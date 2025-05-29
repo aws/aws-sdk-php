@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>The Amazon Interactive Video Service (IVS) real-time API is REST compatible, using a standard HTTP API and an AWS EventBridge event stream for responses. JSON is used for both requests and responses, including errors. </p> <p> <b>Key Concepts</b> </p> <ul> <li> <p> <b>Stage</b> — A virtual space where participants can exchange video in real time.</p> </li> <li> <p> <b>Participant token</b> — A token that authenticates a participant when they join a stage.</p> </li> <li> <p> <b>Participant object</b> — Represents participants (people) in the stage and contains information about them. When a token is created, it includes a participant ID; when a participant uses that token to join a stage, the participant is associated with that participant ID. There is a 1:1 mapping between participant tokens and participants.</p> </li> </ul> <p>For server-side composition:</p> <ul> <li> <p> <b>Composition process</b> — Composites participants of a stage into a single video and forwards it to a set of outputs (e.g., IVS channels). Composition operations support this process.</p> </li> <li> <p> <b>Composition</b> — Controls the look of the outputs, including how participants are positioned in the video.</p> </li> </ul> <p>For more information about your IVS live stream, also see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started.html\">Getting Started with Amazon IVS Real-Time Streaming</a>.</p> <p> <b>Tagging</b> </p> <p>A <i>tag</i> is a metadata label that you assign to an AWS resource. A tag comprises a <i>key</i> and a <i>value</i>, both set by you. For example, you might set a tag as <code>topic:nature</code> to label a particular video category. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS stages has no service-specific constraints beyond what is documented there.</p> <p>Tags can help you identify and organize your AWS resources. For example, you can use the same tag for different resources to indicate that they are related. You can also use tags to manage access (see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html\">Access Tags</a>).</p> <p>The Amazon IVS real-time API has these tag-related operations: <a>TagResource</a>, <a>UntagResource</a>, and <a>ListTagsForResource</a>. The following resource supports tagging: Stage.</p> <p>At most 50 tags can be applied to a resource.</p>",
+  "service": "<p>The Amazon Interactive Video Service (IVS) real-time API is REST compatible, using a standard HTTP API and an AWS EventBridge event stream for responses. JSON is used for both requests and responses, including errors. </p> <p> <b>Key Concepts</b> </p> <ul> <li> <p> <b>Stage</b> — A virtual space where participants can exchange video in real time.</p> </li> <li> <p> <b>Participant token</b> — A token that authenticates a participant when they join a stage.</p> </li> <li> <p> <b>Participant object</b> — Represents participants (people) in the stage and contains information about them. When a token is created, it includes a participant ID; when a participant uses that token to join a stage, the participant is associated with that participant ID. There is a 1:1 mapping between participant tokens and participants.</p> </li> </ul> <p>For server-side composition:</p> <ul> <li> <p> <b>Composition process</b> — Composites participants of a stage into a single video and forwards it to a set of outputs (e.g., IVS channels). Composition operations support this process.</p> </li> <li> <p> <b>Composition</b> — Controls the look of the outputs, including how participants are positioned in the video.</p> </li> </ul> <p>For participant replication:</p> <ul> <li> <p> <b>Source stage</b> — The stage where the participant originally joined, which is used as the source for replication.</p> </li> <li> <p> <b>Destination stage</b> — The stage to which the participant is replicated. </p> </li> <li> <p> <b>Replicated participant</b> — A participant in a stage that is replicated to one or more destination stages. </p> </li> <li> <p> <b>Replica participant</b> — A participant in a destination stage that is replicated from another stage (the source stage).</p> </li> </ul> <p>For more information about your IVS live stream, also see <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started.html\">Getting Started with Amazon IVS Real-Time Streaming</a>.</p> <p> <b>Tagging</b> </p> <p>A <i>tag</i> is a metadata label that you assign to an AWS resource. A tag comprises a <i>key</i> and a <i>value</i>, both set by you. For example, you might set a tag as <code>topic:nature</code> to label a particular video category. See <a href=\"https://docs.aws.amazon.com/tag-editor/latest/userguide/best-practices-and-strats.html\">Best practices and strategies</a> in <i>Tagging AWS Resources and Tag Editor</i> for details, including restrictions that apply to tags and \"Tag naming limits and requirements\"; Amazon IVS stages has no service-specific constraints beyond what is documented there.</p> <p>Tags can help you identify and organize your AWS resources. For example, you can use the same tag for different resources to indicate that they are related. You can also use tags to manage access (see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html\">Access Tags</a>).</p> <p>The Amazon IVS real-time API has these tag-related operations: <a>TagResource</a>, <a>UntagResource</a>, and <a>ListTagsForResource</a>. The following resource supports tagging: Stage.</p> <p>At most 50 tags can be applied to a resource.</p>",
   "operations": {
     "CreateEncoderConfiguration": "<p>Creates an EncoderConfiguration object.</p>",
     "CreateIngestConfiguration": "<p>Creates a new IngestConfiguration resource, used to specify the ingest protocol for a stage.</p>",
@@ -26,6 +26,7 @@
     "ListEncoderConfigurations": "<p>Gets summary information about all EncoderConfigurations in your account, in the AWS region where the API request is processed.</p>",
     "ListIngestConfigurations": "<p>Lists all IngestConfigurations in your account, in the AWS region where the API request is processed.</p>",
     "ListParticipantEvents": "<p>Lists events for a specified participant that occurred during a specified stage session.</p>",
+    "ListParticipantReplicas": "<p>Lists all the replicas for a participant from a source stage.</p>",
     "ListParticipants": "<p>Lists all participants in a specified stage session.</p>",
     "ListPublicKeys": "<p>Gets summary information about all public keys in your account, in the AWS region where the API request is processed.</p>",
     "ListStageSessions": "<p>Gets all sessions for a specified stage.</p>",
@@ -33,7 +34,9 @@
     "ListStorageConfigurations": "<p>Gets summary information about all storage configurations in your account, in the AWS region where the API request is processed.</p>",
     "ListTagsForResource": "<p>Gets information about AWS tags for the specified ARN.</p>",
     "StartComposition": "<p>Starts a Composition from a stage based on the configuration provided in the request.</p> <p>A Composition is an ephemeral resource that exists after this operation returns successfully. Composition stops and the resource is deleted:</p> <ul> <li> <p>When <a>StopComposition</a> is called.</p> </li> <li> <p>After a 1-minute timeout, when all participants are disconnected from the stage.</p> </li> <li> <p>After a 1-minute timeout, if there are no participants in the stage when StartComposition is called.</p> </li> <li> <p>When broadcasting to the IVS channel fails and all retries are exhausted.</p> </li> <li> <p>When broadcasting is disconnected and all attempts to reconnect are exhausted.</p> </li> </ul>",
+    "StartParticipantReplication": "<p>Starts replicating a publishing participant from a source stage to a destination stage.</p>",
     "StopComposition": "<p>Stops and deletes a Composition resource. Any broadcast from the Composition resource is stopped.</p>",
+    "StopParticipantReplication": "<p>Stops a replicated participant session.</p>",
     "TagResource": "<p>Adds or updates tags for the AWS resource with the specified ARN.</p>",
     "UntagResource": "<p>Removes tags from the resource with the specified ARN.</p>",
     "UpdateIngestConfiguration": "<p>Updates a specified IngestConfiguration. Only the stage ARN attached to the IngestConfiguration can be updated. An IngestConfiguration that is active cannot be updated.</p>",
@@ -122,7 +125,7 @@
     "CompositionRecordingTargetSegmentDurationSeconds": {
       "base": null,
       "refs": {
-        "CompositionRecordingHlsConfiguration$targetSegmentDurationSeconds": "<p>Defines the target duration for recorded segments generated when using composite recording. Segments may have durations shorter than the specified value when needed to ensure each segment begins with a keyframe. Default: 2.</p>"
+        "CompositionRecordingHlsConfiguration$targetSegmentDurationSeconds": "<p>Defines the target duration for recorded segments generated when using composite recording. Default: 2.</p>"
       }
     },
     "CompositionState": {
@@ -638,6 +641,16 @@
       "refs": {
       }
     },
+    "ListParticipantReplicasRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListParticipantReplicasResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListParticipantsRequest": {
       "base": null,
       "refs": {
@@ -722,6 +735,12 @@
         "ListParticipantEventsRequest$maxResults": "<p>Maximum number of results to return. Default: 50.</p>"
       }
     },
+    "MaxParticipantReplicaResults": {
+      "base": null,
+      "refs": {
+        "ListParticipantReplicasRequest$maxResults": "<p>Maximum number of results to return. Default: 50.</p>"
+      }
+    },
     "MaxParticipantResults": {
       "base": null,
       "refs": {
@@ -770,6 +789,8 @@
         "ListIngestConfigurationsResponse$nextToken": "<p>If there are more IngestConfigurations than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListParticipantEventsRequest$nextToken": "<p>The first participant event to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListParticipantEventsResponse$nextToken": "<p>If there are more events than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set. </p>",
+        "ListParticipantReplicasRequest$nextToken": "<p>The first participant to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
+        "ListParticipantReplicasResponse$nextToken": "<p>If there are more participants than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListParticipantsRequest$nextToken": "<p>The first participant to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
         "ListParticipantsResponse$nextToken": "<p>If there are more participants than <code>maxResults</code>, use <code>nextToken</code> in the request to get the next set.</p>",
         "ListPublicKeysRequest$nextToken": "<p>The first public key to retrieve. This is used for pagination; see the <code>nextToken</code> response field.</p>",
@@ -793,7 +814,8 @@
       "refs": {
         "CreateIngestConfigurationRequest$attributes": "<p>Application-provided attributes to store in the IngestConfiguration and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
         "IngestConfiguration$attributes": "<p>Application-provided attributes to to store in the IngestConfiguration and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p>",
-        "Participant$attributes": "<p>Application-provided attributes to encode into the token and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information</i>.</p>"
+        "Participant$attributes": "<p>Application-provided attributes to encode into the token and attach to a stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information</i>.</p>",
+        "StartParticipantReplicationRequest$attributes": "<p>Application-provided attributes to set on the replicated participant in the destination stage. Map keys and values can contain UTF-8 encoded text. The maximum length of this field is 1 KB total. <i>This field is exposed to all stage participants and should not be used for personally identifying, confidential, or sensitive information.</i> </p> <p>These attributes are merged with any attributes set for this participant when creating the token. If there is overlap in keys, the values in these attributes are replaced.</p>"
       }
     },
     "ParticipantClientAttribute": {
@@ -816,8 +838,12 @@
         "IngestConfiguration$participantId": "<p>ID of the participant within the stage.</p>",
         "IngestConfigurationSummary$participantId": "<p>ID of the participant within the stage.</p>",
         "ListParticipantEventsRequest$participantId": "<p>Unique identifier for this participant. This is assigned by IVS and returned by <a>CreateParticipantToken</a>.</p>",
+        "ListParticipantReplicasRequest$participantId": "<p>Participant ID of the publisher that has been replicated. This is assigned by IVS and returned by <a>CreateParticipantToken</a> or the <code>jti</code> (JWT ID) used to <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started-distribute-tokens.html#getting-started-distribute-tokens-self-signed\">create a self signed token</a>.</p>",
         "Participant$participantId": "<p>Unique identifier for this participant, assigned by IVS.</p>",
-        "ParticipantSummary$participantId": "<p>Unique identifier for this participant, assigned by IVS.</p>"
+        "ParticipantReplica$participantId": "<p>Participant ID of the publisher that will be replicated. This is assigned by IVS and returned by <a>CreateParticipantToken</a> or the <code>jti</code> (JWT ID) used to <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started-distribute-tokens.html#getting-started-distribute-tokens-self-signed\"> create a self signed token</a>.</p>",
+        "ParticipantSummary$participantId": "<p>Unique identifier for this participant, assigned by IVS.</p>",
+        "StartParticipantReplicationRequest$participantId": "<p>Participant ID of the publisher that will be replicated. This is assigned by IVS and returned by <a>CreateParticipantToken</a> or the <code>jti</code> (JWT ID) used to <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started-distribute-tokens.html#getting-started-distribute-tokens-self-signed\">create a self signed token</a>. </p>",
+        "StopParticipantReplicationRequest$participantId": "<p>Participant ID of the publisher that has been replicated. This is assigned by IVS and returned by <a>CreateParticipantToken</a> or the <code>jti</code> (JWT ID) used to <a href=\"https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started-distribute-tokens.html#getting-started-distribute-tokens-self-signed\"> create a self signed token</a>.</p>"
       }
     },
     "ParticipantList": {
@@ -871,7 +897,7 @@
     "ParticipantRecordingS3Prefix": {
       "base": null,
       "refs": {
-        "Participant$recordingS3Prefix": "<p>S3 prefix of the S3 bucket where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled.</p>"
+        "Participant$recordingS3Prefix": "<p>S3 prefix of the S3 bucket where the participant is being recorded, if individual participant recording is enabled, or <code>\"\"</code> (empty string), if recording is not enabled. If individual participant recording merge is enabled, and if a stage publisher disconnects from a stage and then reconnects, IVS tries to record to the same S3 prefix as the previous session. See <a href=\"/ivs/latest/RealTimeUserGuide/rt-individual-participant-recording.html#ind-part-rec-merge-frag\"> Merge Fragmented Individual Participant Recordings</a>.</p>"
       }
     },
     "ParticipantRecordingState": {
@@ -885,6 +911,18 @@
       "base": null,
       "refs": {
         "ParticipantRecordingHlsConfiguration$targetSegmentDurationSeconds": "<p>Defines the target duration for recorded segments generated when recording a stage participant. Segments may have durations longer than the specified value when needed to ensure each segment begins with a keyframe. Default: 6.</p>"
+      }
+    },
+    "ParticipantReplica": {
+      "base": "<p>Information about the replicated destination stage for a participant.</p>",
+      "refs": {
+        "ParticipantReplicaList$member": null
+      }
+    },
+    "ParticipantReplicaList": {
+      "base": null,
+      "refs": {
+        "ListParticipantReplicasResponse$replicas": "<p>List of all participant replicas.</p>"
       }
     },
     "ParticipantState": {
@@ -1087,6 +1125,18 @@
         "ParticipantSummary$published": "<p>Whether the participant ever published to the stage session.</p>"
       }
     },
+    "ReconnectWindowSeconds": {
+      "base": null,
+      "refs": {
+        "StartParticipantReplicationRequest$reconnectWindowSeconds": "<p>If the participant disconnects and then reconnects within the specified interval, replication will continue to be <code>ACTIVE</code>. Default: 0.</p>"
+      }
+    },
+    "RecordParticipantReplicas": {
+      "base": null,
+      "refs": {
+        "AutoParticipantRecordingConfiguration$recordParticipantReplicas": "<p>Optional field to disable replica participant recording. If this is set to <code>false</code> when a participant is a replica, replica participants are not recorded. Default: <code>true</code>.</p>"
+      }
+    },
     "RecordingConfiguration": {
       "base": "<p>An object representing a configuration to record a stage stream.</p>",
       "refs": {
@@ -1097,6 +1147,27 @@
       "base": null,
       "refs": {
         "RecordingConfiguration$format": "<p>The recording format for storing a recording in Amazon S3.</p>"
+      }
+    },
+    "Replica": {
+      "base": null,
+      "refs": {
+        "Event$replica": "<p>If true, this indicates the <code>participantId</code> is a replicated participant. If this is a subscribe event, then this flag refers to <code>remoteParticipantId</code>.</p>"
+      }
+    },
+    "ReplicationState": {
+      "base": null,
+      "refs": {
+        "Participant$replicationState": "<p>The participant's replication state.</p>",
+        "ParticipantReplica$replicationState": "<p>Replica’s current replication state.</p>",
+        "ParticipantSummary$replicationState": "<p>The participant's replication state.</p>"
+      }
+    },
+    "ReplicationType": {
+      "base": null,
+      "refs": {
+        "Participant$replicationType": "<p>Indicates if the participant has been replicated to another stage or is a replica from another stage. Default: <code>NONE</code>. </p>",
+        "ParticipantSummary$replicationType": "<p>Indicates if the participant has been replicated to another stage or is a replica from another stage. Default: <code>NONE</code>. </p>"
       }
     },
     "ResourceArn": {
@@ -1159,17 +1230,27 @@
         "CreateParticipantTokenRequest$stageArn": "<p>ARN of the stage to which this token is scoped.</p>",
         "DeleteStageRequest$arn": "<p>ARN of the stage to be deleted.</p>",
         "DisconnectParticipantRequest$stageArn": "<p>ARN of the stage to which the participant is attached.</p>",
+        "Event$destinationStageArn": "<p>ARN of the stage where the participant is replicated. Applicable only if the event name is <code>REPLICATION_STARTED</code> or <code>REPLICATION_STOPPED</code>.</p>",
         "GetParticipantRequest$stageArn": "<p>Stage ARN.</p>",
         "GetStageRequest$arn": "<p>ARN of the stage for which the information is to be retrieved.</p>",
         "GetStageSessionRequest$stageArn": "<p>ARN of the stage for which the information is to be retrieved.</p>",
         "ListCompositionsRequest$filterByStageArn": "<p>Filters the Composition list to match the specified Stage ARN.</p>",
         "ListIngestConfigurationsRequest$filterByStageArn": "<p>Filters the response list to match the specified stage ARN. Only one filter (by stage ARN or by state) can be used at a time.</p>",
         "ListParticipantEventsRequest$stageArn": "<p>Stage ARN.</p>",
+        "ListParticipantReplicasRequest$sourceStageArn": "<p>ARN of the stage where the participant is publishing.</p>",
         "ListParticipantsRequest$stageArn": "<p>Stage ARN.</p>",
         "ListStageSessionsRequest$stageArn": "<p>Stage ARN.</p>",
+        "Participant$sourceStageArn": "<p>Source stage ARN from which this participant is replicated, if <code>replicationType</code> is <code>REPLICA</code>. </p>",
+        "ParticipantReplica$sourceStageArn": "<p>ARN of the stage from which this participant is replicated.</p>",
+        "ParticipantReplica$destinationStageArn": "<p>ARN of the stage where the participant is replicated.</p>",
+        "ParticipantSummary$sourceStageArn": "<p>ARN of the stage from which this participant is replicated.</p>",
         "Stage$arn": "<p>Stage ARN.</p>",
         "StageSummary$arn": "<p>Stage ARN.</p>",
         "StartCompositionRequest$stageArn": "<p>ARN of the stage to be used for compositing.</p>",
+        "StartParticipantReplicationRequest$sourceStageArn": "<p>ARN of the stage where the participant is publishing.</p>",
+        "StartParticipantReplicationRequest$destinationStageArn": "<p>ARN of the stage to which the participant will be replicated.</p>",
+        "StopParticipantReplicationRequest$sourceStageArn": "<p>ARN of the stage where the participant is publishing.</p>",
+        "StopParticipantReplicationRequest$destinationStageArn": "<p>ARN of the stage where the participant has been replicated.</p>",
         "UpdateStageRequest$arn": "<p>ARN of the stage to be updated.</p>"
       }
     },
@@ -1206,10 +1287,15 @@
     "StageSessionId": {
       "base": null,
       "refs": {
+        "Event$destinationSessionId": "<p>ID of the session within the destination stage. Applicable only if the event name is <code>REPLICATION_STARTED</code> or <code>REPLICATION_STOPPED</code>.</p>",
         "GetParticipantRequest$sessionId": "<p>ID of a session within the stage.</p>",
         "GetStageSessionRequest$sessionId": "<p>ID of a session within the stage.</p>",
         "ListParticipantEventsRequest$sessionId": "<p>ID of a session within the stage.</p>",
         "ListParticipantsRequest$sessionId": "<p>ID of the session within the stage.</p>",
+        "Participant$sourceSessionId": "<p>ID of the session within the source stage, if <code>replicationType</code> is <code>REPLICA</code>.</p>",
+        "ParticipantReplica$sourceSessionId": "<p>ID of the session within the source stage.</p>",
+        "ParticipantReplica$destinationSessionId": "<p>ID of the session within the destination stage.</p>",
+        "ParticipantSummary$sourceSessionId": "<p>ID of the session within the source stage, if <code>replicationType</code> is <code>REPLICA</code>.</p>",
         "Stage$activeSessionId": "<p>ID of the active session within the stage.</p>",
         "StageSession$sessionId": "<p>ID of the session within the stage.</p>",
         "StageSessionSummary$sessionId": "<p>ID of the session within the stage.</p>",
@@ -1250,12 +1336,32 @@
       "refs": {
       }
     },
+    "StartParticipantReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartParticipantReplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StopCompositionRequest": {
       "base": null,
       "refs": {
       }
     },
     "StopCompositionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopParticipantReplicationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopParticipantReplicationResponse": {
       "base": null,
       "refs": {
       }
@@ -1361,6 +1467,20 @@
         "ServiceQuotaExceededException$xContentTypeOptions": "<p/>",
         "ServiceQuotaExceededException$xFrameOptions": "<p/>",
         "ServiceQuotaExceededException$xAmznErrorType": "<p/>",
+        "StartParticipantReplicationResponse$accessControlAllowOrigin": "<p/>",
+        "StartParticipantReplicationResponse$accessControlExposeHeaders": "<p/>",
+        "StartParticipantReplicationResponse$cacheControl": "<p/>",
+        "StartParticipantReplicationResponse$contentSecurityPolicy": "<p/>",
+        "StartParticipantReplicationResponse$strictTransportSecurity": "<p/>",
+        "StartParticipantReplicationResponse$xContentTypeOptions": "<p/>",
+        "StartParticipantReplicationResponse$xFrameOptions": "<p/>",
+        "StopParticipantReplicationResponse$accessControlAllowOrigin": "<p/>",
+        "StopParticipantReplicationResponse$accessControlExposeHeaders": "<p/>",
+        "StopParticipantReplicationResponse$cacheControl": "<p/>",
+        "StopParticipantReplicationResponse$contentSecurityPolicy": "<p/>",
+        "StopParticipantReplicationResponse$strictTransportSecurity": "<p/>",
+        "StopParticipantReplicationResponse$xContentTypeOptions": "<p/>",
+        "StopParticipantReplicationResponse$xFrameOptions": "<p/>",
         "ValidationException$accessControlAllowOrigin": "<p/>",
         "ValidationException$accessControlExposeHeaders": "<p/>",
         "ValidationException$cacheControl": "<p/>",

@@ -26,8 +26,7 @@
       "output":{"shape":"AbortMultipartUploadOutput"},
       "errors":[
         {"shape":"NoSuchUpload"}
-      ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadAbort.html"
+      ]
     },
     "CompleteMultipartUpload":{
       "name":"CompleteMultipartUpload",
@@ -36,8 +35,7 @@
         "requestUri":"/{Bucket}/{Key+}"
       },
       "input":{"shape":"CompleteMultipartUploadRequest"},
-      "output":{"shape":"CompleteMultipartUploadOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadComplete.html"
+      "output":{"shape":"CompleteMultipartUploadOutput"}
     },
     "CopyObject":{
       "name":"CopyObject",
@@ -50,8 +48,6 @@
       "errors":[
         {"shape":"ObjectNotInActiveTierError"}
       ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectCOPY.html",
-      "alias":"PutObjectCopy",
       "staticContextParams":{
         "DisableS3ExpressSessionAuth":{"value":true}
       }
@@ -68,8 +64,6 @@
         {"shape":"BucketAlreadyExists"},
         {"shape":"BucketAlreadyOwnedByYou"}
       ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUT.html",
-      "alias":"PutBucket",
       "staticContextParams":{
         "DisableAccessPoints":{"value":true},
         "UseS3ExpressControlEndpoint":{"value":true}
@@ -97,9 +91,7 @@
         "requestUri":"/{Bucket}/{Key+}?uploads"
       },
       "input":{"shape":"CreateMultipartUploadRequest"},
-      "output":{"shape":"CreateMultipartUploadOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadInitiate.html",
-      "alias":"InitiateMultipartUpload"
+      "output":{"shape":"CreateMultipartUploadOutput"}
     },
     "CreateSession":{
       "name":"CreateSession",
@@ -124,7 +116,6 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteBucketRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETE.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -149,7 +140,6 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteBucketCorsRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEcors.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -198,7 +188,6 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteBucketLifecycleRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETElifecycle.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -247,7 +236,6 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteBucketPolicyRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEpolicy.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -272,7 +260,6 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteBucketTaggingRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEtagging.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -285,7 +272,6 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteBucketWebsiteRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketDELETEwebsite.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -298,8 +284,7 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteObjectRequest"},
-      "output":{"shape":"DeleteObjectOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectDELETE.html"
+      "output":{"shape":"DeleteObjectOutput"}
     },
     "DeleteObjectTagging":{
       "name":"DeleteObjectTagging",
@@ -319,8 +304,6 @@
       },
       "input":{"shape":"DeleteObjectsRequest"},
       "output":{"shape":"DeleteObjectsOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html",
-      "alias":"DeleteMultipleObjects",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -358,7 +341,6 @@
       },
       "input":{"shape":"GetBucketAclRequest"},
       "output":{"shape":"GetBucketAclOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETacl.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -383,7 +365,6 @@
       },
       "input":{"shape":"GetBucketCorsRequest"},
       "output":{"shape":"GetBucketCorsOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETcors.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -432,7 +413,6 @@
       },
       "input":{"shape":"GetBucketLifecycleRequest"},
       "output":{"shape":"GetBucketLifecycleOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlifecycle.html",
       "deprecated":true,
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
@@ -458,7 +438,6 @@
       },
       "input":{"shape":"GetBucketLocationRequest"},
       "output":{"shape":"GetBucketLocationOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlocation.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -471,7 +450,6 @@
       },
       "input":{"shape":"GetBucketLoggingRequest"},
       "output":{"shape":"GetBucketLoggingOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETlogging.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -508,7 +486,6 @@
       },
       "input":{"shape":"GetBucketNotificationConfigurationRequest"},
       "output":{"shape":"NotificationConfigurationDeprecated"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETnotification.html",
       "deprecated":true,
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
@@ -546,7 +523,6 @@
       },
       "input":{"shape":"GetBucketPolicyRequest"},
       "output":{"shape":"GetBucketPolicyOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETpolicy.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -583,7 +559,6 @@
       },
       "input":{"shape":"GetBucketRequestPaymentRequest"},
       "output":{"shape":"GetBucketRequestPaymentOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentGET.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -596,7 +571,6 @@
       },
       "input":{"shape":"GetBucketTaggingRequest"},
       "output":{"shape":"GetBucketTaggingOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETtagging.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -609,7 +583,6 @@
       },
       "input":{"shape":"GetBucketVersioningRequest"},
       "output":{"shape":"GetBucketVersioningOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETversioningStatus.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -622,7 +595,6 @@
       },
       "input":{"shape":"GetBucketWebsiteRequest"},
       "output":{"shape":"GetBucketWebsiteOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETwebsite.html",
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -639,7 +611,6 @@
         {"shape":"NoSuchKey"},
         {"shape":"InvalidObjectState"}
       ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGET.html",
       "httpChecksum":{
         "requestValidationModeMember":"ChecksumMode",
         "responseAlgorithms":[
@@ -661,8 +632,7 @@
       "output":{"shape":"GetObjectAclOutput"},
       "errors":[
         {"shape":"NoSuchKey"}
-      ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETacl.html"
+      ]
     },
     "GetObjectAttributes":{
       "name":"GetObjectAttributes",
@@ -719,8 +689,7 @@
         "requestUri":"/{Bucket}/{Key+}?torrent"
       },
       "input":{"shape":"GetObjectTorrentRequest"},
-      "output":{"shape":"GetObjectTorrentOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectGETtorrent.html"
+      "output":{"shape":"GetObjectTorrentOutput"}
     },
     "GetPublicAccessBlock":{
       "name":"GetPublicAccessBlock",
@@ -744,8 +713,7 @@
       "output":{"shape":"HeadBucketOutput"},
       "errors":[
         {"shape":"NoSuchBucket"}
-      ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketHEAD.html"
+      ]
     },
     "HeadObject":{
       "name":"HeadObject",
@@ -757,8 +725,7 @@
       "output":{"shape":"HeadObjectOutput"},
       "errors":[
         {"shape":"NoSuchKey"}
-      ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectHEAD.html"
+      ]
     },
     "ListBucketAnalyticsConfigurations":{
       "name":"ListBucketAnalyticsConfigurations",
@@ -812,9 +779,7 @@
         "requestUri":"/"
       },
       "input":{"shape":"ListBucketsRequest"},
-      "output":{"shape":"ListBucketsOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTServiceGET.html",
-      "alias":"GetService"
+      "output":{"shape":"ListBucketsOutput"}
     },
     "ListDirectoryBuckets":{
       "name":"ListDirectoryBuckets",
@@ -835,8 +800,7 @@
         "requestUri":"/{Bucket}?uploads"
       },
       "input":{"shape":"ListMultipartUploadsRequest"},
-      "output":{"shape":"ListMultipartUploadsOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListMPUpload.html"
+      "output":{"shape":"ListMultipartUploadsOutput"}
     },
     "ListObjectVersions":{
       "name":"ListObjectVersions",
@@ -845,9 +809,7 @@
         "requestUri":"/{Bucket}?versions"
       },
       "input":{"shape":"ListObjectVersionsRequest"},
-      "output":{"shape":"ListObjectVersionsOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGETVersion.html",
-      "alias":"GetBucketObjectVersions"
+      "output":{"shape":"ListObjectVersionsOutput"}
     },
     "ListObjects":{
       "name":"ListObjects",
@@ -859,9 +821,7 @@
       "output":{"shape":"ListObjectsOutput"},
       "errors":[
         {"shape":"NoSuchBucket"}
-      ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketGET.html",
-      "alias":"GetBucket"
+      ]
     },
     "ListObjectsV2":{
       "name":"ListObjectsV2",
@@ -882,8 +842,7 @@
         "requestUri":"/{Bucket}/{Key+}"
       },
       "input":{"shape":"ListPartsRequest"},
-      "output":{"shape":"ListPartsOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadListParts.html"
+      "output":{"shape":"ListPartsOutput"}
     },
     "PutBucketAccelerateConfiguration":{
       "name":"PutBucketAccelerateConfiguration",
@@ -907,7 +866,6 @@
         "requestUri":"/{Bucket}?acl"
       },
       "input":{"shape":"PutBucketAclRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTacl.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -934,7 +892,6 @@
         "requestUri":"/{Bucket}?cors"
       },
       "input":{"shape":"PutBucketCorsRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTcors.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -987,7 +944,6 @@
         "requestUri":"/{Bucket}?lifecycle"
       },
       "input":{"shape":"PutBucketLifecycleRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlifecycle.html",
       "deprecated":true,
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
@@ -1020,7 +976,6 @@
         "requestUri":"/{Bucket}?logging"
       },
       "input":{"shape":"PutBucketLoggingRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1047,7 +1002,6 @@
         "requestUri":"/{Bucket}?notification"
       },
       "input":{"shape":"PutBucketNotificationRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTnotification.html",
       "deprecated":true,
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
@@ -1075,7 +1029,10 @@
         "requestUri":"/{Bucket}?ownershipControls"
       },
       "input":{"shape":"PutBucketOwnershipControlsRequest"},
-      "httpChecksum":{"requestChecksumRequired":true},
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      },
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -1087,7 +1044,6 @@
         "requestUri":"/{Bucket}?policy"
       },
       "input":{"shape":"PutBucketPolicyRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTpolicy.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1118,7 +1074,6 @@
         "requestUri":"/{Bucket}?requestPayment"
       },
       "input":{"shape":"PutBucketRequestPaymentRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTrequestPaymentPUT.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1134,7 +1089,6 @@
         "requestUri":"/{Bucket}?tagging"
       },
       "input":{"shape":"PutBucketTaggingRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTtagging.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1150,7 +1104,6 @@
         "requestUri":"/{Bucket}?versioning"
       },
       "input":{"shape":"PutBucketVersioningRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1166,7 +1119,6 @@
         "requestUri":"/{Bucket}?website"
       },
       "input":{"shape":"PutBucketWebsiteRequest"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTwebsite.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1189,7 +1141,6 @@
         {"shape":"TooManyParts"},
         {"shape":"EncryptionTypeMismatch"}
       ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":false
@@ -1206,7 +1157,6 @@
       "errors":[
         {"shape":"NoSuchKey"}
       ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUTacl.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":true
@@ -1290,8 +1240,6 @@
       "errors":[
         {"shape":"ObjectAlreadyInActiveTierError"}
       ],
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectRestore.html",
-      "alias":"PostObjectRestore",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":false
@@ -1318,7 +1266,6 @@
       },
       "input":{"shape":"UploadPartRequest"},
       "output":{"shape":"UploadPartOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPart.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
         "requestChecksumRequired":false
@@ -1332,7 +1279,6 @@
       },
       "input":{"shape":"UploadPartCopyRequest"},
       "output":{"shape":"UploadPartCopyOutput"},
-      "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/mpUploadUploadPartCopy.html",
       "staticContextParams":{
         "DisableS3ExpressSessionAuth":{"value":true}
       }
@@ -1554,15 +1500,13 @@
     },
     "BucketAlreadyExists":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
     "BucketAlreadyOwnedByYou":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -2025,8 +1969,7 @@
     "ContentType":{"type":"string"},
     "ContinuationEvent":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "event":true
     },
     "CopyObjectOutput":{
@@ -3351,8 +3294,7 @@
     },
     "EncryptionTypeMismatch":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -3362,8 +3304,7 @@
     },
     "EndEvent":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "event":true
     },
     "Error":{
@@ -3430,8 +3371,7 @@
     },
     "EventBridgeConfiguration":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EventList":{
       "type":"list",
@@ -5311,15 +5251,13 @@
     },
     "InvalidRequest":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidWriteOffset":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -6384,22 +6322,19 @@
     "NextVersionIdMarker":{"type":"string"},
     "NoSuchBucket":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
     "NoSuchKey":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
     "NoSuchUpload":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
@@ -6475,8 +6410,7 @@
     },
     "ObjectAlreadyInActiveTierError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -6593,8 +6527,7 @@
     "ObjectLockToken":{"type":"string"},
     "ObjectNotInActiveTierError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -6728,8 +6661,7 @@
     },
     "ParquetInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Part":{
       "type":"structure",
@@ -7348,6 +7280,11 @@
           "shape":"OwnershipControls",
           "locationName":"OwnershipControls",
           "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
         }
       },
       "payload":"OwnershipControls"
@@ -8697,8 +8634,7 @@
     },
     "SSES3":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "locationName":"SSE-S3"
     },
     "ScanRange":{
@@ -8874,8 +8810,7 @@
     },
     "SimplePrefix":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "locationName":"SimplePrefix"
     },
     "Size":{
@@ -9061,8 +8996,7 @@
     "Token":{"type":"string"},
     "TooManyParts":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },

@@ -2039,7 +2039,7 @@
         "workloadEstimateId":{"shape":"ResourceId"},
         "filters":{"shape":"ListUsageFilters"},
         "nextToken":{"shape":"NextPageToken"},
-        "maxResults":{"shape":"MaxResults"}
+        "maxResults":{"shape":"WorkloadEstimateUsageMaxResults"}
       }
     },
     "ListWorkloadEstimateUsageResponse":{
@@ -2104,7 +2104,8 @@
     "MaxResults":{
       "type":"integer",
       "box":true,
-      "max":25
+      "max":25,
+      "min":0
     },
     "NegateReservedInstanceAction":{
       "type":"structure",
@@ -2141,7 +2142,8 @@
       "type":"string",
       "enum":[
         "BEFORE_DISCOUNTS",
-        "AFTER_DISCOUNTS"
+        "AFTER_DISCOUNTS",
+        "AFTER_DISCOUNTS_AND_COMMITMENTS"
       ]
     },
     "RateTypes":{
@@ -2478,7 +2480,8 @@
       "type":"string",
       "enum":[
         "BEFORE_DISCOUNTS",
-        "AFTER_DISCOUNTS"
+        "AFTER_DISCOUNTS",
+        "AFTER_DISCOUNTS_AND_COMMITMENTS"
       ]
     },
     "WorkloadEstimateStatus":{
@@ -2544,6 +2547,12 @@
     "WorkloadEstimateUsageItems":{
       "type":"list",
       "member":{"shape":"WorkloadEstimateUsageItem"}
+    },
+    "WorkloadEstimateUsageMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":300,
+      "min":0
     },
     "WorkloadEstimateUsageQuantity":{
       "type":"structure",

@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Add maintenance status field to DescribeMlflowTrackingServer API response
+* `Aws\DataSync` - AgentArns field is made optional for Object Storage and Azure Blob location create requests. Location credentials are now managed via Secrets Manager, and may be encrypted with service managed or customer managed keys. Authentication is now optional for Azure Blob locations.
+* `Aws\IVSRealTime` - IVS Real-Time now offers customers the participant replication that allow customers to copy a participant from one stage to another.
+* `Aws\BCMPricingCalculator` - Add AFTER_DISCOUNTS_AND_COMMITMENTS to Workload Estimate Rate Type. Set ListWorkLoadEstimateUsage maxResults range to minimum of 0 and maximum of 300.
+* `Aws\FSx` - FSx API changes to support the public launch of new Intelligent Tiering storage class on Amazon FSx for Lustre
+* `Aws\Connect` - Amazon Connect Service Feature: Email Recipient Limit Increase
+* `Aws\Amplify` - Add support for customizable build instance sizes. CreateApp and UpdateApp operations now accept a new JobConfig parameter composed of BuildComputeType.
+* `Aws\S3` - Adding checksum support for S3 PutBucketOwnershipControls API.
+* `Aws\MWAA` - Amazon MWAA now lets you choose a worker replacement strategy when updating an environment. This release adds two worker replacement strategies: FORCED (default), which stops workers immediately, and GRACEFUL, which allows workers to finish current tasks before shutting down.
+* `Aws\CloudTrail` - CloudTrail Feature Release: Support for Enriched Events with Configurable Context for Event Data Store
+* `Aws\DataExchange` - This release adds Tag support for Event Action resource, through which customers can create event actions with Tags and retrieve event actions with Tags.
+* `Aws\AutoScaling` - Add support for "apple" CpuManufacturer in ABIS
+
 ## 3.343.20 - 2025-05-28
 
 * `Aws\EventBridge` - Allow for more than 2 characters for location codes in EventBridge ARNs

@@ -1361,7 +1361,9 @@
         "EfaEnabled":{"shape":"Flag"},
         "LogConfiguration":{"shape":"LustreLogCreateConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
-        "MetadataConfiguration":{"shape":"CreateFileSystemLustreMetadataConfiguration"}
+        "MetadataConfiguration":{"shape":"CreateFileSystemLustreMetadataConfiguration"},
+        "ThroughputCapacity":{"shape":"ThroughputCapacityMbps"},
+        "DataReadCacheConfiguration":{"shape":"LustreReadCacheConfiguration"}
       }
     },
     "CreateFileSystemLustreMetadataConfiguration":{
@@ -2169,8 +2171,7 @@
     },
     "DescribeSharedVpcConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeSharedVpcConfigurationResponse":{
       "type":"structure",
@@ -2825,7 +2826,9 @@
         "LogConfiguration":{"shape":"LustreLogConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
         "MetadataConfiguration":{"shape":"FileSystemLustreMetadataConfiguration"},
-        "EfaEnabled":{"shape":"Flag"}
+        "EfaEnabled":{"shape":"Flag"},
+        "ThroughputCapacity":{"shape":"ThroughputCapacityMbps"},
+        "DataReadCacheConfiguration":{"shape":"LustreReadCacheConfiguration"}
       }
     },
     "LustreFileSystemMountName":{
@@ -2860,6 +2863,21 @@
       "type":"list",
       "member":{"shape":"LustreNoSquashNid"},
       "max":64
+    },
+    "LustreReadCacheConfiguration":{
+      "type":"structure",
+      "members":{
+        "SizingMode":{"shape":"LustreReadCacheSizingMode"},
+        "SizeGiB":{"shape":"StorageCapacity"}
+      }
+    },
+    "LustreReadCacheSizingMode":{
+      "type":"string",
+      "enum":[
+        "NO_CACHE",
+        "USER_PROVISIONED",
+        "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+      ]
     },
     "LustreRootSquash":{
       "type":"string",
@@ -3837,8 +3855,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3862,6 +3879,11 @@
       "type":"list",
       "member":{"shape":"TaskId"},
       "max":50
+    },
+    "ThroughputCapacityMbps":{
+      "type":"integer",
+      "max":2000000,
+      "min":4000
     },
     "ThroughputCapacityPerHAPair":{
       "type":"integer",
@@ -3923,8 +3945,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDataRepositoryAssociationRequest":{
       "type":"structure",
@@ -3980,7 +4001,9 @@
         "LogConfiguration":{"shape":"LustreLogCreateConfiguration"},
         "RootSquashConfiguration":{"shape":"LustreRootSquashConfiguration"},
         "PerUnitStorageThroughput":{"shape":"PerUnitStorageThroughput"},
-        "MetadataConfiguration":{"shape":"UpdateFileSystemLustreMetadataConfiguration"}
+        "MetadataConfiguration":{"shape":"UpdateFileSystemLustreMetadataConfiguration"},
+        "ThroughputCapacity":{"shape":"ThroughputCapacityMbps"},
+        "DataReadCacheConfiguration":{"shape":"LustreReadCacheConfiguration"}
       }
     },
     "UpdateFileSystemLustreMetadataConfiguration":{

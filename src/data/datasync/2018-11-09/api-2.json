@@ -766,7 +766,10 @@
     },
     "AzureBlobAuthenticationType":{
       "type":"string",
-      "enum":["SAS"]
+      "enum":[
+        "SAS",
+        "NONE"
+      ]
     },
     "AzureBlobContainerUrl":{
       "type":"string",
@@ -811,6 +814,13 @@
       "type":"structure",
       "members":{}
     },
+    "CmkSecretConfig":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"SecretArn"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
     "CreateAgentRequest":{
       "type":"structure",
       "required":["ActivationKey"],
@@ -833,8 +843,7 @@
       "type":"structure",
       "required":[
         "ContainerUrl",
-        "AuthenticationType",
-        "AgentArns"
+        "AuthenticationType"
       ],
       "members":{
         "ContainerUrl":{"shape":"AzureBlobContainerUrl"},
@@ -844,7 +853,9 @@
         "AccessTier":{"shape":"AzureAccessTier"},
         "Subdirectory":{"shape":"AzureBlobSubdirectory"},
         "AgentArns":{"shape":"AgentArnList"},
-        "Tags":{"shape":"InputTagList"}
+        "Tags":{"shape":"InputTagList"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "CreateLocationAzureBlobResponse":{
@@ -1014,8 +1025,7 @@
       "type":"structure",
       "required":[
         "ServerHostname",
-        "BucketName",
-        "AgentArns"
+        "BucketName"
       ],
       "members":{
         "ServerHostname":{"shape":"ServerHostname"},
@@ -1027,7 +1037,9 @@
         "SecretKey":{"shape":"ObjectStorageSecretKey"},
         "AgentArns":{"shape":"AgentArnList"},
         "Tags":{"shape":"InputTagList"},
-        "ServerCertificate":{"shape":"ObjectStorageCertificate"}
+        "ServerCertificate":{"shape":"ObjectStorageCertificate"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "CreateLocationObjectStorageResponse":{
@@ -1113,6 +1125,13 @@
         "TaskArn":{"shape":"TaskArn"}
       }
     },
+    "CustomSecretConfig":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"SecretArn"},
+        "SecretAccessRoleArn":{"shape":"IamRoleArnOrEmptyString"}
+      }
+    },
     "DeleteAgentRequest":{
       "type":"structure",
       "required":["AgentArn"],
@@ -1182,7 +1201,10 @@
         "BlobType":{"shape":"AzureBlobType"},
         "AccessTier":{"shape":"AzureAccessTier"},
         "AgentArns":{"shape":"AgentArnList"},
-        "CreationTime":{"shape":"Time"}
+        "CreationTime":{"shape":"Time"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "DescribeLocationEfsRequest":{
@@ -1332,7 +1354,10 @@
         "ServerProtocol":{"shape":"ObjectStorageServerProtocol"},
         "AgentArns":{"shape":"AgentArnList"},
         "CreationTime":{"shape":"Time"},
-        "ServerCertificate":{"shape":"ObjectStorageCertificate"}
+        "ServerCertificate":{"shape":"ObjectStorageCertificate"},
+        "ManagedSecretConfig":{"shape":"ManagedSecretConfig"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "DescribeLocationS3Request":{
@@ -1408,7 +1433,9 @@
         "TaskMode":{"shape":"TaskMode"},
         "FilesPrepared":{"shape":"long"},
         "FilesListed":{"shape":"TaskExecutionFilesListedDetail"},
-        "FilesFailed":{"shape":"TaskExecutionFilesFailedDetail"}
+        "FilesFailed":{"shape":"TaskExecutionFilesFailedDetail"},
+        "LaunchTime":{"shape":"Time"},
+        "EndTime":{"shape":"Time"}
       }
     },
     "DescribeTaskRequest":{
@@ -1710,6 +1737,11 @@
       "max":2048,
       "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):iam::[0-9]{12}:role/.*$"
     },
+    "IamRoleArnOrEmptyString":{
+      "type":"string",
+      "max":2048,
+      "pattern":"^(arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):iam::[0-9]{12}:role/[a-zA-Z0-9+=,.@_-]+|)$"
+    },
     "InputTagList":{
       "type":"list",
       "member":{"shape":"TagListEntry"},
@@ -1747,6 +1779,11 @@
       "max":256,
       "min":1,
       "pattern":"^.+$"
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"^(arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):kms:[a-z\\-0-9]+:[0-9]{12}:key/.*|)$"
     },
     "KmsKeyProviderUri":{
       "type":"string",
@@ -1887,6 +1924,12 @@
         "BASIC",
         "TRANSFER"
       ]
+    },
+    "ManagedSecretConfig":{
+      "type":"structure",
+      "members":{
+        "SecretArn":{"shape":"SecretArn"}
+      }
     },
     "ManifestAction":{
       "type":"string",
@@ -2243,6 +2286,11 @@
         "DISABLED"
       ]
     },
+    "SecretArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"^(arn:(aws|aws-cn|aws-us-gov|aws-iso|aws-iso-b):secretsmanager:[a-z\\-0-9]+:[0-9]{12}:secret:.*|)$"
+    },
     "ServerHostname":{
       "type":"string",
       "max":255,
@@ -2593,7 +2641,9 @@
         "SasConfiguration":{"shape":"AzureBlobSasConfiguration"},
         "BlobType":{"shape":"AzureBlobType"},
         "AccessTier":{"shape":"AzureAccessTier"},
-        "AgentArns":{"shape":"AgentArnList"}
+        "AgentArns":{"shape":"AgentArnList"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "UpdateLocationAzureBlobResponse":{
@@ -2718,7 +2768,9 @@
         "AccessKey":{"shape":"ObjectStorageAccessKey"},
         "SecretKey":{"shape":"ObjectStorageSecretKey"},
         "AgentArns":{"shape":"AgentArnList"},
-        "ServerCertificate":{"shape":"ObjectStorageCertificate"}
+        "ServerCertificate":{"shape":"ObjectStorageCertificate"},
+        "CmkSecretConfig":{"shape":"CmkSecretConfig"},
+        "CustomSecretConfig":{"shape":"CustomSecretConfig"}
       }
     },
     "UpdateLocationObjectStorageResponse":{

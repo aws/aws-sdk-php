@@ -643,7 +643,8 @@
         "repositoryCloneMethod":{"shape":"RepositoryCloneMethod"},
         "cacheConfig":{"shape":"CacheConfig"},
         "webhookCreateTime":{"shape":"webhookCreateTime"},
-        "wafConfiguration":{"shape":"WafConfiguration"}
+        "wafConfiguration":{"shape":"WafConfiguration"},
+        "jobConfig":{"shape":"JobConfig"}
       }
     },
     "AppArn":{
@@ -858,6 +859,14 @@
       "member":{"shape":"Branch"},
       "max":255
     },
+    "BuildComputeType":{
+      "type":"string",
+      "enum":[
+        "STANDARD_8GB",
+        "LARGE_16GB",
+        "XLARGE_72GB"
+      ]
+    },
     "BuildSpec":{
       "type":"string",
       "max":25000,
@@ -962,6 +971,7 @@
         "enableAutoBranchCreation":{"shape":"EnableAutoBranchCreation"},
         "autoBranchCreationPatterns":{"shape":"AutoBranchCreationPatterns"},
         "autoBranchCreationConfig":{"shape":"AutoBranchCreationConfig"},
+        "jobConfig":{"shape":"JobConfig"},
         "cacheConfig":{"shape":"CacheConfig"}
       }
     },
@@ -1661,6 +1671,13 @@
       "type":"string",
       "max":1000
     },
+    "JobConfig":{
+      "type":"structure",
+      "required":["buildComputeType"],
+      "members":{
+        "buildComputeType":{"shape":"BuildComputeType"}
+      }
+    },
     "JobId":{
       "type":"string",
       "max":255,
@@ -2334,8 +2351,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2398,8 +2414,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAppRequest":{
       "type":"structure",
@@ -2429,6 +2444,7 @@
         "repository":{"shape":"Repository"},
         "oauthToken":{"shape":"OauthToken"},
         "accessToken":{"shape":"AccessToken"},
+        "jobConfig":{"shape":"JobConfig"},
         "cacheConfig":{"shape":"CacheConfig"}
       }
     },

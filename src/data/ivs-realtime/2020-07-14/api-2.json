@@ -412,6 +412,20 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListParticipantReplicas":{
+      "name":"ListParticipantReplicas",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListParticipantReplicas",
+        "responseCode":200
+      },
+      "input":{"shape":"ListParticipantReplicasRequest"},
+      "output":{"shape":"ListParticipantReplicasResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListParticipants":{
       "name":"ListParticipants",
       "http":{
@@ -520,6 +534,25 @@
         {"shape":"PendingVerification"}
       ]
     },
+    "StartParticipantReplication":{
+      "name":"StartParticipantReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartParticipantReplication",
+        "responseCode":200
+      },
+      "input":{"shape":"StartParticipantReplicationRequest"},
+      "output":{"shape":"StartParticipantReplicationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
     "StopComposition":{
       "name":"StopComposition",
       "http":{
@@ -536,6 +569,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "StopParticipantReplication":{
+      "name":"StopParticipantReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StopParticipantReplication",
+        "responseCode":200
+      },
+      "input":{"shape":"StopParticipantReplicationRequest"},
+      "output":{"shape":"StopParticipantReplicationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "TagResource":{
@@ -671,7 +720,8 @@
         "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"},
         "thumbnailConfiguration":{"shape":"ParticipantThumbnailConfiguration"},
         "recordingReconnectWindowSeconds":{"shape":"ParticipantRecordingReconnectWindowSeconds"},
-        "hlsConfiguration":{"shape":"ParticipantRecordingHlsConfiguration"}
+        "hlsConfiguration":{"shape":"ParticipantRecordingHlsConfiguration"},
+        "recordParticipantReplicas":{"shape":"RecordParticipantReplicas"}
       }
     },
     "AutoParticipantRecordingStorageConfigurationArn":{
@@ -1131,7 +1181,10 @@
         "participantId":{"shape":"ParticipantId"},
         "eventTime":{"shape":"Time"},
         "remoteParticipantId":{"shape":"ParticipantId"},
-        "errorCode":{"shape":"EventErrorCode"}
+        "errorCode":{"shape":"EventErrorCode"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "destinationSessionId":{"shape":"StageSessionId"},
+        "replica":{"shape":"Replica"}
       }
     },
     "EventErrorCode":{
@@ -1168,7 +1221,9 @@
         "SUBSCRIBE_STOPPED",
         "PUBLISH_ERROR",
         "SUBSCRIBE_ERROR",
-        "JOIN_ERROR"
+        "JOIN_ERROR",
+        "REPLICATION_STARTED",
+        "REPLICATION_STOPPED"
       ]
     },
     "Framerate":{
@@ -1533,6 +1588,27 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListParticipantReplicasRequest":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "participantId"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxParticipantReplicaResults"}
+      }
+    },
+    "ListParticipantReplicasResponse":{
+      "type":"structure",
+      "required":["replicas"],
+      "members":{
+        "replicas":{"shape":"ParticipantReplicaList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListParticipantsRequest":{
       "type":"structure",
       "required":[
@@ -1662,6 +1738,12 @@
       "max":100,
       "min":1
     },
+    "MaxParticipantReplicaResults":{
+      "type":"integer",
+      "box":true,
+      "max":50,
+      "min":1
+    },
     "MaxParticipantResults":{
       "type":"integer",
       "box":true,
@@ -1717,7 +1799,11 @@
         "recordingS3BucketName":{"shape":"ParticipantRecordingS3BucketName"},
         "recordingS3Prefix":{"shape":"ParticipantRecordingS3Prefix"},
         "recordingState":{"shape":"ParticipantRecordingState"},
-        "protocol":{"shape":"ParticipantProtocol"}
+        "protocol":{"shape":"ParticipantProtocol"},
+        "replicationType":{"shape":"ReplicationType"},
+        "replicationState":{"shape":"ReplicationState"},
+        "sourceStageArn":{"shape":"StageArn"},
+        "sourceSessionId":{"shape":"StageSessionId"}
       }
     },
     "ParticipantAttributes":{
@@ -1814,6 +1900,29 @@
       "max":10,
       "min":2
     },
+    "ParticipantReplica":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "participantId",
+        "sourceSessionId",
+        "destinationStageArn",
+        "destinationSessionId",
+        "replicationState"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "sourceSessionId":{"shape":"StageSessionId"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "destinationSessionId":{"shape":"StageSessionId"},
+        "replicationState":{"shape":"ReplicationState"}
+      }
+    },
+    "ParticipantReplicaList":{
+      "type":"list",
+      "member":{"shape":"ParticipantReplica"}
+    },
     "ParticipantState":{
       "type":"string",
       "enum":[
@@ -1829,7 +1938,11 @@
         "state":{"shape":"ParticipantState"},
         "firstJoinTime":{"shape":"Time"},
         "published":{"shape":"Published"},
-        "recordingState":{"shape":"ParticipantRecordingState"}
+        "recordingState":{"shape":"ParticipantRecordingState"},
+        "replicationType":{"shape":"ReplicationType"},
+        "replicationState":{"shape":"ReplicationState"},
+        "sourceStageArn":{"shape":"StageArn"},
+        "sourceSessionId":{"shape":"StageSessionId"}
       }
     },
     "ParticipantThumbnailConfiguration":{
@@ -1895,7 +2008,12 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
-    "ParticipantTokenId":{"type":"string"},
+    "ParticipantTokenId":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
     "ParticipantTokenList":{
       "type":"list",
       "member":{"shape":"ParticipantToken"}
@@ -2045,6 +2163,13 @@
       }
     },
     "Published":{"type":"boolean"},
+    "ReconnectWindowSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":0
+    },
+    "RecordParticipantReplicas":{"type":"boolean"},
     "RecordingConfiguration":{
       "type":"structure",
       "members":{
@@ -2055,6 +2180,22 @@
     "RecordingConfigurationFormat":{
       "type":"string",
       "enum":["HLS"]
+    },
+    "Replica":{"type":"boolean"},
+    "ReplicationState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "STOPPED"
+      ]
+    },
+    "ReplicationType":{
+      "type":"string",
+      "enum":[
+        "SOURCE",
+        "REPLICA",
+        "NONE"
+      ]
     },
     "ResourceArn":{
       "type":"string",
@@ -2298,6 +2439,61 @@
         "composition":{"shape":"Composition"}
       }
     },
+    "StartParticipantReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "destinationStageArn",
+        "participantId"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "reconnectWindowSeconds":{"shape":"ReconnectWindowSeconds"},
+        "attributes":{"shape":"ParticipantAttributes"}
+      }
+    },
+    "StartParticipantReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        }
+      }
+    },
     "StopCompositionRequest":{
       "type":"structure",
       "required":["arn"],
@@ -2308,6 +2504,59 @@
     "StopCompositionResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "StopParticipantReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "destinationStageArn",
+        "participantId"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"}
+      }
+    },
+    "StopParticipantReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        }
       }
     },
     "StorageConfiguration":{

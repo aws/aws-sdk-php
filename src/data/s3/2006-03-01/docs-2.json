@@ -52,7 +52,7 @@
     "GetBucketWebsite": "<note> <p>This operation is not supported for directory buckets.</p> </note> <p>Returns the website configuration for a bucket. To host website on Amazon S3, you can configure a bucket as website by adding a website configuration. For more information about hosting websites, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html\">Hosting Websites on Amazon S3</a>. </p> <p>This GET action requires the <code>S3:GetBucketWebsite</code> permission. By default, only the bucket owner can read the bucket website configuration. However, bucket owners can allow other users to read the website configuration by writing a bucket policy granting them the <code>S3:GetBucketWebsite</code> permission.</p> <p>The following operations are related to <code>GetBucketWebsite</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketWebsite.html\">DeleteBucketWebsite</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketWebsite.html\">PutBucketWebsite</a> </p> </li> </ul>",
     "GetObject": "<p>Retrieves an object from Amazon S3.</p> <p>In the <code>GetObject</code> request, specify the full key name for the object.</p> <p> <b>General purpose buckets</b> - Both the virtual-hosted-style requests and the path-style requests are supported. For a virtual hosted-style request example, if you have the object <code>photos/2006/February/sample.jpg</code>, specify the object key name as <code>/photos/2006/February/sample.jpg</code>. For a path-style request example, if you have the object <code>photos/2006/February/sample.jpg</code> in the bucket named <code>examplebucket</code>, specify the object key name as <code>/examplebucket/photos/2006/February/sample.jpg</code>. For more information about request types, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingSpecifyBucket\">HTTP Host Header Bucket Specification</a> in the <i>Amazon S3 User Guide</i>.</p> <p> <b>Directory buckets</b> - Only virtual-hosted-style requests are supported. For a virtual hosted-style request example, if you have the object <code>photos/2006/February/sample.jpg</code> in the bucket named <code>amzn-s3-demo-bucket--usw2-az1--x-s3</code>, specify the object key name as <code>/photos/2006/February/sample.jpg</code>. Also, when you make requests to this API operation, your requests are sent to the Zonal endpoint. These endpoints support virtual-hosted-style requests in the format <code>https://<i>bucket-name</i>.s3express-<i>zone-id</i>.<i>region-code</i>.amazonaws.com/<i>key-name</i> </code>. Path-style requests are not supported. For more information about endpoints in Availability Zones, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html\">Regional and Zonal endpoints for directory buckets in Availability Zones</a> in the <i>Amazon S3 User Guide</i>. For more information about endpoints in Local Zones, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html\">Concepts for directory buckets in Local Zones</a> in the <i>Amazon S3 User Guide</i>.</p> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p> <b>General purpose bucket permissions</b> - You must have the required permissions in a policy. To use <code>GetObject</code>, you must have the <code>READ</code> access to the object (or version). If you grant <code>READ</code> access to the anonymous user, the <code>GetObject</code> operation returns the object without using an authorization header. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html\">Specifying permissions in a policy</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If you include a <code>versionId</code> in your request header, you must have the <code>s3:GetObjectVersion</code> permission to access a specific version of an object. The <code>s3:GetObject</code> permission is not required in this scenario.</p> <p>If you request the current version of an object without a specific <code>versionId</code> in the request header, only the <code>s3:GetObject</code> permission is required. The <code>s3:GetObjectVersion</code> permission is not required in this scenario. </p> <p>If the object that you request doesn’t exist, the error that Amazon S3 returns depends on whether you also have the <code>s3:ListBucket</code> permission.</p> <ul> <li> <p>If you have the <code>s3:ListBucket</code> permission on the bucket, Amazon S3 returns an HTTP status code <code>404 Not Found</code> error.</p> </li> <li> <p>If you don’t have the <code>s3:ListBucket</code> permission, Amazon S3 returns an HTTP status code <code>403 Access Denied</code> error.</p> </li> </ul> </li> <li> <p> <b>Directory bucket permissions</b> - To grant access to this API operation on a directory bucket, we recommend that you use the <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html\"> <code>CreateSession</code> </a> API operation for session-based authorization. Specifically, you grant the <code>s3express:CreateSession</code> permission to the directory bucket in a bucket policy or an IAM identity-based policy. Then, you make the <code>CreateSession</code> API call on the bucket to obtain a session token. With the session token in your request header, you can make API requests to this operation. After the session token expires, you make another <code>CreateSession</code> API call to generate a new session token for use. Amazon Web Services CLI or SDKs create session and refresh the session token automatically to avoid service interruptions when a session expires. For more information about authorization, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html\"> <code>CreateSession</code> </a>.</p> <p>If the object is encrypted using SSE-KMS, you must also have the <code>kms:GenerateDataKey</code> and <code>kms:Decrypt</code> permissions in IAM identity-based policies and KMS key policies for the KMS key.</p> </li> </ul> </dd> <dt>Storage classes</dt> <dd> <p>If the object you are retrieving is stored in the S3 Glacier Flexible Retrieval storage class, the S3 Glacier Deep Archive storage class, the S3 Intelligent-Tiering Archive Access tier, or the S3 Intelligent-Tiering Deep Archive Access tier, before you can retrieve the object you must first restore a copy using <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html\">RestoreObject</a>. Otherwise, this operation returns an <code>InvalidObjectState</code> error. For information about restoring archived objects, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/restoring-objects.html\">Restoring Archived Objects</a> in the <i>Amazon S3 User Guide</i>.</p> <p> <b>Directory buckets </b> - Directory buckets only support <code>EXPRESS_ONEZONE</code> (the S3 Express One Zone storage class) in Availability Zones and <code>ONEZONE_IA</code> (the S3 One Zone-Infrequent Access storage class) in Dedicated Local Zones. Unsupported storage class values won't write a destination object and will respond with the HTTP status code <code>400 Bad Request</code>.</p> </dd> <dt>Encryption</dt> <dd> <p>Encryption request headers, like <code>x-amz-server-side-encryption</code>, should not be sent for the <code>GetObject</code> requests, if your object uses server-side encryption with Amazon S3 managed encryption keys (SSE-S3), server-side encryption with Key Management Service (KMS) keys (SSE-KMS), or dual-layer server-side encryption with Amazon Web Services KMS keys (DSSE-KMS). If you include the header in your <code>GetObject</code> requests for the object that uses these types of keys, you’ll get an HTTP <code>400 Bad Request</code> error.</p> <p> <b>Directory buckets</b> - For directory buckets, there are only two supported options for server-side encryption: SSE-S3 and SSE-KMS. SSE-C isn't supported. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html\">Protecting data with server-side encryption</a> in the <i>Amazon S3 User Guide</i>.</p> </dd> <dt>Overriding response header values through the request</dt> <dd> <p>There are times when you want to override certain response header values of a <code>GetObject</code> response. For example, you might override the <code>Content-Disposition</code> response header value through your <code>GetObject</code> request.</p> <p>You can override values for a set of response headers. These modified response header values are included only in a successful response, that is, when the HTTP status code <code>200 OK</code> is returned. The headers you can override using the following query parameters in the request are a subset of the headers that Amazon S3 accepts when you create an object. </p> <p>The response headers that you can override for the <code>GetObject</code> response are <code>Cache-Control</code>, <code>Content-Disposition</code>, <code>Content-Encoding</code>, <code>Content-Language</code>, <code>Content-Type</code>, and <code>Expires</code>.</p> <p>To override values for a set of response headers in the <code>GetObject</code> response, you can use the following query parameters in the request.</p> <ul> <li> <p> <code>response-cache-control</code> </p> </li> <li> <p> <code>response-content-disposition</code> </p> </li> <li> <p> <code>response-content-encoding</code> </p> </li> <li> <p> <code>response-content-language</code> </p> </li> <li> <p> <code>response-content-type</code> </p> </li> <li> <p> <code>response-expires</code> </p> </li> </ul> <note> <p>When you use these parameters, you must sign the request by using either an Authorization header or a presigned URL. These parameters cannot be used with an unsigned (anonymous) request.</p> </note> </dd> <dt>HTTP Host header syntax</dt> <dd> <p> <b>Directory buckets </b> - The HTTP Host header syntax is <code> <i>Bucket-name</i>.s3express-<i>zone-id</i>.<i>region-code</i>.amazonaws.com</code>.</p> </dd> </dl> <p>The following operations are related to <code>GetObject</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html\">ListBuckets</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html\">GetObjectAcl</a> </p> </li> </ul>",
     "GetObjectAcl": "<note> <p>This operation is not supported for directory buckets.</p> </note> <p>Returns the access control list (ACL) of an object. To use this operation, you must have <code>s3:GetObjectAcl</code> permissions or <code>READ_ACP</code> access to the object. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#acl-access-policy-permission-mapping\">Mapping of ACL permissions and access policy permissions</a> in the <i>Amazon S3 User Guide</i> </p> <p>This functionality is not supported for Amazon S3 on Outposts.</p> <p>By default, GET returns ACL information about the current version of an object. To return ACL information about a different version, use the versionId subresource.</p> <note> <p>If your bucket uses the bucket owner enforced setting for S3 Object Ownership, requests to read ACLs are still supported and return the <code>bucket-owner-full-control</code> ACL with the owner being the account that created the bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html\"> Controlling object ownership and disabling ACLs</a> in the <i>Amazon S3 User Guide</i>.</p> </note> <p>The following operations are related to <code>GetObjectAcl</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html\">GetObject</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html\">GetObjectAttributes</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html\">DeleteObject</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html\">PutObject</a> </p> </li> </ul>",
-    "GetObjectAttributes": "<p>Retrieves all the metadata from an object without returning the object itself. This operation is useful if you're interested only in an object's metadata. </p> <p> <code>GetObjectAttributes</code> combines the functionality of <code>HeadObject</code> and <code>ListParts</code>. All of the data returned with each of those individual calls can be returned with a single call to <code>GetObjectAttributes</code>.</p> <note> <p> <b>Directory buckets</b> - For directory buckets, you must make requests for this API operation to the Zonal endpoint. These endpoints support virtual-hosted-style requests in the format <code>https://<i>amzn-s3-demo-bucket</i>.s3express-<i>zone-id</i>.<i>region-code</i>.amazonaws.com/<i>key-name</i> </code>. Path-style requests are not supported. For more information about endpoints in Availability Zones, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html\">Regional and Zonal endpoints for directory buckets in Availability Zones</a> in the <i>Amazon S3 User Guide</i>. For more information about endpoints in Local Zones, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html\">Concepts for directory buckets in Local Zones</a> in the <i>Amazon S3 User Guide</i>.</p> </note> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p> <b>General purpose bucket permissions</b> - To use <code>GetObjectAttributes</code>, you must have READ access to the object. The permissions that you need to use this operation depend on whether the bucket is versioned. If the bucket is versioned, you need both the <code>s3:GetObjectVersion</code> and <code>s3:GetObjectVersionAttributes</code> permissions for this operation. If the bucket is not versioned, you need the <code>s3:GetObject</code> and <code>s3:GetObjectAttributes</code> permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html\">Specifying Permissions in a Policy</a> in the <i>Amazon S3 User Guide</i>. If the object that you request does not exist, the error Amazon S3 returns depends on whether you also have the <code>s3:ListBucket</code> permission.</p> <ul> <li> <p>If you have the <code>s3:ListBucket</code> permission on the bucket, Amazon S3 returns an HTTP status code <code>404 Not Found</code> (\"no such key\") error.</p> </li> <li> <p>If you don't have the <code>s3:ListBucket</code> permission, Amazon S3 returns an HTTP status code <code>403 Forbidden</code> (\"access denied\") error.</p> </li> </ul> </li> <li> <p> <b>Directory bucket permissions</b> - To grant access to this API operation on a directory bucket, we recommend that you use the <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html\"> <code>CreateSession</code> </a> API operation for session-based authorization. Specifically, you grant the <code>s3express:CreateSession</code> permission to the directory bucket in a bucket policy or an IAM identity-based policy. Then, you make the <code>CreateSession</code> API call on the bucket to obtain a session token. With the session token in your request header, you can make API requests to this operation. After the session token expires, you make another <code>CreateSession</code> API call to generate a new session token for use. Amazon Web Services CLI or SDKs create session and refresh the session token automatically to avoid service interruptions when a session expires. For more information about authorization, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html\"> <code>CreateSession</code> </a>.</p> <p>If the object is encrypted with SSE-KMS, you must also have the <code>kms:GenerateDataKey</code> and <code>kms:Decrypt</code> permissions in IAM identity-based policies and KMS key policies for the KMS key.</p> </li> </ul> </dd> <dt>Encryption</dt> <dd> <note> <p>Encryption request headers, like <code>x-amz-server-side-encryption</code>, should not be sent for <code>HEAD</code> requests if your object uses server-side encryption with Key Management Service (KMS) keys (SSE-KMS), dual-layer server-side encryption with Amazon Web Services KMS keys (DSSE-KMS), or server-side encryption with Amazon S3 managed encryption keys (SSE-S3). The <code>x-amz-server-side-encryption</code> header is used when you <code>PUT</code> an object to S3 and want to specify the encryption method. If you include this header in a <code>GET</code> request for an object that uses these types of keys, you’ll get an HTTP <code>400 Bad Request</code> error. It's because the encryption method can't be changed when you retrieve the object.</p> </note> <p>If you encrypt an object by using server-side encryption with customer-provided encryption keys (SSE-C) when you store the object in Amazon S3, then when you retrieve the metadata from the object, you must use the following headers to provide the encryption key for the server to be able to retrieve the object's metadata. The headers are: </p> <ul> <li> <p> <code>x-amz-server-side-encryption-customer-algorithm</code> </p> </li> <li> <p> <code>x-amz-server-side-encryption-customer-key</code> </p> </li> <li> <p> <code>x-amz-server-side-encryption-customer-key-MD5</code> </p> </li> </ul> <p>For more information about SSE-C, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html\">Server-Side Encryption (Using Customer-Provided Encryption Keys)</a> in the <i>Amazon S3 User Guide</i>.</p> <note> <p> <b>Directory bucket permissions</b> - For directory buckets, there are only two supported options for server-side encryption: server-side encryption with Amazon S3 managed keys (SSE-S3) (<code>AES256</code>) and server-side encryption with KMS keys (SSE-KMS) (<code>aws:kms</code>). We recommend that the bucket's default encryption uses the desired encryption configuration and you don't override the bucket default encryption in your <code>CreateSession</code> requests or <code>PUT</code> object requests. Then, new objects are automatically encrypted with the desired encryption settings. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html\">Protecting data with server-side encryption</a> in the <i>Amazon S3 User Guide</i>. For more information about the encryption overriding behaviors in directory buckets, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html\">Specifying server-side encryption with KMS for new object uploads</a>.</p> </note> </dd> <dt>Versioning</dt> <dd> <p> <b>Directory buckets</b> - S3 Versioning isn't enabled and supported for directory buckets. For this API operation, only the <code>null</code> value of the version ID is supported by directory buckets. You can only specify <code>null</code> to the <code>versionId</code> query parameter in the request.</p> </dd> <dt>Conditional request headers</dt> <dd> <p>Consider the following when using request headers:</p> <ul> <li> <p>If both of the <code>If-Match</code> and <code>If-Unmodified-Since</code> headers are present in the request as follows, then Amazon S3 returns the HTTP status code <code>200 OK</code> and the data requested:</p> <ul> <li> <p> <code>If-Match</code> condition evaluates to <code>true</code>.</p> </li> <li> <p> <code>If-Unmodified-Since</code> condition evaluates to <code>false</code>.</p> </li> </ul> <p>For more information about conditional requests, see <a href=\"https://tools.ietf.org/html/rfc7232\">RFC 7232</a>.</p> </li> <li> <p>If both of the <code>If-None-Match</code> and <code>If-Modified-Since</code> headers are present in the request as follows, then Amazon S3 returns the HTTP status code <code>304 Not Modified</code>:</p> <ul> <li> <p> <code>If-None-Match</code> condition evaluates to <code>false</code>.</p> </li> <li> <p> <code>If-Modified-Since</code> condition evaluates to <code>true</code>.</p> </li> </ul> <p>For more information about conditional requests, see <a href=\"https://tools.ietf.org/html/rfc7232\">RFC 7232</a>.</p> </li> </ul> </dd> <dt>HTTP Host header syntax</dt> <dd> <p> <b>Directory buckets </b> - The HTTP Host header syntax is <code> <i>Bucket-name</i>.s3express-<i>zone-id</i>.<i>region-code</i>.amazonaws.com</code>.</p> </dd> </dl> <p>The following actions are related to <code>GetObjectAttributes</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html\">GetObject</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html\">GetObjectAcl</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLegalHold.html\">GetObjectLegalHold</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html\">GetObjectLockConfiguration</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectRetention.html\">GetObjectRetention</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html\">GetObjectTagging</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html\">HeadObject</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html\">ListParts</a> </p> </li> </ul>",
+    "GetObjectAttributes": "<p>Retrieves all of the metadata from an object without returning the object itself. This operation is useful if you're interested only in an object's metadata. </p> <p> <code>GetObjectAttributes</code> combines the functionality of <code>HeadObject</code> and <code>ListParts</code>. All of the data returned with both of those individual calls can be returned with a single call to <code>GetObjectAttributes</code>.</p> <note> <p> <b>Directory buckets</b> - For directory buckets, you must make requests for this API operation to the Zonal endpoint. These endpoints support virtual-hosted-style requests in the format <code>https://<i>amzn-s3-demo-bucket</i>.s3express-<i>zone-id</i>.<i>region-code</i>.amazonaws.com/<i>key-name</i> </code>. Path-style requests are not supported. For more information about endpoints in Availability Zones, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/endpoint-directory-buckets-AZ.html\">Regional and Zonal endpoints for directory buckets in Availability Zones</a> in the <i>Amazon S3 User Guide</i>. For more information about endpoints in Local Zones, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html\">Concepts for directory buckets in Local Zones</a> in the <i>Amazon S3 User Guide</i>.</p> </note> <dl> <dt>Permissions</dt> <dd> <ul> <li> <p> <b>General purpose bucket permissions</b> - To use <code>GetObjectAttributes</code>, you must have READ access to the object.</p> <p>The other permissions that you need to use this operation depend on whether the bucket is versioned and if a version ID is passed in the <code>GetObjectAttributes</code> request. </p> <ul> <li> <p>If you pass a version ID in your request, you need both the <code>s3:GetObjectVersion</code> and <code>s3:GetObjectVersionAttributes</code> permissions.</p> </li> <li> <p>If you do not pass a version ID in your request, you need the <code>s3:GetObject</code> and <code>s3:GetObjectAttributes</code> permissions. </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html\">Specifying Permissions in a Policy</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If the object that you request does not exist, the error Amazon S3 returns depends on whether you also have the <code>s3:ListBucket</code> permission.</p> <ul> <li> <p>If you have the <code>s3:ListBucket</code> permission on the bucket, Amazon S3 returns an HTTP status code <code>404 Not Found</code> (\"no such key\") error.</p> </li> <li> <p>If you don't have the <code>s3:ListBucket</code> permission, Amazon S3 returns an HTTP status code <code>403 Forbidden</code> (\"access denied\") error.</p> </li> </ul> </li> <li> <p> <b>Directory bucket permissions</b> - To grant access to this API operation on a directory bucket, we recommend that you use the <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html\"> <code>CreateSession</code> </a> API operation for session-based authorization. Specifically, you grant the <code>s3express:CreateSession</code> permission to the directory bucket in a bucket policy or an IAM identity-based policy. Then, you make the <code>CreateSession</code> API call on the bucket to obtain a session token. With the session token in your request header, you can make API requests to this operation. After the session token expires, you make another <code>CreateSession</code> API call to generate a new session token for use. Amazon Web Services CLI or SDKs create session and refresh the session token automatically to avoid service interruptions when a session expires. For more information about authorization, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html\"> <code>CreateSession</code> </a>.</p> <p>If the object is encrypted with SSE-KMS, you must also have the <code>kms:GenerateDataKey</code> and <code>kms:Decrypt</code> permissions in IAM identity-based policies and KMS key policies for the KMS key.</p> </li> </ul> </dd> <dt>Encryption</dt> <dd> <note> <p>Encryption request headers, like <code>x-amz-server-side-encryption</code>, should not be sent for <code>HEAD</code> requests if your object uses server-side encryption with Key Management Service (KMS) keys (SSE-KMS), dual-layer server-side encryption with Amazon Web Services KMS keys (DSSE-KMS), or server-side encryption with Amazon S3 managed encryption keys (SSE-S3). The <code>x-amz-server-side-encryption</code> header is used when you <code>PUT</code> an object to S3 and want to specify the encryption method. If you include this header in a <code>GET</code> request for an object that uses these types of keys, you’ll get an HTTP <code>400 Bad Request</code> error. It's because the encryption method can't be changed when you retrieve the object.</p> </note> <p>If you encrypted an object when you stored the object in Amazon S3 by using server-side encryption with customer-provided encryption keys (SSE-C), then when you retrieve the metadata from the object, you must use the following headers. These headers provide the server with the encryption key required to retrieve the object's metadata. The headers are: </p> <ul> <li> <p> <code>x-amz-server-side-encryption-customer-algorithm</code> </p> </li> <li> <p> <code>x-amz-server-side-encryption-customer-key</code> </p> </li> <li> <p> <code>x-amz-server-side-encryption-customer-key-MD5</code> </p> </li> </ul> <p>For more information about SSE-C, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html\">Server-Side Encryption (Using Customer-Provided Encryption Keys)</a> in the <i>Amazon S3 User Guide</i>.</p> <note> <p> <b>Directory bucket permissions</b> - For directory buckets, there are only two supported options for server-side encryption: server-side encryption with Amazon S3 managed keys (SSE-S3) (<code>AES256</code>) and server-side encryption with KMS keys (SSE-KMS) (<code>aws:kms</code>). We recommend that the bucket's default encryption uses the desired encryption configuration and you don't override the bucket default encryption in your <code>CreateSession</code> requests or <code>PUT</code> object requests. Then, new objects are automatically encrypted with the desired encryption settings. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html\">Protecting data with server-side encryption</a> in the <i>Amazon S3 User Guide</i>. For more information about the encryption overriding behaviors in directory buckets, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html\">Specifying server-side encryption with KMS for new object uploads</a>.</p> </note> </dd> <dt>Versioning</dt> <dd> <p> <b>Directory buckets</b> - S3 Versioning isn't enabled and supported for directory buckets. For this API operation, only the <code>null</code> value of the version ID is supported by directory buckets. You can only specify <code>null</code> to the <code>versionId</code> query parameter in the request.</p> </dd> <dt>Conditional request headers</dt> <dd> <p>Consider the following when using request headers:</p> <ul> <li> <p>If both of the <code>If-Match</code> and <code>If-Unmodified-Since</code> headers are present in the request as follows, then Amazon S3 returns the HTTP status code <code>200 OK</code> and the data requested:</p> <ul> <li> <p> <code>If-Match</code> condition evaluates to <code>true</code>.</p> </li> <li> <p> <code>If-Unmodified-Since</code> condition evaluates to <code>false</code>.</p> </li> </ul> <p>For more information about conditional requests, see <a href=\"https://tools.ietf.org/html/rfc7232\">RFC 7232</a>.</p> </li> <li> <p>If both of the <code>If-None-Match</code> and <code>If-Modified-Since</code> headers are present in the request as follows, then Amazon S3 returns the HTTP status code <code>304 Not Modified</code>:</p> <ul> <li> <p> <code>If-None-Match</code> condition evaluates to <code>false</code>.</p> </li> <li> <p> <code>If-Modified-Since</code> condition evaluates to <code>true</code>.</p> </li> </ul> <p>For more information about conditional requests, see <a href=\"https://tools.ietf.org/html/rfc7232\">RFC 7232</a>.</p> </li> </ul> </dd> <dt>HTTP Host header syntax</dt> <dd> <p> <b>Directory buckets </b> - The HTTP Host header syntax is <code> <i>Bucket-name</i>.s3express-<i>zone-id</i>.<i>region-code</i>.amazonaws.com</code>.</p> </dd> </dl> <p>The following actions are related to <code>GetObjectAttributes</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html\">GetObject</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html\">GetObjectAcl</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLegalHold.html\">GetObjectLegalHold</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html\">GetObjectLockConfiguration</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectRetention.html\">GetObjectRetention</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html\">GetObjectTagging</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html\">HeadObject</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html\">ListParts</a> </p> </li> </ul>",
     "GetObjectLegalHold": "<note> <p>This operation is not supported for directory buckets.</p> </note> <p>Gets an object's current legal hold status. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html\">Locking Objects</a>.</p> <p>This functionality is not supported for Amazon S3 on Outposts.</p> <p>The following action is related to <code>GetObjectLegalHold</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html\">GetObjectAttributes</a> </p> </li> </ul>",
     "GetObjectLockConfiguration": "<note> <p>This operation is not supported for directory buckets.</p> </note> <p>Gets the Object Lock configuration for a bucket. The rule specified in the Object Lock configuration will be applied by default to every new object placed in the specified bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html\">Locking Objects</a>.</p> <p>The following action is related to <code>GetObjectLockConfiguration</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html\">GetObjectAttributes</a> </p> </li> </ul>",
     "GetObjectRetention": "<note> <p>This operation is not supported for directory buckets.</p> </note> <p>Retrieves an object's retention settings. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lock.html\">Locking Objects</a>.</p> <p>This functionality is not supported for Amazon S3 on Outposts.</p> <p>The following action is related to <code>GetObjectRetention</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html\">GetObjectAttributes</a> </p> </li> </ul>",
@@ -122,13 +122,11 @@
     },
     "AbortMultipartUploadOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AbortMultipartUploadRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AbortRuleId": {
       "base": null,
@@ -412,13 +410,11 @@
     },
     "BucketAlreadyExists": {
       "base": "<p>The requested bucket name is not available. The bucket namespace is shared by all users of the system. Select a different name and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BucketAlreadyOwnedByYou": {
       "base": "<p>The bucket you tried to create already exists, and you own it. Amazon S3 returns this error in all Amazon Web Services Regions except in the North Virginia Region. For legacy compatibility, if you re-create an existing bucket that you already own in the North Virginia Region, Amazon S3 returns 200 OK and resets the bucket access control lists (ACLs).</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BucketCannedACL": {
       "base": null,
@@ -722,6 +718,7 @@
         "PutBucketLifecycleRequest$ChecksumAlgorithm": "<p>Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding <code>x-amz-checksum</code> or <code>x-amz-trailer</code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If you provide an individual checksum, Amazon S3 ignores any provided <code>ChecksumAlgorithm</code> parameter.</p>",
         "PutBucketLoggingRequest$ChecksumAlgorithm": "<p>Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding <code>x-amz-checksum</code> or <code>x-amz-trailer</code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If you provide an individual checksum, Amazon S3 ignores any provided <code>ChecksumAlgorithm</code> parameter.</p>",
         "PutBucketNotificationRequest$ChecksumAlgorithm": "<p>Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding <code>x-amz-checksum</code> or <code>x-amz-trailer</code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If you provide an individual checksum, Amazon S3 ignores any provided <code>ChecksumAlgorithm</code> parameter.</p>",
+        "PutBucketOwnershipControlsRequest$ChecksumAlgorithm": "<p> Indicates the algorithm used to create the checksum for the object when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding <code>x-amz-checksum-<i>algorithm</i> </code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If you provide an individual checksum, Amazon S3 ignores any provided <code>ChecksumAlgorithm</code> parameter. </p>",
         "PutBucketPolicyRequest$ChecksumAlgorithm": "<p>Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding <code>x-amz-checksum-<i>algorithm</i> </code> or <code>x-amz-trailer</code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>.</p> <p>For the <code>x-amz-checksum-<i>algorithm</i> </code> header, replace <code> <i>algorithm</i> </code> with the supported algorithm from the following list: </p> <ul> <li> <p> <code>CRC32</code> </p> </li> <li> <p> <code>CRC32C</code> </p> </li> <li> <p> <code>CRC64NVME</code> </p> </li> <li> <p> <code>SHA1</code> </p> </li> <li> <p> <code>SHA256</code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If the individual checksum value you provide through <code>x-amz-checksum-<i>algorithm</i> </code> doesn't match the checksum algorithm you set through <code>x-amz-sdk-checksum-algorithm</code>, Amazon S3 fails the request with a <code>BadDigest</code> error.</p> <note> <p>For directory buckets, when you use Amazon Web Services SDKs, <code>CRC32</code> is the default checksum algorithm that's used for performance.</p> </note>",
         "PutBucketReplicationRequest$ChecksumAlgorithm": "<p>Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding <code>x-amz-checksum</code> or <code>x-amz-trailer</code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If you provide an individual checksum, Amazon S3 ignores any provided <code>ChecksumAlgorithm</code> parameter.</p>",
         "PutBucketRequestPaymentRequest$ChecksumAlgorithm": "<p>Indicates the algorithm used to create the checksum for the request when you use the SDK. This header will not provide any additional functionality if you don't use the SDK. When you send this header, there must be a corresponding <code>x-amz-checksum</code> or <code>x-amz-trailer</code> header sent. Otherwise, Amazon S3 fails the request with the HTTP status code <code>400 Bad Request</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html\">Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p> <p>If you provide an individual checksum, Amazon S3 ignores any provided <code>ChecksumAlgorithm</code> parameter.</p>",
@@ -918,13 +915,11 @@
     },
     "CompleteMultipartUploadOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CompleteMultipartUploadRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CompletedMultipartUpload": {
       "base": "<p>The container for the completed multipart upload details.</p>",
@@ -1059,13 +1054,11 @@
     },
     "CopyObjectOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CopyObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CopyObjectResult": {
       "base": "<p>Container for all response elements.</p>",
@@ -1156,38 +1149,31 @@
     },
     "CreateBucketMetadataTableConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBucketOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBucketRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMultipartUploadOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMultipartUploadRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSessionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreationDate": {
       "base": null,
@@ -1240,73 +1226,59 @@
     },
     "DeleteBucketAnalyticsConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketCorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketEncryptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketIntelligentTieringConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketInventoryConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketLifecycleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketMetadataTableConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketMetricsConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketOwnershipControlsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketTaggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketWebsiteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMarker": {
       "base": null,
@@ -1351,38 +1323,31 @@
     },
     "DeleteObjectOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteObjectTaggingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteObjectTaggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteObjectsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteObjectsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePublicAccessBlockRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletedObject": {
       "base": "<p>Information about the deleted object.</p>",
@@ -1494,8 +1459,7 @@
     },
     "EncryptionTypeMismatch": {
       "base": "<p> The existing object was created with a different encryption type. Subsequent write requests must include the appropriate encryption parameters in the request or while creating the session. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "End": {
       "base": null,
@@ -1692,123 +1656,99 @@
     },
     "GetBucketAccelerateConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketAccelerateConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketAclOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketAclRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketAnalyticsConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketAnalyticsConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketCorsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketCorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketEncryptionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketEncryptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketIntelligentTieringConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketIntelligentTieringConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketInventoryConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketInventoryConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLifecycleConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLifecycleConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLifecycleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLifecycleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLocationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLoggingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketLoggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketMetadataTableConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketMetadataTableConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketMetadataTableConfigurationResult": {
       "base": "<p> The metadata table configuration for a general purpose bucket. </p>",
@@ -1818,113 +1758,91 @@
     },
     "GetBucketMetricsConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketMetricsConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketOwnershipControlsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketOwnershipControlsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketPolicyStatusOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketPolicyStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketReplicationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketRequestPaymentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketRequestPaymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketTaggingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketTaggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketVersioningOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketVersioningRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketWebsiteOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketWebsiteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectAclOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectAclRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectAttributesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectAttributesParts": {
       "base": "<p>A collection of parts associated with a multipart upload.</p>",
@@ -1934,38 +1852,31 @@
     },
     "GetObjectAttributesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectLegalHoldOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectLegalHoldRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectLockConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectLockConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectResponseStatusCode": {
       "base": null,
@@ -1975,43 +1886,35 @@
     },
     "GetObjectRetentionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectRetentionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectTaggingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectTaggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectTorrentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetObjectTorrentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPublicAccessBlockOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPublicAccessBlockRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlacierJobParameters": {
       "base": "<p>Container for S3 Glacier job parameters.</p>",
@@ -2095,23 +1998,19 @@
     },
     "HeadBucketOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HeadBucketRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HeadObjectOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HeadObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HostName": {
       "base": null,
@@ -2278,18 +2177,15 @@
     },
     "InvalidObjectState": {
       "base": "<p>Object is archived and inaccessible until restored.</p> <p>If the object you are retrieving is stored in the S3 Glacier Flexible Retrieval storage class, the S3 Glacier Deep Archive storage class, the S3 Intelligent-Tiering Archive Access tier, or the S3 Intelligent-Tiering Deep Archive Access tier, before you can retrieve the object you must first restore a copy using <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html\">RestoreObject</a>. Otherwise, this operation returns an <code>InvalidObjectState</code> error. For information about restoring archived objects, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/restoring-objects.html\">Restoring Archived Objects</a> in the <i>Amazon S3 User Guide</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequest": {
       "base": "<p>You may receive this error in multiple cases. Depending on the reason for the error, you may receive one of the messages below:</p> <ul> <li> <p>Cannot specify both a write offset value and user-defined object metadata for existing objects.</p> </li> <li> <p>Checksum Type mismatch occurred, expected checksum Type: sha1, actual checksum Type: crc32c.</p> </li> <li> <p>Request body cannot be empty when 'write offset' is specified.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidWriteOffset": {
       "base": "<p> The write offset value that you specified does not match the current object size. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InventoryConfiguration": {
       "base": "<p>Specifies the inventory configuration for an Amazon S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketGETInventoryConfig.html\">GET Bucket inventory</a> in the <i>Amazon S3 API Reference</i>. </p>",
@@ -2526,7 +2422,7 @@
     "LifecycleRuleFilter": {
       "base": "<p>The <code>Filter</code> is used to identify objects that a Lifecycle Rule applies to. A <code>Filter</code> can have exactly one of <code>Prefix</code>, <code>Tag</code>, <code>ObjectSizeGreaterThan</code>, <code>ObjectSizeLessThan</code>, or <code>And</code> specified. If the <code>Filter</code> element is left empty, the Lifecycle Rule applies to all objects in the bucket.</p>",
       "refs": {
-        "LifecycleRule$Filter": "<p>The <code>Filter</code> is used to identify objects that a Lifecycle Rule applies to. A <code>Filter</code> must have exactly one of <code>Prefix</code>, <code>Tag</code>, or <code>And</code> specified. <code>Filter</code> is required if the <code>LifecycleRule</code> does not contain a <code>Prefix</code> element.</p> <note> <p> <code>Tag</code> filters are not supported for directory buckets.</p> </note>"
+        "LifecycleRule$Filter": "<p>The <code>Filter</code> is used to identify objects that a Lifecycle Rule applies to. A <code>Filter</code> must have exactly one of <code>Prefix</code>, <code>Tag</code>, <code>ObjectSizeGreaterThan</code>, <code>ObjectSizeLessThan</code>, or <code>And</code> specified. <code>Filter</code> is required if the <code>LifecycleRule</code> does not contain a <code>Prefix</code> element.</p> <note> <p> <code>Tag</code> filters are not supported for directory buckets.</p> </note>"
       }
     },
     "LifecycleRules": {
@@ -2538,113 +2434,91 @@
     },
     "ListBucketAnalyticsConfigurationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketAnalyticsConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketIntelligentTieringConfigurationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketIntelligentTieringConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketInventoryConfigurationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketInventoryConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketMetricsConfigurationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketMetricsConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBucketsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDirectoryBucketsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDirectoryBucketsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMultipartUploadsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMultipartUploadsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectVersionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectsV2Output": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectsV2Request": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Location": {
       "base": null,
@@ -2656,7 +2530,7 @@
     "LocationInfo": {
       "base": "<p>Specifies the location where the bucket will be created.</p> <p>For directory buckets, the location type is Availability Zone or Local Zone. For more information about directory buckets, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html\">Working with directory buckets</a> in the <i>Amazon S3 User Guide</i>.</p> <note> <p>This functionality is only supported by directory buckets.</p> </note>",
       "refs": {
-        "CreateBucketConfiguration$Location": "<p>Specifies the location where the bucket will be created.</p> <p> <b>Directory buckets </b> - The location type is Availability Zone or Local Zone. To use the Local Zone location type, your account must be enabled for Dedicated Local Zones. Otherwise, you get an HTTP <code>403 Forbidden</code> error with the error code <code>AccessDenied</code>. To learn more, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/opt-in-directory-bucket-lz.html\">Enable accounts for Dedicated Local Zones</a> in the <i>Amazon S3 User Guide</i>. </p> <note> <p>This functionality is only supported by directory buckets.</p> </note>"
+        "CreateBucketConfiguration$Location": "<p>Specifies the location where the bucket will be created.</p> <p> <b>Directory buckets </b> - The location type is Availability Zone or Local Zone. To use the Local Zone location type, your account must be enabled for Local Zones. Otherwise, you get an HTTP <code>403 Forbidden</code> error with the error code <code>AccessDenied</code>. To learn more, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/opt-in-directory-bucket-lz.html\">Enable accounts for Local Zones</a> in the <i>Amazon S3 User Guide</i>. </p> <note> <p>This functionality is only supported by directory buckets.</p> </note>"
       }
     },
     "LocationNameAsString": {
@@ -2745,7 +2619,7 @@
       "base": null,
       "refs": {
         "GetObjectAttributesParts$MaxParts": "<p>The maximum number of parts allowed in the response.</p>",
-        "GetObjectAttributesRequest$MaxParts": "<p>Sets the maximum number of parts to return.</p>",
+        "GetObjectAttributesRequest$MaxParts": "<p>Sets the maximum number of parts to return. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html\">Uploading and copying objects using multipart upload in Amazon S3 </a> in the <i>Amazon Simple Storage Service user guide</i>.</p>",
         "ListPartsOutput$MaxParts": "<p>Maximum number of parts that were allowed in the response.</p>",
         "ListPartsRequest$MaxParts": "<p>Sets the maximum number of parts to return.</p>"
       }
@@ -2955,18 +2829,15 @@
     },
     "NoSuchBucket": {
       "base": "<p>The specified bucket does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NoSuchKey": {
       "base": "<p>The specified key does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NoSuchUpload": {
       "base": "<p>The specified multipart upload does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NoncurrentVersionExpiration": {
       "base": "<p>Specifies when noncurrent object versions expire. Upon expiration, Amazon S3 permanently deletes the noncurrent object versions. You set this lifecycle configuration action on a bucket that has versioning enabled (or suspended) to request that Amazon S3 delete noncurrent object versions at a specific period in the object's lifetime.</p> <note> <p>This parameter applies to general purpose buckets only. It is not supported for directory bucket lifecycle configurations.</p> </note>",
@@ -3027,8 +2898,7 @@
     },
     "ObjectAlreadyInActiveTierError": {
       "base": "<p>This action is not allowed against this storage tier.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ObjectAttributes": {
       "base": null,
@@ -3201,8 +3071,7 @@
     },
     "ObjectNotInActiveTierError": {
       "base": "<p>The source object of the COPY action is not in the active tier and is only stored in Amazon S3 Glacier.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ObjectOwnership": {
       "base": "<p>The container element for object ownership for a bucket's ownership controls.</p> <p> <code>BucketOwnerPreferred</code> - Objects uploaded to the bucket change ownership to the bucket owner if the objects are uploaded with the <code>bucket-owner-full-control</code> canned ACL.</p> <p> <code>ObjectWriter</code> - The uploading account will own the object if the object is uploaded with the <code>bucket-owner-full-control</code> canned ACL.</p> <p> <code>BucketOwnerEnforced</code> - Access control lists (ACLs) are disabled and no longer affect permissions. The bucket owner automatically owns and has full control over every object in the bucket. The bucket only accepts PUT requests that don't specify an ACL or specify bucket owner full control ACLs (such as the predefined <code>bucket-owner-full-control</code> canned ACL or a custom ACL in XML format that grants the same permissions).</p> <p>By default, <code>ObjectOwnership</code> is set to <code>BucketOwnerEnforced</code> and ACLs are disabled. We recommend keeping ACLs disabled, except in uncommon use cases where you must control access for each object individually. For more information about S3 Object Ownership, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html\">Controlling ownership of objects and disabling ACLs for your bucket</a> in the <i>Amazon S3 User Guide</i>. </p> <note> <p>This functionality is not supported for directory buckets. Directory buckets use the bucket owner enforced setting for S3 Object Ownership.</p> </note>",
@@ -3390,7 +3259,7 @@
       "base": null,
       "refs": {
         "GetObjectAttributesParts$PartNumberMarker": "<p>The marker for the current part.</p>",
-        "GetObjectAttributesRequest$PartNumberMarker": "<p>Specifies the part after which listing should begin. Only parts with higher part numbers will be listed.</p>",
+        "GetObjectAttributesRequest$PartNumberMarker": "<p>Specifies the part after which listing should begin. Only parts with higher part numbers will be listed. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html\">Uploading and copying objects using multipart upload in Amazon S3 </a> in the <i>Amazon Simple Storage Service user guide</i>.</p>",
         "ListPartsOutput$PartNumberMarker": "<p>Specifies the part after which listing should begin. Only parts with higher part numbers will be listed.</p>",
         "ListPartsRequest$PartNumberMarker": "<p>Specifies the part after which listing should begin. Only parts with higher part numbers will be listed.</p>"
       }
@@ -3520,173 +3389,139 @@
     },
     "PutBucketAccelerateConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketAclRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketAnalyticsConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketCorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketEncryptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketIntelligentTieringConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketInventoryConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketLifecycleConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketLifecycleConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketLifecycleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketLoggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketMetricsConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketNotificationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketNotificationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketOwnershipControlsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketReplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketRequestPaymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketTaggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketVersioningRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBucketWebsiteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectAclOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectAclRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectLegalHoldOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectLegalHoldRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectLockConfigurationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectLockConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectRetentionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectRetentionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectTaggingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutObjectTaggingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPublicAccessBlockRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueueArn": {
       "base": null,
@@ -3874,7 +3709,7 @@
       }
     },
     "RequestCharged": {
-      "base": "<p>If present, indicates that the requester was successfully charged for the request.</p> <note> <p>This functionality is not supported for directory buckets.</p> </note>",
+      "base": "<p>If present, indicates that the requester was successfully charged for the request. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/RequesterPaysBuckets.html\">Using Requester Pays buckets for storage transfers and usage</a> in the <i>Amazon Simple Storage Service user guide</i>.</p> <note> <p>This functionality is not supported for directory buckets.</p> </note>",
       "refs": {
         "AbortMultipartUploadOutput$RequestCharged": null,
         "CompleteMultipartUploadOutput$RequestCharged": null,
@@ -4020,13 +3855,11 @@
     },
     "RestoreObjectOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreOutputPath": {
       "base": null,
@@ -4260,13 +4093,11 @@
     },
     "SelectObjectContentOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SelectObjectContentRequest": {
       "base": "<note> <p>Learn Amazon S3 Select is no longer available to new customers. Existing customers of Amazon S3 Select can continue to use the feature as usual. <a href=\"http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/\">Learn more</a> </p> </note> <p>Request to filter the contents of an Amazon S3 object based on a simple Structured Query Language (SQL) statement. In the request, along with the SQL expression, you must specify a data serialization format (JSON or CSV) of the object. Amazon S3 uses this to parse object data into records. It returns only records that match the specified SQL expression. You must also specify the data serialization format for the response. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectSELECTContent.html\">S3Select API Documentation</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SelectParameters": {
       "base": "<important> <p>Amazon S3 Select is no longer available to new customers. Existing customers of Amazon S3 Select can continue to use the feature as usual. <a href=\"http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/\">Learn more</a> </p> </important> <p>Describes the parameters for Select job types.</p> <p>Learn <a href=\"http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/\">How to optimize querying your data in Amazon S3</a> using <a href=\"https://docs.aws.amazon.com/athena/latest/ug/what-is.html\">Amazon Athena</a>, <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/transforming-objects.html\">S3 Object Lambda</a>, or client-side filtering.</p>",
@@ -4581,8 +4412,7 @@
     },
     "TooManyParts": {
       "base": "<p> You have attempted to add more parts than the maximum of 10000 that are allowed for this object. You can use the CopyObject operation to copy this object to another and then add more data to the newly copied object. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TopicArn": {
       "base": null,
@@ -4658,23 +4488,19 @@
     },
     "UploadPartCopyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UploadPartCopyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UploadPartOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UploadPartRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UserMetadata": {
       "base": null,
@@ -4726,8 +4552,7 @@
     },
     "WriteGetObjectResponseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "WriteOffsetBytes": {
       "base": null,

@@ -568,7 +568,8 @@
         "Status":{"shape":"UpdateStatus"},
         "CreatedAt":{"shape":"UpdateCreatedAt"},
         "Error":{"shape":"UpdateError"},
-        "Source":{"shape":"UpdateSource"}
+        "Source":{"shape":"UpdateSource"},
+        "WorkerReplacementStrategy":{"shape":"WorkerReplacementStrategy"}
       }
     },
     "ListEnvironmentsInput":{
@@ -988,26 +989,27 @@
           "locationName":"Name"
         },
         "ExecutionRoleArn":{"shape":"IamRoleArn"},
+        "AirflowConfigurationOptions":{"shape":"AirflowConfigurationOptions"},
         "AirflowVersion":{"shape":"AirflowVersion"},
-        "SourceBucketArn":{"shape":"S3BucketArn"},
         "DagS3Path":{"shape":"RelativePath"},
+        "EnvironmentClass":{"shape":"EnvironmentClass"},
+        "LoggingConfiguration":{"shape":"LoggingConfigurationInput"},
+        "MaxWorkers":{"shape":"MaxWorkers"},
+        "MinWorkers":{"shape":"MinWorkers"},
+        "MaxWebservers":{"shape":"MaxWebservers"},
+        "MinWebservers":{"shape":"MinWebservers"},
+        "WorkerReplacementStrategy":{"shape":"WorkerReplacementStrategy"},
+        "NetworkConfiguration":{"shape":"UpdateNetworkConfigurationInput"},
         "PluginsS3Path":{"shape":"RelativePath"},
         "PluginsS3ObjectVersion":{"shape":"S3ObjectVersion"},
         "RequirementsS3Path":{"shape":"RelativePath"},
         "RequirementsS3ObjectVersion":{"shape":"S3ObjectVersion"},
+        "Schedulers":{"shape":"Schedulers"},
+        "SourceBucketArn":{"shape":"S3BucketArn"},
         "StartupScriptS3Path":{"shape":"RelativePath"},
         "StartupScriptS3ObjectVersion":{"shape":"S3ObjectVersion"},
-        "AirflowConfigurationOptions":{"shape":"AirflowConfigurationOptions"},
-        "EnvironmentClass":{"shape":"EnvironmentClass"},
-        "MaxWorkers":{"shape":"MaxWorkers"},
-        "NetworkConfiguration":{"shape":"UpdateNetworkConfigurationInput"},
-        "LoggingConfiguration":{"shape":"LoggingConfigurationInput"},
-        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"},
         "WebserverAccessMode":{"shape":"WebserverAccessMode"},
-        "MinWorkers":{"shape":"MinWorkers"},
-        "Schedulers":{"shape":"Schedulers"},
-        "MinWebservers":{"shape":"MinWebservers"},
-        "MaxWebservers":{"shape":"MaxWebservers"}
+        "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"}
       }
     },
     "UpdateEnvironmentOutput":{
@@ -1079,6 +1081,13 @@
       "max":9,
       "min":1,
       "pattern":".*(MON|TUE|WED|THU|FRI|SAT|SUN):([01]\\d|2[0-3]):(00|30).*"
+    },
+    "WorkerReplacementStrategy":{
+      "type":"string",
+      "enum":[
+        "FORCED",
+        "GRACEFUL"
+      ]
     }
   }
 }
