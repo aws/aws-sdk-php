@@ -103,6 +103,12 @@
         "UpdateApplicationRequest$architecture": "<p>The CPU architecture of an application.</p>"
       }
     },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "PolicyArnList$member": null
+      }
+    },
     "AttemptNumber": {
       "base": null,
       "refs": {
@@ -482,6 +488,12 @@
         "ListJobRunAttemptsResponse$jobRunAttempts": "<p>The array of the listed job run attempt objects.</p>"
       }
     },
+    "JobRunExecutionIamPolicy": {
+      "base": "<p>Optional IAM policy. The resulting job IAM role permissions will be an intersection of the policies passed and the policy associated with your job execution role.</p>",
+      "refs": {
+        "StartJobRunRequest$executionIamPolicy": "<p>You can pass an optional IAM policy. The resulting job IAM role permissions will be an intersection of this policy and the policy associated with your job execution role.</p>"
+      }
+    },
     "JobRunId": {
       "base": null,
       "refs": {
@@ -682,6 +694,18 @@
         "ListJobRunAttemptsResponse$nextToken": "<p>The output displays the token for the next set of application results. This is required for pagination and is available as a response of the previous request.</p>",
         "ListJobRunsRequest$nextToken": "<p>The token for the next set of job run results.</p>",
         "ListJobRunsResponse$nextToken": "<p>The output displays the token for the next set of job run results. This is required for pagination and is available as a response of the previous request.</p>"
+      }
+    },
+    "PolicyArnList": {
+      "base": null,
+      "refs": {
+        "JobRunExecutionIamPolicy$policyArns": "<p>A list of Amazon Resource Names (ARNs) to use as an execution IAM policy.</p>"
+      }
+    },
+    "PolicyDocument": {
+      "base": null,
+      "refs": {
+        "JobRunExecutionIamPolicy$policy": "<p>An IAM inline policy to use as an execution IAM policy.</p>"
       }
     },
     "PrometheusMonitoringConfiguration": {

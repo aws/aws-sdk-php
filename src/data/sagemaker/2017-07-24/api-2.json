@@ -5859,6 +5859,10 @@
         "EmrServerlessSettings":{"shape":"EmrServerlessSettings"}
       }
     },
+    "CapacityReservationPreference":{
+      "type":"string",
+      "enum":["capacity-reservations-only"]
+    },
     "CapacitySize":{
       "type":"structure",
       "required":[
@@ -12538,6 +12542,20 @@
         "EbsVolumeSizeInGb":{"shape":"SpaceEbsVolumeSizeInGb"}
       }
     },
+    "Ec2CapacityReservation":{
+      "type":"structure",
+      "members":{
+        "Ec2CapacityReservationId":{"shape":"Ec2CapacityReservationId"},
+        "TotalInstanceCount":{"shape":"TaskCount"},
+        "AvailableInstanceCount":{"shape":"TaskCount"},
+        "UsedByCurrentEndpoint":{"shape":"TaskCount"}
+      }
+    },
+    "Ec2CapacityReservationId":{"type":"string"},
+    "Ec2CapacityReservationsList":{
+      "type":"list",
+      "member":{"shape":"Ec2CapacityReservation"}
+    },
     "Edge":{
       "type":"structure",
       "members":{
@@ -18296,6 +18314,12 @@
       "min":0,
       "pattern":"1|2"
     },
+    "MlReservationArn":{
+      "type":"string",
+      "max":258,
+      "min":20,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:ml-reservation/.*"
+    },
     "MlTools":{
       "type":"string",
       "enum":[
@@ -21437,7 +21461,8 @@
         "EnableSSMAccess":{"shape":"ProductionVariantSSMAccess"},
         "ManagedInstanceScaling":{"shape":"ProductionVariantManagedInstanceScaling"},
         "RoutingConfig":{"shape":"ProductionVariantRoutingConfig"},
-        "InferenceAmiVersion":{"shape":"ProductionVariantInferenceAmiVersion"}
+        "InferenceAmiVersion":{"shape":"ProductionVariantInferenceAmiVersion"},
+        "CapacityReservationConfig":{"shape":"ProductionVariantCapacityReservationConfig"}
       }
     },
     "ProductionVariantAcceleratorType":{
@@ -21450,6 +21475,24 @@
         "ml.eia2.large",
         "ml.eia2.xlarge"
       ]
+    },
+    "ProductionVariantCapacityReservationConfig":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationPreference":{"shape":"CapacityReservationPreference"},
+        "MlReservationArn":{"shape":"MlReservationArn"}
+      }
+    },
+    "ProductionVariantCapacityReservationSummary":{
+      "type":"structure",
+      "members":{
+        "MlReservationArn":{"shape":"MlReservationArn"},
+        "CapacityReservationPreference":{"shape":"CapacityReservationPreference"},
+        "TotalInstanceCount":{"shape":"TaskCount"},
+        "AvailableInstanceCount":{"shape":"TaskCount"},
+        "UsedByCurrentEndpoint":{"shape":"TaskCount"},
+        "Ec2CapacityReservations":{"shape":"Ec2CapacityReservationsList"}
+      }
     },
     "ProductionVariantContainerStartupHealthCheckTimeoutInSeconds":{
       "type":"integer",
@@ -21782,7 +21825,8 @@
         "CurrentServerlessConfig":{"shape":"ProductionVariantServerlessConfig"},
         "DesiredServerlessConfig":{"shape":"ProductionVariantServerlessConfig"},
         "ManagedInstanceScaling":{"shape":"ProductionVariantManagedInstanceScaling"},
-        "RoutingConfig":{"shape":"ProductionVariantRoutingConfig"}
+        "RoutingConfig":{"shape":"ProductionVariantRoutingConfig"},
+        "CapacityReservationConfig":{"shape":"ProductionVariantCapacityReservationSummary"}
       }
     },
     "ProductionVariantSummaryList":{
@@ -26120,7 +26164,8 @@
         "DomainId":{"shape":"UnifiedStudioDomainId"},
         "ProjectId":{"shape":"UnifiedStudioProjectId"},
         "EnvironmentId":{"shape":"UnifiedStudioEnvironmentId"},
-        "ProjectS3Path":{"shape":"S3Uri"}
+        "ProjectS3Path":{"shape":"S3Uri"},
+        "SingleSignOnApplicationArn":{"shape":"SingleSignOnApplicationArn"}
       }
     },
     "UpdateActionRequest":{

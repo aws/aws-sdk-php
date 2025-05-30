@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMRServerless` - This release adds the capability for users to specify an optional Execution IAM policy in the StartJobRun action. The resulting permissions assumed by the job run is the intersection of the permissions in the Execution Role and the specified Execution IAM Policy.
+* `Aws\SageMaker` - Release new parameter CapacityReservationConfig in ProductionVariant
+
 ## 3.343.21 - 2025-05-29
 
 * `Aws\SageMaker` - Add maintenance status field to DescribeMlflowTrackingServer API response

@@ -1812,6 +1812,13 @@
         "UserSettings$CanvasAppSettings": "<p>The Canvas app settings.</p> <p>SageMaker applies these settings only to private spaces that SageMaker creates for the Canvas app.</p>"
       }
     },
+    "CapacityReservationPreference": {
+      "base": null,
+      "refs": {
+        "ProductionVariantCapacityReservationConfig$CapacityReservationPreference": "<p>Options that you can choose for the capacity reservation. SageMaker AI supports the following options:</p> <dl> <dt>capacity-reservations-only</dt> <dd> <p>SageMaker AI launches instances only into an ML capacity reservation. If no capacity is available, the instances fail to launch.</p> </dd> </dl>",
+        "ProductionVariantCapacityReservationSummary$CapacityReservationPreference": "<p>The option that you chose for the capacity reservation. SageMaker AI supports the following options:</p> <dl> <dt>capacity-reservations-only</dt> <dd> <p>SageMaker AI launches instances only into an ML capacity reservation. If no capacity is available, the instances fail to launch.</p> </dd> </dl>"
+      }
+    },
     "CapacitySize": {
       "base": "<p>Specifies the type and size of the endpoint capacity to activate for a blue/green deployment, a rolling deployment, or a rollback strategy. You can specify your batches as either instance count or the overall percentage or your fleet.</p> <p>For a rollback strategy, if you don't specify the fields in this object, or if you set the <code>Value</code> to 100%, then SageMaker uses a blue/green rollback strategy and rolls all traffic back to the blue fleet.</p>",
       "refs": {
@@ -5560,6 +5567,24 @@
       "base": "<p>A collection of EBS storage settings that apply to both private and shared spaces.</p>",
       "refs": {
         "SpaceStorageSettings$EbsStorageSettings": "<p>A collection of EBS storage settings for a space.</p>"
+      }
+    },
+    "Ec2CapacityReservation": {
+      "base": "<p>The EC2 capacity reservations that are shared to an ML capacity reservation.</p>",
+      "refs": {
+        "Ec2CapacityReservationsList$member": null
+      }
+    },
+    "Ec2CapacityReservationId": {
+      "base": null,
+      "refs": {
+        "Ec2CapacityReservation$Ec2CapacityReservationId": "<p>The unique identifier for an EC2 capacity reservation that's part of the ML capacity reservation.</p>"
+      }
+    },
+    "Ec2CapacityReservationsList": {
+      "base": null,
+      "refs": {
+        "ProductionVariantCapacityReservationSummary$Ec2CapacityReservations": "<p>The EC2 capacity reservations that are shared to this ML capacity reservation, if any.</p>"
       }
     },
     "Edge": {
@@ -10398,6 +10423,13 @@
         "InstanceMetadataServiceConfiguration$MinimumInstanceMetadataServiceVersion": "<p>Indicates the minimum IMDS version that the notebook instance supports. When passed as part of <code>CreateNotebookInstance</code>, if no value is selected, then it defaults to IMDSv1. This means that both IMDSv1 and IMDSv2 are supported. If passed as part of <code>UpdateNotebookInstance</code>, there is no default.</p>"
       }
     },
+    "MlReservationArn": {
+      "base": null,
+      "refs": {
+        "ProductionVariantCapacityReservationConfig$MlReservationArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the ML capacity reservation that SageMaker AI applies when it deploys the endpoint.</p>",
+        "ProductionVariantCapacityReservationSummary$MlReservationArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the ML capacity reservation that SageMaker AI applies when it deploys the endpoint.</p>"
+      }
+    },
     "MlTools": {
       "base": null,
       "refs": {
@@ -13320,6 +13352,18 @@
         "ProductionVariant$AcceleratorType": "<p>This parameter is no longer supported. Elastic Inference (EI) is no longer available.</p> <p>This parameter was used to specify the size of the EI instance to use for the production variant.</p>"
       }
     },
+    "ProductionVariantCapacityReservationConfig": {
+      "base": "<p>Settings for the capacity reservation for the compute instances that SageMaker AI reserves for an endpoint. </p>",
+      "refs": {
+        "ProductionVariant$CapacityReservationConfig": "<p>Settings for the capacity reservation for the compute instances that SageMaker AI reserves for an endpoint. </p>"
+      }
+    },
+    "ProductionVariantCapacityReservationSummary": {
+      "base": "<p>Details about an ML capacity reservation.</p>",
+      "refs": {
+        "ProductionVariantSummary$CapacityReservationConfig": "<p>Settings for the capacity reservation for the compute instances that SageMaker AI reserves for an endpoint. </p>"
+      }
+    },
     "ProductionVariantContainerStartupHealthCheckTimeoutInSeconds": {
       "base": null,
       "refs": {
@@ -15073,7 +15117,8 @@
     "SingleSignOnApplicationArn": {
       "base": null,
       "refs": {
-        "DescribeDomainResponse$SingleSignOnApplicationArn": "<p>The ARN of the application managed by SageMaker AI in IAM Identity Center. This value is only returned for domains created after October 1, 2023.</p>"
+        "DescribeDomainResponse$SingleSignOnApplicationArn": "<p>The ARN of the application managed by SageMaker AI in IAM Identity Center. This value is only returned for domains created after October 1, 2023.</p>",
+        "UnifiedStudioSettings$SingleSignOnApplicationArn": "<p>The ARN of the application managed by SageMaker AI and SageMaker Unified Studio in the Amazon Web Services IAM Identity Center.</p>"
       }
     },
     "SingleSignOnUserIdentifier": {
@@ -16204,8 +16249,14 @@
       "base": null,
       "refs": {
         "DesiredWeightAndCapacity$DesiredInstanceCount": "<p>The variant's capacity.</p>",
+        "Ec2CapacityReservation$TotalInstanceCount": "<p>The number of instances that you allocated to the EC2 capacity reservation.</p>",
+        "Ec2CapacityReservation$AvailableInstanceCount": "<p>The number of instances that are currently available in the EC2 capacity reservation.</p>",
+        "Ec2CapacityReservation$UsedByCurrentEndpoint": "<p>The number of instances from the EC2 capacity reservation that are being used by the endpoint.</p>",
         "PendingProductionVariantSummary$CurrentInstanceCount": "<p>The number of instances associated with the variant.</p>",
         "PendingProductionVariantSummary$DesiredInstanceCount": "<p>The number of instances requested in this deployment, as specified in the endpoint configuration for the endpoint. The value is taken from the request to the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpointConfig.html\">CreateEndpointConfig</a> operation.</p>",
+        "ProductionVariantCapacityReservationSummary$TotalInstanceCount": "<p>The number of instances that you allocated to the ML capacity reservation.</p>",
+        "ProductionVariantCapacityReservationSummary$AvailableInstanceCount": "<p>The number of instances that are currently available in the ML capacity reservation.</p>",
+        "ProductionVariantCapacityReservationSummary$UsedByCurrentEndpoint": "<p>The number of instances from the ML capacity reservation that are being used by the endpoint.</p>",
         "ProductionVariantSummary$CurrentInstanceCount": "<p>The number of instances associated with the variant.</p>",
         "ProductionVariantSummary$DesiredInstanceCount": "<p>The number of instances requested in the <code>UpdateEndpointWeightsAndCapacities</code> request. </p>",
         "RealTimeInferenceConfig$InstanceCount": "<p>The number of instances of the type specified by <code>InstanceType</code>.</p>"
