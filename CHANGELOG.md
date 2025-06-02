@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PCS` - Introduces SUSPENDING and SUSPENDED states for clusters, compute node groups, and queues.
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze Amazon Aurora database clusters and generate Aurora I/O-Optimized recommendations.
+* `Aws\BedrockAgent` - This release adds the Agent Lifecycle Paused State feature to Amazon Bedrock agents. By using an agent's alias, you can temporarily suspend agent operations during maintenance, updates, or other situations.
+* `Aws\Synthetics` - Support for Java runtime handler pattern.
+* `Aws\EKS` - Add support for filtering ListInsights API calls on MISCONFIGURATION insight category
+* `Aws\EntityResolution` - Add support for generating match IDs in near real-time.
+* `Aws\ECS` - Updates Amazon ECS documentation to include note for upcoming default log driver mode change.
+* `Aws\Backup` - You can now subscribe to Amazon SNS notifications and Amazon EventBridge events for backup indexing. You can now receive notifications when a backup index is created, deleted, or fails to create, enhancing your ability to monitor and track your backup operations.
+* `Aws\Athena` - Add support for the managed query result in the workgroup APIs. The managed query result configuration enables users to store query results to Athena owned storage.
+* `Aws\CostOptimizationHub` - Support recommendations for Aurora instance and Aurora cluster storage.
+
 ## 3.343.22 - 2025-05-30
 
 * `Aws\EMRServerless` - This release adds the capability for users to specify an optional Execution IAM policy in the StartJobRun action. The resulting permissions assumed by the job run is the intersection of the permissions in the Execution Role and the specified Execution IAM Policy.

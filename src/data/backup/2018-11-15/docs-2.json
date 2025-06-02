@@ -75,7 +75,7 @@
     "ListRestoreJobsByProtectedResource": "<p>This returns restore jobs that contain the specified protected resource.</p> <p>You must include <code>ResourceArn</code>. You can optionally include <code>NextToken</code>, <code>ByStatus</code>, <code>MaxResults</code>, <code>ByRecoveryPointCreationDateAfter</code> , and <code>ByRecoveryPointCreationDateBefore</code>.</p>",
     "ListRestoreTestingPlans": "<p>Returns a list of restore testing plans.</p>",
     "ListRestoreTestingSelections": "<p>Returns a list of restore testing selections. Can be filtered by <code>MaxResults</code> and <code>RestoreTestingPlanName</code>.</p>",
-    "ListTags": "<p>Returns the tags assigned to the resource, such as a target recovery point, backup plan, or backup vault.</p>",
+    "ListTags": "<p>Returns the tags assigned to the resource, such as a target recovery point, backup plan, or backup vault.</p> <p>This operation returns results depending on the resource type used in the value for <code>resourceArn</code>. For example, recovery points of Amazon DynamoDB with Advanced Settings have an ARN (Amazon Resource Name) that begins with <code>arn:aws:backup</code>. Recovery points (backups) of DynamoDB without Advanced Settings enabled have an ARN that begins with <code>arn:aws:dynamodb</code>.</p> <p>When this operation is called and when you include values of <code>resourceArn</code> that have an ARN other than <code>arn:aws:backup</code>, it may return one of the exceptions listed below. To prevent this exception, include only values representing resource types that are fully managed by Backup. These have an ARN that begins <code>arn:aws:backup</code> and they are noted in the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/backup-feature-availability.html#features-by-resource\">Feature availability by resource</a> table.</p>",
     "PutBackupVaultAccessPolicy": "<p>Sets a resource-based policy that is used to manage access permissions on the target backup vault. Requires a backup vault name and an access policy document in JSON format.</p>",
     "PutBackupVaultLockConfiguration": "<p>Applies Backup Vault Lock to a backup vault, preventing attempts to delete any recovery point stored in or created in a backup vault. Vault Lock also prevents attempts to update the lifecycle policy that controls the retention period of any recovery point currently stored in a backup vault. If specified, Vault Lock enforces a minimum and maximum retention period for future backup and copy jobs that target a backup vault.</p> <note> <p>Backup Vault Lock has been assessed by Cohasset Associates for use in environments that are subject to SEC 17a-4, CFTC, and FINRA regulations. For more information about how Backup Vault Lock relates to these regulations, see the <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/samples/cohassetreport.zip\">Cohasset Associates Compliance Assessment.</a> </p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html\">Backup Vault Lock</a>.</p>",
     "PutBackupVaultNotifications": "<p>Turns on notifications on a backup vault for the specified topic and events.</p>",
@@ -84,8 +84,8 @@
     "StartCopyJob": "<p>Starts a job to create a one-time copy of the specified resource.</p> <p>Does not support continuous backups.</p>",
     "StartReportJob": "<p>Starts an on-demand report job for the specified report plan.</p>",
     "StartRestoreJob": "<p>Recovers the saved resource identified by an Amazon Resource Name (ARN).</p>",
-    "StopBackupJob": "<p>Attempts to cancel a job to create a one-time backup of a resource.</p> <p>This action is not supported for the following services: Amazon FSx for Windows File Server, Amazon FSx for Lustre, Amazon FSx for NetApp ONTAP, Amazon FSx for OpenZFS, Amazon DocumentDB (with MongoDB compatibility), Amazon RDS, Amazon Aurora, and Amazon Neptune.</p>",
-    "TagResource": "<p>Assigns a set of key-value pairs to a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN).</p> <p>This API is supported for recovery points for resource types including Aurora, Amazon DocumentDB. Amazon EBS, Amazon FSx, Neptune, and Amazon RDS.</p>",
+    "StopBackupJob": "<p>Attempts to cancel a job to create a one-time backup of a resource.</p> <p>This action is not supported for the following services:</p> <ul> <li> <p>Amazon Aurora</p> </li> <li> <p>Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p>Amazon FSx for Lustre</p> </li> <li> <p>Amazon FSx for NetApp ONTAP</p> </li> <li> <p>Amazon FSx for OpenZFS</p> </li> <li> <p>Amazon FSx for Windows File Server</p> </li> <li> <p>Amazon Neptune</p> </li> <li> <p>SAP HANA databases on Amazon EC2 instances</p> </li> <li> <p>Amazon RDS</p> </li> </ul>",
+    "TagResource": "<p>Assigns a set of key-value pairs to a resource.</p>",
     "UntagResource": "<p>Removes a set of key-value pairs from a recovery point, backup plan, or backup vault identified by an Amazon Resource Name (ARN)</p> <p>This API is not supported for recovery points for resource types including Aurora, Amazon DocumentDB. Amazon EBS, Amazon FSx, Neptune, and Amazon RDS.</p>",
     "UpdateBackupPlan": "<p>Updates the specified backup plan. The new version is uniquely identified by its ID.</p>",
     "UpdateFramework": "<p>Updates the specified framework.</p>",
@@ -198,7 +198,7 @@
         "StartCopyJobInput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point to use for the copy job; for example, arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45. </p>",
         "StartCopyJobInput$DestinationBackupVaultArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a destination backup vault to copy to; for example, <code>arn:aws:backup:us-east-1:123456789012:backup-vault:aBackupVault</code>.</p>",
         "StartRestoreJobInput$RecoveryPointArn": "<p>An ARN that uniquely identifies a recovery point; for example, <code>arn:aws:backup:us-east-1:123456789012:recovery-point:1EB3B5E7-9EB0-435A-A80B-108B488B0D45</code>.</p>",
-        "TagResourceInput$ResourceArn": "<p>An ARN that uniquely identifies a resource. The format of the ARN depends on the type of the tagged resource.</p> <p>ARNs that do not include <code>backup</code> are incompatible with tagging. <code>TagResource</code> and <code>UntagResource</code> with invalid ARNs will result in an error. Acceptable ARN content can include <code>arn:aws:backup:us-east</code>. Invalid ARN content may look like <code>arn:aws:ec2:us-east</code>.</p>",
+        "TagResourceInput$ResourceArn": "<p>The ARN that uniquely identifies the resource.</p>",
         "UntagResourceInput$ResourceArn": "<p>An ARN that uniquely identifies a resource. The format of the ARN depends on the type of the tagged resource.</p> <p>ARNs that do not include <code>backup</code> are incompatible with tagging. <code>TagResource</code> and <code>UntagResource</code> with invalid ARNs will result in an error. Acceptable ARN content can include <code>arn:aws:backup:us-east</code>. Invalid ARN content may look like <code>arn:aws:ec2:us-east</code>.</p>",
         "UpdateBackupPlanOutput$BackupPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a backup plan; for example, <code>arn:aws:backup:us-east-1:123456789012:plan:8F81F553-3A74-4A3F-B93D-B3360DC80C50</code>.</p>",
         "UpdateFrameworkOutput$FrameworkArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a resource. The format of the ARN depends on the resource type.</p>",
@@ -260,8 +260,7 @@
     },
     "AlreadyExistsException": {
       "base": "<p>The required resource already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BackupJob": {
       "base": "<p>Contains detailed information about a backup job.</p>",
@@ -451,7 +450,7 @@
       "base": null,
       "refs": {
         "GetBackupVaultNotificationsOutput$BackupVaultEvents": "<p>An array of events that indicate the status of jobs to back up resources to the backup vault.</p>",
-        "PutBackupVaultNotificationsInput$BackupVaultEvents": "<p>An array of events that indicate the status of jobs to back up resources to the backup vault.</p> <p>For common use cases and code samples, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/sns-notifications.html\">Using Amazon SNS to track Backup events</a>.</p> <p>The following events are supported:</p> <ul> <li> <p> <code>BACKUP_JOB_STARTED</code> | <code>BACKUP_JOB_COMPLETED</code> </p> </li> <li> <p> <code>COPY_JOB_STARTED</code> | <code>COPY_JOB_SUCCESSFUL</code> | <code>COPY_JOB_FAILED</code> </p> </li> <li> <p> <code>RESTORE_JOB_STARTED</code> | <code>RESTORE_JOB_COMPLETED</code> | <code>RECOVERY_POINT_MODIFIED</code> </p> </li> <li> <p> <code>S3_BACKUP_OBJECT_FAILED</code> | <code>S3_RESTORE_OBJECT_FAILED</code> </p> </li> </ul> <note> <p>The list below includes both supported events and deprecated events that are no longer in use (for reference). Deprecated events do not return statuses or notifications. Refer to the list above for the supported events.</p> </note>"
+        "PutBackupVaultNotificationsInput$BackupVaultEvents": "<p>An array of events that indicate the status of jobs to back up resources to the backup vault.</p> <p>For common use cases and code samples, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/sns-notifications.html\">Using Amazon SNS to track Backup events</a>.</p> <p>The following events are supported:</p> <ul> <li> <p> <code>BACKUP_JOB_STARTED</code> | <code>BACKUP_JOB_COMPLETED</code> | <code>BACKUP_JOB_FAILED</code> </p> </li> <li> <p> <code>COPY_JOB_STARTED</code> | <code>COPY_JOB_SUCCESSFUL</code> | <code>COPY_JOB_FAILED</code> </p> </li> <li> <p> <code>RESTORE_JOB_STARTED</code> | <code>RESTORE_JOB_COMPLETED</code> | <code>RECOVERY_POINT_MODIFIED</code> </p> </li> <li> <p> <code>S3_BACKUP_OBJECT_FAILED</code> | <code>S3_RESTORE_OBJECT_FAILED</code> </p> </li> <li> <p> <code>RECOVERY_POINT_INDEX_COMPLETED</code> | <code>RECOVERY_POINT_INDEX_DELETED</code> | <code>RECOVERY_POINT_INDEXING_FAILED</code> </p> </li> </ul> <note> <p>The list below includes both supported events and deprecated events that are no longer in use (for reference). Deprecated events do not return statuses or notifications. Refer to the list above for the supported events.</p> </note>"
       }
     },
     "BackupVaultList": {
@@ -529,13 +528,11 @@
     },
     "CancelLegalHoldInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelLegalHoldOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ComplianceResourceIdList": {
       "base": null,
@@ -592,8 +589,7 @@
     },
     "ConflictException": {
       "base": "<p>Backup can't perform the action that you requested until it finishes performing a previous action. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ControlInputParameter": {
       "base": "<p>The parameters for a control. A control can have zero, one, or more than one parameter. An example of a control with two parameters is: \"backup plan frequency is at least <code>daily</code> and the retention period is at least <code>1 year</code>\". The first parameter is <code>daily</code>. The second parameter is <code>1 year</code>.</p>",
@@ -680,99 +676,81 @@
     },
     "CreateBackupPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBackupPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBackupSelectionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBackupSelectionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBackupVaultInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBackupVaultOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFrameworkInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFrameworkOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLegalHoldInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLegalHoldOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLogicallyAirGappedBackupVaultInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLogicallyAirGappedBackupVaultOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateReportPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateReportPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRestoreTestingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRestoreTestingPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRestoreTestingSelectionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRestoreTestingSelectionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CronExpression": {
       "base": null,
       "refs": {
-        "BackupRule$ScheduleExpression": "<p>A cron expression in UTC specifying when Backup initiates a backup job. For more information about Amazon Web Services cron expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html\">Schedule Expressions for Rules</a> in the <i>Amazon CloudWatch Events User Guide.</i>. Two examples of Amazon Web Services cron expressions are <code> 15 * ? * * *</code> (take a backup every hour at 15 minutes past the hour) and <code>0 12 * * ? *</code> (take a backup every day at 12 noon UTC). For a table of examples, click the preceding link and scroll down the page.</p>",
-        "BackupRuleInput$ScheduleExpression": "<p>A CRON expression in UTC specifying when Backup initiates a backup job.</p>"
+        "BackupRule$ScheduleExpression": "<p>A cron expression in UTC specifying when Backup initiates a backup job. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p> <p>For more information about Amazon Web Services cron expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html\">Schedule Expressions for Rules</a> in the <i>Amazon CloudWatch Events User Guide</i>.</p> <p>Two examples of Amazon Web Services cron expressions are <code> 15 * ? * * *</code> (take a backup every hour at 15 minutes past the hour) and <code>0 12 * * ? *</code> (take a backup every day at 12 noon UTC).</p> <p>For a table of examples, click the preceding link and scroll down the page.</p>",
+        "BackupRuleInput$ScheduleExpression": "<p>A CRON expression in UTC specifying when Backup initiates a backup job. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p>"
       }
     },
     "DateRange": {
@@ -783,198 +761,159 @@
     },
     "DeleteBackupPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBackupPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBackupSelectionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBackupVaultAccessPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBackupVaultInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBackupVaultLockConfigurationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBackupVaultNotificationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFrameworkInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRecoveryPointInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteReportPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRestoreTestingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRestoreTestingSelectionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DependencyFailureException": {
       "base": "<p>A dependent Amazon Web Services service or resource returned an error to the Backup service, and the action cannot be completed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBackupJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBackupJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBackupVaultInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBackupVaultOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCopyJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCopyJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFrameworkInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFrameworkOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalSettingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProtectedResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProtectedResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRecoveryPointInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRecoveryPointOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRegionSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRegionSettingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReportJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReportJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReportPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeReportPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRestoreJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRestoreJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateRecoveryPointFromParentInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateRecoveryPointInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportBackupPlanTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportBackupPlanTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FormatList": {
       "base": null,
@@ -1032,138 +971,111 @@
     },
     "GetBackupPlanFromJSONInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupPlanFromJSONOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupPlanFromTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupPlanFromTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupSelectionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupSelectionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupVaultAccessPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupVaultAccessPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupVaultNotificationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBackupVaultNotificationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLegalHoldInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLegalHoldOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecoveryPointIndexDetailsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecoveryPointIndexDetailsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecoveryPointRestoreMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRecoveryPointRestoreMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreJobMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreJobMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreTestingInferredMetadataInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreTestingInferredMetadataOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreTestingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreTestingPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreTestingSelectionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestoreTestingSelectionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSupportedResourceTypesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlobalSettings": {
       "base": null,
@@ -1256,18 +1168,15 @@
     },
     "InvalidParameterValueException": {
       "base": "<p>Indicates that something is wrong with a parameter's value. For example, the value is out of range.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>Indicates that something is wrong with the input to the request. For example, a parameter is of the wrong type.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResourceStateException": {
       "base": "<p>Backup is already performing an action on this recovery point. It can't perform the action you requested until the first action finishes. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IsEnabled": {
       "base": null,
@@ -1325,128 +1234,103 @@
     },
     "LimitExceededException": {
       "base": "<p>A limit in the request has been exceeded; for example, a maximum number of items allowed in a request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupJobSummariesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupJobSummariesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupJobsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupJobsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupPlanTemplatesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupPlanTemplatesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupPlanVersionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupPlanVersionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupPlansInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupPlansOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupSelectionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupSelectionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupVaultsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupVaultsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCopyJobSummariesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCopyJobSummariesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCopyJobsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCopyJobsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFrameworksInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFrameworksOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndexedRecoveryPointsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndexedRecoveryPointsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLegalHoldsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLegalHoldsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOfTags": {
       "base": null,
@@ -1456,108 +1340,87 @@
     },
     "ListProtectedResourcesByBackupVaultInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProtectedResourcesByBackupVaultOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProtectedResourcesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProtectedResourcesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsByBackupVaultInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsByBackupVaultOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsByLegalHoldInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsByLegalHoldOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsByResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecoveryPointsByResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReportJobsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReportJobsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReportPlansInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListReportPlansOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreJobSummariesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreJobSummariesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreJobsByProtectedResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreJobsByProtectedResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreJobsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreJobsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreTestingPlansInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreTestingPlansInputMaxResultsInteger": {
       "base": null,
@@ -1567,13 +1430,11 @@
     },
     "ListRestoreTestingPlansOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreTestingSelectionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRestoreTestingSelectionsInputMaxResultsInteger": {
       "base": null,
@@ -1583,23 +1444,20 @@
     },
     "ListRestoreTestingSelectionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
       "refs": {
-        "BackupJob$BackupSizeInBytes": "<p>The size, in bytes, of a backup.</p>",
+        "BackupJob$BackupSizeInBytes": "<p>The size, in bytes, of a backup (recovery point).</p> <p>This value can render differently depending on the resource type as Backup pulls in data information from other Amazon Web Services services. For example, the value returned may show a value of <code>0</code>, which may differ from the anticipated value.</p> <p>The expected behavior for values by resource type are described as follows:</p> <ul> <li> <p>Amazon Aurora, Amazon DocumentDB, and Amazon Neptune do not have this value populate from the operation <code>GetBackupJobStatus</code>.</p> </li> <li> <p>For Amazon DynamoDB with advanced features, this value refers to the size of the recovery point (backup).</p> </li> <li> <p>Amazon EC2 and Amazon EBS show volume size (provisioned storage) returned as part of this value. Amazon EBS does not return backup size information; snapshot size will have the same value as the original resource that was backed up.</p> </li> <li> <p>For Amazon EFS, this value refers to the delta bytes transferred during a backup.</p> </li> <li> <p>Amazon FSx does not populate this value from the operation <code>GetBackupJobStatus</code> for FSx file systems.</p> </li> <li> <p>An Amazon RDS instance will show as <code>0</code>.</p> </li> <li> <p>For virtual machines running VMware, this value is passed to Backup through an asynchronous workflow, which can mean this displayed value can under-represent the actual backup size.</p> </li> </ul>",
         "BackupJob$BytesTransferred": "<p>The size in bytes transferred to a backup vault at the time that the job status was queried.</p>",
         "BackupJobChildJobsInState$value": null,
         "BackupVaultListMember$MinRetentionDays": "<p>The Backup Vault Lock setting that specifies the minimum retention period that the vault retains its recovery points. If this parameter is not specified, Vault Lock does not enforce a minimum retention period.</p> <p>If specified, any backup or copy job to the vault must have a lifecycle policy with a retention period equal to or longer than the minimum retention period. If the job's retention period is shorter than that minimum retention period, then the vault fails the backup or copy job, and you should either modify your lifecycle settings or use a different vault. Recovery points already stored in the vault prior to Vault Lock are not affected.</p>",
@@ -1610,7 +1468,7 @@
         "CopyJobChildJobsInState$value": null,
         "CreateLogicallyAirGappedBackupVaultInput$MinRetentionDays": "<p>This setting specifies the minimum retention period that the vault retains its recovery points.</p> <p>The minimum value accepted is 7 days.</p>",
         "CreateLogicallyAirGappedBackupVaultInput$MaxRetentionDays": "<p>The maximum retention period that the vault retains its recovery points.</p>",
-        "DescribeBackupJobOutput$BackupSizeInBytes": "<p>The size, in bytes, of a backup.</p>",
+        "DescribeBackupJobOutput$BackupSizeInBytes": "<p>The size, in bytes, of a backup (recovery point).</p> <p>This value can render differently depending on the resource type as Backup pulls in data information from other Amazon Web Services services. For example, the value returned may show a value of <code>0</code>, which may differ from the anticipated value.</p> <p>The expected behavior for values by resource type are described as follows:</p> <ul> <li> <p>Amazon Aurora, Amazon DocumentDB, and Amazon Neptune do not have this value populate from the operation <code>GetBackupJobStatus</code>.</p> </li> <li> <p>For Amazon DynamoDB with advanced features, this value refers to the size of the recovery point (backup).</p> </li> <li> <p>Amazon EC2 and Amazon EBS show volume size (provisioned storage) returned as part of this value. Amazon EBS does not return backup size information; snapshot size will have the same value as the original resource that was backed up.</p> </li> <li> <p>For Amazon EFS, this value refers to the delta bytes transferred during a backup.</p> </li> <li> <p>Amazon FSx does not populate this value from the operation <code>GetBackupJobStatus</code> for FSx file systems.</p> </li> <li> <p>An Amazon RDS instance will show as <code>0</code>.</p> </li> <li> <p>For virtual machines running VMware, this value is passed to Backup through an asynchronous workflow, which can mean this displayed value can under-represent the actual backup size.</p> </li> </ul>",
         "DescribeBackupJobOutput$BytesTransferred": "<p>The size in bytes transferred to a backup vault at the time that the job status was queried.</p>",
         "DescribeBackupJobOutput$NumberOfChildJobs": "<p>This returns the number of child (nested) backup jobs.</p>",
         "DescribeBackupVaultOutput$MinRetentionDays": "<p>The Backup Vault Lock setting that specifies the minimum retention period that the vault retains its recovery points. If this parameter is not specified, Vault Lock will not enforce a minimum retention period.</p> <p>If specified, any backup or copy job to the vault must have a lifecycle policy with a retention period equal to or longer than the minimum retention period. If the job's retention period is shorter than that minimum retention period, then the vault fails the backup or copy job, and you should either modify your lifecycle settings or use a different vault. Recovery points already stored in the vault prior to Vault Lock are not affected.</p>",
@@ -1695,8 +1553,7 @@
     },
     "MissingParameterValueException": {
       "base": "<p>Indicates that a required parameter is missing.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterName": {
       "base": null,
@@ -1733,23 +1590,19 @@
     },
     "PutBackupVaultAccessPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBackupVaultLockConfigurationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutBackupVaultNotificationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRestoreValidationResultInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RecoveryPointByBackupVault": {
       "base": "<p>Contains detailed information about the recovery points stored in a backup vault.</p>",
@@ -1802,7 +1655,7 @@
     "RecoveryPointStatus": {
       "base": null,
       "refs": {
-        "DescribeRecoveryPointOutput$Status": "<p>A status code specifying the state of the recovery point.</p> <p> <code>PARTIAL</code> status indicates Backup could not create the recovery point before the backup window closed. To increase your backup plan window using the API, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/API_UpdateBackupPlan.html\">UpdateBackupPlan</a>. You can also increase your backup plan window using the Console by choosing and editing your backup plan.</p> <p> <code>EXPIRED</code> status indicates that the recovery point has exceeded its retention period, but Backup lacks permission or is otherwise unable to delete it. To manually delete these recovery points, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/gs-cleanup-resources.html#cleanup-backups\"> Step 3: Delete the recovery points</a> in the <i>Clean up resources</i> section of <i>Getting started</i>.</p> <p> <code>STOPPED</code> status occurs on a continuous backup where a user has taken some action that causes the continuous backup to be disabled. This can be caused by the removal of permissions, turning off versioning, turning off events being sent to EventBridge, or disabling the EventBridge rules that are put in place by Backup. For recovery points of Amazon S3, Amazon RDS, and Amazon Aurora resources, this status occurs when the retention period of a continuous backup rule is changed.</p> <p>To resolve <code>STOPPED</code> status, ensure that all requested permissions are in place and that versioning is enabled on the S3 bucket. Once these conditions are met, the next instance of a backup rule running will result in a new continuous recovery point being created. The recovery points with STOPPED status do not need to be deleted.</p> <p>For SAP HANA on Amazon EC2 <code>STOPPED</code> status occurs due to user action, application misconfiguration, or backup failure. To ensure that future continuous backups succeed, refer to the recovery point status and check SAP HANA for details.</p>",
+        "DescribeRecoveryPointOutput$Status": "<p>A status code specifying the state of the recovery point. For more information, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/applicationstackbackups.html#cfnrecoverypointstatus\"> Recovery point status</a> in the <i>Backup Developer Guide</i>.</p> <ul> <li> <p> <code>CREATING</code> status indicates that an Backup job has been initiated for a resource. The backup process has started and is actively processing a backup job for the associated recovery point.</p> </li> <li> <p> <code>AVAILABLE</code> status indicates that the backup was successfully created for the recovery point. The backup process has completed without any issues, and the recovery point is now ready for use.</p> </li> <li> <p> <code>PARTIAL</code> status indicates a composite recovery point has one or more nested recovery points that were not in the backup.</p> </li> <li> <p> <code>EXPIRED</code> status indicates that the recovery point has exceeded its retention period, but Backup lacks permission or is otherwise unable to delete it. To manually delete these recovery points, see <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/gs-cleanup-resources.html#cleanup-backups\"> Step 3: Delete the recovery points</a> in the <i>Clean up resources</i> section of <i>Getting started</i>.</p> </li> <li> <p> <code>STOPPED</code> status occurs on a continuous backup where a user has taken some action that causes the continuous backup to be disabled. This can be caused by the removal of permissions, turning off versioning, turning off events being sent to EventBridge, or disabling the EventBridge rules that are put in place by Backup. For recovery points of Amazon S3, Amazon RDS, and Amazon Aurora resources, this status occurs when the retention period of a continuous backup rule is changed.</p> <p>To resolve <code>STOPPED</code> status, ensure that all requested permissions are in place and that versioning is enabled on the S3 bucket. Once these conditions are met, the next instance of a backup rule running will result in a new continuous recovery point being created. The recovery points with STOPPED status do not need to be deleted.</p> <p>For SAP HANA on Amazon EC2 <code>STOPPED</code> status occurs due to user action, application misconfiguration, or backup failure. To ensure that future continuous backups succeed, refer to the recovery point status and check SAP HANA for details.</p> </li> </ul>",
         "RecoveryPointByBackupVault$Status": "<p>A status code specifying the state of the recovery point.</p>",
         "RecoveryPointByResource$Status": "<p>A status code specifying the state of the recovery point.</p>"
       }
@@ -1914,8 +1767,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>A resource that is required for the action doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -2147,53 +1999,43 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>The request failed due to a temporary failure of the server.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBackupJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBackupJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCopyJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCopyJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartReportJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartReportJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRestoreJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRestoreJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopBackupJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StorageClass": {
       "base": null,
@@ -2229,18 +2071,18 @@
         "ListRestoreTestingSelectionsInput$RestoreTestingPlanName": "<p>Returns restore testing selections by the specified restore testing plan name.</p>",
         "ListRestoreTestingSelectionsOutput$NextToken": "<p>The next item following a partial list of returned items. For example, if a request is made to return <code>MaxResults</code> number of items, <code>NextToken</code> allows you to return more items in your list starting at the location pointed to by the nexttoken.</p>",
         "RestoreTestingPlanForCreate$RestoreTestingPlanName": "<p>The RestoreTestingPlanName is a unique string that is the name of the restore testing plan. This cannot be changed after creation, and it must consist of only alphanumeric characters and underscores.</p>",
-        "RestoreTestingPlanForCreate$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed.</p>",
+        "RestoreTestingPlanForCreate$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p>",
         "RestoreTestingPlanForCreate$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
         "RestoreTestingPlanForGet$CreatorRequestId": "<p>This identifies the request and allows failed requests to be retried without the risk of running the operation twice. If the request includes a <code>CreatorRequestId</code> that matches an existing backup plan, that plan is returned. This parameter is optional.</p> <p>If used, this parameter must contain 1 to 50 alphanumeric or '-_.' characters.</p>",
         "RestoreTestingPlanForGet$RestoreTestingPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifies a restore testing plan.</p>",
         "RestoreTestingPlanForGet$RestoreTestingPlanName": "<p>The restore testing plan name.</p>",
-        "RestoreTestingPlanForGet$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed.</p>",
+        "RestoreTestingPlanForGet$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p>",
         "RestoreTestingPlanForGet$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
         "RestoreTestingPlanForList$RestoreTestingPlanArn": "<p>An Amazon Resource Name (ARN) that uniquely identifiesa restore testing plan.</p>",
         "RestoreTestingPlanForList$RestoreTestingPlanName": "<p>The restore testing plan name.</p>",
-        "RestoreTestingPlanForList$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed.</p>",
+        "RestoreTestingPlanForList$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p>",
         "RestoreTestingPlanForList$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
-        "RestoreTestingPlanForUpdate$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed.</p>",
+        "RestoreTestingPlanForUpdate$ScheduleExpression": "<p>A CRON expression in specified timezone when a restore testing plan is executed. When no CRON expression is provided, Backup will use the default expression <code>cron(0 5 ? * * *)</code>.</p>",
         "RestoreTestingPlanForUpdate$ScheduleExpressionTimezone": "<p>Optional. This is the timezone in which the schedule expression is set. By default, ScheduleExpressions are in UTC. You can modify this to a specified timezone.</p>",
         "RestoreTestingSelectionForCreate$IamRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that Backup uses to create the target resource; for example: <code>arn:aws:iam::123456789012:role/S3Access</code>. </p>",
         "RestoreTestingSelectionForCreate$ProtectedResourceType": "<p>The type of Amazon Web Services resource included in a restore testing selection; for example, an Amazon EBS volume or an Amazon RDS database.</p> <p>Supported resource types accepted include:</p> <ul> <li> <p> <code>Aurora</code> for Amazon Aurora</p> </li> <li> <p> <code>DocumentDB</code> for Amazon DocumentDB (with MongoDB compatibility)</p> </li> <li> <p> <code>DynamoDB</code> for Amazon DynamoDB</p> </li> <li> <p> <code>EBS</code> for Amazon Elastic Block Store</p> </li> <li> <p> <code>EC2</code> for Amazon Elastic Compute Cloud</p> </li> <li> <p> <code>EFS</code> for Amazon Elastic File System</p> </li> <li> <p> <code>FSx</code> for Amazon FSx</p> </li> <li> <p> <code>Neptune</code> for Amazon Neptune</p> </li> <li> <p> <code>RDS</code> for Amazon Relational Database Service</p> </li> <li> <p> <code>S3</code> for Amazon S3</p> </li> </ul>",
@@ -2281,8 +2123,7 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2332,88 +2173,71 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBackupPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBackupPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFrameworkInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFrameworkOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGlobalSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRecoveryPointIndexSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRecoveryPointIndexSettingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRecoveryPointLifecycleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRecoveryPointLifecycleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRegionSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateReportPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateReportPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRestoreTestingPlanInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRestoreTestingPlanOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRestoreTestingSelectionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRestoreTestingSelectionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "VaultNames": {
       "base": null,
@@ -2482,7 +2306,7 @@
         "RestoreTestingPlanForList$StartWindowHours": "<p>Defaults to 24 hours.</p> <p>A value in hours after a restore test is scheduled before a job will be canceled if it doesn't start successfully. This value is optional. If this value is included, this parameter has a maximum value of 168 hours (one week).</p>",
         "RestoreTestingPlanForUpdate$StartWindowHours": "<p>Defaults to 24 hours.</p> <p>A value in hours after a restore test is scheduled before a job will be canceled if it doesn't start successfully. This value is optional. If this value is included, this parameter has a maximum value of 168 hours (one week).</p>",
         "RestoreTestingRecoveryPointSelection$SelectionWindowDays": "<p>Accepted values are integers from 1 to 365.</p>",
-        "RestoreTestingSelectionForCreate$ValidationWindowHours": "<p>This is amount of hours (1 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
+        "RestoreTestingSelectionForCreate$ValidationWindowHours": "<p>This is amount of hours (0 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForGet$ValidationWindowHours": "<p>This is amount of hours (1 to 168) available to run a validation script on the data. The data will be deleted upon the completion of the validation script or the end of the specified retention period, whichever comes first.</p>",
         "RestoreTestingSelectionForList$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>",
         "RestoreTestingSelectionForUpdate$ValidationWindowHours": "<p>This value represents the time, in hours, data is retained after a restore test so that optional validation can be completed.</p> <p>Accepted value is an integer between 0 and 168 (the hourly equivalent of seven days).</p>"
@@ -2492,7 +2316,7 @@
       "base": null,
       "refs": {
         "BackupVaultListMember$NumberOfRecoveryPoints": "<p>The number of recovery points that are stored in a backup vault.</p>",
-        "DescribeBackupVaultOutput$NumberOfRecoveryPoints": "<p>The number of recovery points that are stored in a backup vault.</p>"
+        "DescribeBackupVaultOutput$NumberOfRecoveryPoints": "<p>The number of recovery points that are stored in a backup vault.</p> <p>Recovery point count value displayed in the console can be an approximation. Use <a href=\"https://docs.aws.amazon.com/aws-backup/latest/devguide/API_ListRecoveryPointsByBackupVault.html\"> <code>ListRecoveryPointsByBackupVault</code> </a> API to obtain the exact count.</p>"
       }
     },
     "string": {

@@ -211,6 +211,23 @@
       ],
       "idempotent":true
     },
+    "GenerateMatchId":{
+      "name":"GenerateMatchId",
+      "http":{
+        "method":"POST",
+        "requestUri":"/matchingworkflows/{workflowName}/generateMatches",
+        "responseCode":200
+      },
+      "input":{"shape":"GenerateMatchIdInput"},
+      "output":{"shape":"GenerateMatchIdOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "GetIdMappingJob":{
       "name":"GetIdMappingJob",
       "http":{
@@ -1121,6 +1138,60 @@
       },
       "exception":true
     },
+    "FailedRecord":{
+      "type":"structure",
+      "required":[
+        "inputSourceARN",
+        "uniqueId",
+        "errorMessage"
+      ],
+      "members":{
+        "inputSourceARN":{"shape":"FailedRecordInputSourceARNString"},
+        "uniqueId":{"shape":"String"},
+        "errorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "FailedRecordInputSourceARNString":{
+      "type":"string",
+      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
+    },
+    "FailedRecordsList":{
+      "type":"list",
+      "member":{"shape":"FailedRecord"}
+    },
+    "GenerateMatchIdInput":{
+      "type":"structure",
+      "required":[
+        "workflowName",
+        "records"
+      ],
+      "members":{
+        "workflowName":{
+          "shape":"EntityName",
+          "location":"uri",
+          "locationName":"workflowName"
+        },
+        "records":{"shape":"GenerateMatchIdInputRecordsList"},
+        "processingType":{"shape":"ProcessingType"}
+      }
+    },
+    "GenerateMatchIdInputRecordsList":{
+      "type":"list",
+      "member":{"shape":"Record"},
+      "max":1,
+      "min":1
+    },
+    "GenerateMatchIdOutput":{
+      "type":"structure",
+      "required":[
+        "matchGroups",
+        "failedRecords"
+      ],
+      "members":{
+        "matchGroups":{"shape":"MatchGroupsList"},
+        "failedRecords":{"shape":"FailedRecordsList"}
+      }
+    },
     "GetIdMappingJobInput":{
       "type":"structure",
       "required":[
@@ -1989,12 +2060,48 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "MatchGroup":{
+      "type":"structure",
+      "required":[
+        "records",
+        "matchId",
+        "matchRule"
+      ],
+      "members":{
+        "records":{"shape":"MatchedRecordsList"},
+        "matchId":{"shape":"String"},
+        "matchRule":{"shape":"String"}
+      }
+    },
+    "MatchGroupsList":{
+      "type":"list",
+      "member":{"shape":"MatchGroup"}
+    },
     "MatchPurpose":{
       "type":"string",
       "enum":[
         "IDENTIFIER_GENERATION",
         "INDEXING"
       ]
+    },
+    "MatchedRecord":{
+      "type":"structure",
+      "required":[
+        "inputSourceARN",
+        "recordId"
+      ],
+      "members":{
+        "inputSourceARN":{"shape":"MatchedRecordInputSourceARNString"},
+        "recordId":{"shape":"String"}
+      }
+    },
+    "MatchedRecordInputSourceARNString":{
+      "type":"string",
+      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
+    },
+    "MatchedRecordsList":{
+      "type":"list",
+      "member":{"shape":"MatchedRecord"}
     },
     "MatchingWorkflowArn":{
       "type":"string",
@@ -2093,6 +2200,14 @@
       "max":36,
       "min":36,
       "pattern":"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
+    },
+    "ProcessingType":{
+      "type":"string",
+      "enum":[
+        "CONSISTENT",
+        "EVENTUAL",
+        "EVENTUAL_NO_LOOKUP"
+      ]
     },
     "ProviderComponentSchema":{
       "type":"structure",
@@ -2224,6 +2339,19 @@
         "policy":{"shape":"PolicyDocument"}
       }
     },
+    "Record":{
+      "type":"structure",
+      "required":[
+        "inputSourceARN",
+        "uniqueId",
+        "recordAttributeMap"
+      ],
+      "members":{
+        "inputSourceARN":{"shape":"RecordInputSourceARNString"},
+        "uniqueId":{"shape":"UniqueId"},
+        "recordAttributeMap":{"shape":"RecordAttributeMapString255"}
+      }
+    },
     "RecordAttributeMap":{
       "type":"map",
       "key":{"shape":"RecordAttributeMapKeyString"},
@@ -2236,11 +2364,31 @@
       "min":0,
       "pattern":"[a-zA-Z_0-9- \\t]*"
     },
+    "RecordAttributeMapString255":{
+      "type":"map",
+      "key":{"shape":"RecordAttributeMapString255KeyString"},
+      "value":{"shape":"RecordAttributeMapString255ValueString"},
+      "sensitive":true
+    },
+    "RecordAttributeMapString255KeyString":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "RecordAttributeMapString255ValueString":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
     "RecordAttributeMapValueString":{
       "type":"string",
       "max":255,
       "min":0,
       "pattern":"[a-zA-Z_0-9-./@ ()+\\t]*"
+    },
+    "RecordInputSourceARNString":{
+      "type":"string",
+      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "RecordMatchingModel":{
       "type":"string",
@@ -2562,6 +2710,12 @@
       "retryable":{"throttling":true}
     },
     "Timestamp":{"type":"timestamp"},
+    "UniqueId":{
+      "type":"string",
+      "max":38,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]*"
+    },
     "UniqueIdList":{
       "type":"list",
       "member":{"shape":"HeaderSafeUniqueId"}

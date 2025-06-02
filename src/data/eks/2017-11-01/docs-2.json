@@ -43,7 +43,7 @@
     "ListEksAnywhereSubscriptions": "<p>Displays the full description of the subscription.</p>",
     "ListFargateProfiles": "<p>Lists the Fargate profiles associated with the specified cluster in your Amazon Web Services account in the specified Amazon Web Services Region.</p>",
     "ListIdentityProviderConfigs": "<p>Lists the identity provider configurations for your cluster.</p>",
-    "ListInsights": "<p>Returns a list of all insights checked for against the specified cluster. You can filter which insights are returned by category, associated Kubernetes version, and status.</p>",
+    "ListInsights": "<p>Returns a list of all insights checked for against the specified cluster. You can filter which insights are returned by category, associated Kubernetes version, and status. The default filter lists all categories and every status.</p> <p>The following lists the available categories:</p> <ul> <li> <p> <code>UPGRADE_READINESS</code>: Amazon EKS identifies issues that could impact your ability to upgrade to new versions of Kubernetes. These are called upgrade insights.</p> </li> <li> <p> <code>MISCONFIGURATION</code>: Amazon EKS identifies misconfiguration in your EKS Hybrid Nodes setup that could impair functionality of your cluster or workloads. These are called configuration insights.</p> </li> </ul>",
     "ListNodegroups": "<p>Lists the managed node groups associated with the specified cluster in your Amazon Web Services account in the specified Amazon Web Services Region. Self-managed node groups aren't listed.</p>",
     "ListPodIdentityAssociations": "<p>List the EKS Pod Identity associations in a cluster. You can filter the list by the namespace that the association is in or the service account that the association uses.</p>",
     "ListTagsForResource": "<p>List the tags for an Amazon EKS resource.</p>",
@@ -76,8 +76,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>You don't have permissions to perform the requested operation. The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html\">IAM principal</a> making the request must have at least one IAM permissions policy attached that grants the required permissions. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html\">Access management</a> in the <i>IAM User Guide</i>. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessEntry": {
       "base": "<p>An access entry allows an IAM principal (user or role) to access your cluster. Access entries can replace the need to maintain the <code>aws-auth</code> <code>ConfigMap</code> for authentication. For more information about access entries, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/access-entries.html\">Access entries</a> in the <i>Amazon EKS User Guide</i>.</p>",
@@ -219,33 +218,27 @@
     },
     "AssociateAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateEncryptionConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateEncryptionConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateIdentityProviderConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateIdentityProviderConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatedAccessPoliciesList": {
       "base": null,
@@ -282,8 +275,7 @@
     },
     "BadRequestException": {
       "base": "<p>This exception is thrown if the request contains a semantic error. The precise meaning will depend on the API, and will be documented in the error message.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BlockStorage": {
       "base": "<p>Indicates the current configuration of the block storage capability on your EKS Auto Mode cluster. For example, if the capability is enabled or disabled. If the block storage capability is enabled, EKS Auto Mode will create and delete EBS volumes in your Amazon Web Services account. For more information, see EKS Auto Mode block storage capability in the <i>Amazon EKS User Guide</i>.</p>",
@@ -360,7 +352,7 @@
     "CategoryList": {
       "base": null,
       "refs": {
-        "InsightsFilter$categories": "<p>The categories to use to filter insights.</p>"
+        "InsightsFilter$categories": "<p>The categories to use to filter insights. The following lists the available categories:</p> <ul> <li> <p> <code>UPGRADE_READINESS</code>: Amazon EKS identifies issues that could impact your ability to upgrade to new versions of Kubernetes. These are called upgrade insights.</p> </li> <li> <p> <code>MISCONFIGURATION</code>: Amazon EKS identifies misconfiguration in your EKS Hybrid Nodes setup that could impair functionality of your cluster or workloads. These are called configuration insights.</p> </li> </ul>"
       }
     },
     "Certificate": {
@@ -371,8 +363,7 @@
     },
     "ClientException": {
       "base": "<p>These errors are usually caused by a client action. Actions can include using an action or resource on behalf of an <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html\">IAM principal</a> that doesn't have permissions to use the action or resource or specifying an identifier that is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientStat": {
       "base": "<p>Details about clients using the deprecated resources.</p>",
@@ -521,143 +512,115 @@
     },
     "CreateAccessEntryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessEntryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAddonRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAddonResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateClusterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateClusterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEksAnywhereSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEksAnywhereSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFargateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFargateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNodegroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNodegroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePodIdentityAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePodIdentityAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessEntryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessEntryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAddonRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAddonResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteClusterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteClusterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEksAnywhereSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEksAnywhereSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFargateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFargateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNodegroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNodegroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePodIdentityAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePodIdentityAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeprecationDetail": {
       "base": "<p>The summary information about deprecated resource usage for an insight check in the <code>UPGRADE_READINESS</code> category.</p>",
@@ -673,48 +636,39 @@
     },
     "DeregisterClusterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterClusterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessEntryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessEntryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAddonConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAddonConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAddonRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAddonResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAddonVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAddonVersionsRequestMaxResults": {
       "base": null,
@@ -724,18 +678,15 @@
     },
     "DescribeAddonVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeClusterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeClusterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeClusterVersionMaxResults": {
       "base": null,
@@ -745,103 +696,83 @@
     },
     "DescribeClusterVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeClusterVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEksAnywhereSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEksAnywhereSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFargateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFargateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIdentityProviderConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIdentityProviderConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInsightRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInsightResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeNodegroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeNodegroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePodIdentityAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePodIdentityAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUpdateRequest": {
       "base": "<p>Describes an update request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUpdateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateIdentityProviderConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateIdentityProviderConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EksAnywhereSubscription": {
       "base": "<p>An EKS Anywhere subscription authorizing the customer to support for licensed clusters and access to EKS Anywhere Curated Packages.</p>",
@@ -1105,18 +1036,15 @@
     },
     "InvalidParameterException": {
       "base": "<p>The specified parameter is invalid. Review the available parameters for the API request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>The request is invalid given the state of the cluster. Check the state of the cluster and the associated operations.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidStateException": {
       "base": "<p>Amazon EKS detected upgrade readiness issues. Call the <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_ListInsights.html\"> <code>ListInsights</code> </a> API to view detected upgrade blocking issues. Pass the <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_UpdateClusterVersion.html#API_UpdateClusterVersion_RequestBody\"> <code>force</code> </a> flag when updating to override upgrade readiness errors.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpFamily": {
       "base": null,
@@ -1172,8 +1100,7 @@
     },
     "ListAccessEntriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessEntriesRequestMaxResults": {
       "base": null,
@@ -1183,13 +1110,11 @@
     },
     "ListAccessEntriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessPoliciesRequestMaxResults": {
       "base": null,
@@ -1199,13 +1124,11 @@
     },
     "ListAccessPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAddonsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAddonsRequestMaxResults": {
       "base": null,
@@ -1215,13 +1138,11 @@
     },
     "ListAddonsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedAccessPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedAccessPoliciesRequestMaxResults": {
       "base": null,
@@ -1231,13 +1152,11 @@
     },
     "ListAssociatedAccessPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListClustersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListClustersRequestMaxResults": {
       "base": null,
@@ -1247,13 +1166,11 @@
     },
     "ListClustersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEksAnywhereSubscriptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEksAnywhereSubscriptionsRequestMaxResults": {
       "base": null,
@@ -1263,23 +1180,19 @@
     },
     "ListEksAnywhereSubscriptionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFargateProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFargateProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdentityProviderConfigsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdentityProviderConfigsRequestMaxResults": {
       "base": null,
@@ -1289,8 +1202,7 @@
     },
     "ListIdentityProviderConfigsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInsightsMaxResults": {
       "base": null,
@@ -1300,18 +1212,15 @@
     },
     "ListInsightsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInsightsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNodegroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNodegroupsRequestMaxResults": {
       "base": null,
@@ -1321,8 +1230,7 @@
     },
     "ListNodegroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPodIdentityAssociationsMaxResults": {
       "base": null,
@@ -1332,28 +1240,23 @@
     },
     "ListPodIdentityAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPodIdentityAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUpdatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUpdatesRequestMaxResults": {
       "base": null,
@@ -1363,8 +1266,7 @@
     },
     "ListUpdatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogSetup": {
       "base": "<p>An object representing the enabled or disabled Kubernetes control plane logs for your cluster.</p>",
@@ -1475,8 +1377,7 @@
     },
     "NotFoundException": {
       "base": "<p>A service resource associated with the request could not be found. Clients should not retry such requests.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OIDC": {
       "base": "<p>An object representing the <a href=\"https://openid.net/connect/\">OpenID Connect</a> (OIDC) identity provider information for the cluster.</p>",
@@ -1543,13 +1444,11 @@
     },
     "RegisterClusterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterClusterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoteAccessConfig": {
       "base": "<p>An object representing the remote access configuration for the managed node group.</p>",
@@ -1606,23 +1505,19 @@
     },
     "ResourceInUseException": {
       "base": "<p>The specified resource is in use.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceLimitExceededException": {
       "base": "<p>You have encountered a service limit on the specified resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource could not be found. You can view your available clusters with <code>ListClusters</code>. You can view your available managed node groups with <code>ListNodegroups</code>. Amazon EKS clusters and node groups are Amazon Web Services Region specific.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePropagationDelayException": {
       "base": "<p>Required resources (such as service-linked roles) were created and are still propagating. Retry later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
@@ -1633,13 +1528,11 @@
     },
     "ServerException": {
       "base": "<p>These errors are usually caused by a server-side issue.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is unavailable. Back off and retry the operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StorageConfigRequest": {
       "base": "<p>Request to update the configuration of the storage capability of your EKS Auto Mode cluster. For example, enable the capability. For more information, see EKS Auto Mode block storage capability in the <i>Amazon EKS User Guide</i>.</p>",
@@ -2103,13 +1996,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": "<p>The optional part of a key-value pair that make up a tag. A <code>value</code> acts as a descriptor within a tag category (key).</p>",
@@ -2131,8 +2022,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request or operation couldn't be performed because a service is throttling requests.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -2166,18 +2056,15 @@
     },
     "UnsupportedAvailabilityZoneException": {
       "base": "<p>At least one of your specified cluster subnets is in an Availability Zone that does not support Amazon EKS. The exception output specifies the supported Availability Zones for your account, from which you can choose subnets for your cluster.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Update": {
       "base": "<p>An object representing an asynchronous update.</p>",
@@ -2201,53 +2088,43 @@
     },
     "UpdateAccessEntryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessEntryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAddonRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAddonResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateClusterConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateClusterConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateClusterVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateClusterVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEksAnywhereSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEksAnywhereSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLabelsPayload": {
       "base": "<p>An object representing a Kubernetes <code>label</code> change for a managed node group.</p>",
@@ -2257,23 +2134,19 @@
     },
     "UpdateNodegroupConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNodegroupConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNodegroupVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNodegroupVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateParam": {
       "base": "<p>An object representing the details of an update request.</p>",
@@ -2295,13 +2168,11 @@
     },
     "UpdatePodIdentityAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePodIdentityAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStatus": {
       "base": null,

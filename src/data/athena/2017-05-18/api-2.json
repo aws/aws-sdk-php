@@ -1915,7 +1915,8 @@
       "members":{
         "QueryExecutionId":{"shape":"QueryExecutionId"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"MaxQueryResults"}
+        "MaxResults":{"shape":"MaxQueryResults"},
+        "QueryResultType":{"shape":"QueryResultType"}
       }
     },
     "GetQueryResultsOutput":{
@@ -2343,6 +2344,29 @@
       }
     },
     "Long":{"type":"long"},
+    "ManagedQueryResultsConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"ManagedQueryResultsEncryptionConfiguration"}
+      }
+    },
+    "ManagedQueryResultsConfigurationUpdates":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"BoxedBoolean"},
+        "EncryptionConfiguration":{"shape":"ManagedQueryResultsEncryptionConfiguration"},
+        "RemoveEncryptionConfiguration":{"shape":"BoxedBoolean"}
+      }
+    },
+    "ManagedQueryResultsEncryptionConfiguration":{
+      "type":"structure",
+      "required":["KmsKey"],
+      "members":{
+        "KmsKey":{"shape":"KmsKey"}
+      }
+    },
     "MaxApplicationDPUSizesCount":{
       "type":"integer",
       "max":100,
@@ -2601,6 +2625,7 @@
         "QueryExecutionId":{"shape":"QueryExecutionId"},
         "Query":{"shape":"QueryString"},
         "StatementType":{"shape":"StatementType"},
+        "ManagedQueryResultsConfiguration":{"shape":"ManagedQueryResultsConfiguration"},
         "ResultConfiguration":{"shape":"ResultConfiguration"},
         "ResultReuseConfiguration":{"shape":"ResultReuseConfiguration"},
         "QueryExecutionContext":{"shape":"QueryExecutionContext"},
@@ -2669,6 +2694,13 @@
         "CompletionDateTime":{"shape":"Date"},
         "AthenaError":{"shape":"AthenaError"}
       }
+    },
+    "QueryResultType":{
+      "type":"string",
+      "enum":[
+        "DATA_MANIFEST",
+        "DATA_ROWS"
+      ]
     },
     "QueryResultsS3AccessGrantsConfiguration":{
       "type":"structure",
@@ -3316,6 +3348,7 @@
       "type":"structure",
       "members":{
         "ResultConfiguration":{"shape":"ResultConfiguration"},
+        "ManagedQueryResultsConfiguration":{"shape":"ManagedQueryResultsConfiguration"},
         "EnforceWorkGroupConfiguration":{"shape":"BoxedBoolean"},
         "PublishCloudWatchMetricsEnabled":{"shape":"BoxedBoolean"},
         "BytesScannedCutoffPerQuery":{"shape":"BytesScannedCutoffValue"},
@@ -3334,6 +3367,7 @@
       "members":{
         "EnforceWorkGroupConfiguration":{"shape":"BoxedBoolean"},
         "ResultConfigurationUpdates":{"shape":"ResultConfigurationUpdates"},
+        "ManagedQueryResultsConfigurationUpdates":{"shape":"ManagedQueryResultsConfigurationUpdates"},
         "PublishCloudWatchMetricsEnabled":{"shape":"BoxedBoolean"},
         "BytesScannedCutoffPerQuery":{"shape":"BytesScannedCutoffValue"},
         "RemoveBytesScannedCutoffPerQuery":{"shape":"BoxedBoolean"},

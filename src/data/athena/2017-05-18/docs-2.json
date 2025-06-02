@@ -167,6 +167,7 @@
         "AthenaError$Retryable": "<p>True if the query might succeed if resubmitted.</p>",
         "ColumnInfo$CaseSensitive": "<p>Indicates whether values in the column are case-sensitive.</p>",
         "DeleteDataCatalogInput$DeleteCatalogOnly": "<p>Deletes the Athena Data Catalog. You can only use this with the <code>FEDERATED</code> catalogs. You usually perform this before registering the connector with Glue Data Catalog. After deletion, you will have to manage the Glue Connection and Lambda function. </p>",
+        "ManagedQueryResultsConfiguration$Enabled": "<p>If set to true, allows you to store query results in Athena owned storage. If set to false, workgroup member stores query results in location specified under <code>ResultConfiguration$OutputLocation</code>. The default is false. A workgroup cannot have the <code>ResultConfiguration$OutputLocation</code> parameter when you set this field to true. </p>",
         "ResultReuseByAgeConfiguration$Enabled": "<p>True if previous query results can be reused when the query is run; otherwise, false. The default is false.</p>",
         "ResultReuseInformation$ReusedPreviousResult": "<p>True if a previous query result was reused; false if the result was generated from a new run of the query.</p>"
       }
@@ -176,6 +177,8 @@
       "refs": {
         "DeleteWorkGroupInput$RecursiveDeleteOption": "<p>The option to delete the workgroup and its contents even if the workgroup contains any named queries, query executions, or notebooks.</p>",
         "IdentityCenterConfiguration$EnableIdentityCenter": "<p>Specifies whether the workgroup is IAM Identity Center supported.</p>",
+        "ManagedQueryResultsConfigurationUpdates$Enabled": "<p>If set to true, specifies that Athena manages query results in Athena owned storage.</p>",
+        "ManagedQueryResultsConfigurationUpdates$RemoveEncryptionConfiguration": "<p>If set to true, it removes workgroup from Athena owned storage. The existing query results are cleaned up after 24hrs. You must provide query results in location specified under <code>ResultConfiguration$OutputLocation</code>.</p>",
         "QueryResultsS3AccessGrantsConfiguration$EnableS3AccessGrants": "<p>Specifies whether Amazon S3 access grants are enabled for query results.</p>",
         "QueryResultsS3AccessGrantsConfiguration$CreateUserLevelPrefix": "<p>When enabled, appends the user ID as an Amazon S3 path prefix to the query result output location.</p>",
         "ResultConfigurationUpdates$RemoveOutputLocation": "<p>If set to \"true\", indicates that the previously-specified query results location (also known as a client-side setting) for queries in this workgroup should be ignored and set to null. If set to \"false\" or not set, and a value is present in the <code>OutputLocation</code> in <code>ResultConfigurationUpdates</code> (the client-side setting), the <code>OutputLocation</code> in the workgroup's <code>ResultConfiguration</code> will be updated with the new value. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
@@ -981,7 +984,8 @@
     "KmsKey": {
       "base": null,
       "refs": {
-        "CustomerContentEncryptionConfiguration$KmsKey": "<p>The customer managed KMS key that is used to encrypt the user's data stores in Athena.</p>"
+        "CustomerContentEncryptionConfiguration$KmsKey": "<p>The customer managed KMS key that is used to encrypt the user's data stores in Athena.</p>",
+        "ManagedQueryResultsEncryptionConfiguration$KmsKey": "<p>The ARN of an KMS key for encrypting managed query results.</p>"
       }
     },
     "ListApplicationDPUSizesInput": {
@@ -1146,6 +1150,26 @@
         "QueryStage$ExecutionTime": "<p>Time taken to execute this stage.</p>",
         "SessionConfiguration$IdleTimeoutSeconds": "<p>The idle timeout in seconds for the session.</p>",
         "SessionStatistics$DpuExecutionInMillis": "<p>The data processing unit execution time for a session in milliseconds.</p>"
+      }
+    },
+    "ManagedQueryResultsConfiguration": {
+      "base": "<p> The configuration for storing results in Athena owned storage, which includes whether this feature is enabled; whether encryption configuration, if any, is used for encrypting query results. </p>",
+      "refs": {
+        "QueryExecution$ManagedQueryResultsConfiguration": "<p> The configuration for storing results in Athena owned storage, which includes whether this feature is enabled; whether encryption configuration, if any, is used for encrypting query results. </p>",
+        "WorkGroupConfiguration$ManagedQueryResultsConfiguration": "<p> The configuration for storing results in Athena owned storage, which includes whether this feature is enabled; whether encryption configuration, if any, is used for encrypting query results. </p>"
+      }
+    },
+    "ManagedQueryResultsConfigurationUpdates": {
+      "base": "<p>Updates the configuration for managed query results.</p>",
+      "refs": {
+        "WorkGroupConfigurationUpdates$ManagedQueryResultsConfigurationUpdates": "<p>Updates configuration information for managed query results in the workgroup.</p>"
+      }
+    },
+    "ManagedQueryResultsEncryptionConfiguration": {
+      "base": "<p>If you encrypt query and calculation results in Athena owned storage, this field indicates the encryption option (for example, SSE_KMS or CSE_KMS) and key information.</p>",
+      "refs": {
+        "ManagedQueryResultsConfiguration$EncryptionConfiguration": "<p>If you encrypt query and calculation results in Athena owned storage, this field indicates the encryption option (for example, SSE_KMS or CSE_KMS) and key information.</p>",
+        "ManagedQueryResultsConfigurationUpdates$EncryptionConfiguration": "<p>If you encrypt query and calculation results in Athena owned storage, this field indicates the encryption option (for example, SSE_KMS or CSE_KMS) and key information.</p>"
       }
     },
     "MaxApplicationDPUSizesCount": {
@@ -1498,6 +1522,12 @@
         "QueryExecution$Status": "<p>The completion date, current state, submission time, and state change reason (if applicable) for the query execution.</p>"
       }
     },
+    "QueryResultType": {
+      "base": null,
+      "refs": {
+        "GetQueryResultsInput$QueryResultType": "<p> When you set this to <code>DATA_ROWS</code> or empty, <code>GetQueryResults</code> returns the query results in rows. If set to <code>DATA_MANIFEST</code>, it returns the manifest file in rows. Only the query types <code>CREATE TABLE AS SELECT</code>, <code>UNLOAD</code>, and <code>INSERT</code> can generate a manifest file. If you use <code>DATA_MANIFEST</code> for other query types, the query will fail. </p>"
+      }
+    },
     "QueryResultsS3AccessGrantsConfiguration": {
       "base": "<p>Specifies whether Amazon S3 access grants are enabled for query results.</p>",
       "refs": {
@@ -1778,7 +1808,7 @@
     "StatementType": {
       "base": null,
       "refs": {
-        "QueryExecution$StatementType": "<p>The type of query statement that was run. <code>DDL</code> indicates DDL query statements. <code>DML</code> indicates DML (Data Manipulation Language) query statements, such as <code>CREATE TABLE AS SELECT</code>. <code>UTILITY</code> indicates query statements other than DDL and DML, such as <code>SHOW CREATE TABLE</code>, <code>EXPLAIN</code>, <code>DESCRIBE</code>, or <code>SHOW TABLES</code>.</p>"
+        "QueryExecution$StatementType": "<p>The type of query statement that was run. <code>DDL</code> indicates DDL query statements. <code>DML</code> indicates DML (Data Manipulation Language) query statements, such as <code>CREATE TABLE AS SELECT</code>. <code>UTILITY</code> indicates query statements other than DDL and DML, such as <code>SHOW CREATE TABLE</code>, or <code>DESCRIBE TABLE</code>.</p>"
       }
     },
     "StopCalculationExecutionRequest": {

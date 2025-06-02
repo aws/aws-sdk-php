@@ -1775,7 +1775,10 @@
         "BACKUP_PLAN_CREATED",
         "BACKUP_PLAN_MODIFIED",
         "S3_BACKUP_OBJECT_FAILED",
-        "S3_RESTORE_OBJECT_FAILED"
+        "S3_RESTORE_OBJECT_FAILED",
+        "RECOVERY_POINT_INDEX_COMPLETED",
+        "RECOVERY_POINT_INDEX_DELETED",
+        "RECOVERY_POINT_INDEXING_FAILED"
       ]
     },
     "BackupVaultEvents":{
@@ -1841,8 +1844,7 @@
     },
     "CancelLegalHoldOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ComplianceResourceIdList":{
       "type":"list",
@@ -2529,8 +2531,7 @@
     },
     "DescribeGlobalSettingsInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeGlobalSettingsOutput":{
       "type":"structure",
@@ -2621,8 +2622,7 @@
     },
     "DescribeRegionSettingsInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeRegionSettingsOutput":{
       "type":"structure",
@@ -4426,7 +4426,10 @@
         "COMPLETED",
         "PARTIAL",
         "DELETING",
-        "EXPIRED"
+        "EXPIRED",
+        "AVAILABLE",
+        "STOPPED",
+        "CREATING"
       ]
     },
     "RecoveryPointsList":{

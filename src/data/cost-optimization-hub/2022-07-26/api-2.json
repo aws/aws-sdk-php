@@ -180,6 +180,19 @@
         "LowestPrice"
       ]
     },
+    "AuroraDbClusterStorage":{
+      "type":"structure",
+      "members":{
+        "configuration":{"shape":"AuroraDbClusterStorageConfiguration"},
+        "costCalculation":{"shape":"ResourceCostCalculation"}
+      }
+    },
+    "AuroraDbClusterStorageConfiguration":{
+      "type":"structure",
+      "members":{
+        "storageType":{"shape":"String"}
+      }
+    },
     "BlockStoragePerformanceConfiguration":{
       "type":"structure",
       "members":{
@@ -416,7 +429,8 @@
     },
     "GetPreferencesRequest":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "GetPreferencesResponse":{
       "type":"structure",
@@ -862,6 +876,7 @@
         "sageMakerSavingsPlans":{"shape":"SageMakerSavingsPlans"},
         "rdsDbInstance":{"shape":"RdsDbInstance"},
         "rdsDbInstanceStorage":{"shape":"RdsDbInstanceStorage"},
+        "auroraDbClusterStorage":{"shape":"AuroraDbClusterStorage"},
         "dynamoDbReservedCapacity":{"shape":"DynamoDbReservedCapacity"},
         "memoryDbReservedInstances":{"shape":"MemoryDbReservedInstances"}
       },
@@ -912,6 +927,7 @@
         "ElastiCacheReservedInstances",
         "RdsDbInstanceStorage",
         "RdsDbInstance",
+        "AuroraDbClusterStorage",
         "DynamoDbReservedCapacity",
         "MemoryDbReservedInstances"
       ]

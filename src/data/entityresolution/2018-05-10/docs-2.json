@@ -13,11 +13,12 @@
     "DeleteMatchingWorkflow": "<p>Deletes the <code>MatchingWorkflow</code> with a given name. This operation will succeed even if a workflow with the given name does not exist.</p>",
     "DeletePolicyStatement": "<p>Deletes the policy statement.</p>",
     "DeleteSchemaMapping": "<p>Deletes the <code>SchemaMapping</code> with a given name. This operation will succeed even if a schema with the given name does not exist. This operation will fail if there is a <code>MatchingWorkflow</code> object that references the <code>SchemaMapping</code> in the workflow's <code>InputSourceConfig</code>.</p>",
-    "GetIdMappingJob": "<p>Gets the status, metrics, and errors (if there are any) that are associated with a job.</p>",
+    "GenerateMatchId": "<p>Generates or retrieves Match IDs for records using a rule-based matching workflow. When you call this operation, it processes your records against the workflow's matching rules to identify potential matches. For existing records, it retrieves their Match IDs and associated rules. For records without matches, it generates new Match IDs. The operation saves results to Amazon S3. </p> <p>The processing type (<code>processingType</code>) you choose affects both the accuracy and response time of the operation. Additional charges apply for each API call, whether made through the Entity Resolution console or directly via the API. The rule-based matching workflow must exist and be active before calling this operation.</p>",
+    "GetIdMappingJob": "<p>Returns the status, metrics, and errors (if there are any) that are associated with a job.</p>",
     "GetIdMappingWorkflow": "<p>Returns the <code>IdMappingWorkflow</code> with a given name, if it exists.</p>",
     "GetIdNamespace": "<p>Returns the <code>IdNamespace</code> with a given name, if it exists.</p>",
     "GetMatchId": "<p>Returns the corresponding Match ID of a customer record if the record has been processed in a rule-based matching workflow or ML matching workflow.</p> <p>You can call this API as a dry run of an incremental load on the rule-based matching workflow.</p>",
-    "GetMatchingJob": "<p>Gets the status, metrics, and errors (if there are any) that are associated with a job.</p>",
+    "GetMatchingJob": "<p>Returns the status, metrics, and errors (if there are any) that are associated with a job.</p>",
     "GetMatchingWorkflow": "<p>Returns the <code>MatchingWorkflow</code> with a given name, if it exists.</p>",
     "GetPolicy": "<p>Returns the resource-based policy.</p>",
     "GetProviderService": "<p>Returns the <code>ProviderService</code> of a given name.</p>",
@@ -310,6 +311,7 @@
         "DeleteIdNamespaceInput$idNamespaceName": "<p>The name of the ID namespace.</p>",
         "DeleteMatchingWorkflowInput$workflowName": "<p>The name of the workflow to be retrieved.</p>",
         "DeleteSchemaMappingInput$schemaName": "<p>The name of the schema to delete.</p>",
+        "GenerateMatchIdInput$workflowName": "<p> The name of the rule-based matching workflow.</p>",
         "GetIdMappingWorkflowInput$workflowName": "<p>The name of the workflow.</p>",
         "GetIdMappingWorkflowOutput$workflowName": "<p>The name of the workflow.</p>",
         "GetIdNamespaceOutput$idNamespaceName": "<p>The name of the ID namespace.</p>",
@@ -372,6 +374,7 @@
         "ConflictException$message": null,
         "ErrorDetails$errorMessage": "<p>The error message from the job, if there is one.</p>",
         "ExceedsLimitException$message": null,
+        "FailedRecord$errorMessage": "<p> The error message for the record that didn't generate a Match ID.</p>",
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
         "ThrottlingException$message": null,
@@ -380,6 +383,40 @@
     },
     "ExceedsLimitException": {
       "base": "<p>The request was rejected because it attempted to create resources beyond the current Entity Resolution account limits. The error message describes the limit exceeded. </p>",
+      "refs": {
+      }
+    },
+    "FailedRecord": {
+      "base": "<p>The record that didn't generate a Match ID.</p>",
+      "refs": {
+        "FailedRecordsList$member": null
+      }
+    },
+    "FailedRecordInputSourceARNString": {
+      "base": null,
+      "refs": {
+        "FailedRecord$inputSourceARN": "<p> The input source ARN of the record that didn't generate a Match ID.</p>"
+      }
+    },
+    "FailedRecordsList": {
+      "base": null,
+      "refs": {
+        "GenerateMatchIdOutput$failedRecords": "<p> The records that didn't receive a generated Match ID.</p>"
+      }
+    },
+    "GenerateMatchIdInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateMatchIdInputRecordsList": {
+      "base": null,
+      "refs": {
+        "GenerateMatchIdInput$records": "<p> The records to match.</p>"
+      }
+    },
+    "GenerateMatchIdOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -768,7 +805,7 @@
         "GetIdMappingJobInput$jobId": "<p>The ID of the job.</p>",
         "GetIdMappingJobOutput$jobId": "<p>The ID of the job.</p>",
         "GetMatchingJobInput$jobId": "<p>The ID of the job.</p>",
-        "GetMatchingJobOutput$jobId": "<p>The ID of the job.</p>",
+        "GetMatchingJobOutput$jobId": "<p>The unique identifier of the matching job.</p>",
         "JobSummary$jobId": "<p>The ID of the job.</p>",
         "StartIdMappingJobOutput$jobId": "<p>The ID of the job.</p>",
         "StartMatchingJobOutput$jobId": "<p>The ID of the job.</p>"
@@ -944,10 +981,40 @@
       "refs": {
       }
     },
+    "MatchGroup": {
+      "base": "<p>The match group.</p>",
+      "refs": {
+        "MatchGroupsList$member": null
+      }
+    },
+    "MatchGroupsList": {
+      "base": null,
+      "refs": {
+        "GenerateMatchIdOutput$matchGroups": "<p> The match groups from the generated match ID.</p>"
+      }
+    },
     "MatchPurpose": {
       "base": null,
       "refs": {
         "RuleBasedProperties$matchPurpose": "<p> An indicator of whether to generate IDs and index the data or not.</p> <p>If you choose <code>IDENTIFIER_GENERATION</code>, the process generates IDs and indexes the data.</p> <p>If you choose <code>INDEXING</code>, the process indexes the data without generating IDs.</p>"
+      }
+    },
+    "MatchedRecord": {
+      "base": "<p> The matched record.</p>",
+      "refs": {
+        "MatchedRecordsList$member": null
+      }
+    },
+    "MatchedRecordInputSourceARNString": {
+      "base": null,
+      "refs": {
+        "MatchedRecord$inputSourceARN": "<p> The input source ARN of the matched record.</p>"
+      }
+    },
+    "MatchedRecordsList": {
+      "base": null,
+      "refs": {
+        "MatchGroup$records": "<p> The matched records.</p>"
       }
     },
     "MatchingWorkflowArn": {
@@ -1055,6 +1122,12 @@
         "PutPolicyOutput$token": "<p>A unique identifier for the current revision of the policy.</p>"
       }
     },
+    "ProcessingType": {
+      "base": null,
+      "refs": {
+        "GenerateMatchIdInput$processingType": "<p>The processing mode that determines how Match IDs are generated and results are saved. Each mode provides different levels of accuracy, response time, and completeness of results.</p> <p>If not specified, defaults to <code>CONSISTENT</code>.</p> <p> <code>CONSISTENT</code>: Performs immediate lookup and matching against all existing records, with results saved synchronously. Provides highest accuracy but slower response time.</p> <p> <code>EVENTUAL</code> (shown as <i>Background</i> in the console): Performs initial match ID lookup or generation immediately, with record updates processed asynchronously in the background. Offers faster initial response time, with complete matching results available later in S3. </p> <p> <code>EVENTUAL_NO_LOOKUP</code> (shown as <i>Quick ID generation</i> in the console): Generates new match IDs without checking existing matches, with updates processed asynchronously. Provides fastest response time but should only be used for records known to be unique. </p>"
+      }
+    },
     "ProviderComponentSchema": {
       "base": "<p>The input schema supported by provider service.</p>",
       "refs": {
@@ -1143,6 +1216,12 @@
       "refs": {
       }
     },
+    "Record": {
+      "base": "<p> The record.</p>",
+      "refs": {
+        "GenerateMatchIdInputRecordsList$member": null
+      }
+    },
     "RecordAttributeMap": {
       "base": null,
       "refs": {
@@ -1155,10 +1234,34 @@
         "RecordAttributeMap$key": null
       }
     },
+    "RecordAttributeMapString255": {
+      "base": null,
+      "refs": {
+        "Record$recordAttributeMap": "<p> The record's attribute map.</p>"
+      }
+    },
+    "RecordAttributeMapString255KeyString": {
+      "base": null,
+      "refs": {
+        "RecordAttributeMapString255$key": null
+      }
+    },
+    "RecordAttributeMapString255ValueString": {
+      "base": null,
+      "refs": {
+        "RecordAttributeMapString255$value": null
+      }
+    },
     "RecordAttributeMapValueString": {
       "base": null,
       "refs": {
         "RecordAttributeMap$value": null
+      }
+    },
+    "RecordInputSourceARNString": {
+      "base": null,
+      "refs": {
+        "Record$inputSourceARN": "<p> The input source ARN of the record.</p>"
       }
     },
     "RecordMatchingModel": {
@@ -1187,7 +1290,7 @@
         "CreateMatchingWorkflowOutput$resolutionTechniques": "<p>An object which defines the <code>resolutionType</code> and the <code>ruleBasedProperties</code>.</p>",
         "GetMatchingWorkflowOutput$resolutionTechniques": "<p>An object which defines the <code>resolutionType</code> and the <code>ruleBasedProperties</code>.</p>",
         "UpdateMatchingWorkflowInput$resolutionTechniques": "<p>An object which defines the <code>resolutionType</code> and the <code>ruleBasedProperties</code>.</p>",
-        "UpdateMatchingWorkflowOutput$resolutionTechniques": "<p>An object which defines the <code>resolutionType</code> and the <code>ruleBasedProperties</code> </p>"
+        "UpdateMatchingWorkflowOutput$resolutionTechniques": "<p>An object which defines the <code>resolutionType</code> and the <code>ruleBasedProperties</code>.</p>"
       }
     },
     "ResolutionType": {
@@ -1274,7 +1377,7 @@
       "refs": {
         "CreateSchemaMappingInput$mappedInputFields": "<p>A list of <code>MappedInputFields</code>. Each <code>MappedInputField</code> corresponds to a column the source data table, and contains column name plus additional information that Entity Resolution uses for matching.</p>",
         "CreateSchemaMappingOutput$mappedInputFields": "<p>A list of <code>MappedInputFields</code>. Each <code>MappedInputField</code> corresponds to a column the source data table, and contains column name plus additional information that Entity Resolution uses for matching.</p>",
-        "GetSchemaMappingOutput$mappedInputFields": "<p>A list of <code>MappedInputFields</code>. Each <code>MappedInputField</code> corresponds to a column the source data table, and contains column name plus additional information Venice uses for matching.</p>",
+        "GetSchemaMappingOutput$mappedInputFields": "<p>A list of <code>MappedInputFields</code>. Each <code>MappedInputField</code> corresponds to a column the source data table, and contains column name plus additional information Entity Resolution uses for matching.</p>",
         "UpdateSchemaMappingInput$mappedInputFields": "<p>A list of <code>MappedInputFields</code>. Each <code>MappedInputField</code> corresponds to a column the source data table, and contains column name plus additional information that Entity Resolution uses for matching.</p>",
         "UpdateSchemaMappingOutput$mappedInputFields": "<p>A list of <code>MappedInputFields</code>. Each <code>MappedInputField</code> corresponds to a column the source data table, and contains column name plus additional information that Entity Resolution uses for matching.</p>"
       }
@@ -1392,9 +1495,13 @@
         "DeleteMatchingWorkflowOutput$message": "<p>A successful operation message.</p>",
         "DeleteSchemaMappingOutput$message": "<p>A successful operation message.</p>",
         "ExceedsLimitException$quotaName": "<p>The name of the quota that has been breached.</p>",
+        "FailedRecord$uniqueId": "<p> The unique ID of the record that didn't generate a Match ID.</p>",
         "GetMatchIdOutput$matchId": "<p>The unique identifiers for this group of match records.</p>",
         "GetMatchIdOutput$matchRule": "<p>The rule the record matched on.</p>",
         "GetMatchingWorkflowOutput$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role. Entity Resolution assumes this role to access Amazon Web Services resources on your behalf.</p>",
+        "MatchGroup$matchId": "<p> The match ID.</p>",
+        "MatchGroup$matchRule": "<p> The match rule of the match group.</p>",
+        "MatchedRecord$recordId": "<p> The record ID of the matched record.</p>",
         "ProviderIdNameSpaceConfiguration$description": "<p>The description of the ID namespace.</p>",
         "ProviderMarketplaceConfiguration$dataSetId": "<p>The dataset ID on Data Exchange.</p>",
         "ProviderMarketplaceConfiguration$revisionId": "<p>The revision ID on Data Exchange.</p>",
@@ -1485,6 +1592,12 @@
         "SchemaMappingSummary$updatedAt": "<p>The timestamp of when the <code>SchemaMapping</code> was last updated.</p>",
         "UpdateIdNamespaceOutput$createdAt": "<p>The timestamp of when the ID namespace was created.</p>",
         "UpdateIdNamespaceOutput$updatedAt": "<p>The timestamp of when the ID namespace was last updated.</p>"
+      }
+    },
+    "UniqueId": {
+      "base": null,
+      "refs": {
+        "Record$uniqueId": "<p> The unique ID of the record.</p>"
       }
     },
     "UniqueIdList": {

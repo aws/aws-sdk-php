@@ -1518,6 +1518,7 @@
         "agentAliasName":{"shape":"Name"},
         "agentAliasStatus":{"shape":"AgentAliasStatus"},
         "agentId":{"shape":"Id"},
+        "aliasInvocationState":{"shape":"AliasInvocationState"},
         "clientToken":{"shape":"ClientToken"},
         "createdAt":{"shape":"DateTimestamp"},
         "description":{"shape":"Description"},
@@ -1595,6 +1596,7 @@
         "agentAliasId":{"shape":"AgentAliasId"},
         "agentAliasName":{"shape":"Name"},
         "agentAliasStatus":{"shape":"AgentAliasStatus"},
+        "aliasInvocationState":{"shape":"AliasInvocationState"},
         "createdAt":{"shape":"DateTimestamp"},
         "description":{"shape":"Description"},
         "routingConfiguration":{"shape":"AgentAliasRoutingConfiguration"},
@@ -1827,6 +1829,13 @@
         "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
+    },
+    "AliasInvocationState":{
+      "type":"string",
+      "enum":[
+        "ACCEPT_INVOCATIONS",
+        "REJECT_INVOCATIONS"
+      ]
     },
     "AnyToolChoice":{
       "type":"structure",
@@ -7346,6 +7355,7 @@
           "location":"uri",
           "locationName":"agentId"
         },
+        "aliasInvocationState":{"shape":"AliasInvocationState"},
         "description":{"shape":"Description"},
         "routingConfiguration":{"shape":"AgentAliasRoutingConfiguration"}
       }
