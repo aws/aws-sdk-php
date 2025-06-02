@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.343.23 - 2025-06-02
 
 * `Aws\PCS` - Introduces SUSPENDING and SUSPENDED states for clusters, compute node groups, and queues.
 * `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze Amazon Aurora database clusters and generate Aurora I/O-Optimized recommendations.
