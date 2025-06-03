@@ -371,4 +371,8 @@ EOF;
 
         $this->assertEquals(['initial-response' => []], $iterator->current());
     }
+
+    public function testHandleEventWithExceptions() {
+
+    }
 }
