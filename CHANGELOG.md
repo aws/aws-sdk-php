@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Adds support to set the routing mode for a custom domain name.
+* `Aws\EMRServerless` - AWS EMR Serverless: Adds a new option in the CancelJobRun API in EMR 7.9.0+, to cancel a job with grace period. This feature is enabled by default with a 120-second grace period for streaming jobs and is not enabled by default for batch jobs.
+* `Aws\ApiGatewayV2` - Adds support to create routing rules and set the routing mode for a custom domain name.
+
 ## 3.343.23 - 2025-06-02
 
 * `Aws\PCS` - Introduces SUSPENDING and SUSPENDED states for clusters, compute node groups, and queues.

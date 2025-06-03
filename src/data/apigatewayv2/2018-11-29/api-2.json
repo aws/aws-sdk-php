@@ -297,6 +297,34 @@
         }
       ]
     },
+    "CreateRoutingRule": {
+      "name": "CreateRoutingRule",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v2/domainnames/{domainName}/routingrules",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateRoutingRuleRequest"
+      },
+      "output": {
+        "shape": "CreateRoutingRuleResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
     "CreateStage": {
       "name": "CreateStage",
       "http": {
@@ -615,6 +643,29 @@
           "shape": "TooManyRequestsException"
         }
       ]
+    },
+    "DeleteRoutingRule": {
+      "name": "DeleteRoutingRule",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v2/domainnames/{domainName}/routingrules/{routingRuleId}",
+        "responseCode": 204
+      },
+      "input": {
+        "shape": "DeleteRoutingRuleRequest"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        }
+      ],
+      "idempotent": true
     },
     "DeleteStage": {
       "name": "DeleteStage",
@@ -1196,6 +1247,56 @@
         }
       ]
     },
+    "GetRoutingRule": {
+      "name": "GetRoutingRule",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v2/domainnames/{domainName}/routingrules/{routingRuleId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetRoutingRuleRequest"
+      },
+      "output": {
+        "shape": "GetRoutingRuleResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        }
+      ]
+    },
+    "ListRoutingRules": {
+      "name": "ListRoutingRules",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v2/domainnames/{domainName}/routingrules",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListRoutingRulesRequest"
+      },
+      "output": {
+        "shape": "ListRoutingRulesResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        }
+      ]
+    },
     "GetStage": {
       "name": "GetStage",
       "http": {
@@ -1342,6 +1443,35 @@
           "shape": "ConflictException"
         }
       ]
+    },
+    "PutRoutingRule": {
+      "name": "PutRoutingRule",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/v2/domainnames/{domainName}/routingrules/{routingRuleId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "PutRoutingRuleRequest"
+      },
+      "output": {
+        "shape": "PutRoutingRuleResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ],
+      "idempotent": true
     },
     "ReimportApi": {
       "name": "ReimportApi",
@@ -2595,6 +2725,10 @@
           "shape": "MutualTlsAuthenticationInput",
           "locationName": "mutualTlsAuthentication"
         },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
+        },
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
@@ -2619,6 +2753,10 @@
           "shape": "MutualTlsAuthenticationInput",
           "locationName": "mutualTlsAuthentication"
         },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
+        },
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
@@ -2639,6 +2777,10 @@
           "shape": "StringWithLengthBetween1And512",
           "locationName": "domainName"
         },
+        "DomainNameArn": {
+          "shape": "Arn",
+          "locationName": "domainNameArn"
+        },
         "DomainNameConfigurations": {
           "shape": "DomainNameConfigurations",
           "locationName": "domainNameConfigurations"
@@ -2646,6 +2788,10 @@
         "MutualTlsAuthentication": {
           "shape": "MutualTlsAuthentication",
           "locationName": "mutualTlsAuthentication"
+        },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
         },
         "Tags": {
           "shape": "Tags",
@@ -3326,6 +3472,64 @@
         }
       }
     },
+    "CreateRoutingRuleRequest": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOfRoutingRuleAction",
+          "locationName": "actions"
+        },
+        "Conditions": {
+          "shape": "__listOfRoutingRuleCondition",
+          "locationName": "conditions"
+        },
+        "DomainName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "domainName"
+        },
+        "DomainNameId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "domainNameId"
+        },
+        "Priority": {
+          "shape": "RoutingRulePriority",
+          "locationName": "priority"
+        }
+      },
+      "required": [
+        "DomainName",
+        "Actions",
+        "Priority",
+        "Conditions"
+      ]
+    },
+    "CreateRoutingRuleResponse": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOfRoutingRuleAction",
+          "locationName": "actions"
+        },
+        "Conditions": {
+          "shape": "__listOfRoutingRuleCondition",
+          "locationName": "conditions"
+        },
+        "Priority": {
+          "shape": "RoutingRulePriority",
+          "locationName": "priority"
+        },
+        "RoutingRuleArn": {
+          "shape": "Arn",
+          "locationName": "routingRuleArn"
+        },
+        "RoutingRuleId": {
+          "shape": "Id",
+          "locationName": "routingRuleId"
+        }
+      }
+    },
     "CreateStageInput": {
       "type": "structure",
       "members": {
@@ -3852,6 +4056,30 @@
         "ApiId"
       ]
     },
+    "DeleteRoutingRuleRequest": {
+      "type": "structure",
+      "members": {
+        "DomainName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "domainName"
+        },
+        "DomainNameId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "domainNameId"
+        },
+        "RoutingRuleId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "routingRuleId"
+        }
+      },
+      "required": [
+        "RoutingRuleId",
+        "DomainName"
+      ]
+    },
     "DeleteStageRequest": {
       "type": "structure",
       "members": {
@@ -3886,8 +4114,7 @@
     },
     "DeleteVpcLinkResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "Deployment": {
       "type": "structure",
@@ -3950,6 +4177,10 @@
           "shape": "StringWithLengthBetween1And512",
           "locationName": "domainName"
         },
+        "DomainNameArn": {
+          "shape": "Arn",
+          "locationName": "domainNameArn"
+        },
         "DomainNameConfigurations": {
           "shape": "DomainNameConfigurations",
           "locationName": "domainNameConfigurations"
@@ -3957,6 +4188,10 @@
         "MutualTlsAuthentication": {
           "shape": "MutualTlsAuthentication",
           "locationName": "mutualTlsAuthentication"
+        },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
         },
         "Tags": {
           "shape": "Tags",
@@ -4533,6 +4768,10 @@
           "shape": "StringWithLengthBetween1And512",
           "locationName": "domainName"
         },
+        "DomainNameArn": {
+          "shape": "Arn",
+          "locationName": "domainNameArn"
+        },
         "DomainNameConfigurations": {
           "shape": "DomainNameConfigurations",
           "locationName": "domainNameConfigurations"
@@ -4540,6 +4779,10 @@
         "MutualTlsAuthentication": {
           "shape": "MutualTlsAuthentication",
           "locationName": "mutualTlsAuthentication"
+        },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
         },
         "Tags": {
           "shape": "Tags",
@@ -5141,6 +5384,96 @@
         "StageName",
         "ApiId"
       ]
+    },
+    "GetRoutingRuleRequest": {
+      "type": "structure",
+      "members": {
+        "DomainName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "domainName"
+        },
+        "DomainNameId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "domainNameId"
+        },
+        "RoutingRuleId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "routingRuleId"
+        }
+      },
+      "required": [
+        "RoutingRuleId",
+        "DomainName"
+      ]
+    },
+    "GetRoutingRuleResponse": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOfRoutingRuleAction",
+          "locationName": "actions"
+        },
+        "Conditions": {
+          "shape": "__listOfRoutingRuleCondition",
+          "locationName": "conditions"
+        },
+        "Priority": {
+          "shape": "RoutingRulePriority",
+          "locationName": "priority"
+        },
+        "RoutingRuleArn": {
+          "shape": "Arn",
+          "locationName": "routingRuleArn"
+        },
+        "RoutingRuleId": {
+          "shape": "Id",
+          "locationName": "routingRuleId"
+        }
+      }
+    },
+    "ListRoutingRulesRequest": {
+      "type": "structure",
+      "members": {
+        "DomainName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "domainName"
+        },
+        "DomainNameId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "domainNameId"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "DomainName"
+      ]
+    },
+    "ListRoutingRulesResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "NextToken",
+          "locationName": "nextToken"
+        },
+        "RoutingRules": {
+          "shape": "__listOfRoutingRule",
+          "locationName": "routingRules"
+        }
+      }
     },
     "GetStageResponse": {
       "type": "structure",
@@ -5803,6 +6136,70 @@
         "HTTP"
       ]
     },
+    "PutRoutingRuleRequest": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOfRoutingRuleAction",
+          "locationName": "actions"
+        },
+        "Conditions": {
+          "shape": "__listOfRoutingRuleCondition",
+          "locationName": "conditions"
+        },
+        "DomainName": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "domainName"
+        },
+        "DomainNameId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "domainNameId"
+        },
+        "Priority": {
+          "shape": "RoutingRulePriority",
+          "locationName": "priority"
+        },
+        "RoutingRuleId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "routingRuleId"
+        }
+      },
+      "required": [
+        "RoutingRuleId",
+        "DomainName",
+        "Actions",
+        "Priority",
+        "Conditions"
+      ]
+    },
+    "PutRoutingRuleResponse": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOfRoutingRuleAction",
+          "locationName": "actions"
+        },
+        "Conditions": {
+          "shape": "__listOfRoutingRuleCondition",
+          "locationName": "conditions"
+        },
+        "Priority": {
+          "shape": "RoutingRulePriority",
+          "locationName": "priority"
+        },
+        "RoutingRuleArn": {
+          "shape": "Arn",
+          "locationName": "routingRuleArn"
+        },
+        "RoutingRuleId": {
+          "shape": "Id",
+          "locationName": "routingRuleId"
+        }
+      }
+    },
     "ReimportApiInput": {
       "type": "structure",
       "members": {
@@ -6083,6 +6480,171 @@
         }
       }
     },
+    "RoutingMode": {
+      "type": "string",
+      "enum": [
+        "API_MAPPING_ONLY",
+        "ROUTING_RULE_ONLY",
+        "ROUTING_RULE_THEN_API_MAPPING"
+      ]
+    },
+    "RoutingRule": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOfRoutingRuleAction",
+          "locationName": "actions"
+        },
+        "Conditions": {
+          "shape": "__listOfRoutingRuleCondition",
+          "locationName": "conditions"
+        },
+        "Priority": {
+          "shape": "RoutingRulePriority",
+          "locationName": "priority"
+        },
+        "RoutingRuleArn": {
+          "shape": "Arn",
+          "locationName": "routingRuleArn"
+        },
+        "RoutingRuleId": {
+          "shape": "Id",
+          "locationName": "routingRuleId"
+        }
+      }
+    },
+    "RoutingRuleAction": {
+      "type": "structure",
+      "members": {
+        "InvokeApi": {
+          "shape": "RoutingRuleActionInvokeApi",
+          "locationName": "invokeApi"
+        }
+      },
+      "required": [
+        "InvokeApi"
+      ]
+    },
+    "RoutingRuleActionInvokeApi": {
+      "type": "structure",
+      "members": {
+        "ApiId": {
+          "shape": "Id",
+          "locationName": "apiId"
+        },
+        "Stage": {
+          "shape": "StringWithLengthBetween1And128",
+          "locationName": "stage"
+        },
+        "StripBasePath": {
+          "shape": "__boolean",
+          "locationName": "stripBasePath"
+        }
+      },
+      "required": [
+        "Stage",
+        "ApiId"
+      ]
+    },
+    "RoutingRuleCondition": {
+      "type": "structure",
+      "members": {
+        "MatchBasePaths": {
+          "shape": "RoutingRuleMatchBasePaths",
+          "locationName": "matchBasePaths"
+        },
+        "MatchHeaders": {
+          "shape": "RoutingRuleMatchHeaders",
+          "locationName": "matchHeaders"
+        }
+      }
+    },
+    "RoutingRuleInput": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOfRoutingRuleAction",
+          "locationName": "actions"
+        },
+        "Conditions": {
+          "shape": "__listOfRoutingRuleCondition",
+          "locationName": "conditions"
+        },
+        "Priority": {
+          "shape": "RoutingRulePriority",
+          "locationName": "priority"
+        }
+      },
+      "required": [
+        "Actions",
+        "Priority",
+        "Conditions"
+      ]
+    },
+    "RoutingRuleMatchBasePaths": {
+      "type": "structure",
+      "members": {
+        "AnyOf": {
+          "shape": "__listOfSelectionKey",
+          "locationName": "anyOf"
+        }
+      },
+      "required": [
+        "AnyOf"
+      ]
+    },
+    "RoutingRuleMatchHeaderValue": {
+      "type": "structure",
+      "members": {
+        "Header": {
+          "shape": "SelectionKey",
+          "locationName": "header"
+        },
+        "ValueGlob": {
+          "shape": "SelectionExpression",
+          "locationName": "valueGlob"
+        }
+      },
+      "required": [
+        "ValueGlob",
+        "Header"
+      ]
+    },
+    "RoutingRuleMatchHeaders": {
+      "type": "structure",
+      "members": {
+        "AnyOf": {
+          "shape": "__listOfRoutingRuleMatchHeaderValue",
+          "locationName": "anyOf"
+        }
+      },
+      "required": [
+        "AnyOf"
+      ]
+    },
+    "RoutingRulePriority": {
+      "type": "integer",
+      "min": 1,
+      "max": 1000000
+    },
+    "MaxResults": {
+      "type": "integer",
+      "min": 1,
+      "max": 100
+    },
+    "RoutingRules": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "NextToken",
+          "locationName": "nextToken"
+        },
+        "RoutingRules": {
+          "shape": "__listOfRoutingRule",
+          "locationName": "routingRules"
+        }
+      }
+    },
     "SecurityGroupIdList": {
       "type": "list",
       "member": {
@@ -6249,8 +6811,7 @@
     },
     "TagResourceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "Tags": {
       "type": "map",
@@ -6817,6 +7378,10 @@
         "MutualTlsAuthentication": {
           "shape": "MutualTlsAuthenticationInput",
           "locationName": "mutualTlsAuthentication"
+        },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
         }
       }
     },
@@ -6835,6 +7400,10 @@
         "MutualTlsAuthentication": {
           "shape": "MutualTlsAuthenticationInput",
           "locationName": "mutualTlsAuthentication"
+        },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
         }
       },
       "required": [
@@ -6852,6 +7421,10 @@
           "shape": "StringWithLengthBetween1And512",
           "locationName": "domainName"
         },
+        "DomainNameArn": {
+          "shape": "Arn",
+          "locationName": "domainNameArn"
+        },
         "DomainNameConfigurations": {
           "shape": "DomainNameConfigurations",
           "locationName": "domainNameConfigurations"
@@ -6859,6 +7432,10 @@
         "MutualTlsAuthentication": {
           "shape": "MutualTlsAuthentication",
           "locationName": "mutualTlsAuthentication"
+        },
+        "RoutingMode": {
+          "shape": "RoutingMode",
+          "locationName": "routingMode"
         },
         "Tags": {
           "shape": "Tags",
@@ -7909,6 +8486,36 @@
       "type": "list",
       "member": {
         "shape": "RouteResponse"
+      }
+    },
+    "__listOfRoutingRule": {
+      "type": "list",
+      "member": {
+        "shape": "RoutingRule"
+      }
+    },
+    "__listOfRoutingRuleAction": {
+      "type": "list",
+      "member": {
+        "shape": "RoutingRuleAction"
+      }
+    },
+    "__listOfRoutingRuleCondition": {
+      "type": "list",
+      "member": {
+        "shape": "RoutingRuleCondition"
+      }
+    },
+    "__listOfRoutingRuleMatchHeaderValue": {
+      "type": "list",
+      "member": {
+        "shape": "RoutingRuleMatchHeaderValue"
+      }
+    },
+    "__listOfSelectionKey": {
+      "type": "list",
+      "member": {
+        "shape": "SelectionKey"
       }
     },
     "__listOfStage": {
