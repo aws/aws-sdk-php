@@ -110,6 +110,505 @@
         "title": "GetInvoiceUnit as of specified time"
       }
     ],
+    "ListInvoiceSummaries": [
+      {
+        "input": {
+          "Selector": {
+            "ResourceType": "INVOICE_ID",
+            "Value": "1111111111"
+          }
+        },
+        "output": {
+          "InvoiceSummaries": [
+            {
+              "AccountId": "111111111111",
+              "BaseCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "BillingPeriod": {
+                "Month": 1,
+                "Year": 2025
+              },
+              "DueDate": "2025-04-01T01:00:00.000Z",
+              "Entity": {
+                "InvoicingEntity": "Amazon Web Services, Inc."
+              },
+              "InvoiceId": "1111111111",
+              "InvoiceType": "INVOICE",
+              "IssuedDate": "2025-04-01T01:00:00.000Z",
+              "PaymentCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "TaxCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "ListInvoiceSummaries with InvoiceId as selector"
+      },
+      {
+        "input": {
+          "Filter": {
+            "BillingPeriod": {
+              "Month": 1,
+              "Year": 2025
+            }
+          },
+          "Selector": {
+            "ResourceType": "ACCOUNT_ID",
+            "Value": "111111111111"
+          }
+        },
+        "output": {
+          "InvoiceSummaries": [
+            {
+              "AccountId": "111111111111",
+              "BaseCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "BillingPeriod": {
+                "Month": 1,
+                "Year": 2025
+              },
+              "DueDate": "2025-04-01T01:00:00.000Z",
+              "Entity": {
+                "InvoicingEntity": "Amazon Web Services, Inc."
+              },
+              "InvoiceId": "1111111111",
+              "InvoiceType": "INVOICE",
+              "IssuedDate": "2025-04-01T01:00:00.000Z",
+              "PaymentCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "TaxCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              }
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "ListInvoiceSummaries with AccountId as selector and billing period"
+      },
+      {
+        "input": {
+          "Filter": {
+            "TimeInterval": {
+              "EndDate": 1592639007,
+              "StartDate": 1590997407
+            }
+          },
+          "Selector": {
+            "ResourceType": "ACCOUNT_ID",
+            "Value": "111111111111"
+          }
+        },
+        "output": {
+          "InvoiceSummaries": [
+            {
+              "AccountId": "111111111111",
+              "BaseCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "BillingPeriod": {
+                "Month": 1,
+                "Year": 2025
+              },
+              "DueDate": "2025-04-01T01:00:00.000Z",
+              "Entity": {
+                "InvoicingEntity": "Amazon Web Services, Inc."
+              },
+              "InvoiceId": "1111111111",
+              "InvoiceType": "INVOICE",
+              "IssuedDate": "2025-04-01T01:00:00.000Z",
+              "PaymentCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "TaxCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              }
+            }
+          ]
+        },
+        "id": "example-3",
+        "title": "ListInvoiceSummaries with AccountId as selector and time interval"
+      },
+      {
+        "input": {
+          "Filter": {
+            "BillingPeriod": {
+              "Month": 1,
+              "Year": 2025
+            }
+          },
+          "MaxResults": 1,
+          "Selector": {
+            "ResourceType": "ACCOUNT_ID",
+            "Value": "111111111111"
+          }
+        },
+        "output": {
+          "InvoiceSummaries": [
+            {
+              "AccountId": "111111111111",
+              "BaseCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "BillingPeriod": {
+                "Month": 1,
+                "Year": 2025
+              },
+              "DueDate": "2025-04-01T01:00:00.000Z",
+              "Entity": {
+                "InvoicingEntity": "Amazon Web Services, Inc."
+              },
+              "InvoiceId": "1111111111",
+              "InvoiceType": "INVOICE",
+              "IssuedDate": "2025-04-01T01:00:00.000Z",
+              "PaymentCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "TaxCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              }
+            }
+          ],
+          "NextToken": "abcde12345"
+        },
+        "id": "example-4",
+        "title": "ListInvoiceSummaries with AccountId as selector and a billing period and max results"
+      },
+      {
+        "input": {
+          "Filter": {
+            "BillingPeriod": {
+              "Month": 1,
+              "Year": 2025
+            }
+          },
+          "NextToken": "abcde12345",
+          "Selector": {
+            "ResourceType": "ACCOUNT_ID",
+            "Value": "111111111111"
+          }
+        },
+        "output": {
+          "InvoiceSummaries": [
+            {
+              "AccountId": "111111111111",
+              "BaseCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "BillingPeriod": {
+                "Month": 1,
+                "Year": 2025
+              },
+              "DueDate": "2025-04-01T01:00:00.000Z",
+              "Entity": {
+                "InvoicingEntity": "Amazon Web Services, Inc."
+              },
+              "InvoiceId": "1111111111",
+              "InvoiceType": "INVOICE",
+              "IssuedDate": "2025-04-01T01:00:00.000Z",
+              "PaymentCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              },
+              "TaxCurrencyAmount": {
+                "AmountBreakdown": {
+                  "Discounts": {
+                    "TotalAmount": "1.00"
+                  },
+                  "SubTotalAmount": "1.00",
+                  "Taxes": {
+                    "Breakdown": [
+                      {
+                        "Amount": "1",
+                        "Description": "VAT",
+                        "Rate": "1.0"
+                      }
+                    ],
+                    "TotalAmount": "1.00"
+                  }
+                },
+                "CurrencyCode": "USD",
+                "CurrencyExchangeDetails": {
+                  "Rate": "1.0",
+                  "SourceCurrencyCode": "USD",
+                  "TargetCurrencyCode": "USD"
+                },
+                "TotalAmount": "1.00",
+                "TotalAmountBeforeTax": "1.00"
+              }
+            }
+          ]
+        },
+        "id": "example-5",
+        "title": "ListInvoiceSummaries with AccountId as selector and a billing period and next token"
+      }
+    ],
     "ListInvoiceUnits": [
       {
         "input": {

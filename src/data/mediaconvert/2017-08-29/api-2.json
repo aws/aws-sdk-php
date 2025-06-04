@@ -8594,6 +8594,13 @@
         }
       }
     },
+    "Mp4C2paManifest": {
+      "type": "string",
+      "enum": [
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
     "Mp4CslgAtom": {
       "type": "string",
       "enum": [
@@ -8622,6 +8629,14 @@
           "shape": "CmfcAudioDuration",
           "locationName": "audioDuration"
         },
+        "C2paManifest": {
+          "shape": "Mp4C2paManifest",
+          "locationName": "c2paManifest"
+        },
+        "CertificateSecret": {
+          "shape": "__stringMin1Max2048PatternArnAZSecretsmanagerWD12SecretAZAZ09",
+          "locationName": "certificateSecret"
+        },
         "CslgAtom": {
           "shape": "Mp4CslgAtom",
           "locationName": "cslgAtom"
@@ -8641,6 +8656,10 @@
         "Mp4MajorBrand": {
           "shape": "__string",
           "locationName": "mp4MajorBrand"
+        },
+        "SigningKmsKey": {
+          "shape": "__stringMin1PatternArnAwsUsGovCnKmsAZ26EastWestCentralNorthSouthEastWest1912D12KeyAFAF098AFAF094AFAF094AFAF094AFAF0912MrkAFAF0932",
+          "locationName": "signingKmsKey"
         }
       }
     },
@@ -13185,6 +13204,11 @@
       "min": 1,
       "max": 50,
       "pattern": "^[a-zA-Z0-9_\\/_+=.@-]*$"
+    },
+    "__stringMin1PatternArnAwsUsGovCnKmsAZ26EastWestCentralNorthSouthEastWest1912D12KeyAFAF098AFAF094AFAF094AFAF094AFAF0912MrkAFAF0932": {
+      "type": "string",
+      "min": 1,
+      "pattern": "^(arn:aws(-us-gov|-cn)?:kms:[a-z-]{2,6}-(east|west|central|((north|south)(east|west)?))-[1-9]{1,2}:\\d{12}:key/)?[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|mrk-[a-fA-F0-9]{32}$"
     },
     "__stringMin24Max512PatternAZaZ0902": {
       "type": "string",
