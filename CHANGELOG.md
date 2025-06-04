@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.0 - 2025-06-04
 
 * `Aws\Amplify` - Update documentation for cacheConfig in CreateApp API
 * `Aws\Invoicing` - Added new Invoicing ListInvoiceSummaries API Operation
