@@ -147,6 +147,13 @@ class MultipartUploader implements PromisorInterface
     }
 
     /**
+     * @return UploadResponse
+     */
+    public function upload(): UploadResponse {
+        return $this->promise()->wait();
+    }
+
+    /**
      * @return PromiseInterface
      */
     public function promise(): PromiseInterface
@@ -197,27 +204,19 @@ class MultipartUploader implements PromisorInterface
         $isSeekable = $this->body->isSeekable();
         $partSize = $this->config['part_size'];
         $commands = [];
-        for ($partNo = count($this->parts) + 1;
-             $isSeekable
-                 ? $this->body->tell() < $this->body->getSize()
-                 : !$this->body->eof();
-             $partNo++
-        ) {
-            if ($isSeekable) {
-                $readSize = min($partSize, $this->body->getSize() - $this->body->tell());
-            } else {
-                $readSize = $partSize;
-            }
-
-            $partBody  = Utils::streamFor(
-                $this->body->read($readSize)
-            );
+        $partNo = count($this->parts);
+        while (!$this->body->eof()) {
+            $partNo++;
+            $read = $this->body->read($partSize);
             // To make sure we do not create an empty part when
             // we already reached the end of file.
-            if (!$isSeekable && $this->body->eof() && $partBody->getSize() === 0) {
+            if (empty($read) && $this->body->eof()) {
                 break;
             }
 
+            $partBody  = Utils::streamFor(
+                $read
+            );
             $uploadPartCommandArgs = [
                 ...$this->createMultipartArgs,
                 'UploadId' => $this->uploadId,

@@ -8,6 +8,8 @@ use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Models\UploadResponse;
 use Aws\S3\S3Transfer\MultipartUploader;
+use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
@@ -207,5 +209,185 @@ EOF;
             [],
             12345
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransferListenerNotifierNotifiesListenersOnSuccess(): void
+    {
+        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener3 = $this->getMockBuilder(TransferListener::class)->getMock();
+
+        $listener1->expects($this->once())->method('transferInitiated');
+        $listener1->expects($this->atLeastOnce())->method('bytesTransferred');
+        $listener1->expects($this->once())->method('transferComplete');
+
+        $listener2->expects($this->once())->method('transferInitiated');
+        $listener2->expects($this->atLeastOnce())->method('bytesTransferred');
+        $listener2->expects($this->once())->method('transferComplete');
+
+        $listener3->expects($this->once())->method('transferInitiated');
+        $listener3->expects($this->atLeastOnce())->method('bytesTransferred');
+        $listener3->expects($this->once())->method('transferComplete');
+
+        $listenerNotifier = new TransferListenerNotifier([$listener1, $listener2, $listener3]);
+
+        $s3Client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3Client->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result([
+                        'UploadId' => 'TestUploadId'
+                    ]));
+                } elseif ($command->getName() === 'UploadPart') {
+                    return Create::promiseFor(new Result([
+                        'ETag' => 'TestETag'
+                    ]));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+        $s3Client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $stream = Utils::streamFor(str_repeat('*', 10240000)); // 10MB
+        $requestArgs = [
+            'Key' => 'test-key',
+            'Bucket' => 'test-bucket',
+        ];
+
+        $multipartUploader = new MultipartUploader(
+            $s3Client,
+            $requestArgs,
+            [
+                'part_size' => 5242880, // 5MB
+                'concurrency' => 1,
+            ],
+            $stream,
+            null,
+            [],
+            null,
+            $listenerNotifier
+        );
+
+        $response = $multipartUploader->promise()->wait();
+        $this->assertInstanceOf(UploadResponse::class, $response);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransferListenerNotifierNotifiesListenersOnFailure(): void
+    {
+        $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
+        $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
+
+        $listener1->expects($this->once())->method('transferInitiated');
+        $listener1->expects($this->once())->method('transferFail');
+
+        $listener2->expects($this->once())->method('transferInitiated');
+        $listener2->expects($this->once())->method('transferFail');
+
+        $listenerNotifier = new TransferListenerNotifier([$listener1, $listener2]);
+
+        $s3Client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3Client->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result([
+                        'UploadId' => 'TestUploadId'
+                    ]));
+                } elseif ($command->getName() === 'UploadPart') {
+                    return Create::rejectionFor(new \Exception('Upload failed'));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+        $s3Client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $stream = Utils::streamFor(str_repeat('*', 10240000));
+        $requestArgs = [
+            'Key' => 'test-key',
+            'Bucket' => 'test-bucket',
+        ];
+
+        $multipartUploader = new MultipartUploader(
+            $s3Client,
+            $requestArgs,
+            [
+                'part_size' => 5242880, // 5MB
+                'concurrency' => 1,
+            ],
+            $stream,
+            null,
+            [],
+            null,
+            $listenerNotifier
+        );
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Upload failed');
+        $multipartUploader->promise()->wait();
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransferListenerNotifierWithEmptyListeners(): void
+    {
+        $listenerNotifier = new TransferListenerNotifier([]);
+
+        $s3Client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3Client->method('executeAsync')
+            ->willReturnCallback(function ($command) {
+                if ($command->getName() === 'CreateMultipartUpload') {
+                    return Create::promiseFor(new Result([
+                        'UploadId' => 'TestUploadId'
+                    ]));
+                } elseif ($command->getName() === 'UploadPart') {
+                    return Create::promiseFor(new Result([
+                        'ETag' => 'TestETag'
+                    ]));
+                }
+                return Create::promiseFor(new Result([]));
+            });
+        $s3Client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args) {
+                return new Command($commandName, $args);
+            });
+
+        $stream = Utils::streamFor(str_repeat('*', 1024));
+        $requestArgs = [
+            'Key' => 'test-key',
+            'Bucket' => 'test-bucket',
+        ];
+
+        $multipartUploader = new MultipartUploader(
+            $s3Client,
+            $requestArgs,
+            [
+                'part_size' => 5242880,
+                'concurrency' => 1,
+            ],
+            $stream,
+            null,
+            [],
+            null,
+            $listenerNotifier
+        );
+
+        $response = $multipartUploader->promise()->wait();
+        $this->assertInstanceOf(UploadResponse::class, $response);
     }
 }

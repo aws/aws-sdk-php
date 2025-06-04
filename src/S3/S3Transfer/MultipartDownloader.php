@@ -124,6 +124,13 @@ abstract class MultipartDownloader implements PromisorInterface
     }
 
     /**
+     * @return DownloadResponse
+     */
+    public function download(): DownloadResponse {
+        return $this->promise()->wait();
+    }
+
+    /**
      * Returns that resolves a multipart download operation,
      * or to a rejection in case of any failures.
      *
