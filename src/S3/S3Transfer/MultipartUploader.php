@@ -261,6 +261,8 @@ class MultipartUploader implements PromisorInterface
                 },
                 'rejected'     => function (Throwable $e) {
                     $this->partUploadFailed($e);
+
+                    throw $e;
                 }
             ]
         ))->promise();
@@ -410,6 +412,19 @@ class MultipartUploader implements PromisorInterface
      * @return void
      */
     private function uploadFailed(Throwable $reason): void {
+        // Event has been already propagated
+        if ($this->currentSnapshot->getReason() !== null) {
+            return;
+        }
+
+        $this->currentSnapshot = new TransferProgressSnapshot(
+            $this->currentSnapshot->getIdentifier(),
+            $this->currentSnapshot->getTransferredBytes(),
+            $this->currentSnapshot->getTotalBytes(),
+            $this->currentSnapshot->getResponse(),
+            $reason
+        );
+
         if (!empty($this->uploadId)) {
             $this->abortMultipartUpload()->wait();
         }

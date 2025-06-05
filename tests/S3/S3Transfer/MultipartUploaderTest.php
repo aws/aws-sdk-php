@@ -284,6 +284,9 @@ EOF;
      */
     public function testTransferListenerNotifierNotifiesListenersOnFailure(): void
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Upload failed');
+
         $listener1 = $this->getMockBuilder(TransferListener::class)->getMock();
         $listener2 = $this->getMockBuilder(TransferListener::class)->getMock();
 
@@ -334,8 +337,6 @@ EOF;
             $listenerNotifier
         );
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Upload failed');
         $multipartUploader->promise()->wait();
     }
 
