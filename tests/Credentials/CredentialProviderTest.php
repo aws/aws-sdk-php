@@ -2413,11 +2413,15 @@ EOF;
                 return Create::promiseFor(
                     new Response(200, [], Utils::streamFor(''))
                 );
-            } elseif ($path === '/latest/meta-data/iam/security-credentials/') {
+            } elseif ($path === '/latest/meta-data/iam/security-credentials/'
+                || $path === '/latest/meta-data/iam/security-credentials-extended/'
+            ) {
                 return Create::promiseFor(
                     new Response(200, [], Utils::streamFor('testProfile'))
                 );
-            } elseif ($path === '/latest/meta-data/iam/security-credentials/testProfile') {
+            } elseif ($path === '/latest/meta-data/iam/security-credentials/testProfile'
+                || $path === '/latest/meta-data/iam/security-credentials-extended/testProfile'
+            ) {
                 $expiration = time() + 1000;
                 return Create::promiseFor(
                     new Response(
