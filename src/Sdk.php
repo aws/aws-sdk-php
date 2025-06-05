@@ -815,7 +815,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.344.0';
+    const VERSION = '3.344.1';
 
     /** @var array Arguments for creating clients */
     private $args;

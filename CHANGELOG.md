@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.1 - 2025-06-05
 
 * `Aws\WAFV2` - AWS WAF adds support for ASN-based traffic filtering and support for ASN-based rate limiting.
 * `Aws\CloudFormation` - Add new warning type 'EXCLUDED_PROPERTIES'
