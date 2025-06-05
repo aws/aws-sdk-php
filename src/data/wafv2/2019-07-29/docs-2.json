@@ -91,6 +91,12 @@
         "APIKeySummary$Version": "<p>Internal value used by WAF to manage the key. </p>"
       }
     },
+    "ASN": {
+      "base": null,
+      "refs": {
+        "AsnList$member": null
+      }
+    },
     "AWSManagedRulesACFPRuleSet": {
       "base": "<p>Details for your use of the account creation fraud prevention managed rule group, <code>AWSManagedRulesACFPRuleSet</code>. This configuration is used in <code>ManagedRuleGroupConfig</code>. </p>",
       "refs": {
@@ -167,15 +173,25 @@
         "Statement$AndStatement": "<p>A logical rule statement used to combine other rule statements with AND logic. You provide more than one <a>Statement</a> within the <code>AndStatement</code>. </p>"
       }
     },
-    "AssociateWebACLRequest": {
+    "AsnList": {
       "base": null,
       "refs": {
+        "AsnMatchStatement$AsnList": "<p>Contains one or more Autonomous System Numbers (ASNs). ASNs are unique identifiers assigned to large internet networks managed by organizations such as internet service providers, enterprises, universities, or government agencies. </p>"
       }
+    },
+    "AsnMatchStatement": {
+      "base": "<p>A rule statement that inspects web traffic based on the Autonomous System Number (ASN) associated with the request's IP address.</p> <p>For additional details, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-asn-match.html\">ASN match rule statement</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF Developer Guide</a>. </p>",
+      "refs": {
+        "Statement$AsnMatchStatement": "<p>A rule statement that inspects web traffic based on the Autonomous System Number (ASN) associated with the request's IP address.</p> <p>For additional details, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-asn-match.html\">ASN match rule statement</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF Developer Guide</a>. </p>"
+      }
+    },
+    "AssociateWebACLRequest": {
+      "base": null,
+      "refs": {}
     },
     "AssociateWebACLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatedResourceType": {
       "base": null,
@@ -286,13 +302,11 @@
     },
     "CheckCapacityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CheckCapacityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ComparisonOperator": {
       "base": null,
@@ -365,53 +379,43 @@
     },
     "CreateAPIKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAPIKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRegexPatternSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRegexPatternSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRuleGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRuleGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWebACLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWebACLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreationPathString": {
       "base": null,
@@ -512,123 +516,99 @@
     },
     "DeleteAPIKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAPIKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFirewallManagerRuleGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFirewallManagerRuleGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePermissionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePermissionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRegexPatternSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRegexPatternSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRuleGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRuleGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWebACLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWebACLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAllManagedProductsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAllManagedProductsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeManagedProductsByVendorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeManagedProductsByVendorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeManagedRuleGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeManagedRuleGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWebACLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWebACLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DownloadUrl": {
       "base": null,
@@ -938,8 +918,9 @@
       }
     },
     "ForwardedIPConfig": {
-      "base": "<p>The configuration for inspecting IP addresses in an HTTP header that you specify, instead of using the IP address that's reported by the web request origin. Commonly, this is the X-Forwarded-For (XFF) header, but you can specify any header name. </p> <note> <p>If the specified header isn't present in the request, WAF doesn't apply the rule to the web request at all.</p> </note> <p>This configuration is used for <a>GeoMatchStatement</a> and <a>RateBasedStatement</a>. For <a>IPSetReferenceStatement</a>, use <a>IPSetForwardedIPConfig</a> instead. </p> <p>WAF only evaluates the first IP address found in the specified HTTP header. </p>",
+      "base": "<p>The configuration for inspecting IP addresses in an HTTP header that you specify, instead of using the IP address that's reported by the web request origin. Commonly, this is the X-Forwarded-For (XFF) header, but you can specify any header name. </p> <note> <p>If the specified header isn't present in the request, WAF doesn't apply the rule to the web request at all.</p> </note> <p>This configuration is used for <a>GeoMatchStatement</a>, <a>AsnMatchStatement</a>, and <a>RateBasedStatement</a>. For <a>IPSetReferenceStatement</a>, use <a>IPSetForwardedIPConfig</a> instead. </p> <p>WAF only evaluates the first IP address found in the specified HTTP header. </p>",
       "refs": {
+        "AsnMatchStatement$ForwardedIPConfig": "<p>The configuration for inspecting IP addresses to match against an ASN in an HTTP header that you specify, instead of using the IP address that's reported by the web request origin. Commonly, this is the X-Forwarded-For (XFF) header, but you can specify any header name. </p>",
         "GeoMatchStatement$ForwardedIPConfig": "<p>The configuration for inspecting IP addresses in an HTTP header that you specify, instead of using the IP address that's reported by the web request origin. Commonly, this is the X-Forwarded-For (XFF) header, but you can specify any header name. </p> <note> <p>If the specified header isn't present in the request, WAF doesn't apply the rule to the web request at all.</p> </note>",
         "RateBasedStatement$ForwardedIPConfig": "<p>The configuration for inspecting IP addresses in an HTTP header that you specify, instead of using the IP address that's reported by the web request origin. Commonly, this is the X-Forwarded-For (XFF) header, but you can specify any header name. </p> <note> <p>If the specified header isn't present in the request, WAF doesn't apply the rule to the web request at all.</p> </note> <p>This is required if you specify a forwarded IP in the rule's aggregate key settings. </p>"
       }
@@ -959,13 +940,11 @@
     },
     "GenerateMobileSdkReleaseUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GenerateMobileSdkReleaseUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GeoMatchStatement": {
       "base": "<p>A rule statement that labels web requests by country and region and that matches against web requests based on country code. A geo match rule labels every request that it inspects regardless of whether it finds a match.</p> <ul> <li> <p>To manage requests only by country, you can use this statement by itself and specify the countries that you want to match against in the <code>CountryCodes</code> array. </p> </li> <li> <p>Otherwise, configure your geo match rule with Count action so that it only labels requests. Then, add one or more label match rules to run after the geo match rule and configure them to match against the geographic labels and handle the requests as needed. </p> </li> </ul> <p>WAF labels requests using the alpha-2 country and region codes from the International Organization for Standardization (ISO) 3166 standard. WAF determines the codes using either the IP address in the web request origin or, if you specify it, the address in the geo match <code>ForwardedIPConfig</code>. </p> <p>If you use the web request origin, the label formats are <code>awswaf:clientip:geo:region:&lt;ISO country code&gt;-&lt;ISO region code&gt;</code> and <code>awswaf:clientip:geo:country:&lt;ISO country code&gt;</code>.</p> <p>If you use a forwarded IP address, the label formats are <code>awswaf:forwardedip:geo:region:&lt;ISO country code&gt;-&lt;ISO region code&gt;</code> and <code>awswaf:forwardedip:geo:country:&lt;ISO country code&gt;</code>.</p> <p>For additional details, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-geo-match.html\">Geographic match rule statement</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF Developer Guide</a>. </p>",
@@ -975,123 +954,99 @@
     },
     "GetDecryptedAPIKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDecryptedAPIKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedRuleSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetManagedRuleSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMobileSdkReleaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMobileSdkReleaseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPermissionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPermissionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRateBasedStatementManagedKeysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRateBasedStatementManagedKeysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRegexPatternSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRegexPatternSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuleGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuleGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSampledRequestsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSampledRequestsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWebACLForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWebACLForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWebACLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWebACLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HTTPHeader": {
       "base": "<p>Part of the response from <a>GetSampledRequests</a>. This is a complex type that appears as <code>Headers</code> in the response syntax. <code>HTTPHeader</code> contains the names and values of all of the headers that appear in one of the web requests. </p>",
@@ -1349,63 +1304,51 @@
     },
     "ListAPIKeysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAPIKeysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAvailableManagedRuleGroupVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAvailableManagedRuleGroupVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAvailableManagedRuleGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAvailableManagedRuleGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIPSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIPSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLoggingConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLoggingConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedRuleSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedRuleSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMaxItems": {
       "base": null,
@@ -1415,63 +1358,51 @@
     },
     "ListMobileSdkReleasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMobileSdkReleasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRegexPatternSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRegexPatternSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesForWebACLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourcesForWebACLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWebACLsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWebACLsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LockToken": {
       "base": null,
@@ -1726,8 +1657,8 @@
       "refs": {
         "Body$OversizeHandling": "<p>What WAF should do if the body is larger than WAF can inspect. </p> <p>WAF does not support inspecting the entire contents of the web request body if the body exceeds the limit for the resource type. When a web request body is larger than the limit, the underlying host service only forwards the contents that are within the limit to WAF for inspection. </p> <ul> <li> <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p> </li> <li> <p>For CloudFront, API Gateway, Amazon Cognito, App Runner, and Verified Access, the default limit is 16 KB (16,384 bytes), and you can increase the limit for each resource type in the web ACL <code>AssociationConfig</code>, for additional processing fees. </p> </li> <li> <p>For Amplify, use the CloudFront limit.</p> </li> </ul> <p>The options for oversize handling are the following:</p> <ul> <li> <p> <code>CONTINUE</code> - Inspect the available body contents normally, according to the rule inspection criteria. </p> </li> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul> <p>You can combine the <code>MATCH</code> or <code>NO_MATCH</code> settings for oversize handling with your rule and web ACL action settings, so that you block any request whose body is over the limit. </p> <p>Default: <code>CONTINUE</code> </p>",
         "Cookies$OversizeHandling": "<p>What WAF should do if the cookies of the request are more numerous or larger than WAF can inspect. WAF does not support inspecting the entire contents of request cookies when they exceed 8 KB (8192 bytes) or 200 total cookies. The underlying host service forwards a maximum of 200 cookies and at most 8 KB of cookie contents to WAF. </p> <p>The options for oversize handling are the following:</p> <ul> <li> <p> <code>CONTINUE</code> - Inspect the available cookies normally, according to the rule inspection criteria. </p> </li> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul>",
-        "HeaderOrder$OversizeHandling": "<p>What WAF should do if the headers of the request are more numerous or larger than WAF can inspect. WAF does not support inspecting the entire contents of request headers when they exceed 8 KB (8192 bytes) or 200 total headers. The underlying host service forwards a maximum of 200 headers and at most 8 KB of header contents to WAF. </p> <p>The options for oversize handling are the following:</p> <ul> <li> <p> <code>CONTINUE</code> - Inspect the available headers normally, according to the rule inspection criteria. </p> </li> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul>",
-        "Headers$OversizeHandling": "<p>What WAF should do if the headers of the request are more numerous or larger than WAF can inspect. WAF does not support inspecting the entire contents of request headers when they exceed 8 KB (8192 bytes) or 200 total headers. The underlying host service forwards a maximum of 200 headers and at most 8 KB of header contents to WAF. </p> <p>The options for oversize handling are the following:</p> <ul> <li> <p> <code>CONTINUE</code> - Inspect the available headers normally, according to the rule inspection criteria. </p> </li> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul>",
+        "HeaderOrder$OversizeHandling": "<p>What WAF should do if the headers determined by your match scope are more numerous or larger than WAF can inspect. WAF does not support inspecting the entire contents of request headers when they exceed 8 KB (8192 bytes) or 200 total headers. The underlying host service forwards a maximum of 200 headers and at most 8 KB of header contents to WAF. </p> <p>The options for oversize handling are the following:</p> <ul> <li> <p> <code>CONTINUE</code> - Inspect the available headers normally, according to the rule inspection criteria. </p> </li> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul>",
+        "Headers$OversizeHandling": "<p>What WAF should do if the headers determined by your match scope are more numerous or larger than WAF can inspect. WAF does not support inspecting the entire contents of request headers when they exceed 8 KB (8192 bytes) or 200 total headers. The underlying host service forwards a maximum of 200 headers and at most 8 KB of header contents to WAF. </p> <p>The options for oversize handling are the following:</p> <ul> <li> <p> <code>CONTINUE</code> - Inspect the available headers normally, according to the rule inspection criteria. </p> </li> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul>",
         "JsonBody$OversizeHandling": "<p>What WAF should do if the body is larger than WAF can inspect. </p> <p>WAF does not support inspecting the entire contents of the web request body if the body exceeds the limit for the resource type. When a web request body is larger than the limit, the underlying host service only forwards the contents that are within the limit to WAF for inspection. </p> <ul> <li> <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p> </li> <li> <p>For CloudFront, API Gateway, Amazon Cognito, App Runner, and Verified Access, the default limit is 16 KB (16,384 bytes), and you can increase the limit for each resource type in the web ACL <code>AssociationConfig</code>, for additional processing fees. </p> </li> <li> <p>For Amplify, use the CloudFront limit.</p> </li> </ul> <p>The options for oversize handling are the following:</p> <ul> <li> <p> <code>CONTINUE</code> - Inspect the available body contents normally, according to the rule inspection criteria. </p> </li> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul> <p>You can combine the <code>MATCH</code> or <code>NO_MATCH</code> settings for oversize handling with your rule and web ACL action settings, so that you block any request whose body is over the limit. </p> <p>Default: <code>CONTINUE</code> </p>"
       }
     },
@@ -1846,33 +1777,27 @@
     },
     "PutLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutManagedRuleSetVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutManagedRuleSetVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPermissionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPermissionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryString": {
       "base": "<p>Inspect the query string of the web request. This is the part of a URL that appears after a <code>?</code> character, if any.</p> <p>This is used in the <a>FieldToMatch</a> specification for some web request component types. </p> <p>JSON specification: <code>\"QueryString\": {}</code> </p>",
@@ -1915,6 +1840,12 @@
       "base": null,
       "refs": {
         "RateBasedStatement$Limit": "<p>The limit on requests during the specified evaluation window for a single aggregation instance for the rate-based rule. If the rate-based statement includes a <code>ScopeDownStatement</code>, this limit is applied only to the requests that match the statement.</p> <p>Examples: </p> <ul> <li> <p>If you aggregate on just the IP address, this is the limit on requests from any single IP address. </p> </li> <li> <p>If you aggregate on the HTTP method and the query argument name \"city\", then this is the limit on requests for any single method, city pair. </p> </li> </ul>"
+      }
+    },
+    "RateLimitAsn": {
+      "base": "<p>Specifies an Autonomous System Number (ASN) derived from the request's originating or forwarded IP address as an aggregate key for a rate-based rule. Each distinct ASN contributes to the aggregation instance. If you use a single ASN as your custom key, then each ASN fully defines an aggregation instance. </p>",
+      "refs": {
+        "RateBasedStatementCustomKey$ASN": "<p>Use an Autonomous System Number (ASN) derived from the request's originating or forwarded IP address as an aggregate key. Each distinct ASN contributes to the aggregation instance. </p>"
       }
     },
     "RateLimitCookie": {
@@ -2542,13 +2473,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2653,63 +2582,51 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIPSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIPSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateManagedRuleSetVersionExpiryDateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateManagedRuleSetVersionExpiryDateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRegexPatternSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRegexPatternSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRuleGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRuleGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWebACLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWebACLResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UriFragment": {
       "base": "<p>Inspect fragments of the request URI. You can specify the parts of the URI fragment to inspect and you can narrow the set of URI fragments to inspect by including or excluding specific keys. </p> <p>This is used to indicate the web request component to inspect, in the <a>FieldToMatch</a> specification. </p> <p>Example JSON: <code>\"UriFragment\": { \"MatchPattern\": { \"All\": {} }, \"MatchScope\": \"KEY\", \"OversizeHandling\": \"MATCH\" }</code> </p>",
@@ -2789,98 +2706,79 @@
     },
     "WAFAssociatedItemException": {
       "base": "<p>WAF couldn’t perform the operation because your resource is being used by another resource or it’s associated with another resource. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFConfigurationWarningException": {
       "base": "<p>The operation failed because you are inspecting the web request body, headers, or cookies without specifying how to handle oversize components. Rules that inspect the body must either provide an <code>OversizeHandling</code> configuration or they must be preceded by a <code>SizeConstraintStatement</code> that blocks the body content from being too large. Rules that inspect the headers or cookies must provide an <code>OversizeHandling</code> configuration. </p> <p>Provide the handling configuration and retry your operation.</p> <p>Alternately, you can suppress this warning by adding the following tag to the resource that you provide to this operation: <code>Tag</code> (key:<code>WAF:OversizeFieldsHandlingConstraintOptOut</code>, value:<code>true</code>).</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFDuplicateItemException": {
       "base": "<p>WAF couldn’t perform the operation because the resource that you tried to save is a duplicate of an existing one.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFExpiredManagedRuleGroupVersionException": {
       "base": "<p>The operation failed because the specified version for the managed rule group has expired. You can retrieve the available versions for the managed rule group by calling <a>ListAvailableManagedRuleGroupVersions</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFInternalErrorException": {
       "base": "<p>Your request is valid, but WAF couldn’t perform the operation because of a system problem. Retry your request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFInvalidOperationException": {
       "base": "<p>The operation isn't valid. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFInvalidParameterException": {
       "base": "<p>The operation failed because WAF didn't recognize a parameter in the request. For example: </p> <ul> <li> <p>You specified a parameter name or value that isn't valid.</p> </li> <li> <p>Your nested statement isn't valid. You might have tried to nest a statement that can’t be nested. </p> </li> <li> <p>You tried to update a <code>WebACL</code> with a <code>DefaultAction</code> that isn't among the types available at <a>DefaultAction</a>.</p> </li> <li> <p>Your request references an ARN that is malformed, or corresponds to a resource with which a web ACL can't be associated.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFInvalidPermissionPolicyException": {
       "base": "<p>The operation failed because the specified policy isn't in the proper format. </p> <p>The policy specifications must conform to the following:</p> <ul> <li> <p>The policy must be composed using IAM Policy version 2012-10-17.</p> </li> <li> <p>The policy must include specifications for <code>Effect</code>, <code>Action</code>, and <code>Principal</code>.</p> </li> <li> <p> <code>Effect</code> must specify <code>Allow</code>.</p> </li> <li> <p> <code>Action</code> must specify <code>wafv2:CreateWebACL</code>, <code>wafv2:UpdateWebACL</code>, and <code>wafv2:PutFirewallManagerRuleGroups</code> and may optionally specify <code>wafv2:GetRuleGroup</code>. WAF rejects any extra actions or wildcard actions in the policy.</p> </li> <li> <p>The policy must not include a <code>Resource</code> parameter.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html\">IAM Policies</a>. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFInvalidResourceException": {
       "base": "<p>WAF couldn’t perform the operation because the resource that you requested isn’t valid. Check the resource, and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFLimitsExceededException": {
       "base": "<p>WAF couldn’t perform the operation because you exceeded your resource limit. For example, the maximum number of <code>WebACL</code> objects that you can create for an Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">WAF quotas</a> in the <i>WAF Developer Guide</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFLogDestinationPermissionIssueException": {
       "base": "<p>The operation failed because you don't have the permissions that your logging configuration requires. For information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic information</a> in the <i>WAF Developer Guide</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFNonexistentItemException": {
       "base": "<p>WAF couldn’t perform the operation because your resource doesn't exist. If you've just created a resource that you're using in this operation, you might just need to wait a few minutes. It can take from a few seconds to a number of minutes for changes to propagate. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFOptimisticLockException": {
       "base": "<p>WAF couldn’t save your changes because you tried to update or delete a resource that has changed since you last retrieved it. Get the resource again, make any changes you need to make to the new copy, and retry your operation. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFServiceLinkedRoleErrorException": {
       "base": "<p>WAF is not able to access the service linked role. This can be caused by a previous <code>PutLoggingConfiguration</code> request, which can lock the service linked role for about 20 seconds. Please try your request again. The service linked role can also be locked by a previous <code>DeleteServiceLinkedRole</code> request, which can lock the role for 15 minutes or more. If you recently made a call to <code>DeleteServiceLinkedRole</code>, wait at least 15 minutes and try the request again. If you receive this same exception again, you will have to wait additional time until the role is unlocked.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFSubscriptionNotFoundException": {
       "base": "<p>You tried to use a managed rule group that's available by subscription, but you aren't subscribed to it yet. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFTagOperationException": {
       "base": "<p>An error occurred during the tagging operation. Retry your request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFTagOperationInternalErrorException": {
       "base": "<p>WAF couldn’t perform your tagging operation because of an internal error. Retry your request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFUnavailableEntityException": {
       "base": "<p>WAF couldn’t retrieve a resource that you specified for this operation. If you've just created a resource that you're using in this operation, you might just need to wait a few minutes. It can take from a few seconds to a number of minutes for changes to propagate. Verify the resource specifications in your request parameters and then retry the operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WAFUnsupportedAggregateKeyTypeException": {
       "base": "<p>The rule that you've named doesn't aggregate solely on the IP address or solely on the forwarded IP address. This call is only available for rate-based rules with an <code>AggregateKeyType</code> setting of <code>IP</code> or <code>FORWARDED_IP</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WebACL": {
       "base": "<p> A web ACL defines a collection of rules to use to inspect and control web requests. Each rule has a statement that defines what to look for in web requests and an action that WAF applies to requests that match the statement. In the web ACL, you assign a default action to take (allow, block) for any request that does not match any of the rules. The rules in a web ACL can be a combination of the types <a>Rule</a>, <a>RuleGroup</a>, and managed rule group. You can associate a web ACL with one or more Amazon Web Services resources to protect. The resource types include Amazon CloudFront distribution, Amazon API Gateway REST API, Application Load Balancer, AppSync GraphQL API, Amazon Cognito user pool, App Runner service, Amplify application, and Amazon Web Services Verified Access instance. </p>",

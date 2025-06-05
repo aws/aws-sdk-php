@@ -27,14 +27,12 @@
         "input": {
           "CustomKeyStoreId": "cks-1234567890abcdef0"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "The ID of the AWS KMS custom key store."
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "This example connects an AWS KMS custom key store to its backing key store. For an AWS CloudHSM key store, it connects the key store to its AWS CloudHSM cluster. For an external key store, it connects the key store to the external key store proxy that communicates with your external key manager. This operation does not return any data. To verify that the custom key store is connected, use the <code>DescribeCustomKeyStores</code> operation.",
         "id": "to-connect-a-custom-key-store-1628626947750",
@@ -183,8 +181,7 @@
     ],
     "CreateKey": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
           "KeyMetadata": {
             "AWSAccountId": "111122223333",
@@ -359,9 +356,7 @@
                 "Arn": "arn:aws:kms:us-west-2:111122223333:key/mrk-1234abcd12ab34cd56ef12345678990ab",
                 "Region": "us-west-2"
               },
-              "ReplicaKeys": [
-
-              ]
+              "ReplicaKeys": []
             },
             "Origin": "AWS_KMS"
           }
@@ -603,14 +598,12 @@
         "input": {
           "CustomKeyStoreId": "cks-1234567890abcdef0"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "The ID of the custom key store to be deleted."
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "This example deletes a custom key store from AWS KMS. This operation does not affect the backing key store, such as a CloudHSM cluster, external key store proxy, or your external key manager. This operation doesn't return any data. To verify that the operation was successful, use the DescribeCustomKeyStores operation.",
         "id": "to-delete-a-custom-key-store-from-aws-kms-1628630837145",
@@ -665,16 +658,12 @@
     ],
     "DescribeCustomKeyStores": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
-          "CustomKeyStores": [
-
-          ]
+          "CustomKeyStores": []
         },
         "comments": {
-          "input": {
-          },
+          "input": {},
           "output": {
             "CustomKeyStores": "Details about each custom key store in the account and Region."
           }
@@ -1063,14 +1052,12 @@
         "input": {
           "CustomKeyStoreId": "cks-1234567890abcdef0"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "The ID of the custom key store."
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "This example disconnects an AWS KMS custom key store from its backing key store. For an AWS CloudHSM key store, it disconnects the key store from its AWS CloudHSM cluster. For an external key store, it disconnects the key store from the external key store proxy that communicates with your external key manager. This operation doesn't return any data. To verify that the custom key store is disconnected, use the <code>DescribeCustomKeyStores</code> operation.",
         "id": "to-disconnect-a-custom-key-store-from-its-cloudhsm-cluster-234abcdefABC",
@@ -2058,9 +2045,7 @@
             "Origin": "AWS_KMS"
           },
           "ReplicaPolicy": "{\n  \"Version\" : \"2012-10-17\",\n  \"Id\" : \"key-default-1\",...}",
-          "ReplicaTags": [
-
-          ]
+          "ReplicaTags": []
         },
         "comments": {
           "input": {
@@ -2283,15 +2268,13 @@
           "CustomKeyStoreId": "cks-1234567890abcdef0",
           "NewCustomKeyStoreName": "DevelopmentKeys"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "The ID of the custom key store that you are updating.",
             "NewCustomKeyStoreName": "A new friendly name for the custom key store."
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "This example changes the friendly name of the AWS KMS custom key store to the name that you specify. This operation does not return any data. To verify that the operation worked, use the DescribeCustomKeyStores operation.",
         "id": "to-edit-the-friendly-name-of-a-custom-key-store-1",
@@ -2302,15 +2285,13 @@
           "CustomKeyStoreId": "cks-1234567890abcdef0",
           "KeyStorePassword": "ExamplePassword"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "The ID of the custom key store that you are updating.",
             "KeyStorePassword": "The password for the kmsuser crypto user in the CloudHSM cluster."
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "This example tells AWS KMS the password for the kmsuser crypto user in the AWS CloudHSM cluster that is associated with the AWS KMS custom key store. (It does not change the password in the CloudHSM cluster.) This operation does not return any data.",
         "id": "to-edit-the-properties-of-an-aws-cloudhsm-key-store-2",
@@ -2321,15 +2302,13 @@
           "CloudHsmClusterId": "cluster-234abcdefABC",
           "CustomKeyStoreId": "cks-1234567890abcdef0"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CloudHsmClusterId": "The ID of the AWS CloudHSM cluster that you want to associate with the custom key store. This cluster must be related to the original CloudHSM cluster for this key store.",
             "CustomKeyStoreId": "The ID of the custom key store that you are updating."
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "This example changes the AWS CloudHSM cluster that is associated with an AWS CloudHSM key store to a related cluster, such as a different backup of the same cluster. This operation does not return any data. To verify that the operation worked, use the DescribeCustomKeyStores operation.",
         "id": "to-associate-the-custom-key-store-with-a-different-but-related-aws-cloudhsm-cluster-3",
@@ -2343,15 +2322,13 @@
             "RawSecretAccessKey": "DXjSUawnel2fr6SKC7G25CNxTyWKE5PF9XX6H/u9pSo="
           }
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "Identifies the custom key store",
             "XksProxyAuthenticationCredential": "Specifies the values in the proxy authentication credential"
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "To update the proxy authentication credential for your external key store, specify both the <code>RawSecretAccessKey</code> and the <code>AccessKeyId</code>, even if you are changing only one of the values. You can use this feature to fix an invalid credential or to change the credential when the external key store proxy rotates it.",
         "id": "to-update-the-proxy-authentication-credential-of-an-external-key-store-4",
@@ -2362,15 +2339,13 @@
           "CustomKeyStoreId": "cks-1234567890abcdef0",
           "XksProxyUriPath": "/new-path/kms/xks/v1"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "The ID of the custom key store that you are updating",
             "XksProxyUriPath": "The URI path to the external key store proxy APIs"
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "This example updates the proxy URI path for an external key store",
         "id": "to-update-the-xks-proxy-api-path-of-an-external-key-store-5",
@@ -2383,8 +2358,7 @@
           "XksProxyUriEndpoint": "https://myproxy-private.xks.example.com",
           "XksProxyVpcEndpointServiceName": "com.amazonaws.vpce.us-east-1.vpce-svc-example"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
           "input": {
             "CustomKeyStoreId": "Identifies the custom key store",
@@ -2392,8 +2366,7 @@
             "XksProxyUriEndpoint": "Specifies the URI endpoint that AWS KMS uses when communicating with the external key store proxy",
             "XksProxyVpcEndpointServiceName": "Specifies the name of the VPC endpoint service that the proxy uses for communication"
           },
-          "output": {
-          }
+          "output": {}
         },
         "description": "To change the external key store proxy connectivity option from public endpoint connectivity to VPC endpoint service connectivity, in addition to changing the <code>XksProxyConnectivity</code> value, you must change the <code>XksProxyUriEndpoint</code> value to reflect the private DNS name associated with the VPC endpoint service. You must also add an <code>XksProxyVpcEndpointServiceName</code> value.",
         "id": "to-update-the-proxy-connectivity-of-an-external-key-store-to-vpc_endpoint_service-6",

@@ -930,6 +930,11 @@
       "type":"integer",
       "min":0
     },
+    "ASN":{
+      "type":"long",
+      "max":4294967295,
+      "min":0
+    },
     "AWSManagedRulesACFPRuleSet":{
       "type":"structure",
       "required":[
@@ -995,13 +1000,11 @@
     },
     "All":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AllQueryArguments":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AllowAction":{
       "type":"structure",
@@ -1014,6 +1017,20 @@
       "required":["Statements"],
       "members":{
         "Statements":{"shape":"Statements"}
+      }
+    },
+    "AsnList":{
+      "type":"list",
+      "member":{"shape":"ASN"},
+      "max":100,
+      "min":1
+    },
+    "AsnMatchStatement":{
+      "type":"structure",
+      "required":["AsnList"],
+      "members":{
+        "AsnList":{"shape":"AsnList"},
+        "ForwardedIPConfig":{"shape":"ForwardedIPConfig"}
       }
     },
     "AssociateWebACLRequest":{
@@ -1029,8 +1046,7 @@
     },
     "AssociateWebACLResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociatedResourceType":{
       "type":"string",
@@ -1702,8 +1718,7 @@
     },
     "DeleteAPIKeyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFirewallManagerRuleGroupsRequest":{
       "type":"structure",
@@ -1739,8 +1754,7 @@
     },
     "DeleteIPSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLoggingConfigurationRequest":{
       "type":"structure",
@@ -1753,8 +1767,7 @@
     },
     "DeleteLoggingConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePermissionPolicyRequest":{
       "type":"structure",
@@ -1765,8 +1778,7 @@
     },
     "DeletePermissionPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegexPatternSetRequest":{
       "type":"structure",
@@ -1785,8 +1797,7 @@
     },
     "DeleteRegexPatternSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRuleGroupRequest":{
       "type":"structure",
@@ -1805,8 +1816,7 @@
     },
     "DeleteRuleGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteWebACLRequest":{
       "type":"structure",
@@ -1825,8 +1835,7 @@
     },
     "DeleteWebACLResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAllManagedProductsRequest":{
       "type":"structure",
@@ -1893,8 +1902,7 @@
     },
     "DisassociateWebACLResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DownloadUrl":{"type":"string"},
     "EmailField":{
@@ -3020,8 +3028,7 @@
     },
     "Method":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "MetricName":{
       "type":"string",
@@ -3046,8 +3053,7 @@
     },
     "NoneAction":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "NotStatement":{
       "type":"structure",
@@ -3289,13 +3295,11 @@
     },
     "PutPermissionPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QueryString":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RateBasedStatement":{
       "type":"structure",
@@ -3334,7 +3338,8 @@
         "LabelNamespace":{"shape":"RateLimitLabelNamespace"},
         "UriPath":{"shape":"RateLimitUriPath"},
         "JA3Fingerprint":{"shape":"RateLimitJA3Fingerprint"},
-        "JA4Fingerprint":{"shape":"RateLimitJA4Fingerprint"}
+        "JA4Fingerprint":{"shape":"RateLimitJA4Fingerprint"},
+        "ASN":{"shape":"RateLimitAsn"}
       }
     },
     "RateBasedStatementCustomKeys":{
@@ -3354,6 +3359,10 @@
       "max":2000000000,
       "min":10
     },
+    "RateLimitAsn":{
+      "type":"structure",
+      "members":{}
+    },
     "RateLimitCookie":{
       "type":"structure",
       "required":[
@@ -3367,13 +3376,11 @@
     },
     "RateLimitForwardedIP":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RateLimitHTTPMethod":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RateLimitHeader":{
       "type":"structure",
@@ -3388,8 +3395,7 @@
     },
     "RateLimitIP":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RateLimitJA3Fingerprint":{
       "type":"structure",
@@ -3950,7 +3956,8 @@
         "NotStatement":{"shape":"NotStatement"},
         "ManagedRuleGroupStatement":{"shape":"ManagedRuleGroupStatement"},
         "LabelMatchStatement":{"shape":"LabelMatchStatement"},
-        "RegexMatchStatement":{"shape":"RegexMatchStatement"}
+        "RegexMatchStatement":{"shape":"RegexMatchStatement"},
+        "AsnMatchStatement":{"shape":"AsnMatchStatement"}
       }
     },
     "Statements":{
@@ -4016,8 +4023,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -4116,8 +4122,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateIPSetRequest":{
       "type":"structure",
@@ -4261,8 +4266,7 @@
     },
     "UriPath":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UsernameField":{
       "type":"structure",

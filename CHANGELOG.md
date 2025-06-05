@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WAFV2` - AWS WAF adds support for ASN-based traffic filtering and support for ASN-based rate limiting.
+* `Aws\CloudFormation` - Add new warning type 'EXCLUDED_PROPERTIES'
+* `Aws\BCMPricingCalculator` - Updating the minimum for List APIs to be 1 (instead of 0)
+* `Aws\KMS` - AWS KMS announces the support for on-demand rotation of symmetric-encryption KMS keys with imported key material (EXTERNAL origin).
+
 ## 3.344.0 - 2025-06-04
 
 * `Aws\Amplify` - Update documentation for cacheConfig in CreateApp API
