@@ -2,6 +2,8 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
+use Throwable;
+
 class TransferProgressSnapshot
 {
     /** @var string */
@@ -16,6 +18,9 @@ class TransferProgressSnapshot
     /** @var array | null */
     private array | null $response;
 
+    /** @var Throwable | string | null */
+    private Throwable | string | null $reason;
+
     /**
      * @param string $identifier
      * @param int $transferredBytes
@@ -26,12 +31,14 @@ class TransferProgressSnapshot
         string $identifier,
         int $transferredBytes,
         int $totalBytes,
-        ?array $response = null
+        ?array $response = null,
+        Throwable | string | null $reason = null,
     ) {
         $this->identifier = $identifier;
         $this->transferredBytes = $transferredBytes;
         $this->totalBytes = $totalBytes;
         $this->response = $response;
+        $this->reason = $reason;
     }
 
     public function getIdentifier(): string
@@ -56,9 +63,9 @@ class TransferProgressSnapshot
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getResponse(): array
+    public function getResponse(): array | null
     {
         return $this->response;
     }
@@ -75,4 +82,14 @@ class TransferProgressSnapshot
 
         return $this->transferredBytes / $this->totalBytes;
     }
+
+    /**
+     * @return Throwable|string|null
+     */
+    public function getReason(): Throwable|string|null
+    {
+        return $this->reason;
+    }
+
+
 }
