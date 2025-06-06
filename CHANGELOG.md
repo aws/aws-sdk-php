@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.2 - 2025-06-06
 
 * `Aws\Parser` - Add handling for events which type is exceptions in the EventParsingIterator.
 * `Aws\Rekognition` - Adds support for defining an ordered preference list of different Rekognition Face Liveness challenge types when calling CreateFaceLivenessSession.
