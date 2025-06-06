@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Parser` - Add handling for events which type is exceptions in the EventParsingIterator.
+* `Aws\Rekognition` - Adds support for defining an ordered preference list of different Rekognition Face Liveness challenge types when calling CreateFaceLivenessSession.
+* `Aws\RDS` - Include Global Cluster Identifier in DBCluster if the DBCluster is a Global Cluster Member.
+* `Aws\BedrockAgentRuntime` - This release introduces the `PromptCreationConfigurations` input parameter, which includes fields to control prompt population for `InvokeAgent` or `InvokeInlineAgent` requests.
+* `Aws\KMS` - Remove unpopulated KeyMaterialId from Encrypt Response
+* `Aws\S3Tables` - S3 Tables now supports getting details about a table via its table ARN.
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Taipei) Region (ap-east-2) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+
 ## 3.344.1 - 2025-06-05
 
 * `Aws\WAFV2` - AWS WAF adds support for ASN-based traffic filtering and support for ASN-based rate limiting.

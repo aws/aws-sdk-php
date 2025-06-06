@@ -2925,6 +2925,7 @@
         "endSession":{"shape":"Boolean"},
         "inputText":{"shape":"InputText"},
         "memoryId":{"shape":"MemoryId"},
+        "promptCreationConfigurations":{"shape":"PromptCreationConfigurations"},
         "sessionId":{
           "shape":"SessionId",
           "location":"uri",
@@ -3029,6 +3030,7 @@
         "instruction":{"shape":"Instruction"},
         "knowledgeBases":{"shape":"KnowledgeBases"},
         "orchestrationType":{"shape":"OrchestrationType"},
+        "promptCreationConfigurations":{"shape":"PromptCreationConfigurations"},
         "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
         "sessionId":{
           "shape":"SessionId",
@@ -3972,6 +3974,18 @@
       "type":"list",
       "member":{"shape":"PromptConfiguration"},
       "max":10,
+      "min":0
+    },
+    "PromptCreationConfigurations":{
+      "type":"structure",
+      "members":{
+        "excludePreviousThinkingSteps":{"shape":"Boolean"},
+        "previousConversationTurnsToInclude":{"shape":"PromptCreationConfigurationsPreviousConversationTurnsToIncludeInteger"}
+      }
+    },
+    "PromptCreationConfigurationsPreviousConversationTurnsToIncludeInteger":{
+      "type":"integer",
+      "box":true,
       "min":0
     },
     "PromptOverrideConfiguration":{

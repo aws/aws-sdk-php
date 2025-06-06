@@ -118,12 +118,11 @@
     "BackingKeyIdType": {
       "base": null,
       "refs": {
-        "DecryptResponse$KeyMaterialId": "<p>The identifier of the key material used to decrypt the ciphertext. This field is present only when the operation uses a symmetric encryption KMS key.</p>",
+        "DecryptResponse$KeyMaterialId": "<p>The identifier of the key material used to decrypt the ciphertext. This field is present only when the operation uses a symmetric encryption KMS key. This field is omitted if the request includes the <code>Recipient</code> parameter.</p>",
         "DeleteImportedKeyMaterialRequest$KeyMaterialId": "<p>Identifies the imported key material you are deleting. </p> <important> <p>If no KeyMaterialId is specified, KMS deletes the current key material.</p> </important> <p>To get the list of key material IDs associated with a KMS key, use <a>ListKeyRotations</a>.</p>",
-        "EncryptResponse$KeyMaterialId": "<p>The identifier of the key material used to encrypt the ciphertext. This field is present only when the operation uses a symmetric encryption KMS key.</p>",
-        "GenerateDataKeyPairResponse$KeyMaterialId": "<p>The identifier of the key material used to encrypt the private key.</p>",
+        "GenerateDataKeyPairResponse$KeyMaterialId": "<p>The identifier of the key material used to encrypt the private key. This field is omitted if the request includes the <code>Recipient</code> parameter.</p>",
         "GenerateDataKeyPairWithoutPlaintextResponse$KeyMaterialId": "<p>The identifier of the key material used to encrypt the private key.</p>",
-        "GenerateDataKeyResponse$KeyMaterialId": "<p>The identifier of the key material used to encrypt the data key.</p>",
+        "GenerateDataKeyResponse$KeyMaterialId": "<p>The identifier of the key material used to encrypt the data key. This field is omitted if the request includes the <code>Recipient</code> parameter.</p>",
         "GenerateDataKeyWithoutPlaintextResponse$KeyMaterialId": "<p>The identifier of the key material used to encrypt the data key.</p>",
         "ImportKeyMaterialRequest$KeyMaterialId": "<p>Identifies the key material being imported. This parameter is optional and only usable with symmetric encryption keys. You cannot specify a key material ID with <code>ImportType</code> set to <code>NEW_KEY_MATERIAL</code>. Whenever you import key material into a symmetric encryption key, KMS assigns a unique identifier to the key material based on the KMS key ID and the imported key material. When you re-import key material with a specified key material ID, KMS:</p> <ul> <li> <p>Computes the identifier for the key material</p> </li> <li> <p>Matches the computed identifier against the specified key material ID</p> </li> <li> <p>Verifies that the key material ID is already associated with the KMS key</p> </li> </ul> <p>To get the list of key material IDs associated with a KMS key, use <a>ListKeyRotations</a>.</p>",
         "ImportKeyMaterialResponse$KeyMaterialId": "<p>Identifies the imported key material.</p>",

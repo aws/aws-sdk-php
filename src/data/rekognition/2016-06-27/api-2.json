@@ -1428,8 +1428,7 @@
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AgeRange":{
@@ -1632,6 +1631,36 @@
       "type":"list",
       "member":{"shape":"CelebrityRecognition"}
     },
+    "Challenge":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Version"
+      ],
+      "members":{
+        "Type":{"shape":"ChallengeType"},
+        "Version":{"shape":"Version"}
+      }
+    },
+    "ChallengePreference":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ChallengeType"},
+        "Versions":{"shape":"Versions"}
+      }
+    },
+    "ChallengePreferences":{
+      "type":"list",
+      "member":{"shape":"ChallengePreference"}
+    },
+    "ChallengeType":{
+      "type":"string",
+      "enum":[
+        "FaceMovementAndLightChallenge",
+        "FaceMovementChallenge"
+      ]
+    },
     "ClientRequestToken":{
       "type":"string",
       "max":64,
@@ -1711,8 +1740,7 @@
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ConnectedHomeLabel":{"type":"string"},
@@ -1870,7 +1898,8 @@
       "type":"structure",
       "members":{
         "OutputConfig":{"shape":"LivenessOutputConfig"},
-        "AuditImagesLimit":{"shape":"AuditImagesLimit"}
+        "AuditImagesLimit":{"shape":"AuditImagesLimit"},
+        "ChallengePreferences":{"shape":"ChallengePreferences"}
       }
     },
     "CreateFaceLivenessSessionResponse":{
@@ -1966,8 +1995,7 @@
     },
     "CreateUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CustomLabel":{
       "type":"structure",
@@ -2156,8 +2184,7 @@
     },
     "DeleteDatasetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFacesRequest":{
       "type":"structure",
@@ -2191,8 +2218,7 @@
     },
     "DeleteProjectPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProjectRequest":{
       "type":"structure",
@@ -2229,8 +2255,7 @@
     },
     "DeleteStreamProcessorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUserRequest":{
       "type":"structure",
@@ -2249,8 +2274,7 @@
     },
     "DeleteUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeCollectionRequest":{
       "type":"structure",
@@ -2576,8 +2600,7 @@
     },
     "DistributeDatasetEntriesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DistributeDatasetMetadataList":{
       "type":"list",
@@ -2953,7 +2976,8 @@
         "Status":{"shape":"LivenessSessionStatus"},
         "Confidence":{"shape":"Percent"},
         "ReferenceImage":{"shape":"AuditImage"},
-        "AuditImages":{"shape":"AuditImages"}
+        "AuditImages":{"shape":"AuditImages"},
+        "Challenge":{"shape":"Challenge"}
       }
     },
     "GetFaceSearchRequest":{
@@ -3186,8 +3210,7 @@
     },
     "IdempotentParameterMismatchException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Image":{
@@ -3215,8 +3238,7 @@
     },
     "ImageTooLargeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "IndexFacesModelVersion":{
@@ -3265,45 +3287,38 @@
     },
     "InternalServerError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true,
       "fault":true
     },
     "InvalidImageFormatException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidManifestException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidPaginationTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidPolicyRevisionIdException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidS3ObjectException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "IsLabeled":{"type":"boolean"},
@@ -3501,8 +3516,7 @@
     },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ListCollectionsRequest":{
@@ -3706,8 +3720,7 @@
     },
     "MalformedPolicyDocumentException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "MatchedUser":{
@@ -4217,8 +4230,7 @@
     },
     "ProvisionedThroughputExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "PutProjectPolicyRequest":{
@@ -4307,8 +4319,7 @@
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceArn":{
@@ -4318,20 +4329,17 @@
     },
     "ResourceInUseException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResourceNotReadyException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "RoleArn":{
@@ -4533,14 +4541,12 @@
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SessionNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ShotSegment":{
@@ -4811,8 +4817,7 @@
     },
     "StopStreamProcessorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StreamProcessingStartSelector":{
       "type":"structure",
@@ -4955,8 +4960,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -5033,8 +5037,7 @@
     },
     "ThrottlingException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true,
       "fault":true
     },
@@ -5191,8 +5194,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDatasetEntriesRequest":{
       "type":"structure",
@@ -5207,8 +5209,7 @@
     },
     "UpdateDatasetEntriesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateStreamProcessorRequest":{
       "type":"structure",
@@ -5223,8 +5224,7 @@
     },
     "UpdateStreamProcessorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{"type":"string"},
     "Urls":{
@@ -5284,6 +5284,12 @@
         "Assets":{"shape":"Assets"}
       }
     },
+    "Version":{
+      "type":"string",
+      "max":11,
+      "min":5,
+      "pattern":"^(0|[1-9]\\d{0,2})\\.(0|[1-9]\\d{0,2})\\.(0|[1-9]\\d{0,2})$"
+    },
     "VersionDescription":{
       "type":"string",
       "max":255,
@@ -5301,6 +5307,13 @@
       "member":{"shape":"VersionName"},
       "max":10,
       "min":1
+    },
+    "Versions":{
+      "type":"structure",
+      "members":{
+        "Minimum":{"shape":"Version"},
+        "Maximum":{"shape":"Version"}
+      }
     },
     "Video":{
       "type":"structure",
@@ -5341,8 +5354,7 @@
     },
     "VideoTooLargeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     }
   }

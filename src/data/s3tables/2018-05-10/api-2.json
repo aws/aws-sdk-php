@@ -198,7 +198,7 @@
       "name":"GetTable",
       "http":{
         "method":"GET",
-        "requestUri":"/tables/{tableBucketARN}/{namespace}/{name}",
+        "requestUri":"/get-table",
         "responseCode":200
       },
       "input":{"shape":"GetTableRequest"},
@@ -1112,26 +1112,26 @@
     },
     "GetTableRequest":{
       "type":"structure",
-      "required":[
-        "tableBucketARN",
-        "namespace",
-        "name"
-      ],
       "members":{
         "tableBucketARN":{
           "shape":"TableBucketARN",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"tableBucketARN"
         },
         "namespace":{
           "shape":"NamespaceName",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"namespace"
         },
         "name":{
           "shape":"TableName",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"name"
+        },
+        "tableArn":{
+          "shape":"TableARN",
+          "location":"querystring",
+          "locationName":"tableArn"
         }
       }
     },
