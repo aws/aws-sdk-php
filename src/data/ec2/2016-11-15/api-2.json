@@ -6759,6 +6759,10 @@
           "shape":"String",
           "locationName":"carrierIp"
         },
+        "SubnetId":{
+          "shape":"String",
+          "locationName":"subnetId"
+        },
         "ServiceManaged":{
           "shape":"ServiceManaged",
           "locationName":"serviceManaged"
@@ -8171,6 +8175,13 @@
       "type":"list",
       "member":{
         "shape":"AssociatedRole",
+        "locationName":"item"
+      }
+    },
+    "AssociatedSubnetList":{
+      "type":"list",
+      "member":{
+        "shape":"SubnetId",
         "locationName":"item"
       }
     },
@@ -36993,6 +37004,10 @@
         "EnablePrimaryIpv6":{"shape":"Boolean"},
         "ConnectionTrackingSpecification":{"shape":"ConnectionTrackingSpecificationRequest"},
         "AssociatePublicIpAddress":{"shape":"Boolean"},
+        "AssociatedSubnetIds":{
+          "shape":"SubnetIdList",
+          "locationName":"AssociatedSubnetId"
+        },
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -39101,6 +39116,10 @@
         "Operator":{
           "shape":"OperatorResponse",
           "locationName":"operator"
+        },
+        "AssociatedSubnets":{
+          "shape":"AssociatedSubnetList",
+          "locationName":"associatedSubnetSet"
         }
       }
     },
@@ -47310,6 +47329,10 @@
           "shape":"BlockPublicAccessStates",
           "locationName":"blockPublicAccessStates"
         },
+        "Type":{
+          "shape":"String",
+          "locationName":"type"
+        },
         "SubnetId":{
           "shape":"String",
           "locationName":"subnetId"
@@ -47453,6 +47476,13 @@
       }
     },
     "SubnetId":{"type":"string"},
+    "SubnetIdList":{
+      "type":"list",
+      "member":{
+        "shape":"SubnetId",
+        "locationName":"AssociatedSubnetId"
+      }
+    },
     "SubnetIdStringList":{
       "type":"list",
       "member":{
@@ -47524,7 +47554,9 @@
       "enum":[
         "pending",
         "available",
-        "unavailable"
+        "unavailable",
+        "failed",
+        "failed-insufficient-capacity"
       ]
     },
     "Subscription":{

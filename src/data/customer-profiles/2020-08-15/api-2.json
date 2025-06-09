@@ -95,6 +95,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateDomainLayout":{
+      "name":"CreateDomainLayout",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/layouts/{LayoutDefinitionName}"
+      },
+      "input":{"shape":"CreateDomainLayoutRequest"},
+      "output":{"shape":"CreateDomainLayoutResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateEventStream":{
       "name":"CreateEventStream",
       "http":{
@@ -233,6 +249,22 @@
       },
       "input":{"shape":"DeleteDomainRequest"},
       "output":{"shape":"DeleteDomainResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DeleteDomainLayout":{
+      "name":"DeleteDomainLayout",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/layouts/{LayoutDefinitionName}"
+      },
+      "input":{"shape":"DeleteDomainLayoutRequest"},
+      "output":{"shape":"DeleteDomainLayoutResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -460,6 +492,22 @@
       },
       "input":{"shape":"GetDomainRequest"},
       "output":{"shape":"GetDomainResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetDomainLayout":{
+      "name":"GetDomainLayout",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/layouts/{LayoutDefinitionName}"
+      },
+      "input":{"shape":"GetDomainLayoutRequest"},
+      "output":{"shape":"GetDomainLayoutResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -739,6 +787,22 @@
         {"shape":"BadRequestException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListDomainLayouts":{
+      "name":"ListDomainLayouts",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/layouts"
+      },
+      "input":{"shape":"ListDomainLayoutsRequest"},
+      "output":{"shape":"ListDomainLayoutsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -1105,6 +1169,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateDomainLayout":{
+      "name":"UpdateDomainLayout",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/layouts/{LayoutDefinitionName}"
+      },
+      "input":{"shape":"UpdateDomainLayoutRequest"},
+      "output":{"shape":"UpdateDomainLayoutResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateEventTrigger":{
       "name":"UpdateEventTrigger",
       "http":{
@@ -1356,7 +1436,7 @@
     "AttributeList":{
       "type":"list",
       "member":{"shape":"AttributeItem"},
-      "max":2,
+      "max":50,
       "min":1
     },
     "AttributeMap":{
@@ -1577,7 +1657,8 @@
         "DisplayName":{"shape":"displayName"},
         "IsDataPartial":{"shape":"string1To255"},
         "ProfileId":{"shape":"uuid"},
-        "Value":{"shape":"string1To255"}
+        "Value":{"shape":"string1To255"},
+        "LastObjectTimestamp":{"shape":"timestamp"}
       }
     },
     "CalculatedAttributeValueList":{
@@ -1691,6 +1772,7 @@
         "Conditions":{"shape":"Conditions"},
         "Filter":{"shape":"Filter"},
         "Statistic":{"shape":"Statistic"},
+        "UseHistoricalData":{"shape":"optionalBoolean"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1706,7 +1788,63 @@
         "Statistic":{"shape":"Statistic"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
+        "UseHistoricalData":{"shape":"optionalBoolean"},
+        "Status":{"shape":"ReadinessStatus"},
+        "Readiness":{"shape":"Readiness"},
         "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateDomainLayoutRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "LayoutDefinitionName",
+        "Description",
+        "DisplayName",
+        "LayoutType",
+        "Layout"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "LayoutDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"LayoutDefinitionName"
+        },
+        "Description":{"shape":"sensitiveText"},
+        "DisplayName":{"shape":"displayName"},
+        "IsDefault":{"shape":"boolean"},
+        "LayoutType":{"shape":"LayoutType"},
+        "Layout":{"shape":"sensitiveString1To2000000"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateDomainLayoutResponse":{
+      "type":"structure",
+      "required":[
+        "LayoutDefinitionName",
+        "Description",
+        "DisplayName",
+        "LayoutType",
+        "Layout",
+        "Version",
+        "CreatedAt"
+      ],
+      "members":{
+        "LayoutDefinitionName":{"shape":"name"},
+        "Description":{"shape":"sensitiveText"},
+        "DisplayName":{"shape":"displayName"},
+        "IsDefault":{"shape":"boolean"},
+        "LayoutType":{"shape":"LayoutType"},
+        "Layout":{"shape":"sensitiveString1To2000000"},
+        "Version":{"shape":"string1To255"},
+        "Tags":{"shape":"TagMap"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"}
       }
     },
     "CreateDomainRequest":{
@@ -2086,7 +2224,32 @@
     },
     "DeleteCalculatedAttributeDefinitionResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteDomainLayoutRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "LayoutDefinitionName"
+      ],
       "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "LayoutDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"LayoutDefinitionName"
+        }
+      }
+    },
+    "DeleteDomainLayoutResponse":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"message"}
       }
     },
     "DeleteDomainRequest":{
@@ -2128,8 +2291,7 @@
     },
     "DeleteEventStreamResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEventTriggerRequest":{
       "type":"structure",
@@ -2325,8 +2487,7 @@
     },
     "DeleteWorkflowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DestinationField":{
       "type":"string",
@@ -2421,11 +2582,7 @@
       "max":3,
       "min":1
     },
-    "End":{
-      "type":"integer",
-      "max":366,
-      "min":0
-    },
+    "End":{"type":"integer"},
     "EstimateStatus":{
       "type":"string",
       "enum":[
@@ -2813,6 +2970,9 @@
         "Filter":{"shape":"Filter"},
         "Conditions":{"shape":"Conditions"},
         "AttributeDetails":{"shape":"AttributeDetails"},
+        "UseHistoricalData":{"shape":"optionalBoolean"},
+        "Status":{"shape":"ReadinessStatus"},
+        "Readiness":{"shape":"Readiness"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -2847,7 +3007,52 @@
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
         "IsDataPartial":{"shape":"string1To255"},
-        "Value":{"shape":"string1To255"}
+        "Value":{"shape":"string1To255"},
+        "LastObjectTimestamp":{"shape":"timestamp"}
+      }
+    },
+    "GetDomainLayoutRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "LayoutDefinitionName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "LayoutDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"LayoutDefinitionName"
+        }
+      }
+    },
+    "GetDomainLayoutResponse":{
+      "type":"structure",
+      "required":[
+        "LayoutDefinitionName",
+        "Description",
+        "DisplayName",
+        "LayoutType",
+        "Layout",
+        "Version",
+        "CreatedAt",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "LayoutDefinitionName":{"shape":"name"},
+        "Description":{"shape":"sensitiveText"},
+        "DisplayName":{"shape":"displayName"},
+        "IsDefault":{"shape":"boolean"},
+        "LayoutType":{"shape":"LayoutType"},
+        "Layout":{"shape":"sensitiveString1To2000000"},
+        "Version":{"shape":"string1To255"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "GetDomainRequest":{
@@ -3549,6 +3754,35 @@
       "min":20,
       "pattern":"arn:aws:kms:.*:[0-9]+:.*"
     },
+    "LayoutItem":{
+      "type":"structure",
+      "required":[
+        "LayoutDefinitionName",
+        "Description",
+        "DisplayName",
+        "LayoutType",
+        "CreatedAt",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "LayoutDefinitionName":{"shape":"name"},
+        "Description":{"shape":"sensitiveText"},
+        "DisplayName":{"shape":"displayName"},
+        "IsDefault":{"shape":"boolean"},
+        "LayoutType":{"shape":"LayoutType"},
+        "Tags":{"shape":"TagMap"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"}
+      }
+    },
+    "LayoutList":{
+      "type":"list",
+      "member":{"shape":"LayoutItem"}
+    },
+    "LayoutType":{
+      "type":"string",
+      "enum":["PROFILE_EXPLORER"]
+    },
     "ListAccountIntegrationsRequest":{
       "type":"structure",
       "required":["Uri"],
@@ -3586,6 +3820,8 @@
         "Description":{"shape":"sensitiveText"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
+        "UseHistoricalData":{"shape":"optionalBoolean"},
+        "Status":{"shape":"ReadinessStatus"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -3623,7 +3859,8 @@
         "CalculatedAttributeName":{"shape":"typeName"},
         "DisplayName":{"shape":"displayName"},
         "IsDataPartial":{"shape":"string1To255"},
-        "Value":{"shape":"string1To255"}
+        "Value":{"shape":"string1To255"},
+        "LastObjectTimestamp":{"shape":"timestamp"}
       }
     },
     "ListCalculatedAttributesForProfileRequest":{
@@ -3674,6 +3911,34 @@
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
+      }
+    },
+    "ListDomainLayoutsRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListDomainLayoutsResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"LayoutList"},
+        "NextToken":{"shape":"token"}
       }
     },
     "ListDomainsRequest":{
@@ -4302,7 +4567,6 @@
     },
     "ObjectCount":{
       "type":"integer",
-      "max":100,
       "min":1
     },
     "ObjectFilter":{
@@ -4797,13 +5061,12 @@
     },
     "Range":{
       "type":"structure",
-      "required":[
-        "Value",
-        "Unit"
-      ],
       "members":{
         "Value":{"shape":"Value"},
-        "Unit":{"shape":"Unit"}
+        "Unit":{"shape":"Unit"},
+        "ValueRange":{"shape":"ValueRange"},
+        "TimestampSource":{"shape":"string1To255"},
+        "TimestampFormat":{"shape":"string1To255"}
       }
     },
     "RangeOverride":{
@@ -4821,6 +5084,22 @@
     "RangeUnit":{
       "type":"string",
       "enum":["DAYS"]
+    },
+    "Readiness":{
+      "type":"structure",
+      "members":{
+        "ProgressPercentage":{"shape":"percentageInteger"},
+        "Message":{"shape":"text"}
+      }
+    },
+    "ReadinessStatus":{
+      "type":"string",
+      "enum":[
+        "PREPARING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -5181,6 +5460,15 @@
         "CASE",
         "ORDER",
         "COMMUNICATION_RECORD",
+        "AIR_PREFERENCE",
+        "HOTEL_PREFERENCE",
+        "AIR_BOOKING",
+        "AIR_SEGMENT",
+        "HOTEL_RESERVATION",
+        "HOTEL_STAY_REVENUE",
+        "LOYALTY",
+        "LOYALTY_TRANSACTION",
+        "LOYALTY_PROMOTION",
         "UNIQUE",
         "SECONDARY",
         "LOOKUP_ONLY",
@@ -5191,11 +5479,7 @@
       "type":"list",
       "member":{"shape":"StandardIdentifier"}
     },
-    "Start":{
-      "type":"integer",
-      "max":366,
-      "min":1
-    },
+    "Start":{"type":"integer"},
     "Statistic":{
       "type":"string",
       "enum":[
@@ -5275,8 +5559,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -5396,8 +5679,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAddress":{
       "type":"structure",
@@ -5454,6 +5736,48 @@
         "Statistic":{"shape":"Statistic"},
         "Conditions":{"shape":"Conditions"},
         "AttributeDetails":{"shape":"AttributeDetails"},
+        "UseHistoricalData":{"shape":"optionalBoolean"},
+        "Status":{"shape":"ReadinessStatus"},
+        "Readiness":{"shape":"Readiness"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "UpdateDomainLayoutRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "LayoutDefinitionName"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "LayoutDefinitionName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"LayoutDefinitionName"
+        },
+        "Description":{"shape":"sensitiveText"},
+        "DisplayName":{"shape":"displayName"},
+        "IsDefault":{"shape":"boolean"},
+        "LayoutType":{"shape":"LayoutType"},
+        "Layout":{"shape":"sensitiveString1To2000000"}
+      }
+    },
+    "UpdateDomainLayoutResponse":{
+      "type":"structure",
+      "members":{
+        "LayoutDefinitionName":{"shape":"name"},
+        "Description":{"shape":"sensitiveText"},
+        "DisplayName":{"shape":"displayName"},
+        "IsDefault":{"shape":"boolean"},
+        "LayoutType":{"shape":"LayoutType"},
+        "Layout":{"shape":"sensitiveString1To2000000"},
+        "Version":{"shape":"string1To255"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -5578,8 +5902,8 @@
     },
     "Value":{
       "type":"integer",
-      "max":366,
-      "min":1
+      "max":2147483647,
+      "min":0
     },
     "ValueList":{
       "type":"list",
@@ -5587,6 +5911,19 @@
       "max":10,
       "min":1
     },
+    "ValueRange":{
+      "type":"structure",
+      "required":[
+        "Start",
+        "End"
+      ],
+      "members":{
+        "Start":{"shape":"ValueRangeStart"},
+        "End":{"shape":"ValueRangeEnd"}
+      }
+    },
+    "ValueRangeEnd":{"type":"integer"},
+    "ValueRangeStart":{"type":"integer"},
     "Values":{
       "type":"list",
       "member":{"shape":"string1To255"},
@@ -5728,6 +6065,11 @@
     },
     "optionalBoolean":{"type":"boolean"},
     "optionalLong":{"type":"long"},
+    "percentageInteger":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
     "requestValueList":{
       "type":"list",
       "member":{"shape":"string1To255"}
@@ -5765,6 +6107,12 @@
     "sensitiveString1To1000":{
       "type":"string",
       "max":1000,
+      "min":1,
+      "sensitive":true
+    },
+    "sensitiveString1To2000000":{
+      "type":"string",
+      "max":2000000,
       "min":1,
       "sensitive":true
     },

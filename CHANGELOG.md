@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Fixes bug with resolving bucket locations in us-east-1 when calling `GetBucketLocation`
+* `Aws\AppSync` - Deprecate `atRestEncryptionEnabled` and `transitEncryptionEnabled` attributes in `CreateApiCache` action. Encryption is always enabled for new caches.
+* `Aws\EC2` - Release to support Elastic VMware Service (Amazon EVS) Subnet and Amazon EVS Network Interface Types.
+* `Aws\CostExplorer` - Support dual-stack endpoints for ce api
+* `Aws\WorkSpacesThinClient` - Add ConflictException to UpdateEnvironment API
+* `Aws\EFS` - Added support for Internet Protocol Version 6 (IPv6) on EFS Service APIs and mount targets.
+* `Aws\MarketplaceCatalog` - The ListEntities API now supports the EntityID, LastModifiedDate, ProductTitle, and Visibility filters for machine learning products. You can also sort using all of those filters.
+* `Aws\CustomerProfiles` - This release introduces capability of Profile Explorer, using correct ingestion timestamp & using historical data for computing calculated attributes, and new standard objects for T&H as part of Amazon Connect Customer Profiles service.
+
 ## 3.344.2 - 2025-06-06
 
 * `Aws\Parser` - Add handling for events which type is exceptions in the EventParsingIterator.

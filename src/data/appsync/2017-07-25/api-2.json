@@ -1643,8 +1643,18 @@
           "locationName":"apiId"
         },
         "ttl":{"shape":"Long"},
-        "transitEncryptionEnabled":{"shape":"Boolean"},
-        "atRestEncryptionEnabled":{"shape":"Boolean"},
+        "transitEncryptionEnabled":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"transitEncryptionEnabled attribute is deprecated. Encryption in transit is always enabled.",
+          "deprecatedSince":"5/15/2025"
+        },
+        "atRestEncryptionEnabled":{
+          "shape":"Boolean",
+          "deprecated":true,
+          "deprecatedMessage":"atRestEncryptionEnabled attribute is deprecated. Encryption at rest is always enabled.",
+          "deprecatedSince":"5/15/2025"
+        },
         "apiCachingBehavior":{"shape":"ApiCachingBehavior"},
         "type":{"shape":"ApiCacheType"},
         "healthMetricsConfig":{"shape":"CacheHealthMetricsConfig"}
@@ -2033,8 +2043,7 @@
     },
     "DeleteApiCacheResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteApiKeyRequest":{
       "type":"structure",
@@ -2057,8 +2066,7 @@
     },
     "DeleteApiKeyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteApiRequest":{
       "type":"structure",
@@ -2073,8 +2081,7 @@
     },
     "DeleteApiResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteChannelNamespaceRequest":{
       "type":"structure",
@@ -2097,8 +2104,7 @@
     },
     "DeleteChannelNamespaceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDataSourceRequest":{
       "type":"structure",
@@ -2121,8 +2127,7 @@
     },
     "DeleteDataSourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDomainNameRequest":{
       "type":"structure",
@@ -2137,8 +2142,7 @@
     },
     "DeleteDomainNameResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFunctionRequest":{
       "type":"structure",
@@ -2161,8 +2165,7 @@
     },
     "DeleteFunctionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGraphqlApiRequest":{
       "type":"structure",
@@ -2177,8 +2180,7 @@
     },
     "DeleteGraphqlApiResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResolverRequest":{
       "type":"structure",
@@ -2207,8 +2209,7 @@
     },
     "DeleteResolverResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTypeRequest":{
       "type":"structure",
@@ -2231,8 +2232,7 @@
     },
     "DeleteTypeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeltaSyncConfig":{
       "type":"structure",
@@ -2261,8 +2261,7 @@
     },
     "DisassociateApiResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateMergedGraphqlApiRequest":{
       "type":"structure",
@@ -2524,8 +2523,7 @@
     },
     "FlushApiCacheResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "FunctionConfiguration":{
       "type":"structure",
@@ -3885,8 +3883,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3950,8 +3947,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateApiCacheRequest":{
       "type":"structure",

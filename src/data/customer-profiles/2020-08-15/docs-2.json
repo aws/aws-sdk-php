@@ -7,6 +7,7 @@
     "BatchGetProfile": "<p>Get a batch of profiles.</p>",
     "CreateCalculatedAttributeDefinition": "<p>Creates a new calculated attribute definition. After creation, new object data ingested into Customer Profiles will be included in the calculated attribute, which can be retrieved for a profile using the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetCalculatedAttributeForProfile.html\">GetCalculatedAttributeForProfile</a> API. Defining a calculated attribute makes it available for all profiles within a domain. Each calculated attribute can only reference one <code>ObjectType</code> and at most, two fields from that <code>ObjectType</code>.</p>",
     "CreateDomain": "<p>Creates a domain, which is a container for all customer data, such as customer profile attributes, object types, profile keys, and encryption keys. You can create multiple domains, and each domain can have multiple third-party integrations.</p> <p>Each Amazon Connect instance can be associated with only one domain. Multiple Amazon Connect instances can be associated with one domain.</p> <p>Use this API or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UpdateDomain.html\">UpdateDomain</a> to enable <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">identity resolution</a>: set <code>Matching</code> to true.</p> <p>To prevent cross-service impersonation when you call this API, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html\">Cross-service confused deputy prevention</a> for sample policies that you should apply. </p> <note> <p>It is not possible to associate a Customer Profiles domain with an Amazon Connect Instance directly from the API. If you would like to create a domain and associate a Customer Profiles domain, use the Amazon Connect admin website. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-customer-profiles.html#enable-customer-profiles-step1\">Enable Customer Profiles</a>.</p> <p>Each Amazon Connect instance can be associated with only one domain. Multiple Amazon Connect instances can be associated with one domain.</p> </note>",
+    "CreateDomainLayout": "<p>Creates the layout to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
     "CreateEventStream": "<p>Creates an event stream, which is a subscription to real-time events, such as when profiles are created and updated through Amazon Connect Customer Profiles.</p> <p>Each event stream can be associated with only one Kinesis Data Stream destination in the same region and Amazon Web Services account as the customer profiles domain</p>",
     "CreateEventTrigger": "<p>Creates an event trigger, which specifies the rules when to perform action based on customer's ingested data.</p> <p>Each event stream can be associated with only one integration in the same region and AWS account as the event stream. </p>",
     "CreateIntegrationWorkflow": "<p> Creates an integration workflow. An integration workflow is an async process which ingests historic data and sets up an integration for ongoing updates. The supported Amazon AppFlow sources are Salesforce, ServiceNow, and Marketo. </p>",
@@ -16,6 +17,7 @@
     "CreateSegmentSnapshot": "<p>Triggers a job to export a segment to a specified destination.</p>",
     "DeleteCalculatedAttributeDefinition": "<p>Deletes an existing calculated attribute definition. Note that deleting a default calculated attribute is possible, however once deleted, you will be unable to undo that action and will need to recreate it on your own using the CreateCalculatedAttributeDefinition API if you want it back.</p>",
     "DeleteDomain": "<p>Deletes a specific domain and all of its customer data, such as customer profile attributes and their related objects.</p>",
+    "DeleteDomainLayout": "<p>Deletes the layout used to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
     "DeleteEventStream": "<p>Disables and deletes the specified event stream.</p>",
     "DeleteEventTrigger": "<p>Disable and deletes the Event Trigger.</p> <note> <p>You cannot delete an Event Trigger with an active Integration associated.</p> </note>",
     "DeleteIntegration": "<p>Removes an integration from a specific domain.</p>",
@@ -30,6 +32,7 @@
     "GetCalculatedAttributeDefinition": "<p>Provides more information on a calculated attribute definition for Customer Profiles.</p>",
     "GetCalculatedAttributeForProfile": "<p>Retrieve a calculated attribute for a customer profile.</p>",
     "GetDomain": "<p>Returns information about a specific domain.</p>",
+    "GetDomainLayout": "<p>Gets the layout to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
     "GetEventStream": "<p>Returns information about the specified event stream in a specific domain.</p>",
     "GetEventTrigger": "<p>Get a specific Event Trigger from the domain.</p>",
     "GetIdentityResolutionJob": "<p>Returns information about an Identity Resolution Job in a specific domain. </p> <p>Identity Resolution Jobs are set up using the Amazon Connect admin console. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-identity-resolution.html\">Use Identity Resolution to consolidate similar profiles</a>.</p>",
@@ -47,6 +50,7 @@
     "ListAccountIntegrations": "<p>Lists all of the integrations associated to a specific URI in the AWS account.</p>",
     "ListCalculatedAttributeDefinitions": "<p>Lists calculated attribute definitions for Customer Profiles</p>",
     "ListCalculatedAttributesForProfile": "<p>Retrieve a list of calculated attributes for a customer profile.</p>",
+    "ListDomainLayouts": "<p>Lists the existing layouts that can be used to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
     "ListDomains": "<p>Returns a list of all the domains for an AWS account that have been created.</p>",
     "ListEventStreams": "<p>Returns a list of all the event streams in a specific domain.</p>",
     "ListEventTriggers": "<p>List all Event Triggers under a domain.</p>",
@@ -70,6 +74,7 @@
     "UntagResource": "<p>Removes one or more tags from the specified Amazon Connect Customer Profiles resource. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p>",
     "UpdateCalculatedAttributeDefinition": "<p>Updates an existing calculated attribute definition. When updating the Conditions, note that increasing the date range of a calculated attribute will not trigger inclusion of historical data greater than the current date range.</p>",
     "UpdateDomain": "<p>Updates the properties of a domain, including creating or selecting a dead letter queue or an encryption key.</p> <p>After a domain is created, the name can’t be changed.</p> <p>Use this API or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> to enable <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">identity resolution</a>: set <code>Matching</code> to true.</p> <p>To prevent cross-service impersonation when you call this API, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/cross-service-confused-deputy-prevention.html\">Cross-service confused deputy prevention</a> for sample policies that you should apply. </p> <p>To add or remove tags on an existing Domain, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\">TagResource</a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p>",
+    "UpdateDomainLayout": "<p>Updates the layout used to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
     "UpdateEventTrigger": "<p>Update the properties of an Event Trigger.</p>",
     "UpdateProfile": "<p>Updates the properties of a profile. The ProfileId is required for updating a customer profile.</p> <p>When calling the UpdateProfile API, specifying an empty string value means that any existing value will be removed. Not specifying a string value means that any value already there will be kept.</p>"
   },
@@ -84,6 +89,9 @@
         "BatchGetCalculatedAttributeForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "BatchGetProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "CreateDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
+        "CreateDomainLayoutResponse$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
         "CreateDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateDomainResponse$DomainName": "<p>The unique name of the domain.</p>",
         "CreateEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -103,6 +111,8 @@
         "CreateSegmentSnapshotRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateSegmentSnapshotRequest$SegmentDefinitionName": "<p>The name of the segment definition used in this snapshot request.</p>",
         "DeleteCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "DeleteDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
         "DeleteDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteEventStreamRequest$EventStreamName": "<p>The name of the event stream</p>",
@@ -129,6 +139,9 @@
         "GetAutoMergingPreviewResponse$DomainName": "<p>The unique name of the domain.</p>",
         "GetCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetCalculatedAttributeForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
+        "GetDomainLayoutResponse$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
         "GetDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetDomainResponse$DomainName": "<p>The unique name of the domain.</p>",
         "GetEventStreamRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -164,9 +177,11 @@
         "GetWorkflowStepsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "IdentityResolutionJob$DomainName": "<p>The unique name of the domain.</p>",
         "KeyMap$key": null,
+        "LayoutItem$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
         "ListCalculatedAttributeDefinitionsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListCalculatedAttributesForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListDomainItem$DomainName": "<p>The unique name of the domain.</p>",
+        "ListDomainLayoutsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListEventStreamsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListEventTriggersRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListIdentityResolutionJobsRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -197,6 +212,9 @@
         "SegmentDefinitionItem$SegmentDefinitionName": "<p>Name of the segment definition.</p>",
         "SourceSegment$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "UpdateCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "UpdateDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "UpdateDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
+        "UpdateDomainLayoutResponse$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
         "UpdateDomainRequest$DomainName": "<p>The unique name of the domain.</p>",
         "UpdateDomainResponse$DomainName": "<p>The unique name of the domain.</p>",
         "UpdateEventTriggerRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -209,18 +227,15 @@
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddProfileKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddProfileKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AdditionalSearchKey": {
       "base": "<p>A data type pair that consists of a <code>KeyName</code> and <code>Values</code> list that is used in conjunction with the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_SearchProfiles.html#customerprofiles-SearchProfiles-request-KeyName\">KeyName</a> and <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_SearchProfiles.html#customerprofiles-SearchProfiles-request-Values\">Values</a> parameters to search for profiles using the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_SearchProfiles.html\">SearchProfiles</a> API.</p>",
@@ -368,8 +383,7 @@
     },
     "BadRequestException": {
       "base": "<p>The input you provided is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Batch": {
       "base": "<p>Batch defines the boundaries for ingestion for each step in <code>APPFLOW_INTEGRATION</code> workflow. <code>APPFLOW_INTEGRATION</code> workflow splits ingestion based on these boundaries.</p>",
@@ -397,13 +411,11 @@
     },
     "BatchGetCalculatedAttributeForProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetCalculatedAttributeForProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetProfileError": {
       "base": "<p>Error object describing why a specific profile failed.</p>",
@@ -425,13 +437,11 @@
     },
     "BatchGetProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Batches": {
       "base": null,
@@ -548,93 +558,83 @@
     },
     "CreateCalculatedAttributeDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCalculatedAttributeDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateDomainLayoutRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDomainLayoutResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDomainResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventTriggerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventTriggerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIntegrationWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIntegrationWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSegmentDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSegmentDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSegmentEstimateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSegmentEstimateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSegmentSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSegmentSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomAttributes": {
       "base": null,
@@ -689,113 +689,99 @@
     },
     "DeleteCalculatedAttributeDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCalculatedAttributeDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteDomainLayoutRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteDomainLayoutResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDomainResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventTriggerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventTriggerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileObjectResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileObjectTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileObjectTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSegmentDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSegmentDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationField": {
       "base": null,
@@ -811,13 +797,11 @@
     },
     "DetectProfileObjectTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetectProfileObjectTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetectedProfileObjectType": {
       "base": "<p>Contains <code>ProfileObjectType</code> mapping information from the model.</p>",
@@ -1126,133 +1110,115 @@
     },
     "GetAutoMergingPreviewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutoMergingPreviewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculatedAttributeDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculatedAttributeDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculatedAttributeForProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalculatedAttributeForProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetDomainLayoutRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDomainLayoutResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDomainResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventTriggerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventTriggerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdentityResolutionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdentityResolutionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileObjectTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileObjectTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileObjectTypeTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProfileObjectTypeTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentEstimateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentEstimateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentMembershipMessage": {
       "base": null,
@@ -1262,13 +1228,11 @@
     },
     "GetSegmentMembershipRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentMembershipResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentMembershipStatus": {
       "base": null,
@@ -1278,43 +1242,35 @@
     },
     "GetSegmentSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSegmentSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSimilarProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSimilarProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowStepsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowStepsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Group": {
       "base": "<p>Contains dimensions that determine what to segment on.</p>",
@@ -1383,8 +1339,7 @@
     },
     "InternalServerException": {
       "base": "<p>An internal service error occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobSchedule": {
       "base": "<p>The day and time when do you want to start the Identity Resolution Job every week.</p>",
@@ -1428,15 +1383,36 @@
         "FlowDefinition$KmsArn": "<p>The Amazon Resource Name of the AWS Key Management Service (KMS) key you provide for encryption.</p>"
       }
     },
-    "ListAccountIntegrationsRequest": {
+    "LayoutItem": {
+      "base": "<p>The layout object that contains LayoutDefinitionName, Description, DisplayName, IsDefault, LayoutType, Tags, CreatedAt, LastUpdatedAt </p>",
+      "refs": {
+        "LayoutList$member": null
+      }
+    },
+    "LayoutList": {
       "base": null,
       "refs": {
+        "ListDomainLayoutsResponse$Items": "<p>Contains summary information about an EventStream.</p>"
       }
+    },
+    "LayoutType": {
+      "base": null,
+      "refs": {
+        "CreateDomainLayoutRequest$LayoutType": "<p>The type of layout that can be used to view data under a Customer Profiles domain.</p>",
+        "CreateDomainLayoutResponse$LayoutType": "<p>The type of layout that can be used to view data under customer profiles domain.</p>",
+        "GetDomainLayoutResponse$LayoutType": "<p>The type of layout that can be used to view data under a Customer Profiles domain.</p>",
+        "LayoutItem$LayoutType": "<p>The type of layout that can be used to view data under customer profiles domain.</p>",
+        "UpdateDomainLayoutRequest$LayoutType": "<p>The type of layout that can be used to view data under a Customer Profiles domain.</p>",
+        "UpdateDomainLayoutResponse$LayoutType": "<p>The type of layout that can be used to view data under a Customer Profiles domain.</p>"
+      }
+    },
+    "ListAccountIntegrationsRequest": {
+      "base": null,
+      "refs": {}
     },
     "ListAccountIntegrationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCalculatedAttributeDefinitionItem": {
       "base": "<p>The details of a single calculated attribute definition.</p>",
@@ -1446,13 +1422,11 @@
     },
     "ListCalculatedAttributeDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCalculatedAttributeDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCalculatedAttributeForProfileItem": {
       "base": "<p>The details of a single calculated attribute for a profile.</p>",
@@ -1462,13 +1436,11 @@
     },
     "ListCalculatedAttributesForProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCalculatedAttributesForProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDomainItem": {
       "base": "<p>An object in a list that represents a domain.</p>",
@@ -1476,45 +1448,45 @@
         "DomainList$member": null
       }
     },
+    "ListDomainLayoutsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDomainLayoutsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListDomainsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDomainsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventStreamsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventStreamsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventTriggersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventTriggersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdentityResolutionJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdentityResolutionJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntegrationItem": {
       "base": "<p>An integration in list of integrations.</p>",
@@ -1524,13 +1496,11 @@
     },
     "ListIntegrationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntegrationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectTypeAttributeItem": {
       "base": "<p>Item that contains the attribute and when it was last updated.</p>",
@@ -1546,13 +1516,11 @@
     },
     "ListObjectTypeAttributesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListObjectTypeAttributesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileObjectTypeItem": {
       "base": "<p>A ProfileObjectType instance.</p>",
@@ -1568,23 +1536,19 @@
     },
     "ListProfileObjectTypeTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileObjectTypeTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileObjectTypesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileObjectTypesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileObjectsItem": {
       "base": "<p>A ProfileObject in a list of ProfileObjects.</p>",
@@ -1594,43 +1558,35 @@
     },
     "ListProfileObjectsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfileObjectsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleBasedMatchesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleBasedMatchesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSegmentDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSegmentDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowsItem": {
       "base": "<p>A workflow in list of workflows.</p>",
@@ -1640,13 +1596,11 @@
     },
     "ListWorkflowsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MarketoConnectorOperator": {
       "base": null,
@@ -1753,13 +1707,11 @@
     },
     "MergeProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MergeProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Object": {
       "base": null,
@@ -1880,13 +1832,11 @@
     },
     "ProfileAttributeValuesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ProfileAttributeValuesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ProfileAttributes": {
       "base": "<p>The object used to segment on attributes within the customer profile.</p>",
@@ -1996,33 +1946,27 @@
     },
     "PutIntegrationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutIntegrationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutProfileObjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutProfileObjectResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutProfileObjectTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutProfileObjectTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryResult": {
       "base": null,
@@ -2048,10 +1992,26 @@
         "RangeOverride$Unit": "<p>The unit for start and end.</p>"
       }
     },
+    "Readiness": {
+      "base": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>",
+      "refs": {
+        "CreateCalculatedAttributeDefinitionResponse$Readiness": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>",
+        "GetCalculatedAttributeDefinitionResponse$Readiness": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>",
+        "UpdateCalculatedAttributeDefinitionResponse$Readiness": "<p>Information indicating if the Calculated Attribute is ready for use by confirming all historical data has been processed and reflected.</p>"
+      }
+    },
+    "ReadinessStatus": {
+      "base": null,
+      "refs": {
+        "CreateCalculatedAttributeDefinitionResponse$Status": "<p>Status of the Calculated Attribute creation (whether all historical data has been indexed.)</p>",
+        "GetCalculatedAttributeDefinitionResponse$Status": "<p>Status of the Calculated Attribute creation (whether all historical data has been indexed).</p>",
+        "ListCalculatedAttributeDefinitionItem$Status": "<p>Status of the Calculated Attribute creation (whether all historical data has been indexed.)</p>",
+        "UpdateCalculatedAttributeDefinitionResponse$Status": "<p>Status of the Calculated Attribute creation (whether all historical data has been indexed.)</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource does not exist, or access was denied.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
@@ -2148,13 +2108,11 @@
     },
     "SearchProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SegmentDefinitionArn": {
       "base": null,
@@ -2334,6 +2292,8 @@
       "refs": {
         "CreateCalculatedAttributeDefinitionRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateCalculatedAttributeDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateDomainLayoutRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "CreateDomainLayoutResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateDomainRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "CreateEventStreamRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2346,12 +2306,14 @@
         "EventStreamSummary$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "EventTriggerSummaryItem$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "GetCalculatedAttributeDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "GetDomainLayoutResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetEventStreamResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>",
         "GetIntegrationResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetProfileObjectTypeResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "GetSegmentDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "LayoutItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "ListCalculatedAttributeDefinitionItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "ListDomainItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "ListIntegrationItem$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
@@ -2364,6 +2326,7 @@
         "SegmentDefinitionItem$Tags": "<p>The tags belonging to the segment definition.</p>",
         "TagResourceRequest$tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
+        "UpdateDomainLayoutResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "UpdateDomainRequest$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "UpdateDomainResponse$Tags": "<p>The tags used to organize, track, or control access for this resource.</p>",
         "UpdateEventTriggerResponse$Tags": "<p>An array of key-value pairs to apply to this resource.</p>"
@@ -2371,13 +2334,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2417,8 +2378,7 @@
     },
     "ThrottlingException": {
       "base": "<p>You exceeded the maximum number of requests.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timezone": {
       "base": null,
@@ -2458,13 +2418,11 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAddress": {
       "base": "<p>Updates associated with the address properties of a customer profile.</p>",
@@ -2483,43 +2441,43 @@
     },
     "UpdateCalculatedAttributeDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCalculatedAttributeDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateDomainLayoutRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDomainLayoutResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDomainResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventTriggerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventTriggerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Value": {
       "base": null,
@@ -2531,6 +2489,24 @@
       "base": null,
       "refs": {
         "FilterAttributeDimension$Values": "<p>The values to apply the DimensionType on.</p>"
+      }
+    },
+    "ValueRange": {
+      "base": "<p>A structure letting customers specify a relative time window over which over which data is included in the Calculated Attribute. Use positive numbers to indicate that the endpoint is in the past, and negative numbers to indicate it is in the future. ValueRange overrides Value.</p>",
+      "refs": {
+        "Range$ValueRange": "<p>A structure letting customers specify a relative time window over which over which data is included in the Calculated Attribute. Use positive numbers to indicate that the endpoint is in the past, and negative numbers to indicate it is in the future. ValueRange overrides Value.</p>"
+      }
+    },
+    "ValueRangeEnd": {
+      "base": null,
+      "refs": {
+        "ValueRange$End": "<p>The end time of when to include objects. Use positive numbers to indicate that the starting point is in the past, and negative numbers to indicate it is in the future.</p>"
+      }
+    },
+    "ValueRangeStart": {
+      "base": null,
+      "refs": {
+        "ValueRange$Start": "<p>The start time of when to include objects. Use positive numbers to indicate that the starting point is in the past, and negative numbers to indicate it is in the future.</p>"
       }
     },
     "Values": {
@@ -2609,13 +2585,19 @@
     "boolean": {
       "base": null,
       "refs": {
+        "CreateDomainLayoutRequest$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then the layout will not be used by default, but it can be used to view data by explicitly selecting it in the console.</p>",
+        "CreateDomainLayoutResponse$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then the layout will not be used by default, but it can be used to view data by explicitly selecting it in the console.</p>",
+        "GetDomainLayoutResponse$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then the layout will not be used by default, but it can be used to view data by explicitly selecting it in the console.</p>",
         "GetProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "GetProfileObjectTypeTemplateResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
+        "LayoutItem$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then layout will not be used by default but it can be used to view data by explicit selection on UI.</p>",
         "Period$Unlimited": "<p>If set to true, there is no limit on the number of destination invocations per profile. The default is false.</p>",
         "PutProfileObjectTypeRequest$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "PutProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "SalesforceSourceProperties$EnableDynamicFieldUpdate": "<p>The flag that enables dynamic fetching of new (recently added) fields in the Salesforce objects while running a flow.</p>",
-        "SalesforceSourceProperties$IncludeDeletedRecords": "<p>Indicates whether Amazon AppFlow includes deleted files in the flow run.</p>"
+        "SalesforceSourceProperties$IncludeDeletedRecords": "<p>Indicates whether Amazon AppFlow includes deleted files in the flow run.</p>",
+        "UpdateDomainLayoutRequest$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then the layout will not be used by default, but it can be used to view data by explicitly selecting it in the console.</p>",
+        "UpdateDomainLayoutResponse$IsDefault": "<p>If set to true for a layout, this layout will be used by default to view data. If set to false, then the layout will not be used by default, but it can be used to view data by explicitly selecting it in the console.</p>"
       }
     },
     "displayName": {
@@ -2624,12 +2606,18 @@
         "CalculatedAttributeValue$DisplayName": "<p>The display name of the calculated attribute.</p>",
         "CreateCalculatedAttributeDefinitionRequest$DisplayName": "<p>The display name of the calculated attribute.</p>",
         "CreateCalculatedAttributeDefinitionResponse$DisplayName": "<p>The display name of the calculated attribute.</p>",
+        "CreateDomainLayoutRequest$DisplayName": "<p>The display name of the layout</p>",
+        "CreateDomainLayoutResponse$DisplayName": "<p>The display name of the layout</p>",
         "GetCalculatedAttributeDefinitionResponse$DisplayName": "<p>The display name of the calculated attribute.</p>",
         "GetCalculatedAttributeForProfileResponse$DisplayName": "<p>The display name of the calculated attribute.</p>",
+        "GetDomainLayoutResponse$DisplayName": "<p>The display name of the layout</p>",
+        "LayoutItem$DisplayName": "<p>The display name of the layout</p>",
         "ListCalculatedAttributeDefinitionItem$DisplayName": "<p>The display name of the calculated attribute.</p>",
         "ListCalculatedAttributeForProfileItem$DisplayName": "<p>The display name of the calculated attribute.</p>",
         "UpdateCalculatedAttributeDefinitionRequest$DisplayName": "<p>The display name of the calculated attribute.</p>",
-        "UpdateCalculatedAttributeDefinitionResponse$DisplayName": "<p>The display name of the calculated attribute.</p>"
+        "UpdateCalculatedAttributeDefinitionResponse$DisplayName": "<p>The display name of the calculated attribute.</p>",
+        "UpdateDomainLayoutRequest$DisplayName": "<p>The display name of the layout</p>",
+        "UpdateDomainLayoutResponse$DisplayName": "<p>The display name of the layout</p>"
       }
     },
     "encryptionKey": {
@@ -2712,6 +2700,7 @@
         "ListAccountIntegrationsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListCalculatedAttributeDefinitionsRequest$MaxResults": "<p>The maximum number of calculated attribute definitions returned per page.</p>",
         "ListCalculatedAttributesForProfileRequest$MaxResults": "<p>The maximum number of calculated attributes returned per page.</p>",
+        "ListDomainLayoutsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListDomainsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListEventStreamsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListEventTriggersRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -2743,6 +2732,7 @@
       "refs": {
         "AccessDeniedException$Message": null,
         "BadRequestException$Message": null,
+        "DeleteDomainLayoutResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "DeleteDomainResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "DeleteEventTriggerResponse$Message": "<p>A message that indicates the delete request is done.</p>",
         "DeleteIntegrationResponse$Message": "<p>A message that indicates the delete request is done.</p>",
@@ -2777,21 +2767,32 @@
       "base": null,
       "refs": {
         "AutoMerging$Enabled": "<p>The flag that enables the auto-merging of duplicate profiles.</p>",
+        "CreateCalculatedAttributeDefinitionRequest$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>",
+        "CreateCalculatedAttributeDefinitionResponse$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>",
+        "GetCalculatedAttributeDefinitionResponse$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>",
         "GetIntegrationResponse$IsUnstructured": "<p>Boolean that shows if the Flow that's associated with the Integration is created in Amazon Appflow, or with ObjectTypeName equals _unstructured via API/CLI in flowDefinition.</p>",
         "ListAccountIntegrationsRequest$IncludeHidden": "<p>Boolean to indicate if hidden integration should be returned. Defaults to <code>False</code>.</p>",
+        "ListCalculatedAttributeDefinitionItem$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>",
         "ListIntegrationItem$IsUnstructured": "<p>Boolean that shows if the Flow that's associated with the Integration is created in Amazon Appflow, or with ObjectTypeName equals _unstructured via API/CLI in flowDefinition.</p>",
         "ListIntegrationsRequest$IncludeHidden": "<p>Boolean to indicate if hidden integration should be returned. Defaults to <code>False</code>.</p>",
         "MatchingRequest$Enabled": "<p>The flag that enables the matching process of duplicate profiles.</p>",
         "MatchingResponse$Enabled": "<p>The flag that enables the matching process of duplicate profiles.</p>",
         "PutIntegrationResponse$IsUnstructured": "<p>Boolean that shows if the Flow that's associated with the Integration is created in Amazon Appflow, or with ObjectTypeName equals _unstructured via API/CLI in flowDefinition.</p>",
         "RuleBasedMatchingRequest$Enabled": "<p>The flag that enables the rule-based matching process of duplicate profiles.</p>",
-        "RuleBasedMatchingResponse$Enabled": "<p>The flag that enables the rule-based matching process of duplicate profiles.</p>"
+        "RuleBasedMatchingResponse$Enabled": "<p>The flag that enables the rule-based matching process of duplicate profiles.</p>",
+        "UpdateCalculatedAttributeDefinitionResponse$UseHistoricalData": "<p>Whether historical data ingested before the Calculated Attribute was created should be included in calculations.</p>"
       }
     },
     "optionalLong": {
       "base": null,
       "refs": {
         "EventTriggerLimits$EventExpiration": "<p>In milliseconds. Specifies that an event will only trigger the destination if it is processed within a certain latency period.</p>"
+      }
+    },
+    "percentageInteger": {
+      "base": null,
+      "refs": {
+        "Readiness$ProgressPercentage": "<p>Approximately how far the Calculated Attribute creation is from completion.</p>"
       }
     },
     "requestValueList": {
@@ -2834,7 +2835,7 @@
     "sensitiveString0To255": {
       "base": null,
       "refs": {
-        "UpdateProfileRequest$AccountNumber": "<p>An account number that you have given to the customer.</p>",
+        "UpdateProfileRequest$AccountNumber": "<p>An account number that you have assigned to the customer.</p>",
         "UpdateProfileRequest$BusinessName": "<p>The name of the customer’s business.</p>",
         "UpdateProfileRequest$FirstName": "<p>The customer’s first name.</p>",
         "UpdateProfileRequest$MiddleName": "<p>The customer’s middle name.</p>",
@@ -2858,10 +2859,20 @@
         "Profile$AdditionalInformation": "<p>Any additional information relevant to the customer’s profile.</p>"
       }
     },
+    "sensitiveString1To2000000": {
+      "base": null,
+      "refs": {
+        "CreateDomainLayoutRequest$Layout": "<p>A customizable layout that can be used to view data under a Customer Profiles domain.</p>",
+        "CreateDomainLayoutResponse$Layout": "<p>A customizable layout that can be used to view data under Customer Profiles domain.</p>",
+        "GetDomainLayoutResponse$Layout": "<p>A customizable layout that can be used to view data under a Customer Profiles domain.</p>",
+        "UpdateDomainLayoutRequest$Layout": "<p>A customizable layout that can be used to view data under a Customer Profiles domain.</p>",
+        "UpdateDomainLayoutResponse$Layout": "<p>A customizable layout that can be used to view data under a Customer Profiles domain.</p>"
+      }
+    },
     "sensitiveString1To255": {
       "base": null,
       "refs": {
-        "CreateProfileRequest$AccountNumber": "<p>An account number that you have given to the customer.</p>",
+        "CreateProfileRequest$AccountNumber": "<p>An account number that you have assigned to the customer.</p>",
         "CreateProfileRequest$BusinessName": "<p>The name of the customer’s business.</p>",
         "CreateProfileRequest$FirstName": "<p>The customer’s first name.</p>",
         "CreateProfileRequest$MiddleName": "<p>The customer’s middle name.</p>",
@@ -2876,7 +2887,7 @@
         "CreateProfileRequest$BusinessEmailAddress": "<p>The customer’s business email address.</p>",
         "CreateProfileRequest$PartyTypeString": "<p>An alternative to <code>PartyType</code> which accepts any string as input.</p>",
         "CreateProfileRequest$GenderString": "<p>An alternative to <code>Gender</code> which accepts any string as input.</p>",
-        "Profile$AccountNumber": "<p>An account number that you have given to the customer.</p>",
+        "Profile$AccountNumber": "<p>An account number that you have assigned to the customer.</p>",
         "Profile$BusinessName": "<p>The name of the customer’s business.</p>",
         "Profile$FirstName": "<p>The customer’s first name.</p>",
         "Profile$MiddleName": "<p>The customer’s middle name.</p>",
@@ -2898,20 +2909,26 @@
       "refs": {
         "CreateCalculatedAttributeDefinitionRequest$Description": "<p>The description of the calculated attribute.</p>",
         "CreateCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
+        "CreateDomainLayoutRequest$Description": "<p>The description of the layout</p>",
+        "CreateDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "CreateEventTriggerRequest$Description": "<p>The description of the event trigger.</p>",
         "CreateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
         "CreateSegmentDefinitionRequest$Description": "<p>The description of the segment definition.</p>",
         "CreateSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
         "GetCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
+        "GetDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "GetEventTriggerResponse$Description": "<p>The description of the event trigger.</p>",
         "GetProfileObjectTypeResponse$Description": "<p>The description of the profile object type.</p>",
         "GetSegmentDefinitionResponse$Description": "<p>The description of the segment definition.</p>",
+        "LayoutItem$Description": "<p>The description of the layout</p>",
         "ListCalculatedAttributeDefinitionItem$Description": "<p>The threshold for the calculated attribute.</p>",
         "PutProfileObjectTypeRequest$Description": "<p>Description of the profile object type.</p>",
         "PutProfileObjectTypeResponse$Description": "<p>Description of the profile object type.</p>",
         "SegmentDefinitionItem$Description": "<p>The description of the segment definition.</p>",
         "UpdateCalculatedAttributeDefinitionRequest$Description": "<p>The description of the calculated attribute.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$Description": "<p>The description of the calculated attribute.</p>",
+        "UpdateDomainLayoutRequest$Description": "<p>The description of the layout</p>",
+        "UpdateDomainLayoutResponse$Description": "<p>The description of the layout</p>",
         "UpdateEventTriggerRequest$Description": "<p>The description of the event trigger.</p>",
         "UpdateEventTriggerResponse$Description": "<p>The description of the event trigger.</p>"
       }
@@ -2981,6 +2998,7 @@
         "CalculatedAttributeValue$IsDataPartial": "<p>Indicates whether the calculated attribute's value is based on partial data. If the data is partial, it is set to true.</p>",
         "CalculatedAttributeValue$Value": "<p>The value of the calculated attribute.</p>",
         "ConflictResolution$SourceName": "<p>The <code>ObjectType</code> name that is used to resolve profile merging conflicts when choosing <code>SOURCE</code> as the <code>ConflictResolvingModel</code>.</p>",
+        "CreateDomainLayoutResponse$Version": "<p>The version used to create layout.</p>",
         "CreateEventStreamRequest$Uri": "<p>The StreamARN of the destination to deliver profile events to. For example, arn:aws:kinesis:region:account-id:stream/stream-name</p>",
         "CreateEventStreamResponse$EventStreamArn": "<p>A unique identifier for the event stream.</p>",
         "CreateIntegrationWorkflowResponse$Message": "<p>A message indicating create request was received.</p>",
@@ -2999,6 +3017,7 @@
         "EventTriggerValues$member": null,
         "GetCalculatedAttributeForProfileResponse$IsDataPartial": "<p>Indicates whether the calculated attribute’s value is based on partial data. If data is partial, it is set to true.</p>",
         "GetCalculatedAttributeForProfileResponse$Value": "<p>The value of the calculated attribute.</p>",
+        "GetDomainLayoutResponse$Version": "<p>The version used to create layout.</p>",
         "GetEventStreamResponse$EventStreamArn": "<p>A unique identifier for the event stream.</p>",
         "GetIntegrationRequest$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "GetIntegrationResponse$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
@@ -3037,9 +3056,12 @@
         "PutProfileObjectResponse$ProfileObjectUniqueKey": "<p>The unique identifier of the profile object generated by the service.</p>",
         "PutProfileObjectTypeRequest$SourceLastUpdatedTimestampFormat": "<p>The format of your <code>sourceLastUpdatedTimestamp</code> that was previously set up. </p>",
         "PutProfileObjectTypeResponse$SourceLastUpdatedTimestampFormat": "<p>The format of your <code>sourceLastUpdatedTimestamp</code> that was previously set up in fields that were parsed using <a href=\"https://docs.oracle.com/javase/10/docs/api/java/text/SimpleDateFormat.html\">SimpleDateFormat</a>. If you have <code>sourceLastUpdatedTimestamp</code> in your field, you must set up <code>sourceLastUpdatedTimestampFormat</code>.</p>",
+        "Range$TimestampSource": "<p>An expression specifying the field in your JSON object from which the date should be parsed. The expression should follow the structure of \\\"{ObjectTypeName.&lt;Location of timestamp field in JSON pointer format&gt;}\\\". E.g. if your object type is MyType and source JSON is {\"generatedAt\": {\"timestamp\": \"1737587945945\"}}, then TimestampSource should be \"{MyType.generatedAt.timestamp}\".</p>",
+        "Range$TimestampFormat": "<p>The format the timestamp field in your JSON object is specified. This value should be one of EPOCHMILLI (for Unix epoch timestamps with second/millisecond level precision) or ISO_8601 (following ISO_8601 format with second/millisecond level precision, with an optional offset of Z or in the format HH:MM or HHMM.). E.g. if your object type is MyType and source JSON is {\"generatedAt\": {\"timestamp\": \"2001-07-04T12:08:56.235-0700\"}}, then TimestampFormat should be \"ISO_8601\".</p>",
         "SegmentDefinitionItem$DisplayName": "<p>Display name of the segment definition.</p>",
         "Threshold$Value": "<p>The value of the threshold.</p>",
         "UpdateAttributes$key": null,
+        "UpdateDomainLayoutResponse$Version": "<p>The version used to create layout.</p>",
         "ValueList$member": null,
         "Values$member": null,
         "requestValueList$member": null
@@ -3068,7 +3090,8 @@
         "ListProfileObjectTypeItem$Description": "<p>Description of the profile object type.</p>",
         "ObjectAttribute$Source": "<p>An attribute contained within a source object.</p>",
         "ObjectTypeField$Source": "<p>A field of a ProfileObject. For example: _source.FirstName, where “_source” is a ProfileObjectType of a Zendesk user and “FirstName” is a field in that ObjectType.</p>",
-        "ObjectTypeField$Target": "<p>The location of the data in the standard ProfileObject model. For example: _profile.Address.PostalCode.</p>"
+        "ObjectTypeField$Target": "<p>The location of the data in the standard ProfileObject model. For example: _profile.Address.PostalCode.</p>",
+        "Readiness$Message": "<p>Any customer messaging.</p>"
       }
     },
     "timestamp": {
@@ -3078,8 +3101,11 @@
         "AppflowIntegrationWorkflowStep$LastUpdatedAt": "<p>Last updated timestamp for workflow step for <code>APPFLOW_INTEGRATION</code> workflow.</p>",
         "Batch$StartTime": "<p>Start time of batch to split ingestion.</p>",
         "Batch$EndTime": "<p>End time of batch to split ingestion.</p>",
+        "CalculatedAttributeValue$LastObjectTimestamp": "<p>The timestamp of the newest object included in the calculated attribute calculation.</p>",
         "CreateCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "CreateCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
+        "CreateDomainLayoutResponse$CreatedAt": "<p>The timestamp of when the layout was created.</p>",
+        "CreateDomainLayoutResponse$LastUpdatedAt": "<p>The timestamp of when the layout was most recently updated.</p>",
         "CreateDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "CreateDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "CreateEventTriggerResponse$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
@@ -3092,6 +3118,9 @@
         "EventTriggerSummaryItem$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>",
         "GetCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "GetCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
+        "GetCalculatedAttributeForProfileResponse$LastObjectTimestamp": "<p>The timestamp of the newest object included in the calculated attribute calculation.</p>",
+        "GetDomainLayoutResponse$CreatedAt": "<p>The timestamp of when the layout was created.</p>",
+        "GetDomainLayoutResponse$LastUpdatedAt": "<p>The timestamp of when the layout was most recently updated.</p>",
         "GetDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "GetEventStreamResponse$CreatedAt": "<p>The timestamp of when the export was created.</p>",
@@ -3112,8 +3141,11 @@
         "GetWorkflowResponse$LastUpdatedAt": "<p>The timestamp that represents when workflow execution last updated.</p>",
         "IdentityResolutionJob$JobStartTime": "<p>The timestamp of when the job was started or will be started.</p>",
         "IdentityResolutionJob$JobEndTime": "<p>The timestamp of when the job was completed.</p>",
+        "LayoutItem$CreatedAt": "<p>The timestamp of when the layout was created.</p>",
+        "LayoutItem$LastUpdatedAt": "<p>The timestamp of when the layout was most recently updated.</p>",
         "ListCalculatedAttributeDefinitionItem$CreatedAt": "<p>The threshold for the calculated attribute.</p>",
         "ListCalculatedAttributeDefinitionItem$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
+        "ListCalculatedAttributeForProfileItem$LastObjectTimestamp": "<p>The timestamp of the newest object included in the calculated attribute calculation.</p>",
         "ListDomainItem$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "ListDomainItem$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "ListIntegrationItem$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
@@ -3132,6 +3164,8 @@
         "SegmentDefinitionItem$CreatedAt": "<p>When the segment definition was created.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$CreatedAt": "<p>The timestamp of when the calculated attribute definition was created.</p>",
         "UpdateCalculatedAttributeDefinitionResponse$LastUpdatedAt": "<p>The timestamp of when the calculated attribute definition was most recently edited.</p>",
+        "UpdateDomainLayoutResponse$CreatedAt": "<p>The timestamp of when the layout was created.</p>",
+        "UpdateDomainLayoutResponse$LastUpdatedAt": "<p>The timestamp of when the layout was most recently updated.</p>",
         "UpdateDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "UpdateDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "UpdateEventTriggerResponse$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
@@ -3153,6 +3187,8 @@
         "ListCalculatedAttributeDefinitionsResponse$NextToken": "<p>The pagination token from the previous call to ListCalculatedAttributeDefinitions.</p>",
         "ListCalculatedAttributesForProfileRequest$NextToken": "<p>The pagination token from the previous call to ListCalculatedAttributesForProfile.</p>",
         "ListCalculatedAttributesForProfileResponse$NextToken": "<p>The pagination token from the previous call to ListCalculatedAttributesForProfile.</p>",
+        "ListDomainLayoutsRequest$NextToken": "<p>Identifies the next page of results to return.</p>",
+        "ListDomainLayoutsResponse$NextToken": "<p>Identifies the next page of results to return.</p>",
         "ListDomainsRequest$NextToken": "<p>The pagination token from the previous ListDomain API call.</p>",
         "ListDomainsResponse$NextToken": "<p>The pagination token from the previous ListDomains API call.</p>",
         "ListEventStreamsRequest$NextToken": "<p>Identifies the next page of results to return.</p>",
