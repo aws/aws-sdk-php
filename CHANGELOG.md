@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.3 - 2025-06-09
 
 * `Aws\S3` - Fixes bug with resolving bucket locations in us-east-1 when calling `GetBucketLocation`
 * `Aws\AppSync` - Deprecate `atRestEncryptionEnabled` and `transitEncryptionEnabled` attributes in `CreateApiCache` action. Encryption is always enabled for new caches.
