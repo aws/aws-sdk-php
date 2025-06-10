@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.4 - 2025-06-10
 
 * `Aws\GameLiftStreams` - Documentation updates for Amazon GameLift Streams to address formatting errors, correct resource ID examples, and update links to other guides
 
