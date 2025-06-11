@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.5 - 2025-06-11
 
 * `Aws\RDS` - Updates Amazon RDS documentation for Amazon RDS for Db2 cross-Region replicas in standby mode.
 * `Aws\LexModelsV2` - Add support for the Assisted NLU feature to improve bot performance
