@@ -4188,8 +4188,7 @@
     },
     "CreateUploadUrlRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateUploadUrlResponse":{
       "type":"structure",
@@ -4738,8 +4737,7 @@
     },
     "DeleteUtterancesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeBotAliasRequest":{
       "type":"structure",
@@ -5387,7 +5385,7 @@
     },
     "Description":{
       "type":"string",
-      "max":200,
+      "max":2000,
       "min":0
     },
     "DescriptiveBotBuilderSpecification":{
@@ -7201,6 +7199,13 @@
       "min":0
     },
     "NextToken":{"type":"string"},
+    "NluImprovementSpecification":{
+      "type":"structure",
+      "required":["enabled"],
+      "members":{
+        "enabled":{"shape":"Enabled"}
+      }
+    },
     "NonEmptyString":{
       "type":"string",
       "min":1
@@ -7615,7 +7620,8 @@
     "RuntimeSettings":{
       "type":"structure",
       "members":{
-        "slotResolutionImprovement":{"shape":"SlotResolutionImprovementSpecification"}
+        "slotResolutionImprovement":{"shape":"SlotResolutionImprovementSpecification"},
+        "nluImprovement":{"shape":"NluImprovementSpecification"}
       }
     },
     "S3BucketArn":{
@@ -8508,8 +8514,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -8977,8 +8982,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateBotAliasRequest":{
       "type":"structure",

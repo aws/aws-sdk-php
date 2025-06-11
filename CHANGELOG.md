@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - Updates Amazon RDS documentation for Amazon RDS for Db2 cross-Region replicas in standby mode.
+* `Aws\LexModelsV2` - Add support for the Assisted NLU feature to improve bot performance
+* `Aws\ControlCatalog` - Introduced ListControlMappings API that retrieves control mappings. Added control aliases and governed resources fields in GetControl and ListControls APIs. New filtering capability in ListControls API, with implementation identifiers and implementation types.
+* `Aws\EKS` - Release for EKS Pod Identity Cross Account feature and disableSessionTags flag.
+* `Aws\WAFV2` - WAF now provides two DDoS protection options: resource-level monitoring for Application Load Balancers and the AWSManagedRulesAntiDDoSRuleSet managed rule group for CloudFront distributions.
+* `Aws\NetworkManager` - Add support for public DNS hostname resolution to private IP addresses across Cloud WAN-managed VPCs. Add support for security group referencing across Cloud WAN-managed VPCs.
+
 ## 3.344.4 - 2025-06-10
 
 * `Aws\GameLiftStreams` - Documentation updates for Amazon GameLift Streams to address formatting errors, correct resource ID examples, and update links to other guides

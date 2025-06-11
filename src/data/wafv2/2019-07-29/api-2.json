@@ -960,6 +960,14 @@
         "EnableRegexInPath":{"shape":"Boolean"}
       }
     },
+    "AWSManagedRulesAntiDDoSRuleSet":{
+      "type":"structure",
+      "required":["ClientSideActionConfig"],
+      "members":{
+        "ClientSideActionConfig":{"shape":"ClientSideActionConfig"},
+        "SensitivityToBlock":{"shape":"SensitivityToAct"}
+      }
+    },
     "AWSManagedRulesBotControlRuleSet":{
       "type":"structure",
       "required":["InspectionLevel"],
@@ -1159,6 +1167,22 @@
       "type":"structure",
       "members":{
         "Capacity":{"shape":"ConsumedCapacity"}
+      }
+    },
+    "ClientSideAction":{
+      "type":"structure",
+      "required":["UsageOfAction"],
+      "members":{
+        "UsageOfAction":{"shape":"UsageOfAction"},
+        "Sensitivity":{"shape":"SensitivityToAct"},
+        "ExemptUriRegularExpressions":{"shape":"RegularExpressionList"}
+      }
+    },
+    "ClientSideActionConfig":{
+      "type":"structure",
+      "required":["Challenge"],
+      "members":{
+        "Challenge":{"shape":"ClientSideAction"}
       }
     },
     "ComparisonOperator":{
@@ -1589,7 +1613,8 @@
         "CaptchaConfig":{"shape":"CaptchaConfig"},
         "ChallengeConfig":{"shape":"ChallengeConfig"},
         "TokenDomains":{"shape":"TokenDomains"},
-        "AssociationConfig":{"shape":"AssociationConfig"}
+        "AssociationConfig":{"shape":"AssociationConfig"},
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"}
       }
     },
     "CreateWebACLResponse":{
@@ -2885,6 +2910,13 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "LowReputationMode":{
+      "type":"string",
+      "enum":[
+        "ACTIVE_UNDER_DDOS",
+        "ALWAYS_ON"
+      ]
+    },
     "ManagedProductDescriptor":{
       "type":"structure",
       "members":{
@@ -2928,7 +2960,8 @@
         },
         "AWSManagedRulesBotControlRuleSet":{"shape":"AWSManagedRulesBotControlRuleSet"},
         "AWSManagedRulesATPRuleSet":{"shape":"AWSManagedRulesATPRuleSet"},
-        "AWSManagedRulesACFPRuleSet":{"shape":"AWSManagedRulesACFPRuleSet"}
+        "AWSManagedRulesACFPRuleSet":{"shape":"AWSManagedRulesACFPRuleSet"},
+        "AWSManagedRulesAntiDDoSRuleSet":{"shape":"AWSManagedRulesAntiDDoSRuleSet"}
       }
     },
     "ManagedRuleGroupConfigs":{
@@ -3062,6 +3095,13 @@
         "Statement":{"shape":"Statement"}
       }
     },
+    "OnSourceDDoSProtectionConfig":{
+      "type":"structure",
+      "required":["ALBLowReputationMode"],
+      "members":{
+        "ALBLowReputationMode":{"shape":"LowReputationMode"}
+      }
+    },
     "OrStatement":{
       "type":"structure",
       "required":["Statements"],
@@ -3163,7 +3203,8 @@
         "SCOPE_DOWN",
         "CUSTOM_KEYS",
         "ACP_RULE_SET_RESPONSE_INSPECTION",
-        "DATA_PROTECTION_CONFIG"
+        "DATA_PROTECTION_CONFIG",
+        "LOW_REPUTATION_MODE"
       ]
     },
     "ParameterExceptionParameter":{
@@ -3876,6 +3917,14 @@
         "HIGH"
       ]
     },
+    "SensitivityToAct":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
     "SingleCookieName":{
       "type":"string",
       "max":60,
@@ -4249,7 +4298,8 @@
         "CaptchaConfig":{"shape":"CaptchaConfig"},
         "ChallengeConfig":{"shape":"ChallengeConfig"},
         "TokenDomains":{"shape":"TokenDomains"},
-        "AssociationConfig":{"shape":"AssociationConfig"}
+        "AssociationConfig":{"shape":"AssociationConfig"},
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"}
       }
     },
     "UpdateWebACLResponse":{
@@ -4267,6 +4317,13 @@
     "UriPath":{
       "type":"structure",
       "members":{}
+    },
+    "UsageOfAction":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "UsernameField":{
       "type":"structure",
@@ -4479,7 +4536,8 @@
         "ChallengeConfig":{"shape":"ChallengeConfig"},
         "TokenDomains":{"shape":"TokenDomains"},
         "AssociationConfig":{"shape":"AssociationConfig"},
-        "RetrofittedByFirewallManager":{"shape":"Boolean"}
+        "RetrofittedByFirewallManager":{"shape":"Boolean"},
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"}
       }
     },
     "WebACLSummaries":{

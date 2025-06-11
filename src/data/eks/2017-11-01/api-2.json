@@ -1731,7 +1731,9 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"}
       }
     },
     "CreatePodIdentityAssociationResponse":{
@@ -3452,7 +3454,10 @@
         "tags":{"shape":"TagMap"},
         "createdAt":{"shape":"Timestamp"},
         "modifiedAt":{"shape":"Timestamp"},
-        "ownerArn":{"shape":"String"}
+        "ownerArn":{"shape":"String"},
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"},
+        "externalId":{"shape":"String"}
       }
     },
     "PodIdentityAssociationSummaries":{
@@ -4054,7 +4059,9 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"}
       }
     },
     "UpdatePodIdentityAssociationResponse":{
