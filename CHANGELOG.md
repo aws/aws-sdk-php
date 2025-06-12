@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\KMS` - AWS KMS announces the support of ML-DSA key pairs that creates post-quantum safe digital signatures.
+* `Aws\ConnectCampaignsV2` - Added PutInstanceCommunicationLimits and GetInstanceCommunicationLimits APIs
+* `Aws\IoTFleetWise` - Add new status READY_FOR_CHECKIN used for vehicle synchronisation
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\PCS` - Fixed regex patterns for ARN fields.
+* `Aws\ApiGatewayV2` - Documentation updates for Amazon API Gateway
+* `Aws\ECS` - This Amazon ECS release supports updating the capacityProviderStrategy parameter in update-service.
+* `Aws\EMRServerless` - This release adds support for retrieval of the optional executionIamPolicy field in the GetJobRun API response.
+
 ## 3.344.5 - 2025-06-11
 
 * `Aws\RDS` - Updates Amazon RDS documentation for Amazon RDS for Db2 cross-Region replicas in standby mode.

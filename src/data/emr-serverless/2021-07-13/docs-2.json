@@ -491,6 +491,7 @@
     "JobRunExecutionIamPolicy": {
       "base": "<p>Optional IAM policy. The resulting job IAM role permissions will be an intersection of the policies passed and the policy associated with your job execution role.</p>",
       "refs": {
+        "JobRun$executionIamPolicy": null,
         "StartJobRunRequest$executionIamPolicy": "<p>You can pass an optional IAM policy. The resulting job IAM role permissions will be an intersection of this policy and the policy associated with your job execution role.</p>"
       }
     },
@@ -818,7 +819,7 @@
     "ShutdownGracePeriodInSeconds": {
       "base": null,
       "refs": {
-        "CancelJobRunRequest$shutdownGracePeriodInSeconds": "<p>The duration (in seconds) to wait before forcefully terminating the job after cancellation is requested.</p>"
+        "CancelJobRunRequest$shutdownGracePeriodInSeconds": "<p>The duration in seconds to wait before forcefully terminating the job after cancellation is requested.</p>"
       }
     },
     "SparkSubmit": {
