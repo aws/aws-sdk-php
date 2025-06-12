@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.6 - 2025-06-12
 
 * `Aws\KMS` - AWS KMS announces the support of ML-DSA key pairs that creates post-quantum safe digital signatures.
 * `Aws\ConnectCampaignsV2` - Added PutInstanceCommunicationLimits and GetInstanceCommunicationLimits APIs
