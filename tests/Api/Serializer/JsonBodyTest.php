@@ -226,4 +226,35 @@ class JsonBodyTest extends TestCase
         $builtShape = $j->build($shape, $args);
         $this->assertEquals($result, $builtShape);
     }
+
+    /**
+     * @param $args
+     * @param $expected
+     *
+     * @return void
+     * @throws \JsonException
+     * @dataProvider buildsDocTypesProvider
+     */
+    public function testBuildsDocTypes($args, $expected): void
+    {
+        $j = new JsonBody(new Service([], function() { return []; }));
+        $shape = Shape::create(
+            [
+                'type' => 'structure',
+                'members' => [],
+                'document' => true,
+            ]
+            , new ShapeMap([])
+        );
+        $builtShape = $j->build($shape, $args);
+        $this->assertEquals($expected, $builtShape);
+    }
+
+    public function buildsDocTypesProvider(): iterable
+    {
+        return [
+            ['hello', '"hello"'],
+            [['foo' => 'bar'], '{"foo":"bar"}']
+        ];
+    }
 }

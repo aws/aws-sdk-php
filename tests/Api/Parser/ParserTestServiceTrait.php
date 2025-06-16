@@ -33,7 +33,11 @@ trait ParserTestServiceTrait
                     'version' => 'latest',
                     'http_handler' => function () use ($content) {
                         return new FulfilledPromise(new Response(200, [], $content));
-                    }
+                    },
+                    'credentials' => [
+                        'key' => 'foo',
+                        'secret' => 'bar'
+                    ]
                 ]
             )
         );
@@ -60,6 +64,15 @@ trait ParserTestServiceTrait
             [
                 'metadata' => $metadata,
                 'shapes' => [
+                    'DocumentTypeAsPayloadInputOutput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'documentValue' => [
+                                'shape' => 'DocumentType'
+                            ]
+                        ],
+                        'payload' => 'documentValue'
+                    ],
                     "ParseIso8601Response" => [
                         "type" => "structure",
                         "members" => [
@@ -94,6 +107,7 @@ trait ParserTestServiceTrait
                     ],
                     "DocumentType" => [
                         "type" => "structure",
+                        'members' => [],
                         "document" => true
                     ],
                     "__timestampIso8601" => [
@@ -109,6 +123,21 @@ trait ParserTestServiceTrait
                     ],
                 ],
                 'operations' => [
+                    'DocumentTypeAsPayload' => [
+                        'name' => 'DocumentTypeAsPayload',
+                        'http' => [
+                            'method' => 'PUT',
+                            'requestUri' => '/DocumentTypeAsPayload',
+                            'responseCode' => 200
+                        ],
+                        'input' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'output' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'idempotent' => true
+                    ],
                     "ParseDocType" => [
                         "name" => "ParseDocType",
                         "http" => [

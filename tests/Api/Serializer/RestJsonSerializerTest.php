@@ -4,9 +4,8 @@ namespace Aws\Test\Api\Serializer;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
-use Aws\EndpointV2\EndpointDefinitionProvider;
-use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
+use Aws\Exception\InvalidJsonException;
 use Aws\Test\UsesServiceTrait;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -66,6 +65,21 @@ class RestJsonSerializerTest extends TestCase
                             'requestUri' => 'foo/{PathSegment}'
                         ],
                         'input' => ['shape' => 'RequestUriOperationInput'],
+                    ],
+                    'DocumentTypeAsPayload' => [
+                        'name' => 'DocumentTypeAsPayload',
+                        'http' => [
+                            'method' => 'PUT',
+                            'requestUri' => '/DocumentTypeAsPayload',
+                            'responseCode' => 200
+                        ],
+                        'input' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'output' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'idempotent' => true
                     ]
                 ],
                 'shapes' => [
@@ -83,6 +97,15 @@ class RestJsonSerializerTest extends TestCase
                             ]
                         ]
                     ],
+                    'DocumentTypeAsPayloadInputOutput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'documentValue' => [
+                                'shape' => 'DocumentType'
+                            ]
+                        ],
+                        'payload' => 'documentValue'
+                    ],
                     'RequestUriOperationInput' => [
                         'required' => ['PathSegment'],
                         'type' => 'structure',
@@ -94,9 +117,10 @@ class RestJsonSerializerTest extends TestCase
                             'baz' => ['shape' => 'BazShape']
                         ]
                     ],
-                    "DocumentType" => [
-                        "type" => "structure",
-                        "document" => true
+                    'DocumentType' => [
+                        'type' => 'structure',
+                        'members' => [],
+                        'document' => true,
                     ],
                     'BarInput' => [
                         'type' => 'structure',
@@ -328,10 +352,108 @@ class RestJsonSerializerTest extends TestCase
                     ]
                 ],
                 '{"DocumentValue":{"DocumentType":2}}'
+            ]
+        ];
+    }
+
+    /**
+     * @param $input
+     * @param $expectedOutput
+     *
+     * @return void
+     * @dataProvider handlesDocTypeAsPayloadProvider
+     */
+    public function testHandlesDocTypeAsPayload($input, $expectedOutput): void
+    {
+        $request = $this->getRequest('DocumentTypeAsPayload', ['documentValue' => $input]);
+        $this->assertSame('PUT', $request->getMethod());
+        $this->assertSame('http://foo.com/DocumentTypeAsPayload', (string) $request->getUri());
+        $this->assertSame($expectedOutput, $request->getBody()->getContents());
+        $this->assertSame(
+            'application/json',
+            $request->getHeaderLine('Content-Type')
+        );
+    }
+
+    public function handlesDocTypeAsPayloadProvider(): iterable
+    {
+        return [
+            'string payload' => ['hello', '"hello"'],
+            'simple string field' => [
+                ['message' => 'Hello, world!'],
+                '{"message":"Hello, world!"}',
+            ],
+
+            'numeric and boolean types' => [
+                ['success' => true, 'count' => 3, 'ratio' => 0.75],
+                '{"success":true,"count":3,"ratio":0.75}',
+            ],
+
+            'null value' => [
+                ['result' => null],
+                '{"result":null}',
+            ],
+
+            'empty object' => [
+                [],
+                '{}',
+            ],
+
+            'empty array' => [
+                ['items' => []],
+                '{"items":[]}',
+            ],
+
+            'nested object' => [
+                ['user' => ['id' => 1, 'name' => 'Jane']],
+                '{"user":{"id":1,"name":"Jane"}}',
+            ],
+
+            'array of objects' => [
+                ['records' => [['id' => 1], ['id' => 2]]],
+                '{"records":[{"id":1},{"id":2}]}',
+            ],
+
+            'deeply nested structure' => [
+                ['a' => ['b' => ['c' => ['d' => 123]]]],
+                '{"a":{"b":{"c":{"d":123}}}}',
+            ],
+
+            'mixed types in array' => [
+                ['data' => ['string', 123, true, null]],
+                '{"data":["string",123,true,null]}',
             ],
         ];
     }
 
+    /**
+     * @param $input
+     * @param $expectedOutput
+     *
+     * @return void
+     * @dataProvider rejectsInvalidJsonAsPayloadProvider
+     */
+    public function testRejectsInvalidJsonAsPayload($input): void
+    {
+        $this->expectException(InvalidJsonException::class);
+        $this->expectExceptionMessage('Unable to encode JSON document');
+        $this->getRequest('DocumentTypeAsPayload', ['documentValue' => $input]);
+    }
+
+    public function rejectsInvalidJsonAsPayloadProvider(): iterable
+    {
+        return [
+            'malformed byte sequence' => ["\xB1\x31"],
+            'invalid continuation byte' => ["\xC3\x28"],
+            'overlong encoding' => ["\xE2\x28\xA1"],
+            'invalid UTF-8 in nested array' =>[
+                'users' => [
+                    ['name' => "Valid Name"],
+                    ['name' => "\xB1\x31"]  // invalid UTF-8
+                ]
+            ]
+        ];
+    }
 
     /**
      * @dataProvider restJsonContentTypeProvider
