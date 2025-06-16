@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon Bedrock** service.
  * @method \Aws\Result batchDeleteEvaluationJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDeleteEvaluationJobAsync(array $args = [])
+ * @method \Aws\Result createCustomModel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createCustomModelAsync(array $args = [])
  * @method \Aws\Result createEvaluationJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createEvaluationJobAsync(array $args = [])
  * @method \Aws\Result createGuardrail(array $args = [])

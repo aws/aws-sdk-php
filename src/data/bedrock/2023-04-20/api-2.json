@@ -31,6 +31,26 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "CreateCustomModel":{
+      "name":"CreateCustomModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/custom-models/create-custom-model",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateCustomModelRequest"},
+      "output":{"shape":"CreateCustomModelResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateEvaluationJob":{
       "name":"CreateEvaluationJob",
       "http":{
@@ -1290,6 +1310,31 @@
       "type":"string",
       "pattern":".*[a-z]{1,20}/.{1,20}.*"
     },
+    "CreateCustomModelRequest":{
+      "type":"structure",
+      "required":[
+        "modelName",
+        "modelSourceConfig"
+      ],
+      "members":{
+        "modelName":{"shape":"CustomModelName"},
+        "modelSourceConfig":{"shape":"ModelDataSource"},
+        "modelKmsKeyArn":{"shape":"KmsKeyArn"},
+        "roleArn":{"shape":"RoleArn"},
+        "modelTags":{"shape":"TagList"},
+        "clientRequestToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateCustomModelResponse":{
+      "type":"structure",
+      "required":["modelArn"],
+      "members":{
+        "modelArn":{"shape":"ModelArn"}
+      }
+    },
     "CreateEvaluationJobRequest":{
       "type":"structure",
       "required":[
@@ -1656,7 +1701,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}/[a-z0-9]{12}"
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:custom-model/(imported|[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}/[a-z0-9]{12})"
     },
     "CustomModelName":{
       "type":"string",
@@ -1680,7 +1725,8 @@
         "baseModelArn":{"shape":"ModelArn"},
         "baseModelName":{"shape":"ModelName"},
         "customizationType":{"shape":"CustomizationType"},
-        "ownerAccountId":{"shape":"AccountId"}
+        "ownerAccountId":{"shape":"AccountId"},
+        "modelStatus":{"shape":"ModelStatus"}
       }
     },
     "CustomModelSummaryList":{
@@ -1710,7 +1756,8 @@
       "enum":[
         "FINE_TUNING",
         "CONTINUED_PRE_TRAINING",
-        "DISTILLATION"
+        "DISTILLATION",
+        "IMPORTED"
       ]
     },
     "DataProcessingDetails":{
@@ -2398,10 +2445,6 @@
       "required":[
         "modelArn",
         "modelName",
-        "jobArn",
-        "baseModelArn",
-        "trainingDataConfig",
-        "outputDataConfig",
         "creationTime"
       ],
       "members":{
@@ -2419,7 +2462,9 @@
         "trainingMetrics":{"shape":"TrainingMetrics"},
         "validationMetrics":{"shape":"ValidationMetrics"},
         "creationTime":{"shape":"Timestamp"},
-        "customizationConfig":{"shape":"CustomizationConfig"}
+        "customizationConfig":{"shape":"CustomizationConfig"},
+        "modelStatus":{"shape":"ModelStatus"},
+        "failureMessage":{"shape":"ErrorMessage"}
       }
     },
     "GetEvaluationJobRequest":{
@@ -2674,8 +2719,8 @@
         "clientRequestToken":{"shape":"IdempotencyToken"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ModelCustomizationJobStatus"},
-        "failureMessage":{"shape":"ErrorMessage"},
         "statusDetails":{"shape":"StatusDetails"},
+        "failureMessage":{"shape":"ErrorMessage"},
         "creationTime":{"shape":"Timestamp"},
         "lastModifiedTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
@@ -3948,6 +3993,11 @@
           "shape":"Boolean",
           "location":"querystring",
           "locationName":"isOwned"
+        },
+        "modelStatus":{
+          "shape":"ModelStatus",
+          "location":"querystring",
+          "locationName":"modelStatus"
         }
       }
     },
@@ -4585,7 +4635,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}))"
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/((imported)|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}))(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/[a-z0-9-]{1,63}[.]{1}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}))"
     },
     "ModelCopyJobArn":{
       "type":"string",
@@ -4682,8 +4732,8 @@
         "baseModelArn":{"shape":"ModelArn"},
         "jobName":{"shape":"JobName"},
         "status":{"shape":"ModelCustomizationJobStatus"},
-        "lastModifiedTime":{"shape":"Timestamp"},
         "statusDetails":{"shape":"StatusDetails"},
+        "lastModifiedTime":{"shape":"Timestamp"},
         "creationTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"},
         "customModelArn":{"shape":"CustomModelArn"},
@@ -4712,7 +4762,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})))|(([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2}))|(([0-9a-zA-Z][_-]?)+)"
+      "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:(([0-9]{12}:custom-model/((imported)|([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}))(([:][a-z0-9-]{1,63}){0,2})?/[a-z0-9]{12})|(:foundation-model/([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2})))|(([a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([.]?[a-z0-9-]{1,63})([:][a-z0-9-]{1,63}){0,2}))|(([0-9a-zA-Z][_-]?)+)"
     },
     "ModelImportJobArn":{
       "type":"string",
@@ -4890,6 +4940,14 @@
       "max":2048,
       "min":0,
       "pattern":".*arn:aws:sagemaker:.*:hub-content/SageMakerPublicHub/Model/.*"
+    },
+    "ModelStatus":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Creating",
+        "Failed"
+      ]
     },
     "NonBlankString":{
       "type":"string",
@@ -5546,7 +5604,7 @@
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":".*(^[a-zA-Z0-9][a-zA-Z0-9\\-]*$)|(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:([0-9]{12}|)((:(fine-tuning-job|model-customization-job|custom-model)/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12})$)|(:guardrail/[a-z0-9]+$)|(:automated-reasoning-policy/[a-zA-Z0-9]+(:[a-zA-Z0-9]+)?$)|(:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+$)|(:(provisioned-model|model-invocation-job|model-evaluation-job|evaluation-job|model-import-job|imported-model|async-invoke|provisioned-model-v2|provisioned-model-reservation|prompt-router)/[a-z0-9]{12}$))).*"
+      "pattern":".*(^[a-zA-Z0-9][a-zA-Z0-9\\-]*$)|(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:custom-model/([a-z0-9-]{1,63}[.][a-z0-9-]{1,63}(([:][a-z0-9-]{1,63}){0,2})?|imported)/[a-z0-9]{12}$)|(^arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:([0-9]{12}|)((:(fine-tuning-job|model-customization-job)/[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12})$)|(:guardrail/[a-z0-9]+$)|(:automated-reasoning-policy/[a-zA-Z0-9]+(:[a-zA-Z0-9]+)?$)|(:(inference-profile|application-inference-profile)/[a-zA-Z0-9-:.]+$)|(:(provisioned-model|model-invocation-job|model-evaluation-job|evaluation-job|model-import-job|imported-model|async-invoke|provisioned-model-v2|provisioned-model-reservation|prompt-router|custom-model-deployment)/[a-z0-9]{12}$))).*"
     },
     "TeacherModelConfig":{
       "type":"structure",

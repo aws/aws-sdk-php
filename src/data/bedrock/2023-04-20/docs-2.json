@@ -3,6 +3,7 @@
   "service": "<p>Describes the API operations for creating, managing, fine-turning, and evaluating Amazon Bedrock models.</p>",
   "operations": {
     "BatchDeleteEvaluationJob": "<p>Deletes a batch of evaluation jobs. An evaluation job can only be deleted if it has following status <code>FAILED</code>, <code>COMPLETED</code>, and <code>STOPPED</code>. You can request up to 25 model evaluation jobs be deleted in a single request.</p>",
+    "CreateCustomModel": "<p>Creates a new custom model in Amazon Bedrock from an existing SageMaker AI-trained Amazon Nova model stored in an Amazon-managed Amazon S3 bucket. After the model is active, you can use it for inference.</p> <p>To use the model for inference, you must purchase Provisioned Throughput for it. You can't use On-demand inference with these custom models. For more information about Provisioned Throughput, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a>.</p> <p>The model appears in <code>ListCustomModels</code> with a <code>customizationType</code> of <code>imported</code>. To track the status of the new model, you use the <code>GetCustomModel</code> API operation. The model can be in the following states:</p> <ul> <li> <p> <code>Creating</code> - Initial state during validation and registration</p> </li> <li> <p> <code>Active</code> - Model is ready for use in inference</p> </li> <li> <p> <code>Failed</code> - Creation process encountered an error</p> </li> </ul> <p>For more information about creating custom models, including specific model requirements, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/create-custom-model-from-existing.html\">Import a SageMaker AI-trained Amazon Nova model</a> in the Amazon Bedrock User Guide. </p> <note> <p>You use the <code>CreateCustomModel</code> API to import only SageMaker AI-trained Amazon Nova models. To import open-source models, you use the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a>. </p> </note> <p> <b>Related APIs</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModel.html\">GetCustomModel</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModels.html\">ListCustomModels</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModel.html\">DeleteCustomModel</a> </p> </li> </ul>",
     "CreateEvaluationJob": "<p>Creates an evaluation job.</p>",
     "CreateGuardrail": "<p>Creates a guardrail to block topics and to implement safeguards for your generative AI applications.</p> <p>You can configure the following policies in a guardrail to avoid undesirable and harmful content, filter out denied topics and words, and remove sensitive information for privacy protection.</p> <ul> <li> <p> <b>Content filters</b> - Adjust filter strengths to block input prompts or model responses containing harmful content.</p> </li> <li> <p> <b>Denied topics</b> - Define a set of topics that are undesirable in the context of your application. These topics will be blocked if detected in user queries or model responses.</p> </li> <li> <p> <b>Word filters</b> - Configure filters to block undesirable words, phrases, and profanity. Such words can include offensive terms, competitor names etc.</p> </li> <li> <p> <b>Sensitive information filters</b> - Block or mask sensitive information such as personally identifiable information (PII) or custom regex in user inputs and model responses.</p> </li> </ul> <p>In addition to the above policies, you can also configure the messages to be returned to the user if a user input or model response is in violation of the policies defined in the guardrail.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html\">Amazon Bedrock Guardrails</a> in the <i>Amazon Bedrock User Guide</i>.</p>",
     "CreateGuardrailVersion": "<p>Creates a version of the guardrail. Use this API to create a snapshot of the guardrail when you are satisfied with a configuration, or to compare the configuration with another version.</p>",
@@ -23,7 +24,7 @@
     "DeletePromptRouter": "<p>Deletes a specified prompt router. This action cannot be undone.</p>",
     "DeleteProvisionedModelThroughput": "<p>Deletes a Provisioned Throughput. You can't delete a Provisioned Throughput before the commitment term is over. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
-    "GetCustomModel": "<p>Get the properties associated with a Amazon Bedrock custom model that you have created.For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "GetCustomModel": "<p>Get the properties associated with a Amazon Bedrock custom model that you have created. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetEvaluationJob": "<p>Gets information about an evaluation job, such as the status of the job.</p>",
     "GetFoundationModel": "<p>Get details about a Amazon Bedrock foundation model.</p>",
     "GetGuardrail": "<p>Gets details about a guardrail. If you don't specify a version, the response returns details for the <code>DRAFT</code> version.</p>",
@@ -305,6 +306,16 @@
         "ByteContentDoc$contentType": "<p>The MIME type of the document contained in the wrapper object.</p>"
       }
     },
+    "CreateCustomModelRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCustomModelResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateEvaluationJobRequest": {
       "base": null,
       "refs": {
@@ -458,6 +469,7 @@
     "CustomModelName": {
       "base": null,
       "refs": {
+        "CreateCustomModelRequest$modelName": "<p>A unique name for the custom model.</p>",
         "CreateModelCopyJobRequest$targetModelName": "<p>A name for the copied model.</p>",
         "CreateModelCustomizationJobRequest$customModelName": "<p>A name for the resulting custom model.</p>",
         "CustomModelSummary$modelName": "<p>The name of the custom model.</p>",
@@ -634,6 +646,7 @@
       "base": null,
       "refs": {
         "ErrorMessages$member": null,
+        "GetCustomModelResponse$failureMessage": "<p>A failure message for any issues that occurred when creating the custom model. This is included for only a failed CreateCustomModel operation.</p>",
         "GetModelCopyJobResponse$failureMessage": "<p>An error message for why the model copy job failed.</p>",
         "GetModelCustomizationJobResponse$failureMessage": "<p>Information about why the job failed.</p>",
         "GetModelImportJobResponse$failureMessage": "<p>Information about why the import job failed.</p>",
@@ -1841,6 +1854,7 @@
     "IdempotencyToken": {
       "base": null,
       "refs": {
+        "CreateCustomModelRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateEvaluationJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGuardrailRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon S3 User Guide</i>.</p>",
         "CreateGuardrailVersionRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon S3 User Guide</i>.</p>",
@@ -2087,6 +2101,7 @@
     "KmsKeyArn": {
       "base": null,
       "refs": {
+        "CreateCustomModelRequest$modelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the customer managed KMS key to encrypt the custom model. If you don't provide a KMS key, Amazon Bedrock uses an Amazon Web Services-managed KMS key to encrypt the model. </p> <p>If you provide a customer managed KMS key, your Amazon Bedrock service role must have permissions to use it. For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/encryption-import-model.html\">Encryption of imported models</a>. </p>",
         "GetCustomModelResponse$modelKmsKeyArn": "<p>The custom model is encrypted at rest using this key.</p>",
         "GetGuardrailResponse$kmsKeyArn": "<p>The ARN of the KMS key that encrypts the guardrail.</p>",
         "GetImportedModelResponse$modelKmsKeyArn": "<p>The imported model is encrypted at rest using this key.</p>",
@@ -2375,6 +2390,7 @@
     "ModelArn": {
       "base": null,
       "refs": {
+        "CreateCustomModelResponse$modelArn": "<p>The Amazon Resource Name (ARN) of the new custom model.</p>",
         "CreateModelCopyJobRequest$sourceModelArn": "<p>The Amazon Resource Name (ARN) of the model to be copied.</p>",
         "CustomModelSummary$baseModelArn": "<p>The base model Amazon Resource Name (ARN).</p>",
         "GetCustomModelResponse$modelArn": "<p>Amazon Resource Name (ARN) associated with this model.</p>",
@@ -2439,7 +2455,7 @@
       "base": null,
       "refs": {
         "CreateModelCustomizationJobResponse$jobArn": "<p>Amazon Resource Name (ARN) of the fine tuning job</p>",
-        "GetCustomModelResponse$jobArn": "<p>Job Amazon Resource Name (ARN) associated with this model.</p>",
+        "GetCustomModelResponse$jobArn": "<p>Job Amazon Resource Name (ARN) associated with this model. For models that you create with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModel.html\">CreateCustomModel</a> API operation, this is <code>NULL</code>.</p>",
         "GetModelCustomizationJobResponse$jobArn": "<p>The Amazon Resource Name (ARN) of the customization job.</p>",
         "ModelCustomizationJobSummary$jobArn": "<p>Amazon Resource Name (ARN) of the customization job.</p>"
       }
@@ -2478,8 +2494,9 @@
       }
     },
     "ModelDataSource": {
-      "base": "<p>Data source for the imported model.</p>",
+      "base": "<p>The data source of the model to import.</p>",
       "refs": {
+        "CreateCustomModelRequest$modelSourceConfig": "<p>The data source for the model. The Amazon S3 URI in the model source must be for the Amazon-managed Amazon S3 bucket containing your model artifacts. SageMaker AI creates this bucket when you run your first SageMaker AI training job.</p>",
         "CreateModelImportJobRequest$modelDataSource": "<p>The data source for the imported model.</p>",
         "GetImportedModelResponse$modelDataSource": "<p>The data source for this imported model.</p>",
         "GetModelImportJobResponse$modelDataSource": "<p>The data source for the imported model.</p>"
@@ -2656,6 +2673,14 @@
         "MarketplaceModelEndpoint$modelSourceIdentifier": "<p>The ARN of the model from Amazon Bedrock Marketplace that is deployed on this endpoint.</p>",
         "MarketplaceModelEndpointSummary$modelSourceIdentifier": "<p>The ARN of the model from Amazon Bedrock Marketplace that is deployed on this endpoint.</p>",
         "RegisterMarketplaceModelEndpointRequest$modelSourceIdentifier": "<p>The ARN of the model from Amazon Bedrock Marketplace that is deployed on the endpoint.</p>"
+      }
+    },
+    "ModelStatus": {
+      "base": null,
+      "refs": {
+        "CustomModelSummary$modelStatus": "<p>The current status of the custom model. Possible values include:</p> <ul> <li> <p> <code>Creating</code> - The model is being created and validated.</p> </li> <li> <p> <code>Active</code> - The model has been successfully created and is ready for use.</p> </li> <li> <p> <code>Failed</code> - The model creation process failed.</p> </li> </ul>",
+        "GetCustomModelResponse$modelStatus": "<p>The current status of the custom model. Possible values include:</p> <ul> <li> <p> <code>Creating</code> - The model is being created and validated.</p> </li> <li> <p> <code>Active</code> - The model has been successfully created and is ready for use.</p> </li> <li> <p> <code>Failed</code> - The model creation process failed. Check the <code>failureMessage</code> field for details.</p> </li> </ul>",
+        "ListCustomModelsRequest$modelStatus": "<p>The status of them model to filter results by. Possible values include:</p> <ul> <li> <p> <code>Creating</code> - Include only models that are currently being created and validated.</p> </li> <li> <p> <code>Active</code> - Include only models that have been successfully created and are ready for use.</p> </li> <li> <p> <code>Failed</code> - Include only models where the creation process failed.</p> </li> </ul> <p>If you don't specify a status, the API returns models in all states.</p>"
       }
     },
     "NonBlankString": {
@@ -3039,6 +3064,7 @@
       "base": "<p>ARN of a IAM role</p>",
       "refs": {
         "CloudWatchConfig$roleArn": "<p>The role Amazon Resource Name (ARN).</p>",
+        "CreateCustomModelRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM service role that Amazon Bedrock assumes to perform tasks on your behalf. This role must have permissions to access the Amazon S3 bucket containing your model artifacts and the KMS key (if specified). For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-import-iam-role.html\">Setting up an IAM service role for importing models</a> in the Amazon Bedrock User Guide.</p>",
         "CreateEvaluationJobRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM service role that Amazon Bedrock can assume to perform tasks on your behalf. To learn more about the required permissions, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-security.html\">Required permissions for model evaluations</a>.</p>",
         "CreateModelCustomizationJobRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM service role that Amazon Bedrock can assume to perform tasks on your behalf. For example, during model training, Amazon Bedrock needs your permission to read input data from an S3 bucket, write model artifacts to an S3 bucket. To pass this role to Amazon Bedrock, the caller of this API must have the <code>iam:PassRole</code> permission. </p>",
         "CreateModelImportJobRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the model import job.</p>",
@@ -3073,9 +3099,9 @@
       }
     },
     "S3DataSource": {
-      "base": "<p>The Amazon S3 data source of the imported job.</p>",
+      "base": "<p>The Amazon S3 data source of the model to import. For the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModel.html\">CreateCustomModel</a> API operation, you must specify the Amazon S3 URI for the Amazon-managed Amazon S3 bucket containing your model artifacts. SageMaker AI creates this bucket when you run your first SageMaker AI training job.</p>",
       "refs": {
-        "ModelDataSource$s3DataSource": "<p>The Amazon S3 data source of the imported model.</p>"
+        "ModelDataSource$s3DataSource": "<p>The Amazon S3 data source of the model to import.</p>"
       }
     },
     "S3InputFormat": {
@@ -3272,6 +3298,7 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateCustomModelRequest$modelTags": "<p>A list of key-value pairs to associate with the custom model resource. You can use these tags to organize and identify your resources.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
         "CreateEvaluationJobRequest$jobTags": "<p>Tags to attach to the model evaluation job.</p>",
         "CreateGuardrailRequest$tags": "<p>The tags that you want to attach to the guardrail. </p>",
         "CreateInferenceProfileRequest$tags": "<p>An array of objects, each of which contains a tag and its value. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",

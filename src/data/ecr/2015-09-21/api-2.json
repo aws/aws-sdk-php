@@ -834,6 +834,8 @@
         "imageTags":{"shape":"ImageTagsList"},
         "platform":{"shape":"Platform"},
         "pushedAt":{"shape":"Date"},
+        "lastInUseAt":{"shape":"Date"},
+        "inUseCount":{"shape":"InUseCount"},
         "registry":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"}
       }
@@ -1106,8 +1108,7 @@
     },
     "DeleteRegistryPolicyRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegistryPolicyResponse":{
       "type":"structure",
@@ -1249,8 +1250,7 @@
     },
     "DescribeRegistryRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeRegistryResponse":{
       "type":"structure",
@@ -1474,8 +1474,7 @@
     },
     "GetRegistryPolicyRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetRegistryPolicyResponse":{
       "type":"structure",
@@ -1486,8 +1485,7 @@
     },
     "GetRegistryScanningConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetRegistryScanningConfigurationResponse":{
       "type":"structure",
@@ -1707,6 +1705,10 @@
     "ImageTagsList":{
       "type":"list",
       "member":{"shape":"ImageTag"}
+    },
+    "InUseCount":{
+      "type":"long",
+      "min":0
     },
     "InitiateLayerUploadRequest":{
       "type":"structure",
@@ -2713,8 +2715,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagStatus":{
       "type":"string",
@@ -2808,8 +2809,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePullThroughCacheRuleRequest":{
       "type":"structure",

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECR` - The `DescribeImageScanning` API now includes `lastInUseAt` and `InUseCount` fields that can be used to prioritize vulnerability remediation for images that are actively being used.
+* `Aws\SageMaker` - This release 1) adds a new S3DataType Converse for SageMaker training 2)adds C8g R7gd M8g C6in P6 P6e instance type for SageMaker endpoint 3) adds m7i, r7i, c7i instance type for SageMaker Training and Processing.
+* `Aws\Bedrock` - This release of the SDK has the API and documentation for the createcustommodel API. This feature lets you copy a Amazon SageMaker trained Amazon Nova model into Amazon Bedrock for inference.
+* `Aws\NetworkFirewall` - You can now create firewalls using a Transit Gateway instead of a VPC, resulting in a TGW attachment.
+
 ## 3.344.6 - 2025-06-12
 
 * `Aws\KMS` - AWS KMS announces the support of ML-DSA key pairs that creates post-quantum safe digital signatures.
