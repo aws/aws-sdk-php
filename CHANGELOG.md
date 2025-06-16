@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.344.7 - 2025-06-16
 
 * `Aws\ECR` - The `DescribeImageScanning` API now includes `lastInUseAt` and `InUseCount` fields that can be used to prioritize vulnerability remediation for images that are actively being used.
 * `Aws\SageMaker` - This release 1) adds a new S3DataType Converse for SageMaker training 2)adds C8g R7gd M8g C6in P6 P6e instance type for SageMaker endpoint 3) adds m7i, r7i, c7i instance type for SageMaker Training and Processing.
