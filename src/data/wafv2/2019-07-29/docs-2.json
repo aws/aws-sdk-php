@@ -179,6 +179,25 @@
         "Statement$AndStatement": "<p>A logical rule statement used to combine other rule statements with AND logic. You provide more than one <a>Statement</a> within the <code>AndStatement</code>. </p>"
       }
     },
+    "ApplicationAttribute": {
+      "base": "<p>Application details defined during the web ACL creation process. Application attributes help WAF give recommendations for protection packs.</p>",
+      "refs": {
+        "ApplicationAttributes$member": null
+      }
+    },
+    "ApplicationAttributes": {
+      "base": null,
+      "refs": {
+        "ApplicationConfig$Attributes": "<p>Contains the attribute name and a list of values for that attribute.</p>"
+      }
+    },
+    "ApplicationConfig": {
+      "base": "<p>A list of <code>ApplicationAttribute</code>s that contains information about the application.</p>",
+      "refs": {
+        "CreateWebACLRequest$ApplicationConfig": "<p>Configures the ability for the WAF console to store and retrieve application attributes during the web ACL creation process. Application attributes help WAF give recommendations for protection packs.</p>",
+        "WebACL$ApplicationConfig": "<p>Returns a list of <code>ApplicationAttribute</code>s.</p>"
+      }
+    },
     "AsnList": {
       "base": null,
       "refs": {
@@ -211,6 +230,24 @@
         "CreateWebACLRequest$AssociationConfig": "<p>Specifies custom configurations for the associations between the web ACL and protected resources. </p> <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p> <note> <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p> </note> <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>",
         "UpdateWebACLRequest$AssociationConfig": "<p>Specifies custom configurations for the associations between the web ACL and protected resources. </p> <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p> <note> <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p> </note> <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>",
         "WebACL$AssociationConfig": "<p>Specifies custom configurations for the associations between the web ACL and protected resources. </p> <p>Use this to customize the maximum size of the request body that your protected resources forward to WAF for inspection. You can customize this setting for CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources. The default setting is 16 KB (16,384 bytes). </p> <note> <p>You are charged additional fees when your protected resources forward body sizes that are larger than the default. For more information, see <a href=\"http://aws.amazon.com/waf/pricing/\">WAF Pricing</a>.</p> </note> <p>For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192 bytes).</p>"
+      }
+    },
+    "AttributeName": {
+      "base": null,
+      "refs": {
+        "ApplicationAttribute$Name": "<p>Specifies the attribute name.</p>"
+      }
+    },
+    "AttributeValue": {
+      "base": null,
+      "refs": {
+        "AttributeValues$member": null
+      }
+    },
+    "AttributeValues": {
+      "base": null,
+      "refs": {
+        "ApplicationAttribute$Values": "<p>Specifies the attribute value.</p>"
       }
     },
     "BlockAction": {

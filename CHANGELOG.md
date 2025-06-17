@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NetworkFirewall` - Release of Active Threat Defense in Network Firewall
+* `Aws\ACM` - Adds support for Exportable Public Certificates
+* `Aws\MPA` - This release enables customers to create Multi-party approval teams and approval requests to protect supported operations.
+* `Aws\AccessAnalyzer` - We are launching a new analyzer type, internal access analyzer. The new analyzer will generate internal access findings, which help customers understand who within their AWS organization or AWS Account has access to their critical AWS resources.
+* `Aws\DatabaseMigrationService` - Add "Virtual" field to Data Provider as well as "S3Path" and "S3AccessRoleArn" fields to DataProvider settings
+* `Aws\WAFV2` - AWS WAF can now suggest protection packs for you based on the application information you provide when you create a webACL.
+* `Aws\Inspector2` - Add Code Repository Scanning as part of AWS InspectorV2
+* `Aws\Organizations` - Add support for policy operations on the SECURITYHUB_POLICY policy type.
+* `Aws\SecurityHub` - Adds operations, structures, and exceptions required for public preview release of Security Hub V2.
+* `Aws\STS` - The AWS Security Token Service APIs AssumeRoleWithSAML and AssumeRoleWithWebIdentity can now be invoked without pre-configured AWS credentials in the SDK configuration.
+* `Aws\Backup` - AWS Backup is adding support for integration of its logically air-gapped vaults with the AWS Organizations Multi-party approval capability.
+* `Aws\Bedrock` - This release of the SDK has the API and documentation for the createcustommodel API. This feature lets you copy a trained model into Amazon Bedrock for inference.
+* `Aws\GuardDuty` - Adding support for extended threat detection for EKS Audit Logs and EKS Runtime Monitoring.
+
 ## 3.344.7 - 2025-06-16
 
 * `Aws\ECR` - The `DescribeImageScanning` API now includes `lastInUseAt` and `InUseCount` fields that can be used to prioritize vulnerability remediation for images that are actively being used.

@@ -401,6 +401,21 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DescribeRuleGroupSummary":{
+      "name":"DescribeRuleGroupSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeRuleGroupSummaryRequest"},
+      "output":{"shape":"DescribeRuleGroupSummaryResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "DescribeTLSInspectionConfiguration":{
       "name":"DescribeTLSInspectionConfiguration",
       "http":{
@@ -1243,7 +1258,8 @@
         "DryRun":{"shape":"Boolean"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "SourceMetadata":{"shape":"SourceMetadata"},
-        "AnalyzeRuleGroup":{"shape":"Boolean"}
+        "AnalyzeRuleGroup":{"shape":"Boolean"},
+        "SummaryConfiguration":{"shape":"SummaryConfiguration"}
       }
     },
     "CreateRuleGroupResponse":{
@@ -1319,6 +1335,7 @@
       "type":"list",
       "member":{"shape":"CustomAction"}
     },
+    "DeepThreatInspection":{"type":"boolean"},
     "DeleteFirewallPolicyRequest":{
       "type":"structure",
       "members":{
@@ -1570,6 +1587,23 @@
         "UpdateToken":{"shape":"UpdateToken"},
         "RuleGroup":{"shape":"RuleGroup"},
         "RuleGroupResponse":{"shape":"RuleGroupResponse"}
+      }
+    },
+    "DescribeRuleGroupSummaryRequest":{
+      "type":"structure",
+      "members":{
+        "RuleGroupName":{"shape":"ResourceName"},
+        "RuleGroupArn":{"shape":"ResourceArn"},
+        "Type":{"shape":"RuleGroupType"}
+      }
+    },
+    "DescribeRuleGroupSummaryResponse":{
+      "type":"structure",
+      "required":["RuleGroupName"],
+      "members":{
+        "RuleGroupName":{"shape":"ResourceName"},
+        "Description":{"shape":"Description"},
+        "Summary":{"shape":"Summary"}
       }
     },
     "DescribeTLSInspectionConfigurationRequest":{
@@ -2489,7 +2523,8 @@
       "type":"string",
       "enum":[
         "AWS_MANAGED_THREAT_SIGNATURES",
-        "AWS_MANAGED_DOMAIN_LISTS"
+        "AWS_MANAGED_DOMAIN_LISTS",
+        "ACTIVE_THREAT_DEFENSE"
       ]
     },
     "ResourceName":{
@@ -2579,7 +2614,8 @@
         "SourceMetadata":{"shape":"SourceMetadata"},
         "SnsTopic":{"shape":"ResourceArn"},
         "LastModifiedTime":{"shape":"LastUpdateTime"},
-        "AnalysisResults":{"shape":"AnalysisResultList"}
+        "AnalysisResults":{"shape":"AnalysisResultList"},
+        "SummaryConfiguration":{"shape":"SummaryConfiguration"}
       }
     },
     "RuleGroupType":{
@@ -2615,6 +2651,18 @@
         "DEFAULT_ACTION_ORDER",
         "STRICT_ORDER"
       ]
+    },
+    "RuleSummaries":{
+      "type":"list",
+      "member":{"shape":"RuleSummary"}
+    },
+    "RuleSummary":{
+      "type":"structure",
+      "members":{
+        "SID":{"shape":"CollectionMember_String"},
+        "Msg":{"shape":"CollectionMember_String"},
+        "Metadata":{"shape":"CollectionMember_String"}
+      }
     },
     "RuleTargets":{
       "type":"list",
@@ -2839,7 +2887,8 @@
           "shape":"Priority",
           "box":true
         },
-        "Override":{"shape":"StatefulRuleGroupOverride"}
+        "Override":{"shape":"StatefulRuleGroupOverride"},
+        "DeepThreatInspection":{"shape":"DeepThreatInspection"}
       }
     },
     "StatefulRuleGroupReferences":{
@@ -2951,6 +3000,30 @@
     "SubnetMappings":{
       "type":"list",
       "member":{"shape":"SubnetMapping"}
+    },
+    "Summary":{
+      "type":"structure",
+      "members":{
+        "RuleSummaries":{"shape":"RuleSummaries"}
+      }
+    },
+    "SummaryConfiguration":{
+      "type":"structure",
+      "members":{
+        "RuleOptions":{"shape":"SummaryRuleOptions"}
+      }
+    },
+    "SummaryRuleOption":{
+      "type":"string",
+      "enum":[
+        "SID",
+        "MSG",
+        "METADATA"
+      ]
+    },
+    "SummaryRuleOptions":{
+      "type":"list",
+      "member":{"shape":"SummaryRuleOption"}
     },
     "SupportedAvailabilityZones":{
       "type":"map",
@@ -3353,7 +3426,8 @@
         "DryRun":{"shape":"Boolean"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "SourceMetadata":{"shape":"SourceMetadata"},
-        "AnalyzeRuleGroup":{"shape":"Boolean"}
+        "AnalyzeRuleGroup":{"shape":"Boolean"},
+        "SummaryConfiguration":{"shape":"SummaryConfiguration"}
       }
     },
     "UpdateRuleGroupResponse":{

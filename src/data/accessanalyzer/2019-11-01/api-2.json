@@ -930,7 +930,8 @@
     "AnalyzerConfiguration":{
       "type":"structure",
       "members":{
-        "unusedAccess":{"shape":"UnusedAccessConfiguration"}
+        "unusedAccess":{"shape":"UnusedAccessConfiguration"},
+        "internalAccess":{"shape":"InternalAccessConfiguration"}
       },
       "union":true
     },
@@ -1436,6 +1437,7 @@
     "FindingDetails":{
       "type":"structure",
       "members":{
+        "internalAccessDetails":{"shape":"InternalAccessDetails"},
         "externalAccessDetails":{"shape":"ExternalAccessDetails"},
         "unusedPermissionDetails":{"shape":"UnusedPermissionDetails"},
         "unusedIamUserAccessKeyDetails":{"shape":"UnusedIamUserAccessKeyDetails"},
@@ -1557,7 +1559,8 @@
         "UnusedIAMRole",
         "UnusedIAMUserAccessKey",
         "UnusedIAMUserPassword",
-        "UnusedPermission"
+        "UnusedPermission",
+        "InternalAccess"
       ]
     },
     "FindingsList":{
@@ -1572,6 +1575,7 @@
       "type":"structure",
       "members":{
         "externalAccessFindingsStatistics":{"shape":"ExternalAccessFindingsStatistics"},
+        "internalAccessFindingsStatistics":{"shape":"InternalAccessFindingsStatistics"},
         "unusedAccessFindingsStatistics":{"shape":"UnusedAccessFindingsStatistics"}
       },
       "union":true
@@ -1939,6 +1943,73 @@
     "Integer":{
       "type":"integer",
       "box":true
+    },
+    "InternalAccessAnalysisRule":{
+      "type":"structure",
+      "members":{
+        "inclusions":{"shape":"InternalAccessAnalysisRuleCriteriaList"}
+      }
+    },
+    "InternalAccessAnalysisRuleCriteria":{
+      "type":"structure",
+      "members":{
+        "accountIds":{"shape":"AccountIdsList"},
+        "resourceTypes":{"shape":"ResourceTypeList"},
+        "resourceArns":{"shape":"ResourceArnsList"}
+      }
+    },
+    "InternalAccessAnalysisRuleCriteriaList":{
+      "type":"list",
+      "member":{"shape":"InternalAccessAnalysisRuleCriteria"}
+    },
+    "InternalAccessConfiguration":{
+      "type":"structure",
+      "members":{
+        "analysisRule":{"shape":"InternalAccessAnalysisRule"}
+      }
+    },
+    "InternalAccessDetails":{
+      "type":"structure",
+      "members":{
+        "action":{"shape":"ActionList"},
+        "condition":{"shape":"ConditionKeyMap"},
+        "principal":{"shape":"PrincipalMap"},
+        "principalOwnerAccount":{"shape":"String"},
+        "accessType":{"shape":"InternalAccessType"},
+        "principalType":{"shape":"PrincipalType"},
+        "sources":{"shape":"FindingSourceList"},
+        "resourceControlPolicyRestriction":{"shape":"ResourceControlPolicyRestriction"},
+        "serviceControlPolicyRestriction":{"shape":"ServiceControlPolicyRestriction"}
+      }
+    },
+    "InternalAccessFindingsStatistics":{
+      "type":"structure",
+      "members":{
+        "resourceTypeStatistics":{"shape":"InternalAccessResourceTypeStatisticsMap"},
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"}
+      }
+    },
+    "InternalAccessResourceTypeDetails":{
+      "type":"structure",
+      "members":{
+        "totalActiveFindings":{"shape":"Integer"},
+        "totalResolvedFindings":{"shape":"Integer"},
+        "totalArchivedFindings":{"shape":"Integer"}
+      }
+    },
+    "InternalAccessResourceTypeStatisticsMap":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"InternalAccessResourceTypeDetails"}
+    },
+    "InternalAccessType":{
+      "type":"string",
+      "enum":[
+        "INTRA_ACCOUNT",
+        "INTRA_ORG"
+      ]
     },
     "InternalServerException":{
       "type":"structure",
@@ -2433,6 +2504,13 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "PrincipalType":{
+      "type":"string",
+      "enum":[
+        "IAM_ROLE",
+        "IAM_USER"
+      ]
+    },
     "RdsDbClusterSnapshotAccountId":{"type":"string"},
     "RdsDbClusterSnapshotAccountIdsList":{
       "type":"list",
@@ -2552,12 +2630,17 @@
       "type":"string",
       "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
+    "ResourceArnsList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ResourceControlPolicyRestriction":{
       "type":"string",
       "enum":[
         "APPLICABLE",
         "FAILED_TO_EVALUATE_RCP",
-        "NOT_APPLICABLE"
+        "NOT_APPLICABLE",
+        "APPLIED"
       ]
     },
     "ResourceNotFoundException":{
@@ -2606,6 +2689,10 @@
         "totalActivePublic":{"shape":"Integer"},
         "totalActiveCrossAccount":{"shape":"Integer"}
       }
+    },
+    "ResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"ResourceType"}
     },
     "ResourceTypeStatisticsMap":{
       "type":"map",
@@ -2699,6 +2786,15 @@
     },
     "SecretsManagerSecretKmsId":{"type":"string"},
     "SecretsManagerSecretPolicy":{"type":"string"},
+    "ServiceControlPolicyRestriction":{
+      "type":"string",
+      "enum":[
+        "APPLICABLE",
+        "FAILED_TO_EVALUATE_SCP",
+        "NOT_APPLICABLE",
+        "APPLIED"
+      ]
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -2903,7 +2999,9 @@
         "ACCOUNT",
         "ORGANIZATION",
         "ACCOUNT_UNUSED_ACCESS",
-        "ORGANIZATION_UNUSED_ACCESS"
+        "ORGANIZATION_UNUSED_ACCESS",
+        "ACCOUNT_INTERNAL_ACCESS",
+        "ORGANIZATION_INTERNAL_ACCESS"
       ]
     },
     "UnprocessableEntityException":{

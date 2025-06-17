@@ -53,6 +53,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeRuleGroupAsync(array $args = [])
  * @method \Aws\Result describeRuleGroupMetadata(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRuleGroupMetadataAsync(array $args = [])
+ * @method \Aws\Result describeRuleGroupSummary(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeRuleGroupSummaryAsync(array $args = [])
  * @method \Aws\Result describeTLSInspectionConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTLSInspectionConfigurationAsync(array $args = [])
  * @method \Aws\Result describeVpcEndpointAssociation(array $args = [])

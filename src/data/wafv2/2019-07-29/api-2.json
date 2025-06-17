@@ -1027,6 +1027,25 @@
         "Statements":{"shape":"Statements"}
       }
     },
+    "ApplicationAttribute":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"AttributeName"},
+        "Values":{"shape":"AttributeValues"}
+      }
+    },
+    "ApplicationAttributes":{
+      "type":"list",
+      "member":{"shape":"ApplicationAttribute"},
+      "max":10,
+      "min":1
+    },
+    "ApplicationConfig":{
+      "type":"structure",
+      "members":{
+        "Attributes":{"shape":"ApplicationAttributes"}
+      }
+    },
     "AsnList":{
       "type":"list",
       "member":{"shape":"ASN"},
@@ -1071,6 +1090,23 @@
       "members":{
         "RequestBody":{"shape":"RequestBody"}
       }
+    },
+    "AttributeName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\w\\-]+$"
+    },
+    "AttributeValue":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "AttributeValues":{
+      "type":"list",
+      "member":{"shape":"AttributeValue"},
+      "max":10,
+      "min":1
     },
     "BlockAction":{
       "type":"structure",
@@ -1614,7 +1650,8 @@
         "ChallengeConfig":{"shape":"ChallengeConfig"},
         "TokenDomains":{"shape":"TokenDomains"},
         "AssociationConfig":{"shape":"AssociationConfig"},
-        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"}
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"}
       }
     },
     "CreateWebACLResponse":{
@@ -4537,7 +4574,8 @@
         "TokenDomains":{"shape":"TokenDomains"},
         "AssociationConfig":{"shape":"AssociationConfig"},
         "RetrofittedByFirewallManager":{"shape":"Boolean"},
-        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"}
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"}
       }
     },
     "WebACLSummaries":{

@@ -13,7 +13,7 @@
     "CreateVpcEndpointAssociation": "<p>Creates a firewall endpoint for an Network Firewall firewall. This type of firewall endpoint is independent of the firewall endpoints that you specify in the <code>Firewall</code> itself, and you define it in addition to those endpoints after the firewall has been created. You can define a VPC endpoint association using a different VPC than the one you used in the firewall specifications. </p>",
     "DeleteFirewall": "<p>Deletes the specified <a>Firewall</a> and its <a>FirewallStatus</a>. This operation requires the firewall's <code>DeleteProtection</code> flag to be <code>FALSE</code>. You can't revert this operation. </p> <p>You can check whether a firewall is in use by reviewing the route tables for the Availability Zones where you have firewall subnet mappings. Retrieve the subnet mappings by calling <a>DescribeFirewall</a>. You define and update the route tables through Amazon VPC. As needed, update the route tables for the zones to remove the firewall endpoints. When the route tables no longer use the firewall endpoints, you can remove the firewall safely.</p> <p>To delete a firewall, remove the delete protection if you need to using <a>UpdateFirewallDeleteProtection</a>, then delete the firewall by calling <a>DeleteFirewall</a>. </p>",
     "DeleteFirewallPolicy": "<p>Deletes the specified <a>FirewallPolicy</a>. </p>",
-    "DeleteNetworkFirewallTransitGatewayAttachment": "<p>Deletes a transit gateway attachment from a Network Firewall. Either the firewall owner or the transit gateway owner can delete the attachment.</p> <important> <p>After you delete a transit gateway attachment, traffic will no longer flow through the firewall endpoints.</p> </important> <p>After you initiate the delete operation, use <a>DescribeFirewall</a> to monitor the deletion status.</p>",
+    "DeleteNetworkFirewallTransitGatewayAttachment": "<p>Deletes a transit gateway attachment from a Network Firewall. Either the firewall owner or the transit gateway owner can delete the attachment.</p> <important> <p>After you delete a transit gateway attachment, raffic will no longer flow through the firewall endpoints.</p> </important> <p>After you initiate the delete operation, use <a>DescribeFirewall</a> to monitor the deletion status.</p>",
     "DeleteResourcePolicy": "<p>Deletes a resource policy that you created in a <a>PutResourcePolicy</a> request. </p>",
     "DeleteRuleGroup": "<p>Deletes the specified <a>RuleGroup</a>. </p>",
     "DeleteTLSInspectionConfiguration": "<p>Deletes the specified <a>TLSInspectionConfiguration</a>.</p>",
@@ -26,6 +26,7 @@
     "DescribeResourcePolicy": "<p>Retrieves a resource policy that you created in a <a>PutResourcePolicy</a> request. </p>",
     "DescribeRuleGroup": "<p>Returns the data objects for the specified rule group. </p>",
     "DescribeRuleGroupMetadata": "<p>High-level information about a rule group, returned by operations like create and describe. You can use the information provided in the metadata to retrieve and manage a rule group. You can retrieve all objects for a rule group by calling <a>DescribeRuleGroup</a>. </p>",
+    "DescribeRuleGroupSummary": "<p>Returns detailed information for a stateful rule group.</p> <p>For active threat defense Amazon Web Services managed rule groups, this operation provides insight into the protections enabled by the rule group, based on Suricata rule metadata fields. Summaries are available for rule groups you manage and for active threat defense Amazon Web Services managed rule groups.</p> <p>To modify how threat information appears in summaries, use the <code>SummaryConfiguration</code> parameter in <a>UpdateRuleGroup</a>.</p>",
     "DescribeTLSInspectionConfiguration": "<p>Returns the data objects for the specified TLS inspection configuration.</p>",
     "DescribeVpcEndpointAssociation": "<p>Returns the data object for the specified VPC endpoint association. </p>",
     "DisassociateAvailabilityZones": "<p>Removes the specified Availability Zone associations from a transit gateway-attached firewall. This removes the firewall endpoints from these Availability Zones and stops traffic filtering in those zones. Before removing an Availability Zone, ensure you've updated your transit gateway route tables to redirect traffic appropriately.</p> <note> <p>If <code>AvailabilityZoneChangeProtection</code> is enabled, you must first disable it using <a>UpdateAvailabilityZoneChangeProtection</a>.</p> </note> <p>To verify the status of your Availability Zone changes, use <a>DescribeFirewall</a>.</p>",
@@ -41,7 +42,7 @@
     "ListTagsForResource": "<p>Retrieves the tags associated with the specified resource. Tags are key:value pairs that you can use to categorize and manage your resources, for purposes like billing. For example, you might set the tag key to \"customer\" and the value to the customer name or ID. You can specify one or more tags to add to each Amazon Web Services resource, up to 50 tags for a resource.</p> <p>You can tag the Amazon Web Services resources that you manage through Network Firewall: firewalls, firewall policies, and rule groups. </p>",
     "ListVpcEndpointAssociations": "<p>Retrieves the metadata for the VPC endpoint associations that you have defined. If you specify a fireawll, this returns only the endpoint associations for that firewall. </p> <p>Depending on your setting for max results and the number of associations, a single call might not return the full list. </p>",
     "PutResourcePolicy": "<p>Creates or updates an IAM policy for your rule group, firewall policy, or firewall. Use this to share these resources between accounts. This operation works in conjunction with the Amazon Web Services Resource Access Manager (RAM) service to manage resource sharing for Network Firewall. </p> <p>For information about using sharing with Network Firewall resources, see <a href=\"https://docs.aws.amazon.com/network-firewall/latest/developerguide/sharing.html\">Sharing Network Firewall resources</a> in the <i>Network Firewall Developer Guide</i>.</p> <p>Use this operation to create or update a resource policy for your Network Firewall rule group, firewall policy, or firewall. In the resource policy, you specify the accounts that you want to share the Network Firewall resource with and the operations that you want the accounts to be able to perform. </p> <p>When you add an account in the resource policy, you then run the following Resource Access Manager (RAM) operations to access and accept the shared resource. </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/ram/latest/APIReference/API_GetResourceShareInvitations.html\">GetResourceShareInvitations</a> - Returns the Amazon Resource Names (ARNs) of the resource share invitations. </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/ram/latest/APIReference/API_AcceptResourceShareInvitation.html\">AcceptResourceShareInvitation</a> - Accepts the share invitation for a specified resource share. </p> </li> </ul> <p>For additional information about resource sharing using RAM, see <a href=\"https://docs.aws.amazon.com/ram/latest/userguide/what-is.html\">Resource Access Manager User Guide</a>.</p>",
-    "RejectNetworkFirewallTransitGatewayAttachment": "<p>Rejects a transit gateway attachment request for Network Firewall. When you reject the attachment request, Network Firewall cancels the creation of routing components between the transit gateway and firewall endpoints.</p> <p>Only the transit gateway owner can reject the attachment. After rejection, no traffic will flow through the firewall endpoints for this attachment.</p> <p>Use <a>DescribeFirewall</a> to monitor the rejection status. To accept the attachment instead of rejecting it, use <a>AcceptNetworkFirewallTransitGatewayAttachment</a>.</p> <note> <p>Once rejected, you cannot reverse this action. To establish connectivity, you must create a new transit gateway-attached firewall.</p> </note>",
+    "RejectNetworkFirewallTransitGatewayAttachment": "<p>Rejects a transit gateway attachment request for Network Firewall. When you reject the attachment request, Network Firewall cancels the creation of routing components between the transit gateway and firewall endpoints.</p> <p>Only the firewall owner can reject the attachment. After rejection, no traffic will flow through the firewall endpoints for this attachment.</p> <p>Use <a>DescribeFirewall</a> to monitor the rejection status. To accept the attachment instead of rejecting it, use <a>AcceptNetworkFirewallTransitGatewayAttachment</a>.</p> <note> <p>Once rejected, you cannot reverse this action. To establish connectivity, you must create a new transit gateway-attached firewall.</p> </note>",
     "StartAnalysisReport": "<p>Generates a traffic analysis report for the timeframe and traffic type you specify.</p> <p>For information on the contents of a traffic analysis report, see <a>AnalysisReport</a>.</p>",
     "StartFlowCapture": "<p>Begins capturing the flows in a firewall, according to the filters you define. Captures are similar, but not identical to snapshots. Capture operations provide visibility into flows that are not closed and are tracked by a firewall's flow table. Unlike snapshots, captures are a time-boxed view. </p> <p>A flow is network traffic that is monitored by a firewall, either by stateful or stateless rules. For traffic to be considered part of a flow, it must share Destination, DestinationPort, Direction, Protocol, Source, and SourcePort. </p> <note> <p>To avoid encountering operation limits, you should avoid starting captures with broad filters, like wide IP ranges. Instead, we recommend you define more specific criteria with <code>FlowFilters</code>, like narrow IP ranges, ports, or protocols.</p> </note>",
     "StartFlowFlush": "<p>Begins the flushing of traffic from the firewall, according to the filters you define. When the operation starts, impacted flows are temporarily marked as timed out before the Suricata engine prunes, or flushes, the flows from the firewall table.</p> <important> <p>While the flush completes, impacted flows are processed as midstream traffic. This may result in a temporary increase in midstream traffic metrics. We recommend that you double check your stream exception policy before you perform a flush operation.</p> </important>",
@@ -355,6 +356,9 @@
         "AnalysisResult$AnalysisDetail": "<p>Provides analysis details for the identified rule.</p>",
         "AnalysisTypeReportResult$Protocol": "<p>The type of traffic captured by the analysis report.</p>",
         "RuleIdList$member": null,
+        "RuleSummary$SID": "<p>The unique identifier (Signature ID) of the Suricata rule.</p>",
+        "RuleSummary$Msg": "<p>The contents taken from the rule's msg field.</p>",
+        "RuleSummary$Metadata": "<p>The contents of the rule's metadata.</p>",
         "RuleTargets$member": null,
         "StatefulActions$member": null,
         "StatelessActions$member": null,
@@ -427,6 +431,12 @@
       "refs": {
         "FirewallPolicy$StatelessCustomActions": "<p>The custom action definitions that are available for use in the firewall policy's <code>StatelessDefaultActions</code> setting. You name each custom action that you define, and then you can use it by name in your default actions specifications.</p>",
         "StatelessRulesAndCustomActions$CustomActions": "<p>Defines an array of individual custom action definitions that are available for use by the stateless rules in this <code>StatelessRulesAndCustomActions</code> specification. You name each custom action that you define, and then you can use it by name in your <a>StatelessRule</a> <a>RuleDefinition</a> <code>Actions</code> specification.</p>"
+      }
+    },
+    "DeepThreatInspection": {
+      "base": null,
+      "refs": {
+        "StatefulRuleGroupReference$DeepThreatInspection": "<p>Network Firewall plans to augment the active threat defense managed rule group with an additional deep threat inspection capability. When this capability is released, Amazon Web Services will analyze service logs of network traffic processed by these rule groups to identify threat indicators across customers. Amazon Web Services will use these threat indicators to improve the active threat defense managed rule groups and protect the security of Amazon Web Services customers and services.</p> <note> <p>Customers can opt-out of deep threat inspection at any time through the Network Firewall console or API. When customers opt out, Network Firewall will not use the network traffic processed by those customers' active threat defense rule groups for rule group improvement.</p> </note>"
       }
     },
     "DeleteFirewallPolicyRequest": {
@@ -549,6 +559,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeRuleGroupSummaryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeRuleGroupSummaryResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeTLSInspectionConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -575,6 +593,7 @@
         "CreateVpcEndpointAssociationRequest$Description": "<p>A description of the VPC endpoint association. </p>",
         "DescribeFirewallMetadataResponse$Description": "<p>A description of the firewall.</p>",
         "DescribeRuleGroupMetadataResponse$Description": "<p>Returns the metadata objects for the specified rule group. </p>",
+        "DescribeRuleGroupSummaryResponse$Description": "<p>A description of the rule group. </p>",
         "Firewall$Description": "<p>A description of the firewall.</p>",
         "FirewallPolicyResponse$Description": "<p>A description of the firewall policy.</p>",
         "RuleGroupResponse$Description": "<p>A description of the rule group. </p>",
@@ -1384,6 +1403,7 @@
         "DescribeRuleGroupMetadataRequest$RuleGroupArn": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DescribeRuleGroupMetadataResponse$RuleGroupArn": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DescribeRuleGroupRequest$RuleGroupArn": "<p>The Amazon Resource Name (ARN) of the rule group.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
+        "DescribeRuleGroupSummaryRequest$RuleGroupArn": "<p>Required. The Amazon Resource Name (ARN) of the rule group.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DescribeTLSInspectionConfigurationRequest$TLSInspectionConfigurationArn": "<p>The Amazon Resource Name (ARN) of the TLS inspection configuration.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DescribeVpcEndpointAssociationRequest$VpcEndpointAssociationArn": "<p>The Amazon Resource Name (ARN) of a VPC endpoint association.</p>",
         "DisassociateAvailabilityZonesRequest$FirewallArn": "<p>The Amazon Resource Name (ARN) of the firewall.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
@@ -1497,6 +1517,8 @@
         "DescribeRuleGroupMetadataRequest$RuleGroupName": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DescribeRuleGroupMetadataResponse$RuleGroupName": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DescribeRuleGroupRequest$RuleGroupName": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
+        "DescribeRuleGroupSummaryRequest$RuleGroupName": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
+        "DescribeRuleGroupSummaryResponse$RuleGroupName": "<p>The descriptive name of the rule group. You can't change the name of a rule group after you create it.</p>",
         "DescribeTLSInspectionConfigurationRequest$TLSInspectionConfigurationName": "<p>The descriptive name of the TLS inspection configuration. You can't change the name of a TLS inspection configuration after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DisassociateAvailabilityZonesRequest$FirewallName": "<p>The descriptive name of the firewall. You can't change the name of a firewall after you create it.</p> <p>You must specify the ARN or the name, and you can specify both. </p>",
         "DisassociateAvailabilityZonesResponse$FirewallName": "<p>The descriptive name of the firewall. You can't change the name of a firewall after you create it.</p>",
@@ -1606,6 +1628,7 @@
         "DescribeRuleGroupMetadataRequest$Type": "<p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains stateless rules. If it is stateful, it contains stateful rules. </p> <note> <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p> </note>",
         "DescribeRuleGroupMetadataResponse$Type": "<p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains stateless rules. If it is stateful, it contains stateful rules. </p> <note> <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p> </note>",
         "DescribeRuleGroupRequest$Type": "<p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains stateless rules. If it is stateful, it contains stateful rules. </p> <note> <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p> </note>",
+        "DescribeRuleGroupSummaryRequest$Type": "<p>The type of rule group you want a summary for. This is a required field.</p> <p>Valid value: <code>STATEFUL</code> </p> <p>Note that <code>STATELESS</code> exists but is not currently supported. If you provide <code>STATELESS</code>, an exception is returned.</p>",
         "ListRuleGroupsRequest$Type": "<p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains stateless rules. If it is stateful, it contains stateful rules.</p>",
         "RuleGroupResponse$Type": "<p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains stateless rules. If it is stateful, it contains stateful rules. </p>",
         "UpdateRuleGroupRequest$Type": "<p>Indicates whether the rule group is stateless or stateful. If the rule group is stateless, it contains stateless rules. If it is stateful, it contains stateful rules. </p> <note> <p>This setting is required for requests that do not include the <code>RuleGroupARN</code>.</p> </note>"
@@ -1640,6 +1663,18 @@
       "refs": {
         "StatefulEngineOptions$RuleOrder": "<p>Indicates how to manage the order of stateful rule evaluation for the policy. <code>STRICT_ORDER</code> is the recommended option, but <code>DEFAULT_ACTION_ORDER</code> is the default option. With <code>STRICT_ORDER</code>, provide your rules in the order that you want them to be evaluated. You can then choose one or more default actions for packets that don't match any rules. Choose <code>STRICT_ORDER</code> to have the stateful rules engine determine the evaluation order of your rules. The default action for this rule order is <code>PASS</code>, followed by <code>DROP</code>, <code>REJECT</code>, and <code>ALERT</code> actions. Stateful rules are provided to the rule engine as Suricata compatible strings, and Suricata evaluates them based on your settings. For more information, see <a href=\"https://docs.aws.amazon.com/network-firewall/latest/developerguide/suricata-rule-evaluation-order.html\">Evaluation order for stateful rules</a> in the <i>Network Firewall Developer Guide</i>. </p>",
         "StatefulRuleOptions$RuleOrder": "<p>Indicates how to manage the order of the rule evaluation for the rule group. <code>DEFAULT_ACTION_ORDER</code> is the default behavior. Stateful rules are provided to the rule engine as Suricata compatible strings, and Suricata evaluates them based on certain settings. For more information, see <a href=\"https://docs.aws.amazon.com/network-firewall/latest/developerguide/suricata-rule-evaluation-order.html\">Evaluation order for stateful rules</a> in the <i>Network Firewall Developer Guide</i>. </p>"
+      }
+    },
+    "RuleSummaries": {
+      "base": null,
+      "refs": {
+        "Summary$RuleSummaries": "<p>An array of <a>RuleSummary</a> objects containing individual rule details that had been configured by the rulegroup's SummaryConfiguration.</p>"
+      }
+    },
+    "RuleSummary": {
+      "base": "<p>A complex type containing details about a Suricata rule. Contains:</p> <ul> <li> <p> <code>SID</code> </p> </li> <li> <p> <code>Msg</code> </p> </li> <li> <p> <code>Metadata</code> </p> </li> </ul> <p>Summaries are available for rule groups you manage and for active threat defense Amazon Web Services managed rule groups.</p>",
+      "refs": {
+        "RuleSummaries$member": null
       }
     },
     "RuleTargets": {
@@ -1921,6 +1956,32 @@
         "CreateFirewallRequest$SubnetMappings": "<p>The public subnets to use for your Network Firewall firewalls. Each subnet must belong to a different Availability Zone in the VPC. Network Firewall creates a firewall endpoint in each subnet. </p>",
         "DisassociateSubnetsResponse$SubnetMappings": "<p>The IDs of the subnets that are associated with the firewall. </p>",
         "Firewall$SubnetMappings": "<p>The primary public subnets that Network Firewall is using for the firewall. Network Firewall creates a firewall endpoint in each subnet. Create a subnet mapping for each Availability Zone where you want to use the firewall.</p> <p>These subnets are all defined for a single, primary VPC, and each must belong to a different Availability Zone. Each of these subnets establishes the availability of the firewall in its Availability Zone. </p> <p>In addition to these subnets, you can define other endpoints for the firewall in <code>VpcEndpointAssociation</code> resources. You can define these additional endpoints for any VPC, and for any of the Availability Zones where the firewall resource already has a subnet mapping. VPC endpoint associations give you the ability to protect multiple VPCs using a single firewall, and to define multiple firewall endpoints for a VPC in a single Availability Zone. </p>"
+      }
+    },
+    "Summary": {
+      "base": "<p>A complex type containing summaries of security protections provided by a rule group.</p> <p>Network Firewall extracts this information from selected fields in the rule group's Suricata rules, based on your <a>SummaryConfiguration</a> settings.</p>",
+      "refs": {
+        "DescribeRuleGroupSummaryResponse$Summary": "<p>A complex type that contains rule information based on the rule group's configured summary settings. The content varies depending on the fields that you specified to extract in your SummaryConfiguration. When you haven't configured any summary settings, this returns an empty array. The response might include:</p> <ul> <li> <p>Rule identifiers</p> </li> <li> <p>Rule descriptions</p> </li> <li> <p>Any metadata fields that you specified in your SummaryConfiguration</p> </li> </ul>"
+      }
+    },
+    "SummaryConfiguration": {
+      "base": "<p>A complex type that specifies which Suricata rule metadata fields to use when displaying threat information. Contains:</p> <ul> <li> <p> <code>RuleOptions</code> - The Suricata rule options fields to extract and display</p> </li> </ul> <p>These settings affect how threat information appears in both the console and API responses. Summaries are available for rule groups you manage and for active threat defense Amazon Web Services managed rule groups.</p>",
+      "refs": {
+        "CreateRuleGroupRequest$SummaryConfiguration": "<p>An object that contains a <code>RuleOptions</code> array of strings. You use <code>RuleOptions</code> to determine which of the following <a>RuleSummary</a> values are returned in response to <code>DescribeRuleGroupSummary</code>.</p> <ul> <li> <p> <code>Metadata</code> - returns</p> </li> <li> <p> <code>Msg</code> </p> </li> <li> <p> <code>SID</code> </p> </li> </ul>",
+        "RuleGroupResponse$SummaryConfiguration": "<p>A complex type containing the currently selected rule option fields that will be displayed for rule summarization returned by <a>DescribeRuleGroupSummary</a>.</p> <ul> <li> <p>The <code>RuleOptions</code> specified in <a>SummaryConfiguration</a> </p> </li> <li> <p>Rule metadata organization preferences</p> </li> </ul>",
+        "UpdateRuleGroupRequest$SummaryConfiguration": "<p>Updates the selected summary configuration for a rule group.</p> <p>Changes affect subsequent responses from <a>DescribeRuleGroupSummary</a>.</p>"
+      }
+    },
+    "SummaryRuleOption": {
+      "base": null,
+      "refs": {
+        "SummaryRuleOptions$member": null
+      }
+    },
+    "SummaryRuleOptions": {
+      "base": null,
+      "refs": {
+        "SummaryConfiguration$RuleOptions": "<p>Specifies the selected rule options returned by <a>DescribeRuleGroupSummary</a>.</p>"
       }
     },
     "SupportedAvailabilityZones": {

@@ -24,11 +24,11 @@
       },
       "input":{"shape":"AddTagsToCertificateRequest"},
       "errors":[
-        {"shape":"TagPolicyException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"TagPolicyException"},
         {"shape":"TooManyTagsException"},
-        {"shape":"ThrottlingException"},
         {"shape":"InvalidArnException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidTagException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -42,8 +42,8 @@
       "input":{"shape":"DeleteCertificateRequest"},
       "errors":[
         {"shape":"ResourceInUseException"},
-        {"shape":"ThrottlingException"},
         {"shape":"InvalidArnException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
@@ -111,8 +111,8 @@
       "input":{"shape":"ImportCertificateRequest"},
       "output":{"shape":"ImportCertificateResponse"},
       "errors":[
-        {"shape":"TagPolicyException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"TagPolicyException"},
         {"shape":"TooManyTagsException"},
         {"shape":"InvalidArnException"},
         {"shape":"InvalidTagException"},
@@ -168,10 +168,10 @@
       },
       "input":{"shape":"RemoveTagsFromCertificateRequest"},
       "errors":[
-        {"shape":"TagPolicyException"},
         {"shape":"InvalidParameterException"},
-        {"shape":"ThrottlingException"},
+        {"shape":"TagPolicyException"},
         {"shape":"InvalidArnException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InvalidTagException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -198,8 +198,8 @@
       "input":{"shape":"RequestCertificateRequest"},
       "output":{"shape":"RequestCertificateResponse"},
       "errors":[
-        {"shape":"TagPolicyException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"TagPolicyException"},
         {"shape":"TooManyTagsException"},
         {"shape":"InvalidArnException"},
         {"shape":"InvalidTagException"},
@@ -218,6 +218,23 @@
         {"shape":"InvalidArnException"},
         {"shape":"InvalidDomainValidationOptionsException"},
         {"shape":"InvalidStateException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "RevokeCertificate":{
+      "name":"RevokeCertificate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RevokeCertificateRequest"},
+      "output":{"shape":"RevokeCertificateResponse"},
+      "errors":[
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidArnException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -316,6 +333,13 @@
         "Options":{"shape":"CertificateOptions"}
       }
     },
+    "CertificateExport":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "CertificateManagedBy":{
       "type":"string",
       "enum":["CLOUDFRONT"]
@@ -323,7 +347,8 @@
     "CertificateOptions":{
       "type":"structure",
       "members":{
-        "CertificateTransparencyLoggingPreference":{"shape":"CertificateTransparencyLoggingPreference"}
+        "CertificateTransparencyLoggingPreference":{"shape":"CertificateTransparencyLoggingPreference"},
+        "Export":{"shape":"CertificateExport"}
       }
     },
     "CertificateStatus":{
@@ -354,6 +379,7 @@
         "KeyAlgorithm":{"shape":"KeyAlgorithm"},
         "KeyUsages":{"shape":"KeyUsageNames"},
         "ExtendedKeyUsages":{"shape":"ExtendedKeyUsageNames"},
+        "ExportOption":{"shape":"CertificateExport"},
         "InUse":{"shape":"NullableBoolean"},
         "Exported":{"shape":"NullableBoolean"},
         "RenewalEligibility":{"shape":"RenewalEligibility"},
@@ -557,6 +583,7 @@
         "extendedKeyUsage":{"shape":"ExtendedKeyUsageFilterList"},
         "keyUsage":{"shape":"KeyUsageFilterList"},
         "keyTypes":{"shape":"KeyAlgorithmList"},
+        "exportOption":{"shape":"CertificateExport"},
         "managedBy":{"shape":"CertificateManagedBy"}
       }
     },
@@ -937,6 +964,23 @@
         "PRIVILEGE_WITHDRAWN",
         "A_A_COMPROMISE"
       ]
+    },
+    "RevokeCertificateRequest":{
+      "type":"structure",
+      "required":[
+        "CertificateArn",
+        "RevocationReason"
+      ],
+      "members":{
+        "CertificateArn":{"shape":"Arn"},
+        "RevocationReason":{"shape":"RevocationReason"}
+      }
+    },
+    "RevokeCertificateResponse":{
+      "type":"structure",
+      "members":{
+        "CertificateArn":{"shape":"Arn"}
+      }
     },
     "ServiceErrorMessage":{"type":"string"},
     "SortBy":{

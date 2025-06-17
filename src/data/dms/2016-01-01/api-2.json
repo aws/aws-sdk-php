@@ -1896,6 +1896,7 @@
         "DataProviderName":{"shape":"String"},
         "Description":{"shape":"String"},
         "Engine":{"shape":"String"},
+        "Virtual":{"shape":"BooleanOptional"},
         "Settings":{"shape":"DataProviderSettings"},
         "Tags":{"shape":"TagList"}
       }
@@ -2227,6 +2228,7 @@
         "DataProviderCreationTime":{"shape":"Iso8601DateTime"},
         "Description":{"shape":"String"},
         "Engine":{"shape":"String"},
+        "Virtual":{"shape":"BooleanOptional"},
         "Settings":{"shape":"DataProviderSettings"}
       }
     },
@@ -3590,7 +3592,9 @@
         "Port":{"shape":"IntegerOptional"},
         "DatabaseName":{"shape":"String"},
         "SslMode":{"shape":"DmsSslModeValue"},
-        "CertificateArn":{"shape":"String"}
+        "CertificateArn":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "IbmDb2zOsDataProviderSettings":{
@@ -3600,7 +3604,9 @@
         "Port":{"shape":"IntegerOptional"},
         "DatabaseName":{"shape":"String"},
         "SslMode":{"shape":"DmsSslModeValue"},
-        "CertificateArn":{"shape":"String"}
+        "CertificateArn":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "ImportCertificateMessage":{
@@ -3868,7 +3874,9 @@
         "ServerName":{"shape":"String"},
         "Port":{"shape":"IntegerOptional"},
         "SslMode":{"shape":"DmsSslModeValue"},
-        "CertificateArn":{"shape":"String"}
+        "CertificateArn":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "Marker":{
@@ -3912,7 +3920,9 @@
         "Port":{"shape":"IntegerOptional"},
         "DatabaseName":{"shape":"String"},
         "SslMode":{"shape":"DmsSslModeValue"},
-        "CertificateArn":{"shape":"String"}
+        "CertificateArn":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "MigrationProject":{
@@ -3992,6 +4002,7 @@
         "DataProviderName":{"shape":"String"},
         "Description":{"shape":"String"},
         "Engine":{"shape":"String"},
+        "Virtual":{"shape":"BooleanOptional"},
         "ExactSettings":{"shape":"BooleanOptional"},
         "Settings":{"shape":"DataProviderSettings"}
       }
@@ -4277,7 +4288,9 @@
         "ServerName":{"shape":"String"},
         "Port":{"shape":"IntegerOptional"},
         "SslMode":{"shape":"DmsSslModeValue"},
-        "CertificateArn":{"shape":"String"}
+        "CertificateArn":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "NeptuneSettings":{
@@ -4322,7 +4335,9 @@
         "SecretsManagerOracleAsmSecretId":{"shape":"String"},
         "SecretsManagerOracleAsmAccessRoleArn":{"shape":"String"},
         "SecretsManagerSecurityDbEncryptionSecretId":{"shape":"String"},
-        "SecretsManagerSecurityDbEncryptionAccessRoleArn":{"shape":"String"}
+        "SecretsManagerSecurityDbEncryptionAccessRoleArn":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "OracleSettings":{
@@ -4479,7 +4494,9 @@
         "Port":{"shape":"IntegerOptional"},
         "DatabaseName":{"shape":"String"},
         "SslMode":{"shape":"DmsSslModeValue"},
-        "CertificateArn":{"shape":"String"}
+        "CertificateArn":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "PremigrationAssessmentStatus":{
@@ -4628,7 +4645,9 @@
       "members":{
         "ServerName":{"shape":"String"},
         "Port":{"shape":"IntegerOptional"},
-        "DatabaseName":{"shape":"String"}
+        "DatabaseName":{"shape":"String"},
+        "S3Path":{"shape":"String"},
+        "S3AccessRoleArn":{"shape":"String"}
       }
     },
     "RedshiftSettings":{

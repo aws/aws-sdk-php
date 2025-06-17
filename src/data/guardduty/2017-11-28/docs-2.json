@@ -30,7 +30,7 @@
     "DisassociateFromMasterAccount": "<p>Disassociates the current GuardDuty member account from its administrator account.</p> <p>When you disassociate an invited member from a GuardDuty delegated administrator, the member account details obtained from the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a> API, including the associated email addresses, are retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API.</p>",
     "DisassociateMembers": "<p>Disassociates GuardDuty member accounts (from the current administrator account) specified by the account IDs.</p> <p>When you disassociate an invited member from a GuardDuty delegated administrator, the member account details obtained from the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html\">CreateMembers</a> API, including the associated email addresses, are retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>With <code>autoEnableOrganizationMembers</code> configuration for your organization set to <code>ALL</code>, you'll receive an error if you attempt to disassociate a member account before removing them from your organization.</p> <p>If you disassociate a member account that was added by invitation, the member account details obtained from this API, including the associated email addresses, will be retained. This is done so that the delegated administrator can invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html\">InviteMembers</a> API without the need to invoke the CreateMembers API again. To remove the details associated with a member account, the delegated administrator must invoke the <a href=\"https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html\">DeleteMembers</a> API. </p> <p>When the member accounts added through Organizations are later disassociated, you (administrator) can't invite them by calling the InviteMembers API. You can create an association with these member accounts again only by calling the CreateMembers API.</p>",
     "EnableOrganizationAdminAccount": "<p>Designates an Amazon Web Services account within the organization as your GuardDuty delegated administrator. Only the organization's management account can run this API operation.</p>",
-    "GetAdministratorAccount": "<p>Provides the details of the GuardDuty administrator account associated with the current GuardDuty member account.</p> <note> <p>If the organization's management account or a delegated administrator runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </note>",
+    "GetAdministratorAccount": "<p>Provides the details of the GuardDuty administrator account associated with the current GuardDuty member account.</p> <p>Based on the type of account that runs this API, the following list shows how the API behavior varies:</p> <ul> <li> <p>When the GuardDuty administrator account runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </li> <li> <p>When a member account runs this API, it will return the details of the GuardDuty administrator account that is associated with this calling member account.</p> </li> <li> <p>When an individual account (not associated with an organization) runs this API, it will return success (<code>HTTP 200</code>) but no content.</p> </li> </ul>",
     "GetCoverageStatistics": "<p>Retrieves aggregated statistics for your account. If you are a GuardDuty administrator, you can retrieve the statistics for all the resources associated with the active member accounts in your organization who have enabled Runtime Monitoring and have the GuardDuty security agent running on their resources.</p>",
     "GetDetector": "<p>Retrieves a GuardDuty detector specified by the detectorId.</p> <p>There might be regional differences because some data sources might not be available in all the Amazon Web Services Regions where GuardDuty is presently supported. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html\">Regions and endpoints</a>.</p>",
     "GetFilter": "<p>Returns the details of the filter specified by the filter name.</p>",
@@ -210,10 +210,22 @@
         "Signal$ActorIds": "<p>Information about the IDs of the threat actors involved in the signal.</p>"
       }
     },
+    "ActorProcess": {
+      "base": "<p>Contains information about a process involved in a GuardDuty finding, including process identification, execution details, and file information.</p>",
+      "refs": {
+        "Actor$Process": "<p>Contains information about the process associated with the threat actor. This includes details such as process name, path, execution time, and unique identifiers that help track the actor's activities within the system.</p>"
+      }
+    },
     "Actors": {
       "base": null,
       "refs": {
         "Sequence$Actors": "<p>Contains information about the actors involved in the attack sequence.</p>"
+      }
+    },
+    "AdditionalSequenceTypes": {
+      "base": null,
+      "refs": {
+        "Sequence$AdditionalSequenceTypes": "<p>Additional types of sequences that may be associated with the attack sequence finding, providing further context about the nature of the detected threat.</p>"
       }
     },
     "AddonDetails": {
@@ -424,6 +436,12 @@
         "DataSourceConfigurationsResult$CloudTrail": "<p>An object that contains information on the status of CloudTrail as a data source.</p>"
       }
     },
+    "ClusterStatus": {
+      "base": null,
+      "refs": {
+        "EksCluster$Status": "<p>The current status of the Amazon EKS cluster.</p>"
+      }
+    },
     "Condition": {
       "base": "<p>Contains information about the condition.</p>",
       "refs": {
@@ -441,10 +459,34 @@
         "Resource$ContainerDetails": null
       }
     },
+    "ContainerFindingResource": {
+      "base": "<p>Contains information about container resources involved in a GuardDuty finding. This structure provides details about containers that were identified as part of suspicious or malicious activity.</p>",
+      "refs": {
+        "ResourceData$Container": "<p>Contains detailed information about the container associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
+    "ContainerImageUid": {
+      "base": null,
+      "refs": {
+        "ContainerFindingResource$ImageUid": "<p>The unique ID associated with the container image.</p>"
+      }
+    },
     "ContainerInstanceDetails": {
       "base": "<p>Contains information about the Amazon EC2 instance that is running the Amazon ECS container.</p>",
       "refs": {
         "CoverageEcsClusterDetails$ContainerInstanceDetails": "<p>Information about the Amazon ECS container running on Amazon EC2 instance.</p>"
+      }
+    },
+    "ContainerUid": {
+      "base": null,
+      "refs": {
+        "ContainerUids$member": null
+      }
+    },
+    "ContainerUids": {
+      "base": null,
+      "refs": {
+        "KubernetesWorkload$ContainerUids": "<p>A list of unique identifiers for the containers that are part of the Kubernetes workload.</p>"
       }
     },
     "Containers": {
@@ -668,7 +710,7 @@
     "CriterionKey": {
       "base": null,
       "refs": {
-        "FilterCriterion$CriterionKey": "<p>An enum value representing possible scan properties to match with given scan entries.</p> <note> <p>Replace the enum value <code>CLUSTER_NAME</code> with <code>EKS_CLUSTER_NAME</code>. <code>CLUSTER_NAME</code> has been deprecated.</p> </note>"
+        "FilterCriterion$CriterionKey": "<p>An enum value representing possible scan properties to match with given scan entries.</p>"
       }
     },
     "DNSLogsConfigurationResult": {
@@ -1100,6 +1142,18 @@
         "ResourceData$Ec2Instance": "<p>Contains information about the Amazon EC2 instance.</p>"
       }
     },
+    "Ec2InstanceUid": {
+      "base": null,
+      "refs": {
+        "Ec2InstanceUids$member": null
+      }
+    },
+    "Ec2InstanceUids": {
+      "base": null,
+      "refs": {
+        "EksCluster$Ec2InstanceUids": "<p>A list of unique identifiers for the Amazon EC2 instances that serve as worker nodes in the Amazon EKS cluster.</p>"
+      }
+    },
     "Ec2NetworkInterface": {
       "base": "<p>Contains information about the elastic network interface of the Amazon EC2 instance.</p>",
       "refs": {
@@ -1124,6 +1178,12 @@
         "EcsClusterDetails$TaskDetails": "<p>Contains information about the details of the ECS Task.</p>"
       }
     },
+    "EksCluster": {
+      "base": "<p>Contains information about the Amazon EKS cluster involved in a GuardDuty finding, including cluster identification, status, and network configuration.</p>",
+      "refs": {
+        "ResourceData$EksCluster": "<p>Contains detailed information about the Amazon EKS cluster associated with the activity that prompted GuardDuty to generate a finding.</p>"
+      }
+    },
     "EksClusterDetails": {
       "base": "<p>Details about the EKS cluster involved in a Kubernetes finding.</p>",
       "refs": {
@@ -1133,7 +1193,7 @@
     "Email": {
       "base": null,
       "refs": {
-        "AccountDetail$Email": "<p>The email address of the member account.</p>",
+        "AccountDetail$Email": "<p>The email address of the member account.</p> <p>The rules for a valid email address:</p> <ul> <li> <p>The email address must be a minimum of 6 and a maximum of 64 characters long.</p> </li> <li> <p>All characters must be 7-bit ASCII characters.</p> </li> <li> <p>There must be one and only one @ symbol, which separates the local name from the domain name.</p> </li> <li> <p>The local name can't contain any of the following characters:</p> <p>whitespace, \" ' ( ) &lt; &gt; [ ] : ' , \\ | % &amp;</p> </li> <li> <p>The local name can't begin with a dot (.).</p> </li> <li> <p>The domain name can consist of only the characters [a-z], [A-Z], [0-9], hyphen (-), or dot (.).</p> </li> <li> <p>The domain name can't begin or end with a dot (.) or hyphen (-).</p> </li> <li> <p>The domain name must contain at least one dot. </p> </li> </ul>",
         "Member$Email": "<p>The email address of the member account.</p>"
       }
     },
@@ -1339,6 +1399,7 @@
     "FindingType": {
       "base": null,
       "refs": {
+        "AdditionalSequenceTypes$member": null,
         "Finding$Type": "<p>The type of finding.</p>",
         "FindingTypes$member": null
       }
@@ -1830,6 +1891,12 @@
         "Action$KubernetesPermissionCheckedDetails": "<p>Information whether the user has the permission to use a specific Kubernetes API.</p>"
       }
     },
+    "KubernetesResourcesTypes": {
+      "base": null,
+      "refs": {
+        "KubernetesWorkload$KubernetesResourcesTypes": "<p>The types of Kubernetes resources involved in the workload.</p>"
+      }
+    },
     "KubernetesRoleBindingDetails": {
       "base": "<p>Contains information about the role binding that grants the permission defined in a Kubernetes role.</p>",
       "refs": {
@@ -1846,6 +1913,12 @@
       "base": "<p>Details about the Kubernetes user involved in a Kubernetes finding.</p>",
       "refs": {
         "KubernetesDetails$KubernetesUserDetails": "<p>Details about the Kubernetes user involved in a Kubernetes finding.</p>"
+      }
+    },
+    "KubernetesWorkload": {
+      "base": "<p>Contains information about Kubernetes workloads involved in a GuardDuty finding, including pods, deployments, and other Kubernetes resources.</p>",
+      "refs": {
+        "ResourceData$KubernetesWorkload": "<p>Contains detailed information about the Kubernetes workload associated with the activity that prompted GuardDuty to generate a finding.</p>"
       }
     },
     "KubernetesWorkloadDetails": {
@@ -2602,6 +2675,24 @@
         "RuntimeDetails$Process": "<p>Information about the observed process.</p>"
       }
     },
+    "ProcessName": {
+      "base": null,
+      "refs": {
+        "ActorProcess$Name": "<p>The name of the process as it appears in the system.</p>"
+      }
+    },
+    "ProcessPath": {
+      "base": null,
+      "refs": {
+        "ActorProcess$Path": "<p>The full file path to the process executable on the system.</p>"
+      }
+    },
+    "ProcessSha256": {
+      "base": null,
+      "refs": {
+        "ActorProcess$Sha256": "<p>The SHA256 hash of the process executable file, which can be used for identification and verification purposes.</p>"
+      }
+    },
     "ProductCode": {
       "base": "<p>Contains information about the product code for the EC2 instance.</p>",
       "refs": {
@@ -3149,6 +3240,7 @@
         "Container$Name": "<p>Container name.</p>",
         "Container$Image": "<p>Container image.</p>",
         "Container$ImagePrefix": "<p>Part of the image name before the last slash. For example, imagePrefix for public.ecr.aws/amazonlinux/amazonlinux:latest would be public.ecr.aws/amazonlinux. If the image name is relative and does not have a slash, this field is empty.</p>",
+        "ContainerFindingResource$Image": "<p>The container image information, including the image name and tag used to run the container that was involved in the finding.</p>",
         "CountBySeverity$key": null,
         "Country$CountryCode": "<p>The country code of the remote IP address.</p>",
         "Country$CountryName": "<p>The country name of the remote IP address.</p>",
@@ -3209,6 +3301,8 @@
         "EcsTaskDetails$StartedBy": "<p>Contains the tag specified when a task is started.</p>",
         "EcsTaskDetails$Group": "<p>The name of the task group that's associated with the task.</p>",
         "EcsTaskDetails$LaunchType": "<p>A capacity on which the task is running. For example, <code>Fargate</code> and <code>EC2</code>.</p>",
+        "EksCluster$Arn": "<p>The Amazon Resource Name (ARN) that uniquely identifies the Amazon EKS cluster involved in the finding.</p>",
+        "EksCluster$VpcId": "<p>The ID of the Amazon Virtual Private Cloud (Amazon VPC) associated with the Amazon EKS cluster.</p>",
         "EksClusterDetails$Name": "<p>EKS cluster name.</p>",
         "EksClusterDetails$Arn": "<p>EKS cluster ARN.</p>",
         "EksClusterDetails$VpcId": "<p>The VPC ID to which the EKS cluster is attached.</p>",
@@ -3223,7 +3317,7 @@
         "Finding$Description": "<p>The description of the finding.</p>",
         "Finding$Id": "<p>The ID of the finding.</p>",
         "Finding$Partition": "<p>The partition associated with the finding.</p>",
-        "Finding$Region": "<p>The Region where the finding was generated.</p>",
+        "Finding$Region": "<p>The Region where the finding was generated. For findings generated from <a href=\"https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html#cloudtrail-concepts-global-service-events\">Global Service Events</a>, the Region value in the finding might differ from the Region where GuardDuty identifies the potential threat. For more information, see <a href=\"https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html#cloudtrail_global\">How GuardDuty handles Amazon Web Services CloudTrail global events</a> in the <i>Amazon GuardDuty User Guide</i>.</p>",
         "Finding$SchemaVersion": "<p>The version of the schema used for the finding.</p>",
         "Finding$Title": "<p>The title of the finding.</p>",
         "Finding$UpdatedAt": "<p>The time and date when the finding was last updated.</p>",
@@ -3291,6 +3385,7 @@
         "KubernetesRoleDetails$Uid": "<p>The unique identifier of the Kubernetes role name.</p>",
         "KubernetesUserDetails$Username": "<p>The username of the user who called the Kubernetes API.</p>",
         "KubernetesUserDetails$Uid": "<p>The user ID of the user who called the Kubernetes API.</p>",
+        "KubernetesWorkload$Namespace": "<p>The Kubernetes namespace in which the workload is running, providing logical isolation within the cluster.</p>",
         "KubernetesWorkloadDetails$Name": "<p>Kubernetes workload name.</p>",
         "KubernetesWorkloadDetails$Type": "<p>Kubernetes workload type (e.g. Pod, Deployment, etc.).</p>",
         "KubernetesWorkloadDetails$Uid": "<p>Kubernetes workload ID.</p>",
@@ -3653,6 +3748,7 @@
         "EbsVolumeScanDetails$ScanCompletedAt": "<p>Returns the completion date and time of the malware scan.</p>",
         "EcsTaskDetails$TaskCreatedAt": "<p>The Unix timestamp for the time when the task was created.</p>",
         "EcsTaskDetails$StartedAt": "<p>The Unix timestamp for the time when the task started.</p>",
+        "EksCluster$CreatedAt": "<p>The timestamp indicating when the Amazon EKS cluster was created, in UTC format.</p>",
         "EksClusterDetails$CreatedAt": "<p>The timestamp when the EKS cluster was created.</p>",
         "FindingTypeStatistics$LastGeneratedAt": "<p>The timestamp at which this finding type was last generated in your environment.</p>",
         "GetMalwareProtectionPlanResponse$CreatedAt": "<p>The timestamp when the Malware Protection plan resource was created.</p>",
