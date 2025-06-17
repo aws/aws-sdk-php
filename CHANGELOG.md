@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.345.0 - 2025-06-17
 
 * `Aws\NetworkFirewall` - Release of Active Threat Defense in Network Firewall
 * `Aws\ACM` - Adds support for Exportable Public Certificates
