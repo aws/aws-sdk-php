@@ -18,7 +18,6 @@ use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\StreamInterface as Stream;
 use Throwable;
 
 /**
@@ -106,7 +105,8 @@ class MultipartUploader implements PromisorInterface
                 || $config['part_size'] > self::PART_MAX_SIZE) {
                 throw new \InvalidArgumentException(
                     "The config `part_size` value must be between "
-                    . self::PART_MIN_SIZE . " and " . self::PART_MAX_SIZE . "."
+                    . self::PART_MIN_SIZE . " and " . self::PART_MAX_SIZE
+                    . " but ${config['part_size']} given."
                 );
             }
         } else {
@@ -181,6 +181,15 @@ class MultipartUploader implements PromisorInterface
     private function createMultipartUpload(): PromiseInterface
     {
         $requestArgs = [...$this->createMultipartArgs];
+        $checksum = $this->filterChecksum($requestArgs);
+        // Customer provided checksum
+        if ($checksum !== null) {
+            $requestArgs['ChecksumType'] = 'FULL_OBJECT';
+            $requestArgs['ChecksumAlgorithm'] = str_replace('Checksum', '', $checksum);
+            $requestArgs['@context']['request_checksum_calculation'] = 'when_required';
+            unset($requestArgs[$checksum]);
+        }
+
         $this->uploadInitiated($requestArgs);
         $command = $this->s3Client->getCommand(
             'CreateMultipartUpload',
@@ -201,10 +210,21 @@ class MultipartUploader implements PromisorInterface
     private function uploadParts(): PromiseInterface
     {
         $this->calculatedObjectSize = 0;
-        $isSeekable = $this->body->isSeekable();
         $partSize = $this->config['part_size'];
         $commands = [];
         $partNo = count($this->parts);
+        $baseUploadPartCommandArgs = [
+            ...$this->createMultipartArgs,
+            'UploadId' => $this->uploadId,
+        ];
+        // Customer provided checksum
+        $checksum = $this->filterChecksum($this->createMultipartArgs);
+        if ($checksum !== null) {
+            unset($baseUploadPartCommandArgs['ChecksumAlgorithm']);
+            unset($baseUploadPartCommandArgs[$checksum]);
+            $baseUploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
+        }
+
         while (!$this->body->eof()) {
             $partNo++;
             $read = $this->body->read($partSize);
@@ -218,11 +238,11 @@ class MultipartUploader implements PromisorInterface
                 $read
             );
             $uploadPartCommandArgs = [
-                ...$this->createMultipartArgs,
-                'UploadId' => $this->uploadId,
+                ...$baseUploadPartCommandArgs,
                 'PartNumber' => $partNo,
                 'ContentLength' => $partBody->getSize(),
             ];
+
             // To get `requestArgs` when notifying the bytesTransfer listeners.
             $uploadPartCommandArgs['requestArgs'] = [...$uploadPartCommandArgs];
             // Attach body
@@ -282,8 +302,12 @@ class MultipartUploader implements PromisorInterface
                 'Parts' => $this->parts,
             ]
         ];
-        if ($this->containsChecksum($this->createMultipartArgs)) {
+        $checksum = $this->filterChecksum($completeMultipartUploadArgs);
+        // Customer provided checksum
+        if ($checksum !== null) {
+            $completeMultipartUploadArgs['ChecksumAlgorithm'] = str_replace('Checksum', '', $checksum);
             $completeMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
+            $completeMultipartUploadArgs['@context']['request_checksum_calculation'] = 'when_required';
         }
 
         $command = $this->s3Client->getCommand(
@@ -359,7 +383,7 @@ class MultipartUploader implements PromisorInterface
             // Make sure the files exists
             if (!is_readable($source)) {
                 throw new \InvalidArgumentException(
-                    "The source for this upload must be either a readable file or a valid stream."
+                    "The source for this upload must be either a readable file path or a valid stream."
                 );
             }
             $body = new LazyOpenStream($source, 'r');
@@ -371,7 +395,7 @@ class MultipartUploader implements PromisorInterface
             $body = $source;
         } else {
             throw new \InvalidArgumentException(
-                "The source must be a string or a StreamInterface."
+                "The source must be a valid string file path or a StreamInterface."
             );
         }
 
@@ -396,7 +420,8 @@ class MultipartUploader implements PromisorInterface
                 $this->currentSnapshot->getIdentifier(),
                 $this->currentSnapshot->getTransferredBytes(),
                 $this->currentSnapshot->getTotalBytes(),
-                $this->currentSnapshot->getResponse()
+                $this->currentSnapshot->getResponse(),
+                $this->currentSnapshot->getReason(),
             );
         }
 
@@ -445,7 +470,8 @@ class MultipartUploader implements PromisorInterface
             $this->currentSnapshot->getIdentifier(),
             $this->currentSnapshot->getTransferredBytes(),
             $this->currentSnapshot->getTotalBytes(),
-            $result->toArray()
+            $result->toArray(),
+            $this->currentSnapshot->getReason(),
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->transferComplete([
@@ -468,7 +494,9 @@ class MultipartUploader implements PromisorInterface
         $newSnapshot = new TransferProgressSnapshot(
             $this->currentSnapshot->getIdentifier(),
             $this->currentSnapshot->getTransferredBytes() + $partCompletedBytes,
-            $this->currentSnapshot->getTotalBytes()
+            $this->currentSnapshot->getTotalBytes(),
+            $this->currentSnapshot->getResponse(),
+            $this->currentSnapshot->getReason(),
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->bytesTransferred([
@@ -501,13 +529,13 @@ class MultipartUploader implements PromisorInterface
     }
 
     /**
-     * Verifies if a checksum was provided.
+     * Filters a provided checksum if one was provided.
      *
      * @param array $requestArgs
      *
-     * @return bool
+     * @return string | null
      */
-    private function containsChecksum(array $requestArgs): bool
+    private function filterChecksum(array $requestArgs):? string
     {
         static $algorithms = [
             'ChecksumCRC32',
@@ -518,20 +546,20 @@ class MultipartUploader implements PromisorInterface
         ];
         foreach ($algorithms as $algorithm) {
             if (isset($requestArgs[$algorithm])) {
-                return true;
+                return $algorithm;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**
-     * @param Stream $stream
+     * @param StreamInterface $stream
      * @param array $data
      *
-     * @return Stream
+     * @return StreamInterface
      */
-    private function decorateWithHashes(Stream $stream, array &$data): StreamInterface
+    private function decorateWithHashes(StreamInterface $stream, array &$data): StreamInterface
     {
         // Decorate source with a hashing stream
         $hash = new PhpHash('sha256');
