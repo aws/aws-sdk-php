@@ -206,6 +206,8 @@ use GuzzleHttp\Promise;
  * @method \GuzzleHttp\Promise\Promise putObjectTaggingAsync(array $args = [])
  * @method \Aws\Result putPublicAccessBlock(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putPublicAccessBlockAsync(array $args = [])
+ * @method \Aws\Result renameObject(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise renameObjectAsync(array $args = [])
  * @method \Aws\Result restoreObject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreObjectAsync(array $args = [])
  * @method \Aws\Result selectObjectContent(array $args = [])

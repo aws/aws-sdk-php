@@ -1229,6 +1229,18 @@
         "UseS3ExpressControlEndpoint":{"value":true}
       }
     },
+    "RenameObject":{
+      "name":"RenameObject",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}/{Key+}?renameObject"
+      },
+      "input":{"shape":"RenameObjectRequest"},
+      "output":{"shape":"RenameObjectOutput"},
+      "errors":[
+        {"shape":"IdempotencyParameterMismatch"}
+      ]
+    },
     "RestoreObject":{
       "name":"RestoreObject",
       "http":{
@@ -1736,6 +1748,7 @@
         "FULL_OBJECT"
       ]
     },
+    "ClientToken":{"type":"string"},
     "CloudFunction":{"type":"string"},
     "CloudFunctionConfiguration":{
       "type":"structure",
@@ -2814,6 +2827,11 @@
           "shape":"IntelligentTieringId",
           "location":"querystring",
           "locationName":"id"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
         }
       }
     },
@@ -3615,6 +3633,11 @@
           "shape":"IntelligentTieringId",
           "location":"querystring",
           "locationName":"id"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
         }
       }
     },
@@ -5003,6 +5026,11 @@
           "location":"header",
           "locationName":"x-amz-mp-parts-count"
         },
+        "TagCount":{
+          "shape":"TagCount",
+          "location":"header",
+          "locationName":"x-amz-tagging-count"
+        },
         "ObjectLockMode":{
           "shape":"ObjectLockMode",
           "location":"header",
@@ -5140,6 +5168,12 @@
     "HttpErrorCodeReturnedEquals":{"type":"string"},
     "HttpRedirectCode":{"type":"string"},
     "ID":{"type":"string"},
+    "IdempotencyParameterMismatch":{
+      "type":"structure",
+      "members":{},
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "IfMatch":{"type":"string"},
     "IfMatchInitiatedTime":{
       "type":"timestamp",
@@ -5586,6 +5620,11 @@
           "shape":"Token",
           "location":"querystring",
           "locationName":"continuation-token"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
         }
       }
     },
@@ -7002,6 +7041,11 @@
           "location":"querystring",
           "locationName":"id"
         },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        },
         "IntelligentTieringConfiguration":{
           "shape":"IntelligentTieringConfiguration",
           "locationName":"IntelligentTieringConfiguration",
@@ -8279,6 +8323,97 @@
       "type":"string",
       "max":20,
       "min":0
+    },
+    "RenameObjectOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "RenameObjectRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "Key",
+        "RenameSource"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "Key":{
+          "shape":"ObjectKey",
+          "contextParam":{"name":"Key"},
+          "location":"uri",
+          "locationName":"Key"
+        },
+        "RenameSource":{
+          "shape":"RenameSource",
+          "location":"header",
+          "locationName":"x-amz-rename-source"
+        },
+        "DestinationIfMatch":{
+          "shape":"IfMatch",
+          "location":"header",
+          "locationName":"If-Match"
+        },
+        "DestinationIfNoneMatch":{
+          "shape":"IfNoneMatch",
+          "location":"header",
+          "locationName":"If-None-Match"
+        },
+        "DestinationIfModifiedSince":{
+          "shape":"IfModifiedSince",
+          "location":"header",
+          "locationName":"If-Modified-Since"
+        },
+        "DestinationIfUnmodifiedSince":{
+          "shape":"IfUnmodifiedSince",
+          "location":"header",
+          "locationName":"If-Unmodified-Since"
+        },
+        "SourceIfMatch":{
+          "shape":"RenameSourceIfMatch",
+          "location":"header",
+          "locationName":"x-amz-rename-source-if-match"
+        },
+        "SourceIfNoneMatch":{
+          "shape":"RenameSourceIfNoneMatch",
+          "location":"header",
+          "locationName":"x-amz-rename-source-if-none-match"
+        },
+        "SourceIfModifiedSince":{
+          "shape":"RenameSourceIfModifiedSince",
+          "location":"header",
+          "locationName":"x-amz-rename-source-if-modified-since"
+        },
+        "SourceIfUnmodifiedSince":{
+          "shape":"RenameSourceIfUnmodifiedSince",
+          "location":"header",
+          "locationName":"x-amz-rename-source-if-unmodified-since"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"header",
+          "locationName":"x-amz-client-token"
+        }
+      }
+    },
+    "RenameSource":{
+      "type":"string",
+      "pattern":"\\/?.+\\/.+"
+    },
+    "RenameSourceIfMatch":{"type":"string"},
+    "RenameSourceIfModifiedSince":{
+      "type":"timestamp",
+      "timestampFormat":"rfc822"
+    },
+    "RenameSourceIfNoneMatch":{"type":"string"},
+    "RenameSourceIfUnmodifiedSince":{
+      "type":"timestamp",
+      "timestampFormat":"rfc822"
     },
     "ReplaceKeyPrefixWith":{"type":"string"},
     "ReplaceKeyWith":{"type":"string"},

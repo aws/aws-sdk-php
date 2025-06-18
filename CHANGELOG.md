@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Bugfix for issue resolving GeoPlaces GeoRoutes and GeoMaps client endpoints.
+* `Aws\SageMaker` - Add support for p6-b200 instance type for SageMaker Hyperpod
+* `Aws\AutoScaling` - Add IncludeInstances parameter to DescribeAutoScalingGroups API
+* `Aws\CloudWatchLogs` - Added CloudWatch Logs Transformer support for converting CloudTrail, VPC Flow, EKS Audit, AWS WAF and Route53 Resolver logs to OCSF v1.1 format.
+* `Aws\AIOps` - This is the initial SDK release for Amazon AI Operations (AIOps). AIOps is a generative AI-powered assistant that helps you respond to incidents in your system by scanning your system's telemetry and quickly surface suggestions that might be related to your issue.
+* `Aws\S3` - Added support for renaming objects within the same bucket using the new RenameObject API.
+
 ## 3.345.0 - 2025-06-17
 
 * `Aws\NetworkFirewall` - Release of Active Threat Defense in Network Firewall

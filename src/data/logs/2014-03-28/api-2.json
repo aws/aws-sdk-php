@@ -2456,6 +2456,16 @@
       "min":1
     },
     "EventNumber":{"type":"long"},
+    "EventSource":{
+      "type":"string",
+      "enum":[
+        "CloudTrail",
+        "Route53Resolver",
+        "VPCFlow",
+        "EKSAudit",
+        "AWSWAF"
+      ]
+    },
     "EventsLimit":{
       "type":"integer",
       "max":10000,
@@ -3447,6 +3457,10 @@
       "max":128,
       "min":1
     },
+    "OCSFVersion":{
+      "type":"string",
+      "enum":["V1.1"]
+    },
     "OpenSearchApplication":{
       "type":"structure",
       "members":{
@@ -3661,6 +3675,18 @@
         "source":{"shape":"Source"}
       }
     },
+    "ParseToOCSF":{
+      "type":"structure",
+      "required":[
+        "eventSource",
+        "ocsfVersion"
+      ],
+      "members":{
+        "source":{"shape":"Source"},
+        "eventSource":{"shape":"EventSource"},
+        "ocsfVersion":{"shape":"OCSFVersion"}
+      }
+    },
     "ParseVPC":{
       "type":"structure",
       "members":{
@@ -3751,6 +3777,7 @@
         "parseJSON":{"shape":"ParseJSON"},
         "parseKeyValue":{"shape":"ParseKeyValue"},
         "parseRoute53":{"shape":"ParseRoute53"},
+        "parseToOCSF":{"shape":"ParseToOCSF"},
         "parsePostgres":{"shape":"ParsePostgres"},
         "parseVPC":{"shape":"ParseVPC"},
         "parseWAF":{"shape":"ParseWAF"},
