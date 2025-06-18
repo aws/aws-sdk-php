@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.346.0 - 2025-06-18
 
 * `Aws\Api` - Bugfix for issue resolving GeoPlaces GeoRoutes and GeoMaps client endpoints.
 * `Aws\SageMaker` - Add support for p6-b200 instance type for SageMaker Hyperpod
