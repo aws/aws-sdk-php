@@ -246,8 +246,9 @@ abstract class RestSerializer
             }
         }
 
-        if ((!empty($relative) && $relative !== '/')
-            && !$this->isUseEndpointV2
+        if (((!empty($relative) && $relative !== '/')
+            && !$this->isUseEndpointV2)
+            || (isset($serviceName) && str_starts_with($serviceName, 'geo-'))
         ) {
             $this->normalizePath($path);
         }
