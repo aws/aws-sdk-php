@@ -105,3 +105,13 @@ Feature: S3 Transfer Manager
       | 12 | directory-test-2-2 |
       | 1 | directory-test-2-3 |
       | 30 | directory-test-2-4 |
+
+  Scenario Outline: Abort a multipart upload
+    Given I am uploading the file <file> with size <size>
+    When I upload the file <file> using multipart upload and fails at part number <partNumberFail>
+    Then The multipart upload should have been aborted for file <file>
+    Examples:
+      | file | size | partNumberFail |
+      | abort-file-1.txt | 1024 * 1024 * 20 | 3 |
+      | abort-file-2.txt | 1024 * 1024 * 40 | 5 |
+      | abort-file-3.txt | 1024 * 1024 * 10 | 1 |

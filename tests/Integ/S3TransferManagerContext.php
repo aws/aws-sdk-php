@@ -13,6 +13,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 
 class S3TransferManagerContext implements Context, SnippetAcceptingContext
@@ -540,6 +541,14 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
                 }
             }
         };
+        // To make sure transferFail is called
+        $testCase = new class extends TestCase {};
+        $transferListener2 = $testCase->getMockBuilder(
+            TransferListener::class
+        )->getMock();
+        $transferListener2->expects($testCase->once())->method('transferInitiated');
+        $transferListener2->expects($testCase->once())->method('transferFail');
+
         $s3TransferManager->upload(
             $fullFilePath,
             [
@@ -549,6 +558,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             [],
             [
                 $transferListener,
+                $transferListener2
             ]
         )->wait();
     }
