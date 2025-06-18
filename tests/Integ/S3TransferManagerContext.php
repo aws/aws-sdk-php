@@ -4,10 +4,13 @@ namespace Aws\Test\Integ;
 
 use Aws\S3\ApplyChecksumMiddleware;
 use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Progress\TransferListener;
+use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Tester\Exception\PendingException;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\Assert;
 use Psr\Http\Message\StreamInterface;
@@ -477,7 +480,10 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     /**
      * @Then /^the objects (.*) should exist as files within the directory (.*)$/
      */
-    public function theObjectsShouldExistsAsFilesWithinTheDirectory($numfile, $directory): void
+    public function theObjectsShouldExistsAsFilesWithinTheDirectory(
+        $numfile,
+        $directory
+    ): void
     {
         $fullDirectoryPath = self::$tempDir . DIRECTORY_SEPARATOR . $directory;
         $s3Client = self::getSdk()->createS3();
@@ -492,5 +498,84 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         }
 
         Assert::assertEquals($numfile, $count);
+    }
+
+    /**
+     * @Given /^I am uploading the file (.*) with size (.*)$/
+     */
+    public function iAmUploadingTheFileWithSize($file, $size): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        file_put_contents($fullFilePath, str_repeat('*', $size));
+    }
+
+    /**
+     * @When /^I upload the file (.*) using multipart upload and fails at part number (.*)$/
+     */
+    public function iUploadTheFileUsingMultipartUploadAndFailsAtPartNumber(
+        $file,
+        $partNumberFail
+    ): void
+    {
+        $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $file;
+        $s3TransferManager = new S3TransferManager(
+            self::getSdk()->createS3()
+        );
+        $transferListener = new class($partNumberFail) extends TransferListener {
+            private int $partNumber;
+            private int $partNumberFail;
+
+            public function __construct(int $partNumberFail) {
+                $this->partNumberFail = $partNumberFail;
+                $this->partNumber = 0;
+            }
+
+            public function bytesTransferred(array $context): void
+            {
+                $this->partNumber++;
+                if ($this->partNumber === $this->partNumberFail) {
+                    throw new \RuntimeException(
+                        "Transfer failed at part number {$this->partNumber} failed"
+                    );
+                }
+            }
+        };
+        $s3TransferManager->upload(
+            $fullFilePath,
+            [
+                'Bucket' => self::getResourceName(),
+                'Key' => $file,
+            ],
+            [],
+            [
+                $transferListener,
+            ]
+        )->wait();
+    }
+
+    /**
+     * @Then /^The multipart upload should have been aborted for file (.*)$/
+     */
+    public function theMultipartUploadShouldHaveBeenAbortedForFile($file): void
+    {
+        $client = self::getSdk()->createS3();
+        $inProgressMultipartUploads = $client->listMultipartUploads([
+            'Bucket' => self::getResourceName(),
+        ]);
+        // Make sure that, if there are in progress multipart upload
+        // it is not for the file being uploaded in this test.
+        $multipartUploadCount = count($inProgressMultipartUploads);
+        if ($multipartUploadCount > 0) {
+            $multipartUploadCount = 0;
+            foreach ($inProgressMultipartUploads as $inProgressMultipartUpload) {
+                if ($inProgressMultipartUpload['Key'] === $file) {
+                    $multipartUploadCount++;
+                }
+            }
+
+            Assert::assertEquals(0, $multipartUploadCount);
+        }
+
+        Assert::assertEquals(0, $multipartUploadCount);
     }
 }
