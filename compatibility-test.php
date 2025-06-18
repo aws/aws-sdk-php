@@ -33,7 +33,7 @@ class CompatibilityTest
     public function title($text)
     {
         $this->lines[] = $this->isCli
-            ?  "\n" . $text . "\n" . str_repeat('-', strlen($text)) . "\n"
+            ? "\n" . $text . "\n" . str_repeat('-', strlen($text)) . "\n"
             : "<h2>{$text}</h2>";
     }
 
