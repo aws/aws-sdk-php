@@ -385,6 +385,32 @@
         "StartJobRunRequest$executionRoleArn": "<p>The execution role ARN for the job run.</p>"
       }
     },
+    "IdentityCenterApplicationArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$identityCenterApplicationArn": "<p>The ARN of the EMR Serverless created IAM Identity Center Application that provides trusted-identity propagation.</p>"
+      }
+    },
+    "IdentityCenterConfiguration": {
+      "base": "<p>The IAM Identity Center Configuration that includes the Identify Center instance and application ARNs that provide trusted-identity propagation.</p>",
+      "refs": {
+        "Application$identityCenterConfiguration": "<p>The IAM Identity Center configuration applied to enable trusted identity propagation. </p>"
+      }
+    },
+    "IdentityCenterConfigurationInput": {
+      "base": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>",
+      "refs": {
+        "CreateApplicationRequest$identityCenterConfiguration": "<p>The IAM Identity Center Configuration accepts the Identity Center instance parameter required to enable trusted identity propagation. This configuration allows identity propagation between integrated services and the Identity Center instance.</p>",
+        "UpdateApplicationRequest$identityCenterConfiguration": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>"
+      }
+    },
+    "IdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$identityCenterInstanceArn": "<p>The ARN of the IAM Identity Center instance.</p>",
+        "IdentityCenterConfigurationInput$identityCenterInstanceArn": "<p>The ARN of the IAM Identity Center instance.</p>"
+      }
+    },
     "ImageConfiguration": {
       "base": "<p>The applied image configuration.</p>",
       "refs": {

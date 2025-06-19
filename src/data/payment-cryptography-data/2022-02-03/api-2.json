@@ -371,7 +371,7 @@
     },
     "CipherTextType":{
       "type":"string",
-      "max":4096,
+      "max":4224,
       "min":2,
       "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+",
       "sensitive":true
@@ -486,7 +486,7 @@
         "DukptDerivationType"
       ],
       "members":{
-        "KeySerialNumber":{"shape":"HexLengthBetween10And24"},
+        "KeySerialNumber":{"shape":"HexLength16Or20Or24"},
         "DukptDerivationType":{"shape":"DukptDerivationType"}
       }
     },
@@ -494,7 +494,7 @@
       "type":"structure",
       "required":["KeySerialNumber"],
       "members":{
-        "KeySerialNumber":{"shape":"HexLengthBetween10And24"},
+        "KeySerialNumber":{"shape":"HexLength16Or20Or24"},
         "DukptKeyDerivationType":{"shape":"DukptDerivationType"},
         "DukptKeyVariant":{"shape":"DukptKeyVariant"}
       }
@@ -513,7 +513,7 @@
       "type":"structure",
       "required":["KeySerialNumber"],
       "members":{
-        "KeySerialNumber":{"shape":"HexLengthBetween10And24"},
+        "KeySerialNumber":{"shape":"HexLength16Or20Or24"},
         "Mode":{"shape":"DukptEncryptionMode"},
         "DukptKeyDerivationType":{"shape":"DukptDerivationType"},
         "DukptKeyVariant":{"shape":"DukptKeyVariant"},
@@ -855,11 +855,11 @@
       "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+",
       "sensitive":true
     },
-    "HexLengthBetween10And24":{
+    "HexLength16Or20Or24":{
       "type":"string",
       "max":24,
-      "min":10,
-      "pattern":"[0-9a-fA-F]+"
+      "min":16,
+      "pattern":"(?:[0-9a-fA-F]{16}|[0-9a-fA-F]{20}|[0-9a-fA-F]{24})"
     },
     "HexLengthBetween2And4":{
       "type":"string",
@@ -1024,7 +1024,8 @@
       "type":"string",
       "enum":[
         "CMAC",
-        "ANSI_X9_24"
+        "ANSI_X9_24",
+        "HMAC"
       ]
     },
     "KeyDerivationFunction":{
@@ -1061,7 +1062,7 @@
         "DukptKeyVariant"
       ],
       "members":{
-        "KeySerialNumber":{"shape":"HexLengthBetween10And24"},
+        "KeySerialNumber":{"shape":"HexLength16Or20Or24"},
         "DukptKeyVariant":{"shape":"DukptKeyVariant"},
         "DukptDerivationType":{"shape":"DukptDerivationType"}
       }
@@ -1240,14 +1241,14 @@
     },
     "PlainTextOutputType":{
       "type":"string",
-      "max":4096,
+      "max":4224,
       "min":2,
       "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+",
       "sensitive":true
     },
     "PlainTextType":{
       "type":"string",
-      "max":4064,
+      "max":4096,
       "min":2,
       "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+",
       "sensitive":true
@@ -1450,7 +1451,11 @@
         "TDES_3KEY",
         "AES_128",
         "AES_192",
-        "AES_256"
+        "AES_256",
+        "HMAC_SHA256",
+        "HMAC_SHA384",
+        "HMAC_SHA512",
+        "HMAC_SHA224"
       ]
     },
     "ThrottlingException":{

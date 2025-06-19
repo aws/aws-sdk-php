@@ -296,7 +296,8 @@
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
-        "schedulerConfiguration":{"shape":"SchedulerConfiguration"}
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
       }
     },
     "ApplicationArn":{
@@ -535,7 +536,8 @@
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
         "interactiveConfiguration":{"shape":"InteractiveConfiguration"},
-        "schedulerConfiguration":{"shape":"SchedulerConfiguration"}
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
       }
     },
     "CreateApplicationResponse":{
@@ -721,6 +723,29 @@
       "max":2048,
       "min":20,
       "pattern":"arn:(aws[a-zA-Z0-9-]*):iam::([0-9]{12}):(role((\\u002F)|(\\u002F[\\u0021-\\u007F]+\\u002F))[\\w+=,.@-]+)"
+    },
+    "IdentityCenterApplicationArn":{
+      "type":"string",
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}"
+    },
+    "IdentityCenterConfiguration":{
+      "type":"structure",
+      "members":{
+        "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"},
+        "identityCenterApplicationArn":{"shape":"IdentityCenterApplicationArn"}
+      }
+    },
+    "IdentityCenterConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "identityCenterInstanceArn":{"shape":"IdentityCenterInstanceArn"}
+      }
+    },
+    "IdentityCenterInstanceArn":{
+      "type":"string",
+      "max":1024,
+      "min":10,
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}"
     },
     "ImageConfiguration":{
       "type":"structure",
@@ -1550,7 +1575,8 @@
         "releaseLabel":{"shape":"ReleaseLabel"},
         "runtimeConfiguration":{"shape":"ConfigurationList"},
         "monitoringConfiguration":{"shape":"MonitoringConfiguration"},
-        "schedulerConfiguration":{"shape":"SchedulerConfiguration"}
+        "schedulerConfiguration":{"shape":"SchedulerConfiguration"},
+        "identityCenterConfiguration":{"shape":"IdentityCenterConfigurationInput"}
       }
     },
     "UpdateApplicationResponse":{

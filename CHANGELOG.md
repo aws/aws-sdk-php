@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PaymentCryptography` - Additional support for managing HMAC keys that adheres to changes documented in X9.143-2021 and provides better interoperability for key import/export
+* `Aws\SageMaker` - This release introduces alternative support for utilizing CFN templates from S3 for SageMaker Projects.
+* `Aws\EMRServerless` - This release adds the capability to enable IAM IdentityCenter Trusted Identity Propagation for users running Interactive Sessions on EMR Serverless Applications.
+* `Aws\Lambda` - Support Schema Registry feature for Kafka Event Source Mapping. Customers can now configure a Schema Registry to enable schema validation and filtering for Avro, Protobuf, and JSON-formatted events in Lambda for Kafka Event Source.
+* `Aws\Bedrock` - This release of the SDK has the API and documentation for the createcustommodel API. This feature lets you copy a trained model into Amazon Bedrock for inference.
+* `Aws\PaymentCryptographyData` - Additional support for managing HMAC keys that adheres to changes documented in X9.143-2021 and provides better interoperability for key import/export
+
 ## 3.346.0 - 2025-06-18
 
 * `Aws\Api` - Bugfix for issue resolving GeoPlaces GeoRoutes and GeoMaps client endpoints.

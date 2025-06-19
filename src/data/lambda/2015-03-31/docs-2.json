@@ -6,7 +6,7 @@
     "AddPermission": "<p>Grants a <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#Principal_specifying\">principal</a> permission to use a function. You can apply the policy at the function level, or specify a qualifier to restrict access to a single version or alias. If you use a qualifier, the invoker must use the full Amazon Resource Name (ARN) of that version or alias to invoke the function. Note: Lambda does not support adding policies to version $LATEST.</p> <p>To grant permission to another account, specify the account ID as the <code>Principal</code>. To grant permission to an organization defined in Organizations, specify the organization ID as the <code>PrincipalOrgID</code>. For Amazon Web Services services, the principal is a domain-style identifier that the service defines, such as <code>s3.amazonaws.com</code> or <code>sns.amazonaws.com</code>. For Amazon Web Services services, you can also specify the ARN of the associated resource as the <code>SourceArn</code>. If you grant permission to a service principal without specifying the source, other accounts could potentially configure resources in their account to invoke your Lambda function.</p> <p>This operation adds a statement to a resource-based permissions policy for the function. For more information about function policies, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/access-control-resource-based.html\">Using resource-based policies for Lambda</a>.</p>",
     "CreateAlias": "<p>Creates an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">alias</a> for a Lambda function version. Use aliases to provide clients with a function identifier that you can update to invoke a different version.</p> <p>You can also map an alias to split invocation requests between two versions. Use the <code>RoutingConfig</code> parameter to specify a second version and the percentage of invocation requests that it receives.</p>",
     "CreateCodeSigningConfig": "<p>Creates a code signing configuration. A <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html\">code signing configuration</a> defines a list of allowed signing profiles and defines the code-signing validation policy (action to be taken if deployment validation checks fail). </p>",
-    "CreateEventSourceMapping": "<p>Creates a mapping between an event source and an Lambda function. Lambda reads items from the event source and invokes the function.</p> <p>For details about how to configure different event sources, see the following topics. </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-dynamodb-eventsourcemapping\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-eventsourcemapping\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#events-sqs-eventsource\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-eventsourcemapping\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/kafka-smaa.html\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html\"> Amazon DocumentDB</a> </p> </li> </ul> <p>The following error handling options are available only for DynamoDB and Kinesis event sources:</p> <ul> <li> <p> <code>BisectBatchOnFunctionError</code> – If the function returns an error, split the batch in two and retry.</p> </li> <li> <p> <code>MaximumRecordAgeInSeconds</code> – Discard records older than the specified age. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires</p> </li> <li> <p> <code>MaximumRetryAttempts</code> – Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> </li> <li> <p> <code>ParallelizationFactor</code> – Process multiple batches from each shard concurrently.</p> </li> </ul> <p>For stream sources (DynamoDB, Kinesis, Amazon MSK, and self-managed Apache Kafka), the following option is also available:</p> <ul> <li> <p> <code>DestinationConfig</code> – Send discarded records to an Amazon SQS queue, Amazon SNS topic, or Amazon S3 bucket.</p> </li> </ul> <p>For information about which configuration parameters apply to each event source, see the following topics.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-params\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-params\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#services-sqs-params\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-params\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-parms\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-kafka-parms\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html#docdb-configuration\"> Amazon DocumentDB</a> </p> </li> </ul>",
+    "CreateEventSourceMapping": "<p>Creates a mapping between an event source and an Lambda function. Lambda reads items from the event source and invokes the function.</p> <p>For details about how to configure different event sources, see the following topics. </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-dynamodb-eventsourcemapping\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-eventsourcemapping\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#events-sqs-eventsource\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-eventsourcemapping\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/kafka-smaa.html\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html\"> Amazon DocumentDB</a> </p> </li> </ul> <p>The following error handling options are available only for DynamoDB and Kinesis event sources:</p> <ul> <li> <p> <code>BisectBatchOnFunctionError</code> – If the function returns an error, split the batch in two and retry.</p> </li> <li> <p> <code>MaximumRecordAgeInSeconds</code> – Discard records older than the specified age. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires</p> </li> <li> <p> <code>MaximumRetryAttempts</code> – Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> </li> <li> <p> <code>ParallelizationFactor</code> – Process multiple batches from each shard concurrently.</p> </li> </ul> <p>For stream sources (DynamoDB, Kinesis, Amazon MSK, and self-managed Apache Kafka), the following option is also available:</p> <ul> <li> <p> <code>OnFailure</code> – Send discarded records to an Amazon SQS queue, Amazon SNS topic, or Amazon S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html#invocation-async-destinations\">Adding a destination</a>.</p> </li> </ul> <p>For information about which configuration parameters apply to each event source, see the following topics.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-params\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-params\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#services-sqs-params\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-params\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-parms\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-kafka-parms\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html#docdb-configuration\"> Amazon DocumentDB</a> </p> </li> </ul>",
     "CreateFunction": "<p>Creates a Lambda function. To create a function, you need a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-package.html\">deployment package</a> and an <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role\">execution role</a>. The deployment package is a .zip file archive or container image that contains your function code. The execution role grants the function permission to use Amazon Web Services services, such as Amazon CloudWatch Logs for log streaming and X-Ray for request tracing.</p> <p>If the deployment package is a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html\">container image</a>, then you set the package type to <code>Image</code>. For a container image, the code property must include the URI of a container image in the Amazon ECR registry. You do not need to specify the handler and runtime properties.</p> <p>If the deployment package is a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-package.html#gettingstarted-package-zip\">.zip file archive</a>, then you set the package type to <code>Zip</code>. For a .zip file archive, the code property specifies the location of the .zip file. You must also specify the handler and runtime properties. The code in the deployment package must be compatible with the target instruction set architecture of the function (<code>x86-64</code> or <code>arm64</code>). If you do not specify the architecture, then the default value is <code>x86-64</code>.</p> <p>When you create a function, Lambda provisions an instance of the function and its supporting resources. If your function connects to a VPC, this process can take a minute or so. During this time, you can't invoke or modify the function. The <code>State</code>, <code>StateReason</code>, and <code>StateReasonCode</code> fields in the response from <a>GetFunctionConfiguration</a> indicate when the function is ready to invoke. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/functions-states.html\">Lambda function states</a>.</p> <p>A function has an unpublished version, and can have published versions and aliases. The unpublished version changes when you update your function's code and configuration. A published version is a snapshot of your function code and configuration that can't be changed. An alias is a named resource that maps to a version, and can be changed to map to a different version. Use the <code>Publish</code> parameter to create version <code>1</code> of your function from its initial configuration.</p> <p>The other parameters let you configure version-specific and function-level settings. You can modify version-specific settings later with <a>UpdateFunctionConfiguration</a>. Function-level settings apply to both the unpublished and published versions of the function, and include tags (<a>TagResource</a>) and per-function concurrency limits (<a>PutFunctionConcurrency</a>).</p> <p>You can use code signing if your deployment package is a .zip file archive. To enable code signing for this function, specify the ARN of a code-signing configuration. When a user attempts to deploy a code package with <a>UpdateFunctionCode</a>, Lambda checks that the code package has a valid signature from a trusted publisher. The code-signing configuration includes set of signing profiles, which define the trusted publishers for this function.</p> <p>If another Amazon Web Services account or an Amazon Web Services service invokes your function, use <a>AddPermission</a> to grant permission by creating a resource-based Identity and Access Management (IAM) policy. You can grant permissions at the function level, on a version, or on an alias.</p> <p>To invoke your function directly, use <a>Invoke</a>. To invoke your function in response to events in other Amazon Web Services services, create an event source mapping (<a>CreateEventSourceMapping</a>), or configure a function trigger in the other service. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-invocation.html\">Invoking Lambda functions</a>.</p>",
     "CreateFunctionUrlConfig": "<p>Creates a Lambda function URL with the specified configuration parameters. A function URL is a dedicated HTTP(S) endpoint that you can use to invoke your function.</p>",
     "DeleteAlias": "<p>Deletes a Lambda function <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">alias</a>.</p>",
@@ -65,7 +65,7 @@
     "UntagResource": "<p>Removes <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/tagging.html\">tags</a> from a function, event source mapping, or code signing configuration.</p>",
     "UpdateAlias": "<p>Updates the configuration of a Lambda function <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-aliases.html\">alias</a>.</p>",
     "UpdateCodeSigningConfig": "<p>Update the code signing configuration. Changes to the code signing configuration take effect the next time a user tries to deploy a code package to the function. </p>",
-    "UpdateEventSourceMapping": "<p>Updates an event source mapping. You can change the function that Lambda invokes, or pause invocation and resume later from the same location.</p> <p>For details about how to configure different event sources, see the following topics. </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-dynamodb-eventsourcemapping\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-eventsourcemapping\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#events-sqs-eventsource\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-eventsourcemapping\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/kafka-smaa.html\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html\"> Amazon DocumentDB</a> </p> </li> </ul> <p>The following error handling options are available only for DynamoDB and Kinesis event sources:</p> <ul> <li> <p> <code>BisectBatchOnFunctionError</code> – If the function returns an error, split the batch in two and retry.</p> </li> <li> <p> <code>MaximumRecordAgeInSeconds</code> – Discard records older than the specified age. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires</p> </li> <li> <p> <code>MaximumRetryAttempts</code> – Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> </li> <li> <p> <code>ParallelizationFactor</code> – Process multiple batches from each shard concurrently.</p> </li> </ul> <p>For stream sources (DynamoDB, Kinesis, Amazon MSK, and self-managed Apache Kafka), the following option is also available:</p> <ul> <li> <p> <code>DestinationConfig</code> – Send discarded records to an Amazon SQS queue, Amazon SNS topic, or Amazon S3 bucket.</p> </li> </ul> <p>For information about which configuration parameters apply to each event source, see the following topics.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-params\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-params\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#services-sqs-params\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-params\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-parms\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-kafka-parms\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html#docdb-configuration\"> Amazon DocumentDB</a> </p> </li> </ul>",
+    "UpdateEventSourceMapping": "<p>Updates an event source mapping. You can change the function that Lambda invokes, or pause invocation and resume later from the same location.</p> <p>For details about how to configure different event sources, see the following topics. </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-dynamodb-eventsourcemapping\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-eventsourcemapping\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#events-sqs-eventsource\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-eventsourcemapping\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/kafka-smaa.html\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html\"> Amazon DocumentDB</a> </p> </li> </ul> <p>The following error handling options are available only for DynamoDB and Kinesis event sources:</p> <ul> <li> <p> <code>BisectBatchOnFunctionError</code> – If the function returns an error, split the batch in two and retry.</p> </li> <li> <p> <code>MaximumRecordAgeInSeconds</code> – Discard records older than the specified age. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires</p> </li> <li> <p> <code>MaximumRetryAttempts</code> – Discard records after the specified number of retries. The default value is infinite (-1). When set to infinite (-1), failed records are retried until the record expires.</p> </li> <li> <p> <code>ParallelizationFactor</code> – Process multiple batches from each shard concurrently.</p> </li> </ul> <p>For stream sources (DynamoDB, Kinesis, Amazon MSK, and self-managed Apache Kafka), the following option is also available:</p> <ul> <li> <p> <code>OnFailure</code> – Send discarded records to an Amazon SQS queue, Amazon SNS topic, or Amazon S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html#invocation-async-destinations\">Adding a destination</a>.</p> </li> </ul> <p>For information about which configuration parameters apply to each event source, see the following topics.</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html#services-ddb-params\"> Amazon DynamoDB Streams</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html#services-kinesis-params\"> Amazon Kinesis</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#services-sqs-params\"> Amazon SQS</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-mq.html#services-mq-params\"> Amazon MQ and RabbitMQ</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-parms\"> Amazon MSK</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-kafka-parms\"> Apache Kafka</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-documentdb.html#docdb-configuration\"> Amazon DocumentDB</a> </p> </li> </ul>",
     "UpdateFunctionCode": "<p>Updates a Lambda function's code. If code signing is enabled for the function, the code package must be signed by a trusted publisher. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html\">Configuring code signing for Lambda</a>.</p> <p>If the function's package type is <code>Image</code>, then you must specify the code package in <code>ImageUri</code> as the URI of a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html\">container image</a> in the Amazon ECR registry.</p> <p>If the function's package type is <code>Zip</code>, then you must specify the deployment package as a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-package.html#gettingstarted-package-zip\">.zip file archive</a>. Enter the Amazon S3 bucket and key of the code .zip file location. You can also provide the function code inline using the <code>ZipFile</code> field.</p> <p>The code in the deployment package must be compatible with the target instruction set architecture of the function (<code>x86-64</code> or <code>arm64</code>).</p> <p>The function's code is locked when you publish a version. You can't modify the code of a published version, only the unpublished version.</p> <note> <p>For a function defined as a container image, Lambda resolves the image tag to an image digest. In Amazon ECR, if you update the image tag to a new image, Lambda does not automatically update the function.</p> </note>",
     "UpdateFunctionConfiguration": "<p>Modify the version-specific settings of a Lambda function.</p> <p>When you update a function, Lambda provisions an instance of the function and its supporting resources. If your function connects to a VPC, this process can take a minute. During this time, you can't modify the function, but you can still invoke it. The <code>LastUpdateStatus</code>, <code>LastUpdateStatusReason</code>, and <code>LastUpdateStatusReasonCode</code> fields in the response from <a>GetFunctionConfiguration</a> indicate when the update is complete and the function is processing events with the new configuration. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/functions-states.html\">Lambda function states</a>.</p> <p>These settings can vary between versions of a function and are locked when you publish a version. You can't modify the configuration of a published version, only the unpublished version.</p> <p>To configure function concurrency, use <a>PutFunctionConcurrency</a>. To grant invoke permissions to an Amazon Web Services account or Amazon Web Services service, use <a>AddPermission</a>.</p>",
     "UpdateFunctionEventInvokeConfig": "<p>Updates the configuration for asynchronous invocation for a function, version, or alias.</p> <p>To configure options for asynchronous invocation, use <a>PutFunctionEventInvokeConfig</a>.</p>",
@@ -92,23 +92,19 @@
     },
     "AddLayerVersionPermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddLayerVersionPermissionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddPermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddPermissionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AdditionalVersion": {
       "base": null,
@@ -182,7 +178,8 @@
       "base": "<p>Specific configuration settings for an Amazon Managed Streaming for Apache Kafka (Amazon MSK) event source.</p>",
       "refs": {
         "CreateEventSourceMappingRequest$AmazonManagedKafkaEventSourceConfig": "<p>Specific configuration settings for an Amazon Managed Streaming for Apache Kafka (Amazon MSK) event source.</p>",
-        "EventSourceMappingConfiguration$AmazonManagedKafkaEventSourceConfig": "<p>Specific configuration settings for an Amazon Managed Streaming for Apache Kafka (Amazon MSK) event source.</p>"
+        "EventSourceMappingConfiguration$AmazonManagedKafkaEventSourceConfig": "<p>Specific configuration settings for an Amazon Managed Streaming for Apache Kafka (Amazon MSK) event source.</p>",
+        "UpdateEventSourceMappingRequest$AmazonManagedKafkaEventSourceConfig": null
       }
     },
     "ApplicationLogLevel": {
@@ -216,6 +213,7 @@
         "EventSourceMappingConfiguration$EventSourceArn": "<p>The Amazon Resource Name (ARN) of the event source.</p>",
         "FunctionConfiguration$SigningProfileVersionArn": "<p>The ARN of the signing profile version.</p>",
         "FunctionConfiguration$SigningJobArn": "<p>The ARN of the signing job.</p>",
+        "KafkaSchemaRegistryAccessConfig$URI": "<p> The URI of the secret (Secrets Manager secret ARN) to authenticate with your schema registry. </p>",
         "Layer$SigningProfileVersionArn": "<p>The Amazon Resource Name (ARN) for a signing profile version.</p>",
         "Layer$SigningJobArn": "<p>The Amazon Resource Name (ARN) of a signing job.</p>",
         "ListEventSourceMappingsRequest$EventSourceArn": "<p>The Amazon Resource Name (ARN) of the event source.</p> <ul> <li> <p> <b>Amazon Kinesis</b> – The ARN of the data stream or a stream consumer.</p> </li> <li> <p> <b>Amazon DynamoDB Streams</b> – The ARN of the stream.</p> </li> <li> <p> <b>Amazon Simple Queue Service</b> – The ARN of the queue.</p> </li> <li> <p> <b>Amazon Managed Streaming for Apache Kafka</b> – The ARN of the cluster or the ARN of the VPC connection (for <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#msk-multi-vpc\">cross-account event source mappings</a>).</p> </li> <li> <p> <b>Amazon MQ</b> – The ARN of the broker.</p> </li> <li> <p> <b>Amazon DocumentDB</b> – The ARN of the DocumentDB change stream.</p> </li> </ul>",
@@ -301,8 +299,7 @@
     },
     "CodeSigningConfigNotFoundException": {
       "base": "<p>The specified code signing configuration does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CodeSigningPolicies": {
       "base": "<p>Code signing configuration <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-codesigning.html#config-codesigning-policies\">policies</a> specify the validation failure action for signature mismatch or expiry.</p>",
@@ -320,13 +317,11 @@
     },
     "CodeStorageExceededException": {
       "base": "<p>Your Amazon Web Services account has exceeded its maximum total code size. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CodeVerificationFailedException": {
       "base": "<p>The code signature failed one or more of the validation checks for signature mismatch or expiry, and the code signing policy is set to ENFORCE. Lambda blocks the deployment.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CollectionName": {
       "base": null,
@@ -371,38 +366,31 @@
     },
     "CreateAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCodeSigningConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEventSourceMappingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFunctionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFunctionUrlConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFunctionUrlConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DatabaseName": {
       "base": null,
@@ -420,7 +408,7 @@
       }
     },
     "DeadLetterConfig": {
-      "base": "<p>The <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#dlq\">dead-letter queue</a> for failed asynchronous invocations.</p>",
+      "base": "<p>The <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html#invocation-dlq\">dead-letter queue</a> for failed asynchronous invocations.</p>",
       "refs": {
         "CreateFunctionRequest$DeadLetterConfig": "<p>A dead-letter queue configuration that specifies the queue or topic where Lambda sends asynchronous events when they fail processing. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-dlq\">Dead-letter queues</a>.</p>",
         "FunctionConfiguration$DeadLetterConfig": "<p>The function's dead letter queue.</p>",
@@ -429,58 +417,47 @@
     },
     "DeleteAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCodeSigningConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEventSourceMappingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFunctionCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFunctionConcurrencyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFunctionEventInvokeConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFunctionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFunctionUrlConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLayerVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisionedConcurrencyConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -509,7 +486,7 @@
       }
     },
     "DestinationConfig": {
-      "base": "<p>A configuration object that specifies the destination of an event after Lambda processes it.</p>",
+      "base": "<p>A configuration object that specifies the destination of an event after Lambda processes it. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html#invocation-async-destinations\">Adding a destination</a>.</p>",
       "refs": {
         "CreateEventSourceMappingRequest$DestinationConfig": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Kafka only) A configuration object that specifies the destination of an event after Lambda processes it.</p>",
         "EventSourceMappingConfiguration$DestinationConfig": "<p>(Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka event sources only) A configuration object that specifies the destination of an event after Lambda processes it.</p>",
@@ -529,43 +506,35 @@
     },
     "EC2AccessDeniedException": {
       "base": "<p>Need additional permissions to configure VPC settings.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EC2ThrottledException": {
       "base": "<p>Amazon EC2 throttled Lambda during Lambda function initialization using the execution role provided for the function.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EC2UnexpectedException": {
       "base": "<p>Lambda received an unexpected Amazon EC2 client exception while setting up for the Lambda function.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EFSIOException": {
       "base": "<p>An error occurred when reading from or writing to a connected file system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EFSMountConnectivityException": {
       "base": "<p>The Lambda function couldn't make a network connection to the configured file system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EFSMountFailureException": {
       "base": "<p>The Lambda function couldn't mount the configured file system due to a permission or configuration issue.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EFSMountTimeoutException": {
       "base": "<p>The Lambda function made a network connection to the configured file system, but the mount operation timed out.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ENILimitReachedException": {
       "base": "<p>Lambda couldn't create an elastic network interface in the VPC, specified as part of Lambda function configuration, because the limit for network interfaces has been reached. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Enabled": {
       "base": null,
@@ -932,148 +901,119 @@
     },
     "GetAccountSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCodeSigningConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventSourceMappingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionCodeSigningConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionConcurrencyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionConcurrencyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionEventInvokeConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionRecursionConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionRecursionConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionUrlConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFunctionUrlConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLayerVersionByArnRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLayerVersionPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLayerVersionPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLayerVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLayerVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProvisionedConcurrencyConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProvisionedConcurrencyConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuntimeManagementConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuntimeManagementConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Handler": {
       "base": null,
@@ -1132,48 +1072,39 @@
     },
     "InvalidCodeSignatureException": {
       "base": "<p>The code signature failed the integrity check. If the integrity check fails, then Lambda blocks deployment, even if the code signing policy is set to WARN.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterValueException": {
       "base": "<p>One of the parameters in the request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestContentException": {
       "base": "<p>The request body could not be parsed as JSON, or a request header is invalid. For example, the 'x-amzn-RequestId' header is not a valid UUID string.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRuntimeException": {
       "base": "<p>The runtime or runtime version specified is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidSecurityGroupIDException": {
       "base": "<p>The security group ID provided in the Lambda function VPC configuration is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidSubnetIDException": {
       "base": "<p>The subnet ID provided in the Lambda function VPC configuration is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidZipFileException": {
       "base": "<p>Lambda could not unzip the deployment package.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvocationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvocationType": {
       "base": null,
@@ -1183,13 +1114,11 @@
     },
     "InvokeAsyncRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeAsyncResponse": {
       "base": "<p>A success response (<code>202 Accepted</code>) indicates that the request is queued for invocation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeMode": {
       "base": null,
@@ -1216,13 +1145,11 @@
     },
     "InvokeWithResponseStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeWithResponseStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeWithResponseStreamResponseEvent": {
       "base": "<p>An object that includes a chunk of the response payload. When the stream has ended, Lambda includes a <code>InvokeComplete</code> object.</p>",
@@ -1232,18 +1159,15 @@
     },
     "KMSAccessDeniedException": {
       "base": "<p>Lambda couldn't decrypt the environment variables because KMS access was denied. Check the Lambda function's KMS permissions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KMSDisabledException": {
       "base": "<p>Lambda couldn't decrypt the environment variables because the KMS key used is disabled. Check the Lambda function's KMS key settings.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KMSInvalidStateException": {
       "base": "<p>Lambda couldn't decrypt the environment variables because the state of the KMS key used is not valid for Decrypt. Check the function's KMS key settings.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KMSKeyArn": {
       "base": null,
@@ -1260,7 +1184,49 @@
     },
     "KMSNotFoundException": {
       "base": "<p>Lambda couldn't decrypt the environment variables because the KMS key was not found. Check the function's KMS key settings.</p>",
+      "refs": {}
+    },
+    "KafkaSchemaRegistryAccessConfig": {
+      "base": "<p>Specific access configuration settings that tell Lambda how to authenticate with your schema registry.</p> <p>If you're working with an Glue schema registry, don't provide authentication details in this object. Instead, ensure that your execution role has the required permissions for Lambda to access your cluster.</p> <p>If you're working with a Confluent schema registry, choose the authentication method in the <code>Type</code> field, and provide the Secrets Manager secret ARN in the <code>URI</code> field.</p>",
       "refs": {
+        "KafkaSchemaRegistryAccessConfigList$member": null
+      }
+    },
+    "KafkaSchemaRegistryAccessConfigList": {
+      "base": null,
+      "refs": {
+        "KafkaSchemaRegistryConfig$AccessConfigs": "<p>An array of access configuration objects that tell Lambda how to authenticate with your schema registry.</p>"
+      }
+    },
+    "KafkaSchemaRegistryAuthType": {
+      "base": null,
+      "refs": {
+        "KafkaSchemaRegistryAccessConfig$Type": "<p> The type of authentication Lambda uses to access your schema registry. </p>"
+      }
+    },
+    "KafkaSchemaRegistryConfig": {
+      "base": "<p>Specific configuration settings for a Kafka schema registry.</p>",
+      "refs": {
+        "AmazonManagedKafkaEventSourceConfig$SchemaRegistryConfig": "<p>Specific configuration settings for a Kafka schema registry.</p>",
+        "SelfManagedKafkaEventSourceConfig$SchemaRegistryConfig": "<p>Specific configuration settings for a Kafka schema registry.</p>"
+      }
+    },
+    "KafkaSchemaValidationAttribute": {
+      "base": null,
+      "refs": {
+        "KafkaSchemaValidationConfig$Attribute": "<p> The attributes you want your schema registry to validate and filter for. If you selected <code>JSON</code> as the <code>EventRecordFormat</code>, Lambda also deserializes the selected message attributes. </p>"
+      }
+    },
+    "KafkaSchemaValidationConfig": {
+      "base": "<p>Specific schema validation configuration settings that tell Lambda the message attributes you want to validate and filter using your schema registry.</p>",
+      "refs": {
+        "KafkaSchemaValidationConfigList$member": null
+      }
+    },
+    "KafkaSchemaValidationConfigList": {
+      "base": null,
+      "refs": {
+        "KafkaSchemaRegistryConfig$SchemaValidationConfigs": "<p>An array of schema validation configuration objects, which tell Lambda the message attributes you want to validate and filter using your schema registry.</p>"
       }
     },
     "LastUpdateStatus": {
@@ -1406,123 +1372,99 @@
     },
     "ListAliasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAliasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCodeSigningConfigsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCodeSigningConfigsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventSourceMappingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventSourceMappingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionEventInvokeConfigsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionEventInvokeConfigsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionUrlConfigsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionUrlConfigsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionsByCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionsByCodeSigningConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFunctionsResponse": {
       "base": "<p>A list of Lambda functions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLayerVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLayerVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLayersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLayersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisionedConcurrencyConfigsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisionedConcurrencyConfigsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVersionsByFunctionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVersionsByFunctionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LocalMountPath": {
       "base": null,
@@ -1736,15 +1678,15 @@
       }
     },
     "OnFailure": {
-      "base": "<p>A destination for events that failed processing.</p>",
+      "base": "<p>A destination for events that failed processing. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html#invocation-async-destinations\">Adding a destination</a>.</p>",
       "refs": {
         "DestinationConfig$OnFailure": "<p>The destination configuration for failed invocations.</p>"
       }
     },
     "OnSuccess": {
-      "base": "<p>A destination for events that were processed successfully.</p> <p>To retain records of successful <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations\">asynchronous invocations</a>, you can configure an Amazon SNS topic, Amazon SQS queue, Lambda function, or Amazon EventBridge event bus as the destination.</p>",
+      "base": "<p>A destination for events that were processed successfully.</p> <p>To retain records of successful <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations\">asynchronous invocations</a>, you can configure an Amazon SNS topic, Amazon SQS queue, Lambda function, or Amazon EventBridge event bus as the destination.</p> <note> <p> <code>OnSuccess</code> is not supported in <code>CreateEventSourceMapping</code> or <code>UpdateEventSourceMapping</code> requests.</p> </note>",
       "refs": {
-        "DestinationConfig$OnSuccess": "<p>The destination configuration for successful invocations.</p>"
+        "DestinationConfig$OnSuccess": "<p>The destination configuration for successful invocations. Not supported in <code>CreateEventSourceMapping</code> or <code>UpdateEventSourceMapping</code>.</p>"
       }
     },
     "OrganizationId": {
@@ -1782,8 +1724,7 @@
     },
     "PolicyLengthExceededException": {
       "base": "<p>The permissions policy for the resource is too large. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PositiveInteger": {
       "base": null,
@@ -1796,8 +1737,7 @@
     },
     "PreconditionFailedException": {
       "base": "<p>The RevisionId provided does not match the latest RevisionId for the Lambda function or alias.</p> <ul> <li> <p> <b>For AddPermission and RemovePermission API operations:</b> Call <code>GetPolicy</code> to retrieve the latest RevisionId for your resource.</p> </li> <li> <p> <b>For all other API operations:</b> Call <code>GetFunction</code> or <code>GetAlias</code> to retrieve the latest RevisionId for your resource.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Principal": {
       "base": null,
@@ -1825,8 +1765,7 @@
     },
     "ProvisionedConcurrencyConfigNotFoundException": {
       "base": "<p>The specified configuration does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ProvisionedConcurrencyStatusEnum": {
       "base": null,
@@ -1846,68 +1785,55 @@
     },
     "PublishLayerVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PublishLayerVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PublishVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutFunctionCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutFunctionCodeSigningConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutFunctionConcurrencyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutFunctionEventInvokeConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutFunctionRecursionConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutFunctionRecursionConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutProvisionedConcurrencyConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutProvisionedConcurrencyConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRuntimeManagementConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRuntimeManagementConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Qualifier": {
       "base": null,
@@ -1946,8 +1872,7 @@
     },
     "RecursiveInvocationException": {
       "base": "<p>Lambda has detected your function being invoked in a recursive loop with other Amazon Web Services resources and stopped your function's invocation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RecursiveLoop": {
       "base": null,
@@ -1959,18 +1884,15 @@
     },
     "RemoveLayerVersionPermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemovePermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestTooLargeException": {
       "base": "<p>The request payload exceeded the <code>Invoke</code> request body JSON input quota. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html\">Lambda quotas</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReservedConcurrentExecutions": {
       "base": null,
@@ -1988,23 +1910,19 @@
     },
     "ResourceConflictException": {
       "base": "<p>The resource already exists, or another operation is in progress.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceInUseException": {
       "base": "<p>The operation conflicts with the resource's availability. For example, you tried to update an event source mapping in the CREATING state, or you tried to delete an event source mapping currently UPDATING.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource specified in the request does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotReadyException": {
       "base": "<p>The function is inactive and its VPC connection is no longer available. Wait for the VPC connection to reestablish and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResponseStreamingInvocationType": {
       "base": null,
@@ -2084,6 +2002,18 @@
         "UpdateEventSourceMappingRequest$ScalingConfig": "<p>(Amazon SQS only) The scaling configuration for the event source. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html#events-sqs-max-concurrency\">Configuring maximum concurrency for Amazon SQS event sources</a>.</p>"
       }
     },
+    "SchemaRegistryEventRecordFormat": {
+      "base": null,
+      "refs": {
+        "KafkaSchemaRegistryConfig$EventRecordFormat": "<p>The record format that Lambda delivers to your function after schema validation.</p> <ul> <li> <p>Choose <code>JSON</code> to have Lambda deliver the record to your function as a standard JSON object.</p> </li> <li> <p>Choose <code>SOURCE</code> to have Lambda deliver the record to your function in its original source format. Lambda removes all schema metadata, such as the schema ID, before sending the record to your function.</p> </li> </ul>"
+      }
+    },
+    "SchemaRegistryUri": {
+      "base": null,
+      "refs": {
+        "KafkaSchemaRegistryConfig$SchemaRegistryURI": "<p>The URI for your schema registry. The correct URI format depends on the type of schema registry you're using.</p> <ul> <li> <p>For Glue schema registries, use the ARN of the registry.</p> </li> <li> <p>For Confluent schema registries, use the URL of the registry.</p> </li> </ul>"
+      }
+    },
     "SecurityGroupId": {
       "base": null,
       "refs": {
@@ -2108,7 +2038,8 @@
       "base": "<p>Specific configuration settings for a self-managed Apache Kafka event source.</p>",
       "refs": {
         "CreateEventSourceMappingRequest$SelfManagedKafkaEventSourceConfig": "<p>Specific configuration settings for a self-managed Apache Kafka event source.</p>",
-        "EventSourceMappingConfiguration$SelfManagedKafkaEventSourceConfig": "<p>Specific configuration settings for a self-managed Apache Kafka event source.</p>"
+        "EventSourceMappingConfiguration$SelfManagedKafkaEventSourceConfig": "<p>Specific configuration settings for a self-managed Apache Kafka event source.</p>",
+        "UpdateEventSourceMappingRequest$SelfManagedKafkaEventSourceConfig": null
       }
     },
     "SensitiveString": {
@@ -2121,8 +2052,7 @@
     },
     "ServiceException": {
       "base": "<p>The Lambda service encountered an internal error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SigningProfileVersionArns": {
       "base": null,
@@ -2146,13 +2076,11 @@
     },
     "SnapStartException": {
       "base": "<p>The <code>afterRestore()</code> <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/snapstart-runtime-hooks.html\">runtime hook</a> encountered an error. For more information, check the Amazon CloudWatch logs.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnapStartNotReadyException": {
       "base": "<p>Lambda is initializing your function. You can invoke the function when the <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/functions-states.html\">function state</a> becomes <code>Active</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnapStartOptimizationStatus": {
       "base": null,
@@ -2168,8 +2096,7 @@
     },
     "SnapStartTimeoutException": {
       "base": "<p>Lambda couldn't restore the snapshot within the timeout limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SourceAccessConfiguration": {
       "base": "<p>To secure and define access to your event source, you can specify the authentication protocol, VPC components, or virtual host.</p>",
@@ -2258,7 +2185,7 @@
         "ENILimitReachedException$Message": null,
         "EnvironmentError$ErrorCode": "<p>The error code.</p>",
         "EventSourceMappingConfiguration$UUID": "<p>The identifier of the event source mapping.</p>",
-        "EventSourceMappingConfiguration$LastProcessingResult": "<p>The result of the last Lambda invocation of your function.</p>",
+        "EventSourceMappingConfiguration$LastProcessingResult": "<p>The result of the event source mapping's last processing attempt.</p>",
         "EventSourceMappingConfiguration$State": "<p>The state of the event source mapping. It can be one of the following: <code>Creating</code>, <code>Enabling</code>, <code>Enabled</code>, <code>Disabling</code>, <code>Disabled</code>, <code>Updating</code>, or <code>Deleting</code>.</p>",
         "EventSourceMappingConfiguration$StateTransitionReason": "<p>Indicates whether a user or Lambda made the last change to the event source mapping.</p>",
         "FunctionCode$ImageUri": "<p>URI of a <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html\">container image</a> in the Amazon ECR registry.</p>",
@@ -2389,8 +2316,7 @@
     },
     "SubnetIPAddressLimitReachedException": {
       "base": "<p>Lambda couldn't set up VPC access for the Lambda function because one or more configured subnets has no available IP addresses.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SubnetId": {
       "base": null,
@@ -2426,8 +2352,7 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2508,8 +2433,7 @@
     },
     "TooManyRequestsException": {
       "base": "<p>The request throughput limit was exceeded. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html#api-requests\">Lambda quotas</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Topic": {
       "base": null,
@@ -2556,7 +2480,7 @@
       "base": null,
       "refs": {
         "AmazonManagedKafkaEventSourceConfig$ConsumerGroupId": "<p>The identifier for the Kafka consumer group to join. The consumer group ID must be unique among all your Kafka event sources. After creating a Kafka event source mapping with the consumer group ID specified, you cannot update this value. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-consumer-group-id\">Customizable consumer group ID</a>.</p>",
-        "SelfManagedKafkaEventSourceConfig$ConsumerGroupId": "<p>The identifier for the Kafka consumer group to join. The consumer group ID must be unique among all your Kafka event sources. After creating a Kafka event source mapping with the consumer group ID specified, you cannot update this value. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-consumer-group-id\">Customizable consumer group ID</a>.</p>",
+        "SelfManagedKafkaEventSourceConfig$ConsumerGroupId": "<p> The identifier for the Kafka consumer group to join. The consumer group ID must be unique among all your Kafka event sources. After creating a Kafka event source mapping with the consumer group ID specified, you cannot update this value. For more information, see <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/with-kafka-process.html#services-smaa-topic-add\">Customizable consumer group ID</a>.</p>",
         "SourceAccessConfiguration$URI": "<p>The value for your chosen configuration in <code>Type</code>. For example: <code>\"URI\": \"arn:aws:secretsmanager:us-east-1:01234567890:secret:MyBrokerSecretName\"</code>.</p>"
       }
     },
@@ -2575,58 +2499,47 @@
     },
     "UnsupportedMediaTypeException": {
       "base": "<p>The content type of the <code>Invoke</code> request body is not JSON.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCodeSigningConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCodeSigningConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventSourceMappingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFunctionCodeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFunctionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFunctionEventInvokeConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFunctionUrlConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFunctionUrlConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRuntimeOn": {
       "base": null,

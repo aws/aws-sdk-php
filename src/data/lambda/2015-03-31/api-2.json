@@ -1337,7 +1337,8 @@
     "AmazonManagedKafkaEventSourceConfig":{
       "type":"structure",
       "members":{
-        "ConsumerGroupId":{"shape":"URI"}
+        "ConsumerGroupId":{"shape":"URI"},
+        "SchemaRegistryConfig":{"shape":"KafkaSchemaRegistryConfig"}
       }
     },
     "ApplicationLogLevel":{
@@ -1674,8 +1675,7 @@
     },
     "DeleteCodeSigningConfigResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEventSourceMappingRequest":{
       "type":"structure",
@@ -2257,8 +2257,7 @@
     },
     "GetAccountSettingsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountSettingsResponse":{
       "type":"structure",
@@ -2934,6 +2933,51 @@
       },
       "error":{"httpStatusCode":502},
       "exception":true
+    },
+    "KafkaSchemaRegistryAccessConfig":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"KafkaSchemaRegistryAuthType"},
+        "URI":{"shape":"Arn"}
+      }
+    },
+    "KafkaSchemaRegistryAccessConfigList":{
+      "type":"list",
+      "member":{"shape":"KafkaSchemaRegistryAccessConfig"}
+    },
+    "KafkaSchemaRegistryAuthType":{
+      "type":"string",
+      "enum":[
+        "BASIC_AUTH",
+        "CLIENT_CERTIFICATE_TLS_AUTH",
+        "SERVER_ROOT_CA_CERTIFICATE"
+      ]
+    },
+    "KafkaSchemaRegistryConfig":{
+      "type":"structure",
+      "members":{
+        "SchemaRegistryURI":{"shape":"SchemaRegistryUri"},
+        "EventRecordFormat":{"shape":"SchemaRegistryEventRecordFormat"},
+        "AccessConfigs":{"shape":"KafkaSchemaRegistryAccessConfigList"},
+        "SchemaValidationConfigs":{"shape":"KafkaSchemaValidationConfigList"}
+      }
+    },
+    "KafkaSchemaValidationAttribute":{
+      "type":"string",
+      "enum":[
+        "KEY",
+        "VALUE"
+      ]
+    },
+    "KafkaSchemaValidationConfig":{
+      "type":"structure",
+      "members":{
+        "Attribute":{"shape":"KafkaSchemaValidationAttribute"}
+      }
+    },
+    "KafkaSchemaValidationConfigList":{
+      "type":"list",
+      "member":{"shape":"KafkaSchemaValidationConfig"}
     },
     "LastUpdateStatus":{
       "type":"string",
@@ -4104,6 +4148,19 @@
         "MaximumConcurrency":{"shape":"MaximumConcurrency"}
       }
     },
+    "SchemaRegistryEventRecordFormat":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "SOURCE"
+      ]
+    },
+    "SchemaRegistryUri":{
+      "type":"string",
+      "max":10000,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-\\/*:_+=.@-]*"
+    },
     "SecurityGroupId":{"type":"string"},
     "SecurityGroupIds":{
       "type":"list",
@@ -4119,7 +4176,8 @@
     "SelfManagedKafkaEventSourceConfig":{
       "type":"structure",
       "members":{
-        "ConsumerGroupId":{"shape":"URI"}
+        "ConsumerGroupId":{"shape":"URI"},
+        "SchemaRegistryConfig":{"shape":"KafkaSchemaRegistryConfig"}
       }
     },
     "SensitiveString":{
@@ -4533,6 +4591,8 @@
         "TumblingWindowInSeconds":{"shape":"TumblingWindowInSeconds"},
         "FunctionResponseTypes":{"shape":"FunctionResponseTypeList"},
         "ScalingConfig":{"shape":"ScalingConfig"},
+        "AmazonManagedKafkaEventSourceConfig":{"shape":"AmazonManagedKafkaEventSourceConfig"},
+        "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
         "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
         "KMSKeyArn":{"shape":"KMSKeyArn"},
         "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},

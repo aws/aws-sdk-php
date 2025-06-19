@@ -1948,6 +1948,116 @@
         "ModelPackage$CertifyForMarketplace": "<p>Whether the model package is to be certified to be listed on Amazon Web Services Marketplace. For information about listing model packages on Amazon Web Services Marketplace, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-mkt-list.html\">List Your Algorithm or Model Package on Amazon Web Services Marketplace</a>.</p>"
       }
     },
+    "CfnCreateTemplateProvider": {
+      "base": "<p> The CloudFormation template provider configuration for creating infrastructure resources. </p>",
+      "refs": {
+        "CreateTemplateProvider$CfnTemplateProvider": "<p> The CloudFormation template provider configuration for creating infrastructure resources. </p>"
+      }
+    },
+    "CfnStackCreateParameter": {
+      "base": "<p> A key-value pair that represents a parameter for the CloudFormation stack. </p>",
+      "refs": {
+        "CfnStackCreateParameters$member": null
+      }
+    },
+    "CfnStackCreateParameters": {
+      "base": null,
+      "refs": {
+        "CfnCreateTemplateProvider$Parameters": "<p> An array of CloudFormation stack parameters.</p>"
+      }
+    },
+    "CfnStackDetail": {
+      "base": "<p> Details about the CloudFormation stack. </p>",
+      "refs": {
+        "CfnTemplateProviderDetail$StackDetail": "<p> Information about the CloudFormation stack created by the template provider. </p>"
+      }
+    },
+    "CfnStackId": {
+      "base": null,
+      "refs": {
+        "CfnStackDetail$Id": "<p> The unique identifier of the CloudFormation stack. </p>"
+      }
+    },
+    "CfnStackName": {
+      "base": null,
+      "refs": {
+        "CfnStackDetail$Name": "<p> The name of the CloudFormation stack. </p>"
+      }
+    },
+    "CfnStackParameter": {
+      "base": "<p> A key-value pair representing a parameter used in the CloudFormation stack. </p>",
+      "refs": {
+        "CfnStackParameters$member": null
+      }
+    },
+    "CfnStackParameterKey": {
+      "base": null,
+      "refs": {
+        "CfnStackCreateParameter$Key": "<p> The name of the CloudFormation parameter. </p>",
+        "CfnStackParameter$Key": "<p> The name of the CloudFormation parameter. </p>",
+        "CfnStackUpdateParameter$Key": "<p> The name of the CloudFormation parameter. </p>"
+      }
+    },
+    "CfnStackParameterValue": {
+      "base": null,
+      "refs": {
+        "CfnStackCreateParameter$Value": "<p> The value of the CloudFormation parameter. </p>",
+        "CfnStackParameter$Value": "<p> The value of the CloudFormation parameter. </p>",
+        "CfnStackUpdateParameter$Value": "<p> The value of the CloudFormation parameter. </p>"
+      }
+    },
+    "CfnStackParameters": {
+      "base": null,
+      "refs": {
+        "CfnTemplateProviderDetail$Parameters": "<p> An array of CloudFormation stack parameters.</p>"
+      }
+    },
+    "CfnStackStatusMessage": {
+      "base": null,
+      "refs": {
+        "CfnStackDetail$StatusMessage": "<p> A human-readable message about the stack's current status. </p>"
+      }
+    },
+    "CfnStackUpdateParameter": {
+      "base": "<p> A key-value pair representing a parameter used in the CloudFormation stack. </p>",
+      "refs": {
+        "CfnStackUpdateParameters$member": null
+      }
+    },
+    "CfnStackUpdateParameters": {
+      "base": null,
+      "refs": {
+        "CfnUpdateTemplateProvider$Parameters": "<p> An array of CloudFormation stack parameters. </p>"
+      }
+    },
+    "CfnTemplateName": {
+      "base": null,
+      "refs": {
+        "CfnCreateTemplateProvider$TemplateName": "<p> A unique identifier for the template within the project. </p>",
+        "CfnTemplateProviderDetail$TemplateName": "<p> The unique identifier of the template within the project. </p>",
+        "CfnUpdateTemplateProvider$TemplateName": "<p> The unique identifier of the template to update within the project. </p>"
+      }
+    },
+    "CfnTemplateProviderDetail": {
+      "base": "<p> Details about a CloudFormation template provider configuration and associated provisioning information. </p>",
+      "refs": {
+        "TemplateProviderDetail$CfnTemplateProviderDetail": "<p> Details about a CloudFormation template provider configuration and associated provisioning information. </p>"
+      }
+    },
+    "CfnTemplateURL": {
+      "base": null,
+      "refs": {
+        "CfnCreateTemplateProvider$TemplateURL": "<p> The Amazon S3 URL of the CloudFormation template. </p>",
+        "CfnTemplateProviderDetail$TemplateURL": "<p> The Amazon S3 URL of the CloudFormation template. </p>",
+        "CfnUpdateTemplateProvider$TemplateURL": "<p> The Amazon S3 URL of the CloudFormation template.</p>"
+      }
+    },
+    "CfnUpdateTemplateProvider": {
+      "base": "<p> Contains configuration details for updating an existing CloudFormation template provider in the project. </p>",
+      "refs": {
+        "UpdateTemplateProvider$CfnTemplateProvider": "<p> The CloudFormation template provider configuration to update. </p>"
+      }
+    },
     "Channel": {
       "base": "<p>A channel is a named input source that training algorithms can consume. </p>",
       "refs": {
@@ -3561,6 +3671,18 @@
     "CreateStudioLifecycleConfigResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "CreateTemplateProvider": {
+      "base": "<p> Contains configuration details for a template provider. Only one type of template provider can be specified. </p>",
+      "refs": {
+        "CreateTemplateProviderList$member": null
+      }
+    },
+    "CreateTemplateProviderList": {
+      "base": null,
+      "refs": {
+        "CreateProjectInput$TemplateProviders": "<p> An array of template provider configurations for creating infrastructure resources for the project. </p>"
       }
     },
     "CreateTrainingJobRequest": {
@@ -14457,6 +14579,8 @@
       "refs": {
         "AlgorithmValidationSpecification$ValidationRole": "<p>The IAM roles that SageMaker uses to run the training jobs.</p>",
         "AssumableRoleArns$member": null,
+        "CfnCreateTemplateProvider$RoleARN": "<p> The IAM role that CloudFormation assumes when creating the stack. </p>",
+        "CfnTemplateProviderDetail$RoleARN": "<p> The IAM role used by CloudFormation to create the stack. </p>",
         "ClusterInstanceGroupDetails$ExecutionRole": "<p>The execution role for the instance group to assume.</p>",
         "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>",
         "CreateAutoMLJobRequest$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
@@ -16310,6 +16434,19 @@
         "UiTemplateInfo$ContentSha256": "<p>The SHA-256 digest of the contents of the template.</p>"
       }
     },
+    "TemplateProviderDetail": {
+      "base": "<p> Details about a template provider configuration and associated provisioning information. </p>",
+      "refs": {
+        "TemplateProviderDetailList$member": null
+      }
+    },
+    "TemplateProviderDetailList": {
+      "base": null,
+      "refs": {
+        "DescribeProjectOutput$TemplateProviderDetails": "<p> An array of template providers associated with the project. </p>",
+        "Project$TemplateProviderDetails": "<p> An array of template providers associated with the project. </p>"
+      }
+    },
     "TemplateUrl": {
       "base": null,
       "refs": {
@@ -17084,7 +17221,7 @@
         "HyperParameterTuningInstanceConfig$InstanceType": "<p>The instance type used for processing of hyperparameter optimization jobs. Choose from general purpose (no GPUs) instance types: ml.m5.xlarge, ml.m5.2xlarge, and ml.m5.4xlarge or compute optimized (no GPUs) instance types: ml.c5.xlarge and ml.c5.2xlarge. For more information about instance types, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-available-instance-types.html\">instance type descriptions</a>.</p>",
         "HyperParameterTuningResourceConfig$InstanceType": "<p>The instance type used to run hyperparameter optimization tuning jobs. See <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/notebooks-available-instance-types.html\"> descriptions of instance types</a> for more information.</p>",
         "InstanceGroup$InstanceType": "<p>Specifies the instance type of the instance group.</p>",
-        "ResourceConfig$InstanceType": "<p>The ML compute instance type. </p> <note> <p>SageMaker Training on Amazon Elastic Compute Cloud (EC2) P4de instances is in preview release starting December 9th, 2022. </p> <p> <a href=\"http://aws.amazon.com/ec2/instance-types/p4/\">Amazon EC2 P4de instances</a> (currently in preview) are powered by 8 NVIDIA A100 GPUs with 80GB high-performance HBM2e GPU memory, which accelerate the speed of training ML models that need to be trained on large datasets of high-resolution data. In this preview release, Amazon SageMaker supports ML training jobs on P4de instances (<code>ml.p4de.24xlarge</code>) to reduce model training time. The <code>ml.p4de.24xlarge</code> instances are available in the following Amazon Web Services Regions. </p> <ul> <li> <p>US East (N. Virginia) (us-east-1)</p> </li> <li> <p>US West (Oregon) (us-west-2)</p> </li> </ul> <p>To request quota limit increase and start using P4de instances, contact the SageMaker Training service team through your account team.</p> </note>",
+        "ResourceConfig$InstanceType": "<p>The ML compute instance type. </p>",
         "TrainingInstanceTypes$member": null
       }
     },
@@ -18172,6 +18309,18 @@
     "UpdateSpaceResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "UpdateTemplateProvider": {
+      "base": "<p> Contains configuration details for updating an existing template provider in the project. </p>",
+      "refs": {
+        "UpdateTemplateProviderList$member": null
+      }
+    },
+    "UpdateTemplateProviderList": {
+      "base": null,
+      "refs": {
+        "UpdateProjectInput$TemplateProvidersToUpdate": "<p> The template providers to update in the project. </p>"
       }
     },
     "UpdateTrainingJobRequest": {
