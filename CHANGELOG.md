@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.346.1 - 2025-06-19
 
 * `Aws\PaymentCryptography` - Additional support for managing HMAC keys that adheres to changes documented in X9.143-2021 and provides better interoperability for key import/export
 * `Aws\SageMaker` - This release introduces alternative support for utilizing CFN templates from S3 for SageMaker Projects.
