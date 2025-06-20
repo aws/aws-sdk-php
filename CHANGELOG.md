@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.346.2 - 2025-06-20
 
 * `Aws\ECS` - Add ECS support for Windows Server 2025
 * `Aws\Bedrock` - Add support for tiers in Content Filters and Denied Topics for Amazon Bedrock Guardrails.
