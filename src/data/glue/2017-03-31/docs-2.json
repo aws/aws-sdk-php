@@ -2211,7 +2211,7 @@
       "refs": {}
     },
     "CreateDataQualityRulesetRequest": {
-      "base": null,
+      "base": "<p>A request to create a data quality ruleset.</p>",
       "refs": {}
     },
     "CreateDataQualityRulesetResponse": {
@@ -2652,6 +2652,13 @@
       "refs": {
         "Capabilities$SupportedDataOperations": "<p>A list of supported data operations.</p>",
         "Property$DataOperationScopes": "<p>Indicates which data operations are applicable to the property.</p>"
+      }
+    },
+    "DataQualityAggregatedMetrics": {
+      "base": "<p>A summary of metrics showing the total counts of processed rows and rules, including their pass/fail statistics based on row-level results.</p>",
+      "refs": {
+        "DataQualityResult$AggregatedMetrics": "<p> A summary of <code>DataQualityAggregatedMetrics</code> objects showing the total counts of processed rows and rules, including their pass/fail statistics based on row-level results. </p>",
+        "GetDataQualityResultResponse$AggregatedMetrics": "<p> A summary of <code>DataQualityAggregatedMetrics</code> objects showing the total counts of processed rows and rules, including their pass/fail statistics based on row-level results. </p>"
       }
     },
     "DataQualityAnalyzerResult": {
@@ -4498,7 +4505,7 @@
       "refs": {}
     },
     "GetDataQualityResultResponse": {
-      "base": null,
+      "base": "<p>The response for the data quality result.</p>",
       "refs": {}
     },
     "GetDataQualityRuleRecommendationRunRequest": {
@@ -4506,7 +4513,7 @@
       "refs": {}
     },
     "GetDataQualityRuleRecommendationRunResponse": {
-      "base": null,
+      "base": "<p>The response for the Data Quality rule recommendation run.</p>",
       "refs": {}
     },
     "GetDataQualityRulesetEvaluationRunRequest": {
@@ -4522,7 +4529,7 @@
       "refs": {}
     },
     "GetDataQualityRulesetResponse": {
-      "base": null,
+      "base": "<p>Returns the data quality ruleset response.</p>",
       "refs": {}
     },
     "GetDatabaseRequest": {
@@ -6856,6 +6863,7 @@
         "PutWorkflowRunPropertiesRequest$Name": "<p>Name of the workflow which was run.</p>",
         "ReferenceDatasetsList$member": null,
         "ResumeWorkflowRunRequest$Name": "<p>The name of the workflow to resume.</p>",
+        "RuleMetricsMap$key": null,
         "RulesetNames$member": null,
         "RunStatementRequest$SessionId": "<p>The Session Id of the statement to be run.</p>",
         "SecurityConfiguration$Name": "<p>The name of the security configuration.</p>",
@@ -7261,6 +7269,12 @@
         "CreateJobRequest$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\"> Glue pricing page</a>.</p> <p>For Glue version 2.0+ jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "CreateMLTransformRequest$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
         "CreateSessionRequest$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that can be allocated when the job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB memory. </p>",
+        "DataQualityAggregatedMetrics$TotalRowsProcessed": "<p>The total number of rows that were processed during the data quality evaluation.</p>",
+        "DataQualityAggregatedMetrics$TotalRowsPassed": "<p>The total number of rows that passed all applicable data quality rules.</p>",
+        "DataQualityAggregatedMetrics$TotalRowsFailed": "<p>The total number of rows that failed one or more data quality rules.</p>",
+        "DataQualityAggregatedMetrics$TotalRulesProcessed": "<p>The total number of data quality rules that were evaluated.</p>",
+        "DataQualityAggregatedMetrics$TotalRulesPassed": "<p>The total number of data quality rules that passed their evaluation criteria.</p>",
+        "DataQualityAggregatedMetrics$TotalRulesFailed": "<p>The total number of data quality rules that failed their evaluation criteria.</p>",
         "DataQualityMetricValues$ActualValue": "<p>The actual value of the data quality metric.</p>",
         "DataQualityMetricValues$ExpectedValue": "<p>The expected value of the data quality metric according to the analysis of historical data.</p>",
         "DataQualityMetricValues$LowerLimit": "<p>The lower limit of the data quality metric value according to the analysis of historical data.</p>",
@@ -7273,6 +7287,7 @@
         "JobRun$DPUSeconds": "<p>This field can be set for either job runs with execution class <code>FLEX</code> or when Auto Scaling is enabled, and represents the total time each executor ran during the lifecycle of a job run in seconds, multiplied by a DPU factor (1 for <code>G.1X</code>, 2 for <code>G.2X</code>, or 0.25 for <code>G.025X</code> workers). This value may be different than the <code>executionEngineRuntime</code> * <code>MaxCapacity</code> as in the case of Auto Scaling jobs, as the number of executors running at a given time may be less than the <code>MaxCapacity</code>. Therefore, it is possible that the value of <code>DPUSeconds</code> is less than <code>executionEngineRuntime</code> * <code>MaxCapacity</code>.</p>",
         "JobUpdate$MaxCapacity": "<p>For Glue version 1.0 or earlier jobs, using the standard worker type, the number of Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\"> Glue pricing page</a>.</p> <p>For Glue version 2.0+ jobs, you cannot specify a <code>Maximum capacity</code>. Instead, you should specify a <code>Worker type</code> and the <code>Number of workers</code>.</p> <p>Do not set <code>MaxCapacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "MLTransform$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"http://aws.amazon.com/glue/pricing/\">Glue pricing page</a>. </p> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
+        "RuleMetricsMap$value": null,
         "Session$MaxCapacity": "<p>The number of Glue data processing units (DPUs) that can be allocated when the job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB memory. </p>",
         "Session$ExecutionTime": "<p>The total time the session ran for.</p>",
         "Session$DPUSeconds": "<p>The DPUs consumed by the session (formula: ExecutionTime * MaxCapacity).</p>",
@@ -8484,6 +8499,12 @@
         "XMLClassifier$RowTag": "<p>The XML tag designating the element that contains each record in an XML document being parsed. This can't identify a self-closing element (closed by <code>/&gt;</code>). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, <code>&lt;row item_a=\"A\" item_b=\"B\"&gt;&lt;/row&gt;</code> is okay, but <code>&lt;row item_a=\"A\" item_b=\"B\" /&gt;</code> is not).</p>"
       }
     },
+    "RuleMetricsMap": {
+      "base": null,
+      "refs": {
+        "DataQualityRuleResult$RuleMetrics": "<p>A map containing metrics associated with the evaluation of the rule based on row-level results. </p>"
+      }
+    },
     "RulesetNames": {
       "base": null,
       "refs": {
@@ -9246,7 +9267,7 @@
       "refs": {}
     },
     "StartDataQualityRuleRecommendationRunRequest": {
-      "base": null,
+      "base": "<p>The request of the Data Quality rule recommendation request.</p>",
       "refs": {}
     },
     "StartDataQualityRuleRecommendationRunResponse": {

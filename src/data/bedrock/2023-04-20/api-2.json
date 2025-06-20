@@ -2996,17 +2996,41 @@
       "max":6,
       "min":1
     },
+    "GuardrailContentFiltersTier":{
+      "type":"structure",
+      "required":["tierName"],
+      "members":{
+        "tierName":{"shape":"GuardrailContentFiltersTierName"}
+      }
+    },
+    "GuardrailContentFiltersTierConfig":{
+      "type":"structure",
+      "required":["tierName"],
+      "members":{
+        "tierName":{"shape":"GuardrailContentFiltersTierName"}
+      }
+    },
+    "GuardrailContentFiltersTierName":{
+      "type":"string",
+      "enum":[
+        "CLASSIC",
+        "STANDARD"
+      ],
+      "sensitive":true
+    },
     "GuardrailContentPolicy":{
       "type":"structure",
       "members":{
-        "filters":{"shape":"GuardrailContentFilters"}
+        "filters":{"shape":"GuardrailContentFilters"},
+        "tier":{"shape":"GuardrailContentFiltersTier"}
       }
     },
     "GuardrailContentPolicyConfig":{
       "type":"structure",
       "required":["filtersConfig"],
       "members":{
-        "filtersConfig":{"shape":"GuardrailContentFiltersConfig"}
+        "filtersConfig":{"shape":"GuardrailContentFiltersConfig"},
+        "tierConfig":{"shape":"GuardrailContentFiltersTierConfig"}
       }
     },
     "GuardrailContextualGroundingAction":{
@@ -3518,14 +3542,16 @@
       "type":"structure",
       "required":["topics"],
       "members":{
-        "topics":{"shape":"GuardrailTopics"}
+        "topics":{"shape":"GuardrailTopics"},
+        "tier":{"shape":"GuardrailTopicsTier"}
       }
     },
     "GuardrailTopicPolicyConfig":{
       "type":"structure",
       "required":["topicsConfig"],
       "members":{
-        "topicsConfig":{"shape":"GuardrailTopicsConfig"}
+        "topicsConfig":{"shape":"GuardrailTopicsConfig"},
+        "tierConfig":{"shape":"GuardrailTopicsTierConfig"}
       }
     },
     "GuardrailTopicType":{
@@ -3543,6 +3569,28 @@
       "member":{"shape":"GuardrailTopicConfig"},
       "max":30,
       "min":1
+    },
+    "GuardrailTopicsTier":{
+      "type":"structure",
+      "required":["tierName"],
+      "members":{
+        "tierName":{"shape":"GuardrailTopicsTierName"}
+      }
+    },
+    "GuardrailTopicsTierConfig":{
+      "type":"structure",
+      "required":["tierName"],
+      "members":{
+        "tierName":{"shape":"GuardrailTopicsTierName"}
+      }
+    },
+    "GuardrailTopicsTierName":{
+      "type":"string",
+      "enum":[
+        "CLASSIC",
+        "STANDARD"
+      ],
+      "sensitive":true
     },
     "GuardrailVersion":{
       "type":"string",

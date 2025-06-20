@@ -7291,6 +7291,17 @@
       "type":"list",
       "member":{"shape":"DataOperation"}
     },
+    "DataQualityAggregatedMetrics":{
+      "type":"structure",
+      "members":{
+        "TotalRowsProcessed":{"shape":"NullableDouble"},
+        "TotalRowsPassed":{"shape":"NullableDouble"},
+        "TotalRowsFailed":{"shape":"NullableDouble"},
+        "TotalRulesProcessed":{"shape":"NullableDouble"},
+        "TotalRulesPassed":{"shape":"NullableDouble"},
+        "TotalRulesFailed":{"shape":"NullableDouble"}
+      }
+    },
     "DataQualityAnalyzerResult":{
       "type":"structure",
       "members":{
@@ -7381,7 +7392,8 @@
         "RulesetEvaluationRunId":{"shape":"HashString"},
         "RuleResults":{"shape":"DataQualityRuleResults"},
         "AnalyzerResults":{"shape":"DataQualityAnalyzerResults"},
-        "Observations":{"shape":"DataQualityObservations"}
+        "Observations":{"shape":"DataQualityObservations"},
+        "AggregatedMetrics":{"shape":"DataQualityAggregatedMetrics"}
       }
     },
     "DataQualityResultDescription":{
@@ -7454,7 +7466,8 @@
         "EvaluationMessage":{"shape":"DataQualityRuleResultDescription"},
         "Result":{"shape":"DataQualityRuleResultStatus"},
         "EvaluatedMetrics":{"shape":"EvaluatedMetricsMap"},
-        "EvaluatedRule":{"shape":"DataQualityRuleResultDescription"}
+        "EvaluatedRule":{"shape":"DataQualityRuleResultDescription"},
+        "RuleMetrics":{"shape":"RuleMetricsMap"}
       }
     },
     "DataQualityRuleResultDescription":{
@@ -9374,7 +9387,8 @@
         "RulesetEvaluationRunId":{"shape":"HashString"},
         "RuleResults":{"shape":"DataQualityRuleResults"},
         "AnalyzerResults":{"shape":"DataQualityAnalyzerResults"},
-        "Observations":{"shape":"DataQualityObservations"}
+        "Observations":{"shape":"DataQualityObservations"},
+        "AggregatedMetrics":{"shape":"DataQualityAggregatedMetrics"}
       }
     },
     "GetDataQualityRuleRecommendationRunRequest":{
@@ -13519,6 +13533,12 @@
     },
     "RoleString":{"type":"string"},
     "RowTag":{"type":"string"},
+    "RuleMetricsMap":{
+      "type":"map",
+      "key":{"shape":"NameString"},
+      "value":{"shape":"NullableDouble"},
+      "sensitive":true
+    },
     "RulesetNames":{
       "type":"list",
       "member":{"shape":"NameString"},

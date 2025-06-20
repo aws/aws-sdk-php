@@ -1291,6 +1291,25 @@
         "GuardrailContentPolicyConfig$filtersConfig": "<p>Contains the type of the content filter and how strongly it should apply to prompts and model responses.</p>"
       }
     },
+    "GuardrailContentFiltersTier": {
+      "base": "<p>The tier that your guardrail uses for content filters.</p>",
+      "refs": {
+        "GuardrailContentPolicy$tier": "<p>The tier that your guardrail uses for content filters.</p>"
+      }
+    },
+    "GuardrailContentFiltersTierConfig": {
+      "base": "<p>The tier that your guardrail uses for content filters. Consider using a tier that balances performance, accuracy, and compatibility with your existing generative AI workflows.</p>",
+      "refs": {
+        "GuardrailContentPolicyConfig$tierConfig": "<p>The tier that your guardrail uses for content filters.</p>"
+      }
+    },
+    "GuardrailContentFiltersTierName": {
+      "base": null,
+      "refs": {
+        "GuardrailContentFiltersTier$tierName": "<p>The tier that your guardrail uses for content filters. Valid values include:</p> <ul> <li> <p> <code>CLASSIC</code> tier – Provides established guardrails functionality supporting English, French, and Spanish languages.</p> </li> <li> <p> <code>STANDARD</code> tier – Provides a more robust solution than the <code>CLASSIC</code> tier and has more comprehensive language support. This tier requires that your guardrail use <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">cross-Region inference</a>.</p> </li> </ul>",
+        "GuardrailContentFiltersTierConfig$tierName": "<p>The tier that your guardrail uses for content filters. Valid values include:</p> <ul> <li> <p> <code>CLASSIC</code> tier – Provides established guardrails functionality supporting English, French, and Spanish languages.</p> </li> <li> <p> <code>STANDARD</code> tier – Provides a more robust solution than the <code>CLASSIC</code> tier and has more comprehensive language support. This tier requires that your guardrail use <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">cross-Region inference</a>.</p> </li> </ul>"
+      }
+    },
     "GuardrailContentPolicy": {
       "base": "<p>Contains details about how to handle harmful content.</p> <p>This data type is used in the following API operations:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetGuardrail.html#API_GetGuardrail_ResponseSyntax\">GetGuardrail response body</a> </p> </li> </ul>",
       "refs": {
@@ -1749,6 +1768,25 @@
       "base": null,
       "refs": {
         "GuardrailTopicPolicyConfig$topicsConfig": "<p>A list of policies related to topics that the guardrail should deny.</p>"
+      }
+    },
+    "GuardrailTopicsTier": {
+      "base": "<p>The tier that your guardrail uses for denied topic filters.</p>",
+      "refs": {
+        "GuardrailTopicPolicy$tier": "<p>The tier that your guardrail uses for denied topic filters.</p>"
+      }
+    },
+    "GuardrailTopicsTierConfig": {
+      "base": "<p>The tier that your guardrail uses for denied topic filters. Consider using a tier that balances performance, accuracy, and compatibility with your existing generative AI workflows.</p>",
+      "refs": {
+        "GuardrailTopicPolicyConfig$tierConfig": "<p>The tier that your guardrail uses for denied topic filters.</p>"
+      }
+    },
+    "GuardrailTopicsTierName": {
+      "base": null,
+      "refs": {
+        "GuardrailTopicsTier$tierName": "<p>The tier that your guardrail uses for denied topic filters. Valid values include:</p> <ul> <li> <p> <code>CLASSIC</code> tier – Provides established guardrails functionality supporting English, French, and Spanish languages.</p> </li> <li> <p> <code>STANDARD</code> tier – Provides a more robust solution than the <code>CLASSIC</code> tier and has more comprehensive language support. This tier requires that your guardrail use <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">cross-Region inference</a>.</p> </li> </ul>",
+        "GuardrailTopicsTierConfig$tierName": "<p>The tier that your guardrail uses for denied topic filters. Valid values include:</p> <ul> <li> <p> <code>CLASSIC</code> tier – Provides established guardrails functionality supporting English, French, and Spanish languages.</p> </li> <li> <p> <code>STANDARD</code> tier – Provides a more robust solution than the <code>CLASSIC</code> tier and has more comprehensive language support. This tier requires that your guardrail use <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-cross-region.html\">cross-Region inference</a>.</p> </li> </ul>"
       }
     },
     "GuardrailVersion": {
