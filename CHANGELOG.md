@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.347.0 - 2025-06-23
 
 * `Aws\WorkspacesInstances` - Added support for Amazon WorkSpaces Instances API
 * `Aws\S3Tables` - S3 Tables now supports sort and z-order compaction strategies for Iceberg tables in addition to binpack.
