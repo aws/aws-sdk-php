@@ -1686,10 +1686,23 @@
         "UpdateSourceControlFromJobRequest$CommitId": "<p>A commit ID for a commit in the remote repository.</p>"
       }
     },
+    "CompactionConfiguration": {
+      "base": "<p>The configuration for a compaction optimizer. This configuration defines how data files in your table will be compacted to improve query performance and reduce storage costs.</p>",
+      "refs": {
+        "TableOptimizerConfiguration$compactionConfiguration": "<p>The configuration for a compaction optimizer. This configuration defines how data files in your table will be compacted to improve query performance and reduce storage costs.</p>"
+      }
+    },
     "CompactionMetrics": {
       "base": "<p>A structure that contains compaction metrics for the optimizer run.</p>",
       "refs": {
         "TableOptimizerRun$compactionMetrics": "<p>A <code>CompactionMetrics</code> object containing metrics for the optimizer run.</p>"
+      }
+    },
+    "CompactionStrategy": {
+      "base": null,
+      "refs": {
+        "IcebergCompactionConfiguration$strategy": "<p>The strategy to use for compaction. Valid values are:</p> <ul> <li> <p> <code>binpack</code>: Combines small files into larger files, typically targeting sizes over 100MB, while applying any pending deletes. This is the recommended compaction strategy for most use cases. </p> </li> <li> <p> <code>sort</code>: Organizes data based on specified columns which are sorted hierarchically during compaction, improving query performance for filtered operations. This strategy is recommended when your queries frequently filter on specific columns. To use this strategy, you must first define a sort order in your Iceberg table properties using the <code>sort_order</code> table property.</p> </li> <li> <p> <code>z-order</code>: Optimizes data organization by blending multiple attributes into a single scalar value that can be used for sorting, allowing efficient querying across multiple dimensions. This strategy is recommended when you need to query data across multiple dimensions simultaneously. To use this strategy, you must first define a sort order in your Iceberg table properties using the <code>sort_order</code> table property. </p> </li> </ul> <p>If an input is not provided, the default value 'binpack' will be used.</p>",
+        "TableOptimizerRun$compactionStrategy": "<p>The strategy used for the compaction run. Indicates which algorithm was applied to determine how files were selected and combined during the compaction process. Valid values are:</p> <ul> <li> <p> <code>binpack</code>: Combines small files into larger files, typically targeting sizes over 100MB, while applying any pending deletes. This is the recommended compaction strategy for most use cases. </p> </li> <li> <p> <code>sort</code>: Organizes data based on specified columns which are sorted hierarchically during compaction, improving query performance for filtered operations. This strategy is recommended when your queries frequently filter on specific columns. To use this strategy, you must first define a sort order in your Iceberg table properties using the <code>sort_order</code> table property.</p> </li> <li> <p> <code>z-order</code>: Optimizes data organization by blending multiple attributes into a single scalar value that can be used for sorting, allowing efficient querying across multiple dimensions. This strategy is recommended when you need to query data across multiple dimensions simultaneously. To use this strategy, you must first define a sort order in your Iceberg table properties using the <code>sort_order</code> table property. </p> </li> </ul>"
       }
     },
     "Comparator": {
@@ -5265,6 +5278,12 @@
         "DataLakeAccessProperties$DataTransferRole": "<p>A role that will be assumed by Glue for transferring data into/out of the staging bucket during a query.</p>",
         "DataLakeAccessPropertiesOutput$DataTransferRole": "<p>A role that will be assumed by Glue for transferring data into/out of the staging bucket during a query.</p>",
         "EncryptionAtRest$CatalogEncryptionServiceRole": "<p>The role that Glue assumes to encrypt and decrypt the Data Catalog objects on the caller's behalf.</p>"
+      }
+    },
+    "IcebergCompactionConfiguration": {
+      "base": "<p>The configuration for an Iceberg compaction optimizer. This configuration defines parameters for optimizing the layout of data files in Iceberg tables.</p>",
+      "refs": {
+        "CompactionConfiguration$icebergConfiguration": "<p>The configuration for an Iceberg compaction optimizer.</p>"
       }
     },
     "IcebergCompactionMetrics": {

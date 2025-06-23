@@ -1,0 +1,962 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon WorkSpaces Instances provides an API framework for managing virtual workspace environments across multiple AWS regions, enabling programmatic creation and configuration of desktop infrastructure.</p>",
+  "operations": {
+    "AssociateVolume": "<p>Attaches a volume to a WorkSpace Instance.</p>",
+    "CreateVolume": "<p>Creates a new volume for WorkSpace Instances.</p>",
+    "CreateWorkspaceInstance": "<p>Launches a new WorkSpace Instance with specified configuration parameters, enabling programmatic workspace deployment.</p>",
+    "DeleteVolume": "<p>Deletes a specified volume.</p>",
+    "DeleteWorkspaceInstance": "<p>Deletes the specified WorkSpace</p>",
+    "DisassociateVolume": "<p>Detaches a volume from a WorkSpace Instance.</p>",
+    "GetWorkspaceInstance": "<p>Retrieves detailed information about a specific WorkSpace Instance.</p>",
+    "ListInstanceTypes": "<p>Retrieves a list of instance types supported by Amazon WorkSpaces Instances, enabling precise workspace infrastructure configuration.</p>",
+    "ListRegions": "<p>Retrieves a list of AWS regions supported by Amazon WorkSpaces Instances, enabling region discovery for workspace deployments.</p>",
+    "ListTagsForResource": "<p>Retrieves tags for a WorkSpace Instance.</p>",
+    "ListWorkspaceInstances": "<p>Retrieves a collection of WorkSpaces Instances based on specified filters.</p>",
+    "TagResource": "<p>Adds tags to a WorkSpace Instance.</p>",
+    "UntagResource": "<p>Removes tags from a WorkSpace Instance.</p>"
+  },
+  "shapes": {
+    "ARN": {
+      "base": null,
+      "refs": {
+        "CapacityReservationTarget$CapacityReservationResourceGroupArn": "<p>ARN of the capacity reservation resource group.</p>",
+        "IamInstanceProfileSpecification$Arn": "<p>Amazon Resource Name (ARN) of the IAM instance profile.</p>",
+        "LicenseConfigurationRequest$LicenseConfigurationArn": "<p>ARN of the license configuration for the WorkSpace Instance.</p>",
+        "Placement$HostResourceGroupArn": "<p>ARN of the host resource group.</p>"
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>Indicates insufficient permissions to perform the requested action.</p>",
+      "refs": {
+      }
+    },
+    "AmdSevSnpEnum": {
+      "base": null,
+      "refs": {
+        "CpuOptionsRequest$AmdSevSnp": "<p>AMD Secure Encrypted Virtualization configuration.</p>"
+      }
+    },
+    "AssociateVolumeRequest": {
+      "base": "<p>Specifies volume attachment parameters.</p>",
+      "refs": {
+      }
+    },
+    "AssociateVolumeResponse": {
+      "base": "<p>Confirms volume attachment.</p>",
+      "refs": {
+      }
+    },
+    "AutoRecoveryEnum": {
+      "base": null,
+      "refs": {
+        "InstanceMaintenanceOptionsRequest$AutoRecovery": "<p>Enables or disables automatic instance recovery.</p>"
+      }
+    },
+    "AvailabilityZone": {
+      "base": null,
+      "refs": {
+        "Placement$AvailabilityZone": "<p>Identifies the specific AWS availability zone.</p>"
+      }
+    },
+    "BandwidthWeightingEnum": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkPerformanceOptionsRequest$BandwidthWeighting": "<p>Defines bandwidth allocation strategy for network interfaces.</p>"
+      }
+    },
+    "BlockDeviceMappingRequest": {
+      "base": "<p>Defines device mapping for WorkSpace Instance storage.</p>",
+      "refs": {
+        "BlockDeviceMappings$member": null
+      }
+    },
+    "BlockDeviceMappings": {
+      "base": null,
+      "refs": {
+        "ManagedInstanceRequest$BlockDeviceMappings": "<p>Configures block device mappings for storage.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CreateVolumeRequest$Encrypted": "<p>Indicates if the volume should be encrypted.</p>",
+        "EbsBlockDevice$Encrypted": "<p>Indicates if the volume is encrypted.</p>",
+        "EnaSrdSpecificationRequest$EnaSrdEnabled": "<p>Enables or disables ENA SRD for network performance.</p>",
+        "EnaSrdUdpSpecificationRequest$EnaSrdUdpEnabled": "<p>Enables or disables ENA SRD for UDP traffic.</p>",
+        "EnclaveOptionsRequest$Enabled": "<p>Enables or disables AWS Nitro Enclaves for enhanced security.</p>",
+        "HibernationOptionsRequest$Configured": "<p>Enables or disables instance hibernation capability.</p>",
+        "InstanceIpv6Address$IsPrimaryIpv6": "<p>Indicates if this is the primary IPv6 address for the instance.</p>",
+        "InstanceNetworkInterfaceSpecification$AssociateCarrierIpAddress": "<p>Enables carrier IP address association.</p>",
+        "InstanceNetworkInterfaceSpecification$AssociatePublicIpAddress": "<p>Enables public IP address assignment.</p>",
+        "InstanceNetworkInterfaceSpecification$PrimaryIpv6": "<p>Indicates the primary IPv6 configuration.</p>",
+        "ManagedInstanceRequest$DisableApiStop": "<p>Prevents API-initiated instance stop.</p>",
+        "ManagedInstanceRequest$EbsOptimized": "<p>Enables optimized EBS performance.</p>",
+        "ManagedInstanceRequest$EnablePrimaryIpv6": "<p>Enables primary IPv6 address configuration.</p>",
+        "PrivateDnsNameOptionsRequest$EnableResourceNameDnsARecord": "<p>Enables DNS A record for resource name resolution.</p>",
+        "PrivateDnsNameOptionsRequest$EnableResourceNameDnsAAAARecord": "<p>Enables DNS AAAA record for resource name resolution.</p>",
+        "PrivateIpAddressSpecification$Primary": "<p>Indicates if this is the primary private IP address.</p>",
+        "RunInstancesMonitoringEnabled$Enabled": "<p>Enables or disables detailed instance monitoring.</p>"
+      }
+    },
+    "CapacityReservationPreferenceEnum": {
+      "base": null,
+      "refs": {
+        "CapacityReservationSpecification$CapacityReservationPreference": "<p>Preference for using capacity reservation.</p>"
+      }
+    },
+    "CapacityReservationSpecification": {
+      "base": "<p>Specifies capacity reservation preferences.</p>",
+      "refs": {
+        "ManagedInstanceRequest$CapacityReservationSpecification": "<p>Specifies capacity reservation preferences.</p>"
+      }
+    },
+    "CapacityReservationTarget": {
+      "base": "<p>Identifies a specific capacity reservation.</p>",
+      "refs": {
+        "CapacityReservationSpecification$CapacityReservationTarget": "<p>Specific capacity reservation target.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateVolumeRequest$ClientToken": "<p>Unique token to prevent duplicate volume creation.</p>",
+        "CreateWorkspaceInstanceRequest$ClientToken": "<p>Unique token to ensure idempotent instance creation, preventing duplicate workspace launches.</p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Signals a conflict with the current state of the resource.</p>",
+      "refs": {
+      }
+    },
+    "ConnectionTrackingSpecificationRequest": {
+      "base": "<p>Defines connection tracking parameters for network interfaces.</p>",
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$ConnectionTrackingSpecification": "<p>Configures network connection tracking parameters.</p>"
+      }
+    },
+    "CpuCreditsEnum": {
+      "base": null,
+      "refs": {
+        "CreditSpecificationRequest$CpuCredits": "<p>CPU credit specification mode.</p>"
+      }
+    },
+    "CpuOptionsRequest": {
+      "base": "<p>Configures CPU-specific settings for WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$CpuOptions": "<p>Configures CPU-specific settings.</p>"
+      }
+    },
+    "CreateVolumeRequest": {
+      "base": "<p>Specifies volume creation parameters.</p>",
+      "refs": {
+      }
+    },
+    "CreateVolumeResponse": {
+      "base": "<p>Returns the created volume identifier.</p>",
+      "refs": {
+      }
+    },
+    "CreateWorkspaceInstanceRequest": {
+      "base": "<p>Defines the configuration parameters for creating a new WorkSpaces Instance.</p>",
+      "refs": {
+      }
+    },
+    "CreateWorkspaceInstanceResponse": {
+      "base": "<p>Returns the unique identifier for the newly created WorkSpaces Instance.</p>",
+      "refs": {
+      }
+    },
+    "CreditSpecificationRequest": {
+      "base": "<p>Defines CPU credit configuration for burstable instances.</p>",
+      "refs": {
+        "ManagedInstanceRequest$CreditSpecification": "<p>Defines CPU credit configuration for burstable instances.</p>"
+      }
+    },
+    "DeleteVolumeRequest": {
+      "base": "<p>Specifies the volume to delete.</p>",
+      "refs": {
+      }
+    },
+    "DeleteVolumeResponse": {
+      "base": "<p>Confirms volume deletion.</p>",
+      "refs": {
+      }
+    },
+    "DeleteWorkspaceInstanceRequest": {
+      "base": "<p>The WorkSpace to delete</p>",
+      "refs": {
+      }
+    },
+    "DeleteWorkspaceInstanceResponse": {
+      "base": "<p>Confirms the successful deletion of the specified WorkSpace Instance.</p>",
+      "refs": {
+      }
+    },
+    "Description": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$Description": "<p>Descriptive text for the network interface.</p>"
+      }
+    },
+    "DeviceName": {
+      "base": null,
+      "refs": {
+        "AssociateVolumeRequest$Device": "<p>Device path for volume attachment.</p>",
+        "BlockDeviceMappingRequest$DeviceName": "<p>Name of the device for storage mapping.</p>",
+        "BlockDeviceMappingRequest$NoDevice": "<p>Indicates device should not be mapped.</p>",
+        "DisassociateVolumeRequest$Device": "<p>Device path of volume to detach.</p>"
+      }
+    },
+    "DisassociateModeEnum": {
+      "base": null,
+      "refs": {
+        "DisassociateVolumeRequest$DisassociateMode": "<p>Mode for volume detachment.</p>"
+      }
+    },
+    "DisassociateVolumeRequest": {
+      "base": "<p>Specifies volume detachment parameters.</p>",
+      "refs": {
+      }
+    },
+    "DisassociateVolumeResponse": {
+      "base": "<p>Confirms volume detachment.</p>",
+      "refs": {
+      }
+    },
+    "EC2InstanceError": {
+      "base": "<p>Captures detailed error information for EC2 instance operations.</p>",
+      "refs": {
+        "EC2InstanceErrors$member": null
+      }
+    },
+    "EC2InstanceErrors": {
+      "base": null,
+      "refs": {
+        "GetWorkspaceInstanceResponse$EC2InstanceErrors": "<p>Includes any underlying EC2 instance errors encountered.</p>"
+      }
+    },
+    "EC2ManagedInstance": {
+      "base": "<p>Represents an EC2 instance managed by WorkSpaces.</p>",
+      "refs": {
+        "GetWorkspaceInstanceResponse$EC2ManagedInstance": "<p>Details of the associated EC2 managed instance.</p>",
+        "WorkspaceInstance$EC2ManagedInstance": "<p>Details of the associated EC2 managed instance.</p>"
+      }
+    },
+    "EbsBlockDevice": {
+      "base": "<p>Defines configuration for an Elastic Block Store volume.</p>",
+      "refs": {
+        "BlockDeviceMappingRequest$Ebs": "<p>EBS volume configuration for the device.</p>"
+      }
+    },
+    "EnaSrdSpecificationRequest": {
+      "base": "<p>Defines Elastic Network Adapter (ENA) Scalable Reliable Datagram (SRD) configuration.</p>",
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$EnaSrdSpecification": "<p>Configures Elastic Network Adapter Scalable Reliable Datagram settings.</p>"
+      }
+    },
+    "EnaSrdUdpSpecificationRequest": {
+      "base": "<p>Specifies UDP configuration for ENA SRD.</p>",
+      "refs": {
+        "EnaSrdSpecificationRequest$EnaSrdUdpSpecification": "<p>Configures UDP-specific ENA SRD settings.</p>"
+      }
+    },
+    "EnclaveOptionsRequest": {
+      "base": "<p>Configures AWS Nitro Enclave options for the WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$EnclaveOptions": "<p>Configures AWS Nitro Enclave settings.</p>"
+      }
+    },
+    "GetWorkspaceInstanceRequest": {
+      "base": "<p>Identifies the WorkSpaces Instance to retrieve detailed information for.</p>",
+      "refs": {
+      }
+    },
+    "GetWorkspaceInstanceResponse": {
+      "base": "<p>Provides comprehensive details about the requested WorkSpaces Instance.</p>",
+      "refs": {
+      }
+    },
+    "HibernationOptionsRequest": {
+      "base": "<p>Defines hibernation configuration for the WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$HibernationOptions": "<p>Configures instance hibernation capabilities.</p>"
+      }
+    },
+    "HostId": {
+      "base": null,
+      "refs": {
+        "Placement$HostId": "<p>Identifies the specific dedicated host.</p>"
+      }
+    },
+    "HostnameTypeEnum": {
+      "base": null,
+      "refs": {
+        "PrivateDnsNameOptionsRequest$HostnameType": "<p>Specifies the type of hostname configuration.</p>"
+      }
+    },
+    "HttpEndpointEnum": {
+      "base": null,
+      "refs": {
+        "InstanceMetadataOptionsRequest$HttpEndpoint": "<p>Enables or disables HTTP endpoint for instance metadata.</p>"
+      }
+    },
+    "HttpProtocolIpv6Enum": {
+      "base": null,
+      "refs": {
+        "InstanceMetadataOptionsRequest$HttpProtocolIpv6": "<p>Configures IPv6 support for instance metadata HTTP protocol.</p>"
+      }
+    },
+    "HttpPutResponseHopLimit": {
+      "base": null,
+      "refs": {
+        "InstanceMetadataOptionsRequest$HttpPutResponseHopLimit": "<p>Sets maximum number of network hops for metadata PUT responses.</p>"
+      }
+    },
+    "HttpTokensEnum": {
+      "base": null,
+      "refs": {
+        "InstanceMetadataOptionsRequest$HttpTokens": "<p>Configures token requirement for instance metadata retrieval.</p>"
+      }
+    },
+    "IamInstanceProfileSpecification": {
+      "base": "<p>Defines IAM instance profile configuration for WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$IamInstanceProfile": "<p>Specifies IAM instance profile configuration.</p>"
+      }
+    },
+    "ImageId": {
+      "base": null,
+      "refs": {
+        "ManagedInstanceRequest$ImageId": "<p>Identifies the Amazon Machine Image (AMI) for the instance.</p>"
+      }
+    },
+    "InstanceInterruptionBehaviorEnum": {
+      "base": null,
+      "refs": {
+        "SpotMarketOptions$InstanceInterruptionBehavior": "<p>Specifies behavior when spot instance is interrupted.</p>"
+      }
+    },
+    "InstanceIpv6Address": {
+      "base": "<p>Represents an IPv6 address configuration for a WorkSpace Instance.</p>",
+      "refs": {
+        "Ipv6Addresses$member": null
+      }
+    },
+    "InstanceMaintenanceOptionsRequest": {
+      "base": "<p>Configures automatic maintenance settings for WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$MaintenanceOptions": "<p>Defines automatic maintenance settings.</p>"
+      }
+    },
+    "InstanceMarketOptionsRequest": {
+      "base": "<p>Configures marketplace-specific instance deployment options.</p>",
+      "refs": {
+        "ManagedInstanceRequest$InstanceMarketOptions": "<p>Configures marketplace-specific deployment options.</p>"
+      }
+    },
+    "InstanceMetadataOptionsRequest": {
+      "base": "<p>Defines instance metadata service configuration.</p>",
+      "refs": {
+        "ManagedInstanceRequest$MetadataOptions": "<p>Configures instance metadata service settings.</p>"
+      }
+    },
+    "InstanceMetadataTagsEnum": {
+      "base": null,
+      "refs": {
+        "InstanceMetadataOptionsRequest$InstanceMetadataTags": "<p>Enables or disables instance metadata tags retrieval.</p>"
+      }
+    },
+    "InstanceNetworkInterfaceSpecification": {
+      "base": "<p>Defines network interface configuration for WorkSpace Instance.</p>",
+      "refs": {
+        "NetworkInterfaces$member": null
+      }
+    },
+    "InstanceNetworkPerformanceOptionsRequest": {
+      "base": "<p>Configures network performance settings for WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$NetworkPerformanceOptions": "<p>Defines network performance configuration.</p>"
+      }
+    },
+    "InstanceType": {
+      "base": null,
+      "refs": {
+        "InstanceTypeInfo$InstanceType": "<p>Unique identifier for the WorkSpace Instance type.</p>",
+        "ManagedInstanceRequest$InstanceType": "<p>Specifies the WorkSpace Instance type.</p>"
+      }
+    },
+    "InstanceTypeInfo": {
+      "base": "<p>Provides details about a specific WorkSpace Instance type.</p>",
+      "refs": {
+        "InstanceTypes$member": null
+      }
+    },
+    "InstanceTypes": {
+      "base": null,
+      "refs": {
+        "ListInstanceTypesResponse$InstanceTypes": "<p>Collection of supported instance types for WorkSpaces Instances.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "InternalServerException$RetryAfterSeconds": "<p>Recommended wait time before retrying the request.</p>",
+        "ThrottlingException$RetryAfterSeconds": "<p>Recommended wait time before retrying the request.</p>"
+      }
+    },
+    "InterfaceTypeEnum": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$InterfaceType": "<p>Specifies the type of network interface.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Indicates an unexpected server-side error occurred.</p>",
+      "refs": {
+      }
+    },
+    "Ipv4Address": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$PrivateIpAddress": "<p>Primary private IP address for the interface.</p>",
+        "ManagedInstanceRequest$PrivateIpAddress": "<p>Specifies the primary private IP address.</p>",
+        "PrivateIpAddressSpecification$PrivateIpAddress": "<p>Specific private IP address for the network interface.</p>"
+      }
+    },
+    "Ipv4Prefix": {
+      "base": null,
+      "refs": {
+        "Ipv4PrefixSpecificationRequest$Ipv4Prefix": "<p>Specific IPv4 prefix for network interface configuration.</p>"
+      }
+    },
+    "Ipv4PrefixSpecificationRequest": {
+      "base": "<p>Specifies IPv4 prefix configuration for network interfaces.</p>",
+      "refs": {
+        "Ipv4Prefixes$member": null
+      }
+    },
+    "Ipv4Prefixes": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$Ipv4Prefixes": "<p>IPv4 prefix configurations for the interface.</p>"
+      }
+    },
+    "Ipv6Address": {
+      "base": null,
+      "refs": {
+        "InstanceIpv6Address$Ipv6Address": "<p>Specific IPv6 address assigned to the instance.</p>"
+      }
+    },
+    "Ipv6Addresses": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$Ipv6Addresses": "<p>Specific IPv6 addresses for the interface.</p>",
+        "ManagedInstanceRequest$Ipv6Addresses": "<p>Configures specific IPv6 addresses.</p>"
+      }
+    },
+    "Ipv6Prefix": {
+      "base": null,
+      "refs": {
+        "Ipv6PrefixSpecificationRequest$Ipv6Prefix": "<p>Specific IPv6 prefix for network interface configuration.</p>"
+      }
+    },
+    "Ipv6PrefixSpecificationRequest": {
+      "base": "<p>Specifies IPv6 prefix configuration for network interfaces.</p>",
+      "refs": {
+        "Ipv6Prefixes$member": null
+      }
+    },
+    "Ipv6Prefixes": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$Ipv6Prefixes": "<p>IPv6 prefix configurations for the interface.</p>"
+      }
+    },
+    "KmsKeyId": {
+      "base": null,
+      "refs": {
+        "CreateVolumeRequest$KmsKeyId": "<p>KMS key for volume encryption.</p>",
+        "EbsBlockDevice$KmsKeyId": "<p>KMS key used for volume encryption.</p>"
+      }
+    },
+    "LicenseConfigurationRequest": {
+      "base": "<p>Specifies license configuration for WorkSpace Instance.</p>",
+      "refs": {
+        "LicenseSpecifications$member": null
+      }
+    },
+    "LicenseSpecifications": {
+      "base": null,
+      "refs": {
+        "ManagedInstanceRequest$LicenseSpecifications": "<p>Configures license-related settings.</p>"
+      }
+    },
+    "ListInstanceTypesRequest": {
+      "base": "<p>Defines input parameters for retrieving supported WorkSpaces Instances instance types.</p>",
+      "refs": {
+      }
+    },
+    "ListInstanceTypesResponse": {
+      "base": "<p>Contains the list of instance types supported by WorkSpaces Instances.</p>",
+      "refs": {
+      }
+    },
+    "ListRegionsRequest": {
+      "base": "<p>Defines input parameters for retrieving supported WorkSpaces Instances regions.</p>",
+      "refs": {
+      }
+    },
+    "ListRegionsResponse": {
+      "base": "<p>Contains the list of supported AWS regions for WorkSpaces Instances.</p>",
+      "refs": {
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": "<p>Specifies the WorkSpace Instance to retrieve tags for.</p>",
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": "<p>Returns the list of tags for the specified WorkSpace Instance.</p>",
+      "refs": {
+      }
+    },
+    "ListWorkspaceInstancesRequest": {
+      "base": "<p>Defines filters and pagination parameters for retrieving WorkSpaces Instances.</p>",
+      "refs": {
+      }
+    },
+    "ListWorkspaceInstancesResponse": {
+      "base": "<p>Contains the list of WorkSpaces Instances matching the specified criteria.</p>",
+      "refs": {
+      }
+    },
+    "ManagedInstanceRequest": {
+      "base": "<p>Defines comprehensive configuration for a managed WorkSpace Instance.</p>",
+      "refs": {
+        "CreateWorkspaceInstanceRequest$ManagedInstance": "<p>Comprehensive configuration settings for the WorkSpaces Instance, including network, compute, and storage parameters.</p>"
+      }
+    },
+    "MarketTypeEnum": {
+      "base": null,
+      "refs": {
+        "InstanceMarketOptionsRequest$MarketType": "<p>Specifies the type of marketplace for instance deployment.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListInstanceTypesRequest$MaxResults": "<p>Maximum number of instance types to return in a single API call. Enables pagination of instance type results.</p>",
+        "ListRegionsRequest$MaxResults": "<p>Maximum number of regions to return in a single API call. Enables pagination of region results.</p>",
+        "ListWorkspaceInstancesRequest$MaxResults": "<p>Maximum number of WorkSpaces Instances to return in a single response.</p>"
+      }
+    },
+    "NetworkInterfaceId": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$NetworkInterfaceId": "<p>Unique identifier for the network interface.</p>"
+      }
+    },
+    "NetworkInterfaces": {
+      "base": null,
+      "refs": {
+        "ManagedInstanceRequest$NetworkInterfaces": "<p>Configures network interface settings.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListInstanceTypesRequest$NextToken": "<p>Pagination token for retrieving subsequent pages of instance type results.</p>",
+        "ListInstanceTypesResponse$NextToken": "<p>Token for retrieving additional instance types if the result set is paginated.</p>",
+        "ListRegionsRequest$NextToken": "<p>Pagination token for retrieving subsequent pages of region results.</p>",
+        "ListRegionsResponse$NextToken": "<p>Token for retrieving additional regions if the result set is paginated.</p>",
+        "ListWorkspaceInstancesRequest$NextToken": "<p>Pagination token for retrieving subsequent pages of WorkSpaces Instances.</p>",
+        "ListWorkspaceInstancesResponse$NextToken": "<p>Token for retrieving additional WorkSpaces Instances if the result set is paginated.</p>"
+      }
+    },
+    "NonNegativeInteger": {
+      "base": null,
+      "refs": {
+        "ConnectionTrackingSpecificationRequest$TcpEstablishedTimeout": "<p>Timeout for established TCP connections.</p>",
+        "ConnectionTrackingSpecificationRequest$UdpStreamTimeout": "<p>Timeout for UDP stream connections.</p>",
+        "ConnectionTrackingSpecificationRequest$UdpTimeout": "<p>General timeout for UDP connections.</p>",
+        "CpuOptionsRequest$CoreCount": "<p>Number of CPU cores to allocate.</p>",
+        "CpuOptionsRequest$ThreadsPerCore": "<p>Number of threads per CPU core.</p>",
+        "CreateVolumeRequest$Iops": "<p>Input/output operations per second for the volume.</p>",
+        "CreateVolumeRequest$SizeInGB": "<p>Volume size in gigabytes.</p>",
+        "CreateVolumeRequest$Throughput": "<p>Volume throughput performance.</p>",
+        "EbsBlockDevice$Iops": "<p>Input/output operations per second for the volume.</p>",
+        "EbsBlockDevice$Throughput": "<p>Volume data transfer rate.</p>",
+        "EbsBlockDevice$VolumeSize": "<p>Size of the EBS volume in gigabytes.</p>",
+        "InstanceNetworkInterfaceSpecification$DeviceIndex": "<p>Unique index for the network interface.</p>",
+        "InstanceNetworkInterfaceSpecification$Ipv4PrefixCount": "<p>Number of IPv4 prefixes to assign.</p>",
+        "InstanceNetworkInterfaceSpecification$Ipv6AddressCount": "<p>Number of IPv6 addresses to assign.</p>",
+        "InstanceNetworkInterfaceSpecification$Ipv6PrefixCount": "<p>Number of IPv6 prefixes to assign.</p>",
+        "InstanceNetworkInterfaceSpecification$NetworkCardIndex": "<p>Index of the network card for multiple network interfaces.</p>",
+        "InstanceNetworkInterfaceSpecification$SecondaryPrivateIpAddressCount": "<p>Number of additional private IP addresses to assign.</p>",
+        "ManagedInstanceRequest$Ipv6AddressCount": "<p>Specifies number of IPv6 addresses to assign.</p>",
+        "Placement$PartitionNumber": "<p>Specifies partition number for partition placement groups.</p>",
+        "SpotMarketOptions$BlockDurationMinutes": "<p>Duration of spot instance block reservation.</p>"
+      }
+    },
+    "Placement": {
+      "base": "<p>Defines instance placement configuration for WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$Placement": "<p>Specifies instance placement preferences.</p>"
+      }
+    },
+    "PlacementGroupId": {
+      "base": null,
+      "refs": {
+        "Placement$GroupId": "<p>Unique identifier for placement group.</p>"
+      }
+    },
+    "PrivateDnsNameOptionsRequest": {
+      "base": "<p>Configures private DNS name settings for WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$PrivateDnsNameOptions": "<p>Configures private DNS name settings.</p>"
+      }
+    },
+    "PrivateIpAddressSpecification": {
+      "base": "<p>Defines private IP address configuration for network interface.</p>",
+      "refs": {
+        "PrivateIpAddresses$member": null
+      }
+    },
+    "PrivateIpAddresses": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$PrivateIpAddresses": "<p>List of private IP addresses for the interface.</p>"
+      }
+    },
+    "ProvisionStateEnum": {
+      "base": null,
+      "refs": {
+        "GetWorkspaceInstanceResponse$ProvisionState": "<p>Current provisioning state of the WorkSpaces Instance.</p>",
+        "ProvisionStates$member": null,
+        "WorkspaceInstance$ProvisionState": "<p>Current provisioning state of the WorkSpace Instance.</p>"
+      }
+    },
+    "ProvisionStates": {
+      "base": null,
+      "refs": {
+        "ListWorkspaceInstancesRequest$ProvisionStates": "<p>Filter WorkSpaces Instances by their current provisioning states.</p>"
+      }
+    },
+    "Region": {
+      "base": "<p>Represents an AWS region supported by WorkSpaces Instances.</p>",
+      "refs": {
+        "RegionList$member": null
+      }
+    },
+    "RegionList": {
+      "base": null,
+      "refs": {
+        "ListRegionsResponse$Regions": "<p>Collection of AWS regions supported by WorkSpaces Instances.</p>"
+      }
+    },
+    "RegionName": {
+      "base": null,
+      "refs": {
+        "Region$RegionName": "<p>Name of the AWS region.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>Indicates the requested resource could not be found.</p>",
+      "refs": {
+      }
+    },
+    "ResourceTypeEnum": {
+      "base": null,
+      "refs": {
+        "TagSpecification$ResourceType": "<p>Type of resource being tagged.</p>"
+      }
+    },
+    "RunInstancesMonitoringEnabled": {
+      "base": "<p>Configures detailed monitoring for WorkSpace Instance.</p>",
+      "refs": {
+        "ManagedInstanceRequest$Monitoring": "<p>Enables or disables detailed instance monitoring.</p>"
+      }
+    },
+    "SecurityGroupId": {
+      "base": null,
+      "refs": {
+        "SecurityGroupIds$member": null
+      }
+    },
+    "SecurityGroupIds": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$Groups": "<p>Security groups associated with the network interface.</p>",
+        "ManagedInstanceRequest$SecurityGroupIds": "<p>Specifies security group identifiers.</p>"
+      }
+    },
+    "SecurityGroupName": {
+      "base": null,
+      "refs": {
+        "SecurityGroupNames$member": null
+      }
+    },
+    "SecurityGroupNames": {
+      "base": null,
+      "refs": {
+        "ManagedInstanceRequest$SecurityGroups": "<p>Configures security group settings.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>Indicates that a service quota has been exceeded.</p>",
+      "refs": {
+      }
+    },
+    "SnapshotId": {
+      "base": null,
+      "refs": {
+        "CreateVolumeRequest$SnapshotId": "<p>Source snapshot for volume creation.</p>"
+      }
+    },
+    "SpotInstanceTypeEnum": {
+      "base": null,
+      "refs": {
+        "SpotMarketOptions$SpotInstanceType": "<p>Defines the type of spot instance request.</p>"
+      }
+    },
+    "SpotMarketOptions": {
+      "base": "<p>Defines configuration for spot instance deployment.</p>",
+      "refs": {
+        "InstanceMarketOptionsRequest$SpotOptions": "<p>Configuration options for spot instance deployment.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": "<p>Detailed explanation of the access denial.</p>",
+        "ConflictException$Message": "<p>Description of the conflict encountered.</p>",
+        "ConflictException$ResourceId": "<p>Identifier of the conflicting resource.</p>",
+        "ConflictException$ResourceType": "<p>Type of the conflicting resource.</p>",
+        "EC2InstanceError$EC2ErrorCode": "<p>Unique error code identifying the specific EC2 instance error.</p>",
+        "EC2InstanceError$EC2ExceptionType": "<p>Type of exception encountered during EC2 instance operation.</p>",
+        "EC2InstanceError$EC2ErrorMessage": "<p>Detailed description of the EC2 instance error.</p>",
+        "EC2ManagedInstance$InstanceId": "<p>Unique identifier of the managed EC2 instance.</p>",
+        "InternalServerException$Message": "<p>Description of the internal server error.</p>",
+        "ResourceNotFoundException$Message": "<p>Details about the missing resource.</p>",
+        "ResourceNotFoundException$ResourceId": "<p>Identifier of the resource that was not found.</p>",
+        "ResourceNotFoundException$ResourceType": "<p>Type of the resource that was not found.</p>",
+        "ServiceQuotaExceededException$Message": "<p>Description of the quota limitation.</p>",
+        "ServiceQuotaExceededException$ResourceId": "<p>Identifier of the resource related to the quota.</p>",
+        "ServiceQuotaExceededException$ResourceType": "<p>Type of resource related to the quota.</p>",
+        "ServiceQuotaExceededException$ServiceCode": "<p>Code identifying the service with the quota limitation.</p>",
+        "ServiceQuotaExceededException$QuotaCode": "<p>Specific code for the exceeded quota.</p>",
+        "ThrottlingException$Message": "<p>Description of the throttling event.</p>",
+        "ThrottlingException$ServiceCode": "<p>Code identifying the service experiencing throttling.</p>",
+        "ThrottlingException$QuotaCode": "<p>Specific code for the throttling quota.</p>",
+        "ValidationException$Message": "<p>Overall description of validation failures.</p>",
+        "ValidationExceptionField$Name": "<p>Name of the field that failed validation.</p>",
+        "ValidationExceptionField$Reason": "<p>Reason for the validation failure.</p>",
+        "ValidationExceptionField$Message": "<p>Detailed error message describing the validation issue.</p>",
+        "WorkspaceInstanceError$ErrorCode": "<p>Unique error code for the WorkSpace Instance error.</p>",
+        "WorkspaceInstanceError$ErrorMessage": "<p>Detailed description of the WorkSpace Instance error.</p>"
+      }
+    },
+    "String128": {
+      "base": null,
+      "refs": {
+        "CapacityReservationTarget$CapacityReservationId": "<p>Unique identifier for the capacity reservation.</p>",
+        "ManagedInstanceRequest$KernelId": "<p>Identifies the kernel for the instance.</p>",
+        "ManagedInstanceRequest$RamdiskId": "<p>Identifies the ramdisk for the instance.</p>"
+      }
+    },
+    "String64": {
+      "base": null,
+      "refs": {
+        "CreateVolumeRequest$AvailabilityZone": "<p>Availability zone for the volume.</p>",
+        "IamInstanceProfileSpecification$Name": "<p>Name of the IAM instance profile.</p>",
+        "ManagedInstanceRequest$KeyName": "<p>Specifies the key pair for instance access.</p>",
+        "Placement$Affinity": "<p>Specifies host affinity for dedicated instances.</p>",
+        "Placement$GroupName": "<p>Name of the placement group.</p>",
+        "SpotMarketOptions$MaxPrice": "<p>Maximum hourly price for spot instance.</p>"
+      }
+    },
+    "SubnetId": {
+      "base": null,
+      "refs": {
+        "InstanceNetworkInterfaceSpecification$SubnetId": "<p>Subnet identifier for the network interface.</p>",
+        "ManagedInstanceRequest$SubnetId": "<p>Identifies the subnet for the instance.</p>"
+      }
+    },
+    "Tag": {
+      "base": "<p>Represents a key-value metadata tag.</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "Tag$Key": "<p>Unique identifier for the tag.</p>",
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$TagKeys": "<p>Keys of tags to be removed.</p>"
+      }
+    },
+    "TagList": {
+      "base": null,
+      "refs": {
+        "CreateWorkspaceInstanceRequest$Tags": "<p>Optional metadata tags for categorizing and managing WorkSpaces Instances.</p>",
+        "ListTagsForResourceResponse$Tags": "<p>Collection of tags associated with the WorkSpace Instance.</p>",
+        "TagResourceRequest$Tags": "<p>Tags to be added to the WorkSpace Instance.</p>",
+        "TagSpecification$Tags": "<p>Collection of tags for the specified resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": "<p>Specifies tags to add to a WorkSpace Instance.</p>",
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": "<p>Confirms successful tag addition.</p>",
+      "refs": {
+      }
+    },
+    "TagSpecification": {
+      "base": "<p>Defines tagging configuration for a resource.</p>",
+      "refs": {
+        "TagSpecifications$member": null
+      }
+    },
+    "TagSpecifications": {
+      "base": null,
+      "refs": {
+        "CreateVolumeRequest$TagSpecifications": "<p>Metadata tags for the volume.</p>",
+        "ManagedInstanceRequest$TagSpecifications": "<p>Configures resource tagging specifications.</p>"
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tag$Value": "<p>Value associated with the tag key.</p>"
+      }
+    },
+    "TenancyEnum": {
+      "base": null,
+      "refs": {
+        "Placement$Tenancy": "<p>Defines instance tenancy configuration.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>Indicates the request rate has exceeded limits.</p>",
+      "refs": {
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "SpotMarketOptions$ValidUntilUtc": "<p>Timestamp until which spot instance request is valid.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": "<p>Specifies tags to remove from a WorkSpace Instance.</p>",
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": "<p>Confirms successful tag removal.</p>",
+      "refs": {
+      }
+    },
+    "UserData": {
+      "base": null,
+      "refs": {
+        "ManagedInstanceRequest$UserData": "<p>Provides custom initialization data for the instance.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>Indicates invalid input parameters in the request.</p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Represents a validation error field in an API request.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$FieldList": "<p>List of fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$Reason": "<p>Specific reason for the validation failure.</p>"
+      }
+    },
+    "VirtualName": {
+      "base": null,
+      "refs": {
+        "BlockDeviceMappingRequest$VirtualName": "<p>Virtual device name for ephemeral storage.</p>"
+      }
+    },
+    "VolumeId": {
+      "base": null,
+      "refs": {
+        "AssociateVolumeRequest$VolumeId": "<p>Volume to be attached.</p>",
+        "CreateVolumeResponse$VolumeId": "<p>Unique identifier for the new volume.</p>",
+        "DeleteVolumeRequest$VolumeId": "<p>Identifier of the volume to delete.</p>",
+        "DisassociateVolumeRequest$VolumeId": "<p>Volume to be detached.</p>"
+      }
+    },
+    "VolumeTypeEnum": {
+      "base": null,
+      "refs": {
+        "CreateVolumeRequest$VolumeType": "<p>Type of EBS volume.</p>",
+        "EbsBlockDevice$VolumeType": "<p>Type of EBS volume (e.g., gp2, io1).</p>"
+      }
+    },
+    "WorkspaceInstance": {
+      "base": "<p>Represents a single WorkSpace Instance.</p>",
+      "refs": {
+        "WorkspaceInstances$member": null
+      }
+    },
+    "WorkspaceInstanceError": {
+      "base": "<p>Captures errors specific to WorkSpace Instance operations.</p>",
+      "refs": {
+        "WorkspaceInstanceErrors$member": null
+      }
+    },
+    "WorkspaceInstanceErrors": {
+      "base": null,
+      "refs": {
+        "GetWorkspaceInstanceResponse$WorkspaceInstanceErrors": "<p>Captures any errors specific to the WorkSpace Instance lifecycle.</p>"
+      }
+    },
+    "WorkspaceInstanceId": {
+      "base": null,
+      "refs": {
+        "AssociateVolumeRequest$WorkspaceInstanceId": "<p>WorkSpace Instance to attach volume to.</p>",
+        "CreateWorkspaceInstanceResponse$WorkspaceInstanceId": "<p>Unique identifier assigned to the newly created WorkSpaces Instance.</p>",
+        "DeleteWorkspaceInstanceRequest$WorkspaceInstanceId": "<p>Unique identifier of the WorkSpaces Instance targeted for deletion.</p>",
+        "DisassociateVolumeRequest$WorkspaceInstanceId": "<p>WorkSpace Instance to detach volume from.</p>",
+        "GetWorkspaceInstanceRequest$WorkspaceInstanceId": "<p>Unique identifier of the WorkSpace Instance to retrieve.</p>",
+        "GetWorkspaceInstanceResponse$WorkspaceInstanceId": "<p>Unique identifier of the retrieved WorkSpaces Instance.</p>",
+        "ListTagsForResourceRequest$WorkspaceInstanceId": "<p>Unique identifier of the WorkSpace Instance.</p>",
+        "TagResourceRequest$WorkspaceInstanceId": "<p>Unique identifier of the WorkSpace Instance to tag.</p>",
+        "UntagResourceRequest$WorkspaceInstanceId": "<p>Unique identifier of the WorkSpace Instance to untag.</p>",
+        "WorkspaceInstance$WorkspaceInstanceId": "<p>Unique identifier for the WorkSpace Instance.</p>"
+      }
+    },
+    "WorkspaceInstances": {
+      "base": null,
+      "refs": {
+        "ListWorkspaceInstancesResponse$WorkspaceInstances": "<p>Collection of WorkSpaces Instances returned by the query.</p>"
+      }
+    }
+  }
+}

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkspacesInstances` - Added support for Amazon WorkSpaces Instances API
+* `Aws\S3Tables` - S3 Tables now supports sort and z-order compaction strategies for Iceberg tables in addition to binpack.
+* `Aws\Glue` - AWS Glue now supports sort and z-order strategy for managed automated compaction for Iceberg tables in addition to binpack.
+
 ## 3.346.2 - 2025-06-20
 
 * `Aws\ECS` - Add ECS support for Windows Server 2025

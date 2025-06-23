@@ -5720,11 +5720,25 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "CompactionConfiguration":{
+      "type":"structure",
+      "members":{
+        "icebergConfiguration":{"shape":"IcebergCompactionConfiguration"}
+      }
+    },
     "CompactionMetrics":{
       "type":"structure",
       "members":{
         "IcebergMetrics":{"shape":"IcebergCompactionMetrics"}
       }
+    },
+    "CompactionStrategy":{
+      "type":"string",
+      "enum":[
+        "binpack",
+        "sort",
+        "z-order"
+      ]
     },
     "Comparator":{
       "type":"string",
@@ -10623,6 +10637,12 @@
       "type":"string",
       "pattern":"^arn:aws(-(cn|us-gov|iso(-[bef])?))?:iam::[0-9]{12}:role/.+"
     },
+    "IcebergCompactionConfiguration":{
+      "type":"structure",
+      "members":{
+        "strategy":{"shape":"CompactionStrategy"}
+      }
+    },
     "IcebergCompactionMetrics":{
       "type":"structure",
       "members":{
@@ -15192,6 +15212,7 @@
         "roleArn":{"shape":"ArnString"},
         "enabled":{"shape":"NullableBoolean"},
         "vpcConfiguration":{"shape":"TableOptimizerVpcConfiguration"},
+        "compactionConfiguration":{"shape":"CompactionConfiguration"},
         "retentionConfiguration":{"shape":"RetentionConfiguration"},
         "orphanFileDeletionConfiguration":{"shape":"OrphanFileDeletionConfiguration"}
       }
@@ -15218,6 +15239,7 @@
         },
         "error":{"shape":"MessageString"},
         "compactionMetrics":{"shape":"CompactionMetrics"},
+        "compactionStrategy":{"shape":"CompactionStrategy"},
         "retentionMetrics":{"shape":"RetentionMetrics"},
         "orphanFileDeletionMetrics":{"shape":"OrphanFileDeletionMetrics"}
       }

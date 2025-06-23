@@ -1173,8 +1173,18 @@
     "IcebergCompactionSettings":{
       "type":"structure",
       "members":{
-        "targetFileSizeMB":{"shape":"PositiveInteger"}
+        "targetFileSizeMB":{"shape":"PositiveInteger"},
+        "strategy":{"shape":"IcebergCompactionStrategy"}
       }
+    },
+    "IcebergCompactionStrategy":{
+      "type":"string",
+      "enum":[
+        "auto",
+        "binpack",
+        "sort",
+        "z-order"
+      ]
     },
     "IcebergMetadata":{
       "type":"structure",
