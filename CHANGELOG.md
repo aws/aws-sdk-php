@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.347.1 - 2025-06-24
 
 * `Aws\RDS` - Adding support for RDS on Dedicated Local Zones, including local backup target, snapshot availability zone and snapshot target
 * `Aws\TranscribeService` - This Feature Adds Support for the "et-EE" Locale for Batch Operations
