@@ -71,6 +71,24 @@
       ],
       "idempotent":true
     },
+    "CreateFoundationModelAgreement":{
+      "name":"CreateFoundationModelAgreement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/create-foundation-model-agreement",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateFoundationModelAgreementRequest"},
+      "output":{"shape":"CreateFoundationModelAgreementResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "CreateGuardrail":{
       "name":"CreateGuardrail",
       "http":{
@@ -289,6 +307,24 @@
       ],
       "idempotent":true
     },
+    "DeleteFoundationModelAgreement":{
+      "name":"DeleteFoundationModelAgreement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/delete-foundation-model-agreement",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteFoundationModelAgreementRequest"},
+      "output":{"shape":"DeleteFoundationModelAgreementResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DeleteGuardrail":{
       "name":"DeleteGuardrail",
       "http":{
@@ -486,6 +522,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetFoundationModelAvailability":{
+      "name":"GetFoundationModelAvailability",
+      "http":{
+        "method":"GET",
+        "requestUri":"/foundation-model-availability/{modelId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFoundationModelAvailabilityRequest"},
+      "output":{"shape":"GetFoundationModelAvailabilityResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetGuardrail":{
       "name":"GetGuardrail",
       "http":{
@@ -671,6 +724,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetUseCaseForModelAccess":{
+      "name":"GetUseCaseForModelAccess",
+      "http":{
+        "method":"GET",
+        "requestUri":"/use-case-for-model-access",
+        "responseCode":200
+      },
+      "input":{"shape":"GetUseCaseForModelAccessRequest"},
+      "output":{"shape":"GetUseCaseForModelAccessResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListCustomModels":{
       "name":"ListCustomModels",
       "http":{
@@ -697,6 +766,23 @@
       "input":{"shape":"ListEvaluationJobsRequest"},
       "output":{"shape":"ListEvaluationJobsResponse"},
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListFoundationModelAgreementOffers":{
+      "name":"ListFoundationModelAgreementOffers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/list-foundation-model-agreement-offers/{modelId}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListFoundationModelAgreementOffersRequest"},
+      "output":{"shape":"ListFoundationModelAgreementOffersResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
@@ -916,6 +1002,22 @@
       ],
       "idempotent":true
     },
+    "PutUseCaseForModelAccess":{
+      "name":"PutUseCaseForModelAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/use-case-for-model-access",
+        "responseCode":201
+      },
+      "input":{"shape":"PutUseCaseForModelAccessRequest"},
+      "output":{"shape":"PutUseCaseForModelAccessResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "RegisterMarketplaceModelEndpoint":{
       "name":"RegisterMarketplaceModelEndpoint",
       "http":{
@@ -1099,6 +1201,11 @@
       "type":"string",
       "pattern":"[0-9]{12}"
     },
+    "AcknowledgementFormDataBody":{
+      "type":"blob",
+      "max":16384,
+      "min":10
+    },
     "AdditionalModelRequestFields":{
       "type":"map",
       "key":{"shape":"AdditionalModelRequestFieldsKey"},
@@ -1115,6 +1222,23 @@
       },
       "document":true
     },
+    "AgreementAvailability":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"AgreementStatus"},
+        "errorMessage":{"shape":"String"}
+      }
+    },
+    "AgreementStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "PENDING",
+        "NOT_AVAILABLE",
+        "ERROR"
+      ]
+    },
     "ApplicationType":{
       "type":"string",
       "enum":[
@@ -1126,6 +1250,13 @@
       "type":"string",
       "max":2048,
       "min":0
+    },
+    "AuthorizationStatus":{
+      "type":"string",
+      "enum":[
+        "AUTHORIZED",
+        "NOT_AUTHORIZED"
+      ]
     },
     "AutomatedEvaluationConfig":{
       "type":"structure",
@@ -1365,6 +1496,24 @@
       "required":["jobArn"],
       "members":{
         "jobArn":{"shape":"EvaluationJobArn"}
+      }
+    },
+    "CreateFoundationModelAgreementRequest":{
+      "type":"structure",
+      "required":[
+        "offerToken",
+        "modelId"
+      ],
+      "members":{
+        "offerToken":{"shape":"OfferToken"},
+        "modelId":{"shape":"BedrockModelId"}
+      }
+    },
+    "CreateFoundationModelAgreementResponse":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{"shape":"BedrockModelId"}
       }
     },
     "CreateGuardrailRequest":{
@@ -1784,6 +1933,18 @@
       "members":{
       }
     },
+    "DeleteFoundationModelAgreementRequest":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{"shape":"BedrockModelId"}
+      }
+    },
+    "DeleteFoundationModelAgreementResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteGuardrailRequest":{
       "type":"structure",
       "required":["guardrailIdentifier"],
@@ -1911,6 +2072,15 @@
       "members":{
       }
     },
+    "DimensionalPriceRate":{
+      "type":"structure",
+      "members":{
+        "dimension":{"shape":"String"},
+        "price":{"shape":"String"},
+        "description":{"shape":"String"},
+        "unit":{"shape":"String"}
+      }
+    },
     "DistillationConfig":{
       "type":"structure",
       "required":["teacherModelConfig"],
@@ -1929,6 +2099,13 @@
       "type":"string",
       "max":30,
       "min":1
+    },
+    "EntitlementAvailability":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "NOT_AVAILABLE"
+      ]
     },
     "ErrorMessage":{
       "type":"string",
@@ -2508,6 +2685,34 @@
         "failureMessages":{"shape":"ErrorMessages"}
       }
     },
+    "GetFoundationModelAvailabilityRequest":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{
+          "shape":"BedrockModelId",
+          "location":"uri",
+          "locationName":"modelId"
+        }
+      }
+    },
+    "GetFoundationModelAvailabilityResponse":{
+      "type":"structure",
+      "required":[
+        "modelId",
+        "agreementAvailability",
+        "authorizationStatus",
+        "entitlementAvailability",
+        "regionAvailability"
+      ],
+      "members":{
+        "modelId":{"shape":"BedrockModelId"},
+        "agreementAvailability":{"shape":"AgreementAvailability"},
+        "authorizationStatus":{"shape":"AuthorizationStatus"},
+        "entitlementAvailability":{"shape":"EntitlementAvailability"},
+        "regionAvailability":{"shape":"RegionAvailability"}
+      }
+    },
     "GetFoundationModelRequest":{
       "type":"structure",
       "required":["modelIdentifier"],
@@ -2890,6 +3095,18 @@
         "failureMessage":{"shape":"ErrorMessage"},
         "commitmentDuration":{"shape":"CommitmentDuration"},
         "commitmentExpirationTime":{"shape":"Timestamp"}
+      }
+    },
+    "GetUseCaseForModelAccessRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetUseCaseForModelAccessResponse":{
+      "type":"structure",
+      "required":["formData"],
+      "members":{
+        "formData":{"shape":"AcknowledgementFormDataBody"}
       }
     },
     "GuardrailArn":{
@@ -3989,6 +4206,12 @@
       "max":100,
       "min":1
     },
+    "LegalTerm":{
+      "type":"structure",
+      "members":{
+        "url":{"shape":"String"}
+      }
+    },
     "ListCustomModelsRequest":{
       "type":"structure",
       "members":{
@@ -4111,6 +4334,33 @@
       "members":{
         "nextToken":{"shape":"PaginationToken"},
         "jobSummaries":{"shape":"EvaluationSummaries"}
+      }
+    },
+    "ListFoundationModelAgreementOffersRequest":{
+      "type":"structure",
+      "required":["modelId"],
+      "members":{
+        "modelId":{
+          "shape":"BedrockModelId",
+          "location":"uri",
+          "locationName":"modelId"
+        },
+        "offerType":{
+          "shape":"OfferType",
+          "location":"querystring",
+          "locationName":"offerType"
+        }
+      }
+    },
+    "ListFoundationModelAgreementOffersResponse":{
+      "type":"structure",
+      "required":[
+        "modelId",
+        "offers"
+      ],
+      "members":{
+        "modelId":{"shape":"BedrockModelId"},
+        "offers":{"shape":"Offers"}
       }
     },
     "ListFoundationModelsRequest":{
@@ -5001,6 +5251,31 @@
       "type":"string",
       "pattern":"[\\s\\S]*"
     },
+    "Offer":{
+      "type":"structure",
+      "required":[
+        "offerToken",
+        "termDetails"
+      ],
+      "members":{
+        "offerId":{"shape":"OfferId"},
+        "offerToken":{"shape":"OfferToken"},
+        "termDetails":{"shape":"TermDetails"}
+      }
+    },
+    "OfferId":{"type":"string"},
+    "OfferToken":{"type":"string"},
+    "OfferType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "PUBLIC"
+      ]
+    },
+    "Offers":{
+      "type":"list",
+      "member":{"shape":"Offer"}
+    },
     "OrchestrationConfiguration":{
       "type":"structure",
       "required":["queryTransformationConfiguration"],
@@ -5038,6 +5313,13 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "PricingTerm":{
+      "type":"structure",
+      "required":["rateCard"],
+      "members":{
+        "rateCard":{"shape":"RateCard"}
+      }
     },
     "PromptRouterArn":{
       "type":"string",
@@ -5192,6 +5474,18 @@
       "members":{
       }
     },
+    "PutUseCaseForModelAccessRequest":{
+      "type":"structure",
+      "required":["formData"],
+      "members":{
+        "formData":{"shape":"AcknowledgementFormDataBody"}
+      }
+    },
+    "PutUseCaseForModelAccessResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "QueryTransformationConfiguration":{
       "type":"structure",
       "required":["type"],
@@ -5228,6 +5522,10 @@
       "max":1,
       "min":1
     },
+    "RateCard":{
+      "type":"list",
+      "member":{"shape":"DimensionalPriceRate"}
+    },
     "RatingScale":{
       "type":"list",
       "member":{"shape":"RatingScaleItem"},
@@ -5262,6 +5560,13 @@
       "type":"string",
       "max":100,
       "min":1
+    },
+    "RegionAvailability":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "NOT_AVAILABLE"
+      ]
     },
     "RegisterMarketplaceModelEndpointRequest":{
       "type":"structure",
@@ -5597,6 +5902,12 @@
       "max":16,
       "min":1
     },
+    "SupportTerm":{
+      "type":"structure",
+      "members":{
+        "refundPolicyDescription":{"shape":"String"}
+      }
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -5671,6 +5982,20 @@
       "box":true,
       "max":1,
       "min":0
+    },
+    "TermDetails":{
+      "type":"structure",
+      "required":[
+        "usageBasedPricingTerm",
+        "legalTerm",
+        "supportTerm"
+      ],
+      "members":{
+        "usageBasedPricingTerm":{"shape":"PricingTerm"},
+        "legalTerm":{"shape":"LegalTerm"},
+        "supportTerm":{"shape":"SupportTerm"},
+        "validityTerm":{"shape":"ValidityTerm"}
+      }
     },
     "TextInferenceConfig":{
       "type":"structure",
@@ -5892,6 +6217,12 @@
       "member":{"shape":"Validator"},
       "max":10,
       "min":0
+    },
+    "ValidityTerm":{
+      "type":"structure",
+      "members":{
+        "agreementDuration":{"shape":"String"}
+      }
     },
     "VpcConfig":{
       "type":"structure",

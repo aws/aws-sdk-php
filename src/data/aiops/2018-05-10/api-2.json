@@ -288,7 +288,8 @@
         "tags":{"shape":"Tags"},
         "tagKeyBoundaries":{"shape":"TagKeyBoundaries"},
         "chatbotNotificationChannel":{"shape":"ChatbotNotificationChannel"},
-        "isCloudTrailEventHistoryEnabled":{"shape":"Boolean"}
+        "isCloudTrailEventHistoryEnabled":{"shape":"Boolean"},
+        "crossAccountConfigurations":{"shape":"CrossAccountConfigurations"}
       }
     },
     "CreateInvestigationGroupOutput":{
@@ -296,6 +297,18 @@
       "members":{
         "arn":{"shape":"InvestigationGroupArn"}
       }
+    },
+    "CrossAccountConfiguration":{
+      "type":"structure",
+      "members":{
+        "sourceRoleArn":{"shape":"RoleArn"}
+      }
+    },
+    "CrossAccountConfigurations":{
+      "type":"list",
+      "member":{"shape":"CrossAccountConfiguration"},
+      "max":25,
+      "min":0
     },
     "DeleteInvestigationGroupPolicyOutput":{
       "type":"structure",
@@ -392,7 +405,8 @@
         "retentionInDays":{"shape":"Retention"},
         "chatbotNotificationChannel":{"shape":"ChatbotNotificationChannel"},
         "tagKeyBoundaries":{"shape":"TagKeyBoundaries"},
-        "isCloudTrailEventHistoryEnabled":{"shape":"Boolean"}
+        "isCloudTrailEventHistoryEnabled":{"shape":"Boolean"},
+        "crossAccountConfigurations":{"shape":"CrossAccountConfigurations"}
       }
     },
     "IdentifierStringWithPatternAndLengthLimits":{
@@ -665,7 +679,8 @@
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "tagKeyBoundaries":{"shape":"TagKeyBoundaries"},
         "chatbotNotificationChannel":{"shape":"ChatbotNotificationChannel"},
-        "isCloudTrailEventHistoryEnabled":{"shape":"Boolean"}
+        "isCloudTrailEventHistoryEnabled":{"shape":"Boolean"},
+        "crossAccountConfigurations":{"shape":"CrossAccountConfigurations"}
       }
     },
     "ValidationException":{

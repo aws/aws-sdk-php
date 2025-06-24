@@ -140,7 +140,7 @@
         "TaskContainerProperties$essential": "<p>If the essential parameter of a container is marked as <code>true</code>, and that container fails or stops for any reason, all other containers that are part of the task are stopped. If the <code>essential</code> parameter of a container is marked as false, its failure doesn't affect the rest of the containers in a task. If this parameter is omitted, a container is assumed to be essential.</p> <p>All jobs must have at least one essential container. If you have an application that's composed of multiple containers, group containers that are used for a common purpose into components, and separate the different components into multiple task definitions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/application_architecture.html\">Application Architecture</a> in the <i>Amazon Elastic Container Service Developer Guide</i>.</p>",
         "TaskContainerProperties$privileged": "<p>When this parameter is <code>true</code>, the container is given elevated privileges on the host container instance (similar to the <code>root</code> user). This parameter maps to <code>Privileged</code> in the <a href=\"https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate\">Create a container</a> section of the <a href=\"https://docs.docker.com/engine/api/v1.35/\">Docker Remote API</a> and the <code>--privileged</code> option to <a href=\"https://docs.docker.com/engine/reference/run/#security-configuration\">docker run</a>.</p> <note> <p>This parameter is not supported for Windows containers or tasks run on Fargate.</p> </note>",
         "TaskContainerProperties$readonlyRootFilesystem": "<p>When this parameter is true, the container is given read-only access to its root file system. This parameter maps to <code>ReadonlyRootfs</code> in the <a href=\"https://docs.docker.com/engine/api/v1.35/#operation/ContainerCreate\">Create a container</a> section of the <a href=\"https://docs.docker.com/engine/api/v1.35/\">Docker Remote API</a> and the <code>--read-only</code> option to <a href=\"https://docs.docker.com/engine/reference/run/#security-configuration\">docker run</a>.</p> <note> <p>This parameter is not supported for Windows containers.</p> </note>",
-        "UpdatePolicy$terminateJobsOnUpdate": "<p>Specifies whether jobs are automatically terminated when the computer environment infrastructure is updated. The default value is <code>false</code>.</p>"
+        "UpdatePolicy$terminateJobsOnUpdate": "<p>Specifies whether jobs are automatically terminated when the compute environment infrastructure is updated. The default value is <code>false</code>.</p>"
       }
     },
     "CEState": {
@@ -185,18 +185,15 @@
     },
     "CancelJobRequest": {
       "base": "<p>Contains the parameters for <code>CancelJob</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientException": {
       "base": "<p>These errors are usually caused by a client action. One example cause is using an action or resource on behalf of a user that doesn't have permissions to use the action or resource. Another cause is specifying an identifier that's not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientRequestToken": {
       "base": null,
@@ -308,153 +305,123 @@
     },
     "CreateComputeEnvironmentRequest": {
       "base": "<p>Contains the parameters for <code>CreateComputeEnvironment</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateComputeEnvironmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConsumableResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConsumableResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobQueueRequest": {
       "base": "<p>Contains the parameters for <code>CreateJobQueue</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSchedulingPolicyRequest": {
       "base": "<p>Contains the parameters for <code>CreateSchedulingPolicy</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSchedulingPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteComputeEnvironmentRequest": {
       "base": "<p>Contains the parameters for <code>DeleteComputeEnvironment</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteComputeEnvironmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConsumableResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConsumableResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobQueueRequest": {
       "base": "<p>Contains the parameters for <code>DeleteJobQueue</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSchedulingPolicyRequest": {
       "base": "<p>Contains the parameters for <code>DeleteSchedulingPolicy</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSchedulingPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterJobDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterJobDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeComputeEnvironmentsRequest": {
       "base": "<p>Contains the parameters for <code>DescribeComputeEnvironments</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeComputeEnvironmentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConsumableResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConsumableResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobDefinitionsRequest": {
       "base": "<p>Contains the parameters for <code>DescribeJobDefinitions</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobQueuesRequest": {
       "base": "<p>Contains the parameters for <code>DescribeJobQueues</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobQueuesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobsRequest": {
       "base": "<p>Contains the parameters for <code>DescribeJobs</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSchedulingPoliciesRequest": {
       "base": "<p>Contains the parameters for <code>DescribeSchedulingPolicies</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSchedulingPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Device": {
       "base": "<p>An object that represents a container instance host device.</p> <note> <p>This object isn't applicable to jobs that are running on Fargate resources and shouldn't be provided.</p> </note>",
@@ -863,13 +830,11 @@
     },
     "GetJobQueueSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobQueueSnapshotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Host": {
       "base": "<p>Determine whether your data volume persists on the host container instance and where it's stored. If this parameter is empty, then the Docker daemon assigns a host path for your data volume. However, the data isn't guaranteed to persist after the containers that are associated with it stop running.</p>",
@@ -899,7 +864,7 @@
     "ImageType": {
       "base": null,
       "refs": {
-        "Ec2Configuration$imageType": "<p>The image type to match with the instance type to select an AMI. The supported values are different for <code>ECS</code> and <code>EKS</code> resources.</p> <dl> <dt>ECS</dt> <dd> <p>If the <code>imageIdOverride</code> parameter isn't specified, then a recent <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#al2ami\">Amazon ECS-optimized Amazon Linux 2 AMI</a> (<code>ECS_AL2</code>) is used. If a new image type is specified in an update, but neither an <code>imageId</code> nor a <code>imageIdOverride</code> parameter is specified, then the latest Amazon ECS optimized AMI for that image type that's supported by Batch is used.</p> <dl> <dt>ECS_AL2</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#al2ami\">Amazon Linux 2</a>: Default for all non-GPU instance families.</p> </dd> <dt>ECS_AL2_NVIDIA</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#gpuami\">Amazon Linux 2 (GPU)</a>: Default for all GPU instance families (for example <code>P4</code> and <code>G4</code>) and can be used for all non Amazon Web Services Graviton-based instance types.</p> </dd> <dt>ECS_AL2023</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html\">Amazon Linux 2023</a>: Batch supports Amazon Linux 2023.</p> <note> <p>Amazon Linux 2023 does not support <code>A1</code> instances.</p> </note> </dd> <dt>ECS_AL1</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#alami\">Amazon Linux</a>. Amazon Linux has reached the end-of-life of standard support. For more information, see <a href=\"http://aws.amazon.com/amazon-linux-ami/\">Amazon Linux AMI</a>.</p> </dd> </dl> </dd> <dt>EKS</dt> <dd> <p>If the <code>imageIdOverride</code> parameter isn't specified, then a recent <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon EKS-optimized Amazon Linux AMI</a> (<code>EKS_AL2</code>) is used. If a new image type is specified in an update, but neither an <code>imageId</code> nor a <code>imageIdOverride</code> parameter is specified, then the latest Amazon EKS optimized AMI for that image type that Batch supports is used.</p> <dl> <dt>EKS_AL2</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon Linux 2</a>: Default for all non-GPU instance families.</p> </dd> <dt>EKS_AL2_NVIDIA</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon Linux 2 (accelerated)</a>: Default for all GPU instance families (for example, <code>P4</code> and <code>G4</code>) and can be used for all non Amazon Web Services Graviton-based instance types.</p> </dd> </dl> </dd> </dl>"
+        "Ec2Configuration$imageType": "<p>The image type to match with the instance type to select an AMI. The supported values are different for <code>ECS</code> and <code>EKS</code> resources.</p> <dl> <dt>ECS</dt> <dd> <p>If the <code>imageIdOverride</code> parameter isn't specified, then a recent <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#al2ami\">Amazon ECS-optimized Amazon Linux 2 AMI</a> (<code>ECS_AL2</code>) is used. If a new image type is specified in an update, but neither an <code>imageId</code> nor a <code>imageIdOverride</code> parameter is specified, then the latest Amazon ECS optimized AMI for that image type that's supported by Batch is used.</p> <dl> <dt>ECS_AL2</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#al2ami\">Amazon Linux 2</a>: Default for all non-GPU instance families.</p> </dd> <dt>ECS_AL2_NVIDIA</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#gpuami\">Amazon Linux 2 (GPU)</a>: Default for all GPU instance families (for example <code>P4</code> and <code>G4</code>) and can be used for all non Amazon Web Services Graviton-based instance types.</p> </dd> <dt>ECS_AL2023</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html\">Amazon Linux 2023</a>: Batch supports Amazon Linux 2023.</p> <note> <p>Amazon Linux 2023 does not support <code>A1</code> instances.</p> </note> </dd> <dt>ECS_AL1</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#alami\">Amazon Linux</a>. Amazon Linux has reached the end-of-life of standard support. For more information, see <a href=\"http://aws.amazon.com/amazon-linux-ami/\">Amazon Linux AMI</a>.</p> </dd> </dl> </dd> <dt>EKS</dt> <dd> <p>If the <code>imageIdOverride</code> parameter isn't specified, then a recent <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon EKS-optimized Amazon Linux AMI</a> (<code>EKS_AL2</code>) is used. If a new image type is specified in an update, but neither an <code>imageId</code> nor a <code>imageIdOverride</code> parameter is specified, then the latest Amazon EKS optimized AMI for that image type that Batch supports is used.</p> <dl> <dt>EKS_AL2</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon Linux 2</a>: Default for all non-GPU instance families.</p> </dd> <dt>EKS_AL2_NVIDIA</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon Linux 2 (accelerated)</a>: Default for all GPU instance families (for example, <code>P4</code> and <code>G4</code>) and can be used for all non Amazon Web Services Graviton-based instance types.</p> </dd> <dt>EKS_AL2023</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon Linux 2023</a>: Batch supports Amazon Linux 2023.</p> <note> <p>Amazon Linux 2023 does not support <code>A1</code> instances.</p> </note> </dd> <dt>EKS_AL2023_NVIDIA</dt> <dd> <p> <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/eks-optimized-ami.html\">Amazon Linux 2023 (accelerated)</a>: GPU instance families and can be used for all non Amazon Web Services Graviton-based instance types.</p> </dd> </dl> </dd> </dl>"
       }
     },
     "Integer": {
@@ -1171,13 +1136,11 @@
     },
     "ListConsumableResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConsumableResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEcsTaskDetails": {
       "base": null,
@@ -1199,13 +1162,11 @@
     },
     "ListJobsByConsumableResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsByConsumableResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsByConsumableResourceSummary": {
       "base": "<p>Current information about a consumable resource required by a job.</p>",
@@ -1227,33 +1188,27 @@
     },
     "ListJobsRequest": {
       "base": "<p>Contains the parameters for <code>ListJobs</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchedulingPoliciesRequest": {
       "base": "<p>Contains the parameters for <code>ListSchedulingPolicies</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchedulingPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": "<p>Contains the parameters for <code>ListTagsForResource</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTaskContainerDetails": {
       "base": null,
@@ -1461,13 +1416,11 @@
     },
     "RegisterJobDefinitionRequest": {
       "base": "<p>Contains the parameters for <code>RegisterJobDefinition</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterJobDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RepositoryCredentials": {
       "base": "<p>The repository credentials for private registry authentication.</p>",
@@ -1567,8 +1520,7 @@
     },
     "ServerException": {
       "base": "<p>These errors are usually caused by a server issue.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ShareAttributes": {
       "base": "<p>Specifies the weights for the share identifiers for the fair-share policy. Share identifiers that aren't included have a default weight of <code>1.0</code>.</p>",
@@ -1893,13 +1845,11 @@
     },
     "SubmitJobRequest": {
       "base": "<p>Contains the parameters for <code>SubmitJob</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SubmitJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagKey": {
       "base": null,
@@ -1916,13 +1866,11 @@
     },
     "TagResourceRequest": {
       "base": "<p>Contains the parameters for <code>TagResource</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1995,13 +1943,11 @@
     },
     "TerminateJobRequest": {
       "base": "<p>Contains the parameters for <code>TerminateJob</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TerminateJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Tmpfs": {
       "base": "<p>The container path, mount options, and size of the <code>tmpfs</code> mount.</p> <note> <p>This object isn't applicable to jobs that are running on Fargate resources.</p> </note>",
@@ -2032,43 +1978,35 @@
     },
     "UntagResourceRequest": {
       "base": "<p>Contains the parameters for <code>UntagResource</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateComputeEnvironmentRequest": {
       "base": "<p>Contains the parameters for <code>UpdateComputeEnvironment</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateComputeEnvironmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConsumableResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConsumableResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateJobQueueRequest": {
       "base": "<p>Contains the parameters for <code>UpdateJobQueue</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateJobQueueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePolicy": {
       "base": "<p>Specifies the infrastructure update policy for the Amazon EC2 compute environment. For more information about infrastructure updates, see <a href=\"https://docs.aws.amazon.com/batch/latest/userguide/updating-compute-environments.html\">Updating compute environments</a> in the <i>Batch User Guide</i>.</p>",
@@ -2079,12 +2017,17 @@
     },
     "UpdateSchedulingPolicyRequest": {
       "base": "<p>Contains the parameters for <code>UpdateSchedulingPolicy</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSchedulingPolicyResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UserdataType": {
+      "base": null,
       "refs": {
+        "LaunchTemplateSpecification$userdataType": "<p>The EKS node initialization process to use. You only need to specify this value if you are using a custom AMI. The default value is <code>EKS_BOOTSTRAP_SH</code>. If <i>imageType</i> is a custom AMI based on EKS_AL2023 or EKS_AL2023_NVIDIA then you must choose <code>EKS_NODEADM</code>.</p>",
+        "LaunchTemplateSpecificationOverride$userdataType": "<p>The EKS node initialization process to use. You only need to specify this value if you are using a custom AMI. The default value is <code>EKS_BOOTSTRAP_SH</code>. If <i>imageType</i> is a custom AMI based on EKS_AL2023 or EKS_AL2023_NVIDIA then you must choose <code>EKS_NODEADM</code>.</p>"
       }
     },
     "Volume": {

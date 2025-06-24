@@ -567,8 +567,7 @@
     },
     "CancelJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ClientException":{
       "type":"structure",
@@ -916,8 +915,7 @@
     },
     "DeleteComputeEnvironmentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConsumableResourceRequest":{
       "type":"structure",
@@ -928,8 +926,7 @@
     },
     "DeleteConsumableResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteJobQueueRequest":{
       "type":"structure",
@@ -940,8 +937,7 @@
     },
     "DeleteJobQueueResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSchedulingPolicyRequest":{
       "type":"structure",
@@ -952,8 +948,7 @@
     },
     "DeleteSchedulingPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterJobDefinitionRequest":{
       "type":"structure",
@@ -964,8 +959,7 @@
     },
     "DeregisterJobDefinitionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeComputeEnvironmentsRequest":{
       "type":"structure",
@@ -1816,7 +1810,8 @@
         "launchTemplateId":{"shape":"String"},
         "launchTemplateName":{"shape":"String"},
         "version":{"shape":"String"},
-        "overrides":{"shape":"LaunchTemplateSpecificationOverrideList"}
+        "overrides":{"shape":"LaunchTemplateSpecificationOverrideList"},
+        "userdataType":{"shape":"UserdataType"}
       }
     },
     "LaunchTemplateSpecificationOverride":{
@@ -1825,7 +1820,8 @@
         "launchTemplateId":{"shape":"String"},
         "launchTemplateName":{"shape":"String"},
         "version":{"shape":"String"},
-        "targetInstanceTypes":{"shape":"StringList"}
+        "targetInstanceTypes":{"shape":"StringList"},
+        "userdataType":{"shape":"UserdataType"}
       }
     },
     "LaunchTemplateSpecificationOverrideList":{
@@ -2377,8 +2373,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2484,8 +2479,7 @@
     },
     "TerminateJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Tmpfs":{
       "type":"structure",
@@ -2541,8 +2535,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateComputeEnvironmentRequest":{
       "type":"structure",
@@ -2625,8 +2618,14 @@
     },
     "UpdateSchedulingPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
+    },
+    "UserdataType":{
+      "type":"string",
+      "enum":[
+        "EKS_BOOTSTRAP_SH",
+        "EKS_NODEADM"
+      ]
     },
     "Volume":{
       "type":"structure",

@@ -5,6 +5,7 @@
     "BatchDeleteEvaluationJob": "<p>Deletes a batch of evaluation jobs. An evaluation job can only be deleted if it has following status <code>FAILED</code>, <code>COMPLETED</code>, and <code>STOPPED</code>. You can request up to 25 model evaluation jobs be deleted in a single request.</p>",
     "CreateCustomModel": "<p>Creates a new custom model in Amazon Bedrock. After the model is active, you can use it for inference.</p> <p>To use the model for inference, you must purchase Provisioned Throughput for it. You can't use On-demand inference with these custom models. For more information about Provisioned Throughput, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a>.</p> <p>The model appears in <code>ListCustomModels</code> with a <code>customizationType</code> of <code>imported</code>. To track the status of the new model, you use the <code>GetCustomModel</code> API operation. The model can be in the following states:</p> <ul> <li> <p> <code>Creating</code> - Initial state during validation and registration</p> </li> <li> <p> <code>Active</code> - Model is ready for use in inference</p> </li> <li> <p> <code>Failed</code> - Creation process encountered an error</p> </li> </ul> <p> <b>Related APIs</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModel.html\">GetCustomModel</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModels.html\">ListCustomModels</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModel.html\">DeleteCustomModel</a> </p> </li> </ul>",
     "CreateEvaluationJob": "<p>Creates an evaluation job.</p>",
+    "CreateFoundationModelAgreement": "<p>Request a model access agreement for the specified model.</p>",
     "CreateGuardrail": "<p>Creates a guardrail to block topics and to implement safeguards for your generative AI applications.</p> <p>You can configure the following policies in a guardrail to avoid undesirable and harmful content, filter out denied topics and words, and remove sensitive information for privacy protection.</p> <ul> <li> <p> <b>Content filters</b> - Adjust filter strengths to block input prompts or model responses containing harmful content.</p> </li> <li> <p> <b>Denied topics</b> - Define a set of topics that are undesirable in the context of your application. These topics will be blocked if detected in user queries or model responses.</p> </li> <li> <p> <b>Word filters</b> - Configure filters to block undesirable words, phrases, and profanity. Such words can include offensive terms, competitor names etc.</p> </li> <li> <p> <b>Sensitive information filters</b> - Block or mask sensitive information such as personally identifiable information (PII) or custom regex in user inputs and model responses.</p> </li> </ul> <p>In addition to the above policies, you can also configure the messages to be returned to the user if a user input or model response is in violation of the policies defined in the guardrail.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html\">Amazon Bedrock Guardrails</a> in the <i>Amazon Bedrock User Guide</i>.</p>",
     "CreateGuardrailVersion": "<p>Creates a version of the guardrail. Use this API to create a snapshot of the guardrail when you are satisfied with a configuration, or to compare the configuration with another version.</p>",
     "CreateInferenceProfile": "<p>Creates an application inference profile to track metrics and costs when invoking a model. To create an application inference profile for a foundation model in one region, specify the ARN of the model in that region. To create an application inference profile for a foundation model across multiple regions, specify the ARN of the system-defined inference profile that contains the regions that you want to route requests to. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
@@ -16,6 +17,7 @@
     "CreatePromptRouter": "<p>Creates a prompt router that manages the routing of requests between multiple foundation models based on the routing criteria.</p>",
     "CreateProvisionedModelThroughput": "<p>Creates dedicated throughput for a base or custom model with the model units and for the duration that you specify. For pricing details, see <a href=\"http://aws.amazon.com/bedrock/pricing/\">Amazon Bedrock Pricing</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteCustomModel": "<p>Deletes a custom model that you created earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "DeleteFoundationModelAgreement": "<p>Delete the model access agreement for the specified model.</p>",
     "DeleteGuardrail": "<p>Deletes a guardrail.</p> <ul> <li> <p>To delete a guardrail, only specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field. If you delete a guardrail, all of its versions will be deleted.</p> </li> <li> <p>To delete a version of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field and the version in the <code>guardrailVersion</code> field.</p> </li> </ul>",
     "DeleteImportedModel": "<p>Deletes a custom model that you imported earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>. </p>",
     "DeleteInferenceProfile": "<p>Deletes an application inference profile. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
@@ -27,6 +29,7 @@
     "GetCustomModel": "<p>Get the properties associated with a Amazon Bedrock custom model that you have created. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetEvaluationJob": "<p>Gets information about an evaluation job, such as the status of the job.</p>",
     "GetFoundationModel": "<p>Get details about a Amazon Bedrock foundation model.</p>",
+    "GetFoundationModelAvailability": "<p>Get information about the Foundation model availability.</p>",
     "GetGuardrail": "<p>Gets details about a guardrail. If you don't specify a version, the response returns details for the <code>DRAFT</code> version.</p>",
     "GetImportedModel": "<p>Gets properties associated with a customized model you imported. </p>",
     "GetInferenceProfile": "<p>Gets information about an inference profile. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">Increase throughput and resilience with cross-region inference in Amazon Bedrock</a>. in the Amazon Bedrock User Guide.</p>",
@@ -38,8 +41,10 @@
     "GetModelInvocationLoggingConfiguration": "<p>Get the current configuration values for model invocation logging.</p>",
     "GetPromptRouter": "<p>Retrieves details about a prompt router.</p>",
     "GetProvisionedModelThroughput": "<p>Returns details for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "GetUseCaseForModelAccess": "<p>Get usecase for model access.</p>",
     "ListCustomModels": "<p>Returns a list of the custom models that you have created with the <code>CreateModelCustomizationJob</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListEvaluationJobs": "<p>Lists all existing evaluation jobs.</p>",
+    "ListFoundationModelAgreementOffers": "<p>Get the offers associated with the specified model.</p>",
     "ListFoundationModels": "<p>Lists Amazon Bedrock foundation models that you can use. You can filter the results with the request parameters. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/foundation-models.html\">Foundation models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListGuardrails": "<p>Lists details about all the guardrails in an account. To list the <code>DRAFT</code> version of all your guardrails, don't specify the <code>guardrailIdentifier</code> field. To list all versions of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field.</p> <p>You can set the maximum number of results to return in a response in the <code>maxResults</code> field. If there are more results than the number you set, the response returns a <code>nextToken</code> that you can send in another <code>ListGuardrails</code> request to see the next batch of results.</p>",
     "ListImportedModels": "<p>Returns a list of models you've imported. You can filter the results to return based on one or more criteria. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
@@ -53,6 +58,7 @@
     "ListProvisionedModelThroughputs": "<p>Lists the Provisioned Throughputs in the account. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListTagsForResource": "<p>List the tags associated with the specified resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
+    "PutUseCaseForModelAccess": "<p>Put usecase for model access.</p>",
     "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
     "StopEvaluationJob": "<p>Stops an evaluation job that is current being created or running.</p>",
     "StopModelCustomizationJob": "<p>Stops an active model customization job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
@@ -86,6 +92,13 @@
         "ModelInvocationJobS3OutputDataConfig$s3BucketOwner": "<p>The ID of the Amazon Web Services account that owns the S3 bucket containing the output data.</p>"
       }
     },
+    "AcknowledgementFormDataBody": {
+      "base": null,
+      "refs": {
+        "GetUseCaseForModelAccessResponse$formData": "<p>Get customer profile Response.</p>",
+        "PutUseCaseForModelAccessRequest$formData": "<p>Put customer profile Request.</p>"
+      }
+    },
     "AdditionalModelRequestFields": {
       "base": null,
       "refs": {
@@ -103,6 +116,18 @@
       "base": null,
       "refs": {
         "AdditionalModelRequestFields$value": null
+      }
+    },
+    "AgreementAvailability": {
+      "base": "<p>Information about the agreement availability</p>",
+      "refs": {
+        "GetFoundationModelAvailabilityResponse$agreementAvailability": "<p>Agreement availability. </p>"
+      }
+    },
+    "AgreementStatus": {
+      "base": null,
+      "refs": {
+        "AgreementAvailability$status": "<p>Status of the agreement.</p>"
       }
     },
     "ApplicationType": {
@@ -124,6 +149,12 @@
         "MarketplaceModelEndpointSummary$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
         "RegisterMarketplaceModelEndpointRequest$endpointIdentifier": "<p>The ARN of the Amazon SageMaker endpoint you want to register with Amazon Bedrock Marketplace.</p>",
         "UpdateMarketplaceModelEndpointRequest$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint you want to update.</p>"
+      }
+    },
+    "AuthorizationStatus": {
+      "base": null,
+      "refs": {
+        "GetFoundationModelAvailabilityResponse$authorizationStatus": "<p>Authorization status.</p>"
       }
     },
     "AutomatedEvaluationConfig": {
@@ -212,8 +243,15 @@
     "BedrockModelId": {
       "base": null,
       "refs": {
+        "CreateFoundationModelAgreementRequest$modelId": "<p>Model Id of the model for the access request.</p>",
+        "CreateFoundationModelAgreementResponse$modelId": "<p>Model Id of the model for the access request.</p>",
+        "DeleteFoundationModelAgreementRequest$modelId": "<p>Model Id of the model access to delete.</p>",
         "FoundationModelDetails$modelId": "<p>The model identifier.</p>",
-        "FoundationModelSummary$modelId": "<p>The model ID of the foundation model.</p>"
+        "FoundationModelSummary$modelId": "<p>The model ID of the foundation model.</p>",
+        "GetFoundationModelAvailabilityRequest$modelId": "<p>The model Id of the foundation model.</p>",
+        "GetFoundationModelAvailabilityResponse$modelId": "<p>The model Id of the foundation model.</p>",
+        "ListFoundationModelAgreementOffersRequest$modelId": "<p>Model Id of the foundation model.</p>",
+        "ListFoundationModelAgreementOffersResponse$modelId": "<p>Model Id of the foundation model.</p>"
       }
     },
     "Boolean": {
@@ -322,6 +360,16 @@
       }
     },
     "CreateEvaluationJobResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateFoundationModelAgreementRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateFoundationModelAgreementResponse": {
       "base": null,
       "refs": {
       }
@@ -542,6 +590,16 @@
       "refs": {
       }
     },
+    "DeleteFoundationModelAgreementRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteFoundationModelAgreementResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteGuardrailRequest": {
       "base": null,
       "refs": {
@@ -622,6 +680,12 @@
       "refs": {
       }
     },
+    "DimensionalPriceRate": {
+      "base": "<p>Dimensional price rate.</p>",
+      "refs": {
+        "RateCard$member": null
+      }
+    },
     "DistillationConfig": {
       "base": "<p>Settings for distilling a foundation model into a smaller and more efficient model.</p>",
       "refs": {
@@ -640,6 +704,12 @@
       "base": null,
       "refs": {
         "CreateMarketplaceModelEndpointRequest$endpointName": "<p>The name of the endpoint. This name must be unique within your Amazon Web Services account and region.</p>"
+      }
+    },
+    "EntitlementAvailability": {
+      "base": null,
+      "refs": {
+        "GetFoundationModelAvailabilityResponse$entitlementAvailability": "<p>Entitlement availability. </p>"
       }
     },
     "ErrorMessage": {
@@ -1092,6 +1162,16 @@
       "refs": {
       }
     },
+    "GetFoundationModelAvailabilityRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetFoundationModelAvailabilityResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetFoundationModelRequest": {
       "base": null,
       "refs": {
@@ -1208,6 +1288,16 @@
       }
     },
     "GetProvisionedModelThroughputResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetUseCaseForModelAccessRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetUseCaseForModelAccessResponse": {
       "base": null,
       "refs": {
       }
@@ -2202,6 +2292,12 @@
         "KnowledgeBaseVectorSearchConfiguration$numberOfResults": "<p>The number of text chunks to retrieve; the number of results to return.</p>"
       }
     },
+    "LegalTerm": {
+      "base": "<p>The legal term of the agreement.</p>",
+      "refs": {
+        "TermDetails$legalTerm": "<p>Describes the legal terms.</p>"
+      }
+    },
     "ListCustomModelsRequest": {
       "base": null,
       "refs": {
@@ -2218,6 +2314,16 @@
       }
     },
     "ListEvaluationJobsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFoundationModelAgreementOffersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFoundationModelAgreementOffersResponse": {
       "base": null,
       "refs": {
       }
@@ -2735,6 +2841,37 @@
         "ValidationException$message": null
       }
     },
+    "Offer": {
+      "base": "<p>An offer dictates usage terms for the model.</p>",
+      "refs": {
+        "Offers$member": null
+      }
+    },
+    "OfferId": {
+      "base": null,
+      "refs": {
+        "Offer$offerId": "<p>Offer Id for a model offer.</p>"
+      }
+    },
+    "OfferToken": {
+      "base": null,
+      "refs": {
+        "CreateFoundationModelAgreementRequest$offerToken": "<p>An offer token encapsulates the information for an offer.</p>",
+        "Offer$offerToken": "<p>Offer token.</p>"
+      }
+    },
+    "OfferType": {
+      "base": null,
+      "refs": {
+        "ListFoundationModelAgreementOffersRequest$offerType": "<p>Type of offer associated with the model.</p>"
+      }
+    },
+    "Offers": {
+      "base": null,
+      "refs": {
+        "ListFoundationModelAgreementOffersResponse$offers": "<p>List of the offers associated with the specified model.</p>"
+      }
+    },
     "OrchestrationConfiguration": {
       "base": "<p>The configuration details for the model to process the prompt prior to retrieval and response generation.</p>",
       "refs": {
@@ -2798,6 +2935,12 @@
         "GetProvisionedModelThroughputResponse$desiredModelUnits": "<p>The number of model units that was requested for this Provisioned Throughput.</p>",
         "ProvisionedModelSummary$modelUnits": "<p>The number of model units allocated to the Provisioned Throughput.</p>",
         "ProvisionedModelSummary$desiredModelUnits": "<p>The number of model units that was requested to be allocated to the Provisioned Throughput.</p>"
+      }
+    },
+    "PricingTerm": {
+      "base": "<p>Describes the usage-based pricing term.</p>",
+      "refs": {
+        "TermDetails$usageBasedPricingTerm": null
       }
     },
     "PromptRouterArn": {
@@ -2945,6 +3088,16 @@
       "refs": {
       }
     },
+    "PutUseCaseForModelAccessRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutUseCaseForModelAccessResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "QueryTransformationConfiguration": {
       "base": "<p>The configuration details for transforming the prompt.</p>",
       "refs": {
@@ -2981,6 +3134,12 @@
         "EvaluationInferenceConfig$ragConfigs": "<p>Contains the configuration details of the inference for a knowledge base evaluation job, including either the retrieval only configuration or the retrieval with response generation configuration.</p>"
       }
     },
+    "RateCard": {
+      "base": null,
+      "refs": {
+        "PricingTerm$rateCard": "<p>Describes a usage price for each dimension.</p>"
+      }
+    },
     "RatingScale": {
       "base": null,
       "refs": {
@@ -3009,6 +3168,12 @@
       "base": null,
       "refs": {
         "RatingScaleItemValue$stringValue": "<p>A string representing the value for a rating in a custom metric rating scale.</p>"
+      }
+    },
+    "RegionAvailability": {
+      "base": null,
+      "refs": {
+        "GetFoundationModelAvailabilityResponse$regionAvailability": "<p>Region availability. </p>"
       }
     },
     "RegisterMarketplaceModelEndpointRequest": {
@@ -3291,15 +3456,23 @@
     "String": {
       "base": null,
       "refs": {
+        "AgreementAvailability$errorMessage": "<p>Error message.</p>",
         "BatchDeleteEvaluationJobError$code": "<p>A HTTP status code of the evaluation job being deleted.</p>",
         "BatchDeleteEvaluationJobError$message": "<p>A status message about the evaluation job deletion.</p>",
+        "DimensionalPriceRate$dimension": "<p>Dimension for the price rate.</p>",
+        "DimensionalPriceRate$price": "<p>Single-dimensional rate information.</p>",
+        "DimensionalPriceRate$description": "<p>Description of the price rate.</p>",
+        "DimensionalPriceRate$unit": "<p>Unit associated with the price.</p>",
         "GetImportedModelResponse$modelArchitecture": "<p>The architecture of the imported model.</p>",
+        "LegalTerm$url": "<p>URL to the legal term document.</p>",
         "MarketplaceModelEndpoint$statusMessage": "<p>Additional information about the overall status, if available.</p>",
         "MarketplaceModelEndpoint$endpointStatus": "<p>The current status of the endpoint (e.g., Creating, InService, Updating, Failed).</p>",
         "MarketplaceModelEndpoint$endpointStatusMessage": "<p>Additional information about the endpoint status, if available.</p>",
         "MarketplaceModelEndpointSummary$statusMessage": "<p>Additional information about the overall status, if available.</p>",
         "ModelCustomizationHyperParameters$key": null,
-        "ModelCustomizationHyperParameters$value": null
+        "ModelCustomizationHyperParameters$value": null,
+        "SupportTerm$refundPolicyDescription": "<p>Describes the refund policy.</p>",
+        "ValidityTerm$agreementDuration": "<p>Describes the agreement duration.</p>"
       }
     },
     "SubnetId": {
@@ -3312,6 +3485,12 @@
       "base": null,
       "refs": {
         "VpcConfig$subnetIds": "<p>An array of IDs for each subnet in the VPC to use.</p>"
+      }
+    },
+    "SupportTerm": {
+      "base": "<p>Describes a support term.</p>",
+      "refs": {
+        "TermDetails$supportTerm": "<p>Describes the support terms.</p>"
       }
     },
     "Tag": {
@@ -3396,6 +3575,12 @@
       "base": null,
       "refs": {
         "TextInferenceConfig$temperature": "<p>Controls the random-ness of text generated by the language model, influencing how much the model sticks to the most predictable next words versus exploring more surprising options. A lower temperature value (e.g. 0.2 or 0.3) makes model outputs more deterministic or predictable, while a higher temperature (e.g. 0.8 or 0.9) makes the outputs more creative or unpredictable.</p>"
+      }
+    },
+    "TermDetails": {
+      "base": "<p>Describes the usage terms of an offer.</p>",
+      "refs": {
+        "Offer$termDetails": "<p>Details about the terms of the offer.</p>"
       }
     },
     "TextInferenceConfig": {
@@ -3615,6 +3800,12 @@
       "base": null,
       "refs": {
         "ValidationDataConfig$validators": "<p>Information about the validators.</p>"
+      }
+    },
+    "ValidityTerm": {
+      "base": "<p>Describes the validity terms.</p>",
+      "refs": {
+        "TermDetails$validityTerm": "<p>Describes the validity terms.</p>"
       }
     },
     "VpcConfig": {

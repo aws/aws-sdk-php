@@ -1896,8 +1896,7 @@
     },
     "AcceptMatchOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AcceptanceType":{
       "type":"string",
@@ -2848,8 +2847,7 @@
     },
     "CreateVpcPeeringConnectionOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CustomEventData":{
       "type":"string",
@@ -2891,8 +2889,7 @@
     },
     "DeleteContainerFleetOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContainerGroupDefinitionInput":{
       "type":"structure",
@@ -2905,8 +2902,7 @@
     },
     "DeleteContainerGroupDefinitionOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFleetInput":{
       "type":"structure",
@@ -2957,8 +2953,7 @@
     },
     "DeleteGameSessionQueueOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLocationInput":{
       "type":"structure",
@@ -2969,8 +2964,7 @@
     },
     "DeleteLocationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMatchmakingConfigurationInput":{
       "type":"structure",
@@ -2981,8 +2975,7 @@
     },
     "DeleteMatchmakingConfigurationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMatchmakingRuleSetInput":{
       "type":"structure",
@@ -2993,8 +2986,7 @@
     },
     "DeleteMatchmakingRuleSetOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteScalingPolicyInput":{
       "type":"structure",
@@ -3027,8 +3019,7 @@
     },
     "DeleteVpcPeeringAuthorizationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVpcPeeringConnectionInput":{
       "type":"structure",
@@ -3043,8 +3034,7 @@
     },
     "DeleteVpcPeeringConnectionOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeploymentConfiguration":{
       "type":"structure",
@@ -3105,8 +3095,7 @@
     },
     "DeregisterComputeOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterGameServerInput":{
       "type":"structure",
@@ -3591,8 +3580,7 @@
     },
     "DescribeVpcPeeringAuthorizationsInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeVpcPeeringAuthorizationsOutput":{
       "type":"structure",
@@ -5522,7 +5510,8 @@
       "type":"structure",
       "members":{
         "LocationName":{"shape":"LocationStringModel"},
-        "LocationArn":{"shape":"LocationArnModel"}
+        "LocationArn":{"shape":"LocationArnModel"},
+        "PingBeacon":{"shape":"PingBeacon"}
       }
     },
     "LocationModelList":{
@@ -5835,6 +5824,12 @@
         "Message":{"shape":"NonEmptyString"}
       },
       "exception":true
+    },
+    "PingBeacon":{
+      "type":"structure",
+      "members":{
+        "UDPEndpoint":{"shape":"UDPEndpoint"}
+      }
     },
     "PlacedPlayerSession":{
       "type":"structure",
@@ -6471,8 +6466,7 @@
     },
     "StopMatchmakingOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StringList":{
       "type":"list",
@@ -6584,8 +6578,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -6645,6 +6638,13 @@
       ]
     },
     "Timestamp":{"type":"timestamp"},
+    "UDPEndpoint":{
+      "type":"structure",
+      "members":{
+        "Domain":{"shape":"NonZeroAndMaxString"},
+        "Port":{"shape":"PositiveInteger"}
+      }
+    },
     "UnauthorizedException":{
       "type":"structure",
       "members":{
@@ -6672,8 +6672,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAliasInput":{
       "type":"structure",

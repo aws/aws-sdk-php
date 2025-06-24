@@ -946,7 +946,7 @@
     "Arn":{
       "type":"string",
       "max":2048,
-      "pattern":"^arn:aws(-(cn|us-gov|iso-b|iso-c|iso-d))?:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
+      "pattern":"^arn:aws[a-zA-Z-]*:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}$"
     },
     "ArnList":{
       "type":"list",
@@ -990,8 +990,7 @@
     },
     "CheckInLicenseResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CheckoutBorrowLicenseRequest":{
       "type":"structure",
@@ -1353,8 +1352,7 @@
     },
     "DeleteLicenseConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLicenseManagerReportGeneratorRequest":{
       "type":"structure",
@@ -1365,8 +1363,7 @@
     },
     "DeleteLicenseManagerReportGeneratorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLicenseRequest":{
       "type":"structure",
@@ -1395,8 +1392,7 @@
     },
     "DeleteTokenResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DigitalSignatureMethod":{
       "type":"string",
@@ -1697,8 +1693,7 @@
     },
     "GetServiceSettingsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetServiceSettingsResponse":{
       "type":"structure",
@@ -1924,7 +1919,8 @@
     "LicenseConversionContext":{
       "type":"structure",
       "members":{
-        "UsageOperation":{"shape":"UsageOperation"}
+        "UsageOperation":{"shape":"UsageOperation"},
+        "ProductCodes":{"shape":"ProductCodeList"}
       }
     },
     "LicenseConversionTask":{
@@ -2360,6 +2356,29 @@
       "max":1,
       "min":1
     },
+    "ProductCodeId":{
+      "type":"string",
+      "pattern":"^[A-Za-z0-9]{1,25}$"
+    },
+    "ProductCodeList":{
+      "type":"list",
+      "member":{"shape":"ProductCodeListItem"}
+    },
+    "ProductCodeListItem":{
+      "type":"structure",
+      "required":[
+        "ProductCodeId",
+        "ProductCodeType"
+      ],
+      "members":{
+        "ProductCodeId":{"shape":"ProductCodeId"},
+        "ProductCodeType":{"shape":"ProductCodeType"}
+      }
+    },
+    "ProductCodeType":{
+      "type":"string",
+      "enum":["marketplace"]
+    },
     "ProductInformation":{
       "type":"structure",
       "required":[
@@ -2613,8 +2632,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TokenData":{
       "type":"structure",
@@ -2661,8 +2679,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLicenseConfigurationRequest":{
       "type":"structure",
@@ -2681,8 +2698,7 @@
     },
     "UpdateLicenseConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLicenseManagerReportGeneratorRequest":{
       "type":"structure",
@@ -2706,8 +2722,7 @@
     },
     "UpdateLicenseManagerReportGeneratorResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLicenseSpecificationsForResourceRequest":{
       "type":"structure",
@@ -2720,8 +2735,7 @@
     },
     "UpdateLicenseSpecificationsForResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateServiceSettingsRequest":{
       "type":"structure",
@@ -2734,8 +2748,7 @@
     },
     "UpdateServiceSettingsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UsageOperation":{
       "type":"string",
