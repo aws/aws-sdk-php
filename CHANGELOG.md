@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.347.2 - 2025-06-25
 
 * `Aws\ECS` - Updates for change to Amazon ECS default log driver mode from blocking to non-blocking
 * `Aws\Textract` - Add RotationAngle field to Geometry of WORD blocks for Textract AnalyzeDocument API
