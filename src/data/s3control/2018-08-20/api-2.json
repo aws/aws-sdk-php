@@ -1707,11 +1707,17 @@
         "Name":{"shape":"AccessPointName"},
         "NetworkOrigin":{"shape":"NetworkOrigin"},
         "VpcConfiguration":{"shape":"VpcConfiguration"},
-        "Bucket":{"shape":"BucketName"},
+        "Bucket":{"shape":"AccessPointBucketName"},
         "AccessPointArn":{"shape":"S3AccessPointArn"},
         "Alias":{"shape":"Alias"},
-        "BucketAccountId":{"shape":"AccountId"}
+        "BucketAccountId":{"shape":"AccountId"},
+        "DataSourceId":{"shape":"DataSourceId"},
+        "DataSourceType":{"shape":"DataSourceType"}
       }
+    },
+    "AccessPointBucketName":{
+      "type":"string",
+      "max":255
     },
     "AccessPointList":{
       "type":"list",
@@ -2302,6 +2308,11 @@
       },
       "sensitive":true
     },
+    "DataSourceId":{
+      "type":"string",
+      "max":191
+    },
+    "DataSourceType":{"type":"string"},
     "Date":{"type":"timestamp"},
     "Days":{"type":"integer"},
     "DaysAfterInitiation":{"type":"integer"},
@@ -3258,7 +3269,7 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"AccessPointName"},
-        "Bucket":{"shape":"BucketName"},
+        "Bucket":{"shape":"AccessPointBucketName"},
         "NetworkOrigin":{"shape":"NetworkOrigin"},
         "VpcConfiguration":{"shape":"VpcConfiguration"},
         "PublicAccessBlockConfiguration":{"shape":"PublicAccessBlockConfiguration"},
@@ -3266,7 +3277,9 @@
         "Alias":{"shape":"Alias"},
         "AccessPointArn":{"shape":"S3AccessPointArn"},
         "Endpoints":{"shape":"Endpoints"},
-        "BucketAccountId":{"shape":"AccountId"}
+        "BucketAccountId":{"shape":"AccountId"},
+        "DataSourceId":{"shape":"DataSourceId"},
+        "DataSourceType":{"shape":"DataSourceType"}
       }
     },
     "GetAccessPointScopeRequest":{
@@ -4534,6 +4547,16 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "DataSourceId":{
+          "shape":"DataSourceId",
+          "location":"querystring",
+          "locationName":"dataSourceId"
+        },
+        "DataSourceType":{
+          "shape":"DataSourceType",
+          "location":"querystring",
+          "locationName":"dataSourceType"
         }
       }
     },

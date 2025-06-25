@@ -6,6 +6,7 @@
     "CancelDataRepositoryTask": "<p>Cancels an existing Amazon FSx for Lustre data repository task if that task is in either the <code>PENDING</code> or <code>EXECUTING</code> state. When you cancel an export task, Amazon FSx does the following.</p> <ul> <li> <p>Any files that FSx has already exported are not reverted.</p> </li> <li> <p>FSx continues to export any files that are in-flight when the cancel operation is received.</p> </li> <li> <p>FSx does not export any files that have not yet been exported.</p> </li> </ul> <p>For a release task, Amazon FSx will stop releasing files upon cancellation. Any files that have already been released will remain in the released state.</p>",
     "CopyBackup": "<p>Copies an existing backup within the same Amazon Web Services account to another Amazon Web Services Region (cross-Region copy) or within the same Amazon Web Services Region (in-Region copy). You can have up to five backup copy requests in progress to a single destination Region per account.</p> <p>You can use cross-Region backup copies for cross-Region disaster recovery. You can periodically take backups and copy them to another Region so that in the event of a disaster in the primary Region, you can restore from backup and recover availability quickly in the other Region. You can make cross-Region copies only within your Amazon Web Services partition. A partition is a grouping of Regions. Amazon Web Services currently has three partitions: <code>aws</code> (Standard Regions), <code>aws-cn</code> (China Regions), and <code>aws-us-gov</code> (Amazon Web Services GovCloud [US] Regions).</p> <p>You can also use backup copies to clone your file dataset to another Region or within the same Region.</p> <p>You can use the <code>SourceRegion</code> parameter to specify the Amazon Web Services Region from which the backup will be copied. For example, if you make the call from the <code>us-west-1</code> Region and want to copy a backup from the <code>us-east-2</code> Region, you specify <code>us-east-2</code> in the <code>SourceRegion</code> parameter to make a cross-Region copy. If you don't specify a Region, the backup copy is created in the same Region where the request is sent from (in-Region copy).</p> <p>For more information about creating backup copies, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/using-backups.html#copy-backups\"> Copying backups</a> in the <i>Amazon FSx for Windows User Guide</i>, <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-backups-fsx.html#copy-backups\">Copying backups</a> in the <i>Amazon FSx for Lustre User Guide</i>, and <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/using-backups.html#copy-backups\">Copying backups</a> in the <i>Amazon FSx for OpenZFS User Guide</i>.</p>",
     "CopySnapshotAndUpdateVolume": "<p>Updates an existing volume by using a snapshot from another Amazon FSx for OpenZFS file system. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/on-demand-replication.html\">on-demand data replication</a> in the Amazon FSx for OpenZFS User Guide.</p>",
+    "CreateAndAttachS3AccessPoint": "<p>Creates an S3 access point and attaches it to an Amazon FSx volume. For FSx for OpenZFS file systems, the volume must be hosted on a high-availability file system, either Single-AZ or Multi-AZ. For more information, see <a href=\"fsx/latest/OpenZFSGuide/s3accesspoints-for-FSx.html\">Accessing your data using access points</a> in the Amazon FSx for OpenZFS User Guide. </p> <p>The requester requires the following permissions to perform these actions:</p> <ul> <li> <p> <code>fsx:CreateAndAttachS3AccessPoint</code> </p> </li> <li> <p> <code>s3:CreateAccessPoint</code> </p> </li> <li> <p> <code>s3:GetAccessPoint</code> </p> </li> <li> <p> <code>s3:PutAccessPointPolicy</code> </p> </li> <li> <p> <code>s3:DeleteAccessPoint</code> </p> </li> </ul> <p>The following actions are related to <code>CreateAndAttachS3AccessPoint</code>:</p> <ul> <li> <p> <a>DescribeS3AccessPointAttachments</a> </p> </li> <li> <p> <a>DetachAndDeleteS3AccessPoint</a> </p> </li> </ul>",
     "CreateBackup": "<p>Creates a backup of an existing Amazon FSx for Windows File Server file system, Amazon FSx for Lustre file system, Amazon FSx for NetApp ONTAP volume, or Amazon FSx for OpenZFS file system. We recommend creating regular backups so that you can restore a file system or volume from a backup if an issue arises with the original file system or volume.</p> <p>For Amazon FSx for Lustre file systems, you can create a backup only for file systems that have the following configuration:</p> <ul> <li> <p>A Persistent deployment type</p> </li> <li> <p>Are <i>not</i> linked to a data repository</p> </li> </ul> <p>For more information about backups, see the following:</p> <ul> <li> <p>For Amazon FSx for Lustre, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-backups-fsx.html\">Working with FSx for Lustre backups</a>.</p> </li> <li> <p>For Amazon FSx for Windows, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/using-backups.html\">Working with FSx for Windows backups</a>.</p> </li> <li> <p>For Amazon FSx for NetApp ONTAP, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/using-backups.html\">Working with FSx for NetApp ONTAP backups</a>.</p> </li> <li> <p>For Amazon FSx for OpenZFS, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/using-backups.html\">Working with FSx for OpenZFS backups</a>.</p> </li> </ul> <p>If a backup with the specified client request token exists and the parameters match, this operation returns the description of the existing backup. If a backup with the specified client request token exists and the parameters don't match, this operation returns <code>IncompatibleParameterError</code>. If a backup with the specified client request token doesn't exist, <code>CreateBackup</code> does the following: </p> <ul> <li> <p>Creates a new Amazon FSx backup with an assigned ID, and an initial lifecycle state of <code>CREATING</code>.</p> </li> <li> <p>Returns the description of the backup.</p> </li> </ul> <p>By using the idempotent operation, you can retry a <code>CreateBackup</code> operation without the risk of creating an extra backup. This approach can be useful when an initial call fails in a way that makes it unclear whether a backup was created. If you use the same client request token and the initial call created a backup, the operation returns a successful result because all the parameters are the same.</p> <p>The <code>CreateBackup</code> operation returns while the backup's lifecycle state is still <code>CREATING</code>. You can check the backup creation status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeBackups.html\">DescribeBackups</a> operation, which returns the backup state along with other information.</p>",
     "CreateDataRepositoryAssociation": "<p>Creates an Amazon FSx for Lustre data repository association (DRA). A data repository association is a link between a directory on the file system and an Amazon S3 bucket or prefix. You can have a maximum of 8 data repository associations on a file system. Data repository associations are supported on all FSx for Lustre 2.12 and 2.15 file systems, excluding <code>scratch_1</code> deployment type.</p> <p>Each data repository association must have a unique Amazon FSx file system directory and a unique S3 bucket or prefix associated with it. You can configure a data repository association for automatic import only, for automatic export only, or for both. To learn more about linking a data repository to your file system, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html\">Linking your file system to an S3 bucket</a>.</p> <note> <p> <code>CreateDataRepositoryAssociation</code> isn't supported on Amazon File Cache resources. To create a DRA on Amazon File Cache, use the <code>CreateFileCache</code> operation.</p> </note>",
     "CreateDataRepositoryTask": "<p>Creates an Amazon FSx for Lustre data repository task. A <code>CreateDataRepositoryTask</code> operation will fail if a data repository is not linked to the FSx file system.</p> <p>You use import and export data repository tasks to perform bulk operations between your FSx for Lustre file system and its linked data repositories. An example of a data repository task is exporting any data and metadata changes, including POSIX metadata, to files, directories, and symbolic links (symlinks) from your FSx file system to a linked data repository.</p> <p>You use release data repository tasks to release data from your file system for files that are exported to S3. The metadata of released files remains on the file system so users or applications can still access released files by reading the files again, which will restore data from Amazon S3 to the FSx for Lustre file system.</p> <p>To learn more about data repository tasks, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-repository-tasks.html\">Data Repository Tasks</a>. To learn more about linking a data repository to your file system, see <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/create-dra-linked-data-repo.html\">Linking your file system to an S3 bucket</a>.</p>",
@@ -19,7 +20,7 @@
     "DeleteBackup": "<p>Deletes an Amazon FSx backup. After deletion, the backup no longer exists, and its data is gone.</p> <p>The <code>DeleteBackup</code> call returns instantly. The backup won't show up in later <code>DescribeBackups</code> calls.</p> <important> <p>The data in a deleted backup is also deleted and can't be recovered by any means.</p> </important>",
     "DeleteDataRepositoryAssociation": "<p>Deletes a data repository association on an Amazon FSx for Lustre file system. Deleting the data repository association unlinks the file system from the Amazon S3 bucket. When deleting a data repository association, you have the option of deleting the data in the file system that corresponds to the data repository association. Data repository associations are supported on all FSx for Lustre 2.12 and 2.15 file systems, excluding <code>scratch_1</code> deployment type.</p>",
     "DeleteFileCache": "<p>Deletes an Amazon File Cache resource. After deletion, the cache no longer exists, and its data is gone.</p> <p>The <code>DeleteFileCache</code> operation returns while the cache has the <code>DELETING</code> status. You can check the cache deletion status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileCaches.html\">DescribeFileCaches</a> operation, which returns a list of caches in your account. If you pass the cache ID for a deleted cache, the <code>DescribeFileCaches</code> operation returns a <code>FileCacheNotFound</code> error.</p> <important> <p>The data in a deleted cache is also deleted and can't be recovered by any means.</p> </important>",
-    "DeleteFileSystem": "<p>Deletes a file system. After deletion, the file system no longer exists, and its data is gone. Any existing automatic backups and snapshots are also deleted.</p> <p>To delete an Amazon FSx for NetApp ONTAP file system, first delete all the volumes and storage virtual machines (SVMs) on the file system. Then provide a <code>FileSystemId</code> value to the <code>DeleteFileSystem</code> operation.</p> <p>By default, when you delete an Amazon FSx for Windows File Server file system, a final backup is created upon deletion. This final backup isn't subject to the file system's retention policy, and must be manually deleted.</p> <p>To delete an Amazon FSx for Lustre file system, first <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/unmounting-fs.html\">unmount</a> it from every connected Amazon EC2 instance, then provide a <code>FileSystemId</code> value to the <code>DeleteFileSystem</code> operation. By default, Amazon FSx will not take a final backup when the <code>DeleteFileSystem</code> operation is invoked. On file systems not linked to an Amazon S3 bucket, set <code>SkipFinalBackup</code> to <code>false</code> to take a final backup of the file system you are deleting. Backups cannot be enabled on S3-linked file systems. To ensure all of your data is written back to S3 before deleting your file system, you can either monitor for the <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/monitoring-cloudwatch.html#auto-import-export-metrics\">AgeOfOldestQueuedMessage</a> metric to be zero (if using automatic export) or you can run an <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task-dra.html\">export data repository task</a>. If you have automatic export enabled and want to use an export data repository task, you have to disable automatic export before executing the export data repository task.</p> <p>The <code>DeleteFileSystem</code> operation returns while the file system has the <code>DELETING</code> status. You can check the file system deletion status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileSystems.html\">DescribeFileSystems</a> operation, which returns a list of file systems in your account. If you pass the file system ID for a deleted file system, the <code>DescribeFileSystems</code> operation returns a <code>FileSystemNotFound</code> error.</p> <note> <p>If a data repository task is in a <code>PENDING</code> or <code>EXECUTING</code> state, deleting an Amazon FSx for Lustre file system will fail with an HTTP status code 400 (Bad Request).</p> </note> <important> <p>The data in a deleted file system is also deleted and can't be recovered by any means.</p> </important>",
+    "DeleteFileSystem": "<p>Deletes a file system. After deletion, the file system no longer exists, and its data is gone. Any existing automatic backups and snapshots are also deleted.</p> <p>To delete an Amazon FSx for NetApp ONTAP file system, first delete all the volumes and storage virtual machines (SVMs) on the file system. Then provide a <code>FileSystemId</code> value to the <code>DeleteFileSystem</code> operation.</p> <p>Before deleting an Amazon FSx for OpenZFS file system, make sure that there aren't any Amazon S3 access points attached to any volume. For more information on how to list S3 access points that are attached to volumes, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/access-points-list\">Listing S3 access point attachments</a>. For more information on how to delete S3 access points, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/delete-points-list\">Deleting an S3 access point attachment</a>.</p> <p>By default, when you delete an Amazon FSx for Windows File Server file system, a final backup is created upon deletion. This final backup isn't subject to the file system's retention policy, and must be manually deleted.</p> <p>To delete an Amazon FSx for Lustre file system, first <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/unmounting-fs.html\">unmount</a> it from every connected Amazon EC2 instance, then provide a <code>FileSystemId</code> value to the <code>DeleteFileSystem</code> operation. By default, Amazon FSx will not take a final backup when the <code>DeleteFileSystem</code> operation is invoked. On file systems not linked to an Amazon S3 bucket, set <code>SkipFinalBackup</code> to <code>false</code> to take a final backup of the file system you are deleting. Backups cannot be enabled on S3-linked file systems. To ensure all of your data is written back to S3 before deleting your file system, you can either monitor for the <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/monitoring-cloudwatch.html#auto-import-export-metrics\">AgeOfOldestQueuedMessage</a> metric to be zero (if using automatic export) or you can run an <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/export-data-repo-task-dra.html\">export data repository task</a>. If you have automatic export enabled and want to use an export data repository task, you have to disable automatic export before executing the export data repository task.</p> <p>The <code>DeleteFileSystem</code> operation returns while the file system has the <code>DELETING</code> status. You can check the file system deletion status by calling the <a href=\"https://docs.aws.amazon.com/fsx/latest/APIReference/API_DescribeFileSystems.html\">DescribeFileSystems</a> operation, which returns a list of file systems in your account. If you pass the file system ID for a deleted file system, the <code>DescribeFileSystems</code> operation returns a <code>FileSystemNotFound</code> error.</p> <note> <p>If a data repository task is in a <code>PENDING</code> or <code>EXECUTING</code> state, deleting an Amazon FSx for Lustre file system will fail with an HTTP status code 400 (Bad Request).</p> </note> <important> <p>The data in a deleted file system is also deleted and can't be recovered by any means.</p> </important>",
     "DeleteSnapshot": "<p>Deletes an Amazon FSx for OpenZFS snapshot. After deletion, the snapshot no longer exists, and its data is gone. Deleting a snapshot doesn't affect snapshots stored in a file system backup. </p> <p>The <code>DeleteSnapshot</code> operation returns instantly. The snapshot appears with the lifecycle status of <code>DELETING</code> until the deletion is complete.</p>",
     "DeleteStorageVirtualMachine": "<p>Deletes an existing Amazon FSx for ONTAP storage virtual machine (SVM). Prior to deleting an SVM, you must delete all non-root volumes in the SVM, otherwise the operation will fail.</p>",
     "DeleteVolume": "<p>Deletes an Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volume.</p>",
@@ -29,10 +30,12 @@
     "DescribeFileCaches": "<p>Returns the description of a specific Amazon File Cache resource, if a <code>FileCacheIds</code> value is provided for that cache. Otherwise, it returns descriptions of all caches owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all cache descriptions, you can optionally specify the <code>MaxResults</code> parameter to limit the number of descriptions in a response. If more cache descriptions remain, the operation returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p> <p>This operation is used in an iterative process to retrieve a list of your cache descriptions. <code>DescribeFileCaches</code> is called first without a <code>NextToken</code>value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code>.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The implementation might return fewer than <code>MaxResults</code> cache descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of caches returned in the response of one <code>DescribeFileCaches</code> call and the order of caches returned across the responses of a multicall iteration is unspecified.</p> </li> </ul>",
     "DescribeFileSystemAliases": "<p>Returns the DNS aliases that are associated with the specified Amazon FSx for Windows File Server file system. A history of all DNS aliases that have been associated with and disassociated from the file system is available in the list of <a>AdministrativeAction</a> provided in the <a>DescribeFileSystems</a> operation response.</p>",
     "DescribeFileSystems": "<p>Returns the description of specific Amazon FSx file systems, if a <code>FileSystemIds</code> value is provided for that file system. Otherwise, it returns descriptions of all file systems owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all file system descriptions, you can optionally specify the <code>MaxResults</code> parameter to limit the number of descriptions in a response. If more file system descriptions remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p> <p>This operation is used in an iterative process to retrieve a list of your file system descriptions. <code>DescribeFileSystems</code> is called first without a <code>NextToken</code>value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code>.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The implementation might return fewer than <code>MaxResults</code> file system descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of file systems returned in the response of one <code>DescribeFileSystems</code> call and the order of file systems returned across the responses of a multicall iteration is unspecified.</p> </li> </ul>",
+    "DescribeS3AccessPointAttachments": "<p>Describes one or more S3 access points attached to Amazon FSx volumes.</p> <p>The requester requires the following permission to perform this action:</p> <ul> <li> <p> <code>fsx:DescribeS3AccessPointAttachments</code> </p> </li> </ul>",
     "DescribeSharedVpcConfiguration": "<p>Indicates whether participant accounts in your organization can create Amazon FSx for NetApp ONTAP Multi-AZ file systems in subnets that are shared by a virtual private cloud (VPC) owner. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/ONTAPGuide/creating-file-systems.html#fsxn-vpc-shared-subnets\">Creating FSx for ONTAP file systems in shared subnets</a>. </p>",
     "DescribeSnapshots": "<p>Returns the description of specific Amazon FSx for OpenZFS snapshots, if a <code>SnapshotIds</code> value is provided. Otherwise, this operation returns all snapshots owned by your Amazon Web Services account in the Amazon Web Services Region of the endpoint that you're calling.</p> <p>When retrieving all snapshots, you can optionally specify the <code>MaxResults</code> parameter to limit the number of snapshots in a response. If more backups remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response. </p> <p>Use this operation in an iterative process to retrieve a list of your snapshots. <code>DescribeSnapshots</code> is called first without a <code>NextToken</code> value. Then the operation continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code> value.</p> <p>When using this operation, keep the following in mind:</p> <ul> <li> <p>The operation might return fewer than the <code>MaxResults</code> value of snapshot descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of snapshots returned in the response of one <code>DescribeSnapshots</code> call and the order of backups returned across the responses of a multi-call iteration is unspecified. </p> </li> </ul>",
     "DescribeStorageVirtualMachines": "<p>Describes one or more Amazon FSx for NetApp ONTAP storage virtual machines (SVMs).</p>",
     "DescribeVolumes": "<p>Describes one or more Amazon FSx for NetApp ONTAP or Amazon FSx for OpenZFS volumes.</p>",
+    "DetachAndDeleteS3AccessPoint": "<p>Detaches an S3 access point from an Amazon FSx volume and deletes the S3 access point.</p> <p>The requester requires the following permission to perform this action:</p> <ul> <li> <p> <code>fsx:DetachAndDeleteS3AccessPoint</code> </p> </li> <li> <p> <code>s3:DeleteAccessPoint</code> </p> </li> </ul>",
     "DisassociateFileSystemAliases": "<p>Use this action to disassociate, or remove, one or more Domain Name Service (DNS) aliases from an Amazon FSx for Windows File Server file system. If you attempt to disassociate a DNS alias that is not associated with the file system, Amazon FSx responds with an HTTP status code 400 (Bad Request). For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/managing-dns-aliases.html\">Working with DNS Aliases</a>.</p> <p>The system generated response showing the DNS aliases that Amazon FSx is attempting to disassociate from the file system. Use the API operation to monitor the status of the aliases Amazon FSx is disassociating with the file system.</p>",
     "ListTagsForResource": "<p>Lists tags for Amazon FSx resources.</p> <p>When retrieving all tags, you can optionally specify the <code>MaxResults</code> parameter to limit the number of tags in a response. If more tags remain, Amazon FSx returns a <code>NextToken</code> value in the response. In this case, send a later request with the <code>NextToken</code> request parameter set to the value of <code>NextToken</code> from the last response.</p> <p>This action is used in an iterative process to retrieve a list of your tags. <code>ListTagsForResource</code> is called first without a <code>NextToken</code>value. Then the action continues to be called with the <code>NextToken</code> parameter set to the value of the last <code>NextToken</code> value until a response has no <code>NextToken</code>.</p> <p>When using this action, keep the following in mind:</p> <ul> <li> <p>The implementation might return fewer than <code>MaxResults</code> file system descriptions while still including a <code>NextToken</code> value.</p> </li> <li> <p>The order of tags returned in the response of one <code>ListTagsForResource</code> call and the order of tags returned across the responses of a multi-call iteration is unspecified.</p> </li> </ul>",
     "ReleaseFileSystemNfsV3Locks": "<p>Releases the file system lock from an Amazon FSx for OpenZFS file system.</p>",
@@ -56,6 +59,16 @@
         "FileCache$OwnerId": null,
         "FileCacheCreating$OwnerId": null,
         "FileSystem$OwnerId": "<p>The Amazon Web Services account that created the file system. If the file system was created by a user in IAM Identity Center, the Amazon Web Services account to which the IAM user belongs is the owner.</p>"
+      }
+    },
+    "AccessPointAlreadyOwnedByYou": {
+      "base": "<p>An access point with that name already exists in the Amazon Web Services Region in your Amazon Web Services account.</p>",
+      "refs": {}
+    },
+    "AccessPointPolicy": {
+      "base": null,
+      "refs": {
+        "CreateAndAttachS3AccessPointS3Configuration$Policy": "<p>Specifies an access policy to associate with the S3 access point configuration. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points-policies.html\">Configuring IAM policies for using access points</a> in the Amazon Simple Storage Service User Guide.</p>"
       }
     },
     "ActiveDirectoryBackupAttributes": {
@@ -366,6 +379,7 @@
         "AssociateFileSystemAliasesRequest$ClientRequestToken": null,
         "CopyBackupRequest$ClientRequestToken": null,
         "CopySnapshotAndUpdateVolumeRequest$ClientRequestToken": null,
+        "CreateAndAttachS3AccessPointRequest$ClientRequestToken": null,
         "CreateBackupRequest$ClientRequestToken": "<p>(Optional) A string of up to 63 ASCII characters that Amazon FSx uses to ensure idempotent creation. This string is automatically filled on your behalf when you use the Command Line Interface (CLI) or an Amazon Web Services SDK.</p>",
         "CreateDataRepositoryAssociationRequest$ClientRequestToken": null,
         "CreateDataRepositoryTaskRequest$ClientRequestToken": null,
@@ -384,6 +398,7 @@
         "DeleteStorageVirtualMachineRequest$ClientRequestToken": null,
         "DeleteVolumeRequest$ClientRequestToken": null,
         "DescribeFileSystemAliasesRequest$ClientRequestToken": null,
+        "DetachAndDeleteS3AccessPointRequest$ClientRequestToken": null,
         "DisassociateFileSystemAliasesRequest$ClientRequestToken": null,
         "ReleaseFileSystemNfsV3LocksRequest$ClientRequestToken": null,
         "RestoreVolumeFromSnapshotRequest$ClientRequestToken": null,
@@ -437,6 +452,26 @@
       "base": "<p>Used to specify the configuration options for an FSx for ONTAP volume's storage aggregate or aggregates.</p>",
       "refs": {
         "CreateOntapVolumeConfiguration$AggregateConfiguration": "<p>Use to specify configuration options for a volume’s storage aggregate or aggregates.</p>"
+      }
+    },
+    "CreateAndAttachS3AccessPointOpenZFSConfiguration": {
+      "base": "<p>Specifies the FSx for OpenZFS volume that the S3 access point will be attached to, and the file system user identity.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointRequest$OpenZFSConfiguration": "<p>Specifies the configuration to use when creating and attaching an S3 access point to an FSx for OpenZFS volume.</p>"
+      }
+    },
+    "CreateAndAttachS3AccessPointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAndAttachS3AccessPointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAndAttachS3AccessPointS3Configuration": {
+      "base": "<p>Used to create an S3 access point that accepts requests only from a virtual private cloud (VPC) to restrict data access to a private network.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointRequest$S3AccessPoint": "<p>Specifies the virtual private cloud (VPC) configuration if you're creating an access point that is restricted to a VPC. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/access-points-vpc.html\">Creating access points restricted to a virtual private cloud</a>.</p>"
       }
     },
     "CreateBackupRequest": {
@@ -604,6 +639,7 @@
         "FileCache$CreationTime": null,
         "FileCacheCreating$CreationTime": null,
         "FileSystem$CreationTime": "<p>The time that the file system was created, in seconds (since 1970-01-01T00:00:00Z), also known as Unix time.</p>",
+        "S3AccessPointAttachment$CreationTime": null,
         "Snapshot$CreationTime": null,
         "StorageVirtualMachine$CreationTime": null,
         "Volume$CreationTime": null
@@ -985,6 +1021,14 @@
       "base": "<p>The response object for <code>DescribeFileSystems</code> operation.</p>",
       "refs": {}
     },
+    "DescribeS3AccessPointAttachmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeS3AccessPointAttachmentsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeSharedVpcConfigurationRequest": {
       "base": null,
       "refs": {}
@@ -1014,6 +1058,14 @@
       "refs": {}
     },
     "DescribeVolumesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DetachAndDeleteS3AccessPointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DetachAndDeleteS3AccessPointResponse": {
       "base": null,
       "refs": {}
     },
@@ -1096,9 +1148,19 @@
         "DataRepositoryTask$EndTime": "<p>The time the system completed processing the task, populated after the task is complete.</p>"
       }
     },
+    "ErrorCode": {
+      "base": null,
+      "refs": {
+        "AccessPointAlreadyOwnedByYou$ErrorCode": "<p>An error code indicating that an access point with that name already exists in the Amazon Web Services Region in your Amazon Web Services account.</p>",
+        "InvalidAccessPoint$ErrorCode": "<p>An error code indicating that the access point specified doesn't exist.</p>",
+        "InvalidRequest$ErrorCode": "<p>An error code indicating that the action or operation requested is invalid.</p>",
+        "TooManyAccessPoints$ErrorCode": "<p>An error code indicating that you have reached the maximum number of S3 access points attachments allowed for your account in this Amazon Web Services Region, or for the file system.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": "<p>A detailed error message.</p>",
       "refs": {
+        "AccessPointAlreadyOwnedByYou$Message": null,
         "ActiveDirectoryError$Message": null,
         "AdministrativeActionFailureDetails$Message": "<p>Error message providing details about the failed administrative action.</p>",
         "BackupBeingCopied$Message": null,
@@ -1120,6 +1182,7 @@
         "IncompatibleParameterError$Message": null,
         "IncompatibleRegionForMultiAZ$Message": null,
         "InternalServerError$Message": null,
+        "InvalidAccessPoint$Message": null,
         "InvalidDataRepositoryType$Message": null,
         "InvalidDestinationKmsKey$Message": null,
         "InvalidExportPath$Message": null,
@@ -1127,6 +1190,7 @@
         "InvalidNetworkSettings$Message": "<p>Error message explaining what's wrong with network settings.</p>",
         "InvalidPerUnitStorageThroughput$Message": null,
         "InvalidRegion$Message": null,
+        "InvalidRequest$Message": null,
         "InvalidSourceKmsKey$Message": null,
         "LifecycleTransitionReason$Message": null,
         "MissingFileCacheConfiguration$Message": null,
@@ -1135,10 +1199,12 @@
         "NotServiceResourceError$Message": null,
         "ResourceDoesNotSupportTagging$Message": null,
         "ResourceNotFound$Message": null,
+        "S3AccessPointAttachmentNotFound$Message": null,
         "ServiceLimitExceeded$Message": null,
         "SnapshotNotFound$Message": null,
         "SourceBackupUnavailable$Message": null,
         "StorageVirtualMachineNotFound$Message": null,
+        "TooManyAccessPoints$Message": null,
         "UnsupportedOperation$Message": null,
         "VolumeNotFound$Message": null
       }
@@ -1300,6 +1366,13 @@
         "FileSystem$FailureDetails": null
       }
     },
+    "FileSystemGID": {
+      "base": null,
+      "refs": {
+        "FileSystemSecondaryGIDs$member": null,
+        "OpenZFSPosixFileSystemUser$Gid": "<p>The GID of the file system user.</p>"
+      }
+    },
     "FileSystemId": {
       "base": "<p>The globally unique ID of the file system, assigned by Amazon FSx.</p>",
       "refs": {
@@ -1359,6 +1432,12 @@
       "base": "<p>No Amazon FSx file systems were found based upon supplied parameters.</p>",
       "refs": {}
     },
+    "FileSystemSecondaryGIDs": {
+      "base": null,
+      "refs": {
+        "OpenZFSPosixFileSystemUser$SecondaryGids": "<p>The list of secondary GIDs for the file system user. </p>"
+      }
+    },
     "FileSystemType": {
       "base": "<p>The type of Amazon FSx file system.</p>",
       "refs": {
@@ -1376,6 +1455,12 @@
         "FileCacheCreating$FileCacheTypeVersion": "<p>The Lustre version of the cache, which must be <code>2.12</code>.</p>",
         "FileSystem$FileSystemTypeVersion": "<p>The Lustre version of the Amazon FSx for Lustre file system, which can be <code>2.10</code>, <code>2.12</code>, or <code>2.15</code>.</p>",
         "UpdateFileSystemRequest$FileSystemTypeVersion": "<p>The Lustre version you are updating an FSx for Lustre file system to. Valid values are <code>2.12</code> and <code>2.15</code>. The value you choose must be newer than the file system's current Lustre version.</p>"
+      }
+    },
+    "FileSystemUID": {
+      "base": null,
+      "refs": {
+        "OpenZFSPosixFileSystemUser$Uid": "<p>The UID of the file system user.</p>"
       }
     },
     "FileSystems": {
@@ -1469,6 +1554,7 @@
       "refs": {
         "LustreLogConfiguration$Destination": "<p>The Amazon Resource Name (ARN) that specifies the destination of the logs. The destination can be any Amazon CloudWatch Logs log group ARN. The destination ARN must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p>",
         "LustreLogCreateConfiguration$Destination": "<p>The Amazon Resource Name (ARN) that specifies the destination of the logs.</p> <p>The destination can be any Amazon CloudWatch Logs log group ARN, with the following requirements:</p> <ul> <li> <p>The destination ARN that you provide must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p> </li> <li> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix.</p> </li> <li> <p>If you do not provide a destination, Amazon FSx will create and use a log stream in the CloudWatch Logs <code>/aws/fsx/lustre</code> log group (for Amazon FSx for Lustre) or <code>/aws/fsx/filecache</code> (for Amazon File Cache).</p> </li> <li> <p>If <code>Destination</code> is provided and the resource does not exist, the request will fail with a <code>BadRequest</code> error.</p> </li> <li> <p>If <code>Level</code> is set to <code>DISABLED</code>, you cannot specify a destination in <code>Destination</code>.</p> </li> </ul>",
+        "S3AccessPoint$ResourceARN": "<p>he S3 access point's ARN.</p>",
         "WindowsAuditLogConfiguration$AuditLogDestination": "<p>The Amazon Resource Name (ARN) for the destination of the audit logs. The destination can be any Amazon CloudWatch Logs log group ARN or Amazon Kinesis Data Firehose delivery stream ARN.</p> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix. The name of the Amazon Kinesis Data Firehose delivery stream must begin with the <code>aws-fsx</code> prefix.</p> <p>The destination ARN (either CloudWatch Logs log group or Kinesis Data Firehose delivery stream) must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p>",
         "WindowsAuditLogCreateConfiguration$AuditLogDestination": "<p>The Amazon Resource Name (ARN) that specifies the destination of the audit logs.</p> <p>The destination can be any Amazon CloudWatch Logs log group ARN or Amazon Kinesis Data Firehose delivery stream ARN, with the following requirements:</p> <ul> <li> <p>The destination ARN that you provide (either CloudWatch Logs log group or Kinesis Data Firehose delivery stream) must be in the same Amazon Web Services partition, Amazon Web Services Region, and Amazon Web Services account as your Amazon FSx file system.</p> </li> <li> <p>The name of the Amazon CloudWatch Logs log group must begin with the <code>/aws/fsx</code> prefix. The name of the Amazon Kinesis Data Firehose delivery stream must begin with the <code>aws-fsx</code> prefix.</p> </li> <li> <p>If you do not provide a destination in <code>AuditLogDestination</code>, Amazon FSx will create and use a log stream in the CloudWatch Logs <code>/aws/fsx/windows</code> log group.</p> </li> <li> <p>If <code>AuditLogDestination</code> is provided and the resource does not exist, the request will fail with a <code>BadRequest</code> error.</p> </li> <li> <p>If <code>FileAccessAuditLogLevel</code> and <code>FileShareAccessAuditLogLevel</code> are both set to <code>DISABLED</code>, you cannot specify a destination in <code>AuditLogDestination</code>.</p> </li> </ul>"
       }
@@ -1532,6 +1618,10 @@
       "base": "<p>A generic error indicating a server-side failure.</p>",
       "refs": {}
     },
+    "InvalidAccessPoint": {
+      "base": "<p>The access point specified doesn't exist.</p>",
+      "refs": {}
+    },
     "InvalidDataRepositoryType": {
       "base": "<p>You have filtered the response to a data repository type that is not supported.</p>",
       "refs": {}
@@ -1558,6 +1648,10 @@
     },
     "InvalidRegion": {
       "base": "<p>The Region provided for <code>SourceRegion</code> is not valid or is in a different Amazon Web Services partition.</p>",
+      "refs": {}
+    },
+    "InvalidRequest": {
+      "base": "<p>The action or operation requested is invalid. Verify that the action is typed correctly.</p>",
       "refs": {}
     },
     "InvalidSourceKmsKey": {
@@ -1619,6 +1713,7 @@
     "LifecycleTransitionReason": {
       "base": "<p>Describes why a resource lifecycle state changed.</p>",
       "refs": {
+        "S3AccessPointAttachment$LifecycleTransitionReason": null,
         "Snapshot$LifecycleTransitionReason": null,
         "StorageVirtualMachine$LifecycleTransitionReason": "<p>Describes why the SVM lifecycle state changed.</p>",
         "Volume$LifecycleTransitionReason": "<p>The reason why the volume lifecycle status changed.</p>"
@@ -1727,6 +1822,7 @@
         "DescribeFileCachesRequest$MaxResults": null,
         "DescribeFileSystemAliasesRequest$MaxResults": "<p>Maximum number of DNS aliases to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the <code>MaxResults</code> parameter specified in the request and the service's internal maximum number of items per page.</p>",
         "DescribeFileSystemsRequest$MaxResults": "<p>Maximum number of file systems to return in the response (integer). This parameter value must be greater than 0. The number of items that Amazon FSx returns is the minimum of the <code>MaxResults</code> parameter specified in the request and the service's internal maximum number of items per page.</p>",
+        "DescribeS3AccessPointAttachmentsRequest$MaxResults": null,
         "DescribeSnapshotsRequest$MaxResults": null,
         "DescribeStorageVirtualMachinesRequest$MaxResults": null,
         "DescribeVolumesRequest$MaxResults": null,
@@ -1844,6 +1940,8 @@
         "DescribeFileSystemAliasesResponse$NextToken": "<p>Present if there are more DNS aliases than returned in the response (String). You can use the <code>NextToken</code> value in a later request to fetch additional descriptions. </p>",
         "DescribeFileSystemsRequest$NextToken": "<p>Opaque pagination token returned from a previous <code>DescribeFileSystems</code> operation (String). If a token present, the operation continues the list from where the returning call left off.</p>",
         "DescribeFileSystemsResponse$NextToken": "<p>Present if there are more file systems than returned in the response (String). You can use the <code>NextToken</code> value in the later request to fetch the descriptions. </p>",
+        "DescribeS3AccessPointAttachmentsRequest$NextToken": null,
+        "DescribeS3AccessPointAttachmentsResponse$NextToken": null,
         "DescribeSnapshotsRequest$NextToken": null,
         "DescribeSnapshotsResponse$NextToken": null,
         "DescribeStorageVirtualMachinesRequest$NextToken": null,
@@ -1952,6 +2050,19 @@
         "FileSystem$OpenZFSConfiguration": "<p>The configuration for this Amazon FSx for OpenZFS file system.</p>"
       }
     },
+    "OpenZFSFileSystemIdentity": {
+      "base": "<p>Specifies the file system user identity that will be used for authorizing all file access requests that are made using the S3 access point.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointOpenZFSConfiguration$FileSystemIdentity": "<p>Specifies the file system user identity to use for authorizing file read and write requests that are made using this S3 access point.</p>",
+        "S3AccessPointOpenZFSConfiguration$FileSystemIdentity": "<p>The file system identity used to authorize file access requests made using the S3 access point.</p>"
+      }
+    },
+    "OpenZFSFileSystemUserType": {
+      "base": null,
+      "refs": {
+        "OpenZFSFileSystemIdentity$Type": "<p>Specifies the FSx for OpenZFS user identity type, accepts only <code>POSIX</code>.</p>"
+      }
+    },
     "OpenZFSNfsExport": {
       "base": "<p>The Network File System (NFS) configurations for mounting an Amazon FSx for OpenZFS file system. </p>",
       "refs": {
@@ -1983,6 +2094,12 @@
       "base": "<p>The snapshot configuration used when creating an Amazon FSx for OpenZFS volume from a snapshot.</p>",
       "refs": {
         "OpenZFSVolumeConfiguration$OriginSnapshot": "<p>The configuration object that specifies the snapshot to use as the origin of the data for the volume.</p>"
+      }
+    },
+    "OpenZFSPosixFileSystemUser": {
+      "base": "<p>The FSx for OpenZFS file system user that is used for authorizing all file access requests that are made using the S3 access point.</p>",
+      "refs": {
+        "OpenZFSFileSystemIdentity$PosixUser": "<p>Specifies the UID and GIDs of the file system POSIX user.</p>"
       }
     },
     "OpenZFSQuotaType": {
@@ -2232,6 +2349,108 @@
         "UpdateFileSystemOpenZFSConfiguration$RemoveRouteTableIds": "<p>(Multi-AZ only) A list of IDs of existing virtual private cloud (VPC) route tables to disassociate (remove) from your Amazon FSx for OpenZFS file system. You can use the API operation to retrieve the list of VPC route table IDs for a file system.</p>"
       }
     },
+    "S3AccessPoint": {
+      "base": "<p>Describes the S3 access point configuration of the S3 access point attachment.</p>",
+      "refs": {
+        "S3AccessPointAttachment$S3AccessPoint": "<p>The S3 access point configuration of the S3 access point attachment.</p>"
+      }
+    },
+    "S3AccessPointAlias": {
+      "base": null,
+      "refs": {
+        "S3AccessPoint$Alias": "<p>The S3 access point's alias.</p>"
+      }
+    },
+    "S3AccessPointAttachment": {
+      "base": "<p>An S3 access point attached to an Amazon FSx volume.</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointResponse$S3AccessPointAttachment": "<p>Describes the configuration of the S3 access point created.</p>",
+        "S3AccessPointAttachments$member": null
+      }
+    },
+    "S3AccessPointAttachmentLifecycle": {
+      "base": null,
+      "refs": {
+        "DetachAndDeleteS3AccessPointResponse$Lifecycle": "<p>The lifecycle status of the S3 access point attachment.</p>",
+        "S3AccessPointAttachment$Lifecycle": "<p>The lifecycle status of the S3 access point attachment. The lifecycle can have the following values:</p> <ul> <li> <p>AVAILABLE - the S3 access point attachment is available for use</p> </li> <li> <p>CREATING - Amazon FSx is creating the S3 access point and attachment</p> </li> <li> <p>DELETING - Amazon FSx is deleting the S3 access point and attachment</p> </li> <li> <p>FAILED - The S3 access point attachment is in a failed state. Delete and detach the S3 access point attachment, and create a new one.</p> </li> <li> <p>UPDATING - Amazon FSx is updating the S3 access point attachment</p> </li> </ul>"
+      }
+    },
+    "S3AccessPointAttachmentName": {
+      "base": null,
+      "refs": {
+        "CreateAndAttachS3AccessPointRequest$Name": "<p>The name you want to assign to this S3 access point.</p>",
+        "DetachAndDeleteS3AccessPointRequest$Name": "<p>The name of the S3 access point attachment that you want to delete.</p>",
+        "DetachAndDeleteS3AccessPointResponse$Name": "<p>The name of the S3 access point attachment being deleted.</p>",
+        "S3AccessPointAttachment$Name": "<p>The name of the S3 access point attachment; also used for the name of the S3 access point.</p>",
+        "S3AccessPointAttachmentNames$member": null
+      }
+    },
+    "S3AccessPointAttachmentNames": {
+      "base": null,
+      "refs": {
+        "DescribeS3AccessPointAttachmentsRequest$Names": "<p>The names of the S3 access point attachments whose descriptions you want to retrieve.</p>"
+      }
+    },
+    "S3AccessPointAttachmentNotFound": {
+      "base": "<p>The access point specified was not found.</p>",
+      "refs": {}
+    },
+    "S3AccessPointAttachmentType": {
+      "base": null,
+      "refs": {
+        "CreateAndAttachS3AccessPointRequest$Type": "<p>The type of S3 access point you want to create. Only <code>OpenZFS</code> is supported.</p>",
+        "S3AccessPointAttachment$Type": "<p>The type of Amazon FSx volume that the S3 access point is attached to. </p>"
+      }
+    },
+    "S3AccessPointAttachments": {
+      "base": null,
+      "refs": {
+        "DescribeS3AccessPointAttachmentsResponse$S3AccessPointAttachments": "<p>Array of S3 access point attachments returned after a successful <code>DescribeS3AccessPointAttachments</code> operation.</p>"
+      }
+    },
+    "S3AccessPointAttachmentsFilter": {
+      "base": "<p>A set of Name and Values pairs used to view a select set of S3 access point attachments.</p>",
+      "refs": {
+        "S3AccessPointAttachmentsFilters$member": null
+      }
+    },
+    "S3AccessPointAttachmentsFilterName": {
+      "base": null,
+      "refs": {
+        "S3AccessPointAttachmentsFilter$Name": "<p>The name of the filter.</p>"
+      }
+    },
+    "S3AccessPointAttachmentsFilterValue": {
+      "base": null,
+      "refs": {
+        "S3AccessPointAttachmentsFilterValues$member": null
+      }
+    },
+    "S3AccessPointAttachmentsFilterValues": {
+      "base": null,
+      "refs": {
+        "S3AccessPointAttachmentsFilter$Values": "<p>The values of the filter.</p>"
+      }
+    },
+    "S3AccessPointAttachmentsFilters": {
+      "base": null,
+      "refs": {
+        "DescribeS3AccessPointAttachmentsRequest$Filters": "<p>Enter a filter Name and Values pair to view a select set of S3 access point attachments.</p>"
+      }
+    },
+    "S3AccessPointOpenZFSConfiguration": {
+      "base": "<p>Describes the FSx for OpenZFS attachment configuration of an S3 access point attachment.</p>",
+      "refs": {
+        "S3AccessPointAttachment$OpenZFSConfiguration": "<p>The OpenZFSConfiguration of the S3 access point attachment.</p>"
+      }
+    },
+    "S3AccessPointVpcConfiguration": {
+      "base": "<p>If included, Amazon S3 restricts access to this access point to requests from the specified virtual private cloud (VPC).</p>",
+      "refs": {
+        "CreateAndAttachS3AccessPointS3Configuration$VpcConfiguration": "<p>If included, Amazon S3 restricts access to this S3 access point to requests made from the specified virtual private cloud (VPC).</p>",
+        "S3AccessPoint$VpcConfiguration": "<p>The S3 access point's virtual private cloud (VPC) configuration.</p>"
+      }
+    },
     "S3DataRepositoryConfiguration": {
       "base": "<p>The configuration for an Amazon S3 data repository linked to an Amazon FSx for Lustre file system with a data repository association. The configuration consists of an <code>AutoImportPolicy</code> that defines which file events on the data repository are automatically imported to the file system and an <code>AutoExportPolicy</code> that defines which file events on the file system are automatically exported to the data repository. File events are when files or directories are added, changed, or deleted on the file system or the data repository.</p> <note> <p>Data repository associations on Amazon File Cache don't use <code>S3DataRepositoryConfiguration</code> because they don't support automatic import or automatic export.</p> </note>",
       "refs": {
@@ -2460,7 +2679,7 @@
       "base": "<p>Specifies the file system's storage type.</p>",
       "refs": {
         "CreateFileSystemFromBackupRequest$StorageType": "<p>Sets the storage type for the Windows, OpenZFS, or Lustre file system that you're creating from a backup. Valid values are <code>SSD</code>, <code>HDD</code>, and <code>INTELLIGENT_TIERING</code>.</p> <ul> <li> <p>Set to <code>SSD</code> to use solid state drive storage. SSD is supported on all Windows and OpenZFS deployment types.</p> </li> <li> <p>Set to <code>HDD</code> to use hard disk drive storage. HDD is supported on <code>SINGLE_AZ_2</code> and <code>MULTI_AZ_1</code> FSx for Windows File Server file system deployment types.</p> </li> <li> <p>Set to <code>INTELLIGENT_TIERING</code> to use fully elastic, intelligently-tiered storage. Intelligent-Tiering is only available for OpenZFS file systems with the Multi-AZ deployment type and for Lustre file systems with the Persistent_2 deployment type.</p> </li> </ul> <p> The default value is <code>SSD</code>. </p> <note> <p>HDD and SSD storage types have different minimum storage capacity requirements. A restored file system's storage capacity is tied to the file system that was backed up. You can create a file system that uses HDD storage from a backup of a file system that used SSD storage if the original SSD file system had a storage capacity of at least 2000 GiB.</p> </note>",
-        "CreateFileSystemRequest$StorageType": "<p>Sets the storage class for the file system that you're creating. Valid values are <code>SSD</code>, <code>HDD</code>, and <code>INTELLIGENT_TIERING</code>.</p> <ul> <li> <p>Set to <code>SSD</code> to use solid state drive storage. SSD is supported on all Windows, Lustre, ONTAP, and OpenZFS deployment types.</p> </li> <li> <p>Set to <code>HDD</code> to use hard disk drive storage, which is supported on <code>SINGLE_AZ_2</code> and <code>MULTI_AZ_1</code> Windows file system deployment types, and on <code>PERSISTENT_1</code> Lustre file system deployment types.</p> </li> <li> <p>Set to <code>INTELLIGENT_TIERING</code> to use fully elastic, intelligently-tiered storage. Intelligent-Tiering is only available for OpenZFS file systems with the Multi-AZ deployment type and for Lustre file systems with the Persistent_2 deployment type.</p> </li> </ul> <p>Default value is <code>SSD</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/optimize-fsx-costs.html#storage-type-options\"> Storage type options</a> in the <i>FSx for Windows File Server User Guide</i>, <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/lustre-storage-classes\">FSx for Lustre storage classes</a> in the <i>FSx for Lustre User Guide</i>, and <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering\">Working with Intelligent-Tiering</a> in the <i>Amazon FSx for OpenZFS User Guide</i>.</p>",
+        "CreateFileSystemRequest$StorageType": "<p>Sets the storage class for the file system that you're creating. Valid values are <code>SSD</code>, <code>HDD</code>, and <code>INTELLIGENT_TIERING</code>.</p> <ul> <li> <p>Set to <code>SSD</code> to use solid state drive storage. SSD is supported on all Windows, Lustre, ONTAP, and OpenZFS deployment types.</p> </li> <li> <p>Set to <code>HDD</code> to use hard disk drive storage, which is supported on <code>SINGLE_AZ_2</code> and <code>MULTI_AZ_1</code> Windows file system deployment types, and on <code>PERSISTENT_1</code> Lustre file system deployment types.</p> </li> <li> <p>Set to <code>INTELLIGENT_TIERING</code> to use fully elastic, intelligently-tiered storage. Intelligent-Tiering is only available for OpenZFS file systems with the Multi-AZ deployment type and for Lustre file systems with the Persistent_2 deployment type.</p> </li> </ul> <p>Default value is <code>SSD</code>. For more information, see <a href=\"https://docs.aws.amazon.com/fsx/latest/WindowsGuide/optimize-fsx-costs.html#storage-type-options\"> Storage type options</a> in the <i>FSx for Windows File Server User Guide</i>, <a href=\"https://docs.aws.amazon.com/fsx/latest/LustreGuide/using-fsx-lustre.html#lustre-storage-classes\">FSx for Lustre storage classes</a> in the <i>FSx for Lustre User Guide</i>, and <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering\">Working with Intelligent-Tiering</a> in the <i>Amazon FSx for OpenZFS User Guide</i>.</p>",
         "FileSystem$StorageType": "<p>The type of storage the file system is using.</p> <ul> <li> <p>If set to <code>SSD</code>, the file system uses solid state drive storage.</p> </li> <li> <p>If set to <code>HDD</code>, the file system uses hard disk drive storage.</p> </li> <li> <p>If set to <code>INTELLIGENT_TIERING</code>, the file system uses fully elastic, intelligently-tiered storage.</p> </li> </ul>",
         "UpdateFileSystemRequest$StorageType": null
       }
@@ -2728,6 +2947,10 @@
         "TieringPolicy$Name": "<p>Specifies the tiering policy used to transition data. Default value is <code>SNAPSHOT_ONLY</code>.</p> <ul> <li> <p> <code>SNAPSHOT_ONLY</code> - moves cold snapshots to the capacity pool storage tier.</p> </li> <li> <p> <code>AUTO</code> - moves cold user data and snapshots to the capacity pool storage tier based on your access patterns.</p> </li> <li> <p> <code>ALL</code> - moves all user data blocks in both the active file system and Snapshot copies to the storage pool tier.</p> </li> <li> <p> <code>NONE</code> - keeps a volume's data in the primary storage tier, preventing it from being moved to the capacity pool tier.</p> </li> </ul>"
       }
     },
+    "TooManyAccessPoints": {
+      "base": "<p>You have reached the maximum number of S3 access points attachments allowed for your account in this Amazon Web Services Region, or for the file system. For more information, or to request an increase, see <a href=\"https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/limits.html\">Service quotas on FSx resources</a> in the FSx for OpenZFS User Guide.</p>",
+      "refs": {}
+    },
     "TotalConstituents": {
       "base": null,
       "refs": {
@@ -2975,6 +3198,7 @@
       "refs": {
         "CopySnapshotAndUpdateVolumeRequest$VolumeId": "<p>Specifies the ID of the volume that you are copying the snapshot to.</p>",
         "CopySnapshotAndUpdateVolumeResponse$VolumeId": "<p>The ID of the volume that you copied the snapshot to.</p>",
+        "CreateAndAttachS3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume to which you want the S3 access point attached.</p>",
         "CreateBackupRequest$VolumeId": "<p>(Optional) The ID of the FSx for ONTAP volume to back up.</p>",
         "CreateOpenZFSVolumeConfiguration$ParentVolumeId": "<p>The ID of the volume to use as the parent volume of the volume that you are creating.</p>",
         "CreateSnapshotRequest$VolumeId": "<p>The ID of the volume that you are taking a snapshot of.</p>",
@@ -2984,6 +3208,7 @@
         "OpenZFSVolumeConfiguration$ParentVolumeId": "<p>The ID of the parent volume.</p>",
         "RestoreVolumeFromSnapshotRequest$VolumeId": "<p>The ID of the volume that you are restoring.</p>",
         "RestoreVolumeFromSnapshotResponse$VolumeId": "<p>The ID of the volume that you restored.</p>",
+        "S3AccessPointOpenZFSConfiguration$VolumeId": "<p>The ID of the FSx for OpenZFS volume that the S3 access point is attached to.</p>",
         "Snapshot$VolumeId": "<p>The ID of the volume that the snapshot is of.</p>",
         "UpdateVolumeRequest$VolumeId": "<p>The ID of the volume that you want to update, in the format <code>fsvol-0123456789abcdef0</code>.</p>",
         "Volume$VolumeId": "<p>The system-generated, unique ID of the volume.</p>",
@@ -3049,7 +3274,8 @@
       "refs": {
         "FileCache$VpcId": null,
         "FileCacheCreating$VpcId": null,
-        "FileSystem$VpcId": "<p>The ID of the primary virtual private cloud (VPC) for the file system.</p>"
+        "FileSystem$VpcId": "<p>The ID of the primary virtual private cloud (VPC) for the file system.</p>",
+        "S3AccessPointVpcConfiguration$VpcId": "<p>Specifies the virtual private cloud (VPC) for the S3 access point VPC configuration, if one exists.</p>"
       }
     },
     "WeeklyTime": {

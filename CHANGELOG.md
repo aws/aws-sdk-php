@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Updates for change to Amazon ECS default log driver mode from blocking to non-blocking
+* `Aws\Textract` - Add RotationAngle field to Geometry of WORD blocks for Textract AnalyzeDocument API
+* `Aws\S3Control` - Add support for the ability to use Amazon S3 Access Points with Amazon FSx for OpenZFS file systems.
+* `Aws\WorkSpacesThinClient` - Remove Tags field from Get API responses
+* `Aws\FSx` - Add support for the ability to create Amazon S3 Access Points for Amazon FSx for OpenZFS file systems.
+* `Aws\StorageGateway` - This release adds IPv6 support to the Storage Gateway APIs. APIs that previously only accept or return IPv4 address will now accept or return both IPv4 and IPv6 addresses.
+* `Aws\S3` - Adds support for additional server-side encryption mode and storage class values for accessing Amazon FSx data from Amazon S3 using S3 Access Points
+
 ## 3.347.1 - 2025-06-24
 
 * `Aws\RDS` - Adding support for RDS on Dedicated Local Zones, including local backup target, snapshot availability zone and snapshot target

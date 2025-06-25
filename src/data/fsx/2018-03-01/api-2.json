@@ -85,6 +85,26 @@
       ],
       "idempotent":true
     },
+    "CreateAndAttachS3AccessPoint":{
+      "name":"CreateAndAttachS3AccessPoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAndAttachS3AccessPointRequest"},
+      "output":{"shape":"CreateAndAttachS3AccessPointResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"VolumeNotFound"},
+        {"shape":"InvalidAccessPoint"},
+        {"shape":"InvalidRequest"},
+        {"shape":"AccessPointAlreadyOwnedByYou"},
+        {"shape":"TooManyAccessPoints"}
+      ]
+    },
     "CreateBackup":{
       "name":"CreateBackup",
       "http":{
@@ -481,6 +501,21 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DescribeS3AccessPointAttachments":{
+      "name":"DescribeS3AccessPointAttachments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeS3AccessPointAttachmentsRequest"},
+      "output":{"shape":"DescribeS3AccessPointAttachmentsResponse"},
+      "errors":[
+        {"shape":"S3AccessPointAttachmentNotFound"},
+        {"shape":"BadRequest"},
+        {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperation"}
+      ]
+    },
     "DescribeSharedVpcConfiguration":{
       "name":"DescribeSharedVpcConfiguration",
       "http":{
@@ -534,6 +569,22 @@
         {"shape":"BadRequest"},
         {"shape":"InternalServerError"},
         {"shape":"VolumeNotFound"}
+      ]
+    },
+    "DetachAndDeleteS3AccessPoint":{
+      "name":"DetachAndDeleteS3AccessPoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DetachAndDeleteS3AccessPointRequest"},
+      "output":{"shape":"DetachAndDeleteS3AccessPointResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"S3AccessPointAttachmentNotFound"}
       ]
     },
     "DisassociateFileSystemAliases":{
@@ -769,6 +820,19 @@
       "max":12,
       "min":12,
       "pattern":"^\\d{12}$"
+    },
+    "AccessPointAlreadyOwnedByYou":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "AccessPointPolicy":{
+      "type":"string",
+      "max":200000,
+      "min":1
     },
     "ActiveDirectoryBackupAttributes":{
       "type":"structure",
@@ -1190,6 +1254,47 @@
       "members":{
         "Aggregates":{"shape":"Aggregates"},
         "ConstituentsPerAggregate":{"shape":"AggregateListMultiplier"}
+      }
+    },
+    "CreateAndAttachS3AccessPointOpenZFSConfiguration":{
+      "type":"structure",
+      "required":[
+        "VolumeId",
+        "FileSystemIdentity"
+      ],
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "FileSystemIdentity":{"shape":"OpenZFSFileSystemIdentity"}
+      }
+    },
+    "CreateAndAttachS3AccessPointRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type"
+      ],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "Name":{"shape":"S3AccessPointAttachmentName"},
+        "Type":{"shape":"S3AccessPointAttachmentType"},
+        "OpenZFSConfiguration":{"shape":"CreateAndAttachS3AccessPointOpenZFSConfiguration"},
+        "S3AccessPoint":{"shape":"CreateAndAttachS3AccessPointS3Configuration"}
+      }
+    },
+    "CreateAndAttachS3AccessPointResponse":{
+      "type":"structure",
+      "members":{
+        "S3AccessPointAttachment":{"shape":"S3AccessPointAttachment"}
+      }
+    },
+    "CreateAndAttachS3AccessPointS3Configuration":{
+      "type":"structure",
+      "members":{
+        "VpcConfiguration":{"shape":"S3AccessPointVpcConfiguration"},
+        "Policy":{"shape":"AccessPointPolicy"}
       }
     },
     "CreateBackupRequest":{
@@ -2169,6 +2274,22 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "DescribeS3AccessPointAttachmentsRequest":{
+      "type":"structure",
+      "members":{
+        "Names":{"shape":"S3AccessPointAttachmentNames"},
+        "Filters":{"shape":"S3AccessPointAttachmentsFilters"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeS3AccessPointAttachmentsResponse":{
+      "type":"structure",
+      "members":{
+        "S3AccessPointAttachments":{"shape":"S3AccessPointAttachments"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "DescribeSharedVpcConfigurationRequest":{
       "type":"structure",
       "members":{}
@@ -2226,6 +2347,24 @@
       "members":{
         "Volumes":{"shape":"Volumes"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DetachAndDeleteS3AccessPointRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "Name":{"shape":"S3AccessPointAttachmentName"}
+      }
+    },
+    "DetachAndDeleteS3AccessPointResponse":{
+      "type":"structure",
+      "members":{
+        "Lifecycle":{"shape":"S3AccessPointAttachmentLifecycle"},
+        "Name":{"shape":"S3AccessPointAttachmentName"}
       }
     },
     "DirectoryId":{
@@ -2303,6 +2442,11 @@
       }
     },
     "EndTime":{"type":"timestamp"},
+    "ErrorCode":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "ErrorMessage":{
       "type":"string",
       "max":256,
@@ -2504,6 +2648,11 @@
         "Message":{"shape":"ErrorMessage"}
       }
     },
+    "FileSystemGID":{
+      "type":"long",
+      "max":4294967295,
+      "min":0
+    },
     "FileSystemId":{
       "type":"string",
       "max":21,
@@ -2554,6 +2703,11 @@
       },
       "exception":true
     },
+    "FileSystemSecondaryGIDs":{
+      "type":"list",
+      "member":{"shape":"FileSystemGID"},
+      "max":15
+    },
     "FileSystemType":{
       "type":"string",
       "enum":[
@@ -2568,6 +2722,11 @@
       "max":20,
       "min":1,
       "pattern":"^[0-9](.[0-9]*)*$"
+    },
+    "FileSystemUID":{
+      "type":"long",
+      "max":4294967295,
+      "min":0
     },
     "FileSystems":{
       "type":"list",
@@ -2676,6 +2835,14 @@
       "exception":true,
       "fault":true
     },
+    "InvalidAccessPoint":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
     "InvalidDataRepositoryType":{
       "type":"structure",
       "members":{
@@ -2724,6 +2891,14 @@
     "InvalidRegion":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "InvalidRequest":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
@@ -3136,6 +3311,18 @@
         "ReadCacheConfiguration":{"shape":"OpenZFSReadCacheConfiguration"}
       }
     },
+    "OpenZFSFileSystemIdentity":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"OpenZFSFileSystemUserType"},
+        "PosixUser":{"shape":"OpenZFSPosixFileSystemUser"}
+      }
+    },
+    "OpenZFSFileSystemUserType":{
+      "type":"string",
+      "enum":["POSIX"]
+    },
     "OpenZFSNfsExport":{
       "type":"structure",
       "required":["ClientConfigurations"],
@@ -3165,6 +3352,18 @@
       "members":{
         "SnapshotARN":{"shape":"ResourceARN"},
         "CopyStrategy":{"shape":"OpenZFSCopyStrategy"}
+      }
+    },
+    "OpenZFSPosixFileSystemUser":{
+      "type":"structure",
+      "required":[
+        "Uid",
+        "Gid"
+      ],
+      "members":{
+        "Uid":{"shape":"FileSystemUID"},
+        "Gid":{"shape":"FileSystemGID"},
+        "SecondaryGids":{"shape":"FileSystemSecondaryGIDs"}
       }
     },
     "OpenZFSQuotaType":{
@@ -3410,6 +3609,113 @@
       "type":"list",
       "member":{"shape":"RouteTableId"},
       "max":50
+    },
+    "S3AccessPoint":{
+      "type":"structure",
+      "members":{
+        "ResourceARN":{"shape":"GeneralARN"},
+        "Alias":{"shape":"S3AccessPointAlias"},
+        "VpcConfiguration":{"shape":"S3AccessPointVpcConfiguration"}
+      }
+    },
+    "S3AccessPointAlias":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^[0-9a-z\\\\-]{1,63}"
+    },
+    "S3AccessPointAttachment":{
+      "type":"structure",
+      "members":{
+        "Lifecycle":{"shape":"S3AccessPointAttachmentLifecycle"},
+        "LifecycleTransitionReason":{"shape":"LifecycleTransitionReason"},
+        "CreationTime":{"shape":"CreationTime"},
+        "Name":{"shape":"S3AccessPointAttachmentName"},
+        "Type":{"shape":"S3AccessPointAttachmentType"},
+        "OpenZFSConfiguration":{"shape":"S3AccessPointOpenZFSConfiguration"},
+        "S3AccessPoint":{"shape":"S3AccessPoint"}
+      }
+    },
+    "S3AccessPointAttachmentLifecycle":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "CREATING",
+        "DELETING",
+        "UPDATING",
+        "FAILED"
+      ]
+    },
+    "S3AccessPointAttachmentName":{
+      "type":"string",
+      "max":50,
+      "min":3,
+      "pattern":"^(?=[a-z0-9])[a-z0-9-]{1,48}[a-z0-9]$"
+    },
+    "S3AccessPointAttachmentNames":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachmentName"},
+      "max":50
+    },
+    "S3AccessPointAttachmentNotFound":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "S3AccessPointAttachmentType":{
+      "type":"string",
+      "enum":["OPENZFS"]
+    },
+    "S3AccessPointAttachments":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachment"},
+      "max":1000
+    },
+    "S3AccessPointAttachmentsFilter":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"S3AccessPointAttachmentsFilterName"},
+        "Values":{"shape":"S3AccessPointAttachmentsFilterValues"}
+      }
+    },
+    "S3AccessPointAttachmentsFilterName":{
+      "type":"string",
+      "enum":[
+        "file-system-id",
+        "volume-id",
+        "type"
+      ]
+    },
+    "S3AccessPointAttachmentsFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z\\*\\.\\\\/\\?\\-\\_]*$"
+    },
+    "S3AccessPointAttachmentsFilterValues":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachmentsFilterValue"},
+      "max":20
+    },
+    "S3AccessPointAttachmentsFilters":{
+      "type":"list",
+      "member":{"shape":"S3AccessPointAttachmentsFilter"},
+      "max":2
+    },
+    "S3AccessPointOpenZFSConfiguration":{
+      "type":"structure",
+      "members":{
+        "VolumeId":{"shape":"VolumeId"},
+        "FileSystemIdentity":{"shape":"OpenZFSFileSystemIdentity"}
+      }
+    },
+    "S3AccessPointVpcConfiguration":{
+      "type":"structure",
+      "members":{
+        "VpcId":{"shape":"VpcId"}
+      }
     },
     "S3DataRepositoryConfiguration":{
       "type":"structure",
@@ -3905,6 +4211,14 @@
         "ALL",
         "NONE"
       ]
+    },
+    "TooManyAccessPoints":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
     },
     "TotalConstituents":{
       "type":"integer",

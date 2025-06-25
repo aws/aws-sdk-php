@@ -81,7 +81,7 @@
     "SetSMBGuestPassword": "<p>Sets the password for the guest user <code>smbguest</code>. The <code>smbguest</code> user is the user when the authentication method for the file share is set to <code>GuestAccess</code>. This operation only supported for S3 File Gateways</p>",
     "ShutdownGateway": "<p>Shuts down a Tape Gateway or Volume Gateway. To specify which gateway to shut down, use the Amazon Resource Name (ARN) of the gateway in the body of your request.</p> <note> <p>This API action cannot be used to shut down S3 File Gateway or FSx File Gateway.</p> </note> <p>The operation shuts down the gateway service component running in the gateway's virtual machine (VM) and not the host VM.</p> <note> <p>If you want to shut down the VM, it is recommended that you first shut down the gateway component in the VM to avoid unpredictable conditions.</p> </note> <p>After the gateway is shutdown, you cannot call any other API except <a>StartGateway</a>, <a>DescribeGatewayInformation</a>, and <a>ListGateways</a>. For more information, see <a>ActivateGateway</a>. Your applications cannot read from or write to the gateway's storage volumes, and there are no snapshots taken.</p> <note> <p>When you make a shutdown request, you will get a <code>200 OK</code> success response immediately. However, it might take some time for the gateway to shut down. You can call the <a>DescribeGatewayInformation</a> API to check the status. For more information, see <a>ActivateGateway</a>.</p> </note> <p>If do not intend to use the gateway again, you must delete the gateway (using <a>DeleteGateway</a>) to no longer pay software charges associated with the gateway.</p>",
     "StartAvailabilityMonitorTest": "<p>Start a test that verifies that the specified gateway is configured for High Availability monitoring in your host environment. This request only initiates the test and that a successful response only indicates that the test was started. It doesn't indicate that the test passed. For the status of the test, invoke the <code>DescribeAvailabilityMonitorTest</code> API.</p> <note> <p>Starting this test will cause your gateway to go offline for a brief period.</p> </note>",
-    "StartCacheReport": "<p>Starts generating a report of the file metadata currently cached by an S3 File Gateway for a specific file share. You can use this report to identify and resolve issues if you have files failing upload from your gateway to Amazon S3. The report is a CSV file containing a list of files which match the set of filter parameters you specify in the request.</p> <note> <p>The <b>Files Failing Upload</b> flag is reset every 24 hours and during gateway reboot. If this report captures the files after the reset, but before they become flagged again, they will not be reported as <b>Files Failing Upload</b>.</p> </note> <p>The following requirements must be met to successfully generate a cache report:</p> <ul> <li> <p>You must have permissions to list the entire Amazon S3 bucket associated with the specified file share.</p> </li> <li> <p>No other cache reports can currently be in-progress for the specified file share.</p> </li> <li> <p>There must be fewer than 10 existing cache reports for the specified file share.</p> </li> <li> <p>The gateway must be online and connected to Amazon Web Services.</p> </li> <li> <p>The root disk must have at least 20GB of free space when report generation starts.</p> </li> <li> <p>You must specify at least one value for <code>InclusionFilters</code> or <code>ExclusionFilters</code> in the request.</p> </li> </ul>",
+    "StartCacheReport": "<p>Starts generating a report of the file metadata currently cached by an S3 File Gateway for a specific file share. You can use this report to identify and resolve issues if you have files failing upload from your gateway to Amazon S3. The report is a CSV file containing a list of files which match the set of filter parameters you specify in the request.</p> <note> <p>The <b>Files Failing Upload</b> flag is reset every 24 hours and during gateway reboot. If this report captures the files after the reset, but before they become flagged again, they will not be reported as <b>Files Failing Upload</b>.</p> </note> <p>The following requirements must be met to successfully generate a cache report:</p> <ul> <li> <p>You must have <code>s3:PutObject</code> and <code>s3:AbortMultipartUpload</code> permissions for the Amazon S3 bucket where you want to store the cache report.</p> </li> <li> <p>No other cache reports can currently be in-progress for the specified file share.</p> </li> <li> <p>There must be fewer than 10 existing cache reports for the specified file share.</p> </li> <li> <p>The gateway must be online and connected to Amazon Web Services.</p> </li> <li> <p>The root disk must have at least 20GB of free space when report generation starts.</p> </li> <li> <p>You must specify at least one value for <code>InclusionFilters</code> or <code>ExclusionFilters</code> in the request.</p> </li> </ul>",
     "StartGateway": "<p>Starts a gateway that you previously shut down (see <a>ShutdownGateway</a>). After the gateway starts, you can then make other API calls, your applications can read from or write to the gateway's storage volumes and you will be able to take snapshot backups.</p> <note> <p>When you make a request, you will get a 200 OK success response immediately. However, it might take some time for the gateway to be ready. You should call <a>DescribeGatewayInformation</a> and check the status before making any additional API calls. For more information, see <a>ActivateGateway</a>.</p> </note> <p>To specify which gateway to start, use the Amazon Resource Name (ARN) of the gateway in your request.</p>",
     "UpdateAutomaticTapeCreationPolicy": "<p>Updates the automatic tape creation policy of a gateway. Use this to update the policy with a new set of automatic tape creation rules. This is only supported for tape gateways.</p> <p>By default, there is no automatic tape creation policy.</p> <note> <p>A gateway can have only one automatic tape creation policy.</p> </note>",
     "UpdateBandwidthRateLimit": "<p>Updates the bandwidth rate limits of a gateway. You can update both the upload and download bandwidth rate limit or specify only one of the two. If you don't set a bandwidth rate limit, the existing rate limit remains. This operation is supported only for the stored volume, cached volume, and tape gateway types. To update bandwidth rate limits for S3 file gateways, use <a>UpdateBandwidthRateLimitSchedule</a>.</p> <p>By default, a gateway's bandwidth rate limits are not set. If you don't set any limit, the gateway does not have any limitations on its bandwidth usage and could potentially use the maximum available bandwidth.</p> <p>To specify which gateway to update, use the Amazon Resource Name (ARN) of the gateway in your request.</p>",
@@ -102,13 +102,11 @@
   "shapes": {
     "ActivateGatewayInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>ActivateGatewayInput$ActivationKey</a> </p> </li> <li> <p> <a>ActivateGatewayInput$GatewayName</a> </p> </li> <li> <p> <a>ActivateGatewayInput$GatewayRegion</a> </p> </li> <li> <p> <a>ActivateGatewayInput$GatewayTimezone</a> </p> </li> <li> <p> <a>ActivateGatewayInput$GatewayType</a> </p> </li> <li> <p> <a>ActivateGatewayInput$MediumChangerType</a> </p> </li> <li> <p> <a>ActivateGatewayInput$TapeDriveType</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivateGatewayOutput": {
       "base": "<p>Storage Gateway returns the Amazon Resource Name (ARN) of the activated gateway. It is a string made of information such as your account, gateway name, and Amazon Web Services Region. This ARN is used to reference the gateway in other API operations as well as resource-based authorization.</p> <note> <p>For gateways activated prior to September 02, 2015, the gateway ARN contains the gateway name rather than the gateway ID. Changing the name of the gateway has no effect on the gateway ARN.</p> </note>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivationKey": {
       "base": null,
@@ -125,73 +123,59 @@
     },
     "AddCacheInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddCacheOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddTagsToResourceInput": {
       "base": "<p>AddTagsToResourceInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddTagsToResourceOutput": {
       "base": "<p>AddTagsToResourceOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddUploadBufferInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddUploadBufferOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddWorkingStorageInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>AddWorkingStorageInput$DiskIds</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddWorkingStorageOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway for which working storage was configured.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssignTapePoolInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssignTapePoolOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateFileSystemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateFileSystemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachVolumeInput": {
       "base": "<p>AttachVolumeInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachVolumeOutput": {
       "base": "<p>AttachVolumeOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AuditDestinationARN": {
       "base": null,
@@ -435,33 +419,27 @@
     },
     "CancelArchivalInput": {
       "base": "<p>CancelArchivalInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelArchivalOutput": {
       "base": "<p>CancelArchivalOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelCacheReportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelCacheReportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelRetrievalInput": {
       "base": "<p>CancelRetrievalInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelRetrievalOutput": {
       "base": "<p>CancelRetrievalOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CaseSensitivity": {
       "base": null,
@@ -512,93 +490,75 @@
     },
     "CreateCachediSCSIVolumeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCachediSCSIVolumeOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNFSFileShareInput": {
       "base": "<p>CreateNFSFileShareInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNFSFileShareOutput": {
       "base": "<p>CreateNFSFileShareOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSMBFileShareInput": {
       "base": "<p>CreateSMBFileShareInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSMBFileShareOutput": {
       "base": "<p>CreateSMBFileShareOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotFromVolumeRecoveryPointInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotFromVolumeRecoveryPointOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>CreateSnapshotInput$SnapshotDescription</a> </p> </li> <li> <p> <a>CreateSnapshotInput$VolumeARN</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStorediSCSIVolumeInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>CreateStorediSCSIVolumeInput$DiskId</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$NetworkInterfaceId</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$PreserveExistingData</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$SnapshotId</a> </p> </li> <li> <p> <a>CreateStorediSCSIVolumeInput$TargetName</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStorediSCSIVolumeOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTapePoolInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTapePoolOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTapeWithBarcodeInput": {
       "base": "<p>CreateTapeWithBarcodeInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTapeWithBarcodeOutput": {
       "base": "<p>CreateTapeOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTapesInput": {
       "base": "<p>CreateTapesInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTapesOutput": {
       "base": "<p>CreateTapeOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedDate": {
       "base": null,
@@ -640,113 +600,91 @@
     },
     "DeleteAutomaticTapeCreationPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutomaticTapeCreationPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBandwidthRateLimitInput": {
       "base": "<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>DeleteBandwidthRateLimitInput$BandwidthType</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBandwidthRateLimitOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway whose bandwidth rate information was deleted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCacheReportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCacheReportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChapCredentialsInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>DeleteChapCredentialsInput$InitiatorName</a> </p> </li> <li> <p> <a>DeleteChapCredentialsInput$TargetARN</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChapCredentialsOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFileShareInput": {
       "base": "<p>DeleteFileShareInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFileShareOutput": {
       "base": "<p>DeleteFileShareOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGatewayInput": {
       "base": "<p>A JSON object containing the ID of the gateway to delete.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGatewayOutput": {
       "base": "<p>A JSON object containing the ID of the deleted gateway.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotScheduleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotScheduleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTapeArchiveInput": {
       "base": "<p>DeleteTapeArchiveInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTapeArchiveOutput": {
       "base": "<p>DeleteTapeArchiveOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTapeInput": {
       "base": "<p>DeleteTapeInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTapeOutput": {
       "base": "<p>DeleteTapeOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTapePoolInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTapePoolOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVolumeInput": {
       "base": "<p>A JSON object containing the <a>DeleteVolumeInput$VolumeARN</a> to delete.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVolumeOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the storage volume that was deleted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeprecationDate": {
       "base": null,
@@ -757,213 +695,171 @@
     },
     "DescribeAvailabilityMonitorTestInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAvailabilityMonitorTestOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBandwidthRateLimitInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBandwidthRateLimitOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBandwidthRateLimitScheduleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBandwidthRateLimitScheduleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCacheInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCacheOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCacheReportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCacheReportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCachediSCSIVolumesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCachediSCSIVolumesOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeChapCredentialsInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the iSCSI volume target.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeChapCredentialsOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFileSystemAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFileSystemAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGatewayInformationInput": {
       "base": "<p>A JSON object containing the ID of the gateway.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGatewayInformationOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceStartTimeInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceStartTimeOutput": {
       "base": "<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>DescribeMaintenanceStartTimeOutput$SoftwareUpdatePreferences</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$DayOfMonth</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$DayOfWeek</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$HourOfDay</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$MinuteOfHour</a> </p> </li> <li> <p> <a>DescribeMaintenanceStartTimeOutput$Timezone</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeNFSFileSharesInput": {
       "base": "<p>DescribeNFSFileSharesInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeNFSFileSharesOutput": {
       "base": "<p>DescribeNFSFileSharesOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSMBFileSharesInput": {
       "base": "<p>DescribeSMBFileSharesInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSMBFileSharesOutput": {
       "base": "<p>DescribeSMBFileSharesOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSMBSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSMBSettingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSnapshotScheduleInput": {
       "base": "<p>A JSON object containing the <a>DescribeSnapshotScheduleInput$VolumeARN</a> of the volume.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSnapshotScheduleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStorediSCSIVolumesInput": {
       "base": "<p>A JSON object containing a list of <a>DescribeStorediSCSIVolumesInput$VolumeARNs</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStorediSCSIVolumesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTapeArchivesInput": {
       "base": "<p>DescribeTapeArchivesInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTapeArchivesOutput": {
       "base": "<p>DescribeTapeArchivesOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTapeRecoveryPointsInput": {
       "base": "<p>DescribeTapeRecoveryPointsInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTapeRecoveryPointsOutput": {
       "base": "<p>DescribeTapeRecoveryPointsOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTapesInput": {
       "base": "<p>DescribeTapesInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTapesOutput": {
       "base": "<p>DescribeTapesOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUploadBufferInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUploadBufferOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeVTLDevicesInput": {
       "base": "<p>DescribeVTLDevicesInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeVTLDevicesOutput": {
       "base": "<p>DescribeVTLDevicesOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkingStorageInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkingStorageOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -974,13 +870,11 @@
     },
     "DetachVolumeInput": {
       "base": "<p>AttachVolumeInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachVolumeOutput": {
       "base": "<p>AttachVolumeOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeviceType": {
       "base": null,
@@ -996,23 +890,19 @@
     },
     "DisableGatewayInput": {
       "base": "<p>DisableGatewayInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableGatewayOutput": {
       "base": "<p>DisableGatewayOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFileSystemInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFileSystemOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Disk": {
       "base": "<p>Represents a gateway's local disk.</p>",
@@ -1142,13 +1032,11 @@
     },
     "EvictFilesFailingUploadInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EvictFilesFailingUploadOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FileShareARN": {
       "base": "<p>The Amazon Resource Name (ARN) of the file share.</p>",
@@ -1182,11 +1070,11 @@
       }
     },
     "FileShareClientList": {
-      "base": "<p>The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IP addresses or valid CIDR blocks.</p>",
+      "base": "<p>The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IPv4/IPv6 addresses or valid CIDR blocks.</p>",
       "refs": {
-        "CreateNFSFileShareInput$ClientList": "<p>The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IP addresses or valid CIDR blocks.</p>",
+        "CreateNFSFileShareInput$ClientList": "<p>The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IPv4/IPv6 addresses or valid CIDR blocks.</p>",
         "NFSFileShareInfo$ClientList": null,
-        "UpdateNFSFileShareInput$ClientList": "<p>The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IP addresses or valid CIDR blocks.</p>"
+        "UpdateNFSFileShareInput$ClientList": "<p>The list of clients that are allowed to access the S3 File Gateway. The list must contain either valid IPv4/IPv6 addresses or valid CIDR blocks.</p>"
       }
     },
     "FileShareId": {
@@ -1528,7 +1416,7 @@
     "Hosts": {
       "base": null,
       "refs": {
-        "JoinDomainInput$DomainControllers": "<p>List of IPv4 addresses, NetBIOS names, or host names of your domain server. If you need to specify the port number include it after the colon (“:”). For example, <code>mydc.mydomain.com:389</code>.</p>"
+        "JoinDomainInput$DomainControllers": "<p>List of IP addresses, NetBIOS names, or host names of your domain server. If you need to specify the port number include it after the colon (“:”). For example, <code>mydc.mydomain.com:389</code>.</p> <note> <p>S3 File Gateway supports IPv6 addresses in addition to IPv4 and other existing formats.</p> <p>FSx File Gateway does not support IPv6.</p> </note>"
       }
     },
     "HourOfDay": {
@@ -1548,12 +1436,6 @@
         "IpAddressList$member": null
       }
     },
-    "IPV4AddressCIDR": {
-      "base": null,
-      "refs": {
-        "FileShareClientList$member": null
-      }
-    },
     "Initiator": {
       "base": null,
       "refs": {
@@ -1568,18 +1450,22 @@
     },
     "InternalServerError": {
       "base": "<p>An internal server error has occurred during the request. For more information, see the error and message fields.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidGatewayRequestException": {
       "base": "<p>An exception occurred because an invalid gateway request was issued to the service. For more information, see the error and message fields.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddressList": {
       "base": null,
       "refs": {
         "EndpointNetworkConfiguration$IpAddresses": "<p>A list of gateway IP addresses on which the associated Amazon FSx file system is available.</p> <note> <p>If multiple file systems are associated with this gateway, this field is required.</p> </note>"
+      }
+    },
+    "Ipv4OrIpv6AddressCIDR": {
+      "base": null,
+      "refs": {
+        "FileShareClientList$member": null
       }
     },
     "IqnName": {
@@ -1594,13 +1480,11 @@
     },
     "JoinDomainInput": {
       "base": "<p>JoinDomainInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JoinDomainOutput": {
       "base": "<p>JoinDomainOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KMSKey": {
       "base": "<p>Optional. The Amazon Resource Name (ARN) of a symmetric customer master key (CMK) used for Amazon S3 server-side encryption. Storage Gateway does not support asymmetric CMKs. This value must be set if <code>KMSEncrypted</code> is <code>true</code>, or if <code>EncryptionType</code> is <code>SseKms</code> or <code>DsseKms</code>.</p>",
@@ -1629,123 +1513,99 @@
     },
     "ListAutomaticTapeCreationPoliciesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAutomaticTapeCreationPoliciesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCacheReportsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCacheReportsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFileSharesInput": {
       "base": "<p>ListFileShareInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFileSharesOutput": {
       "base": "<p>ListFileShareOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFileSystemAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFileSystemAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGatewaysInput": {
       "base": "<p>A JSON object containing zero or more of the following fields:</p> <ul> <li> <p> <a>ListGatewaysInput$Limit</a> </p> </li> <li> <p> <a>ListGatewaysInput$Marker</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGatewaysOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLocalDisksInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLocalDisksOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": "<p>ListTagsForResourceInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": "<p>ListTagsForResourceOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTapePoolsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTapePoolsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTapesInput": {
       "base": "<p>A JSON object that contains one or more of the following fields:</p> <ul> <li> <p> <a>ListTapesInput$Limit</a> </p> </li> <li> <p> <a>ListTapesInput$Marker</a> </p> </li> <li> <p> <a>ListTapesInput$TapeARNs</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTapesOutput": {
       "base": "<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>ListTapesOutput$Marker</a> </p> </li> <li> <p> <a>ListTapesOutput$VolumeInfos</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVolumeInitiatorsInput": {
       "base": "<p>ListVolumeInitiatorsInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVolumeInitiatorsOutput": {
       "base": "<p>ListVolumeInitiatorsOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVolumeRecoveryPointsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVolumeRecoveryPointsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVolumesInput": {
       "base": "<p>A JSON object that contains one or more of the following fields:</p> <ul> <li> <p> <a>ListVolumesInput$Limit</a> </p> </li> <li> <p> <a>ListVolumesInput$Marker</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVolumesOutput": {
       "base": "<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>ListVolumesOutput$Marker</a> </p> </li> <li> <p> <a>ListVolumesOutput$VolumeInfos</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LocalConsolePassword": {
       "base": null,
@@ -1845,9 +1705,9 @@
     "NetworkInterfaceId": {
       "base": null,
       "refs": {
-        "AttachVolumeInput$NetworkInterfaceId": "<p>The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted. Use <a>DescribeGatewayInformation</a> to get a list of the network interfaces available on a gateway.</p> <p>Valid Values: A valid IP address.</p>",
-        "CreateCachediSCSIVolumeInput$NetworkInterfaceId": "<p>The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted. Use <a>DescribeGatewayInformation</a> to get a list of the network interfaces available on a gateway.</p> <p>Valid Values: A valid IP address.</p>",
-        "CreateStorediSCSIVolumeInput$NetworkInterfaceId": "<p>The network interface of the gateway on which to expose the iSCSI target. Only IPv4 addresses are accepted. Use <a>DescribeGatewayInformation</a> to get a list of the network interfaces available on a gateway.</p> <p>Valid Values: A valid IP address.</p>",
+        "AttachVolumeInput$NetworkInterfaceId": "<p>The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use <a>DescribeGatewayInformation</a> to get a list of the network interfaces available on a gateway.</p> <p>Valid Values: A valid IP address.</p>",
+        "CreateCachediSCSIVolumeInput$NetworkInterfaceId": "<p>The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use <a>DescribeGatewayInformation</a> to get a list of the network interfaces available on a gateway.</p> <p>Valid Values: A valid IP address.</p>",
+        "CreateStorediSCSIVolumeInput$NetworkInterfaceId": "<p>The network interface of the gateway on which to expose the iSCSI target. Accepts IPv4 and IPv6 addresses. Use <a>DescribeGatewayInformation</a> to get a list of the network interfaces available on a gateway.</p> <p>Valid Values: A valid IP address.</p>",
         "DeviceiSCSIAttributes$NetworkInterfaceId": "<p>The network interface identifier of the VTL device.</p>",
         "VolumeiSCSIAttributes$NetworkInterfaceId": "<p>The network interface identifier.</p>"
       }
@@ -1878,13 +1738,11 @@
     },
     "NotifyWhenUploadedInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "NotifyWhenUploadedOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "NumTapesToCreate": {
       "base": null,
@@ -2009,13 +1867,11 @@
     },
     "RefreshCacheInput": {
       "base": "<p>RefreshCacheInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RefreshCacheOutput": {
       "base": "<p>RefreshCacheOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegionId": {
       "base": null,
@@ -2030,13 +1886,11 @@
     },
     "RemoveTagsFromResourceInput": {
       "base": "<p>RemoveTagsFromResourceInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTagsFromResourceOutput": {
       "base": "<p>RemoveTagsFromResourceOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReportCompletionPercent": {
       "base": null,
@@ -2046,13 +1900,11 @@
     },
     "ResetCacheInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetCacheOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceARN": {
       "base": null,
@@ -2081,23 +1933,19 @@
     },
     "RetrieveTapeArchiveInput": {
       "base": "<p>RetrieveTapeArchiveInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveTapeArchiveOutput": {
       "base": "<p>RetrieveTapeArchiveOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveTapeRecoveryPointInput": {
       "base": "<p>RetrieveTapeRecoveryPointInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveTapeRecoveryPointOutput": {
       "base": "<p>RetrieveTapeRecoveryPointOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Role": {
       "base": "<p>The ARN of the IAM role that an S3 File Gateway assumes when it accesses the underlying storage.</p>",
@@ -2144,38 +1992,31 @@
     },
     "ServiceUnavailableError": {
       "base": "<p>An internal server error has occurred because the service is unavailable. For more information, see the error and message fields.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetLocalConsolePasswordInput": {
       "base": "<p>SetLocalConsolePasswordInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetLocalConsolePasswordOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetSMBGuestPasswordInput": {
       "base": "<p>SetSMBGuestPasswordInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetSMBGuestPasswordOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ShutdownGatewayInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway to shut down.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ShutdownGatewayOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway that was shut down.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnapshotDescription": {
       "base": null,
@@ -2225,33 +2066,27 @@
     },
     "StartAvailabilityMonitorTestInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAvailabilityMonitorTestOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCacheReportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCacheReportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartGatewayInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway to start.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartGatewayOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway that was restarted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StorageClass": {
       "base": "<p/>",
@@ -2542,153 +2377,123 @@
     },
     "UpdateAutomaticTapeCreationPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAutomaticTapeCreationPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBandwidthRateLimitInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>UpdateBandwidthRateLimitInput$AverageDownloadRateLimitInBitsPerSec</a> </p> </li> <li> <p> <a>UpdateBandwidthRateLimitInput$AverageUploadRateLimitInBitsPerSec</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBandwidthRateLimitOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway whose throttle information was updated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBandwidthRateLimitScheduleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBandwidthRateLimitScheduleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChapCredentialsInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>UpdateChapCredentialsInput$InitiatorName</a> </p> </li> <li> <p> <a>UpdateChapCredentialsInput$SecretToAuthenticateInitiator</a> </p> </li> <li> <p> <a>UpdateChapCredentialsInput$SecretToAuthenticateTarget</a> </p> </li> <li> <p> <a>UpdateChapCredentialsInput$TargetARN</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChapCredentialsOutput": {
       "base": "<p>A JSON object containing the following fields:</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFileSystemAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFileSystemAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewayInformationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewayInformationOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway that was updated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewaySoftwareNowInput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway to update.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewaySoftwareNowOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway that was updated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceStartTimeInput": {
       "base": "<p>A JSON object containing the following fields:</p> <ul> <li> <p> <a>UpdateMaintenanceStartTimeInput$SoftwareUpdatePreferences</a> </p> </li> <li> <p> <a>UpdateMaintenanceStartTimeInput$DayOfMonth</a> </p> </li> <li> <p> <a>UpdateMaintenanceStartTimeInput$DayOfWeek</a> </p> </li> <li> <p> <a>UpdateMaintenanceStartTimeInput$HourOfDay</a> </p> </li> <li> <p> <a>UpdateMaintenanceStartTimeInput$MinuteOfHour</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceStartTimeOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the gateway whose maintenance start time is updated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNFSFileShareInput": {
       "base": "<p>UpdateNFSFileShareInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNFSFileShareOutput": {
       "base": "<p>UpdateNFSFileShareOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBFileShareInput": {
       "base": "<p>UpdateSMBFileShareInput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBFileShareOutput": {
       "base": "<p>UpdateSMBFileShareOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBFileShareVisibilityInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBFileShareVisibilityOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBLocalGroupsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBLocalGroupsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBSecurityStrategyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSMBSecurityStrategyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSnapshotScheduleInput": {
       "base": "<p>A JSON object containing one or more of the following fields:</p> <ul> <li> <p> <a>UpdateSnapshotScheduleInput$Description</a> </p> </li> <li> <p> <a>UpdateSnapshotScheduleInput$RecurrenceInHours</a> </p> </li> <li> <p> <a>UpdateSnapshotScheduleInput$StartAt</a> </p> </li> <li> <p> <a>UpdateSnapshotScheduleInput$VolumeARN</a> </p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSnapshotScheduleOutput": {
       "base": "<p>A JSON object containing the Amazon Resource Name (ARN) of the updated storage volume.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVTLDeviceTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVTLDeviceTypeOutput": {
       "base": "<p>UpdateVTLDeviceTypeOutput</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UserList": {
       "base": null,
@@ -2941,7 +2746,7 @@
         "InvalidGatewayRequestException$message": "<p>A human-readable message describing the error that occurred.</p>",
         "NetworkInterface$Ipv4Address": "<p>The Internet Protocol version 4 (IPv4) address of the interface.</p>",
         "NetworkInterface$MacAddress": "<p>The Media Access Control (MAC) address of the interface.</p> <note> <p>This is currently unsupported and will not be returned in output.</p> </note>",
-        "NetworkInterface$Ipv6Address": "<p>The Internet Protocol version 6 (IPv6) address of the interface. <i>Currently not supported</i>.</p>",
+        "NetworkInterface$Ipv6Address": "<p>The Internet Protocol version 6 (IPv6) address of the interface.</p> <note> <p>This element returns IPv6 addresses for all gateway types except FSx File Gateway.</p> </note>",
         "ServiceUnavailableError$message": "<p>A human-readable message describing the error that occurred.</p>",
         "UpdateGatewayInformationOutput$GatewayName": "<p>The name you configured for your gateway.</p>",
         "VolumeRecoveryPointInfo$VolumeRecoveryPointTime": "<p>The time the recovery point was taken.</p>",
