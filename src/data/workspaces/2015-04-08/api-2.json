@@ -1013,7 +1013,10 @@
       "output":{"shape":"ModifyWorkspaceAccessPropertiesResult"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "ModifyWorkspaceCreationProperties":{
@@ -1402,6 +1405,29 @@
       },
       "exception":true
     },
+    "AccessEndpoint":{
+      "type":"structure",
+      "members":{
+        "AccessEndpointType":{"shape":"AccessEndpointType"},
+        "VpcEndpointId":{"shape":"AlphanumericDashUnderscoreNonEmptyString"}
+      }
+    },
+    "AccessEndpointConfig":{
+      "type":"structure",
+      "required":["AccessEndpoints"],
+      "members":{
+        "AccessEndpoints":{"shape":"AccessEndpointList"},
+        "InternetFallbackProtocols":{"shape":"InternetFallbackProtocolList"}
+      }
+    },
+    "AccessEndpointList":{
+      "type":"list",
+      "member":{"shape":"AccessEndpoint"}
+    },
+    "AccessEndpointType":{
+      "type":"string",
+      "enum":["STREAMING_WSP"]
+    },
     "AccessPropertyValue":{
       "type":"string",
       "enum":[
@@ -1479,6 +1505,10 @@
       "pattern":"^(http|https)\\://\\S+"
     },
     "Alias":{"type":"string"},
+    "AlphanumericDashUnderscoreNonEmptyString":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9\\_\\-]{1,1000}$"
+    },
     "AmazonUuid":{
       "type":"string",
       "max":36,
@@ -3168,6 +3198,21 @@
       },
       "exception":true
     },
+    "InternetFallbackProtocol":{
+      "type":"string",
+      "enum":["PCOIP"]
+    },
+    "InternetFallbackProtocolList":{
+      "type":"list",
+      "member":{"shape":"InternetFallbackProtocol"}
+    },
+    "InvalidParameterCombinationException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
     "InvalidParameterValuesException":{
       "type":"structure",
       "members":{
@@ -4478,7 +4523,8 @@
         "DeviceTypeChromeOs":{"shape":"AccessPropertyValue"},
         "DeviceTypeZeroClient":{"shape":"AccessPropertyValue"},
         "DeviceTypeLinux":{"shape":"AccessPropertyValue"},
-        "DeviceTypeWorkSpacesThinClient":{"shape":"AccessPropertyValue"}
+        "DeviceTypeWorkSpacesThinClient":{"shape":"AccessPropertyValue"},
+        "AccessEndpointConfig":{"shape":"AccessEndpointConfig"}
       }
     },
     "WorkspaceBundle":{

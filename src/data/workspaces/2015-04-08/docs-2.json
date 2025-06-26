@@ -141,6 +141,30 @@
       "base": "<p>The user is not authorized to access a resource.</p>",
       "refs": {}
     },
+    "AccessEndpoint": {
+      "base": "<p>Describes the access type and endpoint for a WorkSpace.</p>",
+      "refs": {
+        "AccessEndpointList$member": null
+      }
+    },
+    "AccessEndpointConfig": {
+      "base": "<p>Describes the access endpoint configuration for a WorkSpace.</p>",
+      "refs": {
+        "WorkspaceAccessProperties$AccessEndpointConfig": "<p>Specifies the configuration for accessing the WorkSpace.</p>"
+      }
+    },
+    "AccessEndpointList": {
+      "base": null,
+      "refs": {
+        "AccessEndpointConfig$AccessEndpoints": "<p>Indicates a list of access endpoints associated with this directory.</p>"
+      }
+    },
+    "AccessEndpointType": {
+      "base": null,
+      "refs": {
+        "AccessEndpoint$AccessEndpointType": "<p>Indicates the type of access endpoint.</p>"
+      }
+    },
     "AccessPropertyValue": {
       "base": null,
       "refs": {
@@ -230,6 +254,12 @@
       "base": null,
       "refs": {
         "WorkspaceDirectory$Alias": "<p>The directory alias.</p>"
+      }
+    },
+    "AlphanumericDashUnderscoreNonEmptyString": {
+      "base": null,
+      "refs": {
+        "AccessEndpoint$VpcEndpointId": "<p>Indicates the VPC endpoint to use for access.</p>"
       }
     },
     "AmazonUuid": {
@@ -1438,6 +1468,7 @@
         "AccessDeniedException$message": null,
         "ConflictException$message": null,
         "InternalServerException$message": null,
+        "InvalidParameterCombinationException$message": "<p>The exception error message.</p>",
         "InvalidParameterValuesException$message": "<p>The exception error message.</p>",
         "InvalidResourceStateException$message": null,
         "OperationInProgressException$message": null,
@@ -1616,6 +1647,22 @@
     },
     "InternalServerException": {
       "base": "<p>Unexpected server error occured.</p>",
+      "refs": {}
+    },
+    "InternetFallbackProtocol": {
+      "base": null,
+      "refs": {
+        "InternetFallbackProtocolList$member": null
+      }
+    },
+    "InternetFallbackProtocolList": {
+      "base": null,
+      "refs": {
+        "AccessEndpointConfig$InternetFallbackProtocols": "<p>Indicates a list of protocols that fallback to using the public Internet when streaming over a VPC endpoint is not available.</p>"
+      }
+    },
+    "InvalidParameterCombinationException": {
+      "base": "<p>Two or more of the selected parameter values cannot be used together.</p>",
       "refs": {}
     },
     "InvalidParameterValuesException": {

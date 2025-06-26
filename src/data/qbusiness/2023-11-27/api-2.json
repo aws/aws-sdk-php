@@ -3037,6 +3037,9 @@
                 "actions": {
                     "shape": "QIamActions"
                 },
+                "conditions": {
+                    "shape": "PermissionConditions"
+                },
                 "principal": {
                     "shape": "PrincipalRoleArn"
                 }
@@ -4124,6 +4127,9 @@
                 "displayName": {
                     "shape": "DataAccessorName"
                 },
+                "authenticationDetail": {
+                    "shape": "DataAccessorAuthenticationDetail"
+                },
                 "tags": {
                     "shape": "Tags"
                 }
@@ -4567,6 +4573,9 @@
                 "principal": {
                     "shape": "PrincipalRoleArn"
                 },
+                "authenticationDetail": {
+                    "shape": "DataAccessorAuthenticationDetail"
+                },
                 "createdAt": {
                     "shape": "Timestamp"
                 },
@@ -4581,11 +4590,69 @@
             "min": 0,
             "pattern": "arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^\/].{0,1023}"
         },
+        "DataAccessorAuthenticationConfiguration": {
+            "type": "structure",
+            "members": {
+                "idcTrustedTokenIssuerConfiguration": {
+                    "shape": "DataAccessorIdcTrustedTokenIssuerConfiguration"
+                }
+            },
+            "union": true
+        },
+        "DataAccessorAuthenticationDetail": {
+            "type": "structure",
+            "required": [
+                "authenticationType"
+            ],
+            "members": {
+                "authenticationType": {
+                    "shape": "DataAccessorAuthenticationType"
+                },
+                "authenticationConfiguration": {
+                    "shape": "DataAccessorAuthenticationConfiguration"
+                },
+                "externalIds": {
+                    "shape": "DataAccessorExternalIds"
+                }
+            }
+        },
+        "DataAccessorAuthenticationType": {
+            "type": "string",
+            "enum": [
+                "AWS_IAM_IDC_TTI",
+                "AWS_IAM_IDC_AUTH_CODE"
+            ]
+        },
+        "DataAccessorExternalId": {
+            "type": "string",
+            "max": 1000,
+            "min": 1,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9_-]*"
+        },
+        "DataAccessorExternalIds": {
+            "type": "list",
+            "member": {
+                "shape": "DataAccessorExternalId"
+            },
+            "max": 1,
+            "min": 1
+        },
         "DataAccessorId": {
             "type": "string",
             "max": 36,
             "min": 36,
             "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
+        "DataAccessorIdcTrustedTokenIssuerConfiguration": {
+            "type": "structure",
+            "required": [
+                "idcTrustedTokenIssuerArn"
+            ],
+            "members": {
+                "idcTrustedTokenIssuerArn": {
+                    "shape": "IdcTrustedTokenIssuerArn"
+                }
+            }
         },
         "DataAccessorName": {
             "type": "string",
@@ -5792,6 +5859,9 @@
                 "actionConfigurations": {
                     "shape": "ActionConfigurationList"
                 },
+                "authenticationDetail": {
+                    "shape": "DataAccessorAuthenticationDetail"
+                },
                 "createdAt": {
                     "shape": "Timestamp"
                 },
@@ -6397,6 +6467,12 @@
                     "shape": "RoleArn"
                 }
             }
+        },
+        "IdcTrustedTokenIssuerArn": {
+            "type": "string",
+            "max": 1284,
+            "min": 0,
+            "pattern": "arn:aws:sso::[0-9]{12}:trustedTokenIssuer\/(sso)?ins-[a-zA-Z0-9-.]{16}\/tti-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
         },
         "IdentityProviderConfiguration": {
             "type": "structure",
@@ -7771,6 +7847,57 @@
             "type": "string",
             "sensitive": true
         },
+        "PermissionCondition": {
+            "type": "structure",
+            "required": [
+                "conditionOperator",
+                "conditionKey",
+                "conditionValues"
+            ],
+            "members": {
+                "conditionOperator": {
+                    "shape": "PermissionConditionOperator"
+                },
+                "conditionKey": {
+                    "shape": "PermissionConditionKey"
+                },
+                "conditionValues": {
+                    "shape": "PermissionConditionValues"
+                }
+            }
+        },
+        "PermissionConditionKey": {
+            "type": "string",
+            "pattern": "aws:PrincipalTag\/qbusiness-dataaccessor:[a-zA-Z]+.*"
+        },
+        "PermissionConditionOperator": {
+            "type": "string",
+            "enum": [
+                "StringEquals"
+            ]
+        },
+        "PermissionConditionValue": {
+            "type": "string",
+            "max": 1000,
+            "min": 1,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9_-]*"
+        },
+        "PermissionConditionValues": {
+            "type": "list",
+            "member": {
+                "shape": "PermissionConditionValue"
+            },
+            "max": 1,
+            "min": 1
+        },
+        "PermissionConditions": {
+            "type": "list",
+            "member": {
+                "shape": "PermissionCondition"
+            },
+            "max": 10,
+            "min": 1
+        },
         "PersonalizationConfiguration": {
             "type": "structure",
             "required": [
@@ -9126,6 +9253,9 @@
                 },
                 "actionConfigurations": {
                     "shape": "ActionConfigurationList"
+                },
+                "authenticationDetail": {
+                    "shape": "DataAccessorAuthenticationDetail"
                 },
                 "displayName": {
                     "shape": "DataAccessorName"

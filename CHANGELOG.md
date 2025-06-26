@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Deadline` - Added fields to track cumulative task retry attempts for steps and jobs
+* `Aws\Keyspaces` - This release provides change data capture (CDC) streams support through updates to the Amazon Keyspaces API.
+* `Aws\EC2` - This release adds support for OdbNetworkArn as a target in VPC Route Tables
+* `Aws\QBusiness` - Added support for App level authentication for QBusiness DataAccessor using AWS IAM Identity center Trusted Token issuer
+* `Aws\KeyspacesStreams` - This release adds change data capture (CDC) streams support through the new Amazon Keyspaces Streams API.
+* `Aws\IoTManagedIntegrations` - Adding managed integrations APIs for IoT Device Management to onboard and control devices across different manufacturers, connectivity protocols and third party vendor clouds. APIs include managed thing operations, provisioning profile management, and cloud connector operations.
+* `Aws\WorkSpaces` - Updated modifyStreamingProperties to support PrivateLink VPC endpoints for directories
+* `Aws\KMS` - This release updates AWS CLI examples for KMS APIs.
+
 ## 3.347.2 - 2025-06-25
 
 * `Aws\ECS` - Updates for change to Amazon ECS default log driver mode from blocking to non-blocking

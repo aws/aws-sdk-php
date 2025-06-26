@@ -408,6 +408,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionKendraRanking(array $args = [])
  * @method \Aws\Keyspaces\KeyspacesClient createKeyspaces(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKeyspaces(array $args = [])
+ * @method \Aws\KeyspacesStreams\KeyspacesStreamsClient createKeyspacesStreams(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionKeyspacesStreams(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKinesis(array $args = [])
  * @method \Aws\KinesisAnalytics\KinesisAnalyticsClient createKinesisAnalytics(array $args = [])

@@ -2,6 +2,9 @@
   "version": "2.0",
   "service": "<p>Managed integrations is a feature of AWS IoT Device Management that enables developers to quickly build innovative IoT solutions. Customers can use managed integrations to automate device setup workflows and support interoperability across many devices, regardless of device vendor or connectivity protocol. This allows developers to use a single user-interface to control, manage, and operate a range of devices.</p>",
   "operations": {
+    "CreateAccountAssociation": "<p>Creates a new account association via the destination id.</p>",
+    "CreateCloudConnector": "<p>Creates a C2C (cloud-to-cloud) connector.</p>",
+    "CreateConnectorDestination": "<p>Create a connector destination for connecting a cloud-to-cloud (C2C) connector to the customer's Amazon Web Services account.</p>",
     "CreateCredentialLocker": "<p>Create a product credential locker. This operation will trigger the creation of all the manufacturing resources including the Wi-Fi setup key pair and device certificate.</p>",
     "CreateDestination": "<p> Create a destination. IoT managed integrations uses the destination to determine where to deliver notifications for a device. </p>",
     "CreateEventLogConfiguration": "<p>Set the event log configuration for the account, resource type, or specific resource.</p>",
@@ -10,6 +13,9 @@
     "CreateOtaTask": "<p>Create an over-the-air (OTA) task to update a device.</p>",
     "CreateOtaTaskConfiguration": "<p>Create a configuraiton for the over-the-air (OTA) task.</p>",
     "CreateProvisioningProfile": "<p>Create a provisioning profile for a device to execute the provisioning flows using a provisioning template. The provisioning template is a document that defines the set of resources and policies applied to a device during the provisioning process.</p>",
+    "DeleteAccountAssociation": "<p>Remove a third party account and related devices from an end user.</p>",
+    "DeleteCloudConnector": "<p>Delete a cloud connector.</p>",
+    "DeleteConnectorDestination": "<p>Delete a connector destination for connecting a cloud-to-cloud (C2C) connector to the customer's Amazon Web Services account.</p>",
     "DeleteCredentialLocker": "<p>Delete a credential locker. </p> <note> <p>This operation can't be undone and any existing device won't be able to use IoT managed integrations.</p> </note>",
     "DeleteDestination": "<p>Deletes a customer-managed destination specified by id. </p>",
     "DeleteEventLogConfiguration": "<p>Delete an event log configuration.</p>",
@@ -18,6 +24,10 @@
     "DeleteOtaTask": "<p>Delete the over-the-air (OTA) task.</p>",
     "DeleteOtaTaskConfiguration": "<p>Delete the over-the-air (OTA) task configuration.</p>",
     "DeleteProvisioningProfile": "<p>Delete a provisioning profile.</p>",
+    "DeregisterAccountAssociation": "<p>Deregisters an account association, removing the connection between a managed thing and a third-party account.</p>",
+    "GetAccountAssociation": "<p>Get an account association for an Amazon Web Services account linked to a customer-managed destination.</p>",
+    "GetCloudConnector": "<p>Gets all the information about a connector for a connector developer.</p>",
+    "GetConnectorDestination": "<p>Get a connector destination of a cloud-to-cloud (C2C) connector connecting to a customer's Amazon Web Services account.</p>",
     "GetCredentialLocker": "<p>Get information on an existing credential locker</p>",
     "GetCustomEndpoint": "<p>Returns the IoT managed integrations custom endpoint.</p>",
     "GetDefaultEncryptionConfiguration": "<p> Retrieves information about the default encryption configuration for the Amazon Web Services account in the default or specified region. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/key-management.html\">Key management</a> in the <i>AWS IoT SiteWise User Guide</i>.</p>",
@@ -28,7 +38,7 @@
     "GetManagedThing": "<p> Get the attributes and capabilities associated with a managed thing.</p>",
     "GetManagedThingCapabilities": "<p>Get the capabilities for a managed thing using the device ID.</p>",
     "GetManagedThingConnectivityData": "<p>Get the connectivity status of a managed thing.</p>",
-    "GetManagedThingMetaData": "<p>Get the metadata information for a managed thing.</p>",
+    "GetManagedThingMetaData": "<p>Get the metadata information for a managed thing.</p> <note> <p>The <code>managedThing</code> <code>metadata</code> parameter is used for associating attributes with a <code>managedThing</code> that can be used for grouping over-the-air (OTA) tasks. Name value pairs in <code>metadata</code> can be used in the <code>OtaTargetQueryString</code> parameter for the <code>CreateOtaTask</code> API operation.</p> </note>",
     "GetManagedThingState": "<p> Returns the managed thing state for the given device Id.</p>",
     "GetNotificationConfiguration": "<p> Get a notification configuration.</p>",
     "GetOtaTask": "<p>Get the over-the-air (OTA) task.</p>",
@@ -36,24 +46,39 @@
     "GetProvisioningProfile": "<p>Get a provisioning profile by template name.</p>",
     "GetRuntimeLogConfiguration": "<p>Get the runtime log configuration for a specific managed thing or for all managed things as a group.</p>",
     "GetSchemaVersion": "<p>Gets a schema version with the provided information.</p>",
+    "ListAccountAssociations": "<p>Lists all account associations, with optional filtering by connector destination ID.</p>",
+    "ListCloudConnectors": "<p>Returns a list of connectors based on permissions. </p>",
+    "ListConnectorDestinations": "<p>Lists all connector destinations, with optional filtering by cloud connector ID.</p>",
     "ListCredentialLockers": "<p>List information on an existing credential locker.</p>",
     "ListDestinations": "<p> List all destination names under one Amazon Web Services account.</p>",
+    "ListDeviceDiscoveries": "<p>Lists all device discovery tasks, with optional filtering by type and status.</p>",
+    "ListDiscoveredDevices": "<p>Lists all devices discovered during a specific device discovery task.</p>",
     "ListEventLogConfigurations": "<p>List all event log configurations for an account.</p>",
+    "ListManagedThingAccountAssociations": "<p>Lists all account associations for a specific managed thing.</p>",
     "ListManagedThingSchemas": "<p>List schemas associated with a managed thing.</p>",
-    "ListManagedThings": "<p>List all of the associations and statuses for a managed thing by its owner.</p>",
+    "ListManagedThings": "<p>Listing all managed things with provision for filters.</p>",
     "ListNotificationConfigurations": "<p> List all notification configurations.</p>",
     "ListOtaTaskConfigurations": "<p>List all of the over-the-air (OTA) task configurations.</p>",
     "ListOtaTaskExecutions": "<p>List all of the over-the-air (OTA) task executions.</p>",
     "ListOtaTasks": "<p>List all of the over-the-air (OTA) tasks.</p>",
     "ListProvisioningProfiles": "<p>List the provisioning profiles within the Amazon Web Services account.</p>",
     "ListSchemaVersions": "<p>Lists schema versions with the provided information.</p>",
+    "ListTagsForResource": "<p>List tags for the specified resource.</p>",
     "PutDefaultEncryptionConfiguration": "<p>Sets the default encryption configuration for the Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/key-management.html\">Key management</a> in the AWS IoT SiteWise User Guide.</p>",
     "PutHubConfiguration": "<p>Update a hub configuration.</p>",
     "PutRuntimeLogConfiguration": "<p>Set the runtime log configuration for a specific managed thing or for all managed things as a group.</p>",
+    "RegisterAccountAssociation": "<p>Registers an account association with a managed thing, establishing a connection between a device and a third-party account.</p>",
     "RegisterCustomEndpoint": "<p>Customers can request IoT managed integrations to manage the server trust for them or bring their own external server trusts for the custom domain. Returns an IoT managed integrations endpoint.</p>",
     "ResetRuntimeLogConfiguration": "<p>Reset a runtime log configuration for a specific managed thing or for all managed things as a group.</p>",
+    "SendConnectorEvent": "<p>Relays third-party device events for a connector such as a new device or a device state change event.</p>",
     "SendManagedThingCommand": "<p>Send the command to the device represented by the managed thing. </p>",
-    "StartDeviceDiscovery": "<p> During user-guided setup, this is used to start device discovery. The authentication material (install code) is passed as a message to the controller telling it to start the discovery.</p>",
+    "StartAccountAssociationRefresh": "<p>Initiates a refresh of an existing account association to update its authorization and connection status.</p>",
+    "StartDeviceDiscovery": "<p> This API is used to start device discovery for hub-connected and third-party-connected devices. The authentication material (install code) is passed as a message to the controller telling it to start the discovery.</p>",
+    "TagResource": "<p>Add tags for the specified resource.</p>",
+    "UntagResource": "<p>Remove tags for the specified resource.</p>",
+    "UpdateAccountAssociation": "<p>Updates the properties of an existing account association.</p>",
+    "UpdateCloudConnector": "<p>Update an existing cloud connector.</p>",
+    "UpdateConnectorDestination": "<p>Updates the properties of an existing connector destination.</p>",
     "UpdateDestination": "<p> Update a destination specified by id. </p>",
     "UpdateEventLogConfiguration": "<p>Update an event log configuration by log configuration ID.</p>",
     "UpdateManagedThing": "<p>Update the attributes and capabilities associated with a managed thing.</p>",
@@ -90,10 +115,76 @@
       "refs": {
       }
     },
+    "AccountAssociationArn": {
+      "base": null,
+      "refs": {
+        "AccountAssociationItem$Arn": "<p>The Amazon Resource Name (ARN) of the account association.</p>",
+        "CreateAccountAssociationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the account association.</p>",
+        "GetAccountAssociationResponse$Arn": "<p>The Amazon Resource Name (ARN) of the account association.</p>"
+      }
+    },
+    "AccountAssociationDescription": {
+      "base": null,
+      "refs": {
+        "AccountAssociationItem$Description": "<p>A description of the account association.</p>",
+        "CreateAccountAssociationRequest$Description": "<p>A description of the account association request.</p>",
+        "GetAccountAssociationResponse$Description": "<p>The description of the account association.</p>",
+        "UpdateAccountAssociationRequest$Description": "<p>The new description to assign to the account association.</p>"
+      }
+    },
+    "AccountAssociationErrorMessage": {
+      "base": null,
+      "refs": {
+        "AccountAssociationItem$ErrorMessage": "<p>The error message explaining any issues with the account association, if applicable.</p>",
+        "GetAccountAssociationResponse$ErrorMessage": "<p>The error message explaining the current account association error.</p>"
+      }
+    },
+    "AccountAssociationId": {
+      "base": null,
+      "refs": {
+        "AccountAssociationItem$AccountAssociationId": "<p>The unique identifier of the account association.</p>",
+        "CreateAccountAssociationResponse$AccountAssociationId": "<p>The identifier for the account association request.</p>",
+        "DeleteAccountAssociationRequest$AccountAssociationId": "<p>The unique identifier of the account association to be deleted.</p>",
+        "DeregisterAccountAssociationRequest$AccountAssociationId": "<p>The unique identifier of the account association to be deregistered.</p>",
+        "GetAccountAssociationRequest$AccountAssociationId": "<p>The unique identifier of the account association to retrieve.</p>",
+        "GetAccountAssociationResponse$AccountAssociationId": "<p>The unique identifier of the retrieved account association.</p>",
+        "GetDeviceDiscoveryResponse$AccountAssociationId": "<p>The identifier of the account association used for the device discovery.</p>",
+        "ListManagedThingAccountAssociationsRequest$AccountAssociationId": "<p>The identifier of the account association to filter results by. When specified, only associations with this account association ID will be returned.</p>",
+        "ManagedThingAssociation$AccountAssociationId": "<p>The identifier of the account association in the association.</p>",
+        "RegisterAccountAssociationRequest$AccountAssociationId": "<p>The identifier of the account association to register with the managed thing.</p>",
+        "RegisterAccountAssociationResponse$AccountAssociationId": "<p>The identifier of the account association that was registered.</p>",
+        "SendManagedThingCommandRequest$AccountAssociationId": "<p>The identifier of the account association to use when sending a command to a managed thing.</p>",
+        "StartAccountAssociationRefreshRequest$AccountAssociationId": "<p>The unique identifier of the account association to refresh.</p>",
+        "StartDeviceDiscoveryRequest$AccountAssociationId": "<p>The identifier of the cloud-to-cloud account association to use for discovery of third-party devices.</p>",
+        "UpdateAccountAssociationRequest$AccountAssociationId": "<p>The unique identifier of the account association to update.</p>"
+      }
+    },
+    "AccountAssociationItem": {
+      "base": "<p>Structure containing information about an account association, including its identifier, state, and related metadata.</p>",
+      "refs": {
+        "AccountAssociationListDefinition$member": null
+      }
+    },
+    "AccountAssociationListDefinition": {
+      "base": null,
+      "refs": {
+        "ListAccountAssociationsResponse$Items": "<p>The list of account associations that match the specified criteria.</p>"
+      }
+    },
+    "AccountAssociationName": {
+      "base": null,
+      "refs": {
+        "AccountAssociationItem$Name": "<p>The name of the account association.</p>",
+        "CreateAccountAssociationRequest$Name": "<p>The name of the destination for the new account association.</p>",
+        "GetAccountAssociationResponse$Name": "<p>The name of the account association.</p>",
+        "UpdateAccountAssociationRequest$Name": "<p>The new name to assign to the account association.</p>"
+      }
+    },
     "ActionName": {
       "base": null,
       "refs": {
-        "CapabilityReportActions$member": null
+        "CapabilityReportActions$member": null,
+        "MatterCapabilityReportAttribute$name": "<p>Name for the Amazon Web Services Matter capability report attribute.</p>"
       }
     },
     "ActionReference": {
@@ -115,6 +206,14 @@
         "ManagedThingSummary$AdvertisedProductId": "<p>The id of the advertised product.</p>"
       }
     },
+    "AssociationState": {
+      "base": null,
+      "refs": {
+        "AccountAssociationItem$AssociationState": "<p>The current state of the account association, indicating its status in the association lifecycle.</p>",
+        "CreateAccountAssociationResponse$AssociationState": "<p>The current state of the account association request.</p>",
+        "GetAccountAssociationResponse$AssociationState": "<p>The current status state for the account association.</p>"
+      }
+    },
     "AttributeName": {
       "base": null,
       "refs": {
@@ -127,16 +226,44 @@
         "MetaData$value": null
       }
     },
+    "AuthConfig": {
+      "base": "<p>The authentication configuration details for a connector destination, including OAuth settings and other authentication parameters.</p>",
+      "refs": {
+        "CreateConnectorDestinationRequest$AuthConfig": "<p>The authentication configuration details for the connector destination, including OAuth settings and other authentication parameters.</p>",
+        "GetConnectorDestinationResponse$AuthConfig": "<p>The authentication configuration details for the connector destination, including OAuth settings and other authentication parameters.</p>"
+      }
+    },
+    "AuthConfigUpdate": {
+      "base": "<p>The updated authentication configuration details for a connector destination.</p>",
+      "refs": {
+        "UpdateConnectorDestinationRequest$AuthConfig": "<p>The updated authentication configuration details for the connector destination.</p>"
+      }
+    },
     "AuthMaterialString": {
       "base": null,
       "refs": {
-        "CreateManagedThingRequest$AuthenticationMaterial": "<p>The authentication material defining the device connectivity setup requests. The authentication materials used are the device bar code.</p>"
+        "CreateManagedThingRequest$AuthenticationMaterial": "<p>The authentication material defining the device connectivity setup requests. The authentication materials used are the device bar code.</p>",
+        "DiscoveredDeviceSummary$AuthenticationMaterial": "<p>The authentication material required for connecting to the discovered device, such as credentials or tokens.</p>"
       }
     },
     "AuthMaterialType": {
       "base": null,
       "refs": {
         "CreateManagedThingRequest$AuthenticationMaterialType": "<p>The type of authentication material used for device connectivity setup requests.</p>"
+      }
+    },
+    "AuthType": {
+      "base": null,
+      "refs": {
+        "CreateConnectorDestinationRequest$AuthType": "<p>The authentication type used for the connector destination, which determines how credentials and access are managed.</p>",
+        "GetConnectorDestinationResponse$AuthType": "<p>The authentication type used for the connector destination, which determines how credentials and access are managed.</p>",
+        "UpdateConnectorDestinationRequest$AuthType": "<p>The new authentication type to use for the connector destination.</p>"
+      }
+    },
+    "AuthUrl": {
+      "base": null,
+      "refs": {
+        "OAuthConfig$authUrl": "<p>The authorization URL for the OAuth service, where users are directed to authenticate and authorize access.</p>"
       }
     },
     "BaseRatePerMinute": {
@@ -148,13 +275,15 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "DeleteManagedThingRequest$Force": "<p>When set to <code>TRUE</code>, a forceful deteletion of the managed thing will occur. When set to <code>FALSE</code>, a non-forceful deletion of the managed thing will occur.</p>"
+        "DeleteManagedThingRequest$Force": "<p>When set to <code>TRUE</code>, a forceful deteletion of the managed thing will occur. When set to <code>FALSE</code>, a non-forceful deletion of the managed thing will occur.</p>",
+        "ProactiveRefreshTokenRenewal$enabled": "<p>Indicates whether proactive refresh token renewal is enabled.</p>"
       }
     },
     "Brand": {
       "base": null,
       "refs": {
         "CreateManagedThingRequest$Brand": "<p>The brand of the device.</p>",
+        "DiscoveredDeviceSummary$Brand": "<p>The brand of the discovered device.</p>",
         "GetManagedThingResponse$Brand": "<p>The brand of the device.</p>",
         "ManagedThingSummary$Brand": "<p>The brand of the device.</p>",
         "UpdateManagedThingRequest$Brand": "<p>The brand of the device.</p>"
@@ -204,6 +333,7 @@
       "refs": {
         "CapabilityReportCapability$name": "<p>The name of the capability.</p>",
         "CommandCapability$name": "<p>Describe the capability with an name.</p>",
+        "MatterCapabilityReportCluster$name": "<p>The capability name used in the Amazon Web Services Matter capability report.</p>",
         "StateCapability$name": "<p>Name for the Amazon Web Services capability.</p>"
       }
     },
@@ -267,7 +397,22 @@
     "CapabilityReportVersion": {
       "base": null,
       "refs": {
-        "CapabilityReport$version": "<p>The version of the capability report.</p>"
+        "CapabilityReport$version": "<p>The version of the capability report.</p>",
+        "MatterCapabilityReport$version": "<p>The version of the capability report.</p>"
+      }
+    },
+    "CapabilitySchemaItem": {
+      "base": "<p>Structure representing a capability schema item that defines the functionality and features supported by a managed thing.</p>",
+      "refs": {
+        "CapabilitySchemas$member": null
+      }
+    },
+    "CapabilitySchemas": {
+      "base": null,
+      "refs": {
+        "CreateManagedThingRequest$CapabilitySchemas": "<p>The capability schemas that define the functionality and features supported by the managed thing, including device capabilities and their associated properties.</p>",
+        "Device$CapabilitySchemas": "<p>Report of all capabilities supported by the device.</p>",
+        "UpdateManagedThingRequest$CapabilitySchemas": "<p>The updated capability schemas that define the functionality and features supported by the managed thing.</p>"
       }
     },
     "CapabilityVersion": {
@@ -303,6 +448,9 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "CreateAccountAssociationRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
+        "CreateCloudConnectorRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
+        "CreateConnectorDestinationRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
         "CreateCredentialLockerRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
         "CreateDestinationRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
         "CreateEventLogConfigurationRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
@@ -312,6 +460,46 @@
         "CreateOtaTaskRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
         "CreateProvisioningProfileRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>",
         "StartDeviceDiscoveryRequest$ClientToken": "<p>An idempotency token. If you retry a request that completed successfully initially using the same client token and parameters, then the retry attempt will succeed without performing any further actions.</p>"
+      }
+    },
+    "CloudConnectorDescription": {
+      "base": null,
+      "refs": {
+        "ConnectorItem$Description": "<p>A description of the C2C connector.</p>",
+        "CreateCloudConnectorRequest$Description": "<p>A description of the C2C connector.</p>",
+        "GetCloudConnectorResponse$Description": "<p>A description of the C2C connector.</p>",
+        "UpdateCloudConnectorRequest$Description": "<p>The new description to assign to the cloud connector.</p>"
+      }
+    },
+    "CloudConnectorId": {
+      "base": null,
+      "refs": {
+        "ConnectorDestinationSummary$CloudConnectorId": "<p>The identifier of the cloud connector associated with this connector destination.</p>",
+        "ConnectorItem$Id": "<p>The identifier of the C2C connector.</p>",
+        "CreateCloudConnectorResponse$Id": "<p>The unique identifier assigned to the newly created cloud connector.</p>",
+        "CreateConnectorDestinationRequest$CloudConnectorId": "<p>The identifier of the C2C connector.</p>",
+        "DeleteCloudConnectorRequest$Identifier": "<p>The identifier of the cloud connector.</p>",
+        "GetCloudConnectorRequest$Identifier": "<p>The identifier of the C2C connector.</p>",
+        "GetCloudConnectorResponse$Id": "<p>The unique identifier of the cloud connector.</p>",
+        "GetConnectorDestinationResponse$CloudConnectorId": "<p>The identifier of the C2C connector.</p>",
+        "ListConnectorDestinationsRequest$CloudConnectorId": "<p>The identifier of the cloud connector to filter connector destinations by.</p>",
+        "UpdateCloudConnectorRequest$Identifier": "<p>The unique identifier of the cloud connector to update.</p>"
+      }
+    },
+    "CloudConnectorType": {
+      "base": null,
+      "refs": {
+        "ConnectorItem$Type": "<p>The type of cloud connector created.</p>",
+        "GetCloudConnectorResponse$Type": "<p>The type of cloud connector created.</p>",
+        "ListCloudConnectorsRequest$Type": "<p>The type of cloud connectors to filter by when listing available connectors.</p>"
+      }
+    },
+    "ClusterId": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$id": "<p>The id of the Amazon Web Services Matter capability report cluster.</p>",
+        "MatterCapabilityReportEndpointClientClusters$member": null,
+        "MatterCluster$id": "<p>The cluster id.</p>"
       }
     },
     "CommandCapabilities": {
@@ -394,11 +582,113 @@
         "StartDeviceDiscoveryRequest$ConnectorAssociationIdentifier": "<p>The id of the connector association.</p>"
       }
     },
+    "ConnectorDestinationDescription": {
+      "base": null,
+      "refs": {
+        "ConnectorDestinationSummary$Description": "<p>A description of the connector destination.</p>",
+        "CreateConnectorDestinationRequest$Description": "<p>A description of the connector destination.</p>",
+        "GetConnectorDestinationResponse$Description": "<p>A description of the connector destination.</p>",
+        "UpdateConnectorDestinationRequest$Description": "<p>The new description to assign to the connector destination.</p>"
+      }
+    },
+    "ConnectorDestinationId": {
+      "base": null,
+      "refs": {
+        "AccountAssociationItem$ConnectorDestinationId": "<p>The identifier of the connector destination associated with this account association.</p>",
+        "ConnectorDestinationSummary$Id": "<p>The unique identifier of the connector destination.</p>",
+        "CreateAccountAssociationRequest$ConnectorDestinationId": "<p>The identifier of the connector destination.</p>",
+        "CreateConnectorDestinationResponse$Id": "<p>The identifier of the C2C connector destination creation request.</p>",
+        "DeleteConnectorDestinationRequest$Identifier": "<p>The identifier of the connector destination.</p>",
+        "GetAccountAssociationResponse$ConnectorDestinationId": "<p>The identifier of the connector destination associated with this account association.</p>",
+        "GetConnectorDestinationRequest$Identifier": "<p>The identifier of the C2C connector destination.</p>",
+        "GetConnectorDestinationResponse$Id": "<p>The unique identifier of the connector destination.</p>",
+        "GetManagedThingResponse$ConnectorDestinationId": "<p>The identifier of the connector destination associated with this managed thing.</p>",
+        "ListAccountAssociationsRequest$ConnectorDestinationId": "<p>The identifier of the connector destination to filter account associations by.</p>",
+        "ListManagedThingsRequest$ConnectorDestinationIdFilter": "<p>Filter managed things by the connector destination ID they are associated with.</p>",
+        "ManagedThingSummary$ConnectorDestinationId": "<p>The identifier of the connector destination associated with this managed thing, if applicable.</p>",
+        "UpdateConnectorDestinationRequest$Identifier": "<p>The unique identifier of the connector destination to update.</p>"
+      }
+    },
+    "ConnectorDestinationListDefinition": {
+      "base": null,
+      "refs": {
+        "ListConnectorDestinationsResponse$ConnectorDestinationList": "<p>The list of connector destinations that match the specified criteria.</p>"
+      }
+    },
+    "ConnectorDestinationName": {
+      "base": null,
+      "refs": {
+        "ConnectorDestinationSummary$Name": "<p>The display name of the connector destination.</p>",
+        "CreateConnectorDestinationRequest$Name": "<p>The display name of the connector destination.</p>",
+        "GetConnectorDestinationResponse$Name": "<p>The display name of the connector destination.</p>",
+        "UpdateConnectorDestinationRequest$Name": "<p>The new display name to assign to the connector destination.</p>"
+      }
+    },
+    "ConnectorDestinationSummary": {
+      "base": "<p>Structure containing summary information about a connector destination, which defines how a cloud-to-cloud connector connects to a customer's AWS account.</p>",
+      "refs": {
+        "ConnectorDestinationListDefinition$member": null
+      }
+    },
     "ConnectorDeviceId": {
       "base": null,
       "refs": {
+        "Device$ConnectorDeviceId": "<p>The device id as defined by the connector.</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
+        "DiscoveredDeviceSummary$ConnectorDeviceId": "<p>The third-party device identifier as defined by the connector. This identifier must not contain personal identifiable information (PII).</p>",
         "GetManagedThingResponse$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
-        "ManagedThingSummary$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>"
+        "ListManagedThingsRequest$ConnectorDeviceIdFilter": "<p>Filter managed things by the connector device ID they are associated with. When specified, only managed things with this connector device ID will be returned.</p>",
+        "ManagedThingSummary$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
+        "SendConnectorEventRequest$ConnectorDeviceId": "<p>The third-party device id as defined by the connector. This device id must not contain personal identifiable information (PII).</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>"
+      }
+    },
+    "ConnectorDeviceName": {
+      "base": null,
+      "refs": {
+        "Device$ConnectorDeviceName": "<p>The name of the device as defined by the connector.</p>",
+        "DiscoveredDeviceSummary$ConnectorDeviceName": "<p>The name of the device as defined by the connector or third-party system.</p>"
+      }
+    },
+    "ConnectorEventMessage": {
+      "base": null,
+      "refs": {
+        "SendConnectorEventRequest$Message": "<p>The device state change event payload.</p> <p>This parameter will include the following three fields:</p> <ul> <li> <p> <code>uri</code>: <code>schema auc://&lt;PARTNER-DEVICE-ID&gt;/ResourcePath</code> (The <code>Resourcepath</code> corresponds to an OCF resource.)</p> </li> <li> <p> <code>op</code>: For device state changes, this field must populate as <code>n+d</code>.</p> </li> <li> <p> <code>cn</code>: The content depends on the OCF resource referenced in <code>ResourcePath</code>.</p> </li> </ul>"
+      }
+    },
+    "ConnectorEventOperation": {
+      "base": null,
+      "refs": {
+        "SendConnectorEventRequest$Operation": "<p>The Open Connectivity Foundation (OCF) operation requested to be performed on the managed thing.</p> <note> <p>The field op can have a value of \"I\" or \"U\". The field \"cn\" will contain the capability types.</p> </note>"
+      }
+    },
+    "ConnectorEventOperationVersion": {
+      "base": null,
+      "refs": {
+        "SendConnectorEventRequest$OperationVersion": "<p>The Open Connectivity Foundation (OCF) security specification version for the operation being requested on the managed thing. For more information, see <a href=\"https://openconnectivity.org/specs/OCF_Security_Specification_v1.0.0.pdf\">OCF Security Specification</a>.</p>"
+      }
+    },
+    "ConnectorEventStatusCode": {
+      "base": null,
+      "refs": {
+        "SendConnectorEventRequest$StatusCode": "<p>The status code of the Open Connectivity Foundation (OCF) operation being performed on the managed thing.</p>"
+      }
+    },
+    "ConnectorId": {
+      "base": null,
+      "refs": {
+        "SendConnectorEventRequest$ConnectorId": "<p>The id of the connector between the third-party cloud provider and IoT managed integrations.</p>",
+        "SendConnectorEventResponse$ConnectorId": "<p>The id of the connector between the third-party cloud provider and IoT managed integrations.</p>"
+      }
+    },
+    "ConnectorItem": {
+      "base": "<p>Structure describing a connector.</p>",
+      "refs": {
+        "ConnectorList$member": null
+      }
+    },
+    "ConnectorList": {
+      "base": null,
+      "refs": {
+        "ListCloudConnectorsResponse$Items": "<p>The list of connectors.</p>"
       }
     },
     "ConnectorPolicyId": {
@@ -407,6 +697,36 @@
         "GetManagedThingResponse$ConnectorPolicyId": "<p>The id of the connector policy.</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>",
         "ListManagedThingsRequest$ConnectorPolicyIdFilter": "<p>Filter on a connector policy id for a managed thing.</p>",
         "ManagedThingSummary$ConnectorPolicyId": "<p>The id of the connector policy.</p> <note> <p>This parameter is used for cloud-to-cloud devices only.</p> </note>"
+      }
+    },
+    "CreateAccountAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAccountAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCloudConnectorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCloudConnectorResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateConnectorDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateConnectorDestinationResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateCredentialLockerRequest": {
@@ -553,6 +873,39 @@
         "CredentialLockerListDefinition$member": null
       }
     },
+    "CustomProtocolDetail": {
+      "base": null,
+      "refs": {
+        "StartDeviceDiscoveryRequest$CustomProtocolDetail": "<p>Additional protocol-specific details required for device discovery, which vary based on the discovery type.</p> <note> <p>For a <code>DiscoveryType</code> of <code>CUSTOM</code>, the string-to-string map must have a key value of <code>Name</code> set to a non-empty-string.</p> </note>"
+      }
+    },
+    "CustomProtocolDetailKey": {
+      "base": null,
+      "refs": {
+        "CustomProtocolDetail$key": null
+      }
+    },
+    "CustomProtocolDetailValue": {
+      "base": null,
+      "refs": {
+        "CustomProtocolDetail$value": null
+      }
+    },
+    "DeleteAccountAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCloudConnectorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteConnectorDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteCredentialLockerRequest": {
       "base": null,
       "refs": {
@@ -626,6 +979,11 @@
         "UpdateDestinationRequest$DeliveryDestinationType": "<p>The destination type for the customer-managed destination.</p>"
       }
     },
+    "DeregisterAccountAssociationRequest": {
+      "base": "<p>Request for deregister a managed thing from account association</p>",
+      "refs": {
+      }
+    },
     "DestinationCreatedAt": {
       "base": null,
       "refs": {
@@ -675,6 +1033,12 @@
         "GetDestinationResponse$UpdatedAt": "<p>The timestamp value of when the destination update requset occurred.</p>"
       }
     },
+    "Device": {
+      "base": "<p>Describe the device using the relevant metadata and supported clusters for device discovery.</p>",
+      "refs": {
+        "Devices$member": null
+      }
+    },
     "DeviceDiscoveryArn": {
       "base": null,
       "refs": {
@@ -684,15 +1048,40 @@
     "DeviceDiscoveryId": {
       "base": null,
       "refs": {
+        "DeviceDiscoverySummary$Id": "<p>The unique identifier of the device discovery job.</p>",
         "GetDeviceDiscoveryRequest$Identifier": "<p>The id of the device discovery job request.</p>",
         "GetDeviceDiscoveryResponse$Id": "<p>The id of the device discovery job request.</p>",
+        "ListDiscoveredDevicesRequest$Identifier": "<p>The identifier of the device discovery job to list discovered devices for.</p>",
+        "RegisterAccountAssociationRequest$DeviceDiscoveryId": "<p>The identifier of the device discovery job associated with this registration.</p>",
+        "RegisterAccountAssociationResponse$DeviceDiscoveryId": "<p>The identifier of the device discovery job associated with this registration.</p>",
+        "SendConnectorEventRequest$DeviceDiscoveryId": "<p>The id for the device discovery job.</p>",
         "StartDeviceDiscoveryResponse$Id": "<p>The id of the device discovery job request.</p>"
+      }
+    },
+    "DeviceDiscoveryListDefinition": {
+      "base": null,
+      "refs": {
+        "ListDeviceDiscoveriesResponse$Items": "<p>The list of device discovery jobs that match the specified criteria.</p>"
       }
     },
     "DeviceDiscoveryStatus": {
       "base": null,
       "refs": {
-        "GetDeviceDiscoveryResponse$Status": "<p>The status of the device discovery job request.</p>"
+        "DeviceDiscoverySummary$Status": "<p>The current status of the device discovery job.</p>",
+        "GetDeviceDiscoveryResponse$Status": "<p>The status of the device discovery job request.</p>",
+        "ListDeviceDiscoveriesRequest$StatusFilter": "<p>The status to filter device discovery jobs by.</p>"
+      }
+    },
+    "DeviceDiscoverySummary": {
+      "base": "<p>Structure containing summary information about a device discovery job, including its identifier, type, and status.</p>",
+      "refs": {
+        "DeviceDiscoveryListDefinition$member": null
+      }
+    },
+    "DeviceMetadata": {
+      "base": null,
+      "refs": {
+        "Device$DeviceMetadata": "<p>The metadata attributes for a device.</p>"
       }
     },
     "DeviceSpecificKey": {
@@ -704,19 +1093,51 @@
     "DeviceType": {
       "base": null,
       "refs": {
+        "DeviceTypeList$member": null,
         "DeviceTypes$member": null
+      }
+    },
+    "DeviceTypeList": {
+      "base": null,
+      "refs": {
+        "DiscoveredDeviceSummary$DeviceTypes": "<p>The list of device types or categories that the discovered device belongs to.</p>"
       }
     },
     "DeviceTypes": {
       "base": null,
       "refs": {
-        "CapabilityReportEndpoint$deviceTypes": "<p>The type of device.</p>"
+        "CapabilityReportEndpoint$deviceTypes": "<p>The type of device.</p>",
+        "MatterCapabilityReportEndpoint$deviceTypes": "<p>The type of device.</p>"
+      }
+    },
+    "Devices": {
+      "base": null,
+      "refs": {
+        "SendConnectorEventRequest$Devices": "<p>The list of devices.</p>"
       }
     },
     "DisconnectReasonValue": {
       "base": null,
       "refs": {
         "GetManagedThingConnectivityDataResponse$DisconnectReason": "<p>The reason for the connectivity disconnect with the managed thing.</p>"
+      }
+    },
+    "DiscoveredAt": {
+      "base": null,
+      "refs": {
+        "DiscoveredDeviceSummary$DiscoveredAt": "<p>The timestamp indicating when the device was discovered.</p>"
+      }
+    },
+    "DiscoveredDeviceListDefinition": {
+      "base": null,
+      "refs": {
+        "ListDiscoveredDevicesResponse$Items": "<p>The list of discovered devices that match the specified criteria.</p>"
+      }
+    },
+    "DiscoveredDeviceSummary": {
+      "base": "<p>Structure containing summary information about a device discovered during a device discovery job.</p>",
+      "refs": {
+        "DiscoveredDeviceListDefinition$member": null
       }
     },
     "DiscoveryAuthMaterialString": {
@@ -737,6 +1158,12 @@
         "GetDeviceDiscoveryResponse$FinishedAt": "<p>The timestamp value for the completion time of the device discovery.</p>"
       }
     },
+    "DiscoveryModification": {
+      "base": null,
+      "refs": {
+        "DiscoveredDeviceSummary$Modification": "<p>The status of the discovered device, indicating whether it has been added, removed, or modified since the last discovery.</p>"
+      }
+    },
     "DiscoveryStartedAt": {
       "base": null,
       "refs": {
@@ -747,8 +1174,19 @@
     "DiscoveryType": {
       "base": null,
       "refs": {
+        "DeviceDiscoverySummary$DiscoveryType": "<p>The type of discovery process used to find devices.</p>",
         "GetDeviceDiscoveryResponse$DiscoveryType": "<p>The discovery type supporting the type of device to be discovered in the device discovery job request.</p>",
-        "StartDeviceDiscoveryRequest$DiscoveryType": "<p>The discovery type supporting the type of device to be discovered in the device discovery job request.</p>"
+        "ListDeviceDiscoveriesRequest$TypeFilter": "<p>The discovery type to filter device discovery jobs by.</p>",
+        "StartDeviceDiscoveryRequest$DiscoveryType": "<p>The discovery type supporting the type of device to be discovered in the device discovery task request.</p>"
+      }
+    },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "ConnectorItem$Name": "<p>The display name of the C2C connector.</p>",
+        "CreateCloudConnectorRequest$Name": "<p>The display name of the C2C connector.</p>",
+        "GetCloudConnectorResponse$Name": "<p>The display name of the C2C connector.</p>",
+        "UpdateCloudConnectorRequest$Name": "<p>The new display name to assign to the cloud connector.</p>"
       }
     },
     "DurationInMinutes": {
@@ -778,6 +1216,14 @@
         "RegisterCustomEndpointResponse$EndpointAddress": "<p>The IoT managed integrations dedicated, custom endpoint for the device to route traffic through.</p>"
       }
     },
+    "EndpointConfig": {
+      "base": "<p>The configuration details for an endpoint, which defines how to connect to and communicate with external services.</p>",
+      "refs": {
+        "ConnectorItem$EndpointConfig": "<p>The configuration details for the cloud connector endpoint, including connection parameters and authentication requirements.</p>",
+        "CreateCloudConnectorRequest$EndpointConfig": "<p>The configuration details for the cloud connector endpoint, including connection parameters and authentication requirements.</p>",
+        "GetCloudConnectorResponse$EndpointConfig": "<p>The configuration details for the cloud connector endpoint, including connection parameters and authentication requirements.</p>"
+      }
+    },
     "EndpointId": {
       "base": null,
       "refs": {
@@ -785,7 +1231,24 @@
         "CommandEndpoint$endpointId": "<p>The id of the endpoint for a managed thing.</p>",
         "ListManagedThingSchemasRequest$EndpointIdFilter": "<p>Filter on an endpoint id.</p>",
         "ManagedThingSchemaListItem$EndpointId": "<p>The id of the endpoint for a managed thing.</p>",
+        "MatterCapabilityReportEndpoint$id": "<p>The id of the Amazon Web Services Matter capability report endpoint.</p>",
+        "MatterCapabilityReportEndpointParts$member": null,
+        "MatterEndpoint$id": "<p>The Matter endpoint id.</p>",
         "StateEndpoint$endpointId": "<p>Numeric identifier of the endpoint</p>"
+      }
+    },
+    "EndpointSemanticTag": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportEndpointSemanticTags$member": null
+      }
+    },
+    "EndpointType": {
+      "base": null,
+      "refs": {
+        "ConnectorItem$EndpointType": "<p>The type of endpoint used for the C2C connector.</p>",
+        "CreateCloudConnectorRequest$EndpointType": "<p>The type of endpoint used for the cloud connector, which defines how the connector communicates with external services.</p>",
+        "GetCloudConnectorResponse$EndpointType": "<p>The type of endpoint used for the cloud connector, which defines how the connector communicates with external services.</p>"
       }
     },
     "ErrorMessage": {
@@ -795,12 +1258,26 @@
         "ConflictException$Message": null,
         "InternalFailureException$Message": null,
         "InternalServerException$Message": null,
+        "InvalidRequestException$Message": null,
+        "LimitExceededException$Message": null,
         "ResourceNotFoundException$Message": null,
         "ServiceQuotaExceededException$Message": null,
         "ServiceUnavailableException$Message": null,
         "ThrottlingException$Message": null,
         "UnauthorizedException$Message": null,
         "ValidationException$Message": null
+      }
+    },
+    "ErrorResourceId": {
+      "base": null,
+      "refs": {
+        "ResourceNotFoundException$ResourceId": "<p>Id of the affected resource</p>"
+      }
+    },
+    "ErrorResourceType": {
+      "base": null,
+      "refs": {
+        "ResourceNotFoundException$ResourceType": "<p>Type of the affected resource</p>"
       }
     },
     "EventLogConfigurationListDefinition": {
@@ -843,6 +1320,42 @@
       "base": "<p>Structure representing exponential rate of rollout for an over-the-air (OTA) task.</p>",
       "refs": {
         "OtaTaskExecutionRolloutConfig$ExponentialRolloutRate": "<p>Structure representing exponential rate of rollout for an over-the-air (OTA) task.</p>"
+      }
+    },
+    "ExtrinsicSchemaId": {
+      "base": null,
+      "refs": {
+        "CapabilitySchemaItem$ExtrinsicId": "<p>The external identifier for the capability, used when referencing the capability outside of the AWS ecosystem.</p>"
+      }
+    },
+    "GetAccountAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAccountAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCloudConnectorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCloudConnectorResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetConnectorDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetConnectorDestinationResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetCredentialLockerRequest": {
@@ -1087,6 +1600,19 @@
         "GetManagedThingResponse$InternationalArticleNumber": "<p>The unique 13 digit number that identifies the managed thing.</p>"
       }
     },
+    "InvalidRequestException": {
+      "base": "<p>The request is not valid.</p>",
+      "refs": {
+      }
+    },
+    "IoTManagedIntegrationsResourceARN": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$ResourceArn": "<p>The ARN of the resource for which to list tags.</p>",
+        "TagResourceRequest$ResourceArn": "<p>The ARN of the resource to which to add tags.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>The ARN of the resource to which to add tags.</p>"
+      }
+    },
     "KmsKeyArn": {
       "base": null,
       "refs": {
@@ -1095,12 +1621,60 @@
         "PutDefaultEncryptionConfigurationResponse$kmsKeyArn": "<p>The Key Amazon Resource Name (ARN) of the AWS KMS key used for KMS encryption if you use <code>KMS_BASED_ENCRYPTION</code>.</p>"
       }
     },
+    "LambdaArn": {
+      "base": null,
+      "refs": {
+        "LambdaConfig$arn": "<p>The Amazon Resource Name (ARN) of the Lambda function used as an endpoint.</p>",
+        "ListCloudConnectorsRequest$LambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function to filter cloud connectors by.</p>"
+      }
+    },
+    "LambdaConfig": {
+      "base": "<p>Configuration details for an AWS Lambda function used as an endpoint for a cloud connector.</p>",
+      "refs": {
+        "EndpointConfig$lambda": "<p>The Lambda function configuration for the endpoint, used when the endpoint communicates through an AWS Lambda function.</p>"
+      }
+    },
     "LastUpdatedAt": {
       "base": null,
       "refs": {
         "GetOtaTaskResponse$LastUpdatedAt": "<p>The timestamp value of when the over-the-air (OTA) task was last updated at.</p>",
         "OtaTaskExecutionSummary$LastUpdatedAt": "<p>The timestamp value of when the over-the-air (OTA) task execution summary was last updated.</p>",
         "OtaTaskSummary$LastUpdatedAt": "<p>The timestamp value of when the over-the-air (OTA) task was last updated at.</p>"
+      }
+    },
+    "LimitExceededException": {
+      "base": "<p>The request exceeds a service limit or quota. Adjust your request parameters and try again.</p>",
+      "refs": {
+      }
+    },
+    "ListAccountAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAccountAssociationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCloudConnectorsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCloudConnectorsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListConnectorDestinationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListConnectorDestinationsResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ListCredentialLockersRequest": {
@@ -1123,12 +1697,42 @@
       "refs": {
       }
     },
+    "ListDeviceDiscoveriesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDeviceDiscoveriesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDiscoveredDevicesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListDiscoveredDevicesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListEventLogConfigurationsRequest": {
       "base": null,
       "refs": {
       }
     },
     "ListEventLogConfigurationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListManagedThingAccountAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListManagedThingAccountAssociationsResponse": {
       "base": null,
       "refs": {
       }
@@ -1213,6 +1817,16 @@
       "refs": {
       }
     },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "LocalStoreFileRotationMaxBytes": {
       "base": null,
       "refs": {
@@ -1267,11 +1881,25 @@
         "ManagedThingSummary$Arn": "<p>The Amazon Resource Name (ARN) of the managed thing.</p>"
       }
     },
+    "ManagedThingAssociation": {
+      "base": "<p>Structure representing an association between a managed thing and an account association, which connects a device to a third-party account.</p>",
+      "refs": {
+        "ManagedThingAssociationList$member": null
+      }
+    },
+    "ManagedThingAssociationList": {
+      "base": null,
+      "refs": {
+        "ListManagedThingAccountAssociationsResponse$Items": "<p>The list of managed thing associations that match the specified criteria, including the managed thing ID and account association ID for each association.</p>"
+      }
+    },
     "ManagedThingId": {
       "base": null,
       "refs": {
         "CreateManagedThingResponse$Id": "<p>The id of the managed thing.</p>",
         "DeleteManagedThingRequest$Identifier": "<p>The id of the managed thing.</p>",
+        "DeregisterAccountAssociationRequest$ManagedThingId": "<p>The identifier of the managed thing to be deregistered from the account association.</p>",
+        "DiscoveredDeviceSummary$ManagedThingId": "<p>The identifier of the managed thing created for this discovered device, if one exists.</p>",
         "GetDeviceDiscoveryResponse$ControllerId": "<p>The id of the end-user's IoT hub.</p>",
         "GetManagedThingCapabilitiesRequest$Identifier": "<p>The id of the device.</p>",
         "GetManagedThingCapabilitiesResponse$ManagedThingId": "<p>The id of the device.</p>",
@@ -1284,10 +1912,14 @@
         "GetManagedThingStateRequest$ManagedThingId": "<p>The id of the device.</p>",
         "GetRuntimeLogConfigurationRequest$ManagedThingId": "<p>The id for a managed thing.</p>",
         "GetRuntimeLogConfigurationResponse$ManagedThingId": "<p>The id for a managed thing.</p>",
+        "ListManagedThingAccountAssociationsRequest$ManagedThingId": "<p>The identifier of the managed thing to list account associations for.</p>",
         "ListManagedThingSchemasRequest$Identifier": "<p>The managed thing id.</p>",
+        "ManagedThingAssociation$ManagedThingId": "<p>The identifier of the managed thing in the association.</p>",
         "ManagedThingSummary$Id": "<p>The id of the device.</p>",
         "OtaTaskExecutionSummaries$ManagedThingId": "<p>The id of a managed thing.</p>",
         "PutRuntimeLogConfigurationRequest$ManagedThingId": "<p>The id for a managed thing.</p>",
+        "RegisterAccountAssociationRequest$ManagedThingId": "<p>The identifier of the managed thing to register with the account association.</p>",
+        "RegisterAccountAssociationResponse$ManagedThingId": "<p>The identifier of the managed thing that was registered with the account association.</p>",
         "ResetRuntimeLogConfigurationRequest$ManagedThingId": "<p>The id of a managed thing.</p>",
         "SendManagedThingCommandRequest$ManagedThingId": "<p>The id of the device.</p>",
         "StartDeviceDiscoveryRequest$ControllerIdentifier": "<p>The id of the end-user's IoT hub.</p>",
@@ -1318,12 +1950,185 @@
         "ManagedThingListDefinition$member": null
       }
     },
+    "MatterAttributeId": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportAttribute$id": "<p>The id of the Matter attribute.</p>"
+      }
+    },
+    "MatterAttributes": {
+      "base": null,
+      "refs": {
+        "MatterCluster$attributes": "<p>The Matter attributes.</p>"
+      }
+    },
+    "MatterCapabilityReport": {
+      "base": "<p>Matter based capability report.</p>",
+      "refs": {
+        "Device$CapabilityReport": "<p>The capability report for the device.</p>"
+      }
+    },
+    "MatterCapabilityReportAttribute": {
+      "base": "<p>Matter attribute used in capability report.</p>",
+      "refs": {
+        "MatterCapabilityReportAttributes$member": null
+      }
+    },
+    "MatterCapabilityReportAttributeValue": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportAttribute$value": "<p>Value for the Amazon Web Services Matter capability report attribute.</p>"
+      }
+    },
+    "MatterCapabilityReportAttributes": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$attributes": "<p>The attributes of the Amazon Web Services Matter capability report.</p>"
+      }
+    },
+    "MatterCapabilityReportCluster": {
+      "base": "<p>Capability used in Matter capability report.</p>",
+      "refs": {
+        "MatterCapabilityReportClusters$member": null
+      }
+    },
+    "MatterCapabilityReportClusterRevisionId": {
+      "base": null,
+      "refs": {
+        "CapabilitySchemaItem$ExtrinsicVersion": "<p>The version of the external capability definition, used to track compatibility with external systems.</p>",
+        "MatterCapabilityReportCluster$revision": "<p>The id of the revision for the Amazon Web Services Matter capability report.</p>"
+      }
+    },
+    "MatterCapabilityReportClusters": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportEndpoint$clusters": "<p>Matter clusters used in capability report.</p>"
+      }
+    },
+    "MatterCapabilityReportCommands": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$commands": "<p>The commands used with the Amazon Web Services Matter capability report.</p>"
+      }
+    },
+    "MatterCapabilityReportEndpoint": {
+      "base": "<p>Matter endpoint used in capability report.</p>",
+      "refs": {
+        "MatterCapabilityReportEndpoints$member": null
+      }
+    },
+    "MatterCapabilityReportEndpointClientClusters": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportEndpoint$clientClusters": "<p>Semantic information related to endpoint.</p>"
+      }
+    },
+    "MatterCapabilityReportEndpointParts": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportEndpoint$parts": "<p>Heirachy of child endpoints contained in the given endpoint.</p>"
+      }
+    },
+    "MatterCapabilityReportEndpointSemanticTags": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportEndpoint$semanticTags": "<p>Semantic information related to endpoint.</p>"
+      }
+    },
+    "MatterCapabilityReportEndpoints": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReport$endpoints": "<p>The endpoints used in the capability report.</p>"
+      }
+    },
+    "MatterCapabilityReportEvents": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$events": "<p>The events used with the Amazon Web Services Matter capability report.</p>"
+      }
+    },
+    "MatterCapabilityReportFabricIndex": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$fabricIndex": "<p>The fabric index for the Amazon Web Services Matter capability report.</p>"
+      }
+    },
+    "MatterCapabilityReportFeatureMap": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$featureMap": "<p>32 bit-map used to indicate which features a cluster supports.</p>"
+      }
+    },
+    "MatterCapabilityReportGeneratedCommands": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$generatedCommands": "<p>Matter clusters used in capability report.</p>"
+      }
+    },
+    "MatterCluster": {
+      "base": "<p>Describe a Matter cluster with an id, and the relevant attributes, commands, and events.</p>",
+      "refs": {
+        "MatterClusters$member": null
+      }
+    },
+    "MatterClusters": {
+      "base": null,
+      "refs": {
+        "MatterEndpoint$clusters": "<p>A list of Matter clusters for a managed thing.</p>"
+      }
+    },
+    "MatterCommandId": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCommands$member": null,
+        "MatterCapabilityReportGeneratedCommands$member": null,
+        "MatterCommands$key": null
+      }
+    },
+    "MatterCommands": {
+      "base": null,
+      "refs": {
+        "MatterCluster$commands": "<p>Describe the Matter commands with the Matter command identifier mapped to the command fields.</p>"
+      }
+    },
+    "MatterEndpoint": {
+      "base": "<p>Structure describing a managed thing.</p>",
+      "refs": {
+        "SendConnectorEventRequest$MatterEndpoint": "<p>The device endpoint.</p>"
+      }
+    },
+    "MatterEventId": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportEvents$member": null,
+        "MatterEvents$key": null
+      }
+    },
+    "MatterEvents": {
+      "base": null,
+      "refs": {
+        "MatterCluster$events": "<p>Describe the Matter events with the Matter event identifier mapped to the event fields.</p>"
+      }
+    },
+    "MatterFields": {
+      "base": null,
+      "refs": {
+        "MatterCommands$value": null,
+        "MatterEvents$value": null
+      }
+    },
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListAccountAssociationsRequest$MaxResults": "<p>The maximum number of account associations to return in a single response.</p>",
+        "ListCloudConnectorsRequest$MaxResults": "<p>The maximum number of results to return at one time.</p>",
+        "ListConnectorDestinationsRequest$MaxResults": "<p>The maximum number of connector destinations to return in a single response.</p>",
         "ListCredentialLockersRequest$MaxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListDestinationsRequest$MaxResults": "<p>The maximum number of results to return at one time.</p>",
+        "ListDeviceDiscoveriesRequest$MaxResults": "<p>The maximum number of device discovery jobs to return in a single response.</p>",
+        "ListDiscoveredDevicesRequest$MaxResults": "<p>The maximum number of discovered devices to return in a single response.</p>",
         "ListEventLogConfigurationsRequest$MaxResults": "<p>The maximum number of results to return at one time.</p>",
+        "ListManagedThingAccountAssociationsRequest$MaxResults": "<p>The maximum number of account associations to return in a single response.</p>",
         "ListManagedThingSchemasRequest$MaxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListManagedThingsRequest$MaxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListNotificationConfigurationsRequest$MaxResults": "<p>The maximum number of results to return at one time.</p>",
@@ -1343,7 +2148,7 @@
     "MetaData": {
       "base": null,
       "refs": {
-        "CreateManagedThingRequest$MetaData": "<p>The metadata for the managed thing.</p>",
+        "CreateManagedThingRequest$MetaData": "<p>The metadata for the managed thing.</p> <note> <p>The <code>managedThing</code> <code>metadata</code> parameter is used for associating attributes with a <code>managedThing</code> that can be used for grouping over-the-air (OTA) tasks. Name value pairs in <code>metadata</code> can be used in the <code>OtaTargetQueryString</code> parameter for the <code>CreateOtaTask</code> API operation.</p> </note>",
         "GetManagedThingMetaDataResponse$MetaData": "<p>The metadata for the managed thing.</p>",
         "GetManagedThingResponse$MetaData": "<p>The metadata for the managed thing.</p>",
         "UpdateManagedThingRequest$MetaData": "<p>The metadata for the managed thing.</p>"
@@ -1365,6 +2170,7 @@
       "base": null,
       "refs": {
         "CreateManagedThingRequest$Model": "<p>The model of the device.</p>",
+        "DiscoveredDeviceSummary$Model": "<p>The model of the discovered device.</p>",
         "GetManagedThingResponse$Model": "<p>The model of the device.</p>",
         "ManagedThingSummary$Model": "<p>The model of the device.</p>",
         "UpdateManagedThingRequest$Model": "<p>The model of the device.</p>"
@@ -1382,12 +2188,23 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListAccountAssociationsRequest$NextToken": "<p>A token used for pagination of results.</p>",
+        "ListAccountAssociationsResponse$NextToken": "<p>A token used for pagination of results when there are more account associations than can be returned in a single response.</p>",
+        "ListCloudConnectorsRequest$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
+        "ListCloudConnectorsResponse$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
+        "ListConnectorDestinationsRequest$NextToken": "<p>A token used for pagination of results.</p>",
+        "ListConnectorDestinationsResponse$NextToken": "<p>A token used for pagination of results when there are more connector destinations than can be returned in a single response.</p>",
         "ListCredentialLockersRequest$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
         "ListCredentialLockersResponse$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
         "ListDestinationsRequest$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
         "ListDestinationsResponse$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
+        "ListDeviceDiscoveriesRequest$NextToken": "<p>A token used for pagination of results.</p>",
+        "ListDeviceDiscoveriesResponse$NextToken": "<p>A token used for pagination of results when there are more device discovery jobs than can be returned in a single response.</p>",
+        "ListDiscoveredDevicesRequest$NextToken": "<p>A token used for pagination of results.</p>",
+        "ListDiscoveredDevicesResponse$NextToken": "<p>A token used for pagination of results when there are more discovered devices than can be returned in a single response.</p>",
         "ListEventLogConfigurationsRequest$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
         "ListEventLogConfigurationsResponse$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
+        "ListManagedThingAccountAssociationsRequest$NextToken": "<p>A token used for pagination of results.</p>",
         "ListManagedThingSchemasRequest$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
         "ListManagedThingSchemasResponse$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
         "ListManagedThingsRequest$NextToken": "<p>A token that can be used to retrieve the next set of results.</p>",
@@ -1405,7 +2222,8 @@
     "NodeId": {
       "base": null,
       "refs": {
-        "CapabilityReport$nodeId": "<p>The numeric identifier of the node.</p>"
+        "CapabilityReport$nodeId": "<p>The numeric identifier of the node.</p>",
+        "MatterCapabilityReport$nodeId": "<p>The numeric identifier of the node.</p>"
       }
     },
     "NotificationConfigurationCreatedAt": {
@@ -1442,6 +2260,32 @@
       "base": null,
       "refs": {
         "RolloutRateIncreaseCriteria$numberOfSucceededThings": "<p>The threshold for number of succeeded things that will initiate the increase in rate of rollout.</p>"
+      }
+    },
+    "OAuthAuthorizationUrl": {
+      "base": null,
+      "refs": {
+        "CreateAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication.</p>",
+        "GetAccountAssociationResponse$OAuthAuthorizationUrl": "<p>Third party IoT platform OAuth authorization server URL backed with all the required parameters to perform end-user authentication.</p>",
+        "StartAccountAssociationRefreshResponse$OAuthAuthorizationUrl": "<p>Third-party IoT platform OAuth authorization server URL with all required parameters to perform end-user authentication during the refresh process.</p>"
+      }
+    },
+    "OAuthCompleteRedirectUrl": {
+      "base": null,
+      "refs": {
+        "GetConnectorDestinationResponse$OAuthCompleteRedirectUrl": "<p>The URL where users are redirected after completing the OAuth authorization process for the connector destination.</p>"
+      }
+    },
+    "OAuthConfig": {
+      "base": "<p>Configuration details for OAuth authentication with a third-party service.</p>",
+      "refs": {
+        "AuthConfig$oAuth": "<p>The OAuth configuration settings used for authentication with the third-party service.</p>"
+      }
+    },
+    "OAuthUpdate": {
+      "base": "<p>Structure containing updated OAuth configuration settings.</p>",
+      "refs": {
+        "AuthConfigUpdate$oAuthUpdate": "<p>The updated OAuth configuration settings for the authentication configuration.</p>"
       }
     },
     "OtaDescription": {
@@ -1639,6 +2483,19 @@
         "ManagedThingSummary$ParentControllerId": "<p>Id of the controller device used for the discovery job.</p>"
       }
     },
+    "ProactiveRefreshTokenRenewal": {
+      "base": "<p>Configuration settings for proactively refreshing OAuth tokens before they expire.</p>",
+      "refs": {
+        "OAuthConfig$proactiveRefreshTokenRenewal": "<p>Configuration for proactively refreshing OAuth tokens before they expire.</p>",
+        "OAuthUpdate$proactiveRefreshTokenRenewal": "<p>Updated configuration for proactively refreshing OAuth tokens before they expire.</p>"
+      }
+    },
+    "ProactiveRefreshTokenRenewalDaysBeforeRenewalInteger": {
+      "base": null,
+      "refs": {
+        "ProactiveRefreshTokenRenewal$DaysBeforeRenewal": "<p>The days before token expiration when the system should attempt to renew the token, specified in days.</p>"
+      }
+    },
     "PropertyName": {
       "base": null,
       "refs": {
@@ -1737,6 +2594,16 @@
       "base": null,
       "refs": {
         "OtaTaskExecutionSummary$QueuedAt": "<p>The timestamp value of when the over-the-air (OTA) task execution summary is targeted to start.</p>"
+      }
+    },
+    "RegisterAccountAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RegisterAccountAssociationResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "RegisterCustomEndpointRequest": {
@@ -1854,6 +2721,7 @@
     "SchemaVersionFormat": {
       "base": null,
       "refs": {
+        "CapabilitySchemaItem$Format": "<p>The format of the capability schema, which defines how the schema is structured and interpreted.</p>",
         "GetSchemaVersionRequest$Format": "<p>The format of the schema version.</p>"
       }
     },
@@ -1912,9 +2780,41 @@
       "base": null,
       "refs": {
         "CapabilityReportCapability$id": "<p>The id of the schema version.</p>",
+        "CapabilitySchemaItem$CapabilityId": "<p>The unique identifier of the capability defined in the schema.</p>",
         "CommandCapability$id": "<p>Describe the capability with an id.</p>",
         "GetSchemaVersionRequest$SchemaVersionedId": "<p>Schema id with a version specified. If the version is missing, it defaults to latest version.</p>",
+        "MatterCapabilityReportCluster$publicId": "<p>The id of the schema version.</p>",
         "StateCapability$id": "<p>The id of the managed thing in the capability report.</p>"
+      }
+    },
+    "SecretsManager": {
+      "base": "<p>Configuration for AWS Secrets Manager, used to securely store and manage sensitive information for connector destinations.</p>",
+      "refs": {
+        "CreateConnectorDestinationRequest$SecretsManager": "<p>The AWS Secrets Manager configuration used to securely store and manage sensitive information for the connector destination.</p>",
+        "GetConnectorDestinationResponse$SecretsManager": "<p>The AWS Secrets Manager configuration used to securely store and manage sensitive information for the connector destination.</p>",
+        "UpdateConnectorDestinationRequest$SecretsManager": "<p>The updated AWS Secrets Manager configuration for the connector destination.</p>"
+      }
+    },
+    "SecretsManagerArn": {
+      "base": null,
+      "refs": {
+        "SecretsManager$arn": "<p>The Amazon Resource Name (ARN) of the AWS Secrets Manager secret.</p>"
+      }
+    },
+    "SecretsManagerVersionId": {
+      "base": null,
+      "refs": {
+        "SecretsManager$versionId": "<p>The version ID of the AWS Secrets Manager secret.</p>"
+      }
+    },
+    "SendConnectorEventRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SendConnectorEventResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "SendManagedThingCommandRequest": {
@@ -1970,6 +2870,22 @@
         "GetEventLogConfigurationResponse$ResourceType": "<p>The type of resource for the event log configuration.</p>"
       }
     },
+    "SpecVersion": {
+      "base": null,
+      "refs": {
+        "MatterCapabilityReportCluster$specVersion": "<p>The spec version used in the Amazon Web Services Matter capability report.</p>"
+      }
+    },
+    "StartAccountAssociationRefreshRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAccountAssociationRefreshResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartDeviceDiscoveryRequest": {
       "base": null,
       "refs": {
@@ -2019,13 +2935,34 @@
     "String": {
       "base": null,
       "refs": {
+        "ListManagedThingAccountAssociationsResponse$NextToken": "<p>A token used for pagination of results when there are more account associations than can be returned in a single response.</p>",
+        "OAuthConfig$scope": "<p>The OAuth scopes requested during authorization, which define the permissions granted to the application.</p>",
+        "OAuthConfig$oAuthCompleteRedirectUrl": "<p>The URL where users are redirected after completing the OAuth authorization process.</p>",
+        "OAuthUpdate$oAuthCompleteRedirectUrl": "<p>The updated URL where users are redirected after completing the OAuth authorization process.</p>",
         "Target$member": null
       }
     },
     "TagKey": {
       "base": null,
       "refs": {
+        "TagKeyList$member": null,
         "TagsMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$TagKeys": "<p>A list of tag keys to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "TagValue": {
@@ -2037,19 +2974,24 @@
     "TagsMap": {
       "base": null,
       "refs": {
+        "CreateAccountAssociationRequest$Tags": "<p>A set of key/value pairs that are used to manage the account association.</p>",
         "CreateCredentialLockerRequest$Tags": "<p>A set of key/value pairs that are used to manage the credential locker.</p>",
         "CreateDestinationRequest$Tags": "<p>A set of key/value pairs that are used to manage the destination.</p>",
         "CreateManagedThingRequest$Tags": "<p>A set of key/value pairs that are used to manage the managed thing.</p>",
         "CreateNotificationConfigurationRequest$Tags": "<p>A set of key/value pairs that are used to manage the notification configuration.</p>",
         "CreateOtaTaskRequest$Tags": "<p>A set of key/value pairs that are used to manage the over-the-air (OTA) task.</p>",
         "CreateProvisioningProfileRequest$Tags": "<p>A set of key/value pairs that are used to manage the provisioning profile.</p>",
+        "GetAccountAssociationResponse$Tags": "<p>A set of key/value pairs that are used to manage the account association.</p>",
         "GetCredentialLockerResponse$Tags": "<p>A set of key/value pairs that are used to manage the credential locker.</p>",
         "GetDestinationResponse$Tags": "<p>A set of key/value pairs that are used to manage the customer-managed destination.</p>",
         "GetDeviceDiscoveryResponse$Tags": "<p>A set of key/value pairs that are used to manage the device discovery request.</p>",
         "GetManagedThingResponse$Tags": "<p>A set of key/value pairs that are used to manage the managed thing.</p>",
         "GetNotificationConfigurationResponse$Tags": "<p>A set of key/value pairs that are used to manage the notification configuration.</p>",
+        "GetOtaTaskResponse$Tags": "<p>A set of key/value pairs that are used to manage the over-the-air (OTA) task.</p>",
         "GetProvisioningProfileResponse$Tags": "<p>A set of key/value pairs that are used to manage the provisioning profile.</p>",
-        "StartDeviceDiscoveryRequest$Tags": "<p>A set of key/value pairs that are used to manage the device discovery request.</p>"
+        "ListTagsForResourceResponse$tags": "<p>A set of key/value pairs that are used to manage the resource.</p>",
+        "StartDeviceDiscoveryRequest$Tags": "<p>A set of key/value pairs that are used to manage the device discovery request.</p>",
+        "TagResourceRequest$Tags": "<p>A set of key/value pairs that are used to manage the resource</p>"
       }
     },
     "Target": {
@@ -2066,6 +3008,12 @@
         "GetOtaTaskResponse$TaskProcessingDetails": "<p>The processing details of all over-the-air (OTA) tasks.</p>"
       }
     },
+    "ThirdPartyUserId": {
+      "base": null,
+      "refs": {
+        "SendConnectorEventRequest$UserId": "<p>The id of the third-party cloud provider.</p>"
+      }
+    },
     "ThresholdPercentage": {
       "base": null,
       "refs": {
@@ -2077,9 +3025,22 @@
       "refs": {
       }
     },
+    "TokenEndpointAuthenticationScheme": {
+      "base": null,
+      "refs": {
+        "OAuthConfig$tokenEndpointAuthenticationScheme": "<p>The authentication scheme used when requesting tokens from the token endpoint.</p>"
+      }
+    },
+    "TokenUrl": {
+      "base": null,
+      "refs": {
+        "OAuthConfig$tokenUrl": "<p>The token URL for the OAuth service, where authorization codes are exchanged for access tokens.</p>"
+      }
+    },
     "TraceId": {
       "base": null,
       "refs": {
+        "SendConnectorEventRequest$TraceId": "<p>The trace request identifier used to correlate a command request and response. This is specified by the device owner, but will be generated by IoT managed integrations if not provided by the device owner.</p>",
         "SendManagedThingCommandResponse$TraceId": "<p>The trace request identifier. This is specified by the device owner, but will be generated by IoT managed integrations if not provided by the device owner.</p>"
       }
     },
@@ -2092,6 +3053,31 @@
       "base": null,
       "refs": {
         "GetManagedThingResponse$UniversalProductCode": "<p>The universal product code (UPC) of the device model. The UPC is typically used in the United States of America and Canada.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAccountAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCloudConnectorRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateConnectorDestinationRequest": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateDestinationRequest": {
@@ -2145,6 +3131,7 @@
     "ValidationSchema": {
       "base": null,
       "refs": {
+        "CapabilitySchemaItem$Schema": "<p>The actual schema definition that describes the capability's properties, actions, and events.</p>",
         "ManagedThingSchemaListItem$Schema": "<p>The validation schema for one schema item associated with a managed thing.</p>"
       }
     }

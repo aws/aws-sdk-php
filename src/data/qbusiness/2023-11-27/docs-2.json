@@ -1062,6 +1062,39 @@
         "GetDataAccessorResponse$dataAccessorArn": "<p>The Amazon Resource Name (ARN) of the data accessor.</p>"
       }
     },
+    "DataAccessorAuthenticationConfiguration": {
+      "base": "<p>A union type that contains the specific authentication configuration based on the authentication type selected.</p>",
+      "refs": {
+        "DataAccessorAuthenticationDetail$authenticationConfiguration": "<p>The specific authentication configuration based on the authentication type.</p>"
+      }
+    },
+    "DataAccessorAuthenticationDetail": {
+      "base": "<p>Contains the authentication configuration details for a data accessor. This structure defines how the ISV authenticates when accessing data through the data accessor.</p>",
+      "refs": {
+        "CreateDataAccessorRequest$authenticationDetail": "<p>The authentication configuration details for the data accessor. This specifies how the ISV will authenticate when accessing data through this data accessor.</p>",
+        "DataAccessor$authenticationDetail": "<p>The authentication configuration details for the data accessor. This specifies how the ISV authenticates when accessing data through this data accessor.</p>",
+        "GetDataAccessorResponse$authenticationDetail": "<p>The authentication configuration details for the data accessor. This specifies how the ISV authenticates when accessing data through this data accessor.</p>",
+        "UpdateDataAccessorRequest$authenticationDetail": "<p>The updated authentication configuration details for the data accessor. This specifies how the ISV will authenticate when accessing data through this data accessor.</p>"
+      }
+    },
+    "DataAccessorAuthenticationType": {
+      "base": "<p>The type of authentication mechanism used by the data accessor.</p>",
+      "refs": {
+        "DataAccessorAuthenticationDetail$authenticationType": "<p>The type of authentication to use for the data accessor. This determines how the ISV authenticates when accessing data. You can use one of two authentication types:</p> <ul> <li> <p> <code>AWS_IAM_IDC_TTI</code> - Authentication using IAM Identity Center Trusted Token Issuer (TTI). This authentication type allows the ISV to use a trusted token issuer to generate tokens for accessing the data.</p> </li> <li> <p> <code>AWS_IAM_IDC_AUTH_CODE</code> - Authentication using IAM Identity Center authorization code flow. This authentication type uses the standard OAuth 2.0 authorization code flow for authentication.</p> </li> </ul>"
+      }
+    },
+    "DataAccessorExternalId": {
+      "base": null,
+      "refs": {
+        "DataAccessorExternalIds$member": null
+      }
+    },
+    "DataAccessorExternalIds": {
+      "base": null,
+      "refs": {
+        "DataAccessorAuthenticationDetail$externalIds": "<p>A list of external identifiers associated with this authentication configuration. These are used to correlate the data accessor with external systems.</p>"
+      }
+    },
     "DataAccessorId": {
       "base": null,
       "refs": {
@@ -1071,6 +1104,12 @@
         "GetDataAccessorRequest$dataAccessorId": "<p>The unique identifier of the data accessor to retrieve.</p>",
         "GetDataAccessorResponse$dataAccessorId": "<p>The unique identifier of the data accessor.</p>",
         "UpdateDataAccessorRequest$dataAccessorId": "<p>The unique identifier of the data accessor to update.</p>"
+      }
+    },
+    "DataAccessorIdcTrustedTokenIssuerConfiguration": {
+      "base": "<p>Configuration details for IAM Identity Center Trusted Token Issuer (TTI) authentication.</p>",
+      "refs": {
+        "DataAccessorAuthenticationConfiguration$idcTrustedTokenIssuerConfiguration": "<p>Configuration for IAM Identity Center Trusted Token Issuer (TTI) authentication used when the authentication type is <code>AWS_IAM_IDC_TTI</code>.</p>"
       }
     },
     "DataAccessorName": {
@@ -1918,6 +1957,12 @@
         "PluginAuthConfiguration$idcAuthConfiguration": "<p>Information about the IAM Identity Center Application used to configure authentication for a plugin.</p>"
       }
     },
+    "IdcTrustedTokenIssuerArn": {
+      "base": null,
+      "refs": {
+        "DataAccessorIdcTrustedTokenIssuerConfiguration$idcTrustedTokenIssuerArn": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center Trusted Token Issuer that will be used for authentication.</p>"
+      }
+    },
     "IdentityProviderConfiguration": {
       "base": "<p>Provides information about the identity provider (IdP) used to authenticate end users of an Amazon Q Business web experience.</p>",
       "refs": {
@@ -2111,7 +2156,7 @@
     "LambdaArn": {
       "base": null,
       "refs": {
-        "HookConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function sduring ingestion. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cde-lambda-operations.html\">Using Lambda functions for Amazon Q Business document enrichment</a>.</p>"
+        "HookConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function during ingestion. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cde-lambda-operations.html\">Using Lambda functions for Amazon Q Business document enrichment</a>.</p>"
       }
     },
     "LicenseNotFoundException": {
@@ -2694,6 +2739,42 @@
       "base": null,
       "refs": {
         "APISchema$payload": "<p>The JSON or YAML-formatted payload defining the OpenAPI schema for a custom plugin. </p>"
+      }
+    },
+    "PermissionCondition": {
+      "base": "<p>Defines a condition that restricts when a permission is effective. Conditions allow you to control access based on specific attributes of the request.</p>",
+      "refs": {
+        "PermissionConditions$member": null
+      }
+    },
+    "PermissionConditionKey": {
+      "base": null,
+      "refs": {
+        "PermissionCondition$conditionKey": "<p>The key for the condition. This identifies the attribute that the condition applies to.</p>"
+      }
+    },
+    "PermissionConditionOperator": {
+      "base": null,
+      "refs": {
+        "PermissionCondition$conditionOperator": "<p>The operator to use for the condition evaluation. This determines how the condition values are compared.</p>"
+      }
+    },
+    "PermissionConditionValue": {
+      "base": null,
+      "refs": {
+        "PermissionConditionValues$member": null
+      }
+    },
+    "PermissionConditionValues": {
+      "base": null,
+      "refs": {
+        "PermissionCondition$conditionValues": "<p>The values to compare against using the specified condition operator.</p>"
+      }
+    },
+    "PermissionConditions": {
+      "base": null,
+      "refs": {
+        "AssociatePermissionRequest$conditions": "<p>The conditions that restrict when the permission is effective. These conditions can be used to limit the permission based on specific attributes of the request.</p>"
       }
     },
     "PersonalizationConfiguration": {

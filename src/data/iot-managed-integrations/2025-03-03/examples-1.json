@@ -1,10 +1,101 @@
 {
   "version": "1.0",
   "examples": {
+    "CreateCloudConnector": [
+      {
+        "input": {
+          "ClientToken": "1234567890",
+          "EndpointConfig": {
+            "lambda": {
+              "arn": "arn:aws:lambda:us-east-1:111122223333:function:my-function:myVersion"
+            }
+          },
+          "EndpointType": "LAMBDA",
+          "Name": "Connector for TP Link Cloud"
+        },
+        "output": {
+          "Id": "TPLinkConnector1211"
+        },
+        "id": "example-1",
+        "title": "CreateCloudConnector happy path for TP Link"
+      },
+      {
+        "input": {
+          "ClientToken": "12312321",
+          "EndpointConfig": {
+            "lambda": {
+              "arn": "arn:aws:lambda:us-east-1:111122223333:function:my-function:myVersion"
+            }
+          },
+          "EndpointType": "LAMBDA",
+          "Name": "Connector for Ring Cloud"
+        },
+        "output": {
+          "Id": "RingConnector1212"
+        },
+        "id": "example-2",
+        "title": "CreateCloudConnector happy path for Ring"
+      },
+      {
+        "input": {
+          "ClientToken": "1213123123",
+          "EndpointConfig": {
+            "lambda": {
+              "arn": "arn:aws:lambda:us-east-1:111122223333:function:my-function:myVersion2"
+            }
+          },
+          "EndpointType": "LAMBDA",
+          "Name": "Connector for Ring Cloud"
+        },
+        "id": "example-3",
+        "title": "CreateCloudConnector error path for Ring connector which already exists"
+      }
+    ],
+    "GetCloudConnector": [
+      {
+        "input": {
+          "Identifier": "123456789012"
+        },
+        "output": {
+          "EndpointConfig": {
+            "lambda": {
+              "arn": "arn:aws:lambda:us-east-1:111122223333:function:my-function:myVersion"
+            }
+          },
+          "EndpointType": "LAMBDA",
+          "Id": "123456789012",
+          "Name": "Connector for TP Link Cloud V2"
+        },
+        "id": "example-1",
+        "title": "GetCloudConnector happy path for TP Link to get connector resource"
+      },
+      {
+        "input": {
+          "Identifier": "123456789012"
+        },
+        "output": {
+          "EndpointConfig": {
+            "lambda": {
+              "arn": "arn:aws:lambda:us-east-1:111122223333:function:my-function:myVersion"
+            }
+          },
+          "Name": "Connector for Ring Cloud"
+        },
+        "id": "example-2",
+        "title": "GetCloudConnector happy path for Ring to pending status"
+      },
+      {
+        "input": {
+          "Identifier": "123456789012"
+        },
+        "id": "example-3",
+        "title": "GetCloudConnector error Id for Ring connector which does not exist"
+      }
+    ],
     "GetSchemaVersion": [
       {
         "input": {
-          "SchemaVersionedId": "matter.ColorControl@$latest",
+          "SchemaVersionedId": "matter.ColorControl@1.4",
           "Type": "capability"
         },
         "output": {
@@ -14,15 +105,9 @@
             "name": "Color Control",
             "$defs": {
             },
-            "$id": "matter.ColorControl@1.3",
-            "$ref": "aws.capability@1.0",
+            "$id": "/schema-versions/capability/matter.ColorControl@1.4",
+            "$ref": "/schema-versions/definition/aws.capability@1.0",
             "actions": [
-              {
-                "$ref": "aws.action.ReadState@1.0"
-              },
-              {
-                "$ref": "aws.action.UpdateState@1.0"
-              },
               {
                 "name": "MoveToHue",
                 "extrinsicId": "0x00",
@@ -55,7 +140,7 @@
             "title": "Color Control Cluster"
           },
           "SchemaId": "matter.ColorControl",
-          "SemanticVersion": "1.3",
+          "SemanticVersion": "1.4",
           "Type": "capability"
         },
         "id": "example-1",
@@ -64,7 +149,7 @@
       {
         "input": {
           "Format": "ZCL",
-          "SchemaVersionedId": "matter.ColorControl@1.3",
+          "SchemaVersionedId": "matter.ColorControl@1.4",
           "Type": "capability"
         },
         "output": {
@@ -73,7 +158,7 @@
           "Schema": {
           },
           "SchemaId": "matter.ColorControl",
-          "SemanticVersion": "1.3",
+          "SemanticVersion": "1.4",
           "Type": "capability"
         },
         "id": "example-2",
@@ -88,10 +173,50 @@
         "title": "GetSchemaVersion error path for an example schema version that does not exist."
       }
     ],
+    "ListCloudConnectors": [
+      {
+        "input": {
+          "MaxResults": 5
+        },
+        "output": {
+          "Items": [
+            {
+              "Description": "Description for TP Link Cloud V2",
+              "EndpointConfig": {
+                "lambda": {
+                  "arn": "arn:aws:lambda:us-east-1:111122223333:function:my-function:myVersion"
+                }
+              },
+              "EndpointType": "LAMBDA",
+              "Name": "Connector for TP Link Cloud V2"
+            },
+            {
+              "Description": "Description for Ring Cloud",
+              "EndpointConfig": {
+                "lambda": {
+                  "arn": "arn:aws:lambda:us-east-1:111122223333:function:my-function:myVersion"
+                }
+              },
+              "EndpointType": "LAMBDA",
+              "Name": "Connector for Ring Cloud"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "ListCloudConnectors happy path to get a list of connector resources"
+      },
+      {
+        "input": {
+          "MaxResults": 5
+        },
+        "id": "example-2",
+        "title": "ListCloudConnectors error path for unauthorized user"
+      }
+    ],
     "ListSchemaVersions": [
       {
         "input": {
-          "SchemaId": "matter.ColorControl",
+          "SchemaId": "example.ColorControl",
           "Type": "capability"
         },
         "output": {
@@ -99,8 +224,8 @@
             {
               "Description": "The Color Control cluster defined as Harmony Capability.",
               "Namespace": "matter",
-              "SchemaId": "matter.ColorControl",
-              "SemanticVersion": "1.3",
+              "SchemaId": "example.ColorControl",
+              "SemanticVersion": "1.4",
               "Type": "capability"
             }
           ]
@@ -118,8 +243,8 @@
             {
               "Description": "The Color Control cluster defined as Harmony Capability.",
               "Namespace": "matter",
-              "SchemaId": "matter.ColorControl",
-              "SemanticVersion": "1.3",
+              "SchemaId": "example.ColorControl",
+              "SemanticVersion": "1.4",
               "Type": "capability"
             }
           ]
@@ -130,11 +255,151 @@
       {
         "input": {
           "Namespace": "matter",
-          "SchemaId": "matter.ColorControl",
+          "SchemaId": "example.ColorControl",
           "Type": "capability"
         },
         "id": "example-3",
         "title": "ListSchemaVersions error  for invalid input."
+      }
+    ],
+    "SendConnectorEvent": [
+      {
+        "input": {
+          "ConnectorId": "MockConnectorId",
+          "DeviceDiscoveryId": "358275hbk3qr",
+          "Devices": [
+            {
+              "CapabilityReport": {
+                "version": "1.0.0",
+                "endpoints": [
+                  {
+                    "clusters": [
+                      {
+                        "attributes": [
+                          {
+                            "value": "exampleString",
+                            "id": "0x0000"
+                          },
+                          {
+                            "id": "0x0001"
+                          },
+                          {
+                            "id": "0x0002"
+                          }
+                        ],
+                        "commands": [
+                          "0x00",
+                          "0x01"
+                        ],
+                        "events": [
+
+                        ],
+                        "id": "0x0201",
+                        "revision": 1
+                      }
+                    ],
+                    "deviceTypes": [
+                      "Refrigerator"
+                    ],
+                    "id": "EP1"
+                  }
+                ],
+                "nodeId": "1"
+              },
+              "ConnectorDeviceId": "Mock-Connector-DeviceId-1",
+              "ConnectorDeviceName": "Sample-User-device-1"
+            }
+          ],
+          "Message": "Sample ConnectorEventMessage",
+          "Operation": "DEVICE_DISCOVERY",
+          "OperationVersion": "1.0",
+          "StatusCode": 200,
+          "UserId": "MockThirdPartyUserId"
+        },
+        "output": {
+          "ConnectorId": "MockConnectorId"
+        },
+        "id": "example-1",
+        "title": "SendConnectorEvent happy path for device discovery"
+      },
+      {
+        "input": {
+          "ConnectorId": "MockConnectorId",
+          "MatterEndpoint": {
+            "clusters": [
+              {
+                "attributes": {
+                  "0x0000": [
+                    73
+                  ],
+                  "0x15570003": "exampleString"
+                },
+                "commands": {
+                  "0x03": {
+                  }
+                },
+                "id": "0x1003"
+              }
+            ],
+            "id": "1"
+          },
+          "Message": "Sample ConnectorEventMessage",
+          "Operation": "DEVICE_COMMAND_RESPONSE",
+          "OperationVersion": "1.0",
+          "StatusCode": 200,
+          "TraceId": "9b75f3839b6140f=_1",
+          "UserId": "MockThirdPartyUserId"
+        },
+        "output": {
+          "ConnectorId": "MockConnectorId"
+        },
+        "id": "example-2",
+        "title": "SendConnectorEvent happy path for device command response"
+      },
+      {
+        "input": {
+          "ConnectorId": "MockConnectorId",
+          "MatterEndpoint": {
+            "clusters": [
+              {
+                "attributes": {
+                  "0x0000": 73
+                },
+                "id": "0x1003"
+              }
+            ],
+            "id": "1"
+          },
+          "Message": "Sample ConnectorEventMessage",
+          "Operation": "DEVICE_EVENT",
+          "OperationVersion": "1.0",
+          "StatusCode": 200,
+          "TraceId": "TraceId-Sample",
+          "UserId": "MockThirdPartyUserId"
+        },
+        "output": {
+          "ConnectorId": "MockConnectorId"
+        },
+        "id": "example-3",
+        "title": "SendConnectorEvent happy path for device event"
+      }
+    ],
+    "UpdateCloudConnector": [
+      {
+        "input": {
+          "Identifier": "123456789012",
+          "Name": "Connector for TP Link Cloud V2"
+        },
+        "id": "example-1",
+        "title": "UpdateCloudConnector happy path for TP Link to update display name"
+      },
+      {
+        "input": {
+          "Identifier": "123456789012",
+          "Name": "Connector for Ring Cloud"
+        },
+        "id": "example-2",
+        "title": "UpdateCloudConnector error Id for Ring connector which does not exist"
       }
     ]
   }
