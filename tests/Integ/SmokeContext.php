@@ -15,6 +15,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use JmesPath\Env;
 use PHPUnit\Framework\Assert;
+use Psr\Http\Message\RequestInterface;
 
 class SmokeContext extends Assert implements
     Context,
@@ -315,6 +316,29 @@ class SmokeContext extends Assert implements
             $this->iCallTheApiWith($command, $payload);
         } catch (AwsException $e) {
             $this->error= $e;
+        }
+    }
+
+    /**
+     * @When /^I attempt to call the "([^"]*)" API, using query compatible approach, with:$/
+     */
+    public function iAttemptToCallTheAPIUsingQueryCompatibleApproachWith($command, TableNode $payload)
+    {
+        // Save current definition
+        $currentDefinition = $this->client->getApi()->getDefinition();
+
+        // Create a copy of the current and set the queryCompatibleMode in the metadata
+        $modifiedDefinition = $currentDefinition;
+        $modifiedDefinition['metadata']['awsQueryCompatible'] = [];
+
+        // Assign the modified definition to the client
+        $this->client->getApi()->setDefinition($modifiedDefinition);
+
+        try {
+            $this->iAttemptToCallTheApiWith($command, $payload);
+        } finally {
+            // Set back the definition to the client
+            $this->client->getApi()->setDefinition($currentDefinition);
         }
     }
 
