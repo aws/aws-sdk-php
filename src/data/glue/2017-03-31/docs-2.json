@@ -215,7 +215,7 @@
     "StartImportLabelsTaskRun": "<p>Enables you to provide additional labels (examples of truth) to be used to teach the machine learning transform and improve its quality. This API operation is generally used as part of the active learning workflow that starts with the <code>StartMLLabelingSetGenerationTaskRun</code> call and that ultimately results in improving the quality of your machine learning transform. </p> <p>After the <code>StartMLLabelingSetGenerationTaskRun</code> finishes, Glue machine learning will have generated a series of questions for humans to answer. (Answering these questions is often called 'labeling' in the machine learning workflows). In the case of the <code>FindMatches</code> transform, these questions are of the form, “What is the correct way to group these rows together into groups composed entirely of matching records?” After the labeling process is finished, users upload their answers/labels with a call to <code>StartImportLabelsTaskRun</code>. After <code>StartImportLabelsTaskRun</code> finishes, all future runs of the machine learning transform use the new and improved labels and perform a higher-quality transformation.</p> <p>By default, <code>StartMLLabelingSetGenerationTaskRun</code> continually learns from and combines all labels that you upload unless you set <code>Replace</code> to true. If you set <code>Replace</code> to true, <code>StartImportLabelsTaskRun</code> deletes and forgets all previously uploaded labels and learns only from the exact set that you upload. Replacing labels can be helpful if you realize that you previously uploaded incorrect labels, and you believe that they are having a negative effect on your transform quality.</p> <p>You can check on the status of your task run by calling the <code>GetMLTaskRun</code> operation. </p>",
     "StartJobRun": "<p>Starts a job run using a job definition.</p>",
     "StartMLEvaluationTaskRun": "<p>Starts a task to estimate the quality of the transform. </p> <p>When you provide label sets as examples of truth, Glue machine learning uses some of those examples to learn from them. The rest of the labels are used as a test to estimate quality.</p> <p>Returns a unique identifier for the run. You can call <code>GetMLTaskRun</code> to get more information about the stats of the <code>EvaluationTaskRun</code>.</p>",
-    "StartMLLabelingSetGenerationTaskRun": "<p>Starts the active learning workflow for your machine learning transform to improve the transform's quality by generating label sets and adding labels.</p> <p>When the <code>StartMLLabelingSetGenerationTaskRun</code> finishes, Glue will have generated a \"labeling set\" or a set of questions for humans to answer.</p> <p>In the case of the <code>FindMatches</code> transform, these questions are of the form, “What is the correct way to group these rows together into groups composed entirely of matching records?” </p> <p>After the labeling process is finished, you can upload your labels with a call to <code>StartImportLabelsTaskRun</code>. After <code>StartImportLabelsTaskRun</code> finishes, all future runs of the machine learning transform will use the new and improved labels and perform a higher-quality transformation.</p>",
+    "StartMLLabelingSetGenerationTaskRun": "<p>Starts the active learning workflow for your machine learning transform to improve the transform's quality by generating label sets and adding labels.</p> <p>When the <code>StartMLLabelingSetGenerationTaskRun</code> finishes, Glue will have generated a \"labeling set\" or a set of questions for humans to answer.</p> <p>In the case of the <code>FindMatches</code> transform, these questions are of the form, “What is the correct way to group these rows together into groups composed entirely of matching records?” </p> <p>After the labeling process is finished, you can upload your labels with a call to <code>StartImportLabelsTaskRun</code>. After <code>StartImportLabelsTaskRun</code> finishes, all future runs of the machine learning transform will use the new and improved labels and perform a higher-quality transformation.</p> <p>Note: The role used to write the generated labeling set to the <code>OutputS3Path</code> is the role associated with the Machine Learning Transform, specified in the <code>CreateMLTransform</code> API.</p>",
     "StartTrigger": "<p>Starts an existing trigger. See <a href=\"https://docs.aws.amazon.com/glue/latest/dg/trigger-job.html\">Triggering Jobs</a> for information about how different types of trigger are started.</p>",
     "StartWorkflowRun": "<p>Starts a new run of the specified workflow.</p>",
     "StopColumnStatisticsTaskRun": "<p>Stops a task run for the specified table.</p>",
@@ -980,6 +980,7 @@
         "GetUnfilteredTableMetadataResponse$IsRegisteredWithLakeFormation": "<p>A Boolean value that indicates whether the partition location is registered with Lake Formation.</p>",
         "GetUnfilteredTableMetadataResponse$IsMultiDialectView": "<p>Specifies whether the view supports the SQL dialects of one or more different query engines and can therefore be read by those engines.</p>",
         "GetUnfilteredTableMetadataResponse$IsProtected": "<p>A flag that instructs the engine not to push user-provided operations into the logical plan of the view during query planning. However, if set this flag does not guarantee that the engine will comply. Refer to the engine's documentation to understand the guarantees provided, if any.</p>",
+        "IcebergStructField$Required": "<p>Indicates whether this field is required (non-nullable) or optional (nullable) in the table schema.</p>",
         "StorageDescriptor$Compressed": "<p> <code>True</code> if the data in the table is compressed, or <code>False</code> if not.</p>",
         "StorageDescriptor$StoredAsSubDirectories": "<p> <code>True</code> if the table data is stored in subdirectories, or <code>False</code> if not.</p>",
         "Table$IsRegisteredWithLakeFormation": "<p>Indicates whether the table has been registered with Lake Formation.</p>",
@@ -1552,6 +1553,8 @@
       "refs": {
         "AuditColumnNamesList$member": null,
         "FindMatchesParameters$PrimaryKeyColumnName": "<p>The name of a column that uniquely identifies rows in the source table. Used to help identify matching records.</p>",
+        "IcebergPartitionField$Name": "<p>The name of the partition field as it will appear in the partitioned table structure.</p>",
+        "IcebergStructField$Name": "<p>The name of the field as it appears in the table schema and query operations.</p>",
         "SchemaColumn$Name": "<p>The name of the column.</p>"
       }
     },
@@ -1676,7 +1679,8 @@
     "CommentString": {
       "base": null,
       "refs": {
-        "Column$Comment": "<p>A free-form text comment.</p>"
+        "Column$Comment": "<p>A free-form text comment.</p>",
+        "IcebergStructField$Doc": "<p>Optional documentation or description text that provides additional context about the purpose and usage of this field.</p>"
       }
     },
     "CommitIdString": {
@@ -2251,6 +2255,12 @@
       "base": "<p>Specifies a <code>grok</code> classifier for <code>CreateClassifier</code> to create.</p>",
       "refs": {
         "CreateClassifierRequest$GrokClassifier": "<p>A <code>GrokClassifier</code> object specifying the classifier to create.</p>"
+      }
+    },
+    "CreateIcebergTableInput": {
+      "base": "<p>The configuration parameters required to create a new Iceberg table in the Glue Data Catalog, including table properties and metadata specifications.</p>",
+      "refs": {
+        "IcebergInput$CreateIcebergTableInput": "<p>The configuration parameters required to create a new Iceberg table in the Glue Data Catalog, including table properties and metadata specifications.</p>"
       }
     },
     "CreateIntegrationRequest": {
@@ -5292,10 +5302,22 @@
         "CompactionMetrics$IcebergMetrics": "<p>A structure containing the Iceberg compaction metrics for the optimizer run.</p>"
       }
     },
+    "IcebergDocument": {
+      "base": null,
+      "refs": {
+        "IcebergStructField$Type": "<p>The data type definition for this field, specifying the structure and format of the data it contains.</p>"
+      }
+    },
     "IcebergInput": {
       "base": "<p>A structure that defines an Apache Iceberg metadata table to create in the catalog.</p>",
       "refs": {
         "OpenTableFormatInput$IcebergInput": "<p>Specifies an <code>IcebergInput</code> structure that defines an Apache Iceberg metadata table.</p>"
+      }
+    },
+    "IcebergNullOrder": {
+      "base": null,
+      "refs": {
+        "IcebergSortField$NullOrder": "<p>The ordering behavior for null values in this field, specifying whether nulls should appear first or last in the sort order.</p>"
       }
     },
     "IcebergOrphanFileDeletionConfiguration": {
@@ -5310,6 +5332,25 @@
         "OrphanFileDeletionMetrics$IcebergMetrics": "<p>A structure containing the Iceberg orphan file deletion metrics for the optimizer run.</p>"
       }
     },
+    "IcebergPartitionField": {
+      "base": "<p>Defines a single partition field within an Iceberg partition specification, including the source field, transformation function, partition name, and unique identifier.</p>",
+      "refs": {
+        "IcebergPartitionSpecFieldList$member": null
+      }
+    },
+    "IcebergPartitionSpec": {
+      "base": "<p>Defines the partitioning specification for an Iceberg table, determining how table data will be organized and partitioned for optimal query performance.</p>",
+      "refs": {
+        "CreateIcebergTableInput$PartitionSpec": "<p>The partitioning specification that defines how the Iceberg table data will be organized and partitioned for optimal query performance.</p>",
+        "IcebergTableUpdate$PartitionSpec": "<p>The updated partitioning specification that defines how the table data should be reorganized and partitioned.</p>"
+      }
+    },
+    "IcebergPartitionSpecFieldList": {
+      "base": null,
+      "refs": {
+        "IcebergPartitionSpec$Fields": "<p>The list of partition fields that define how the table data should be partitioned, including source fields and their transformations.</p>"
+      }
+    },
     "IcebergRetentionConfiguration": {
       "base": "<p>The configuration for an Iceberg snapshot retention optimizer.</p>",
       "refs": {
@@ -5320,6 +5361,68 @@
       "base": "<p>Snapshot retention metrics for Iceberg for the optimizer run.</p>",
       "refs": {
         "RetentionMetrics$IcebergMetrics": "<p>A structure containing the Iceberg retention metrics for the optimizer run.</p>"
+      }
+    },
+    "IcebergSchema": {
+      "base": "<p>Defines the schema structure for an Iceberg table, including field definitions, data types, and schema metadata.</p>",
+      "refs": {
+        "CreateIcebergTableInput$Schema": "<p>The schema definition that specifies the structure, field types, and metadata for the Iceberg table.</p>",
+        "IcebergTableUpdate$Schema": "<p>The updated schema definition for the Iceberg table, specifying any changes to field structure, data types, or schema metadata.</p>"
+      }
+    },
+    "IcebergSortDirection": {
+      "base": null,
+      "refs": {
+        "IcebergSortField$Direction": "<p>The sort direction for this field, either ascending or descending.</p>"
+      }
+    },
+    "IcebergSortField": {
+      "base": "<p>Defines a single field within an Iceberg sort order specification, including the source field, transformation, sort direction, and null value ordering.</p>",
+      "refs": {
+        "IcebergSortOrderFieldList$member": null
+      }
+    },
+    "IcebergSortOrder": {
+      "base": "<p>Defines the sort order specification for an Iceberg table, determining how data should be ordered within partitions to optimize query performance.</p>",
+      "refs": {
+        "CreateIcebergTableInput$WriteOrder": "<p>The sort order specification that defines how data should be ordered within each partition to optimize query performance.</p>",
+        "IcebergTableUpdate$SortOrder": "<p>The updated sort order specification that defines how data should be ordered within partitions for optimal query performance.</p>"
+      }
+    },
+    "IcebergSortOrderFieldList": {
+      "base": null,
+      "refs": {
+        "IcebergSortOrder$Fields": "<p>The list of fields and their sort directions that define the ordering criteria for the Iceberg table data.</p>"
+      }
+    },
+    "IcebergStructField": {
+      "base": "<p>Defines a single field within an Iceberg table schema, including its identifier, name, data type, nullability, and documentation.</p>",
+      "refs": {
+        "IcebergStructFieldList$member": null
+      }
+    },
+    "IcebergStructFieldList": {
+      "base": null,
+      "refs": {
+        "IcebergSchema$Fields": "<p>The list of field definitions that make up the table schema, including field names, types, and metadata.</p>"
+      }
+    },
+    "IcebergStructTypeEnum": {
+      "base": null,
+      "refs": {
+        "IcebergSchema$Type": "<p>The root type of the schema structure, typically \"struct\" for Iceberg table schemas.</p>"
+      }
+    },
+    "IcebergTableUpdate": {
+      "base": "<p>Defines a complete set of updates to be applied to an Iceberg table, including schema changes, partitioning modifications, sort order adjustments, location updates, and property changes.</p>",
+      "refs": {
+        "IcebergTableUpdateList$member": null
+      }
+    },
+    "IcebergTableUpdateList": {
+      "base": null,
+      "refs": {
+        "UpdateIcebergTableInput$Updates": "<p>The list of table update operations that specify the changes to be made to the Iceberg table, including schema modifications, partition specifications, and table properties.</p>"
       }
     },
     "IcebergTarget": {
@@ -5338,6 +5441,13 @@
       "base": null,
       "refs": {
         "CrawlerTargets$IcebergTargets": "<p>Specifies Apache Iceberg data store targets.</p>"
+      }
+    },
+    "IcebergTransformString": {
+      "base": null,
+      "refs": {
+        "IcebergPartitionField$Transform": "<p>The transformation function applied to the source field to create the partition, such as identity, bucket, truncate, year, month, day, or hour.</p>",
+        "IcebergSortField$Transform": "<p>The transformation function applied to the source field before sorting, such as identity, bucket, or truncate.</p>"
       }
     },
     "IdString": {
@@ -5437,6 +5547,14 @@
       "refs": {
         "CodeGenNode$LineNumber": "<p>The line number of the node.</p>",
         "DecimalNumber$Scale": "<p>The scale that determines where the decimal point falls in the unscaled value.</p>",
+        "IcebergPartitionField$SourceId": "<p>The identifier of the source field from the table schema that this partition field is based on.</p>",
+        "IcebergPartitionField$FieldId": "<p>The unique identifier assigned to this partition field within the Iceberg table's partition specification.</p>",
+        "IcebergPartitionSpec$SpecId": "<p>The unique identifier for this partition specification within the Iceberg table's metadata history.</p>",
+        "IcebergSchema$SchemaId": "<p>The unique identifier for this schema version within the Iceberg table's schema evolution history.</p>",
+        "IcebergSortField$SourceId": "<p>The identifier of the source field from the table schema that this sort field is based on.</p>",
+        "IcebergSortOrder$OrderId": "<p>The unique identifier for this sort order specification within the Iceberg table's metadata.</p>",
+        "IcebergStructField$Id": "<p>The unique identifier assigned to this field within the Iceberg table schema, used for schema evolution and field tracking.</p>",
+        "IntegerList$member": null,
         "StorageDescriptor$NumberOfBuckets": "<p>Must be specified if the table contains any dimension columns.</p>"
       }
     },
@@ -5444,6 +5562,12 @@
       "base": null,
       "refs": {
         "Order$SortOrder": "<p>Indicates that the column is sorted in ascending order (<code>== 1</code>), or in descending order (<code>==0</code>).</p>"
+      }
+    },
+    "IntegerList": {
+      "base": null,
+      "refs": {
+        "IcebergSchema$IdentifierFieldIds": "<p>The list of field identifiers that uniquely identify records in the table, used for row-level operations and deduplication.</p>"
       }
     },
     "IntegerValue": {
@@ -6239,6 +6363,8 @@
     "LocationString": {
       "base": null,
       "refs": {
+        "CreateIcebergTableInput$Location": "<p>The S3 location where the Iceberg table data will be stored.</p>",
+        "IcebergTableUpdate$Location": "<p>The updated S3 location where the Iceberg table data will be stored.</p>",
         "LocationStringList$member": null,
         "StorageDescriptor$Location": "<p>The physical location of the table. By default, this takes the form of the warehouse location, followed by the database location in the warehouse, followed by the table name.</p>"
       }
@@ -6676,6 +6802,7 @@
         "CreateTableOptimizerRequest$DatabaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
         "CreateTableOptimizerRequest$TableName": "<p>The name of the table.</p>",
         "CreateTableRequest$DatabaseName": "<p>The catalog database in which to create the new table. For Hive compatibility, this name is entirely lowercase.</p>",
+        "CreateTableRequest$Name": "<p>The unique identifier for the table within the specified database that will be created in the Glue Data Catalog.</p>",
         "CreateTriggerRequest$Name": "<p>The name of the trigger.</p>",
         "CreateTriggerRequest$WorkflowName": "<p>The name of the workflow associated with the trigger.</p>",
         "CreateTriggerResponse$Name": "<p>The name of the trigger.</p>",
@@ -6766,8 +6893,11 @@
         "ErrorDetail$ErrorCode": "<p>The code associated with this error.</p>",
         "EvaluatedMetricsMap$key": null,
         "FederatedCatalog$ConnectionName": "<p>The name of the connection to an external data source, for example a Redshift-federated catalog.</p>",
+        "FederatedCatalog$ConnectionType": "<p>The type of connection used to access the federated catalog, specifying the protocol or method for connection to the external data source.</p>",
         "FederatedDatabase$ConnectionName": "<p>The name of the connection to the external metastore.</p>",
+        "FederatedDatabase$ConnectionType": "<p>The type of connection used to access the federated database, such as JDBC, ODBC, or other supported connection protocols.</p>",
         "FederatedTable$ConnectionName": "<p>The name of the connection to the external metastore.</p>",
+        "FederatedTable$ConnectionType": "<p>The type of connection used to access the federated table, specifying the protocol or method for connecting to the external data source.</p>",
         "FindMatchesTaskRunProperties$JobName": "<p>The name assigned to the job for the Find Matches task run.</p>",
         "GetBlueprintRequest$Name": "<p>The name of the blueprint.</p>",
         "GetBlueprintRunsRequest$BlueprintName": "<p>The name of the blueprint.</p>",
@@ -6980,6 +7110,7 @@
         "UpdateTableOptimizerRequest$DatabaseName": "<p>The name of the database in the catalog in which the table resides.</p>",
         "UpdateTableOptimizerRequest$TableName": "<p>The name of the table.</p>",
         "UpdateTableRequest$DatabaseName": "<p>The name of the catalog database in which the table resides. For Hive compatibility, this name is entirely lowercase.</p>",
+        "UpdateTableRequest$Name": "<p>The unique identifier for the table within the specified database that will be created in the Glue Data Catalog.</p>",
         "UpdateTriggerRequest$Name": "<p>The name of the trigger to update.</p>",
         "UpdateUsageProfileRequest$Name": "<p>The name of the usage profile.</p>",
         "UpdateUsageProfileResponse$Name": "<p>The name of the usage profile that was updated.</p>",
@@ -7360,7 +7491,9 @@
     "NullableString": {
       "base": null,
       "refs": {
-        "QuerySessionContext$ClusterId": "<p>An identifier string for the consumer cluster.</p>"
+        "QuerySessionContext$ClusterId": "<p>An identifier string for the consumer cluster.</p>",
+        "StringToStringMap$key": null,
+        "StringToStringMap$value": null
       }
     },
     "NumberTargetPartitionsString": {
@@ -9643,6 +9776,13 @@
         "UpdateDevEndpointRequest$DeleteArguments": "<p>The list of argument keys to be deleted from the map of arguments used to configure the <code>DevEndpoint</code>.</p>"
       }
     },
+    "StringToStringMap": {
+      "base": null,
+      "refs": {
+        "CreateIcebergTableInput$Properties": "<p>Key-value pairs of additional table properties and configuration settings for the Iceberg table.</p>",
+        "IcebergTableUpdate$Properties": "<p>Updated key-value pairs of table properties and configuration settings for the Iceberg table.</p>"
+      }
+    },
     "SupportedDialect": {
       "base": "<p>A structure specifying the dialect and dialect version used by the query engine.</p>",
       "refs": {
@@ -10590,6 +10730,18 @@
         "UpdateClassifierRequest$GrokClassifier": "<p>A <code>GrokClassifier</code> object with updated fields.</p>"
       }
     },
+    "UpdateIcebergInput": {
+      "base": "<p>Input parameters specific to updating Apache Iceberg tables in Glue Data Catalog, containing the update operations to be applied to an existing Iceberg table.</p>",
+      "refs": {
+        "UpdateOpenTableFormatInput$UpdateIcebergInput": "<p>Apache Iceberg-specific update parameters that define the table modifications to be applied, including schema changes, partition specifications, and table properties.</p>"
+      }
+    },
+    "UpdateIcebergTableInput": {
+      "base": "<p>Contains the update operations to be applied to an existing Iceberg table in AWS Glue Data Catalog, defining the new state of the table metadata. </p>",
+      "refs": {
+        "UpdateIcebergInput$UpdateIcebergTableInput": "<p>The specific update operations to be applied to the Iceberg table, containing a list of updates that define the new state of the table including schema, partitions, and properties.</p>"
+      }
+    },
     "UpdateIntegrationResourcePropertyRequest": {
       "base": null,
       "refs": {}
@@ -10635,6 +10787,12 @@
     "UpdateMLTransformResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateOpenTableFormatInput": {
+      "base": "<p>Input parameters for updating open table format tables in GlueData Catalog, serving as a wrapper for format-specific update operations such as Apache Iceberg.</p>",
+      "refs": {
+        "UpdateTableRequest$UpdateOpenTableFormatInput": null
+      }
     },
     "UpdatePartitionRequest": {
       "base": null,

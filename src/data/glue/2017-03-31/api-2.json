@@ -6615,6 +6615,20 @@
         "CustomPatterns":{"shape":"CustomPatterns"}
       }
     },
+    "CreateIcebergTableInput":{
+      "type":"structure",
+      "required":[
+        "Location",
+        "Schema"
+      ],
+      "members":{
+        "Location":{"shape":"LocationString"},
+        "Schema":{"shape":"IcebergSchema"},
+        "PartitionSpec":{"shape":"IcebergPartitionSpec"},
+        "WriteOrder":{"shape":"IcebergSortOrder"},
+        "Properties":{"shape":"StringToStringMap"}
+      }
+    },
     "CreateIntegrationRequest":{
       "type":"structure",
       "required":[
@@ -6964,6 +6978,7 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
+        "Name":{"shape":"NameString"},
         "TableInput":{"shape":"TableInput"},
         "PartitionIndexes":{"shape":"PartitionIndexList"},
         "TransactionId":{"shape":"TransactionIdString"},
@@ -8712,14 +8727,16 @@
       "type":"structure",
       "members":{
         "Identifier":{"shape":"FederationIdentifier"},
-        "ConnectionName":{"shape":"NameString"}
+        "ConnectionName":{"shape":"NameString"},
+        "ConnectionType":{"shape":"NameString"}
       }
     },
     "FederatedDatabase":{
       "type":"structure",
       "members":{
         "Identifier":{"shape":"FederationIdentifier"},
-        "ConnectionName":{"shape":"NameString"}
+        "ConnectionName":{"shape":"NameString"},
+        "ConnectionType":{"shape":"NameString"}
       }
     },
     "FederatedResourceAlreadyExistsException":{
@@ -8735,7 +8752,8 @@
       "members":{
         "Identifier":{"shape":"FederationIdentifier"},
         "DatabaseIdentifier":{"shape":"FederationIdentifier"},
-        "ConnectionName":{"shape":"NameString"}
+        "ConnectionName":{"shape":"NameString"},
+        "ConnectionType":{"shape":"NameString"}
       }
     },
     "FederationIdentifier":{
@@ -10653,13 +10671,26 @@
         "JobDurationInHour":{"shape":"dpuDurationInHour"}
       }
     },
+    "IcebergDocument":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
     "IcebergInput":{
       "type":"structure",
       "required":["MetadataOperation"],
       "members":{
         "MetadataOperation":{"shape":"MetadataOperation"},
-        "Version":{"shape":"VersionString"}
+        "Version":{"shape":"VersionString"},
+        "CreateIcebergTableInput":{"shape":"CreateIcebergTableInput"}
       }
+    },
+    "IcebergNullOrder":{
+      "type":"string",
+      "enum":[
+        "nulls-first",
+        "nulls-last"
+      ]
     },
     "IcebergOrphanFileDeletionConfiguration":{
       "type":"structure",
@@ -10676,6 +10707,32 @@
         "NumberOfDpus":{"shape":"dpuCounts"},
         "JobDurationInHour":{"shape":"dpuDurationInHour"}
       }
+    },
+    "IcebergPartitionField":{
+      "type":"structure",
+      "required":[
+        "SourceId",
+        "Transform",
+        "Name"
+      ],
+      "members":{
+        "SourceId":{"shape":"Integer"},
+        "Transform":{"shape":"IcebergTransformString"},
+        "Name":{"shape":"ColumnNameString"},
+        "FieldId":{"shape":"Integer"}
+      }
+    },
+    "IcebergPartitionSpec":{
+      "type":"structure",
+      "required":["Fields"],
+      "members":{
+        "Fields":{"shape":"IcebergPartitionSpecFieldList"},
+        "SpecId":{"shape":"Integer"}
+      }
+    },
+    "IcebergPartitionSpecFieldList":{
+      "type":"list",
+      "member":{"shape":"IcebergPartitionField"}
     },
     "IcebergRetentionConfiguration":{
       "type":"structure",
@@ -10695,6 +10752,95 @@
         "NumberOfDpus":{"shape":"dpuCounts"},
         "JobDurationInHour":{"shape":"dpuDurationInHour"}
       }
+    },
+    "IcebergSchema":{
+      "type":"structure",
+      "required":["Fields"],
+      "members":{
+        "SchemaId":{"shape":"Integer"},
+        "IdentifierFieldIds":{"shape":"IntegerList"},
+        "Type":{"shape":"IcebergStructTypeEnum"},
+        "Fields":{"shape":"IcebergStructFieldList"}
+      }
+    },
+    "IcebergSortDirection":{
+      "type":"string",
+      "enum":[
+        "asc",
+        "desc"
+      ]
+    },
+    "IcebergSortField":{
+      "type":"structure",
+      "required":[
+        "SourceId",
+        "Transform",
+        "Direction",
+        "NullOrder"
+      ],
+      "members":{
+        "SourceId":{"shape":"Integer"},
+        "Transform":{"shape":"IcebergTransformString"},
+        "Direction":{"shape":"IcebergSortDirection"},
+        "NullOrder":{"shape":"IcebergNullOrder"}
+      }
+    },
+    "IcebergSortOrder":{
+      "type":"structure",
+      "required":[
+        "OrderId",
+        "Fields"
+      ],
+      "members":{
+        "OrderId":{"shape":"Integer"},
+        "Fields":{"shape":"IcebergSortOrderFieldList"}
+      }
+    },
+    "IcebergSortOrderFieldList":{
+      "type":"list",
+      "member":{"shape":"IcebergSortField"}
+    },
+    "IcebergStructField":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Name",
+        "Type",
+        "Required"
+      ],
+      "members":{
+        "Id":{"shape":"Integer"},
+        "Name":{"shape":"ColumnNameString"},
+        "Type":{"shape":"IcebergDocument"},
+        "Required":{"shape":"Boolean"},
+        "Doc":{"shape":"CommentString"}
+      }
+    },
+    "IcebergStructFieldList":{
+      "type":"list",
+      "member":{"shape":"IcebergStructField"}
+    },
+    "IcebergStructTypeEnum":{
+      "type":"string",
+      "enum":["struct"]
+    },
+    "IcebergTableUpdate":{
+      "type":"structure",
+      "required":[
+        "Schema",
+        "Location"
+      ],
+      "members":{
+        "Schema":{"shape":"IcebergSchema"},
+        "PartitionSpec":{"shape":"IcebergPartitionSpec"},
+        "SortOrder":{"shape":"IcebergSortOrder"},
+        "Location":{"shape":"LocationString"},
+        "Properties":{"shape":"StringToStringMap"}
+      }
+    },
+    "IcebergTableUpdateList":{
+      "type":"list",
+      "member":{"shape":"IcebergTableUpdate"}
     },
     "IcebergTarget":{
       "type":"structure",
@@ -10718,6 +10864,7 @@
       "type":"list",
       "member":{"shape":"IcebergTarget"}
     },
+    "IcebergTransformString":{"type":"string"},
     "IdString":{
       "type":"string",
       "max":255,
@@ -10812,6 +10959,10 @@
       "type":"integer",
       "max":1,
       "min":0
+    },
+    "IntegerList":{
+      "type":"list",
+      "member":{"shape":"Integer"}
     },
     "IntegerValue":{"type":"integer"},
     "Integration":{
@@ -15105,6 +15256,11 @@
       "type":"list",
       "member":{"shape":"GenericString"}
     },
+    "StringToStringMap":{
+      "type":"map",
+      "key":{"shape":"NullableString"},
+      "value":{"shape":"NullableString"}
+    },
     "SupportedDialect":{
       "type":"structure",
       "members":{
@@ -16058,6 +16214,20 @@
         "CustomPatterns":{"shape":"CustomPatterns"}
       }
     },
+    "UpdateIcebergInput":{
+      "type":"structure",
+      "required":["UpdateIcebergTableInput"],
+      "members":{
+        "UpdateIcebergTableInput":{"shape":"UpdateIcebergTableInput"}
+      }
+    },
+    "UpdateIcebergTableInput":{
+      "type":"structure",
+      "required":["Updates"],
+      "members":{
+        "Updates":{"shape":"IcebergTableUpdateList"}
+      }
+    },
     "UpdateIntegrationResourcePropertyRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -16160,6 +16330,12 @@
         "TransformId":{"shape":"HashString"}
       }
     },
+    "UpdateOpenTableFormatInput":{
+      "type":"structure",
+      "members":{
+        "UpdateIcebergInput":{"shape":"UpdateIcebergInput"}
+      }
+    },
     "UpdatePartitionRequest":{
       "type":"structure",
       "required":[
@@ -16259,19 +16435,18 @@
     },
     "UpdateTableRequest":{
       "type":"structure",
-      "required":[
-        "DatabaseName",
-        "TableInput"
-      ],
+      "required":["DatabaseName"],
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
+        "Name":{"shape":"NameString"},
         "TableInput":{"shape":"TableInput"},
         "SkipArchive":{"shape":"BooleanNullable"},
         "TransactionId":{"shape":"TransactionIdString"},
         "VersionId":{"shape":"VersionString"},
         "ViewUpdateAction":{"shape":"ViewUpdateAction"},
-        "Force":{"shape":"Boolean"}
+        "Force":{"shape":"Boolean"},
+        "UpdateOpenTableFormatInput":{"shape":"UpdateOpenTableFormatInput"}
       }
     },
     "UpdateTableResponse":{

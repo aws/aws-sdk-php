@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - Update JSON target for Kubernetes workload resource type.
+* `Aws\Glue` - AWS Glue now supports schema, partition and sort management of Apache Iceberg tables using Glue SDK
+* `Aws\QConnect` - Adding UnauthorizedException to public SDK
+* `Aws\SESv2` - Added support for new SES regions
+* `Aws\RDS` - StartDBCluster and StopDBCluster can now throw InvalidDBShardGroupStateFault.
+* `Aws\ConfigService` - Added important considerations to the PutConformancePack and PutOrganizationConformancPack APIs.
+* `Aws\Connect` - This release adds the following value to an InitiateAs enum: COMPLETED
+
 ## 3.348.0 - 2025-06-26
 
 * `Aws\Deadline` - Added fields to track cumulative task retry attempts for steps and jobs

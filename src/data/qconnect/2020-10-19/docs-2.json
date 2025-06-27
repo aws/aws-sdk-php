@@ -48,7 +48,7 @@
     "GetMessageTemplate": "<p>Retrieves the Amazon Q in Connect message template. The message template identifier can contain an optional qualifier, for example, <code>&lt;message-template-id&gt;:&lt;qualifier&gt;</code>, which is either an actual version number or an Amazon Q Connect managed qualifier <code>$ACTIVE_VERSION</code> | <code>$LATEST</code>. If it is not supplied, then <code>$LATEST</code> is assumed implicitly.</p>",
     "GetNextMessage": "<p>Retrieves next message on an Amazon Q in Connect session.</p>",
     "GetQuickResponse": "<p>Retrieves the quick response.</p>",
-    "GetRecommendations": "<important> <p>This API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024, you will need to create a new Assistant in the Amazon Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.</p> </important> <p>Retrieves recommendations for the specified session. To avoid retrieving the same recommendations in subsequent calls, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_NotifyRecommendationsReceived.html\">NotifyRecommendationsReceived</a>. This API supports long-polling behavior with the <code>waitTimeSeconds</code> parameter. Short poll is the default behavior and only returns recommendations already available. To perform a manual query against an assistant, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_QueryAssistant.html\">QueryAssistant</a>.</p>",
+    "GetRecommendations": "<p><important> <p>This API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024, you will need to create a new Assistant in the Amazon Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.</p> </important> <p>Retrieves recommendations for the specified session. To avoid retrieving the same recommendations in subsequent calls, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_NotifyRecommendationsReceived.html\">NotifyRecommendationsReceived</a>. This API supports long-polling behavior with the <code>waitTimeSeconds</code> parameter. Short poll is the default behavior and only returns recommendations already available. To perform a manual query against an assistant, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_QueryAssistant.html\">QueryAssistant</a>.</p></p>",
     "GetSession": "<p>Retrieves information for a specified session.</p>",
     "ListAIAgentVersions": "<p>List AI Agent versions.</p>",
     "ListAIAgents": "<p>Lists AI Agents.</p>",
@@ -69,7 +69,7 @@
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
     "NotifyRecommendationsReceived": "<p>Removes the specified recommendations from the specified assistant's queue of newly available recommendations. You can use this API in conjunction with <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a> and a <code>waitTimeSeconds</code> input for long-polling behavior and avoiding duplicate recommendations.</p>",
     "PutFeedback": "<p>Provides feedback against the specified assistant for the specified target. This API only supports generative targets.</p>",
-    "QueryAssistant": "<important> <p>This API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024, you will need to create a new Assistant in the Amazon Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.</p> </important> <p>Performs a manual search against the specified assistant. To retrieve recommendations for an assistant, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a>. </p>",
+    "QueryAssistant": "<p><important> <p>This API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024, you will need to create a new Assistant in the Amazon Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.</p> </important> <p>Performs a manual search against the specified assistant. To retrieve recommendations for an assistant, use <a href=\"https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html\">GetRecommendations</a>. </p></p>",
     "RemoveAssistantAIAgent": "<p>Removes the AI Agent that is set for use by default on an Amazon Q in Connect Assistant.</p>",
     "RemoveKnowledgeBaseTemplateUri": "<p>Removes a URI template from a knowledge base.</p>",
     "RenderMessageTemplate": "<p>Renders the Amazon Q in Connect message template based on the attribute values provided and generates the message content. For any variable present in the message template, if the attribute value is neither provided in the attribute request parameter nor the default attribute of the message template, the rendered message content will keep the variable placeholder as it is and return the attribute keys that are missing.</p>",
@@ -2561,7 +2561,7 @@
     "NonEmptyString": {
       "base": null,
       "refs": {
-        "AnswerRecommendationAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p> <note> <p>Changing this locale to anything other than <code>en_US</code>, <code>en_GB</code>, or <code>en_AU</code> will turn off recommendations triggered by contact transcripts for agent assistance, as this feature is not supported in multiple languages.</p> </note>",
+        "AnswerRecommendationAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p> <note> <p>For more information on supported locales, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/supported-languages.html#qic-notes-languages\">Language support for Amazon Q in Connect</a>.</p> </note>",
         "ConnectConfiguration$instanceId": "<p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>",
         "ContentData$revisionId": "<p>The identifier of the content revision.</p>",
         "ContentMetadata$key": null,
@@ -2580,7 +2580,7 @@
         "ListKnowledgeBasesResponse$nextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListQuickResponsesRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListQuickResponsesResponse$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
-        "ManualSearchAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p>",
+        "ManualSearchAIAgentConfiguration$locale": "<p>The locale to which specifies the language and region settings that determine the response language for <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_QueryAssistant.html\">QueryAssistant</a>.</p> <note> <p>For more information on supported locales, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/supported-languages.html#qic-notes-languages\">Language support for Amazon Q in Connect</a>.</p> </note>",
         "MessageTemplateFilterField$name": "<p>The name of the attribute field to filter the message templates by.</p>",
         "MessageTemplateOrderField$name": "<p>The name of the message template.</p>",
         "MessageTemplateQueryField$name": "<p>The name of the attribute to query the message templates by.</p>",
@@ -3401,6 +3401,7 @@
         "ThrottlingException$message": null,
         "TooManyTagsException$message": null,
         "TooManyTagsException$resourceName": "<p>The specified resource name.</p>",
+        "UnauthorizedException$message": null,
         "ValidationException$message": null
       }
     },
@@ -3613,6 +3614,11 @@
     },
     "TooManyTagsException": {
       "base": "<p>Amazon Q in Connect throws this exception if you have too many tags in your tag set.</p>",
+      "refs": {
+      }
+    },
+    "UnauthorizedException": {
+      "base": "<p>You do not have permission to perform this action.</p>",
       "refs": {
       }
     },
