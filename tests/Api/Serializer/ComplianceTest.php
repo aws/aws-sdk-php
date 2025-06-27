@@ -31,7 +31,6 @@ class ComplianceTest extends TestCase
         foreach ($files as $file) {
             $data = json_decode(file_get_contents($file), true);
             foreach ($data as $suite) {
-                $suite['metadata']['type'] = $suite['metadata']['protocol'];
                 foreach ($suite['cases'] as $case) {
                     $serviceData = [
                         'metadata' => $suite['metadata'],
@@ -48,11 +47,9 @@ class ComplianceTest extends TestCase
                         $file . ': ' . $suite['description'],
                         $description,
                         $case['given']['name'],
-                        isset($case['params']) ? $case['params'] : [],
+                        $case['params'] ?? [],
                         $case['serialized'],
-                        isset($suite['clientEndpoint'])
-                            ? $suite['clientEndpoint']
-                            : null
+                        $suite['clientEndpoint'] ?? null
                     ];
                 }
             }
@@ -95,10 +92,14 @@ class ComplianceTest extends TestCase
 
         $command = $client->getCommand($name, $args);
         $request = \Aws\serialize($command);
+
+        if (isset($serialized['method'])) {
+            $this->assertEquals($serialized['method'], $request->getMethod());
+        }
         $this->assertEquals($serialized['uri'], $request->getRequestTarget());
 
         $body = (string) $request->getBody();
-        switch ($service->getMetadata('type')) {
+        switch ($service->getProtocol()) {
             case 'json':
             case 'rest-json':
                 // Normalize the JSON data.
@@ -132,7 +133,7 @@ class ComplianceTest extends TestCase
         }
         if (isset($serialized['forbidHeaders'])) {
             foreach ($serialized['forbidHeaders'] as $key => $value) {
-                $this->assertTrue(!isset($request->getHeaders()[$key]));
+                $this->assertNotTrue(isset($request->getHeaders()[$key]));
             }
         }
     }
