@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.348.1 - 2025-06-27
 
 * `Aws\GuardDuty` - Update JSON target for Kubernetes workload resource type.
 * `Aws\Glue` - AWS Glue now supports schema, partition and sort management of Apache Iceberg tables using Glue SDK
