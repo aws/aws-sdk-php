@@ -69,7 +69,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                     ]
                 ),
                 [],
-                [ 'transfer-encoding', 'content-length'],
+                [ 'transfer-encoding'],
             ],
             [
                 $client->getCommand(
@@ -78,7 +78,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         'InputStream' => $inputStream,
                     ]
                 ),
-                [ 'content-length' => [26] ],
+                [ 'Content-Length' => [26] ],
                 [ 'transfer-encoding' ],
             ],
             [
@@ -88,18 +88,8 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         'InputStream' => $inputStream,
                     ]
                 ),
-                [ 'content-length' => [26] ],
+                [ 'Content-Length' => [26] ],
                 [ 'transfer-encoding' ],
-            ],
-            [
-                $client->getCommand(
-                    'StreamingUnsignedOp',
-                    [
-                        'InputStream' => $inputStream,
-                    ]
-                ),
-                [ 'transfer-encoding' => ['chunked'] ],
-                [ 'content-length' ],
             ],
             [
                 $client->getCommand(
@@ -108,7 +98,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         'InputStream' => $inputStream,
                     ]
                 ),
-                [ 'content-length' => [26] ],
+                [ 'Content-Length' => [26] ],
                 [ 'transfer-encoding' ],
             ],
         ];

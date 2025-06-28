@@ -66,14 +66,17 @@ class QuerySerializer
             'Content-Length' => strlen($body),
             'Content-Type'   => 'application/x-www-form-urlencoded'
         ];
+        $requestUri = $operation['http']['requestUri'] ?? null;
 
         if ($endpoint instanceof RulesetEndpoint) {
             $this->setEndpointV2RequestOptions($endpoint, $headers);
         }
+        $absoluteUri = str_ends_with($this->endpoint, '/')
+            ? $this->endpoint : $this->endpoint . $requestUri;
 
         return new Request(
             'POST',
-            $this->endpoint,
+            $absoluteUri,
             $headers,
             $body
         );
