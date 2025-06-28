@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\Serializer;
 
+use Aws\Api\ListShape;
 use Aws\Api\MapShape;
 use Aws\Api\Service;
 use Aws\Api\Operation;
@@ -10,11 +11,13 @@ use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
+use DateTimeInterface;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Serializes HTTP locations like header, uri, payload, etc...
@@ -23,6 +26,11 @@ use Psr\Http\Message\RequestInterface;
 abstract class RestSerializer
 {
     use EndpointV2SerializerTrait;
+
+    private static array $excludeContentType = [
+        's3' => true,
+        'glacier' => true
+    ];
 
     /** @var Service */
     private $api;
@@ -114,9 +122,9 @@ abstract class RestSerializer
         }
 
         if (isset($bodyMembers)) {
-            $this->payload($operation->getInput(), $bodyMembers, $opts);
+            $this->payload($input, $bodyMembers, $opts);
         } else if (!isset($opts['body']) && $this->hasPayloadParam($input, $payload)) {
-            $this->payload($operation->getInput(), [], $opts);
+            $this->payload($input, [], $opts);
         }
 
         return $opts;
@@ -130,12 +138,31 @@ abstract class RestSerializer
 
         $m = $input->getMember($name);
 
+        $type = $m->getType();
         if ($m['streaming'] ||
-           ($m['type'] == 'string' || $m['type'] == 'blob')
+           ($type === 'string' || $type === 'blob')
         ) {
+            //This path skips setting the content-type header usually done in JsonBody
+            //S3 and glacier determine content type in Middleware::ContentType()
+            if (!isset(self::$excludeContentType[$this->api->getServiceName()])) {
+                switch ($type) {
+                    case 'string':
+                        $opts['headers']['Content-Type'] = 'text/plain';
+                        break;
+                    case 'blob':
+                        $opts['headers']['Content-Type'] = 'application/octet-stream';
+                        break;
+                }
+            }
+
+            $body = $args[$name];
+            if (!$m['streaming'] && is_string($body)) {
+                $opts['headers']['Content-Length'] = strlen($body);
+            }
+
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $opts['body'] = Psr7\Utils::streamFor($args[$name]);
+            $opts['body'] = Psr7\Utils::streamFor($body);
             return;
         }
 
@@ -144,13 +171,29 @@ abstract class RestSerializer
 
     private function applyHeader($name, Shape $member, $value, array &$opts)
     {
-        if ($member->getType() === 'timestamp') {
-            $timestampFormat = !empty($member['timestampFormat'])
-                ? $member['timestampFormat']
-                : 'rfc822';
-            $value = TimestampShape::format($value, $timestampFormat);
-        } elseif ($member->getType() === 'boolean') {
-            $value = $value ? 'true' : 'false';
+        // Handle lists by recursively applying header logic to each element
+        if ($member instanceof ListShape) {
+            $listMember = $member->getMember();
+            $headerValues = [];
+
+            foreach ($value as $listValue) {
+                $tempOpts = ['headers' => []];
+                $this->applyHeader('temp', $listMember, $listValue, $tempOpts);
+                $convertedValue = $tempOpts['headers']['temp'];
+                $headerValues[] = $convertedValue;
+            }
+
+            $value = $headerValues;
+        } elseif (!is_null($value)) {
+            switch ($member->getType()) {
+                case 'timestamp':
+                    $timestampFormat = $member['timestampFormat'] ?? 'rfc822';
+                    $value = $this->formatTimestamp($value, $timestampFormat);
+                    break;
+                case 'boolean':
+                    $value = $this->formatBoolean($value);
+                    break;
+            }
         }
 
         if ($member['jsonvalue']) {
@@ -183,15 +226,25 @@ abstract class RestSerializer
             $opts['query'] = isset($opts['query']) && is_array($opts['query'])
                 ? $opts['query'] + $value
                 : $value;
-        } elseif ($value !== null) {
-            $type = $member->getType();
-            if ($type === 'boolean') {
-                $value = $value ? 'true' : 'false';
-            } elseif ($type === 'timestamp') {
-                $timestampFormat = !empty($member['timestampFormat'])
-                    ? $member['timestampFormat']
-                    : 'iso8601';
-                $value = TimestampShape::format($value, $timestampFormat);
+        } elseif ($member instanceof ListShape) {
+            $listMember = $member->getMember();
+            $paramName = $member['locationName'] ?: $name;
+
+            foreach ($value as $listValue) {
+                // Recursively call applyQuery for each list element
+                $tempOpts = ['query' => []];
+                $this->applyQuery('temp', $listMember, $listValue, $tempOpts);
+                $opts['query'][$paramName][] = $tempOpts['query']['temp'];
+            }
+        } elseif (!is_null($value)) {
+            switch ($member->getType()) {
+                case 'timestamp':
+                    $timestampFormat = $member['timestampFormat'] ?? 'iso8601';
+                    $value = $this->formatTimestamp($value, $timestampFormat);
+                    break;
+                case 'boolean':
+                    $value = $this->formatBoolean($value);
+                    break;
             }
 
             $opts['query'][$member['locationName'] ?: $name] = $value;
@@ -276,19 +329,25 @@ abstract class RestSerializer
     {
         if ($payload) {
             $potentiallyEmptyTypes = ['blob','string'];
-            if ($this->api->getMetadata('protocol') == 'rest-xml') {
+            if ($this->api->getProtocol() == 'rest-xml') {
                 $potentiallyEmptyTypes[] = 'structure';
             }
+
             $payloadMember = $input->getMember($payload);
-            if (in_array($payloadMember['type'], $potentiallyEmptyTypes)) {
+            //unions may also be empty/unset
+            if (!empty($payloadMember['union']) ||
+                in_array($payloadMember['type'], $potentiallyEmptyTypes)
+            ) {
                 return false;
             }
         }
+
         foreach ($input->getMembers() as $member) {
             if (!isset($member['location'])) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -303,13 +362,23 @@ abstract class RestSerializer
         $varDefinitions = [];
 
         foreach ($command->getInput()->getMembers() as $name => $member) {
-            if ($member['location'] == 'uri') {
-                $varDefinitions[$member['locationName'] ?: $name] =
-                    isset($args[$name])
-                        ? $args[$name]
-                        : null;
+            $value = $args[$name] ?? null;
+
+            if (!is_null($value)) {
+                switch ($member->getType()) {
+                    case 'timestamp':
+                        $timestampFormat = $member['timestampFormat'] ?? 'iso8601';
+                        $value = $this->formatTimestamp($value, $timestampFormat);
+                        break;
+                    case 'boolean':
+                        $value = $this->formatBoolean($value);
+                        break;
+                }
             }
+
+            $varDefinitions[$member['locationName'] ?: $name] = $value;
         }
+
         return $varDefinitions;
     }
 
@@ -326,5 +395,29 @@ abstract class RestSerializer
         if (!empty($path) && $path !== '/' && substr($path, -1) !== '/') {
             $this->endpoint = $this->endpoint->withPath($path . '/');
         }
+    }
+
+    /**
+     * @param DateTimeInterface|string|int $value
+     * @param string $timestampFormat
+     *
+     * @return string
+     */
+    private function formatTimestamp(
+        DateTimeInterface|string|int $value,
+        string $timestampFormat
+    ): string
+    {
+        return TimestampShape::format($value, $timestampFormat);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    private function formatBoolean($value): string
+    {
+        return $value ? 'true' : 'false';
     }
 }
