@@ -14,6 +14,7 @@ Feature: Amazon CloudWatch
     | StateReason | xyz |
     Then I expect the response error code to be "ValidationError"
 
+  @queryCompat
   Scenario: AmbiguousErrorResolution
     When I attempt to call the "GetDashboard" API, using query compatible approach, with:
     |DashboardName| foo |
