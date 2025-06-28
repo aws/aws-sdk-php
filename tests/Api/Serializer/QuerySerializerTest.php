@@ -47,7 +47,7 @@ class QuerySerializerTest extends TestCase
         $cmd = new Command('foo', ['baz' => []]);
         $request = $q($cmd);
         $this->assertSame('POST', $request->getMethod());
-        $this->assertSame('http://foo.com', (string) $request->getUri());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
         $this->assertSame('Action=foo&Version=1&baz=', (string) $request->getBody());
     }
 
@@ -82,6 +82,6 @@ class QuerySerializerTest extends TestCase
         $cmd = new Command('foo', ['baz' => []]);
         $endpoint = new RulesetEndpoint('https://foo.com');
         $request = $q($cmd, $endpoint);
-        $this->assertSame('http://foo.com', (string) $request->getUri());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
     }
 }
