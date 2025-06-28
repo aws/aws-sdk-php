@@ -31,7 +31,14 @@ class RestJsonParser extends AbstractRestParser
         $jsonBody = $this->parseJson($response->getBody(), $response);
 
         if ($jsonBody) {
-            $result += $this->parser->parse($member, $jsonBody);
+            $body = $this->parser->parse($member, $jsonBody);
+
+            // Document types can be of any JSON value, including strings
+            if (is_string($body)) {
+                $result = $body;
+            } else {
+                $result += $body;
+            }
         }
     }
 
