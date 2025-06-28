@@ -22,7 +22,11 @@ class GlacierClientTest extends TestCase
         $client = new GlacierClient([
             'service' => 'glacier',
             'region'  => 'us-west-2',
-            'version' => 'latest'
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => 'foo',
+                'secret'  => 'bar'
+            ]
         ]);
         $command = $client->getCommand('UploadArchive', [
             'vaultName'  => 'foo',

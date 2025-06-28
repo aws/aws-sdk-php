@@ -4,10 +4,10 @@ namespace Aws\Test\Api\Serializer;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
-use Aws\EndpointV2\EndpointDefinitionProvider;
-use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
+use Aws\Exception\InvalidJsonException;
 use Aws\Test\UsesServiceTrait;
+use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
@@ -17,7 +17,7 @@ class RestJsonSerializerTest extends TestCase
 {
     use UsesServiceTrait;
 
-    private function getTestService()
+    private function getTestService(): Service
     {
         return new Service(
             [
@@ -66,6 +66,21 @@ class RestJsonSerializerTest extends TestCase
                             'requestUri' => 'foo/{PathSegment}'
                         ],
                         'input' => ['shape' => 'RequestUriOperationInput'],
+                    ],
+                    'DocumentTypeAsPayload' => [
+                        'name' => 'DocumentTypeAsPayload',
+                        'http' => [
+                            'method' => 'PUT',
+                            'requestUri' => '/DocumentTypeAsPayload',
+                            'responseCode' => 200
+                        ],
+                        'input' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'output' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'idempotent' => true
                     ]
                 ],
                 'shapes' => [
@@ -83,6 +98,15 @@ class RestJsonSerializerTest extends TestCase
                             ]
                         ]
                     ],
+                    'DocumentTypeAsPayloadInputOutput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'documentValue' => [
+                                'shape' => 'DocumentType'
+                            ]
+                        ],
+                        'payload' => 'documentValue'
+                    ],
                     'RequestUriOperationInput' => [
                         'required' => ['PathSegment'],
                         'type' => 'structure',
@@ -94,9 +118,10 @@ class RestJsonSerializerTest extends TestCase
                             'baz' => ['shape' => 'BazShape']
                         ]
                     ],
-                    "DocumentType" => [
-                        "type" => "structure",
-                        "document" => true
+                    'DocumentType' => [
+                        'type' => 'structure',
+                        'members' => [],
+                        'document' => true,
                     ],
                     'BarInput' => [
                         'type' => 'structure',
@@ -164,7 +189,7 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    private function getRequest($commandName, $input)
+    private function getRequest(string $commandName, array $input): RequestInterface
     {
         $service = $this->getTestService();
         $command = new Command($commandName, $input);
@@ -172,7 +197,11 @@ class RestJsonSerializerTest extends TestCase
         return $j($command);
     }
 
-    private function getPathEndpointRequest($commandName, $input, $options = [])
+    private function getPathEndpointRequest(
+        string $commandName,
+        array $input,
+        ?array $options = []
+    ): RequestInterface
     {
         $service = $this->getTestService();
         $command = new Command($commandName, $input);
@@ -181,7 +210,7 @@ class RestJsonSerializerTest extends TestCase
         return $j($command);
     }
 
-    public function testPreparesRequestsWithContentType()
+    public function testPreparesRequestsWithContentType(): void
     {
         $request = $this->getRequest('foo', ['baz' => 'bar']);
         $this->assertSame('POST', $request->getMethod());
@@ -193,7 +222,7 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    public function testPreparesRequestsWithEndpointWithPath()
+    public function testPreparesRequestsWithEndpointWithPath(): void
     {
         $request = $this->getPathEndpointRequest('foo', ['baz' => 'bar']);
         $this->assertSame('POST', $request->getMethod());
@@ -220,16 +249,7 @@ class RestJsonSerializerTest extends TestCase
         );
     }
 
-    public function testPreparesRequestsWithBlobButNoForcedContentType()
-    {
-        $request = $this->getRequest('bar', ['baz' => 'bar']);
-        $this->assertSame('POST', $request->getMethod());
-        $this->assertSame('http://foo.com/', (string) $request->getUri());
-        $this->assertSame('bar', (string) $request->getBody());
-        $this->assertSame('', $request->getHeaderLine('Content-Type'));
-    }
-
-    public function testPreparesRequestsWithJsonValueTraitString()
+    public function testPreparesRequestsWithJsonValueTraitString(): void
     {
         $jsonValueArgs = '{"a":"b"}';
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
@@ -239,7 +259,7 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
-    public function testPreparesRequestsWithJsonValueTraitArray()
+    public function testPreparesRequestsWithJsonValueTraitArray(): void
     {
         $jsonValueArgs = [
             "a" => "b"
@@ -251,7 +271,7 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
-    public function testPreparesRequestsWithJsonValueTraitEmptyString()
+    public function testPreparesRequestsWithJsonValueTraitEmptyString(): void
     {
         $jsonValueArgs = '';
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
@@ -261,7 +281,7 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
-    public function testPreparesRequestsWithJsonValueTraitThrowsException()
+    public function testPreparesRequestsWithJsonValueTraitThrowsException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $obj = new \stdClass();
@@ -269,7 +289,7 @@ class RestJsonSerializerTest extends TestCase
         $this->getRequest('foobar', ['baz' => $obj]);
     }
 
-    public function testPreparesRequestsWithStructPayload()
+    public function testPreparesRequestsWithStructPayload(): void
     {
         $request = $this->getRequest('baz', ['baz' => ['baz' => '1234']]);
         $this->assertSame('POST', $request->getMethod());
@@ -286,7 +306,7 @@ class RestJsonSerializerTest extends TestCase
      * @param string $operation
      *
      */
-    public function testHandlesDoctype($input, $expectedOutput)
+    public function testHandlesDoctype($input, $expectedOutput): void
     {
         $request = $this->getRequest('doctype', $input);
         $this->assertSame('POST', $request->getMethod());
@@ -299,7 +319,8 @@ class RestJsonSerializerTest extends TestCase
     }
 
 
-    public function doctypeTestProvider() {
+    public function doctypeTestProvider(): iterable
+    {
         return [
             [
                 ['DocumentValue' =>
@@ -338,7 +359,11 @@ class RestJsonSerializerTest extends TestCase
      * @param string $operation
      * @param string $input
      */
-    public function testRestJsonContentTypeNoPayload($operation, $input) {
+    public function testRestJsonContentTypeNoPayload(
+        string $operation,
+        array $input
+    ): void
+    {
         $request = $this->getRequest($operation, $input);
         $this->assertSame('http://foo.com/', (string) $request->getUri());
         $this->assertSame("", $request->getBody()->getContents());
@@ -350,7 +375,8 @@ class RestJsonSerializerTest extends TestCase
     }
 
 
-    public function restJsonContentTypeProvider() {
+    public function restJsonContentTypeProvider(): iterable
+    {
         return [
             [
                 "noPayload", ['baz' => 'bar'],
@@ -366,20 +392,24 @@ class RestJsonSerializerTest extends TestCase
      * @param bool $arg
      * @param string $expected
      */
-    public function testSerializesHeaderValueToBoolString($arg, $expected)
+    public function testSerializesHeaderValueToBoolString(
+        bool $arg,
+        string $expected
+    ): void
     {
         $request = $this->getRequest('boolHeader', ['bool' => $arg]);
         $this->assertSame($expected, $request->getHeaderLine('Is-Bool'));
     }
 
-    public function boolProvider() {
+    public function boolProvider(): iterable
+    {
         return [
             [true, 'true'],
             [false, 'false']
         ];
     }
 
-    public function testDoesNotOverrideScheme()
+    public function testDoesNotOverrideScheme(): void
     {
         $serializer = new RestJsonSerializer($this->getTestService(), 'http://foo.com');
         $cmd = new Command('foo', ['baz' => 'bar']);
@@ -387,5 +417,95 @@ class RestJsonSerializerTest extends TestCase
         $request = $serializer($cmd, $endpoint);
         $this->assertSame('http://foo.com/', (string) $request->getUri());
     }
-}
 
+    /**
+     * @param string|array $input
+     * @param string $expectedOutput
+     *
+     * @return void
+     * @dataProvider handlesDocTypeAsPayloadProvider
+     */
+    public function testHandlesDocTypeAsPayload(
+        string|array $input,
+        string $expectedOutput
+    ): void
+    {
+        $request = $this->getRequest('DocumentTypeAsPayload', ['documentValue' => $input]);
+        $this->assertSame('PUT', $request->getMethod());
+        $this->assertSame('http://foo.com/DocumentTypeAsPayload', (string) $request->getUri());
+        $this->assertSame($expectedOutput, $request->getBody()->getContents());
+        $this->assertSame(
+            'application/json',
+            $request->getHeaderLine('Content-Type')
+        );
+    }
+
+    public function handlesDocTypeAsPayloadProvider(): \Generator
+    {
+        yield 'string payload' => ['hello', '"hello"'];
+        yield 'simple string field' => [
+            ['message' => 'Hello, world!'],
+            '{"message":"Hello, world!"}',
+        ];
+        yield 'numeric and boolean types' => [
+            ['success' => true, 'count' => 3, 'ratio' => 0.75],
+            '{"success":true,"count":3,"ratio":0.75}',
+        ];
+        yield 'null value' => [
+            ['result' => null],
+            '{"result":null}',
+        ];
+        yield 'empty object' => [
+            [],
+            '{}',
+        ];
+        yield 'empty array' => [
+            ['items' => []],
+            '{"items":[]}',
+        ];
+        yield 'nested object' => [
+            ['user' => ['id' => 1, 'name' => 'Jane']],
+            '{"user":{"id":1,"name":"Jane"}}',
+        ];
+        yield 'array of objects' => [
+            ['records' => [['id' => 1], ['id' => 2]]],
+            '{"records":[{"id":1},{"id":2}]}',
+        ];
+        yield 'deeply nested structure' => [
+            ['a' => ['b' => ['c' => ['d' => 123]]]],
+            '{"a":{"b":{"c":{"d":123}}}}',
+        ];
+        yield 'mixed types in array' => [
+            ['data' => ['string', 123, true, null]],
+            '{"data":["string",123,true,null]}',
+        ];
+    }
+
+    /**
+     * @param $input
+     *
+     * @return void
+     * @dataProvider rejectsInvalidJsonAsPayloadProvider
+     */
+    public function testRejectsInvalidJsonAsPayload(array|string $input): void
+    {
+        $this->expectException(InvalidJsonException::class);
+        $this->expectExceptionMessage('Unable to encode JSON document');
+        $this->getRequest('DocumentTypeAsPayload', ['documentValue' => $input]);
+    }
+
+    public function rejectsInvalidJsonAsPayloadProvider(): iterable
+    {
+        return [
+            'malformed byte sequence' => ["\xB1\x31"],
+            'invalid continuation byte' => ["\xC3\x28"],
+            'overlong encoding' => ["\xE2\x28\xA1"],
+            'invalid UTF-8 in nested array' => [
+                'users' => [
+                    ['name' => "Valid Name"],
+                    ['name' => "\xB1\x31"]  // invalid UTF-8
+                ]
+            ]
+        ];
+    }
+}

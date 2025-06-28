@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Api\Serializer;
 
+use Aws\Api\ListShape;
 use Aws\Api\MapShape;
 use Aws\Api\Service;
 use Aws\Api\Operation;
@@ -10,11 +11,13 @@ use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
 use Aws\EndpointV2\EndpointV2SerializerTrait;
 use Aws\EndpointV2\Ruleset\RulesetEndpoint;
+use DateTimeInterface;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Serializes HTTP locations like header, uri, payload, etc...
@@ -24,8 +27,13 @@ abstract class RestSerializer
 {
     use EndpointV2SerializerTrait;
 
+    private static array $excludeContentType = [
+        's3' => true,
+        'glacier' => true
+    ];
+
     /** @var Service */
-    private $api;
+    private Service $api;
 
     /** @var Uri */
     private $endpoint;
@@ -45,8 +53,7 @@ abstract class RestSerializer
 
     /**
      * @param CommandInterface $command Command to serialize into a request.
-     * @param $clientArgs Client arguments used for dynamic endpoint resolution.
-     *
+     * @param null $endpoint
      * @return RequestInterface
      */
     public function __invoke(
@@ -57,7 +64,7 @@ abstract class RestSerializer
         $operation = $this->api->getOperation($command->getName());
         $commandArgs = $command->toArray();
         $opts = $this->serialize($operation, $commandArgs);
-        $headers = isset($opts['headers']) ? $opts['headers'] : [];
+        $headers = $opts['headers'] ?? [];
 
         if ($endpoint instanceof RulesetEndpoint) {
             $this->isUseEndpointV2 = true;
@@ -70,7 +77,7 @@ abstract class RestSerializer
             $operation['http']['method'],
             $uri,
             $headers,
-            isset($opts['body']) ? $opts['body'] : null
+            $opts['body'] ?? null
         );
     }
 
@@ -103,20 +110,20 @@ abstract class RestSerializer
                 $location = $member['location'];
                 if (!$payload && !$location) {
                     $bodyMembers[$name] = $value;
-                } elseif ($location == 'header') {
+                } elseif ($location === 'header') {
                     $this->applyHeader($name, $member, $value, $opts);
-                } elseif ($location == 'querystring') {
+                } elseif ($location === 'querystring') {
                     $this->applyQuery($name, $member, $value, $opts);
-                } elseif ($location == 'headers') {
+                } elseif ($location === 'headers') {
                     $this->applyHeaderMap($name, $member, $value, $opts);
                 }
             }
         }
 
         if (isset($bodyMembers)) {
-            $this->payload($operation->getInput(), $bodyMembers, $opts);
+            $this->payload($input, $bodyMembers, $opts);
         } else if (!isset($opts['body']) && $this->hasPayloadParam($input, $payload)) {
-            $this->payload($operation->getInput(), [], $opts);
+            $this->payload($input, [], $opts);
         }
 
         return $opts;
@@ -130,13 +137,42 @@ abstract class RestSerializer
 
         $m = $input->getMember($name);
 
+        $type = $m->getType();
         if ($m['streaming'] ||
-           ($m['type'] == 'string' || $m['type'] == 'blob')
+           ($type === 'string' || $type === 'blob')
         ) {
+            // This path skips setting the content-type header usually done in
+            // RestJsonSerializer and RestXmlSerializer.certain S3 and glacier
+            // operations determine content type in Middleware::ContentType()
+            if (!isset(self::$excludeContentType[$this->api->getServiceName()])) {
+                switch ($type) {
+                    case 'string':
+                        $opts['headers']['Content-Type'] = 'text/plain';
+                        break;
+                    case 'blob':
+                        $opts['headers']['Content-Type'] = 'application/octet-stream';
+                        break;
+                }
+            }
+
+            $body = $args[$name];
+            if (!$m['streaming'] && is_string($body)) {
+                $opts['headers']['Content-Length'] = strlen($body);
+            }
+
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
-            $opts['body'] = Psr7\Utils::streamFor($args[$name]);
+            $opts['body'] = Psr7\Utils::streamFor($body);
             return;
+        }
+
+        // Payload members have special rules for locationName handling
+        // they should use their member-level locationName
+        // if it differs from the member name.
+        $type = $m->getType();
+        if ($type === 'structure') {
+            // Mark this as a payload member with its member name
+            $m['__payloadMemberName'] = $name;
         }
 
         $this->payload($m, $args[$name], $opts);
@@ -144,13 +180,29 @@ abstract class RestSerializer
 
     private function applyHeader($name, Shape $member, $value, array &$opts)
     {
-        if ($member->getType() === 'timestamp') {
-            $timestampFormat = !empty($member['timestampFormat'])
-                ? $member['timestampFormat']
-                : 'rfc822';
-            $value = TimestampShape::format($value, $timestampFormat);
-        } elseif ($member->getType() === 'boolean') {
-            $value = $value ? 'true' : 'false';
+        // Handle lists by recursively applying header logic to each element
+        if ($member instanceof ListShape) {
+            $listMember = $member->getMember();
+            $headerValues = [];
+
+            foreach ($value as $listValue) {
+                $tempOpts = ['headers' => []];
+                $this->applyHeader('temp', $listMember, $listValue, $tempOpts);
+                $convertedValue = $tempOpts['headers']['temp'];
+                $headerValues[] = $convertedValue;
+            }
+
+            $value = $headerValues;
+        } elseif (!is_null($value)) {
+            switch ($member->getType()) {
+                case 'timestamp':
+                    $timestampFormat = $member['timestampFormat'] ?? 'rfc822';
+                    $value = $this->formatTimestamp($value, $timestampFormat);
+                    break;
+                case 'boolean':
+                    $value = $this->formatBoolean($value);
+                    break;
+            }
         }
 
         if ($member['jsonvalue']) {
@@ -183,15 +235,25 @@ abstract class RestSerializer
             $opts['query'] = isset($opts['query']) && is_array($opts['query'])
                 ? $opts['query'] + $value
                 : $value;
-        } elseif ($value !== null) {
-            $type = $member->getType();
-            if ($type === 'boolean') {
-                $value = $value ? 'true' : 'false';
-            } elseif ($type === 'timestamp') {
-                $timestampFormat = !empty($member['timestampFormat'])
-                    ? $member['timestampFormat']
-                    : 'iso8601';
-                $value = TimestampShape::format($value, $timestampFormat);
+        } elseif ($member instanceof ListShape) {
+            $listMember = $member->getMember();
+            $paramName = $member['locationName'] ?: $name;
+
+            foreach ($value as $listValue) {
+                // Recursively call applyQuery for each list element
+                $tempOpts = ['query' => []];
+                $this->applyQuery('temp', $listMember, $listValue, $tempOpts);
+                $opts['query'][$paramName][] = $tempOpts['query']['temp'];
+            }
+        } elseif (!is_null($value)) {
+            switch ($member->getType()) {
+                case 'timestamp':
+                    $timestampFormat = $member['timestampFormat'] ?? 'iso8601';
+                    $value = $this->formatTimestamp($value, $timestampFormat);
+                    break;
+                case 'boolean':
+                    $value = $this->formatBoolean($value);
+                    break;
             }
 
             $opts['query'][$member['locationName'] ?: $name] = $value;
@@ -206,8 +268,8 @@ abstract class RestSerializer
 
         $relative = preg_replace_callback(
             '/\{([^\}]+)\}/',
-            function (array $matches) use ($varDefinitions) {
-                $isGreedy = substr($matches[1], -1, 1) == '+';
+            static function (array $matches) use ($varDefinitions) {
+                $isGreedy = str_ends_with($matches[1], '+');
                 $k = $isGreedy ? substr($matches[1], 0, -1) : $matches[1];
                 if (!isset($varDefinitions[$k])) {
                     return '';
@@ -276,19 +338,25 @@ abstract class RestSerializer
     {
         if ($payload) {
             $potentiallyEmptyTypes = ['blob','string'];
-            if ($this->api->getMetadata('protocol') == 'rest-xml') {
+            if ($this->api->getProtocol() === 'rest-xml') {
                 $potentiallyEmptyTypes[] = 'structure';
             }
+
             $payloadMember = $input->getMember($payload);
-            if (in_array($payloadMember['type'], $potentiallyEmptyTypes)) {
+            //unions may also be empty/unset
+            if (!empty($payloadMember['union'])
+                || in_array($payloadMember['type'], $potentiallyEmptyTypes)
+            ) {
                 return false;
             }
         }
+
         foreach ($input->getMembers() as $member) {
             if (!isset($member['location'])) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -303,13 +371,24 @@ abstract class RestSerializer
         $varDefinitions = [];
 
         foreach ($command->getInput()->getMembers() as $name => $member) {
-            if ($member['location'] == 'uri') {
-                $varDefinitions[$member['locationName'] ?: $name] =
-                    isset($args[$name])
-                        ? $args[$name]
-                        : null;
+            if ($member['location'] === 'uri') {
+                $value = $args[$name] ?? null;
+                if (!is_null($value)) {
+                    switch ($member->getType()) {
+                        case 'timestamp':
+                            $timestampFormat = $member['timestampFormat'] ?? 'iso8601';
+                            $value = $this->formatTimestamp($value, $timestampFormat);
+                            break;
+                        case 'boolean':
+                            $value = $this->formatBoolean($value);
+                            break;
+                    }
+                }
+
+                $varDefinitions[$member['locationName'] ?: $name] = $value;
             }
         }
+
         return $varDefinitions;
     }
 
@@ -326,5 +405,29 @@ abstract class RestSerializer
         if (!empty($path) && $path !== '/' && substr($path, -1) !== '/') {
             $this->endpoint = $this->endpoint->withPath($path . '/');
         }
+    }
+
+    /**
+     * @param DateTimeInterface|string|int $value
+     * @param string $timestampFormat
+     *
+     * @return string
+     */
+    private function formatTimestamp(
+        DateTimeInterface|string|int $value,
+        string $timestampFormat
+    ): string
+    {
+        return TimestampShape::format($value, $timestampFormat);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    private function formatBoolean($value): string
+    {
+        return $value ? 'true' : 'false';
     }
 }
