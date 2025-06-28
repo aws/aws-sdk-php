@@ -47,7 +47,9 @@ class ComplianceTest extends TestCase
                     $description = new Service($serviceData, function () { return []; });
                     if (!empty($case['error'])) {
                         if (empty($case['errorCode'])) {
-                            throw new \InvalidArgumentException('Protocol test error cases must have associated "errorType" value.');
+                            throw new \InvalidArgumentException(
+                                'Protocol test error cases must have associated "errorType" value.'
+                            );
                         }
                         $result = $case['error'];
                     } elseif (!empty($case['result'])) {
@@ -55,6 +57,8 @@ class ComplianceTest extends TestCase
                     } else {
                         $result = [];
                     }
+
+
                     $cases[] = [
                         $file . ': ' . $suite['description'],
                         $description,
@@ -100,8 +104,8 @@ class ComplianceTest extends TestCase
         // Create a response based on the serialized property of the test.
         $response = new Psr7\Response(
             $res['status_code'],
-            $res['headers'],
-            Psr7\Utils::streamFor($res['body'])
+            $res['headers'] ?? [],
+            Psr7\Utils::streamFor($res['body'] ?? null)
         );
 
         if (!is_null($errorCode)) {
