@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.348.2 - 2025-06-30
 
 * `Aws\Api` - Adds support for extracting error code from nested `error` property in error shapes.
 * `Aws\Bedrock` - Add support for API Keys, Re-Ranker, implicit filter for RAG / KB evaluation for Bedrock APIs.
