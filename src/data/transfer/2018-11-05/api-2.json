@@ -1444,7 +1444,8 @@
         "Tags":{"shape":"Tags"},
         "WorkflowDetails":{"shape":"WorkflowDetails"},
         "StructuredLogDestinations":{"shape":"StructuredLogDestinations"},
-        "S3StorageOptions":{"shape":"S3StorageOptions"}
+        "S3StorageOptions":{"shape":"S3StorageOptions"},
+        "IpAddressType":{"shape":"IpAddressType"}
       }
     },
     "CreateServerResponse":{
@@ -2066,7 +2067,8 @@
         "WorkflowDetails":{"shape":"WorkflowDetails"},
         "StructuredLogDestinations":{"shape":"StructuredLogDestinations"},
         "S3StorageOptions":{"shape":"S3StorageOptions"},
-        "As2ServiceManagedEgressIpAddresses":{"shape":"ServiceManagedEgressIpAddresses"}
+        "As2ServiceManagedEgressIpAddresses":{"shape":"ServiceManagedEgressIpAddresses"},
+        "IpAddressType":{"shape":"IpAddressType"}
       }
     },
     "DescribedUser":{
@@ -2510,6 +2512,13 @@
         "Message":{"shape":"Message"}
       },
       "exception":true
+    },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "DUALSTACK"
+      ]
     },
     "ListAccessesRequest":{
       "type":"structure",
@@ -3434,7 +3443,7 @@
       "type":"string",
       "max":32,
       "min":0,
-      "pattern":"\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"
+      "pattern":"[0-9a-fA-F\\.\\:]+"
     },
     "SshPublicKey":{
       "type":"structure",
@@ -3880,7 +3889,8 @@
         "ServerId":{"shape":"ServerId"},
         "WorkflowDetails":{"shape":"WorkflowDetails"},
         "StructuredLogDestinations":{"shape":"StructuredLogDestinations"},
-        "S3StorageOptions":{"shape":"S3StorageOptions"}
+        "S3StorageOptions":{"shape":"S3StorageOptions"},
+        "IpAddressType":{"shape":"IpAddressType"}
       }
     },
     "UpdateServerResponse":{

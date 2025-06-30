@@ -139,6 +139,7 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CitationsConfig$enabled": "<p>Specifies whether document citations should be included in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.</p>",
         "GuardrailContentFilter$detected": "<p>Indicates whether content that breaches the guardrail configuration is detected.</p>",
         "GuardrailContextualGroundingFilter$detected": "<p>Indicates whether content that fails the contextual grounding evaluation (grounding or relevance score less than the corresponding threshold) was detected.</p>",
         "GuardrailCustomWord$detected": "<p>Indicates whether custom word content that breaches the guardrail configuration is detected.</p>",
@@ -160,6 +161,79 @@
       "base": null,
       "refs": {
         "CachePointBlock$type": "<p>Specifies the type of cache point within the CachePointBlock.</p>"
+      }
+    },
+    "Citation": {
+      "base": "<p>Contains information about a citation that references a specific source document. Citations provide traceability between the model's generated response and the source documents that informed that response.</p>",
+      "refs": {
+        "Citations$member": null
+      }
+    },
+    "CitationGeneratedContent": {
+      "base": "<p>Contains the generated text content that corresponds to or is supported by a citation from a source document.</p>",
+      "refs": {
+        "CitationGeneratedContentList$member": null
+      }
+    },
+    "CitationGeneratedContentList": {
+      "base": null,
+      "refs": {
+        "CitationsContentBlock$content": "<p>The generated content that is supported by the associated citations.</p>"
+      }
+    },
+    "CitationLocation": {
+      "base": "<p>Specifies the precise location within a source document where cited content can be found. This can include character-level positions, page numbers, or document chunks depending on the document type and indexing method.</p>",
+      "refs": {
+        "Citation$location": "<p>The precise location within the source document where the cited content can be found, including character positions, page numbers, or chunk identifiers.</p>",
+        "CitationsDelta$location": "<p>Specifies the precise location within a source document where cited content can be found. This can include character-level positions, page numbers, or document chunks depending on the document type and indexing method.</p>"
+      }
+    },
+    "CitationSourceContent": {
+      "base": "<p>Contains the actual text content from a source document that is being cited or referenced in the model's response.</p>",
+      "refs": {
+        "CitationSourceContentList$member": null
+      }
+    },
+    "CitationSourceContentDelta": {
+      "base": "<p>Contains incremental updates to the source content text during streaming responses, allowing clients to build up the cited content progressively.</p>",
+      "refs": {
+        "CitationSourceContentListDelta$member": null
+      }
+    },
+    "CitationSourceContentList": {
+      "base": null,
+      "refs": {
+        "Citation$sourceContent": "<p>The specific content from the source document that was referenced or cited in the generated response.</p>"
+      }
+    },
+    "CitationSourceContentListDelta": {
+      "base": null,
+      "refs": {
+        "CitationsDelta$sourceContent": "<p>The specific content from the source document that was referenced or cited in the generated response.</p>"
+      }
+    },
+    "Citations": {
+      "base": null,
+      "refs": {
+        "CitationsContentBlock$citations": "<p>An array of citations that reference the source documents used to generate the associated content.</p>"
+      }
+    },
+    "CitationsConfig": {
+      "base": "<p>Configuration settings for enabling and controlling document citations in Converse API responses. When enabled, the model can include citation information that links generated content back to specific source documents.</p>",
+      "refs": {
+        "DocumentBlock$citations": "<p>Configuration settings that control how citations should be generated for this specific document.</p>"
+      }
+    },
+    "CitationsContentBlock": {
+      "base": "<p>A content block that contains both generated text and associated citation information. This block type is returned when document citations are enabled, providing traceability between the generated content and the source documents that informed the response.</p>",
+      "refs": {
+        "ContentBlock$citationsContent": "<p>A content block that contains both generated text and associated citation information, providing traceability between the response and source documents.</p>"
+      }
+    },
+    "CitationsDelta": {
+      "base": "<p>Contains incremental updates to citation information during streaming responses. This allows clients to build up citation data progressively as the response is generated.</p>",
+      "refs": {
+        "ContentBlockDelta$citation": "<p>Incremental citation information that is streamed as part of the response generation process.</p>"
       }
     },
     "ConflictException": {
@@ -334,10 +408,94 @@
         "DocumentBlock$name": "<p>A name for the document. The name can only contain the following characters:</p> <ul> <li> <p>Alphanumeric characters</p> </li> <li> <p>Whitespace characters (no more than one in a row)</p> </li> <li> <p>Hyphens</p> </li> <li> <p>Parentheses</p> </li> <li> <p>Square brackets</p> </li> </ul> <note> <p>This field is vulnerable to prompt injections, because the model might inadvertently interpret it as instructions. Therefore, we recommend that you specify a neutral name.</p> </note>"
       }
     },
+    "DocumentCharLocation": {
+      "base": "<p>Specifies a character-level location within a document, providing precise positioning information for cited content using start and end character indices.</p>",
+      "refs": {
+        "CitationLocation$documentChar": "<p>The character-level location within the document where the cited content is found.</p>"
+      }
+    },
+    "DocumentCharLocationDocumentIndexInteger": {
+      "base": null,
+      "refs": {
+        "DocumentCharLocation$documentIndex": "<p>The index of the document within the array of documents provided in the request.</p>"
+      }
+    },
+    "DocumentCharLocationEndInteger": {
+      "base": null,
+      "refs": {
+        "DocumentCharLocation$end": "<p>The ending character position of the cited content within the document.</p>"
+      }
+    },
+    "DocumentCharLocationStartInteger": {
+      "base": null,
+      "refs": {
+        "DocumentCharLocation$start": "<p>The starting character position of the cited content within the document.</p>"
+      }
+    },
+    "DocumentChunkLocation": {
+      "base": "<p>Specifies a chunk-level location within a document, providing positioning information for cited content using logical document segments or chunks.</p>",
+      "refs": {
+        "CitationLocation$documentChunk": "<p>The chunk-level location within the document where the cited content is found, typically used for documents that have been segmented into logical chunks.</p>"
+      }
+    },
+    "DocumentChunkLocationDocumentIndexInteger": {
+      "base": null,
+      "refs": {
+        "DocumentChunkLocation$documentIndex": "<p>The index of the document within the array of documents provided in the request.</p>"
+      }
+    },
+    "DocumentChunkLocationEndInteger": {
+      "base": null,
+      "refs": {
+        "DocumentChunkLocation$end": "<p>The ending chunk identifier or index of the cited content within the document.</p>"
+      }
+    },
+    "DocumentChunkLocationStartInteger": {
+      "base": null,
+      "refs": {
+        "DocumentChunkLocation$start": "<p>The starting chunk identifier or index of the cited content within the document.</p>"
+      }
+    },
+    "DocumentContentBlock": {
+      "base": "<p>Contains the actual content of a document that can be processed by the model and potentially cited in the response.</p>",
+      "refs": {
+        "DocumentContentBlocks$member": null
+      }
+    },
+    "DocumentContentBlocks": {
+      "base": null,
+      "refs": {
+        "DocumentSource$content": "<p>The structured content of the document source, which may include various content blocks such as text, images, or other document elements.</p>"
+      }
+    },
     "DocumentFormat": {
       "base": null,
       "refs": {
         "DocumentBlock$format": "<p>The format of a document, or its extension.</p>"
+      }
+    },
+    "DocumentPageLocation": {
+      "base": "<p>Specifies a page-level location within a document, providing positioning information for cited content using page numbers.</p>",
+      "refs": {
+        "CitationLocation$documentPage": "<p>The page-level location within the document where the cited content is found.</p>"
+      }
+    },
+    "DocumentPageLocationDocumentIndexInteger": {
+      "base": null,
+      "refs": {
+        "DocumentPageLocation$documentIndex": "<p>The index of the document within the array of documents provided in the request.</p>"
+      }
+    },
+    "DocumentPageLocationEndInteger": {
+      "base": null,
+      "refs": {
+        "DocumentPageLocation$end": "<p>The ending page number of the cited content within the document.</p>"
+      }
+    },
+    "DocumentPageLocationStartInteger": {
+      "base": null,
+      "refs": {
+        "DocumentPageLocation$start": "<p>The starting page number of the cited content within the document.</p>"
       }
     },
     "DocumentSource": {
@@ -535,7 +693,7 @@
     "GuardrailConverseContentBlock": {
       "base": "<p/> <p>A content block for selective guarding with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> API operations. </p>",
       "refs": {
-        "ContentBlock$guardContent": "<p>Contains the content to assess with the guardrail. If you don't specify <code>guardContent</code> in a call to the Converse API, the guardrail (if passed in the Converse API) assesses the entire message.</p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. <pre><code> &lt;/p&gt; </code></pre>",
+        "ContentBlock$guardContent": "<p>Contains the content to assess with the guardrail. If you don't specify <code>guardContent</code> in a call to the Converse API, the guardrail (if passed in the Converse API) assesses the entire message.</p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. </p>",
         "SystemContentBlock$guardContent": "<p>A content block to assess with the guardrail. Use with the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> or <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> API operations. </p> <p>For more information, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>.</p>"
       }
     },
@@ -948,9 +1106,9 @@
     "InvokeModelIdentifier": {
       "base": null,
       "refs": {
-        "InvokeModelRequest$modelId": "<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>",
+        "InvokeModelRequest$modelId": "<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, specify the ARN of the custom model deployment (for on-demand inference) or the ARN of your provisioned model (for Provisioned Throughput). For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>",
         "InvokeModelWithBidirectionalStreamRequest$modelId": "<p>The model ID or ARN of the model ID to use. Currently, only <code>amazon.nova-sonic-v1:0</code> is supported.</p>",
-        "InvokeModelWithResponseStreamRequest$modelId": "<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>"
+        "InvokeModelWithResponseStreamRequest$modelId": "<p>The unique identifier of the model to invoke to run inference.</p> <p>The <code>modelId</code> to provide depends on the type of model or throughput that you use:</p> <ul> <li> <p>If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns\">Amazon Bedrock base model IDs (on-demand throughput)</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html\">Supported Regions and models for cross-region inference</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html\">Run inference using a Provisioned Throughput</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use a custom model, specify the ARN of the custom model deployment (for on-demand inference) or the ARN of your provisioned model (for Provisioned Throughput). For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Use a custom model in Amazon Bedrock</a> in the Amazon Bedrock User Guide.</p> </li> <li> <p>If you use an <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">imported model</a>, specify the ARN of the imported model. You can get the model ARN from a successful call to <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html\">CreateModelImportJob</a> or from the Imported models page in the Amazon Bedrock console.</p> </li> </ul>"
       }
     },
     "InvokeModelRequest": {
@@ -1321,8 +1479,16 @@
       "base": null,
       "refs": {
         "ApplyGuardrailResponse$actionReason": "<p>The reason for the action taken when harmful content is detected.</p>",
+        "Citation$title": "<p>The title or identifier of the source document being cited.</p>",
+        "CitationGeneratedContent$text": "<p>The text content that was generated by the model and is supported by the associated citation.</p>",
+        "CitationSourceContent$text": "<p>The text content from the source document that is being cited.</p>",
+        "CitationSourceContentDelta$text": "<p>An incremental update to the text content from the source document that is being cited.</p>",
+        "CitationsDelta$title": "<p>The title or identifier of the source document being cited.</p>",
         "ContentBlock$text": "<p>Text to include in the message.</p>",
         "ContentBlockDelta$text": "<p>The content text.</p>",
+        "DocumentBlock$context": "<p>Contextual information about how the document should be processed or interpreted by the model when generating citations.</p>",
+        "DocumentContentBlock$text": "<p>The text content of the document.</p>",
+        "DocumentSource$text": "<p>The text content of the document source.</p>",
         "GuardrailAssessmentListMap$key": null,
         "GuardrailAssessmentMap$key": null,
         "GuardrailConverseTextBlock$text": "<p>The text that you want to guard.</p>",

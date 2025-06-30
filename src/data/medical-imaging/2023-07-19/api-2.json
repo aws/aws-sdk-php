@@ -458,6 +458,11 @@
           "shape":"Boolean",
           "location":"querystring",
           "locationName":"force"
+        },
+        "promoteToPrimary":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"promoteToPrimary"
         }
       },
       "payload":"copyImageSetInformation"
@@ -987,7 +992,8 @@
         "deletedAt":{"shape":"Date"},
         "message":{"shape":"Message"},
         "imageSetArn":{"shape":"Arn"},
-        "overrides":{"shape":"Overrides"}
+        "overrides":{"shape":"Overrides"},
+        "isPrimary":{"shape":"Boolean"}
       }
     },
     "ImageFrameId":{
@@ -1029,7 +1035,8 @@
         "updatedAt":{"shape":"Date"},
         "deletedAt":{"shape":"Date"},
         "message":{"shape":"Message"},
-        "overrides":{"shape":"Overrides"}
+        "overrides":{"shape":"Overrides"},
+        "isPrimary":{"shape":"Boolean"}
       }
     },
     "ImageSetPropertiesList":{
@@ -1071,7 +1078,8 @@
         "version":{"shape":"Integer"},
         "createdAt":{"shape":"Date"},
         "updatedAt":{"shape":"Date"},
-        "DICOMTags":{"shape":"DICOMTags"}
+        "DICOMTags":{"shape":"DICOMTags"},
+        "isPrimary":{"shape":"Boolean"}
       }
     },
     "Integer":{
@@ -1327,7 +1335,8 @@
         "DICOMSeriesInstanceUID":{"shape":"DICOMSeriesInstanceUID"},
         "createdAt":{"shape":"Date"},
         "updatedAt":{"shape":"Date"},
-        "DICOMStudyDateAndTime":{"shape":"DICOMStudyDateAndTime"}
+        "DICOMStudyDateAndTime":{"shape":"DICOMStudyDateAndTime"},
+        "isPrimary":{"shape":"Boolean"}
       },
       "union":true
     },
@@ -1514,8 +1523,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1555,8 +1563,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateImageSetMetadataRequest":{
       "type":"structure",

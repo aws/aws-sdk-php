@@ -103,7 +103,8 @@
       "base": null,
       "refs": {
         "ExternalSourcesGenerationConfiguration$additionalModelRequestFields": "<p>Additional model parameters and their corresponding values not included in the text inference configuration for an external source. Takes in custom model parameters specific to the language model being used.</p>",
-        "GenerationConfiguration$additionalModelRequestFields": "<p>Additional model parameters and corresponding values not included in the <code>textInferenceConfig</code> structure for a knowledge base. This allows you to provide custom model parameters specific to the language model being used.</p>"
+        "GenerationConfiguration$additionalModelRequestFields": "<p>Additional model parameters and corresponding values not included in the <code>textInferenceConfig</code> structure for a knowledge base. This allows you to provide custom model parameters specific to the language model being used.</p>",
+        "VectorSearchBedrockRerankingModelConfiguration$additionalModelRequestFields": "<p>A list of additional fields to include in the model request during reranking. These fields provide extra context or configuration options specific to the selected foundation model.</p>"
       }
     },
     "AdditionalModelRequestFieldsKey": {
@@ -149,6 +150,12 @@
         "MarketplaceModelEndpointSummary$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint.</p>",
         "RegisterMarketplaceModelEndpointRequest$endpointIdentifier": "<p>The ARN of the Amazon SageMaker endpoint you want to register with Amazon Bedrock Marketplace.</p>",
         "UpdateMarketplaceModelEndpointRequest$endpointArn": "<p>The Amazon Resource Name (ARN) of the endpoint you want to update.</p>"
+      }
+    },
+    "AttributeType": {
+      "base": null,
+      "refs": {
+        "MetadataAttributeSchema$type": "<p>The data type of the metadata attribute. The type determines how the attribute can be used in filter expressions and reranking.</p>"
       }
     },
     "AuthorizationStatus": {
@@ -237,6 +244,7 @@
       "base": null,
       "refs": {
         "ExternalSourcesRetrieveAndGenerateConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate responses. </p>",
+        "ImplicitFilterConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the foundation model used for implicit filtering. This model processes the query to extract relevant filtering criteria.</p>",
         "KnowledgeBaseRetrieveAndGenerateConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the foundation model or <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html\">inference profile</a> used to generate responses.</p>"
       }
     },
@@ -252,6 +260,12 @@
         "GetFoundationModelAvailabilityResponse$modelId": "<p>The model Id of the foundation model.</p>",
         "ListFoundationModelAgreementOffersRequest$modelId": "<p>Model Id of the foundation model.</p>",
         "ListFoundationModelAgreementOffersResponse$modelId": "<p>Model Id of the foundation model.</p>"
+      }
+    },
+    "BedrockRerankingModelArn": {
+      "base": null,
+      "refs": {
+        "VectorSearchBedrockRerankingModelConfiguration$modelArn": "<p>The Amazon Resource Name (ARN) of the foundation model to use for reranking. This model processes the query and search results to determine a more relevant ordering.</p>"
       }
     },
     "Boolean": {
@@ -1051,6 +1065,25 @@
       "base": "<p>The configuration of the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>",
       "refs": {
         "RetrieveAndGenerateConfiguration$externalSourcesConfiguration": "<p>The configuration for the external source wrapper object in the <code>retrieveAndGenerate</code> function.</p>"
+      }
+    },
+    "FieldForReranking": {
+      "base": "<p>Specifies a field to be used during the reranking process in a Knowledge Base vector search. This structure identifies metadata fields that should be considered when reordering search results to improve relevance.</p>",
+      "refs": {
+        "FieldsForReranking$member": null
+      }
+    },
+    "FieldForRerankingFieldNameString": {
+      "base": null,
+      "refs": {
+        "FieldForReranking$fieldName": "<p>The name of the metadata field to be used during the reranking process.</p>"
+      }
+    },
+    "FieldsForReranking": {
+      "base": null,
+      "refs": {
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToInclude": "<p>A list of metadata field names to explicitly include in the reranking process. Only these fields will be considered when reordering search results. This parameter cannot be used together with fieldsToExclude.</p>",
+        "RerankingMetadataSelectiveModeConfiguration$fieldsToExclude": "<p>A list of metadata field names to explicitly exclude from the reranking process. All metadata fields except these will be considered when reordering search results. This parameter cannot be used together with fieldsToInclude.</p>"
       }
     },
     "FilterAttribute": {
@@ -2003,6 +2036,12 @@
         "ByteContentDoc$identifier": "<p>The file name of the document contained in the wrapper object.</p>"
       }
     },
+    "ImplicitFilterConfiguration": {
+      "base": "<p>Configuration for implicit filtering in Knowledge Base vector searches. Implicit filtering allows you to automatically filter search results based on metadata attributes without requiring explicit filter expressions in each query.</p>",
+      "refs": {
+        "KnowledgeBaseVectorSearchConfiguration$implicitFilterConfiguration": "<p>Configuration for implicit filtering in Knowledge Base vector searches. This allows the system to automatically apply filters based on the query context without requiring explicit filter expressions.</p>"
+      }
+    },
     "ImportedModelArn": {
       "base": null,
       "refs": {
@@ -2510,6 +2549,36 @@
       "refs": {
         "GetModelInvocationJobResponse$message": "<p>If the batch inference job failed, this field contains a message describing why the job failed.</p>",
         "ModelInvocationJobSummary$message": "<p>If the batch inference job failed, this field contains a message describing why the job failed.</p>"
+      }
+    },
+    "MetadataAttributeSchema": {
+      "base": "<p>Defines the schema for a metadata attribute used in Knowledge Base vector searches. Metadata attributes provide additional context for documents and can be used for filtering and reranking search results.</p>",
+      "refs": {
+        "MetadataAttributeSchemaList$member": null
+      }
+    },
+    "MetadataAttributeSchemaDescriptionString": {
+      "base": null,
+      "refs": {
+        "MetadataAttributeSchema$description": "<p>An optional description of the metadata attribute that provides additional context about its purpose and usage.</p>"
+      }
+    },
+    "MetadataAttributeSchemaKeyString": {
+      "base": null,
+      "refs": {
+        "MetadataAttributeSchema$key": "<p>The unique identifier for the metadata attribute. This key is used to reference the attribute in filter expressions and reranking configurations.</p>"
+      }
+    },
+    "MetadataAttributeSchemaList": {
+      "base": null,
+      "refs": {
+        "ImplicitFilterConfiguration$metadataAttributes": "<p>A list of metadata attribute schemas that define the structure and properties of metadata fields used for implicit filtering. Each attribute defines a key, type, and optional description.</p>"
+      }
+    },
+    "MetadataConfigurationForReranking": {
+      "base": "<p>Configuration for how metadata should be used during the reranking process in Knowledge Base vector searches. This determines which metadata fields are included or excluded when reordering search results.</p>",
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$metadataConfiguration": "<p>Configuration for how document metadata should be used during the reranking process. This determines which metadata fields are included when reordering search results.</p>"
       }
     },
     "MetricFloat": {
@@ -3226,6 +3295,18 @@
         "RequestMetadataMap$value": null
       }
     },
+    "RerankingMetadataSelectionMode": {
+      "base": null,
+      "refs": {
+        "MetadataConfigurationForReranking$selectionMode": "<p>The mode for selecting which metadata fields to include in the reranking process. Valid values are ALL (use all available metadata fields) or SELECTIVE (use only specified fields).</p>"
+      }
+    },
+    "RerankingMetadataSelectiveModeConfiguration": {
+      "base": "<p>Configuration for selectively including or excluding metadata fields during the reranking process. This allows you to control which metadata attributes are considered when reordering search results.</p>",
+      "refs": {
+        "MetadataConfigurationForReranking$selectiveModeConfiguration": "<p>Configuration for selective mode, which allows you to explicitly include or exclude specific metadata fields during reranking. This is only used when selectionMode is set to SELECTIVE.</p>"
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
       "refs": {
@@ -3806,6 +3887,36 @@
       "base": "<p>Describes the validity terms.</p>",
       "refs": {
         "TermDetails$validityTerm": "<p>Describes the validity terms.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingConfiguration": {
+      "base": "<p>Configuration for using Amazon Bedrock foundation models to rerank Knowledge Base vector search results. This enables more sophisticated relevance ranking using large language models.</p>",
+      "refs": {
+        "VectorSearchRerankingConfiguration$bedrockRerankingConfiguration": "<p>Configuration for using Amazon Bedrock foundation models to rerank search results. This is required when the reranking type is set to BEDROCK.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger": {
+      "base": null,
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$numberOfRerankedResults": "<p>The maximum number of results to rerank. This limits how many of the initial vector search results will be processed by the reranking model. A smaller number improves performance but may exclude potentially relevant results.</p>"
+      }
+    },
+    "VectorSearchBedrockRerankingModelConfiguration": {
+      "base": "<p>Configuration for the Amazon Bedrock foundation model used for reranking vector search results. This specifies which model to use and any additional parameters required by the model.</p>",
+      "refs": {
+        "VectorSearchBedrockRerankingConfiguration$modelConfiguration": "<p>Configuration for the Amazon Bedrock foundation model used for reranking. This includes the model ARN and any additional request fields required by the model.</p>"
+      }
+    },
+    "VectorSearchRerankingConfiguration": {
+      "base": "<p>Configuration for reranking vector search results to improve relevance. Reranking applies additional relevance models to reorder the initial vector search results based on more sophisticated criteria.</p>",
+      "refs": {
+        "KnowledgeBaseVectorSearchConfiguration$rerankingConfiguration": "<p>Configuration for reranking search results in Knowledge Base vector searches. Reranking improves search relevance by reordering initial vector search results using more sophisticated relevance models.</p>"
+      }
+    },
+    "VectorSearchRerankingConfigurationType": {
+      "base": null,
+      "refs": {
+        "VectorSearchRerankingConfiguration$type": "<p>The type of reranking to apply to vector search results. Currently, the only supported value is BEDROCK, which uses Amazon Bedrock foundation models for reranking.</p>"
       }
     },
     "VpcConfig": {

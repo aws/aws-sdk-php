@@ -2298,7 +2298,8 @@
       "errors":[
         {"shape":"NoSuchEntityException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ServiceFailureException"}
+        {"shape":"ServiceFailureException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "UpdateAccountPasswordPolicy":{
@@ -2432,7 +2433,8 @@
       },
       "input":{"shape":"UpdateSSHPublicKeyRequest"},
       "errors":[
-        {"shape":"NoSuchEntityException"}
+        {"shape":"NoSuchEntityException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "UpdateServerCertificate":{
@@ -2470,7 +2472,8 @@
       "errors":[
         {"shape":"NoSuchEntityException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ServiceFailureException"}
+        {"shape":"ServiceFailureException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "UpdateUser":{
@@ -2996,7 +2999,8 @@
       ],
       "members":{
         "UserName":{"shape":"userNameType"},
-        "ServiceName":{"shape":"serviceName"}
+        "ServiceName":{"shape":"serviceName"},
+        "CredentialAgeDays":{"shape":"credentialAgeDays"}
       }
     },
     "CreateServiceSpecificCredentialResponse":{
@@ -4643,13 +4647,18 @@
       "type":"structure",
       "members":{
         "UserName":{"shape":"userNameType"},
-        "ServiceName":{"shape":"serviceName"}
+        "ServiceName":{"shape":"serviceName"},
+        "AllUsers":{"shape":"allUsers"},
+        "Marker":{"shape":"markerType"},
+        "MaxItems":{"shape":"maxItemsType"}
       }
     },
     "ListServiceSpecificCredentialsResponse":{
       "type":"structure",
       "members":{
-        "ServiceSpecificCredentials":{"shape":"ServiceSpecificCredentialsListType"}
+        "ServiceSpecificCredentials":{"shape":"ServiceSpecificCredentialsListType"},
+        "Marker":{"shape":"responseMarkerType"},
+        "IsTruncated":{"shape":"booleanType"}
       }
     },
     "ListSigningCertificatesRequest":{
@@ -5439,17 +5448,18 @@
       "required":[
         "CreateDate",
         "ServiceName",
-        "ServiceUserName",
-        "ServicePassword",
         "ServiceSpecificCredentialId",
         "UserName",
         "Status"
       ],
       "members":{
         "CreateDate":{"shape":"dateType"},
+        "ExpirationDate":{"shape":"dateType"},
         "ServiceName":{"shape":"serviceName"},
         "ServiceUserName":{"shape":"serviceUserName"},
         "ServicePassword":{"shape":"servicePassword"},
+        "ServiceCredentialAlias":{"shape":"serviceCredentialAlias"},
+        "ServiceCredentialSecret":{"shape":"serviceCredentialSecret"},
         "ServiceSpecificCredentialId":{"shape":"serviceSpecificCredentialId"},
         "UserName":{"shape":"userNameType"},
         "Status":{"shape":"statusType"}
@@ -5460,7 +5470,6 @@
       "required":[
         "UserName",
         "Status",
-        "ServiceUserName",
         "CreateDate",
         "ServiceSpecificCredentialId",
         "ServiceName"
@@ -5469,7 +5478,9 @@
         "UserName":{"shape":"userNameType"},
         "Status":{"shape":"statusType"},
         "ServiceUserName":{"shape":"serviceUserName"},
+        "ServiceCredentialAlias":{"shape":"serviceCredentialAlias"},
         "CreateDate":{"shape":"dateType"},
+        "ExpirationDate":{"shape":"dateType"},
         "ServiceSpecificCredentialId":{"shape":"serviceSpecificCredentialId"},
         "ServiceName":{"shape":"serviceName"}
       }
@@ -6100,6 +6111,10 @@
       "min":3,
       "pattern":"^[a-z0-9]([a-z0-9]|-(?!-)){1,61}[a-z0-9]$"
     },
+    "allUsers":{
+      "type":"boolean",
+      "box":true
+    },
     "arnType":{
       "type":"string",
       "max":2048,
@@ -6165,6 +6180,11 @@
     "clientIDType":{
       "type":"string",
       "max":255,
+      "min":1
+    },
+    "credentialAgeDays":{
+      "type":"integer",
+      "max":36600,
       "min":1
     },
     "credentialReportExpiredExceptionMessage":{"type":"string"},
@@ -6490,6 +6510,16 @@
       "min":1,
       "pattern":"[\\w+=,.@-]+"
     },
+    "serviceCredentialAlias":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "pattern":"[\\w+=,.@-]+"
+    },
+    "serviceCredentialSecret":{
+      "type":"string",
+      "sensitive":true
+    },
     "serviceFailureExceptionMessage":{"type":"string"},
     "serviceName":{"type":"string"},
     "serviceNameType":{"type":"string"},
@@ -6519,8 +6549,8 @@
     "serviceUserName":{
       "type":"string",
       "max":200,
-      "min":17,
-      "pattern":"[\\w+=,.@-]+"
+      "min":0,
+      "pattern":"[\\w+=,.@-]*"
     },
     "sortKeyType":{
       "type":"string",
@@ -6535,7 +6565,8 @@
       "type":"string",
       "enum":[
         "Active",
-        "Inactive"
+        "Inactive",
+        "Expired"
       ]
     },
     "stringType":{"type":"string"},

@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Web Services Systems Manager is the operations hub for your Amazon Web Services applications and resources and a secure end-to-end management solution for hybrid cloud environments that enables safe and secure operations at scale.</p> <p>This reference is intended to be used with the <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/\">Amazon Web Services Systems Manager User Guide</a>. To get started, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up.html\">Setting up Amazon Web Services Systems Manager</a>.</p> <p class=\"title\"> <b>Related resources</b> </p> <ul> <li> <p>For information about each of the tools that comprise Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-tools.html\">Using Systems Manager tools</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> </li> <li> <p>For details about predefined runbooks for Automation, a tool in Amazon Web Services Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-runbook-reference.html\">Systems Manager Automation runbook reference</a> </i>.</p> </li> <li> <p>For information about AppConfig, a tool in Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/\">AppConfig User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/\">AppConfig API Reference</a> </i>.</p> </li> <li> <p>For information about Incident Manager, a tool in Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/userguide/\">Systems Manager Incident Manager User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/APIReference/\">Systems Manager Incident Manager API Reference</a> </i>.</p> </li> </ul>",
+  "service": "<p>Amazon Web Services Systems Manager is the operations hub for your Amazon Web Services applications and resources and a secure end-to-end management solution for hybrid cloud environments that enables safe and secure operations at scale.</p> <p>This reference is intended to be used with the <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/\">Amazon Web Services Systems Manager User Guide</a>. To get started, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up-console.html\">Setting up Amazon Web Services Systems Manager</a>.</p> <p class=\"title\"> <b>Related resources</b> </p> <ul> <li> <p>For information about each of the tools that comprise Systems Manager, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-tools.html\">Using Systems Manager tools</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> </li> <li> <p>For details about predefined runbooks for Automation, a tool in Amazon Web Services Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-runbook-reference.html\">Systems Manager Automation runbook reference</a> </i>.</p> </li> <li> <p>For information about AppConfig, a tool in Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/appconfig/latest/userguide/\">AppConfig User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/appconfig/2019-10-09/APIReference/\">AppConfig API Reference</a> </i>.</p> </li> <li> <p>For information about Incident Manager, a tool in Systems Manager, see the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/userguide/\">Systems Manager Incident Manager User Guide</a> </i> and the <i> <a href=\"https://docs.aws.amazon.com/incident-manager/latest/APIReference/\">Systems Manager Incident Manager API Reference</a> </i>.</p> </li> </ul>",
   "operations": {
     "AddTagsToResource": "<p>Adds or overwrites one or more tags for the specified resource. <i>Tags</i> are metadata that you can assign to your automations, documents, managed nodes, maintenance windows, Parameter Store parameters, and patch baselines. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. Each tag consists of a key and an optional value, both of which you define. For example, you could define a set of tags for your account's managed nodes that helps you track each node's owner and stack level. For example:</p> <ul> <li> <p> <code>Key=Owner,Value=DbAdmin</code> </p> </li> <li> <p> <code>Key=Owner,Value=SysAdmin</code> </p> </li> <li> <p> <code>Key=Owner,Value=Dev</code> </p> </li> <li> <p> <code>Key=Stack,Value=Production</code> </p> </li> <li> <p> <code>Key=Stack,Value=Pre-Production</code> </p> </li> <li> <p> <code>Key=Stack,Value=Test</code> </p> </li> </ul> <p>Most resources can have a maximum of 50 tags. Automations can have a maximum of 5 tags.</p> <p>We recommend that you devise a set of tag keys that meets your needs for each resource type. Using a consistent set of tag keys makes it easier for you to manage your resources. You can search and filter the resources based on the tags you add. Tags don't have any semantic meaning to and are interpreted strictly as a string of characters.</p> <p>For more information about using tags with Amazon Elastic Compute Cloud (Amazon EC2) instances, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html\">Tag your Amazon EC2 resources</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "AssociateOpsItemRelatedItem": "<p>Associates a related item to a Systems Manager OpsCenter OpsItem. For example, you can associate an Incident Manager incident or analysis with an OpsItem. Incident Manager and OpsCenter are tools in Amazon Web Services Systems Manager.</p>",
@@ -152,8 +152,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>The requester doesn't have permissions to perform the requested operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessKeyIdType": {
       "base": null,
@@ -180,6 +179,12 @@
         "GetAccessTokenResponse$AccessRequestStatus": "<p>The status of the access request.</p>"
       }
     },
+    "AccessType": {
+      "base": null,
+      "refs": {
+        "Session$AccessType": "<p> <code>Standard</code> access type is the default for Session Manager sessions. <code>JustInTime</code> is the access type for <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-just-in-time-node-access.html\">Just-in-time node access</a>. </p>"
+      }
+    },
     "Account": {
       "base": null,
       "refs": {
@@ -196,7 +201,7 @@
     "AccountIdList": {
       "base": null,
       "refs": {
-        "DescribeDocumentPermissionResponse$AccountIds": "<p>The account IDs that have permission to use this document. The ID can be either an Amazon Web Services account or <i>All</i>.</p>",
+        "DescribeDocumentPermissionResponse$AccountIds": "<p>The account IDs that have permission to use this document. The ID can be either an Amazon Web Services account number or <code>all</code>.</p>",
         "ModifyDocumentPermissionRequest$AccountIdsToAdd": "<p>The Amazon Web Services users that should have access to the document. The account IDs can either be a group of account IDs or <i>All</i>. You must specify a value for this parameter or the <code>AccountIdsToRemove</code> parameter.</p>",
         "ModifyDocumentPermissionRequest$AccountIdsToRemove": "<p>The Amazon Web Services users that should no longer have access to the document. The Amazon Web Services user can either be a group of account IDs or <i>All</i>. This action has a higher priority than <code>AccountIdsToAdd</code>. If you specify an ID to add and the same ID to remove, the system removes access to the document. You must specify a value for this parameter or the <code>AccountIdsToAdd</code> parameter.</p>"
       }
@@ -256,13 +261,11 @@
     },
     "AddTagsToResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddTagsToResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AgentErrorCode": {
       "base": null,
@@ -359,8 +362,7 @@
     },
     "AlreadyExistsException": {
       "base": "<p>Error returned if an attempt is made to register a patch group with a patch baseline that is already registered with a different patch baseline.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApplyOnlyAtCronInterval": {
       "base": null,
@@ -386,18 +388,15 @@
     },
     "AssociateOpsItemRelatedItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateOpsItemRelatedItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatedInstances": {
       "base": "<p>You must disassociate a document from all managed nodes before you can delete it.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Association": {
       "base": "<p>Describes an association of a Amazon Web Services Systems Manager document (SSM document) and a managed node.</p>",
@@ -407,8 +406,7 @@
     },
     "AssociationAlreadyExists": {
       "base": "<p>The specified association already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociationComplianceSeverity": {
       "base": null,
@@ -438,8 +436,7 @@
     },
     "AssociationDoesNotExist": {
       "base": "<p>The specified association doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociationExecution": {
       "base": "<p>Includes information about the specified association.</p>",
@@ -449,8 +446,7 @@
     },
     "AssociationExecutionDoesNotExist": {
       "base": "<p>The specified execution ID doesn't exist. Verify the ID number and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociationExecutionFilter": {
       "base": "<p>Filters used in the request.</p>",
@@ -583,8 +579,7 @@
     },
     "AssociationLimitExceeded": {
       "base": "<p>You can have at most 2,000 active associations.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociationList": {
       "base": null,
@@ -674,8 +669,7 @@
     },
     "AssociationVersionLimitExceeded": {
       "base": "<p>You have reached the maximum number versions allowed for an association. Each association has a limit of 1,000 versions. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociationVersionList": {
       "base": null,
@@ -800,18 +794,15 @@
     },
     "AutomationDefinitionNotApprovedException": {
       "base": "<p>Indicates that the Change Manager change template used in the change request was rejected or is still in a pending state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AutomationDefinitionNotFoundException": {
       "base": "<p>An Automation runbook with the specified name couldn't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AutomationDefinitionVersionNotFoundException": {
       "base": "<p>An Automation runbook with the specified name and version couldn't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AutomationExecution": {
       "base": "<p>Detailed information about the current state of an individual Automation execution.</p>",
@@ -872,8 +863,7 @@
     },
     "AutomationExecutionLimitExceededException": {
       "base": "<p>The number of simultaneously running Automation executions exceeded the allowable limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AutomationExecutionMetadata": {
       "base": "<p>Details about a specific Automation execution.</p>",
@@ -889,8 +879,7 @@
     },
     "AutomationExecutionNotFoundException": {
       "base": "<p>There is no automation execution information for the requested automation execution ID.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AutomationExecutionPreview": {
       "base": "<p>Information about the results of the execution preview.</p>",
@@ -949,8 +938,7 @@
     },
     "AutomationStepNotFoundException": {
       "base": "<p>The specified step name and execution ID don't exist. Verify the information and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AutomationSubtype": {
       "base": null,
@@ -1090,23 +1078,19 @@
     },
     "CancelCommandRequest": {
       "base": "<p/>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelCommandResult": {
       "base": "<p>Whether or not the command was successfully canceled. There is no guarantee that a request can be canceled.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelMaintenanceWindowExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelMaintenanceWindowExecutionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Category": {
       "base": null,
@@ -1484,8 +1468,7 @@
     },
     "ComplianceTypeCountLimitExceededException": {
       "base": "<p>You specified too many custom compliance types. You can specify a maximum of 10 different types. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ComplianceTypeName": {
       "base": null,
@@ -1531,18 +1514,15 @@
     },
     "CreateActivationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateActivationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssociationBatchRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssociationBatchRequestEntries": {
       "base": null,
@@ -1559,78 +1539,63 @@
     },
     "CreateAssociationBatchResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssociationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDocumentResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOpsItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOpsItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOpsMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOpsMetadataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePatchBaselineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePatchBaselineResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceDataSyncRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceDataSyncResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedDate": {
       "base": null,
@@ -1646,8 +1611,7 @@
     },
     "CustomSchemaCountLimitExceededException": {
       "base": "<p>You have exceeded the limit for custom schemas. Delete one or more custom schemas and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DateTime": {
       "base": null,
@@ -1769,123 +1733,99 @@
     },
     "DeleteActivationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteActivationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssociationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDocumentResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInventoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInventoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOpsItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOpsItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOpsMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOpsMetadataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteParameterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteParameterResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteParametersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteParametersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePatchBaselineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePatchBaselineResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceDataSyncRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceDataSyncResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeliveryTimedOutCount": {
       "base": null,
@@ -1895,43 +1835,35 @@
     },
     "DeregisterManagedInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterManagedInstanceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterPatchBaselineForPatchGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterPatchBaselineForPatchGroupResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTargetFromMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTargetFromMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTaskFromMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTaskFromMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeActivationsFilter": {
       "base": "<p>Filter for the DescribeActivation API.</p>",
@@ -1953,163 +1885,131 @@
     },
     "DescribeActivationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeActivationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssociationExecutionTargetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssociationExecutionTargetsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssociationExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssociationExecutionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssociationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAutomationExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAutomationExecutionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAutomationStepExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAutomationStepExecutionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAvailablePatchesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAvailablePatchesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDocumentPermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDocumentPermissionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDocumentResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEffectiveInstanceAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEffectiveInstanceAssociationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEffectivePatchesForPatchBaselineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEffectivePatchesForPatchBaselineResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceAssociationsStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceAssociationsStatusResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceInformationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceInformationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePatchStatesForPatchGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePatchStatesForPatchGroupResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePatchStatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePatchStatesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePatchesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePatchesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePropertiesMaxResults": {
       "base": null,
@@ -2119,173 +2019,139 @@
     },
     "DescribeInstancePropertiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstancePropertiesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInventoryDeletionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInventoryDeletionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowExecutionTaskInvocationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowExecutionTaskInvocationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowExecutionTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowExecutionTasksResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowExecutionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowScheduleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowScheduleResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowTargetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowTargetsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowTasksResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowsForTargetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowsForTargetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMaintenanceWindowsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOpsItemsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOpsItemsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeParametersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeParametersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchBaselinesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchBaselinesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchGroupStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchGroupStateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchGroupsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchPropertiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePatchPropertiesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSessionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSessionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescriptionInDocument": {
       "base": null,
@@ -2295,13 +2161,11 @@
     },
     "DisassociateOpsItemRelatedItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateOpsItemRelatedItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentARN": {
       "base": null,
@@ -2313,7 +2177,7 @@
         "CreateAssociationRequest$Name": "<p>The name of the SSM Command document or Automation runbook that contains the configuration information for the managed node.</p> <p>You can specify Amazon Web Services-predefined documents, documents you created, or a document that is shared with you from another Amazon Web Services account.</p> <p>For Systems Manager documents (SSM documents) that are shared with you from other Amazon Web Services accounts, you must specify the complete SSM document ARN, in the following format:</p> <p> <code>arn:<i>partition</i>:ssm:<i>region</i>:<i>account-id</i>:document/<i>document-name</i> </code> </p> <p>For example:</p> <p> <code>arn:aws:ssm:us-east-2:12345678912:document/My-Shared-Document</code> </p> <p>For Amazon Web Services-predefined documents and SSM documents you created in your account, you only need to specify the document name. For example, <code>AWS-ApplyPatchBaseline</code> or <code>My-Document</code>.</p>",
         "DeleteAssociationRequest$Name": "<p>The name of the SSM document.</p>",
         "DescribeAssociationRequest$Name": "<p>The name of the SSM document.</p>",
-        "DescribeDocumentRequest$Name": "<p>The name of the SSM document.</p>",
+        "DescribeDocumentRequest$Name": "<p>The name of the SSM document.</p> <note> <p>If you're calling a shared SSM document from a different Amazon Web Services account, <code>Name</code> is the full Amazon Resource Name (ARN) of the document.</p> </note>",
         "DocumentDescription$Name": "<p>The name of the SSM document.</p>",
         "DocumentIdentifier$Name": "<p>The name of the SSM document.</p>",
         "DocumentRequires$Name": "<p>The name of the required SSM document. The name can be an Amazon Resource Name (ARN).</p>",
@@ -2332,8 +2196,7 @@
     },
     "DocumentAlreadyExists": {
       "base": "<p>The specified document already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentAuthor": {
       "base": null,
@@ -2473,8 +2336,7 @@
     },
     "DocumentLimitExceeded": {
       "base": "<p>You can have at most 500 active SSM documents.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentMetadataEnum": {
       "base": null,
@@ -2497,7 +2359,7 @@
         "CommandInvocation$DocumentName": "<p>The document name that was requested for execution.</p>",
         "CreateDocumentRequest$Name": "<p>A name for the SSM document.</p> <important> <p>You can't use the following strings as document name prefixes. These are reserved by Amazon Web Services for use as document name prefixes:</p> <ul> <li> <p> <code>aws</code> </p> </li> <li> <p> <code>amazon</code> </p> </li> <li> <p> <code>amzn</code> </p> </li> <li> <p> <code>AWSEC2</code> </p> </li> <li> <p> <code>AWSConfigRemediation</code> </p> </li> <li> <p> <code>AWSSupport</code> </p> </li> </ul> </important>",
         "DeleteDocumentRequest$Name": "<p>The name of the document.</p>",
-        "DescribeDocumentPermissionRequest$Name": "<p>The name of the document for which you are the owner.</p>",
+        "DescribeDocumentPermissionRequest$Name": "<p>The name of the document for which you are the owner. </p>",
         "DocumentDefaultVersionDescription$Name": "<p>The name of the document.</p>",
         "DocumentVersionInfo$Name": "<p>The document name.</p>",
         "GetCommandInvocationResult$DocumentName": "<p>The name of the document that was run. For example, <code>AWS-RunShellScript</code>.</p>",
@@ -2556,8 +2418,7 @@
     },
     "DocumentPermissionLimit": {
       "base": "<p>The document can't be shared with more Amazon Web Services accounts. You can specify a maximum of 20 accounts per API operation to share a private document.</p> <p>By default, you can share a private document with a maximum of 1,000 accounts and publicly share up to five documents.</p> <p>If you need to increase the quota for privately or publicly shared Systems Manager documents, contact Amazon Web Services Support.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentPermissionMaxResults": {
       "base": null,
@@ -2723,8 +2584,7 @@
     },
     "DocumentVersionLimitExceeded": {
       "base": "<p>The document has too many versions. Delete one or more document versions and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentVersionList": {
       "base": null,
@@ -2756,8 +2616,7 @@
     },
     "DoesNotExistException": {
       "base": "<p>Error returned when the ID specified for a resource, such as a maintenance window or patch baseline, doesn't exist.</p> <p>For information about resource quotas in Amazon Web Services Systems Manager, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/ssm.html#limits_ssm\">Systems Manager service quotas</a> in the <i>Amazon Web Services General Reference</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DryRun": {
       "base": null,
@@ -2767,18 +2626,15 @@
     },
     "DuplicateDocumentContent": {
       "base": "<p>The content of the association document matches another document. Change the content of the document and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DuplicateDocumentVersionName": {
       "base": "<p>The version name has already been used in this document. Specify a different version name, and then try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DuplicateInstanceId": {
       "base": "<p>You can't specify a managed node ID in more than one association.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Duration": {
       "base": null,
@@ -2906,108 +2762,87 @@
     },
     "FeatureNotAvailableException": {
       "base": "<p>You attempted to register a <code>LAMBDA</code> or <code>STEP_FUNCTIONS</code> task in a region where the corresponding service isn't available. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccessTokenRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccessTokenResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomationExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutomationExecutionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalendarStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCalendarStateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCommandInvocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCommandInvocationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectionStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectionStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDefaultPatchBaselineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDefaultPatchBaselineResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeployablePatchSnapshotForInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeployablePatchSnapshotForInstanceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExecutionPreviewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExecutionPreviewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInventoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInventoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInventorySchemaMaxResults": {
       "base": null,
@@ -3017,73 +2852,59 @@
     },
     "GetInventorySchemaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInventorySchemaResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowExecutionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowExecutionTaskInvocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowExecutionTaskInvocationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowExecutionTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowExecutionTaskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMaintenanceWindowTaskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOpsItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOpsItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOpsMetadataMaxResults": {
       "base": null,
@@ -3093,43 +2914,35 @@
     },
     "GetOpsMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOpsMetadataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOpsSummaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOpsSummaryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParameterHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParameterHistoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParameterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParameterResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParametersByPathMaxResults": {
       "base": null,
@@ -3139,53 +2952,43 @@
     },
     "GetParametersByPathRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParametersByPathResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParametersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetParametersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPatchBaselineForPatchGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPatchBaselineForPatchGroupResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPatchBaselineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPatchBaselineResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePoliciesResponseEntries": {
       "base": null,
@@ -3201,23 +3004,19 @@
     },
     "GetServiceSettingRequest": {
       "base": "<p>The request body of the GetServiceSetting API operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceSettingResult": {
       "base": "<p>The query result body of the GetServiceSetting API operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "HierarchyLevelLimitExceededException": {
       "base": "<p>A hierarchy can have a maximum of 15 levels. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-parameter-name-constraints.html\">Requirements and constraints for parameter names</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "HierarchyTypeMismatchException": {
       "base": "<p>Parameter Store doesn't support changing a parameter type in a hierarchy. For example, you can't change a parameter from a <code>String</code> type to a <code>SecureString</code> type. You must create a new, unique parameter.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IPAddress": {
       "base": null,
@@ -3253,8 +3052,7 @@
     },
     "IdempotentParameterMismatch": {
       "base": "<p>Error returned when an idempotent operation is retried and the parameters don't match the original call to the API with the same idempotency token. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImpactType": {
       "base": null,
@@ -3264,8 +3062,7 @@
     },
     "IncompatiblePolicyException": {
       "base": "<p>There is a conflict in the policies specified for this parameter. You can't, for example, specify two Expiration policies for a parameter. Review your policies, and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InstallOverrideList": {
       "base": null,
@@ -3437,7 +3234,7 @@
     "InstanceInformationStringFilterKey": {
       "base": null,
       "refs": {
-        "InstanceInformationStringFilter$Key": "<p>The filter key name to describe your managed nodes.</p> <p>Valid filter key values: ActivationIds | AgentVersion | AssociationStatus | IamRole | InstanceIds | PingStatus | PlatformTypes | ResourceType | SourceIds | SourceTypes | \"tag-key\" | \"tag:<code>{keyname}</code> </p> <ul> <li> <p>Valid values for the <code>AssociationStatus</code> filter key: Success | Pending | Failed</p> </li> <li> <p>Valid values for the <code>PingStatus</code> filter key: Online | ConnectionLost | Inactive (deprecated)</p> </li> <li> <p>Valid values for the <code>PlatformType</code> filter key: Windows | Linux | MacOS</p> </li> <li> <p>Valid values for the <code>ResourceType</code> filter key: EC2Instance | ManagedInstance</p> </li> <li> <p>Valid values for the <code>SourceType</code> filter key: AWS::EC2::Instance | AWS::SSM::ManagedInstance | AWS::IoT::Thing</p> </li> <li> <p>Valid tag examples: <code>Key=tag-key,Values=Purpose</code> | <code>Key=tag:Purpose,Values=Test</code>.</p> </li> </ul>"
+        "InstanceInformationStringFilter$Key": "<p>The filter key name to describe your managed nodes.</p> <p>Valid filter key values: ActivationIds | AgentVersion | AssociationStatus | IamRole | InstanceIds | PingStatus | PlatformType | ResourceType | SourceIds | SourceTypes | \"tag-key\" | \"tag:<code>{keyname}</code> </p> <ul> <li> <p>Valid values for the <code>AssociationStatus</code> filter key: Success | Pending | Failed</p> </li> <li> <p>Valid values for the <code>PingStatus</code> filter key: Online | ConnectionLost | Inactive (deprecated)</p> </li> <li> <p>Valid values for the <code>PlatformType</code> filter key: Windows | Linux | MacOS</p> </li> <li> <p>Valid values for the <code>ResourceType</code> filter key: EC2Instance | ManagedInstance</p> </li> <li> <p>Valid values for the <code>SourceType</code> filter key: AWS::EC2::Instance | AWS::SSM::ManagedInstance | AWS::IoT::Thing</p> </li> <li> <p>Valid tag examples: <code>Key=tag-key,Values=Purpose</code> | <code>Key=tag:Purpose,Values=Test</code>.</p> </li> </ul>"
       }
     },
     "InstanceInformationStringFilterList": {
@@ -3641,258 +3438,207 @@
     },
     "InternalServerError": {
       "base": "<p>An error occurred on the server side.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidActivation": {
       "base": "<p>The activation isn't valid. The activation might have been deleted, or the ActivationId and the ActivationCode don't match.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidActivationId": {
       "base": "<p>The activation ID isn't valid. Verify that you entered the correct ActivationId or ActivationCode and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAggregatorException": {
       "base": "<p>The specified aggregator isn't valid for the group type. Verify that the aggregator you provided is supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAllowedPatternException": {
       "base": "<p>The request doesn't meet the regular expression requirement.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAssociation": {
       "base": "<p>The association isn't valid or doesn't exist. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAssociationVersion": {
       "base": "<p>The version you specified isn't valid. Use ListAssociationVersions to view all versions of an association according to the association ID. Or, use the <code>$LATEST</code> parameter to view the latest version of the association.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAutomationExecutionParametersException": {
       "base": "<p>The supplied parameters for invoking the specified Automation runbook are incorrect. For example, they may not match the set of parameters permitted for the specified Automation document.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAutomationSignalException": {
       "base": "<p>The signal isn't valid for the current Automation execution.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAutomationStatusUpdateException": {
       "base": "<p>The specified update status operation isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidCommandId": {
       "base": "<p>The specified command ID isn't valid. Verify the ID and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDeleteInventoryParametersException": {
       "base": "<p>One or more of the parameters specified for the delete operation isn't valid. Verify all parameters and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDeletionIdException": {
       "base": "<p>The ID specified for the delete operation doesn't exist or isn't valid. Verify the ID and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDocument": {
       "base": "<p>The specified SSM document doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDocumentContent": {
       "base": "<p>The content for the document isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDocumentOperation": {
       "base": "<p>You attempted to delete a document while it is still shared. You must stop sharing the document before you can delete it.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDocumentSchemaVersion": {
       "base": "<p>The version of the document schema isn't supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDocumentType": {
       "base": "<p>The SSM document type isn't valid. Valid document types are described in the <code>DocumentType</code> property.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDocumentVersion": {
       "base": "<p>The document version isn't valid or doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidFilter": {
       "base": "<p>The filter name isn't valid. Verify that you entered the correct name and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidFilterKey": {
       "base": "<p>The specified key isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidFilterOption": {
       "base": "<p>The specified filter option isn't valid. Valid options are Equals and BeginsWith. For Path filter, valid options are Recursive and OneLevel.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidFilterValue": {
       "base": "<p>The filter value isn't valid. Verify the value and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidInstanceId": {
       "base": "<p>The following problems can cause this exception:</p> <ul> <li> <p>You don't have permission to access the managed node.</p> </li> <li> <p>Amazon Web Services Systems Manager Agent (SSM Agent) isn't running. Verify that SSM Agent is running.</p> </li> <li> <p>SSM Agent isn't registered with the SSM endpoint. Try reinstalling SSM Agent.</p> </li> <li> <p>The managed node isn't in a valid state. Valid states are: <code>Running</code>, <code>Pending</code>, <code>Stopped</code>, and <code>Stopping</code>. Invalid states are: <code>Shutting-down</code> and <code>Terminated</code>.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidInstanceInformationFilterValue": {
       "base": "<p>The specified filter value isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidInstancePropertyFilterValue": {
       "base": "<p>The specified filter value isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidInventoryGroupException": {
       "base": "<p>The specified inventory group isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidInventoryItemContextException": {
       "base": "<p>You specified invalid keys or values in the <code>Context</code> attribute for <code>InventoryItem</code>. Verify the keys and values, and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidInventoryRequestException": {
       "base": "<p>The request isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidItemContentException": {
       "base": "<p>One or more content items isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidKeyId": {
       "base": "<p>The query key ID isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNextToken": {
       "base": "<p>The specified token isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNotificationConfig": {
       "base": "<p>One or more configuration items isn't valid. Verify that a valid Amazon Resource Name (ARN) was provided for an Amazon Simple Notification Service topic.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidOptionException": {
       "base": "<p>The delete inventory option specified isn't valid. Verify the option and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidOutputFolder": {
       "base": "<p>The S3 bucket doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidOutputLocation": {
       "base": "<p>The output location isn't valid or doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameters": {
       "base": "<p>You must specify values for all required parameters in the Amazon Web Services Systems Manager document (SSM document). You can only supply values to parameters defined in the SSM document.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPermissionType": {
       "base": "<p>The permission type isn't supported. <i>Share</i> is the only supported permission type.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPluginName": {
       "base": "<p>The plugin name isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPolicyAttributeException": {
       "base": "<p>A policy attribute or its value is invalid. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPolicyTypeException": {
       "base": "<p>The policy type isn't supported. Parameter Store supports the following policy types: Expiration, ExpirationNotification, and NoChangeNotification.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResourceId": {
       "base": "<p>The resource ID isn't valid. Verify that you entered the correct ID and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResourceType": {
       "base": "<p>The resource type isn't valid. For example, if you are attempting to tag an EC2 instance, the instance must be a registered managed node.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResultAttributeException": {
       "base": "<p>The specified inventory item result attribute isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRole": {
       "base": "<p>The role name can't contain invalid characters. Also verify that you specified an IAM role for notifications that includes the required trust policy. For information about configuring the IAM role for Run Command notifications, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/monitoring-sns-notifications.html\">Monitoring Systems Manager status changes using Amazon SNS notifications</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidSchedule": {
       "base": "<p>The schedule is invalid. Verify your cron or rate expression and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTag": {
       "base": "<p>The specified tag key or value isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTarget": {
       "base": "<p>The target isn't valid or doesn't exist. It might not be configured for Systems Manager or you might not have permission to perform the operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTargetMaps": {
       "base": "<p>TargetMap parameter isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTypeNameException": {
       "base": "<p>The parameter type name isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidUpdate": {
       "base": "<p>The update isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InventoryAggregator": {
       "base": "<p>Specifies the inventory type and attribute for the aggregation execution.</p>",
@@ -4191,8 +3937,7 @@
     },
     "InvocationDoesNotExist": {
       "base": "<p>The command ID and managed node ID you specified didn't match any invocations. Verify the command ID and the managed node ID and try again. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvocationTraceOutput": {
       "base": null,
@@ -4214,13 +3959,11 @@
     },
     "ItemContentMismatchException": {
       "base": "<p>The inventory item has invalid content. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ItemSizeLimitExceededException": {
       "base": "<p>The inventory item size has exceeded the size limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KeyList": {
       "base": null,
@@ -4236,13 +3979,11 @@
     },
     "LabelParameterVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LabelParameterVersionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LastResourceDataSyncMessage": {
       "base": null,
@@ -4270,143 +4011,115 @@
     },
     "ListAssociationVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociationVersionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandInvocationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandInvocationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComplianceItemsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComplianceItemsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComplianceSummariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComplianceSummariesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDocumentMetadataHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDocumentMetadataHistoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDocumentVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDocumentVersionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDocumentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDocumentsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInventoryEntriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInventoryEntriesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNodesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNodesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNodesSummaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNodesSummaryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOpsItemEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOpsItemEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOpsItemRelatedItemsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOpsItemRelatedItemsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOpsMetadataMaxResults": {
       "base": null,
@@ -4416,43 +4129,35 @@
     },
     "ListOpsMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOpsMetadataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceComplianceSummariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceComplianceSummariesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceDataSyncRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceDataSyncResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LoggingInfo": {
       "base": "<p>Information about an Amazon Simple Storage Service (Amazon S3) bucket to write managed node-level logs to.</p> <note> <p> <code>LoggingInfo</code> has been deprecated. To specify an Amazon Simple Storage Service (Amazon S3) bucket to contain logs, instead use the <code>OutputS3BucketName</code> and <code>OutputS3KeyPrefix</code> options in the <code>TaskInvocationParameters</code> structure. For information about how Amazon Web Services Systems Manager handles these options for the supported maintenance window task types, see <a>MaintenanceWindowTaskInvocationParameters</a>.</p> </note>",
@@ -5039,8 +4744,7 @@
     },
     "MalformedResourcePolicyDocumentException": {
       "base": "<p>The specified policy document is malformed or invalid, or excessive <code>PutResourcePolicy</code> or <code>DeleteResourcePolicy</code> calls have been made.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ManagedInstanceId": {
       "base": null,
@@ -5081,8 +4785,7 @@
     },
     "MaxDocumentSizeExceeded": {
       "base": "<p>The size limit of a document is 64 KB.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxErrors": {
       "base": null,
@@ -5184,13 +4887,11 @@
     },
     "ModifyDocumentPermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ModifyDocumentPermissionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "NextToken": {
       "base": null,
@@ -5647,8 +5348,7 @@
     },
     "OpsItemAccessDeniedException": {
       "base": "<p>You don't have permission to view OpsItems in the specified account. Verify that your account is configured either as a Systems Manager delegated administrator or that you are logged into the Organizations management account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemAccountId": {
       "base": null,
@@ -5658,8 +5358,7 @@
     },
     "OpsItemAlreadyExistsException": {
       "base": "<p>The OpsItem already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemArn": {
       "base": null,
@@ -5681,8 +5380,7 @@
     },
     "OpsItemConflictException": {
       "base": "<p>The specified OpsItem is in the process of being deleted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemDataKey": {
       "base": null,
@@ -5831,13 +5529,11 @@
     },
     "OpsItemInvalidParameterException": {
       "base": "<p>A specified parameter argument isn't valid. Verify the available arguments and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemLimitExceededException": {
       "base": "<p>The request caused OpsItems to exceed one or more quotas.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemMaxResults": {
       "base": null,
@@ -5847,8 +5543,7 @@
     },
     "OpsItemNotFoundException": {
       "base": "<p>The specified OpsItem ID doesn't exist. Verify the ID and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemNotification": {
       "base": "<p>A notification about the OpsItem.</p>",
@@ -5897,8 +5592,7 @@
     },
     "OpsItemRelatedItemAlreadyExistsException": {
       "base": "<p>The Amazon Resource Name (ARN) is already associated with the OpsItem.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemRelatedItemAssociationId": {
       "base": null,
@@ -5910,8 +5604,7 @@
     },
     "OpsItemRelatedItemAssociationNotFoundException": {
       "base": "<p>The association wasn't found using the parameters you specified in the call. Verify the information and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsItemRelatedItemAssociationResourceType": {
       "base": null,
@@ -6051,8 +5744,7 @@
     },
     "OpsMetadataAlreadyExistsException": {
       "base": "<p>An OpsMetadata object already exists for the selected resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsMetadataArn": {
       "base": null,
@@ -6097,18 +5789,15 @@
     },
     "OpsMetadataInvalidArgumentException": {
       "base": "<p>One of the arguments passed is invalid. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsMetadataKeyLimitExceededException": {
       "base": "<p>The OpsMetadata object exceeds the maximum number of OpsMetadata keys that you can assign to an application in Application Manager.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsMetadataLimitExceededException": {
       "base": "<p>Your account reached the maximum number of OpsMetadata objects allowed by Application Manager. The maximum is 200 OpsMetadata objects. Delete one or more OpsMetadata object and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsMetadataList": {
       "base": null,
@@ -6118,8 +5807,7 @@
     },
     "OpsMetadataNotFoundException": {
       "base": "<p>The OpsMetadata object doesn't exist. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsMetadataResourceId": {
       "base": null,
@@ -6131,8 +5819,7 @@
     },
     "OpsMetadataTooManyUpdatesException": {
       "base": "<p>The system is processing too many concurrent updates. Wait a few moments and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OpsResultAttribute": {
       "base": "<p>The OpsItem data type to return.</p>",
@@ -6227,8 +5914,7 @@
     },
     "ParameterAlreadyExists": {
       "base": "<p>The parameter already exists. You can't create duplicate parameters.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterDataType": {
       "base": null,
@@ -6292,8 +5978,7 @@
     },
     "ParameterLimitExceeded": {
       "base": "<p>You have exceeded the number of parameters for this Amazon Web Services account. Delete one or more parameters and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterList": {
       "base": null,
@@ -6304,8 +5989,7 @@
     },
     "ParameterMaxVersionLimitExceeded": {
       "base": "<p>Parameter Store retains the 100 most recently created versions of a parameter. After this number of versions has been created, Parameter Store deletes the oldest version when a new one is created. However, if the oldest version has a <i>label</i> attached to it, Parameter Store won't delete the version and instead presents this error message:</p> <p> <code>An error occurred (ParameterMaxVersionLimitExceeded) when calling the PutParameter operation: You attempted to create a new version of <i>parameter-name</i> by calling the PutParameter API with the overwrite flag. Version <i>version-number</i>, the oldest version, can't be deleted because it has a label associated with it. Move the label to another version of the parameter, and try again.</code> </p> <p>This safeguard is to prevent parameter versions with mission critical labels assigned to them from being deleted. To continue creating new parameters, first move the label from the oldest version of the parameter to a newer one for use in your operations. For information about moving parameter labels, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-labels.html#sysman-paramstore-labels-console-move\">Move a parameter label (console)</a> or <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-labels.html#sysman-paramstore-labels-cli-move\">Move a parameter label (CLI)</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterMetadata": {
       "base": "<p>Metadata includes information like the Amazon Resource Name (ARN) of the last user to update the parameter and the date and time the parameter was last used.</p>",
@@ -6337,13 +6021,11 @@
     },
     "ParameterNotFound": {
       "base": "<p>The parameter couldn't be found. Verify the name and try again.</p> <note> <p>For the <code>DeleteParameter</code> and <code>GetParameter</code> actions, if the specified parameter doesn't exist, the <code>ParameterNotFound</code> exception is <i>not</i> recorded in CloudTrail event logs.</p> </note>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterPatternMismatchException": {
       "base": "<p>The parameter name isn't valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterPolicies": {
       "base": null,
@@ -6428,13 +6110,11 @@
     },
     "ParameterVersionLabelLimitExceeded": {
       "base": "<p>A parameter version can have a maximum of ten labels.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ParameterVersionNotFound": {
       "base": "<p>The specified parameter version wasn't found. Verify the parameter name and version, and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Parameters": {
       "base": null,
@@ -7084,8 +6764,7 @@
     },
     "PoliciesLimitExceededException": {
       "base": "<p>You specified more than the maximum number of allowed policies for the parameter. The maximum is 10.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Policy": {
       "base": null,
@@ -7126,13 +6805,11 @@
     },
     "PutComplianceItemsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutComplianceItemsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutInventoryMessage": {
       "base": null,
@@ -7142,33 +6819,27 @@
     },
     "PutInventoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutInventoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutParameterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutParameterResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RebootOption": {
       "base": null,
@@ -7197,43 +6868,35 @@
     },
     "RegisterDefaultPatchBaselineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterDefaultPatchBaselineResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterPatchBaselineForPatchGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterPatchBaselineForPatchGroupResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterTargetWithMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterTargetWithMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterTaskWithMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterTaskWithMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegistrationLimit": {
       "base": null,
@@ -7295,13 +6958,11 @@
     },
     "RemoveTagsFromResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTagsFromResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RequireType": {
       "base": null,
@@ -7311,13 +6972,11 @@
     },
     "ResetServiceSettingRequest": {
       "base": "<p>The request body of the ResetServiceSetting API operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetServiceSettingResult": {
       "base": "<p>The result body of the ResetServiceSetting API operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResolvedTargets": {
       "base": "<p>Information about targets that resolved during the Automation execution.</p>",
@@ -7366,8 +7025,7 @@
     },
     "ResourceDataSyncAlreadyExistsException": {
       "base": "<p>A sync configuration with the same name already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceDataSyncAwsOrganizationsSource": {
       "base": "<p>Information about the <code>AwsOrganizationsSource</code> resource data sync source. A sync source of this type can synchronize data from Organizations or, if an Amazon Web Services organization isn't present, from multiple Amazon Web Services Regions.</p>",
@@ -7378,13 +7036,11 @@
     },
     "ResourceDataSyncConflictException": {
       "base": "<p>Another <code>UpdateResourceDataSync</code> request is being processed. Wait a few minutes and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceDataSyncCountExceededException": {
       "base": "<p>You have exceeded the allowed maximum sync configurations.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceDataSyncCreatedTime": {
       "base": null,
@@ -7420,8 +7076,7 @@
     },
     "ResourceDataSyncInvalidConfigurationException": {
       "base": "<p>The specified sync configuration is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceDataSyncItem": {
       "base": "<p>Information about a resource data sync configuration, including its current status and last successful sync.</p>",
@@ -7457,8 +7112,7 @@
     },
     "ResourceDataSyncNotFoundException": {
       "base": "<p>The specified sync name wasn't found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceDataSyncOrganizationSourceType": {
       "base": null,
@@ -7575,33 +7229,27 @@
     },
     "ResourceInUseException": {
       "base": "<p>Error returned if an attempt is made to delete a patch baseline that is registered for a patch group.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceLimitExceededException": {
       "base": "<p>Error returned when the caller has exceeded the default resource quotas. For example, too many maintenance windows or patch baselines have been created.</p> <p>For information about resource quotas in Systems Manager, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/ssm.html#limits_ssm\">Systems Manager service quotas</a> in the <i>Amazon Web Services General Reference</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified parameter to be shared could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyConflictException": {
       "base": "<p>The hash provided in the call doesn't match the stored hash. This exception is thrown when trying to update an obsolete policy version or when multiple requests to update a policy are sent.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyInvalidParameterException": {
       "base": "<p>One or more parameters specified for the call aren't valid. Verify the parameters and their values and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyLimitExceededException": {
       "base": "<p>The <a>PutResourcePolicy</a> API action enforces two limits. A policy can't be greater than 1024 bytes in size. And only one policy can be attached to <code>OpsItemGroup</code>. Verify these limits and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyMaxResults": {
       "base": null,
@@ -7611,8 +7259,7 @@
     },
     "ResourcePolicyNotFoundException": {
       "base": "<p>No policies with the specified policy ID and hash could be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyParameterNamesList": {
       "base": null,
@@ -7656,13 +7303,11 @@
     },
     "ResumeSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResumeSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReviewInformation": {
       "base": "<p>Information about the result of a document review request.</p>",
@@ -7788,28 +7433,23 @@
     },
     "SendAutomationSignalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendAutomationSignalResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendCommandRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendCommandResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request exceeds the service quota. Service quotas, also referred to as limits, are the maximum number of service resources or operations for your Amazon Web Services account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceRole": {
       "base": null,
@@ -7844,8 +7484,7 @@
     },
     "ServiceSettingNotFound": {
       "base": "<p>The specified service setting wasn't found. Either the service name or the setting hasn't been provisioned by the Amazon Web Services service team.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceSettingValue": {
       "base": null,
@@ -8057,63 +7696,51 @@
     },
     "StartAccessRequestRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAccessRequestResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAssociationsOnceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAssociationsOnceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAutomationExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAutomationExecutionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartChangeRequestExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartChangeRequestExecutionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExecutionPreviewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExecutionPreviewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StatusAdditionalInfo": {
       "base": null,
@@ -8156,8 +7783,7 @@
     },
     "StatusUnchanged": {
       "base": "<p>The updated status is the same as the current status.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StepExecution": {
       "base": "<p>Detailed information about an the execution state of an Automation step.</p>",
@@ -8210,13 +7836,11 @@
     },
     "StopAutomationExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopAutomationExecutionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopType": {
       "base": null,
@@ -8464,8 +8088,7 @@
     },
     "SubTypeCountLimitExceededException": {
       "base": "<p>The sub-type count exceeded the limit for the inventory type.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Tag": {
       "base": "<p>Metadata that you assign to your Amazon Web Services resources. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. In Amazon Web Services Systems Manager, you can apply tags to Systems Manager documents (SSM documents), managed nodes, maintenance windows, parameters, patch baselines, OpsItems, and OpsMetadata.</p>",
@@ -8521,8 +8144,7 @@
     },
     "TargetInUseException": {
       "base": "<p>You specified the <code>Safe</code> option for the DeregisterTargetFromMaintenanceWindow operation, but the target is still referenced in a task.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TargetKey": {
       "base": null,
@@ -8602,8 +8224,7 @@
     },
     "TargetNotConnected": {
       "base": "<p>The specified target managed node for the session isn't fully configured for use with Session Manager. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started.html\">Setting up Session Manager</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. This error is also returned if you attempt to start a session on a managed node that is located in a different account or Region</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TargetParameterList": {
       "base": null,
@@ -8678,18 +8299,15 @@
     },
     "TerminateSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TerminateSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingException": {
       "base": "<p>The request or operation couldn't be performed because the service is throttling requests.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeoutSeconds": {
       "base": null,
@@ -8708,13 +8326,11 @@
     },
     "TooManyTagsError": {
       "base": "<p>The <code>Targets</code> parameter includes too many tags. Remove one or more tags and try the command again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TooManyUpdates": {
       "base": "<p>There are concurrent updates for a resource that supports one update at a time.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TotalCount": {
       "base": null,
@@ -8724,8 +8340,7 @@
     },
     "TotalSizeLimitExceededException": {
       "base": "<p>The size of inventory data has exceeded the total size limit for the resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UUID": {
       "base": null,
@@ -8738,193 +8353,155 @@
     },
     "UnlabelParameterVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnlabelParameterVersionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedCalendarException": {
       "base": "<p>The calendar entry contained in the specified SSM document isn't supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedFeatureRequiredException": {
       "base": "<p>Patching for applications released by Microsoft is only available on EC2 instances and advanced instances. To patch applications released by Microsoft on on-premises servers and VMs, you must enable advanced instances. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-managedinstances-advanced.html\">Turning on the advanced-instances tier</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedInventoryItemContextException": {
       "base": "<p>The <code>Context</code> attribute that you specified for the <code>InventoryItem</code> isn't allowed for this inventory type. You can only use the <code>Context</code> attribute with inventory types like <code>AWS:ComplianceItem</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedInventorySchemaVersionException": {
       "base": "<p>Inventory item type schema version has to match supported versions in the service. Check output of GetInventorySchema to see the available schema version for each type.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedOperatingSystem": {
       "base": "<p>The operating systems you specified isn't supported, or the operation isn't supported for the operating system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedOperationException": {
       "base": "<p>This operation is not supported for the current account. You must first enable the Systems Manager integrated experience in your account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedParameterType": {
       "base": "<p>The parameter type isn't supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedPlatformType": {
       "base": "<p>The document doesn't support the platform type of the given managed node IDs. For example, you sent an document for a Windows managed node to a Linux node.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssociationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssociationStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssociationStatusResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentDefaultVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentDefaultVersionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceWindowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceWindowResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceWindowTargetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceWindowTargetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceWindowTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMaintenanceWindowTaskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateManagedInstanceRoleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateManagedInstanceRoleResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOpsItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOpsItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOpsMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOpsMetadataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePatchBaselineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePatchBaselineResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceDataSyncRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceDataSyncResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceSettingRequest": {
       "base": "<p>The request body of the UpdateServiceSetting API operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceSettingResult": {
       "base": "<p>The result body of the UpdateServiceSetting API operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -8952,8 +8529,7 @@
     },
     "ValidationException": {
       "base": "<p>The request isn't valid. Verify that you entered valid contents for the command and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Version": {
       "base": null,

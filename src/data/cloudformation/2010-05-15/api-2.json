@@ -4763,7 +4763,8 @@
         "PropertyDifferences":{"shape":"PropertyDifferences"},
         "StackResourceDriftStatus":{"shape":"StackResourceDriftStatus"},
         "Timestamp":{"shape":"Timestamp"},
-        "ModuleInfo":{"shape":"ModuleInfo"}
+        "ModuleInfo":{"shape":"ModuleInfo"},
+        "DriftStatusReason":{"shape":"StackResourceDriftStatusReason"}
       }
     },
     "StackResourceDriftInformation":{
@@ -4788,7 +4789,8 @@
         "IN_SYNC",
         "MODIFIED",
         "DELETED",
-        "NOT_CHECKED"
+        "NOT_CHECKED",
+        "UNKNOWN"
       ]
     },
     "StackResourceDriftStatusFilters":{
@@ -4797,6 +4799,7 @@
       "max":4,
       "min":1
     },
+    "StackResourceDriftStatusReason":{"type":"string"},
     "StackResourceDrifts":{
       "type":"list",
       "member":{"shape":"StackResourceDrift"}

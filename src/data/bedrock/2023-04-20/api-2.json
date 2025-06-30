@@ -2,7 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-04-20",
-    "auth":["aws.auth#sigv4"],
+    "auth":[
+      "aws.auth#sigv4",
+      "smithy.api#httpBearerAuth"
+    ],
     "endpointPrefix":"bedrock",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -1251,6 +1254,15 @@
       "max":2048,
       "min":0
     },
+    "AttributeType":{
+      "type":"string",
+      "enum":[
+        "STRING",
+        "NUMBER",
+        "BOOLEAN",
+        "STRING_LIST"
+      ]
+    },
     "AuthorizationStatus":{
       "type":"string",
       "enum":[
@@ -1372,6 +1384,12 @@
       "max":140,
       "min":0,
       "pattern":"[a-z0-9-]{1,63}[.]{1}[a-z0-9-]{1,63}([a-z0-9-]{1,63}[.]){0,2}[a-z0-9-]{1,63}([:][a-z0-9-]{1,63}){0,2}(/[a-z0-9]{12}|)"
+    },
+    "BedrockRerankingModelArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/(.*))?"
     },
     "Boolean":{
       "type":"boolean",
@@ -2500,6 +2518,25 @@
         "sources":{"shape":"ExternalSources"},
         "generationConfiguration":{"shape":"ExternalSourcesGenerationConfiguration"}
       }
+    },
+    "FieldForReranking":{
+      "type":"structure",
+      "required":["fieldName"],
+      "members":{
+        "fieldName":{"shape":"FieldForRerankingFieldNameString"}
+      }
+    },
+    "FieldForRerankingFieldNameString":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
+    "FieldsForReranking":{
+      "type":"list",
+      "member":{"shape":"FieldForReranking"},
+      "max":100,
+      "min":1,
+      "sensitive":true
     },
     "FilterAttribute":{
       "type":"structure",
@@ -3933,6 +3970,17 @@
       "min":1,
       "sensitive":true
     },
+    "ImplicitFilterConfiguration":{
+      "type":"structure",
+      "required":[
+        "metadataAttributes",
+        "modelArn"
+      ],
+      "members":{
+        "metadataAttributes":{"shape":"MetadataAttributeSchemaList"},
+        "modelArn":{"shape":"BedrockModelArn"}
+      }
+    },
     "ImportedModelArn":{
       "type":"string",
       "max":1011,
@@ -4197,7 +4245,9 @@
       "members":{
         "numberOfResults":{"shape":"KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger"},
         "overrideSearchType":{"shape":"SearchType"},
-        "filter":{"shape":"RetrievalFilter"}
+        "filter":{"shape":"RetrievalFilter"},
+        "implicitFilterConfiguration":{"shape":"ImplicitFilterConfiguration"},
+        "rerankingConfiguration":{"shape":"VectorSearchRerankingConfiguration"}
       }
     },
     "KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger":{
@@ -4917,6 +4967,46 @@
       "min":0,
       "sensitive":true
     },
+    "MetadataAttributeSchema":{
+      "type":"structure",
+      "required":[
+        "key",
+        "type",
+        "description"
+      ],
+      "members":{
+        "key":{"shape":"MetadataAttributeSchemaKeyString"},
+        "type":{"shape":"AttributeType"},
+        "description":{"shape":"MetadataAttributeSchemaDescriptionString"}
+      },
+      "sensitive":true
+    },
+    "MetadataAttributeSchemaDescriptionString":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\s\\S]+"
+    },
+    "MetadataAttributeSchemaKeyString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\s\\S]+"
+    },
+    "MetadataAttributeSchemaList":{
+      "type":"list",
+      "member":{"shape":"MetadataAttributeSchema"},
+      "max":25,
+      "min":1
+    },
+    "MetadataConfigurationForReranking":{
+      "type":"structure",
+      "required":["selectionMode"],
+      "members":{
+        "selectionMode":{"shape":"RerankingMetadataSelectionMode"},
+        "selectiveModeConfiguration":{"shape":"RerankingMetadataSelectiveModeConfiguration"}
+      }
+    },
     "MetricFloat":{
       "type":"float",
       "box":true
@@ -5633,6 +5723,21 @@
       "min":0,
       "pattern":"[a-zA-Z0-9\\s._:/=+$@-]{0,256}"
     },
+    "RerankingMetadataSelectionMode":{
+      "type":"string",
+      "enum":[
+        "SELECTIVE",
+        "ALL"
+      ]
+    },
+    "RerankingMetadataSelectiveModeConfiguration":{
+      "type":"structure",
+      "members":{
+        "fieldsToInclude":{"shape":"FieldsForReranking"},
+        "fieldsToExclude":{"shape":"FieldsForReranking"}
+      },
+      "union":true
+    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
@@ -6223,6 +6328,41 @@
       "members":{
         "agreementDuration":{"shape":"String"}
       }
+    },
+    "VectorSearchBedrockRerankingConfiguration":{
+      "type":"structure",
+      "required":["modelConfiguration"],
+      "members":{
+        "modelConfiguration":{"shape":"VectorSearchBedrockRerankingModelConfiguration"},
+        "numberOfRerankedResults":{"shape":"VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger"},
+        "metadataConfiguration":{"shape":"MetadataConfigurationForReranking"}
+      }
+    },
+    "VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "VectorSearchBedrockRerankingModelConfiguration":{
+      "type":"structure",
+      "required":["modelArn"],
+      "members":{
+        "modelArn":{"shape":"BedrockRerankingModelArn"},
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"}
+      }
+    },
+    "VectorSearchRerankingConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"VectorSearchRerankingConfigurationType"},
+        "bedrockRerankingConfiguration":{"shape":"VectorSearchBedrockRerankingConfiguration"}
+      }
+    },
+    "VectorSearchRerankingConfigurationType":{
+      "type":"string",
+      "enum":["BEDROCK_RERANKING_MODEL"]
     },
     "VpcConfig":{
       "type":"structure",

@@ -5784,6 +5784,19 @@
       "member":{"shape":"Channel"},
       "max":4
     },
+    "ChatContactMetrics":{
+      "type":"structure",
+      "members":{
+        "MultiParty":{"shape":"NullableBoolean"},
+        "TotalMessages":{"shape":"Count"},
+        "TotalBotMessages":{"shape":"Count"},
+        "TotalBotMessageLengthInChars":{"shape":"Count"},
+        "ConversationCloseTimeInMillis":{"shape":"DurationMillis"},
+        "ConversationTurnCount":{"shape":"Count"},
+        "AgentFirstResponseTimestamp":{"shape":"timestamp"},
+        "AgentFirstResponseTimeInMillis":{"shape":"DurationMillis"}
+      }
+    },
     "ChatContent":{
       "type":"string",
       "max":16384,
@@ -5825,6 +5838,14 @@
       "members":{
         "ContentType":{"shape":"ChatContentType"},
         "Content":{"shape":"ChatContent"}
+      }
+    },
+    "ChatMetrics":{
+      "type":"structure",
+      "members":{
+        "ChatContactMetrics":{"shape":"ChatContactMetrics"},
+        "AgentMetrics":{"shape":"ParticipantMetrics"},
+        "CustomerMetrics":{"shape":"ParticipantMetrics"}
       }
     },
     "ChatParticipantRoleConfig":{
@@ -6025,6 +6046,7 @@
         "AnsweringMachineDetectionStatus":{"shape":"AnsweringMachineDetectionStatus"},
         "CustomerVoiceActivity":{"shape":"CustomerVoiceActivity"},
         "QualityMetrics":{"shape":"QualityMetrics"},
+        "ChatMetrics":{"shape":"ChatMetrics"},
         "DisconnectDetails":{"shape":"DisconnectDetails"},
         "AdditionalEmailRecipients":{"shape":"AdditionalEmailRecipients"},
         "SegmentAttributes":{"shape":"SegmentAttributes"},
@@ -6482,6 +6504,7 @@
         "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },
+    "Count":{"type":"integer"},
     "CreateAgentStatusRequest":{
       "type":"structure",
       "required":[
@@ -9326,6 +9349,10 @@
       "min":0
     },
     "DurationInSeconds":{"type":"integer"},
+    "DurationMillis":{
+      "type":"long",
+      "min":0
+    },
     "EffectiveHoursOfOperationList":{
       "type":"list",
       "member":{"shape":"EffectiveHoursOfOperations"}
@@ -13425,6 +13452,7 @@
         "UserIds":{"shape":"UserIdList"}
       }
     },
+    "NullableBoolean":{"type":"boolean"},
     "NullableProficiencyLevel":{
       "type":"float",
       "max":5.0,
@@ -13644,6 +13672,20 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "ParticipantMetrics":{
+      "type":"structure",
+      "members":{
+        "ParticipantId":{"shape":"ParticipantId"},
+        "ParticipantType":{"shape":"ParticipantType"},
+        "ConversationAbandon":{"shape":"NullableBoolean"},
+        "MessagesSent":{"shape":"Count"},
+        "NumResponses":{"shape":"Count"},
+        "MessageLengthInChars":{"shape":"Count"},
+        "TotalResponseTimeInMillis":{"shape":"DurationMillis"},
+        "MaxResponseTimeInMillis":{"shape":"DurationMillis"},
+        "LastMessageTimestamp":{"shape":"timestamp"}
+      }
     },
     "ParticipantRole":{
       "type":"string",

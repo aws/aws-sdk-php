@@ -11,18 +11,18 @@
     "DeletePartnership": "<p>Deletes the specified partnership. A partnership represents the connection between you and your trading partner. It ties together a profile and one or more trading capabilities.</p>",
     "DeleteProfile": "<p>Deletes the specified profile. A profile is the mechanism used to create the concept of a private network.</p>",
     "DeleteTransformer": "<p>Deletes the specified transformer. A transformer can take an EDI file as input and transform it into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or XML-formatted document as input and transform it into an EDI file.</p>",
-    "GenerateMapping": "<p>Takes sample input and output documents and uses Amazon Bedrock to generate a mapping automatically. Depending on the accuracy and other factors, you can then edit the mapping for your needs.</p> <note> <p>Before you can use the AI-assisted feature for Amazon Web Services B2B Data Interchange you must enable models in Amazon Bedrock. For details, see <a href=\"https://docs.aws.amazon.com/b2bi/latest/userguide/ai-assisted-mapping.html#ai-assist-prereq\">AI-assisted template mapping prerequisites</a> in the <i>Amazon Web Services B2B Data Interchange User guide</i>.</p> </note>",
+    "GenerateMapping": "<p>Takes sample input and output documents and uses Amazon Bedrock to generate a mapping automatically. Depending on the accuracy and other factors, you can then edit the mapping for your needs.</p> <note> <p>Before you can use the AI-assisted feature for Amazon Web Services B2B Data Interchange you must enable models in Amazon Bedrock. For details, see <a href=\"https://docs.aws.amazon.com/b2bi/latest/userguide/ai-assisted-mapping.html#ai-assist-prereq\">AI-assisted template mapping prerequisites</a> in the <i>Amazon Web Services B2B Data Interchange User guide</i>.</p> </note> <p>To generate a mapping, perform the following steps:</p> <ol> <li> <p>Start with an X12 EDI document to use as the input.</p> </li> <li> <p>Call <code>TestMapping</code> using your EDI document.</p> </li> <li> <p>Use the output from the <code>TestMapping</code> operation as either input or output for your GenerateMapping call, along with your sample file.</p> </li> </ol>",
     "GetCapability": "<p>Retrieves the details for the specified capability. A trading capability contains the information required to transform incoming EDI documents into JSON or XML outputs.</p>",
     "GetPartnership": "<p>Retrieves the details for a partnership, based on the partner and profile IDs specified. A partnership represents the connection between you and your trading partner. It ties together a profile and one or more trading capabilities.</p>",
     "GetProfile": "<p>Retrieves the details for the profile specified by the profile ID. A profile is the mechanism used to create the concept of a private network.</p>",
     "GetTransformer": "<p>Retrieves the details for the transformer specified by the transformer ID. A transformer can take an EDI file as input and transform it into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or XML-formatted document as input and transform it into an EDI file.</p>",
-    "GetTransformerJob": "<p>Returns the details of the transformer run, based on the Transformer job ID.</p>",
+    "GetTransformerJob": "<p>Returns the details of the transformer run, based on the Transformer job ID.</p> <note> <p>If 30 days have elapsed since your transformer job was started, the system deletes it. So, if you run <code>GetTransformerJob</code> and supply a <code>transformerId</code> and <code>transformerJobId</code> for a job that was started more than 30 days previously, you receive a 404 response.</p> </note>",
     "ListCapabilities": "<p>Lists the capabilities associated with your Amazon Web Services account for your current or specified region. A trading capability contains the information required to transform incoming EDI documents into JSON or XML outputs.</p>",
     "ListPartnerships": "<p>Lists the partnerships associated with your Amazon Web Services account for your current or specified region. A partnership represents the connection between you and your trading partner. It ties together a profile and one or more trading capabilities.</p>",
     "ListProfiles": "<p>Lists the profiles associated with your Amazon Web Services account for your current or specified region. A profile is the mechanism used to create the concept of a private network.</p>",
     "ListTagsForResource": "<p>Lists all of the tags associated with the Amazon Resource Name (ARN) that you specify. The resource can be a capability, partnership, profile, or transformer.</p>",
     "ListTransformers": "<p>Lists the available transformers. A transformer can take an EDI file as input and transform it into a JSON-or XML-formatted document. Alternatively, a transformer can take a JSON-or XML-formatted document as input and transform it into an EDI file.</p>",
-    "StartTransformerJob": "<p>Runs a job, using a transformer, to parse input EDI (electronic data interchange) file into the output structures used by Amazon Web Services B2B Data Interchange.</p> <p>If you only want to transform EDI (electronic data interchange) documents, you don't need to create profiles, partnerships or capabilities. Just create and configure a transformer, and then run the <code>StartTransformerJob</code> API to process your files.</p>",
+    "StartTransformerJob": "<p>Runs a job, using a transformer, to parse input EDI (electronic data interchange) file into the output structures used by Amazon Web Services B2B Data Interchange.</p> <p>If you only want to transform EDI (electronic data interchange) documents, you don't need to create profiles, partnerships or capabilities. Just create and configure a transformer, and then run the <code>StartTransformerJob</code> API to process your files.</p> <note> <p>The system stores transformer jobs for 30 days. During that period, you can run <a href=\"https://docs.aws.amazon.com/b2bi/latest/APIReference/API_GetTransformerJob.html\">GetTransformerJob</a> and supply its <code>transformerId</code> and <code>transformerJobId</code> to return details of the job.</p> </note>",
     "TagResource": "<p>Attaches a key-value pair to a resource, as identified by its Amazon Resource Name (ARN). Resources are capability, partnership, profile, transformers and other entities.</p> <p>There is no response returned from this call.</p>",
     "TestConversion": "<p>This operation mimics the latter half of a typical Outbound EDI request. It takes an input JSON/XML in the B2Bi shape as input, converts it to an X12 EDI string, and return that string.</p>",
     "TestMapping": "<p>Maps the input file according to the provided template file. The API call downloads the file contents from the Amazon S3 location, and passes the contents in as a string, to the <code>inputFileContent</code> parameter.</p>",
@@ -37,6 +37,13 @@
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {
+      }
+    },
+    "AdvancedOptions": {
+      "base": "<p>A structure that contains advanced options for EDI processing. Currently, only X12 advanced options are supported.</p>",
+      "refs": {
+        "InputConversion$advancedOptions": "<p>Specifies advanced options for the input conversion process. These options provide additional control over how EDI files are processed during transformation.</p>",
+        "TestParsingRequest$advancedOptions": "<p>Specifies advanced options for parsing the input EDI file. These options allow for more granular control over the parsing process, including split options for X12 files.</p>"
       }
     },
     "AmazonResourceName": {
@@ -349,13 +356,13 @@
     "GenerateMappingInputFileContent": {
       "base": null,
       "refs": {
-        "GenerateMappingRequest$inputFileContent": "<p>Provide the contents of a sample X12 EDI file (for inbound EDI) or JSON/XML file (for outbound EDI) to use as a starting point for the mapping.</p>"
+        "GenerateMappingRequest$inputFileContent": "<p>Provide the contents of a sample X12 EDI file, either in JSON or XML format, to use as a starting point for the mapping.</p>"
       }
     },
     "GenerateMappingOutputFileContent": {
       "base": null,
       "refs": {
-        "GenerateMappingRequest$outputFileContent": "<p>Provide the contents of a sample X12 EDI file (for outbound EDI) or JSON/XML file (for inbound EDI) to use as a target for the mapping.</p>"
+        "GenerateMappingRequest$outputFileContent": "<p>Provide the contents of a sample X12 EDI file, either in JSON or XML format, to use as a target for the mapping.</p>"
       }
     },
     "GenerateMappingRequest": {
@@ -424,6 +431,12 @@
       "refs": {
       }
     },
+    "InboundEdiOptions": {
+      "base": "<p>Contains options for processing inbound EDI files. These options allow for customizing how incoming EDI documents are processed.</p>",
+      "refs": {
+        "CapabilityOptions$inboundEdi": "<p>A structure that contains the inbound EDI options for the capability.</p>"
+      }
+    },
     "InputConversion": {
       "base": "<p>Contains the input formatting options for an inbound transformer (takes an X12-formatted EDI document as input and converts it to JSON or XML.</p>",
       "refs": {
@@ -473,6 +486,18 @@
       "base": null,
       "refs": {
         "SampleDocuments$keys": "<p>Contains an array of the Amazon S3 keys used to identify the location for your sample documents.</p>"
+      }
+    },
+    "LineLength": {
+      "base": null,
+      "refs": {
+        "WrapOptions$lineLength": "<p>Specifies the maximum length of a line before wrapping occurs. This value is used when <code>wrapBy</code> is set to <code>LINE_LENGTH</code>.</p>"
+      }
+    },
+    "LineTerminator": {
+      "base": null,
+      "refs": {
+        "WrapOptions$lineTerminator": "<p>Specifies the character sequence used to terminate lines when wrapping. Valid values:</p> <ul> <li> <p> <code>CRLF</code>: carriage return and line feed</p> </li> <li> <p> <code>LF</code>: line feed)</p> </li> <li> <p> <code>CR</code>: carriage return</p> </li> </ul>"
       }
     },
     "ListCapabilitiesRequest": {
@@ -641,6 +666,12 @@
         "ListProfilesResponse$nextToken": "<p>When additional results are obtained from the command, a <code>NextToken</code> parameter is returned in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional resources.</p>",
         "ListTransformersRequest$nextToken": "<p>When additional results are obtained from the command, a <code>NextToken</code> parameter is returned in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional resources.</p>",
         "ListTransformersResponse$nextToken": "<p>When additional results are obtained from the command, a <code>NextToken</code> parameter is returned in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional resources.</p>"
+      }
+    },
+    "ParsedSplitFileContentsList": {
+      "base": null,
+      "refs": {
+        "TestParsingResponse$parsedSplitFileContents": "<p>Returns an array of parsed file contents when the input file is split according to the specified split options. Each element in the array represents a separate split file's parsed content.</p>"
       }
     },
     "PartnerName": {
@@ -826,6 +857,24 @@
       "refs": {
       }
     },
+    "StartingFunctionalGroupControlNumber": {
+      "base": null,
+      "refs": {
+        "X12ControlNumbers$startingFunctionalGroupControlNumber": "<p>Specifies the starting functional group control number (GS06) to use for X12 EDI generation. This number is incremented for each new functional group. For the GS (functional group) envelope, Amazon Web Services B2B Data Interchange generates a functional group control number that is unique to the sender ID, receiver ID, and functional identifier code combination. </p>"
+      }
+    },
+    "StartingInterchangeControlNumber": {
+      "base": null,
+      "refs": {
+        "X12ControlNumbers$startingInterchangeControlNumber": "<p>Specifies the starting interchange control number (ISA13) to use for X12 EDI generation. This number is incremented for each new interchange. For the ISA (interchange) envelope, Amazon Web Services B2B Data Interchange generates an interchange control number that is unique for the ISA05 and ISA06 (sender) &amp; ISA07 and ISA08 (receiver) combination. </p>"
+      }
+    },
+    "StartingTransactionSetControlNumber": {
+      "base": null,
+      "refs": {
+        "X12ControlNumbers$startingTransactionSetControlNumber": "<p>Specifies the starting transaction set control number (ST02) to use for X12 EDI generation. This number is incremented for each new transaction set.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -836,6 +885,7 @@
         "CreateTransformerRequest$clientToken": "<p>Reserved for future use.</p>",
         "GenerateMappingResponse$mappingTemplate": "<p>Returns a mapping template based on your inputs.</p>",
         "GetTransformerJobResponse$message": "<p>Returns an optional error message, which gets populated when the job is not run successfully.</p>",
+        "ParsedSplitFileContentsList$member": null,
         "ServiceQuotaExceededException$resourceId": "<p>The ID for the resource that exceeded the quota, which caused the exception.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The resource type (profile, partnership, transformer, or capability) that exceeded the quota, which caused the exception.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>The code responsible for exceeding the quota, which caused the exception.</p>",
@@ -1067,10 +1117,34 @@
         "TestConversionResponse$validationMessages": "<p>Returns an array of strings, each containing a message that Amazon Web Services B2B Data Interchange generates during the conversion.</p>"
       }
     },
+    "WrapFormat": {
+      "base": null,
+      "refs": {
+        "WrapOptions$wrapBy": "<p>Specifies the method used for wrapping lines in the EDI output. Valid values:</p> <ul> <li> <p> <code>SEGMENT</code>: Wraps by segment.</p> </li> <li> <p> <code>ONE_LINE</code>: Indicates that the entire content is on a single line.</p> <note> <p>When you specify <code>ONE_LINE</code>, do not provide either the line length nor the line terminator value.</p> </note> </li> <li> <p> <code>LINE_LENGTH</code>: Wraps by character count, as specified by <code>lineLength</code> value.</p> </li> </ul>"
+      }
+    },
+    "WrapOptions": {
+      "base": "<p>Contains options for wrapping (line folding) in X12 EDI files. Wrapping controls how long lines are handled in the EDI output.</p>",
+      "refs": {
+        "X12Envelope$wrapOptions": null
+      }
+    },
+    "X12AcknowledgmentOptions": {
+      "base": "<p>Contains options for configuring X12 acknowledgments. These options control how functional and technical acknowledgments are handled.</p>",
+      "refs": {
+        "X12InboundEdiOptions$acknowledgmentOptions": "<p>Specifies acknowledgment options for inbound X12 EDI files. These options control how functional and technical acknowledgments are handled.</p>"
+      }
+    },
     "X12AcknowledgmentRequestedCode": {
       "base": null,
       "refs": {
         "X12InterchangeControlHeaders$acknowledgmentRequestedCode": "<p>Located at position ISA-14 in the header. The value \"1\" indicates that the sender is requesting an interchange acknowledgment at receipt of the interchange. The value \"0\" is used otherwise.</p>"
+      }
+    },
+    "X12AdvancedOptions": {
+      "base": "<p>Contains advanced options specific to X12 EDI processing, such as splitting large X12 files into smaller units.</p>",
+      "refs": {
+        "AdvancedOptions$x12": "<p>A structure that contains X12-specific advanced options, such as split options for processing X12 EDI files.</p>"
       }
     },
     "X12ApplicationReceiverCode": {
@@ -1089,6 +1163,12 @@
       "base": null,
       "refs": {
         "X12Delimiters$componentSeparator": "<p>The component, or sub-element, separator. The default value is <code>:</code> (colon).</p>"
+      }
+    },
+    "X12ControlNumbers": {
+      "base": "<p>Contains configuration for X12 control numbers used in X12 EDI generation. Control numbers are used to uniquely identify interchanges, functional groups, and transaction sets.</p>",
+      "refs": {
+        "X12OutboundEdiHeaders$controlNumbers": "<p>Specifies control number configuration for outbound X12 EDI headers. These settings determine the starting values for interchange, functional group, and transaction set control numbers.</p>"
       }
     },
     "X12DataElementSeparator": {
@@ -1118,10 +1198,22 @@
         "OutboundEdiOptions$x12": "<p>A structure that contains an X12 envelope structure.</p>"
       }
     },
+    "X12FunctionalAcknowledgment": {
+      "base": null,
+      "refs": {
+        "X12AcknowledgmentOptions$functionalAcknowledgment": "<p>Specifies whether functional acknowledgments (997/999) should be generated for incoming X12 transactions. Valid values are <code>DO_NOT_GENERATE</code>, <code>GENERATE_ALL_SEGMENTS</code> and <code>GENERATE_WITHOUT_TRANSACTION_SET_RESPONSE_LOOP</code>.</p> <p>If you choose <code>GENERATE_WITHOUT_TRANSACTION_SET_RESPONSE_LOOP</code>, Amazon Web Services B2B Data Interchange skips the AK2_Loop when generating an acknowledgment document.</p>"
+      }
+    },
     "X12FunctionalGroupHeaders": {
       "base": "<p>Part of the X12 message structure. These are the functional group headers for the X12 EDI object.</p>",
       "refs": {
         "X12OutboundEdiHeaders$functionalGroupHeaders": "<p>The functional group headers for the X12 object.</p>"
+      }
+    },
+    "X12GS05TimeFormat": {
+      "base": "<p>Specifies the time format in the GS05 element (time) of the functional group header. The following formats use 24-hour clock time:</p> <ul> <li> <p> <code>HHMM</code> - Hours and minutes</p> </li> <li> <p> <code>HHMMSS</code> - Hours, minutes, and seconds</p> </li> <li> <p> <code>HHMMSSDD</code> - Hours, minutes, seconds, and decimal seconds</p> </li> </ul> <p>Where:</p> <ul> <li> <p> <code>HH</code> - Hours (00-23)</p> </li> <li> <p> <code>MM</code> - Minutes (00-59)</p> </li> <li> <p> <code>SS</code> - Seconds (00-59)</p> </li> <li> <p> <code>DD</code> - Hundredths of seconds (00-99)</p> </li> </ul>",
+      "refs": {
+        "X12OutboundEdiHeaders$gs05TimeFormat": null
       }
     },
     "X12IdQualifier": {
@@ -1129,6 +1221,12 @@
       "refs": {
         "X12InterchangeControlHeaders$senderIdQualifier": "<p>Located at position ISA-05 in the header. Qualifier for the sender ID. Together, the ID and qualifier uniquely identify the sending trading partner.</p>",
         "X12InterchangeControlHeaders$receiverIdQualifier": "<p>Located at position ISA-07 in the header. Qualifier for the receiver ID. Together, the ID and qualifier uniquely identify the receiving trading partner.</p>"
+      }
+    },
+    "X12InboundEdiOptions": {
+      "base": "<p>Contains options specific to processing inbound X12 EDI files.</p>",
+      "refs": {
+        "InboundEdiOptions$x12": "<p>A structure that contains X12-specific options for processing inbound X12 EDI files.</p>"
       }
     },
     "X12InterchangeControlHeaders": {
@@ -1171,6 +1269,24 @@
       "base": null,
       "refs": {
         "X12InterchangeControlHeaders$senderId": "<p>Located at position ISA-06 in the header. This value (along with the <code>senderIdQualifier</code>) identifies the sender of the interchange. </p>"
+      }
+    },
+    "X12SplitBy": {
+      "base": null,
+      "refs": {
+        "X12SplitOptions$splitBy": "<p>Specifies the method used to split X12 EDI files. Valid values include <code>TRANSACTION</code> (split by individual transaction sets), or <code>NONE</code> (no splitting).</p>"
+      }
+    },
+    "X12SplitOptions": {
+      "base": "<p>Contains options for splitting X12 EDI files into smaller units. This is useful for processing large EDI files more efficiently.</p>",
+      "refs": {
+        "X12AdvancedOptions$splitOptions": "<p>Specifies options for splitting X12 EDI files. These options control how large X12 files are divided into smaller, more manageable units.</p>"
+      }
+    },
+    "X12TechnicalAcknowledgment": {
+      "base": null,
+      "refs": {
+        "X12AcknowledgmentOptions$technicalAcknowledgment": "<p>Specifies whether technical acknowledgments (TA1) should be generated for incoming X12 interchanges. Valid values are <code>DO_NOT_GENERATE</code> and <code>GENERATE_ALL_SEGMENTS</code> and.</p>"
       }
     },
     "X12TransactionSet": {

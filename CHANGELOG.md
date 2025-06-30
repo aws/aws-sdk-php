@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Adds support for extracting error code from nested `error` property in error shapes.
+* `Aws\Bedrock` - Add support for API Keys, Re-Ranker, implicit filter for RAG / KB evaluation for Bedrock APIs.
+* `Aws\IAM` - Updated IAM ServiceSpecificCredential support to include expiration, API Key output format instead of username and password for services that will support API keys, and the ability to list credentials for all users in the account for a given service configuration.
+* `Aws\EventBridge` - Added support for EventBridge Dualstack endpoints in AWS GovCloud (US) regions (us-gov-east-1 and us-gov-west-1). The dualstack endpoints are identical for both FIPS and non-FIPS configurations, following the format: events.{region}.api.aws
+* `Aws\DynamoDB` - This change adds support for witnesses in global tables. It also adds a new table status, REPLICATION_NOT_AUTHORIZED. This status will indicate scenarios where global replicas table can't be utilized for data plane operations.
+* `Aws\QuickSight` - Introduced custom permission capabilities for reporting content. Added menu option in exploration to preserve configuration data when textbox menu option is used. Added support for Athena trusted identity propagation.
+* `Aws\Glue` - releasing source processing properties to support source properties for ODB integrations
+* `Aws\SSM` - Introduces AccessType, a new filter value for the DescribeSessions API.
+* `Aws\CloudFormation` - Added support for UNKNOWN drift status.
+* `Aws\ARCZonalShift` - Added support for on-demand practice runs and balanced capacity checks in ARC autoshift practice.
+* `Aws\B2bi` - Updated APIs to support inbound EDI split capabilities and additional Partnership-level configurations of generated EDI files' contents and format.
+* `Aws\BedrockRuntime` - Add API Key and document citations support for Bedrock Runtime APIs
+* `Aws\NetworkFlowMonitor` - Add ConflictExceptions to UpdateScope and DeleteScope operations for scopes being mutated.
+* `Aws\Connect` - This release introduces ChatMetrics to the model, providing comprehensive analytics insights for Amazon Connect chat conversations. Users can access these detailed metrics through the AWS Connect API by using the DescribeContact operation with their specific instance and contact IDs
+* `Aws\DataExchange` - This release updates resource Id with alphanumeric constraint, including Asset id, Revision id, Data Set id, Job id, and Event Action id.
+* `Aws\PCS` - Fixed the validation pattern for an instance profile Amazon Resource Name (ARN) in AWS PCS.
+* `Aws\MedicalImaging` - Added new fields to support the concept of primary image sets within the storage hierarchy.
+* `Aws\CloudWatchLogs` - Increase minimum length of queryId parameter to 1 character.
+* `Aws\Transfer` - Added support for dual-stack (IPv4 and IPv6) endpoints for SFTP public endpoints and VPC-internal endpoints (SFTP, FTPS, FTP, and AS2), enabling customers to configure new servers with IPv4 or dual-stack mode, convert existing servers to dual-stack, and use IPv6 with service APIs.
+* `Aws\ConfigService` - Updated ResourceType enum with new resource types onboarded by AWS Config as of June 2025
+* `Aws\Outposts` - Make ContactName and ContactPhoneNumber required fields when creating and updating Outpost Site Addresses.
+
 ## 3.348.1 - 2025-06-27
 
 * `Aws\GuardDuty` - Update JSON target for Kubernetes workload resource type.

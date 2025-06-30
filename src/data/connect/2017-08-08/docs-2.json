@@ -25,7 +25,7 @@
     "ClaimPhoneNumber": "<p>Claims an available phone number to your Amazon Connect instance or traffic distribution group. You can call this API only in the same Amazon Web Services Region where the Amazon Connect instance or traffic distribution group was created.</p> <p>For more information about how to use this operation, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/claim-phone-number.html\">Claim a phone number in your country</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/claim-phone-numbers-traffic-distribution-groups.html\">Claim phone numbers to traffic distribution groups</a> in the <i>Amazon Connect Administrator Guide</i>. </p> <important> <p>You can call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_SearchAvailablePhoneNumbers.html\">SearchAvailablePhoneNumbers</a> API for available phone numbers that you can claim. Call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ClaimPhoneNumber.html\">ClaimPhoneNumber</a> operation.</p> </important> <p>If you plan to claim and release numbers frequently, contact us for a service quota exception. Otherwise, it is possible you will be blocked from claiming and releasing any more numbers until up to 180 days past the oldest number released has expired.</p> <p>By default you can claim and release up to 200% of your maximum number of active phone numbers. If you claim and release phone numbers using the UI or API during a rolling 180 day cycle that exceeds 200% of your phone number service level quota, you will be blocked from claiming any more numbers until 180 days past the oldest number released has expired. </p> <p>For example, if you already have 99 claimed numbers and a service level quota of 99 phone numbers, and in any 180 day period you release 99, claim 99, and then release 99, you will have exceeded the 200% limit. At that point you are blocked from claiming any more numbers until you open an Amazon Web Services support ticket.</p>",
     "CompleteAttachedFileUpload": "<p>Allows you to confirm that the attached file has been uploaded using the pre-signed URL provided in the StartAttachedFileUpload API.</p>",
     "CreateAgentStatus": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Creates an agent status for the specified Amazon Connect instance.</p>",
-    "CreateContact": "<important> <p>Only the EMAIL and VOICE channels are supported. The supported initiation methods for EMAIL are: OUTBOUND, AGENT_REPLY, and FLOW. For VOICE the supported initiation methods are TRANSFER and the subtype connect:ExternalAudio. </p> </important> <p>Creates a new EMAIL or VOICE contact. </p>",
+    "CreateContact": "<important> <p>Only the VOICE, EMAIL, and TASK channels are supported. </p> <ul> <li> <p>For VOICE: The supported initiation method is <code>TRANSFER</code>. The contacts created with this initiation method have a subtype <code>connect:ExternalAudio</code>. </p> </li> <li> <p>For EMAIL: The supported initiation methods are <code>OUTBOUND</code>, <code>AGENT_REPLY</code>, and <code>FLOW</code>. </p> </li> <li> <p>For TASK: The supported initiation method is <code>API</code>. Contacts created with this API have a sub-type of <code>connect:ExternalTask</code>.</p> </li> </ul> </important> <p>Creates a new VOICE, EMAIL, or TASK contact. </p> <p>After a contact is created, you can move it to the desired state by using the <code>InitiateAs</code> parameter. While you can use API to create task contacts that are in the <code>COMPLETED</code> state, you must contact Amazon Web Services Support before using it for bulk import use cases. Bulk import causes your requests to be throttled or fail if your CreateContact limits aren't high enough. </p>",
     "CreateContactFlow": "<p>Creates a flow for the specified Amazon Connect instance.</p> <p>You can also create and update flows using the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/flow-language.html\">Amazon Connect Flow language</a>.</p>",
     "CreateContactFlowModule": "<p>Creates a flow module for the specified Amazon Connect instance. </p>",
     "CreateContactFlowVersion": "<p>Publishes a new version of the flow provided. Versions are immutable and monotonically increasing. If the <code>FlowContentSha256</code> provided is different from the <code>FlowContentSha256</code> of the <code>$LATEST</code> published flow content, then an error is returned. This API only supports creating versions for flows of type <code>Campaign</code>.</p>",
@@ -1334,7 +1334,7 @@
         "Channels$member": null,
         "Contact$Channel": "<p>How the contact reached your contact center.</p>",
         "ContactSearchSummary$Channel": "<p>How the contact reached your contact center.</p>",
-        "CreateContactRequest$Channel": "<p>The channel for the contact</p> <important> <p>CreateContact only supports the EMAIL and VOICE channels. The following information that states other channels are supported is incorrect. We are working to update this topic.</p> </important>",
+        "CreateContactRequest$Channel": "<p>The channel for the contact.</p> <important> <p>The CHAT channel is not supported. The following information is incorrect. We're working to correct it.</p> </important>",
         "Dimensions$Channel": "<p>The channel used for grouping and filters.</p>",
         "MediaConcurrency$Channel": "<p>The channels that agents can handle in the Contact Control Panel (CCP).</p>",
         "RoutingProfileQueueConfigSummary$Channel": "<p>The channels this queue supports.</p>",
@@ -1359,6 +1359,12 @@
       "base": null,
       "refs": {
         "Filters$Channels": "<p>The channel to use to filter the metrics.</p>"
+      }
+    },
+    "ChatContactMetrics": {
+      "base": "<p>Information about the overall participant interactions at the contact level.</p>",
+      "refs": {
+        "ChatMetrics$ChatContactMetrics": "<p>Information about the overall participant interactions at the contact level.</p>"
       }
     },
     "ChatContent": {
@@ -1399,6 +1405,12 @@
       "refs": {
         "StartChatContactRequest$InitialMessage": "<p>The initial message to be sent to the newly created chat.</p>",
         "StartOutboundChatContactRequest$InitialSystemMessage": null
+      }
+    },
+    "ChatMetrics": {
+      "base": "<p>Information about how agent, bot, and customer interact in a chat contact.</p>",
+      "refs": {
+        "Contact$ChatMetrics": "<p>Information about how agent, bot, and customer interact in a chat contact.</p>"
       }
     },
     "ChatParticipantRoleConfig": {
@@ -1996,7 +2008,7 @@
         "AssociatedContactSummary$InitiationMethod": "<p>Indicates how the contact was initiated.</p>",
         "Contact$InitiationMethod": "<p>Indicates how the contact was initiated.</p>",
         "ContactSearchSummary$InitiationMethod": "<p>Indicates how the contact was initiated.</p>",
-        "CreateContactRequest$InitiationMethod": "<p>Indicates how the contact was initiated. </p> <important> <p>CreateContact only supports the following initiation methods: </p> <ul> <li> <p>For EMAIL: OUTBOUND, AGENT_REPLY, and FLOW. </p> </li> <li> <p>For VOICE: TRANSFER and the subtype connect:ExternalAudio. </p> </li> </ul> <p>The following information that states other initiation methods are supported is incorrect. We are working to update this topic.</p> </important>",
+        "CreateContactRequest$InitiationMethod": "<p>Indicates how the contact was initiated. </p> <important> <p>CreateContact only supports the following initiation methods. Valid values by channel are: </p> <ul> <li> <p>For VOICE: <code>TRANSFER</code> and the subtype <code>connect:ExternalAudio</code> </p> </li> <li> <p>For EMAIL: <code>OUTBOUND</code> | <code>AGENT_REPLY</code> | <code>FLOW</code> </p> </li> <li> <p>For TASK: <code>API</code> </p> </li> </ul> <p>The other channels listed below are incorrect. We're working to correct this information.</p> </important>",
         "InitiationMethodList$member": null
       }
     },
@@ -2015,7 +2027,7 @@
     "ContactReferences": {
       "base": null,
       "refs": {
-        "CreateContactRequest$References": "<p>A formatted URL that is shown to an agent in the Contact Control Panel (CCP). Tasks can have the following reference types at the time of creation: URL | NUMBER | STRING | DATE | EMAIL | ATTACHMENT.</p>",
+        "CreateContactRequest$References": "<p>A formatted URL that is shown to an agent in the Contact Control Panel (CCP). Tasks can have the following reference types at the time of creation: <code>URL</code> | <code>NUMBER</code> | <code>STRING</code> | <code>DATE</code> | <code>EMAIL</code> | <code>ATTACHMENT</code>.</p>",
         "StartEmailContactRequest$References": "<p>A formatted URL that is shown to an agent in the Contact Control Panel (CCP). Emails can have the following reference types at the time of creation: <code>URL</code> | <code>NUMBER</code> | <code>STRING</code> | <code>DATE</code>. <code>EMAIL</code> | <code>EMAIL_MESSAGE</code> |<code>ATTACHMENT</code> are not a supported reference type during email creation.</p>",
         "StartOutboundVoiceContactRequest$References": "<p>A formatted URL that is shown to an agent in the Contact Control Panel (CCP). Contacts can have the following reference types at the time of creation: <code>URL</code> | <code>NUMBER</code> | <code>STRING</code> | <code>DATE</code> | <code>EMAIL</code>. <code>ATTACHMENT</code> is not a supported reference type during voice contact creation.</p>",
         "StartTaskContactRequest$References": "<p>A formatted URL that is shown to an agent in the Contact Control Panel (CCP). Tasks can have the following reference types at the time of creation: <code>URL</code> | <code>NUMBER</code> | <code>STRING</code> | <code>DATE</code> | <code>EMAIL</code>. <code>ATTACHMENT</code> is not a supported reference type during task creation.</p>",
@@ -2137,6 +2149,18 @@
       "base": "<p>An object that can be used to specify Tag conditions or Hierarchy Group conditions inside the <code>SearchFilter</code>.</p> <p>This accepts an <code>OR</code> of <code>AND</code> (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul> <note> <p>Only one field can be populated. Maximum number of allowed Tag conditions is 25. Maximum number of allowed Hierarchy Group conditions is 20. </p> </note>",
       "refs": {
         "UserSearchFilter$UserAttributeFilter": "<p>An object that can be used to specify Tag conditions or Hierarchy Group conditions inside the SearchFilter.</p> <p>This accepts an <code>OR</code> of <code>AND</code> (List of List) input where:</p> <ul> <li> <p>The top level list specifies conditions that need to be applied with <code>OR</code> operator.</p> </li> <li> <p>The inner list specifies conditions that need to be applied with <code>AND</code> operator.</p> </li> </ul> <note> <p>Only one field can be populated. This object can’t be used along with TagFilter. Request can either contain TagFilter or UserAttributeFilter if SearchFilter is specified, combination of both is not supported and such request will throw AccessDeniedException.</p> </note>"
+      }
+    },
+    "Count": {
+      "base": null,
+      "refs": {
+        "ChatContactMetrics$TotalMessages": "<p>The number of chat messages on the contact.</p>",
+        "ChatContactMetrics$TotalBotMessages": "<p>The total number of bot and automated messages on a chat contact.</p>",
+        "ChatContactMetrics$TotalBotMessageLengthInChars": "<p>The total number of characters from bot and automated messages on a chat contact.</p>",
+        "ChatContactMetrics$ConversationTurnCount": "<p>The number of conversation turns in a chat contact, which represents the back-and-forth exchanges between customer and other participants.</p>",
+        "ParticipantMetrics$MessagesSent": "<p>Number of chat messages sent by Participant.</p>",
+        "ParticipantMetrics$NumResponses": "<p>Number of chat messages sent by Participant.</p>",
+        "ParticipantMetrics$MessageLengthInChars": "<p>Number of chat characters sent by Participant.</p>"
       }
     },
     "CreateAgentStatusRequest": {
@@ -3176,6 +3200,15 @@
       "refs": {
         "Expiry$DurationInSeconds": "<p>The number of seconds to wait before expiring the routing step.</p>",
         "RoutingCriteriaInputStepExpiry$DurationInSeconds": "<p>The number of seconds that the contact will be routed only to agents matching this routing&#x2028; step, if expiry was configured for this routing step.</p>"
+      }
+    },
+    "DurationMillis": {
+      "base": null,
+      "refs": {
+        "ChatContactMetrics$ConversationCloseTimeInMillis": "<p>The time it took for a contact to end after the last customer message.</p>",
+        "ChatContactMetrics$AgentFirstResponseTimeInMillis": "<p>The time for an agent to respond after obtaining a chat contact.</p>",
+        "ParticipantMetrics$TotalResponseTimeInMillis": "<p>Total chat response time by Participant.</p>",
+        "ParticipantMetrics$MaxResponseTimeInMillis": "<p>Maximum chat response time by Participant.</p>"
       }
     },
     "EffectiveHoursOfOperationList": {
@@ -4651,7 +4684,7 @@
     "InitiateAs": {
       "base": null,
       "refs": {
-        "CreateContactRequest$InitiateAs": "<p>Initial state of the contact when it's created</p>"
+        "CreateContactRequest$InitiateAs": "<p>Initial state of the contact when it's created. Only TASK channel contacts can be initiated with <code>COMPLETED</code> state.</p>"
       }
     },
     "InitiationMethodList": {
@@ -6175,6 +6208,13 @@
         "SendNotificationActionDefinition$Recipient": "<p>Notification recipient.</p>"
       }
     },
+    "NullableBoolean": {
+      "base": null,
+      "refs": {
+        "ChatContactMetrics$MultiParty": "<p>A boolean flag indicating whether multiparty chat or supervisor barge were enabled on this contact.</p>",
+        "ParticipantMetrics$ConversationAbandon": "<p>A boolean flag indicating whether the chat conversation was abandoned by a Participant.</p>"
+      }
+    },
     "NullableProficiencyLevel": {
       "base": null,
       "refs": {
@@ -6378,11 +6418,19 @@
       "base": null,
       "refs": {
         "CreateParticipantResponse$ParticipantId": "<p>The identifier for a chat participant. The participantId for a chat participant is the same throughout the chat lifecycle.</p>",
+        "ParticipantMetrics$ParticipantId": "<p>The Participant's ID.</p>",
         "RealTimeContactAnalysisSegmentAttachments$ParticipantId": "<p>The identifier of the participant.</p>",
         "RealTimeContactAnalysisSegmentEvent$ParticipantId": "<p>The identifier of the participant.</p>",
         "RealTimeContactAnalysisSegmentTranscript$ParticipantId": "<p>The identifier of the participant.</p>",
         "StartChatContactResponse$ParticipantId": "<p>The identifier for a chat participant. The participantId for a chat participant is the same throughout the chat lifecycle.</p>",
         "StartWebRTCContactResponse$ParticipantId": "<p>The identifier for a contact participant. The <code>ParticipantId</code> for a contact participant is the same throughout the contact lifecycle.</p>"
+      }
+    },
+    "ParticipantMetrics": {
+      "base": "<p>Information about a participant's interactions in a contact.</p>",
+      "refs": {
+        "ChatMetrics$AgentMetrics": "<p>Information about agent interactions in a contact.</p>",
+        "ChatMetrics$CustomerMetrics": "<p>Information about customer interactions in a contact.</p>"
       }
     },
     "ParticipantRole": {
@@ -6456,6 +6504,7 @@
     "ParticipantType": {
       "base": null,
       "refs": {
+        "ParticipantMetrics$ParticipantType": "<p>Information about the conversation participant. Following are the participant types: [Agent, Customer, Supervisor].</p>",
         "RecordingInfo$ParticipantType": "<p>Information about the conversation participant, whether they are an agent or contact. The participant types are as follows:</p> <ul> <li> <p>All</p> </li> <li> <p>Manager</p> </li> <li> <p>Agent</p> </li> <li> <p>Customer</p> </li> <li> <p>Thirdparty</p> </li> <li> <p>Supervisor</p> </li> </ul>"
       }
     },
@@ -10061,7 +10110,7 @@
     "UserInfo": {
       "base": "<p>The user details for the contact.</p>",
       "refs": {
-        "CreateContactRequest$UserInfo": "<p>User details for the contact</p> <important> <p>UserInfo is required when creating an EMAIL contact with OUTBOUND and AGENT_REPLY contact initiation methods.</p> </important>",
+        "CreateContactRequest$UserInfo": "<p>User details for the contact</p> <important> <p>UserInfo is required when creating an EMAIL contact with <code>OUTBOUND</code> and <code>AGENT_REPLY</code> contact initiation methods.</p> </important>",
         "UpdateContactRequest$UserInfo": "<p>Information about the agent associated with a contact. This parameter can only be updated for external audio contacts. It is used when you integrate third-party systems with Contact Lens for analytics. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-lens-integration.html\">Amazon Connect Contact Lens integration</a> in the <i> Amazon Connect Administrator Guide</i>.</p>"
       }
     },
@@ -10493,6 +10542,7 @@
         "AgentInfo$ConnectedToAgentTimestamp": "<p>The timestamp when the contact was connected to the agent.</p>",
         "AgentInfo$AfterContactWorkStartTimestamp": "<p>The date and time when the agent started doing After Contact Work for the contact, in UTC time.</p>",
         "AgentInfo$AfterContactWorkEndTimestamp": "<p>The date and time when the agent ended After Contact Work for the contact, in UTC time. In cases when agent finishes doing <code>AfterContactWork</code> for chat contacts and switches their activity status to offline or equivalent without clearing the contact in CCP, discrepancies may be noticed for <code>AfterContactWorkEndTimestamp</code>.</p>",
+        "ChatContactMetrics$AgentFirstResponseTimestamp": "<p>The agent first response timestamp for a chat contact.</p>",
         "Contact$InitiationTimestamp": "<p>The date and time this contact was initiated, in UTC time. For <code>INBOUND</code>, this is when the contact arrived. For <code>OUTBOUND</code>, this is when the agent began dialing. For <code>CALLBACK</code>, this is when the callback contact was created. For <code>TRANSFER</code> and <code>QUEUE_TRANSFER</code>, this is when the transfer was initiated. For <code>API</code>, this is when the request arrived. For <code>EXTERNAL_OUTBOUND</code>, this is when the agent started dialing the external participant. For <code>MONITOR</code>, this is when the supervisor started listening to a contact.</p>",
         "Contact$DisconnectTimestamp": "<p>The date and time that the customer endpoint disconnected from the current contact, in UTC time. In transfer scenarios, the DisconnectTimestamp of the previous contact indicates the date and time when that contact ended.</p>",
         "Contact$LastUpdateTimestamp": "<p>The timestamp when contact was last updated.</p>",
@@ -10518,6 +10568,7 @@
         "GetMetricDataRequest$EndTime": "<p>The timestamp, in UNIX Epoch time format, at which to end the reporting interval for the retrieval of historical metrics data. The time must be specified using an interval of 5 minutes, such as 11:00, 11:05, 11:10, and must be later than the start time timestamp.</p> <p>The time range between the start and end time must be less than 24 hours.</p>",
         "GetTaskTemplateResponse$LastModifiedTime": "<p>The timestamp when the task template was last modified.</p>",
         "GetTaskTemplateResponse$CreatedTime": "<p>The timestamp when the task template was created.</p>",
+        "ParticipantMetrics$LastMessageTimestamp": "<p>Timestamp of last chat message by Participant.</p>",
         "QueueInfo$EnqueueTimestamp": "<p>The timestamp when the contact was added to the queue.</p>",
         "RecordingInfo$StartTimestamp": "<p>When the conversation of the last leg of the recording started in UTC time.</p>",
         "RecordingInfo$StopTimestamp": "<p>When the conversation of the last leg of recording stopped in UTC time.</p>",

@@ -1193,15 +1193,15 @@
     "PutGroupPolicy": [
       {
         "input": {
-          "GroupName": "Admins",
-          "PolicyDocument": "{\"Version\":\"2012-10-17\",\"Statement\":{\"Effect\":\"Allow\",\"Action\":\"*\",\"Resource\":\"*\"}}",
-          "PolicyName": "AllPerms"
+          "GroupName": "PowerUsers",
+          "PolicyDocument": "{\"Version\":\"2012-10-17\",\"Statement\":{\"Effect\":\"Allow\",\"Action\":[\"iam:Get*\",\"iam:List*\",\"iam:Generate*\"],\"Resource\":\"*\"}}",
+          "PolicyName": "IAMReadAccess"
         },
         "comments": {
           "input": {},
           "output": {}
         },
-        "description": "The following command adds a policy named AllPerms to the IAM group named Admins.",
+        "description": "The following command adds a policy named IAMReadAccess to the IAM group named PowerUsers.",
         "id": "4bc17418-758f-4d0f-ab0c-4d00265fec2e",
         "title": "To add a policy to a group"
       }

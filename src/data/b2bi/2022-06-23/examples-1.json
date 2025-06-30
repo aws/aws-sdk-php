@@ -640,6 +640,64 @@
         },
         "id": "example-1",
         "title": "Sample TestParsing call"
+      },
+      {
+        "input": {
+          "advancedOptions": {
+            "x12": {
+              "splitOptions": {
+                "splitBy": "NONE"
+              }
+            }
+          },
+          "ediType": {
+            "x12Details": {
+              "version": "VERSION_4010",
+              "transactionSet": "X12_110"
+            }
+          },
+          "fileFormat": "JSON",
+          "inputFile": {
+            "key": "sampleFile.txt",
+            "bucketName": "test-bucket"
+          }
+        },
+        "output": {
+          "parsedFileContent": "Sample parsed file content"
+        },
+        "id": "example-2",
+        "title": "Sample TestParsing call without EDI Splitting"
+      },
+      {
+        "input": {
+          "advancedOptions": {
+            "x12": {
+              "splitOptions": {
+                "splitBy": "TRANSACTION"
+              }
+            }
+          },
+          "ediType": {
+            "x12Details": {
+              "version": "VERSION_4010",
+              "transactionSet": "X12_110"
+            }
+          },
+          "fileFormat": "JSON",
+          "inputFile": {
+            "key": "sampleFile.txt",
+            "bucketName": "test-bucket"
+          }
+        },
+        "output": {
+          "parsedFileContent": "",
+          "parsedSplitFileContents": [
+            "sample split parsed file content",
+            "sample split parsed file content"
+          ]
+        },
+        "id": "example-3",
+        "title": "Sample TestParsing call with EDI Splitting by Transaction"
       }
     ],
     "UntagResource": [

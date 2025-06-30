@@ -150,7 +150,8 @@
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocumentContent"},
         {"shape":"DocumentLimitExceeded"},
-        {"shape":"InvalidDocumentSchemaVersion"}
+        {"shape":"InvalidDocumentSchemaVersion"},
+        {"shape":"TooManyUpdates"}
       ]
     },
     "CreateMaintenanceWindow":{
@@ -271,7 +272,8 @@
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocument"},
         {"shape":"InvalidDocumentOperation"},
-        {"shape":"AssociatedInstances"}
+        {"shape":"AssociatedInstances"},
+        {"shape":"TooManyUpdates"}
       ]
     },
     "DeleteInventory":{
@@ -2048,7 +2050,8 @@
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocument"},
         {"shape":"InvalidDocumentOperation"},
-        {"shape":"InvalidDocumentVersion"}
+        {"shape":"InvalidDocumentVersion"},
+        {"shape":"TooManyUpdates"}
       ]
     },
     "UpdateMaintenanceWindow":{
@@ -2211,6 +2214,13 @@
         "Pending"
       ]
     },
+    "AccessType":{
+      "type":"string",
+      "enum":[
+        "Standard",
+        "JustInTime"
+      ]
+    },
     "Account":{"type":"string"},
     "AccountId":{
       "type":"string",
@@ -2286,8 +2296,7 @@
     },
     "AddTagsToResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AgentErrorCode":{
       "type":"string",
@@ -2392,8 +2401,7 @@
     },
     "AssociatedInstances":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Association":{
@@ -2425,8 +2433,7 @@
     },
     "AssociationAlreadyExists":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AssociationComplianceSeverity":{
@@ -2652,8 +2659,7 @@
     },
     "AssociationLimitExceeded":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AssociationList":{
@@ -3171,8 +3177,7 @@
     },
     "CancelCommandResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelMaintenanceWindowExecutionRequest":{
       "type":"structure",
@@ -3872,8 +3877,7 @@
     },
     "CreateResourceDataSyncResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreatedDate":{"type":"timestamp"},
     "Credentials":{
@@ -3915,8 +3919,7 @@
     },
     "DeleteActivationResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssociationRequest":{
       "type":"structure",
@@ -3928,8 +3931,7 @@
     },
     "DeleteAssociationResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDocumentRequest":{
       "type":"structure",
@@ -3943,8 +3945,7 @@
     },
     "DeleteDocumentResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteInventoryRequest":{
       "type":"structure",
@@ -3989,8 +3990,7 @@
     },
     "DeleteOpsItemResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteOpsMetadataRequest":{
       "type":"structure",
@@ -4001,8 +4001,7 @@
     },
     "DeleteOpsMetadataResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteParameterRequest":{
       "type":"structure",
@@ -4013,8 +4012,7 @@
     },
     "DeleteParameterResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteParametersRequest":{
       "type":"structure",
@@ -4053,8 +4051,7 @@
     },
     "DeleteResourceDataSyncResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResourcePolicyRequest":{
       "type":"structure",
@@ -4071,8 +4068,7 @@
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeliveryTimedOutCount":{"type":"integer"},
     "DeregisterManagedInstanceRequest":{
@@ -4084,8 +4080,7 @@
     },
     "DeregisterManagedInstanceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterPatchBaselineForPatchGroupRequest":{
       "type":"structure",
@@ -4862,8 +4857,7 @@
     },
     "DisassociateOpsItemRelatedItemResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DocumentARN":{
       "type":"string",
@@ -5259,8 +5253,7 @@
     },
     "DuplicateInstanceId":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Duration":{
@@ -6549,8 +6542,7 @@
     },
     "InvalidCommandId":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidDeleteInventoryParametersException":{
@@ -6618,8 +6610,7 @@
     },
     "InvalidFilterKey":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidFilterOption":{
@@ -6716,14 +6707,12 @@
     },
     "InvalidOutputFolder":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidOutputLocation":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameters":{
@@ -6742,8 +6731,7 @@
     },
     "InvalidPluginName":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidPolicyAttributeException":{
@@ -6762,14 +6750,12 @@
     },
     "InvalidResourceId":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidResourceType":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidResultAttributeException":{
@@ -7106,8 +7092,7 @@
     "InventoryTypeDisplayName":{"type":"string"},
     "InvocationDoesNotExist":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvocationTraceOutput":{
@@ -8062,8 +8047,7 @@
     },
     "ModifyDocumentPermissionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "NextToken":{"type":"string"},
     "Node":{
@@ -9779,8 +9763,7 @@
     },
     "PutComplianceItemsResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutInventoryMessage":{"type":"string"},
     "PutInventoryRequest":{
@@ -10041,8 +10024,7 @@
     },
     "RemoveTagsFromResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RequireType":{
       "type":"string",
@@ -10520,8 +10502,7 @@
     },
     "SendAutomationSignalResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "SendCommandRequest":{
       "type":"structure",
@@ -10614,7 +10595,8 @@
         "Reason":{"shape":"SessionReason"},
         "Details":{"shape":"SessionDetails"},
         "OutputUrl":{"shape":"SessionManagerOutputUrl"},
-        "MaxSessionDuration":{"shape":"MaxSessionDuration"}
+        "MaxSessionDuration":{"shape":"MaxSessionDuration"},
+        "AccessType":{"shape":"AccessType"}
       }
     },
     "SessionDetails":{
@@ -10641,7 +10623,8 @@
         "Target",
         "Owner",
         "Status",
-        "SessionId"
+        "SessionId",
+        "AccessType"
       ]
     },
     "SessionFilterList":{
@@ -10826,8 +10809,7 @@
     },
     "StartAssociationsOnceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartAutomationExecutionRequest":{
       "type":"structure",
@@ -10940,8 +10922,7 @@
     "StatusName":{"type":"string"},
     "StatusUnchanged":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "StepExecution":{
@@ -11055,8 +11036,7 @@
     },
     "StopAutomationExecutionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopType":{
       "type":"string",
@@ -11280,8 +11260,7 @@
     },
     "TooManyTagsError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TooManyUpdates":{
@@ -11475,8 +11454,7 @@
     },
     "UpdateDocumentMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDocumentRequest":{
       "type":"structure",
@@ -11658,8 +11636,7 @@
     },
     "UpdateManagedInstanceRoleResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateOpsItemRequest":{
       "type":"structure",
@@ -11685,8 +11662,7 @@
     },
     "UpdateOpsItemResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateOpsMetadataRequest":{
       "type":"structure",
@@ -11766,8 +11742,7 @@
     },
     "UpdateResourceDataSyncResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateServiceSettingRequest":{
       "type":"structure",
@@ -11782,8 +11757,7 @@
     },
     "UpdateServiceSettingResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{"type":"string"},
     "ValidNextStep":{

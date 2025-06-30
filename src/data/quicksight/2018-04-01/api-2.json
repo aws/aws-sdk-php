@@ -3897,8 +3897,7 @@
     },
     "AllSheetsFilterScopeConfiguration":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AltText":{
       "type":"string",
@@ -5108,7 +5107,8 @@
       "type":"structure",
       "members":{
         "WorkGroup":{"shape":"WorkGroup"},
-        "RoleArn":{"shape":"RoleArn"}
+        "RoleArn":{"shape":"RoleArn"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
       }
     },
     "AttributeAggregationFunction":{
@@ -5230,8 +5230,7 @@
     },
     "AxisDisplayDataDrivenRange":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AxisDisplayMinMaxRange":{
       "type":"structure",
@@ -5883,6 +5882,8 @@
       "members":{
         "ExportToCsv":{"shape":"CapabilityState"},
         "ExportToExcel":{"shape":"CapabilityState"},
+        "ExportToPdf":{"shape":"CapabilityState"},
+        "PrintReports":{"shape":"CapabilityState"},
         "CreateAndUpdateThemes":{"shape":"CapabilityState"},
         "AddOrRunAnomalyDetectionForAnalyses":{"shape":"CapabilityState"},
         "ShareAnalyses":{"shape":"CapabilityState"},
@@ -5897,7 +5898,11 @@
         "CreateAndUpdateDataSources":{"shape":"CapabilityState"},
         "ShareDataSources":{"shape":"CapabilityState"},
         "ViewAccountSPICECapacity":{"shape":"CapabilityState"},
-        "CreateSPICEDataset":{"shape":"CapabilityState"}
+        "CreateSPICEDataset":{"shape":"CapabilityState"},
+        "ExportToPdfInScheduledReports":{"shape":"CapabilityState"},
+        "ExportToCsvInScheduledReports":{"shape":"CapabilityState"},
+        "ExportToExcelInScheduledReports":{"shape":"CapabilityState"},
+        "IncludeContentInScheduledReportsEmail":{"shape":"CapabilityState"}
       }
     },
     "CapabilityState":{
@@ -19814,7 +19819,8 @@
       "type":"string",
       "enum":[
         "REDSHIFT",
-        "QBUSINESS"
+        "QBUSINESS",
+        "ATHENA"
       ]
     },
     "SessionLifetimeInMinutes":{
@@ -20123,7 +20129,8 @@
       "required":["SheetTextBoxId"],
       "members":{
         "SheetTextBoxId":{"shape":"ShortRestrictiveResourceId"},
-        "Content":{"shape":"SheetTextBoxContent"}
+        "Content":{"shape":"SheetTextBoxContent"},
+        "Interactions":{"shape":"TextBoxInteractionOptions"}
       }
     },
     "SheetTextBoxContent":{
@@ -21495,6 +21502,18 @@
         "TitleOptions":{"shape":"LabelOptions"},
         "PlaceholderOptions":{"shape":"TextControlPlaceholderOptions"},
         "InfoIconLabelOptions":{"shape":"SheetControlInfoIconLabelOptions"}
+      }
+    },
+    "TextBoxInteractionOptions":{
+      "type":"structure",
+      "members":{
+        "TextBoxMenuOption":{"shape":"TextBoxMenuOption"}
+      }
+    },
+    "TextBoxMenuOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
     "TextConditionalFormat":{

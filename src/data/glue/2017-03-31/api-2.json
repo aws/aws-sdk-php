@@ -10999,7 +10999,8 @@
     "IntegrationConfig":{
       "type":"structure",
       "members":{
-        "RefreshInterval":{"shape":"String128"}
+        "RefreshInterval":{"shape":"String128"},
+        "SourceProperties":{"shape":"IntegrationSourcePropertiesMap"}
       }
     },
     "IntegrationConflictOperationFault":{
@@ -11067,6 +11068,11 @@
         "Message":{"shape":"IntegrationErrorMessage"}
       },
       "exception":true
+    },
+    "IntegrationSourcePropertiesMap":{
+      "type":"map",
+      "key":{"shape":"IntegrationString"},
+      "value":{"shape":"IntegrationString"}
     },
     "IntegrationStatus":{
       "type":"string",

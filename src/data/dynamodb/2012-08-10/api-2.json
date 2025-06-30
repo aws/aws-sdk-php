@@ -60,7 +60,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ItemCollectionSizeLimitExceededException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ReplicatedWriteConflictException"}
       ],
       "endpointdiscovery":{},
       "operationContextParams":{
@@ -1534,6 +1535,13 @@
         "GlobalTableDescription":{"shape":"GlobalTableDescription"}
       }
     },
+    "CreateGlobalTableWitnessGroupMemberAction":{
+      "type":"structure",
+      "required":["RegionName"],
+      "members":{
+        "RegionName":{"shape":"RegionName"}
+      }
+    },
     "CreateReplicaAction":{
       "type":"structure",
       "required":["RegionName"],
@@ -1649,6 +1657,13 @@
       "required":["IndexName"],
       "members":{
         "IndexName":{"shape":"IndexName"}
+      }
+    },
+    "DeleteGlobalTableWitnessGroupMemberAction":{
+      "type":"structure",
+      "required":["RegionName"],
+      "members":{
+        "RegionName":{"shape":"RegionName"}
       }
     },
     "DeleteItemInput":{
@@ -2400,6 +2415,30 @@
         "DELETING",
         "UPDATING"
       ]
+    },
+    "GlobalTableWitnessDescription":{
+      "type":"structure",
+      "members":{
+        "RegionName":{"shape":"RegionName"},
+        "WitnessStatus":{"shape":"WitnessStatus"}
+      }
+    },
+    "GlobalTableWitnessDescriptionList":{
+      "type":"list",
+      "member":{"shape":"GlobalTableWitnessDescription"}
+    },
+    "GlobalTableWitnessGroupUpdate":{
+      "type":"structure",
+      "members":{
+        "Create":{"shape":"CreateGlobalTableWitnessGroupMemberAction"},
+        "Delete":{"shape":"DeleteGlobalTableWitnessGroupMemberAction"}
+      }
+    },
+    "GlobalTableWitnessGroupUpdateList":{
+      "type":"list",
+      "member":{"shape":"GlobalTableWitnessGroupUpdate"},
+      "max":1,
+      "min":1
     },
     "IdempotentParameterMismatchException":{
       "type":"structure",
@@ -3453,7 +3492,10 @@
         "DELETING",
         "ACTIVE",
         "REGION_DISABLED",
-        "INACCESSIBLE_ENCRYPTION_CREDENTIALS"
+        "INACCESSIBLE_ENCRYPTION_CREDENTIALS",
+        "ARCHIVING",
+        "ARCHIVED",
+        "REPLICATION_NOT_AUTHORIZED"
       ]
     },
     "ReplicaStatusDescription":{"type":"string"},
@@ -3474,7 +3516,8 @@
       "members":{
         "message":{"shape":"ErrorMessage"}
       },
-      "exception":true
+      "exception":true,
+      "retryable":{"throttling":false}
     },
     "ReplicationGroupUpdate":{
       "type":"structure",
@@ -3885,6 +3928,7 @@
         "LatestStreamArn":{"shape":"StreamArn"},
         "GlobalTableVersion":{"shape":"String"},
         "Replicas":{"shape":"ReplicaDescriptionList"},
+        "GlobalTableWitnesses":{"shape":"GlobalTableWitnessDescriptionList"},
         "RestoreSummary":{"shape":"RestoreSummary"},
         "SSEDescription":{"shape":"SSEDescription"},
         "ArchivalSummary":{"shape":"ArchivalSummary"},
@@ -3932,7 +3976,8 @@
         "ACTIVE",
         "INACCESSIBLE_ENCRYPTION_CREDENTIALS",
         "ARCHIVING",
-        "ARCHIVED"
+        "ARCHIVED",
+        "REPLICATION_NOT_AUTHORIZED"
       ]
     },
     "TableWarmThroughputDescription":{
@@ -4326,6 +4371,7 @@
         "TableClass":{"shape":"TableClass"},
         "DeletionProtectionEnabled":{"shape":"DeletionProtectionEnabled"},
         "MultiRegionConsistency":{"shape":"MultiRegionConsistency"},
+        "GlobalTableWitnessUpdates":{"shape":"GlobalTableWitnessGroupUpdateList"},
         "OnDemandThroughput":{"shape":"OnDemandThroughput"},
         "WarmThroughput":{"shape":"WarmThroughput"}
       }
@@ -4381,6 +4427,14 @@
         "ReadUnitsPerSecond":{"shape":"LongObject"},
         "WriteUnitsPerSecond":{"shape":"LongObject"}
       }
+    },
+    "WitnessStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "DELETING",
+        "ACTIVE"
+      ]
     },
     "WriteRequest":{
       "type":"structure",
