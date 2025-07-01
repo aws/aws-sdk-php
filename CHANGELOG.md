@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.349.0 - 2025-07-01
 
 * `Aws\Odb` - This release adds API operations for Oracle Database@AWS. You can use the APIs to create Exadata infrastructure, ODB networks, and Exadata and Autonomous VM clusters inside AWS data centers. The infrastructure is managed by OCI. You can integrate these resources with AWS services.
 * `Aws\RDS` - Amazon RDS Custom for Oracle now supports multi-AZ database instances.
