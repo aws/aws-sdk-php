@@ -1,0 +1,2013 @@
+{
+  "version": "2.0",
+  "service": "<p>Oracle Database@Amazon Web Services is an offering that enables you to access Oracle Exadata infrastructure managed by Oracle Cloud Infrastructure (OCI) inside Amazon Web Services data centers. You can migrate your Oracle Exadata workloads, establish low-latency connectivity with applications running on Amazon Web Services, and integrate with Amazon Web Services services. For example, you can run application servers in a virtual private cloud (VPC) and access an Oracle Exadata system running in Oracle Database@Amazon Web Services. You can get started with Oracle Database@Amazon Web Services by using the familiar Amazon Web Services Management Console, APIs, or CLI.</p> <p>This interface reference for Oracle Database@Amazon Web Services contains documentation for a programming or command line interface that you can use to manage Oracle Database@Amazon Web Services. Oracle Database@Amazon Web Services is asynchronous, which means that some interfaces might require techniques such as polling or callback functions to determine when a command has been applied. The reference structure is as follows.</p> <note> <p>In this preview release documentation, the links in the \"See Also\" sections do not work.</p> </note> <p> <b>Oracle Database@Amazon Web Services API Reference</b> </p> <ul> <li> <p>For the alphabetical list of API actions, see .</p> </li> <li> <p>For the alphabetical list of data types, see .</p> </li> <li> <p>For a list of common parameters, see <a>CommonParameters</a>.</p> </li> <li> <p>For descriptions of the error codes, see <a>CommonErrors</a>.</p> </li> </ul>",
+  "operations": {
+    "AcceptMarketplaceRegistration": "<p>Registers the Amazon Web Services Marketplace token for your Amazon Web Services account to activate your Oracle Database@Amazon Web Services subscription.</p>",
+    "CreateCloudAutonomousVmCluster": "<p>Creates a new Autonomous VM cluster in the specified Exadata infrastructure.</p>",
+    "CreateCloudExadataInfrastructure": "<p>Creates an Exadata infrastructure.</p>",
+    "CreateCloudVmCluster": "<p>Creates a VM cluster on the specified Exadata infrastructure.</p>",
+    "CreateOdbNetwork": "<p>Creates an ODB network.</p>",
+    "CreateOdbPeeringConnection": "<p>Creates a peering connection between an ODB network and either another ODB network or a customer-owned VPC.</p> <p>A peering connection enables private connectivity between the networks for application-tier communication.</p>",
+    "DeleteCloudAutonomousVmCluster": "<p>Deletes an Autonomous VM cluster.</p>",
+    "DeleteCloudExadataInfrastructure": "<p>Deletes the specified Exadata infrastructure. Before you use this operation, make sure to delete all of the VM clusters that are hosted on this Exadata infrastructure.</p>",
+    "DeleteCloudVmCluster": "<p>Deletes the specified VM cluster.</p>",
+    "DeleteOdbNetwork": "<p>Deletes the specified ODB network.</p>",
+    "DeleteOdbPeeringConnection": "<p>Deletes an ODB peering connection.</p> <p>When you delete an ODB peering connection, the underlying VPC peering connection is also deleted.</p>",
+    "GetCloudAutonomousVmCluster": "<p>Gets information about a specific Autonomous VM cluster.</p>",
+    "GetCloudExadataInfrastructure": "<p>Returns information about the specified Exadata infrastructure.</p>",
+    "GetCloudExadataInfrastructureUnallocatedResources": "<p>Retrieves information about unallocated resources in a specified Cloud Exadata Infrastructure.</p>",
+    "GetCloudVmCluster": "<p>Returns information about the specified VM cluster.</p>",
+    "GetDbNode": "<p>Returns information about the specified DB node.</p>",
+    "GetDbServer": "<p>Returns information about the specified database server.</p>",
+    "GetOciOnboardingStatus": "<p>Returns the tenancy activation link and onboarding status for your Amazon Web Services account.</p>",
+    "GetOdbNetwork": "<p>Returns information about the specified ODB network.</p>",
+    "GetOdbPeeringConnection": "<p>Retrieves information about an ODB peering connection.</p>",
+    "InitializeService": "<p>Initializes the ODB service for the first time in an account.</p>",
+    "ListAutonomousVirtualMachines": "<p>Lists all Autonomous VMs in an Autonomous VM cluster.</p>",
+    "ListCloudAutonomousVmClusters": "<p>Lists all Autonomous VM clusters in a specified Cloud Exadata infrastructure.</p>",
+    "ListCloudExadataInfrastructures": "<p>Returns information about the Exadata infrastructures owned by your Amazon Web Services account.</p>",
+    "ListCloudVmClusters": "<p>Returns information about the VM clusters owned by your Amazon Web Services account or only the ones on the specified Exadata infrastructure.</p>",
+    "ListDbNodes": "<p>Returns information about the DB nodes for the specified VM cluster.</p>",
+    "ListDbServers": "<p>Returns information about the database servers that belong to the specified Exadata infrastructure.</p>",
+    "ListDbSystemShapes": "<p>Returns information about the shapes that are available for an Exadata infrastructure.</p>",
+    "ListGiVersions": "<p>Returns information about Oracle Grid Infrastructure (GI) software versions that are available for a VM cluster for the specified shape.</p>",
+    "ListOdbNetworks": "<p>Returns information about the ODB networks owned by your Amazon Web Services account.</p>",
+    "ListOdbPeeringConnections": "<p>Lists all ODB peering connections or those associated with a specific ODB network.</p>",
+    "ListSystemVersions": "<p>Returns information about the system versions that are available for a VM cluster for the specified <code>giVersion</code> and <code>shape</code>.</p>",
+    "ListTagsForResource": "<p>Returns information about the tags applied to this resource.</p>",
+    "RebootDbNode": "<p>Reboots the specified DB node in a VM cluster.</p>",
+    "StartDbNode": "<p>Starts the specified DB node in a VM cluster.</p>",
+    "StopDbNode": "<p>Stops the specified DB node in a VM cluster.</p>",
+    "TagResource": "<p>Applies tags to the specified resource.</p>",
+    "UntagResource": "<p>Removes tags from the specified resource.</p>",
+    "UpdateCloudExadataInfrastructure": "<p>Updates the properties of an Exadata infrastructure resource.</p>",
+    "UpdateOdbNetwork": "<p>Updates properties of a specified ODB network.</p>"
+  },
+  "shapes": {
+    "AcceptMarketplaceRegistrationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AcceptMarketplaceRegistrationOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "Access": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$s3Access": "<p>Specifies the configuration for Amazon S3 access from the ODB network.</p>",
+        "CreateOdbNetworkInput$zeroEtlAccess": "<p>Specifies the configuration for Zero-ETL access from the ODB network.</p>",
+        "UpdateOdbNetworkInput$s3Access": "<p>Specifies the updated configuration for Amazon S3 access from the ODB network.</p>",
+        "UpdateOdbNetworkInput$zeroEtlAccess": "<p>Specifies the updated configuration for Zero-ETL access from the ODB network.</p>"
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>You don't have sufficient access to perform this action. Make sure you have the required permissions and try again.</p>",
+      "refs": {}
+    },
+    "AutonomousVirtualMachineList": {
+      "base": null,
+      "refs": {
+        "ListAutonomousVirtualMachinesOutput$autonomousVirtualMachines": "<p>The list of Autonomous VMs in the specified Autonomous VM cluster.</p>"
+      }
+    },
+    "AutonomousVirtualMachineSummary": {
+      "base": "<p>A summary of an Autonomous Virtual Machine (VM) within an Autonomous VM cluster.</p>",
+      "refs": {
+        "AutonomousVirtualMachineList$member": null
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$isMtlsEnabledVmCluster": "<p>Indicates whether mutual TLS (mTLS) authentication is enabled for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$isMtlsEnabledVmCluster": "<p>Indicates if mutual TLS (mTLS) authentication is enabled for the Autonomous VM cluster.</p>",
+        "CloudVmCluster$isLocalBackupEnabled": "<p>Indicates whether database backups to local Exadata storage is enabled for the VM cluster.</p>",
+        "CloudVmCluster$isSparseDiskgroupEnabled": "<p>Indicates whether the VM cluster is configured with a sparse disk group.</p>",
+        "CloudVmClusterSummary$isLocalBackupEnabled": "<p>Indicates whether database backups to local Exadata storage is enabled for the VM cluster.</p>",
+        "CloudVmClusterSummary$isSparseDiskgroupEnabled": "<p>Indicates whether the VM cluster is configured with a sparse disk group.</p>",
+        "CreateCloudAutonomousVmClusterInput$isMtlsEnabledVmCluster": "<p>Specifies whether to enable mutual TLS (mTLS) authentication for the Autonomous VM cluster.</p>",
+        "CreateCloudVmClusterInput$isLocalBackupEnabled": "<p>Specifies whether to enable database backups to local Exadata storage for the VM cluster.</p>",
+        "CreateCloudVmClusterInput$isSparseDiskgroupEnabled": "<p>Specifies whether to create a sparse disk group for the VM cluster.</p>",
+        "DataCollectionOptions$isDiagnosticsEventsEnabled": "<p>Indicates whether diagnostic collection is enabled for the VM cluster.</p>",
+        "DataCollectionOptions$isHealthMonitoringEnabled": "<p>Indicates whether health monitoring is enabled for the VM cluster.</p>",
+        "DataCollectionOptions$isIncidentLogsEnabled": "<p>Indicates whether incident logs are enabled for the cloud VM cluster.</p>",
+        "DbSystemShapeSummary$areServerTypesSupported": "<p>Indicates whether the hardware system model supports configurable database and server storage types.</p>",
+        "DeleteOdbNetworkInput$deleteAssociatedResources": "<p>Specifies whether to delete associated OCI networking resources along with the ODB network.</p>",
+        "MaintenanceWindow$isCustomActionTimeoutEnabled": "<p>Indicates whether custom action timeout is enabled for the maintenance window.</p>",
+        "MaintenanceWindow$skipRu": "<p>Indicates whether to skip release updates during maintenance.</p>"
+      }
+    },
+    "CloudAutonomousVmCluster": {
+      "base": "<p>Information about an Autonomous VM cluster resource.</p>",
+      "refs": {
+        "GetCloudAutonomousVmClusterOutput$cloudAutonomousVmCluster": "<p>The details of the requested Autonomous VM cluster.</p>"
+      }
+    },
+    "CloudAutonomousVmClusterList": {
+      "base": null,
+      "refs": {
+        "ListCloudAutonomousVmClustersOutput$cloudAutonomousVmClusters": "<p>The list of Autonomous VM clusters in the specified Cloud Exadata Infrastructure.</p>"
+      }
+    },
+    "CloudAutonomousVmClusterResourceDetails": {
+      "base": "<p>Resource details of an Autonomous VM cluster.</p>",
+      "refs": {
+        "CloudAutonomousVmClusterResourceDetailsList$member": null
+      }
+    },
+    "CloudAutonomousVmClusterResourceDetailsList": {
+      "base": null,
+      "refs": {
+        "CloudExadataInfrastructureUnallocatedResources$cloudAutonomousVmClusters": "<p>A list of Autonomous VM clusters associated with this Cloud Exadata Infrastructure.</p>"
+      }
+    },
+    "CloudAutonomousVmClusterSummary": {
+      "base": "<p>A summary of an Autonomous VM cluster.</p>",
+      "refs": {
+        "CloudAutonomousVmClusterList$member": null
+      }
+    },
+    "CloudExadataInfrastructure": {
+      "base": "<p>Information about an Exadata infrastructure.</p>",
+      "refs": {
+        "GetCloudExadataInfrastructureOutput$cloudExadataInfrastructure": "<p>The Exadata infrastructure.</p>"
+      }
+    },
+    "CloudExadataInfrastructureList": {
+      "base": null,
+      "refs": {
+        "ListCloudExadataInfrastructuresOutput$cloudExadataInfrastructures": "<p>The list of Exadata infrastructures along with their properties.</p>"
+      }
+    },
+    "CloudExadataInfrastructureSummary": {
+      "base": "<p>Information about an Exadata infrastructure.</p>",
+      "refs": {
+        "CloudExadataInfrastructureList$member": null
+      }
+    },
+    "CloudExadataInfrastructureUnallocatedResources": {
+      "base": "<p>Information about unallocated resources in the Cloud Exadata infrastructure.</p>",
+      "refs": {
+        "GetCloudExadataInfrastructureUnallocatedResourcesOutput$cloudExadataInfrastructureUnallocatedResources": "<p>Details about the unallocated resources in the specified Cloud Exadata infrastructure.</p>"
+      }
+    },
+    "CloudVmCluster": {
+      "base": "<p>Information about a VM cluster.</p>",
+      "refs": {
+        "GetCloudVmClusterOutput$cloudVmCluster": "<p>The VM cluster.</p>"
+      }
+    },
+    "CloudVmClusterList": {
+      "base": null,
+      "refs": {
+        "ListCloudVmClustersOutput$cloudVmClusters": "<p>The list of VM clusters along with their properties.</p>"
+      }
+    },
+    "CloudVmClusterSummary": {
+      "base": "<p>Information about a VM cluster.</p>",
+      "refs": {
+        "CloudVmClusterList$member": null
+      }
+    },
+    "ComputeModel": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$computeModel": "<p>The compute model of the Autonomous VM cluster: ECPU or OCPU.</p>",
+        "CloudAutonomousVmClusterSummary$computeModel": "<p>The compute model of the Autonomous VM cluster: ECPU or OCPU.</p>",
+        "CloudExadataInfrastructure$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>",
+        "CloudExadataInfrastructureSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>",
+        "CloudVmCluster$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>",
+        "CloudVmClusterSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>",
+        "DbServer$computeModel": "<p>The compute model of the database server (ECPU or OCPU).</p>",
+        "DbServerSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled.</p>",
+        "DbSystemShapeSummary$computeModel": "<p>The OCI model compute model used when you create or clone an instance: ECPU or OCPU. An ECPU is an abstracted measure of compute resources. ECPUs are based on the number of cores elastically allocated from a pool of compute and storage servers. An OCPU is a legacy physical measure of compute resources. OCPUs are based on the physical core of a processor with hyper-threading enabled. </p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p>Occurs when a conflict with the current status of your resource. Fix any inconsistencies with your resource and try again.</p>",
+      "refs": {}
+    },
+    "CreateCloudAutonomousVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCloudAutonomousVmClusterInputAutonomousDataStorageSizeInTBsDouble": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$autonomousDataStorageSizeInTBs": "<p>The data disk group size to be allocated for Autonomous Databases, in terabytes (TB).</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$clientToken": "<p>A client-provided token to ensure idempotency of the request.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputCpuCoreCountPerNodeInteger": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$cpuCoreCountPerNode": "<p>The number of CPU cores to be enabled per VM cluster node.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputDescriptionString": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$description": "<p>A user-provided description of the Autonomous VM cluster.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputMemoryPerOracleComputeUnitInGBsInteger": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$memoryPerOracleComputeUnitInGBs": "<p>The amount of memory to be allocated per OCPU, in GB.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputScanListenerPortNonTlsInteger": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$scanListenerPortNonTls": "<p>The SCAN listener port for non-TLS (TCP) protocol.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputScanListenerPortTlsInteger": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$scanListenerPortTls": "<p>The SCAN listener port for TLS (TCP) protocol.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputTimeZoneString": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$timeZone": "<p>The time zone to use for the Autonomous VM cluster.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterInputTotalContainerDatabasesInteger": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$totalContainerDatabases": "<p>The total number of Autonomous CDBs that you can create in the Autonomous VM cluster.</p>"
+      }
+    },
+    "CreateCloudAutonomousVmClusterOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCloudExadataInfrastructureInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCloudExadataInfrastructureInputAvailabilityZoneIdString": {
+      "base": null,
+      "refs": {
+        "CreateCloudExadataInfrastructureInput$availabilityZoneId": "<p>The AZ ID of the AZ where the Exadata infrastructure is located.</p> <p>This operation requires that you specify a value for either <code>availabilityZone</code> or <code>availabilityZoneId</code>.</p> <p>Example: <code>use1-az1</code> </p>"
+      }
+    },
+    "CreateCloudExadataInfrastructureInputAvailabilityZoneString": {
+      "base": null,
+      "refs": {
+        "CreateCloudExadataInfrastructureInput$availabilityZone": "<p>The name of the Availability Zone (AZ) where the Exadata infrastructure is located.</p> <p>This operation requires that you specify a value for either <code>availabilityZone</code> or <code>availabilityZoneId</code>.</p> <p>Example: <code>us-east-1a</code> </p>"
+      }
+    },
+    "CreateCloudExadataInfrastructureInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateCloudExadataInfrastructureInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, the Amazon Web Services SDK automatically generates a client token and uses it for the request to ensure idempotency. The client token is valid for up to 24 hours after it's first used.</p>"
+      }
+    },
+    "CreateCloudExadataInfrastructureInputDatabaseServerTypeString": {
+      "base": null,
+      "refs": {
+        "CreateCloudExadataInfrastructureInput$databaseServerType": "<p>The database server model type of the Exadata infrastructure. For the list of valid model names, use the <code>ListDbSystemShapes</code> operation.</p>"
+      }
+    },
+    "CreateCloudExadataInfrastructureInputShapeString": {
+      "base": null,
+      "refs": {
+        "CreateCloudExadataInfrastructureInput$shape": "<p>The model name of the Exadata infrastructure. For the list of valid model names, use the <code>ListDbSystemShapes</code> operation.</p>"
+      }
+    },
+    "CreateCloudExadataInfrastructureInputStorageServerTypeString": {
+      "base": null,
+      "refs": {
+        "CreateCloudExadataInfrastructureInput$storageServerType": "<p>The storage server model type of the Exadata infrastructure. For the list of valid model names, use the <code>ListDbSystemShapes</code> operation.</p>"
+      }
+    },
+    "CreateCloudExadataInfrastructureOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCloudVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCloudVmClusterInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, the Amazon Web Services SDK automatically generates a client token and uses it for the request to ensure idempotency. The client token is valid for up to 24 hours after it's first used.</p>"
+      }
+    },
+    "CreateCloudVmClusterInputClusterNameString": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$clusterName": "<p>A name for the Grid Infrastructure cluster. The name isn't case sensitive.</p>"
+      }
+    },
+    "CreateCloudVmClusterInputCpuCoreCountInteger": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$cpuCoreCount": "<p>The number of CPU cores to enable on the VM cluster.</p>"
+      }
+    },
+    "CreateCloudVmClusterInputGiVersionString": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$giVersion": "<p>A valid software version of Oracle Grid Infrastructure (GI). To get the list of valid values, use the <code>ListGiVersions</code> operation and specify the shape of the Exadata infrastructure.</p> <p>Example: <code>19.0.0.0</code> </p>"
+      }
+    },
+    "CreateCloudVmClusterInputHostnameString": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$hostname": "<p>The host name for the VM cluster.</p> <p>Constraints:</p> <ul> <li> <p>Can't be \"localhost\" or \"hostname\".</p> </li> <li> <p>Can't contain \"-version\".</p> </li> <li> <p>The maximum length of the combined hostname and domain is 63 characters.</p> </li> <li> <p>The hostname must be unique within the subnet.</p> </li> </ul>"
+      }
+    },
+    "CreateCloudVmClusterInputScanListenerPortTcpInteger": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$scanListenerPortTcp": "<p>The port number for TCP connections to the single client access name (SCAN) listener. </p> <p>Valid values: <code>1024–8999</code> with the following exceptions: <code>2484</code>, <code>6100</code>, <code>6200</code>, <code>7060</code>, <code>7070</code>, <code>7085</code>, and <code>7879</code> </p> <p>Default: <code>1521</code> </p>"
+      }
+    },
+    "CreateCloudVmClusterInputSystemVersionString": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$systemVersion": "<p>The version of the operating system of the image for the VM cluster.</p>"
+      }
+    },
+    "CreateCloudVmClusterInputTimeZoneString": {
+      "base": null,
+      "refs": {
+        "CreateCloudVmClusterInput$timeZone": "<p>The time zone for the VM cluster. For a list of valid values for time zone, you can check the options in the console.</p> <p>Default: UTC</p>"
+      }
+    },
+    "CreateCloudVmClusterOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOdbNetworkInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOdbNetworkInputAvailabilityZoneIdString": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$availabilityZoneId": "<p>The AZ ID of the AZ where the ODB network is located.</p> <p>This operation requires that you specify a value for either <code>availabilityZone</code> or <code>availabilityZoneId</code>.</p>"
+      }
+    },
+    "CreateOdbNetworkInputAvailabilityZoneString": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$availabilityZone": "<p>The Amazon Web Services Availability Zone (AZ) where the ODB network is located.</p> <p>This operation requires that you specify a value for either <code>availabilityZone</code> or <code>availabilityZoneId</code>.</p>"
+      }
+    },
+    "CreateOdbNetworkInputBackupSubnetCidrString": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$backupSubnetCidr": "<p>The CIDR range of the backup subnet for the ODB network.</p> <p>Constraints:</p> <ul> <li> <p>Must not overlap with the CIDR range of the client subnet.</p> </li> <li> <p>Must not overlap with the CIDR ranges of the VPCs that are connected to the ODB network.</p> </li> <li> <p>Must not use the following CIDR ranges that are reserved by OCI:</p> <ul> <li> <p> <code>100.106.0.0/16</code> and <code>100.107.0.0/16</code> </p> </li> <li> <p> <code>169.254.0.0/16</code> </p> </li> <li> <p> <code>224.0.0.0 - 239.255.255.255</code> </p> </li> <li> <p> <code>240.0.0.0 - 255.255.255.255</code> </p> </li> </ul> </li> </ul>"
+      }
+    },
+    "CreateOdbNetworkInputClientSubnetCidrString": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$clientSubnetCidr": "<p>The CIDR range of the client subnet for the ODB network.</p> <p>Constraints:</p> <ul> <li> <p>Must not overlap with the CIDR range of the backup subnet.</p> </li> <li> <p>Must not overlap with the CIDR ranges of the VPCs that are connected to the ODB network.</p> </li> <li> <p>Must not use the following CIDR ranges that are reserved by OCI:</p> <ul> <li> <p> <code>100.106.0.0/16</code> and <code>100.107.0.0/16</code> </p> </li> <li> <p> <code>169.254.0.0/16</code> </p> </li> <li> <p> <code>224.0.0.0 - 239.255.255.255</code> </p> </li> <li> <p> <code>240.0.0.0 - 255.255.255.255</code> </p> </li> </ul> </li> </ul>"
+      }
+    },
+    "CreateOdbNetworkInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you don't specify a client token, the Amazon Web Services SDK automatically generates a client token and uses it for the request to ensure idempotency. The client token is valid for up to 24 hours after it's first used.</p>"
+      }
+    },
+    "CreateOdbNetworkInputCustomDomainNameString": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$customDomainName": "<p>The domain name to use for the resources in the ODB network.</p>"
+      }
+    },
+    "CreateOdbNetworkInputDefaultDnsPrefixString": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$defaultDnsPrefix": "<p>The DNS prefix to the default DNS domain name. The default DNS domain name is oraclevcn.com.</p>"
+      }
+    },
+    "CreateOdbNetworkOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOdbPeeringConnectionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOdbPeeringConnectionInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateOdbPeeringConnectionInput$clientToken": "<p>The client token for the ODB peering connection request.</p> <p>Constraints:</p> <ul> <li> <p>Must be unique for each request.</p> </li> </ul>"
+      }
+    },
+    "CreateOdbPeeringConnectionOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CustomerContact": {
+      "base": "<p>A contact to receive notification from Oracle about maintenance updates for a specific Exadata infrastructure.</p>",
+      "refs": {
+        "CustomerContacts$member": null
+      }
+    },
+    "CustomerContactEmailString": {
+      "base": null,
+      "refs": {
+        "CustomerContact$email": "<p>The email address of the contact.</p>"
+      }
+    },
+    "CustomerContacts": {
+      "base": null,
+      "refs": {
+        "CloudExadataInfrastructure$customerContactsToSendToOCI": "<p>The email addresses of contacts to receive notification from Oracle about maintenance updates for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$customerContactsToSendToOCI": "<p>The email addresses of contacts to receive notification from Oracle about maintenance updates for the Exadata infrastructure.</p>",
+        "CreateCloudExadataInfrastructureInput$customerContactsToSendToOCI": "<p>The email addresses of contacts to receive notification from Oracle about maintenance updates for the Exadata infrastructure.</p>"
+      }
+    },
+    "DataCollectionOptions": {
+      "base": "<p>Information about the data collection options enabled for a VM cluster.</p>",
+      "refs": {
+        "CloudVmCluster$dataCollectionOptions": "<p>The set of diagnostic collection options enabled for the VM cluster.</p>",
+        "CloudVmClusterSummary$dataCollectionOptions": null,
+        "CreateCloudVmClusterInput$dataCollectionOptions": "<p>The set of preferences for the various diagnostic collection options for the VM cluster.</p>"
+      }
+    },
+    "DayOfWeek": {
+      "base": "<p>An enumeration of days of the week used for scheduling maintenance windows.</p>",
+      "refs": {
+        "DaysOfWeek$member": null
+      }
+    },
+    "DayOfWeekName": {
+      "base": null,
+      "refs": {
+        "DayOfWeek$name": "<p>The name of the day of the week.</p>"
+      }
+    },
+    "DaysOfWeek": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$daysOfWeek": "<p>The days of the week when maintenance can be performed.</p>"
+      }
+    },
+    "DbIormConfig": {
+      "base": "<p>The IORM configuration settings for the database.</p>",
+      "refs": {
+        "DbIormConfigList$member": null
+      }
+    },
+    "DbIormConfigList": {
+      "base": null,
+      "refs": {
+        "ExadataIormConfig$dbPlans": "<p>An array of IORM settings for all the database in the Exadata DB system.</p>"
+      }
+    },
+    "DbNode": {
+      "base": "<p>Information about a DB node.</p>",
+      "refs": {
+        "GetDbNodeOutput$dbNode": null
+      }
+    },
+    "DbNodeList": {
+      "base": null,
+      "refs": {
+        "ListDbNodesOutput$dbNodes": "<p>The list of DB nodes along with their properties.</p>"
+      }
+    },
+    "DbNodeMaintenanceType": {
+      "base": null,
+      "refs": {
+        "DbNode$maintenanceType": "<p>The type of database node maintenance. Either <code>VMDB_REBOOT_MIGRATION</code> or <code>EXADBXS_REBOOT_MIGRATION</code>.</p>",
+        "DbNodeSummary$maintenanceType": "<p>The type of maintenance the DB node. </p>"
+      }
+    },
+    "DbNodeResourceStatus": {
+      "base": null,
+      "refs": {
+        "DbNode$status": "<p>The current status of the DB node.</p>",
+        "DbNodeSummary$status": "<p>The current status of the DB node.</p>",
+        "RebootDbNodeOutput$status": "<p>The current status of the DB node after the reboot operation.</p>",
+        "StartDbNodeOutput$status": "<p>The current status of the DB node after the start operation.</p>",
+        "StopDbNodeOutput$status": "<p>The current status of the DB node after the stop operation.</p>"
+      }
+    },
+    "DbNodeSummary": {
+      "base": "<p>Information about a DB node.</p>",
+      "refs": {
+        "DbNodeList$member": null
+      }
+    },
+    "DbServer": {
+      "base": "<p>Information about a database server.</p>",
+      "refs": {
+        "GetDbServerOutput$dbServer": "<p>The details of the requested database server.</p>"
+      }
+    },
+    "DbServerList": {
+      "base": null,
+      "refs": {
+        "ListDbServersOutput$dbServers": "<p>The list of database servers along with their properties.</p>"
+      }
+    },
+    "DbServerPatchingDetails": {
+      "base": "<p>The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.</p>",
+      "refs": {
+        "DbServer$dbServerPatchingDetails": "<p>The scheduling details for the quarterly maintenance window. Patching and system updates take place during the maintenance window.</p>",
+        "DbServerSummary$dbServerPatchingDetails": null
+      }
+    },
+    "DbServerPatchingStatus": {
+      "base": null,
+      "refs": {
+        "DbServerPatchingDetails$patchingStatus": "<p>The status of the patching operation. Possible values are <code>SCHEDULED</code>, <code>MAINTENANCE_IN_PROGRESS</code>, <code>FAILED</code>, and <code>COMPLETE</code>.</p>"
+      }
+    },
+    "DbServerSummary": {
+      "base": "<p>Information about a database server.</p>",
+      "refs": {
+        "DbServerList$member": null
+      }
+    },
+    "DbSystemShapeList": {
+      "base": null,
+      "refs": {
+        "ListDbSystemShapesOutput$dbSystemShapes": "<p>The list of shapes and their properties.</p>"
+      }
+    },
+    "DbSystemShapeSummary": {
+      "base": "<p>Information about a hardware system model (shape) that's available for an Exadata infrastructure. The shape determines resources, such as CPU cores, memory, and storage, to allocate to the Exadata infrastructure.</p>",
+      "refs": {
+        "DbSystemShapeList$member": null
+      }
+    },
+    "DeleteCloudAutonomousVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCloudAutonomousVmClusterOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCloudExadataInfrastructureInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCloudExadataInfrastructureOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCloudVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCloudVmClusterOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOdbNetworkInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOdbNetworkOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOdbPeeringConnectionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOdbPeeringConnectionOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DiskRedundancy": {
+      "base": null,
+      "refs": {
+        "CloudVmCluster$diskRedundancy": "<p>The type of redundancy configured for the VM cluster. <code>NORMAL</code> is 2-way redundancy. <code>HIGH</code> is 3-way redundancy.</p>",
+        "CloudVmClusterSummary$diskRedundancy": "<p>The type of redundancy configured for the VM cluster. <code>NORMAL</code> is 2-way redundancy. <code>HIGH</code> is 3-way redundancy.</p>"
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$autonomousDataStorageSizeInTBs": "<p>The data storage size allocated for Autonomous Databases in the Autonomous VM cluster, in TB.</p>",
+        "CloudAutonomousVmCluster$availableAutonomousDataStorageSizeInTBs": "<p>The available data storage space for Autonomous Databases in the Autonomous VM cluster, in TB.</p>",
+        "CloudAutonomousVmCluster$dataStorageSizeInGBs": "<p>The total data storage allocated to the Autonomous VM cluster, in GB.</p>",
+        "CloudAutonomousVmCluster$dataStorageSizeInTBs": "<p>The total data storage allocated to the Autonomous VM cluster, in TB.</p>",
+        "CloudAutonomousVmCluster$exadataStorageInTBsLowestScaledValue": "<p>The minimum value to which you can scale down the Exadata storage, in TB.</p>",
+        "CloudAutonomousVmClusterResourceDetails$unallocatedAdbStorageInTBs": "<p>The amount of unallocated Autonomous Database storage in the Autonomous VM cluster, in terabytes.</p>",
+        "CloudAutonomousVmClusterSummary$autonomousDataStorageSizeInTBs": "<p>The total data storage allocated for Autonomous Databases in the Autonomous VM cluster, in TB.</p>",
+        "CloudAutonomousVmClusterSummary$availableAutonomousDataStorageSizeInTBs": "<p>The available data storage for Autonomous Databases in the Autonomous VM cluster, in TB.</p>",
+        "CloudAutonomousVmClusterSummary$dataStorageSizeInGBs": "<p>The total data storage allocated to the Autonomous VM cluster, in GB.</p>",
+        "CloudAutonomousVmClusterSummary$dataStorageSizeInTBs": "<p>The total data storage allocated to the Autonomous VM cluster, in TB.</p>",
+        "CloudAutonomousVmClusterSummary$exadataStorageInTBsLowestScaledValue": "<p>The lowest value to which Exadata storage can be scaled down, in TB.</p>",
+        "CloudExadataInfrastructure$dataStorageSizeInTBs": "<p>The size of the Exadata infrastructure's data disk group, in terabytes (TB).</p>",
+        "CloudExadataInfrastructure$maxDataStorageInTBs": "<p>The total amount of data disk group storage, in terabytes (TB), that's available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$dataStorageSizeInTBs": "<p>The size of the Exadata infrastructure's data disk group, in terabytes (TB).</p>",
+        "CloudExadataInfrastructureSummary$maxDataStorageInTBs": "<p>The total amount of data disk group storage, in terabytes (TB), that's available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureUnallocatedResources$exadataStorageInTBs": "<p>The amount of unallocated Exadata storage available, in terabytes (TB).</p>",
+        "CloudVmCluster$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TB), that's allocated for the VM cluster.</p>",
+        "CloudVmClusterSummary$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TB), that's allocated for the VM cluster.</p>",
+        "CreateCloudVmClusterInput$dataStorageSizeInTBs": "<p>The size of the data disk group, in terabytes (TBs), to allocate for the VM cluster.</p>"
+      }
+    },
+    "ExadataIormConfig": {
+      "base": "<p>The IORM settings of the Exadata DB system.</p>",
+      "refs": {
+        "CloudVmCluster$iormConfigCache": "<p>The ExadataIormConfig cache details for the VM cluster.</p>",
+        "CloudVmClusterSummary$iormConfigCache": null
+      }
+    },
+    "Float": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$percentProgress": "<p>The progress of the current operation on the Autonomous VM cluster, as a percentage.</p>",
+        "CloudAutonomousVmCluster$autonomousDataStoragePercentage": "<p>The percentage of data storage currently in use for Autonomous Databases in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$availableCpus": "<p>The number of CPU cores available for allocation to Autonomous Databases.</p>",
+        "CloudAutonomousVmCluster$cpuPercentage": "<p>The percentage of total CPU cores currently in use in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$provisionedCpus": "<p>The number of CPU cores currently provisioned in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$reclaimableCpus": "<p>The number of CPU cores that can be reclaimed from terminated or scaled-down Autonomous Databases.</p>",
+        "CloudAutonomousVmCluster$reservedCpus": "<p>The number of CPU cores reserved for system operations and redundancy.</p>",
+        "CloudAutonomousVmClusterSummary$percentProgress": "<p>The progress of the current operation on the Autonomous VM cluster, as a percentage.</p>",
+        "CloudAutonomousVmClusterSummary$autonomousDataStoragePercentage": "<p>The percentage of data storage currently in use for Autonomous Databases in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$availableCpus": "<p>The number of CPU cores available for allocation to Autonomous Databases.</p>",
+        "CloudAutonomousVmClusterSummary$cpuPercentage": "<p>The percentage of total CPU cores currently in use in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$provisionedCpus": "<p>The number of CPUs currently provisioned in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$reclaimableCpus": "<p>The number of CPUs that can be reclaimed from terminated or scaled-down Autonomous Databases.</p>",
+        "CloudAutonomousVmClusterSummary$reservedCpus": "<p>The number of CPUs reserved for system operations and redundancy.</p>",
+        "CloudExadataInfrastructure$percentProgress": "<p>The amount of progress made on the current operation on the Exadata infrastructure, expressed as a percentage.</p>",
+        "CloudExadataInfrastructureSummary$percentProgress": "<p>The amount of progress made on the current operation on the Exadata infrastructure, expressed as a percentage.</p>",
+        "CloudVmCluster$percentProgress": "<p>The amount of progress made on the current operation on the VM cluster, expressed as a percentage.</p>",
+        "CloudVmClusterSummary$percentProgress": "<p>The amount of progress made on the current operation on the VM cluster, expressed as a percentage.</p>",
+        "OdbNetwork$percentProgress": "<p>The amount of progress made on the current operation on the ODB network, expressed as a percentage.</p>",
+        "OdbNetworkSummary$percentProgress": "<p>The amount of progress made on the current operation on the ODB network, expressed as a percentage.</p>",
+        "OdbPeeringConnection$percentProgress": "<p>The percentage progress of the ODB peering connection creation or deletion.</p>",
+        "OdbPeeringConnectionSummary$percentProgress": "<p>The percentage progress of the ODB peering connection creation or deletion.</p>"
+      }
+    },
+    "GetCloudAutonomousVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCloudAutonomousVmClusterOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCloudExadataInfrastructureInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCloudExadataInfrastructureOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCloudExadataInfrastructureUnallocatedResourcesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCloudExadataInfrastructureUnallocatedResourcesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCloudVmClusterInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCloudVmClusterOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDbNodeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDbNodeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDbServerInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDbServerOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOciOnboardingStatusInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOciOnboardingStatusOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOdbNetworkInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOdbNetworkOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOdbPeeringConnectionInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOdbPeeringConnectionOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GiVersionList": {
+      "base": null,
+      "refs": {
+        "ListGiVersionsOutput$giVersions": "<p>The list of GI versions and their properties.</p>"
+      }
+    },
+    "GiVersionSummary": {
+      "base": "<p>Information about a specific version of Oracle Grid Infrastructure (GI) software that can be installed on a VM cluster.</p>",
+      "refs": {
+        "GiVersionList$member": null
+      }
+    },
+    "HoursOfDay": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$hoursOfDay": "<p>The hours of the day when maintenance can be performed.</p>"
+      }
+    },
+    "InitializeServiceInput": {
+      "base": null,
+      "refs": {}
+    },
+    "InitializeServiceOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "AutonomousVirtualMachineSummary$cpuCoreCount": "<p>The number of CPU cores allocated to this Autonomous VM.</p>",
+        "AutonomousVirtualMachineSummary$memorySizeInGBs": "<p>The amount of memory allocated to this Autonomous VM, in gigabytes (GB).</p>",
+        "AutonomousVirtualMachineSummary$dbNodeStorageSizeInGBs": "<p>The amount of storage allocated to this Autonomous Virtual Machine, in gigabytes (GB).</p>",
+        "CloudAutonomousVmCluster$availableContainerDatabases": "<p>The number of Autonomous CDBs that you can create with the currently available storage.</p>",
+        "CloudAutonomousVmCluster$cpuCoreCount": "<p>The total number of CPU cores in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$cpuCoreCountPerNode": "<p>The number of CPU cores enabled per node in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$dbNodeStorageSizeInGBs": "<p>The local node storage allocated to the Autonomous VM cluster, in gigabytes (GB).</p>",
+        "CloudAutonomousVmCluster$maxAcdsLowestScaledValue": "<p>The minimum value to which you can scale down the maximum number of Autonomous CDBs.</p>",
+        "CloudAutonomousVmCluster$memoryPerOracleComputeUnitInGBs": "<p>The amount of memory allocated per Oracle Compute Unit, in GB.</p>",
+        "CloudAutonomousVmCluster$memorySizeInGBs": "<p>The total amount of memory allocated to the Autonomous VM cluster, in gigabytes (GB).</p>",
+        "CloudAutonomousVmCluster$nodeCount": "<p>The number of database server nodes in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$nonProvisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that can't be provisioned because of resource constraints.</p>",
+        "CloudAutonomousVmCluster$provisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that can be provisioned in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$provisionedAutonomousContainerDatabases": "<p>The number of Autonomous CDBs currently provisioned in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$scanListenerPortNonTls": "<p>The SCAN listener port for non-TLS (TCP) protocol. The default is 1521.</p>",
+        "CloudAutonomousVmCluster$scanListenerPortTls": "<p>The SCAN listener port for TLS (TCP) protocol. The default is 2484.</p>",
+        "CloudAutonomousVmCluster$totalContainerDatabases": "<p>The total number of Autonomous Container Databases that can be created with the allocated local storage.</p>",
+        "CloudAutonomousVmClusterSummary$availableContainerDatabases": "<p>The number of Autonomous Container Databases that you can create with the currently available storage.</p>",
+        "CloudAutonomousVmClusterSummary$cpuCoreCount": "<p>The total number of CPU cores in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$cpuCoreCountPerNode": "<p>The number of CPU cores per node in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$dbNodeStorageSizeInGBs": "<p>The local node storage allocated to the Autonomous VM cluster, in GB.</p>",
+        "CloudAutonomousVmClusterSummary$maxAcdsLowestScaledValue": "<p>The lowest value to which you can scale down the maximum number of Autonomous CDBs.</p>",
+        "CloudAutonomousVmClusterSummary$memoryPerOracleComputeUnitInGBs": "<p>The amount of memory allocated per Oracle Compute Unit (OCU), in GB.</p>",
+        "CloudAutonomousVmClusterSummary$memorySizeInGBs": "<p>The total amount of memory allocated to the Autonomous VM cluster, in GB.</p>",
+        "CloudAutonomousVmClusterSummary$nodeCount": "<p>The number of database server nodes in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$nonProvisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that can't be provisioned because of resource constraints.</p>",
+        "CloudAutonomousVmClusterSummary$provisionableAutonomousContainerDatabases": "<p>The number of Autonomous CDBs that you can provision in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$provisionedAutonomousContainerDatabases": "<p>The number of Autonomous Container Databases currently provisioned in the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$scanListenerPortNonTls": "<p>The SCAN listener port for non-TLS (TCP) protocol.</p>",
+        "CloudAutonomousVmClusterSummary$scanListenerPortTls": "<p>The SCAN listener port for TLS (TCP) protocol.</p>",
+        "CloudAutonomousVmClusterSummary$totalContainerDatabases": "<p>The total number of Autonomous Container Databases that can be created in the Autonomous VM cluster.</p>",
+        "CloudExadataInfrastructure$activatedStorageCount": "<p>The number of storage servers requested for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$additionalStorageCount": "<p>The number of storage servers requested for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$availableStorageSizeInGBs": "<p>The amount of available storage, in gigabytes (GB), for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$computeCount": "<p>The number of database servers for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$cpuCount": "<p>The total number of CPU cores that are allocated to the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$dbNodeStorageSizeInGBs": "<p>The size of the Exadata infrastructure's local node storage, in gigabytes (GB).</p>",
+        "CloudExadataInfrastructure$maxCpuCount": "<p>The total number of CPU cores available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$maxDbNodeStorageSizeInGBs": "<p>The total amount of local node storage, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$maxMemoryInGBs": "<p>The total amount of memory, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$storageCount": "<p>The number of storage servers that are activated for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$totalStorageSizeInGBs": "<p>The total amount of storage, in gigabytes (GB), on the the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$activatedStorageCount": "<p>The number of storage servers requested for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$additionalStorageCount": "<p>The number of storage servers requested for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$availableStorageSizeInGBs": "<p>The amount of available storage, in gigabytes (GB), for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$computeCount": "<p>The number of database servers for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$cpuCount": "<p>The total number of CPU cores that are allocated to the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$dbNodeStorageSizeInGBs": "<p>The size of the Exadata infrastructure's local node storage, in gigabytes (GB).</p>",
+        "CloudExadataInfrastructureSummary$maxCpuCount": "<p>The total number of CPU cores available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$maxDbNodeStorageSizeInGBs": "<p>The total amount of local node storage, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$maxMemoryInGBs": "<p>The total amount of memory, in gigabytes (GB), that's available on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$storageCount": "<p>The number of storage servers that are activated for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$totalStorageSizeInGBs": "<p>The total amount of storage, in gigabytes (GB), on the the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureUnallocatedResources$localStorageInGBs": "<p>The amount of unallocated local storage available, in gigabytes (GB).</p>",
+        "CloudExadataInfrastructureUnallocatedResources$memoryInGBs": "<p>The amount of unallocated memory available, in gigabytes (GB).</p>",
+        "CloudExadataInfrastructureUnallocatedResources$ocpus": "<p>The number of unallocated Oracle CPU Units (OCPUs) available.</p>",
+        "CloudVmCluster$cpuCoreCount": "<p>The number of CPU cores enabled on the VM cluster.</p>",
+        "CloudVmCluster$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), that's allocated for the VM cluster.</p>",
+        "CloudVmCluster$listenerPort": "<p>The port number configured for the listener on the VM cluster.</p>",
+        "CloudVmCluster$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated for the VM cluster.</p>",
+        "CloudVmCluster$nodeCount": "<p>The number of nodes in the VM cluster.</p>",
+        "CloudVmCluster$storageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), that's allocated to the VM cluster.</p>",
+        "CloudVmClusterSummary$cpuCoreCount": "<p>The number of CPU cores enabled on the VM cluster.</p>",
+        "CloudVmClusterSummary$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), that's allocated for the VM cluster.</p>",
+        "CloudVmClusterSummary$listenerPort": "<p>The port number configured for the listener on the VM cluster.</p>",
+        "CloudVmClusterSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated for the VM cluster.</p>",
+        "CloudVmClusterSummary$nodeCount": "<p>The number of nodes in the VM cluster.</p>",
+        "CloudVmClusterSummary$storageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), that's allocated to the VM cluster.</p>",
+        "CreateCloudExadataInfrastructureInput$computeCount": "<p>The number of database servers for the Exadata infrastructure. Valid values for this parameter depend on the shape. To get information about the minimum and maximum values, use the <code>ListDbSystemShapes</code> operation.</p>",
+        "CreateCloudExadataInfrastructureInput$storageCount": "<p>The number of storage servers to activate for this Exadata infrastructure. Valid values for this parameter depend on the shape. To get information about the minimum and maximum values, use the <code>ListDbSystemShapes</code> operation.</p>",
+        "CreateCloudVmClusterInput$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GBs), to allocate for the VM cluster.</p>",
+        "CreateCloudVmClusterInput$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GBs), to allocate for the VM cluster.</p>",
+        "DbIormConfig$share": "<p>The relative priority of this database.</p>",
+        "DbNode$cpuCoreCount": "<p>Number of CPU cores enabled on the DB node.</p>",
+        "DbNode$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GBs), that's allocated on the DB node.</p>",
+        "DbNode$memorySizeInGBs": "<p>The allocated memory in GBs on the DB node.</p>",
+        "DbNode$softwareStorageSizeInGB": "<p>The size (in GB) of the block storage volume allocation for the DB system. </p>",
+        "DbNode$totalCpuCoreCount": "<p>The total number of CPU cores reserved on the DB node.</p>",
+        "DbNodeSummary$cpuCoreCount": "<p>The number of CPU cores enabled on the DB node.</p>",
+        "DbNodeSummary$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), that's allocated on the DB node.</p>",
+        "DbNodeSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that allocated on the DB node.</p>",
+        "DbNodeSummary$softwareStorageSizeInGB": "<p>The size of the block storage volume, in gigabytes (GB), that's allocated for the DB system. This attribute applies only for virtual machine DB systems.</p>",
+        "DbNodeSummary$totalCpuCoreCount": "<p>The total number of CPU cores reserved on the DB node.</p>",
+        "DbServer$cpuCoreCount": "<p>The number of CPU cores enabled on the database server.</p>",
+        "DbServer$dbNodeStorageSizeInGBs": "<p>The allocated local node storage in GBs on the database server.</p>",
+        "DbServer$maxCpuCount": "<p>The total number of CPU cores available.</p>",
+        "DbServer$maxDbNodeStorageInGBs": "<p>The total local node storage available in GBs.</p>",
+        "DbServer$maxMemoryInGBs": "<p>The total memory available in GBs.</p>",
+        "DbServer$memorySizeInGBs": "<p>The allocated memory in GBs on the database server.</p>",
+        "DbServerPatchingDetails$estimatedPatchDuration": "<p>Estimated time, in minutes, to patch one database server.</p>",
+        "DbServerSummary$cpuCoreCount": "<p>The number of CPU cores enabled on the database server.</p>",
+        "DbServerSummary$dbNodeStorageSizeInGBs": "<p>The amount of local node storage, in gigabytes (GB), that's allocated on the database server.</p>",
+        "DbServerSummary$maxCpuCount": "<p>The total number of CPU cores available on the database server.</p>",
+        "DbServerSummary$maxDbNodeStorageInGBs": "<p>The total amount of local node storage, in gigabytes (GB), that's available on the database server.</p>",
+        "DbServerSummary$maxMemoryInGBs": "<p>The total amount of memory, in gigabytes (GB), that's available on the database server.</p>",
+        "DbServerSummary$memorySizeInGBs": "<p>The amount of memory, in gigabytes (GB), that's allocated on the database server.</p>",
+        "DbSystemShapeSummary$availableCoreCount": "<p>The maximum number of CPU cores that can be enabled for the shape.</p>",
+        "DbSystemShapeSummary$availableCoreCountPerNode": "<p>The maximum number of CPU cores per DB node that can be enabled for the shape.</p>",
+        "DbSystemShapeSummary$availableDataStorageInTBs": "<p>The maximum amount of data storage, in terabytes (TB), that can be enabled for the shape.</p>",
+        "DbSystemShapeSummary$availableDataStoragePerServerInTBs": "<p>The maximum amount of data storage, in terabytes (TB), that's available per storage server for the shape.</p>",
+        "DbSystemShapeSummary$availableDbNodePerNodeInGBs": "<p>The maximum amount of DB node storage, in gigabytes (GB), that's available per DB node for the shape.</p>",
+        "DbSystemShapeSummary$availableDbNodeStorageInGBs": "<p>The maximum amount of DB node storage, in gigabytes (GB), that can be enabled for the shape.</p>",
+        "DbSystemShapeSummary$availableMemoryInGBs": "<p>The maximum amount of memory, in gigabytes (GB), that can be enabled for the shape.</p>",
+        "DbSystemShapeSummary$availableMemoryPerNodeInGBs": "<p>The maximum amount of memory, in gigabytes (GB), that's available per DB node for the shape.</p>",
+        "DbSystemShapeSummary$coreCountIncrement": "<p>The discrete number by which the CPU core count for the shape can be increased or decreased.</p>",
+        "DbSystemShapeSummary$maxStorageCount": "<p>The maximum number of Exadata storage servers that's available for the shape.</p>",
+        "DbSystemShapeSummary$maximumNodeCount": "<p>The maximum number of compute servers that is available for the shape.</p>",
+        "DbSystemShapeSummary$minCoreCountPerNode": "<p>The minimum number of CPU cores that can be enabled per node for the shape.</p>",
+        "DbSystemShapeSummary$minDataStorageInTBs": "<p>The minimum amount of data storage, in terabytes (TB), that must be allocated for the shape.</p>",
+        "DbSystemShapeSummary$minDbNodeStoragePerNodeInGBs": "<p>The minimum amount of DB node storage, in gigabytes (GB), that must be allocated per DB node for the shape.</p>",
+        "DbSystemShapeSummary$minMemoryPerNodeInGBs": "<p>The minimum amount of memory, in gigabytes (GB), that must be allocated per DB node for the shape.</p>",
+        "DbSystemShapeSummary$minStorageCount": "<p>The minimum number of Exadata storage servers that are available for the shape.</p>",
+        "DbSystemShapeSummary$minimumCoreCount": "<p>The minimum number of CPU cores that can be enabled for the shape.</p>",
+        "DbSystemShapeSummary$minimumNodeCount": "<p>The minimum number of compute servers that are available for the shape.</p>",
+        "DbSystemShapeSummary$runtimeMinimumCoreCount": "<p>The runtime minimum number of CPU cores that can be enabled for the shape.</p>",
+        "HoursOfDay$member": null,
+        "InternalServerException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request after an internal server error.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>The number of seconds to wait before retrying the request after being throttled.</p>",
+        "WeeksOfMonth$member": null
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Occurs when there is an internal failure in the Oracle Database@Amazon Web Services service. Wait and try again.</p>",
+      "refs": {}
+    },
+    "IormLifecycleState": {
+      "base": null,
+      "refs": {
+        "ExadataIormConfig$lifecycleState": "<p>The current state of IORM configuration for the Exadata DB system.</p>"
+      }
+    },
+    "LicenseModel": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$licenseModel": "<p>The Oracle license model that applies to the Autonomous VM cluster. Valid values are <code>LICENSE_INCLUDED</code> or <code>BRING_YOUR_OWN_LICENSE</code>.</p>",
+        "CloudAutonomousVmClusterSummary$licenseModel": "<p>The Oracle license model that applies to the Autonomous VM cluster.</p>",
+        "CloudVmCluster$licenseModel": "<p>The Oracle license model applied to the VM cluster.</p>",
+        "CloudVmClusterSummary$licenseModel": "<p>The Oracle license model applied to the VM cluster.</p>",
+        "CreateCloudAutonomousVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the Autonomous VM cluster.</p>",
+        "CreateCloudVmClusterInput$licenseModel": "<p>The Oracle license model to apply to the VM cluster.</p> <p>Default: <code>LICENSE_INCLUDED</code> </p>"
+      }
+    },
+    "ListAutonomousVirtualMachinesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAutonomousVirtualMachinesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListAutonomousVirtualMachinesInput$maxResults": "<p>The maximum number of items to return per page.</p>"
+      }
+    },
+    "ListAutonomousVirtualMachinesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListAutonomousVirtualMachinesInput$nextToken": "<p>The pagination token to continue listing from.</p>"
+      }
+    },
+    "ListAutonomousVirtualMachinesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCloudAutonomousVmClustersInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCloudAutonomousVmClustersInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCloudAutonomousVmClustersInput$maxResults": "<p>The maximum number of items to return per page.</p>"
+      }
+    },
+    "ListCloudAutonomousVmClustersInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListCloudAutonomousVmClustersInput$nextToken": "<p>The pagination token to continue listing from.</p>"
+      }
+    },
+    "ListCloudAutonomousVmClustersOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCloudExadataInfrastructuresInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCloudExadataInfrastructuresInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCloudExadataInfrastructuresInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListCloudExadataInfrastructuresInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListCloudExadataInfrastructuresInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListCloudExadataInfrastructuresOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCloudVmClustersInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCloudVmClustersInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListCloudVmClustersInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListCloudVmClustersInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListCloudVmClustersInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListCloudVmClustersOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDbNodesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDbNodesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDbNodesInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListDbNodesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListDbNodesInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListDbNodesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDbServersInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDbServersInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDbServersInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListDbServersInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListDbServersInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListDbServersOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDbSystemShapesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListDbSystemShapesInputAvailabilityZoneIdString": {
+      "base": null,
+      "refs": {
+        "ListDbSystemShapesInput$availabilityZoneId": "<p>The physical ID of the AZ, for example, use1-az4. This ID persists across accounts.</p>"
+      }
+    },
+    "ListDbSystemShapesInputAvailabilityZoneString": {
+      "base": null,
+      "refs": {
+        "ListDbSystemShapesInput$availabilityZone": "<p>The logical name of the AZ, for example, us-east-1a. This name varies depending on the account.</p>"
+      }
+    },
+    "ListDbSystemShapesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListDbSystemShapesInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListDbSystemShapesInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListDbSystemShapesInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListDbSystemShapesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGiVersionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGiVersionsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListGiVersionsInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListGiVersionsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListGiVersionsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListGiVersionsInputShapeString": {
+      "base": null,
+      "refs": {
+        "ListGiVersionsInput$shape": "<p>The shape to return GI versions for. For a list of valid shapes, use the <code>ListDbSystemShapes</code> operation..</p>"
+      }
+    },
+    "ListGiVersionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOdbNetworksInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOdbNetworksInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOdbNetworksInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListOdbNetworksInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListOdbNetworksInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListOdbNetworksOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOdbPeeringConnectionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOdbPeeringConnectionsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOdbPeeringConnectionsInput$maxResults": "<p>The maximum number of ODB peering connections to return in the response.</p> <p>Default: <code>20</code> </p> <p>Constraints:</p> <ul> <li> <p>Must be between 1 and 100.</p> </li> </ul>"
+      }
+    },
+    "ListOdbPeeringConnectionsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListOdbPeeringConnectionsInput$nextToken": "<p>The pagination token for the next page of ODB peering connections.</p>"
+      }
+    },
+    "ListOdbPeeringConnectionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemVersionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListSystemVersionsInputGiVersionString": {
+      "base": null,
+      "refs": {
+        "ListSystemVersionsInput$giVersion": "<p>The software version of the Exadata Grid Infrastructure (GI).</p>"
+      }
+    },
+    "ListSystemVersionsInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListSystemVersionsInput$maxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output.</p> <p>Default: <code>10</code> </p>"
+      }
+    },
+    "ListSystemVersionsInputNextTokenString": {
+      "base": null,
+      "refs": {
+        "ListSystemVersionsInput$nextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>"
+      }
+    },
+    "ListSystemVersionsInputShapeString": {
+      "base": null,
+      "refs": {
+        "ListSystemVersionsInput$shape": "<p>The Exadata hardware system model.</p>"
+      }
+    },
+    "ListSystemVersionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MaintenanceWindow": {
+      "base": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
+      "refs": {
+        "CloudAutonomousVmCluster$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
+        "CloudAutonomousVmClusterSummary$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
+        "CloudExadataInfrastructure$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
+        "CloudExadataInfrastructureSummary$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
+        "CreateCloudAutonomousVmClusterInput$maintenanceWindow": "<p>The scheduling details for the maintenance window. Patching and system updates take place during the maintenance window.</p>",
+        "CreateCloudExadataInfrastructureInput$maintenanceWindow": "<p>The maintenance window configuration for the Exadata Cloud infrastructure.</p> <p>This allows you to define when maintenance operations such as patching and updates can be performed on the infrastructure.</p>",
+        "UpdateCloudExadataInfrastructureInput$maintenanceWindow": null
+      }
+    },
+    "MaintenanceWindowCustomActionTimeoutInMinsInteger": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$customActionTimeoutInMins": "<p>The custom action timeout in minutes for the maintenance window.</p>"
+      }
+    },
+    "MaintenanceWindowLeadTimeInWeeksInteger": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$leadTimeInWeeks": "<p>The lead time in weeks before the maintenance window.</p>"
+      }
+    },
+    "ManagedResourceStatus": {
+      "base": null,
+      "refs": {
+        "ManagedS3BackupAccess$status": "<p>The status of the managed Amazon S3 backup access.</p> <p>Valid Values: <code>enabled | disabled</code> </p>",
+        "S3Access$status": "<p>The status of the Amazon S3 access.</p> <p>Valid Values: <code>enabled | disabled</code> </p>",
+        "ZeroEtlAccess$status": "<p>The status of the Zero-ETL access.</p> <p>Valid Values: <code>enabled | disabled</code> </p>"
+      }
+    },
+    "ManagedS3BackupAccess": {
+      "base": "<p>The configuration for managed Amazon S3 backup access from the ODB network.</p>",
+      "refs": {
+        "ManagedServices$managedS3BackupAccess": "<p>The managed Amazon S3 backup access configuration.</p>"
+      }
+    },
+    "ManagedServices": {
+      "base": "<p>The managed services configuration for the ODB network.</p>",
+      "refs": {
+        "OdbNetwork$managedServices": "<p>The managed services configuration for the ODB network.</p>",
+        "OdbNetworkSummary$managedServices": "<p>The managed services configuration for the ODB network.</p>"
+      }
+    },
+    "Month": {
+      "base": "<p>An enumeration of months used for scheduling maintenance windows.</p>",
+      "refs": {
+        "Months$member": null
+      }
+    },
+    "MonthName": {
+      "base": null,
+      "refs": {
+        "Month$name": "<p>The name of the month.</p>"
+      }
+    },
+    "Months": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$months": "<p>The months when maintenance can be performed.</p>"
+      }
+    },
+    "Objective": {
+      "base": null,
+      "refs": {
+        "ExadataIormConfig$objective": "<p>The current value for the IORM objective. The default is AUTO.</p>"
+      }
+    },
+    "OciDnsForwardingConfig": {
+      "base": "<p>DNS configuration to forward DNS resolver endpoints to your OCI Private Zone.</p>",
+      "refs": {
+        "OciDnsForwardingConfigList$member": null
+      }
+    },
+    "OciDnsForwardingConfigDomainNameString": {
+      "base": null,
+      "refs": {
+        "OciDnsForwardingConfig$domainName": "<p>Domain name to which DNS resolver forwards to.</p>"
+      }
+    },
+    "OciDnsForwardingConfigList": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$ociDnsForwardingConfigs": "<p>The DNS resolver endpoint in OCI for forwarding DNS queries for the ociPrivateZone domain.</p>",
+        "OdbNetworkSummary$ociDnsForwardingConfigs": "<p>The DNS resolver endpoint in OCI for forwarding DNS queries for the ociPrivateZone domain.</p>"
+      }
+    },
+    "OciOnboardingStatus": {
+      "base": "<p/>",
+      "refs": {
+        "GetOciOnboardingStatusOutput$status": null
+      }
+    },
+    "OdbNetwork": {
+      "base": "<p>Information about an ODB network.</p>",
+      "refs": {
+        "GetOdbNetworkOutput$odbNetwork": "<p>The ODB network.</p>"
+      }
+    },
+    "OdbNetworkAvailabilityZoneIdString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$availabilityZoneId": "<p>The AZ ID of the AZ where the ODB network is located.</p>"
+      }
+    },
+    "OdbNetworkAvailabilityZoneString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$availabilityZone": "<p>The Amazon Web Services Availability Zone (AZ) where the ODB network is located.</p>"
+      }
+    },
+    "OdbNetworkBackupSubnetCidrString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$backupSubnetCidr": "<p>The CIDR range of the backup subnet in the ODB network.</p>"
+      }
+    },
+    "OdbNetworkClientSubnetCidrString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$clientSubnetCidr": "<p>The CIDR range of the client subnet in the ODB network.</p>"
+      }
+    },
+    "OdbNetworkCustomDomainNameString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$customDomainName": "<p>The domain name for the resources in the ODB network.</p>"
+      }
+    },
+    "OdbNetworkDefaultDnsPrefixString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$defaultDnsPrefix": "<p>The DNS prefix to the default DNS domain name. The default DNS domain name is oraclevcn.com.</p>"
+      }
+    },
+    "OdbNetworkList": {
+      "base": null,
+      "refs": {
+        "ListOdbNetworksOutput$odbNetworks": "<p>The list of ODB networks.</p>"
+      }
+    },
+    "OdbNetworkOciNetworkAnchorIdString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$ociNetworkAnchorId": "<p>The unique identifier of the OCI network anchor for the ODB network.</p>"
+      }
+    },
+    "OdbNetworkOciVcnIdString": {
+      "base": null,
+      "refs": {
+        "OdbNetwork$ociVcnId": "<p>The Oracle Cloud ID (OCID) for the Virtual Cloud Network (VCN) that's associated with the ODB network.</p>"
+      }
+    },
+    "OdbNetworkSummary": {
+      "base": "<p>Information about an ODB network.</p>",
+      "refs": {
+        "OdbNetworkList$member": null
+      }
+    },
+    "OdbNetworkSummaryAvailabilityZoneIdString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$availabilityZoneId": "<p>The AZ ID of the AZ where the ODB network is located.</p>"
+      }
+    },
+    "OdbNetworkSummaryAvailabilityZoneString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$availabilityZone": "<p>The Amazon Web Services Availability Zone (AZ) where the ODB network is located.</p>"
+      }
+    },
+    "OdbNetworkSummaryBackupSubnetCidrString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$backupSubnetCidr": "<p>The CIDR range of the backup subnet in the ODB network.</p>"
+      }
+    },
+    "OdbNetworkSummaryClientSubnetCidrString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$clientSubnetCidr": "<p>The CIDR range of the client subnet in the ODB network.</p>"
+      }
+    },
+    "OdbNetworkSummaryCustomDomainNameString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$customDomainName": "<p>The domain name for the resources in the ODB network.</p>"
+      }
+    },
+    "OdbNetworkSummaryDefaultDnsPrefixString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$defaultDnsPrefix": "<p>The DNS prefix to the default DNS domain name. The default DNS domain name is oraclevcn.com.</p>"
+      }
+    },
+    "OdbNetworkSummaryOciNetworkAnchorIdString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$ociNetworkAnchorId": "<p>The unique identifier of the OCI network anchor for the ODB network.</p>"
+      }
+    },
+    "OdbNetworkSummaryOciVcnIdString": {
+      "base": null,
+      "refs": {
+        "OdbNetworkSummary$ociVcnId": "<p>The Oracle Cloud ID (OCID) for the Virtual Cloud Network (VCN) associated with the ODB network.</p>"
+      }
+    },
+    "OdbPeeringConnection": {
+      "base": "<p>A peering connection between an ODB network and either another ODB network or a customer-owned VPC.</p>",
+      "refs": {
+        "GetOdbPeeringConnectionOutput$odbPeeringConnection": null
+      }
+    },
+    "OdbPeeringConnectionList": {
+      "base": null,
+      "refs": {
+        "ListOdbPeeringConnectionsOutput$odbPeeringConnections": "<p>The list of ODB peering connections.</p>"
+      }
+    },
+    "OdbPeeringConnectionSummary": {
+      "base": "<p>A summary of an ODB peering connection.</p>",
+      "refs": {
+        "OdbPeeringConnectionList$member": null
+      }
+    },
+    "PatchingModeType": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$patchingMode": "<p>The patching mode for the maintenance window.</p>"
+      }
+    },
+    "PolicyDocument": {
+      "base": null,
+      "refs": {
+        "CreateOdbNetworkInput$s3PolicyDocument": "<p>Specifies the endpoint policy for Amazon S3 access from the ODB network.</p>",
+        "UpdateOdbNetworkInput$s3PolicyDocument": "<p>Specifies the updated endpoint policy for Amazon S3 access from the ODB network.</p>"
+      }
+    },
+    "PreferenceType": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$preference": "<p>The preference for the maintenance window scheduling.</p>"
+      }
+    },
+    "RebootDbNodeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "RebootDbNodeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "RequestTagMap": {
+      "base": null,
+      "refs": {
+        "CreateCloudAutonomousVmClusterInput$tags": "<p>Free-form tags for this resource. Each tag is a key-value pair with no predefined name, type, or namespace.</p>",
+        "CreateCloudExadataInfrastructureInput$tags": "<p>The list of resource tags to apply to the Exadata infrastructure.</p>",
+        "CreateCloudVmClusterInput$tags": "<p>The list of resource tags to apply to the VM cluster.</p>",
+        "CreateOdbNetworkInput$tags": "<p>The list of resource tags to apply to the ODB network.</p>",
+        "CreateOdbPeeringConnectionInput$tags": "<p>The tags to assign to the ODB peering connection.</p>",
+        "TagResourceRequest$tags": "<p>The list of tags to apply to the resource.</p>"
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "DbNode$dbNodeArn": "<p>The Amazon Resource Name (ARN) of the DB node.</p>",
+        "DbNodeSummary$dbNodeArn": "<p>The Amazon Resource Name (ARN) of the DB node.</p>",
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to list tags for.</p>",
+        "ManagedServices$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
+        "ManagedServices$resourceGatewayArn": "<p>The Amazon Resource Name (ARN) of the resource gateway.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to apply tags to.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to remove tags from.</p>"
+      }
+    },
+    "ResourceDisplayName": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$displayName": "<p>The display name of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$displayName": "<p>The user-friendly name for the Autonomous VM cluster.</p>",
+        "CreateCloudAutonomousVmClusterInput$displayName": "<p>The display name for the Autonomous VM cluster. The name does not need to be unique.</p>",
+        "CreateCloudExadataInfrastructureInput$displayName": "<p>A user-friendly name for the Exadata infrastructure.</p>",
+        "CreateCloudVmClusterInput$displayName": "<p>A user-friendly name for the VM cluster.</p>",
+        "CreateOdbNetworkInput$displayName": "<p>A user-friendly name for the ODB network.</p>",
+        "CreateOdbPeeringConnectionInput$displayName": "<p>The display name for the ODB peering connection.</p>",
+        "UpdateOdbNetworkInput$displayName": "<p>The new user-friendly name of the ODB network.</p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "AutonomousVirtualMachineSummary$autonomousVirtualMachineId": "<p>The unique identifier of the Autonomous VM.</p>",
+        "AutonomousVirtualMachineSummary$dbServerId": "<p>The unique identifier of the database server hosting this Autonomous VM.</p>",
+        "CloudAutonomousVmCluster$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterResourceDetails$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster.</p>",
+        "CloudVmCluster$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
+        "CloudVmClusterSummary$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
+        "DbNode$dbNodeId": "<p>The unique identifier of the DB node.</p>",
+        "DbNode$dbServerId": "<p>The unique identifier of the Db server that is associated with the DB node.</p>",
+        "DbNodeSummary$dbNodeId": "<p>The unique identifier of the DB node.</p>",
+        "DbNodeSummary$dbServerId": "<p>The unique identifier of the database server that's associated with the DB node.</p>",
+        "DbServer$dbServerId": "<p>The unique identifier for the database server.</p>",
+        "DbServerSummary$dbServerId": "<p>The unique identifier of the database server.</p>",
+        "DeleteCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to delete.</p>",
+        "DeleteCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster to delete.</p>",
+        "GetCloudAutonomousVmClusterInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster to retrieve information about.</p>",
+        "GetCloudVmClusterInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
+        "GetDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node.</p>",
+        "GetDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to retrieve information about.</p>",
+        "GetDbServerInput$dbServerId": "<p>The unique identifier of the database server to retrieve information about.</p>",
+        "ListAutonomousVirtualMachinesInput$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster whose virtual machines you're listing.</p>",
+        "ListDbNodesInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster.</p>",
+        "RebootDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node to reboot.</p>",
+        "RebootDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to reboot.</p>",
+        "StartDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node to start.</p>",
+        "StartDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to start.</p>",
+        "StopDbNodeInput$cloudVmClusterId": "<p>The unique identifier of the VM cluster that contains the DB node to stop.</p>",
+        "StopDbNodeInput$dbNodeId": "<p>The unique identifier of the DB node to stop.</p>"
+      }
+    },
+    "ResourceIdOrArn": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$odbNetworkId": "<p>The unique identifier of the ODB network associated with this Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata Infrastructure containing this Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$odbNetworkId": "<p>The unique identifier of the ODB network associated with this Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure containing this Autonomous VM cluster.</p>",
+        "CloudExadataInfrastructure$cloudExadataInfrastructureId": "<p>The unique identifier for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$cloudExadataInfrastructureId": "<p>The unique identifier for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureUnallocatedResources$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata infrastructure.</p>",
+        "CloudVmCluster$odbNetworkId": "<p>The unique identifier of the ODB network for the VM cluster.</p>",
+        "CloudVmClusterSummary$odbNetworkId": "<p>The unique identifier of the ODB network for the VM cluster.</p>",
+        "CreateCloudAutonomousVmClusterInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure where the VM cluster will be created.</p>",
+        "CreateCloudAutonomousVmClusterInput$odbNetworkId": "<p>The unique identifier of the ODB network to be used for the VM cluster.</p>",
+        "CreateCloudVmClusterInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure for this VM cluster.</p>",
+        "CreateCloudVmClusterInput$odbNetworkId": "<p>The unique identifier of the ODB network for the VM cluster.</p>",
+        "CreateOdbPeeringConnectionInput$odbNetworkId": "<p>The unique identifier of the ODB network that initiates the peering connection.</p>",
+        "CreateOdbPeeringConnectionInput$peerNetworkId": "<p>The unique identifier of the peer network. This can be either a VPC ID or another ODB network ID.</p>",
+        "DeleteCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure to delete.</p>",
+        "DeleteOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network to delete.</p>",
+        "DeleteOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection to delete.</p>",
+        "GetCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure.</p>",
+        "GetCloudExadataInfrastructureUnallocatedResourcesInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata infrastructure for which to retrieve unallocated resources.</p>",
+        "GetDbServerInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure that contains the database server.</p>",
+        "GetOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
+        "GetOdbPeeringConnectionInput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection to retrieve information about.</p>",
+        "ListCloudAutonomousVmClustersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Cloud Exadata Infrastructure that hosts the Autonomous VM clusters to be listed.</p>",
+        "ListCloudVmClustersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
+        "ListDbServersInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Oracle Exadata infrastructure.</p>",
+        "ListOdbPeeringConnectionsInput$odbNetworkId": "<p>The identifier of the ODB network to list peering connections for.</p> <p>If not specified, lists all ODB peering connections in the account.</p>",
+        "OdbNetwork$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
+        "OdbNetworkSummary$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
+        "OdbPeeringConnection$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection. A sample ID is <code>odbpcx-abcdefgh12345678</code>.</p>",
+        "OdbPeeringConnectionSummary$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection. A sample ID is <code>odbpcx-abcdefgh12345678</code>.</p>",
+        "UpdateCloudExadataInfrastructureInput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure to update.</p>",
+        "UpdateOdbNetworkInput$odbNetworkId": "<p>The unique identifier of the ODB network to update.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The operation tried to access a resource that doesn't exist. Make sure you provided the correct resource and try again.</p>",
+      "refs": {}
+    },
+    "ResourceStatus": {
+      "base": null,
+      "refs": {
+        "AutonomousVirtualMachineSummary$status": "<p>The current status of the Autonomous VM.</p>",
+        "CloudAutonomousVmCluster$status": "<p>The current state of the Autonomous VM cluster. Possible values include <code>CREATING</code>, <code>AVAILABLE</code>, <code>UPDATING</code>, <code>DELETING</code>, <code>DELETED</code>, <code>FAILED</code>.</p>",
+        "CloudAutonomousVmClusterSummary$status": "<p>The current status of the Autonomous VM cluster.</p>",
+        "CloudExadataInfrastructure$status": "<p>The current status of the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$status": "<p>The current status of the Exadata infrastructure.</p>",
+        "CloudVmCluster$status": "<p>The current status of the VM cluster.</p>",
+        "CloudVmClusterSummary$status": "<p>The current status of the VM cluster.</p>",
+        "CreateCloudAutonomousVmClusterOutput$status": "<p>The current status of the Autonomous VM cluster creation process.</p>",
+        "CreateCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure.</p>",
+        "CreateCloudVmClusterOutput$status": "<p>The current status of the VM cluster.</p>",
+        "CreateOdbNetworkOutput$status": "<p>The current status of the ODB network.</p>",
+        "CreateOdbPeeringConnectionOutput$status": "<p>The status of the ODB peering connection.</p> <p>Valid Values: <code>provisioning | active | terminating | terminated | failed</code> </p>",
+        "DbServer$status": "<p>The current status of the database server.</p>",
+        "DbServerSummary$status": "<p>The current status of the database server.</p>",
+        "OdbNetwork$status": "<p>The current status of the ODB network.</p>",
+        "OdbNetworkSummary$status": "<p>The current status of the ODB network.</p>",
+        "OdbPeeringConnection$status": "<p>The status of the ODB peering connection.</p> <p>Valid Values: <code>provisioning | active | terminating | terminated | failed</code> </p>",
+        "OdbPeeringConnectionSummary$status": "<p>The status of the ODB peering connection.</p> <p>Valid Values: <code>provisioning | active | terminating | terminated | failed</code> </p>",
+        "UpdateCloudExadataInfrastructureOutput$status": "<p>The current status of the Exadata infrastructure after the update operation.</p>",
+        "UpdateOdbNetworkOutput$status": "<p>The current status of the ODB network.</p>"
+      }
+    },
+    "ResponseTagMap": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceResponse$tags": "<p>The list of tags applied to the resource.</p>"
+      }
+    },
+    "S3Access": {
+      "base": "<p>The configuration for Amazon S3 access from the ODB network.</p>",
+      "refs": {
+        "ManagedServices$s3Access": "<p>The Amazon S3 access configuration.</p>"
+      }
+    },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "SensitiveStringList$member": null
+      }
+    },
+    "SensitiveStringList": {
+      "base": null,
+      "refs": {
+        "CloudVmCluster$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the VM cluster.</p>",
+        "CloudVmClusterSummary$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the VM cluster.</p>"
+      }
+    },
+    "ServiceNetworkEndpoint": {
+      "base": "<p>The configuration for a service network endpoint.</p>",
+      "refs": {
+        "ManagedServices$serviceNetworkEndpoint": "<p>The service network endpoint configuration.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>You have exceeded the service quota.</p>",
+      "refs": {}
+    },
+    "ShapeType": {
+      "base": null,
+      "refs": {
+        "DbSystemShapeSummary$shapeType": "<p>The shape type. This property is determined by the CPU hardware.</p>"
+      }
+    },
+    "StartDbNodeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartDbNodeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopDbNodeInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopDbNodeOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AcceptMarketplaceRegistrationInput$marketplaceRegistrationToken": "<p>The registration token that's generated by Amazon Web Services Marketplace and sent to Oracle Database@Amazon Web Services.</p>",
+        "AccessDeniedException$message": null,
+        "AutonomousVirtualMachineSummary$statusReason": "<p>Additional information about the current status of the Autonomous VM, if applicable.</p>",
+        "AutonomousVirtualMachineSummary$vmName": "<p>The name of the Autonomous VM.</p>",
+        "AutonomousVirtualMachineSummary$dbServerDisplayName": "<p>The display name of the database server hosting this Autonomous VM.</p>",
+        "AutonomousVirtualMachineSummary$clientIpAddress": "<p>The IP address used by clients to connect to this Autonomous VM.</p>",
+        "AutonomousVirtualMachineSummary$cloudAutonomousVmClusterId": "<p>The unique identifier of the Autonomous VM cluster containing this Autonomous VM.</p>",
+        "AutonomousVirtualMachineSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous VM.</p>",
+        "AutonomousVirtualMachineSummary$ociResourceAnchorName": "<p>The name of the Oracle Cloud Infrastructure (OCI) resource anchor associated with this Autonomous VM.</p>",
+        "CloudAutonomousVmCluster$cloudAutonomousVmClusterArn": "<p>The Amazon Resource Name (ARN) for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$ociResourceAnchorName": "<p>The name of the OCI resource anchor associated with this Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$statusReason": "<p>Additional information about the current status of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$description": "<p>The user-provided description of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$domain": "<p>The domain name for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$hostname": "<p>The hostname for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$ociUrl": "<p>The URL for accessing the OCI console page for this Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$shape": "<p>The shape of the Exadata infrastructure for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmCluster$timeZone": "<p>The time zone of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$cloudAutonomousVmClusterArn": "<p>The Amazon Resource Name (ARN) for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$ociResourceAnchorName": "<p>The name of the OCI resource anchor associated with this Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$statusReason": "<p>Additional information about the current status of the Autonomous VM cluster, if applicable.</p>",
+        "CloudAutonomousVmClusterSummary$description": "<p>The user-provided description of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$domain": "<p>The domain name for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$hostname": "<p>The host name for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$ocid": "<p>The Oracle Cloud Identifier (OCID) of the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$ociUrl": "<p>The URL for accessing the OCI console page for this Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$shape": "<p>The shape of the Exadata infrastructure for the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$timeZone": "<p>The time zone of the Autonomous VM cluster.</p>",
+        "CloudExadataInfrastructure$displayName": "<p>The user-friendly name for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$statusReason": "<p>Additional information about the status of the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$availabilityZone": "<p>The name of the Availability Zone (AZ) where the Exadata infrastructure is located.</p>",
+        "CloudExadataInfrastructure$availabilityZoneId": "<p>The AZ ID of the AZ where the Exadata infrastructure is located.</p>",
+        "CloudExadataInfrastructure$dbServerVersion": "<p>The software version of the database servers (dom0) in the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$lastMaintenanceRunId": "<p>The Oracle Cloud Identifier (OCID) of the last maintenance run for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$monthlyDbServerVersion": "<p>The monthly software version of the database servers installed on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$monthlyStorageServerVersion": "<p>The monthly software version of the storage servers installed on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$nextMaintenanceRunId": "<p>The OCID of the next maintenance run for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$ociUrl": "<p>The HTTPS link to the Exadata infrastructure in OCI.</p>",
+        "CloudExadataInfrastructure$ocid": "<p>The OCID of the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$shape": "<p>The model name of the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$storageServerVersion": "<p>The software version of the storage servers on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructure$databaseServerType": "<p>The database server model type of the Exadata infrastructure. For the list of valid model names, use the <code>ListDbSystemShapes</code> operation.</p>",
+        "CloudExadataInfrastructure$storageServerType": "<p>The storage server model type of the Exadata infrastructure. For the list of valid model names, use the <code>ListDbSystemShapes</code> operation.</p>",
+        "CloudExadataInfrastructureSummary$displayName": "<p>The user-friendly name for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$statusReason": "<p>Additional information about the status of the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$cloudExadataInfrastructureArn": "<p>The Amazon Resource Name (ARN) for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$availabilityZone": "<p>The name of the Availability Zone (AZ) where the Exadata infrastructure is located.</p>",
+        "CloudExadataInfrastructureSummary$availabilityZoneId": "<p>The AZ ID of the AZ where the Exadata infrastructure is located.</p>",
+        "CloudExadataInfrastructureSummary$dbServerVersion": "<p>The software version of the database servers on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$lastMaintenanceRunId": "<p>The Oracle Cloud Identifier (OCID) of the last maintenance run for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$monthlyDbServerVersion": "<p>The monthly software version of the database servers (dom0) installed on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$monthlyStorageServerVersion": "<p>The monthly software version of the storage servers installed on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$nextMaintenanceRunId": "<p>The OCID of the next maintenance run for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$ociUrl": "<p>The HTTPS link to the Exadata infrastructure in OCI.</p>",
+        "CloudExadataInfrastructureSummary$ocid": "<p>The OCID of the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$shape": "<p>The model name of the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$storageServerVersion": "<p>The software version of the storage servers on the Exadata infrastructure.</p>",
+        "CloudExadataInfrastructureSummary$databaseServerType": "<p>The database server model type of the Exadata infrastructure. For the list of valid model names, use the <code>ListDbSystemShapes</code> operation.</p>",
+        "CloudExadataInfrastructureSummary$storageServerType": "<p>The storage server model type of the Exadata infrastructure. For the list of valid model names, use the <code>ListDbSystemShapes</code> operation.</p>",
+        "CloudExadataInfrastructureUnallocatedResources$cloudExadataInfrastructureDisplayName": "<p>The display name of the Cloud Exadata infrastructure.</p>",
+        "CloudVmCluster$displayName": "<p>The user-friendly name for the VM cluster.</p>",
+        "CloudVmCluster$statusReason": "<p>Additional information about the status of the VM cluster.</p>",
+        "CloudVmCluster$cloudVmClusterArn": "<p>The Amazon Resource Name (ARN) of the VM cluster.</p>",
+        "CloudVmCluster$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure that this VM cluster belongs to.</p>",
+        "CloudVmCluster$clusterName": "<p>The name of the Grid Infrastructure (GI) cluster.</p>",
+        "CloudVmCluster$giVersion": "<p>The software version of the Oracle Grid Infrastructure (GI) for the VM cluster.</p>",
+        "CloudVmCluster$hostname": "<p>The host name for the VM cluster.</p>",
+        "CloudVmCluster$lastUpdateHistoryEntryId": "<p>The Oracle Cloud ID (OCID) of the last maintenance update history entry.</p>",
+        "CloudVmCluster$ocid": "<p>The OCID of the VM cluster.</p>",
+        "CloudVmCluster$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the VM cluster.</p>",
+        "CloudVmCluster$ociUrl": "<p>The HTTPS link to the VM cluster in OCI.</p>",
+        "CloudVmCluster$domain": "<p>The domain of the VM cluster.</p>",
+        "CloudVmCluster$scanDnsName": "<p>The FQDN of the DNS record for the Single Client Access Name (SCAN) IP addresses that are associated with the VM cluster.</p>",
+        "CloudVmCluster$scanDnsRecordId": "<p>The OCID of the DNS record for the SCAN IP addresses that are associated with the VM cluster.</p>",
+        "CloudVmCluster$shape": "<p>The hardware model name of the Exadata infrastructure that's running the VM cluster.</p>",
+        "CloudVmCluster$systemVersion": "<p>The operating system version of the image chosen for the VM cluster.</p>",
+        "CloudVmCluster$timeZone": "<p>The time zone of the VM cluster.</p>",
+        "CloudVmClusterSummary$displayName": "<p>The user-friendly name for the VM cluster.</p>",
+        "CloudVmClusterSummary$statusReason": "<p>Additional information about the status of the VM cluster.</p>",
+        "CloudVmClusterSummary$cloudVmClusterArn": "<p>The Amazon Resource Name (ARN) of the VM cluster.</p>",
+        "CloudVmClusterSummary$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure that this VM cluster belongs to.</p>",
+        "CloudVmClusterSummary$clusterName": "<p>The name of the Grid Infrastructure (GI) cluster.</p>",
+        "CloudVmClusterSummary$giVersion": "<p>The software version of the Oracle Grid Infrastructure (GI) for the VM cluster.</p>",
+        "CloudVmClusterSummary$hostname": "<p>The host name for the VM cluster.</p>",
+        "CloudVmClusterSummary$lastUpdateHistoryEntryId": "<p>The Oracle Cloud ID (OCID) of the last maintenance update history entry.</p>",
+        "CloudVmClusterSummary$ocid": "<p>The OCID of the VM cluster.</p>",
+        "CloudVmClusterSummary$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the VM cluster.</p>",
+        "CloudVmClusterSummary$ociUrl": "<p>The HTTPS link to the VM cluster in OCI.</p>",
+        "CloudVmClusterSummary$domain": "<p>The domain of the VM cluster.</p>",
+        "CloudVmClusterSummary$scanDnsName": "<p>The FQDN of the DNS record for the Single Client Access Name (SCAN) IP addresses that are associated with the VM cluster.</p>",
+        "CloudVmClusterSummary$scanDnsRecordId": "<p>The OCID of the DNS record for the SCAN IP addresses that are associated with the VM cluster.</p>",
+        "CloudVmClusterSummary$shape": "<p>The hardware model name of the Exadata infrastructure that's running the VM cluster.</p>",
+        "CloudVmClusterSummary$systemVersion": "<p>The operating system version of the image chosen for the VM cluster.</p>",
+        "CloudVmClusterSummary$timeZone": "<p>The time zone of the VM cluster.</p>",
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p>The identifier of the resource that caused the conflict.</p>",
+        "ConflictException$resourceType": "<p>The type of resource that caused the conflict.</p>",
+        "CreateCloudAutonomousVmClusterOutput$displayName": "<p>The display name of the created Autonomous VM cluster.</p>",
+        "CreateCloudAutonomousVmClusterOutput$statusReason": "<p>Additional information about the current status of the Autonomous VM cluster creation process, if applicable.</p>",
+        "CreateCloudAutonomousVmClusterOutput$cloudAutonomousVmClusterId": "<p>The unique identifier of the created Autonomous VM cluster.</p>",
+        "CreateCloudExadataInfrastructureOutput$displayName": "<p>The user-friendly name for the Exadata infrastructure.</p>",
+        "CreateCloudExadataInfrastructureOutput$statusReason": "<p>Additional information about the status of the Exadata infrastructure.</p>",
+        "CreateCloudExadataInfrastructureOutput$cloudExadataInfrastructureId": "<p>The unique identifier of the Exadata infrastructure.</p>",
+        "CreateCloudVmClusterOutput$displayName": "<p>The user-friendly name for the VM cluster.</p>",
+        "CreateCloudVmClusterOutput$statusReason": "<p>Additional information about the status of the VM cluster.</p>",
+        "CreateCloudVmClusterOutput$cloudVmClusterId": "<p>The unique identifier for the VM cluster.</p>",
+        "CreateOdbNetworkOutput$displayName": "<p>The user-friendly name of the ODB network.</p>",
+        "CreateOdbNetworkOutput$statusReason": "<p>Additional information about the status of the ODB network.</p>",
+        "CreateOdbNetworkOutput$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
+        "CreateOdbPeeringConnectionOutput$displayName": "<p>The display name of the ODB peering connection.</p>",
+        "CreateOdbPeeringConnectionOutput$statusReason": "<p>The reason for the current status of the ODB peering connection.</p>",
+        "CreateOdbPeeringConnectionOutput$odbPeeringConnectionId": "<p>The unique identifier of the ODB peering connection.</p>",
+        "DbIormConfig$dbName": "<p>The database name. For the default DbPlan, the dbName is <code>default</code>.</p>",
+        "DbIormConfig$flashCacheLimit": "<p>The flash cache limit for this database. This value is internally configured based on the share value assigned to the database.</p>",
+        "DbNode$statusReason": "<p>Additional information about the status of the DB node.</p>",
+        "DbNode$additionalDetails": "<p>Additional information about the planned maintenance.</p>",
+        "DbNode$backupIpId": "<p>The Oracle Cloud ID (OCID) of the backup IP address that's associated with the DB node.</p>",
+        "DbNode$backupVnic2Id": "<p>The OCID of the second backup VNIC.</p>",
+        "DbNode$backupVnicId": "<p>The OCID of the backup VNIC.</p>",
+        "DbNode$dbSystemId": "<p>The OCID of the DB system.</p>",
+        "DbNode$faultDomain": "<p>The name of the fault domain the instance is contained in.</p>",
+        "DbNode$hostIpId": "<p>The OCID of the host IP address that's associated with the DB node.</p>",
+        "DbNode$hostname": "<p>The host name for the DB node.</p>",
+        "DbNode$ocid": "<p>The OCID of the DB node.</p>",
+        "DbNode$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the DB node.</p>",
+        "DbNode$timeMaintenanceWindowEnd": "<p>End date and time of maintenance window.</p>",
+        "DbNode$timeMaintenanceWindowStart": "<p>Start date and time of maintenance window.</p>",
+        "DbNode$vnic2Id": "<p>The OCID of the second VNIC.</p>",
+        "DbNode$vnicId": "<p>The OCID of the VNIC.</p>",
+        "DbNode$privateIpAddress": "<p>The private IP address assigned to the DB node.</p>",
+        "DbNode$floatingIpAddress": "<p>The floating IP address assigned to the DB node.</p>",
+        "DbNodeSummary$statusReason": "<p>Additional information about the status of the DB node.</p>",
+        "DbNodeSummary$additionalDetails": "<p>Additional information about the planned maintenance.</p>",
+        "DbNodeSummary$backupIpId": "<p>The Oracle Cloud ID (OCID) of the backup IP address that's associated with the DB node.</p>",
+        "DbNodeSummary$backupVnic2Id": "<p>The OCID of the second backup virtual network interface card (VNIC) for the DB node.</p>",
+        "DbNodeSummary$backupVnicId": "<p>The OCID of the backup VNIC for the DB node.</p>",
+        "DbNodeSummary$dbSystemId": "<p>The OCID of the DB system.</p>",
+        "DbNodeSummary$faultDomain": "<p>The name of the fault domain where the DB node is located.</p>",
+        "DbNodeSummary$hostIpId": "<p>The OCID of the host IP address that's associated with the DB node.</p>",
+        "DbNodeSummary$hostname": "<p>The host name for the DB node.</p>",
+        "DbNodeSummary$ocid": "<p>The OCID of the DB node.</p>",
+        "DbNodeSummary$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the DB node.</p>",
+        "DbNodeSummary$timeMaintenanceWindowEnd": "<p>The end date and time of the maintenance window.</p>",
+        "DbNodeSummary$timeMaintenanceWindowStart": "<p>The start date and time of the maintenance window.</p>",
+        "DbNodeSummary$vnic2Id": "<p>The OCID of the second VNIC.</p>",
+        "DbNodeSummary$vnicId": "<p>The OCID of the VNIC.</p>",
+        "DbServer$statusReason": "<p>Additional information about the current status of the database server.</p>",
+        "DbServer$displayName": "<p>The user-friendly name of the database server.</p>",
+        "DbServer$exadataInfrastructureId": "<p>The ID of the Exadata infrastructure the database server belongs to.</p>",
+        "DbServer$ocid": "<p>The OCID of the database server.</p>",
+        "DbServer$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the database server.</p>",
+        "DbServer$shape": "<p>The shape of the database server. The shape determines the amount of CPU, storage, and memory resources available.</p>",
+        "DbServerPatchingDetails$timePatchingEnded": "<p>The time when the patching operation ended.</p>",
+        "DbServerPatchingDetails$timePatchingStarted": "<p>The time when the patching operation started.</p>",
+        "DbServerSummary$statusReason": "<p>Additional information about the status of the database server.</p>",
+        "DbServerSummary$displayName": "<p>The user-friendly name of the database server. The name doesn't need to be unique.</p>",
+        "DbServerSummary$exadataInfrastructureId": "<p>The ID of the Exadata infrastructure that hosts the database server.</p>",
+        "DbServerSummary$ocid": "<p>The OCID of the database server.</p>",
+        "DbServerSummary$ociResourceAnchorName": "<p>The name of the OCI resource anchor for the database server.</p>",
+        "DbServerSummary$shape": "<p>The hardware system model of the Exadata infrastructure that the database server is hosted on. The shape determines the amount of CPU, storage, and memory resources available.</p>",
+        "DbSystemShapeSummary$shapeFamily": "<p>The family of the shape.</p>",
+        "DbSystemShapeSummary$name": "<p>The name of the shape.</p>",
+        "ExadataIormConfig$lifecycleDetails": "<p>Additional information about the current lifecycleState.</p>",
+        "GetOciOnboardingStatusOutput$existingTenancyActivationLink": "<p>The existing OCI tenancy activation link for your Amazon Web Services account.</p>",
+        "GetOciOnboardingStatusOutput$newTenancyActivationLink": "<p>A new OCI tenancy activation link for your Amazon Web Services account.</p>",
+        "GiVersionSummary$version": "<p>The GI software version.</p>",
+        "InternalServerException$message": null,
+        "ListAutonomousVirtualMachinesOutput$nextToken": "<p>The pagination token from which to continue listing.</p>",
+        "ListCloudAutonomousVmClustersOutput$nextToken": "<p>The pagination token to continue listing from.</p>",
+        "ListCloudExadataInfrastructuresOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListCloudVmClustersOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListDbNodesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListDbServersOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListDbSystemShapesOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListGiVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListOdbNetworksOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "ListOdbPeeringConnectionsOutput$nextToken": "<p>The pagination token for the next page of ODB peering connections.</p>",
+        "ListSystemVersionsOutput$nextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "OciDnsForwardingConfig$ociDnsListenerIp": "<p>OCI DNS listener IP for custom DNS setup.</p>",
+        "OdbNetwork$displayName": "<p>The user-friendly name of the ODB network.</p>",
+        "OdbNetwork$statusReason": "<p>Additional information about the current status of the ODB network.</p>",
+        "OdbNetwork$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network.</p>",
+        "OdbNetwork$ociNetworkAnchorUrl": "<p>The URL of the OCI network anchor for the ODB network.</p>",
+        "OdbNetwork$ociResourceAnchorName": "<p>The name of the OCI resource anchor that's associated with the ODB network.</p>",
+        "OdbNetwork$ociVcnUrl": "<p>The URL for the VCN that's associated with the ODB network.</p>",
+        "OdbNetworkSummary$displayName": "<p>The user-friendly name of the ODB network.</p>",
+        "OdbNetworkSummary$statusReason": "<p>Additional information about the current status of the ODB network.</p>",
+        "OdbNetworkSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network.</p>",
+        "OdbNetworkSummary$ociNetworkAnchorUrl": "<p>The URL of the OCI network anchor for the ODB network.</p>",
+        "OdbNetworkSummary$ociResourceAnchorName": "<p>The name of the OCI resource anchor associated with the ODB network.</p>",
+        "OdbNetworkSummary$ociVcnUrl": "<p>The URL for the VCN that's associated with the ODB network.</p>",
+        "OdbPeeringConnection$displayName": "<p>The display name of the ODB peering connection.</p>",
+        "OdbPeeringConnection$statusReason": "<p>The reason for the current status of the ODB peering connection.</p>",
+        "OdbPeeringConnection$odbPeeringConnectionArn": "<p>The Amazon Resource Name (ARN) of the ODB peering connection.</p> <p>Example: <code>arn:aws:odb:us-east-1:123456789012:odb-peering-connection/odbpcx-abcdefgh12345678</code> </p>",
+        "OdbPeeringConnection$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network that initiated the peering connection.</p>",
+        "OdbPeeringConnection$peerNetworkArn": "<p>The Amazon Resource Name (ARN) of the peer network.</p>",
+        "OdbPeeringConnection$odbPeeringConnectionType": "<p>The type of the ODB peering connection.</p> <p>Valid Values: <code>ODB-VPC | ODB-ODB</code> </p>",
+        "OdbPeeringConnectionSummary$displayName": "<p>The display name of the ODB peering connection.</p>",
+        "OdbPeeringConnectionSummary$statusReason": "<p>The reason for the current status of the ODB peering connection.</p>",
+        "OdbPeeringConnectionSummary$odbPeeringConnectionArn": "<p>The Amazon Resource Name (ARN) of the ODB peering connection.</p>",
+        "OdbPeeringConnectionSummary$odbNetworkArn": "<p>The Amazon Resource Name (ARN) of the ODB network that initiated the peering connection.</p>",
+        "OdbPeeringConnectionSummary$peerNetworkArn": "<p>The Amazon Resource Name (ARN) of the peer network.</p>",
+        "OdbPeeringConnectionSummary$odbPeeringConnectionType": "<p>The type of the ODB peering connection.</p> <p>Valid Values: <code>ODB-VPC | ODB-ODB</code> </p>",
+        "RebootDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was rebooted.</p>",
+        "RebootDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the reboot operation.</p>",
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceId": "<p>The identifier of the resource that was not found.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The type of resource that was not found.</p>",
+        "S3Access$domainName": "<p>The domain name for the Amazon S3 access.</p>",
+        "S3Access$s3PolicyDocument": "<p>The endpoint policy for the Amazon S3 access.</p>",
+        "ServiceNetworkEndpoint$vpcEndpointId": "<p>The identifier of the VPC endpoint.</p>",
+        "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$resourceId": "<p>The identifier of the resource that exceeded the service quota.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The type of resource that exceeded the service quota.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The unqiue identifier of the service quota that was exceeded.</p>",
+        "StartDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was started.</p>",
+        "StartDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the start operation.</p>",
+        "StopDbNodeOutput$dbNodeId": "<p>The unique identifier of the DB node that was stopped.</p>",
+        "StopDbNodeOutput$statusReason": "<p>Additional information about the status of the DB node after the stop operation.</p>",
+        "StringList$member": null,
+        "SystemVersionSummary$giVersion": "<p>The version of GI software.</p>",
+        "SystemVersionSummary$shape": "<p>The Exadata hardware model.</p>",
+        "ThrottlingException$message": null,
+        "UpdateCloudExadataInfrastructureOutput$displayName": "<p>The user-friendly name of the updated Exadata infrastructure.</p>",
+        "UpdateCloudExadataInfrastructureOutput$statusReason": "<p>Additional information about the status of the Exadata infrastructure after the update operation.</p>",
+        "UpdateCloudExadataInfrastructureOutput$cloudExadataInfrastructureId": "<p>The unique identifier of the updated Exadata infrastructure.</p>",
+        "UpdateOdbNetworkOutput$displayName": "<p>The user-friendly name of the ODB network.</p>",
+        "UpdateOdbNetworkOutput$statusReason": "<p>Additional information about the status of the ODB network.</p>",
+        "UpdateOdbNetworkOutput$odbNetworkId": "<p>The unique identifier of the ODB network.</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The field name for which validation failed.</p>",
+        "ValidationExceptionField$message": "<p>The description of the error.</p>",
+        "ZeroEtlAccess$cidr": "<p>The CIDR block for the Zero-ETL access.</p>"
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$dbServers": "<p>The list of database servers associated with the Autonomous VM cluster.</p>",
+        "CloudAutonomousVmClusterSummary$dbServers": "<p>The list of database servers associated with the Autonomous VM cluster.</p>",
+        "CloudVmCluster$dbServers": "<p>The list of database servers for the VM cluster.</p>",
+        "CloudVmCluster$scanIpIds": "<p>The OCID of the SCAN IP addresses that are associated with the VM cluster.</p>",
+        "CloudVmCluster$vipIds": "<p>The virtual IP (VIP) addresses that are associated with the VM cluster. Oracle's Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the VM cluster to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster.</p>",
+        "CloudVmClusterSummary$dbServers": "<p>The list of database servers for the VM cluster.</p>",
+        "CloudVmClusterSummary$scanIpIds": "<p>The OCID of the SCAN IP addresses that are associated with the VM cluster.</p>",
+        "CloudVmClusterSummary$vipIds": "<p>The virtual IP (VIP) addresses that are associated with the VM cluster. Oracle's Cluster Ready Services (CRS) creates and maintains one VIP address for each node in the VM cluster to enable failover. If one node fails, the VIP is reassigned to another active node in the cluster.</p>",
+        "CreateCloudAutonomousVmClusterInput$dbServers": "<p>The list of database servers to be used for the Autonomous VM cluster.</p>",
+        "CreateCloudVmClusterInput$sshPublicKeys": "<p>The public key portion of one or more key pairs used for SSH access to the VM cluster.</p>",
+        "CreateCloudVmClusterInput$dbServers": "<p>The list of database servers for the VM cluster.</p>",
+        "DbServer$vmClusterIds": "<p>The OCID of the VM clusters that are associated with the database server.</p>",
+        "DbServer$autonomousVmClusterIds": "<p>The list of identifiers for the Autonomous VM clusters associated with this database server.</p>",
+        "DbServer$autonomousVirtualMachineIds": "<p>The list of unique identifiers for the Autonomous VMs associated with this database server.</p>",
+        "DbServerSummary$vmClusterIds": "<p>The IDs of the VM clusters that are associated with the database server.</p>",
+        "DbServerSummary$autonomousVmClusterIds": "<p>A list of identifiers for the Autonomous VM clusters.</p>",
+        "DbServerSummary$autonomousVirtualMachineIds": "<p>A list of unique identifiers for the Autonomous VMs.</p>",
+        "GetCloudExadataInfrastructureUnallocatedResourcesInput$dbServers": "<p>The database servers to include in the unallocated resources query.</p>",
+        "ManagedS3BackupAccess$ipv4Addresses": "<p>The IPv4 addresses for the managed Amazon S3 backup access.</p>",
+        "ManagedServices$managedServicesIpv4Cidrs": "<p>The IPv4 CIDR blocks for the managed services.</p>",
+        "OdbNetwork$peeredCidrs": "<p>The list of CIDR ranges from the peered VPC that are allowed access to the ODB network.</p>",
+        "OdbNetworkSummary$peeredCidrs": "<p>The list of CIDR ranges from the peered VPC that are allowed access to the ODB network.</p>",
+        "S3Access$ipv4Addresses": "<p>The IPv4 addresses for the Amazon S3 access.</p>",
+        "SystemVersionSummary$systemVersions": "<p>The Exadata system versions that are compatible with the specified Exadata shape and GI version.</p>",
+        "UpdateOdbNetworkInput$peeredCidrsToBeAdded": "<p>The list of CIDR ranges from the peered VPC that allow access to the ODB network.</p>",
+        "UpdateOdbNetworkInput$peeredCidrsToBeRemoved": "<p>The list of CIDR ranges from the peered VPC to remove from the ODB network.</p>"
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "CloudAutonomousVmCluster$createdAt": "<p>The date and time when the Autonomous VM cluster was created.</p>",
+        "CloudAutonomousVmCluster$timeDatabaseSslCertificateExpires": "<p>The expiration date and time of the database SSL certificate.</p>",
+        "CloudAutonomousVmCluster$timeOrdsCertificateExpires": "<p>The expiration date and time of the Oracle REST Data Services (ORDS) certificate.</p>",
+        "CloudAutonomousVmClusterSummary$createdAt": "<p>The date and time when the Autonomous VM cluster was created.</p>",
+        "CloudAutonomousVmClusterSummary$timeDatabaseSslCertificateExpires": "<p>The expiration date and time of the database SSL certificate.</p>",
+        "CloudAutonomousVmClusterSummary$timeOrdsCertificateExpires": "<p>The expiration date and time of the Oracle REST Data Services (ORDS) certificate.</p>",
+        "CloudExadataInfrastructure$createdAt": "<p>The date and time when the Exadata infrastructure was created.</p>",
+        "CloudExadataInfrastructureSummary$createdAt": "<p>The date and time when the Exadata infrastructure was created.</p>",
+        "CloudVmCluster$createdAt": "<p>The date and time when the VM cluster was created.</p>",
+        "CloudVmClusterSummary$createdAt": "<p>The date and time when the VM cluster was created.</p>",
+        "DbNode$createdAt": "<p>The date and time when the DB node was created.</p>",
+        "DbNodeSummary$createdAt": "<p>The date and time when the DB node was created.</p>",
+        "DbServer$createdAt": "<p>The date and time when the database server was created.</p>",
+        "DbServerSummary$createdAt": "<p>The date and time when the database server was created.</p>",
+        "OdbNetwork$createdAt": "<p>The date and time when the ODB network was created.</p>",
+        "OdbNetworkSummary$createdAt": "<p>The date and time when the ODB network was created.</p>",
+        "OdbPeeringConnection$createdAt": "<p>The timestamp when the ODB peering connection was created.</p>",
+        "OdbPeeringConnectionSummary$createdAt": "<p>The timestamp when the ODB peering connection was created.</p>"
+      }
+    },
+    "SystemVersionList": {
+      "base": null,
+      "refs": {
+        "ListSystemVersionsOutput$systemVersions": "<p>The list of system versions.</p>"
+      }
+    },
+    "SystemVersionSummary": {
+      "base": "<p>Information about the compatible system versions that can be used with a specific Exadata shape and Grid Infrastructure (GI) version.</p>",
+      "refs": {
+        "SystemVersionList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "RequestTagMap$key": null,
+        "ResponseTagMap$key": null,
+        "TagKeys$member": null
+      }
+    },
+    "TagKeys": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The names (keys) of the tags to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "RequestTagMap$value": null,
+        "ResponseTagMap$value": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCloudExadataInfrastructureInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateCloudExadataInfrastructureOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOdbNetworkInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOdbNetworkOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ValidationException": {
+      "base": "<p>The request has failed validation because it is missing required fields or has invalid inputs.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>The input failed to meet the constraints specified by the service in a specified field. Make sure you provided the correct input and try again.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p>A list of fields that failed validation.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p>The reason why the validation failed.</p>"
+      }
+    },
+    "VpcEndpointType": {
+      "base": null,
+      "refs": {
+        "ServiceNetworkEndpoint$vpcEndpointType": "<p>The type of the VPC endpoint.</p> <p>Valid Values: <code>Interface | Gateway</code> </p>"
+      }
+    },
+    "WeeksOfMonth": {
+      "base": null,
+      "refs": {
+        "MaintenanceWindow$weeksOfMonth": "<p>The weeks of the month when maintenance can be performed.</p>"
+      }
+    },
+    "ZeroEtlAccess": {
+      "base": "<p>The configuration for Zero-ETL access from the ODB network.</p>",
+      "refs": {
+        "ManagedServices$zeroEtlAccess": "<p>The Zero-ETL access configuration.</p>"
+      }
+    }
+  }
+}

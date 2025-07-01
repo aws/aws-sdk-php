@@ -19,7 +19,7 @@
     "DeleteConfiguredModelAlgorithmAssociation": "<p>Deletes a configured model algorithm association.</p>",
     "DeleteMLConfiguration": "<p>Deletes a ML modeling configuration.</p>",
     "DeleteMLInputChannelData": "<p>Provides the information necessary to delete an ML input channel.</p>",
-    "DeleteTrainedModelOutput": "<p>Deletes the output of a trained model.</p>",
+    "DeleteTrainedModelOutput": "<p>Deletes the model artifacts stored by the service.</p>",
     "DeleteTrainingDataset": "<p>Specifies a training dataset that you want to delete. You can't delete a training dataset if there are any audience models that depend on the training dataset. In Clean Rooms ML, the <code>TrainingDataset</code> is metadata that points to a Glue table, which is read only during <code>AudienceModel</code> creation. This action deletes the metadata.</p>",
     "GetAudienceGenerationJob": "<p>Returns information about an audience generation job.</p>",
     "GetAudienceModel": "<p>Returns information about an audience model</p>",
@@ -49,6 +49,7 @@
     "ListMLInputChannels": "<p>Returns a list of ML input channels.</p>",
     "ListTagsForResource": "<p>Returns a list of tags for a provided resource.</p>",
     "ListTrainedModelInferenceJobs": "<p>Returns a list of trained model inference jobs that match the request parameters.</p>",
+    "ListTrainedModelVersions": "<p>Returns a list of trained model versions for a specified trained model. This operation allows you to view all versions of a trained model, including information about their status and creation details. You can use this to track the evolution of your trained models and select specific versions for inference or further training.</p>",
     "ListTrainedModels": "<p>Returns a list of trained models.</p>",
     "ListTrainingDatasets": "<p>Returns a list of training datasets.</p>",
     "PutConfiguredAudienceModelPolicy": "<p>Create or update the resource policy for a configured audience model.</p>",
@@ -94,8 +95,8 @@
     "AlgorithmImage": {
       "base": null,
       "refs": {
-        "ContainerConfig$imageUri": "<p>The registry path of the docker image that contains the algorithm. Clean Rooms ML supports both <code>registry/repository[:tag]</code> and <code>registry/repositry[@digest]</code> image path formats. For more information about using images in Clean Rooms ML, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AlgorithmSpecification.html#sagemaker-Type-AlgorithmSpecification-TrainingImage\">Sagemaker API reference</a>.</p>",
-        "InferenceContainerConfig$imageUri": "<p>The registry path of the docker image that contains the inference algorithm. Clean Rooms ML supports both <code>registry/repository[:tag]</code> and <code>registry/repositry[@digest]</code> image path formats. For more information about using images in Clean Rooms ML, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AlgorithmSpecification.html#sagemaker-Type-AlgorithmSpecification-TrainingImage\">Sagemaker API reference</a>.</p>"
+        "ContainerConfig$imageUri": "<p>The registry path of the docker image that contains the algorithm. Clean Rooms ML currently only supports the <code>registry/repository[:tag]</code> image path format. For more information about using images in Clean Rooms ML, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AlgorithmSpecification.html#sagemaker-Type-AlgorithmSpecification-TrainingImage\">Sagemaker API reference</a>.</p>",
+        "InferenceContainerConfig$imageUri": "<p>The registry path of the docker image that contains the inference algorithm. Clean Rooms ML currently only supports the <code>registry/repository[:tag]</code> image path format. For more information about using images in Clean Rooms ML, see the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AlgorithmSpecification.html#sagemaker-Type-AlgorithmSpecification-TrainingImage\">Sagemaker API reference</a>.</p>"
       }
     },
     "AnalysisTemplateArn": {
@@ -954,8 +955,35 @@
         "CreateTrainingDatasetRequest$roleArn": "<p>The ARN of the IAM role that Clean Rooms ML can assume to read the data referred to in the <code>dataSource</code> field of each dataset.</p> <p>Passing a role across AWS accounts is not allowed. If you pass a role that isn't in your account, you get an <code>AccessDeniedException</code> error.</p>",
         "GetConfiguredModelAlgorithmResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the service role that was used to create the configured model algorithm.</p>",
         "GetTrainingDatasetResponse$roleArn": "<p>The IAM role used to read the training data.</p>",
-        "InputChannel$roleArn": "<p>The ARN of the IAM role that Clean Rooms ML can assume to read the data referred to in the <code>dataSource</code> field the input channel.</p> <p>Passing a role across AWS accounts is not allowed. If you pass a role that isn't in your account, you get an <code>AccessDeniedException</code> error.</p>",
+        "InputChannel$roleArn": "<p>The Amazon Resource Name (ARN) of the role used to run the query specified in the <code>dataSource</code> field of the input channel.</p> <p>Passing a role across AWS accounts is not allowed. If you pass a role that isn't in your account, you get an <code>AccessDeniedException</code> error.</p>",
         "MLOutputConfiguration$roleArn": "<p>The Amazon Resource Name (ARN) of the service access role that is used to store the model artifacts.</p>"
+      }
+    },
+    "IncrementalTrainingDataChannel": {
+      "base": "<p>Defines an incremental training data channel that references a previously trained model. Incremental training allows you to update an existing trained model with new data, building upon the knowledge from a base model rather than training from scratch. This can significantly reduce training time and computational costs while improving model performance with additional data.</p>",
+      "refs": {
+        "IncrementalTrainingDataChannels$member": null
+      }
+    },
+    "IncrementalTrainingDataChannelOutput": {
+      "base": "<p>Contains information about an incremental training data channel that was used to create a trained model. This structure provides details about the base model and channel configuration used during incremental training.</p>",
+      "refs": {
+        "IncrementalTrainingDataChannelsOutput$member": null
+      }
+    },
+    "IncrementalTrainingDataChannels": {
+      "base": null,
+      "refs": {
+        "CreateTrainedModelRequest$incrementalTrainingDataChannels": "<p>Specifies the incremental training data channels for the trained model. </p> <p>Incremental training allows you to create a new trained model with updates without retraining from scratch. You can specify up to one incremental training data channel that references a previously trained model and its version.</p> <p>Limit: Maximum of 20 channels total (including both <code>incrementalTrainingDataChannels</code> and <code>dataChannels</code>).</p>"
+      }
+    },
+    "IncrementalTrainingDataChannelsOutput": {
+      "base": null,
+      "refs": {
+        "CollaborationTrainedModelSummary$incrementalTrainingDataChannels": "<p>Information about the incremental training data channels used to create this version of the trained model.</p>",
+        "GetCollaborationTrainedModelResponse$incrementalTrainingDataChannels": "<p>Information about the incremental training data channels used to create this version of the trained model. This includes details about the base model that was used for incremental training and the channel configuration.</p>",
+        "GetTrainedModelResponse$incrementalTrainingDataChannels": "<p>Information about the incremental training data channels used to create this version of the trained model. This includes details about the base model that was used for incremental training and the channel configuration.</p>",
+        "TrainedModelSummary$incrementalTrainingDataChannels": "<p>Information about the incremental training data channels used to create this version of the trained model.</p>"
       }
     },
     "InferenceContainerConfig": {
@@ -1060,6 +1088,11 @@
       "base": null,
       "refs": {
         "ResourceConfig$instanceType": "<p>The instance type that is used to train the model.</p>"
+      }
+    },
+    "InternalServiceException": {
+      "base": "<p>An internal service error occurred. Retry your request. If the problem persists, contact AWS Support.</p>",
+      "refs": {
       }
     },
     "KmsKeyArn": {
@@ -1217,6 +1250,16 @@
       "refs": {
       }
     },
+    "ListTrainedModelVersionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTrainedModelVersionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTrainedModelsRequest": {
       "base": null,
       "refs": {
@@ -1331,6 +1374,7 @@
         "ListConfiguredModelAlgorithmsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
         "ListMLInputChannelsRequest$maxResults": "<p>The maximum number of ML input channels to return.</p>",
         "ListTrainedModelInferenceJobsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
+        "ListTrainedModelVersionsRequest$maxResults": "<p>The maximum number of trained model versions to return in a single page. The default value is 10, and the maximum value is 100.</p>",
         "ListTrainedModelsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>",
         "ListTrainingDatasetsRequest$maxResults": "<p>The maximum size of the results that is returned per call.</p>"
       }
@@ -1407,13 +1451,15 @@
     "ModelTrainingDataChannelName": {
       "base": null,
       "refs": {
+        "IncrementalTrainingDataChannel$channelName": "<p>The name of the incremental training data channel. This name is used to identify the channel during the training process and must be unique within the training job.</p>",
+        "IncrementalTrainingDataChannelOutput$channelName": "<p>The name of the incremental training data channel that was used.</p>",
         "ModelTrainingDataChannel$channelName": "<p>The name of the training data channel.</p>"
       }
     },
     "ModelTrainingDataChannels": {
       "base": null,
       "refs": {
-        "CreateTrainedModelRequest$dataChannels": "<p>Defines the data channels that are used as input for the trained model request.</p>",
+        "CreateTrainedModelRequest$dataChannels": "<p>Defines the data channels that are used as input for the trained model request.</p> <p>Limit: Maximum of 20 channels total (including both <code>dataChannels</code> and <code>incrementalTrainingDataChannels</code>).</p>",
         "GetTrainedModelResponse$dataChannels": "<p>The data channels that were used for the trained model.</p>"
       }
     },
@@ -1450,6 +1496,7 @@
         "GetTrainedModelInferenceJobResponse$name": "<p>The name of the trained model inference job.</p>",
         "GetTrainedModelResponse$name": "<p>The name of the trained model.</p>",
         "GetTrainingDatasetResponse$name": "<p>The name of the training dataset.</p>",
+        "IncrementalTrainingDataChannelOutput$modelName": "<p>The name of the base trained model that was used for incremental training.</p>",
         "MLInputChannelSummary$name": "<p>The name of the ML input channel.</p>",
         "StartAudienceExportJobRequest$name": "<p>The name of the audience export job.</p>",
         "StartAudienceGenerationJobRequest$name": "<p>The name of the audience generation job.</p>",
@@ -1489,6 +1536,8 @@
         "ListMLInputChannelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
         "ListTrainedModelInferenceJobsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
         "ListTrainedModelInferenceJobsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
+        "ListTrainedModelVersionsRequest$nextToken": "<p>The pagination token from a previous <code>ListTrainedModelVersions</code> request. Use this token to retrieve the next page of results.</p>",
+        "ListTrainedModelVersionsResponse$nextToken": "<p>The pagination token to use in a subsequent <code>ListTrainedModelVersions</code> request to retrieve the next page of results. This value is null when there are no more results to return.</p>",
         "ListTrainedModelsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
         "ListTrainedModelsResponse$nextToken": "<p>The token value used to access the next page of results.</p>",
         "ListTrainingDatasetsRequest$nextToken": "<p>The token value retrieved from a previous call to access the next page of results.</p>",
@@ -1676,6 +1725,12 @@
         "Destination$s3Destination": null
       }
     },
+    "S3DataDistributionType": {
+      "base": null,
+      "refs": {
+        "ModelTrainingDataChannel$s3DataDistributionType": "<p>Specifies how the training data stored in Amazon S3 should be distributed to training instances. This parameter controls the data distribution strategy for the training job:</p> <ul> <li> <p> <code>FullyReplicated</code> - The entire dataset is replicated on each training instance. This is suitable for smaller datasets and algorithms that require access to the complete dataset.</p> </li> <li> <p> <code>ShardedByS3Key</code> - The dataset is distributed across training instances based on Amazon S3 key names. This is suitable for larger datasets and distributed training scenarios where each instance processes a subset of the data.</p> </li> </ul>"
+      }
+    },
     "S3Path": {
       "base": null,
       "refs": {
@@ -1686,6 +1741,12 @@
     "ServiceQuotaExceededException": {
       "base": "<p>You have exceeded your service quota.</p>",
       "refs": {
+      }
+    },
+    "ServiceQuotaExceededExceptionQuotaValueDouble": {
+      "base": null,
+      "refs": {
+        "ServiceQuotaExceededException$quotaValue": "<p>The current limit on the service quota that was exceeded</p>"
       }
     },
     "SharedAudienceMetrics": {
@@ -1770,10 +1831,13 @@
         "GetTrainedModelResponse$metricsStatusDetails": "<p>Details about the metrics status for the trained model.</p>",
         "GetTrainedModelResponse$logsStatusDetails": "<p>Details about the logs status for the trained model.</p>",
         "GetTrainedModelResponse$trainingContainerImageDigest": "<p>Information about the training image container.</p>",
+        "InternalServiceException$message": null,
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$quotaName": "<p>The name of the service quota limit that was exceeded</p>",
         "StatusDetails$statusCode": "<p>The status code that was returned. The status code is intended for programmatic error handling. Clean Rooms ML will not change the status code for existing error conditions.</p>",
         "StatusDetails$message": "<p>The error message that was returned. The message is intended for human consumption and can change at any time. Use the <code>statusCode</code> for programmatic error handling.</p>",
+        "ThrottlingException$message": null,
         "TrainedModelInferenceJobSummary$metricsStatusDetails": "<p>Details about the metrics status for the trained model inference job.</p>",
         "TrainedModelInferenceJobSummary$logsStatusDetails": "<p>Details about the log status for the trained model inference job.</p>",
         "ValidationException$message": null
@@ -1913,6 +1977,11 @@
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to remove tags from.</p>"
       }
     },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {
+      }
+    },
     "TrainedModelArn": {
       "base": null,
       "refs": {
@@ -1927,13 +1996,33 @@
         "GetTrainedModelInferenceJobResponse$trainedModelArn": "<p>The Amazon Resource Name (ARN) for the trained model that was used for the trained model inference job.</p>",
         "GetTrainedModelRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that you are interested in.</p>",
         "GetTrainedModelResponse$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model.</p>",
+        "IncrementalTrainingDataChannel$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the base trained model to use for incremental training. This model serves as the starting point for the incremental training process.</p>",
         "ListCollaborationTrainedModelExportJobsRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that was used to create the export jobs that you are interested in.</p>",
         "ListCollaborationTrainedModelInferenceJobsRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that was used to create the trained model inference jobs that you are interested in.</p>",
         "ListTrainedModelInferenceJobsRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of a trained model that was used to create the trained model inference jobs that you are interested in.</p>",
+        "ListTrainedModelVersionsRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model for which to list versions.</p>",
         "StartTrainedModelExportJobRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that you want to export.</p>",
         "StartTrainedModelInferenceJobRequest$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that is used for this trained model inference job.</p>",
         "TrainedModelInferenceJobSummary$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model that is used for the trained model inference job.</p>",
         "TrainedModelSummary$trainedModelArn": "<p>The Amazon Resource Name (ARN) of the trained model.</p>"
+      }
+    },
+    "TrainedModelArtifactMaxSize": {
+      "base": "<p>Specifies the maximum size limit for trained model artifacts. This configuration helps control storage costs and ensures that trained models don't exceed specified size constraints. The size limit applies to the total size of all artifacts produced by the training job.</p>",
+      "refs": {
+        "TrainedModelsConfigurationPolicy$maxArtifactSize": "<p>The maximum size limit for trained model artifacts as defined in the configuration policy. This setting helps enforce consistent size limits across trained models in the collaboration.</p>"
+      }
+    },
+    "TrainedModelArtifactMaxSizeUnitType": {
+      "base": null,
+      "refs": {
+        "TrainedModelArtifactMaxSize$unit": "<p>The unit of measurement for the maximum artifact size. Valid values include common storage units such as bytes, kilobytes, megabytes, gigabytes, and terabytes.</p>"
+      }
+    },
+    "TrainedModelArtifactMaxSizeValue": {
+      "base": null,
+      "refs": {
+        "TrainedModelArtifactMaxSize$value": "<p>The numerical value for the maximum artifact size limit. This value is interpreted according to the specified unit.</p>"
       }
     },
     "TrainedModelExportFileType": {
@@ -2055,6 +2144,7 @@
     "TrainedModelList": {
       "base": null,
       "refs": {
+        "ListTrainedModelVersionsResponse$trainedModels": "<p>A list of trained model versions that match the specified criteria. Each entry contains summary information about a trained model version, including its version identifier, status, and creation details.</p>",
         "ListTrainedModelsResponse$trainedModels": "<p>The list of trained models.</p>"
       }
     },
@@ -2064,6 +2154,7 @@
         "CollaborationTrainedModelSummary$status": "<p>The status of the trained model.</p>",
         "GetCollaborationTrainedModelResponse$status": "<p>The status of the trained model.</p>",
         "GetTrainedModelResponse$status": "<p>The status of the trained model.</p>",
+        "ListTrainedModelVersionsRequest$status": "<p>Filter the results to only include trained model versions with the specified status. Valid values include <code>CREATE_PENDING</code>, <code>CREATE_IN_PROGRESS</code>, <code>ACTIVE</code>, <code>CREATE_FAILED</code>, and others.</p>",
         "TrainedModelSummary$status": "<p>The status of the trained model.</p>"
       }
     },
@@ -2111,20 +2202,32 @@
         "TrainingDatasetList$member": null
       }
     },
+    "TrainingInputMode": {
+      "base": null,
+      "refs": {
+        "CreateTrainedModelRequest$trainingInputMode": "<p>The input mode for accessing the training data. This parameter determines how the training data is made available to the training algorithm. Valid values are:</p> <ul> <li> <p> <code>File</code> - The training data is downloaded to the training instance and made available as files.</p> </li> <li> <p> <code>FastFile</code> - The training data is streamed directly from Amazon S3 to the training algorithm, providing faster access for large datasets.</p> </li> <li> <p> <code>Pipe</code> - The training data is streamed to the training algorithm using named pipes, which can improve performance for certain algorithms.</p> </li> </ul>",
+        "GetCollaborationTrainedModelResponse$trainingInputMode": "<p>The input mode that was used for accessing the training data when this trained model was created. This indicates how the training data was made available to the training algorithm.</p>",
+        "GetTrainedModelResponse$trainingInputMode": "<p>The input mode that was used for accessing the training data when this trained model was created. This indicates how the training data was made available to the training algorithm.</p>"
+      }
+    },
     "UUID": {
       "base": null,
       "refs": {
         "AudienceGenerationJobSummary$collaborationId": "<p>The identifier of the collaboration that contains this audience generation job.</p>",
         "CancelTrainedModelInferenceJobRequest$membershipIdentifier": "<p>The membership ID of the trained model inference job that you want to cancel.</p>",
         "CancelTrainedModelRequest$membershipIdentifier": "<p>The membership ID of the trained model job that you want to cancel.</p>",
+        "CancelTrainedModelRequest$versionIdentifier": "<p>The version identifier of the trained model to cancel. This parameter allows you to specify which version of the trained model you want to cancel when multiple versions exist.</p> <p>If <code>versionIdentifier</code> is not specified, the base model will be cancelled.</p>",
         "CollaborationConfiguredModelAlgorithmAssociationSummary$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
         "CollaborationConfiguredModelAlgorithmAssociationSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm association.</p>",
         "CollaborationMLInputChannelSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel.</p>",
         "CollaborationMLInputChannelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
+        "CollaborationTrainedModelExportJobSummary$trainedModelVersionIdentifier": "<p>The version identifier of the trained model that was exported in this job.</p>",
         "CollaborationTrainedModelExportJobSummary$membershipIdentifier": "<p>The membership ID of the member that created the trained model export job.</p>",
         "CollaborationTrainedModelExportJobSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model export job.</p>",
         "CollaborationTrainedModelInferenceJobSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
+        "CollaborationTrainedModelInferenceJobSummary$trainedModelVersionIdentifier": "<p>The version identifier of the trained model that was used for inference in this job.</p>",
         "CollaborationTrainedModelInferenceJobSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model inference job.</p>",
+        "CollaborationTrainedModelSummary$versionIdentifier": "<p>The version identifier of this trained model version.</p>",
         "CollaborationTrainedModelSummary$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
         "CollaborationTrainedModelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>",
         "ConfiguredModelAlgorithmAssociationSummary$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
@@ -2132,10 +2235,12 @@
         "CreateConfiguredModelAlgorithmAssociationRequest$membershipIdentifier": "<p>The membership ID of the member who is associating this configured model algorithm.</p>",
         "CreateMLInputChannelRequest$membershipIdentifier": "<p>The membership ID of the member that is creating the ML input channel.</p>",
         "CreateTrainedModelRequest$membershipIdentifier": "<p>The membership ID of the member that is creating the trained model.</p>",
+        "CreateTrainedModelResponse$versionIdentifier": "<p>The unique version identifier assigned to the newly created trained model. This identifier can be used to reference this specific version of the trained model in subsequent operations such as inference jobs or incremental training.</p> <p>The initial version identifier for the base version of the trained model is \"NULL\".</p>",
         "DeleteConfiguredModelAlgorithmAssociationRequest$membershipIdentifier": "<p>The membership ID of the member that is deleting the configured model algorithm association.</p>",
         "DeleteMLConfigurationRequest$membershipIdentifier": "<p>The membership ID of the of the member that is deleting the ML modeling configuration.</p>",
         "DeleteMLInputChannelDataRequest$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel you want to delete.</p>",
         "DeleteTrainedModelOutputRequest$membershipIdentifier": "<p>The membership ID of the member that is deleting the trained model output.</p>",
+        "DeleteTrainedModelOutputRequest$versionIdentifier": "<p>The version identifier of the trained model to delete. If not specified, the operation will delete the base version of the trained model. When specified, only the particular version will be deleted.</p>",
         "GetAudienceGenerationJobResponse$collaborationId": "<p>The identifier of the collaboration that this audience generation job is associated with.</p>",
         "GetCollaborationConfiguredModelAlgorithmAssociationRequest$collaborationIdentifier": "<p>The collaboration ID for the collaboration that contains the configured model algorithm association that you want to return information about.</p>",
         "GetCollaborationConfiguredModelAlgorithmAssociationResponse$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
@@ -2144,8 +2249,10 @@
         "GetCollaborationMLInputChannelResponse$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel.</p>",
         "GetCollaborationMLInputChannelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
         "GetCollaborationTrainedModelRequest$collaborationIdentifier": "<p>The collaboration ID that contains the trained model that you want to return information about.</p>",
+        "GetCollaborationTrainedModelRequest$versionIdentifier": "<p>The version identifier of the trained model to retrieve. If not specified, the operation returns information about the latest version of the trained model.</p>",
         "GetCollaborationTrainedModelResponse$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
         "GetCollaborationTrainedModelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>",
+        "GetCollaborationTrainedModelResponse$versionIdentifier": "<p>The version identifier of the trained model. This unique identifier distinguishes this version from other versions of the same trained model.</p>",
         "GetConfiguredModelAlgorithmAssociationRequest$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
         "GetConfiguredModelAlgorithmAssociationResponse$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm association.</p>",
         "GetConfiguredModelAlgorithmAssociationResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm association.</p>",
@@ -2156,29 +2263,42 @@
         "GetMLInputChannelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
         "GetMLInputChannelResponse$protectedQueryIdentifier": "<p>The ID of the protected query that was used to create the ML input channel.</p>",
         "GetTrainedModelInferenceJobRequest$membershipIdentifier": "<p>Provides the membership ID of the membership that contains the trained model inference job that you are interested in.</p>",
+        "GetTrainedModelInferenceJobResponse$trainedModelVersionIdentifier": "<p>The version identifier of the trained model used for this inference job. This identifies the specific version of the trained model that was used to generate the inference results.</p>",
         "GetTrainedModelInferenceJobResponse$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
         "GetTrainedModelRequest$membershipIdentifier": "<p>The membership ID of the member that created the trained model that you are interested in.</p>",
+        "GetTrainedModelRequest$versionIdentifier": "<p>The version identifier of the trained model to retrieve. If not specified, the operation returns information about the latest version of the trained model.</p>",
         "GetTrainedModelResponse$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
         "GetTrainedModelResponse$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>",
+        "GetTrainedModelResponse$versionIdentifier": "<p>The version identifier of the trained model. This unique identifier distinguishes this version from other versions of the same trained model.</p>",
+        "IncrementalTrainingDataChannel$versionIdentifier": "<p>The version identifier of the base trained model to use for incremental training. If not specified, the latest version of the trained model is used.</p>",
+        "IncrementalTrainingDataChannelOutput$versionIdentifier": "<p>The version identifier of the trained model that was used for incremental training.</p>",
         "ListAudienceGenerationJobsRequest$collaborationId": "<p>The identifier of the collaboration that contains the audience generation jobs that you are interested in.</p>",
         "ListCollaborationConfiguredModelAlgorithmAssociationsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the configured model algorithm associations that you are interested in.</p>",
         "ListCollaborationMLInputChannelsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channels that you want to list.</p>",
         "ListCollaborationTrainedModelExportJobsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model export jobs that you are interested in.</p>",
+        "ListCollaborationTrainedModelExportJobsRequest$trainedModelVersionIdentifier": "<p>The version identifier of the trained model to filter export jobs by. When specified, only export jobs for this specific version of the trained model are returned.</p>",
         "ListCollaborationTrainedModelInferenceJobsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model inference jobs that you are interested in.</p>",
+        "ListCollaborationTrainedModelInferenceJobsRequest$trainedModelVersionIdentifier": "<p>The version identifier of the trained model to filter inference jobs by. When specified, only inference jobs that used this specific version of the trained model are returned.</p>",
         "ListCollaborationTrainedModelsRequest$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained models you are interested in.</p>",
         "ListConfiguredModelAlgorithmAssociationsRequest$membershipIdentifier": "<p>The membership ID of the member that created the configured model algorithm associations you are interested in.</p>",
         "ListMLInputChannelsRequest$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channels that you want to list.</p>",
         "ListTrainedModelInferenceJobsRequest$membershipIdentifier": "<p>The membership </p>",
+        "ListTrainedModelInferenceJobsRequest$trainedModelVersionIdentifier": "<p>The version identifier of the trained model to filter inference jobs by. When specified, only inference jobs that used this specific version of the trained model are returned.</p>",
+        "ListTrainedModelVersionsRequest$membershipIdentifier": "<p>The membership identifier for the collaboration that contains the trained model.</p>",
         "ListTrainedModelsRequest$membershipIdentifier": "<p>The membership ID of the member that created the trained models you are interested in.</p>",
         "MLInputChannelSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the ML input channel.</p>",
         "MLInputChannelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the ML input channel.</p>",
         "MLInputChannelSummary$protectedQueryIdentifier": "<p>The ID of the protected query that was used to create the ML input channel.</p>",
         "PutMLConfigurationRequest$membershipIdentifier": "<p>The membership ID of the member that is being configured.</p>",
         "StartAudienceGenerationJobRequest$collaborationId": "<p>The identifier of the collaboration that contains the audience generation job.</p>",
+        "StartTrainedModelExportJobRequest$trainedModelVersionIdentifier": "<p>The version identifier of the trained model to export. This specifies which version of the trained model should be exported to the specified destination.</p>",
         "StartTrainedModelExportJobRequest$membershipIdentifier": "<p>The membership ID of the member that is receiving the exported trained model artifacts.</p>",
         "StartTrainedModelInferenceJobRequest$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
+        "StartTrainedModelInferenceJobRequest$trainedModelVersionIdentifier": "<p>The version identifier of the trained model to use for inference. This specifies which version of the trained model should be used to generate predictions on the input data.</p>",
         "TrainedModelInferenceJobSummary$membershipIdentifier": "<p>The membership ID of the membership that contains the trained model inference job.</p>",
+        "TrainedModelInferenceJobSummary$trainedModelVersionIdentifier": "<p>The version identifier of the trained model that was used for inference in this job.</p>",
         "TrainedModelInferenceJobSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model inference job.</p>",
+        "TrainedModelSummary$versionIdentifier": "<p>The version identifier of this trained model version.</p>",
         "TrainedModelSummary$membershipIdentifier": "<p>The membership ID of the member that created the trained model.</p>",
         "TrainedModelSummary$collaborationIdentifier": "<p>The collaboration ID of the collaboration that contains the trained model.</p>"
       }

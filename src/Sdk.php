@@ -550,6 +550,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionOSIS(array $args = [])
  * @method \Aws\ObservabilityAdmin\ObservabilityAdminClient createObservabilityAdmin(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionObservabilityAdmin(array $args = [])
+ * @method \Aws\Odb\OdbClient createOdb(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionOdb(array $args = [])
  * @method \Aws\Omics\OmicsClient createOmics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOmics(array $args = [])
  * @method \Aws\OpenSearchServerless\OpenSearchServerlessClient createOpenSearchServerless(array $args = [])

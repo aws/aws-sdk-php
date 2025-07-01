@@ -11,6 +11,7 @@
     "CheckDocumentAccess": "<p>Verifies if a user has access permissions for a specified document and returns the actual ACL attached to the document. Resolves user access on the document via user aliases and groups when verifying user access.</p>",
     "CreateAnonymousWebExperienceUrl": "<p>Creates a unique URL for anonymous Amazon Q Business web experience. This URL can only be used once and must be used within 5 minutes after it's generated.</p>",
     "CreateApplication": "<p>Creates an Amazon Q Business application.</p> <note> <p>There are new tiers for Amazon Q Business. Not all features in Amazon Q Business Pro are also available in Amazon Q Business Lite. For information on what's included in Amazon Q Business Lite and what's included in Amazon Q Business Pro, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers\">Amazon Q Business tiers</a>. You must use the Amazon Q Business console to assign subscription tiers to users. </p> <p>An Amazon Q Apps service linked role will be created if it's absent in the Amazon Web Services account when <code>QAppsConfiguration</code> is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\"> Using service-linked roles for Q Apps</a>.</p> <p>When you create an application, Amazon Q Business may securely transmit data for processing from your selected Amazon Web Services region, but within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note>",
+    "CreateChatResponseConfiguration": "<p>Creates a new chat response configuration for an Amazon Q Business application. This operation establishes a set of parameters that define how the system generates and formats responses to user queries in chat interactions.</p>",
     "CreateDataAccessor": "<p>Creates a new data accessor for an ISV to access data from a Amazon Q Business application. The data accessor is an entity that represents the ISV's access to the Amazon Q Business application's data. It includes the IAM role ARN for the ISV, a friendly name, and a set of action configurations that define the specific actions the ISV is allowed to perform and any associated data filters. When the data accessor is created, an IAM Identity Center application is also created to manage the ISV's identity and authentication for accessing the Amazon Q Business application.</p>",
     "CreateDataSource": "<p>Creates a data source connector for an Amazon Q Business application.</p> <p> <code>CreateDataSource</code> is a synchronous operation. The operation returns 200 if the data source was successfully created. Otherwise, an exception is raised.</p>",
     "CreateIndex": "<p>Creates an Amazon Q Business index.</p> <p>To determine if index creation has completed, check the <code>Status</code> field returned from a call to <code>DescribeIndex</code>. The <code>Status</code> field is set to <code>ACTIVE</code> when the index is ready to use.</p> <p>Once the index is active, you can index your documents using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_BatchPutDocument.html\"> <code>BatchPutDocument</code> </a> API or the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_CreateDataSource.html\"> <code>CreateDataSource</code> </a> API.</p>",
@@ -22,6 +23,7 @@
     "DeleteApplication": "<p>Deletes an Amazon Q Business application.</p>",
     "DeleteAttachment": "<p>Deletes an attachment associated with a specific Amazon Q Business conversation.</p>",
     "DeleteChatControlsConfiguration": "<p>Deletes chat controls configured for an existing Amazon Q Business application.</p>",
+    "DeleteChatResponseConfiguration": "<p>Deletes a specified chat response configuration from an Amazon Q Business application.</p>",
     "DeleteConversation": "<p>Deletes an Amazon Q Business web experience conversation.</p>",
     "DeleteDataAccessor": "<p>Deletes a specified data accessor. This operation permanently removes the data accessor and its associated IAM Identity Center application. Any access granted to the ISV through this data accessor will be revoked.</p>",
     "DeleteDataSource": "<p>Deletes an Amazon Q Business data source connector. While the data source is being deleted, the <code>Status</code> field returned by a call to the <code>DescribeDataSource</code> API is set to <code>DELETING</code>. </p>",
@@ -34,6 +36,7 @@
     "DisassociatePermission": "<p>Removes a permission policy from a Amazon Q Business application, revoking the cross-account access that was previously granted to an ISV. This operation deletes the specified policy statement from the application's permission policy.</p>",
     "GetApplication": "<p>Gets information about an existing Amazon Q Business application.</p>",
     "GetChatControlsConfiguration": "<p>Gets information about chat controls configured for an existing Amazon Q Business application.</p>",
+    "GetChatResponseConfiguration": "<p>Retrieves detailed information about a specific chat response configuration from an Amazon Q Business application. This operation returns the complete configuration settings and metadata.</p>",
     "GetDataAccessor": "<p>Retrieves information about a specified data accessor. This operation returns details about the data accessor, including its display name, unique identifier, Amazon Resource Name (ARN), the associated Amazon Q Business application and IAM Identity Center application, the IAM role for the ISV, the action configurations, and the timestamps for when the data accessor was created and last updated.</p>",
     "GetDataSource": "<p>Gets information about an existing Amazon Q Business data source connector.</p>",
     "GetGroup": "<p>Describes a group by group name.</p>",
@@ -46,6 +49,7 @@
     "GetWebExperience": "<p>Gets information about an existing Amazon Q Business web experience.</p>",
     "ListApplications": "<p>Lists Amazon Q Business applications.</p> <note> <p>Amazon Q Business applications may securely transmit data for processing across Amazon Web Services Regions within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note>",
     "ListAttachments": "<p>Gets a list of attachments associated with an Amazon Q Business web experience or a list of attachements associated with a specific Amazon Q Business conversation.</p>",
+    "ListChatResponseConfigurations": "<p>Retrieves a list of all chat response configurations available in a specified Amazon Q Business application. This operation returns summary information about each configuration to help administrators manage and select appropriate response settings.</p>",
     "ListConversations": "<p>Lists one or more Amazon Q Business conversations.</p>",
     "ListDataAccessors": "<p>Lists the data accessors for a Amazon Q Business application. This operation returns a paginated list of data accessor summaries, including the friendly name, unique identifier, ARN, associated IAM role, and creation/update timestamps for each data accessor.</p>",
     "ListDataSourceSyncJobs": "<p>Get information about an Amazon Q Business data source connector synchronization.</p>",
@@ -71,6 +75,7 @@
     "UntagResource": "<p>Removes a tag from an Amazon Q Business application or a data source.</p>",
     "UpdateApplication": "<p>Updates an existing Amazon Q Business application.</p> <note> <p>Amazon Q Business applications may securely transmit data for processing across Amazon Web Services Regions within your geography. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html\">Cross region inference in Amazon Q Business</a>.</p> </note> <note> <p>An Amazon Q Apps service-linked role will be created if it's absent in the Amazon Web Services account when <code>QAppsConfiguration</code> is enabled in the request. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html\">Using service-linked roles for Q Apps</a>. </p> </note>",
     "UpdateChatControlsConfiguration": "<p>Updates a set of chat controls configured for an existing Amazon Q Business application.</p>",
+    "UpdateChatResponseConfiguration": "<p>Updates an existing chat response configuration in an Amazon Q Business application. This operation allows administrators to modify configuration settings, display name, and response parameters to refine how the system generates responses.</p>",
     "UpdateDataAccessor": "<p>Updates an existing data accessor. This operation allows modifying the action configurations (the allowed actions and associated filters) and the display name of the data accessor. It does not allow changing the IAM role associated with the data accessor or other core properties of the data accessor.</p>",
     "UpdateDataSource": "<p>Updates an existing Amazon Q Business data source connector.</p>",
     "UpdateIndex": "<p>Updates an Amazon Q Business index.</p>",
@@ -284,6 +289,7 @@
         "CheckDocumentAccessRequest$applicationId": "<p>The unique identifier of the application. This is required to identify the specific Amazon Q Business application context for the document access check.</p>",
         "CreateAnonymousWebExperienceUrlRequest$applicationId": "<p>The identifier of the Amazon Q Business application environment attached to the web experience.</p>",
         "CreateApplicationResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
+        "CreateChatResponseConfigurationRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application for which to create the new chat response configuration.</p>",
         "CreateDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "CreateDataSourceRequest$applicationId": "<p> The identifier of the Amazon Q Business application the data source will be attached to.</p>",
         "CreateIndexRequest$applicationId": "<p>The identifier of the Amazon Q Business application using the index.</p>",
@@ -295,6 +301,7 @@
         "DeleteApplicationRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "DeleteAttachmentRequest$applicationId": "<p>The unique identifier for the Amazon Q Business application environment.</p>",
         "DeleteChatControlsConfigurationRequest$applicationId": "<p>The identifier of the application the chat controls have been configured for.</p>",
+        "DeleteChatResponseConfigurationRequest$applicationId": "<p>The unique identifier of theAmazon Q Business application from which to delete the chat response configuration.</p>",
         "DeleteConversationRequest$applicationId": "<p>The identifier of the Amazon Q Business application associated with the conversation.</p>",
         "DeleteDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "DeleteDataSourceRequest$applicationId": "<p>The identifier of the Amazon Q Business application used with the data source connector.</p>",
@@ -308,6 +315,7 @@
         "GetApplicationRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "GetApplicationResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "GetChatControlsConfigurationRequest$applicationId": "<p>The identifier of the application for which the chat controls are configured.</p>",
+        "GetChatResponseConfigurationRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application containing the chat response configuration to retrieve.</p>",
         "GetDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "GetDataAccessorResponse$applicationId": "<p>The unique identifier of the Amazon Q Business application associated with this data accessor.</p>",
         "GetDataSourceRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
@@ -325,6 +333,7 @@
         "GetWebExperienceRequest$applicationId": "<p>The identifier of the Amazon Q Business application linked to the web experience.</p>",
         "GetWebExperienceResponse$applicationId": "<p>The identifier of the Amazon Q Business application linked to the web experience.</p>",
         "ListAttachmentsRequest$applicationId": "<p>The unique identifier for the Amazon Q Business application.</p>",
+        "ListChatResponseConfigurationsRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application for which to list available chat response configurations.</p>",
         "ListConversationsRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "ListDataAccessorsRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "ListDataSourceSyncJobsRequest$applicationId": "<p>The identifier of the Amazon Q Business application connected to the data source.</p>",
@@ -346,6 +355,7 @@
         "StopDataSourceSyncJobRequest$applicationId": "<p>The identifier of the Amazon Q Business application that the data source is connected to.</p>",
         "UpdateApplicationRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "UpdateChatControlsConfigurationRequest$applicationId": "<p>The identifier of the application for which the chat controls are configured.</p>",
+        "UpdateChatResponseConfigurationRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application containing the chat response configuration to update.</p>",
         "UpdateDataAccessorRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application.</p>",
         "UpdateDataSourceRequest$applicationId": "<p> The identifier of the Amazon Q Business application the data source is attached to.</p>",
         "UpdateIndexRequest$applicationId": "<p>The identifier of the Amazon Q Business application connected to the index.</p>",
@@ -763,6 +773,51 @@
         "ChatOutput$outputStream": "<p>The streaming output for the <code>Chat</code> API.</p>"
       }
     },
+    "ChatResponseConfiguration": {
+      "base": "<p>Configuration details that define how Amazon Q Business generates and formats responses to user queries in chat interactions. This configuration allows administrators to customize response characteristics to meet specific organizational needs and communication standards.</p>",
+      "refs": {
+        "ChatResponseConfigurations$member": null
+      }
+    },
+    "ChatResponseConfigurationArn": {
+      "base": null,
+      "refs": {
+        "ChatResponseConfiguration$chatResponseConfigurationArn": "<p>The Amazon Resource Name (ARN) of the chat response configuration, which uniquely identifies the resource across all Amazon Web Services services and accounts.</p>",
+        "CreateChatResponseConfigurationResponse$chatResponseConfigurationArn": "<p>The Amazon Resource Name (ARN) of the newly created chat response configuration, which uniquely identifies the resource across all Amazon Web Services services. </p>",
+        "GetChatResponseConfigurationResponse$chatResponseConfigurationArn": "<p>The Amazon Resource Name (ARN) of the retrieved chat response configuration, which uniquely identifies the resource across all Amazon Web Services services. </p>"
+      }
+    },
+    "ChatResponseConfigurationDetail": {
+      "base": "<p>Detailed information about a chat response configuration, including comprehensive settings and parameters that define how Amazon Q Business generates and formats responses.</p>",
+      "refs": {
+        "GetChatResponseConfigurationResponse$inUseConfiguration": "<p>The currently active configuration settings that are being used to generate responses in the Amazon Q Business application.</p>",
+        "GetChatResponseConfigurationResponse$lastUpdateConfiguration": "<p>Information about the most recent update to the configuration, including timestamp and modification details.</p>"
+      }
+    },
+    "ChatResponseConfigurationId": {
+      "base": null,
+      "refs": {
+        "ChatResponseConfiguration$chatResponseConfigurationId": "<p>A unique identifier for your chat response configuration settings, used to reference and manage the configuration within the Amazon Q Business service.</p>",
+        "CreateChatResponseConfigurationResponse$chatResponseConfigurationId": "<p>The unique identifier assigned to a newly created chat response configuration, used for subsequent operations on this resource.</p>",
+        "DeleteChatResponseConfigurationRequest$chatResponseConfigurationId": "<p>The unique identifier of the chat response configuration to delete from the specified application. </p>",
+        "GetChatResponseConfigurationRequest$chatResponseConfigurationId": "<p>The unique identifier of the chat response configuration to retrieve from the specified application.</p>",
+        "GetChatResponseConfigurationResponse$chatResponseConfigurationId": "<p>The unique identifier of the retrieved chat response configuration.</p>",
+        "UpdateChatResponseConfigurationRequest$chatResponseConfigurationId": "<p>The unique identifier of the chat response configuration to update within the specified application.</p>"
+      }
+    },
+    "ChatResponseConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "ChatResponseConfiguration$status": "<p>The current status of the chat response configuration, indicating whether it is active, pending, or in another state that affects its availability for use in chat interactions.</p>",
+        "ChatResponseConfigurationDetail$status": "<p>The current status of the chat response configuration, indicating whether it is active, pending, or in another state that affects its availability for use.</p>"
+      }
+    },
+    "ChatResponseConfigurations": {
+      "base": null,
+      "refs": {
+        "ListChatResponseConfigurationsResponse$chatResponseConfigurations": "<p>A list of chat response configuration summaries, each containing key information about an available configuration in the specified application.</p>"
+      }
+    },
     "ChatSyncInput": {
       "base": null,
       "refs": {
@@ -923,6 +978,16 @@
       }
     },
     "CreateApplicationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateChatResponseConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateChatResponseConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -1241,7 +1306,7 @@
     "DateAttributeBoostingConfiguration": {
       "base": "<p>Provides information on boosting <code>DATE</code> type document attributes.</p> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
       "refs": {
-        "DocumentAttributeBoostingConfiguration$dateConfiguration": "<p>Provides information on boosting <code>DATE</code> type document attributes.</p>"
+        "DocumentAttributeBoostingConfiguration$dateConfiguration": "<p>Provides information on boosting <code>DATE</code> type document attributes.</p> <p>Version 2 assigns priority tiers to <code>DATE</code> attributes, establishing clear hierarchical relationships with other boosted attributes.</p>"
       }
     },
     "DeleteApplicationRequest": {
@@ -1270,6 +1335,16 @@
       }
     },
     "DeleteChatControlsConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteChatResponseConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteChatResponseConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -1400,6 +1475,15 @@
       "refs": {
       }
     },
+    "DisplayName": {
+      "base": null,
+      "refs": {
+        "ChatResponseConfiguration$displayName": "<p>A human-readable name for the chat response configuration, making it easier to identify and manage multiple configurations within an organization.</p>",
+        "CreateChatResponseConfigurationRequest$displayName": "<p>A human-readable name for the new chat response configuration, making it easier to identify and manage among multiple configurations.</p>",
+        "GetChatResponseConfigurationResponse$displayName": "<p>The human-readable name of the retrieved chat response configuration, making it easier to identify among multiple configurations.</p>",
+        "UpdateChatResponseConfigurationRequest$displayName": "<p>The new human-readable name to assign to the chat response configuration, making it easier to identify among multiple configurations.</p>"
+      }
+    },
     "Document": {
       "base": "<p>A document in an Amazon Q Business application.</p>",
       "refs": {
@@ -1469,7 +1553,7 @@
       }
     },
     "DocumentAttributeBoostingConfiguration": {
-      "base": "<p>Provides information on boosting supported Amazon Q Business document attribute types. When an end user chat query matches document attributes that have been boosted, Amazon Q Business prioritizes generating responses from content that matches the boosted document attributes.</p> <note> <p>For <code>STRING</code> and <code>STRING_LIST</code> type document attributes to be used for boosting on the console and the API, they must be enabled for search using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html\">DocumentAttributeConfiguration</a> object of the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html\">UpdateIndex</a> API. If you haven't enabled searching on these attributes, you can't boost attributes of these data types on either the console or the API.</p> </note> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
+      "base": "<p>Provides information on boosting supported Amazon Q Business document attribute types. When an end user chat query matches document attributes that have been boosted, Amazon Q Business prioritizes generating responses from content that matches the boosted document attributes.</p> <p>In version 2, boosting uses numeric values (ONE, TWO) to indicate priority tiers that establish clear hierarchical relationships between boosted attributes. This allows for more precise control over how different attributes influence search results.</p> <note> <p>For <code>STRING</code> and <code>STRING_LIST</code> type document attributes to be used for boosting on the console and the API, they must be enabled for search using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html\">DocumentAttributeConfiguration</a> object of the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html\">UpdateIndex</a> API. If you haven't enabled searching on these attributes, you can't boost attributes of these data types on either the console or the API.</p> </note> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
       "refs": {
         "DocumentAttributeBoostingOverrideMap$value": null
       }
@@ -1477,10 +1561,10 @@
     "DocumentAttributeBoostingLevel": {
       "base": null,
       "refs": {
-        "DateAttributeBoostingConfiguration$boostingLevel": "<p>Specifies how much a document attribute is boosted.</p>",
-        "NumberAttributeBoostingConfiguration$boostingLevel": "<p>Specifies the duration, in seconds, of a boost applies to a <code>NUMBER</code> type document attribute.</p>",
-        "StringAttributeBoostingConfiguration$boostingLevel": "<p>Specifies how much a document attribute is boosted.</p>",
-        "StringListAttributeBoostingConfiguration$boostingLevel": "<p>Specifies how much a document attribute is boosted.</p>"
+        "DateAttributeBoostingConfiguration$boostingLevel": "<p>Specifies the priority tier ranking of boosting applied to document attributes. For version 2, this parameter indicates the relative ranking between boosted fields (ONE being highest priority, TWO being second highest, etc.) and determines the order in which attributes influence document ranking in search results. For version 1, this parameter specifies the boosting intensity. For version 2, boosting intensity (VERY HIGH, HIGH, MEDIUM, LOW, NONE) are not supported. Note that in version 2, you are not allowed to boost on only one field and make this value TWO.</p>",
+        "NumberAttributeBoostingConfiguration$boostingLevel": "<p>Specifies the priority of boosted document attributes in relation to other boosted attributes. This parameter determines how strongly the attribute influences document ranking in search results. <code>NUMBER</code> attributes can serve as additional boosting factors when needed, but are not supported when using <code>NativeIndexConfiguration</code> version 2.</p>",
+        "StringAttributeBoostingConfiguration$boostingLevel": "<p>Specifies the priority tier ranking of boosting applied to document attributes. For version 2, this parameter indicates the relative ranking between boosted fields (ONE being highest priority, TWO being second highest, etc.) and determines the order in which attributes influence document ranking in search results. For version 1, this parameter specifies the boosting intensity. For version 2, boosting intensity (VERY HIGH, HIGH, MEDIUM, LOW, NONE) are not supported. Note that in version 2, you are not allowed to boost on only one field and make this value TWO.</p>",
+        "StringListAttributeBoostingConfiguration$boostingLevel": "<p>Specifies the priority of boosted document attributes in relation to other boosted attributes. This parameter determines how strongly the attribute influences document ranking in search results. <code>STRING_LIST</code> attributes can serve as additional boosting factors when needed, but are not supported when using <code>NativeIndexConfiguration</code> version 2.</p>"
       }
     },
     "DocumentAttributeBoostingOverrideMap": {
@@ -1655,6 +1739,7 @@
       "refs": {
         "Attachment$error": "<p>ErrorDetail providing information about a Amazon Q Business attachment error. </p>",
         "AttachmentOutput$error": "<p>An error associated with a file uploaded during chat.</p>",
+        "ChatResponseConfigurationDetail$error": null,
         "DataSourceSyncJob$error": "<p>If the <code>Status</code> field is set to <code>FAILED</code>, the <code>ErrorCode</code> field indicates the reason the synchronization failed. </p>",
         "DocumentDetails$error": "<p>An error message associated with the document.</p>",
         "FailedDocument$error": "<p>An explanation for why the document couldn't be removed from the index.</p>",
@@ -1754,6 +1839,16 @@
       }
     },
     "GetChatControlsConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetChatResponseConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetChatResponseConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -2120,11 +2215,31 @@
         "UpdateApplicationRequest$identityCenterInstanceArn": "<p> The Amazon Resource Name (ARN) of the IAM Identity Center instance you are either creating for—or connecting to—your Amazon Q Business application.</p>"
       }
     },
+    "Instruction": {
+      "base": null,
+      "refs": {
+        "InstructionCollection$responseLength": "<p>Specifies the desired length of responses generated by Amazon Q Business. This parameter allows administrators to control whether responses are concise and brief or more detailed and comprehensive.</p>",
+        "InstructionCollection$targetAudience": "<p>Defines the intended audience for the responses, allowing Amazon Q Business to tailor its language, terminology, and explanations appropriately. This could range from technical experts to general users with varying levels of domain knowledge.</p>",
+        "InstructionCollection$perspective": "<p>Determines the point of view or perspective from which Amazon Q Business generates responses, such as first-person, second-person, or third-person perspective, affecting how information is presented to users.</p>",
+        "InstructionCollection$outputStyle": "<p>Specifies the formatting and structural style of responses, such as bullet points, paragraphs, step-by-step instructions, or other organizational formats that enhance readability and comprehension.</p>",
+        "InstructionCollection$identity": "<p>Defines the persona or identity that Amazon Q Business should adopt when responding to users, allowing for customization of the assistant's character, role, or representation within an organization.</p>",
+        "InstructionCollection$tone": "<p>Controls the emotional tone and communication style of responses, such as formal, casual, technical, friendly, or professional, to align with organizational communication standards and user expectations.</p>",
+        "InstructionCollection$customInstructions": "<p>Allows administrators to provide specific, custom instructions that guide how Amazon Q Business should respond in particular scenarios or to certain types of queries, enabling fine-grained control over response generation.</p>",
+        "InstructionCollection$examples": "<p>Provides sample responses or templates that Amazon Q Business can reference when generating responses, helping to establish consistent patterns and formats for different types of user queries.</p>"
+      }
+    },
+    "InstructionCollection": {
+      "base": "<p>A set of instructions that define how Amazon Q Business should generate and format responses to user queries. This collection includes parameters for controlling response characteristics such as length, audience targeting, perspective, style, identity, tone, and custom instructions.</p>",
+      "refs": {
+        "ResponseConfiguration$instructionCollection": "<p>A collection of instructions that guide how Amazon Q Business generates responses, including parameters for response length, target audience, perspective, output style, identity, tone, and custom instructions.</p>"
+      }
+    },
     "Integer": {
       "base": null,
       "refs": {
         "ActionReviewPayloadField$displayOrder": "<p>The display order of fields in a payload.</p>",
         "Attachment$fileSize": "<p>Size in bytes of the Amazon Q Business attachment.</p>",
+        "ListChatResponseConfigurationsRequest$maxResults": "<p>The maximum number of chat response configurations to return in a single response. This parameter helps control pagination of results when many configurations exist.</p>",
         "SourceAttribution$citationNumber": "<p>The number attached to a citation in an Amazon Q Business generated response.</p>",
         "TextSegment$beginOffset": "<p>The zero-based location in the response string where the source attribution starts.</p>",
         "TextSegment$endOffset": "<p>The zero-based location in the response string where the source attribution ends.</p>"
@@ -2180,6 +2295,16 @@
       }
     },
     "ListAttachmentsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListChatResponseConfigurationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListChatResponseConfigurationsResponse": {
       "base": null,
       "refs": {
       }
@@ -2362,6 +2487,7 @@
         "AudioSourceDetails$startTimeMilliseconds": "<p>The starting timestamp in milliseconds for the relevant audio segment.</p>",
         "AudioSourceDetails$endTimeMilliseconds": "<p>The ending timestamp in milliseconds for the relevant audio segment.</p>",
         "DocumentAttributeValue$longValue": "<p>A long integer value. </p>",
+        "NativeIndexConfiguration$version": "<p>A read-only field that specifies the version of the <code>NativeIndexConfiguration</code>.</p> <p>Amazon Q Business introduces enhanced document retrieval capabilities in version 2 of <code>NativeIndexConfiguration</code>, focusing on streamlined metadata boosting that prioritizes recency and source relevance to deliver more accurate responses to your queries. Version 2 has the following differences from version 1:</p> <ul> <li> <p>Version 2 supports a single Date field (created_at OR last_updated_at) for recency boosting</p> </li> <li> <p>Version 2 supports a single String field with an ordered list of up to 5 values</p> </li> <li> <p>Version 2 introduces number-based boost levels (ONE, TWO) alongside the text-based levels</p> </li> <li> <p>Version 2 allows specifying prioritization between Date and String fields</p> </li> <li> <p>Version 2 maintains backward compatibility with existing configurations</p> </li> </ul>",
         "VideoSourceDetails$startTimeMilliseconds": "<p>The starting timestamp in milliseconds for the relevant video segment.</p>",
         "VideoSourceDetails$endTimeMilliseconds": "<p>The ending timestamp in milliseconds for the relevant video segment.</p>"
       }
@@ -2647,6 +2773,8 @@
         "ListApplicationsResponse$nextToken": "<p>If the response is truncated, Amazon Q Business returns this token. You can use this token in a subsequent request to retrieve the next set of applications.</p>",
         "ListAttachmentsRequest$nextToken": "<p>If the number of attachments returned exceeds <code>maxResults</code>, Amazon Q Business returns a next token as a pagination token to retrieve the next set of attachments.</p>",
         "ListAttachmentsResponse$nextToken": "<p>If the response is truncated, Amazon Q Business returns this token, which you can use in a later request to list the next set of attachments.</p>",
+        "ListChatResponseConfigurationsRequest$nextToken": "<p>A pagination token used to retrieve the next set of results when the number of configurations exceeds the specified <code>maxResults</code> value.</p>",
+        "ListChatResponseConfigurationsResponse$nextToken": "<p>A pagination token that can be used in a subsequent request to retrieve additional chat response configurations if the results were truncated due to the <code>maxResults</code> parameter.</p>",
         "ListConversationsRequest$nextToken": "<p>If the <code>maxResults</code> response was incomplete because there is more data to retrieve, Amazon Q Business returns a pagination token in the response. You can use this pagination token to retrieve the next set of Amazon Q Business conversations.</p>",
         "ListConversationsResponse$nextToken": "<p>If the response is truncated, Amazon Q Business returns this token, which you can use in a later request to list the next set of messages.</p>",
         "ListDataSourceSyncJobsRequest$nextToken": "<p>If the <code>maxResults</code> response was incpmplete because there is more data to retriever, Amazon Q Business returns a pagination token in the response. You can use this pagination token to retrieve the next set of responses.</p>",
@@ -2693,15 +2821,15 @@
       }
     },
     "NumberAttributeBoostingConfiguration": {
-      "base": "<p>Provides information on boosting <code>NUMBER</code> type document attributes.</p> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
+      "base": "<p>Provides information on boosting <code>NUMBER</code> type document attributes.</p> <p>In the current boosting implementation, boosting focuses primarily on <code>DATE</code> attributes for recency and <code>STRING</code> attributes for source prioritization. <code>NUMBER</code> attributes can serve as additional boosting factors when needed, but are not supported when using <code>NativeIndexConfiguration</code> version 2.</p> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
       "refs": {
-        "DocumentAttributeBoostingConfiguration$numberConfiguration": "<p>Provides information on boosting <code>NUMBER</code> type document attributes.</p>"
+        "DocumentAttributeBoostingConfiguration$numberConfiguration": "<p>Provides information on boosting <code>NUMBER</code> type document attributes.</p> <p> <code>NUMBER</code> attributes are not supported when using <code>NativeIndexConfiguration</code> version 2, which focuses on <code>DATE</code> attributes for recency and <code>STRING</code> attributes for source prioritization.</p>"
       }
     },
     "NumberAttributeBoostingType": {
       "base": null,
       "refs": {
-        "NumberAttributeBoostingConfiguration$boostingType": "<p>Specifies how much a document attribute is boosted.</p>"
+        "NumberAttributeBoostingConfiguration$boostingType": "<p>Specifies whether higher or lower numeric values should be prioritized when boosting. Valid values are ASCENDING (higher numbers are more important) and DESCENDING (lower numbers are more important).</p>"
       }
     },
     "OAuth2ClientCredentialConfiguration": {
@@ -3007,6 +3135,32 @@
     "ResourceNotFoundException": {
       "base": "<p>The application or plugin resource you want to use doesn’t exist. Make sure you have provided the correct resource and try again.</p>",
       "refs": {
+      }
+    },
+    "ResponseConfiguration": {
+      "base": "<p>Configuration settings to define how Amazon Q Business generates and formats responses to user queries. This includes customization options for response style, tone, length, and other characteristics.</p>",
+      "refs": {
+        "ResponseConfigurations$value": null
+      }
+    },
+    "ResponseConfigurationSummary": {
+      "base": null,
+      "refs": {
+        "ChatResponseConfiguration$responseConfigurationSummary": "<p>A summary of the response configuration settings, providing a concise overview of the key parameters that define how responses are generated and formatted.</p>"
+      }
+    },
+    "ResponseConfigurationType": {
+      "base": null,
+      "refs": {
+        "ResponseConfigurations$key": null
+      }
+    },
+    "ResponseConfigurations": {
+      "base": null,
+      "refs": {
+        "ChatResponseConfigurationDetail$responseConfigurations": "<p>A collection of specific response configuration settings that collectively define how responses are generated, formatted, and presented to users in chat interactions.</p>",
+        "CreateChatResponseConfigurationRequest$responseConfigurations": "<p>A collection of response configuration settings that define how Amazon Q Business will generate and format responses to user queries in chat interactions.</p>",
+        "UpdateChatResponseConfigurationRequest$responseConfigurations": "<p>The updated collection of response configuration settings that define how Amazon Q Business generates and formats responses to user queries.</p>"
       }
     },
     "ResponseScope": {
@@ -3324,10 +3478,12 @@
         "Attachment$fileType": "<p>Filetype of the Amazon Q Business attachment.</p>",
         "Attachment$md5chksum": "<p>MD5 checksum of the Amazon Q Business attachment contents.</p>",
         "AudioSourceDetails$mediaMimeType": "<p>The MIME type of the audio file (e.g., audio/mp3, audio/wav).</p>",
+        "ChatResponseConfigurationDetail$responseConfigurationSummary": "<p>A summary of the response configuration details, providing a concise overview of the key parameters and settings that define the response generation behavior.</p>",
         "ChatSyncOutput$systemMessage": "<p>An AI-generated message in a conversation.</p>",
         "CheckDocumentAccessRequest$userId": "<p>The unique identifier of the user. Used to check the access permissions for this specific user against the document's ACL.</p>",
         "ConflictException$resourceId": "<p>The identifier of the resource affected.</p>",
         "ConflictException$resourceType": "<p>The type of the resource affected.</p>",
+        "CreateChatResponseConfigurationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This helps prevent the same configuration from being created multiple times if retries occur.</p>",
         "CreateUserRequest$userId": "<p>The user emails attached to a user mapping.</p>",
         "DataSource$type": "<p>The type of the Amazon Q Business data source.</p>",
         "DataSourceSyncJob$dataSourceErrorCode": "<p>If the reason that the synchronization failed is due to an error with the underlying data source, this field contains a code that identifies the error.</p>",
@@ -3354,6 +3510,7 @@
         "StringAttributeValueBoosting$key": null,
         "TextOutputEvent$systemMessage": "<p>An AI-generated message in a <code>TextOutputEvent</code>.</p>",
         "TextSegment$mediaMimeType": "<p>The MIME type (image/png) of the media object associated with the text segment in the source attribution.</p>",
+        "UpdateChatResponseConfigurationRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request. This helps prevent the same update from being processed multiple times if retries occur.</p>",
         "UpdateUserRequest$userId": "<p>The email id attached to the user.</p>",
         "UserAlias$userId": "<p>The identifier of the user id associated with the user aliases.</p>",
         "UserGroups$member": null,
@@ -3366,13 +3523,13 @@
     "StringAttributeBoostingConfiguration": {
       "base": "<p>Provides information on boosting <code>STRING</code> type document attributes.</p> <note> <p>For <code>STRING</code> and <code>STRING_LIST</code> type document attributes to be used for boosting on the console and the API, they must be enabled for search using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html\">DocumentAttributeConfiguration</a> object of the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html\">UpdateIndex</a> API. If you haven't enabled searching on these attributes, you can't boost attributes of these data types on either the console or the API.</p> </note> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
       "refs": {
-        "DocumentAttributeBoostingConfiguration$stringConfiguration": "<p>Provides information on boosting <code>STRING</code> type document attributes.</p>"
+        "DocumentAttributeBoostingConfiguration$stringConfiguration": "<p>Provides information on boosting <code>STRING</code> type document attributes.</p> <p>Version 2 assigns priority tiers to <code>STRING</code> attributes, establishing clear hierarchical relationships with other boosted attributes.</p>"
       }
     },
     "StringAttributeValueBoosting": {
       "base": null,
       "refs": {
-        "StringAttributeBoostingConfiguration$attributeValueBoosting": "<p>Specifies specific values of a <code>STRING</code> type document attribute being boosted.</p>"
+        "StringAttributeBoostingConfiguration$attributeValueBoosting": "<p>Specifies specific values of a <code>STRING</code> type document attribute being boosted. When using <code>NativeIndexConfiguration</code> version 2, you can specify up to five values in order of priority.</p>"
       }
     },
     "StringAttributeValueBoostingLevel": {
@@ -3382,9 +3539,9 @@
       }
     },
     "StringListAttributeBoostingConfiguration": {
-      "base": "<p>Provides information on boosting <code>STRING_LIST</code> type document attributes.</p> <note> <p>For <code>STRING</code> and <code>STRING_LIST</code> type document attributes to be used for boosting on the console and the API, they must be enabled for search using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html\">DocumentAttributeConfiguration</a> object of the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html\">UpdateIndex</a> API. If you haven't enabled searching on these attributes, you can't boost attributes of these data types on either the console or the API.</p> </note> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
+      "base": "<p>Provides information on boosting <code>STRING_LIST</code> type document attributes.</p> <p>In the current boosting implementation, boosting focuses primarily on <code>DATE</code> attributes for recency and <code>STRING</code> attributes for source prioritization. <code>STRING_LIST</code> attributes can serve as additional boosting factors when needed, but are not supported when using <code>NativeIndexConfiguration</code> version 2.</p> <note> <p>For <code>STRING</code> and <code>STRING_LIST</code> type document attributes to be used for boosting on the console and the API, they must be enabled for search using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html\">DocumentAttributeConfiguration</a> object of the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html\">UpdateIndex</a> API. If you haven't enabled searching on these attributes, you can't boost attributes of these data types on either the console or the API.</p> </note> <p>For more information on how boosting document attributes work in Amazon Q Business, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html\">Boosting using document attributes</a>.</p>",
       "refs": {
-        "DocumentAttributeBoostingConfiguration$stringListConfiguration": "<p>Provides information on boosting <code>STRING_LIST</code> type document attributes.</p>"
+        "DocumentAttributeBoostingConfiguration$stringListConfiguration": "<p>Provides information on boosting <code>STRING_LIST</code> type document attributes.</p> <p> <code>STRING_LIST</code> attributes are not supported when using <code>NativeIndexConfiguration</code> version 2, which focuses on <code>DATE</code> attributes for recency and <code>STRING</code> attributes for source prioritization.</p>"
       }
     },
     "SubnetId": {
@@ -3525,6 +3682,7 @@
       "base": null,
       "refs": {
         "CreateApplicationRequest$tags": "<p>A list of key-value pairs that identify or categorize your Amazon Q Business application. You can also use tags to help control access to the application. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
+        "CreateChatResponseConfigurationRequest$tags": "<p>A list of key-value pairs to apply as tags to the new chat response configuration, enabling categorization and management of resources across Amazon Web Services services.</p>",
         "CreateDataAccessorRequest$tags": "<p>The tags to associate with the data accessor.</p>",
         "CreateDataSourceRequest$tags": "<p>A list of key-value pairs that identify or categorize the data source connector. You can also use tags to help control access to the data source connector. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
         "CreateIndexRequest$tags": "<p>A list of key-value pairs that identify or categorize the index. You can also use tags to help control access to the index. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
@@ -3576,6 +3734,9 @@
         "Application$createdAt": "<p>The Unix timestamp when the Amazon Q Business application was created.</p>",
         "Application$updatedAt": "<p>The Unix timestamp when the Amazon Q Business application was last updated. </p>",
         "Attachment$createdAt": "<p>The Unix timestamp when the Amazon Q Business attachment was created.</p>",
+        "ChatResponseConfiguration$createdAt": "<p>The timestamp indicating when the chat response configuration was initially created, useful for tracking the lifecycle of configuration resources.</p>",
+        "ChatResponseConfiguration$updatedAt": "<p>The timestamp indicating when the chat response configuration was last modified, helping administrators track changes and maintain version awareness.</p>",
+        "ChatResponseConfigurationDetail$updatedAt": "<p>The timestamp indicating when the detailed chat response configuration was last modified, helping administrators track changes and maintain version awareness.</p>",
         "Conversation$startTime": "<p>The start time of the conversation.</p>",
         "DataAccessor$createdAt": "<p>The timestamp when the data accessor was created.</p>",
         "DataAccessor$updatedAt": "<p>The timestamp when the data accessor was last updated.</p>",
@@ -3588,6 +3749,7 @@
         "DocumentDetails$updatedAt": "<p>The timestamp for when the document was last updated.</p>",
         "GetApplicationResponse$createdAt": "<p>The Unix timestamp when the Amazon Q Business application was last updated.</p>",
         "GetApplicationResponse$updatedAt": "<p>The Unix timestamp when the Amazon Q Business application was last updated.</p>",
+        "GetChatResponseConfigurationResponse$createdAt": "<p>The timestamp indicating when the chat response configuration was initially created.</p>",
         "GetDataAccessorResponse$createdAt": "<p>The timestamp when the data accessor was created.</p>",
         "GetDataAccessorResponse$updatedAt": "<p>The timestamp when the data accessor was last updated.</p>",
         "GetDataSourceResponse$createdAt": "<p>The Unix timestamp when the data source connector was created.</p>",
@@ -3675,6 +3837,16 @@
       }
     },
     "UpdateChatControlsConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateChatResponseConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateChatResponseConfigurationResponse": {
       "base": null,
       "refs": {
       }

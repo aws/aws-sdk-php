@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Odb` - This release adds API operations for Oracle Database@AWS. You can use the APIs to create Exadata infrastructure, ODB networks, and Exadata and Autonomous VM clusters inside AWS data centers. The infrastructure is managed by OCI. You can integrate these resources with AWS services.
+* `Aws\RDS` - Amazon RDS Custom for Oracle now supports multi-AZ database instances.
+* `Aws\SageMaker` - Updated field validation requirements for InstanceGroups.
+* `Aws\DataZone` - Add support for the new optional domain-unit-id parameter in the UpdateProject API.
+* `Aws\QBusiness` - New ChatResponseConfiguration to Customize Q Business chat responses for specific use cases and communication needs. Updated Boosting capability allowing admins to provide preference on date attributes for recency and/or provide a preferred data source.
+* `Aws\CleanRoomsML` - This release introduces support for incremental training and distributed training for custom models in AWS Clean Rooms ML.
+* `Aws\EC2` - Add Context to GetInstanceTypesFromInstanceRequirements API
+
 ## 3.348.2 - 2025-06-30
 
 * `Aws\Api` - Adds support for extracting error code from nested `error` property in error shapes.

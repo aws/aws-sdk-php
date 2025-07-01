@@ -303,6 +303,44 @@
             ],
             "idempotent": true
         },
+        "CreateChatResponseConfiguration": {
+            "name": "CreateChatResponseConfiguration",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/applications\/{applicationId}\/chatresponseconfigurations",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "CreateChatResponseConfigurationRequest"
+            },
+            "output": {
+                "shape": "CreateChatResponseConfigurationResponse"
+            },
+            "errors": [
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ServiceQuotaExceededException"
+                }
+            ],
+            "idempotent": true
+        },
         "CreateDataAccessor": {
             "name": "CreateDataAccessor",
             "http": {
@@ -690,6 +728,41 @@
                 },
                 {
                     "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "idempotent": true
+        },
+        "DeleteChatResponseConfiguration": {
+            "name": "DeleteChatResponseConfiguration",
+            "http": {
+                "method": "DELETE",
+                "requestUri": "\/applications\/{applicationId}\/chatresponseconfigurations\/{chatResponseConfigurationId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "DeleteChatResponseConfigurationRequest"
+            },
+            "output": {
+                "shape": "DeleteChatResponseConfigurationResponse"
+            },
+            "errors": [
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ConflictException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -1115,6 +1188,37 @@
                 }
             ]
         },
+        "GetChatResponseConfiguration": {
+            "name": "GetChatResponseConfiguration",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/chatresponseconfigurations\/{chatResponseConfigurationId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "GetChatResponseConfigurationRequest"
+            },
+            "output": {
+                "shape": "GetChatResponseConfigurationResponse"
+            },
+            "errors": [
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
         "GetDataAccessor": {
             "name": "GetDataAccessor",
             "http": {
@@ -1487,6 +1591,37 @@
                 },
                 {
                     "shape": "LicenseNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ]
+        },
+        "ListChatResponseConfigurations": {
+            "name": "ListChatResponseConfigurations",
+            "http": {
+                "method": "GET",
+                "requestUri": "\/applications\/{applicationId}\/chatresponseconfigurations",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "ListChatResponseConfigurationsRequest"
+            },
+            "output": {
+                "shape": "ListChatResponseConfigurationsResponse"
+            },
+            "errors": [
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
                 },
                 {
                     "shape": "ThrottlingException"
@@ -2311,6 +2446,41 @@
                 },
                 {
                     "shape": "ServiceQuotaExceededException"
+                }
+            ],
+            "idempotent": true
+        },
+        "UpdateChatResponseConfiguration": {
+            "name": "UpdateChatResponseConfiguration",
+            "http": {
+                "method": "PUT",
+                "requestUri": "\/applications\/{applicationId}\/chatresponseconfigurations\/{chatResponseConfigurationId}",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "UpdateChatResponseConfigurationRequest"
+            },
+            "output": {
+                "shape": "UpdateChatResponseConfigurationResponse"
+            },
+            "errors": [
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ConflictException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "ValidationException"
+                },
+                {
+                    "shape": "AccessDeniedException"
                 }
             ],
             "idempotent": true
@@ -3715,6 +3885,85 @@
             },
             "eventstream": true
         },
+        "ChatResponseConfiguration": {
+            "type": "structure",
+            "required": [
+                "chatResponseConfigurationId",
+                "chatResponseConfigurationArn",
+                "displayName",
+                "status"
+            ],
+            "members": {
+                "chatResponseConfigurationId": {
+                    "shape": "ChatResponseConfigurationId"
+                },
+                "chatResponseConfigurationArn": {
+                    "shape": "ChatResponseConfigurationArn"
+                },
+                "displayName": {
+                    "shape": "DisplayName"
+                },
+                "responseConfigurationSummary": {
+                    "shape": "ResponseConfigurationSummary"
+                },
+                "status": {
+                    "shape": "ChatResponseConfigurationStatus"
+                },
+                "createdAt": {
+                    "shape": "Timestamp"
+                },
+                "updatedAt": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "ChatResponseConfigurationArn": {
+            "type": "string",
+            "max": 1284,
+            "min": 1,
+            "pattern": "arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^\/].{0,1023}"
+        },
+        "ChatResponseConfigurationDetail": {
+            "type": "structure",
+            "members": {
+                "responseConfigurations": {
+                    "shape": "ResponseConfigurations"
+                },
+                "responseConfigurationSummary": {
+                    "shape": "String"
+                },
+                "status": {
+                    "shape": "ChatResponseConfigurationStatus"
+                },
+                "error": {
+                    "shape": "ErrorDetail"
+                },
+                "updatedAt": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "ChatResponseConfigurationId": {
+            "type": "string",
+            "max": 36,
+            "min": 36,
+            "pattern": "[a-zA-Z0-9][a-zA-Z0-9-]{35}"
+        },
+        "ChatResponseConfigurationStatus": {
+            "type": "string",
+            "enum": [
+                "CREATING",
+                "UPDATING",
+                "FAILED",
+                "ACTIVE"
+            ]
+        },
+        "ChatResponseConfigurations": {
+            "type": "list",
+            "member": {
+                "shape": "ChatResponseConfiguration"
+            }
+        },
         "ChatSyncInput": {
             "type": "structure",
             "required": [
@@ -4097,6 +4346,49 @@
                 },
                 "applicationArn": {
                     "shape": "ApplicationArn"
+                }
+            }
+        },
+        "CreateChatResponseConfigurationRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "displayName",
+                "responseConfigurations"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "displayName": {
+                    "shape": "DisplayName"
+                },
+                "clientToken": {
+                    "shape": "String",
+                    "idempotencyToken": true
+                },
+                "responseConfigurations": {
+                    "shape": "ResponseConfigurations"
+                },
+                "tags": {
+                    "shape": "Tags"
+                }
+            }
+        },
+        "CreateChatResponseConfigurationResponse": {
+            "type": "structure",
+            "required": [
+                "chatResponseConfigurationId",
+                "chatResponseConfigurationArn"
+            ],
+            "members": {
+                "chatResponseConfigurationId": {
+                    "shape": "ChatResponseConfigurationId"
+                },
+                "chatResponseConfigurationArn": {
+                    "shape": "ChatResponseConfigurationArn"
                 }
             }
         },
@@ -4523,8 +4815,7 @@
             "type": "structure",
             "required": [
                 "description",
-                "apiSchemaType",
-                "apiSchema"
+                "apiSchemaType"
             ],
             "members": {
                 "description": {
@@ -4905,6 +5196,29 @@
             "type": "structure",
             "members": []
         },
+        "DeleteChatResponseConfigurationRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "chatResponseConfigurationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "chatResponseConfigurationId": {
+                    "shape": "ChatResponseConfigurationId",
+                    "location": "uri",
+                    "locationName": "chatResponseConfigurationId"
+                }
+            }
+        },
+        "DeleteChatResponseConfigurationResponse": {
+            "type": "structure",
+            "members": []
+        },
         "DeleteConversationRequest": {
             "type": "structure",
             "required": [
@@ -5180,6 +5494,11 @@
             "type": "structure",
             "members": []
         },
+        "DisplayName": {
+            "type": "string",
+            "max": 100,
+            "min": 1
+        },
         "Document": {
             "type": "structure",
             "required": [
@@ -5328,7 +5647,9 @@
                 "LOW",
                 "MEDIUM",
                 "HIGH",
-                "VERY_HIGH"
+                "VERY_HIGH",
+                "ONE",
+                "TWO"
             ]
         },
         "DocumentAttributeBoostingOverrideMap": {
@@ -5813,6 +6134,48 @@
                 },
                 "hallucinationReductionConfiguration": {
                     "shape": "HallucinationReductionConfiguration"
+                }
+            }
+        },
+        "GetChatResponseConfigurationRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "chatResponseConfigurationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "chatResponseConfigurationId": {
+                    "shape": "ChatResponseConfigurationId",
+                    "location": "uri",
+                    "locationName": "chatResponseConfigurationId"
+                }
+            }
+        },
+        "GetChatResponseConfigurationResponse": {
+            "type": "structure",
+            "members": {
+                "chatResponseConfigurationId": {
+                    "shape": "ChatResponseConfigurationId"
+                },
+                "chatResponseConfigurationArn": {
+                    "shape": "ChatResponseConfigurationArn"
+                },
+                "displayName": {
+                    "shape": "DisplayName"
+                },
+                "createdAt": {
+                    "shape": "Timestamp"
+                },
+                "inUseConfiguration": {
+                    "shape": "ChatResponseConfigurationDetail"
+                },
+                "lastUpdateConfiguration": {
+                    "shape": "ChatResponseConfigurationDetail"
                 }
             }
         },
@@ -6645,6 +7008,41 @@
             "min": 10,
             "pattern": "arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance\/(sso)?ins-[a-zA-Z0-9-.]{16}"
         },
+        "Instruction": {
+            "type": "string",
+            "max": 1000,
+            "min": 5,
+            "pattern": "[\\s\\S]*"
+        },
+        "InstructionCollection": {
+            "type": "structure",
+            "members": {
+                "responseLength": {
+                    "shape": "Instruction"
+                },
+                "targetAudience": {
+                    "shape": "Instruction"
+                },
+                "perspective": {
+                    "shape": "Instruction"
+                },
+                "outputStyle": {
+                    "shape": "Instruction"
+                },
+                "identity": {
+                    "shape": "Instruction"
+                },
+                "tone": {
+                    "shape": "Instruction"
+                },
+                "customInstructions": {
+                    "shape": "Instruction"
+                },
+                "examples": {
+                    "shape": "Instruction"
+                }
+            }
+        },
         "Integer": {
             "type": "integer",
             "box": true
@@ -6774,6 +7172,40 @@
             "members": {
                 "attachments": {
                     "shape": "AttachmentList"
+                },
+                "nextToken": {
+                    "shape": "NextToken"
+                }
+            }
+        },
+        "ListChatResponseConfigurationsRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "maxResults": {
+                    "shape": "Integer",
+                    "location": "querystring",
+                    "locationName": "maxResults"
+                },
+                "nextToken": {
+                    "shape": "NextToken",
+                    "location": "querystring",
+                    "locationName": "nextToken"
+                }
+            }
+        },
+        "ListChatResponseConfigurationsResponse": {
+            "type": "structure",
+            "members": {
+                "chatResponseConfigurations": {
+                    "shape": "ChatResponseConfigurations"
                 },
                 "nextToken": {
                     "shape": "NextToken"
@@ -7743,6 +8175,9 @@
                 "indexId": {
                     "shape": "IndexId"
                 },
+                "version": {
+                    "shape": "Long"
+                },
                 "boostingOverride": {
                     "shape": "DocumentAttributeBoostingOverrideMap"
                 }
@@ -8307,6 +8742,36 @@
             },
             "exception": true
         },
+        "ResponseConfiguration": {
+            "type": "structure",
+            "members": {
+                "instructionCollection": {
+                    "shape": "InstructionCollection"
+                }
+            }
+        },
+        "ResponseConfigurationSummary": {
+            "type": "string",
+            "max": 1000,
+            "min": 1
+        },
+        "ResponseConfigurationType": {
+            "type": "string",
+            "enum": [
+                "ALL"
+            ]
+        },
+        "ResponseConfigurations": {
+            "type": "map",
+            "key": {
+                "shape": "ResponseConfigurationType"
+            },
+            "value": {
+                "shape": "ResponseConfiguration"
+            },
+            "max": 1,
+            "min": 1
+        },
         "ResponseScope": {
             "type": "string",
             "enum": [
@@ -8806,7 +9271,12 @@
                 "LOW",
                 "MEDIUM",
                 "HIGH",
-                "VERY_HIGH"
+                "VERY_HIGH",
+                "ONE",
+                "TWO",
+                "THREE",
+                "FOUR",
+                "FIVE"
             ]
         },
         "StringListAttributeBoostingConfiguration": {
@@ -9230,6 +9700,40 @@
             }
         },
         "UpdateChatControlsConfigurationResponse": {
+            "type": "structure",
+            "members": []
+        },
+        "UpdateChatResponseConfigurationRequest": {
+            "type": "structure",
+            "required": [
+                "applicationId",
+                "chatResponseConfigurationId",
+                "responseConfigurations"
+            ],
+            "members": {
+                "applicationId": {
+                    "shape": "ApplicationId",
+                    "location": "uri",
+                    "locationName": "applicationId"
+                },
+                "chatResponseConfigurationId": {
+                    "shape": "ChatResponseConfigurationId",
+                    "location": "uri",
+                    "locationName": "chatResponseConfigurationId"
+                },
+                "displayName": {
+                    "shape": "DisplayName"
+                },
+                "responseConfigurations": {
+                    "shape": "ResponseConfigurations"
+                },
+                "clientToken": {
+                    "shape": "String",
+                    "idempotencyToken": true
+                }
+            }
+        },
+        "UpdateChatResponseConfigurationResponse": {
             "type": "structure",
             "members": []
         },
