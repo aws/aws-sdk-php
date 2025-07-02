@@ -4817,6 +4817,7 @@
         },
         "ResourceArn":{
           "shape":"S3ResourceArn",
+          "contextParam":{"name":"ResourceArn"},
           "location":"uri",
           "locationName":"resourceArn"
         }
@@ -6251,7 +6252,7 @@
     "S3ResourceArn":{
       "type":"string",
       "max":1011,
-      "pattern":"arn:[^:]+:s3:[^:].*"
+      "pattern":"arn:[^:]+:s3(express)?:[^:].*"
     },
     "S3Retention":{
       "type":"structure",
@@ -6698,6 +6699,7 @@
         },
         "ResourceArn":{
           "shape":"S3ResourceArn",
+          "contextParam":{"name":"ResourceArn"},
           "location":"uri",
           "locationName":"resourceArn"
         },
@@ -6783,6 +6785,7 @@
         },
         "ResourceArn":{
           "shape":"S3ResourceArn",
+          "contextParam":{"name":"ResourceArn"},
           "location":"uri",
           "locationName":"resourceArn"
         },

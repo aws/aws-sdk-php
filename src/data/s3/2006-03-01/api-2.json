@@ -1500,7 +1500,8 @@
       "members":{
         "Name":{"shape":"BucketName"},
         "CreationDate":{"shape":"CreationDate"},
-        "BucketRegion":{"shape":"BucketRegion"}
+        "BucketRegion":{"shape":"BucketRegion"},
+        "BucketArn":{"shape":"S3RegionalOrS3ExpressBucketArnString"}
       }
     },
     "BucketAccelerateStatus":{
@@ -2306,7 +2307,8 @@
       "members":{
         "LocationConstraint":{"shape":"BucketLocationConstraint"},
         "Location":{"shape":"LocationInfo"},
-        "Bucket":{"shape":"BucketInfo"}
+        "Bucket":{"shape":"BucketInfo"},
+        "Tags":{"shape":"TagSet"}
       }
     },
     "CreateBucketMetadataTableConfigurationRequest":{
@@ -2352,6 +2354,11 @@
           "shape":"Location",
           "location":"header",
           "locationName":"Location"
+        },
+        "BucketArn":{
+          "shape":"S3RegionalOrS3ExpressBucketArnString",
+          "location":"header",
+          "locationName":"x-amz-bucket-arn"
         }
       }
     },
@@ -4814,6 +4821,11 @@
     "HeadBucketOutput":{
       "type":"structure",
       "members":{
+        "BucketArn":{
+          "shape":"S3RegionalOrS3ExpressBucketArnString",
+          "location":"header",
+          "locationName":"x-amz-bucket-arn"
+        },
         "BucketLocationType":{
           "shape":"LocationType",
           "location":"header",
@@ -8715,6 +8727,12 @@
         "UserMetadata":{"shape":"UserMetadata"},
         "StorageClass":{"shape":"StorageClass"}
       }
+    },
+    "S3RegionalOrS3ExpressBucketArnString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:[^:]+:(s3|s3express):.*"
     },
     "S3TablesArn":{"type":"string"},
     "S3TablesBucketArn":{"type":"string"},
