@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.349.1 - 2025-07-02
 
 * `Aws\EC2` - AWS Site-to-Site VPN now supports IPv6 addresses on outer tunnel IPs, making it easier for customers to build or transition to IPv6-only networks.
 * `Aws\S3` - Added support for directory bucket creation with tags and bucket ARN retrieval in CreateBucket, ListDirectoryBuckets, and HeadBucket operations
