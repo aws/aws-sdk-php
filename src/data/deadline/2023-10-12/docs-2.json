@@ -4036,7 +4036,10 @@
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource to apply tags to.</p>",
         "Tags$key": null,
         "Tags$value": null,
+        "TaskParameterValue$chunkInt": "<p>A range (for example 1-10) or selection of specific (for example 1,3,7,8,10) integers represented as a string.</p>",
         "TaskParameters$key": null,
+        "TaskRunManifestPropertiesResponse$outputManifestPath": "<p>The manifest file path.</p>",
+        "TaskRunManifestPropertiesResponse$outputManifestHash": "<p>The hash value of the file.</p>",
         "ThrottlingException$message": null,
         "ThrottlingException$serviceCode": "<p>Identifies the service that is being throttled.</p>",
         "ThrottlingException$quotaCode": "<p>Identifies the quota that is being throttled.</p>",
@@ -4172,6 +4175,7 @@
         "AssignedTaskRunSessionActionDefinition$parameters": "<p>The parameters to include.</p>",
         "GetTaskResponse$parameters": "<p>The parameters for the task.</p>",
         "TaskRunSessionActionDefinition$parameters": "<p>The task parameters.</p>",
+        "TaskRunSessionActionDefinitionSummary$parameters": "<p>The parameters of a task run in a session action.</p>",
         "TaskSearchSummary$parameters": "<p>The parameters to search for.</p>",
         "TaskSummary$parameters": "<p>The task parameters.</p>"
       }
@@ -4182,6 +4186,43 @@
         "GetTaskResponse$failureRetryCount": "<p>The number of times that the task failed and was retried.</p>",
         "TaskSearchSummary$failureRetryCount": "<p>The number of times that the task failed and was retried.</p>",
         "TaskSummary$failureRetryCount": "<p>The number of times that the task failed and was retried.</p>"
+      }
+    },
+    "TaskRunManifestPropertiesListRequest": {
+      "base": null,
+      "refs": {
+        "UpdatedSessionActionInfo$manifests": "<p>A list of output manifest properties reported by the worker agent, with each entry corresponding to a manifest property in the job.</p>"
+      }
+    },
+    "TaskRunManifestPropertiesListResponse": {
+      "base": null,
+      "refs": {
+        "GetSessionActionResponse$manifests": "<p>The list of manifest properties that describe file attachments for the task run.</p>",
+        "SessionActionSummary$manifests": "<p>The list of manifest properties that describe file attachments for the task run.</p>"
+      }
+    },
+    "TaskRunManifestPropertiesRequest": {
+      "base": "<p>The output manifest properties reported by the worker agent for a completed task run.</p>",
+      "refs": {
+        "TaskRunManifestPropertiesListRequest$member": null
+      }
+    },
+    "TaskRunManifestPropertiesRequestOutputManifestHashString": {
+      "base": null,
+      "refs": {
+        "TaskRunManifestPropertiesRequest$outputManifestHash": "<p>The hash value of the file.</p>"
+      }
+    },
+    "TaskRunManifestPropertiesRequestOutputManifestPathString": {
+      "base": null,
+      "refs": {
+        "TaskRunManifestPropertiesRequest$outputManifestPath": "<p>The manifest file path.</p>"
+      }
+    },
+    "TaskRunManifestPropertiesResponse": {
+      "base": "<p>The manifest properties for a task run, corresponding to the manifest properties in the job.</p>",
+      "refs": {
+        "TaskRunManifestPropertiesListResponse$member": null
       }
     },
     "TaskRunSessionActionDefinition": {

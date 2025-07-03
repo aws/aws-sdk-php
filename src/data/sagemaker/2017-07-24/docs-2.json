@@ -32,6 +32,7 @@
     "CreateFeatureGroup": "<p>Create a new <code>FeatureGroup</code>. A <code>FeatureGroup</code> is a group of <code>Features</code> defined in the <code>FeatureStore</code> to describe a <code>Record</code>. </p> <p>The <code>FeatureGroup</code> defines the schema and features contained in the <code>FeatureGroup</code>. A <code>FeatureGroup</code> definition is composed of a list of <code>Features</code>, a <code>RecordIdentifierFeatureName</code>, an <code>EventTimeFeatureName</code> and configurations for its <code>OnlineStore</code> and <code>OfflineStore</code>. Check <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">Amazon Web Services service quotas</a> to see the <code>FeatureGroup</code>s quota for your Amazon Web Services account.</p> <p>Note that it can take approximately 10-15 minutes to provision an <code>OnlineStore</code> <code>FeatureGroup</code> with the <code>InMemory</code> <code>StorageType</code>.</p> <important> <p>You must include at least one of <code>OnlineStoreConfig</code> and <code>OfflineStoreConfig</code> to create a <code>FeatureGroup</code>.</p> </important>",
     "CreateFlowDefinition": "<p>Creates a flow definition.</p>",
     "CreateHub": "<p>Create a hub.</p>",
+    "CreateHubContentPresignedUrls": "<p>Creates presigned URLs for accessing hub content artifacts. This operation generates time-limited, secure URLs that allow direct download of model artifacts and associated files from Amazon SageMaker hub content, including gated models that require end-user license agreement acceptance.</p>",
     "CreateHubContentReference": "<p>Create a hub content reference in order to add a model in the JumpStart public hub to a private hub.</p>",
     "CreateHumanTaskUi": "<p>Defines the settings you will use for the human review workflow user interface. Reviewers will see a three-panel interface with an instruction area, the item to review, and an input area.</p>",
     "CreateHyperParameterTuningJob": "<p>Starts a hyperparameter tuning job. A hyperparameter tuning job finds the best version of a model by running many training jobs on your dataset using the algorithm you choose and values for hyperparameters within ranges that you specify. It then chooses the hyperparameter values that result in a model that performs the best, as measured by an objective metric that you choose.</p> <p>A hyperparameter tuning job automatically creates Amazon SageMaker experiments, trials, and trial components for each training job that it runs. You can view these entities in Amazon SageMaker Studio. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/experiments-view-compare.html#experiments-view\">View Experiments, Trials, and Trial Components</a>.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any hyperparameter fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by any security-sensitive information included in the request hyperparameter variable or plain text fields..</p> </important>",
@@ -301,6 +302,7 @@
     "StartMonitoringSchedule": "<p>Starts a previously stopped monitoring schedule.</p> <note> <p>By default, when you successfully create a new schedule, the status of a monitoring schedule is <code>scheduled</code>.</p> </note>",
     "StartNotebookInstance": "<p>Launches an ML compute instance with the latest version of the libraries and attaches your ML storage volume. After configuring the notebook instance, SageMaker AI sets the notebook instance status to <code>InService</code>. A notebook instance's status must be <code>InService</code> before you can connect to your Jupyter notebook. </p>",
     "StartPipelineExecution": "<p>Starts a pipeline execution.</p>",
+    "StartSession": "<p>Initiates a remote connection session between a local integrated development environments (IDEs) and a remote SageMaker space.</p>",
     "StopAutoMLJob": "<p>A method for forcing a running job to shut down.</p>",
     "StopCompilationJob": "<p>Stops a model compilation job.</p> <p> To stop a job, Amazon SageMaker AI sends the algorithm the SIGTERM signal. This gracefully shuts the job down. If the job hasn't stopped, it sends the SIGKILL signal.</p> <p>When it receives a <code>StopCompilationJob</code> request, Amazon SageMaker AI changes the <code>CompilationJobStatus</code> of the job to <code>Stopping</code>. After Amazon SageMaker stops the job, it sets the <code>CompilationJobStatus</code> to <code>Stopped</code>. </p>",
     "StopEdgeDeploymentStage": "<p>Stops a stage in an edge deployment plan.</p>",
@@ -1063,6 +1065,18 @@
         "AuthenticationRequestExtraParams$value": null
       }
     },
+    "AuthorizedUrl": {
+      "base": "<p>Contains a presigned URL and its associated local file path for downloading hub content artifacts.</p>",
+      "refs": {
+        "AuthorizedUrlConfigs$member": null
+      }
+    },
+    "AuthorizedUrlConfigs": {
+      "base": null,
+      "refs": {
+        "CreateHubContentPresignedUrlsResponse$AuthorizedUrlConfigs": "<p>An array of authorized URL configurations, each containing a presigned URL and its corresponding local file path for proper file organization during download.</p>"
+      }
+    },
     "AutoGenerateEndpointName": {
       "base": null,
       "refs": {
@@ -1670,6 +1684,7 @@
         "NetworkConfig$EnableNetworkIsolation": "<p>Whether to allow inbound and outbound network calls to and from the containers used for the processing job.</p>",
         "OfflineStoreConfig$DisableGlueTableCreation": "<p>Set to <code>True</code> to disable the automatic creation of an Amazon Web Services Glue table when configuring an <code>OfflineStore</code>. If set to <code>False</code>, Feature Store will name the <code>OfflineStore</code> Glue table following <a href=\"https://docs.aws.amazon.com/athena/latest/ug/tables-databases-columns-names.html\">Athena's naming recommendations</a>.</p> <p>The default value is <code>False</code>.</p>",
         "OnlineStoreConfig$EnableOnlineStore": "<p>Turn <code>OnlineStore</code> off by specifying <code>False</code> for the <code>EnableOnlineStore</code> flag. Turn <code>OnlineStore</code> on by specifying <code>True</code> for the <code>EnableOnlineStore</code> flag. </p> <p>The default value is <code>False</code>.</p>",
+        "PresignedUrlAccessConfig$AcceptEula": "<p>Indicates acceptance of the End User License Agreement (EULA) for gated models. Set to true to acknowledge acceptance of the license terms required for accessing gated content.</p>",
         "QualityCheckStepMetadata$SkipCheck": "<p>This flag indicates if the drift check against the previous baseline will be skipped or not. If it is set to <code>False</code>, the previous baseline of the configured check type must be available.</p>",
         "QualityCheckStepMetadata$RegisterNewBaseline": "<p>This flag indicates if a newly calculated baseline can be accessed through step properties <code>BaselineUsedForDriftCheckConstraints</code> and <code>BaselineUsedForDriftCheckStatistics</code>. If it is set to <code>False</code>, the previous baseline of the configured check type must also be available. These can be accessed through the <code>BaselineUsedForDriftCheckConstraints</code> and <code> BaselineUsedForDriftCheckStatistics</code> properties. </p>",
         "QueryLineageRequest$IncludeEdges": "<p> Setting this value to <code>True</code> retrieves not only the entities of interest but also the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking-entities.html\">Associations</a> and lineage entities on the path. Set to <code>False</code> to only return lineage entities that match your query.</p>",
@@ -3284,6 +3299,14 @@
       "refs": {}
     },
     "CreateFlowDefinitionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateHubContentPresignedUrlsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateHubContentPresignedUrlsResponse": {
       "base": null,
       "refs": {}
     },
@@ -6528,6 +6551,8 @@
         "KendraSettings$Status": "<p>Describes whether the document querying feature is enabled or disabled in the Canvas application.</p>",
         "ModelRegisterSettings$Status": "<p>Describes whether the integration to the model registry is enabled or disabled in the Canvas application.</p>",
         "SpaceSettings$SpaceManagedResources": "<p>If you enable this option, SageMaker AI creates the following resources on your behalf when you create the space:</p> <ul> <li> <p>The user profile that possesses the space.</p> </li> <li> <p>The app that the space contains.</p> </li> </ul>",
+        "SpaceSettings$RemoteAccess": "<p>A setting that enables or disables remote access for a SageMaker space. When enabled, this allows you to connect to the remote space from your local IDE.</p>",
+        "SpaceSettingsSummary$RemoteAccess": "<p>A setting that enables or disables remote access for a SageMaker space. When enabled, this allows you to connect to the remote space from your local IDE.</p>",
         "TimeSeriesForecastingSettings$Status": "<p>Describes whether time series forecasting is enabled or disabled in the Canvas application.</p>",
         "UnifiedStudioSettings$StudioWebPortalAccess": "<p>Sets whether you can access the domain in Amazon SageMaker Studio:</p> <dl> <dt>ENABLED</dt> <dd> <p>You can access the domain in Amazon SageMaker Studio. If you migrate the domain to Amazon SageMaker Unified Studio, you can access it in both studio interfaces.</p> </dd> <dt>DISABLED</dt> <dd> <p>You can't access the domain in Amazon SageMaker Studio. If you migrate the domain to Amazon SageMaker Unified Studio, you can access it only in that studio interface.</p> </dd> </dl> <p>To migrate a domain to Amazon SageMaker Unified Studio, you specify the UnifiedStudioSettings data type when you use the UpdateDomain action.</p>"
       }
@@ -7051,6 +7076,7 @@
     "HubContentName": {
       "base": null,
       "refs": {
+        "CreateHubContentPresignedUrlsRequest$HubContentName": "<p>The name of the hub content for which to generate presigned URLs. This identifies the specific model or content within the hub.</p>",
         "CreateHubContentReferenceRequest$HubContentName": "<p>The name of the hub content to reference.</p>",
         "DeleteHubContentReferenceRequest$HubContentName": "<p>The name of the hub content to delete.</p>",
         "DeleteHubContentRequest$HubContentName": "<p>The name of the content that you want to delete from a hub.</p>",
@@ -7098,6 +7124,7 @@
     "HubContentType": {
       "base": null,
       "refs": {
+        "CreateHubContentPresignedUrlsRequest$HubContentType": "<p>The type of hub content to access. Valid values include <code>Model</code>, <code>Notebook</code>, and <code>ModelReference</code>.</p>",
         "DeleteHubContentReferenceRequest$HubContentType": "<p>The type of hub content reference to delete. The only supported type of hub content reference to delete is <code>ModelReference</code>.</p>",
         "DeleteHubContentRequest$HubContentType": "<p>The type of content that you want to delete from a hub.</p>",
         "DescribeHubContentRequest$HubContentType": "<p>The type of content in the hub.</p>",
@@ -7113,6 +7140,7 @@
     "HubContentVersion": {
       "base": null,
       "refs": {
+        "CreateHubContentPresignedUrlsRequest$HubContentVersion": "<p>The version of the hub content. If not specified, the latest version is used.</p>",
         "CreateHubContentReferenceRequest$MinVersion": "<p>The minimum version of the hub content to reference.</p>",
         "DeleteHubContentRequest$HubContentVersion": "<p>The version of the content that you want to delete from a hub.</p>",
         "DescribeHubContentRequest$HubContentVersion": "<p>The version of the content to describe.</p>",
@@ -7166,6 +7194,7 @@
     "HubNameOrArn": {
       "base": null,
       "refs": {
+        "CreateHubContentPresignedUrlsRequest$HubName": "<p>The name or Amazon Resource Name (ARN) of the hub that contains the content. For public content, use <code>SageMakerPublicHub</code>.</p>",
         "CreateHubContentReferenceRequest$HubName": "<p>The name of the hub to add the hub content reference to.</p>",
         "DeleteHubContentReferenceRequest$HubName": "<p>The name of the hub to delete the hub content reference from.</p>",
         "DeleteHubContentRequest$HubName": "<p>The name of the hub that you want to delete content in.</p>",
@@ -9624,6 +9653,12 @@
         "ListWorkteamsRequest$SortBy": "<p>The field to sort results by. The default is <code>CreationTime</code>.</p>"
       }
     },
+    "LocalPath": {
+      "base": null,
+      "refs": {
+        "AuthorizedUrl$LocalPath": "<p>The recommended local file path where the downloaded file should be stored to maintain proper directory structure and file organization.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -9635,6 +9670,12 @@
         "EdgeModelStat$ActiveDeviceCount": "<p>The number of devices that have this model version, a heart beat, and are currently running.</p>",
         "EdgeModelStat$SamplingDeviceCount": "<p>The number of devices with this model version and are producing sample data.</p>",
         "TotalHits$Value": "<p>The total number of matching results. This value may be exact or an estimate, depending on the <code>Relation</code> field.</p>"
+      }
+    },
+    "LongS3Uri": {
+      "base": null,
+      "refs": {
+        "AuthorizedUrl$Url": "<p>The presigned S3 URL that provides temporary, secure access to download the file. URLs expire within 15 minutes for security purposes.</p>"
       }
     },
     "MLFramework": {
@@ -9762,6 +9803,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "CreateHubContentPresignedUrlsRequest$MaxResults": "<p>The maximum number of presigned URLs to return in the response. Default value is 100. Large models may contain hundreds of files, requiring pagination to retrieve all URLs.</p>",
         "ListActionsRequest$MaxResults": "<p>The maximum number of actions to return in the response. The default value is 10.</p>",
         "ListAlgorithmsInput$MaxResults": "<p>The maximum number of algorithms to return in the response.</p>",
         "ListAliasesRequest$MaxResults": "<p>The maximum number of aliases to return.</p>",
@@ -11404,6 +11446,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "CreateHubContentPresignedUrlsRequest$NextToken": "<p> A token for pagination. Use this token to retrieve the next set of presigned URLs when the response is truncated.</p>",
+        "CreateHubContentPresignedUrlsResponse$NextToken": "<p>A token for pagination. If present, indicates that more presigned URLs are available. Use this token in a subsequent request to retrieve additional URLs.</p>",
         "DescribeDeviceRequest$NextToken": "<p>Next token of device description.</p>",
         "DescribeDeviceResponse$NextToken": "<p>The response from the last list when returning a list large enough to need tokening.</p>",
         "DescribeEdgeDeploymentPlanRequest$NextToken": "<p>If the edge deployment plan has enough stages to require tokening, then this is the response from the last list of stages returned.</p>",
@@ -12641,6 +12685,12 @@
       "base": null,
       "refs": {
         "CreatePresignedDomainUrlResponse$AuthorizedUrl": "<p>The presigned URL.</p>"
+      }
+    },
+    "PresignedUrlAccessConfig": {
+      "base": "<p>Configuration for accessing hub content through presigned URLs, including license agreement acceptance and URL validation settings.</p>",
+      "refs": {
+        "CreateHubContentPresignedUrlsRequest$AccessConfig": "<p>Configuration settings for accessing the hub content, including end-user license agreement acceptance for gated models and expected S3 URL validation.</p>"
       }
     },
     "PriorityClass": {
@@ -13914,6 +13964,12 @@
         "DescribeDomainResponse$HomeEfsFileSystemId": "<p>The ID of the Amazon Elastic File System managed by this Domain.</p>"
       }
     },
+    "ResourceIdentifier": {
+      "base": null,
+      "refs": {
+        "StartSessionRequest$ResourceIdentifier": "<p>The Amazon Resource Name (ARN) of the resource to which the remote connection will be established. For example, this identifies the specific ARN space application you want to connect to from your local IDE.</p>"
+      }
+    },
     "ResourceInUse": {
       "base": "<p>Resource being accessed is in use.</p>",
       "refs": {}
@@ -14203,6 +14259,7 @@
     "S3ModelUri": {
       "base": null,
       "refs": {
+        "PresignedUrlAccessConfig$ExpectedS3Url": "<p>The expected S3 URL prefix for validation purposes. This parameter helps ensure consistency between the resolved S3 URIs and the deployment configuration, reducing potential compatibility issues.</p>",
         "S3ModelDataSource$S3Uri": "<p>Specifies the S3 path of ML model data to deploy.</p>",
         "S3ModelDataSource$ManifestS3Uri": "<p>The Amazon S3 URI of the manifest file. The manifest file is a CSV file that stores the artifact locations.</p>"
       }
@@ -14648,6 +14705,12 @@
         "CreatePresignedDomainUrlRequest$SessionExpirationDurationInSeconds": "<p>The session expiration duration in seconds. This value defaults to 43200.</p>",
         "CreatePresignedMlflowTrackingServerUrlRequest$SessionExpirationDurationInSeconds": "<p>The duration in seconds that your MLflow UI session is valid.</p>",
         "CreatePresignedNotebookInstanceUrlInput$SessionExpirationDurationInSeconds": "<p>The duration of the session, in seconds. The default is 12 hours.</p>"
+      }
+    },
+    "SessionId": {
+      "base": null,
+      "refs": {
+        "StartSessionResponse$SessionId": "<p>A unique identifier for the established remote connection session.</p>"
       }
     },
     "ShadowModeConfig": {
@@ -15102,6 +15165,14 @@
       "base": null,
       "refs": {}
     },
+    "StartSessionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartSessionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Statistic": {
       "base": null,
       "refs": {
@@ -15239,6 +15310,12 @@
       "base": null,
       "refs": {
         "OnlineStoreConfig$StorageType": "<p>Option for different tiers of low latency storage for real-time data retrieval.</p> <ul> <li> <p> <code>Standard</code>: A managed low latency data store for feature groups.</p> </li> <li> <p> <code>InMemory</code>: A managed data store for feature groups that supports very low latency retrieval. </p> </li> </ul>"
+      }
+    },
+    "StreamUrl": {
+      "base": null,
+      "refs": {
+        "StartSessionResponse$StreamUrl": "<p>A WebSocket URL used to establish a SSH connection between the local IDE and remote SageMaker space.</p>"
       }
     },
     "String": {
@@ -16455,6 +16532,12 @@
       "base": null,
       "refs": {
         "TimeSeriesConfig$TimestampAttributeName": "<p>The name of the column indicating a point in time at which the target value of a given item is recorded.</p>"
+      }
+    },
+    "TokenValue": {
+      "base": null,
+      "refs": {
+        "StartSessionResponse$TokenValue": "<p>An encrypted token value containing session and caller information. </p>"
       }
     },
     "TotalHits": {

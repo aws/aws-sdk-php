@@ -768,6 +768,111 @@
         },
         "id": "example-2",
         "title": "Creating an OriginEndpoint with container type CMAF, and encryption enabled"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "Description": "Description for exampleOriginEndpointISM",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName"
+          },
+          "StartoverWindowSeconds": 300,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Description for exampleOriginEndpointISM",
+          "ETag": "GlfT+dwAyGIR4wuy8nKWl1RDPwSrjQej9qUutLZxoxk=",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "ModifiedAt": "2022-10-18T09:36:00.00Z",
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName"
+          },
+          "StartoverWindowSeconds": 300,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-3",
+        "title": "Creating an OriginEndpoint with container type ISM, and encryption enabled"
       }
     ],
     "DeleteChannel": [
@@ -1066,6 +1171,74 @@
         },
         "id": "example-1",
         "title": "Getting an OriginEndpoint"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "OriginEndpointName": "exampleOriginEndpointISM"
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Description for exampleOriginEndpointISM",
+          "ETag": "HmgU+ewBzHJS5xvz9nLXm2SEQxTsjRfk0rVvuMayoyl=",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "ModifiedAt": "2022-10-18T09:36:00.00Z",
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+            },
+            {
+              "ManifestLayout": "COMPACT",
+              "ManifestName": "exampleMssManifest2",
+              "ManifestWindowSeconds": 30,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest2.ism/Manifest"
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName"
+          },
+          "StartoverWindowSeconds": 300,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-2",
+        "title": "Getting an OriginEndpoint with ISM container"
       }
     ],
     "GetOriginEndpointPolicy": [
@@ -1182,11 +1355,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T06:00:00.00Z"
               },
-              "Status": "QUEUED",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "QUEUED"
             },
             {
               "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannelName2/originEndpoint/exampleOriginEndpointName2/harvestJob/HarvestJobName2",
@@ -1225,11 +1394,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T02:00:00.00Z"
               },
-              "Status": "IN_PROGRESS",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "IN_PROGRESS"
             }
           ],
           "NextToken": "someTokenValue"
@@ -1281,11 +1446,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T06:00:00.00Z"
               },
-              "Status": "QUEUED",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "QUEUED"
             },
             {
               "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannelName/originEndpoint/exampleOriginEndpointName2/harvestJob/HarvestJobName2",
@@ -1323,11 +1484,7 @@
                 "EndTime": "2024-05-28T12:00:00.00Z",
                 "StartTime": "2024-05-28T02:00:00.00Z"
               },
-              "Status": "IN_PROGRESS",
-              "Tags": {
-                "key1": "value1",
-                "key2": "value2"
-              }
+              "Status": "IN_PROGRESS"
             }
           ],
           "NextToken": "someTokenValue"
@@ -1554,6 +1711,34 @@
               ],
               "ModifiedAt": "2022-10-18T09:36:00.00Z",
               "OriginEndpointName": "exampleOriginEndpointCMAF"
+            },
+            {
+              "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+              "ChannelGroupName": "exampleChannelGroup",
+              "ChannelName": "exampleChannel",
+              "ContainerType": "ISM",
+              "CreatedAt": "2022-10-18T09:36:00.00Z",
+              "Description": "Description for exampleOriginEndpointISM",
+              "ForceEndpointErrorConfiguration": {
+                "EndpointErrorConditions": [
+                  "STALE_MANIFEST",
+                  "INCOMPLETE_MANIFEST",
+                  "MISSING_DRM_KEY",
+                  "SLATE_INPUT"
+                ]
+              },
+              "ModifiedAt": "2022-10-18T09:36:00.00Z",
+              "MssManifests": [
+                {
+                  "ManifestName": "exampleMssManifest1",
+                  "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+                },
+                {
+                  "ManifestName": "exampleMssManifest2",
+                  "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest2.ism/Manifest"
+                }
+              ],
+              "OriginEndpointName": "exampleOriginEndpointISM"
             }
           ]
         },
@@ -1915,6 +2100,118 @@
         },
         "id": "example-1",
         "title": "Updating an OriginEndpoint"
+      },
+      {
+        "input": {
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "Description": "Updated description for exampleOriginEndpointISM",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60
+            },
+            {
+              "ManifestLayout": "COMPACT",
+              "ManifestName": "exampleMssManifest2",
+              "ManifestWindowSeconds": 30
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName2"
+          },
+          "StartoverWindowSeconds": 600
+        },
+        "output": {
+          "Arn": "arn:aws:mediapackagev2:us-west-2:123456789012:channelGroup/exampleChannelGroup/channel/exampleChannel/originEndpoint/exampleOriginEndpointISM",
+          "ChannelGroupName": "exampleChannelGroup",
+          "ChannelName": "exampleChannel",
+          "ContainerType": "ISM",
+          "CreatedAt": "2022-10-18T09:36:00.00Z",
+          "Description": "Updated description for exampleOriginEndpointISM",
+          "ETag": "HmgU+ewBzHJS5xvz9nLXm2SEQxTsjRfk0rVvuMayoyl=",
+          "ForceEndpointErrorConfiguration": {
+            "EndpointErrorConditions": [
+              "STALE_MANIFEST",
+              "INCOMPLETE_MANIFEST",
+              "MISSING_DRM_KEY",
+              "SLATE_INPUT"
+            ]
+          },
+          "ModifiedAt": "2022-10-18T09:37:00.00Z",
+          "MssManifests": [
+            {
+              "ManifestLayout": "FULL",
+              "ManifestName": "exampleMssManifest1",
+              "ManifestWindowSeconds": 60,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest1.ism/Manifest"
+            },
+            {
+              "ManifestLayout": "COMPACT",
+              "ManifestName": "exampleMssManifest2",
+              "ManifestWindowSeconds": 30,
+              "Url": "https://abcde.egress.vwxyz.mediapackagev2.us-west-2.amazonaws.com/out/v1/exampleChannelGroup/exampleChannel/exampleOriginEndpointISM/exampleMssManifest2.ism/Manifest"
+            }
+          ],
+          "OriginEndpointName": "exampleOriginEndpointISM",
+          "Segment": {
+            "Encryption": {
+              "EncryptionMethod": {
+                "IsmEncryptionMethod": "CENC"
+              },
+              "SpekeKeyProvider": {
+                "DrmSystems": [
+                  "PLAYREADY"
+                ],
+                "EncryptionContractConfiguration": {
+                  "PresetSpeke20Audio": "SHARED",
+                  "PresetSpeke20Video": "SHARED"
+                },
+                "ResourceId": "ResourceId",
+                "RoleArn": "arn:aws:iam::123456789012:role/empRole",
+                "Url": "https://speke-key-provider.example.com"
+              }
+            },
+            "SegmentDurationSeconds": 2,
+            "SegmentName": "segmentName2"
+          },
+          "StartoverWindowSeconds": 600,
+          "Tags": {
+            "key1": "value1",
+            "key2": "value2"
+          }
+        },
+        "id": "example-2",
+        "title": "Updating an OriginEndpoint with ISM container"
       }
     ]
   }

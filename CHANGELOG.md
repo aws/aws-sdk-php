@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaPackageV2` - This release adds support for Microsoft Smooth Streaming (MSS) and allows users to exclude DRM segment Metadata in MediaPackage v2 Origin Endpoints
+* `Aws\Deadline` - Added fields for output manifest reporting and task chunking parameters
+* `Aws\Route53` - Amazon Route 53 now supports the iso-e regions for private DNS Amazon VPCs and cloudwatch healthchecks.
+* `Aws\CustomerProfiles` - This release introduces capability of create Segments via importing a CSV file directly. This consumes the CSV file and creates/updates corresponding profiles for the particular domain.
+* `Aws\SageMaker` - Changes include new StartSession API for SageMaker Studio spaces and CreateHubContentPresignedUrls API for SageMaker JumpStart.
+* `Aws\EC2` - This release adds GroupOwnerId as a response member to the DescribeSecurityGroupVpcAssociations API and also adds waiters for SecurityGroupVpcAssociations (SecurityGroupVpcAssociationAssociated and SecurityGroupVpcAssociationDisassociated).
+
 ## 3.349.1 - 2025-07-02
 
 * `Aws\EC2` - AWS Site-to-Site VPN now supports IPv6 addresses on outer tunnel IPs, making it easier for customers to build or transition to IPv6-only networks.

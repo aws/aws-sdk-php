@@ -376,6 +376,15 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "CreateHubContentPresignedUrls":{
+      "name":"CreateHubContentPresignedUrls",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateHubContentPresignedUrlsRequest"},
+      "output":{"shape":"CreateHubContentPresignedUrlsResponse"}
+    },
     "CreateHubContentReference":{
       "name":"CreateHubContentReference",
       "http":{
@@ -3340,6 +3349,19 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "StartSession":{
+      "name":"StartSession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartSessionRequest"},
+      "output":{"shape":"StartSessionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
     "StopAutoMLJob":{
       "name":"StopAutoMLJob",
       "http":{
@@ -5001,6 +5023,17 @@
       "max":512,
       "min":0,
       "pattern":".*"
+    },
+    "AuthorizedUrl":{
+      "type":"structure",
+      "members":{
+        "Url":{"shape":"LongS3Uri"},
+        "LocalPath":{"shape":"LocalPath"}
+      }
+    },
+    "AuthorizedUrlConfigs":{
+      "type":"list",
+      "member":{"shape":"AuthorizedUrl"}
     },
     "AutoGenerateEndpointName":{"type":"boolean"},
     "AutoMLAlgorithm":{
@@ -7832,9 +7865,7 @@
       "required":[
         "DomainName",
         "AuthMode",
-        "DefaultUserSettings",
-        "SubnetIds",
-        "VpcId"
+        "DefaultUserSettings"
       ],
       "members":{
         "DomainName":{"shape":"DomainName"},
@@ -8034,6 +8065,31 @@
       "required":["FlowDefinitionArn"],
       "members":{
         "FlowDefinitionArn":{"shape":"FlowDefinitionArn"}
+      }
+    },
+    "CreateHubContentPresignedUrlsRequest":{
+      "type":"structure",
+      "required":[
+        "HubName",
+        "HubContentType",
+        "HubContentName"
+      ],
+      "members":{
+        "HubName":{"shape":"HubNameOrArn"},
+        "HubContentType":{"shape":"HubContentType"},
+        "HubContentName":{"shape":"HubContentName"},
+        "HubContentVersion":{"shape":"HubContentVersion"},
+        "AccessConfig":{"shape":"PresignedUrlAccessConfig"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "CreateHubContentPresignedUrlsResponse":{
+      "type":"structure",
+      "required":["AuthorizedUrlConfigs"],
+      "members":{
+        "AuthorizedUrlConfigs":{"shape":"AuthorizedUrlConfigs"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "CreateHubContentReferenceRequest":{
@@ -18182,7 +18238,19 @@
         "CreateDate"
       ]
     },
+    "LocalPath":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"\\/.*"
+    },
     "Long":{"type":"long"},
+    "LongS3Uri":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"(https|s3)://([^/]+)/?(.*)"
+    },
     "MLFramework":{
       "type":"string",
       "max":128,
@@ -21159,6 +21227,16 @@
       ]
     },
     "PresignedDomainUrl":{"type":"string"},
+    "PresignedUrlAccessConfig":{
+      "type":"structure",
+      "members":{
+        "AcceptEula":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "ExpectedS3Url":{"shape":"S3ModelUri"}
+      }
+    },
     "PriorityClass":{
       "type":"structure",
       "required":[
@@ -23093,6 +23171,12 @@
       "max":32,
       "min":0
     },
+    "ResourceIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:.*\\/.*"
+    },
     "ResourceInUse":{
       "type":"structure",
       "members":{
@@ -23823,6 +23907,11 @@
       "max":43200,
       "min":1800
     },
+    "SessionId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "ShadowModeConfig":{
       "type":"structure",
       "required":[
@@ -24132,13 +24221,15 @@
         "AppType":{"shape":"AppType"},
         "SpaceStorageSettings":{"shape":"SpaceStorageSettings"},
         "SpaceManagedResources":{"shape":"FeatureStatus"},
-        "CustomFileSystems":{"shape":"CustomFileSystems"}
+        "CustomFileSystems":{"shape":"CustomFileSystems"},
+        "RemoteAccess":{"shape":"FeatureStatus"}
       }
     },
     "SpaceSettingsSummary":{
       "type":"structure",
       "members":{
         "AppType":{"shape":"AppType"},
+        "RemoteAccess":{"shape":"FeatureStatus"},
         "SpaceStorageSettings":{"shape":"SpaceStorageSettings"}
       }
     },
@@ -24296,6 +24387,21 @@
       "type":"structure",
       "members":{
         "PipelineExecutionArn":{"shape":"PipelineExecutionArn"}
+      }
+    },
+    "StartSessionRequest":{
+      "type":"structure",
+      "required":["ResourceIdentifier"],
+      "members":{
+        "ResourceIdentifier":{"shape":"ResourceIdentifier"}
+      }
+    },
+    "StartSessionResponse":{
+      "type":"structure",
+      "members":{
+        "SessionId":{"shape":"SessionId"},
+        "StreamUrl":{"shape":"StreamUrl"},
+        "TokenValue":{"shape":"TokenValue"}
       }
     },
     "Statistic":{
@@ -24511,6 +24617,7 @@
         "InMemory"
       ]
     },
+    "StreamUrl":{"type":"string"},
     "String":{"type":"string"},
     "String1024":{
       "type":"string",
@@ -25080,6 +25187,11 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "TokenValue":{
+      "type":"string",
+      "max":1024,
+      "min":0
     },
     "TotalHits":{
       "type":"structure",

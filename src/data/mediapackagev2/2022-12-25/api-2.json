@@ -687,7 +687,8 @@
       "type":"string",
       "enum":[
         "TS",
-        "CMAF"
+        "CMAF",
+        "ISM"
       ]
     },
     "CreateChannelGroupRequest":{
@@ -962,6 +963,25 @@
       "type":"list",
       "member":{"shape":"CreateLowLatencyHlsManifestConfiguration"}
     },
+    "CreateMssManifestConfiguration":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ManifestName"},
+        "ManifestWindowSeconds":{"shape":"CreateMssManifestConfigurationManifestWindowSecondsInteger"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "ManifestLayout":{"shape":"MssManifestLayout"}
+      }
+    },
+    "CreateMssManifestConfigurationManifestWindowSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":30
+    },
+    "CreateMssManifests":{
+      "type":"list",
+      "member":{"shape":"CreateMssManifestConfiguration"}
+    },
     "CreateOriginEndpointRequest":{
       "type":"structure",
       "required":[
@@ -995,6 +1015,7 @@
         "HlsManifests":{"shape":"CreateHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"CreateLowLatencyHlsManifests"},
         "DashManifests":{"shape":"CreateDashManifests"},
+        "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "Tags":{"shape":"TagMap"}
       }
@@ -1031,6 +1052,7 @@
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
         "DashManifests":{"shape":"GetDashManifests"},
+        "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
@@ -1402,6 +1424,7 @@
         "ConstantInitializationVector":{"shape":"EncryptionConstantInitializationVectorString"},
         "EncryptionMethod":{"shape":"EncryptionMethod"},
         "KeyRotationIntervalSeconds":{"shape":"EncryptionKeyRotationIntervalSecondsInteger"},
+        "CmafExcludeSegmentDrmMetadata":{"shape":"Boolean"},
         "SpekeKeyProvider":{"shape":"SpekeKeyProvider"}
       }
     },
@@ -1432,7 +1455,8 @@
       "type":"structure",
       "members":{
         "TsEncryptionMethod":{"shape":"TsEncryptionMethod"},
-        "CmafEncryptionMethod":{"shape":"CmafEncryptionMethod"}
+        "CmafEncryptionMethod":{"shape":"CmafEncryptionMethod"},
+        "IsmEncryptionMethod":{"shape":"IsmEncryptionMethod"}
       }
     },
     "EndpointErrorCondition":{
@@ -1734,6 +1758,24 @@
       "type":"list",
       "member":{"shape":"GetLowLatencyHlsManifestConfiguration"}
     },
+    "GetMssManifestConfiguration":{
+      "type":"structure",
+      "required":[
+        "ManifestName",
+        "Url"
+      ],
+      "members":{
+        "ManifestName":{"shape":"ManifestName"},
+        "Url":{"shape":"String"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "ManifestWindowSeconds":{"shape":"Integer"},
+        "ManifestLayout":{"shape":"MssManifestLayout"}
+      }
+    },
+    "GetMssManifests":{
+      "type":"list",
+      "member":{"shape":"GetMssManifestConfiguration"}
+    },
     "GetOriginEndpointPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1826,6 +1868,7 @@
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
         "DashManifests":{"shape":"GetDashManifests"},
+        "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
@@ -1971,6 +2014,10 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "IsmEncryptionMethod":{
+      "type":"string",
+      "enum":["CENC"]
     },
     "ListChannelGroupsRequest":{
       "type":"structure",
@@ -2121,6 +2168,18 @@
       "type":"list",
       "member":{"shape":"ListLowLatencyHlsManifestConfiguration"}
     },
+    "ListMssManifestConfiguration":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ResourceName"},
+        "Url":{"shape":"String"}
+      }
+    },
+    "ListMssManifests":{
+      "type":"list",
+      "member":{"shape":"ListMssManifestConfiguration"}
+    },
     "ListOriginEndpointsRequest":{
       "type":"structure",
       "required":[
@@ -2189,6 +2248,13 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-]+"
     },
+    "MssManifestLayout":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "COMPACT"
+      ]
+    },
     "OriginEndpointListConfiguration":{
       "type":"structure",
       "required":[
@@ -2210,6 +2276,7 @@
         "HlsManifests":{"shape":"ListHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"ListLowLatencyHlsManifests"},
         "DashManifests":{"shape":"ListDashManifests"},
+        "MssManifests":{"shape":"ListMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"}
       }
     },
@@ -2755,6 +2822,7 @@
         "HlsManifests":{"shape":"CreateHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"CreateLowLatencyHlsManifests"},
         "DashManifests":{"shape":"CreateDashManifests"},
+        "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{
           "shape":"EntityTag",
@@ -2794,6 +2862,7 @@
         "StartoverWindowSeconds":{"shape":"Integer"},
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
+        "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{
@@ -2823,6 +2892,7 @@
         "ENCRYPTION_METHOD_CONTAINER_TYPE_MISMATCH",
         "CENC_IV_INCOMPATIBLE",
         "ENCRYPTION_CONTRACT_WITHOUT_AUDIO_RENDITION_INCOMPATIBLE",
+        "ENCRYPTION_CONTRACT_WITH_ISM_CONTAINER_INCOMPATIBLE",
         "ENCRYPTION_CONTRACT_UNENCRYPTED",
         "ENCRYPTION_CONTRACT_SHARED",
         "NUM_MANIFESTS_LOW",
@@ -2871,12 +2941,20 @@
         "HARVEST_JOB_CUSTOMER_ENDPOINT_READ_ACCESS_DENIED",
         "CLIP_START_TIME_WITH_START_OR_END",
         "START_TAG_TIME_OFFSET_INVALID",
-        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_INPUT_SWITCHING",
-        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION",
         "INCOMPATIBLE_DASH_PROFILE_DVB_DASH_CONFIGURATION",
         "DASH_DVB_ATTRIBUTES_WITHOUT_DVB_DASH_PROFILE",
         "INCOMPATIBLE_DASH_COMPACTNESS_CONFIGURATION",
-        "INCOMPATIBLE_XML_ENCODING"
+        "INCOMPATIBLE_XML_ENCODING",
+        "CMAF_EXCLUDE_SEGMENT_DRM_METADATA_INCOMPATIBLE_CONTAINER_TYPE",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_INPUT_SWITCHING",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION",
+        "TS_CONTAINER_TYPE_WITH_MSS_MANIFEST",
+        "CMAF_CONTAINER_TYPE_WITH_MSS_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_HLS_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_LL_HLS_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_DASH_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_SCTE",
+        "ISM_CONTAINER_WITH_KEY_ROTATION"
       ]
     }
   }

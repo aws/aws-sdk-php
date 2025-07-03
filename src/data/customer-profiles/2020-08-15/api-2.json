@@ -225,6 +225,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateUploadJob":{
+      "name":"CreateUploadJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/upload-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateUploadJobRequest"},
+      "output":{"shape":"CreateUploadJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DeleteCalculatedAttributeDefinition":{
       "name":"DeleteCalculatedAttributeDefinition",
       "http":{
@@ -711,6 +728,40 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetUploadJob":{
+      "name":"GetUploadJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/upload-jobs/{JobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetUploadJobRequest"},
+      "output":{"shape":"GetUploadJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetUploadJobPath":{
+      "name":"GetUploadJobPath",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/upload-jobs/{JobId}/path",
+        "responseCode":200
+      },
+      "input":{"shape":"GetUploadJobPathRequest"},
+      "output":{"shape":"GetUploadJobPathResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetWorkflow":{
       "name":"GetWorkflow",
       "http":{
@@ -1014,6 +1065,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListUploadJobs":{
+      "name":"ListUploadJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/upload-jobs",
+        "responseCode":200
+      },
+      "input":{"shape":"ListUploadJobsRequest"},
+      "output":{"shape":"ListUploadJobsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListWorkflows":{
       "name":"ListWorkflows",
       "http":{
@@ -1107,6 +1175,40 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "StartUploadJob":{
+      "name":"StartUploadJob",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/upload-jobs/{JobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"StartUploadJobRequest"},
+      "output":{"shape":"StartUploadJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StopUploadJob":{
+      "name":"StopUploadJob",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{DomainName}/upload-jobs/{JobId}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopUploadJobRequest"},
+      "output":{"shape":"StopUploadJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "TagResource":{
@@ -2144,6 +2246,36 @@
         "SnapshotId":{"shape":"uuid"}
       }
     },
+    "CreateUploadJobRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "DisplayName",
+        "Fields",
+        "UniqueKey"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "DisplayName":{"shape":"string1To255"},
+        "Fields":{"shape":"FieldMap"},
+        "UniqueKey":{"shape":"text"},
+        "DataExpiry":{"shape":"expirationDaysInteger"}
+      }
+    },
+    "CreateUploadJobResponse":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{
+          "shape":"uuid",
+          "locationName":"JobId"
+        }
+      }
+    },
     "CustomAttributes":{
       "type":"map",
       "key":{"shape":"typeName"},
@@ -2765,7 +2897,7 @@
     },
     "FieldMap":{
       "type":"map",
-      "key":{"shape":"name"},
+      "key":{"shape":"fieldName"},
       "value":{"shape":"ObjectTypeField"},
       "sensitive":true
     },
@@ -3536,6 +3668,107 @@
         "RuleLevel":{"shape":"RuleLevel"},
         "ConfidenceScore":{"shape":"Double"},
         "NextToken":{"shape":"token"}
+      }
+    },
+    "GetUploadJobPathRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "JobId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "JobId":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"JobId"
+        }
+      }
+    },
+    "GetUploadJobPathResponse":{
+      "type":"structure",
+      "required":["Url"],
+      "members":{
+        "Url":{
+          "shape":"stringTo2048",
+          "locationName":"Url"
+        },
+        "ClientToken":{
+          "shape":"text",
+          "locationName":"ClientToken"
+        },
+        "ValidUntil":{
+          "shape":"timestamp",
+          "locationName":"ValidUntil"
+        }
+      }
+    },
+    "GetUploadJobRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "JobId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "JobId":{
+          "shape":"uuid",
+          "location":"uri",
+          "locationName":"JobId"
+        }
+      }
+    },
+    "GetUploadJobResponse":{
+      "type":"structure",
+      "members":{
+        "JobId":{
+          "shape":"uuid",
+          "locationName":"JobId"
+        },
+        "DisplayName":{
+          "shape":"string1To255",
+          "locationName":"DisplayName"
+        },
+        "Status":{
+          "shape":"UploadJobStatus",
+          "locationName":"Status"
+        },
+        "StatusReason":{
+          "shape":"StatusReason",
+          "locationName":"StatusReason"
+        },
+        "CreatedAt":{
+          "shape":"timestamp",
+          "locationName":"CreatedAt"
+        },
+        "CompletedAt":{
+          "shape":"timestamp",
+          "locationName":"CompletedAt"
+        },
+        "Fields":{
+          "shape":"FieldMap",
+          "locationName":"Fields"
+        },
+        "UniqueKey":{
+          "shape":"text",
+          "locationName":"UniqueKey"
+        },
+        "ResultsSummary":{
+          "shape":"ResultsSummary",
+          "locationName":"ResultsSummary"
+        },
+        "DataExpiry":{
+          "shape":"expirationDaysInteger",
+          "locationName":"DataExpiry"
+        }
       }
     },
     "GetWorkflowRequest":{
@@ -4349,6 +4582,40 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "ListUploadJobsRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "MaxResults":{
+          "shape":"MaxSize500",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListUploadJobsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"token",
+          "locationName":"NextToken"
+        },
+        "Items":{
+          "shape":"UploadJobsList",
+          "locationName":"Items"
+        }
+      }
+    },
     "ListWorkflowsItem":{
       "type":"structure",
       "required":[
@@ -5109,6 +5376,23 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "ResultsSummary":{
+      "type":"structure",
+      "members":{
+        "UpdatedRecords":{
+          "shape":"optionalLong",
+          "locationName":"UpdatedRecords"
+        },
+        "CreatedRecords":{
+          "shape":"optionalLong",
+          "locationName":"CreatedRecords"
+        },
+        "FailedRecords":{
+          "shape":"optionalLong",
+          "locationName":"FailedRecords"
+        }
+      }
+    },
     "RoleArn":{
       "type":"string",
       "max":512,
@@ -5480,6 +5764,29 @@
       "member":{"shape":"StandardIdentifier"}
     },
     "Start":{"type":"integer"},
+    "StartUploadJobRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "JobId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "JobId":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"JobId"
+        }
+      }
+    },
+    "StartUploadJobResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "Statistic":{
       "type":"string",
       "enum":[
@@ -5507,6 +5814,36 @@
       ]
     },
     "StatusCode":{"type":"integer"},
+    "StatusReason":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_FAILURE",
+        "INTERNAL_FAILURE"
+      ]
+    },
+    "StopUploadJobRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "JobId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "JobId":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"JobId"
+        }
+      }
+    },
+    "StopUploadJobResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "String":{"type":"string"},
     "StringDimensionType":{
       "type":"string",
@@ -5899,6 +6236,54 @@
       "members":{
         "ProfileId":{"shape":"uuid"}
       }
+    },
+    "UploadJobItem":{
+      "type":"structure",
+      "members":{
+        "JobId":{
+          "shape":"uuid",
+          "locationName":"JobId"
+        },
+        "DisplayName":{
+          "shape":"string1To255",
+          "locationName":"DisplayName"
+        },
+        "Status":{
+          "shape":"UploadJobStatus",
+          "locationName":"Status"
+        },
+        "StatusReason":{
+          "shape":"StatusReason",
+          "locationName":"StatusReason"
+        },
+        "CreatedAt":{
+          "shape":"timestamp",
+          "locationName":"CreatedAt"
+        },
+        "CompletedAt":{
+          "shape":"timestamp",
+          "locationName":"CompletedAt"
+        },
+        "DataExpiry":{
+          "shape":"expirationDaysInteger",
+          "locationName":"DataExpiry"
+        }
+      }
+    },
+    "UploadJobStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "IN_PROGRESS",
+        "PARTIALLY_SUCCEEDED",
+        "SUCCEEDED",
+        "FAILED",
+        "STOPPED"
+      ]
+    },
+    "UploadJobsList":{
+      "type":"list",
+      "member":{"shape":"UploadJobItem"}
     },
     "Value":{
       "type":"integer",

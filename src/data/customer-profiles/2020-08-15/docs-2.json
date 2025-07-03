@@ -15,6 +15,7 @@
     "CreateSegmentDefinition": "<p>Creates a segment definition associated to the given domain.</p>",
     "CreateSegmentEstimate": "<p>Creates a segment estimate query.</p>",
     "CreateSegmentSnapshot": "<p>Triggers a job to export a segment to a specified destination.</p>",
+    "CreateUploadJob": "<p>Creates an Upload job to ingest data for segment imports. The metadata is created for the job with the provided field mapping and unique key. </p>",
     "DeleteCalculatedAttributeDefinition": "<p>Deletes an existing calculated attribute definition. Note that deleting a default calculated attribute is possible, however once deleted, you will be unable to undo that action and will need to recreate it on your own using the CreateCalculatedAttributeDefinition API if you want it back.</p>",
     "DeleteDomain": "<p>Deletes a specific domain and all of its customer data, such as customer profile attributes and their related objects.</p>",
     "DeleteDomainLayout": "<p>Deletes the layout used to view data for a specific domain. This API can only be invoked from the Amazon Connect admin website.</p>",
@@ -45,6 +46,8 @@
     "GetSegmentMembership": "<p>Determines if the given profiles are within a segment.</p>",
     "GetSegmentSnapshot": "<p>Retrieve the latest status of a segment snapshot.</p>",
     "GetSimilarProfiles": "<p>Returns a set of profiles that belong to the same matching group using the <code>matchId</code> or <code>profileId</code>. You can also specify the type of matching that you want for finding similar profiles using either <code>RULE_BASED_MATCHING</code> or <code>ML_BASED_MATCHING</code>.</p>",
+    "GetUploadJob": "<p>This API retrieves the details of a specific upload job. </p>",
+    "GetUploadJobPath": "<p>This API retrieves the pre-signed URL and client token for uploading the file associated with the upload job. </p>",
     "GetWorkflow": "<p>Get details of specified workflow.</p>",
     "GetWorkflowSteps": "<p>Get granular list of steps in workflow.</p>",
     "ListAccountIntegrations": "<p>Lists all of the integrations associated to a specific URI in the AWS account.</p>",
@@ -64,12 +67,15 @@
     "ListRuleBasedMatches": "<p>Returns a set of <code>MatchIds</code> that belong to the given domain.</p>",
     "ListSegmentDefinitions": "<p>Lists all segment definitions under a domain.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with an Amazon Connect Customer Profiles resource. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p>",
+    "ListUploadJobs": "<p>This API retrieves a list of upload jobs for the specified domain. </p>",
     "ListWorkflows": "<p>Query to list all workflows.</p>",
     "MergeProfiles": "<p>Runs an AWS Lambda job that does the following:</p> <ol> <li> <p>All the profileKeys in the <code>ProfileToBeMerged</code> will be moved to the main profile.</p> </li> <li> <p>All the objects in the <code>ProfileToBeMerged</code> will be moved to the main profile.</p> </li> <li> <p>All the <code>ProfileToBeMerged</code> will be deleted at the end.</p> </li> <li> <p>All the profileKeys in the <code>ProfileIdsToBeMerged</code> will be moved to the main profile.</p> </li> <li> <p>Standard fields are merged as follows:</p> <ol> <li> <p>Fields are always \"union\"-ed if there are no conflicts in standard fields or attributeKeys.</p> </li> <li> <p>When there are conflicting fields:</p> <ol> <li> <p>If no <code>SourceProfileIds</code> entry is specified, the main Profile value is always taken. </p> </li> <li> <p>If a <code>SourceProfileIds</code> entry is specified, the specified profileId is always taken, even if it is a NULL value.</p> </li> </ol> </li> </ol> </li> </ol> <p>You can use MergeProfiles together with <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">GetMatches</a>, which returns potentially matching profiles, or use it with the results of another matching system. After profiles have been merged, they cannot be separated (unmerged).</p>",
     "PutIntegration": "<p>Adds an integration between the service and a third-party service, which includes Amazon AppFlow and Amazon Connect.</p> <p>An integration can belong to only one domain.</p> <p>To add or remove tags on an existing Integration, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\"> TagResource </a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\"> UntagResource</a>.</p>",
     "PutProfileObject": "<p>Adds additional objects to customer profiles of a given ObjectType.</p> <p>When adding a specific profile object, like a Contact Record, an inferred profile can get created if it is not mapped to an existing profile. The resulting profile will only have a phone number populated in the standard ProfileObject. Any additional Contact Records with the same phone number will be mapped to the same inferred profile.</p> <p>When a ProfileObject is created and if a ProfileObjectType already exists for the ProfileObject, it will provide data to a standard profile depending on the ProfileObjectType definition.</p> <p>PutProfileObject needs an ObjectType, which can be created using PutProfileObjectType.</p>",
     "PutProfileObjectType": "<p>Defines a ProfileObjectType.</p> <p>To add or remove tags on an existing ObjectType, see <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_TagResource.html\"> TagResource</a>/<a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UntagResource.html\">UntagResource</a>.</p>",
     "SearchProfiles": "<p>Searches for profiles within a specific domain using one or more predefined search keys (e.g., _fullName, _phone, _email, _account, etc.) and/or custom-defined search keys. A search key is a data type pair that consists of a <code>KeyName</code> and <code>Values</code> list.</p> <p>This operation supports searching for profiles with a minimum of 1 key-value(s) pair and up to 5 key-value(s) pairs using either <code>AND</code> or <code>OR</code> logic.</p>",
+    "StartUploadJob": "<p>This API starts the processing of an upload job to ingest profile data. </p>",
+    "StopUploadJob": "<p>This API stops the processing of an upload job. </p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Amazon Connect Customer Profiles resource. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p> <p>Tags don't have any semantic meaning to AWS and are interpreted strictly as strings of characters.</p> <p>You can use the TagResource action with a resource that already has tags. If you specify a new tag key, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified Amazon Connect Customer Profiles resource. In Connect Customer Profiles, domains, profile object types, and integrations can be tagged.</p>",
     "UpdateCalculatedAttributeDefinition": "<p>Updates an existing calculated attribute definition. When updating the Conditions, note that increasing the date range of a calculated attribute will not trigger inclusion of historical data greater than the current date range.</p>",
@@ -110,6 +116,7 @@
         "CreateSegmentEstimateResponse$DomainName": "<p>The unique name of the domain.</p>",
         "CreateSegmentSnapshotRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateSegmentSnapshotRequest$SegmentDefinitionName": "<p>The name of the segment definition used in this snapshot request.</p>",
+        "CreateUploadJobRequest$DomainName": "<p>The unique name of the domain. Domain should be exists for the upload job to be created. </p>",
         "DeleteCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
         "DeleteDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
@@ -132,7 +139,6 @@
         "EventStreamSummary$EventStreamName": "<p>The name of the event stream.</p>",
         "EventTriggerNames$member": null,
         "EventTriggerSummaryItem$EventTriggerName": "<p>The unique name of the event trigger.</p>",
-        "FieldMap$key": null,
         "FieldNameList$member": null,
         "FoundByKeyValue$KeyName": "<p>A searchable identifier of a customer profile.</p>",
         "GetAutoMergingPreviewRequest$DomainName": "<p>The unique name of the domain.</p>",
@@ -173,6 +179,9 @@
         "GetSegmentSnapshotRequest$DomainName": "<p>The unique identifier of the domain.</p>",
         "GetSegmentSnapshotRequest$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
         "GetSimilarProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetUploadJobPathRequest$DomainName": "<p>The unique name of the domain containing the upload job. </p>",
+        "GetUploadJobPathRequest$JobId": "<p>The unique identifier of the upload job to retrieve the upload path for. This is generated from the CreateUploadJob API. </p>",
+        "GetUploadJobRequest$DomainName": "<p>The unique name of the domain containing the upload job. </p>",
         "GetWorkflowRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetWorkflowStepsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "IdentityResolutionJob$DomainName": "<p>The unique name of the domain.</p>",
@@ -196,6 +205,7 @@
         "ListProfileObjectsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListRuleBasedMatchesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListSegmentDefinitionsRequest$DomainName": "<p>The unique identifier of the domain.</p>",
+        "ListUploadJobsRequest$DomainName": "<p>The unique name of the domain to list upload jobs for. </p>",
         "ListWorkflowsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "MergeProfilesRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ObjectFilter$KeyName": "<p>A searchable identifier of a profile object. The predefined keys you can use to search for <code>_asset</code> include: <code>_assetId</code>, <code>_assetName</code>, and <code>_serialNumber</code>. The predefined keys you can use to search for <code>_case</code> include: <code>_caseId</code>. The predefined keys you can use to search for <code>_order</code> include: <code>_orderId</code>.</p>",
@@ -211,6 +221,10 @@
         "SearchProfilesRequest$KeyName": "<p>A searchable identifier of a customer profile. The predefined keys you can use to search include: _account, _profileId, _assetId, _caseId, _orderId, _fullName, _phone, _email, _ctrContactId, _marketoLeadId, _salesforceAccountId, _salesforceContactId, _salesforceAssetId, _zendeskUserId, _zendeskExternalId, _zendeskTicketId, _serviceNowSystemId, _serviceNowIncidentId, _segmentUserId, _shopifyCustomerId, _shopifyOrderId.</p>",
         "SegmentDefinitionItem$SegmentDefinitionName": "<p>Name of the segment definition.</p>",
         "SourceSegment$SegmentDefinitionName": "<p>The unique name of the segment definition.</p>",
+        "StartUploadJobRequest$DomainName": "<p>The unique name of the domain containing the upload job to start. </p>",
+        "StartUploadJobRequest$JobId": "<p>The unique identifier of the upload job to start. </p>",
+        "StopUploadJobRequest$DomainName": "<p>The unique name of the domain containing the upload job to stop. </p>",
+        "StopUploadJobRequest$JobId": "<p>The unique identifier of the upload job to stop. </p>",
         "UpdateCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "UpdateDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
         "UpdateDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
@@ -636,6 +650,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateUploadJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateUploadJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "CustomAttributes": {
       "base": null,
       "refs": {
@@ -1017,9 +1039,11 @@
     "FieldMap": {
       "base": null,
       "refs": {
+        "CreateUploadJobRequest$Fields": "<p>The mapping between CSV Columns and Profile Object attributes. A map of the name and ObjectType field.</p>",
         "DetectedProfileObjectType$Fields": "<p>A map of the name and the <code>ObjectType</code> field.</p>",
         "GetProfileObjectTypeResponse$Fields": "<p>A map of the name and ObjectType field.</p>",
         "GetProfileObjectTypeTemplateResponse$Fields": "<p>A map of the name and ObjectType field.</p>",
+        "GetUploadJobResponse$Fields": "<p>The mapping between CSV Columns and Profile Object attributes for the upload job. </p>",
         "PutProfileObjectTypeRequest$Fields": "<p>A map of the name and ObjectType field.</p>",
         "PutProfileObjectTypeResponse$Fields": "<p>A map of the name and ObjectType field.</p>"
       }
@@ -1253,6 +1277,22 @@
       "refs": {}
     },
     "GetSimilarProfilesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUploadJobPathRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUploadJobPathResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUploadJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetUploadJobResponse": {
       "base": null,
       "refs": {}
     },
@@ -1588,6 +1628,14 @@
       "base": null,
       "refs": {}
     },
+    "ListUploadJobsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUploadJobsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListWorkflowsItem": {
       "base": "<p>A workflow in list of workflows.</p>",
       "refs": {
@@ -1702,7 +1750,8 @@
     "MaxSize500": {
       "base": null,
       "refs": {
-        "ListSegmentDefinitionsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>"
+        "ListSegmentDefinitionsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
+        "ListUploadJobsRequest$MaxResults": "<p>The maximum number of upload jobs to return per page. </p>"
       }
     },
     "MergeProfilesRequest": {
@@ -2013,6 +2062,12 @@
       "base": "<p>The requested resource does not exist, or access was denied.</p>",
       "refs": {}
     },
+    "ResultsSummary": {
+      "base": "<p>The summary of results for an upload job, including the number of updated, created, and failed records. </p>",
+      "refs": {
+        "GetUploadJobResponse$ResultsSummary": "<p>The summary of results for the upload job, including the number of updated, created, and failed records. </p>"
+      }
+    },
     "RoleArn": {
       "base": null,
       "refs": {
@@ -2227,6 +2282,14 @@
         "RangeOverride$Start": "<p>The start time of when to include objects.</p>"
       }
     },
+    "StartUploadJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartUploadJobResponse": {
+      "base": null,
+      "refs": {}
+    },
     "Statistic": {
       "base": null,
       "refs": {
@@ -2252,6 +2315,21 @@
         "GetSegmentEstimateResponse$StatusCode": "<p>The status code of the segment estimate.</p>",
         "ProfileAttributeValuesResponse$StatusCode": "<p>The status code for the response.</p>"
       }
+    },
+    "StatusReason": {
+      "base": null,
+      "refs": {
+        "GetUploadJobResponse$StatusReason": "<p>The reason for the current status of the upload job. Possible reasons: </p> <ul> <li> <p> <b>VALIDATION_FAILURE</b>: The upload job has encountered an error or issue and was unable to complete the profile data ingestion. </p> </li> <li> <p> <b>INTERNAL_FAILURE</b>: Failure caused from service side </p> </li> </ul>",
+        "UploadJobItem$StatusReason": "<p>The reason for the current status of the upload job. </p>"
+      }
+    },
+    "StopUploadJobRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StopUploadJobResponse": {
+      "base": null,
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -2479,6 +2557,25 @@
       "base": null,
       "refs": {}
     },
+    "UploadJobItem": {
+      "base": "<p>The summary information for an individual upload job. </p>",
+      "refs": {
+        "UploadJobsList$member": null
+      }
+    },
+    "UploadJobStatus": {
+      "base": null,
+      "refs": {
+        "GetUploadJobResponse$Status": "<p>The status describing the status for the upload job. The following are Valid Values: </p> <ul> <li> <p> <b>CREATED</b>: The upload job has been created, but has not started processing yet. </p> </li> <li> <p> <b>IN_PROGRESS</b>: The upload job is currently in progress, ingesting and processing the profile data. </p> </li> <li> <p> <b>PARTIALLY_SUCCEEDED</b>: The upload job has successfully completed the ingestion and processing of all profile data. </p> </li> <li> <p> <b>SUCCEEDED</b>: The upload job has successfully completed the ingestion and processing of all profile data. </p> </li> <li> <p> <b>FAILED</b>: The upload job has failed to complete. </p> </li> <li> <p> <b>STOPPED</b>: The upload job has been manually stopped or terminated before completion. </p> </li> </ul>",
+        "UploadJobItem$Status": "<p>The current status of the upload job. </p>"
+      }
+    },
+    "UploadJobsList": {
+      "base": null,
+      "refs": {
+        "ListUploadJobsResponse$Items": "<p>The list of upload jobs for the specified domain. </p>"
+      }
+    },
     "Value": {
       "base": null,
       "refs": {
@@ -2640,17 +2737,21 @@
       "refs": {
         "CreateDomainRequest$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>",
         "CreateDomainResponse$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>",
+        "CreateUploadJobRequest$DataExpiry": "<p>The expiry duration for the profiles ingested with the job. If not provided, the system default of 2 weeks is used. </p>",
         "GetDomainResponse$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>",
         "GetProfileObjectTypeResponse$ExpirationDays": "<p>The number of days until the data in the object expires.</p>",
+        "GetUploadJobResponse$DataExpiry": "<p>The expiry duration for the profiles ingested with the upload job. </p>",
         "PutProfileObjectTypeRequest$ExpirationDays": "<p>The number of days until the data in the object expires.</p>",
         "PutProfileObjectTypeResponse$ExpirationDays": "<p>The number of days until the data in the object expires.</p>",
         "UpdateDomainRequest$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>",
-        "UpdateDomainResponse$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>"
+        "UpdateDomainResponse$DefaultExpirationDays": "<p>The default number of days until the data within the domain expires.</p>",
+        "UploadJobItem$DataExpiry": "<p>The expiry duration for the profiles ingested with the upload job. </p>"
       }
     },
     "fieldName": {
       "base": null,
       "refs": {
+        "FieldMap$key": null,
         "ObjectAttribute$FieldName": "<p>A field defined within an object type.</p>"
       }
     },
@@ -2786,7 +2887,10 @@
     "optionalLong": {
       "base": null,
       "refs": {
-        "EventTriggerLimits$EventExpiration": "<p>In milliseconds. Specifies that an event will only trigger the destination if it is processed within a certain latency period.</p>"
+        "EventTriggerLimits$EventExpiration": "<p>In milliseconds. Specifies that an event will only trigger the destination if it is processed within a certain latency period.</p>",
+        "ResultsSummary$UpdatedRecords": "<p>The number of records that were updated during the upload job. </p>",
+        "ResultsSummary$CreatedRecords": "<p>The number of records that were newly created during the upload job. </p>",
+        "ResultsSummary$FailedRecords": "<p>The number of records that failed to be processed during the upload job. </p>"
       }
     },
     "percentageInteger": {
@@ -3006,6 +3110,7 @@
         "CreateSegmentDefinitionResponse$DisplayName": "<p>The display name of the segment definition.</p>",
         "CreateSegmentEstimateResponse$EstimateId": "<p>A unique identifier for the resource. The value can be passed to <code>GetSegmentEstimate</code> to retrieve the result of segment estimate status.</p>",
         "CreateSegmentSnapshotRequest$DestinationUri": "<p>The destination to which the segment will be exported. This field must be provided if the request is not submitted from the Amazon Connect Admin Website.</p>",
+        "CreateUploadJobRequest$DisplayName": "<p>The unique name of the upload job. Could be a file name to identify the upload job.</p>",
         "DeleteIntegrationRequest$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "DeleteProfileObjectRequest$ProfileObjectUniqueKey": "<p>The unique identifier of the profile object generated by the service.</p>",
         "DeleteWorkflowRequest$WorkflowId": "<p>Unique identifier for the workflow.</p>",
@@ -3033,6 +3138,7 @@
         "GetSimilarProfilesRequest$SearchKey": "<p>The string indicating the search key to be used.</p>",
         "GetSimilarProfilesRequest$SearchValue": "<p>The string based on <code>SearchKey</code> to be searched for similar profiles.</p>",
         "GetSimilarProfilesResponse$MatchId": "<p>The string <code>matchId</code> that the similar profiles belong to.</p>",
+        "GetUploadJobResponse$DisplayName": "<p>The unique name of the upload job. Could be a file name to identify the upload job. </p>",
         "GetWorkflowResponse$ErrorDescription": "<p>Workflow error messages during execution (if any).</p>",
         "ListAccountIntegrationsRequest$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "ListCalculatedAttributeForProfileItem$IsDataPartial": "<p>Indicates whether the calculated attribute’s value is based on partial data. If data is partial, it is set to true.</p>",
@@ -3062,6 +3168,7 @@
         "Threshold$Value": "<p>The value of the threshold.</p>",
         "UpdateAttributes$key": null,
         "UpdateDomainLayoutResponse$Version": "<p>The version used to create layout.</p>",
+        "UploadJobItem$DisplayName": "<p>The name of the upload job. </p>",
         "ValueList$member": null,
         "Values$member": null,
         "requestValueList$member": null
@@ -3071,6 +3178,7 @@
       "base": null,
       "refs": {
         "GetIdentityResolutionJobResponse$Message": "<p>The error messages that are generated when the Identity Resolution Job runs.</p>",
+        "GetUploadJobPathResponse$Url": "<p>The pre-signed S3 URL for uploading the CSV file associated with the upload job. </p>",
         "IdentityResolutionJob$Message": "<p>The error messages that are generated when the Identity Resolution Job runs.</p>",
         "SourceFields$member": null
       }
@@ -3086,7 +3194,10 @@
     "text": {
       "base": null,
       "refs": {
+        "CreateUploadJobRequest$UniqueKey": "<p>The unique key columns for de-duping the profiles used to map data to the profile. </p>",
         "EventTriggerSummaryItem$Description": "<p>The description of the event trigger.</p>",
+        "GetUploadJobPathResponse$ClientToken": "<p>The plaintext data key used to encrypt the upload file. </p> <p>To persist to the pre-signed url, use the client token and MD5 client token as header. The required headers are as follows: </p> <ul> <li> <p>x-amz-server-side-encryption-customer-key: Client Token </p> </li> <li> <p>x-amz-server-side-encryption-customer-key-MD5: MD5 Client Token </p> </li> <li> <p>x-amz-server-side-encryption-customer-algorithm: AES256 </p> </li> </ul>",
+        "GetUploadJobResponse$UniqueKey": "<p>The unique key columns used for de-duping the keys in the upload job. </p>",
         "ListProfileObjectTypeItem$Description": "<p>Description of the profile object type.</p>",
         "ObjectAttribute$Source": "<p>An attribute contained within a source object.</p>",
         "ObjectTypeField$Source": "<p>A field of a ProfileObject. For example: _source.FirstName, where “_source” is a ProfileObjectType of a Zendesk user and “FirstName” is a field in that ObjectType.</p>",
@@ -3137,6 +3248,9 @@
         "GetProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "GetSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
+        "GetUploadJobPathResponse$ValidUntil": "<p>The expiry timestamp for the pre-signed URL, after which the URL will no longer be valid. </p>",
+        "GetUploadJobResponse$CreatedAt": "<p>The timestamp when the upload job was created. </p>",
+        "GetUploadJobResponse$CompletedAt": "<p>The timestamp when the upload job was completed. </p>",
         "GetWorkflowResponse$StartDate": "<p>The timestamp that represents when workflow execution started.</p>",
         "GetWorkflowResponse$LastUpdatedAt": "<p>The timestamp that represents when workflow execution last updated.</p>",
         "IdentityResolutionJob$JobStartTime": "<p>The timestamp of when the job was started or will be started.</p>",
@@ -3169,7 +3283,9 @@
         "UpdateDomainResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "UpdateDomainResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "UpdateEventTriggerResponse$CreatedAt": "<p>The timestamp of when the event trigger was created.</p>",
-        "UpdateEventTriggerResponse$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>"
+        "UpdateEventTriggerResponse$LastUpdatedAt": "<p>The timestamp of when the event trigger was most recently updated.</p>",
+        "UploadJobItem$CreatedAt": "<p>The timestamp when the upload job was created. </p>",
+        "UploadJobItem$CompletedAt": "<p>The timestamp when the upload job was completed. </p>"
       }
     },
     "token": {
@@ -3211,6 +3327,8 @@
         "ListRuleBasedMatchesResponse$NextToken": "<p>The pagination token from the previous <code>ListRuleBasedMatches</code> API call.</p>",
         "ListSegmentDefinitionsRequest$NextToken": "<p>The pagination token from the previous call. </p>",
         "ListSegmentDefinitionsResponse$NextToken": "<p>The pagination token from the previous call.</p>",
+        "ListUploadJobsRequest$NextToken": "<p>The pagination token from the previous call to retrieve the next page of results. </p>",
+        "ListUploadJobsResponse$NextToken": "<p>The pagination token to use to retrieve the next page of results. </p>",
         "ListWorkflowsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListWorkflowsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "SearchProfilesRequest$NextToken": "<p>The pagination token from the previous SearchProfiles API call.</p>",
@@ -3273,6 +3391,7 @@
         "CreateIntegrationWorkflowResponse$WorkflowId": "<p>Unique identifier for the workflow.</p>",
         "CreateProfileResponse$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "CreateSegmentSnapshotResponse$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
+        "CreateUploadJobResponse$JobId": "<p>The unique identifier for the created upload job. </p>",
         "DeleteProfileKeyRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "DeleteProfileObjectRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "DeleteProfileRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
@@ -3301,6 +3420,8 @@
         "GetIdentityResolutionJobResponse$JobId": "<p>The unique identifier of the Identity Resolution Job.</p>",
         "GetSegmentSnapshotRequest$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
         "GetSegmentSnapshotResponse$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
+        "GetUploadJobRequest$JobId": "<p>The unique identifier of the upload job to retrieve. </p>",
+        "GetUploadJobResponse$JobId": "<p>The unique identifier of the upload job. </p>",
         "GetWorkflowRequest$WorkflowId": "<p>Unique identifier for the workflow.</p>",
         "GetWorkflowResponse$WorkflowId": "<p>Unique identifier for the workflow.</p>",
         "GetWorkflowStepsRequest$WorkflowId": "<p>Unique identifier for the workflow.</p>",
@@ -3314,7 +3435,8 @@
         "ProfileIdToBeMergedList$member": null,
         "ProfileIds$member": null,
         "UpdateProfileRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
-        "UpdateProfileResponse$ProfileId": "<p>The unique identifier of a customer profile.</p>"
+        "UpdateProfileResponse$ProfileId": "<p>The unique identifier of a customer profile.</p>",
+        "UploadJobItem$JobId": "<p>The unique identifier of the upload job. </p>"
       }
     }
   }

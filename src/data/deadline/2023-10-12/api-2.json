@@ -4861,7 +4861,8 @@
         "processExitCode":{"shape":"ProcessExitCode"},
         "progressMessage":{"shape":"SessionActionProgressMessage"},
         "definition":{"shape":"SessionActionDefinition"},
-        "acquiredLimits":{"shape":"AcquiredLimits"}
+        "acquiredLimits":{"shape":"AcquiredLimits"},
+        "manifests":{"shape":"TaskRunManifestPropertiesListResponse"}
       }
     },
     "GetSessionRequest":{
@@ -7830,7 +7831,8 @@
         "endedAt":{"shape":"EndedAt"},
         "workerUpdatedAt":{"shape":"Timestamp"},
         "progressPercent":{"shape":"SessionActionProgressPercent"},
-        "definition":{"shape":"SessionActionDefinitionSummary"}
+        "definition":{"shape":"SessionActionDefinitionSummary"},
+        "manifests":{"shape":"TaskRunManifestPropertiesListResponse"}
       }
     },
     "SessionId":{
@@ -8151,7 +8153,8 @@
         "INT",
         "FLOAT",
         "STRING",
-        "PATH"
+        "PATH",
+        "CHUNK_INT"
       ]
     },
     "StepRequiredCapabilities":{
@@ -8355,7 +8358,8 @@
         "int":{"shape":"IntString"},
         "float":{"shape":"FloatString"},
         "string":{"shape":"ParameterString"},
-        "path":{"shape":"PathString"}
+        "path":{"shape":"PathString"},
+        "chunkInt":{"shape":"String"}
       },
       "sensitive":true,
       "union":true
@@ -8371,6 +8375,40 @@
       "box":true,
       "max":2147483647,
       "min":0
+    },
+    "TaskRunManifestPropertiesListRequest":{
+      "type":"list",
+      "member":{"shape":"TaskRunManifestPropertiesRequest"},
+      "max":10,
+      "min":0
+    },
+    "TaskRunManifestPropertiesListResponse":{
+      "type":"list",
+      "member":{"shape":"TaskRunManifestPropertiesResponse"}
+    },
+    "TaskRunManifestPropertiesRequest":{
+      "type":"structure",
+      "members":{
+        "outputManifestPath":{"shape":"TaskRunManifestPropertiesRequestOutputManifestPathString"},
+        "outputManifestHash":{"shape":"TaskRunManifestPropertiesRequestOutputManifestHashString"}
+      }
+    },
+    "TaskRunManifestPropertiesRequestOutputManifestHashString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "TaskRunManifestPropertiesRequestOutputManifestPathString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "TaskRunManifestPropertiesResponse":{
+      "type":"structure",
+      "members":{
+        "outputManifestPath":{"shape":"String"},
+        "outputManifestHash":{"shape":"String"}
+      }
     },
     "TaskRunSessionActionDefinition":{
       "type":"structure",
@@ -8389,7 +8427,8 @@
       "required":["stepId"],
       "members":{
         "taskId":{"shape":"TaskId"},
-        "stepId":{"shape":"StepId"}
+        "stepId":{"shape":"StepId"},
+        "parameters":{"shape":"TaskParameters"}
       }
     },
     "TaskRunStatus":{
@@ -9147,7 +9186,8 @@
         "startedAt":{"shape":"SyntheticTimestamp_date_time"},
         "endedAt":{"shape":"SyntheticTimestamp_date_time"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
-        "progressPercent":{"shape":"SessionActionProgressPercent"}
+        "progressPercent":{"shape":"SessionActionProgressPercent"},
+        "manifests":{"shape":"TaskRunManifestPropertiesListRequest"}
       }
     },
     "UpdatedSessionActions":{
