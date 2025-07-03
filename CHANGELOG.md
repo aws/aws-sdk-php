@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.349.2 - 2025-07-03
 
 * `Aws\MediaPackageV2` - This release adds support for Microsoft Smooth Streaming (MSS) and allows users to exclude DRM segment Metadata in MediaPackage v2 Origin Endpoints
 * `Aws\Deadline` - Added fields for output manifest reporting and task chunking parameters
