@@ -40,7 +40,14 @@ class QueryParser extends AbstractParser
         ResponseInterface $response
     ) {
         $output = $this->api->getOperation($command->getName())->getOutput();
-        $xml = $this->parseXml($response->getBody(), $response);
+        $xml = $response->getBody()->getSize()
+            ? $this->parseXml($response->getBody(), $response)
+            : null;
+
+        // Empty request bodies should not be deserialized.
+        if (is_null($xml)) {
+            return new Result();
+        }
 
         if ($this->honorResultWrapper && $output['resultWrapper']) {
             $xml = $xml->{$output['resultWrapper']};

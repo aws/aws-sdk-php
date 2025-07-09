@@ -5,7 +5,6 @@ use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Api\ErrorParser\RestJsonErrorParser;
 use Aws\Api\ErrorParser\XmlErrorParser;
 use Aws\Api\Service;
-use Aws\AwsClient;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -144,8 +143,8 @@ class WrappedHttpHandlerTest extends TestCase
             'rest-xml' => $this->generateTestService('rest-xml'),
         ];
 
-        return [
-            [
+
+            yield [
                 new Response(
                     400,
                     ['X-Amzn-RequestId' => '123'],
@@ -156,8 +155,8 @@ class WrappedHttpHandlerTest extends TestCase
                 'bar',
                 '123',
                 [],
-            ],
-            [
+            ];
+            yield [
                 new Response(
                     400,
                     [
@@ -170,8 +169,8 @@ class WrappedHttpHandlerTest extends TestCase
                 null,
                 '123',
                 [],
-            ],
-            [
+            ];
+            yield [
                 new Response(
                     400,
                     [],
@@ -182,7 +181,7 @@ class WrappedHttpHandlerTest extends TestCase
                 'InternalError',
                 '656c76696e6727732072657175657374',
                 [],
-            ],
+            ];
             [
                 new Response(
                     400,
@@ -194,9 +193,8 @@ class WrappedHttpHandlerTest extends TestCase
                 null,
                 null,
                 [],
-            ],
-            // Rest-json with modeled exception from header error type
-            [
+            ];
+            yield 'Rest-json with modeled exception from header error type' => [
                 new Response(
                     400,
                     [
@@ -216,13 +214,11 @@ class WrappedHttpHandlerTest extends TestCase
                 [
                     'TestString' => 'foo-string',
                     'TestInt' => 456,
-                    'TestHeaderMember' => '',
                     'TestHeaders' => [],
                     'TestStatus' => 400
                 ],
-            ],
-            // Rest-json with modeled exception from body error code
-            [
+            ];
+            yield 'Rest-json with modeled exception from body error code' => [
                 new Response(
                     400,
                     [
@@ -242,13 +238,11 @@ class WrappedHttpHandlerTest extends TestCase
                 [
                     'TestString' => 'foo-string',
                     'TestInt' => 456,
-                    'TestHeaderMember' => '',
                     'TestHeaders' => [],
                     'TestStatus' => 400
                 ],
-            ],
-            // Ec2 with modeled exception
-            [
+            ];
+            yield 'Ec2 with modeled exception' => [
                 new Response(
                     400,
                     [],
@@ -272,13 +266,11 @@ class WrappedHttpHandlerTest extends TestCase
                 [
                     'TestString' => 'SomeString',
                     'TestInt' => 456,
-                    'TestHeaderMember' => '',
                     'TestHeaders' => [],
                     'TestStatus' => 400,
                 ],
-            ],
-            // Query with modeled exception
-            [
+            ];
+            yield 'Query with modeled exception' => [
                 new Response(
                     400,
                     [],
@@ -300,13 +292,11 @@ class WrappedHttpHandlerTest extends TestCase
                 [
                     'TestString' => 'SomeString',
                     'TestInt' => 456,
-                    'TestHeaderMember' => '',
                     'TestHeaders' => [],
                     'TestStatus' => 400,
                 ],
-            ],
-            // Rest-xml with modeled exception
-            [
+            ];
+            yield 'Rest-xml with modeled exception' => [
                 new Response(
                     400,
                     [],
@@ -328,12 +318,10 @@ class WrappedHttpHandlerTest extends TestCase
                 [
                     'TestString' => 'SomeString',
                     'TestInt' => 456,
-                    'TestHeaderMember' => '',
                     'TestHeaders' => [],
                     'TestStatus' => 400,
                 ],
-            ],
-        ];
+            ];
     }
 
     public function testCanRejectWithException()
