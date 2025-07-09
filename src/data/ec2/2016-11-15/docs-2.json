@@ -254,7 +254,9 @@
     "DescribeByoipCidrs": "<p>Describes the IP address ranges that were specified in calls to <a>ProvisionByoipCidr</a>.</p> <p>To describe the address pools that were created when you provisioned the address ranges, use <a>DescribePublicIpv4Pools</a> or <a>DescribeIpv6Pools</a>.</p>",
     "DescribeCapacityBlockExtensionHistory": "<p>Describes the events for the specified Capacity Block extension during the specified time.</p>",
     "DescribeCapacityBlockExtensionOfferings": "<p>Describes Capacity Block extension offerings available for purchase in the Amazon Web Services Region that you're currently using.</p>",
-    "DescribeCapacityBlockOfferings": "<p>Describes Capacity Block offerings available for purchase in the Amazon Web Services Region that you're currently using. With Capacity Blocks, you purchase a specific instance type for a period of time.</p> <p>To search for an available Capacity Block offering, you specify a reservation duration and instance count.</p>",
+    "DescribeCapacityBlockOfferings": "<p>Describes Capacity Block offerings available for purchase in the Amazon Web Services Region that you're currently using. With Capacity Blocks, you can purchase a specific GPU instance type or EC2 UltraServer for a period of time.</p> <p>To search for an available Capacity Block offering, you specify a reservation duration and instance count.</p>",
+    "DescribeCapacityBlockStatus": "<p>Describes the availability of capacity for the specified Capacity blocks, or all of your Capacity Blocks.</p>",
+    "DescribeCapacityBlocks": "<p>Describes details about Capacity Blocks in the Amazon Web Services Region that you're currently using.</p>",
     "DescribeCapacityReservationBillingRequests": "<p>Describes a request to assign the billing of the unused capacity of a Capacity Reservation. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/transfer-billing.html\"> Billing assignment for shared Amazon EC2 Capacity Reservations</a>.</p>",
     "DescribeCapacityReservationFleets": "<p>Describes one or more Capacity Reservation Fleets.</p>",
     "DescribeCapacityReservations": "<p>Describes one or more of your Capacity Reservations. The results describe only the Capacity Reservations in the Amazon Web Services Region that you're currently using.</p>",
@@ -299,7 +301,7 @@
     "DescribeInstanceEventWindows": "<p>Describes the specified event windows or all event windows.</p> <p>If you specify event window IDs, the output includes information for only the specified event windows. If you specify filters, the output includes information for only those event windows that meet the filter criteria. If you do not specify event windows IDs or filters, the output includes information for all event windows, which can affect performance. We recommend that you use pagination to ensure that the operation returns quickly and successfully. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/event-windows.html\">Define event windows for scheduled events</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribeInstanceImageMetadata": "<p>Describes the AMI that was used to launch an instance, even if the AMI is deprecated, deregistered, made private (no longer public or shared with your account), or not allowed.</p> <p>If you specify instance IDs, the output includes information for only the specified instances. If you specify filters, the output includes information for only those instances that meet the filter criteria. If you do not specify instance IDs or filters, the output includes information for all instances, which can affect performance.</p> <p>If you specify an instance ID that is not valid, an instance that doesn't exist, or an instance that you do not own, an error (<code>InvalidInstanceID.NotFound</code>) is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>In the rare case where an Availability Zone is experiencing a service disruption and you specify instance IDs that are in the affected Availability Zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs that are in an unaffected Availability Zone, the call works normally.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeInstanceStatus": "<p>Describes the status of the specified instances or all of your instances. By default, only running instances are described, unless you specifically indicate to return the status of all instances.</p> <p>Instance status includes the following components:</p> <ul> <li> <p> <b>Status checks</b> - Amazon EC2 performs status checks on running EC2 instances to identify hardware and software issues. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html\">Status checks for your instances</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html\">Troubleshoot instances with failed status checks</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Scheduled events</b> - Amazon EC2 can schedule events (such as reboot, stop, or terminate) for your instances related to hardware issues, software updates, or system maintenance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html\">Scheduled events for your instances</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> <li> <p> <b>Instance state</b> - You can manage your instances from the moment you launch them through their termination. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html\">Instance lifecycle</a> in the <i>Amazon EC2 User Guide</i>.</p> </li> </ul> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
-    "DescribeInstanceTopology": "<p>Describes a tree-based hierarchy that represents the physical host placement of your EC2 instances within an Availability Zone or Local Zone. You can use this information to determine the relative proximity of your EC2 instances within the Amazon Web Services network to support your tightly coupled workloads.</p> <p class=\"title\"> <b>Limitations</b> </p> <ul> <li> <p>Supported zones</p> <ul> <li> <p>Availability Zone</p> </li> <li> <p>Local Zone</p> </li> </ul> </li> <li> <p>Supported instance types</p> <ul> <li> <p>Returns 3 network nodes in the response</p> <ul> <li> <p> <code>hpc6a.48xlarge</code> | <code>hpc6id.32xlarge</code> | <code>hpc7a.12xlarge</code> | <code>hpc7a.24xlarge</code> | <code>hpc7a.48xlarge</code> | <code>hpc7a.96xlarge</code> | <code>hpc7g.4xlarge</code> | <code>hpc7g.8xlarge</code> | <code>hpc7g.16xlarge</code> </p> </li> <li> <p> <code>p3dn.24xlarge</code> | <code>p4d.24xlarge</code> | <code>p4de.24xlarge</code> | <code>p5.48xlarge</code> | <code>p5e.48xlarge</code> | <code>p5en.48xlarge</code> </p> </li> <li> <p> <code>trn1.2xlarge</code> | <code>trn1.32xlarge</code> | <code>trn1n.32xlarge</code> | <code>trn2.48xlarge</code> | <code>trn2u.48xlarge</code> </p> </li> </ul> </li> <li> <p>Returns 4 network nodes in the response</p> <ul> <li> <p> <code>p6-b200.48xlarge</code> </p> </li> </ul> </li> </ul> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology.html\">Amazon EC2 instance topology</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+    "DescribeInstanceTopology": "<p>Describes a tree-based hierarchy that represents the physical host placement of your EC2 instances within an Availability Zone or Local Zone. You can use this information to determine the relative proximity of your EC2 instances within the Amazon Web Services network to support your tightly coupled workloads.</p> <p>Instance topology is supported for specific instance types only. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology-prerequisites.html\"> Prerequisites for Amazon EC2 instance topology</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>The Amazon EC2 API follows an eventual consistency model due to the distributed nature of the system supporting it. As a result, when you call the DescribeInstanceTopology API command immediately after launching instances, the response might return a <code>null</code> value for <code>capacityBlockId</code> because the data might not have fully propagated across all subsystems. For more information, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-topology.html\">Amazon EC2 instance topology</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribeInstanceTypeOfferings": "<p>Lists the instance types that are offered for the specified location. If no location is specified, the default is to list the instance types that are offered in the current Region.</p>",
     "DescribeInstanceTypes": "<p>Describes the specified instance types. By default, all instance types for the current Region are described. Alternatively, you can filter the results.</p>",
     "DescribeInstances": "<p>Describes the specified instances or all instances.</p> <p>If you specify instance IDs, the output includes information for only the specified instances. If you specify filters, the output includes information for only those instances that meet the filter criteria. If you do not specify instance IDs or filters, the output includes information for all instances, which can affect performance. We recommend that you use pagination to ensure that the operation returns quickly and successfully.</p> <p>If you specify an instance ID that is not valid, an error is returned. If you specify an instance that you do not own, it is not included in the output.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If you describe instances in the rare case where an Availability Zone is experiencing a service disruption and you specify instance IDs that are in the affected zone, or do not specify any instance IDs at all, the call fails. If you describe instances and specify only instance IDs that are in an unaffected zone, the call works normally.</p> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
@@ -414,7 +416,7 @@
     "DetachInternetGateway": "<p>Detaches an internet gateway from a VPC, disabling connectivity between the internet and the VPC. The VPC must not contain any running instances with Elastic IP addresses or public IPv4 addresses.</p>",
     "DetachNetworkInterface": "<p>Detaches a network interface from an instance.</p>",
     "DetachVerifiedAccessTrustProvider": "<p>Detaches the specified Amazon Web Services Verified Access trust provider from the specified Amazon Web Services Verified Access instance.</p>",
-    "DetachVolume": "<p>Detaches an EBS volume from an instance. Make sure to unmount any file systems on the device within your operating system before detaching the volume. Failure to do so can result in the volume becoming stuck in the <code>busy</code> state while detaching. If this happens, detachment can be delayed indefinitely until you unmount the volume, force detachment, reboot the instance, or all three. If an EBS volume is the root device of an instance, it can't be detached while the instance is running. To detach the root volume, stop the instance first.</p> <p>When a volume with an Amazon Web Services Marketplace product code is detached from an instance, the product code is no longer associated with the instance.</p> <p>You can't detach or force detach volumes that are attached to Amazon ECS or Fargate tasks. Attempting to do this results in the <code>UnsupportedOperationException</code> exception with the <code>Unable to detach volume attached to ECS tasks</code> error message.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-detaching-volume.html\">Detach an Amazon EBS volume</a> in the <i>Amazon EBS User Guide</i>.</p>",
+    "DetachVolume": "<p>Detaches an EBS volume from an instance. Make sure to unmount any file systems on the device within your operating system before detaching the volume. Failure to do so can result in the volume becoming stuck in the <code>busy</code> state while detaching. If this happens, detachment can be delayed indefinitely until you unmount the volume, force detachment, reboot the instance, or all three. If an EBS volume is the root device of an instance, it can't be detached while the instance is running. To detach the root volume, stop the instance first.</p> <p>When a volume with an Amazon Web Services Marketplace product code is detached from an instance, the product code is no longer associated with the instance.</p> <p>You can't detach or force detach volumes that are attached to Amazon Web Services-managed resources. Attempting to do this results in the <code>UnsupportedOperationException</code> exception.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/ebs/latest/userguide/ebs-detaching-volume.html\">Detach an Amazon EBS volume</a> in the <i>Amazon EBS User Guide</i>.</p>",
     "DetachVpnGateway": "<p>Detaches a virtual private gateway from a VPC. You do this if you're planning to turn off the VPC and not use it anymore. You can confirm a virtual private gateway has been completely detached from a VPC by describing the virtual private gateway (any attachments to the virtual private gateway are also described).</p> <p>You must wait for the attachment's state to switch to <code>detached</code> before you can delete the VPC or attach a different VPC to the virtual private gateway.</p>",
     "DisableAddressTransfer": "<p>Disables Elastic IP address transfer. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-eips.html#transfer-EIPs-intro\">Transfer Elastic IP addresses</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "DisableAllowedImagesSettings": "<p>Disables Allowed AMIs for your account in the specified Amazon Web Services Region. When set to <code>disabled</code>, the image criteria in your Allowed AMIs settings do not apply, and no restrictions are placed on AMI discoverability or usage. Users in your account can launch instances using any public AMI or AMI shared with your account.</p> <note> <p>The Allowed AMIs feature does not restrict the AMIs owned by your account. Regardless of the criteria you set, the AMIs created by your account will always be discoverable and usable by users in your account.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html\">Control the discovery and use of AMIs in Amazon EC2 with Allowed AMIs</a> in <i>Amazon EC2 User Guide</i>.</p>",
@@ -2513,6 +2515,8 @@
         "DescribeCapacityBlockExtensionHistoryRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityBlockExtensionOfferingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityBlockOfferingsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeCapacityBlockStatusRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeCapacityBlocksRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityReservationBillingRequestsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityReservationFleetsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeCapacityReservationsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -3272,6 +3276,7 @@
     "BoxedInteger": {
       "base": null,
       "refs": {
+        "CapacityBlockOffering$UltraserverCount": "<p>The number of EC2 UltraServers in the offering.</p>",
         "InstanceMetadataDefaultsResponse$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel.</p>",
         "ModifyInstanceMetadataDefaultsRequest$HttpPutResponseHopLimit": "<p>The maximum number of hops that the metadata token can travel. To indicate no preference, specify <code>-1</code>.</p> <p>Possible values: Integers from <code>1</code> to <code>64</code>, and <code>-1</code> to indicate no preference</p>"
       }
@@ -3573,6 +3578,12 @@
         "CapacityReservation$CapacityAllocations": "<p>Information about instance capacity usage.</p>"
       }
     },
+    "CapacityBlock": {
+      "base": "<p>Reserve powerful GPU instances on a future date to support your short duration machine learning (ML) workloads. Instances that run inside a Capacity Block are automatically placed close together inside <a href=\"http://aws.amazon.com/ec2/ultraclusters/\">Amazon EC2 UltraClusters</a>, for low-latency, petabit-scale, non-blocking networking.</p> <p>You can also reserve Amazon EC2 UltraServers. UltraServers connect multiple EC2 instances using a low-latency, high-bandwidth accelerator interconnect (NeuronLink). They are built to tackle very large-scale AI/ML workloads that require significant processing power. For more information, see Amazon EC2 UltraServers.</p>",
+      "refs": {
+        "CapacityBlockSet$member": null
+      }
+    },
     "CapacityBlockExtension": {
       "base": "<p>Describes a Capacity Block extension. With an extension, you can extend the duration of time for an existing Capacity Block.</p>",
       "refs": {
@@ -3604,6 +3615,28 @@
         "CapacityBlockExtension$CapacityBlockExtensionStatus": "<p>The status of the Capacity Block extension. A Capacity Block extension can have one of the following statuses:</p> <ul> <li> <p> <code>payment-pending</code> - The Capacity Block extension payment is processing. If your payment can't be processed within 12 hours, the Capacity Block extension is failed.</p> </li> <li> <p> <code>payment-failed</code> - Payment for the Capacity Block extension request was not successful.</p> </li> <li> <p> <code>payment-succeeded</code> - Payment for the Capacity Block extension request was successful. You receive an invoice that reflects the one-time upfront payment. In the invoice, you can associate the paid amount with the Capacity Block reservation ID.</p> </li> </ul>"
       }
     },
+    "CapacityBlockId": {
+      "base": null,
+      "refs": {
+        "CapacityBlock$CapacityBlockId": "<p>The ID of the Capacity Block.</p>",
+        "CapacityBlockIds$member": null,
+        "CapacityBlockStatus$CapacityBlockId": "<p>The ID of the Capacity Block.</p>",
+        "CapacityReservation$CapacityBlockId": "<p>The ID of the Capacity Block.</p>"
+      }
+    },
+    "CapacityBlockIds": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityBlockStatusRequest$CapacityBlockIds": "<p>The ID of the Capacity Block.</p>",
+        "DescribeCapacityBlocksRequest$CapacityBlockIds": "<p>The IDs of the Capacity Blocks.</p>"
+      }
+    },
+    "CapacityBlockInterconnectStatus": {
+      "base": null,
+      "refs": {
+        "CapacityBlockStatus$InterconnectStatus": "<p>The status of the high-bandwidth accelerator interconnect. Possible states include:</p> <ul> <li> <p> <code>ok</code> the accelerator interconnect is healthy.</p> </li> <li> <p> <code>impaired</code> - accelerator interconnect communication is impaired.</p> </li> <li> <p> <code>insufficient-data</code> - insufficient data to determine accelerator interconnect status.</p> </li> </ul>"
+      }
+    },
     "CapacityBlockOffering": {
       "base": "<p>The recommended Capacity Block that fits your search requirements.</p>",
       "refs": {
@@ -3614,6 +3647,31 @@
       "base": null,
       "refs": {
         "DescribeCapacityBlockOfferingsResult$CapacityBlockOfferings": "<p>The recommended Capacity Block offering for the dates specified.</p>"
+      }
+    },
+    "CapacityBlockResourceState": {
+      "base": null,
+      "refs": {
+        "CapacityBlock$State": "<p>The state of the Capacity Block.</p>"
+      }
+    },
+    "CapacityBlockSet": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityBlocksResult$CapacityBlocks": "<p>The Capacity Blocks.</p>",
+        "PurchaseCapacityBlockResult$CapacityBlocks": "<p>The Capacity Block.</p>"
+      }
+    },
+    "CapacityBlockStatus": {
+      "base": "<p>Describes the availability of capacity for a Capacity Block.</p>",
+      "refs": {
+        "CapacityBlockStatusSet$member": null
+      }
+    },
+    "CapacityBlockStatusSet": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityBlockStatusResult$CapacityBlockStatuses": "<p>The availability of capacity for a Capacity Block.</p>"
       }
     },
     "CapacityReservation": {
@@ -3736,6 +3794,7 @@
         "CancelCapacityReservationRequest$CapacityReservationId": "<p>The ID of the Capacity Reservation to be cancelled.</p>",
         "CapacityBlockExtension$CapacityReservationId": "<p>The reservation ID of the Capacity Block extension.</p>",
         "CapacityReservationIdSet$member": null,
+        "CapacityReservationStatus$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "CapacityReservationTarget$CapacityReservationId": "<p>The ID of the Capacity Reservation in which to run the instance.</p>",
         "CreateCapacityReservationBySplittingRequest$SourceCapacityReservationId": "<p> The ID of the Capacity Reservation from which you want to split the capacity. </p>",
         "DescribeCapacityBlockExtensionOfferingsRequest$CapacityReservationId": "<p>The ID of the Capacity reservation to be extended.</p>",
@@ -3753,6 +3812,7 @@
     "CapacityReservationIdSet": {
       "base": null,
       "refs": {
+        "CapacityBlock$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>",
         "DescribeCapacityBlockExtensionHistoryRequest$CapacityReservationIds": "<p>The IDs of Capacity Block reservations that you want to display the history for.</p>",
         "DescribeCapacityReservationBillingRequestsRequest$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>",
         "DescribeCapacityReservationsRequest$CapacityReservationIds": "<p>The ID of the Capacity Reservation.</p>"
@@ -3819,6 +3879,18 @@
       "refs": {
         "CapacityReservation$State": "<p>The current state of the Capacity Reservation. A Capacity Reservation can be in one of the following states:</p> <ul> <li> <p> <code>active</code> - The capacity is available for use.</p> </li> <li> <p> <code>expired</code> - The Capacity Reservation expired automatically at the date and time specified in your reservation request. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>cancelled</code> - The Capacity Reservation was canceled. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>pending</code> - The Capacity Reservation request was successful but the capacity provisioning is still pending.</p> </li> <li> <p> <code>failed</code> - The Capacity Reservation request has failed. A request can fail due to request parameters that are not valid, capacity constraints, or instance limit constraints. You can view a failed request for 60 minutes.</p> </li> <li> <p> <code>scheduled</code> - (<i>Future-dated Capacity Reservations</i>) The future-dated Capacity Reservation request was approved and the Capacity Reservation is scheduled for delivery on the requested start date.</p> </li> <li> <p> <code>payment-pending</code> - (<i>Capacity Blocks</i>) The upfront payment has not been processed yet.</p> </li> <li> <p> <code>payment-failed</code> - (<i>Capacity Blocks</i>) The upfront payment was not processed in the 12-hour time frame. Your Capacity Block was released.</p> </li> <li> <p> <code>assessing</code> - (<i>Future-dated Capacity Reservations</i>) Amazon EC2 is assessing your request for a future-dated Capacity Reservation.</p> </li> <li> <p> <code>delayed</code> - (<i>Future-dated Capacity Reservations</i>) Amazon EC2 encountered a delay in provisioning the requested future-dated Capacity Reservation. Amazon EC2 is unable to deliver the requested capacity by the requested start date and time.</p> </li> <li> <p> <code>unsupported</code> - (<i>Future-dated Capacity Reservations</i>) Amazon EC2 can't support the future-dated Capacity Reservation request due to capacity constraints. You can view unsupported requests for 30 days. The Capacity Reservation will not be delivered.</p> </li> </ul>",
         "GetCapacityReservationUsageResult$State": "<p>The current state of the Capacity Reservation. A Capacity Reservation can be in one of the following states:</p> <ul> <li> <p> <code>active</code> - The capacity is available for use.</p> </li> <li> <p> <code>expired</code> - The Capacity Reservation expired automatically at the date and time specified in your reservation request. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>cancelled</code> - The Capacity Reservation was canceled. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>pending</code> - The Capacity Reservation request was successful but the capacity provisioning is still pending.</p> </li> <li> <p> <code>failed</code> - The Capacity Reservation request has failed. A request can fail due to request parameters that are not valid, capacity constraints, or instance limit constraints. You can view a failed request for 60 minutes.</p> </li> <li> <p> <code>scheduled</code> - (<i>Future-dated Capacity Reservations</i>) The future-dated Capacity Reservation request was approved and the Capacity Reservation is scheduled for delivery on the requested start date.</p> </li> <li> <p> <code>payment-pending</code> - (<i>Capacity Blocks</i>) The upfront payment has not been processed yet.</p> </li> <li> <p> <code>payment-failed</code> - (<i>Capacity Blocks</i>) The upfront payment was not processed in the 12-hour time frame. Your Capacity Block was released.</p> </li> <li> <p> <code>assessing</code> - (<i>Future-dated Capacity Reservations</i>) Amazon EC2 is assessing your request for a future-dated Capacity Reservation.</p> </li> <li> <p> <code>delayed</code> - (<i>Future-dated Capacity Reservations</i>) Amazon EC2 encountered a delay in provisioning the requested future-dated Capacity Reservation. Amazon EC2 is unable to deliver the requested capacity by the requested start date and time.</p> </li> <li> <p> <code>unsupported</code> - (<i>Future-dated Capacity Reservations</i>) Amazon EC2 can't support the future-dated Capacity Reservation request due to capacity constraints. You can view unsupported requests for 30 days. The Capacity Reservation will not be delivered.</p> </li> </ul>"
+      }
+    },
+    "CapacityReservationStatus": {
+      "base": "<p>Describes the availability of capacity for a Capacity Reservation.</p>",
+      "refs": {
+        "CapacityReservationStatusSet$member": null
+      }
+    },
+    "CapacityReservationStatusSet": {
+      "base": null,
+      "refs": {
+        "CapacityBlockStatus$CapacityReservationStatuses": "<p>The availability of capacity for the Capacity Block reservations.</p>"
       }
     },
     "CapacityReservationTarget": {
@@ -6927,6 +6999,38 @@
       }
     },
     "DescribeCapacityBlockOfferingsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityBlockStatusMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityBlockStatusRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeCapacityBlockStatusRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityBlockStatusResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityBlocksMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeCapacityBlocksRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeCapacityBlocksRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeCapacityBlocksResult": {
       "base": null,
       "refs": {
       }
@@ -10532,6 +10636,8 @@
         "DescribeAwsNetworkPerformanceMetricSubscriptionsRequest$Filters": "<p>One or more filters.</p>",
         "DescribeBundleTasksRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>bundle-id</code> - The ID of the bundle task.</p> </li> <li> <p> <code>error-code</code> - If the task failed, the error code returned.</p> </li> <li> <p> <code>error-message</code> - If the task failed, the error message returned.</p> </li> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>progress</code> - The level of task completion, as a percentage (for example, 20%).</p> </li> <li> <p> <code>s3-bucket</code> - The Amazon S3 bucket to store the AMI.</p> </li> <li> <p> <code>s3-prefix</code> - The beginning of the AMI name.</p> </li> <li> <p> <code>start-time</code> - The time the task started (for example, 2013-09-15T17:15:20.000Z).</p> </li> <li> <p> <code>state</code> - The state of the task (<code>pending</code> | <code>waiting-for-shutdown</code> | <code>bundling</code> | <code>storing</code> | <code>cancelling</code> | <code>complete</code> | <code>failed</code>).</p> </li> <li> <p> <code>update-time</code> - The time of the most recent update for the task.</p> </li> </ul>",
         "DescribeCapacityBlockExtensionHistoryRequest$Filters": "<p>One or more filters</p> <ul> <li> <p> <code>availability-zone</code> - The Availability Zone of the extension.</p> </li> <li> <p> <code>availability-zone-id</code> - The Availability Zone ID of the extension.</p> </li> <li> <p> <code>capacity-block-extension-offering-id</code> - The ID of the extension offering.</p> </li> <li> <p> <code>capacity-block-extension-status</code> - The status of the extension (<code>payment-pending</code> | <code>payment-failed</code> | <code>payment-succeeded</code>).</p> </li> <li> <p> <code>capacity-reservation-id</code> - The reservation ID of the extension.</p> </li> <li> <p> <code>instance-type</code> - The instance type of the extension.</p> </li> </ul>",
+        "DescribeCapacityBlockStatusRequest$Filters": "<p>One or more filters. </p> <ul> <li> <p> <code>interconnect-status</code> - The status of the interconnect for the Capacity Block (<code>ok</code> | <code>impaired</code> | <code>insufficient-data</code>).</p> </li> </ul>",
+        "DescribeCapacityBlocksRequest$Filters": "<p> One or more filters. </p> <ul> <li> <p> <code>capacity-block-id</code> - The ID of the Capacity Block.</p> </li> <li> <p> <code>ultraserver-type</code> - The Capacity Block type. The type can be <code>instances</code> or <code>ultraservers</code>.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the Capacity Block.</p> </li> <li> <p> <code>start-date</code> - The date and time at which the Capacity Block was started.</p> </li> <li> <p> <code>end-date</code> - The date and time at which the Capacity Block expires. When a Capacity Block expires, all instances in the Capacity Block are terminated.</p> </li> <li> <p> <code>create-date</code> - The date and time at which the Capacity Block was created.</p> </li> <li> <p> <code>state</code> - The state of the Capacity Block (<code>active</code> | <code>expired</code> | <code>unavailable</code> | <code>cancelled</code> | <code>failed</code> | <code>scheduled</code> | <code>payment-pending</code> | <code>payment-failed</code>).</p> </li> <li> <p> <code>tags</code> - The tags assigned to the Capacity Block.</p> </li> </ul>",
         "DescribeCapacityReservationBillingRequestsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>status</code> - The state of the request (<code>pending</code> | <code>accepted</code> | <code>rejected</code> | <code>cancelled</code> | <code>revoked</code> | <code>expired</code>).</p> </li> <li> <p> <code>requested-by</code> - The account ID of the Capacity Reservation owner that initiated the request. Not supported if you specify <code>requested-by</code> for <b>Role</b>.</p> </li> <li> <p> <code>unused-reservation-billing-owner</code> - The ID of the consumer account to which the request was sent. Not supported if you specify <code>unused-reservation-billing-owner</code> for <b>Role</b>.</p> </li> </ul>",
         "DescribeCapacityReservationFleetsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>state</code> - The state of the Fleet (<code>submitted</code> | <code>modifying</code> | <code>active</code> | <code>partially_fulfilled</code> | <code>expiring</code> | <code>expired</code> | <code>cancelling</code> | <code>cancelled</code> | <code>failed</code>).</p> </li> <li> <p> <code>instance-match-criteria</code> - The instance matching criteria for the Fleet. Only <code>open</code> is supported.</p> </li> <li> <p> <code>tenancy</code> - The tenancy of the Fleet (<code>default</code> | <code>dedicated</code>).</p> </li> <li> <p> <code>allocation-strategy</code> - The allocation strategy used by the Fleet. Only <code>prioritized</code> is supported.</p> </li> </ul>",
         "DescribeCapacityReservationsRequest$Filters": "<p>One or more filters.</p> <ul> <li> <p> <code>instance-type</code> - The type of instance for which the Capacity Reservation reserves capacity.</p> </li> <li> <p> <code>owner-id</code> - The ID of the Amazon Web Services account that owns the Capacity Reservation.</p> </li> <li> <p> <code>instance-platform</code> - The type of operating system for which the Capacity Reservation reserves capacity.</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the Capacity Reservation.</p> </li> <li> <p> <code>tenancy</code> - Indicates the tenancy of the Capacity Reservation. A Capacity Reservation can have one of the following tenancy settings:</p> <ul> <li> <p> <code>default</code> - The Capacity Reservation is created on hardware that is shared with other Amazon Web Services accounts.</p> </li> <li> <p> <code>dedicated</code> - The Capacity Reservation is created on single-tenant hardware that is dedicated to a single Amazon Web Services account.</p> </li> </ul> </li> <li> <p> <code>outpost-arn</code> - The Amazon Resource Name (ARN) of the Outpost on which the Capacity Reservation was created.</p> </li> <li> <p> <code>state</code> - The current state of the Capacity Reservation. A Capacity Reservation can be in one of the following states:</p> <ul> <li> <p> <code>active</code>- The Capacity Reservation is active and the capacity is available for your use.</p> </li> <li> <p> <code>expired</code> - The Capacity Reservation expired automatically at the date and time specified in your request. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>cancelled</code> - The Capacity Reservation was cancelled. The reserved capacity is no longer available for your use.</p> </li> <li> <p> <code>pending</code> - The Capacity Reservation request was successful but the capacity provisioning is still pending.</p> </li> <li> <p> <code>failed</code> - The Capacity Reservation request has failed. A request might fail due to invalid request parameters, capacity constraints, or instance limit constraints. Failed requests are retained for 60 minutes.</p> </li> </ul> </li> <li> <p> <code>start-date</code> - The date and time at which the Capacity Reservation was started.</p> </li> <li> <p> <code>end-date</code> - The date and time at which the Capacity Reservation expires. When a Capacity Reservation expires, the reserved capacity is released and you can no longer launch instances into it. The Capacity Reservation's state changes to expired when it reaches its end date and time.</p> </li> <li> <p> <code>end-date-type</code> - Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time.</p> </li> </ul> </li> <li> <p> <code>instance-match-criteria</code> - Indicates the type of instance launches that the Capacity Reservation accepts. The options include:</p> <ul> <li> <p> <code>open</code> - The Capacity Reservation accepts all instances that have matching attributes (instance type, platform, and Availability Zone). Instances that have matching attributes launch into the Capacity Reservation automatically without specifying any additional parameters.</p> </li> <li> <p> <code>targeted</code> - The Capacity Reservation only accepts instances that have matching attributes (instance type, platform, and Availability Zone), and explicitly target the Capacity Reservation. This ensures that only permitted instances can use the reserved capacity.</p> </li> </ul> </li> <li> <p> <code>placement-group-arn</code> - The ARN of the cluster placement group in which the Capacity Reservation was created.</p> </li> </ul>",
@@ -12586,7 +12692,7 @@
     "InstanceBlockDeviceMappingSpecificationList": {
       "base": null,
       "refs": {
-        "ModifyInstanceAttributeRequest$BlockDeviceMappings": "<p>Modifies the <code>DeleteOnTermination</code> attribute for volumes that are currently attached. The volume must be owned by the caller. If no value is specified for <code>DeleteOnTermination</code>, the default is <code>true</code> and the volume is deleted when the instance is terminated. You can't modify the <code>DeleteOnTermination</code> attribute for volumes that are attached to Fargate tasks.</p> <p>To add instance store volumes to an Amazon EBS-backed instance, you must add them when you launch the instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html#Using_OverridingAMIBDM\">Update the block device mapping when launching an instance</a> in the <i>Amazon EC2 User Guide</i>.</p>"
+        "ModifyInstanceAttributeRequest$BlockDeviceMappings": "<p>Modifies the <code>DeleteOnTermination</code> attribute for volumes that are currently attached. The volume must be owned by the caller. If no value is specified for <code>DeleteOnTermination</code>, the default is <code>true</code> and the volume is deleted when the instance is terminated. You can't modify the <code>DeleteOnTermination</code> attribute for volumes that are attached to Amazon Web Services-managed resources.</p> <p>To add instance store volumes to an Amazon EBS-backed instance, you must add them when you launch the instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html#Using_OverridingAMIBDM\">Update the block device mapping when launching an instance</a> in the <i>Amazon EC2 User Guide</i>.</p>"
       }
     },
     "InstanceBootModeValues": {
@@ -13448,10 +13554,16 @@
         "CapacityBlockOffering$InstanceCount": "<p>The number of instances in the Capacity Block offering.</p>",
         "CapacityBlockOffering$CapacityBlockDurationHours": "<p>The number of hours (in addition to <code>capacityBlockDurationMinutes</code>) for the duration of the Capacity Block reservation. For example, if a Capacity Block starts at <b>04:55</b> and ends at <b>11:30</b>, the hours field would be <b>6</b>.</p>",
         "CapacityBlockOffering$CapacityBlockDurationMinutes": "<p>The number of minutes (in addition to <code>capacityBlockDurationHours</code>) for the duration of the Capacity Block reservation. For example, if a Capacity Block starts at <b>08:55</b> and ends at <b>11:30</b>, the minutes field would be <b>35</b>.</p>",
+        "CapacityBlockStatus$TotalCapacity": "<p>The combined amount of <code>Available</code> and <code>Unavailable</code> capacity in the Capacity Block.</p>",
+        "CapacityBlockStatus$TotalAvailableCapacity": "<p>The remaining capacity. Indicates the number of resources that can be launched into the Capacity Block.</p>",
+        "CapacityBlockStatus$TotalUnavailableCapacity": "<p>The unavailable capacity. Indicates the instance capacity that is unavailable for use due to a system status check failure.</p>",
         "CapacityReservation$TotalInstanceCount": "<p>The total number of instances for which the Capacity Reservation reserves capacity.</p>",
         "CapacityReservation$AvailableInstanceCount": "<p>The remaining capacity. Indicates the number of instances that can be launched in the Capacity Reservation.</p>",
         "CapacityReservationCommitmentInfo$CommittedInstanceCount": "<p>The instance capacity that you committed to when you requested the future-dated Capacity Reservation.</p>",
         "CapacityReservationFleet$TotalTargetCapacity": "<p>The total number of capacity units for which the Capacity Reservation Fleet reserves capacity. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/crfleet-concepts.html#target-capacity\">Total target capacity</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+        "CapacityReservationStatus$TotalCapacity": "<p>The combined amount of <code>Available</code> and <code>Unavailable</code> capacity in the Capacity Reservation.</p>",
+        "CapacityReservationStatus$TotalAvailableCapacity": "<p>The remaining capacity. Indicates the amount of resources that can be launched into the Capacity Reservation.</p>",
+        "CapacityReservationStatus$TotalUnavailableCapacity": "<p>The used capacity. Indicates that the capacity is in use by resources that are running in the Capacity Reservation.</p>",
         "ClientVpnEndpoint$VpnPort": "<p>The port number for the Client VPN endpoint.</p>",
         "ClientVpnEndpoint$SessionTimeoutHours": "<p>The maximum VPN session duration time in hours.</p> <p>Valid values: <code>8 | 10 | 12 | 24</code> </p> <p>Default value: <code>24</code> </p>",
         "ConnectionTrackingConfiguration$TcpEstablishedTimeout": "<p>Timeout (in seconds) for idle TCP connections in an established state. Min: 60 seconds. Max: 432000 seconds (5 days). Default: 432000 seconds. Recommended: Less than 432000 seconds.</p>",
@@ -13503,6 +13615,7 @@
         "DescribeCapacityBlockExtensionOfferingsRequest$CapacityBlockExtensionDurationHours": "<p>The duration of the Capacity Block extension offering in hours.</p>",
         "DescribeCapacityBlockOfferingsRequest$InstanceCount": "<p>The number of instances for which to reserve capacity. Each Capacity Block can have up to 64 instances, and you can have up to 256 instances across Capacity Blocks.</p>",
         "DescribeCapacityBlockOfferingsRequest$CapacityDurationHours": "<p>The reservation duration for the Capacity Block, in hours. You must specify the duration in 1-day increments up 14 days, and in 7-day increments up to 182 days.</p>",
+        "DescribeCapacityBlockOfferingsRequest$UltraserverCount": "<p>The number of EC2 UltraServers in the offerings.</p>",
         "DescribeElasticGpusResult$MaxResults": "<p>The total number of items to return. If the total number of items available is more than the value specified in max-items then a Next-Token will be provided in the output that you can use to resume pagination.</p>",
         "DescribeFastLaunchImagesSuccessItem$MaxParallelLaunches": "<p>The maximum number of instances that Amazon EC2 can launch at the same time to create pre-provisioned snapshots for Windows fast launch.</p>",
         "DescribeFleetHistoryRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>",
@@ -16220,6 +16333,9 @@
         "AddressTransfer$TransferOfferAcceptedTimestamp": "<p>The timestamp when the Elastic IP address transfer was accepted.</p>",
         "AthenaIntegration$PartitionStartDate": "<p>The start date for the partition.</p>",
         "AthenaIntegration$PartitionEndDate": "<p>The end date for the partition.</p>",
+        "CapacityBlock$StartDate": "<p>The date and time at which the Capacity Block was started.</p>",
+        "CapacityBlock$EndDate": "<p>The date and time at which the Capacity Block expires. When a Capacity Block expires, all instances in the Capacity Block are terminated.</p>",
+        "CapacityBlock$CreateDate": "<p>The date and time at which the Capacity Block was created.</p>",
         "CapacityBlockExtension$CapacityBlockExtensionPurchaseDate": "<p>The date when the Capacity Block extension was purchased.</p>",
         "CapacityBlockExtension$CapacityBlockExtensionStartDate": "<p>The start date of the Capacity Block extension.</p>",
         "CapacityBlockExtension$CapacityBlockExtensionEndDate": "<p>The end date of the Capacity Block extension.</p>",
@@ -21845,6 +21961,9 @@
         "CancelSpotFleetRequestsErrorItem$SpotFleetRequestId": "<p>The ID of the Spot Fleet request.</p>",
         "CancelSpotFleetRequestsSuccessItem$SpotFleetRequestId": "<p>The ID of the Spot Fleet request.</p>",
         "CancelledSpotInstanceRequest$SpotInstanceRequestId": "<p>The ID of the Spot Instance request.</p>",
+        "CapacityBlock$UltraserverType": "<p>The EC2 UltraServer type of the Capacity Block.</p>",
+        "CapacityBlock$AvailabilityZone": "<p>The Availability Zone of the Capacity Block.</p>",
+        "CapacityBlock$AvailabilityZoneId": "<p>The Availability Zone ID of the Capacity Block.</p>",
         "CapacityBlockExtension$InstanceType": "<p>The instance type of the Capacity Block extension.</p>",
         "CapacityBlockExtension$UpfrontFee": "<p>The total price to be paid up front.</p>",
         "CapacityBlockExtension$CurrencyCode": "<p>The currency of the payment for the Capacity Block extension.</p>",
@@ -21855,6 +21974,7 @@
         "CapacityBlockOffering$AvailabilityZone": "<p>The Availability Zone of the Capacity Block offering.</p>",
         "CapacityBlockOffering$UpfrontFee": "<p>The total price to be paid up front.</p>",
         "CapacityBlockOffering$CurrencyCode": "<p>The currency of the payment for the Capacity Block.</p>",
+        "CapacityBlockOffering$UltraserverType": "<p>The EC2 UltraServer type of the Capacity Block offering.</p>",
         "CapacityReservation$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "CapacityReservation$OwnerId": "<p>The ID of the Amazon Web Services account that owns the Capacity Reservation.</p>",
         "CapacityReservation$CapacityReservationArn": "<p>The Amazon Resource Name (ARN) of the Capacity Reservation.</p>",
@@ -22218,7 +22338,12 @@
         "DescribeCapacityBlockExtensionOfferingsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeCapacityBlockOfferingsRequest$InstanceType": "<p>The type of instance for which the Capacity Block offering reserves capacity.</p>",
         "DescribeCapacityBlockOfferingsRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeCapacityBlockOfferingsRequest$UltraserverType": "<p>The EC2 UltraServer type of the Capacity Block offerings.</p>",
         "DescribeCapacityBlockOfferingsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeCapacityBlockStatusRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeCapacityBlockStatusResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "DescribeCapacityBlocksRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
+        "DescribeCapacityBlocksResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeCapacityReservationBillingRequestsRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
         "DescribeCapacityReservationBillingRequestsResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "DescribeCapacityReservationFleetsRequest$NextToken": "<p>The token to use to retrieve the next page of results.</p>",
@@ -22477,11 +22602,11 @@
         "DnsEntry$HostedZoneId": "<p>The ID of the private hosted zone.</p>",
         "EbsBlockDevice$KmsKeyId": "<p>Identifier (key ID, key alias, key ARN, or alias ARN) of the customer managed KMS key to use for EBS encryption.</p> <p>This parameter is only supported on <code>BlockDeviceMapping</code> objects called by <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html\">RequestSpotFleet</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html\">RequestSpotInstances</a>.</p>",
         "EbsBlockDevice$OutpostArn": "<p>The ARN of the Outpost on which the snapshot is stored.</p> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>.</p>",
-        "EbsBlockDevice$AvailabilityZone": "<p>The Availability Zone where the EBS volume will be created (for example, <code>us-east-1a</code>).</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both. If neither is specified, Amazon EC2 automatically selects an Availability Zone within the Region.</p> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>.</p>",
-        "EbsBlockDevice$AvailabilityZoneId": "<p>The ID of the Availability Zone where the EBS volume will be created (for example, <code>use1-az1</code>).</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both. If neither is specified, Amazon EC2 automatically selects an Availability Zone within the Region.</p> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>.</p>",
+        "EbsBlockDevice$AvailabilityZone": "<p>The Availability Zone where the EBS volume will be created (for example, <code>us-east-1a</code>).</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both. If neither is specified, Amazon EC2 automatically selects an Availability Zone within the Region.</p> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html\">DescribeImages</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a>.</p>",
+        "EbsBlockDevice$AvailabilityZoneId": "<p>The ID of the Availability Zone where the EBS volume will be created (for example, <code>use1-az1</code>).</p> <p>Either <code>AvailabilityZone</code> or <code>AvailabilityZoneId</code> can be specified, but not both. If neither is specified, Amazon EC2 automatically selects an Availability Zone within the Region.</p> <p>This parameter is not supported when using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>, <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeImages.html\">DescribeImages</a>, and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html\">RunInstances</a>.</p>",
         "EbsInstanceBlockDevice$VolumeId": "<p>The ID of the EBS volume.</p>",
-        "EbsInstanceBlockDevice$AssociatedResource": "<p>The ARN of the Amazon ECS or Fargate task to which the volume is attached.</p>",
-        "EbsInstanceBlockDevice$VolumeOwnerId": "<p>The ID of the Amazon Web Services account that owns the volume.</p> <p>This parameter is returned only for volumes that are attached to Fargate tasks.</p>",
+        "EbsInstanceBlockDevice$AssociatedResource": "<p>The ARN of the Amazon Web Services-managed resource to which the volume is attached.</p>",
+        "EbsInstanceBlockDevice$VolumeOwnerId": "<p>The ID of the Amazon Web Services account that owns the volume.</p> <p>This parameter is returned only for volumes that are attached to Amazon Web Services-managed resources.</p>",
         "Ec2InstanceConnectEndpoint$OwnerId": "<p>The ID of the Amazon Web Services account that created the EC2 Instance Connect Endpoint.</p>",
         "Ec2InstanceConnectEndpoint$StateMessage": "<p>The message for the current state of the EC2 Instance Connect Endpoint. Can include a failure message.</p>",
         "Ec2InstanceConnectEndpoint$DnsName": "<p>The DNS name of the EC2 Instance Connect Endpoint.</p>",
@@ -22807,6 +22932,7 @@
         "Instance$RootDeviceName": "<p>The device name of the root device volume (for example, <code>/dev/sda1</code>).</p>",
         "Instance$SpotInstanceRequestId": "<p>If the request is a Spot Instance request, the ID of the request.</p>",
         "Instance$SriovNetSupport": "<p>Specifies whether enhanced networking with the Intel 82599 Virtual Function interface is enabled.</p>",
+        "Instance$CapacityBlockId": "<p>The ID of the Capacity Block.</p> <note> <p>For P5 instances, a Capacity Block ID refers to a group of instances. For Trn2u instances, a capacity block ID refers to an EC2 UltraServer.</p> </note>",
         "Instance$CapacityReservationId": "<p>The ID of the Capacity Reservation.</p>",
         "Instance$PlatformDetails": "<p>The platform details value for the instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/billing-info-fields.html\">AMI billing information fields</a> in the <i>Amazon EC2 User Guide</i>.</p>",
         "Instance$UsageOperation": "<p>The usage operation value for the instance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/billing-info-fields.html\">AMI billing information fields</a> in the <i>Amazon EC2 User Guide</i>.</p>",
@@ -22877,6 +23003,7 @@
         "InstanceTopology$GroupName": "<p>The name of the placement group that the instance is in.</p>",
         "InstanceTopology$AvailabilityZone": "<p>The name of the Availability Zone or Local Zone that the instance is in.</p>",
         "InstanceTopology$ZoneId": "<p>The ID of the Availability Zone or Local Zone that the instance is in.</p>",
+        "InstanceTopology$CapacityBlockId": "<p>The ID of the Capacity Block. This parameter is only supported for Ultraserver instances and identifies instances within the Ultraserver domain.</p>",
         "InstanceTypeInfoFromInstanceRequirements$InstanceType": "<p>The matching instance type.</p>",
         "InstanceTypes$member": null,
         "InstanceTypesList$member": null,
@@ -23912,11 +24039,11 @@
         "Volume$SnapshotId": "<p>The snapshot from which the volume was created, if applicable.</p>",
         "Volume$AvailabilityZone": "<p>The Availability Zone for the volume.</p>",
         "Volume$KmsKeyId": "<p>The Amazon Resource Name (ARN) of the KMS key that was used to protect the volume encryption key for the volume.</p>",
-        "VolumeAttachment$AssociatedResource": "<p>The ARN of the Amazon ECS or Fargate task to which the volume is attached.</p>",
-        "VolumeAttachment$InstanceOwningService": "<p>The service principal of Amazon Web Services service that owns the underlying instance to which the volume is attached.</p> <p>This parameter is returned only for volumes that are attached to Fargate tasks.</p>",
+        "VolumeAttachment$AssociatedResource": "<p>The ARN of the Amazon Web Services-managed resource to which the volume is attached.</p>",
+        "VolumeAttachment$InstanceOwningService": "<p>The service principal of the Amazon Web Services service that owns the underlying resource to which the volume is attached.</p> <p>This parameter is returned only for volumes that are attached to Amazon Web Services-managed resources.</p>",
         "VolumeAttachment$VolumeId": "<p>The ID of the volume.</p>",
-        "VolumeAttachment$InstanceId": "<p>The ID of the instance.</p> <p>If the volume is attached to a Fargate task, this parameter returns <code>null</code>.</p>",
-        "VolumeAttachment$Device": "<p>The device name.</p> <p>If the volume is attached to a Fargate task, this parameter returns <code>null</code>.</p>",
+        "VolumeAttachment$InstanceId": "<p>The ID of the instance.</p> <p>If the volume is attached to an Amazon Web Services-managed resource, this parameter returns <code>null</code>.</p>",
+        "VolumeAttachment$Device": "<p>The device name.</p> <p>If the volume is attached to an Amazon Web Services-managed resource, this parameter returns <code>null</code>.</p>",
         "VolumeModification$VolumeId": "<p>The ID of the volume.</p>",
         "VolumeModification$StatusMessage": "<p>A status message about the modification progress or failure.</p>",
         "VolumeStatusAction$Code": "<p>The code identifying the operation, for example, <code>enable-volume-io</code>.</p>",
@@ -24299,6 +24426,7 @@
       "refs": {
         "Address$Tags": "<p>Any tags assigned to the Elastic IP address.</p>",
         "AllowedPrincipal$Tags": "<p>The tags.</p>",
+        "CapacityBlock$Tags": "<p>The tags assigned to the Capacity Block.</p>",
         "CapacityReservation$Tags": "<p>Any tags assigned to the Capacity Reservation.</p>",
         "CapacityReservationFleet$Tags": "<p>The tags assigned to the Capacity Reservation Fleet.</p>",
         "CarrierGateway$Tags": "<p>The tags assigned to the carrier gateway.</p>",

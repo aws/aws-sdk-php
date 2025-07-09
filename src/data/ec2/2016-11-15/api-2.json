@@ -2266,6 +2266,24 @@
       "input":{"shape":"DescribeCapacityBlockOfferingsRequest"},
       "output":{"shape":"DescribeCapacityBlockOfferingsResult"}
     },
+    "DescribeCapacityBlockStatus":{
+      "name":"DescribeCapacityBlockStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityBlockStatusRequest"},
+      "output":{"shape":"DescribeCapacityBlockStatusResult"}
+    },
+    "DescribeCapacityBlocks":{
+      "name":"DescribeCapacityBlocks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCapacityBlocksRequest"},
+      "output":{"shape":"DescribeCapacityBlocksResult"}
+    },
     "DescribeCapacityReservationBillingRequests":{
       "name":"DescribeCapacityReservationBillingRequests",
       "http":{
@@ -9563,6 +9581,51 @@
         "locationName":"item"
       }
     },
+    "CapacityBlock":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockId":{
+          "shape":"CapacityBlockId",
+          "locationName":"capacityBlockId"
+        },
+        "UltraserverType":{
+          "shape":"String",
+          "locationName":"ultraserverType"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
+        "CapacityReservationIds":{
+          "shape":"CapacityReservationIdSet",
+          "locationName":"capacityReservationIdSet"
+        },
+        "StartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startDate"
+        },
+        "EndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"endDate"
+        },
+        "CreateDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"createDate"
+        },
+        "State":{
+          "shape":"CapacityBlockResourceState",
+          "locationName":"state"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
     "CapacityBlockExtension":{
       "type":"structure",
       "members":{
@@ -9695,6 +9758,22 @@
         "payment-succeeded"
       ]
     },
+    "CapacityBlockId":{"type":"string"},
+    "CapacityBlockIds":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityBlockId",
+        "locationName":"item"
+      }
+    },
+    "CapacityBlockInterconnectStatus":{
+      "type":"string",
+      "enum":[
+        "ok",
+        "impaired",
+        "insufficient-data"
+      ]
+    },
     "CapacityBlockOffering":{
       "type":"structure",
       "members":{
@@ -9738,6 +9817,14 @@
           "shape":"CapacityReservationTenancy",
           "locationName":"tenancy"
         },
+        "UltraserverType":{
+          "shape":"String",
+          "locationName":"ultraserverType"
+        },
+        "UltraserverCount":{
+          "shape":"BoxedInteger",
+          "locationName":"ultraserverCount"
+        },
         "CapacityBlockDurationMinutes":{
           "shape":"Integer",
           "locationName":"capacityBlockDurationMinutes"
@@ -9748,6 +9835,62 @@
       "type":"list",
       "member":{
         "shape":"CapacityBlockOffering",
+        "locationName":"item"
+      }
+    },
+    "CapacityBlockResourceState":{
+      "type":"string",
+      "enum":[
+        "active",
+        "expired",
+        "unavailable",
+        "cancelled",
+        "failed",
+        "scheduled",
+        "payment-pending",
+        "payment-failed"
+      ]
+    },
+    "CapacityBlockSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityBlock",
+        "locationName":"item"
+      }
+    },
+    "CapacityBlockStatus":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockId":{
+          "shape":"CapacityBlockId",
+          "locationName":"capacityBlockId"
+        },
+        "InterconnectStatus":{
+          "shape":"CapacityBlockInterconnectStatus",
+          "locationName":"interconnectStatus"
+        },
+        "TotalCapacity":{
+          "shape":"Integer",
+          "locationName":"totalCapacity"
+        },
+        "TotalAvailableCapacity":{
+          "shape":"Integer",
+          "locationName":"totalAvailableCapacity"
+        },
+        "TotalUnavailableCapacity":{
+          "shape":"Integer",
+          "locationName":"totalUnavailableCapacity"
+        },
+        "CapacityReservationStatuses":{
+          "shape":"CapacityReservationStatusSet",
+          "locationName":"capacityReservationStatusSet"
+        }
+      }
+    },
+    "CapacityBlockStatusSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityBlockStatus",
         "locationName":"item"
       }
     },
@@ -9861,6 +10004,10 @@
         "DeliveryPreference":{
           "shape":"CapacityReservationDeliveryPreference",
           "locationName":"deliveryPreference"
+        },
+        "CapacityBlockId":{
+          "shape":"CapacityBlockId",
+          "locationName":"capacityBlockId"
         }
       }
     },
@@ -10181,8 +10328,37 @@
         "payment-failed",
         "assessing",
         "delayed",
-        "unsupported"
+        "unsupported",
+        "unavailable"
       ]
+    },
+    "CapacityReservationStatus":{
+      "type":"structure",
+      "members":{
+        "CapacityReservationId":{
+          "shape":"CapacityReservationId",
+          "locationName":"capacityReservationId"
+        },
+        "TotalCapacity":{
+          "shape":"Integer",
+          "locationName":"totalCapacity"
+        },
+        "TotalAvailableCapacity":{
+          "shape":"Integer",
+          "locationName":"totalAvailableCapacity"
+        },
+        "TotalUnavailableCapacity":{
+          "shape":"Integer",
+          "locationName":"totalUnavailableCapacity"
+        }
+      }
+    },
+    "CapacityReservationStatusSet":{
+      "type":"list",
+      "member":{
+        "shape":"CapacityReservationStatus",
+        "locationName":"item"
+      }
     },
     "CapacityReservationTarget":{
       "type":"structure",
@@ -16865,7 +17041,9 @@
         "EndDateRange":{"shape":"MillisecondDateTime"},
         "CapacityDurationHours":{"shape":"Integer"},
         "NextToken":{"shape":"String"},
-        "MaxResults":{"shape":"DescribeCapacityBlockOfferingsMaxResults"}
+        "MaxResults":{"shape":"DescribeCapacityBlockOfferingsMaxResults"},
+        "UltraserverType":{"shape":"String"},
+        "UltraserverCount":{"shape":"Integer"}
       }
     },
     "DescribeCapacityBlockOfferingsResult":{
@@ -16874,6 +17052,74 @@
         "CapacityBlockOfferings":{
           "shape":"CapacityBlockOfferingSet",
           "locationName":"capacityBlockOfferingSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeCapacityBlockStatusMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "DescribeCapacityBlockStatusRequest":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockIds":{
+          "shape":"CapacityBlockIds",
+          "locationName":"CapacityBlockId"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeCapacityBlockStatusMaxResults"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeCapacityBlockStatusResult":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockStatuses":{
+          "shape":"CapacityBlockStatusSet",
+          "locationName":"capacityBlockStatusSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeCapacityBlocksMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "DescribeCapacityBlocksRequest":{
+      "type":"structure",
+      "members":{
+        "CapacityBlockIds":{
+          "shape":"CapacityBlockIds",
+          "locationName":"CapacityBlockId"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeCapacityBlocksMaxResults"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeCapacityBlocksResult":{
+      "type":"structure",
+      "members":{
+        "CapacityBlocks":{
+          "shape":"CapacityBlockSet",
+          "locationName":"capacityBlockSet"
         },
         "NextToken":{
           "shape":"String",
@@ -29286,6 +29532,10 @@
           "shape":"CpuOptions",
           "locationName":"cpuOptions"
         },
+        "CapacityBlockId":{
+          "shape":"String",
+          "locationName":"capacityBlockId"
+        },
         "CapacityReservationId":{
           "shape":"String",
           "locationName":"capacityReservationId"
@@ -30968,6 +31218,10 @@
         "ZoneId":{
           "shape":"String",
           "locationName":"zoneId"
+        },
+        "CapacityBlockId":{
+          "shape":"String",
+          "locationName":"capacityBlockId"
         }
       }
     },
@@ -41296,6 +41550,10 @@
         "CapacityReservation":{
           "shape":"CapacityReservation",
           "locationName":"capacityReservation"
+        },
+        "CapacityBlocks":{
+          "shape":"CapacityBlockSet",
+          "locationName":"capacityBlockSet"
         }
       }
     },
@@ -43359,6 +43617,7 @@
         "instance-connect-endpoint",
         "verified-access-endpoint-target",
         "ipam-external-resource-verification-token",
+        "capacity-block",
         "mac-modification-task"
       ]
     },
