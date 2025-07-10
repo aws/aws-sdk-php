@@ -8,7 +8,11 @@ use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResponse;
 use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Models\MultipartUploaderConfig;
+use Aws\S3\S3Transfer\Models\PutObjectResponse;
+use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResponse;
+use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Models\UploadResponse;
 use Aws\S3\S3Transfer\Progress\MultiProgressTracker;
 use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
@@ -20,59 +24,30 @@ use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use function Aws\filter;
 use function Aws\map;
 
 class S3TransferManager
 {
-    private static array $defaultConfig = [
-        'target_part_size_bytes' => 8 * 1024 * 1024,
-        'multipart_upload_threshold_bytes' => 16 * 1024 * 1024,
-        'checksum_validation_enabled' => true,
-        'checksum_algorithm' => 'crc32',
-        'multipart_download_type' => 'partGet',
-        'concurrency' => 5,
-        'track_progress' => false,
-        'region' => 'us-east-1',
-    ];
-
     /** @var S3Client  */
     private S3ClientInterface $s3Client;
 
-    /** @var array  */
-    private array $config;
+    /** @var S3TransferManagerConfig  */
+    private S3TransferManagerConfig $config;
 
     /**
      * @param S3ClientInterface | null $s3Client If provided as null then,
      * a default client will be created where its region will be the one
      * resolved from either the default from the config or the provided.
-     * @param array $config
-     * - target_part_size_bytes: (int, default=(8388608 `8MB`))
-     *   The minimum part size to be used in a multipart upload/download.
-     * - multipart_upload_threshold_bytes: (int, default=(16777216 `16 MB`))
-     *   The threshold to decided whether a multipart upload is needed.
-     * - checksum_validation_enabled: (bool, default=true)
-     *   To decide whether a checksum validation will be applied to the response.
-     * - checksum_algorithm: (string, default='crc32')
-     *   The checksum algorithm to be used in an upload request.
-     * - multipart_download_type: (string, default='partGet')
-     *   The download type to be used in a multipart download.
-     * - concurrency: (int, default=5)
-     *   Maximum number of concurrent operations allowed during a multipart
-     *   upload/download.
-     * - track_progress: (bool, default=false)
-     *   To enable progress tracker in a multipart upload/download, and or
-     *   a directory upload/download operation.
-     * - region: (string, default="us-east-2")
+     * @param S3TransferManagerConfig|null $config
      */
     public function __construct(
         ?S3ClientInterface $s3Client = null,
-        array $config = []
+        ?S3TransferManagerConfig $config = null
     ) {
-        $this->config =  [
-            ...self::$defaultConfig,
-            ...$config,
-        ];
+        $this->config = $config ?? S3TransferManagerConfig::fromArray([]);
         if ($s3Client === null) {
             $this->s3Client = $this->defaultS3Client();
         } else {
@@ -89,99 +64,64 @@ class S3TransferManager
     }
 
     /**
-     * @return array
+     * @return S3TransferManagerConfig
      */
-    public function getConfig(): array
+    public function getConfig(): S3TransferManagerConfig
     {
         return $this->config;
     }
 
     /**
-     * @param string|StreamInterface $source
-     * @param array $requestArgs The putObject request arguments.
-     * Required parameters would be:
-     * - Bucket: (string, required)
-     * - Key: (string, required)
-     * @param array $config The config options for this upload operation.
-     * - multipart_upload_threshold_bytes: (int, optional)
-     *   To override the default threshold for when to use multipart upload.
-     * - part_size: (int, optional) To override the default
-     *   target part size in bytes.
-     * - track_progress: (bool, optional) To override the default option for
-     *   enabling progress tracking. If this option is resolved as true and
-     *   a progressTracker parameter is not provided then, a default implementation
-     *   will be resolved. This option is intended to make the operation to use
-     *   a default progress tracker implementation when $progressTracker is null.
-     * - checksum_algorithm: (bool, optional) To override the default
-     *   checksum algorithm.
-     * @param TransferListener[]|null $listeners
-     * @param TransferListener|null $progressTracker
+     * @param UploadRequest $uploadRequest
      *
      * @return PromiseInterface
      */
-    public function upload(
-        string | StreamInterface $source,
-        array $requestArgs = [],
-        array $config = [],
-        array $listeners = [],
-        ?TransferListener $progressTracker = null,
-    ): PromiseInterface
+    public function upload(UploadRequest $uploadRequest): PromiseInterface
     {
         // Make sure it is a valid in path in case of a string
-        if (is_string($source) && !is_readable($source)) {
-            throw new InvalidArgumentException(
-                "Please provide a valid readable file path or a valid stream as source."
-            );
-        }
+        $uploadRequest->validateSource();
+
         // Valid required parameters
-        foreach (['Bucket', 'Key'] as $reqParam) {
-            $this->requireNonEmpty(
-                $requestArgs,
-                $reqParam,
-                "The `$reqParam` parameter must be provided as part of the request arguments."
-            );
-        }
+        $uploadRequest->validateRequiredParameters();
 
-        $mupThreshold = $config['multipart_upload_threshold_bytes']
-            ?? $this->config['multipart_upload_threshold_bytes'];
-        if ($mupThreshold < MultipartUploader::PART_MIN_SIZE) {
-            throw new InvalidArgumentException(
-                "The provided config `multipart_upload_threshold_bytes`"
-                ."must be greater than or equal to " . MultipartUploader::PART_MIN_SIZE
-            );
-        }
+        $config = $uploadRequest->getConfig();
 
-        if (!isset($requestArgs['ChecksumAlgorithm'])) {
-            $algorithm = $config['checksum_algorithm']
-                ?? $this->config['checksum_algorithm'];
-            $requestArgs['ChecksumAlgorithm'] = strtoupper($algorithm);
-        }
-
+        // Validate progress tracker
+        $progressTracker = $uploadRequest->getProgressTracker();
         if ($progressTracker === null
-            && ($config['track_progress'] ?? $this->config['track_progress'])) {
+            && ($config->getTrackProgress()
+                ?? $this->config->isTrackProgress())) {
             $progressTracker = new SingleProgressTracker();
         }
 
+        // Append progress tracker to listeners if not null
+        $listeners = $uploadRequest->getListeners();
         if ($progressTracker !== null) {
             $listeners[] = $progressTracker;
         }
 
         $listenerNotifier = new TransferListenerNotifier($listeners);
-        if ($this->requiresMultipartUpload($source, $mupThreshold)) {
+
+        // Validate multipart upload threshold
+        $mupThreshold = $config->getMultipartUploadThresholdBytes()
+            ?? $this->config->getMultipartUploadThresholdBytes();
+        if ($mupThreshold < AbstractMultipartUploader::PART_MIN_SIZE) {
+            throw new InvalidArgumentException(
+                "The provided config `multipart_upload_threshold_bytes`"
+                ."must be greater than or equal to " . AbstractMultipartUploader::PART_MIN_SIZE
+            );
+        }
+
+        if ($this->requiresMultipartUpload($uploadRequest->getSource(), $mupThreshold)) {
             return $this->tryMultipartUpload(
-                $source,
-                $requestArgs,
-                [
-                    'part_size' => $config['part_size'] ?? $this->config['target_part_size_bytes'],
-                    'concurrency' => $this->config['concurrency'],
-                ],
+                $uploadRequest,
                 $listenerNotifier
             );
         }
 
         return $this->trySingleUpload(
-            $source,
-            $requestArgs,
+            $uploadRequest->getSource(),
+            $uploadRequest->getPutObjectRequest()->toSingleObjectRequest(),
             $listenerNotifier
         );
     }
@@ -275,14 +215,14 @@ class S3TransferManager
             $failurePolicyCallback = $config['failure_policy'];
         }
 
-        $dirIterator = new \RecursiveDirectoryIterator($sourceDirectory);
+        $dirIterator = new RecursiveDirectoryIterator($sourceDirectory);
         $dirIterator->setFlags(FilesystemIterator::SKIP_DOTS);
         if (($config['follow_symbolic_links'] ?? false) === true) {
             $dirIterator->setFlags(FilesystemIterator::FOLLOW_SYMLINKS);
         }
 
         if (($config['recursive'] ?? false) === true) {
-            $dirIterator = new \RecursiveIteratorIterator($dirIterator);
+            $dirIterator = new RecursiveIteratorIterator($dirIterator);
         }
 
         $files = filter(
@@ -839,7 +779,11 @@ class S3TransferManager
                         ]
                     );
 
-                    return new UploadResponse($result->toArray());
+                    return new UploadResponse(
+                        PutObjectResponse::fromArray(
+                            $result->toArray()
+                        )->toSingleUploadResponse()
+                    );
                 }
             )->otherwise(function ($reason) use ($objectSize, $requestArgs, $listenerNotifier) {
                 $listenerNotifier->transferFail(
@@ -867,25 +811,22 @@ class S3TransferManager
     }
 
     /**
-     * @param string|StreamInterface $source
-     * @param array $requestArgs
-     * @param array $config
+     * @param UploadRequest $uploadRequest
      * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
      */
     private function tryMultipartUpload(
-        string | StreamInterface $source,
-        array $requestArgs,
-        array $config = [],
+        UploadRequest $uploadRequest,
         ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface {
-        $createMultipartArgs = [...$requestArgs];
         return (new MultipartUploader(
             $this->s3Client,
-            $createMultipartArgs,
-            $config,
-            $source,
+            $uploadRequest->getPutObjectRequest(),
+            MultipartUploaderConfig::fromArray(
+                $uploadRequest->getConfig()->toArray()
+            ),
+            $uploadRequest->getSource(),
             listenerNotifier: $listenerNotifier,
         ))->promise();
     }

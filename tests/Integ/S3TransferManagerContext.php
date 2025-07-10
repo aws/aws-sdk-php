@@ -4,6 +4,8 @@ namespace Aws\Test\Integ;
 
 use Aws\S3\ApplyChecksumMiddleware;
 use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
+use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\S3TransferManager;
@@ -93,11 +95,13 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             self::getSdk()->createS3()
         );
         $s3TransferManager->upload(
-            $fullFilePath,
-            [
-                'Bucket' => self::getResourceName(),
-                'Key' => $filename,
-            ]
+            UploadRequest::fromLegacyArgs(
+                $fullFilePath,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $filename,
+                ]
+            )
         )->wait();
     }
 
@@ -133,11 +137,13 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             self::getSdk()->createS3()
         );
         $s3TransferManager->upload(
-            $this->stream,
-            [
-                'Bucket' => self::getResourceName(),
-                'Key' => $key,
-            ]
+            UploadRequest::fromLegacyArgs(
+                $this->stream,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $key,
+                ]
+            )
         )->wait();
     }
 
@@ -173,19 +179,21 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $filename;
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3(),
-            [
+            S3TransferManagerConfig::fromArray([
                 'multipart_upload_threshold_bytes' => $partsize,
-            ]
+            ])
         );
         $s3TransferManager->upload(
-            $fullFilePath,
-            [
-                'Bucket' => self::getResourceName(),
-                'Key' => $filename,
-            ],
-            [
-                'part_size' => intval($partsize),
-            ]
+            UploadRequest::fromLegacyArgs(
+                $fullFilePath,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $filename,
+                ],
+                [
+                    'part_size' => intval($partsize),
+                ]
+            )
         )->wait();
     }
 
@@ -204,19 +212,21 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
     {
         $s3TransferManager = new S3TransferManager(
             self::getSdk()->createS3(),
-            [
+            S3TransferManagerConfig::fromArray([
                 'multipart_upload_threshold_bytes' => $partsize,
-            ]
+            ])
         );
         $s3TransferManager->upload(
-            $this->stream,
-            [
-                'Bucket' => self::getResourceName(),
-                'Key' => $filename,
-            ],
-            [
-                'part_size' => intval($partsize),
-            ]
+            UploadRequest::fromLegacyArgs(
+                $this->stream,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $filename,
+                ],
+                [
+                    'part_size' => intval($partsize),
+                ]
+            )
         )->wait();
     }
 
@@ -268,14 +278,16 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
             self::getSdk()->createS3(),
         );
         $s3TransferManager->upload(
-            $fullFilePath,
-            [
-                'Bucket' => self::getResourceName(),
-                'Key' => $filename,
-            ],
-            [
-                'checksum_algorithm' => $checksum_algorithm,
-            ]
+            UploadRequest::fromLegacyArgs(
+                $fullFilePath,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $filename,
+                ],
+                [
+                    'checksum_algorithm' => $checksum_algorithm,
+                ]
+            )
         )->wait();
     }
 
@@ -450,11 +462,13 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         );
         for ($i = 0; $i < $numfile - 1; $i++) {
             $s3TransferManager->upload(
-                Utils::streamFor("This is a test file content #" . ($i + 1)),
-                [
-                    'Bucket' => self::getResourceName(),
-                    'Key' => $directory . DIRECTORY_SEPARATOR . "file" . ($i + 1) . ".txt",
-                ]
+                UploadRequest::fromLegacyArgs(
+                    Utils::streamFor("This is a test file content #" . ($i + 1)),
+                    [
+                        'Bucket' => self::getResourceName(),
+                        'Key' => $directory . DIRECTORY_SEPARATOR . "file" . ($i + 1) . ".txt",
+                    ]
+                )
             )->wait();
         }
     }
@@ -550,16 +564,18 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $transferListener2->expects($testCase->once())->method('transferFail');
 
         $s3TransferManager->upload(
-            $fullFilePath,
-            [
-                'Bucket' => self::getResourceName(),
-                'Key' => $file,
-            ],
-            [],
-            [
-                $transferListener,
-                $transferListener2
-            ]
+            UploadRequest::fromLegacyArgs(
+                $fullFilePath,
+                [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $file,
+                ],
+                [],
+                [
+                    $transferListener,
+                    $transferListener2
+                ]
+            )
         )->wait();
     }
 
