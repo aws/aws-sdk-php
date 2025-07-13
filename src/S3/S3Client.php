@@ -422,6 +422,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         $this->addBuiltIns($args);
         parent::__construct($args);
         $stack = $this->getHandlerList();
+        $config = $this->getConfig();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
         $stack->appendBuild(
             ApplyChecksumMiddleware::wrap($this->getApi(), $this->getConfig()),
@@ -433,7 +434,9 @@ class S3Client extends AwsClient implements S3ClientInterface
         );
 
         if ($this->getConfig('bucket_endpoint')) {
-            $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
+            $stack->appendBuild(BucketEndpointMiddleware::wrap(
+                $this->isUseEndpointV2(), $args['endpoint'] ?? null), 's3.bucket_endpoint'
+            );
         } elseif (!$this->isUseEndpointV2()) {
             $stack->appendBuild(
                 S3EndpointMiddleware::wrap(
@@ -916,6 +919,10 @@ class S3Client extends AwsClient implements S3ClientInterface
                         $requestUri = str_replace('/{Bucket}', '/', $requestUri);
                     } else {
                         $requestUri = str_replace('/{Bucket}', '', $requestUri);
+                        // If we're left with just a query string, prepend '/'
+                        if (strpos($requestUri, '?') === 0) {
+                            $requestUri = '/' . $requestUri;
+                        }
                     }
                     $operation['http']['requestUri'] = $requestUri;
                 }

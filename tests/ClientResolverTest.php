@@ -1510,7 +1510,6 @@ EOF;
             }
         } finally {
             unlink($configFile);
-            rmdir($awsDir);
             if ($currentEnvConfigFile) {
                 putenv(
                     ConfigurationResolver::ENV_CONFIG_FILE
