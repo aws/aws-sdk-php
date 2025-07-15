@@ -2,6 +2,8 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
+use function Aws\remove_nulls_from_array;
+
 class PutObjectResponse
 {
     /** @var bool|null */
@@ -91,6 +93,35 @@ class PutObjectResponse
         $this->serverSideEncryption = $serverSideEncryption;
         $this->size = $size;
         $this->versionId = $versionId;
+    }
+
+    /**
+     * Create an instance from an array of data
+     *
+     * @param array $data
+     * @return self
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['BucketKeyEnabled'] ?? null,
+            $data['ChecksumCRC32'] ?? null,
+            $data['ChecksumCRC32C'] ?? null,
+            $data['ChecksumCRC64NVME'] ?? null,
+            $data['ChecksumSHA1'] ?? null,
+            $data['ChecksumSHA256'] ?? null,
+            $data['ChecksumType'] ?? null,
+            $data['ETag'] ?? null,
+            $data['Expiration'] ?? null,
+            $data['RequestCharged'] ?? null,
+            $data['SSECustomerAlgorithm'] ?? null,
+            $data['SSECustomerKeyMD5'] ?? null,
+            $data['SSEKMSEncryptionContext'] ?? null,
+            $data['SSEKMSKeyId'] ?? null,
+            $data['ServerSideEncryption'] ?? null,
+            $data['Size'] ?? null,
+            $data['VersionId'] ?? null
+        );
     }
 
     /**
@@ -235,7 +266,7 @@ class PutObjectResponse
      * @return array Array containing AWS S3 response fields with their corresponding values
      */
     public function toMultipartUploadResponse(): array {
-        return [
+        $array = [
             'BucketKeyEnabled' => $this->bucketKeyEnabled,
             'ChecksumCRC32' => $this->checksumCRC32,
             'ChecksumCRC32C' => $this->checksumCRC32C,
@@ -250,6 +281,10 @@ class PutObjectResponse
             'ServerSideEncryption' => $this->serverSideEncryption,
             'VersionId' => $this->versionId
         ];
+
+        remove_nulls_from_array($array);
+
+        return $array;
     }
 
     /**
@@ -258,7 +293,7 @@ class PutObjectResponse
      * @return array Array containing AWS S3 response fields with their corresponding values
      */
     public function toSingleUploadResponse(): array {
-        return [
+        $array = [
             'BucketKeyEnabled' => $this->bucketKeyEnabled,
             'ChecksumCRC32' => $this->checksumCRC32,
             'ChecksumCRC32C' => $this->checksumCRC32C,
@@ -277,34 +312,9 @@ class PutObjectResponse
             'Size' => $this->size,
             'VersionId' => $this->versionId
         ];
-    }
 
-    /**
-     * Create an instance from an array of data
-     *
-     * @param array $data
-     * @return self
-     */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            $data['BucketKeyEnabled'] ?? null,
-            $data['ChecksumCRC32'] ?? null,
-            $data['ChecksumCRC32C'] ?? null,
-            $data['ChecksumCRC64NVME'] ?? null,
-            $data['ChecksumSHA1'] ?? null,
-            $data['ChecksumSHA256'] ?? null,
-            $data['ChecksumType'] ?? null,
-            $data['ETag'] ?? null,
-            $data['Expiration'] ?? null,
-            $data['RequestCharged'] ?? null,
-            $data['SSECustomerAlgorithm'] ?? null,
-            $data['SSECustomerKeyMD5'] ?? null,
-            $data['SSEKMSEncryptionContext'] ?? null,
-            $data['SSEKMSKeyId'] ?? null,
-            $data['ServerSideEncryption'] ?? null,
-            $data['Size'] ?? null,
-            $data['VersionId'] ?? null
-        );
+        remove_nulls_from_array($array);
+
+        return $array;
     }
 }

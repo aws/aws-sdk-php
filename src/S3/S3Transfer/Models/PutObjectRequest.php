@@ -2,6 +2,8 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
+use function Aws\remove_nulls_from_array;
+
 class PutObjectRequest
 {
     /** @var string|null */
@@ -231,6 +233,54 @@ class PutObjectRequest
         $this->checksumSHA256 = $checksumSHA256;
         $this->ifMatch = $ifMatch;
         $this->ifNoneMatch = $ifNoneMatch;
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return PutObjectRequest
+     */
+    public static function fromArray(array $array): PutObjectRequest
+    {
+        return new self(
+        $array['ACL'] ?? null,
+        $array['Bucket'] ?? null,
+        $array['BucketKeyEnabled'] ?? null,
+        $array['CacheControl'] ?? null,
+        $array['ChecksumAlgorithm'] ?? null,
+        $array['ContentDisposition'] ?? null,
+        $array['ContentEncoding'] ?? null,
+        $array['ContentLanguage'] ?? null,
+        $array['ContentType'] ?? null,
+        $array['ExpectedBucketOwner'] ?? null,
+        $array['Expires'] ?? null,
+        $array['GrantFullControl'] ?? null,
+        $array['GrantRead'] ?? null,
+        $array['GrantReadACP'] ?? null,
+        $array['GrantWriteACP'] ?? null,
+        $array['Key'] ?? null,
+        $array['Metadata'] ?? null,
+        $array['ObjectLockLegalHoldStatus'] ?? null,
+        $array['ObjectLockMode'] ?? null,
+        $array['ObjectLockRetainUntilDate'] ?? null,
+        $array['RequestPayer'] ?? null,
+        $array['SSECustomerAlgorithm'] ?? null,
+        $array['SSECustomerKey'] ?? null,
+        $array['SSECustomerKeyMD5'] ?? null,
+        $array['SSEKMSEncryptionContext'] ?? null,
+        $array['SSEKMSKeyId'] ?? null,
+        $array['ServerSideEncryption'] ?? null,
+        $array['StorageClass'] ?? null,
+        $array['Tagging'] ?? null,
+        $array['WebsiteRedirectLocation'] ?? null,
+        $array['ChecksumCRC32'] ?? null,
+        $array['ChecksumCRC32C'] ?? null,
+        $array['ChecksumCRC64NVME'] ?? null,
+        $array['ChecksumSHA1'] ?? null,
+        $array['ChecksumSHA256'] ?? null,
+        $array['IfMatch'] ?? null,
+            $array['IfNoneMatch'] ?? null
+        );
     }
 
     /**
@@ -536,59 +586,23 @@ class PutObjectRequest
      */
     public function toSingleObjectRequest(): array
     {
-        $requestArgs = [];
+        $requestArgs = [
+            'Bucket' => $this->bucket,
+            'ChecksumAlgorithm' => $this->checksumAlgorithm,
+            'ChecksumCRC32' => $this->checksumCRC32,
+            'ChecksumCRC32C' => $this->checksumCRC32C,
+            'ChecksumCRC64NVME' => $this->checksumCRC64NVME,
+            'ChecksumSHA1' => $this->checksumSHA1,
+            'ChecksumSHA256' => $this->checksumSHA256,
+            'ExpectedBucketOwner' => $this->expectedBucketOwner,
+            'Key' => $this->key,
+            'RequestPayer' => $this->requestPayer,
+            'SSECustomerAlgorithm' => $this->sseCustomerAlgorithm,
+            'SSECustomerKey' => $this->sseCustomerKey,
+            'SSECustomerKeyMD5' => $this->sseCustomerKeyMD5,
+        ];
 
-        if ($this->bucket !== null) {
-            $requestArgs['Bucket'] = $this->bucket;
-        }
-
-        if ($this->checksumAlgorithm !== null) {
-            $requestArgs['ChecksumAlgorithm'] = $this->checksumAlgorithm;
-        }
-
-        if ($this->checksumCRC32 !== null) {
-            $requestArgs['ChecksumCRC32'] = $this->checksumCRC32;
-        }
-
-        if ($this->checksumCRC32C !== null) {
-            $requestArgs['ChecksumCRC32C'] = $this->checksumCRC32C;
-        }
-
-        if ($this->checksumCRC64NVME !== null) {
-            $requestArgs['ChecksumCRC64NVME'] = $this->checksumCRC64NVME;
-        }
-
-        if ($this->checksumSHA1 !== null) {
-            $requestArgs['ChecksumSHA1'] = $this->checksumSHA1;
-        }
-
-        if ($this->checksumSHA256 !== null) {
-            $requestArgs['ChecksumSHA256'] = $this->checksumSHA256;
-        }
-
-        if ($this->expectedBucketOwner !== null) {
-            $requestArgs['ExpectedBucketOwner'] = $this->expectedBucketOwner;
-        }
-
-        if ($this->key !== null) {
-            $requestArgs['Key'] = $this->key;
-        }
-
-        if ($this->requestPayer !== null) {
-            $requestArgs['RequestPayer'] = $this->requestPayer;
-        }
-
-        if ($this->sseCustomerAlgorithm !== null) {
-            $requestArgs['SSECustomerAlgorithm'] = $this->sseCustomerAlgorithm;
-        }
-
-        if ($this->sseCustomerKey !== null) {
-            $requestArgs['SSECustomerKey'] = $this->sseCustomerKey;
-        }
-
-        if ($this->sseCustomerKeyMD5 !== null) {
-            $requestArgs['SSECustomerKeyMD5'] = $this->sseCustomerKeyMD5;
-        }
+        remove_nulls_from_array($requestArgs);
 
         return $requestArgs;
     }
@@ -600,127 +614,40 @@ class PutObjectRequest
      */
     public function toCreateMultipartRequest(): array
     {
-        $requestArgs = [];
+        $requestArgs = [
+            'ACL' => $this->acl,
+            'Bucket' => $this->bucket,
+            'BucketKeyEnabled' => $this->bucketKeyEnabled,
+            'CacheControl' => $this->cacheControl,
+            'ChecksumAlgorithm' => $this->checksumAlgorithm,
+            'ContentDisposition' => $this->contentDisposition,
+            'ContentEncoding' => $this->contentEncoding,
+            'ContentLanguage' => $this->contentLanguage,
+            'ContentType' => $this->contentType,
+            'ExpectedBucketOwner' => $this->expectedBucketOwner,
+            'Expires' => $this->expires,
+            'GrantFullControl' => $this->grantFullControl,
+            'GrantRead' => $this->grantRead,
+            'GrantReadACP' => $this->grantReadACP,
+            'GrantWriteACP' => $this->grantWriteACP,
+            'Key' => $this->key,
+            'Metadata' => $this->metadata,
+            'ObjectLockLegalHoldStatus' => $this->objectLockLegalHoldStatus,
+            'ObjectLockMode' => $this->objectLockMode,
+            'ObjectLockRetainUntilDate' => $this->objectLockRetainUntilDate,
+            'RequestPayer' => $this->requestPayer,
+            'SSECustomerAlgorithm' => $this->sseCustomerAlgorithm,
+            'SSECustomerKey' => $this->sseCustomerKey,
+            'SSECustomerKeyMD5' => $this->sseCustomerKeyMD5,
+            'SSEKMSEncryptionContext' => $this->ssekmsEncryptionContext,
+            'SSEKMSKeyId' => $this->ssekmsKeyId,
+            'ServerSideEncryption' => $this->serverSideEncryption,
+            'StorageClass' => $this->storageClass,
+            'Tagging' => $this->tagging,
+            'WebsiteRedirectLocation' => $this->websiteRedirectLocation,
+        ];
 
-        if ($this->acl !== null) {
-            $requestArgs['ACL'] = $this->acl;
-        }
-
-        if ($this->bucket !== null) {
-            $requestArgs['Bucket'] = $this->bucket;
-        }
-
-        if ($this->bucketKeyEnabled !== null) {
-            $requestArgs['BucketKeyEnabled'] = $this->bucketKeyEnabled;
-        }
-
-        if ($this->cacheControl !== null) {
-            $requestArgs['CacheControl'] = $this->cacheControl;
-        }
-
-        if ($this->checksumAlgorithm !== null) {
-            $requestArgs['ChecksumAlgorithm'] = $this->checksumAlgorithm;
-        }
-
-        if ($this->contentDisposition !== null) {
-            $requestArgs['ContentDisposition'] = $this->contentDisposition;
-        }
-
-        if ($this->contentEncoding !== null) {
-            $requestArgs['ContentEncoding'] = $this->contentEncoding;
-        }
-
-        if ($this->contentLanguage !== null) {
-            $requestArgs['ContentLanguage'] = $this->contentLanguage;
-        }
-
-        if ($this->contentType !== null) {
-            $requestArgs['ContentType'] = $this->contentType;
-        }
-
-        if ($this->expectedBucketOwner !== null) {
-            $requestArgs['ExpectedBucketOwner'] = $this->expectedBucketOwner;
-        }
-
-        if ($this->expires !== null) {
-            $requestArgs['Expires'] = $this->expires;
-        }
-
-        if ($this->grantFullControl !== null) {
-            $requestArgs['GrantFullControl'] = $this->grantFullControl;
-        }
-
-        if ($this->grantRead !== null) {
-            $requestArgs['GrantRead'] = $this->grantRead;
-        }
-
-        if ($this->grantReadACP !== null) {
-            $requestArgs['GrantReadACP'] = $this->grantReadACP;
-        }
-
-        if ($this->grantWriteACP !== null) {
-            $requestArgs['GrantWriteACP'] = $this->grantWriteACP;
-        }
-
-        if ($this->key !== null) {
-            $requestArgs['Key'] = $this->key;
-        }
-
-        if ($this->metadata !== null) {
-            $requestArgs['Metadata'] = $this->metadata;
-        }
-
-        if ($this->objectLockLegalHoldStatus !== null) {
-            $requestArgs['ObjectLockLegalHoldStatus'] = $this->objectLockLegalHoldStatus;
-        }
-
-        if ($this->objectLockMode !== null) {
-            $requestArgs['ObjectLockMode'] = $this->objectLockMode;
-        }
-
-        if ($this->objectLockRetainUntilDate !== null) {
-            $requestArgs['ObjectLockRetainUntilDate'] = $this->objectLockRetainUntilDate;
-        }
-
-        if ($this->requestPayer !== null) {
-            $requestArgs['RequestPayer'] = $this->requestPayer;
-        }
-
-        if ($this->sseCustomerAlgorithm !== null) {
-            $requestArgs['SSECustomerAlgorithm'] = $this->sseCustomerAlgorithm;
-        }
-
-        if ($this->sseCustomerKey !== null) {
-            $requestArgs['SSECustomerKey'] = $this->sseCustomerKey;
-        }
-
-        if ($this->sseCustomerKeyMD5 !== null) {
-            $requestArgs['SSECustomerKeyMD5'] = $this->sseCustomerKeyMD5;
-        }
-
-        if ($this->ssekmsEncryptionContext !== null) {
-            $requestArgs['SSEKMSEncryptionContext'] = $this->ssekmsEncryptionContext;
-        }
-
-        if ($this->ssekmsKeyId !== null) {
-            $requestArgs['SSEKMSKeyId'] = $this->ssekmsKeyId;
-        }
-
-        if ($this->serverSideEncryption !== null) {
-            $requestArgs['ServerSideEncryption'] = $this->serverSideEncryption;
-        }
-
-        if ($this->storageClass !== null) {
-            $requestArgs['StorageClass'] = $this->storageClass;
-        }
-
-        if ($this->tagging !== null) {
-            $requestArgs['Tagging'] = $this->tagging;
-        }
-
-        if ($this->websiteRedirectLocation !== null) {
-            $requestArgs['WebsiteRedirectLocation'] = $this->websiteRedirectLocation;
-        }
+        remove_nulls_from_array($requestArgs);
 
         return $requestArgs;
     }
@@ -732,39 +659,18 @@ class PutObjectRequest
      */
     public function toUploadPartRequest(): array
     {
-        $requestArgs = [];
+        $requestArgs = [
+            'Bucket' => $this->bucket,
+            'ChecksumAlgorithm' => $this->checksumAlgorithm,
+            'ExpectedBucketOwner' => $this->expectedBucketOwner,
+            'Key' => $this->key,
+            'RequestPayer' => $this->requestPayer,
+            'SSECustomerAlgorithm' => $this->sseCustomerAlgorithm,
+            'SSECustomerKey' => $this->sseCustomerKey,
+            'SSECustomerKeyMD5' => $this->sseCustomerKeyMD5,
+        ];
 
-        if ($this->bucket !== null) {
-            $requestArgs['Bucket'] = $this->bucket;
-        }
-
-        if ($this->checksumAlgorithm !== null) {
-            $requestArgs['ChecksumAlgorithm'] = $this->checksumAlgorithm;
-        }
-
-        if ($this->expectedBucketOwner !== null) {
-            $requestArgs['ExpectedBucketOwner'] = $this->expectedBucketOwner;
-        }
-
-        if ($this->key !== null) {
-            $requestArgs['Key'] = $this->key;
-        }
-
-        if ($this->requestPayer !== null) {
-            $requestArgs['RequestPayer'] = $this->requestPayer;
-        }
-
-        if ($this->sseCustomerAlgorithm !== null) {
-            $requestArgs['SSECustomerAlgorithm'] = $this->sseCustomerAlgorithm;
-        }
-
-        if ($this->sseCustomerKey !== null) {
-            $requestArgs['SSECustomerKey'] = $this->sseCustomerKey;
-        }
-
-        if ($this->sseCustomerKeyMD5 !== null) {
-            $requestArgs['SSECustomerKeyMD5'] = $this->sseCustomerKeyMD5;
-        }
+        remove_nulls_from_array($requestArgs);
 
         return $requestArgs;
     }
@@ -776,63 +682,24 @@ class PutObjectRequest
      */
     public function toCompleteMultipartUploadRequest(): array
     {
-        $requestArgs = [];
+        $requestArgs = [
+            'Bucket' => $this->bucket,
+            'ChecksumCRC32' => $this->checksumCRC32,
+            'ChecksumCRC32C' => $this->checksumCRC32C,
+            'ChecksumCRC64NVME' => $this->checksumCRC64NVME,
+            'ChecksumSHA1' => $this->checksumSHA1,
+            'ChecksumSHA256' => $this->checksumSHA256,
+            'ExpectedBucketOwner' => $this->expectedBucketOwner,
+            'IfMatch' => $this->ifMatch,
+            'IfNoneMatch' => $this->ifNoneMatch,
+            'Key' => $this->key,
+            'RequestPayer' => $this->requestPayer,
+            'SSECustomerAlgorithm' => $this->sseCustomerAlgorithm,
+            'SSECustomerKey' => $this->sseCustomerKey,
+            'SSECustomerKeyMD5' => $this->sseCustomerKeyMD5,
+        ];
 
-        if ($this->bucket !== null) {
-            $requestArgs['Bucket'] = $this->bucket;
-        }
-
-        if ($this->checksumCRC32 !== null) {
-            $requestArgs['ChecksumCRC32'] = $this->checksumCRC32;
-        }
-
-        if ($this->checksumCRC32C !== null) {
-            $requestArgs['ChecksumCRC32C'] = $this->checksumCRC32C;
-        }
-
-        if ($this->checksumCRC64NVME !== null) {
-            $requestArgs['ChecksumCRC64NVME'] = $this->checksumCRC64NVME;
-        }
-
-        if ($this->checksumSHA1 !== null) {
-            $requestArgs['ChecksumSHA1'] = $this->checksumSHA1;
-        }
-
-        if ($this->checksumSHA256 !== null) {
-            $requestArgs['ChecksumSHA256'] = $this->checksumSHA256;
-        }
-
-        if ($this->expectedBucketOwner !== null) {
-            $requestArgs['ExpectedBucketOwner'] = $this->expectedBucketOwner;
-        }
-
-        if ($this->ifMatch !== null) {
-            $requestArgs['IfMatch'] = $this->ifMatch;
-        }
-
-        if ($this->ifNoneMatch !== null) {
-            $requestArgs['IfNoneMatch'] = $this->ifNoneMatch;
-        }
-
-        if ($this->key !== null) {
-            $requestArgs['Key'] = $this->key;
-        }
-
-        if ($this->requestPayer !== null) {
-            $requestArgs['RequestPayer'] = $this->requestPayer;
-        }
-
-        if ($this->sseCustomerAlgorithm !== null) {
-            $requestArgs['SSECustomerAlgorithm'] = $this->sseCustomerAlgorithm;
-        }
-
-        if ($this->sseCustomerKey !== null) {
-            $requestArgs['SSECustomerKey'] = $this->sseCustomerKey;
-        }
-
-        if ($this->sseCustomerKeyMD5 !== null) {
-            $requestArgs['SSECustomerKeyMD5'] = $this->sseCustomerKeyMD5;
-        }
+        remove_nulls_from_array($requestArgs);
 
         return $requestArgs;
     }
@@ -844,23 +711,14 @@ class PutObjectRequest
      */
     public function toAbortMultipartRequest(): array
     {
-        $requestArgs = [];
+        $requestArgs = [
+            'Bucket' => $this->bucket,
+            'ExpectedBucketOwner' => $this->expectedBucketOwner,
+            'Key' => $this->key,
+            'RequestPayer' => $this->requestPayer,
+        ];
 
-        if ($this->bucket !== null) {
-            $requestArgs['Bucket'] = $this->bucket;
-        }
-
-        if ($this->expectedBucketOwner !== null) {
-            $requestArgs['ExpectedBucketOwner'] = $this->expectedBucketOwner;
-        }
-
-        if ($this->key !== null) {
-            $requestArgs['Key'] = $this->key;
-        }
-
-        if ($this->requestPayer !== null) {
-            $requestArgs['RequestPayer'] = $this->requestPayer;
-        }
+        remove_nulls_from_array($requestArgs);
 
         return $requestArgs;
     }
@@ -872,7 +730,7 @@ class PutObjectRequest
      */
     public function toArray(): array
     {
-        return [
+        $array = [
             'ACL' => $this->acl,
             'Bucket' => $this->bucket,
             'BucketKeyEnabled' => $this->bucketKeyEnabled,
@@ -911,54 +769,9 @@ class PutObjectRequest
             'IfMatch' => $this->ifMatch,
             'IfNoneMatch' => $this->ifNoneMatch,
         ];
-    }
 
-    /**
-     * Create instance from array
-     *
-     * @param array $data
-     * @return static
-     */
-    public static function fromArray(array $data): static
-    {
-        return new static(
-            $data['ACL'] ?? null,
-            $data['Bucket'] ?? null,
-            $data['BucketKeyEnabled'] ?? null,
-            $data['CacheControl'] ?? null,
-            $data['ChecksumAlgorithm'] ?? null,
-            $data['ContentDisposition'] ?? null,
-            $data['ContentEncoding'] ?? null,
-            $data['ContentLanguage'] ?? null,
-            $data['ContentType'] ?? null,
-            $data['ExpectedBucketOwner'] ?? null,
-            $data['Expires'] ?? null,
-            $data['GrantFullControl'] ?? null,
-            $data['GrantRead'] ?? null,
-            $data['GrantReadACP'] ?? null,
-            $data['GrantWriteACP'] ?? null,
-            $data['Key'] ?? null,
-            $data['Metadata'] ?? null,
-            $data['ObjectLockLegalHoldStatus'] ?? null,
-            $data['ObjectLockMode'] ?? null,
-            $data['ObjectLockRetainUntilDate'] ?? null,
-            $data['RequestPayer'] ?? null,
-            $data['SSECustomerAlgorithm'] ?? null,
-            $data['SSECustomerKey'] ?? null,
-            $data['SSECustomerKeyMD5'] ?? null,
-            $data['SSEKMSEncryptionContext'] ?? null,
-            $data['SSEKMSKeyId'] ?? null,
-            $data['ServerSideEncryption'] ?? null,
-            $data['StorageClass'] ?? null,
-            $data['Tagging'] ?? null,
-            $data['WebsiteRedirectLocation'] ?? null,
-            $data['ChecksumCRC32'] ?? null,
-            $data['ChecksumCRC32C'] ?? null,
-            $data['ChecksumCRC64NVME'] ?? null,
-            $data['ChecksumSHA1'] ?? null,
-            $data['ChecksumSHA256'] ?? null,
-            $data['IfMatch'] ?? null,
-            $data['IfNoneMatch'] ?? null
-        );
+        remove_nulls_from_array($array);
+
+        return $array;
     }
 }

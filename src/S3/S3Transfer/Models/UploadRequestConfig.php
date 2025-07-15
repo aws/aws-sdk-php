@@ -21,7 +21,7 @@ class UploadRequestConfig extends TransferRequestConfig
      */
     private ?int $targetPartSizeBytes;
 
-    /** @var int */
+    /** @var int|null */
     private ?int $concurrency;
 
     /** @var string|null */
@@ -46,6 +46,24 @@ class UploadRequestConfig extends TransferRequestConfig
         $this->targetPartSizeBytes = $targetPartSizeBytes;
         $this->concurrency = $concurrency;
         $this->requestChecksumCalculation = $requestChecksumCalculation;
+    }
+
+    /**
+     * Create an UploadConfig instance from an array
+     *
+     * @param array<string, mixed> $data Array containing configuration data
+     *
+     * @return self
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['multipart_upload_threshold_bytes'] ?? null,
+            $data['target_part_size_bytes'] ?? null,
+            $data['track_progress'] ?? null,
+            $data['concurrency'] ?? null,
+            $data['request_checksum_calculation'] ?? null,
+        );
     }
 
     /**
@@ -98,23 +116,5 @@ class UploadRequestConfig extends TransferRequestConfig
             'concurrency' => $this->concurrency,
             'request_checksum_calculation' => $this->requestChecksumCalculation,
         ];
-    }
-
-    /**
-     * Create an UploadConfig instance from an array
-     *
-     * @param array<string, mixed> $data Array containing configuration data
-     *
-     * @return static
-     */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            $data['multipart_upload_threshold_bytes'] ?? null,
-            $data['target_part_size_bytes'] ?? null,
-            $data['track_progress'] ?? null,
-            $data['concurrency'] ?? null,
-            $data['request_checksum_calculation'] ?? null,
-        );
     }
 }

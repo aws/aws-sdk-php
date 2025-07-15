@@ -38,6 +38,41 @@ class UploadRequest extends TransferRequest
     }
 
     /**
+     * @param string|StreamInterface $source
+     * @param array $requestArgs The putObject request arguments.
+     * Required parameters would be:
+     * - Bucket: (string, required)
+     * - Key: (string, required)
+     * @param array $config The config options for this upload operation.
+     * - multipart_upload_threshold_bytes: (int, optional)
+     *   To override the default threshold for when to use multipart upload.
+     * - target_part_size_bytes: (int, optional) To override the default
+     *   target part size in bytes.
+     * - track_progress: (bool, optional) To override the default option for
+     *   enabling progress tracking. If this option is resolved as true and
+     *   a progressTracker parameter is not provided then, a default implementation
+     *   will be resolved. This option is intended to make the operation to use
+     *   a default progress tracker implementation when $progressTracker is null.
+     * @param TransferListener[]|null $listeners
+     * @param TransferListener|null $progressTracker
+     *
+     * @return UploadRequest
+     */
+    public static function fromLegacyArgs(string | StreamInterface $source,
+                                          array $requestArgs = [],
+                                          array $config = [],
+                                          array $listeners = [],
+                                          ?TransferListener $progressTracker = null): UploadRequest {
+        return new UploadRequest(
+            $source,
+            PutObjectRequest::fromArray($requestArgs),
+            UploadRequestConfig::fromArray($config),
+            $listeners,
+            $progressTracker
+        );
+    }
+
+    /**
      * Get the source.
      *
      * @return StreamInterface|string
@@ -101,40 +136,5 @@ class UploadRequest extends TransferRequest
                 );
             }
         }
-    }
-
-    /**
-     * @param string|StreamInterface $source
-     * @param array $requestArgs The putObject request arguments.
-     * Required parameters would be:
-     * - Bucket: (string, required)
-     * - Key: (string, required)
-     * @param array $config The config options for this upload operation.
-     * - multipart_upload_threshold_bytes: (int, optional)
-     *   To override the default threshold for when to use multipart upload.
-     * - target_part_size_bytes: (int, optional) To override the default
-     *   target part size in bytes.
-     * - track_progress: (bool, optional) To override the default option for
-     *   enabling progress tracking. If this option is resolved as true and
-     *   a progressTracker parameter is not provided then, a default implementation
-     *   will be resolved. This option is intended to make the operation to use
-     *   a default progress tracker implementation when $progressTracker is null.
-     * @param TransferListener[]|null $listeners
-     * @param TransferListener|null $progressTracker
-     *
-     * @return UploadRequest
-     */
-    public static function fromLegacyArgs(string | StreamInterface $source,
-                                     array $requestArgs = [],
-                                     array $config = [],
-                                     array $listeners = [],
-                                     ?TransferListener $progressTracker = null): UploadRequest {
-        return new UploadRequest(
-            $source,
-            PutObjectRequest::fromArray($requestArgs),
-            UploadRequestConfig::fromArray($config),
-            $listeners,
-            $progressTracker
-        );
     }
 }

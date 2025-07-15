@@ -2,32 +2,30 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Psr\Http\Message\StreamInterface;
-
 class DownloadResponse
 {
     /**
-     * @param StreamInterface $data
-     * @param array $metadata
+     * @param mixed $downloadDataResult
+     * @param array $downloadResponse
      */
     public function __construct(
-        private readonly StreamInterface $data,
-        private readonly array           $metadata = []
+        private readonly mixed $downloadDataResult,
+        private readonly array           $downloadResponse = []
     ) {}
 
     /**
-     * @return StreamInterface
+     * @return mixed
      */
-    public function getData(): StreamInterface
+    public function getDownloadDataResult(): mixed
     {
-        return $this->data;
+        return $this->downloadDataResult;
     }
 
     /**
      * @return array
      */
-    public function getMetadata(): array
+    public function getDownloadResponse(): array
     {
-        return $this->metadata;
+        return $this->downloadResponse;
     }
 }

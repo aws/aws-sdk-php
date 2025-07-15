@@ -11,6 +11,7 @@ use Aws\ResultInterface;
  */
 class PartGetMultipartDownloader extends MultipartDownloader
 {
+
     /**
      * @inheritDoc
      *
@@ -24,8 +25,15 @@ class PartGetMultipartDownloader extends MultipartDownloader
             $this->currentPartNo++;
         }
 
-        $nextRequestArgs = array_slice($this->requestArgs, 0);
+        $nextRequestArgs = $this->getObjectRequest->toArray();
         $nextRequestArgs['PartNumber'] = $this->currentPartNo;
+        if ($this->config->getResponseChecksumValidationEnabled()) {
+            $nextRequestArgs['ChecksumMode'] = 'ENABLED';
+        }
+
+        if (!empty($this->eTag)) {
+            $nextRequestArgs['IfMatch'] = $this->eTag;
+        }
 
         return $this->s3Client->getCommand(
             self::GET_OBJECT_COMMAND,
@@ -46,7 +54,7 @@ class PartGetMultipartDownloader extends MultipartDownloader
             $this->objectPartsCount = $result['PartsCount'];
         }
 
-        $this->objectSizeInBytes = $this->computeObjectSize(
+        $this->objectSizeInBytes = $this->computeObjectSizeFromContentRange(
             $result['ContentRange'] ?? ""
         );
     }

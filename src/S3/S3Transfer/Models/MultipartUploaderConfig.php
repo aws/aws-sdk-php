@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-class MultipartUploaderConfig
+final class MultipartUploaderConfig
 {
 
     /** @var int */
@@ -28,6 +28,25 @@ class MultipartUploaderConfig
         $this->targetPartSizeBytes = $targetPartSizeBytes;
         $this->concurrency = $concurrency;
         $this->requestChecksumCalculation = $requestChecksumCalculation;
+    }
+
+    /**
+     * Create an MultipartUploaderConfig instance from an array
+     *
+     * @param array<string, int> $data Array containing configuration data
+     *
+     * @return MultipartUploaderConfig
+     */
+    public static function fromArray(array $data): MultipartUploaderConfig
+    {
+        return new self(
+            $data['target_part_size_bytes']
+            ?? S3TransferManagerConfig::DEFAULT_TARGET_PART_SIZE_BYTES,
+            $data['concurrency']
+            ?? S3TransferManagerConfig::DEFAULT_CONCURRENCY,
+            $data['request_checksum_calculation']
+            ?? S3TransferManagerConfig::DEFAULT_REQUEST_CHECKSUM_CALCULATION
+        );
     }
 
     /**
@@ -63,24 +82,5 @@ class MultipartUploaderConfig
             'concurrency' => $this->concurrency,
             'request_checksum_calculation' => $this->requestChecksumCalculation,
         ];
-    }
-
-    /**
-     * Create an MultipartUploaderConfig instance from an array
-     *
-     * @param array<string, int> $data Array containing configuration data
-     *
-     * @return static
-     */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            $data['target_part_size_bytes']
-                ?? S3TransferManagerConfig::DEFAULT_TARGET_PART_SIZE_BYTES,
-            $data['concurrency']
-                ?? S3TransferManagerConfig::DEFAULT_CONCURRENCY,
-            $data['request_checksum_calculation']
-                ?? S3TransferManagerConfig::DEFAULT_REQUEST_CHECKSUM_CALCULATION
-        );
     }
 }
