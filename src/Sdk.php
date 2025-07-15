@@ -670,6 +670,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionS3Outposts(array $args = [])
  * @method \Aws\S3Tables\S3TablesClient createS3Tables(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionS3Tables(array $args = [])
+ * @method \Aws\S3Vectors\S3VectorsClient createS3Vectors(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionS3Vectors(array $args = [])
  * @method \Aws\SSMContacts\SSMContactsClient createSSMContacts(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSMContacts(array $args = [])
  * @method \Aws\SSMGuiConnect\SSMGuiConnectClient createSSMGuiConnect(array $args = [])

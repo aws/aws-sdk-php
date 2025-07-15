@@ -2,18 +2,35 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-05-13",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"repostspace",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS re:Post Private",
     "serviceId":"repostspace",
     "signatureVersion":"v4",
     "signingName":"repostspace",
-    "uid":"repostspace-2022-05-13",
-    "auth":["aws.auth#sigv4"]
+    "uid":"repostspace-2022-05-13"
   },
   "operations":{
+    "BatchAddChannelRoleToAccessors":{
+      "name":"BatchAddChannelRoleToAccessors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/spaces/{spaceId}/channels/{channelId}/roles",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchAddChannelRoleToAccessorsInput"},
+      "output":{"shape":"BatchAddChannelRoleToAccessorsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "BatchAddRole":{
       "name":"BatchAddRole",
       "http":{
@@ -24,8 +41,26 @@
       "input":{"shape":"BatchAddRoleInput"},
       "output":{"shape":"BatchAddRoleOutput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "BatchRemoveChannelRoleFromAccessors":{
+      "name":"BatchRemoveChannelRoleFromAccessors",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/spaces/{spaceId}/channels/{channelId}/roles",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchRemoveChannelRoleFromAccessorsInput"},
+      "output":{"shape":"BatchRemoveChannelRoleFromAccessorsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -42,8 +77,28 @@
       "input":{"shape":"BatchRemoveRoleInput"},
       "output":{"shape":"BatchRemoveRoleOutput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateChannel":{
+      "name":"CreateChannel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/spaces/{spaceId}/channels",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateChannelInput"},
+      "output":{"shape":"CreateChannelOutput"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -61,9 +116,9 @@
       "output":{"shape":"CreateSpaceOutput"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -79,8 +134,8 @@
       },
       "input":{"shape":"DeleteSpaceInput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -96,13 +151,30 @@
       },
       "input":{"shape":"DeregisterAdminInput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "GetChannel":{
+      "name":"GetChannel",
+      "http":{
+        "method":"GET",
+        "requestUri":"/spaces/{spaceId}/channels/{channelId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetChannelInput"},
+      "output":{"shape":"GetChannelOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "GetSpace":{
       "name":"GetSpace",
@@ -114,9 +186,25 @@
       "input":{"shape":"GetSpaceInput"},
       "output":{"shape":"GetSpaceOutput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListChannels":{
+      "name":"ListChannels",
+      "http":{
+        "method":"GET",
+        "requestUri":"/spaces/{spaceId}/channels",
+        "responseCode":200
+      },
+      "input":{"shape":"ListChannelsInput"},
+      "output":{"shape":"ListChannelsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -131,8 +219,8 @@
       "input":{"shape":"ListSpacesInput"},
       "output":{"shape":"ListSpacesOutput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
@@ -147,8 +235,8 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -163,8 +251,8 @@
       },
       "input":{"shape":"RegisterAdminInput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -180,10 +268,10 @@
       },
       "input":{"shape":"SendInvitesInput"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -198,8 +286,8 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -216,8 +304,27 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
-        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateChannel":{
+      "name":"UpdateChannel",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/spaces/{spaceId}/channels/{channelId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateChannelInput"},
+      "output":{"shape":"UpdateChannelOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -233,9 +340,9 @@
       },
       "input":{"shape":"UpdateSpaceInput"},
       "errors":[
+        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
-        {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
@@ -264,26 +371,66 @@
       "min":0
     },
     "AdminId":{"type":"string"},
+    "AllowedDomainsList":{
+      "type":"list",
+      "member":{"shape":"EmailDomain"},
+      "max":10,
+      "min":1
+    },
     "Arn":{
       "type":"string",
       "max":2048,
       "min":20
     },
-    "BatchAddRoleInput":{
+    "BatchAddChannelRoleToAccessorsInput":{
       "type":"structure",
       "required":[
+        "spaceId",
+        "channelId",
         "accessorIds",
-        "role",
-        "spaceId"
+        "channelRole"
       ],
       "members":{
-        "accessorIds":{"shape":"AccessorIdList"},
-        "role":{"shape":"Role"},
         "spaceId":{
           "shape":"SpaceId",
           "location":"uri",
           "locationName":"spaceId"
-        }
+        },
+        "channelId":{
+          "shape":"ChannelId",
+          "location":"uri",
+          "locationName":"channelId"
+        },
+        "accessorIds":{"shape":"AccessorIdList"},
+        "channelRole":{"shape":"ChannelRole"}
+      }
+    },
+    "BatchAddChannelRoleToAccessorsOutput":{
+      "type":"structure",
+      "required":[
+        "addedAccessorIds",
+        "errors"
+      ],
+      "members":{
+        "addedAccessorIds":{"shape":"AccessorIdList"},
+        "errors":{"shape":"BatchErrorList"}
+      }
+    },
+    "BatchAddRoleInput":{
+      "type":"structure",
+      "required":[
+        "spaceId",
+        "accessorIds",
+        "role"
+      ],
+      "members":{
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
+        },
+        "accessorIds":{"shape":"AccessorIdList"},
+        "role":{"shape":"Role"}
       }
     },
     "BatchAddRoleOutput":{
@@ -314,33 +461,140 @@
       "type":"list",
       "member":{"shape":"BatchError"}
     },
-    "BatchRemoveRoleInput":{
+    "BatchRemoveChannelRoleFromAccessorsInput":{
       "type":"structure",
       "required":[
+        "spaceId",
+        "channelId",
         "accessorIds",
-        "role",
-        "spaceId"
+        "channelRole"
       ],
       "members":{
-        "accessorIds":{"shape":"AccessorIdList"},
-        "role":{"shape":"Role"},
         "spaceId":{
           "shape":"SpaceId",
           "location":"uri",
           "locationName":"spaceId"
-        }
+        },
+        "channelId":{
+          "shape":"ChannelId",
+          "location":"uri",
+          "locationName":"channelId"
+        },
+        "accessorIds":{"shape":"AccessorIdList"},
+        "channelRole":{"shape":"ChannelRole"}
+      }
+    },
+    "BatchRemoveChannelRoleFromAccessorsOutput":{
+      "type":"structure",
+      "required":[
+        "removedAccessorIds",
+        "errors"
+      ],
+      "members":{
+        "removedAccessorIds":{"shape":"AccessorIdList"},
+        "errors":{"shape":"BatchErrorList"}
+      }
+    },
+    "BatchRemoveRoleInput":{
+      "type":"structure",
+      "required":[
+        "spaceId",
+        "accessorIds",
+        "role"
+      ],
+      "members":{
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
+        },
+        "accessorIds":{"shape":"AccessorIdList"},
+        "role":{"shape":"Role"}
       }
     },
     "BatchRemoveRoleOutput":{
       "type":"structure",
       "required":[
-        "errors",
-        "removedAccessorIds"
+        "removedAccessorIds",
+        "errors"
       ],
       "members":{
-        "errors":{"shape":"BatchErrorList"},
-        "removedAccessorIds":{"shape":"AccessorIdList"}
+        "removedAccessorIds":{"shape":"AccessorIdList"},
+        "errors":{"shape":"BatchErrorList"}
       }
+    },
+    "ChannelData":{
+      "type":"structure",
+      "required":[
+        "spaceId",
+        "channelId",
+        "channelName",
+        "createDateTime",
+        "channelStatus",
+        "userCount",
+        "groupCount"
+      ],
+      "members":{
+        "spaceId":{"shape":"SpaceId"},
+        "channelId":{"shape":"ChannelId"},
+        "channelName":{"shape":"ChannelName"},
+        "channelDescription":{"shape":"ChannelDescription"},
+        "createDateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "deleteDateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "channelStatus":{"shape":"ChannelStatus"},
+        "userCount":{"shape":"UserCount"},
+        "groupCount":{"shape":"GroupCount"}
+      }
+    },
+    "ChannelDescription":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "sensitive":true
+    },
+    "ChannelId":{
+      "type":"string",
+      "max":24,
+      "min":24
+    },
+    "ChannelName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "sensitive":true
+    },
+    "ChannelRole":{
+      "type":"string",
+      "enum":[
+        "ASKER",
+        "EXPERT",
+        "MODERATOR",
+        "SUPPORTREQUESTOR"
+      ]
+    },
+    "ChannelRoleList":{
+      "type":"list",
+      "member":{"shape":"ChannelRole"}
+    },
+    "ChannelRoles":{
+      "type":"map",
+      "key":{"shape":"AccessorId"},
+      "value":{"shape":"ChannelRoleList"}
+    },
+    "ChannelStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "CREATING",
+        "CREATE_FAILED",
+        "DELETED",
+        "DELETING",
+        "DELETE_FAILED"
+      ]
+    },
+    "ChannelsList":{
+      "type":"list",
+      "member":{"shape":"ChannelData"}
     },
     "ClientId":{"type":"string"},
     "ConfigurationStatus":{
@@ -372,6 +626,29 @@
       "type":"long",
       "box":true
     },
+    "CreateChannelInput":{
+      "type":"structure",
+      "required":[
+        "spaceId",
+        "channelName"
+      ],
+      "members":{
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
+        },
+        "channelName":{"shape":"ChannelName"},
+        "channelDescription":{"shape":"ChannelDescription"}
+      }
+    },
+    "CreateChannelOutput":{
+      "type":"structure",
+      "required":["channelId"],
+      "members":{
+        "channelId":{"shape":"ChannelId"}
+      }
+    },
     "CreateSpaceInput":{
       "type":"structure",
       "required":[
@@ -380,13 +657,14 @@
         "tier"
       ],
       "members":{
-        "description":{"shape":"SpaceDescription"},
         "name":{"shape":"SpaceName"},
-        "roleArn":{"shape":"Arn"},
         "subdomain":{"shape":"SpaceSubdomain"},
-        "tags":{"shape":"Tags"},
         "tier":{"shape":"TierLevel"},
-        "userKMSKey":{"shape":"KMSKey"}
+        "description":{"shape":"SpaceDescription"},
+        "userKMSKey":{"shape":"KMSKey"},
+        "tags":{"shape":"Tags"},
+        "roleArn":{"shape":"Arn"},
+        "supportedEmailDomains":{"shape":"SupportedEmailDomainsParameters"}
       }
     },
     "CreateSpaceOutput":{
@@ -410,27 +688,87 @@
     "DeregisterAdminInput":{
       "type":"structure",
       "required":[
-        "adminId",
-        "spaceId"
+        "spaceId",
+        "adminId"
       ],
       "members":{
-        "adminId":{
-          "shape":"AdminId",
-          "location":"uri",
-          "locationName":"adminId"
-        },
         "spaceId":{
           "shape":"SpaceId",
           "location":"uri",
           "locationName":"spaceId"
+        },
+        "adminId":{
+          "shape":"AdminId",
+          "location":"uri",
+          "locationName":"adminId"
         }
       }
+    },
+    "EmailDomain":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "sensitive":true
     },
     "ErrorCode":{
       "type":"integer",
       "box":true
     },
     "ErrorMessage":{"type":"string"},
+    "FeatureEnableParameter":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "FeatureEnableStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED",
+        "NOT_ALLOWED"
+      ]
+    },
+    "GetChannelInput":{
+      "type":"structure",
+      "required":[
+        "spaceId",
+        "channelId"
+      ],
+      "members":{
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
+        },
+        "channelId":{
+          "shape":"ChannelId",
+          "location":"uri",
+          "locationName":"channelId"
+        }
+      }
+    },
+    "GetChannelOutput":{
+      "type":"structure",
+      "required":[
+        "spaceId",
+        "channelId",
+        "channelName",
+        "createDateTime",
+        "channelStatus"
+      ],
+      "members":{
+        "spaceId":{"shape":"SpaceId"},
+        "channelId":{"shape":"ChannelId"},
+        "channelName":{"shape":"ChannelName"},
+        "channelDescription":{"shape":"ChannelDescription"},
+        "createDateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "deleteDateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "channelRoles":{"shape":"ChannelRoles"},
+        "channelStatus":{"shape":"ChannelStatus"}
+      }
+    },
     "GetSpaceInput":{
       "type":"structure",
       "required":["spaceId"],
@@ -445,55 +783,63 @@
     "GetSpaceOutput":{
       "type":"structure",
       "required":[
-        "arn",
-        "clientId",
-        "configurationStatus",
-        "createDateTime",
-        "name",
-        "randomDomain",
         "spaceId",
+        "arn",
+        "name",
         "status",
-        "storageLimit",
-        "tier",
+        "configurationStatus",
+        "clientId",
+        "vanityDomainStatus",
         "vanityDomain",
-        "vanityDomainStatus"
+        "randomDomain",
+        "createDateTime",
+        "tier",
+        "storageLimit"
       ],
       "members":{
-        "arn":{"shape":"Arn"},
-        "clientId":{"shape":"ClientId"},
-        "configurationStatus":{"shape":"ConfigurationStatus"},
-        "contentSize":{"shape":"ContentSize"},
-        "createDateTime":{"shape":"SyntheticTimestamp_date_time"},
-        "customerRoleArn":{"shape":"Arn"},
-        "deleteDateTime":{"shape":"SyntheticTimestamp_date_time"},
-        "description":{"shape":"SpaceDescription"},
-        "groupAdmins":{
-          "shape":"GroupAdmins",
-          "deprecated":true,
-          "deprecatedMessage":"This property has been depracted and will be replaced by the roles property."
-        },
-        "name":{"shape":"SpaceName"},
-        "randomDomain":{"shape":"Url"},
-        "roles":{"shape":"Roles"},
         "spaceId":{"shape":"SpaceId"},
+        "arn":{"shape":"Arn"},
+        "name":{"shape":"SpaceName"},
         "status":{"shape":"ProvisioningStatus"},
-        "storageLimit":{"shape":"StorageLimit"},
+        "configurationStatus":{"shape":"ConfigurationStatus"},
+        "clientId":{"shape":"ClientId"},
+        "identityStoreId":{"shape":"IdentityStoreId"},
+        "applicationArn":{"shape":"Arn"},
+        "description":{"shape":"SpaceDescription"},
+        "vanityDomainStatus":{"shape":"VanityDomainStatus"},
+        "vanityDomain":{"shape":"Url"},
+        "randomDomain":{"shape":"Url"},
+        "customerRoleArn":{"shape":"Arn"},
+        "createDateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "deleteDateTime":{"shape":"SyntheticTimestamp_date_time"},
         "tier":{"shape":"TierLevel"},
+        "storageLimit":{"shape":"StorageLimit"},
         "userAdmins":{
           "shape":"UserAdmins",
           "deprecated":true,
           "deprecatedMessage":"This property has been depracted and will be replaced by the roles property."
         },
-        "userCount":{"shape":"UserCount"},
+        "groupAdmins":{
+          "shape":"GroupAdmins",
+          "deprecated":true,
+          "deprecatedMessage":"This property has been depracted and will be replaced by the roles property."
+        },
+        "roles":{"shape":"Roles"},
         "userKMSKey":{"shape":"KMSKey"},
-        "vanityDomain":{"shape":"Url"},
-        "vanityDomainStatus":{"shape":"VanityDomainStatus"}
+        "userCount":{"shape":"UserCount"},
+        "contentSize":{"shape":"ContentSize"},
+        "supportedEmailDomains":{"shape":"SupportedEmailDomainsStatus"}
       }
     },
     "GroupAdmins":{
       "type":"list",
       "member":{"shape":"AdminId"}
     },
+    "GroupCount":{
+      "type":"integer",
+      "box":true
+    },
+    "IdentityStoreId":{"type":"string"},
     "Integer":{
       "type":"integer",
       "box":true
@@ -527,18 +873,53 @@
       "sensitive":true
     },
     "KMSKey":{"type":"string"},
-    "ListSpacesInput":{
+    "ListChannelsInput":{
       "type":"structure",
+      "required":["spaceId"],
       "members":{
-        "maxResults":{
-          "shape":"ListSpacesLimit",
-          "location":"querystring",
-          "locationName":"maxResults"
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
         },
         "nextToken":{
           "shape":"String",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListChannelsLimit",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListChannelsLimit":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListChannelsOutput":{
+      "type":"structure",
+      "required":["channels"],
+      "members":{
+        "channels":{"shape":"ChannelsList"},
+        "nextToken":{"shape":"String"}
+      }
+    },
+    "ListSpacesInput":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListSpacesLimit",
+          "location":"querystring",
+          "locationName":"maxResults"
         }
       }
     },
@@ -552,8 +933,8 @@
       "type":"structure",
       "required":["spaces"],
       "members":{
-        "nextToken":{"shape":"String"},
-        "spaces":{"shape":"SpacesList"}
+        "spaces":{"shape":"SpacesList"},
+        "nextToken":{"shape":"String"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -581,19 +962,19 @@
     "RegisterAdminInput":{
       "type":"structure",
       "required":[
-        "adminId",
-        "spaceId"
+        "spaceId",
+        "adminId"
       ],
       "members":{
-        "adminId":{
-          "shape":"AdminId",
-          "location":"uri",
-          "locationName":"adminId"
-        },
         "spaceId":{
           "shape":"SpaceId",
           "location":"uri",
           "locationName":"spaceId"
+        },
+        "adminId":{
+          "shape":"AdminId",
+          "location":"uri",
+          "locationName":"adminId"
         }
       }
     },
@@ -636,37 +1017,37 @@
     "SendInvitesInput":{
       "type":"structure",
       "required":[
-        "accessorIds",
-        "body",
         "spaceId",
-        "title"
+        "accessorIds",
+        "title",
+        "body"
       ],
       "members":{
-        "accessorIds":{"shape":"AccessorIdList"},
-        "body":{"shape":"InviteBody"},
         "spaceId":{
           "shape":"SpaceId",
           "location":"uri",
           "locationName":"spaceId"
         },
-        "title":{"shape":"InviteTitle"}
+        "accessorIds":{"shape":"AccessorIdList"},
+        "title":{"shape":"InviteTitle"},
+        "body":{"shape":"InviteBody"}
       }
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
         "message",
-        "quotaCode",
         "resourceId",
         "resourceType",
-        "serviceCode"
+        "serviceCode",
+        "quotaCode"
       ],
       "members":{
         "message":{"shape":"String"},
-        "quotaCode":{"shape":"String"},
         "resourceId":{"shape":"String"},
         "resourceType":{"shape":"String"},
-        "serviceCode":{"shape":"String"}
+        "serviceCode":{"shape":"String"},
+        "quotaCode":{"shape":"String"}
       },
       "error":{
         "httpStatusCode":402,
@@ -677,35 +1058,36 @@
     "SpaceData":{
       "type":"structure",
       "required":[
-        "arn",
-        "configurationStatus",
-        "createDateTime",
-        "name",
-        "randomDomain",
         "spaceId",
+        "arn",
+        "name",
         "status",
-        "storageLimit",
-        "tier",
+        "configurationStatus",
+        "vanityDomainStatus",
         "vanityDomain",
-        "vanityDomainStatus"
+        "randomDomain",
+        "tier",
+        "storageLimit",
+        "createDateTime"
       ],
       "members":{
+        "spaceId":{"shape":"SpaceId"},
         "arn":{"shape":"Arn"},
+        "name":{"shape":"SpaceName"},
+        "description":{"shape":"SpaceDescription"},
+        "status":{"shape":"ProvisioningStatus"},
         "configurationStatus":{"shape":"ConfigurationStatus"},
-        "contentSize":{"shape":"ContentSize"},
+        "vanityDomainStatus":{"shape":"VanityDomainStatus"},
+        "vanityDomain":{"shape":"Url"},
+        "randomDomain":{"shape":"Url"},
+        "tier":{"shape":"TierLevel"},
+        "storageLimit":{"shape":"StorageLimit"},
         "createDateTime":{"shape":"SyntheticTimestamp_date_time"},
         "deleteDateTime":{"shape":"SyntheticTimestamp_date_time"},
-        "description":{"shape":"SpaceDescription"},
-        "name":{"shape":"SpaceName"},
-        "randomDomain":{"shape":"Url"},
-        "spaceId":{"shape":"SpaceId"},
-        "status":{"shape":"ProvisioningStatus"},
-        "storageLimit":{"shape":"StorageLimit"},
-        "tier":{"shape":"TierLevel"},
-        "userCount":{"shape":"UserCount"},
         "userKMSKey":{"shape":"KMSKey"},
-        "vanityDomain":{"shape":"Url"},
-        "vanityDomainStatus":{"shape":"VanityDomainStatus"}
+        "userCount":{"shape":"UserCount"},
+        "contentSize":{"shape":"ContentSize"},
+        "supportedEmailDomains":{"shape":"SupportedEmailDomainsStatus"}
       }
     },
     "SpaceDescription":{
@@ -735,6 +1117,20 @@
       "box":true
     },
     "String":{"type":"string"},
+    "SupportedEmailDomainsParameters":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"FeatureEnableParameter"},
+        "allowedDomains":{"shape":"AllowedDomainsList"}
+      }
+    },
+    "SupportedEmailDomainsStatus":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"FeatureEnableStatus"},
+        "allowedDomains":{"shape":"AllowedDomainsList"}
+      }
+    },
     "SyntheticTimestamp_date_time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -743,7 +1139,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
     },
     "TagKeyList":{
       "type":"list",
@@ -787,13 +1183,13 @@
       "required":["message"],
       "members":{
         "message":{"shape":"String"},
+        "serviceCode":{"shape":"String"},
         "quotaCode":{"shape":"String"},
         "retryAfterSeconds":{
           "shape":"Integer",
           "location":"header",
           "locationName":"Retry-After"
-        },
-        "serviceCode":{"shape":"String"}
+        }
       },
       "error":{
         "httpStatusCode":429,
@@ -833,18 +1229,46 @@
       "members":{
       }
     },
-    "UpdateSpaceInput":{
+    "UpdateChannelInput":{
       "type":"structure",
-      "required":["spaceId"],
+      "required":[
+        "spaceId",
+        "channelId",
+        "channelName"
+      ],
       "members":{
-        "description":{"shape":"SpaceDescription"},
-        "roleArn":{"shape":"Arn"},
         "spaceId":{
           "shape":"SpaceId",
           "location":"uri",
           "locationName":"spaceId"
         },
-        "tier":{"shape":"TierLevel"}
+        "channelId":{
+          "shape":"ChannelId",
+          "location":"uri",
+          "locationName":"channelId"
+        },
+        "channelName":{"shape":"ChannelName"},
+        "channelDescription":{"shape":"ChannelDescription"}
+      }
+    },
+    "UpdateChannelOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateSpaceInput":{
+      "type":"structure",
+      "required":["spaceId"],
+      "members":{
+        "spaceId":{
+          "shape":"SpaceId",
+          "location":"uri",
+          "locationName":"spaceId"
+        },
+        "description":{"shape":"SpaceDescription"},
+        "tier":{"shape":"TierLevel"},
+        "roleArn":{"shape":"Arn"},
+        "supportedEmailDomains":{"shape":"SupportedEmailDomainsParameters"}
       }
     },
     "Url":{"type":"string"},
@@ -863,9 +1287,9 @@
         "reason"
       ],
       "members":{
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
         "message":{"shape":"String"},
-        "reason":{"shape":"ValidationExceptionReason"}
+        "reason":{"shape":"ValidationExceptionReason"},
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -876,12 +1300,12 @@
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "message",
-        "name"
+        "name",
+        "message"
       ],
       "members":{
-        "message":{"shape":"String"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "message":{"shape":"String"}
       }
     },
     "ValidationExceptionFieldList":{

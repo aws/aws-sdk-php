@@ -5,12 +5,14 @@
     "endpointPrefix":"streams.dynamodb",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon DynamoDB Streams",
     "serviceId":"DynamoDB Streams",
     "signatureVersion":"v4",
     "signingName":"dynamodb",
     "targetPrefix":"DynamoDBStreams_20120810",
-    "uid":"streams-dynamodb-2012-08-10"
+    "uid":"streams-dynamodb-2012-08-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DescribeStream":{
@@ -108,7 +110,8 @@
       "members":{
         "StreamArn":{"shape":"StreamArn"},
         "Limit":{"shape":"PositiveIntegerObject"},
-        "ExclusiveStartShardId":{"shape":"ShardId"}
+        "ExclusiveStartShardId":{"shape":"ShardId"},
+        "ShardFilter":{"shape":"ShardFilter"}
       }
     },
     "DescribeStreamOutput":{
@@ -303,6 +306,17 @@
     "ShardDescriptionList":{
       "type":"list",
       "member":{"shape":"Shard"}
+    },
+    "ShardFilter":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"ShardFilterType"},
+        "ShardId":{"shape":"ShardId"}
+      }
+    },
+    "ShardFilterType":{
+      "type":"string",
+      "enum":["CHILD_SHARDS"]
     },
     "ShardId":{
       "type":"string",

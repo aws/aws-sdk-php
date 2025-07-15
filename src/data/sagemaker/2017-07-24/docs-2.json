@@ -269,6 +269,7 @@
     "ListPipelineExecutionSteps": "<p>Gets a list of <code>PipeLineExecutionStep</code> objects.</p>",
     "ListPipelineExecutions": "<p>Gets a list of the pipeline executions.</p>",
     "ListPipelineParametersForExecution": "<p>Gets a list of parameters for a pipeline execution.</p>",
+    "ListPipelineVersions": "<p>Gets a list of all versions of the pipeline.</p>",
     "ListPipelines": "<p>Gets a list of pipelines.</p>",
     "ListProcessingJobs": "<p>Lists processing jobs that satisfy various filters.</p>",
     "ListProjects": "<p>Gets a list of the projects in an Amazon Web Services account.</p>",
@@ -354,6 +355,7 @@
     "UpdatePartnerApp": "<p>Updates all of the SageMaker Partner AI Apps in an account.</p>",
     "UpdatePipeline": "<p>Updates a pipeline.</p>",
     "UpdatePipelineExecution": "<p>Updates a pipeline execution.</p>",
+    "UpdatePipelineVersion": "<p>Updates a pipeline version.</p>",
     "UpdateProject": "<p>Updates a machine learning (ML) project that is created from a template that sets up an ML pipeline from training to deploying an approved model.</p> <note> <p>You must not update a project that is in use. If you update the <code>ServiceCatalogProvisioningUpdateDetails</code> of a project that is active or being created, or updated, you may lose resources already created by the project.</p> </note>",
     "UpdateSpace": "<p>Updates the settings of a space.</p> <note> <p>You can't edit the app type of a space in the <code>SpaceSettings</code>.</p> </note>",
     "UpdateTrainingJob": "<p>Update a model training job to request a new Debugger profiling configuration or to change warm pool retention length.</p>",
@@ -2345,7 +2347,9 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$TargetCount": "<p>The number of instances you specified to add to the instance group of a SageMaker HyperPod cluster.</p>",
-        "ClusterInstanceGroupSpecification$InstanceCount": "<p>Specifies the number of instances to add to the instance group of a SageMaker HyperPod cluster.</p>"
+        "ClusterInstanceGroupSpecification$InstanceCount": "<p>Specifies the number of instances to add to the instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterRestrictedInstanceGroupDetails$TargetCount": "<p>The number of instances you specified to add to the restricted instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$InstanceCount": "<p>Specifies the number of instances to add to the restricted instance group of a SageMaker HyperPod cluster.</p>"
       }
     },
     "ClusterInstanceGroupDetails": {
@@ -2368,6 +2372,8 @@
         "ClusterInstanceGroupsToDelete$member": null,
         "ClusterNodeDetails$InstanceGroupName": "<p>The instance group name in which the instance is.</p>",
         "ClusterNodeSummary$InstanceGroupName": "<p>The name of the instance group in which the instance is.</p>",
+        "ClusterRestrictedInstanceGroupDetails$InstanceGroupName": "<p>The name of the restricted instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$InstanceGroupName": "<p>Specifies the name of the restricted instance group.</p>",
         "ListClusterNodesRequest$InstanceGroupNameContains": "<p>A filter that returns the instance groups whose name contain a specified string.</p>",
         "UpdateClusterSoftwareInstanceGroupSpecification$InstanceGroupName": "<p>The name of the instance group to update.</p>"
       }
@@ -2421,7 +2427,9 @@
       "refs": {
         "ClusterInstanceGroupDetails$InstanceStorageConfigs": "<p>The additional storage configurations for the instances in the SageMaker HyperPod cluster instance group.</p>",
         "ClusterInstanceGroupSpecification$InstanceStorageConfigs": "<p>Specifies the additional storage configurations for the instances in the SageMaker HyperPod cluster instance group.</p>",
-        "ClusterNodeDetails$InstanceStorageConfigs": "<p>The configurations of additional storage specified to the instance group where the instance (node) is launched.</p>"
+        "ClusterNodeDetails$InstanceStorageConfigs": "<p>The configurations of additional storage specified to the instance group where the instance (node) is launched.</p>",
+        "ClusterRestrictedInstanceGroupDetails$InstanceStorageConfigs": "<p>The additional storage configurations for the instances in the SageMaker HyperPod cluster restricted instance group.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$InstanceStorageConfigs": "<p>Specifies the additional storage configurations for the instances in the SageMaker HyperPod cluster restricted instance group.</p>"
       }
     },
     "ClusterInstanceType": {
@@ -2431,6 +2439,8 @@
         "ClusterInstanceGroupSpecification$InstanceType": "<p>Specifies the instance type of the instance group.</p>",
         "ClusterNodeDetails$InstanceType": "<p>The type of the instance.</p>",
         "ClusterNodeSummary$InstanceType": "<p>The type of the instance.</p>",
+        "ClusterRestrictedInstanceGroupDetails$InstanceType": "<p>The instance type of the restricted instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$InstanceType": "<p>Specifies the instance type of the restricted instance group.</p>",
         "ComputeQuotaResourceConfig$InstanceType": "<p>The instance type of the instance group for the cluster.</p>"
       }
     },
@@ -2512,7 +2522,8 @@
     "ClusterNonNegativeInstanceCount": {
       "base": null,
       "refs": {
-        "ClusterInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the instance group of a SageMaker HyperPod cluster.</p>"
+        "ClusterInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the instance group of a SageMaker HyperPod cluster.</p>",
+        "ClusterRestrictedInstanceGroupDetails$CurrentCount": "<p>The number of instances that are currently in the restricted instance group of a SageMaker HyperPod cluster.</p>"
       }
     },
     "ClusterOrchestrator": {
@@ -2544,6 +2555,31 @@
       "base": null,
       "refs": {
         "ClusterNodeDetails$PrivatePrimaryIpv6": "<p>The private primary IPv6 address of the SageMaker HyperPod cluster node when configured with an Amazon VPC that supports IPv6 and includes subnets with IPv6 addressing enabled in either the cluster Amazon VPC configuration or the instance group Amazon VPC configuration.</p>"
+      }
+    },
+    "ClusterRestrictedInstanceGroupDetails": {
+      "base": "<p>The instance group details of the restricted instance group (RIG).</p>",
+      "refs": {
+        "ClusterRestrictedInstanceGroupDetailsList$member": null
+      }
+    },
+    "ClusterRestrictedInstanceGroupDetailsList": {
+      "base": null,
+      "refs": {
+        "DescribeClusterResponse$RestrictedInstanceGroups": "<p>The specialized instance groups for training models like Amazon Nova to be created in the SageMaker HyperPod cluster.</p>"
+      }
+    },
+    "ClusterRestrictedInstanceGroupSpecification": {
+      "base": "<p>The specifications of a restricted instance group that you need to define.</p>",
+      "refs": {
+        "ClusterRestrictedInstanceGroupSpecifications$member": null
+      }
+    },
+    "ClusterRestrictedInstanceGroupSpecifications": {
+      "base": null,
+      "refs": {
+        "CreateClusterRequest$RestrictedInstanceGroups": "<p>The specialized instance groups for training models like Amazon Nova to be created in the SageMaker HyperPod cluster.</p>",
+        "UpdateClusterRequest$RestrictedInstanceGroups": "<p>The specialized instance groups for training models like Amazon Nova to be created in the SageMaker HyperPod cluster.</p>"
       }
     },
     "ClusterSchedulerConfigArn": {
@@ -2615,7 +2651,9 @@
       "refs": {
         "ClusterInstanceGroupDetails$ThreadsPerCore": "<p>The number you specified to <code>TreadsPerCore</code> in <code>CreateCluster</code> for enabling or disabling multithreading. For instance types that support multithreading, you can specify 1 for disabling multithreading and 2 for enabling multithreading. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
         "ClusterInstanceGroupSpecification$ThreadsPerCore": "<p>Specifies the value for <b>Threads per core</b>. For instance types that support multithreading, you can specify <code>1</code> for disabling multithreading and <code>2</code> for enabling multithreading. For instance types that doesn't support multithreading, specify <code>1</code>. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
-        "ClusterNodeDetails$ThreadsPerCore": "<p>The number of threads per CPU core you specified under <code>CreateCluster</code>.</p>"
+        "ClusterNodeDetails$ThreadsPerCore": "<p>The number of threads per CPU core you specified under <code>CreateCluster</code>.</p>",
+        "ClusterRestrictedInstanceGroupDetails$ThreadsPerCore": "<p>The number you specified to <code>TreadsPerCore</code> in <code>CreateCluster</code> for enabling or disabling multithreading. For instance types that support multithreading, you can specify 1 for disabling multithreading and 2 for enabling multithreading. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$ThreadsPerCore": "<p>The number you specified to <code>TreadsPerCore</code> in <code>CreateCluster</code> for enabling or disabling multithreading. For instance types that support multithreading, you can specify 1 for disabling multithreading and 2 for enabling multithreading. For more information, see the reference table of <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cpu-options-supported-instances-values.html\">CPU cores and threads per CPU core per instance type</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>"
       }
     },
     "CodeEditorAppImageConfig": {
@@ -6008,6 +6046,18 @@
         "UpdateDevicesRequest$DeviceFleetName": "<p>The name of the fleet the devices belong to.</p>"
       }
     },
+    "EnvironmentConfig": {
+      "base": "<p>The configuration for the restricted instance groups (RIG) environment.</p>",
+      "refs": {
+        "ClusterRestrictedInstanceGroupSpecification$EnvironmentConfig": "<p>The configuration for the restricted instance groups (RIG) environment.</p>"
+      }
+    },
+    "EnvironmentConfigDetails": {
+      "base": "<p>The configuration details for the restricted instance groups (RIG) environment.</p>",
+      "refs": {
+        "ClusterRestrictedInstanceGroupDetails$EnvironmentConfig": "<p>The configuration for the restricted instance groups (RIG) environment.</p>"
+      }
+    },
     "EnvironmentKey": {
       "base": null,
       "refs": {
@@ -6275,6 +6325,13 @@
         "DescribeEndpointOutput$ExplainerConfig": "<p>The configuration parameters for an explainer.</p>"
       }
     },
+    "FSxLustreConfig": {
+      "base": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>",
+      "refs": {
+        "EnvironmentConfig$FSxLustreConfig": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>",
+        "EnvironmentConfigDetails$FSxLustreConfig": "<p>Configuration settings for an Amazon FSx for Lustre file system to be used with the cluster.</p>"
+      }
+    },
     "FSxLustreFileSystem": {
       "base": "<p>A custom file system in Amazon FSx for Lustre.</p>",
       "refs": {
@@ -6285,6 +6342,18 @@
       "base": "<p>The settings for assigning a custom Amazon FSx for Lustre file system to a user profile or space for an Amazon SageMaker Domain.</p>",
       "refs": {
         "CustomFileSystemConfig$FSxLustreFileSystemConfig": "<p>The settings for a custom Amazon FSx for Lustre file system.</p>"
+      }
+    },
+    "FSxLustrePerUnitStorageThroughput": {
+      "base": null,
+      "refs": {
+        "FSxLustreConfig$PerUnitStorageThroughput": "<p>The throughput capacity of the Amazon FSx for Lustre file system, measured in MB/s per TiB of storage.</p>"
+      }
+    },
+    "FSxLustreSizeInGiB": {
+      "base": null,
+      "refs": {
+        "FSxLustreConfig$SizeInGiB": "<p>The storage capacity of the Amazon FSx for Lustre file system, specified in gibibytes (GiB).</p>"
       }
     },
     "FailStepMetadata": {
@@ -8287,13 +8356,15 @@
     "InstanceGroupStatus": {
       "base": null,
       "refs": {
-        "ClusterInstanceGroupDetails$Status": "<p>The current status of the cluster instance group.</p> <ul> <li> <p> <code>InService</code>: The instance group is active and healthy.</p> </li> <li> <p> <code>Creating</code>: The instance group is being provisioned.</p> </li> <li> <p> <code>Updating</code>: The instance group is being updated.</p> </li> <li> <p> <code>Failed</code>: The instance group has failed to provision or is no longer healthy.</p> </li> <li> <p> <code>Degraded</code>: The instance group is degraded, meaning that some instances have failed to provision or are no longer healthy.</p> </li> <li> <p> <code>Deleting</code>: The instance group is being deleted.</p> </li> </ul>"
+        "ClusterInstanceGroupDetails$Status": "<p>The current status of the cluster instance group.</p> <ul> <li> <p> <code>InService</code>: The instance group is active and healthy.</p> </li> <li> <p> <code>Creating</code>: The instance group is being provisioned.</p> </li> <li> <p> <code>Updating</code>: The instance group is being updated.</p> </li> <li> <p> <code>Failed</code>: The instance group has failed to provision or is no longer healthy.</p> </li> <li> <p> <code>Degraded</code>: The instance group is degraded, meaning that some instances have failed to provision or are no longer healthy.</p> </li> <li> <p> <code>Deleting</code>: The instance group is being deleted.</p> </li> </ul>",
+        "ClusterRestrictedInstanceGroupDetails$Status": "<p>The current status of the cluster's restricted instance group.</p> <ul> <li> <p> <code>InService</code>: The restricted instance group is active and healthy.</p> </li> <li> <p> <code>Creating</code>: The restricted instance group is being provisioned.</p> </li> <li> <p> <code>Updating</code>: The restricted instance group is being updated.</p> </li> <li> <p> <code>Failed</code>: The restricted instance group has failed to provision or is no longer healthy.</p> </li> <li> <p> <code>Degraded</code>: The restricted instance group is degraded, meaning that some instances have failed to provision or are no longer healthy.</p> </li> <li> <p> <code>Deleting</code>: The restricted instance group is being deleted.</p> </li> </ul>"
       }
     },
     "InstanceGroupTrainingPlanStatus": {
       "base": null,
       "refs": {
-        "ClusterInstanceGroupDetails$TrainingPlanStatus": "<p>The current status of the training plan associated with this cluster instance group.</p>"
+        "ClusterInstanceGroupDetails$TrainingPlanStatus": "<p>The current status of the training plan associated with this cluster instance group.</p>",
+        "ClusterRestrictedInstanceGroupDetails$TrainingPlanStatus": "<p>The current status of the training plan associated with this cluster restricted instance group.</p>"
       }
     },
     "InstanceGroups": {
@@ -9483,6 +9554,14 @@
       "base": null,
       "refs": {}
     },
+    "ListPipelineVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPipelineVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListPipelinesRequest": {
       "base": null,
       "refs": {}
@@ -9860,6 +9939,7 @@
         "ListPipelineExecutionStepsRequest$MaxResults": "<p>The maximum number of pipeline execution steps to return in the response.</p>",
         "ListPipelineExecutionsRequest$MaxResults": "<p>The maximum number of pipeline executions to return in the response.</p>",
         "ListPipelineParametersForExecutionRequest$MaxResults": "<p>The maximum number of parameters to return in the response.</p>",
+        "ListPipelineVersionsRequest$MaxResults": "<p>The maximum number of pipeline versions to return in the response.</p>",
         "ListPipelinesRequest$MaxResults": "<p>The maximum number of pipelines to return in the response.</p>",
         "ListProcessingJobsRequest$MaxResults": "<p>The maximum number of processing jobs to return in the response.</p>",
         "ListProjectsInput$MaxResults": "<p>The maximum number of projects to return in the response.</p>",
@@ -11572,6 +11652,8 @@
         "ListPipelineExecutionsResponse$NextToken": "<p>If the result of the previous <code>ListPipelineExecutions</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of pipeline executions, use the token in the next request.</p>",
         "ListPipelineParametersForExecutionRequest$NextToken": "<p>If the result of the previous <code>ListPipelineParametersForExecution</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of parameters, use the token in the next request.</p>",
         "ListPipelineParametersForExecutionResponse$NextToken": "<p>If the result of the previous <code>ListPipelineParametersForExecution</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of parameters, use the token in the next request.</p>",
+        "ListPipelineVersionsRequest$NextToken": "<p>If the result of the previous <code>ListPipelineVersions</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of pipeline versions, use this token in your next request.</p>",
+        "ListPipelineVersionsResponse$NextToken": "<p>If the result of the previous <code>ListPipelineVersions</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of pipeline versions, use this token in your next request.</p>",
         "ListPipelinesRequest$NextToken": "<p>If the result of the previous <code>ListPipelines</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of pipelines, use the token in the next request.</p>",
         "ListPipelinesResponse$NextToken": "<p>If the result of the previous <code>ListPipelines</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of pipelines, use the token in the next request.</p>",
         "ListProcessingJobsRequest$NextToken": "<p>If the result of the previous <code>ListProcessingJobs</code> request was truncated, the response includes a <code>NextToken</code>. To retrieve the next set of processing jobs, use the token in the next request.</p>",
@@ -11948,7 +12030,9 @@
       "base": null,
       "refs": {
         "ClusterInstanceGroupDetails$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>",
-        "ClusterInstanceGroupSpecification$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>"
+        "ClusterInstanceGroupSpecification$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster instance group is created or updated.</p>",
+        "ClusterRestrictedInstanceGroupDetails$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster's restricted instance group is created or updated.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$OnStartDeepHealthChecks": "<p>A flag indicating whether deep health checks should be performed when the cluster restricted instance group is created or updated.</p>"
       }
     },
     "OnlineStoreConfig": {
@@ -12474,7 +12558,11 @@
         "Pipeline$PipelineArn": "<p>The Amazon Resource Name (ARN) of the pipeline.</p>",
         "PipelineExecution$PipelineArn": "<p>The Amazon Resource Name (ARN) of the pipeline that was executed.</p>",
         "PipelineSummary$PipelineArn": "<p> The Amazon Resource Name (ARN) of the pipeline.</p>",
-        "UpdatePipelineResponse$PipelineArn": "<p>The Amazon Resource Name (ARN) of the updated pipeline.</p>"
+        "PipelineVersion$PipelineArn": "<p>The Amazon Resource Name (ARN) of the pipeline.</p>",
+        "PipelineVersionSummary$PipelineArn": "<p>The Amazon Resource Name (ARN) of the pipeline.</p>",
+        "UpdatePipelineResponse$PipelineArn": "<p>The Amazon Resource Name (ARN) of the updated pipeline.</p>",
+        "UpdatePipelineVersionRequest$PipelineArn": "<p>The Amazon Resource Name (ARN) of the pipeline.</p>",
+        "UpdatePipelineVersionResponse$PipelineArn": "<p>The Amazon Resource Name (ARN) of the pipeline.</p>"
       }
     },
     "PipelineDefinition": {
@@ -12520,6 +12608,8 @@
         "ListPipelineParametersForExecutionRequest$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "PipelineExecution$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "PipelineExecutionSummary$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
+        "PipelineVersion$LastExecutedPipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the most recent pipeline execution created from this pipeline version.</p>",
+        "PipelineVersionSummary$LastExecutionPipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the most recent pipeline execution created from this pipeline version.</p>",
         "RetryPipelineExecutionRequest$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "RetryPipelineExecutionResponse$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "SelectiveExecutionConfig$SourcePipelineExecutionArn": "<p>The ARN from a reference execution of the current pipeline. Used to copy input collaterals needed for the selected steps to run. The execution status of the pipeline can be either <code>Failed</code> or <code>Success</code>.</p> <p>This field is required if the steps you specify for <code>SelectedSteps</code> depend on output collaterals from any non-specified pipeline steps. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/pipelines-selective-ex.html\">Selective Execution for Pipeline Steps</a>.</p>",
@@ -12556,6 +12646,7 @@
         "DescribePipelineExecutionResponse$PipelineExecutionDisplayName": "<p>The display name of the pipeline execution.</p>",
         "PipelineExecution$PipelineExecutionDisplayName": "<p>The display name of the pipeline execution.</p>",
         "PipelineExecutionSummary$PipelineExecutionDisplayName": "<p>The display name of the pipeline execution.</p>",
+        "PipelineVersion$LastExecutedPipelineExecutionDisplayName": "<p>The display name of the most recent pipeline execution created from this pipeline version.</p>",
         "StartPipelineExecutionRequest$PipelineExecutionDisplayName": "<p>The display name of the pipeline execution.</p>",
         "UpdatePipelineExecutionRequest$PipelineExecutionDisplayName": "<p>The display name of the pipeline execution.</p>"
       }
@@ -12565,7 +12656,8 @@
       "refs": {
         "DescribePipelineExecutionResponse$PipelineExecutionStatus": "<p>The status of the pipeline execution.</p>",
         "PipelineExecution$PipelineExecutionStatus": "<p>The status of the pipeline status.</p>",
-        "PipelineExecutionSummary$PipelineExecutionStatus": "<p>The status of the pipeline execution.</p>"
+        "PipelineExecutionSummary$PipelineExecutionStatus": "<p>The status of the pipeline execution.</p>",
+        "PipelineVersion$LastExecutedPipelineExecutionStatus": "<p>The status of the most recent pipeline execution created from this pipeline version.</p>"
       }
     },
     "PipelineExecutionStep": {
@@ -12627,6 +12719,7 @@
       "refs": {
         "DescribePipelineRequest$PipelineName": "<p>The name or Amazon Resource Name (ARN) of the pipeline to describe.</p>",
         "ListPipelineExecutionsRequest$PipelineName": "<p>The name or Amazon Resource Name (ARN) of the pipeline.</p>",
+        "ListPipelineVersionsRequest$PipelineName": "<p>The Amazon Resource Name (ARN) of the pipeline.</p>",
         "StartPipelineExecutionRequest$PipelineName": "<p>The name or Amazon Resource Name (ARN) of the pipeline.</p>"
       }
     },
@@ -12653,6 +12746,57 @@
       "base": null,
       "refs": {
         "ListPipelinesResponse$PipelineSummaries": "<p>Contains a sorted list of <code>PipelineSummary</code> objects matching the specified filters. Each <code>PipelineSummary</code> consists of PipelineArn, PipelineName, ExperimentName, PipelineDescription, CreationTime, LastModifiedTime, LastRunTime, and RoleArn. This list can be empty. </p>"
+      }
+    },
+    "PipelineVersion": {
+      "base": "<p>The version of the pipeline.</p>",
+      "refs": {
+        "SearchRecord$PipelineVersion": "<p>The version of the pipeline.</p>"
+      }
+    },
+    "PipelineVersionDescription": {
+      "base": null,
+      "refs": {
+        "DescribePipelineResponse$PipelineVersionDescription": "<p>The description of the pipeline version.</p>",
+        "PipelineVersion$PipelineVersionDescription": "<p>The description of the pipeline version.</p>",
+        "PipelineVersionSummary$PipelineVersionDescription": "<p>The description of the pipeline version.</p>",
+        "UpdatePipelineVersionRequest$PipelineVersionDescription": "<p>The description of the pipeline version.</p>"
+      }
+    },
+    "PipelineVersionId": {
+      "base": null,
+      "refs": {
+        "DescribePipelineExecutionResponse$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
+        "DescribePipelineRequest$PipelineVersionId": "<p>The ID of the pipeline version to describe.</p>",
+        "PipelineExecution$PipelineVersionId": "<p>The ID of the pipeline version that started this execution.</p>",
+        "PipelineVersion$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
+        "PipelineVersionSummary$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
+        "StartPipelineExecutionRequest$PipelineVersionId": "<p>The ID of the pipeline version to start execution from.</p>",
+        "UpdatePipelineResponse$PipelineVersionId": "<p>The ID of the pipeline version.</p>",
+        "UpdatePipelineVersionRequest$PipelineVersionId": "<p>The pipeline version ID to update.</p>",
+        "UpdatePipelineVersionResponse$PipelineVersionId": "<p>The ID of the pipeline version.</p>"
+      }
+    },
+    "PipelineVersionName": {
+      "base": null,
+      "refs": {
+        "DescribePipelineResponse$PipelineVersionDisplayName": "<p>The display name of the pipeline version.</p>",
+        "PipelineExecution$PipelineVersionDisplayName": "<p>The display name of the pipeline version that started this execution.</p>",
+        "PipelineVersion$PipelineVersionDisplayName": "<p>The display name of the pipeline version.</p>",
+        "PipelineVersionSummary$PipelineVersionDisplayName": "<p>The display name of the pipeline version.</p>",
+        "UpdatePipelineVersionRequest$PipelineVersionDisplayName": "<p>The display name of the pipeline version.</p>"
+      }
+    },
+    "PipelineVersionSummary": {
+      "base": "<p>The summary of the pipeline version.</p>",
+      "refs": {
+        "PipelineVersionSummaryList$member": null
+      }
+    },
+    "PipelineVersionSummaryList": {
+      "base": null,
+      "refs": {
+        "ListPipelineVersionsResponse$PipelineVersionSummaries": "<p>Contains a sorted list of pipeline version summary objects matching the specified filters. Each version summary includes the pipeline version ID, the creation date, and the last pipeline execution created from that version. This list can be empty.</p>"
       }
     },
     "PlatformIdentifier": {
@@ -14098,6 +14242,8 @@
         "CfnTemplateProviderDetail$RoleARN": "<p> The IAM role used by CloudFormation to create the stack. </p>",
         "ClusterInstanceGroupDetails$ExecutionRole": "<p>The execution role for the instance group to assume.</p>",
         "ClusterInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the instance group.</p>",
+        "ClusterRestrictedInstanceGroupDetails$ExecutionRole": "<p>The execution role for the restricted instance group to assume.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the restricted instance group.</p>",
         "CreateAutoMLJobRequest$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateAutoMLJobV2Request$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateCompilationJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker AI to perform tasks on your behalf. </p> <p>During model compilation, Amazon SageMaker AI needs your permission to:</p> <ul> <li> <p>Read input data from an S3 bucket</p> </li> <li> <p>Write model artifacts to an S3 bucket</p> </li> <li> <p>Write logs to Amazon CloudWatch Logs</p> </li> <li> <p>Publish metrics to Amazon CloudWatch</p> </li> </ul> <p>You grant permissions for all of these tasks to an IAM role. To pass this role to Amazon SageMaker AI, the caller of this API must have the <code>iam:PassRole</code> permission. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">Amazon SageMaker AI Roles.</a> </p>",
@@ -14304,6 +14450,7 @@
         "DescribeLabelingJobResponse$LabelCategoryConfigS3Uri": "<p>The S3 location of the JSON file that defines the categories used to label data objects. Please note the following label-category limits:</p> <ul> <li> <p>Semantic segmentation labeling jobs using automated labeling: 20 labels</p> </li> <li> <p>Box bounding labeling jobs (all): 10 labels</p> </li> </ul> <p>The file is a JSON structure in the following format:</p> <p> <code>{</code> </p> <p> <code> \"document-version\": \"2018-11-28\"</code> </p> <p> <code> \"labels\": [</code> </p> <p> <code> {</code> </p> <p> <code> \"label\": \"<i>label 1</i>\"</code> </p> <p> <code> },</code> </p> <p> <code> {</code> </p> <p> <code> \"label\": \"<i>label 2</i>\"</code> </p> <p> <code> },</code> </p> <p> <code> ...</code> </p> <p> <code> {</code> </p> <p> <code> \"label\": \"<i>label n</i>\"</code> </p> <p> <code> }</code> </p> <p> <code> ]</code> </p> <p> <code>}</code> </p>",
         "DescribeMlflowTrackingServerResponse$ArtifactStoreUri": "<p>The S3 URI of the general purpose bucket used as the MLflow Tracking Server artifact store.</p>",
         "EdgeOutputConfig$S3OutputLocation": "<p>The Amazon Simple Storage (S3) bucker URI.</p>",
+        "EnvironmentConfigDetails$S3OutputPath": "<p>The Amazon S3 path where output data from the restricted instance group (RIG) environment will be stored.</p>",
         "FileSource$S3Uri": "<p>The Amazon S3 URI for the file source.</p>",
         "FlowDefinitionOutputConfig$S3OutputPath": "<p>The Amazon S3 path where the object containing human output will be made available.</p> <p>To learn more about the format of Amazon A2I output data, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/a2i-output-data.html\">Amazon A2I Output Data</a>.</p>",
         "InferenceRecommendationsJob$SamplePayloadUrl": "<p>The Amazon Simple Storage Service (Amazon S3) path where the sample payload is stored. This path must point to a single gzip compressed tar archive (.tar.gz suffix).</p>",
@@ -14469,7 +14616,9 @@
       "base": "<p>The configuration object of the schedule that SageMaker follows when updating the AMI.</p>",
       "refs": {
         "ClusterInstanceGroupDetails$ScheduledUpdateConfig": "<p>The configuration object of the schedule that SageMaker follows when updating the AMI.</p>",
-        "ClusterInstanceGroupSpecification$ScheduledUpdateConfig": "<p>The configuration object of the schedule that SageMaker uses to update the AMI.</p>"
+        "ClusterInstanceGroupSpecification$ScheduledUpdateConfig": "<p>The configuration object of the schedule that SageMaker uses to update the AMI.</p>",
+        "ClusterRestrictedInstanceGroupDetails$ScheduledUpdateConfig": null,
+        "ClusterRestrictedInstanceGroupSpecification$ScheduledUpdateConfig": null
       }
     },
     "SchedulerConfig": {
@@ -14883,6 +15032,7 @@
         "ListOptimizationJobsRequest$SortOrder": "<p>The sort order for results. The default is <code>Ascending</code> </p>",
         "ListPipelineExecutionStepsRequest$SortOrder": "<p>The field by which to sort results. The default is <code>CreatedTime</code>.</p>",
         "ListPipelineExecutionsRequest$SortOrder": "<p>The sort order for results.</p>",
+        "ListPipelineVersionsRequest$SortOrder": "<p>The sort order for the results.</p>",
         "ListPipelinesRequest$SortOrder": "<p>The sort order for results.</p>",
         "ListProcessingJobsRequest$SortOrder": "<p>The sort order for results. The default is <code>Ascending</code>.</p>",
         "ListSpacesRequest$SortOrder": "<p>The sort order for the results. The default is <code>Ascending</code>.</p>",
@@ -16388,6 +16538,8 @@
         "ListMonitoringSchedulesRequest$LastModifiedTimeAfter": "<p>A filter that returns only monitoring schedules modified after a specified time.</p>",
         "ListPipelineExecutionsRequest$CreatedAfter": "<p>A filter that returns the pipeline executions that were created after a specified time.</p>",
         "ListPipelineExecutionsRequest$CreatedBefore": "<p>A filter that returns the pipeline executions that were created before a specified time.</p>",
+        "ListPipelineVersionsRequest$CreatedAfter": "<p>A filter that returns the pipeline versions that were created after a specified time.</p>",
+        "ListPipelineVersionsRequest$CreatedBefore": "<p>A filter that returns the pipeline versions that were created before a specified time.</p>",
         "ListPipelinesRequest$CreatedAfter": "<p>A filter that returns the pipelines that were created after a specified time.</p>",
         "ListPipelinesRequest$CreatedBefore": "<p>A filter that returns the pipelines that were created before a specified time.</p>",
         "ListProcessingJobsRequest$CreationTimeAfter": "<p>A filter that returns only processing jobs created after the specified time.</p>",
@@ -16460,6 +16612,9 @@
         "PipelineSummary$CreationTime": "<p>The creation time of the pipeline.</p>",
         "PipelineSummary$LastModifiedTime": "<p>The time that the pipeline was last modified.</p>",
         "PipelineSummary$LastExecutionTime": "<p>The last time that a pipeline execution began.</p>",
+        "PipelineVersion$CreationTime": "<p>The creation time of the pipeline version.</p>",
+        "PipelineVersion$LastModifiedTime": "<p>The time when the pipeline version was last modified.</p>",
+        "PipelineVersionSummary$CreationTime": "<p>The creation time of the pipeline version.</p>",
         "ProcessingJob$ProcessingEndTime": "<p>The time that the processing job ended.</p>",
         "ProcessingJob$ProcessingStartTime": "<p>The time that the processing job started.</p>",
         "ProcessingJob$LastModifiedTime": "<p>The time the processing job was last modified.</p>",
@@ -16842,6 +16997,8 @@
       "refs": {
         "ClusterInstanceGroupDetails$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan associated with this cluster instance group.</p> <p>For more information about how to reserve GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "ClusterInstanceGroupSpecification$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to use for this cluster instance group.</p> <p>For more information about how to reserve GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
+        "ClusterRestrictedInstanceGroupDetails$TrainingPlanArn": "<p>The Amazon Resource Name (ARN) of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
+        "ClusterRestrictedInstanceGroupSpecification$TrainingPlanArn": "<p>The Amazon Resource Name (ARN) of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
         "CreateTrainingPlanResponse$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the created training plan.</p>",
         "DescribeTrainingPlanResponse$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan.</p>",
         "ListClustersRequest$TrainingPlanArn": "<p>The Amazon Resource Name (ARN); of the training plan to filter clusters by. For more information about reserving GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
@@ -17730,6 +17887,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdatePipelineVersionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePipelineVersionResponse": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateProjectInput": {
       "base": null,
       "refs": {}
@@ -17819,7 +17984,7 @@
       }
     },
     "UserContext": {
-      "base": "<p>Information about the user who created or modified an experiment, trial, trial component, lineage group, project, or model card.</p>",
+      "base": "<p>Information about the user who created or modified a SageMaker resource.</p>",
       "refs": {
         "AssociationSummary$CreatedBy": null,
         "DescribeActionResponse$CreatedBy": null,
@@ -17866,6 +18031,8 @@
         "Pipeline$LastModifiedBy": null,
         "PipelineExecution$CreatedBy": null,
         "PipelineExecution$LastModifiedBy": null,
+        "PipelineVersion$CreatedBy": null,
+        "PipelineVersion$LastModifiedBy": null,
         "Project$CreatedBy": "<p>Who created the project.</p>",
         "Project$LastModifiedBy": null,
         "Trial$CreatedBy": "<p>Who created the trial.</p>",
@@ -18106,6 +18273,8 @@
         "ClusterInstanceGroupDetails$OverrideVpcConfig": "<p>The customized Amazon VPC configuration at the instance group level that overrides the default Amazon VPC configuration of the SageMaker HyperPod cluster.</p>",
         "ClusterInstanceGroupSpecification$OverrideVpcConfig": "<p>To configure multi-AZ deployments, customize the Amazon VPC configuration at the instance group level. You can specify different subnets and security groups across different AZs in the instance group specification to override a SageMaker HyperPod cluster's default Amazon VPC configuration. For more information about deploying a cluster in multiple AZs, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-multiple-availability-zones\">Setting up SageMaker HyperPod clusters across multiple AZs</a>.</p> <note> <p>When your Amazon VPC and subnets support IPv6, network communications differ based on the cluster orchestration platform:</p> <ul> <li> <p>Slurm-orchestrated clusters automatically configure nodes with dual IPv6 and IPv4 addresses, allowing immediate IPv6 network communications.</p> </li> <li> <p>In Amazon EKS-orchestrated clusters, nodes receive dual-stack addressing, but pods can only use IPv6 when the Amazon EKS cluster is explicitly IPv6-enabled. For information about deploying an IPv6 Amazon EKS cluster, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/deploy-ipv6-cluster.html#_deploy_an_ipv6_cluster_with_eksctl\">Amazon EKS IPv6 Cluster Deployment</a>.</p> </li> </ul> <p>Additional resources for IPv6 configuration:</p> <ul> <li> <p>For information about adding IPv6 support to your VPC, see to <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html\">IPv6 Support for VPC</a>.</p> </li> <li> <p>For information about creating a new IPv6-compatible VPC, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html\">Amazon VPC Creation Guide</a>.</p> </li> <li> <p>To configure SageMaker HyperPod with a custom Amazon VPC, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-optional-vpc\">Custom Amazon VPC Setup for SageMaker HyperPod</a>.</p> </li> </ul> </note>",
         "ClusterNodeDetails$OverrideVpcConfig": "<p>The customized Amazon VPC configuration at the instance group level that overrides the default Amazon VPC configuration of the SageMaker HyperPod cluster.</p>",
+        "ClusterRestrictedInstanceGroupDetails$OverrideVpcConfig": null,
+        "ClusterRestrictedInstanceGroupSpecification$OverrideVpcConfig": null,
         "CreateClusterRequest$VpcConfig": "<p>Specifies the Amazon Virtual Private Cloud (VPC) that is associated with the Amazon SageMaker HyperPod cluster. You can control access to and from your resources by configuring your VPC. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html\">Give SageMaker access to resources in your Amazon VPC</a>.</p> <note> <p>When your Amazon VPC and subnets support IPv6, network communications differ based on the cluster orchestration platform:</p> <ul> <li> <p>Slurm-orchestrated clusters automatically configure nodes with dual IPv6 and IPv4 addresses, allowing immediate IPv6 network communications.</p> </li> <li> <p>In Amazon EKS-orchestrated clusters, nodes receive dual-stack addressing, but pods can only use IPv6 when the Amazon EKS cluster is explicitly IPv6-enabled. For information about deploying an IPv6 Amazon EKS cluster, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/deploy-ipv6-cluster.html#_deploy_an_ipv6_cluster_with_eksctl\">Amazon EKS IPv6 Cluster Deployment</a>.</p> </li> </ul> <p>Additional resources for IPv6 configuration:</p> <ul> <li> <p>For information about adding IPv6 support to your VPC, see to <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/vpc-migrate-ipv6.html\">IPv6 Support for VPC</a>.</p> </li> <li> <p>For information about creating a new IPv6-compatible VPC, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html\">Amazon VPC Creation Guide</a>.</p> </li> <li> <p>To configure SageMaker HyperPod with a custom Amazon VPC, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-prerequisites.html#sagemaker-hyperpod-prerequisites-optional-vpc\">Custom Amazon VPC Setup for SageMaker HyperPod</a>.</p> </li> </ul> </note>",
         "CreateEndpointConfigInput$VpcConfig": null,
         "CreateModelInput$VpcConfig": "<p>A <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VpcConfig.html\">VpcConfig</a> object that specifies the VPC that you want your model to connect to. Control access to and from your model container by configuring the VPC. <code>VpcConfig</code> is used in hosting services and in batch transform. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/host-vpc.html\">Protect Endpoints by Using an Amazon Virtual Private Cloud</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-vpc.html\">Protect Data in Batch Transform Jobs by Using an Amazon Virtual Private Cloud</a>.</p>",

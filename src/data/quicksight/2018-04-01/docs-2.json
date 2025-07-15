@@ -133,7 +133,7 @@
     "ListIAMPolicyAssignments": "<p>Lists the IAM policy assignments in the current Amazon QuickSight account.</p>",
     "ListIAMPolicyAssignmentsForUser": "<p>Lists all of the IAM policy assignments, including the Amazon Resource Names (ARNs), for the IAM policies assigned to the specified user and group, or groups that the user belongs to.</p>",
     "ListIdentityPropagationConfigs": "<p>Lists all services and authorized targets that the Amazon QuickSight IAM Identity Center application can access.</p> <p>This operation is only supported for Amazon QuickSight accounts that use IAM Identity Center.</p>",
-    "ListIngestions": "<p>Lists the history of SPICE ingestions for a dataset.</p>",
+    "ListIngestions": "<p>Lists the history of SPICE ingestions for a dataset. Limited to 5 TPS per user and 25 TPS per account.</p>",
     "ListNamespaces": "<p>Lists the namespaces for the specified Amazon Web Services account. This operation doesn't list deleted namespaces.</p>",
     "ListRefreshSchedules": "<p>Lists the refresh schedules of a dataset. Each dataset can have up to 5 schedules. </p>",
     "ListRoleMemberships": "<p>Lists all groups that are associated with a role.</p>",
@@ -3524,6 +3524,20 @@
       "base": "<p>A list of custom filter values.</p>",
       "refs": {
         "CategoryFilterConfiguration$CustomFilterListConfiguration": "<p>A list of custom filter values. In the Amazon QuickSight console, this filter type is called a custom filter list.</p>"
+      }
+    },
+    "CustomInstructions": {
+      "base": "<p>Instructions that provide additional guidance and context for response generation.</p>",
+      "refs": {
+        "CreateTopicRequest$CustomInstructions": "<p>Custom instructions for the topic.</p>",
+        "DescribeTopicResponse$CustomInstructions": "<p>Custom instructions for the topic.</p>",
+        "UpdateTopicRequest$CustomInstructions": "<p>Custom instructions for the topic.</p>"
+      }
+    },
+    "CustomInstructionsString": {
+      "base": null,
+      "refs": {
+        "CustomInstructions$CustomInstructionsString": "<p>A text field for providing additional guidance or context for response generation.</p>"
       }
     },
     "CustomLabel": {

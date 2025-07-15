@@ -2201,6 +2201,18 @@
         "LoopIncompatibleNodeTypeFlowValidationDetails$incompatibleNodeType": "<p>The node type of the incompatible node in the DoWhile loop. Some node types, like a condition node, aren't allowed in a DoWhile loop.</p>"
       }
     },
+    "IndexArn": {
+      "base": null,
+      "refs": {
+        "S3VectorsConfiguration$indexArn": "<p>The Amazon Resource Name (ARN) of the vector index used for the knowledge base. This ARN identifies the specific vector index resource within Amazon Bedrock.</p>"
+      }
+    },
+    "IndexName": {
+      "base": null,
+      "refs": {
+        "S3VectorsConfiguration$indexName": "<p>The name of the vector index used for the knowledge base. This name identifies the vector index within the Amazon Bedrock service.</p>"
+      }
+    },
     "InferenceConfiguration": {
       "base": "<p>Contains inference parameters to use when the agent invokes a foundation model in the part of the agent sequence defined by the <code>promptType</code>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>.</p>",
       "refs": {
@@ -3952,6 +3964,12 @@
         "S3DataSourceConfiguration$inclusionPrefixes": "<p>A list of S3 prefixes to include certain files or content. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-prefixes.html\">Organizing objects using prefixes</a>.</p>"
       }
     },
+    "S3VectorsConfiguration": {
+      "base": "<p>Contains the storage configuration of the knowledge base for S3 vectors.</p>",
+      "refs": {
+        "StorageConfiguration$s3VectorsConfiguration": "<p>The configuration settings for storing knowledge base data using S3 vectors. This includes vector index information and S3 bucket details for vector storage.</p>"
+      }
+    },
     "SalesforceAuthType": {
       "base": null,
       "refs": {
@@ -4636,6 +4654,12 @@
       "base": null,
       "refs": {
         "ValidationException$fieldList": "<p>A list of objects containing fields that caused validation errors and their corresponding validation error messages.</p>"
+      }
+    },
+    "VectorBucketArn": {
+      "base": null,
+      "refs": {
+        "S3VectorsConfiguration$vectorBucketArn": "<p>The Amazon Resource Name (ARN) of the S3 bucket where vector embeddings are stored. This bucket contains the vector data used by the knowledge base.</p>"
       }
     },
     "VectorIngestionConfiguration": {

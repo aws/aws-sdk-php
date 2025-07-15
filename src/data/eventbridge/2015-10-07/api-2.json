@@ -1417,6 +1417,7 @@
         "Description":{"shape":"EventBusDescription"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1426,7 +1427,8 @@
         "EventBusArn":{"shape":"String"},
         "Description":{"shape":"EventBusDescription"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
-        "DeadLetterConfig":{"shape":"DeadLetterConfig"}
+        "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"}
       }
     },
     "CreatePartnerEventSourceRequest":{
@@ -1698,6 +1700,7 @@
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "DeadLetterConfig":{"shape":"DeadLetterConfig"},
         "Policy":{"shape":"String"},
+        "LogConfig":{"shape":"LogConfig"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"}
       }
@@ -2065,6 +2068,13 @@
       "members":{},
       "exception":true
     },
+    "IncludeDetail":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "FULL"
+      ]
+    },
     "InputTransformer":{
       "type":"structure",
       "required":["InputTemplate"],
@@ -2114,6 +2124,15 @@
         "EC2",
         "FARGATE",
         "EXTERNAL"
+      ]
+    },
+    "Level":{
+      "type":"string",
+      "enum":[
+        "OFF",
+        "ERROR",
+        "INFO",
+        "TRACE"
       ]
     },
     "LimitExceededException":{
@@ -2335,6 +2354,13 @@
       "members":{
         "Targets":{"shape":"TargetList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "LogConfig":{
+      "type":"structure",
+      "members":{
+        "IncludeDetail":{"shape":"IncludeDetail"},
+        "Level":{"shape":"Level"}
       }
     },
     "Long":{"type":"long"},
@@ -3367,7 +3393,8 @@
         "Name":{"shape":"EventBusName"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "Description":{"shape":"EventBusDescription"},
-        "DeadLetterConfig":{"shape":"DeadLetterConfig"}
+        "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"}
       }
     },
     "UpdateEventBusResponse":{
@@ -3377,7 +3404,8 @@
         "Name":{"shape":"EventBusName"},
         "KmsKeyIdentifier":{"shape":"KmsKeyIdentifier"},
         "Description":{"shape":"EventBusDescription"},
-        "DeadLetterConfig":{"shape":"DeadLetterConfig"}
+        "DeadLetterConfig":{"shape":"DeadLetterConfig"},
+        "LogConfig":{"shape":"LogConfig"}
       }
     }
   }

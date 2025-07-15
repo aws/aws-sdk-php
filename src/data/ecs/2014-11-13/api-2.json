@@ -980,6 +980,15 @@
       "members":{},
       "exception":true
     },
+    "AdvancedConfiguration":{
+      "type":"structure",
+      "members":{
+        "alternateTargetGroupArn":{"shape":"String"},
+        "productionListenerRule":{"shape":"String"},
+        "testListenerRule":{"shape":"String"},
+        "roleArn":{"shape":"String"}
+      }
+    },
     "AgentUpdateStatus":{
       "type":"string",
       "enum":[
@@ -1783,7 +1792,10 @@
         "deploymentCircuitBreaker":{"shape":"DeploymentCircuitBreaker"},
         "maximumPercent":{"shape":"BoxedInteger"},
         "minimumHealthyPercent":{"shape":"BoxedInteger"},
-        "alarms":{"shape":"DeploymentAlarms"}
+        "alarms":{"shape":"DeploymentAlarms"},
+        "strategy":{"shape":"DeploymentStrategy"},
+        "bakeTimeInMinutes":{"shape":"BoxedInteger"},
+        "lifecycleHooks":{"shape":"DeploymentLifecycleHookList"}
       }
     },
     "DeploymentController":{
@@ -1807,12 +1819,48 @@
         "kmsKeyId":{"shape":"String"}
       }
     },
+    "DeploymentLifecycleHook":{
+      "type":"structure",
+      "members":{
+        "hookTargetArn":{"shape":"String"},
+        "roleArn":{"shape":"IAMRoleArn"},
+        "lifecycleStages":{"shape":"DeploymentLifecycleHookStageList"},
+        "hookDetails":{"shape":"HookDetails"}
+      }
+    },
+    "DeploymentLifecycleHookList":{
+      "type":"list",
+      "member":{"shape":"DeploymentLifecycleHook"}
+    },
+    "DeploymentLifecycleHookStage":{
+      "type":"string",
+      "enum":[
+        "RECONCILE_SERVICE",
+        "PRE_SCALE_UP",
+        "POST_SCALE_UP",
+        "TEST_TRAFFIC_SHIFT",
+        "POST_TEST_TRAFFIC_SHIFT",
+        "PRODUCTION_TRAFFIC_SHIFT",
+        "POST_PRODUCTION_TRAFFIC_SHIFT"
+      ]
+    },
+    "DeploymentLifecycleHookStageList":{
+      "type":"list",
+      "member":{"shape":"DeploymentLifecycleHookStage"}
+    },
     "DeploymentRolloutState":{
       "type":"string",
       "enum":[
         "COMPLETED",
         "FAILED",
         "IN_PROGRESS"
+      ]
+    },
+    "DeploymentStrategy":{
+      "type":"string",
+      "enum":[
+        "ROLLING",
+        "BLUE_GREEN"
       ]
     },
     "Deployments":{
@@ -2287,6 +2335,11 @@
         "UNKNOWN"
       ]
     },
+    "HookDetails":{
+      "type":"structure",
+      "members":{},
+      "document":true
+    },
     "HostEntry":{
       "type":"structure",
       "required":[
@@ -2611,7 +2664,8 @@
         "targetGroupArn":{"shape":"String"},
         "loadBalancerName":{"shape":"String"},
         "containerName":{"shape":"String"},
-        "containerPort":{"shape":"BoxedInteger"}
+        "containerPort":{"shape":"BoxedInteger"},
+        "advancedConfiguration":{"shape":"AdvancedConfiguration"}
       }
     },
     "LoadBalancers":{
@@ -3082,6 +3136,12 @@
       "type":"list",
       "member":{"shape":"Attribute"}
     },
+    "ResolvedConfiguration":{
+      "type":"structure",
+      "members":{
+        "loadBalancers":{"shape":"ServiceRevisionLoadBalancers"}
+      }
+    },
     "Resource":{
       "type":"structure",
       "members":{
@@ -3277,7 +3337,8 @@
       "required":["port"],
       "members":{
         "port":{"shape":"PortNumber"},
-        "dnsName":{"shape":"String"}
+        "dnsName":{"shape":"String"},
+        "testTrafficRules":{"shape":"ServiceConnectTestTrafficRules"}
       }
     },
     "ServiceConnectClientAliasList":{
@@ -3321,6 +3382,28 @@
       "type":"list",
       "member":{"shape":"ServiceConnectServiceResource"}
     },
+    "ServiceConnectTestTrafficHeaderMatchRules":{
+      "type":"structure",
+      "required":["exact"],
+      "members":{
+        "exact":{"shape":"String"}
+      }
+    },
+    "ServiceConnectTestTrafficHeaderRules":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"String"},
+        "value":{"shape":"ServiceConnectTestTrafficHeaderMatchRules"}
+      }
+    },
+    "ServiceConnectTestTrafficRules":{
+      "type":"structure",
+      "required":["header"],
+      "members":{
+        "header":{"shape":"ServiceConnectTestTrafficHeaderRules"}
+      }
+    },
     "ServiceConnectTlsCertificateAuthority":{
       "type":"structure",
       "members":{
@@ -3351,6 +3434,7 @@
         "targetServiceRevision":{"shape":"ServiceRevisionSummary"},
         "status":{"shape":"ServiceDeploymentStatus"},
         "statusReason":{"shape":"String"},
+        "lifecycleStage":{"shape":"ServiceDeploymentLifecycleStage"},
         "deploymentConfiguration":{"shape":"DeploymentConfiguration"},
         "rollback":{"shape":"Rollback"},
         "deploymentCircuitBreaker":{"shape":"ServiceDeploymentCircuitBreaker"},
@@ -3386,6 +3470,21 @@
         "failureCount":{"shape":"Integer"},
         "threshold":{"shape":"Integer"}
       }
+    },
+    "ServiceDeploymentLifecycleStage":{
+      "type":"string",
+      "enum":[
+        "RECONCILE_SERVICE",
+        "PRE_SCALE_UP",
+        "SCALE_UP",
+        "POST_SCALE_UP",
+        "TEST_TRAFFIC_SHIFT",
+        "POST_TEST_TRAFFIC_SHIFT",
+        "PRODUCTION_TRAFFIC_SHIFT",
+        "POST_PRODUCTION_TRAFFIC_SHIFT",
+        "BAKE_TIME",
+        "CLEAN_UP"
+      ]
     },
     "ServiceDeploymentNotFoundException":{
       "type":"structure",
@@ -3507,8 +3606,20 @@
         "volumeConfigurations":{"shape":"ServiceVolumeConfigurations"},
         "fargateEphemeralStorage":{"shape":"DeploymentEphemeralStorage"},
         "createdAt":{"shape":"Timestamp"},
-        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"}
+        "vpcLatticeConfigurations":{"shape":"VpcLatticeConfigurations"},
+        "resolvedConfiguration":{"shape":"ResolvedConfiguration"}
       }
+    },
+    "ServiceRevisionLoadBalancer":{
+      "type":"structure",
+      "members":{
+        "targetGroupArn":{"shape":"String"},
+        "productionListenerRule":{"shape":"String"}
+      }
+    },
+    "ServiceRevisionLoadBalancers":{
+      "type":"list",
+      "member":{"shape":"ServiceRevisionLoadBalancer"}
     },
     "ServiceRevisionSummary":{
       "type":"structure",
@@ -4264,6 +4375,7 @@
         "platformVersion":{"shape":"String"},
         "forceNewDeployment":{"shape":"Boolean"},
         "healthCheckGracePeriodSeconds":{"shape":"BoxedInteger"},
+        "deploymentController":{"shape":"DeploymentController"},
         "enableExecuteCommand":{"shape":"BoxedBoolean"},
         "enableECSManagedTags":{"shape":"BoxedBoolean"},
         "loadBalancers":{"shape":"LoadBalancers"},

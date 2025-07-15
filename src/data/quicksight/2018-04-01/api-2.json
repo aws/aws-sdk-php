@@ -7555,7 +7555,8 @@
         "TopicId":{"shape":"TopicId"},
         "Topic":{"shape":"TopicDetails"},
         "Tags":{"shape":"TagList"},
-        "FolderArns":{"shape":"FolderArnList"}
+        "FolderArns":{"shape":"FolderArnList"},
+        "CustomInstructions":{"shape":"CustomInstructions"}
       }
     },
     "CreateTopicResponse":{
@@ -7789,6 +7790,18 @@
         "SelectAllOptions":{"shape":"CategoryFilterSelectAllOptions"},
         "NullOption":{"shape":"FilterNullOption"}
       }
+    },
+    "CustomInstructions":{
+      "type":"structure",
+      "required":["CustomInstructionsString"],
+      "members":{
+        "CustomInstructionsString":{"shape":"CustomInstructionsString"}
+      }
+    },
+    "CustomInstructionsString":{
+      "type":"string",
+      "max":5000,
+      "sensitive":true
     },
     "CustomLabel":{
       "type":"string",
@@ -11804,7 +11817,8 @@
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
-        }
+        },
+        "CustomInstructions":{"shape":"CustomInstructions"}
       }
     },
     "DescribeUserRequest":{
@@ -24109,7 +24123,8 @@
           "location":"uri",
           "locationName":"TopicId"
         },
-        "Topic":{"shape":"TopicDetails"}
+        "Topic":{"shape":"TopicDetails"},
+        "CustomInstructions":{"shape":"CustomInstructions"}
       }
     },
     "UpdateTopicResponse":{

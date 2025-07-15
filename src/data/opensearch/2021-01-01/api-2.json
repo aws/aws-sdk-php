@@ -1225,13 +1225,15 @@
     "AIMLOptionsInput":{
       "type":"structure",
       "members":{
-        "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsInput"}
+        "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsInput"},
+        "S3VectorsEngine":{"shape":"S3VectorsEngine"}
       }
     },
     "AIMLOptionsOutput":{
       "type":"structure",
       "members":{
-        "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsOutput"}
+        "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsOutput"},
+        "S3VectorsEngine":{"shape":"S3VectorsEngine"}
       }
     },
     "AIMLOptionsStatus":{
@@ -1283,8 +1285,7 @@
     },
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -1916,8 +1917,7 @@
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -2148,8 +2148,7 @@
     },
     "DeleteApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDataSourceRequest":{
       "type":"structure",
@@ -2275,8 +2274,7 @@
     },
     "DependencyFailureException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":424},
       "exception":true
     },
@@ -2689,8 +2687,7 @@
     "DisableTimestamp":{"type":"timestamp"},
     "DisabledOperationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -3494,22 +3491,19 @@
     "IntegerClass":{"type":"integer"},
     "InternalException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true
     },
     "InvalidPaginationTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
     "InvalidTypeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -3558,8 +3552,7 @@
     },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -4698,15 +4691,13 @@
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -4725,8 +4716,7 @@
     },
     "RevokeVpcEndpointAccessResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RoleArn":{
       "type":"string",
@@ -4768,6 +4758,12 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "S3VectorsEngine":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
     },
     "SAMLEntityId":{
       "type":"string",
@@ -5400,8 +5396,7 @@
     },
     "ValidationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },

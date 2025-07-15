@@ -2,18 +2,24 @@
   "version": "2.0",
   "service": "<p>AWS re:Post Private is a private version of AWS re:Post for enterprises with Enterprise Support or Enterprise On-Ramp Support plans. It provides access to knowledge and experts to accelerate cloud adoption and increase developer productivity. With your organization-specific private re:Post, you can build an organization-specific developer community that drives efficiencies at scale and provides access to valuable knowledge resources. Additionally, re:Post Private centralizes trusted AWS technical content and offers private discussion forums to improve how your teams collaborate internally and with AWS to remove technical obstacles, accelerate innovation, and scale more efficiently in the cloud.</p>",
   "operations": {
-    "BatchAddRole": "<p>Add role to multiple users or groups in a private re:Post.</p>",
-    "BatchRemoveRole": "<p>Remove role from multiple users or groups in a private re:Post.</p>",
+    "BatchAddChannelRoleToAccessors": "<p>Add role to multiple users or groups in a private re:Post channel.</p>",
+    "BatchAddRole": "<p>Add a role to multiple users or groups in a private re:Post.</p>",
+    "BatchRemoveChannelRoleFromAccessors": "<p>Remove a role from multiple users or groups in a private re:Post channel.</p>",
+    "BatchRemoveRole": "<p>Remove a role from multiple users or groups in a private re:Post.</p>",
+    "CreateChannel": "<p>Creates a channel in an AWS re:Post Private private re:Post.</p>",
     "CreateSpace": "<p>Creates an AWS re:Post Private private re:Post.</p>",
     "DeleteSpace": "<p>Deletes an AWS re:Post Private private re:Post.</p>",
     "DeregisterAdmin": "<p>Removes the user or group from the list of administrators of the private re:Post.</p>",
+    "GetChannel": "<p>Displays information about a channel in a private re:Post.</p>",
     "GetSpace": "<p>Displays information about the AWS re:Post Private private re:Post.</p>",
+    "ListChannels": "<p>Returns the list of channel within a private re:Post with some information about each channel.</p>",
     "ListSpaces": "<p>Returns a list of AWS re:Post Private private re:Posts in the account with some information about each private re:Post.</p>",
     "ListTagsForResource": "<p>Returns the tags that are associated with the AWS re:Post Private resource specified by the resourceArn. The only resource that can be tagged is a private re:Post.</p>",
     "RegisterAdmin": "<p>Adds a user or group to the list of administrators of the private re:Post.</p>",
     "SendInvites": "<p>Sends an invitation email to selected users and groups.</p>",
     "TagResource": "<p>Associates tags with an AWS re:Post Private resource. Currently, the only resource that can be tagged is the private re:Post. If you specify a new tag key for the resource, the tag is appended to the list of tags that are associated with the resource. If you specify a tag key that’s already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p>",
     "UntagResource": "<p>Removes the association of the tag with the AWS re:Post Private resource.</p>",
+    "UpdateChannel": "<p>Modifies an existing channel.</p>",
     "UpdateSpace": "<p>Modifies an existing AWS re:Post Private private re:Post.</p>"
   },
   "shapes": {
@@ -27,14 +33,19 @@
       "refs": {
         "AccessorIdList$member": null,
         "BatchError$accessorId": "<p>The accessor identifier that's related to the error.</p>",
+        "ChannelRoles$key": null,
         "Roles$key": null
       }
     },
     "AccessorIdList": {
       "base": null,
       "refs": {
+        "BatchAddChannelRoleToAccessorsInput$accessorIds": "<p>The user or group identifiers to add the role to.</p>",
+        "BatchAddChannelRoleToAccessorsOutput$addedAccessorIds": "<p>An array of successfully updated identifiers.</p>",
         "BatchAddRoleInput$accessorIds": "<p>The user or group accessor identifiers to add the role to.</p>",
         "BatchAddRoleOutput$addedAccessorIds": "<p>An array of successfully updated accessor identifiers.</p>",
+        "BatchRemoveChannelRoleFromAccessorsInput$accessorIds": "<p>The users or groups identifiers to remove the role from.</p>",
+        "BatchRemoveChannelRoleFromAccessorsOutput$removedAccessorIds": "<p>An array of successfully updated identifiers.</p>",
         "BatchRemoveRoleInput$accessorIds": "<p>The user or group accessor identifiers to remove the role from.</p>",
         "BatchRemoveRoleOutput$removedAccessorIds": "<p>An array of successfully updated accessor identifiers.</p>",
         "SendInvitesInput$accessorIds": "<p>The array of identifiers for the users and groups.</p>"
@@ -49,17 +60,35 @@
         "UserAdmins$member": null
       }
     },
+    "AllowedDomainsList": {
+      "base": null,
+      "refs": {
+        "SupportedEmailDomainsParameters$allowedDomains": "<p/>",
+        "SupportedEmailDomainsStatus$allowedDomains": "<p/>"
+      }
+    },
     "Arn": {
       "base": null,
       "refs": {
         "CreateSpaceInput$roleArn": "<p>The IAM role that grants permissions to the private re:Post to convert unanswered questions into AWS support tickets.</p>",
         "GetSpaceOutput$arn": "<p>The ARN of the private re:Post.</p>",
+        "GetSpaceOutput$applicationArn": "<p/>",
         "GetSpaceOutput$customerRoleArn": "<p>The IAM role that grants permissions to the private re:Post to convert unanswered questions into AWS support tickets.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource that the tags are associated with.</p>",
         "SpaceData$arn": "<p>The ARN of the private re:Post.</p>",
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource that the tag is associated with.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource.</p>",
         "UpdateSpaceInput$roleArn": "<p>The IAM role that grants permissions to the private re:Post to convert unanswered questions into AWS support tickets.</p>"
+      }
+    },
+    "BatchAddChannelRoleToAccessorsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchAddChannelRoleToAccessorsOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "BatchAddRoleInput": {
@@ -81,8 +110,20 @@
     "BatchErrorList": {
       "base": null,
       "refs": {
+        "BatchAddChannelRoleToAccessorsOutput$errors": "<p>An array of errors that occurred when roles were added.</p>",
         "BatchAddRoleOutput$errors": "<p>An array of errors that occurred when roles were added.</p>",
+        "BatchRemoveChannelRoleFromAccessorsOutput$errors": "<p>An array of errors that occurred when roles were removed.</p>",
         "BatchRemoveRoleOutput$errors": "<p>An array of errors that occurred when roles were removed.</p>"
+      }
+    },
+    "BatchRemoveChannelRoleFromAccessorsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchRemoveChannelRoleFromAccessorsOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "BatchRemoveRoleInput": {
@@ -93,6 +134,75 @@
     "BatchRemoveRoleOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "ChannelData": {
+      "base": "<p>A structure that contains some information about a channel in a private re:Post.</p>",
+      "refs": {
+        "ChannelsList$member": null
+      }
+    },
+    "ChannelDescription": {
+      "base": null,
+      "refs": {
+        "ChannelData$channelDescription": "<p>A description for the channel. This is used only to help you identify this channel.</p>",
+        "CreateChannelInput$channelDescription": "<p>A description for the channel. This is used only to help you identify this channel.</p>",
+        "GetChannelOutput$channelDescription": "<p>A description for the channel. This is used only to help you identify this channel.</p>",
+        "UpdateChannelInput$channelDescription": "<p>A description for the channel. This is used only to help you identify this channel.</p>"
+      }
+    },
+    "ChannelId": {
+      "base": null,
+      "refs": {
+        "BatchAddChannelRoleToAccessorsInput$channelId": "<p>The unique ID of the private re:Post channel.</p>",
+        "BatchRemoveChannelRoleFromAccessorsInput$channelId": "<p>The unique ID of the private re:Post channel.</p>",
+        "ChannelData$channelId": "<p>The unique ID of the private re:Post channel.</p>",
+        "CreateChannelOutput$channelId": "<p>The unique ID of the private re:Post channel.</p>",
+        "GetChannelInput$channelId": "<p>The unique ID of the private re:Post channel.</p>",
+        "GetChannelOutput$channelId": "<p>The unique ID of the private re:Post channel.</p>",
+        "UpdateChannelInput$channelId": "<p>The unique ID of the private re:Post channel.</p>"
+      }
+    },
+    "ChannelName": {
+      "base": null,
+      "refs": {
+        "ChannelData$channelName": "<p>The name for the channel. This must be unique per private re:Post.</p>",
+        "CreateChannelInput$channelName": "<p>The name for the channel. This must be unique per private re:Post.</p>",
+        "GetChannelOutput$channelName": "<p>The name for the channel. This must be unique per private re:Post.</p>",
+        "UpdateChannelInput$channelName": "<p>The name for the channel. This must be unique per private re:Post.</p>"
+      }
+    },
+    "ChannelRole": {
+      "base": null,
+      "refs": {
+        "BatchAddChannelRoleToAccessorsInput$channelRole": "<p>The channel role to add to the users or groups.</p>",
+        "BatchRemoveChannelRoleFromAccessorsInput$channelRole": "<p>The channel role to remove from the users or groups.</p>",
+        "ChannelRoleList$member": null
+      }
+    },
+    "ChannelRoleList": {
+      "base": null,
+      "refs": {
+        "ChannelRoles$value": null
+      }
+    },
+    "ChannelRoles": {
+      "base": null,
+      "refs": {
+        "GetChannelOutput$channelRoles": "<p>The channel roles associated to the users and groups of the channel.</p>"
+      }
+    },
+    "ChannelStatus": {
+      "base": null,
+      "refs": {
+        "ChannelData$channelStatus": "<p>The status pf the channel.</p>",
+        "GetChannelOutput$channelStatus": "<p>The status pf the channel.</p>"
+      }
+    },
+    "ChannelsList": {
+      "base": null,
+      "refs": {
+        "ListChannelsOutput$channels": "<p>An array of structures that contain some information about the channels in the private re:Post.</p>"
       }
     },
     "ClientId": {
@@ -120,6 +230,16 @@
         "SpaceData$contentSize": "<p>The content size of the private re:Post.</p>"
       }
     },
+    "CreateChannelInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateChannelOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateSpaceInput": {
       "base": null,
       "refs": {
@@ -140,6 +260,12 @@
       "refs": {
       }
     },
+    "EmailDomain": {
+      "base": null,
+      "refs": {
+        "AllowedDomainsList$member": null
+      }
+    },
     "ErrorCode": {
       "base": null,
       "refs": {
@@ -150,6 +276,28 @@
       "base": null,
       "refs": {
         "BatchError$message": "<p>Description of the error.</p>"
+      }
+    },
+    "FeatureEnableParameter": {
+      "base": null,
+      "refs": {
+        "SupportedEmailDomainsParameters$enabled": "<p/>"
+      }
+    },
+    "FeatureEnableStatus": {
+      "base": null,
+      "refs": {
+        "SupportedEmailDomainsStatus$enabled": "<p/>"
+      }
+    },
+    "GetChannelInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetChannelOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "GetSpaceInput": {
@@ -166,6 +314,18 @@
       "base": null,
       "refs": {
         "GetSpaceOutput$groupAdmins": "<p>The list of groups that are administrators of the private re:Post.</p>"
+      }
+    },
+    "GroupCount": {
+      "base": null,
+      "refs": {
+        "ChannelData$groupCount": "<p>The number of groups that are part of the channel.</p>"
+      }
+    },
+    "IdentityStoreId": {
+      "base": null,
+      "refs": {
+        "GetSpaceOutput$identityStoreId": "<p/>"
       }
     },
     "Integer": {
@@ -198,6 +358,22 @@
         "CreateSpaceInput$userKMSKey": "<p>The AWS KMS key ARN that’s used for the AWS KMS encryption. If you don't provide a key, your data is encrypted by default with a key that AWS owns and manages for you.</p>",
         "GetSpaceOutput$userKMSKey": "<p>The custom AWS KMS key ARN that’s used for the AWS KMS encryption.</p>",
         "SpaceData$userKMSKey": "<p>The custom AWS KMS key ARN that’s used for the AWS KMS encryption.</p>"
+      }
+    },
+    "ListChannelsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListChannelsLimit": {
+      "base": null,
+      "refs": {
+        "ListChannelsInput$maxResults": "<p>The maximum number of channels to include in the results.</p>"
+      }
+    },
+    "ListChannelsOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "ListSpacesInput": {
@@ -291,16 +467,24 @@
     "SpaceId": {
       "base": null,
       "refs": {
+        "BatchAddChannelRoleToAccessorsInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "BatchAddRoleInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
+        "BatchRemoveChannelRoleFromAccessorsInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "BatchRemoveRoleInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
+        "ChannelData$spaceId": "<p>The unique ID of the private re:Post.</p>",
+        "CreateChannelInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "CreateSpaceOutput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "DeleteSpaceInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "DeregisterAdminInput$spaceId": "<p>The ID of the private re:Post to remove the admin from.</p>",
+        "GetChannelInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
+        "GetChannelOutput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "GetSpaceInput$spaceId": "<p>The ID of the private re:Post.</p>",
         "GetSpaceOutput$spaceId": "<p>The unique ID of the private re:Post.</p>",
+        "ListChannelsInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "RegisterAdminInput$spaceId": "<p>The ID of the private re:Post.</p>",
         "SendInvitesInput$spaceId": "<p>The ID of the private re:Post.</p>",
         "SpaceData$spaceId": "<p>The unique ID of the private re:Post.</p>",
+        "UpdateChannelInput$spaceId": "<p>The unique ID of the private re:Post.</p>",
         "UpdateSpaceInput$spaceId": "<p>The unique ID of this private re:Post.</p>"
       }
     },
@@ -339,27 +523,47 @@
         "ConflictException$resourceId": "<p>The ID of the resource.</p>",
         "ConflictException$resourceType": "<p>The type of the resource.</p>",
         "InternalServerException$message": null,
+        "ListChannelsInput$nextToken": "<p>The token for the next set of channel to return. You receive this token from a previous ListChannels operation.</p>",
+        "ListChannelsOutput$nextToken": "<p>The token that you use when you request the next set of channels.</p>",
         "ListSpacesInput$nextToken": "<p>The token for the next set of private re:Posts to return. You receive this token from a previous ListSpaces operation.</p>",
         "ListSpacesOutput$nextToken": "<p>The token that you use when you request the next set of private re:Posts.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The ID of the resource.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of the resource.</p>",
         "ServiceQuotaExceededException$message": null,
-        "ServiceQuotaExceededException$quotaCode": "<p>The code to identify the quota.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>The id of the resource.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The type of the resource.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>The code to identify the service.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The code to identify the quota.</p>",
         "ThrottlingException$message": null,
-        "ThrottlingException$quotaCode": "<p>The code to identify the quota.</p>",
         "ThrottlingException$serviceCode": "<p>The code to identify the service.</p>",
+        "ThrottlingException$quotaCode": "<p>The code to identify the quota.</p>",
         "ValidationException$message": null,
-        "ValidationExceptionField$message": "<p>The name of the field.</p>",
-        "ValidationExceptionField$name": "<p>Message describing why the field failed validation.</p>"
+        "ValidationExceptionField$name": "<p>Message describing why the field failed validation.</p>",
+        "ValidationExceptionField$message": "<p>The name of the field.</p>"
+      }
+    },
+    "SupportedEmailDomainsParameters": {
+      "base": "<p/>",
+      "refs": {
+        "CreateSpaceInput$supportedEmailDomains": "<p/>",
+        "UpdateSpaceInput$supportedEmailDomains": "<p/>"
+      }
+    },
+    "SupportedEmailDomainsStatus": {
+      "base": "<p/>",
+      "refs": {
+        "GetSpaceOutput$supportedEmailDomains": "<p/>",
+        "SpaceData$supportedEmailDomains": "<p/>"
       }
     },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "ChannelData$createDateTime": "<p>The date when the channel was created.</p>",
+        "ChannelData$deleteDateTime": "<p>The date when the channel was deleted.</p>",
+        "GetChannelOutput$createDateTime": "<p>The date when the channel was created.</p>",
+        "GetChannelOutput$deleteDateTime": "<p>The date when the channel was deleted.</p>",
         "GetSpaceOutput$createDateTime": "<p>The date when the private re:Post was created.</p>",
         "GetSpaceOutput$deleteDateTime": "<p>The date when the private re:Post was deleted.</p>",
         "SpaceData$createDateTime": "<p>The date when the private re:Post was created.</p>",
@@ -427,6 +631,16 @@
       "refs": {
       }
     },
+    "UpdateChannelInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateChannelOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateSpaceInput": {
       "base": null,
       "refs": {
@@ -435,10 +649,10 @@
     "Url": {
       "base": null,
       "refs": {
-        "GetSpaceOutput$randomDomain": "<p>The AWS generated subdomain of the private re:Post</p>",
         "GetSpaceOutput$vanityDomain": "<p>The custom subdomain that you use to access your private re:Post. All custom subdomains must be approved by AWS before use.</p>",
-        "SpaceData$randomDomain": "<p>The AWS generated subdomain of the private re:Post.</p>",
-        "SpaceData$vanityDomain": "<p>This custom subdomain that you use to access your private re:Post. All custom subdomains must be approved by AWS before use.</p>"
+        "GetSpaceOutput$randomDomain": "<p>The AWS generated subdomain of the private re:Post</p>",
+        "SpaceData$vanityDomain": "<p>This custom subdomain that you use to access your private re:Post. All custom subdomains must be approved by AWS before use.</p>",
+        "SpaceData$randomDomain": "<p>The AWS generated subdomain of the private re:Post.</p>"
       }
     },
     "UserAdmins": {
@@ -450,6 +664,7 @@
     "UserCount": {
       "base": null,
       "refs": {
+        "ChannelData$userCount": "<p>The number of users that are part of the channel.</p>",
         "GetSpaceOutput$userCount": "<p>The number of users that have onboarded to the private re:Post.</p>",
         "SpaceData$userCount": "<p>The number of onboarded users to the private re:Post.</p>"
       }

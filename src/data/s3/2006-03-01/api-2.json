@@ -69,6 +69,21 @@
         "UseS3ExpressControlEndpoint":{"value":true}
       }
     },
+    "CreateBucketMetadataConfiguration":{
+      "name":"CreateBucketMetadataConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/{Bucket}?metadataConfiguration"
+      },
+      "input":{"shape":"CreateBucketMetadataConfigurationRequest"},
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      },
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
+    },
     "CreateBucketMetadataTableConfiguration":{
       "name":"CreateBucketMetadataTableConfiguration",
       "http":{
@@ -188,6 +203,18 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteBucketLifecycleRequest"},
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
+    },
+    "DeleteBucketMetadataConfiguration":{
+      "name":"DeleteBucketMetadataConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/{Bucket}?metadataConfiguration",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteBucketMetadataConfigurationRequest"},
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -450,6 +477,18 @@
       },
       "input":{"shape":"GetBucketLoggingRequest"},
       "output":{"shape":"GetBucketLoggingOutput"},
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
+    },
+    "GetBucketMetadataConfiguration":{
+      "name":"GetBucketMetadataConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/{Bucket}?metadataConfiguration"
+      },
+      "input":{"shape":"GetBucketMetadataConfigurationRequest"},
+      "output":{"shape":"GetBucketMetadataConfigurationOutput"},
       "staticContextParams":{
         "UseS3ExpressControlEndpoint":{"value":true}
       }
@@ -1269,6 +1308,36 @@
         "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
       },
       "output":{"shape":"SelectObjectContentOutput"}
+    },
+    "UpdateBucketMetadataInventoryTableConfiguration":{
+      "name":"UpdateBucketMetadataInventoryTableConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}?metadataInventoryTable"
+      },
+      "input":{"shape":"UpdateBucketMetadataInventoryTableConfigurationRequest"},
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      },
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
+    },
+    "UpdateBucketMetadataJournalTableConfiguration":{
+      "name":"UpdateBucketMetadataJournalTableConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/{Bucket}?metadataJournalTable"
+      },
+      "input":{"shape":"UpdateBucketMetadataJournalTableConfigurationRequest"},
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      },
+      "staticContextParams":{
+        "UseS3ExpressControlEndpoint":{"value":true}
+      }
     },
     "UploadPart":{
       "name":"UploadPart",
@@ -2311,6 +2380,42 @@
         "Tags":{"shape":"TagSet"}
       }
     },
+    "CreateBucketMetadataConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "MetadataConfiguration"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "MetadataConfiguration":{
+          "shape":"MetadataConfiguration",
+          "locationName":"MetadataConfiguration",
+          "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      },
+      "payload":"MetadataConfiguration"
+    },
     "CreateBucketMetadataTableConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -2884,6 +2989,23 @@
         }
       }
     },
+    "DeleteBucketMetadataConfigurationRequest":{
+      "type":"structure",
+      "required":["Bucket"],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      }
+    },
     "DeleteBucketMetadataTableConfigurationRequest":{
       "type":"structure",
       "required":["Bucket"],
@@ -3286,6 +3408,14 @@
         "Metrics":{"shape":"Metrics"}
       }
     },
+    "DestinationResult":{
+      "type":"structure",
+      "members":{
+        "TableBucketType":{"shape":"S3TablesBucketType"},
+        "TableBucketArn":{"shape":"S3TablesBucketArn"},
+        "TableNamespace":{"shape":"S3TablesNamespace"}
+      }
+    },
     "DirectoryBucketToken":{
       "type":"string",
       "max":1024,
@@ -3418,6 +3548,13 @@
       ]
     },
     "Expiration":{"type":"string"},
+    "ExpirationState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "ExpirationStatus":{
       "type":"string",
       "enum":[
@@ -3781,6 +3918,37 @@
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
         }
+      }
+    },
+    "GetBucketMetadataConfigurationOutput":{
+      "type":"structure",
+      "members":{
+        "GetBucketMetadataConfigurationResult":{"shape":"GetBucketMetadataConfigurationResult"}
+      },
+      "payload":"GetBucketMetadataConfigurationResult"
+    },
+    "GetBucketMetadataConfigurationRequest":{
+      "type":"structure",
+      "required":["Bucket"],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      }
+    },
+    "GetBucketMetadataConfigurationResult":{
+      "type":"structure",
+      "required":["MetadataConfigurationResult"],
+      "members":{
+        "MetadataConfigurationResult":{"shape":"MetadataConfigurationResult"}
       }
     },
     "GetBucketMetadataTableConfigurationOutput":{
@@ -5331,6 +5499,13 @@
       "member":{"shape":"InventoryConfiguration"},
       "flattened":true
     },
+    "InventoryConfigurationState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "InventoryDestination":{
       "type":"structure",
       "required":["S3BucketDestination"],
@@ -5429,6 +5604,33 @@
         "Frequency":{"shape":"InventoryFrequency"}
       }
     },
+    "InventoryTableConfiguration":{
+      "type":"structure",
+      "required":["ConfigurationState"],
+      "members":{
+        "ConfigurationState":{"shape":"InventoryConfigurationState"},
+        "EncryptionConfiguration":{"shape":"MetadataTableEncryptionConfiguration"}
+      }
+    },
+    "InventoryTableConfigurationResult":{
+      "type":"structure",
+      "required":["ConfigurationState"],
+      "members":{
+        "ConfigurationState":{"shape":"InventoryConfigurationState"},
+        "TableStatus":{"shape":"MetadataTableStatus"},
+        "Error":{"shape":"ErrorDetails"},
+        "TableName":{"shape":"S3TablesName"},
+        "TableArn":{"shape":"S3TablesArn"}
+      }
+    },
+    "InventoryTableConfigurationUpdates":{
+      "type":"structure",
+      "required":["ConfigurationState"],
+      "members":{
+        "ConfigurationState":{"shape":"InventoryConfigurationState"},
+        "EncryptionConfiguration":{"shape":"MetadataTableEncryptionConfiguration"}
+      }
+    },
     "IsEnabled":{
       "type":"boolean",
       "box":true
@@ -5468,10 +5670,41 @@
         "LINES"
       ]
     },
+    "JournalTableConfiguration":{
+      "type":"structure",
+      "required":["RecordExpiration"],
+      "members":{
+        "RecordExpiration":{"shape":"RecordExpiration"},
+        "EncryptionConfiguration":{"shape":"MetadataTableEncryptionConfiguration"}
+      }
+    },
+    "JournalTableConfigurationResult":{
+      "type":"structure",
+      "required":[
+        "TableStatus",
+        "TableName",
+        "RecordExpiration"
+      ],
+      "members":{
+        "TableStatus":{"shape":"MetadataTableStatus"},
+        "Error":{"shape":"ErrorDetails"},
+        "TableName":{"shape":"S3TablesName"},
+        "TableArn":{"shape":"S3TablesArn"},
+        "RecordExpiration":{"shape":"RecordExpiration"}
+      }
+    },
+    "JournalTableConfigurationUpdates":{
+      "type":"structure",
+      "required":["RecordExpiration"],
+      "members":{
+        "RecordExpiration":{"shape":"RecordExpiration"}
+      }
+    },
     "KMSContext":{"type":"string"},
     "KeyCount":{"type":"integer"},
     "KeyMarker":{"type":"string"},
     "KeyPrefixEquals":{"type":"string"},
+    "KmsKeyArn":{"type":"string"},
     "LambdaFunctionArn":{"type":"string"},
     "LambdaFunctionConfiguration":{
       "type":"structure",
@@ -6256,6 +6489,23 @@
       "key":{"shape":"MetadataKey"},
       "value":{"shape":"MetadataValue"}
     },
+    "MetadataConfiguration":{
+      "type":"structure",
+      "required":["JournalTableConfiguration"],
+      "members":{
+        "JournalTableConfiguration":{"shape":"JournalTableConfiguration"},
+        "InventoryTableConfiguration":{"shape":"InventoryTableConfiguration"}
+      }
+    },
+    "MetadataConfigurationResult":{
+      "type":"structure",
+      "required":["DestinationResult"],
+      "members":{
+        "DestinationResult":{"shape":"DestinationResult"},
+        "JournalTableConfigurationResult":{"shape":"JournalTableConfigurationResult"},
+        "InventoryTableConfigurationResult":{"shape":"InventoryTableConfigurationResult"}
+      }
+    },
     "MetadataDirective":{
       "type":"string",
       "enum":[
@@ -6283,6 +6533,14 @@
       "required":["S3TablesDestinationResult"],
       "members":{
         "S3TablesDestinationResult":{"shape":"S3TablesDestinationResult"}
+      }
+    },
+    "MetadataTableEncryptionConfiguration":{
+      "type":"structure",
+      "required":["SseAlgorithm"],
+      "members":{
+        "SseAlgorithm":{"shape":"TableSseAlgorithm"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "MetadataTableStatus":{"type":"string"},
@@ -8304,6 +8562,18 @@
     },
     "Range":{"type":"string"},
     "RecordDelimiter":{"type":"string"},
+    "RecordExpiration":{
+      "type":"structure",
+      "required":["Expiration"],
+      "members":{
+        "Expiration":{"shape":"ExpirationState"},
+        "Days":{
+          "shape":"RecordExpirationDays",
+          "box":true
+        }
+      }
+    },
+    "RecordExpirationDays":{"type":"integer"},
     "RecordsEvent":{
       "type":"structure",
       "members":{
@@ -8736,6 +9006,13 @@
     },
     "S3TablesArn":{"type":"string"},
     "S3TablesBucketArn":{"type":"string"},
+    "S3TablesBucketType":{
+      "type":"string",
+      "enum":[
+        "aws",
+        "customer"
+      ]
+    },
     "S3TablesDestination":{
       "type":"structure",
       "required":[
@@ -9059,6 +9336,13 @@
       "enum":["V_1"]
     },
     "Suffix":{"type":"string"},
+    "TableSseAlgorithm":{
+      "type":"string",
+      "enum":[
+        "aws:kms",
+        "AES256"
+      ]
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -9236,6 +9520,78 @@
       ]
     },
     "URI":{"type":"string"},
+    "UpdateBucketMetadataInventoryTableConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "InventoryTableConfiguration"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "InventoryTableConfiguration":{
+          "shape":"InventoryTableConfigurationUpdates",
+          "locationName":"InventoryTableConfiguration",
+          "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      },
+      "payload":"InventoryTableConfiguration"
+    },
+    "UpdateBucketMetadataJournalTableConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "JournalTableConfiguration"
+      ],
+      "members":{
+        "Bucket":{
+          "shape":"BucketName",
+          "contextParam":{"name":"Bucket"},
+          "location":"uri",
+          "locationName":"Bucket"
+        },
+        "ContentMD5":{
+          "shape":"ContentMD5",
+          "location":"header",
+          "locationName":"Content-MD5"
+        },
+        "ChecksumAlgorithm":{
+          "shape":"ChecksumAlgorithm",
+          "location":"header",
+          "locationName":"x-amz-sdk-checksum-algorithm"
+        },
+        "JournalTableConfiguration":{
+          "shape":"JournalTableConfigurationUpdates",
+          "locationName":"JournalTableConfiguration",
+          "xmlNamespace":{"uri":"http://s3.amazonaws.com/doc/2006-03-01/"}
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "location":"header",
+          "locationName":"x-amz-expected-bucket-owner"
+        }
+      },
+      "payload":"JournalTableConfiguration"
+    },
     "UploadIdMarker":{"type":"string"},
     "UploadPartCopyOutput":{
       "type":"structure",

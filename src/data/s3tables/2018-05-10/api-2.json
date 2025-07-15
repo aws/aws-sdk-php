@@ -934,7 +934,8 @@
         "name":{"shape":"TableBucketName"},
         "ownerAccountId":{"shape":"AccountId"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "tableBucketId":{"shape":"TableBucketId"}
+        "tableBucketId":{"shape":"TableBucketId"},
+        "type":{"shape":"TableBucketType"}
       }
     },
     "GetTableEncryptionRequest":{
@@ -1300,6 +1301,11 @@
           "shape":"ListTableBucketsLimit",
           "location":"querystring",
           "locationName":"maxBuckets"
+        },
+        "type":{
+          "shape":"TableBucketType",
+          "location":"querystring",
+          "locationName":"type"
         }
       }
     },
@@ -1661,12 +1667,20 @@
         "name":{"shape":"TableBucketName"},
         "ownerAccountId":{"shape":"AccountId"},
         "createdAt":{"shape":"SyntheticTimestamp_date_time"},
-        "tableBucketId":{"shape":"TableBucketId"}
+        "tableBucketId":{"shape":"TableBucketId"},
+        "type":{"shape":"TableBucketType"}
       }
     },
     "TableBucketSummaryList":{
       "type":"list",
       "member":{"shape":"TableBucketSummary"}
+    },
+    "TableBucketType":{
+      "type":"string",
+      "enum":[
+        "customer",
+        "aws"
+      ]
     },
     "TableMaintenanceConfiguration":{
       "type":"map",

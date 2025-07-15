@@ -12295,7 +12295,8 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "IpAddressType":{"shape":"IpAddressType"}
       }
     },
     "CreateInstanceConnectEndpointResult":{
@@ -23764,6 +23765,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "IpAddressType":{
+          "shape":"IpAddressType",
+          "locationName":"ipAddressType"
         }
       }
     },
@@ -29434,6 +29439,30 @@
     },
     "InferenceDeviceMemorySize":{"type":"integer"},
     "InferenceDeviceName":{"type":"string"},
+    "InitializationStatusDetails":{
+      "type":"structure",
+      "members":{
+        "InitializationType":{
+          "shape":"InitializationType",
+          "locationName":"initializationType"
+        },
+        "Progress":{
+          "shape":"Long",
+          "locationName":"progress"
+        },
+        "EstimatedTimeToCompleteInSeconds":{
+          "shape":"Long",
+          "locationName":"estimatedTimeToCompleteInSeconds"
+        }
+      }
+    },
+    "InitializationType":{
+      "type":"string",
+      "enum":[
+        "default",
+        "provisioned-rate"
+      ]
+    },
     "InsideCidrBlocksStringList":{
       "type":"list",
       "member":{
@@ -52010,6 +52039,10 @@
           "shape":"VolumeStatusAttachmentStatusList",
           "locationName":"attachmentStatuses"
         },
+        "InitializationStatusDetails":{
+          "shape":"InitializationStatusDetails",
+          "locationName":"initializationStatusDetails"
+        },
         "AvailabilityZoneId":{
           "shape":"String",
           "locationName":"availabilityZoneId"
@@ -52027,7 +52060,8 @@
       "type":"string",
       "enum":[
         "io-enabled",
-        "io-performance"
+        "io-performance",
+        "initialization-state"
       ]
     },
     "VolumeType":{
