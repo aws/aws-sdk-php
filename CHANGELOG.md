@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.350.0 - 2025-07-15
 
 * `Aws\S3Vectors` - Amazon S3 Vectors provides cost-effective, elastic, and durable vector storage for queries based on semantic meaning and similarity.
 * `Aws\Repostspace` - This release introduces Channels functionality with CreateChannel, GetChannel, ListChannels, and UpdateChannel operations. Channels provide dedicated collaboration spaces where teams can organize discussions and knowledge by projects, business units, or areas of responsibility.
