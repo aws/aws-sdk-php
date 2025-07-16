@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.350.1 - 2025-07-16
 
 * `Aws\ECS` - This release removes hookDetails for the Amazon ECS native blue/green deployments.
 
