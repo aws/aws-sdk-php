@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.0 - 2025-07-16
 
 * `Aws\SFN` - Doc-only update to introduction, and edits to clarify input parameter and the set of control characters.
 * `Aws\DataSync` - AWS DataSync now supports IPv6 address inputs and outputs in create, update, and describe operations for NFS, SMB, and Object Storage locations
