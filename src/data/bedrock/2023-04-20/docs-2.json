@@ -4,6 +4,7 @@
   "operations": {
     "BatchDeleteEvaluationJob": "<p>Deletes a batch of evaluation jobs. An evaluation job can only be deleted if it has following status <code>FAILED</code>, <code>COMPLETED</code>, and <code>STOPPED</code>. You can request up to 25 model evaluation jobs be deleted in a single request.</p>",
     "CreateCustomModel": "<p>Creates a new custom model in Amazon Bedrock. After the model is active, you can use it for inference.</p> <p>To use the model for inference, you must purchase Provisioned Throughput for it. You can't use On-demand inference with these custom models. For more information about Provisioned Throughput, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a>.</p> <p>The model appears in <code>ListCustomModels</code> with a <code>customizationType</code> of <code>imported</code>. To track the status of the new model, you use the <code>GetCustomModel</code> API operation. The model can be in the following states:</p> <ul> <li> <p> <code>Creating</code> - Initial state during validation and registration</p> </li> <li> <p> <code>Active</code> - Model is ready for use in inference</p> </li> <li> <p> <code>Failed</code> - Creation process encountered an error</p> </li> </ul> <p> <b>Related APIs</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModel.html\">GetCustomModel</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModels.html\">ListCustomModels</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModel.html\">DeleteCustomModel</a> </p> </li> </ul>",
+    "CreateCustomModelDeployment": "<p>Deploys a custom model for on-demand inference in Amazon Bedrock. After you deploy your custom model, you use the deployment's Amazon Resource Name (ARN) as the <code>modelId</code> parameter when you submit prompts and generate responses with model inference.</p> <p> For more information about setting up on-demand inference for custom models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Set up inference for a custom model</a>. </p> <p>The following actions are related to the <code>CreateCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "CreateEvaluationJob": "<p>Creates an evaluation job.</p>",
     "CreateFoundationModelAgreement": "<p>Request a model access agreement for the specified model.</p>",
     "CreateGuardrail": "<p>Creates a guardrail to block topics and to implement safeguards for your generative AI applications.</p> <p>You can configure the following policies in a guardrail to avoid undesirable and harmful content, filter out denied topics and words, and remove sensitive information for privacy protection.</p> <ul> <li> <p> <b>Content filters</b> - Adjust filter strengths to block input prompts or model responses containing harmful content.</p> </li> <li> <p> <b>Denied topics</b> - Define a set of topics that are undesirable in the context of your application. These topics will be blocked if detected in user queries or model responses.</p> </li> <li> <p> <b>Word filters</b> - Configure filters to block undesirable words, phrases, and profanity. Such words can include offensive terms, competitor names etc.</p> </li> <li> <p> <b>Sensitive information filters</b> - Block or mask sensitive information such as personally identifiable information (PII) or custom regex in user inputs and model responses.</p> </li> </ul> <p>In addition to the above policies, you can also configure the messages to be returned to the user if a user input or model response is in violation of the policies defined in the guardrail.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html\">Amazon Bedrock Guardrails</a> in the <i>Amazon Bedrock User Guide</i>.</p>",
@@ -17,6 +18,7 @@
     "CreatePromptRouter": "<p>Creates a prompt router that manages the routing of requests between multiple foundation models based on the routing criteria.</p>",
     "CreateProvisionedModelThroughput": "<p>Creates dedicated throughput for a base or custom model with the model units and for the duration that you specify. For pricing details, see <a href=\"http://aws.amazon.com/bedrock/pricing/\">Amazon Bedrock Pricing</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteCustomModel": "<p>Deletes a custom model that you created earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "DeleteCustomModelDeployment": "<p>Deletes a custom model deployment. This operation stops the deployment and removes it from your account. After deletion, the deployment ARN can no longer be used for inference requests.</p> <p>The following actions are related to the <code>DeleteCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> </ul>",
     "DeleteFoundationModelAgreement": "<p>Delete the model access agreement for the specified model.</p>",
     "DeleteGuardrail": "<p>Deletes a guardrail.</p> <ul> <li> <p>To delete a guardrail, only specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field. If you delete a guardrail, all of its versions will be deleted.</p> </li> <li> <p>To delete a version of a guardrail, specify the ARN of the guardrail in the <code>guardrailIdentifier</code> field and the version in the <code>guardrailVersion</code> field.</p> </li> </ul>",
     "DeleteImportedModel": "<p>Deletes a custom model that you imported earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html\">Import a customized model</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>. </p>",
@@ -27,6 +29,7 @@
     "DeleteProvisionedModelThroughput": "<p>Deletes a Provisioned Throughput. You can't delete a Provisioned Throughput before the commitment term is over. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
     "GetCustomModel": "<p>Get the properties associated with a Amazon Bedrock custom model that you have created. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "GetCustomModelDeployment": "<p>Retrieves information about a custom model deployment, including its status, configuration, and metadata. Use this operation to monitor the deployment status and retrieve details needed for inference requests.</p> <p>The following actions are related to the <code>GetCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "GetEvaluationJob": "<p>Gets information about an evaluation job, such as the status of the job.</p>",
     "GetFoundationModel": "<p>Get details about a Amazon Bedrock foundation model.</p>",
     "GetFoundationModelAvailability": "<p>Get information about the Foundation model availability.</p>",
@@ -42,6 +45,7 @@
     "GetPromptRouter": "<p>Retrieves details about a prompt router.</p>",
     "GetProvisionedModelThroughput": "<p>Returns details for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetUseCaseForModelAccess": "<p>Get usecase for model access.</p>",
+    "ListCustomModelDeployments": "<p>Lists custom model deployments in your account. You can filter the results by creation time, name, status, and associated model. Use this operation to manage and monitor your custom model deployments.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>The following actions are related to the <code>ListCustomModelDeployments</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "ListCustomModels": "<p>Returns a list of the custom models that you have created with the <code>CreateModelCustomizationJob</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListEvaluationJobs": "<p>Lists all existing evaluation jobs.</p>",
     "ListFoundationModelAgreementOffers": "<p>Get the offers associated with the specified model.</p>",
@@ -358,6 +362,16 @@
         "ByteContentDoc$contentType": "<p>The MIME type of the document contained in the wrapper object.</p>"
       }
     },
+    "CreateCustomModelDeploymentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCustomModelDeploymentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateCustomModelRequest": {
       "base": null,
       "refs": {
@@ -521,11 +535,56 @@
     "CustomModelArn": {
       "base": null,
       "refs": {
+        "CreateCustomModelDeploymentRequest$modelArn": "<p>The Amazon Resource Name (ARN) of the custom model to deploy for on-demand inference. The custom model must be in the <code>Active</code> state.</p>",
         "CustomModelSummary$modelArn": "<p>The Amazon Resource Name (ARN) of the custom model.</p>",
+        "GetCustomModelDeploymentResponse$modelArn": "<p>The Amazon Resource Name (ARN) of the custom model associated with this deployment.</p>",
         "GetModelCopyJobResponse$targetModelArn": "<p>The Amazon Resource Name (ARN) of the copied model.</p>",
         "GetModelCustomizationJobResponse$outputModelArn": "<p>The Amazon Resource Name (ARN) of the output model.</p>",
+        "ListCustomModelDeploymentsRequest$modelArnEquals": "<p>Filters deployments by the Amazon Resource Name (ARN) of the associated custom model.</p>",
         "ModelCopyJobSummary$targetModelArn": "<p>The Amazon Resource Name (ARN) of the copied model.</p>",
         "ModelCustomizationJobSummary$customModelArn": "<p>Amazon Resource Name (ARN) of the custom model.</p>"
+      }
+    },
+    "CustomModelDeploymentArn": {
+      "base": null,
+      "refs": {
+        "CreateCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment. Use this ARN as the <code>modelId</code> parameter when invoking the model with the <code>InvokeModel</code> or <code>Converse</code> operations.</p>",
+        "CustomModelDeploymentSummary$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>",
+        "GetCustomModelDeploymentResponse$customModelDeploymentArn": "<p>The Amazon Resource Name (ARN) of the custom model deployment.</p>"
+      }
+    },
+    "CustomModelDeploymentDescription": {
+      "base": null,
+      "refs": {
+        "CreateCustomModelDeploymentRequest$description": "<p>A description for the custom model deployment to help you identify its purpose.</p>",
+        "GetCustomModelDeploymentResponse$description": "<p>The description of the custom model deployment.</p>"
+      }
+    },
+    "CustomModelDeploymentIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to delete.</p>",
+        "GetCustomModelDeploymentRequest$customModelDeploymentIdentifier": "<p>The Amazon Resource Name (ARN) or name of the custom model deployment to retrieve information about.</p>"
+      }
+    },
+    "CustomModelDeploymentStatus": {
+      "base": null,
+      "refs": {
+        "CustomModelDeploymentSummary$status": "<p>The status of the custom model deployment. Possible values are <code>CREATING</code>, <code>ACTIVE</code>, and <code>FAILED</code>.</p>",
+        "GetCustomModelDeploymentResponse$status": "<p>The status of the custom model deployment. Possible values are:</p> <ul> <li> <p> <code>CREATING</code> - The deployment is being set up and prepared for inference.</p> </li> <li> <p> <code>ACTIVE</code> - The deployment is ready and available for inference requests.</p> </li> <li> <p> <code>FAILED</code> - The deployment failed to be created or became unavailable.</p> </li> </ul>",
+        "ListCustomModelDeploymentsRequest$statusEquals": "<p>Filters deployments by status. Valid values are <code>CREATING</code>, <code>ACTIVE</code>, and <code>FAILED</code>.</p>"
+      }
+    },
+    "CustomModelDeploymentSummary": {
+      "base": "<p>Contains summary information about a custom model deployment, including its ARN, name, status, and associated custom model.</p>",
+      "refs": {
+        "CustomModelDeploymentSummaryList$member": null
+      }
+    },
+    "CustomModelDeploymentSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCustomModelDeploymentsResponse$modelDeploymentSummaries": "<p>A list of custom model deployment summaries.</p>"
       }
     },
     "CustomModelName": {
@@ -592,6 +651,16 @@
       "base": "<p>For a Distillation job, the status details for the data processing sub-task of the job.</p>",
       "refs": {
         "StatusDetails$dataProcessingDetails": "<p>The status details for the data processing sub-task of the job.</p>"
+      }
+    },
+    "DeleteCustomModelDeploymentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteCustomModelDeploymentResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteCustomModelRequest": {
@@ -729,7 +798,9 @@
     "ErrorMessage": {
       "base": null,
       "refs": {
+        "CustomModelDeploymentSummary$failureMessage": "<p>If the deployment status is <code>FAILED</code>, this field contains a message describing the failure reason.</p>",
         "ErrorMessages$member": null,
+        "GetCustomModelDeploymentResponse$failureMessage": "<p>If the deployment status is <code>FAILED</code>, this field contains a message describing the failure reason.</p>",
         "GetCustomModelResponse$failureMessage": "<p>A failure message for any issues that occurred when creating the custom model. This is included for only a failed CreateCustomModel operation.</p>",
         "GetModelCopyJobResponse$failureMessage": "<p>An error message for why the model copy job failed.</p>",
         "GetModelCustomizationJobResponse$failureMessage": "<p>Information about why the job failed.</p>",
@@ -1173,6 +1244,16 @@
       "base": "<p>The configuration details for response generation based on retrieved text chunks.</p>",
       "refs": {
         "KnowledgeBaseRetrieveAndGenerateConfiguration$generationConfiguration": "<p>Contains configurations details for response generation based on retrieved text chunks.</p>"
+      }
+    },
+    "GetCustomModelDeploymentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCustomModelDeploymentResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetCustomModelRequest": {
@@ -2015,6 +2096,7 @@
     "IdempotencyToken": {
       "base": null,
       "refs": {
+        "CreateCustomModelDeploymentRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateCustomModelRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateEvaluationJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateGuardrailRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon S3 User Guide</i>.</p>",
@@ -2337,6 +2419,16 @@
         "TermDetails$legalTerm": "<p>Describes the legal terms.</p>"
       }
     },
+    "ListCustomModelDeploymentsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCustomModelDeploymentsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListCustomModelsRequest": {
       "base": null,
       "refs": {
@@ -2524,6 +2616,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListCustomModelDeploymentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListCustomModelsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListEvaluationJobsRequest$maxResults": "<p>The maximum number of results to return.</p>",
         "ListGuardrailsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
@@ -2605,6 +2698,7 @@
       "refs": {
         "CreateCustomModelResponse$modelArn": "<p>The Amazon Resource Name (ARN) of the new custom model.</p>",
         "CreateModelCopyJobRequest$sourceModelArn": "<p>The Amazon Resource Name (ARN) of the model to be copied.</p>",
+        "CustomModelDeploymentSummary$modelArn": "<p>The Amazon Resource Name (ARN) of the custom model associated with this deployment.</p>",
         "CustomModelSummary$baseModelArn": "<p>The base model Amazon Resource Name (ARN).</p>",
         "GetCustomModelResponse$modelArn": "<p>Amazon Resource Name (ARN) associated with this model.</p>",
         "GetCustomModelResponse$baseModelArn": "<p>Amazon Resource Name (ARN) of the base model.</p>",
@@ -2713,6 +2807,15 @@
         "CreateModelImportJobRequest$modelDataSource": "<p>The data source for the imported model.</p>",
         "GetImportedModelResponse$modelDataSource": "<p>The data source for this imported model.</p>",
         "GetModelImportJobResponse$modelDataSource": "<p>The data source for the imported model.</p>"
+      }
+    },
+    "ModelDeploymentName": {
+      "base": null,
+      "refs": {
+        "CreateCustomModelDeploymentRequest$modelDeploymentName": "<p>The name for the custom model deployment. The name must be unique within your Amazon Web Services account and Region.</p>",
+        "CustomModelDeploymentSummary$customModelDeploymentName": "<p>The name of the custom model deployment.</p>",
+        "GetCustomModelDeploymentResponse$modelDeploymentName": "<p>The name of the custom model deployment.</p>",
+        "ListCustomModelDeploymentsRequest$nameContains": "<p>Filters deployments whose names contain the specified string. </p>"
       }
     },
     "ModelId": {
@@ -2958,6 +3061,8 @@
     "PaginationToken": {
       "base": null,
       "refs": {
+        "ListCustomModelDeploymentsRequest$nextToken": "<p>The token for the next set of results. Use this token to retrieve additional results when the response is truncated.</p>",
+        "ListCustomModelDeploymentsResponse$nextToken": "<p>The token for the next set of results. This value is null when there are no more results to return.</p>",
         "ListCustomModelsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
         "ListCustomModelsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>",
         "ListEvaluationJobsRequest$nextToken": "<p>Continuation token from the previous response, for Amazon Bedrock to list the next set of results.</p>",
@@ -3473,6 +3578,7 @@
     "SortModelsBy": {
       "base": null,
       "refs": {
+        "ListCustomModelDeploymentsRequest$sortBy": "<p>The field to sort the results by. The only supported value is <code>CreationTime</code>.</p>",
         "ListCustomModelsRequest$sortBy": "<p>The field to sort by in the returned list of models.</p>",
         "ListImportedModelsRequest$sortBy": "<p>The field to sort by in the returned list of imported models.</p>"
       }
@@ -3480,6 +3586,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
+        "ListCustomModelDeploymentsRequest$sortOrder": "<p>The sort order for the results. Valid values are <code>Ascending</code> and <code>Descending</code>. Default is <code>Descending</code>.</p>",
         "ListCustomModelsRequest$sortOrder": "<p>The sort order of the results.</p>",
         "ListEvaluationJobsRequest$sortOrder": "<p>Specifies whether to sort the list of evaluation jobs by either ascending or descending order.</p>",
         "ListImportedModelsRequest$sortOrder": "<p>Specifies whetehr to sort the results in ascending or descending order.</p>",
@@ -3596,6 +3703,7 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateCustomModelDeploymentRequest$tags": "<p>Tags to assign to the custom model deployment. You can use tags to organize and track your Amazon Web Services resources for cost allocation and management purposes.</p>",
         "CreateCustomModelRequest$modelTags": "<p>A list of key-value pairs to associate with the custom model resource. You can use these tags to organize and identify your resources.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
         "CreateEvaluationJobRequest$jobTags": "<p>Tags to attach to the model evaluation job.</p>",
         "CreateGuardrailRequest$tags": "<p>The tags that you want to attach to the guardrail. </p>",
@@ -3685,10 +3793,14 @@
       "base": null,
       "refs": {
         "CreateGuardrailResponse$createdAt": "<p>The time at which the guardrail was created.</p>",
+        "CustomModelDeploymentSummary$createdAt": "<p>The date and time when the custom model deployment was created.</p>",
+        "CustomModelDeploymentSummary$lastUpdatedAt": "<p>The date and time when the custom model deployment was last modified.</p>",
         "CustomModelSummary$creationTime": "<p>Creation time of the model.</p>",
         "DataProcessingDetails$creationTime": "<p>The start time of the data processing sub-task of the job.</p>",
         "DataProcessingDetails$lastModifiedTime": "<p>The latest update to the data processing sub-task of the job.</p>",
         "EvaluationSummary$creationTime": "<p>The time the evaluation job was created.</p>",
+        "GetCustomModelDeploymentResponse$createdAt": "<p>The date and time when the custom model deployment was created.</p>",
+        "GetCustomModelDeploymentResponse$lastUpdatedAt": "<p>The date and time when the custom model deployment was last updated.</p>",
         "GetCustomModelResponse$creationTime": "<p>Creation time of the model.</p>",
         "GetEvaluationJobResponse$creationTime": "<p>The time the evaluation job was created.</p>",
         "GetEvaluationJobResponse$lastModifiedTime": "<p>The time the evaluation job was last modified.</p>",
@@ -3718,6 +3830,8 @@
         "ImportedModelSummary$creationTime": "<p>Creation time of the imported model.</p>",
         "InferenceProfileSummary$createdAt": "<p>The time at which the inference profile was created.</p>",
         "InferenceProfileSummary$updatedAt": "<p>The time at which the inference profile was last updated.</p>",
+        "ListCustomModelDeploymentsRequest$createdBefore": "<p>Filters deployments created before the specified date and time.</p>",
+        "ListCustomModelDeploymentsRequest$createdAfter": "<p>Filters deployments created after the specified date and time.</p>",
         "ListCustomModelsRequest$creationTimeBefore": "<p>Return custom models created before the specified time. </p>",
         "ListCustomModelsRequest$creationTimeAfter": "<p>Return custom models created after the specified time. </p>",
         "ListEvaluationJobsRequest$creationTimeAfter": "<p>A filter to only list evaluation jobs created after a specified time.</p>",

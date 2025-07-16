@@ -337,6 +337,7 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationAbortedException"},
         {"shape":"ServiceUnavailableException"}
       ]
     },
@@ -1115,6 +1116,8 @@
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"LimitExceededException"},
+        {"shape":"OperationAbortedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceUnavailableException"}
       ]
     },
@@ -1878,7 +1881,9 @@
     "DeleteResourcePolicyRequest":{
       "type":"structure",
       "members":{
-        "policyName":{"shape":"PolicyName"}
+        "policyName":{"shape":"PolicyName"},
+        "resourceArn":{"shape":"Arn"},
+        "expectedRevisionId":{"shape":"ExpectedRevisionId"}
       }
     },
     "DeleteRetentionPolicyRequest":{
@@ -1969,13 +1974,14 @@
       "enum":[
         "S3",
         "CWL",
-        "FH"
+        "FH",
+        "XRAY"
       ]
     },
     "DeliveryDestinationTypes":{
       "type":"list",
       "member":{"shape":"DeliveryDestinationType"},
-      "max":3,
+      "max":4,
       "min":1
     },
     "DeliveryDestinations":{
@@ -2275,7 +2281,9 @@
       "type":"structure",
       "members":{
         "nextToken":{"shape":"NextToken"},
-        "limit":{"shape":"DescribeLimit"}
+        "limit":{"shape":"DescribeLimit"},
+        "resourceArn":{"shape":"Arn"},
+        "policyScope":{"shape":"PolicyScope"}
       }
     },
     "DescribeResourcePoliciesResponse":{
@@ -2469,6 +2477,10 @@
     "EventsLimit":{
       "type":"integer",
       "max":10000,
+      "min":1
+    },
+    "ExpectedRevisionId":{
+      "type":"string",
       "min":1
     },
     "ExportDestinationBucket":{
@@ -3748,6 +3760,13 @@
       "min":1
     },
     "PolicyName":{"type":"string"},
+    "PolicyScope":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT",
+        "RESOURCE"
+      ]
+    },
     "PolicyType":{
       "type":"string",
       "enum":[
@@ -3854,14 +3873,12 @@
     },
     "PutDeliveryDestinationRequest":{
       "type":"structure",
-      "required":[
-        "name",
-        "deliveryDestinationConfiguration"
-      ],
+      "required":["name"],
       "members":{
         "name":{"shape":"DeliveryDestinationName"},
         "outputFormat":{"shape":"OutputFormat"},
         "deliveryDestinationConfiguration":{"shape":"DeliveryDestinationConfiguration"},
+        "deliveryDestinationType":{"shape":"DeliveryDestinationType"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -4027,13 +4044,16 @@
       "type":"structure",
       "members":{
         "policyName":{"shape":"PolicyName"},
-        "policyDocument":{"shape":"PolicyDocument"}
+        "policyDocument":{"shape":"PolicyDocument"},
+        "resourceArn":{"shape":"Arn"},
+        "expectedRevisionId":{"shape":"ExpectedRevisionId"}
       }
     },
     "PutResourcePolicyResponse":{
       "type":"structure",
       "members":{
-        "resourcePolicy":{"shape":"ResourcePolicy"}
+        "resourcePolicy":{"shape":"ResourcePolicy"},
+        "revisionId":{"shape":"ExpectedRevisionId"}
       }
     },
     "PutRetentionPolicyRequest":{
@@ -4285,7 +4305,10 @@
       "members":{
         "policyName":{"shape":"PolicyName"},
         "policyDocument":{"shape":"PolicyDocument"},
-        "lastUpdatedTime":{"shape":"Timestamp"}
+        "lastUpdatedTime":{"shape":"Timestamp"},
+        "policyScope":{"shape":"PolicyScope"},
+        "resourceArn":{"shape":"Arn"},
+        "revisionId":{"shape":"ExpectedRevisionId"}
       }
     },
     "ResourceType":{

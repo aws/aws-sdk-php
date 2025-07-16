@@ -1,0 +1,2395 @@
+{
+  "version": "2.0",
+  "service": "<p><note> <p>Amazon Bedrock AgentCore is in preview release and is subject to change.</p> </note> <p>Amazon Bedrock Agent Core Control is a service that enables you to manage memory resources for your Amazon Bedrock agents.</p> <p>Use this API to create, retrieve, update, and delete memory resources and their associated memory strategies. Memory resources enable your agents to store and retrieve information from conversations and interactions.</p></p>",
+  "operations": {
+    "CreateAgentRuntime": "<p>Creates an Amazon Secure Agent.</p>",
+    "CreateAgentRuntimeEndpoint": "<p>Creates an Amazon Secure AgentEndpoint.</p>",
+    "CreateApiKeyCredentialProvider": "<p>Creates a new API key credential provider.</p>",
+    "CreateBrowser": "<p>Creates a custom browser.</p>",
+    "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
+    "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>To create a gateway, you must specify a name, protocol type, and IAM role. The role grants the gateway permission to access Amazon Web Services services and resources.</p>",
+    "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p> <p>To create a target, you must specify the gateway identifier and target configuration.</p>",
+    "CreateMemory": "<p>Creates a new memory.</p>",
+    "CreateOauth2CredentialProvider": "<p>Creates a new OAuth2 credential provider.</p>",
+    "CreateWorkloadIdentity": "<p>Creates a new workload identity.</p>",
+    "DeleteAgentRuntime": "<p>Deletes an Amazon Secure Agent.</p>",
+    "DeleteAgentRuntimeEndpoint": "<p>Deletes an Amazon Secure AgentEndpoint.</p>",
+    "DeleteApiKeyCredentialProvider": "<p>Deletes an API key credential provider.</p>",
+    "DeleteBrowser": "<p>Deletes a custom browser.</p>",
+    "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
+    "DeleteGateway": "<p>Deletes a Gateway.</p>",
+    "DeleteGatewayTarget": "<p>Deletes a Gateway Target.</p>",
+    "DeleteMemory": "<p>Deletes a memory.</p>",
+    "DeleteOauth2CredentialProvider": "<p>Deletes an OAuth2 credential provider.</p>",
+    "DeleteWorkloadIdentity": "<p>Deletes a workload identity.</p>",
+    "GetAgentRuntime": "<p>Gets an Amazon Secure Agent.</p>",
+    "GetAgentRuntimeEndpoint": "<p>Gets information about an Amazon Secure AgentEndpoint.</p>",
+    "GetApiKeyCredentialProvider": "<p>Retrieves information about an API key credential provider.</p>",
+    "GetBrowser": "<p>Gets information about a custom browser.</p>",
+    "GetCodeInterpreter": "<p>Gets information about a custom code interpreter.</p>",
+    "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
+    "GetGatewayTarget": "<p>Retrieves information about a specific Gateway Target.</p>",
+    "GetMemory": "<p>Retrieve an existing memory.</p>",
+    "GetOauth2CredentialProvider": "<p>Retrieves information about an OAuth2 credential provider.</p>",
+    "GetTokenVault": "<p>Retrieves information about a token vault.</p>",
+    "GetWorkloadIdentity": "<p>Retrieves information about a workload identity.</p>",
+    "ListAgentRuntimeEndpoints": "<p>Lists all endpoints for a specific Amazon Secure Agent.</p>",
+    "ListAgentRuntimeVersions": "<p>Lists all versions of a specific Amazon Secure Agent.</p>",
+    "ListAgentRuntimes": "<p>Lists all Amazon Secure Agents in your account.</p>",
+    "ListApiKeyCredentialProviders": "<p>Lists all API key credential providers in your account.</p>",
+    "ListBrowsers": "<p>Lists all custom browsers in your account.</p>",
+    "ListCodeInterpreters": "<p>Lists all custom code interpreters in your account.</p>",
+    "ListGatewayTargets": "<p>Lists all targets for a specific Gateway.</p>",
+    "ListGateways": "<p>Lists all Gateways in the account.</p>",
+    "ListMemories": "<p>Lists the memory present.</p>",
+    "ListOauth2CredentialProviders": "<p>Lists all OAuth2 credential providers in your account.</p>",
+    "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
+    "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
+    "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
+    "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Secure AgentEndpoint.</p>",
+    "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
+    "UpdateGateway": "<p>Updates an existing Gateway.</p>",
+    "UpdateGatewayTarget": "<p>Updates an existing Gateway Target.</p>",
+    "UpdateMemory": "<p>Update memory.</p>",
+    "UpdateOauth2CredentialProvider": "<p>Updates an existing OAuth2 credential provider.</p>",
+    "UpdateWorkloadIdentity": "<p>Updates an existing workload identity.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
+      "refs": {}
+    },
+    "Agent": {
+      "base": "<p>Contains information about an agent runtime. An agent runtime is the execution environment for a Amazon Bedrock Agent.</p>",
+      "refs": {
+        "Agents$member": null
+      }
+    },
+    "AgentArtifact": {
+      "base": "<p>The artifact of the agent.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$agentRuntimeArtifact": "<p>The artifact of the agent.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeArtifact": "<p>The artifact of the agent runtime.</p>",
+        "UpdateAgentRuntimeRequest$agentRuntimeArtifact": "<p>The updated artifact of the agent runtime.</p>"
+      }
+    },
+    "AgentEndpoint": {
+      "base": "<p>Contains information about an agent runtime endpoint. An endpoint provides a way to connect to and interact with an agent runtime.</p>",
+      "refs": {
+        "AgentEndpoints$member": null
+      }
+    },
+    "AgentEndpointDescription": {
+      "base": null,
+      "refs": {
+        "AgentEndpoint$description": "<p>The description of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointRequest$description": "<p>The description of the agent runtime endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$description": "<p>The description of the agent runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointRequest$description": "<p>The updated description of the agent runtime endpoint.</p>"
+      }
+    },
+    "AgentEndpointStatus": {
+      "base": null,
+      "refs": {
+        "AgentEndpoint$status": "<p>The current status of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$status": "<p>The current status of the agent runtime endpoint.</p>",
+        "DeleteAgentRuntimeEndpointResponse$status": "<p>The current status of the agent runtime endpoint deletion.</p>",
+        "GetAgentRuntimeEndpointResponse$status": "<p>The current status of the agent runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$status": "<p>The current status of the updated agent runtime endpoint.</p>"
+      }
+    },
+    "AgentEndpoints": {
+      "base": null,
+      "refs": {
+        "ListAgentRuntimeEndpointsResponse$runtimeEndpoints": "<p>The list of agent runtime endpoints.</p>"
+      }
+    },
+    "AgentRuntimeArn": {
+      "base": null,
+      "refs": {
+        "Agent$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
+        "AgentEndpoint$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime associated with the endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
+        "CreateAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
+        "GetAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
+        "UpdateAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
+        "UpdateAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the updated agent runtime.</p>"
+      }
+    },
+    "AgentRuntimeEndpointArn": {
+      "base": null,
+      "refs": {
+        "AgentEndpoint$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>"
+      }
+    },
+    "AgentRuntimeEndpointId": {
+      "base": null,
+      "refs": {
+        "AgentEndpoint$id": "<p>The unique identifier of the agent runtime endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$id": "<p>The unique identifier of the agent runtime endpoint.</p>"
+      }
+    },
+    "AgentRuntimeId": {
+      "base": null,
+      "refs": {
+        "Agent$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
+        "CreateAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to create an endpoint for.</p>",
+        "CreateAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
+        "DeleteAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime associated with the endpoint.</p>",
+        "DeleteAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to delete.</p>",
+        "GetAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime associated with the endpoint.</p>",
+        "GetAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to retrieve.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
+        "ListAgentRuntimeEndpointsRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to list endpoints for.</p>",
+        "ListAgentRuntimeVersionsRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to list versions for.</p>",
+        "UpdateAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime associated with the endpoint.</p>",
+        "UpdateAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to update.</p>",
+        "UpdateAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the updated agent runtime.</p>"
+      }
+    },
+    "AgentRuntimeName": {
+      "base": null,
+      "refs": {
+        "Agent$agentRuntimeName": "<p>The name of the agent runtime.</p>",
+        "CreateAgentRuntimeRequest$agentRuntimeName": "<p>The name of the secure agent.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeName": "<p>The name of the agent runtime.</p>"
+      }
+    },
+    "AgentRuntimeVersion": {
+      "base": null,
+      "refs": {
+        "Agent$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
+        "AgentEndpoint$liveVersion": "<p>The live version of the agent runtime endpoint. This is the version that is currently serving requests.</p>",
+        "AgentEndpoint$targetVersion": "<p>The target version of the agent runtime endpoint. This is the version that the endpoint is being updated to.</p>",
+        "CreateAgentRuntimeEndpointRequest$agentRuntimeVersion": "<p>The version of the agent runtime to use for the endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the agent runtime for the endpoint.</p>",
+        "CreateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
+        "GetAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the agent runtime on the endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the agent runtime for the endpoint.</p>",
+        "GetAgentRuntimeRequest$agentRuntimeVersion": "<p>The version of the agent runtime to retrieve.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
+        "UpdateAgentRuntimeEndpointRequest$agentRuntimeVersion": "<p>The updated version of the agent runtime for the endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the agent runtime on the endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the agent runtime for the endpoint.</p>",
+        "UpdateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the updated agent runtime.</p>"
+      }
+    },
+    "AgentStatus": {
+      "base": null,
+      "refs": {
+        "Agent$status": "<p>The current status of the agent runtime.</p>",
+        "CreateAgentRuntimeResponse$status": "<p>The current status of the agent runtime.</p>",
+        "DeleteAgentRuntimeResponse$status": "<p>The current status of the agent runtime deletion.</p>",
+        "GetAgentRuntimeResponse$status": "<p>The current status of the agent runtime.</p>",
+        "UpdateAgentRuntimeResponse$status": "<p>The current status of the updated agent runtime.</p>"
+      }
+    },
+    "Agents": {
+      "base": null,
+      "refs": {
+        "ListAgentRuntimeVersionsResponse$agentRuntimes": "<p>The list of agent runtime versions.</p>",
+        "ListAgentRuntimesResponse$agentRuntimes": "<p>The list of agent runtimes.</p>"
+      }
+    },
+    "AllowedAudience": {
+      "base": null,
+      "refs": {
+        "AllowedAudienceList$member": null
+      }
+    },
+    "AllowedAudienceList": {
+      "base": null,
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$allowedAudience": "<p>Represents individual audience values that are validated in the incoming JWT token validation process.</p>"
+      }
+    },
+    "AllowedClient": {
+      "base": null,
+      "refs": {
+        "AllowedClientsList$member": null
+      }
+    },
+    "AllowedClientsList": {
+      "base": null,
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$allowedClients": "<p>Represents individual client IDs that are validated in the incoming JWT token validation process.</p>"
+      }
+    },
+    "ApiKeyCredentialLocation": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredentialProvider$credentialLocation": "<p>The location of the API key credential. This field specifies where in the request the API key should be placed.</p>"
+      }
+    },
+    "ApiKeyCredentialParameterName": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredentialProvider$credentialParameterName": "<p>The name of the credential parameter for the API key. This parameter name is used when sending the API key to the target endpoint.</p>"
+      }
+    },
+    "ApiKeyCredentialPrefix": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredentialProvider$credentialPrefix": "<p>The prefix for the API key credential. This prefix is added to the API key when sending it to the target endpoint.</p>"
+      }
+    },
+    "ApiKeyCredentialProvider": {
+      "base": "<p>An API key credential provider for gateway authentication. This structure contains the configuration for authenticating with the target endpoint using an API key.</p>",
+      "refs": {
+        "CredentialProvider$apiKeyCredentialProvider": "<p>The API key credential provider. This provider uses an API key to authenticate with the target endpoint.</p>"
+      }
+    },
+    "ApiKeyCredentialProviderArn": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredentialProvider$providerArn": "<p>The Amazon Resource Name (ARN) of the API key credential provider. This ARN identifies the provider in Amazon Web Services.</p>"
+      }
+    },
+    "ApiKeyCredentialProviderArnType": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredentialProviderItem$credentialProviderArn": "<p>The Amazon Resource Name (ARN) of the API key credential provider.</p>",
+        "CreateApiKeyCredentialProviderResponse$credentialProviderArn": "<p>The Amazon Resource Name (ARN) of the created API key credential provider.</p>",
+        "GetApiKeyCredentialProviderResponse$credentialProviderArn": "<p>The Amazon Resource Name (ARN) of the API key credential provider.</p>",
+        "UpdateApiKeyCredentialProviderResponse$credentialProviderArn": "<p>The Amazon Resource Name (ARN) of the API key credential provider.</p>"
+      }
+    },
+    "ApiKeyCredentialProviderItem": {
+      "base": "<p>Contains information about an API key credential provider.</p>",
+      "refs": {
+        "ApiKeyCredentialProviders$member": null
+      }
+    },
+    "ApiKeyCredentialProviders": {
+      "base": null,
+      "refs": {
+        "ListApiKeyCredentialProvidersResponse$credentialProviders": "<p>The list of API key credential providers.</p>"
+      }
+    },
+    "ApiKeyType": {
+      "base": null,
+      "refs": {
+        "CreateApiKeyCredentialProviderRequest$apiKey": "<p>The API key to use for authentication. This value is encrypted and stored securely.</p>",
+        "UpdateApiKeyCredentialProviderRequest$apiKey": "<p>The new API key to use for authentication. This value replaces the existing API key and is encrypted and stored securely.</p>"
+      }
+    },
+    "ApiSchemaConfiguration": {
+      "base": "<p>Configuration for API schema.</p>",
+      "refs": {
+        "McpTargetConfiguration$openApiSchema": "<p>The OpenAPI schema for the Model Context Protocol target. This schema defines the API structure of the target.</p>",
+        "McpTargetConfiguration$smithyModel": "<p>The Smithy model for the Model Context Protocol target. This model defines the API structure of the target using the Smithy specification.</p>"
+      }
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "CreateMemoryInput$encryptionKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the memory data.</p>",
+        "CreateMemoryInput$memoryExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the memory to access Amazon Web Services services.</p>",
+        "Memory$encryptionKeyArn": "<p>The ARN of the KMS key used to encrypt the memory.</p>",
+        "Memory$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the memory.</p>",
+        "UpdateMemoryInput$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the memory.</p>"
+      }
+    },
+    "AuthorizationEndpointType": {
+      "base": null,
+      "refs": {
+        "Oauth2AuthorizationServerMetadata$authorizationEndpoint": "<p>The authorization endpoint URL for the OAuth2 authorization server.</p>"
+      }
+    },
+    "AuthorizerConfiguration": {
+      "base": "<p>Represents inbound authorization configuration options used to authenticate incoming requests. </p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$authorizerConfiguration": "<p>The authorizer configuration for the agent runtime.</p>",
+        "CreateGatewayRequest$authorizerConfiguration": "<p>The authorizer configuration for the Gateway.</p>",
+        "CreateGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the created Gateway.</p>",
+        "GetAgentRuntimeResponse$authorizerConfiguration": "<p>The authorizer configuration for the agent runtime.</p>",
+        "GetGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the Gateway.</p>",
+        "UpdateAgentRuntimeRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the agent runtime.</p>",
+        "UpdateGatewayRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the Gateway.</p>",
+        "UpdateGatewayResponse$authorizerConfiguration": "<p>The updated authorizer configuration for the Gateway.</p>"
+      }
+    },
+    "AuthorizerType": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$authorizerType": "<p>The type of authorizer to use for the gateway.</p>",
+        "CreateGatewayResponse$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
+        "GatewaySummary$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
+        "GetGatewayResponse$authorizerType": "<p>Authorizer type for the gateway.</p>",
+        "UpdateGatewayRequest$authorizerType": "<p>The updated authorizer type for the Gateway.</p>",
+        "UpdateGatewayResponse$authorizerType": "<p>The updated authorizer type for the Gateway.</p>"
+      }
+    },
+    "AwsAccountId": {
+      "base": null,
+      "refs": {
+        "S3Configuration$bucketOwnerAccountId": "<p>The account ID of the Amazon S3 bucket owner. This ID is used for cross-account access to the bucket.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "RecordingConfig$enabled": "<p>Indicates whether recording is enabled for the browser. When set to true, browser sessions are recorded.</p>"
+      }
+    },
+    "BrowserArn": {
+      "base": null,
+      "refs": {
+        "BrowserSummary$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>",
+        "CreateBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the created browser.</p>",
+        "GetBrowserResponse$browserArn": "<p>The Amazon Resource Name (ARN) of the browser.</p>"
+      }
+    },
+    "BrowserId": {
+      "base": null,
+      "refs": {
+        "BrowserSummary$browserId": "<p>The unique identifier of the browser.</p>",
+        "CreateBrowserResponse$browserId": "<p>The unique identifier of the created browser.</p>",
+        "DeleteBrowserRequest$browserId": "<p>The unique identifier of the browser to delete.</p>",
+        "DeleteBrowserResponse$browserId": "<p>The unique identifier of the deleted browser.</p>",
+        "GetBrowserRequest$browserId": "<p>The unique identifier of the browser to retrieve.</p>",
+        "GetBrowserResponse$browserId": "<p>The unique identifier of the browser.</p>"
+      }
+    },
+    "BrowserNetworkConfiguration": {
+      "base": "<p>The network configuration for a browser. This structure defines how the browser connects to the network.</p>",
+      "refs": {
+        "CreateBrowserRequest$networkConfiguration": "<p>The network configuration for the browser. This configuration specifies the network mode for the browser.</p>",
+        "GetBrowserResponse$networkConfiguration": null
+      }
+    },
+    "BrowserNetworkMode": {
+      "base": null,
+      "refs": {
+        "BrowserNetworkConfiguration$networkMode": "<p>The network mode for the browser. This field specifies how the browser connects to the network.</p>"
+      }
+    },
+    "BrowserStatus": {
+      "base": null,
+      "refs": {
+        "BrowserSummary$status": "<p>The current status of the browser.</p>",
+        "CreateBrowserResponse$status": "<p>The current status of the browser.</p>",
+        "DeleteBrowserResponse$status": "<p>The current status of the browser deletion.</p>",
+        "GetBrowserResponse$status": "<p>The current status of the browser.</p>"
+      }
+    },
+    "BrowserSummaries": {
+      "base": null,
+      "refs": {
+        "ListBrowsersResponse$browserSummaries": "<p>The list of browser summaries.</p>"
+      }
+    },
+    "BrowserSummary": {
+      "base": "<p>Contains summary information about a browser. A browser enables Amazon Bedrock Agent to interact with web content.</p>",
+      "refs": {
+        "BrowserSummaries$member": null
+      }
+    },
+    "ClientIdType": {
+      "base": null,
+      "refs": {
+        "CustomOauth2ProviderConfigInput$clientId": "<p>The client ID for the custom OAuth2 provider.</p>",
+        "GithubOauth2ProviderConfigInput$clientId": "<p>The client ID for the GitHub OAuth2 provider.</p>",
+        "GoogleOauth2ProviderConfigInput$clientId": "<p>The client ID for the Google OAuth2 provider.</p>",
+        "MicrosoftOauth2ProviderConfigInput$clientId": "<p>The client ID for the Microsoft OAuth2 provider.</p>",
+        "SalesforceOauth2ProviderConfigInput$clientId": "<p>The client ID for the Salesforce OAuth2 provider.</p>",
+        "SlackOauth2ProviderConfigInput$clientId": "<p>The client ID for the Slack OAuth2 provider.</p>"
+      }
+    },
+    "ClientSecretType": {
+      "base": null,
+      "refs": {
+        "CustomOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the custom OAuth2 provider.</p>",
+        "GithubOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the GitHub OAuth2 provider.</p>",
+        "GoogleOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Google OAuth2 provider.</p>",
+        "MicrosoftOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Microsoft OAuth2 provider.</p>",
+        "SalesforceOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Salesforce OAuth2 provider.</p>",
+        "SlackOauth2ProviderConfigInput$clientSecret": "<p>The client secret for the Slack OAuth2 provider.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "CreateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
+        "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
+        "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
+        "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
+        "DeleteAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "UpdateAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
+        "UpdateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>"
+      }
+    },
+    "CodeInterpreterArn": {
+      "base": null,
+      "refs": {
+        "CodeInterpreterSummary$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>",
+        "CreateCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the created code interpreter.</p>",
+        "GetCodeInterpreterResponse$codeInterpreterArn": "<p>The Amazon Resource Name (ARN) of the code interpreter.</p>"
+      }
+    },
+    "CodeInterpreterId": {
+      "base": null,
+      "refs": {
+        "CodeInterpreterSummary$codeInterpreterId": "<p>The unique identifier of the code interpreter.</p>",
+        "CreateCodeInterpreterResponse$codeInterpreterId": "<p>The unique identifier of the created code interpreter.</p>",
+        "DeleteCodeInterpreterRequest$codeInterpreterId": "<p>The unique identifier of the code interpreter to delete.</p>",
+        "DeleteCodeInterpreterResponse$codeInterpreterId": "<p>The unique identifier of the deleted code interpreter.</p>",
+        "GetCodeInterpreterRequest$codeInterpreterId": "<p>The unique identifier of the code interpreter to retrieve.</p>",
+        "GetCodeInterpreterResponse$codeInterpreterId": "<p>The unique identifier of the code interpreter.</p>"
+      }
+    },
+    "CodeInterpreterNetworkConfiguration": {
+      "base": "<p>The network configuration for a code interpreter. This structure defines how the code interpreter connects to the network.</p>",
+      "refs": {
+        "CreateCodeInterpreterRequest$networkConfiguration": "<p>The network configuration for the code interpreter. This configuration specifies the network mode for the code interpreter.</p>",
+        "GetCodeInterpreterResponse$networkConfiguration": null
+      }
+    },
+    "CodeInterpreterNetworkMode": {
+      "base": null,
+      "refs": {
+        "CodeInterpreterNetworkConfiguration$networkMode": "<p>The network mode for the code interpreter. This field specifies how the code interpreter connects to the network.</p>"
+      }
+    },
+    "CodeInterpreterStatus": {
+      "base": null,
+      "refs": {
+        "CodeInterpreterSummary$status": "<p>The current status of the code interpreter.</p>",
+        "CreateCodeInterpreterResponse$status": "<p>The current status of the code interpreter.</p>",
+        "DeleteCodeInterpreterResponse$status": "<p>The current status of the code interpreter deletion.</p>",
+        "GetCodeInterpreterResponse$status": "<p>The current status of the code interpreter.</p>"
+      }
+    },
+    "CodeInterpreterSummaries": {
+      "base": null,
+      "refs": {
+        "ListCodeInterpretersResponse$codeInterpreterSummaries": "<p>The list of code interpreter summaries.</p>"
+      }
+    },
+    "CodeInterpreterSummary": {
+      "base": "<p>Contains summary information about a code interpreter. A code interpreter enables Amazon Bedrock Agent to execute code.</p>",
+      "refs": {
+        "CodeInterpreterSummaries$member": null
+      }
+    },
+    "ConcurrentModificationException": {
+      "base": "<p>Exception thrown when a resource is modified concurrently by multiple requests.</p>",
+      "refs": {}
+    },
+    "ConflictException": {
+      "base": "<p>This exception is thrown when there is a conflict performing an operation</p>",
+      "refs": {}
+    },
+    "ConsolidationConfiguration": {
+      "base": "<p>Contains consolidation configuration information for a memory strategy.</p>",
+      "refs": {
+        "StrategyConfiguration$consolidation": "<p>The consolidation configuration for the memory strategy.</p>"
+      }
+    },
+    "ContainerConfiguration": {
+      "base": "<p>Representation of a container configuration.</p>",
+      "refs": {
+        "AgentArtifact$containerConfiguration": "<p>The container configuration for the agent artifact.</p>"
+      }
+    },
+    "CreateAgentRuntimeEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentRuntimeEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateAgentRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateApiKeyCredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateApiKeyCredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateBrowserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateBrowserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCodeInterpreterRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCodeInterpreterResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGatewayTargetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateMemoryInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateMemoryInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "CreateMemoryInput$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>"
+      }
+    },
+    "CreateMemoryInputEventExpiryDurationInteger": {
+      "base": null,
+      "refs": {
+        "CreateMemoryInput$eventExpiryDuration": "<p>The duration after which memory events expire. Specified as an ISO 8601 duration.</p>"
+      }
+    },
+    "CreateMemoryOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOauth2CredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateOauth2CredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWorkloadIdentityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateWorkloadIdentityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CredentialProvider": {
+      "base": "<p>A credential provider for gateway authentication. This structure contains the configuration for authenticating with the target endpoint.</p>",
+      "refs": {
+        "CredentialProviderConfiguration$credentialProvider": "<p>The credential provider. This field contains the specific configuration for the credential provider type.</p>"
+      }
+    },
+    "CredentialProviderArnType": {
+      "base": null,
+      "refs": {
+        "CreateOauth2CredentialProviderResponse$credentialProviderArn": "<p>The Amazon Resource Name (ARN) of the OAuth2 credential provider.</p>",
+        "GetOauth2CredentialProviderResponse$credentialProviderArn": "<p>ARN of the credential provider requested.</p>",
+        "Oauth2CredentialProviderItem$credentialProviderArn": "<p>The Amazon Resource Name (ARN) of the OAuth2 credential provider.</p>",
+        "UpdateOauth2CredentialProviderResponse$credentialProviderArn": "<p>The Amazon Resource Name (ARN) of the OAuth2 credential provider.</p>"
+      }
+    },
+    "CredentialProviderConfiguration": {
+      "base": "<p>The configuration for a credential provider. This structure defines how the gateway authenticates with the target endpoint.</p>",
+      "refs": {
+        "CredentialProviderConfigurations$member": null
+      }
+    },
+    "CredentialProviderConfigurations": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetRequest$credentialProviderConfigurations": "<p>The credential provider configurations for the target. These configurations specify how the gateway authenticates with the target endpoint.</p>",
+        "CreateGatewayTargetResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the target.</p>",
+        "GetGatewayTargetResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the Gateway Target.</p>",
+        "UpdateGatewayTargetRequest$credentialProviderConfigurations": "<p>The updated credential provider configurations for the Gateway Target.</p>",
+        "UpdateGatewayTargetResponse$credentialProviderConfigurations": "<p>The updated credential provider configurations for the Gateway Target.</p>"
+      }
+    },
+    "CredentialProviderName": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredentialProviderItem$name": "<p>The name of the API key credential provider.</p>",
+        "CreateApiKeyCredentialProviderRequest$name": "<p>The name of the API key credential provider. The name must be unique within your account.</p>",
+        "CreateApiKeyCredentialProviderResponse$name": "<p>The name of the created API key credential provider.</p>",
+        "CreateOauth2CredentialProviderRequest$name": "<p>The name of the OAuth2 credential provider. The name must be unique within your account.</p>",
+        "CreateOauth2CredentialProviderResponse$name": "<p>The name of the OAuth2 credential provider.</p>",
+        "DeleteApiKeyCredentialProviderRequest$name": "<p>The name of the API key credential provider to delete.</p>",
+        "DeleteOauth2CredentialProviderRequest$name": "<p>The name of the OAuth2 credential provider to delete.</p>",
+        "GetApiKeyCredentialProviderRequest$name": "<p>The name of the API key credential provider to retrieve.</p>",
+        "GetApiKeyCredentialProviderResponse$name": "<p>The name of the API key credential provider.</p>",
+        "GetOauth2CredentialProviderRequest$name": "<p>The name of the OAuth2 credential provider to retrieve.</p>",
+        "GetOauth2CredentialProviderResponse$name": "<p>The name of the OAuth2 credential provider.</p>",
+        "Oauth2CredentialProviderItem$name": "<p>The name of the OAuth2 credential provider.</p>",
+        "UpdateApiKeyCredentialProviderRequest$name": "<p>The name of the API key credential provider to update.</p>",
+        "UpdateApiKeyCredentialProviderResponse$name": "<p>The name of the API key credential provider.</p>",
+        "UpdateOauth2CredentialProviderRequest$name": "<p>The name of the OAuth2 credential provider to update.</p>",
+        "UpdateOauth2CredentialProviderResponse$name": "<p>The name of the OAuth2 credential provider.</p>"
+      }
+    },
+    "CredentialProviderType": {
+      "base": null,
+      "refs": {
+        "CredentialProviderConfiguration$credentialProviderType": "<p>The type of credential provider. This field specifies which authentication method the gateway uses.</p>"
+      }
+    },
+    "CredentialProviderVendorType": {
+      "base": null,
+      "refs": {
+        "CreateOauth2CredentialProviderRequest$credentialProviderVendor": "<p>The vendor of the OAuth2 credential provider. This specifies which OAuth2 implementation to use.</p>",
+        "GetOauth2CredentialProviderResponse$credentialProviderVendor": "<p>The vendor of the OAuth2 credential provider.</p>",
+        "Oauth2CredentialProviderItem$credentialProviderVendor": "<p>The vendor of the OAuth2 credential provider.</p>",
+        "UpdateOauth2CredentialProviderRequest$credentialProviderVendor": "<p>The vendor of the OAuth2 credential provider.</p>",
+        "UpdateOauth2CredentialProviderResponse$credentialProviderVendor": "<p>The vendor of the OAuth2 credential provider.</p>"
+      }
+    },
+    "CustomConfigurationInput": {
+      "base": "<p>Input for custom configuration of a memory strategy.</p>",
+      "refs": {
+        "CustomMemoryStrategyInput$configuration": "<p>The configuration for the custom memory strategy.</p>"
+      }
+    },
+    "CustomConsolidationConfiguration": {
+      "base": "<p>Contains custom consolidation configuration information.</p>",
+      "refs": {
+        "ConsolidationConfiguration$customConsolidationConfiguration": "<p>The custom consolidation configuration.</p>"
+      }
+    },
+    "CustomConsolidationConfigurationInput": {
+      "base": "<p>Input for a custom consolidation configuration.</p>",
+      "refs": {
+        "ModifyConsolidationConfiguration$customConsolidationConfiguration": "<p>The updated custom consolidation configuration.</p>"
+      }
+    },
+    "CustomExtractionConfiguration": {
+      "base": "<p>Contains custom extraction configuration information.</p>",
+      "refs": {
+        "ExtractionConfiguration$customExtractionConfiguration": "<p>The custom extraction configuration.</p>"
+      }
+    },
+    "CustomExtractionConfigurationInput": {
+      "base": "<p>Input for a custom extraction configuration.</p>",
+      "refs": {
+        "ModifyExtractionConfiguration$customExtractionConfiguration": "<p>The updated custom extraction configuration.</p>"
+      }
+    },
+    "CustomJWTAuthorizerConfiguration": {
+      "base": "<p>Configuration for inbound JWT-based authorization, specifying how incoming requests should be authenticated.</p>",
+      "refs": {
+        "AuthorizerConfiguration$customJWTAuthorizer": "<p>The inbound JWT-based authorization, specifying how incoming requests should be authenticated.</p>"
+      }
+    },
+    "CustomMemoryStrategyInput": {
+      "base": "<p>Input for creating a custom memory strategy.</p>",
+      "refs": {
+        "MemoryStrategyInput$customMemoryStrategy": "<p>Input for creating a custom memory strategy.</p>"
+      }
+    },
+    "CustomOauth2ProviderConfigInput": {
+      "base": "<p>Input configuration for a custom OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$customOauth2ProviderConfig": "<p>The configuration for a custom OAuth2 provider.</p>"
+      }
+    },
+    "CustomOauth2ProviderConfigOutput": {
+      "base": "<p>Output configuration for a custom OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$customOauth2ProviderConfig": "<p>The output configuration for a custom OAuth2 provider.</p>"
+      }
+    },
+    "DateTimestamp": {
+      "base": null,
+      "refs": {
+        "Agent$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
+        "AgentEndpoint$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
+        "AgentEndpoint$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
+        "BrowserSummary$createdAt": "<p>The timestamp when the browser was created.</p>",
+        "BrowserSummary$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
+        "CodeInterpreterSummary$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
+        "CodeInterpreterSummary$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
+        "CreateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
+        "CreateAgentRuntimeResponse$createdAt": "<p>The timestamp when the agent runtime was created.</p>",
+        "CreateBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
+        "CreateCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
+        "CreateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
+        "CreateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "CreateGatewayTargetResponse$createdAt": "<p>The timestamp when the target was created.</p>",
+        "CreateGatewayTargetResponse$updatedAt": "<p>The timestamp when the target was last updated.</p>",
+        "DeleteBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
+        "DeleteCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
+        "GatewaySummary$createdAt": "<p>The timestamp when the gateway was created.</p>",
+        "GatewaySummary$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "GetAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
+        "GetAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
+        "GetAgentRuntimeResponse$createdAt": "<p>The timestamp when the agent runtime was created.</p>",
+        "GetAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
+        "GetBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
+        "GetBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
+        "GetCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
+        "GetCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
+        "GetGatewayResponse$createdAt": "<p>The timestamp when the Gateway was created.</p>",
+        "GetGatewayResponse$updatedAt": "<p>The timestamp when the Gateway was last updated.</p>",
+        "GetGatewayTargetResponse$createdAt": "<p>The timestamp when the Gateway Target was created.</p>",
+        "GetGatewayTargetResponse$updatedAt": "<p>The timestamp when the Gateway Target was last updated.</p>",
+        "TargetSummary$createdAt": "<p>The timestamp when the target was created.</p>",
+        "TargetSummary$updatedAt": "<p>The timestamp when the target was last updated.</p>",
+        "UpdateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
+        "UpdateAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
+        "UpdateAgentRuntimeResponse$createdAt": "<p>The timestamp when the agent runtime was created.</p>",
+        "UpdateAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
+        "UpdateGatewayResponse$createdAt": "<p>The timestamp when the Gateway was created.</p>",
+        "UpdateGatewayResponse$updatedAt": "<p>The timestamp when the Gateway was last updated.</p>",
+        "UpdateGatewayTargetResponse$createdAt": "<p>The timestamp when the Gateway Target was created.</p>",
+        "UpdateGatewayTargetResponse$updatedAt": "<p>The timestamp when the Gateway Target was last updated.</p>"
+      }
+    },
+    "DecryptionFailure": {
+      "base": "<p>Exception thrown when decryption of a secret fails.</p>",
+      "refs": {}
+    },
+    "DeleteAgentRuntimeEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentRuntimeEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAgentRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteApiKeyCredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteApiKeyCredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteBrowserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteBrowserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCodeInterpreterRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteCodeInterpreterResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayTargetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteMemoryInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteMemoryInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "DeleteMemoryInput$clientToken": "<p>A client token is used for keeping track of idempotent requests. It can contain a session id which can be around 250 chars, combined with a unique AWS identifier.</p>"
+      }
+    },
+    "DeleteMemoryOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteMemoryStrategiesList": {
+      "base": null,
+      "refs": {
+        "ModifyMemoryStrategies$deleteMemoryStrategies": "<p>The list of memory strategies to delete.</p>"
+      }
+    },
+    "DeleteMemoryStrategyInput": {
+      "base": "<p>Input for deleting a memory strategy.</p>",
+      "refs": {
+        "DeleteMemoryStrategiesList$member": null
+      }
+    },
+    "DeleteOauth2CredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteOauth2CredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteWorkloadIdentityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteWorkloadIdentityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Description": {
+      "base": null,
+      "refs": {
+        "Agent$description": "<p>The description of the agent runtime.</p>",
+        "BrowserSummary$description": "<p>The description of the browser.</p>",
+        "CodeInterpreterSummary$description": "<p>The description of the code interpreter.</p>",
+        "CreateAgentRuntimeRequest$description": "<p>The description of the agent runtime.</p>",
+        "CreateBrowserRequest$description": "<p>The description of the browser.</p>",
+        "CreateCodeInterpreterRequest$description": "<p>The description of the code interpreter.</p>",
+        "CreateMemoryInput$description": "<p>The description of the memory.</p>",
+        "CustomMemoryStrategyInput$description": "<p>The description of the custom memory strategy.</p>",
+        "GetAgentRuntimeResponse$description": "<p>The description of the agent runtime.</p>",
+        "GetBrowserResponse$description": "<p>The description of the browser.</p>",
+        "GetCodeInterpreterResponse$description": "<p>The description of the code interpreter.</p>",
+        "Memory$description": "<p>The description of the memory.</p>",
+        "MemoryStrategy$description": "<p>The description of the memory strategy.</p>",
+        "ModifyMemoryStrategyInput$description": "<p>The updated description of the memory strategy.</p>",
+        "SemanticMemoryStrategyInput$description": "<p>The description of the semantic memory strategy.</p>",
+        "SummaryMemoryStrategyInput$description": "<p>The description of the summary memory strategy.</p>",
+        "UpdateAgentRuntimeRequest$description": "<p>The updated description of the agent runtime.</p>",
+        "UpdateMemoryInput$description": "<p>The updated description of the memory.</p>",
+        "UserPreferenceMemoryStrategyInput$description": "<p>The description of the user preference memory strategy.</p>"
+      }
+    },
+    "DiscoveryUrl": {
+      "base": null,
+      "refs": {
+        "CustomJWTAuthorizerConfiguration$discoveryUrl": "<p>This URL is used to fetch OpenID Connect configuration or authorization server metadata for validating incoming tokens.</p>"
+      }
+    },
+    "DiscoveryUrlType": {
+      "base": null,
+      "refs": {
+        "Oauth2Discovery$discoveryUrl": "<p>The discovery URL for the OAuth2 provider.</p>"
+      }
+    },
+    "EncryptionFailure": {
+      "base": "<p>Exception thrown when encryption of a secret fails.</p>",
+      "refs": {}
+    },
+    "EndpointName": {
+      "base": null,
+      "refs": {
+        "AgentEndpoint$name": "<p>The name of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointRequest$name": "<p>The name of the agent runtime endpoint.</p>",
+        "DeleteAgentRuntimeEndpointRequest$endpointName": "<p>The name of the agent runtime endpoint to delete.</p>",
+        "GetAgentRuntimeEndpointRequest$endpointName": "<p>The name of the agent runtime endpoint to retrieve.</p>",
+        "GetAgentRuntimeEndpointResponse$name": "<p>The name of the agent runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointRequest$endpointName": "<p>The name of the agent runtime endpoint to update.</p>"
+      }
+    },
+    "EnvironmentVariableKey": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariablesMap$key": null
+      }
+    },
+    "EnvironmentVariableValue": {
+      "base": null,
+      "refs": {
+        "EnvironmentVariablesMap$value": null
+      }
+    },
+    "EnvironmentVariablesMap": {
+      "base": null,
+      "refs": {
+        "CreateAgentRuntimeRequest$environmentVariables": "<p>Environment variables to set in the agent runtime environment.</p>",
+        "GetAgentRuntimeResponse$environmentVariables": "<p>Environment variables set in the agent runtime environment.</p>",
+        "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the agent runtime environment.</p>"
+      }
+    },
+    "ExceptionLevel": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
+        "CreateGatewayResponse$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
+        "GetGatewayResponse$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
+        "UpdateGatewayRequest$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
+        "UpdateGatewayResponse$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>"
+      }
+    },
+    "ExtractionConfiguration": {
+      "base": "<p>Contains extraction configuration information for a memory strategy.</p>",
+      "refs": {
+        "StrategyConfiguration$extraction": "<p>The extraction configuration for the memory strategy.</p>"
+      }
+    },
+    "GatewayArn": {
+      "base": null,
+      "refs": {
+        "CreateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the created gateway.</p>",
+        "CreateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "DeleteGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>",
+        "GetGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>",
+        "GetGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>",
+        "UpdateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the updated Gateway.</p>",
+        "UpdateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>"
+      }
+    },
+    "GatewayDescription": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$description": "<p>The description of the gateway.</p>",
+        "CreateGatewayResponse$description": "<p>The description of the gateway.</p>",
+        "GatewaySummary$description": "<p>The description of the gateway.</p>",
+        "GetGatewayResponse$description": "<p>The description of the Gateway.</p>",
+        "UpdateGatewayRequest$description": "<p>The updated description for the Gateway.</p>",
+        "UpdateGatewayResponse$description": "<p>The updated description of the Gateway.</p>"
+      }
+    },
+    "GatewayId": {
+      "base": null,
+      "refs": {
+        "CreateGatewayResponse$gatewayId": "<p>The unique identifier of the created gateway.</p>",
+        "DeleteGatewayResponse$gatewayId": "<p>The unique identifier of the deleted Gateway.</p>",
+        "GatewaySummary$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "GetGatewayResponse$gatewayId": "<p>The unique identifier of the Gateway.</p>",
+        "UpdateGatewayResponse$gatewayId": "<p>The unique identifier of the updated Gateway.</p>"
+      }
+    },
+    "GatewayIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway to create a target for. This can be either the gateway ID or the gateway ARN.</p>",
+        "DeleteGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to delete. This can be either the gateway ID or the gateway ARN.</p>",
+        "DeleteGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the Gateway associated with the target.</p>",
+        "GetGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to retrieve. This can be either the gateway ID or the gateway ARN.</p>",
+        "GetGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway that contains the target. This can be either the gateway ID or the gateway ARN.</p>",
+        "ListGatewayTargetsRequest$gatewayIdentifier": "<p>The identifier of the gateway to list targets for. This can be either the gateway ID or the gateway ARN.</p>",
+        "UpdateGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to update. This can be either the gateway ID or the gateway ARN.</p>",
+        "UpdateGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the Gateway associated with the target.</p>"
+      }
+    },
+    "GatewayMaxResults": {
+      "base": null,
+      "refs": {
+        "ListGatewaysRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>"
+      }
+    },
+    "GatewayName": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$name": "<p>The name of the gateway. The name must be unique within your account.</p>",
+        "CreateGatewayResponse$name": "<p>The name of the gateway.</p>",
+        "GatewaySummary$name": "<p>The name of the gateway.</p>",
+        "GetGatewayResponse$name": "<p>The name of the Gateway.</p>",
+        "UpdateGatewayRequest$name": "<p>The updated name for the Gateway.</p>",
+        "UpdateGatewayResponse$name": "<p>The updated name of the Gateway.</p>"
+      }
+    },
+    "GatewayNextToken": {
+      "base": null,
+      "refs": {
+        "ListGatewaysRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListGatewaysResponse$nextToken": "<p>Opaque continuation token for the next paginated response.</p>"
+      }
+    },
+    "GatewayProtocolConfiguration": {
+      "base": "<p>The configuration for a gateway protocol. This structure defines how the gateway communicates with external services.</p>",
+      "refs": {
+        "CreateGatewayRequest$protocolConfiguration": "<p>The configuration settings for the protocol specified in the protocolType parameter.</p>",
+        "CreateGatewayResponse$protocolConfiguration": "<p>The configuration settings for the protocol used by the gateway.</p>",
+        "GetGatewayResponse$protocolConfiguration": null,
+        "UpdateGatewayRequest$protocolConfiguration": null,
+        "UpdateGatewayResponse$protocolConfiguration": null
+      }
+    },
+    "GatewayProtocolType": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$protocolType": "<p>The protocol type for the gateway. Currently supports MCP (Model Context Protocol).</p>",
+        "CreateGatewayResponse$protocolType": "<p>The protocol type of the gateway.</p>",
+        "GatewaySummary$protocolType": "<p>The protocol type used by the gateway.</p>",
+        "GetGatewayResponse$protocolType": "<p>Protocol applied to a Gateway.</p>",
+        "UpdateGatewayRequest$protocolType": "<p>The updated protocol type for the Gateway.</p>",
+        "UpdateGatewayResponse$protocolType": "<p>The updated protocol type for the Gateway.</p>"
+      }
+    },
+    "GatewayStatus": {
+      "base": null,
+      "refs": {
+        "CreateGatewayResponse$status": "<p>The current status of the gateway.</p>",
+        "DeleteGatewayResponse$status": "<p>The current status of the Gateway deletion.</p>",
+        "GatewaySummary$status": "<p>The current status of the gateway.</p>",
+        "GetGatewayResponse$status": "<p>The current status of the Gateway.</p>",
+        "UpdateGatewayResponse$status": "<p>The current status of the updated Gateway.</p>"
+      }
+    },
+    "GatewaySummaries": {
+      "base": null,
+      "refs": {
+        "ListGatewaysResponse$items": "<p>The list of Gateway summaries.</p>"
+      }
+    },
+    "GatewaySummary": {
+      "base": "<p>Contains summary information about a gateway.</p>",
+      "refs": {
+        "GatewaySummaries$member": null
+      }
+    },
+    "GatewayUrl": {
+      "base": null,
+      "refs": {
+        "CreateGatewayResponse$gatewayUrl": "<p>The URL endpoint for the created gateway.</p>",
+        "GetGatewayResponse$gatewayUrl": "<p>An endpoint for invoking Gateway.</p>",
+        "UpdateGatewayResponse$gatewayUrl": "<p>An endpoint for invoking the updated Gateway.</p>"
+      }
+    },
+    "GetAgentRuntimeEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentRuntimeEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetAgentRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetApiKeyCredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetApiKeyCredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBrowserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetBrowserResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeInterpreterRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCodeInterpreterResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGatewayTargetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMemoryInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMemoryOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOauth2CredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOauth2CredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTokenVaultRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetTokenVaultResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWorkloadIdentityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetWorkloadIdentityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GithubOauth2ProviderConfigInput": {
+      "base": "<p>Input configuration for a GitHub OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$githubOauth2ProviderConfig": "<p>The configuration for a GitHub OAuth2 provider.</p>"
+      }
+    },
+    "GithubOauth2ProviderConfigOutput": {
+      "base": "<p>Output configuration for a GitHub OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$githubOauth2ProviderConfig": "<p>The output configuration for a GitHub OAuth2 provider.</p>"
+      }
+    },
+    "GoogleOauth2ProviderConfigInput": {
+      "base": "<p>Input configuration for a Google OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$googleOauth2ProviderConfig": "<p>The configuration for a Google OAuth2 provider.</p>"
+      }
+    },
+    "GoogleOauth2ProviderConfigOutput": {
+      "base": "<p>Output configuration for a Google OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$googleOauth2ProviderConfig": "<p>The output configuration for a Google OAuth2 provider.</p>"
+      }
+    },
+    "InlinePayload": {
+      "base": null,
+      "refs": {
+        "ApiSchemaConfiguration$inlinePayload": "<p>The inline payload containing the API schema definition.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
+      "refs": {}
+    },
+    "IssuerUrlType": {
+      "base": null,
+      "refs": {
+        "Oauth2AuthorizationServerMetadata$issuer": "<p>The issuer URL for the OAuth2 authorization server.</p>"
+      }
+    },
+    "KeyType": {
+      "base": null,
+      "refs": {
+        "KmsConfiguration$keyType": "<p>The type of KMS key (CustomerManagedKey or ServiceManagedKey).</p>"
+      }
+    },
+    "KmsConfiguration": {
+      "base": "<p>Contains the KMS configuration for a resource.</p>",
+      "refs": {
+        "GetTokenVaultResponse$kmsConfiguration": "<p>The KMS configuration for the token vault.</p>",
+        "SetTokenVaultCMKRequest$kmsConfiguration": "<p>The KMS configuration for the token vault, including the key type and KMS key ARN.</p>",
+        "SetTokenVaultCMKResponse$kmsConfiguration": "<p>The KMS configuration for the token vault.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "CreateGatewayRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
+        "CreateGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
+        "GetGatewayResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt the Gateway.</p>",
+        "KmsConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key.</p>",
+        "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the Gateway.</p>",
+        "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the Gateway.</p>"
+      }
+    },
+    "LambdaFunctionArn": {
+      "base": null,
+      "refs": {
+        "McpLambdaTargetConfiguration$lambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function. This function is invoked by the gateway to communicate with the target.</p>"
+      }
+    },
+    "ListAgentRuntimeEndpointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRuntimeEndpointsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRuntimeVersionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRuntimeVersionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRuntimesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAgentRuntimesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListApiKeyCredentialProvidersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListApiKeyCredentialProvidersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBrowsersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListBrowsersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeInterpretersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCodeInterpretersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewayTargetsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewayTargetsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewaysRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGatewaysResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMemoriesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListMemoriesInputMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListMemoriesInput$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>"
+      }
+    },
+    "ListMemoriesOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOauth2CredentialProvidersRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListOauth2CredentialProvidersRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListOauth2CredentialProvidersRequest$maxResults": "<p>Maximum number of results to return.</p>"
+      }
+    },
+    "ListOauth2CredentialProvidersResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWorkloadIdentitiesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListWorkloadIdentitiesRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListWorkloadIdentitiesRequest$maxResults": "<p>Maximum number of results to return.</p>"
+      }
+    },
+    "ListWorkloadIdentitiesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MCPGatewayConfiguration": {
+      "base": "<p>The configuration for a Model Context Protocol (MCP) gateway. This structure defines how the gateway implements the MCP protocol.</p>",
+      "refs": {
+        "GatewayProtocolConfiguration$mcp": "<p>The configuration for the Model Context Protocol (MCP). This protocol enables communication between Amazon Bedrock Agent and external tools.</p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListAgentRuntimeEndpointsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListAgentRuntimeVersionsRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListAgentRuntimesRequest$maxResults": "<p>The maximum number of results to return in the response.</p>",
+        "ListApiKeyCredentialProvidersRequest$maxResults": "<p>Maximum number of results to return.</p>",
+        "ListBrowsersRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>",
+        "ListCodeInterpretersRequest$maxResults": "<p>The maximum number of results to return in the response.</p>"
+      }
+    },
+    "McpInstructions": {
+      "base": null,
+      "refs": {
+        "MCPGatewayConfiguration$instructions": "<p>The instructions for using the Model Context Protocol gateway. These instructions provide guidance on how to interact with the gateway.</p>"
+      }
+    },
+    "McpLambdaTargetConfiguration": {
+      "base": "<p>The Lambda configuration for a Model Context Protocol target. This structure defines how the gateway uses a Lambda function to communicate with the target.</p>",
+      "refs": {
+        "McpTargetConfiguration$lambda": "<p>The Lambda configuration for the Model Context Protocol target. This configuration defines how the gateway uses a Lambda function to communicate with the target.</p>"
+      }
+    },
+    "McpSupportedVersions": {
+      "base": null,
+      "refs": {
+        "MCPGatewayConfiguration$supportedVersions": "<p>The supported versions of the Model Context Protocol. This field specifies which versions of the protocol the gateway can use.</p>"
+      }
+    },
+    "McpTargetConfiguration": {
+      "base": "<p>The Model Context Protocol (MCP) configuration for a target. This structure defines how the gateway uses MCP to communicate with the target.</p>",
+      "refs": {
+        "TargetConfiguration$mcp": "<p>The Model Context Protocol (MCP) configuration for the target. This configuration defines how the gateway uses MCP to communicate with the target.</p>"
+      }
+    },
+    "McpVersion": {
+      "base": null,
+      "refs": {
+        "McpSupportedVersions$member": null
+      }
+    },
+    "Memory": {
+      "base": "<p>Contains information about a memory resource.</p>",
+      "refs": {
+        "CreateMemoryOutput$memory": "<p>The details of the created memory, including its ID, ARN, name, description, and configuration settings.</p>",
+        "GetMemoryOutput$memory": "<p>The retrieved memory details.</p>",
+        "UpdateMemoryOutput$memory": "<p>The updated memory details.</p>"
+      }
+    },
+    "MemoryArn": {
+      "base": null,
+      "refs": {
+        "Memory$arn": "<p>The Amazon Resource Name (ARN) of the memory.</p>",
+        "MemorySummary$arn": "<p>The Amazon Resource Name (ARN) of the memory.</p>"
+      }
+    },
+    "MemoryEventExpiryDurationInteger": {
+      "base": null,
+      "refs": {
+        "Memory$eventExpiryDuration": "<p>The number of days after which memory events will expire.</p>"
+      }
+    },
+    "MemoryId": {
+      "base": null,
+      "refs": {
+        "DeleteMemoryInput$memoryId": "<p>The unique identifier of the memory to delete.</p>",
+        "DeleteMemoryOutput$memoryId": "<p>The unique identifier of the deleted memory.</p>",
+        "GetMemoryInput$memoryId": "<p>The unique identifier of the memory to retrieve.</p>",
+        "Memory$id": "<p>The unique identifier of the memory.</p>",
+        "MemorySummary$id": "<p>The unique identifier of the memory.</p>",
+        "UpdateMemoryInput$memoryId": "<p>The unique identifier of the memory to update.</p>"
+      }
+    },
+    "MemoryStatus": {
+      "base": null,
+      "refs": {
+        "DeleteMemoryOutput$status": "<p>The current status of the memory deletion.</p>",
+        "Memory$status": "<p>The current status of the memory.</p>",
+        "MemorySummary$status": "<p>The current status of the memory.</p>"
+      }
+    },
+    "MemoryStrategy": {
+      "base": "<p>Contains information about a memory strategy.</p>",
+      "refs": {
+        "MemoryStrategyList$member": null
+      }
+    },
+    "MemoryStrategyId": {
+      "base": null,
+      "refs": {
+        "MemoryStrategy$strategyId": "<p>The unique identifier of the memory strategy.</p>"
+      }
+    },
+    "MemoryStrategyInput": {
+      "base": "<p>Contains input information for creating a memory strategy.</p>",
+      "refs": {
+        "MemoryStrategyInputList$member": null
+      }
+    },
+    "MemoryStrategyInputList": {
+      "base": null,
+      "refs": {
+        "CreateMemoryInput$memoryStrategies": "<p>The memory strategies to use for this memory. Strategies define how information is extracted, processed, and consolidated.</p>",
+        "ModifyMemoryStrategies$addMemoryStrategies": "<p>The list of memory strategies to add.</p>"
+      }
+    },
+    "MemoryStrategyList": {
+      "base": null,
+      "refs": {
+        "Memory$strategies": "<p>The list of memory strategies associated with this memory.</p>"
+      }
+    },
+    "MemoryStrategyStatus": {
+      "base": null,
+      "refs": {
+        "MemoryStrategy$status": "<p>The current status of the memory strategy.</p>"
+      }
+    },
+    "MemoryStrategyType": {
+      "base": null,
+      "refs": {
+        "MemoryStrategy$type": "<p>The type of the memory strategy.</p>"
+      }
+    },
+    "MemorySummary": {
+      "base": "<p>Contains summary information about a memory resource.</p>",
+      "refs": {
+        "MemorySummaryList$member": null
+      }
+    },
+    "MemorySummaryList": {
+      "base": null,
+      "refs": {
+        "ListMemoriesOutput$memories": "<p>The list of memory summaries.</p>"
+      }
+    },
+    "MicrosoftOauth2ProviderConfigInput": {
+      "base": "<p>Input configuration for a Microsoft OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$microsoftOauth2ProviderConfig": "<p>The configuration for a Microsoft OAuth2 provider.</p>"
+      }
+    },
+    "MicrosoftOauth2ProviderConfigOutput": {
+      "base": "<p>Output configuration for a Microsoft OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$microsoftOauth2ProviderConfig": "<p>The output configuration for a Microsoft OAuth2 provider.</p>"
+      }
+    },
+    "ModifyConsolidationConfiguration": {
+      "base": "<p>Contains information for modifying a consolidation configuration.</p>",
+      "refs": {
+        "ModifyStrategyConfiguration$consolidation": "<p>The updated consolidation configuration.</p>"
+      }
+    },
+    "ModifyExtractionConfiguration": {
+      "base": "<p>Contains information for modifying an extraction configuration.</p>",
+      "refs": {
+        "ModifyStrategyConfiguration$extraction": "<p>The updated extraction configuration.</p>"
+      }
+    },
+    "ModifyMemoryStrategies": {
+      "base": "<p>Contains information for modifying memory strategies.</p>",
+      "refs": {
+        "UpdateMemoryInput$memoryStrategies": "<p>The memory strategies to add, modify, or delete.</p>"
+      }
+    },
+    "ModifyMemoryStrategiesList": {
+      "base": null,
+      "refs": {
+        "ModifyMemoryStrategies$modifyMemoryStrategies": "<p>The list of memory strategies to modify.</p>"
+      }
+    },
+    "ModifyMemoryStrategyInput": {
+      "base": "<p>Input for modifying a memory strategy.</p>",
+      "refs": {
+        "ModifyMemoryStrategiesList$member": null
+      }
+    },
+    "ModifyStrategyConfiguration": {
+      "base": "<p>Contains information for modifying a strategy configuration.</p>",
+      "refs": {
+        "ModifyMemoryStrategyInput$configuration": "<p>The updated configuration for the memory strategy.</p>"
+      }
+    },
+    "Name": {
+      "base": null,
+      "refs": {
+        "CreateMemoryInput$name": "<p>The name of the memory. The name must be unique within your account.</p>",
+        "CustomMemoryStrategyInput$name": "<p>The name of the custom memory strategy.</p>",
+        "Memory$name": "<p>The name of the memory.</p>",
+        "MemoryStrategy$name": "<p>The name of the memory strategy.</p>",
+        "SemanticMemoryStrategyInput$name": "<p>The name of the semantic memory strategy.</p>",
+        "SummaryMemoryStrategyInput$name": "<p>The name of the summary memory strategy.</p>",
+        "UserPreferenceMemoryStrategyInput$name": "<p>The name of the user preference memory strategy.</p>"
+      }
+    },
+    "Namespace": {
+      "base": null,
+      "refs": {
+        "NamespacesList$member": null
+      }
+    },
+    "NamespacesList": {
+      "base": null,
+      "refs": {
+        "CustomMemoryStrategyInput$namespaces": "<p>The namespaces associated with the custom memory strategy.</p>",
+        "MemoryStrategy$namespaces": "<p>The namespaces associated with the memory strategy.</p>",
+        "ModifyMemoryStrategyInput$namespaces": "<p>The updated namespaces for the memory strategy.</p>",
+        "SemanticMemoryStrategyInput$namespaces": "<p>The namespaces associated with the semantic memory strategy.</p>",
+        "SummaryMemoryStrategyInput$namespaces": "<p>The namespaces associated with the summary memory strategy.</p>",
+        "UserPreferenceMemoryStrategyInput$namespaces": "<p>The namespaces associated with the user preference memory strategy.</p>"
+      }
+    },
+    "NetworkConfiguration": {
+      "base": "<p>SecurityConfig for the Agent.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$networkConfiguration": "<p>The network configuration for the agent runtime.</p>",
+        "GetAgentRuntimeResponse$networkConfiguration": "<p>The network configuration for the agent runtime.</p>",
+        "UpdateAgentRuntimeRequest$networkConfiguration": "<p>The updated network configuration for the agent runtime.</p>"
+      }
+    },
+    "NetworkMode": {
+      "base": null,
+      "refs": {
+        "NetworkConfiguration$networkMode": "<p>The network mode for the agent runtime.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListAgentRuntimeEndpointsRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAgentRuntimeEndpointsResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAgentRuntimeVersionsRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAgentRuntimeVersionsResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAgentRuntimesRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListAgentRuntimesResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListBrowsersRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListBrowsersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListCodeInterpretersRequest$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListCodeInterpretersResponse$nextToken": "<p>A token to retrieve the next page of results.</p>"
+      }
+    },
+    "NonBlankString": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "UnauthorizedException$message": null
+      }
+    },
+    "OAuthCredentialProvider": {
+      "base": "<p>An OAuth credential provider for gateway authentication. This structure contains the configuration for authenticating with the target endpoint using OAuth.</p>",
+      "refs": {
+        "CredentialProvider$oauthCredentialProvider": "<p>The OAuth credential provider. This provider uses OAuth authentication to access the target endpoint.</p>"
+      }
+    },
+    "OAuthCredentialProviderArn": {
+      "base": null,
+      "refs": {
+        "OAuthCredentialProvider$providerArn": "<p>The Amazon Resource Name (ARN) of the OAuth credential provider. This ARN identifies the provider in Amazon Web Services.</p>"
+      }
+    },
+    "OAuthCustomParameters": {
+      "base": null,
+      "refs": {
+        "OAuthCredentialProvider$customParameters": "<p>The custom parameters for the OAuth credential provider. These parameters provide additional configuration for the OAuth authentication process.</p>"
+      }
+    },
+    "OAuthCustomParametersKey": {
+      "base": null,
+      "refs": {
+        "OAuthCustomParameters$key": null
+      }
+    },
+    "OAuthCustomParametersValue": {
+      "base": null,
+      "refs": {
+        "OAuthCustomParameters$value": null
+      }
+    },
+    "OAuthScope": {
+      "base": null,
+      "refs": {
+        "OAuthScopes$member": null
+      }
+    },
+    "OAuthScopes": {
+      "base": null,
+      "refs": {
+        "OAuthCredentialProvider$scopes": "<p>The OAuth scopes for the credential provider. These scopes define the level of access requested from the OAuth provider.</p>"
+      }
+    },
+    "Oauth2AuthorizationServerMetadata": {
+      "base": "<p>Contains the authorization server metadata for an OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2Discovery$authorizationServerMetadata": "<p>The authorization server metadata for the OAuth2 provider.</p>"
+      }
+    },
+    "Oauth2CredentialProviderItem": {
+      "base": "<p>Contains information about an OAuth2 credential provider.</p>",
+      "refs": {
+        "Oauth2CredentialProviders$member": null
+      }
+    },
+    "Oauth2CredentialProviders": {
+      "base": null,
+      "refs": {
+        "ListOauth2CredentialProvidersResponse$credentialProviders": "<p>The list of OAuth2 credential providers.</p>"
+      }
+    },
+    "Oauth2Discovery": {
+      "base": "<p>Contains the discovery information for an OAuth2 provider.</p>",
+      "refs": {
+        "CustomOauth2ProviderConfigInput$oauthDiscovery": "<p>The OAuth2 discovery information for the custom provider.</p>",
+        "CustomOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the custom provider.</p>",
+        "GithubOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the GitHub provider.</p>",
+        "GoogleOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Google provider.</p>",
+        "MicrosoftOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Microsoft provider.</p>",
+        "SalesforceOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Salesforce provider.</p>",
+        "SlackOauth2ProviderConfigOutput$oauthDiscovery": "<p>The OAuth2 discovery information for the Slack provider.</p>"
+      }
+    },
+    "Oauth2ProviderConfigInput": {
+      "base": "<p>Contains the input configuration for an OAuth2 provider.</p>",
+      "refs": {
+        "CreateOauth2CredentialProviderRequest$oauth2ProviderConfigInput": "<p>The configuration settings for the OAuth2 provider, including client ID, client secret, and other vendor-specific settings.</p>",
+        "UpdateOauth2CredentialProviderRequest$oauth2ProviderConfigInput": "<p>The configuration input for the OAuth2 provider.</p>"
+      }
+    },
+    "Oauth2ProviderConfigOutput": {
+      "base": "<p>Contains the output configuration for an OAuth2 provider.</p>",
+      "refs": {
+        "GetOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>",
+        "UpdateOauth2CredentialProviderResponse$oauth2ProviderConfigOutput": "<p>The configuration output for the OAuth2 provider.</p>"
+      }
+    },
+    "OverrideType": {
+      "base": null,
+      "refs": {
+        "StrategyConfiguration$type": "<p>The type of override for the strategy configuration.</p>"
+      }
+    },
+    "Prompt": {
+      "base": null,
+      "refs": {
+        "SemanticConsolidationOverride$appendToPrompt": "<p>The text to append to the prompt for semantic consolidation.</p>",
+        "SemanticExtractionOverride$appendToPrompt": "<p>The text to append to the prompt for semantic extraction.</p>",
+        "SemanticOverrideConsolidationConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for semantic consolidation.</p>",
+        "SemanticOverrideExtractionConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for semantic extraction.</p>",
+        "SummaryConsolidationOverride$appendToPrompt": "<p>The text to append to the prompt for summary consolidation.</p>",
+        "SummaryOverrideConsolidationConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for summary consolidation.</p>",
+        "UserPreferenceConsolidationOverride$appendToPrompt": "<p>The text to append to the prompt for user preference consolidation.</p>",
+        "UserPreferenceExtractionOverride$appendToPrompt": "<p>The text to append to the prompt for user preference extraction.</p>",
+        "UserPreferenceOverrideConsolidationConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for user preference consolidation.</p>",
+        "UserPreferenceOverrideExtractionConfigurationInput$appendToPrompt": "<p>The text to append to the prompt for user preference extraction.</p>"
+      }
+    },
+    "ProtocolConfiguration": {
+      "base": "<p>The protocol configuration for an agent runtime. This structure defines how the agent runtime communicates with clients.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$protocolConfiguration": null,
+        "GetAgentRuntimeResponse$protocolConfiguration": null,
+        "UpdateAgentRuntimeRequest$protocolConfiguration": null
+      }
+    },
+    "RecordingConfig": {
+      "base": "<p>The recording configuration for a browser. This structure defines how browser sessions are recorded.</p>",
+      "refs": {
+        "CreateBrowserRequest$recording": "<p>The recording configuration for the browser. When enabled, browser sessions are recorded and stored in the specified Amazon S3 location.</p>",
+        "GetBrowserResponse$recording": null
+      }
+    },
+    "RequiredProperties": {
+      "base": null,
+      "refs": {
+        "SchemaDefinition$required": "<p>The required fields in the schema definition. These fields must be provided when using the schema.</p>"
+      }
+    },
+    "ResourceLimitExceededException": {
+      "base": "<p>Exception thrown when a resource limit is exceeded.</p>",
+      "refs": {}
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
+      "refs": {}
+    },
+    "ResourceOauth2ReturnUrlListType": {
+      "base": null,
+      "refs": {
+        "CreateWorkloadIdentityRequest$allowedResourceOauth2ReturnUrls": "<p>The list of allowed OAuth2 return URLs for resources associated with this workload identity.</p>",
+        "CreateWorkloadIdentityResponse$allowedResourceOauth2ReturnUrls": "<p>The list of allowed OAuth2 return URLs for resources associated with this workload identity.</p>",
+        "GetWorkloadIdentityResponse$allowedResourceOauth2ReturnUrls": "<p>The list of allowed OAuth2 return URLs for resources associated with this workload identity.</p>",
+        "UpdateWorkloadIdentityRequest$allowedResourceOauth2ReturnUrls": "<p>The new list of allowed OAuth2 return URLs for resources associated with this workload identity. This list replaces the existing list.</p>",
+        "UpdateWorkloadIdentityResponse$allowedResourceOauth2ReturnUrls": "<p>The list of allowed OAuth2 return URLs for resources associated with this workload identity.</p>"
+      }
+    },
+    "ResourceOauth2ReturnUrlType": {
+      "base": null,
+      "refs": {
+        "ResourceOauth2ReturnUrlListType$member": null
+      }
+    },
+    "ResourceType": {
+      "base": null,
+      "refs": {
+        "ListBrowsersRequest$type": "<p>The type of browsers to list. If not specified, all browser types are returned.</p>",
+        "ListCodeInterpretersRequest$type": "<p>The type of code interpreters to list.</p>"
+      }
+    },
+    "ResponseListType": {
+      "base": null,
+      "refs": {
+        "Oauth2AuthorizationServerMetadata$responseTypes": "<p>The supported response types for the OAuth2 authorization server.</p>"
+      }
+    },
+    "ResponseType": {
+      "base": null,
+      "refs": {
+        "ResponseListType$member": null
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "CreateAgentRuntimeRequest$roleArn": "<p>The IAM role ARN that provides permissions for the agent runtime.</p>",
+        "CreateBrowserRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the browser to access Amazon Web Services services.</p>",
+        "CreateCodeInterpreterRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the code interpreter to access Amazon Web Services services.</p>",
+        "CreateGatewayRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the gateway to access Amazon Web Services services.</p>",
+        "CreateGatewayResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the gateway.</p>",
+        "GetAgentRuntimeResponse$roleArn": "<p>The IAM role ARN that provides permissions for the agent runtime.</p>",
+        "GetBrowserResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the browser.</p>",
+        "GetCodeInterpreterResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the code interpreter.</p>",
+        "GetGatewayResponse$roleArn": "<p>The IAM role ARN that provides permissions for the Gateway.</p>",
+        "UpdateAgentRuntimeRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the agent runtime.</p>",
+        "UpdateGatewayRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the Gateway.</p>",
+        "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the Gateway.</p>"
+      }
+    },
+    "RuntimeContainerUri": {
+      "base": null,
+      "refs": {
+        "ContainerConfiguration$containerUri": "<p>The ECR URI of the container.</p>"
+      }
+    },
+    "S3BucketUri": {
+      "base": null,
+      "refs": {
+        "S3Configuration$uri": "<p>The URI of the Amazon S3 object. This URI specifies the location of the object in Amazon S3.</p>"
+      }
+    },
+    "S3Configuration": {
+      "base": "<p>The Amazon S3 configuration for a gateway. This structure defines how the gateway accesses files in Amazon S3.</p>",
+      "refs": {
+        "ApiSchemaConfiguration$s3": null,
+        "ToolSchema$s3": "<p>The Amazon S3 location of the tool schema. This location contains the schema definition file.</p>"
+      }
+    },
+    "S3Location": {
+      "base": "<p>The Amazon S3 location for storing data. This structure defines where in Amazon S3 data is stored.</p>",
+      "refs": {
+        "RecordingConfig$s3Location": "<p>The Amazon S3 location where browser recordings are stored. This location contains the recorded browser sessions.</p>"
+      }
+    },
+    "S3LocationBucketString": {
+      "base": null,
+      "refs": {
+        "S3Location$bucket": "<p>The name of the Amazon S3 bucket. This bucket contains the stored data.</p>"
+      }
+    },
+    "S3LocationPrefixString": {
+      "base": null,
+      "refs": {
+        "S3Location$prefix": "<p>The prefix for objects in the Amazon S3 bucket. This prefix is added to the object keys to organize the data.</p>"
+      }
+    },
+    "SalesforceOauth2ProviderConfigInput": {
+      "base": "<p>Input configuration for a Salesforce OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$salesforceOauth2ProviderConfig": "<p>The configuration for a Salesforce OAuth2 provider.</p>"
+      }
+    },
+    "SalesforceOauth2ProviderConfigOutput": {
+      "base": "<p>Output configuration for a Salesforce OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$salesforceOauth2ProviderConfig": "<p>The output configuration for a Salesforce OAuth2 provider.</p>"
+      }
+    },
+    "SandboxName": {
+      "base": null,
+      "refs": {
+        "BrowserSummary$name": "<p>The name of the browser.</p>",
+        "CodeInterpreterSummary$name": "<p>The name of the code interpreter.</p>",
+        "CreateBrowserRequest$name": "<p>The name of the browser. The name must be unique within your account.</p>",
+        "CreateCodeInterpreterRequest$name": "<p>The name of the code interpreter. The name must be unique within your account.</p>",
+        "GetBrowserResponse$name": "<p>The name of the browser.</p>",
+        "GetCodeInterpreterResponse$name": "<p>The name of the code interpreter.</p>"
+      }
+    },
+    "SchemaDefinition": {
+      "base": "<p>A schema definition for a gateway target. This structure defines the structure of the API that the target exposes.</p>",
+      "refs": {
+        "SchemaDefinition$items": "<p>The items in the schema definition. This field is used for array types to define the structure of the array elements.</p>",
+        "SchemaProperties$value": null,
+        "ToolDefinition$inputSchema": "<p>The input schema for the tool. This schema defines the structure of the input that the tool accepts.</p>",
+        "ToolDefinition$outputSchema": "<p>The output schema for the tool. This schema defines the structure of the output that the tool produces.</p>"
+      }
+    },
+    "SchemaProperties": {
+      "base": null,
+      "refs": {
+        "SchemaDefinition$properties": "<p>The properties of the schema definition. These properties define the fields in the schema.</p>"
+      }
+    },
+    "SchemaType": {
+      "base": null,
+      "refs": {
+        "SchemaDefinition$type": "<p>The type of the schema definition. This field specifies the data type of the schema.</p>"
+      }
+    },
+    "SearchType": {
+      "base": null,
+      "refs": {
+        "MCPGatewayConfiguration$searchType": "<p>The search type for the Model Context Protocol gateway. This field specifies how the gateway handles search operations.</p>"
+      }
+    },
+    "Secret": {
+      "base": "<p>Contains information about a secret in AWS Secrets Manager.</p>",
+      "refs": {
+        "CreateApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the secret containing the API key.</p>",
+        "CreateOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in AWS Secrets Manager.</p>",
+        "GetApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the API key secret in AWS Secrets Manager.</p>",
+        "GetOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in AWS Secrets Manager.</p>",
+        "UpdateApiKeyCredentialProviderResponse$apiKeySecretArn": "<p>The Amazon Resource Name (ARN) of the API key secret in AWS Secrets Manager.</p>",
+        "UpdateOauth2CredentialProviderResponse$clientSecretArn": "<p>The Amazon Resource Name (ARN) of the client secret in AWS Secrets Manager.</p>"
+      }
+    },
+    "SecretArn": {
+      "base": null,
+      "refs": {
+        "Secret$secretArn": "<p>The Amazon Resource Name (ARN) of the secret in AWS Secrets Manager.</p>"
+      }
+    },
+    "SemanticConsolidationOverride": {
+      "base": "<p>Contains semantic consolidation override configuration.</p>",
+      "refs": {
+        "CustomConsolidationConfiguration$semanticConsolidationOverride": "<p>The semantic consolidation override configuration.</p>"
+      }
+    },
+    "SemanticExtractionOverride": {
+      "base": "<p>Contains semantic extraction override configuration.</p>",
+      "refs": {
+        "CustomExtractionConfiguration$semanticExtractionOverride": "<p>The semantic extraction override configuration.</p>"
+      }
+    },
+    "SemanticMemoryStrategyInput": {
+      "base": "<p>Input for creating a semantic memory strategy.</p>",
+      "refs": {
+        "MemoryStrategyInput$semanticMemoryStrategy": "<p>Input for creating a semantic memory strategy.</p>"
+      }
+    },
+    "SemanticOverrideConfigurationInput": {
+      "base": "<p>Input for semantic override configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomConfigurationInput$semanticOverride": "<p>The semantic override configuration for a custom memory strategy.</p>"
+      }
+    },
+    "SemanticOverrideConsolidationConfigurationInput": {
+      "base": "<p>Input for semantic override consolidation configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomConsolidationConfigurationInput$semanticConsolidationOverride": "<p>The semantic consolidation override configuration input.</p>",
+        "SemanticOverrideConfigurationInput$consolidation": "<p>The consolidation configuration for a semantic override.</p>"
+      }
+    },
+    "SemanticOverrideExtractionConfigurationInput": {
+      "base": "<p>Input for semantic override extraction configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomExtractionConfigurationInput$semanticExtractionOverride": "<p>The semantic extraction override configuration input.</p>",
+        "SemanticOverrideConfigurationInput$extraction": "<p>The extraction configuration for a semantic override.</p>"
+      }
+    },
+    "ServerProtocol": {
+      "base": null,
+      "refs": {
+        "ProtocolConfiguration$serverProtocol": "<p>The server protocol for the agent runtime. This field specifies which protocol the agent runtime uses to communicate with clients.</p>"
+      }
+    },
+    "ServiceException": {
+      "base": "<p>An internal error occurred.</p>",
+      "refs": {}
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>This exception is thrown when a request is made beyond the service quota</p>",
+      "refs": {}
+    },
+    "SetTokenVaultCMKRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SetTokenVaultCMKResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SlackOauth2ProviderConfigInput": {
+      "base": "<p>Input configuration for a Slack OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigInput$slackOauth2ProviderConfig": "<p>The configuration for a Slack OAuth2 provider.</p>"
+      }
+    },
+    "SlackOauth2ProviderConfigOutput": {
+      "base": "<p>Output configuration for a Slack OAuth2 provider.</p>",
+      "refs": {
+        "Oauth2ProviderConfigOutput$slackOauth2ProviderConfig": "<p>The output configuration for a Slack OAuth2 provider.</p>"
+      }
+    },
+    "StatusReason": {
+      "base": null,
+      "refs": {
+        "StatusReasons$member": null
+      }
+    },
+    "StatusReasons": {
+      "base": null,
+      "refs": {
+        "CreateGatewayResponse$statusReasons": "<p>The reasons for the current status of the gateway.</p>",
+        "CreateGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the target.</p>",
+        "DeleteGatewayResponse$statusReasons": "<p>The reasons for the current status of the Gateway deletion.</p>",
+        "DeleteGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the Gateway Target deletion.</p>",
+        "GetGatewayResponse$statusReasons": "<p>The reasons for the current status of the Gateway.</p>",
+        "GetGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the Gateway Target.</p>",
+        "UpdateGatewayResponse$statusReasons": "<p>The reasons for the current status of the updated Gateway.</p>",
+        "UpdateGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the updated Gateway Target.</p>"
+      }
+    },
+    "StrategyConfiguration": {
+      "base": "<p>Contains configuration information for a memory strategy.</p>",
+      "refs": {
+        "MemoryStrategy$configuration": "<p>The configuration of the memory strategy.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "ConcurrentModificationException$message": null,
+        "DecryptionFailure$message": null,
+        "DeleteMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to delete.</p>",
+        "EncryptionFailure$message": null,
+        "GetAgentRuntimeEndpointResponse$failureReason": "<p>The reason for failure if the agent runtime endpoint is in a failed state.</p>",
+        "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
+        "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
+        "ListMemoriesInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListMemoriesOutput$nextToken": "<p>A token to retrieve the next page of results.</p>",
+        "ListOauth2CredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
+        "ListOauth2CredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
+        "ListWorkloadIdentitiesRequest$nextToken": "<p>Pagination token.</p>",
+        "ListWorkloadIdentitiesResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
+        "Memory$failureReason": "<p>The reason for failure if the memory is in a failed state.</p>",
+        "ModifyMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to modify.</p>",
+        "RequiredProperties$member": null,
+        "ResourceLimitExceededException$message": null,
+        "SchemaDefinition$description": "<p>The description of the schema definition. This description provides information about the purpose and usage of the schema.</p>",
+        "SchemaProperties$key": null,
+        "SemanticConsolidationOverride$modelId": "<p>The model ID to use for semantic consolidation.</p>",
+        "SemanticExtractionOverride$modelId": "<p>The model ID to use for semantic extraction.</p>",
+        "SemanticOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for semantic consolidation.</p>",
+        "SemanticOverrideExtractionConfigurationInput$modelId": "<p>The model ID to use for semantic extraction.</p>",
+        "ServiceException$message": null,
+        "SummaryConsolidationOverride$modelId": "<p>The model ID to use for summary consolidation.</p>",
+        "SummaryOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for summary consolidation.</p>",
+        "ThrottledException$message": null,
+        "ToolDefinition$name": "<p>The name of the tool. This name identifies the tool in the Model Context Protocol.</p>",
+        "ToolDefinition$description": "<p>The description of the tool. This description provides information about the purpose and usage of the tool.</p>",
+        "UserPreferenceConsolidationOverride$modelId": "<p>The model ID to use for user preference consolidation.</p>",
+        "UserPreferenceExtractionOverride$modelId": "<p>The model ID to use for user preference extraction.</p>",
+        "UserPreferenceOverrideConsolidationConfigurationInput$modelId": "<p>The model ID to use for user preference consolidation.</p>",
+        "UserPreferenceOverrideExtractionConfigurationInput$modelId": "<p>The model ID to use for user preference extraction.</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field.</p>",
+        "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>"
+      }
+    },
+    "SummaryConsolidationOverride": {
+      "base": "<p>Contains summary consolidation override configuration.</p>",
+      "refs": {
+        "CustomConsolidationConfiguration$summaryConsolidationOverride": "<p>The summary consolidation override configuration.</p>"
+      }
+    },
+    "SummaryMemoryStrategyInput": {
+      "base": "<p>Input for creating a summary memory strategy.</p>",
+      "refs": {
+        "MemoryStrategyInput$summaryMemoryStrategy": "<p>Input for creating a summary memory strategy.</p>"
+      }
+    },
+    "SummaryOverrideConfigurationInput": {
+      "base": "<p>Input for summary override configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomConfigurationInput$summaryOverride": "<p>The summary override configuration for a custom memory strategy.</p>"
+      }
+    },
+    "SummaryOverrideConsolidationConfigurationInput": {
+      "base": "<p>Input for summary override consolidation configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomConsolidationConfigurationInput$summaryConsolidationOverride": "<p>The summary consolidation override configuration input.</p>",
+        "SummaryOverrideConfigurationInput$consolidation": "<p>The consolidation configuration for a summary override.</p>"
+      }
+    },
+    "TargetConfiguration": {
+      "base": "<p>The configuration for a gateway target. This structure defines how the gateway connects to and interacts with the target endpoint.</p>",
+      "refs": {
+        "CreateGatewayTargetRequest$targetConfiguration": "<p>The configuration settings for the target, including endpoint information and schema definitions.</p>",
+        "CreateGatewayTargetResponse$targetConfiguration": "<p>The configuration settings for the target.</p>",
+        "GetGatewayTargetResponse$targetConfiguration": null,
+        "UpdateGatewayTargetRequest$targetConfiguration": null,
+        "UpdateGatewayTargetResponse$targetConfiguration": null
+      }
+    },
+    "TargetDescription": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetRequest$description": "<p>The description of the gateway target.</p>",
+        "CreateGatewayTargetResponse$description": "<p>The description of the target.</p>",
+        "GetGatewayTargetResponse$description": "<p>The description of the Gateway Target.</p>",
+        "TargetSummary$description": "<p>The description of the target.</p>",
+        "UpdateGatewayTargetRequest$description": "<p>The updated description for the Gateway Target.</p>",
+        "UpdateGatewayTargetResponse$description": "<p>The updated description of the Gateway Target.</p>"
+      }
+    },
+    "TargetId": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetResponse$targetId": "<p>The unique identifier of the created target.</p>",
+        "DeleteGatewayTargetRequest$targetId": "<p>The unique identifier of the Gateway Target to delete.</p>",
+        "DeleteGatewayTargetResponse$targetId": "<p>The unique identifier of the deleted Gateway Target.</p>",
+        "GetGatewayTargetRequest$targetId": "<p>The unique identifier of the target to retrieve.</p>",
+        "GetGatewayTargetResponse$targetId": "<p>The unique identifier of the Gateway Target.</p>",
+        "TargetSummary$targetId": "<p>The unique identifier of the target.</p>",
+        "UpdateGatewayTargetRequest$targetId": "<p>The unique identifier of the Gateway Target to update.</p>",
+        "UpdateGatewayTargetResponse$targetId": "<p>The unique identifier of the updated Gateway Target.</p>"
+      }
+    },
+    "TargetMaxResults": {
+      "base": null,
+      "refs": {
+        "ListGatewayTargetsRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>"
+      }
+    },
+    "TargetName": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetRequest$name": "<p>The name of the gateway target. The name must be unique within the gateway.</p>",
+        "CreateGatewayTargetResponse$name": "<p>The name of the target.</p>",
+        "GetGatewayTargetResponse$name": "<p>The name of the Gateway Target.</p>",
+        "TargetSummary$name": "<p>The name of the target.</p>",
+        "UpdateGatewayTargetRequest$name": "<p>The updated name for the Gateway Target.</p>",
+        "UpdateGatewayTargetResponse$name": "<p>The updated name of the Gateway Target.</p>"
+      }
+    },
+    "TargetNextToken": {
+      "base": null,
+      "refs": {
+        "ListGatewayTargetsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListGatewayTargetsResponse$nextToken": "<p>Opaque continuation token for the next paginated response.</p>"
+      }
+    },
+    "TargetStatus": {
+      "base": null,
+      "refs": {
+        "CreateGatewayTargetResponse$status": "<p>The current status of the target.</p>",
+        "DeleteGatewayTargetResponse$status": "<p>The current status of the Gateway Target deletion.</p>",
+        "GetGatewayTargetResponse$status": "<p>The current status of the Gateway Target.</p>",
+        "TargetSummary$status": "<p>The current status of the target.</p>",
+        "UpdateGatewayTargetResponse$status": "<p>The current status of the updated Gateway Target.</p>"
+      }
+    },
+    "TargetSummaries": {
+      "base": null,
+      "refs": {
+        "ListGatewayTargetsResponse$items": "<p>The list of Gateway Target summaries.</p>"
+      }
+    },
+    "TargetSummary": {
+      "base": "<p>Contains summary information about a gateway target. A target represents an endpoint that the gateway can connect to.</p>",
+      "refs": {
+        "TargetSummaries$member": null
+      }
+    },
+    "ThrottledException": {
+      "base": "<p>API rate limit has been exceeded.</p>",
+      "refs": {}
+    },
+    "ThrottlingException": {
+      "base": "<p>This exception is thrown when the number of requests exceeds the limit</p>",
+      "refs": {}
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "ApiKeyCredentialProviderItem$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
+        "ApiKeyCredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "GetApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
+        "GetApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "GetOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
+        "GetOauth2CredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
+        "GetTokenVaultResponse$lastModifiedDate": "<p>The timestamp when the token vault was last modified.</p>",
+        "GetWorkloadIdentityResponse$createdTime": "<p>The timestamp when the workload identity was created.</p>",
+        "GetWorkloadIdentityResponse$lastUpdatedTime": "<p>The timestamp when the workload identity was last updated.</p>",
+        "Memory$createdAt": "<p>The timestamp when the memory was created.</p>",
+        "Memory$updatedAt": "<p>The timestamp when the memory was last updated.</p>",
+        "MemoryStrategy$createdAt": "<p>The timestamp when the memory strategy was created.</p>",
+        "MemoryStrategy$updatedAt": "<p>The timestamp when the memory strategy was last updated.</p>",
+        "MemorySummary$createdAt": "<p>The timestamp when the memory was created.</p>",
+        "MemorySummary$updatedAt": "<p>The timestamp when the memory was last updated.</p>",
+        "Oauth2CredentialProviderItem$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
+        "Oauth2CredentialProviderItem$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
+        "SetTokenVaultCMKResponse$lastModifiedDate": "<p>The timestamp when the token vault was last modified.</p>",
+        "UpdateApiKeyCredentialProviderResponse$createdTime": "<p>The timestamp when the API key credential provider was created.</p>",
+        "UpdateApiKeyCredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the API key credential provider was last updated.</p>",
+        "UpdateOauth2CredentialProviderResponse$createdTime": "<p>The timestamp when the OAuth2 credential provider was created.</p>",
+        "UpdateOauth2CredentialProviderResponse$lastUpdatedTime": "<p>The timestamp when the OAuth2 credential provider was last updated.</p>",
+        "UpdateWorkloadIdentityResponse$createdTime": "<p>The timestamp when the workload identity was created.</p>",
+        "UpdateWorkloadIdentityResponse$lastUpdatedTime": "<p>The timestamp when the workload identity was last updated.</p>"
+      }
+    },
+    "TokenEndpointType": {
+      "base": null,
+      "refs": {
+        "Oauth2AuthorizationServerMetadata$tokenEndpoint": "<p>The token endpoint URL for the OAuth2 authorization server.</p>"
+      }
+    },
+    "TokenVaultIdType": {
+      "base": null,
+      "refs": {
+        "GetTokenVaultRequest$tokenVaultId": "<p>The unique identifier of the token vault to retrieve.</p>",
+        "GetTokenVaultResponse$tokenVaultId": "<p>The ID of the token vault.</p>",
+        "SetTokenVaultCMKRequest$tokenVaultId": "<p>The unique identifier of the token vault to update.</p>",
+        "SetTokenVaultCMKResponse$tokenVaultId": "<p>The ID of the token vault.</p>"
+      }
+    },
+    "ToolDefinition": {
+      "base": "<p>A tool definition for a gateway target. This structure defines a tool that the target exposes through the Model Context Protocol.</p>",
+      "refs": {
+        "ToolDefinitions$member": null
+      }
+    },
+    "ToolDefinitions": {
+      "base": null,
+      "refs": {
+        "ToolSchema$inlinePayload": "<p>The inline payload of the tool schema. This payload contains the schema definition directly in the request.</p>"
+      }
+    },
+    "ToolSchema": {
+      "base": "<p>A tool schema for a gateway target. This structure defines the schema for a tool that the target exposes through the Model Context Protocol.</p>",
+      "refs": {
+        "McpLambdaTargetConfiguration$toolSchema": "<p>The tool schema for the Lambda function. This schema defines the structure of the tools that the Lambda function provides.</p>"
+      }
+    },
+    "UnauthorizedException": {
+      "base": "<p>This exception is thrown when the JWT bearer token is invalid or not found for OAuth bearer token based access</p>",
+      "refs": {}
+    },
+    "UpdateAgentRuntimeEndpointRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentRuntimeEndpointResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentRuntimeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateAgentRuntimeResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateApiKeyCredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateApiKeyCredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayTargetRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateGatewayTargetResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMemoryInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateMemoryInputClientTokenString": {
+      "base": null,
+      "refs": {
+        "UpdateMemoryInput$clientToken": "<p>A client token is used for keeping track of idempotent requests. It can contain a session id which can be around 250 chars, combined with a unique AWS identifier.</p>"
+      }
+    },
+    "UpdateMemoryInputEventExpiryDurationInteger": {
+      "base": null,
+      "refs": {
+        "UpdateMemoryInput$eventExpiryDuration": "<p>The number of days after which memory events will expire, between 7 and 365 days.</p>"
+      }
+    },
+    "UpdateMemoryOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOauth2CredentialProviderRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateOauth2CredentialProviderResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateWorkloadIdentityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateWorkloadIdentityResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UserPreferenceConsolidationOverride": {
+      "base": "<p>Contains user preference consolidation override configuration.</p>",
+      "refs": {
+        "CustomConsolidationConfiguration$userPreferenceConsolidationOverride": "<p>The user preference consolidation override configuration.</p>"
+      }
+    },
+    "UserPreferenceExtractionOverride": {
+      "base": "<p>Contains user preference extraction override configuration.</p>",
+      "refs": {
+        "CustomExtractionConfiguration$userPreferenceExtractionOverride": "<p>The user preference extraction override configuration.</p>"
+      }
+    },
+    "UserPreferenceMemoryStrategyInput": {
+      "base": "<p>Input for creating a user preference memory strategy.</p>",
+      "refs": {
+        "MemoryStrategyInput$userPreferenceMemoryStrategy": "<p>Input for creating a user preference memory strategy.</p>"
+      }
+    },
+    "UserPreferenceOverrideConfigurationInput": {
+      "base": "<p>Input for user preference override configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomConfigurationInput$userPreferenceOverride": "<p>The user preference override configuration for a custom memory strategy.</p>"
+      }
+    },
+    "UserPreferenceOverrideConsolidationConfigurationInput": {
+      "base": "<p>Input for user preference override consolidation configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomConsolidationConfigurationInput$userPreferenceConsolidationOverride": "<p>The user preference consolidation override configuration input.</p>",
+        "UserPreferenceOverrideConfigurationInput$consolidation": "<p>The consolidation configuration for a user preference override.</p>"
+      }
+    },
+    "UserPreferenceOverrideExtractionConfigurationInput": {
+      "base": "<p>Input for user preference override extraction configuration in a memory strategy.</p>",
+      "refs": {
+        "CustomExtractionConfigurationInput$userPreferenceExtractionOverride": "<p>The user preference extraction override configuration input.</p>",
+        "UserPreferenceOverrideConfigurationInput$extraction": "<p>The extraction configuration for a user preference override.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by the service.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Stores information about a field passed inside a request that resulted in an exception.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": null
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": null
+      }
+    },
+    "WorkloadIdentityArn": {
+      "base": null,
+      "refs": {
+        "WorkloadIdentityDetails$workloadIdentityArn": "<p>The ARN associated with the workload identity.</p>"
+      }
+    },
+    "WorkloadIdentityArnType": {
+      "base": null,
+      "refs": {
+        "CreateWorkloadIdentityResponse$workloadIdentityArn": "<p>The Amazon Resource Name (ARN) of the workload identity.</p>",
+        "GetWorkloadIdentityResponse$workloadIdentityArn": "<p>The Amazon Resource Name (ARN) of the workload identity.</p>",
+        "UpdateWorkloadIdentityResponse$workloadIdentityArn": "<p>The Amazon Resource Name (ARN) of the workload identity.</p>",
+        "WorkloadIdentityType$workloadIdentityArn": "<p>The Amazon Resource Name (ARN) of the workload identity.</p>"
+      }
+    },
+    "WorkloadIdentityDetails": {
+      "base": "<p>The information about the workload identity.</p>",
+      "refs": {
+        "CreateAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the agent runtime.</p>",
+        "CreateGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the created Gateway.</p>",
+        "GetAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the agent runtime.</p>",
+        "GetGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the Gateway.</p>",
+        "UpdateAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the updated agent runtime.</p>",
+        "UpdateGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the updated Gateway.</p>"
+      }
+    },
+    "WorkloadIdentityList": {
+      "base": null,
+      "refs": {
+        "ListWorkloadIdentitiesResponse$workloadIdentities": "<p>The list of workload identities.</p>"
+      }
+    },
+    "WorkloadIdentityNameType": {
+      "base": null,
+      "refs": {
+        "CreateWorkloadIdentityRequest$name": "<p>The name of the workload identity. The name must be unique within your account.</p>",
+        "CreateWorkloadIdentityResponse$name": "<p>The name of the workload identity.</p>",
+        "DeleteWorkloadIdentityRequest$name": "<p>The name of the workload identity to delete.</p>",
+        "GetWorkloadIdentityRequest$name": "<p>The name of the workload identity to retrieve.</p>",
+        "GetWorkloadIdentityResponse$name": "<p>The name of the workload identity.</p>",
+        "UpdateWorkloadIdentityRequest$name": "<p>The name of the workload identity to update.</p>",
+        "UpdateWorkloadIdentityResponse$name": "<p>The name of the workload identity.</p>",
+        "WorkloadIdentityType$name": "<p>The name of the workload identity.</p>"
+      }
+    },
+    "WorkloadIdentityType": {
+      "base": "<p>Contains information about a workload identity.</p>",
+      "refs": {
+        "WorkloadIdentityList$member": null
+      }
+    }
+  }
+}

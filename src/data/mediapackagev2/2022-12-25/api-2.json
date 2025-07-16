@@ -612,6 +612,32 @@
       "members":{
       }
     },
+    "CdnAuthConfiguration":{
+      "type":"structure",
+      "required":[
+        "CdnIdentifierSecretArns",
+        "SecretsRoleArn"
+      ],
+      "members":{
+        "CdnIdentifierSecretArns":{"shape":"CdnAuthConfigurationCdnIdentifierSecretArnsList"},
+        "SecretsRoleArn":{"shape":"CdnAuthConfigurationSecretsRoleArnString"}
+      }
+    },
+    "CdnAuthConfigurationCdnIdentifierSecretArnsList":{
+      "type":"list",
+      "member":{"shape":"CdnIdentifierSecretArn"},
+      "min":1
+    },
+    "CdnAuthConfigurationSecretsRoleArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
+    "CdnIdentifierSecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
     "ChannelGroupListConfiguration":{
       "type":"structure",
       "required":[
@@ -1813,7 +1839,8 @@
         "ChannelGroupName":{"shape":"ResourceName"},
         "ChannelName":{"shape":"ResourceName"},
         "OriginEndpointName":{"shape":"ResourceName"},
-        "Policy":{"shape":"PolicyText"}
+        "Policy":{"shape":"PolicyText"},
+        "CdnAuthConfiguration":{"shape":"CdnAuthConfiguration"}
       }
     },
     "GetOriginEndpointRequest":{
@@ -2370,7 +2397,8 @@
           "location":"uri",
           "locationName":"OriginEndpointName"
         },
-        "Policy":{"shape":"PolicyText"}
+        "Policy":{"shape":"PolicyText"},
+        "CdnAuthConfiguration":{"shape":"CdnAuthConfiguration"}
       }
     },
     "PutOriginEndpointPolicyResponse":{
@@ -2954,7 +2982,22 @@
         "ISM_CONTAINER_TYPE_WITH_LL_HLS_MANIFEST",
         "ISM_CONTAINER_TYPE_WITH_DASH_MANIFEST",
         "ISM_CONTAINER_TYPE_WITH_SCTE",
-        "ISM_CONTAINER_WITH_KEY_ROTATION"
+        "ISM_CONTAINER_WITH_KEY_ROTATION",
+        "BATCH_GET_SECRET_VALUE_DENIED",
+        "GET_SECRET_VALUE_DENIED",
+        "DESCRIBE_SECRET_DENIED",
+        "INVALID_SECRET_FORMAT",
+        "SECRET_IS_NOT_ONE_KEY_VALUE_PAIR",
+        "INVALID_SECRET_KEY",
+        "INVALID_SECRET_VALUE",
+        "SECRET_ARN_RESOURCE_NOT_FOUND",
+        "DECRYPT_SECRET_FAILED",
+        "TOO_MANY_SECRETS",
+        "DUPLICATED_SECRET",
+        "MALFORMED_SECRET_ARN",
+        "SECRET_FROM_DIFFERENT_ACCOUNT",
+        "SECRET_FROM_DIFFERENT_REGION",
+        "INVALID_SECRET"
       ]
     }
   }

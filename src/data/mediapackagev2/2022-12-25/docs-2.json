@@ -35,7 +35,7 @@
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p>You don't have permissions to perform the requested operation. The user or role that is making the request must have at least one IAM permissions policy attached that grants the required permissions. For more information, see Access Management in the IAM User Guide.</p>",
+      "base": "<p>Access is denied because either you don't have permissions to perform the requested operation or MediaPackage is getting throttling errors with CDN authorization. The user or role that is making the request must have at least one IAM permissions policy attached that grants the required permissions. For more information, see Access Management in the IAM User Guide. Or, if you're using CDN authorization, you will receive this exception if MediaPackage receives a throttling error from Secrets Manager.</p>",
       "refs": {
       }
     },
@@ -75,6 +75,31 @@
     "CancelHarvestJobResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "CdnAuthConfiguration": {
+      "base": "<p>The settings to enable CDN authorization headers in MediaPackage.</p>",
+      "refs": {
+        "GetOriginEndpointPolicyResponse$CdnAuthConfiguration": "<p>The settings for using authorization headers between the MediaPackage endpoint and your CDN. </p> <p>For information about CDN authorization, see <a href=\"https://docs.aws.amazon.com/mediapackage/latest/userguide/cdn-auth.html\">CDN authorization in Elemental MediaPackage</a> in the MediaPackage user guide.</p>",
+        "PutOriginEndpointPolicyRequest$CdnAuthConfiguration": "<p>The settings for using authorization headers between the MediaPackage endpoint and your CDN. </p> <p>For information about CDN authorization, see <a href=\"https://docs.aws.amazon.com/mediapackage/latest/userguide/cdn-auth.html\">CDN authorization in Elemental MediaPackage</a> in the MediaPackage user guide. </p>"
+      }
+    },
+    "CdnAuthConfigurationCdnIdentifierSecretArnsList": {
+      "base": null,
+      "refs": {
+        "CdnAuthConfiguration$CdnIdentifierSecretArns": "<p>The ARN for the secret in Secrets Manager that your CDN uses for authorization to access the endpoint.</p>"
+      }
+    },
+    "CdnAuthConfigurationSecretsRoleArnString": {
+      "base": null,
+      "refs": {
+        "CdnAuthConfiguration$SecretsRoleArn": "<p>The ARN for the IAM role that gives MediaPackage read access to Secrets Manager and KMS for CDN authorization.</p>"
+      }
+    },
+    "CdnIdentifierSecretArn": {
+      "base": null,
+      "refs": {
+        "CdnAuthConfigurationCdnIdentifierSecretArnsList$member": null
       }
     },
     "ChannelGroupListConfiguration": {

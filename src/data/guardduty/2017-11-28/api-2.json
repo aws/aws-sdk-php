@@ -97,7 +97,8 @@
       "output":{"shape":"CreateIPSetResponse"},
       "errors":[
         {"shape":"BadRequestException"},
-        {"shape":"InternalServerErrorException"}
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "CreateMalwareProtectionPlan":{
@@ -169,7 +170,8 @@
       "output":{"shape":"CreateThreatIntelSetResponse"},
       "errors":[
         {"shape":"BadRequestException"},
-        {"shape":"InternalServerErrorException"}
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeclineInvitations":{
@@ -978,7 +980,8 @@
       "output":{"shape":"UpdateIPSetResponse"},
       "errors":[
         {"shape":"BadRequestException"},
-        {"shape":"InternalServerErrorException"}
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateMalwareProtectionPlan":{
@@ -1063,7 +1066,8 @@
       "output":{"shape":"UpdateThreatIntelSetResponse"},
       "errors":[
         {"shape":"BadRequestException"},
-        {"shape":"InternalServerErrorException"}
+        {"shape":"InternalServerErrorException"},
+        {"shape":"AccessDeniedException"}
       ]
     }
   },
@@ -2279,6 +2283,10 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "locationName":"expectedBucketOwner"
         }
       }
     },
@@ -2477,6 +2485,10 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "locationName":"expectedBucketOwner"
         }
       }
     },
@@ -4281,6 +4293,10 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "locationName":"expectedBucketOwner"
         }
       }
     },
@@ -4548,6 +4564,10 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "locationName":"expectedBucketOwner"
         }
       }
     },
@@ -8591,6 +8611,10 @@
         "Activate":{
           "shape":"Boolean",
           "locationName":"activate"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "locationName":"expectedBucketOwner"
         }
       }
     },
@@ -8790,6 +8814,10 @@
         "Activate":{
           "shape":"Boolean",
           "locationName":"activate"
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
+          "locationName":"expectedBucketOwner"
         }
       }
     },

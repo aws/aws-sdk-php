@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SFN` - Doc-only update to introduction, and edits to clarify input parameter and the set of control characters.
+* `Aws\DataSync` - AWS DataSync now supports IPv6 address inputs and outputs in create, update, and describe operations for NFS, SMB, and Object Storage locations
+* `Aws\Bedrock` - This release adds support for on-demand custom model inference through CustomModelDeployment APIs for Amazon Bedrock.
+* `Aws\BedrockAgentCore` - Initial release of Amazon Bedrock AgentCore SDK including Runtime, Built-In Tools, Memory, Gateway and Identity.
+* `Aws\NetworkFlowMonitor` - Introducing 2 new scope status types - DEACTIVATING and DEACTIVATED.
+* `Aws\CloudWatchLogs` - CloudWatch Logs updates: Added X-Ray tracing for Amazon Bedrock Agent resources. Logs introduced Log Group level resource policies (managed through Put/Delete/Describe Resource Policy APIs). For more information, see CloudWatch Logs API documentation.
+* `Aws\Glue` - AWS Glue now supports schema, partition and sort management of Apache Iceberg tables using Glue SDK
+* `Aws\PaymentCryptographyData` - Expand length of message data field for Mac generation and validation to 8192 characters.
+* `Aws\BedrockAgentCoreControl` - Initial release of Amazon Bedrock AgentCore SDK including Runtime, Built-In Tools, Memory, Gateway and Identity.
+* `Aws\MediaPackageV2` - This release adds support for CDN Authentication using Static Headers in MediaPackage v2.
+* `Aws\IoTWireless` - FuotaTaskId is not a valid IdentifierType for EventConfiguration and is being removed from possible IdentifierType values.
+* `Aws\BedrockRuntime` - document update to support on demand custom model.
+* `Aws\GuardDuty` - Add expectedBucketOwner parameter to ThreatIntel and IPSet APIs.
+
 ## 3.350.1 - 2025-07-16
 
 * `Aws\ECS` - This release removes hookDetails for the Amazon ECS native blue/green deployments.

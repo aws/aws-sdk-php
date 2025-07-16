@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<fullname>Step Functions</fullname> <p>Step Functions coordinates the components of distributed applications and microservices using visual workflows.</p> <p>You can use Step Functions to build applications from individual components, each of which performs a discrete function, or <i>task</i>, allowing you to scale and change applications quickly. Step Functions provides a console that helps visualize the components of your application as a series of steps. Step Functions automatically triggers and tracks each step, and retries steps when there are errors, so your application executes predictably and in the right order every time. Step Functions logs the state of each step, so you can quickly diagnose and debug any issues.</p> <p>Step Functions manages operations and underlying infrastructure to ensure your application is available at any scale. You can run tasks on Amazon Web Services, your own servers, or any system that has access to Amazon Web Services. You can access and use Step Functions using the console, the Amazon Web Services SDKs, or an HTTP API. For more information about Step Functions, see the <i> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html\">Step Functions Developer Guide</a> </i>.</p> <important> <p>If you use the Step Functions API actions using Amazon Web Services SDK integrations, make sure the API actions are in camel case and parameter names are in Pascal case. For example, you could use Step Functions API action <code>startSyncExecution</code> and specify its parameter as <code>StateMachineArn</code>.</p> </important>",
+  "service": "<fullname>Step Functions</fullname> <p>With Step Functions, you can create workflows, also called <i>state machines</i>, to build distributed applications, automate processes, orchestrate microservices, and create data and machine learning pipelines.</p> <p>Through the Step Functions API, you can create, list, update, and delete state machines, activities, and other data types. You can start, stop, and redrive your state machines. Your activity workers can send task success, heartbeat, and failure responses.</p> <p>With API calls, you can also manage other aspects of your workflow, such as tags, versions, and aliases.</p> <p>For more information about developing solutions with Step Functions, see the <i> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/welcome.html\">Step Functions Developer Guide</a> </i>.</p> <important> <p>If you use the Step Functions API actions using Amazon Web Services SDK integrations, make sure the API actions are in camel case and parameter names are in Pascal case. For example, you might use Step Functions API action <code>startSyncExecution</code> and specify its parameter as <code>StateMachineArn</code>.</p> </important>",
   "operations": {
     "CreateActivity": "<p>Creates an activity. An activity is a task that you write in any programming language and host on any machine that has access to Step Functions. Activities must poll Step Functions using the <code>GetActivityTask</code> API action and respond using <code>SendTask*</code> API actions. This function lets Step Functions know the existence of your activity and returns an identifier for use in a state machine and when polling from the activity.</p> <note> <p>This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.</p> </note> <note> <p> <code>CreateActivity</code> is an idempotent API. Subsequent requests won’t create a duplicate resource if it was already created. <code>CreateActivity</code>'s idempotency check is based on the activity <code>name</code>. If a following request has different <code>tags</code> values, Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, <code>tags</code> will not be updated, even if they are different.</p> </note>",
     "CreateStateMachine": "<p>Creates a state machine. A state machine consists of a collection of states that can do work (<code>Task</code> states), determine to which states to transition next (<code>Choice</code> states), stop an execution with an error (<code>Fail</code> states), and so on. State machines are specified using a JSON-based, structured language. For more information, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html\">Amazon States Language</a> in the Step Functions User Guide.</p> <p>If you set the <code>publish</code> parameter of this API action to <code>true</code>, it publishes version <code>1</code> as the first revision of the state machine.</p> <p> For additional control over security, you can encrypt your data using a <b>customer-managed key</b> for Step Functions state machines. You can configure a symmetric KMS key and data key reuse period when creating or updating a <b>State Machine</b>. The execution history and state machine definition will be encrypted with the key applied to the State Machine. </p> <note> <p>This operation is eventually consistent. The results are best effort and may not reflect very recent updates and changes.</p> </note> <note> <p> <code>CreateStateMachine</code> is an idempotent API. Subsequent requests won’t create a duplicate resource if it was already created. <code>CreateStateMachine</code>'s idempotency check is based on the state machine <code>name</code>, <code>definition</code>, <code>type</code>, <code>LoggingConfiguration</code>, <code>TracingConfiguration</code>, and <code>EncryptionConfiguration</code> The check is also based on the <code>publish</code> and <code>versionDescription</code> parameters. If a following request has a different <code>roleArn</code> or <code>tags</code>, Step Functions will ignore these differences and treat it as an idempotent request of the previous. In this case, <code>roleArn</code> and <code>tags</code> will not be updated, even if they are different.</p> </note>",
@@ -33,7 +33,7 @@
     "StartSyncExecution": "<p>Starts a Synchronous Express state machine execution. <code>StartSyncExecution</code> is not available for <code>STANDARD</code> workflows.</p> <note> <p> <code>StartSyncExecution</code> will return a <code>200 OK</code> response, even if your execution fails, because the status code in the API response doesn't reflect function errors. Error codes are reserved for errors that prevent your execution from running, such as permissions errors, limit errors, or issues with your state machine code and configuration. </p> </note> <note> <p>This API action isn't logged in CloudTrail.</p> </note>",
     "StopExecution": "<p>Stops an execution.</p> <p>This API action is not supported by <code>EXPRESS</code> state machines.</p> <p>For an execution with encryption enabled, Step Functions will encrypt the error and cause fields using the KMS key for the execution role.</p> <p>A caller can stop an execution without using any KMS permissions in the execution role if the caller provides a null value for both <code>error</code> and <code>cause</code> fields because no data needs to be encrypted.</p>",
     "TagResource": "<p>Add a tag to a Step Functions resource.</p> <p>An array of key-value pairs. For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html\">Using Cost Allocation Tags</a> in the <i>Amazon Web Services Billing and Cost Management User Guide</i>, and <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_iam-tags.html\">Controlling Access Using IAM Tags</a>.</p> <p>Tags may only contain Unicode letters, digits, white space, or these symbols: <code>_ . : / = + - @</code>.</p>",
-    "TestState": "<p>Accepts the definition of a single state and executes it. You can test a state without creating a state machine or updating an existing state machine. Using this API, you can test the following:</p> <ul> <li> <p>A state's <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-input-output-dataflow\">input and output processing</a> data flow</p> </li> <li> <p>An <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-services.html\">Amazon Web Services service integration</a> request and response</p> </li> <li> <p>An <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/connect-third-party-apis.html\">HTTP Task</a> request and response</p> </li> </ul> <p>You can call this API on only one state at a time. The states that you can test include the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-task-state.html#task-types\">All Task types</a> except <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html\">Activity</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-pass-state.html\">Pass</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-wait-state.html\">Wait</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-choice-state.html\">Choice</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-succeed-state.html\">Succeed</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-fail-state.html\">Fail</a> </p> </li> </ul> <p>The <code>TestState</code> API assumes an IAM role which must contain the required IAM permissions for the resources your state is accessing. For information about the permissions a state might need, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions\">IAM permissions to test a state</a>.</p> <p>The <code>TestState</code> API can run for up to five minutes. If the execution of a state exceeds this duration, it fails with the <code>States.Timeout</code> error.</p> <p> <code>TestState</code> doesn't support <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html\">Activity tasks</a>, <code>.sync</code> or <code>.waitForTaskToken</code> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html\">service integration patterns</a>, <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-parallel-state.html\">Parallel</a>, or <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-map-state.html\">Map</a> states.</p>",
+    "TestState": "<p>Accepts the definition of a single state and executes it. You can test a state without creating a state machine or updating an existing state machine. Using this API, you can test the following:</p> <ul> <li> <p>A state's <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-input-output-dataflow\">input and output processing</a> data flow</p> </li> <li> <p>An <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-services.html\">Amazon Web Services service integration</a> request and response</p> </li> <li> <p>An <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/call-https-apis.html\">HTTP Task</a> request and response</p> </li> </ul> <p>You can call this API on only one state at a time. The states that you can test include the following:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-task-state.html#task-types\">All Task types</a> except <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html\">Activity</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-pass-state.html\">Pass</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-wait-state.html\">Wait</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-choice-state.html\">Choice</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-succeed-state.html\">Succeed</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-fail-state.html\">Fail</a> </p> </li> </ul> <p>The <code>TestState</code> API assumes an IAM role which must contain the required IAM permissions for the resources your state is accessing. For information about the permissions a state might need, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions\">IAM permissions to test a state</a>.</p> <p>The <code>TestState</code> API can run for up to five minutes. If the execution of a state exceeds this duration, it fails with the <code>States.Timeout</code> error.</p> <p> <code>TestState</code> doesn't support <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-activities.html\">Activity tasks</a>, <code>.sync</code> or <code>.waitForTaskToken</code> <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/connect-to-resource.html\">service integration patterns</a>, <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-parallel-state.html\">Parallel</a>, or <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-map-state.html\">Map</a> states.</p>",
     "UntagResource": "<p>Remove a tag from a Step Functions resource</p>",
     "UpdateMapRun": "<p>Updates an in-progress Map Run's configuration to include changes to the settings that control maximum concurrency and Map Run failure.</p>",
     "UpdateStateMachine": "<p>Updates an existing state machine by modifying its <code>definition</code>, <code>roleArn</code>, <code>loggingConfiguration</code>, or <code>EncryptionConfiguration</code>. Running executions will continue to use the previous <code>definition</code> and <code>roleArn</code>. You must include at least one of <code>definition</code> or <code>roleArn</code> or you will receive a <code>MissingRequiredParameter</code> error.</p> <p>A qualified state machine ARN refers to a <i>Distributed Map state</i> defined within a state machine. For example, the qualified state machine ARN <code>arn:partition:states:region:account-id:stateMachine:stateMachineName/mapStateLabel</code> refers to a <i>Distributed Map state</i> with a label <code>mapStateLabel</code> in the state machine named <code>stateMachineName</code>.</p> <p>A qualified state machine ARN can either refer to a <i>Distributed Map state</i> defined within a state machine, a version ARN, or an alias ARN.</p> <p>The following are some examples of qualified and unqualified state machine ARNs:</p> <ul> <li> <p>The following qualified state machine ARN refers to a <i>Distributed Map state</i> with a label <code>mapStateLabel</code> in a state machine named <code>myStateMachine</code>.</p> <p> <code>arn:partition:states:region:account-id:stateMachine:myStateMachine/mapStateLabel</code> </p> <note> <p>If you provide a qualified state machine ARN that refers to a <i>Distributed Map state</i>, the request fails with <code>ValidationException</code>.</p> </note> </li> <li> <p>The following qualified state machine ARN refers to an alias named <code>PROD</code>.</p> <p> <code>arn:&lt;partition&gt;:states:&lt;region&gt;:&lt;account-id&gt;:stateMachine:&lt;myStateMachine:PROD&gt;</code> </p> <note> <p>If you provide a qualified state machine ARN that refers to a version ARN or an alias ARN, the request starts execution for that version or alias.</p> </note> </li> <li> <p>The following unqualified state machine ARN refers to a state machine named <code>myStateMachine</code>.</p> <p> <code>arn:&lt;partition&gt;:states:&lt;region&gt;:&lt;account-id&gt;:stateMachine:&lt;myStateMachine&gt;</code> </p> </li> </ul> <p>After you update your state machine, you can set the <code>publish</code> parameter to <code>true</code> in the same action to publish a new <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/concepts-state-machine-version.html\">version</a>. This way, you can opt-in to strict versioning of your state machine.</p> <note> <p>Step Functions assigns monotonically increasing integers for state machine versions, starting at version number 1.</p> </note> <note> <p>All <code>StartExecution</code> calls within a few seconds use the updated <code>definition</code> and <code>roleArn</code>. Executions started immediately after you call <code>UpdateStateMachine</code> may use the previous state machine <code>definition</code> and <code>roleArn</code>. </p> </note>",
@@ -43,13 +43,11 @@
   "shapes": {
     "ActivityAlreadyExists": {
       "base": "<p>Activity already exists. <code>EncryptionConfiguration</code> may not be updated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivityDoesNotExist": {
       "base": "<p>The specified activity does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivityFailedEventDetails": {
       "base": "<p>Contains details about an activity that failed during an execution.</p>",
@@ -59,8 +57,7 @@
     },
     "ActivityLimitExceeded": {
       "base": "<p>The maximum number of activities has been reached. Existing activities must be deleted before a new activity can be created.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivityList": {
       "base": null,
@@ -106,8 +103,7 @@
     },
     "ActivityWorkerLimitExceeded": {
       "base": "<p>The maximum number of workers concurrently polling for activity tasks has been reached.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AliasDescription": {
       "base": null,
@@ -245,8 +241,7 @@
     },
     "ConflictException": {
       "base": "<p>Updating or deleting a resource can cause an inconsistent state. This error occurs when there're concurrent requests for <a>DeleteStateMachineVersion</a>, <a>PublishStateMachineVersion</a>, or <a>UpdateStateMachine</a> with the <code>publish</code> parameter set to <code>true</code>.</p> <p>HTTP Status Code: 409</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectorParameters": {
       "base": null,
@@ -256,33 +251,27 @@
     },
     "CreateActivityInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateActivityOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStateMachineAliasInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStateMachineAliasOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStateMachineInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStateMachineOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Definition": {
       "base": null,
@@ -297,103 +286,83 @@
     },
     "DeleteActivityInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteActivityOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStateMachineAliasInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStateMachineAliasOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStateMachineInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStateMachineOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStateMachineVersionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStateMachineVersionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeActivityInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeActivityOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMapRunInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMapRunOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStateMachineAliasInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStateMachineAliasOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStateMachineForExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStateMachineForExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStateMachineInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStateMachineOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Enabled": {
       "base": null,
@@ -483,13 +452,11 @@
     },
     "ExecutionAlreadyExists": {
       "base": "<p>The execution has the same <code>name</code> as another execution (but a different <code>input</code>).</p> <note> <p>Executions with the same <code>name</code> and <code>input</code> are considered idempotent.</p> </note>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecutionDoesNotExist": {
       "base": "<p>The specified execution does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecutionFailedEventDetails": {
       "base": "<p>Contains details about an execution failure event.</p>",
@@ -499,8 +466,7 @@
     },
     "ExecutionLimitExceeded": {
       "base": "<p>The maximum number of running executions has been reached. Running executions must end or be stopped before a new execution can be started.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecutionList": {
       "base": null,
@@ -516,8 +482,7 @@
     },
     "ExecutionNotRedrivable": {
       "base": "<p>The execution Amazon Resource Name (ARN) that you specified for <code>executionArn</code> cannot be redriven.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecutionRedriveFilter": {
       "base": null,
@@ -548,7 +513,7 @@
       "refs": {
         "DescribeExecutionOutput$status": "<p>The current status of the execution.</p>",
         "ExecutionListItem$status": "<p>The current status of the execution.</p>",
-        "ListExecutionsInput$statusFilter": "<p>If specified, only list the executions whose current execution status matches the given filter.</p>"
+        "ListExecutionsInput$statusFilter": "<p>If specified, only list the executions whose current execution status matches the given filter.</p> <p>If you provide a <code>PENDING_REDRIVE</code> statusFilter, you must specify <code>mapRunArn</code>. For more information, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/redrive-map-run.html#redrive-child-workflow-behavior\">Child workflow execution redrive behaviour</a> in the <i>Step Functions Developer Guide</i>. </p> <p>If you provide a stateMachineArn and a <code>PENDING_REDRIVE</code> statusFilter, the API returns a validation exception.</p>"
       }
     },
     "ExecutionSucceededEventDetails": {
@@ -565,23 +530,19 @@
     },
     "GetActivityTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetActivityTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExecutionHistoryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExecutionHistoryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HTTPBody": {
       "base": null,
@@ -708,53 +669,43 @@
     },
     "InvalidArn": {
       "base": "<p>The provided Amazon Resource Name (ARN) is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidDefinition": {
       "base": "<p>The provided Amazon States Language definition is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidEncryptionConfiguration": {
       "base": "<p>Received when <code>encryptionConfiguration</code> is specified but various conditions exist which make the configuration invalid. For example, if <code>type</code> is set to <code>CUSTOMER_MANAGED_KMS_KEY</code>, but <code>kmsKeyId</code> is null, or <code>kmsDataKeyReusePeriodSeconds</code> is not between 60 and 900, or the KMS key is not symmetric or inactive.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidExecutionInput": {
       "base": "<p>The provided JSON input data is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidLoggingConfiguration": {
       "base": "<p>Configuration is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidName": {
       "base": "<p>The provided name is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidOutput": {
       "base": "<p>The provided JSON output data is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidToken": {
       "base": "<p>The provided token is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTracingConfiguration": {
       "base": "<p>Your <code>tracingConfiguration</code> key does not match, or <code>enabled</code> has not been set to <code>true</code> or <code>false</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsAccessDeniedException": {
       "base": "<p>Either your KMS key policy or API caller does not have the required permissions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsDataKeyReusePeriodSeconds": {
       "base": null,
@@ -764,8 +715,7 @@
     },
     "KmsInvalidStateException": {
       "base": "<p>The KMS key is not in valid state, for example: Disabled or Deleted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyId": {
       "base": null,
@@ -781,8 +731,7 @@
     },
     "KmsThrottlingException": {
       "base": "<p>Received when KMS returns <code>ThrottlingException</code> for a KMS call that Step Functions makes on behalf of the caller.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LambdaFunctionFailedEventDetails": {
       "base": "<p>Contains details about a Lambda function that failed during an execution.</p>",
@@ -822,23 +771,19 @@
     },
     "ListActivitiesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActivitiesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutionsPageToken": {
       "base": null,
@@ -849,53 +794,43 @@
     },
     "ListMapRunsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMapRunsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStateMachineAliasesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStateMachineAliasesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStateMachineVersionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStateMachineVersionsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStateMachinesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStateMachinesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogDestination": {
       "base": "<p/>",
@@ -982,7 +917,7 @@
     "MapRunLabel": {
       "base": null,
       "refs": {
-        "DescribeStateMachineForExecutionOutput$label": "<p>A user-defined or an auto-generated string that identifies a <code>Map</code> state. This ﬁeld is returned only if the <code>executionArn</code> is a child workflow execution that was started by a Distributed Map state.</p>",
+        "DescribeStateMachineForExecutionOutput$label": "<p>A user-defined or an auto-generated string that identifies a <code>Map</code> state. This field is returned only if the <code>executionArn</code> is a child workflow execution that was started by a Distributed Map state.</p>",
         "DescribeStateMachineOutput$label": "<p>A user-defined or an auto-generated string that identifies a <code>Map</code> state. This parameter is present only if the <code>stateMachineArn</code> specified in input is a qualified state machine ARN.</p>"
       }
     },
@@ -1031,29 +966,28 @@
     },
     "MissingRequiredParameter": {
       "base": "<p>Request is missing a required parameter. This error occurs if both <code>definition</code> and <code>roleArn</code> are not specified.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Name": {
       "base": null,
       "refs": {
-        "ActivityListItem$name": "<p>The name of the activity.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
-        "CreateActivityInput$name": "<p>The name of the activity to create. This name must be unique for your Amazon Web Services account and region for 90 days. For more information, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions\"> Limits Related to State Machine Executions</a> in the <i>Step Functions Developer Guide</i>.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
-        "CreateStateMachineInput$name": "<p>The name of the state machine. </p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
-        "DescribeActivityOutput$name": "<p>The name of the activity.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
-        "DescribeExecutionOutput$name": "<p>The name of the execution.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "ActivityListItem$name": "<p>The name of the activity.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "CreateActivityInput$name": "<p>The name of the activity to create. This name must be unique for your Amazon Web Services account and region for 90 days. For more information, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions\"> Limits Related to State Machine Executions</a> in the <i>Step Functions Developer Guide</i>.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "CreateStateMachineInput$name": "<p>The name of the state machine. </p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "DescribeActivityOutput$name": "<p>The name of the activity.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "DescribeExecutionOutput$name": "<p>The name of the execution.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
         "DescribeStateMachineAliasOutput$name": "<p>The name of the state machine alias.</p>",
         "DescribeStateMachineForExecutionOutput$name": "<p>The name of the state machine associated with the execution.</p>",
-        "DescribeStateMachineOutput$name": "<p>The name of the state machine.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
-        "ExecutionListItem$name": "<p>The name of the execution.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "DescribeStateMachineOutput$name": "<p>The name of the state machine.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "ExecutionListItem$name": "<p>The name of the execution.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
         "GetActivityTaskInput$workerName": "<p>You can provide an arbitrary name in order to identify the worker that the task is assigned to. This name is used when it is logged in the execution history.</p>",
         "MapIterationEventDetails$name": "<p>The name of the iteration’s parent Map state.</p>",
-        "StartExecutionInput$name": "<p>Optional name of the execution. This name must be unique for your Amazon Web Services account, Region, and state machine for 90 days. For more information, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions\"> Limits Related to State Machine Executions</a> in the <i>Step Functions Developer Guide</i>.</p> <p>If you don't provide a name for the execution, Step Functions automatically generates a universally unique identifier (UUID) as the execution name.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "StartExecutionInput$name": "<p>Optional name of the execution. This name must be unique for your Amazon Web Services account, Region, and state machine for 90 days. For more information, see <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions\"> Limits Related to State Machine Executions</a> in the <i>Step Functions Developer Guide</i>.</p> <p>If you don't provide a name for the execution, Step Functions automatically generates a universally unique identifier (UUID) as the execution name.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
         "StartSyncExecutionInput$name": "<p>The name of the execution.</p>",
         "StartSyncExecutionOutput$name": "<p>The name of the execution.</p>",
         "StateEnteredEventDetails$name": "<p>The name of the state.</p>",
-        "StateExitedEventDetails$name": "<p>The name of the state.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
-        "StateMachineListItem$name": "<p>The name of the state machine.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "StateExitedEventDetails$name": "<p>The name of the state.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
+        "StateMachineListItem$name": "<p>The name of the state machine.</p> <p>A name must <i>not</i> contain:</p> <ul> <li> <p>white space</p> </li> <li> <p>brackets <code>&lt; &gt; { } [ ]</code> </p> </li> <li> <p>wildcard characters <code>? *</code> </p> </li> <li> <p>special characters <code>\" # % \\ ^ | ~ ` $ &amp; , ; : /</code> </p> </li> <li> <p>control characters (<code>U+0000-001F</code>, <code>U+007F-009F</code>, <code>U+FFFE-FFFF</code>)</p> </li> <li> <p>surrogates (<code>U+D800-DFFF</code>)</p> </li> <li> <p>invalid characters (<code> U+10FFFF</code>)</p> </li> </ul> <p>To enable logging with CloudWatch Logs, the name should only contain 0-9, A-Z, a-z, - and _.</p>",
         "TaskFailedEventDetails$resourceType": "<p>The service name of the resource in a task state.</p>",
         "TaskFailedEventDetails$resource": "<p>The action of the resource called by a task state.</p>",
         "TaskScheduledEventDetails$resourceType": "<p>The service name of the resource in a task state.</p>",
@@ -1111,13 +1045,11 @@
     },
     "PublishStateMachineVersionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PublishStateMachineVersionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RedriveCount": {
       "base": null,
@@ -1131,18 +1063,15 @@
     },
     "RedriveExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RedriveExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFound": {
       "base": "<p>Could not find the referenced resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RevealSecrets": {
       "base": null,
@@ -1181,33 +1110,27 @@
     },
     "SendTaskFailureInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendTaskFailureOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendTaskHeartbeatInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendTaskHeartbeatOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendTaskSuccessInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendTaskSuccessOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SensitiveCause": {
       "base": null,
@@ -1256,8 +1179,8 @@
         "LambdaFunctionScheduledEventDetails$input": "<p>The JSON data input to the Lambda function. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "LambdaFunctionSucceededEventDetails$output": "<p>The JSON data output by the Lambda function. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "SendTaskSuccessInput$output": "<p>The JSON output of the task. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
-        "StartExecutionInput$input": "<p>The string that contains the JSON input data for the execution, for example:</p> <p> <code>\"input\": \"{\\\"first_name\\\" : \\\"test\\\"}\"</code> </p> <note> <p>If you don't include any JSON input data, you still must include the two braces, for example: <code>\"input\": \"{}\"</code> </p> </note> <p>Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
-        "StartSyncExecutionInput$input": "<p>The string that contains the JSON input data for the execution, for example:</p> <p> <code>\"input\": \"{\\\"first_name\\\" : \\\"test\\\"}\"</code> </p> <note> <p>If you don't include any JSON input data, you still must include the two braces, for example: <code>\"input\": \"{}\"</code> </p> </note> <p>Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
+        "StartExecutionInput$input": "<p>The string that contains the JSON input data for the execution, for example:</p> <p> <code>\"{\\\"first_name\\\" : \\\"Tim\\\"}\"</code> </p> <note> <p>If you don't include any JSON input data, you still must include the two braces, for example: <code>\"{}\"</code> </p> </note> <p>Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
+        "StartSyncExecutionInput$input": "<p>The string that contains the JSON input data for the execution, for example:</p> <p> <code>\"{\\\"first_name\\\" : \\\"Tim\\\"}\"</code> </p> <note> <p>If you don't include any JSON input data, you still must include the two braces, for example: <code>\"{}\"</code> </p> </note> <p>Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "StartSyncExecutionOutput$input": "<p>The string that contains the JSON input data of the execution. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
         "StartSyncExecutionOutput$output": "<p>The JSON output data of the execution. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p> <note> <p>This field is set only if the execution succeeds. If the execution fails, this field is null.</p> </note>",
         "StateEnteredEventDetails$input": "<p>The string that contains the JSON input data for the state. Length constraints apply to the payload size, and are expressed as bytes in UTF-8 encoding.</p>",
@@ -1303,28 +1226,23 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request would cause a service quota to be exceeded.</p> <p>HTTP Status Code: 402</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSyncExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSyncExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StateEnteredEventDetails": {
       "base": "<p>Contains details about a state entered during an execution.</p>",
@@ -1352,23 +1270,19 @@
     },
     "StateMachineAlreadyExists": {
       "base": "<p>A state machine with the same name but a different definition or role ARN already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StateMachineDeleting": {
       "base": "<p>The specified state machine is being deleted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StateMachineDoesNotExist": {
       "base": "<p>The specified state machine does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StateMachineLimitExceeded": {
       "base": "<p>The maximum number of state machines has been reached. Existing state machines must be deleted before a new state machine can be created.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StateMachineList": {
       "base": null,
@@ -1399,8 +1313,7 @@
     },
     "StateMachineTypeNotSupported": {
       "base": "<p>State machine type is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StateMachineVersionList": {
       "base": null,
@@ -1418,19 +1331,17 @@
       "base": null,
       "refs": {
         "EvaluationFailedEventDetails$state": "<p>The name of the state in which the evaluation error occurred.</p>",
-        "TestStateOutput$nextState": "<p>The name of the next state to transition to. If you haven't defined a next state in your definition or if the execution of the state fails, this ﬁeld doesn't contain a value.</p>",
+        "TestStateOutput$nextState": "<p>The name of the next state to transition to. If you haven't defined a next state in your definition or if the execution of the state fails, this field doesn't contain a value.</p>",
         "VariableReferences$key": null
       }
     },
     "StopExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopExecutionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SyncExecutionStatus": {
       "base": null,
@@ -1468,13 +1379,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1491,8 +1400,7 @@
     },
     "TaskDoesNotExist": {
       "base": "<p>The activity does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TaskFailedEventDetails": {
       "base": "<p>Contains details about a task failure event.</p>",
@@ -1538,8 +1446,7 @@
     },
     "TaskTimedOut": {
       "base": "<p>The task token has either expired or the task associated with the token has already been closed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TaskTimedOutEventDetails": {
       "base": "<p>Contains details about a resource timeout that occurred during an execution.</p>",
@@ -1564,13 +1471,11 @@
     },
     "TestStateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestStateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeoutInSeconds": {
       "base": null,
@@ -1635,16 +1540,15 @@
     },
     "TooManyTags": {
       "base": "<p>You've exceeded the number of tags allowed for a resource. See the <a href=\"https://docs.aws.amazon.com/step-functions/latest/dg/limits.html\"> Limits Topic</a> in the Step Functions Developer Guide.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TraceHeader": {
       "base": null,
       "refs": {
-        "DescribeExecutionOutput$traceHeader": "<p>The X-Ray trace header that was passed to the execution.</p>",
-        "StartExecutionInput$traceHeader": "<p>Passes the X-Ray trace header. The trace header can also be passed in the request payload.</p>",
-        "StartSyncExecutionInput$traceHeader": "<p>Passes the X-Ray trace header. The trace header can also be passed in the request payload.</p>",
-        "StartSyncExecutionOutput$traceHeader": "<p>The X-Ray trace header that was passed to the execution.</p>"
+        "DescribeExecutionOutput$traceHeader": "<p>The X-Ray trace header that was passed to the execution.</p> <note> <p> For X-Ray traces, all Amazon Web Services services use the <code>X-Amzn-Trace-Id</code> header from the HTTP request. Using the header is the preferred mechanism to identify a trace. <code>StartExecution</code> and <code>StartSyncExecution</code> API operations can also use <code>traceHeader</code> from the body of the request payload. If <b>both</b> sources are provided, Step Functions will use the <b>header value</b> (preferred) over the value in the request body. </p> </note>",
+        "StartExecutionInput$traceHeader": "<p>Passes the X-Ray trace header. The trace header can also be passed in the request payload.</p> <note> <p> For X-Ray traces, all Amazon Web Services services use the <code>X-Amzn-Trace-Id</code> header from the HTTP request. Using the header is the preferred mechanism to identify a trace. <code>StartExecution</code> and <code>StartSyncExecution</code> API operations can also use <code>traceHeader</code> from the body of the request payload. If <b>both</b> sources are provided, Step Functions will use the <b>header value</b> (preferred) over the value in the request body. </p> </note>",
+        "StartSyncExecutionInput$traceHeader": "<p>Passes the X-Ray trace header. The trace header can also be passed in the request payload.</p> <note> <p> For X-Ray traces, all Amazon Web Services services use the <code>X-Amzn-Trace-Id</code> header from the HTTP request. Using the header is the preferred mechanism to identify a trace. <code>StartExecution</code> and <code>StartSyncExecution</code> API operations can also use <code>traceHeader</code> from the body of the request payload. If <b>both</b> sources are provided, Step Functions will use the <b>header value</b> (preferred) over the value in the request body. </p> </note>",
+        "StartSyncExecutionOutput$traceHeader": "<p>The X-Ray trace header that was passed to the execution.</p> <note> <p> For X-Ray traces, all Amazon Web Services services use the <code>X-Amzn-Trace-Id</code> header from the HTTP request. Using the header is the preferred mechanism to identify a trace. <code>StartExecution</code> and <code>StartSyncExecution</code> API operations can also use <code>traceHeader</code> from the body of the request payload. If <b>both</b> sources are provided, Step Functions will use the <b>header value</b> (preferred) over the value in the request body. </p> </note>"
       }
     },
     "TracingConfiguration": {
@@ -1693,43 +1597,35 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMapRunInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMapRunOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStateMachineAliasInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStateMachineAliasOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStateMachineInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStateMachineOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidateStateMachineDefinitionCode": {
       "base": null,
@@ -1751,8 +1647,7 @@
     },
     "ValidateStateMachineDefinitionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidateStateMachineDefinitionLocation": {
       "base": null,
@@ -1774,8 +1669,7 @@
     },
     "ValidateStateMachineDefinitionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidateStateMachineDefinitionResultCode": {
       "base": null,
@@ -1798,8 +1692,7 @@
     },
     "ValidationException": {
       "base": "<p>The input does not satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionReason": {
       "base": null,
