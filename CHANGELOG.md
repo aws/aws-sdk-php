@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - This release removes hookDetails for the Amazon ECS native blue/green deployments.
+
 ## 3.350.0 - 2025-07-15
 
 * `Aws\S3Vectors` - Amazon S3 Vectors provides cost-effective, elastic, and durable vector storage for queries based on semantic meaning and similarity.
