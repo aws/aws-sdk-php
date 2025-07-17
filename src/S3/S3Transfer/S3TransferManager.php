@@ -376,13 +376,13 @@ class S3TransferManager
         $listArgs = [
             'Bucket' => $sourceBucket,
         ]  + ($config['list_object_v2_args'] ?? []);
+
         $s3Prefix = $config['s3_prefix'] ?? null;
         if (empty($listArgs['Prefix']) && $s3Prefix !== null) {
             $listArgs['Prefix'] = $s3Prefix;
         }
 
-        $listArgs['Delimiter'] = $listArgs['Delimiter']
-            ?? $config['s3_delimiter'] ?? null;
+        $listArgs['Delimiter'] = $listArgs['Delimiter'] ?? null;
 
         $objects = $this->s3Client
             ->getPaginator('ListObjectsV2', $listArgs)
@@ -434,9 +434,18 @@ class S3TransferManager
         $promises = [];
         $objectsDownloaded = 0;
         $objectsFailed = 0;
+        $s3Delimiter = $config['s3_delimiter'] ?? '/';
         foreach ($objects as $object) {
             $bucketAndKeyArray = self::s3UriAsBucketAndKey($object);
             $objectKey = $bucketAndKeyArray['Key'];
+            if ($s3Prefix !== null && str_contains($objectKey, $s3Delimiter)) {
+                if (!str_ends_with($s3Prefix, $s3Delimiter)) {
+                    $s3Prefix = $s3Prefix.$s3Delimiter;
+                }
+
+                $objectKey = substr($objectKey, strlen($s3Prefix));
+            }
+
             $destinationFile = $destinationDirectory . DIRECTORY_SEPARATOR . $objectKey;
             if ($this->resolvesOutsideTargetDirectory($destinationFile, $objectKey)) {
                 throw new S3TransferException(
