@@ -9,21 +9,16 @@ use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\AbstractMultipartUploader;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
-use Aws\S3\S3Transfer\Models\MultipartUploaderConfig;
-use Aws\S3\S3Transfer\Models\PutObjectRequest;
-use Aws\S3\S3Transfer\Models\UploadRequestConfig;
-use Aws\S3\S3Transfer\Models\UploadResponse;
+use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\MultipartUploader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\Test\TestsUtility;
 use GuzzleHttp\Promise\Create;
-use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
 
 class MultipartUploaderTest extends TestCase
 {
@@ -110,19 +105,15 @@ class MultipartUploaderTest extends TestCase
         try {
             $multipartUploader = new MultipartUploader(
                 $s3Client,
-                PutObjectRequest::fromArray(
-                    $requestArgs,
-                ),
-                MultipartUploaderConfig::fromArray(
-                    $config
-                ),
+                $requestArgs,
+                $config,
                 $source
             );
-            /** @var UploadResponse $response */
+            /** @var UploadResult $response */
             $response = $multipartUploader->promise()->wait();
             $snapshot = $multipartUploader->getCurrentSnapshot();
 
-            $this->assertInstanceOf(UploadResponse::class, $response);
+            $this->assertInstanceOf(UploadResult::class, $response);
             $this->assertCount($expected['parts'], $multipartUploader->getParts());
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTransferredBytes());
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTotalBytes());
@@ -145,7 +136,9 @@ class MultipartUploaderTest extends TestCase
                 ],
                 'command_args' => [],
                 'config' => [
-                    'target_part_size_bytes' => 10240000
+                    'target_part_size_bytes' => 10240000,
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
                 ],
                 'expected' => [
                     'succeed' => true,
@@ -160,7 +153,9 @@ class MultipartUploaderTest extends TestCase
                 ],
                 'command_args' => [],
                 'config' => [
-                    'target_part_size_bytes' => 10240000
+                    'target_part_size_bytes' => 10240000,
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
                 ],
                 'expected' => [
                     'succeed' => true,
@@ -175,7 +170,9 @@ class MultipartUploaderTest extends TestCase
                 ],
                 'command_args' => [],
                 'config' => [
-                    'target_part_size_bytes' => 10240000
+                    'target_part_size_bytes' => 10240000,
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
                 ],
                 'expected' => [
                     'succeed' => true,
@@ -190,7 +187,9 @@ class MultipartUploaderTest extends TestCase
                 ],
                 'command_args' => [],
                 'config' => [
-                    'target_part_size_bytes' => 10240000
+                    'target_part_size_bytes' => 10240000,
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
                 ],
                 'expected' => [
                     'succeed' => true,
@@ -207,7 +206,9 @@ class MultipartUploaderTest extends TestCase
                     'ChecksumCRC32' => 'FooChecksum',
                 ],
                 'config' => [
-                    'target_part_size_bytes' => 10240000
+                    'target_part_size_bytes' => 10240000,
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
                 ],
                 'expected' => [
                     'succeed' => true,
@@ -286,12 +287,12 @@ EOF;
 
         new MultipartUploader(
             $this->getMultipartUploadS3Client(),
-            PutObjectRequest::fromArray(
-                ['Bucket' => 'test-bucket', 'Key' => 'test-key']
-            ),
-            MultipartUploaderConfig::fromArray([
-                'target_part_size_bytes' => $partSize
-            ]),
+            ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            [
+                'target_part_size_bytes' => $partSize,
+                'concurrency' => 1,
+                'request_checksum_calculation' => 'when_supported'
+            ],
             Utils::streamFor('')
         );
     }
@@ -356,11 +357,15 @@ EOF;
         try {
             new MultipartUploader(
                 $this->getMultipartUploadS3Client(),
-                PutObjectRequest::fromArray([
+                ([
                     'Bucket' => 'test-bucket',
                     'Key' => 'test-key'
                 ]),
-                MultipartUploaderConfig::fromArray([]),
+                [
+                    'target_part_size_bytes' => 1024 * 1024 * 5,
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
+                ],
                 $source
             );
         } finally {
@@ -446,11 +451,12 @@ EOF;
 
         $multipartUploader = new MultipartUploader(
             $s3Client,
-            PutObjectRequest::fromArray($requestArgs),
-            MultipartUploaderConfig::fromArray([
+            $requestArgs,
+            [
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
-            ]),
+                'request_checksum_calculation' => 'when_supported'
+            ],
             $stream,
             null,
             [],
@@ -459,7 +465,7 @@ EOF;
         );
 
         $response = $multipartUploader->promise()->wait();
-        $this->assertInstanceOf(UploadResponse::class, $response);
+        $this->assertInstanceOf(UploadResult::class, $response);
     }
 
     /**
@@ -504,10 +510,12 @@ EOF;
 
         $multipartUploader = new MultipartUploader(
             $s3Client,
-            PutObjectRequest::fromArray($requestArgs),
-            MultipartUploaderConfig::fromArray([
+            $requestArgs,
+            [
+                'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
-            ]),
+                'request_checksum_calculation' => 'when_supported'
+            ],
             $stream
         );
 
@@ -598,18 +606,20 @@ EOF;
         try {
             $multipartUploader = new MultipartUploader(
                 $s3Client,
-                PutObjectRequest::fromArray($requestArgs),
-                MultipartUploaderConfig::fromArray([
+                $requestArgs,
+                [
+                    'target_part_size_bytes' => 5242880, // 5MB
                     'concurrency' => 3,
-                ]),
+                    'request_checksum_calculation' => 'when_supported'
+                ],
                 $source,
             );
-            /** @var UploadResponse $response */
+            /** @var UploadResult $response */
             $response = $multipartUploader->promise()->wait();
             foreach ($operationsCalled as $key => $value) {
                 $this->assertTrue($value, 'Operation {' . $key . '} was not called');
             }
-            $this->assertInstanceOf(UploadResponse::class, $response);
+            $this->assertInstanceOf(UploadResult::class, $response);
         } finally {
             foreach ($cleanUpFns as $fn) {
                 $fn();
@@ -728,10 +738,12 @@ EOF;
         try {
             $multipartUploader = new MultipartUploader(
                 $s3Client,
-                PutObjectRequest::fromArray($requestArgs),
-                MultipartUploaderConfig::fromArray([
-                    'concurrency' => 3,
-                ]),
+                $requestArgs,
+                [
+                    'target_part_size_bytes' => 5242880, // 5MB
+                    'concurrency' => 1,
+                    'request_checksum_calculation' => 'when_supported'
+                ],
                 $source,
             );
             $multipartUploader->promise()->wait();
@@ -788,11 +800,12 @@ EOF;
 
         $multipartUploader = new MultipartUploader(
             $s3Client,
-            PutObjectRequest::fromArray($requestArgs),
-            MultipartUploaderConfig::fromArray([
+            $requestArgs,
+            [
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
-            ]),
+                'request_checksum_calculation' => 'when_supported'
+            ],
             $stream,
             null,
             [],
@@ -839,11 +852,11 @@ EOF;
 
         $multipartUploader = new MultipartUploader(
             $s3Client,
-            PUtObjectRequest::fromArray($requestArgs),
-            MultipartUploaderConfig::fromArray([
+            $requestArgs,
+            [
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
-            ]),
+            ],
             $stream,
             null,
             [],
@@ -852,6 +865,6 @@ EOF;
         );
 
         $response = $multipartUploader->promise()->wait();
-        $this->assertInstanceOf(UploadResponse::class, $response);
+        $this->assertInstanceOf(UploadResult::class, $response);
     }
 }

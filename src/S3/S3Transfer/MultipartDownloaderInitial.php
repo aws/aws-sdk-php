@@ -5,7 +5,7 @@ namespace Aws\S3\S3Transfer;
 use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
-use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
@@ -124,9 +124,9 @@ abstract class MultipartDownloaderInitial implements PromisorInterface
     }
 
     /**
-     * @return DownloadResponse
+     * @return DownloadResult
      */
-    public function download(): DownloadResponse {
+    public function download(): DownloadResult {
         return $this->promise()->wait();
     }
 
@@ -185,7 +185,7 @@ abstract class MultipartDownloaderInitial implements PromisorInterface
             $this->downloadComplete();
 
             unset($result['Body']);
-            yield Create::promiseFor(new DownloadResponse(
+            yield Create::promiseFor(new DownloadResult(
                 $this->stream,
                 $result['@metadata'] ?? []
             ));

@@ -6,14 +6,12 @@ use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
-use Aws\S3\S3Transfer\Models\DownloadHandler;
-use Aws\S3\S3Transfer\Models\DownloadResponse;
-use Aws\S3\S3Transfer\Models\GetObjectRequest;
-use Aws\S3\S3Transfer\Models\GetObjectResponse;
-use Aws\S3\S3Transfer\Models\MultipartDownloaderConfig;
+use Aws\S3\S3Transfer\Models\DownloadResult;
+use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
+use Aws\S3\S3Transfer\Utils\DownloadHandler;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -22,15 +20,15 @@ use GuzzleHttp\Promise\PromisorInterface;
 abstract class MultipartDownloader implements PromisorInterface
 {
     public const GET_OBJECT_COMMAND = "GetObject";
-    public const PART_GET_MULTIPART_DOWNLOADER = "partGet";
-    public const RANGED_GET_MULTIPART_DOWNLOADER = "rangedGet";
+    public const PART_GET_MULTIPART_DOWNLOADER = "part";
+    public const RANGED_GET_MULTIPART_DOWNLOADER = "ranged";
     private const OBJECT_SIZE_REGEX = "/\/(\d+)$/";
     
-    /** @var GetObjectRequest */
-    protected GetObjectRequest $getObjectRequest;
+    /** @var array */
+    protected readonly array $getObjectRequestArgs;
 
-    /** @var MultipartDownloaderConfig */
-    protected readonly MultipartDownloaderConfig $config;
+    /** @var array */
+    protected readonly array $config;
 
     /** @var DownloadHandler */
     private DownloadHandler $downloadHandler;
@@ -44,8 +42,8 @@ abstract class MultipartDownloader implements PromisorInterface
     /** @var int */
     protected int $objectSizeInBytes;
 
-    /** @var string */
-    protected string $eTag;
+    /** @var string|null */
+    protected ?string $eTag;
 
     /** @var TransferListenerNotifier | null */
     private readonly ?TransferListenerNotifier $listenerNotifier;
@@ -55,29 +53,30 @@ abstract class MultipartDownloader implements PromisorInterface
 
     /**
      * @param S3ClientInterface $s3Client
-     * @param GetObjectRequest $getObjectRequest
-     * @param MultipartDownloaderConfig $config
+     * @param array $getObjectRequestArgs
+     * @param array $config
      * @param DownloadHandler $downloadHandler
      * @param int $currentPartNo
      * @param int $objectPartsCount
      * @param int $objectSizeInBytes
-     * @param string $eTag
+     * @param string|null $eTag
      * @param TransferProgressSnapshot|null $currentSnapshot
      * @param TransferListenerNotifier|null $listenerNotifier
      */
     public function __construct(
         protected readonly S3ClientInterface $s3Client,
-        GetObjectRequest $getObjectRequest,
-        MultipartDownloaderConfig $config,
+        array $getObjectRequestArgs,
+        array $config,
         DownloadHandler $downloadHandler,
         int $currentPartNo = 0,
         int $objectPartsCount = 0,
         int $objectSizeInBytes = 0,
-        string $eTag = "",
+        ?string $eTag = null,
         ?TransferProgressSnapshot $currentSnapshot = null,
         ?TransferListenerNotifier $listenerNotifier  = null
     ) {
-        $this->getObjectRequest = $getObjectRequest;
+        $this->getObjectRequestArgs = $getObjectRequestArgs;
+        $this->validateConfig($config);
         $this->config = $config;
         $this->downloadHandler = $downloadHandler;
         $this->currentPartNo = $currentPartNo;
@@ -91,6 +90,24 @@ abstract class MultipartDownloader implements PromisorInterface
         // Add download handler to the listener notifier
         $listenerNotifier->addListener($downloadHandler);
         $this->listenerNotifier  = $listenerNotifier;
+    }
+
+    private function validateConfig(array &$config): void {
+        if (!isset($config['target_part_size_bytes'])) {
+            $config['target_part_size_bytes'] = S3TransferManagerConfig::DEFAULT_TARGET_PART_SIZE_BYTES;
+        }
+
+        if (!isset($config['response_checksum_validation'])) {
+            $config['response_checksum_validation'] = S3TransferManagerConfig::DEFAULT_RESPONSE_CHECKSUM_VALIDATION;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig(): array
+    {
+        return $this->config;
     }
 
     /**
@@ -126,9 +143,9 @@ abstract class MultipartDownloader implements PromisorInterface
     }
 
     /**
-     * @return DownloadResponse
+     * @return DownloadResult
      */
-    public function download(): DownloadResponse {
+    public function download(): DownloadResult {
         return $this->promise()->wait();
     }
 
@@ -170,11 +187,12 @@ abstract class MultipartDownloader implements PromisorInterface
                 $this->downloadComplete();
 
                 // Return response
-                yield Create::promiseFor(new DownloadResponse(
+                $result = $initialRequestResult->toArray();
+                unset($result['Body']);
+
+                yield Create::promiseFor(new DownloadResult(
                     $this->downloadHandler->getHandlerResult(),
-                    GetObjectResponse::fromArray(
-                        $initialRequestResult->toArray()
-                    )->toArray(),
+                    $result,
                 ));
             } catch (\Throwable $e) {
                 $this->downloadFailed($e);
@@ -314,7 +332,7 @@ abstract class MultipartDownloader implements PromisorInterface
         );
 
         $this->listenerNotifier?->transferFail([
-            TransferListener::REQUEST_ARGS_KEY => $this->getObjectRequest->toArray(),
+            TransferListener::REQUEST_ARGS_KEY => $this->getObjectRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
         ]);
@@ -345,7 +363,7 @@ abstract class MultipartDownloader implements PromisorInterface
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->bytesTransferred([
-            TransferListener::REQUEST_ARGS_KEY => $this->getObjectRequest->toArray(),
+            TransferListener::REQUEST_ARGS_KEY => $this->getObjectRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }
@@ -379,7 +397,7 @@ abstract class MultipartDownloader implements PromisorInterface
         );
         $this->currentSnapshot = $newSnapshot;
         $this->listenerNotifier?->transferComplete([
-            TransferListener::REQUEST_ARGS_KEY => $this->getObjectRequest->toArray(),
+            TransferListener::REQUEST_ARGS_KEY => $this->getObjectRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
         ]);
     }

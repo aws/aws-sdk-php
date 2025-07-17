@@ -3,7 +3,7 @@
 namespace Aws\Test\Integ;
 
 use Aws\S3\ApplyChecksumMiddleware;
-use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Progress\TransferListener;
@@ -337,7 +337,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         $s3TransferManager->download([
             'Bucket' => self::getResourceName(),
             'Key' => $filename,
-        ])->then(function (DownloadResponse $response) use ($filename) {
+        ])->then(function (DownloadResult $response) use ($filename) {
             $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $filename;
             file_put_contents($fullFilePath, $response->getData()->getContents());
         })->wait();
@@ -381,7 +381,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
         [],
         [
             'multipart_download_type' => $download_type,
-        ])->then(function (DownloadResponse $response) use ($filename) {
+        ])->then(function (DownloadResult $response) use ($filename) {
             $fullFilePath = self::$tempDir . DIRECTORY_SEPARATOR . $filename;
             file_put_contents($fullFilePath, $response->getData()->getContents());
         })->wait();

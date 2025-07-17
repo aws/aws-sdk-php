@@ -25,9 +25,9 @@ class PartGetMultipartDownloader extends MultipartDownloader
             $this->currentPartNo++;
         }
 
-        $nextRequestArgs = $this->getObjectRequest->toArray();
+        $nextRequestArgs = $this->getObjectRequestArgs;
         $nextRequestArgs['PartNumber'] = $this->currentPartNo;
-        if ($this->config->getResponseChecksumValidationEnabled()) {
+        if ($this->config['response_checksum_validation'] === 'when_supported') {
             $nextRequestArgs['ChecksumMode'] = 'ENABLED';
         }
 

@@ -5,56 +5,32 @@ namespace Aws\S3\S3Transfer\Models;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\S3TransferManager;
+use Aws\S3\S3Transfer\Utils\DownloadHandler;
 use Aws\S3\S3Transfer\Utils\FileDownloadHandler;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 
 final class DownloadRequest extends TransferRequest
 {
+    public static array $configKeys = [
+        'response_checksum_validation',
+        'multipart_download_type',
+        'track_progress'
+    ];
+
     /** @var string|array|null */
     private string|array|null $source;
 
-    /** @var GetObjectRequest */
-    private GetObjectRequest $getObjectRequest;
-
-    /** @var DownloadRequestConfig */
-    private DownloadRequestConfig $config;
+    /** @var array */
+    private array $getObjectRequestArgs;
 
     /** @var DownloadHandler|null */
     private ?DownloadHandler $downloadHandler;
 
     /**
-     * @param string|array|null $source
-     * @param GetObjectRequest $getObjectRequest
-     * @param DownloadRequestConfig $config
-     * @param DownloadHandler|null $downloadHandler
-     * @param array $listeners
-     * @param TransferListener|null $progressTracker
-     */
-    public function __construct(
-        string|array|null $source,
-        GetObjectRequest $getObjectRequest,
-        DownloadRequestConfig $config,
-        ?DownloadHandler $downloadHandler,
-        array $listeners = [],
-        ?TransferListener $progressTracker  = null
-    ) {
-        parent::__construct($listeners, $progressTracker);
-        $this->source = $source;
-        $this->getObjectRequest = $getObjectRequest;
-        $this->config = $config;
-        if ($downloadHandler === null) {
-            $downloadHandler = new StreamDownloadHandler();
-        }
-        $this->downloadHandler = $downloadHandler;
-    }
-
-    /**
      * @param string|array|null $source The object to be downloaded from S3.
      * It can be either a string with a S3 URI or an array with a Bucket and Key
      * properties set.
-     * @param array $downloadRequestArgs The getObject request arguments to be provided as part
-     * of each get object operation, except for the bucket and key, which
-     * are already provided as the source.
+     * @param array $getObjectRequestArgs
      * @param array $config The configuration to be used for this operation:
      *  - multipart_download_type: (string, optional)
      *    Overrides the resolved value from the transfer manager config.
@@ -72,8 +48,34 @@ final class DownloadRequest extends TransferRequest
      * @param DownloadHandler|null $downloadHandler
      * @param TransferListener[]|null $listeners
      * @param TransferListener|null $progressTracker
+     */
+    public function __construct(
+        string|array|null $source,
+        array $getObjectRequestArgs,
+        array $config,
+        ?DownloadHandler $downloadHandler,
+        array $listeners = [],
+        ?TransferListener $progressTracker  = null
+    ) {
+        parent::__construct($listeners, $progressTracker, $config);
+        $this->source = $source;
+        $this->getObjectRequestArgs = $getObjectRequestArgs;
+        $this->config = $config;
+        if ($downloadHandler === null) {
+            $downloadHandler = new StreamDownloadHandler();
+        }
+        $this->downloadHandler = $downloadHandler;
+    }
+
+    /**
+     * @param string|array|null $source
+     * @param array $downloadRequestArgs
+     * @param array $config
+     * @param DownloadHandler|null $downloadHandler
+     * @param array $listeners
+     * @param TransferListener|null $progressTracker
      *
-     * @return static
+     * @return DownloadRequest
      */
     public static function fromLegacyArgs(
         string | array | null    $source,
@@ -86,8 +88,8 @@ final class DownloadRequest extends TransferRequest
     {
         return new DownloadRequest(
             $source,
-            GetObjectRequest::fromArray($downloadRequestArgs),
-            DownloadRequestConfig::fromArray($config),
+            $downloadRequestArgs,
+            $config,
             $downloadHandler,
             $listeners,
             $progressTracker
@@ -107,7 +109,7 @@ final class DownloadRequest extends TransferRequest
     {
         return new DownloadRequest(
             $downloadRequest->getSource(),
-            $downloadRequest->getGetObjectRequest(),
+            $downloadRequest->getObjectRequestArgs(),
             $downloadRequest->getConfig(),
             $downloadHandler,
             $downloadRequest->getListeners(),
@@ -124,19 +126,11 @@ final class DownloadRequest extends TransferRequest
     }
 
     /**
-     * @return GetObjectRequest
+     * @return array
      */
-    public function getGetObjectRequest(): GetObjectRequest
+    public function getObjectRequestArgs(): array
     {
-        return $this->getObjectRequest;
-    }
-
-    /**
-     * @return DownloadRequestConfig
-     */
-    public function getConfig(): DownloadRequestConfig
-    {
-        return $this->config;
+        return $this->getObjectRequestArgs;
     }
 
     /**
@@ -156,8 +150,8 @@ final class DownloadRequest extends TransferRequest
     public function normalizeSourceAsArray(): array {
         // If source is null then fall back to getObjectRequest.
         $source = $this->getSource() ?? [
-            'Bucket' => $this->getObjectRequest->getBucket(),
-            'Key'    => $this->getObjectRequest->getKey(),
+            'Bucket' => $this->getObjectRequestArgs['Bucket'] ?? null,
+            'Key'    => $this->getObjectRequestArgs['Key'] ?? null,
         ];
         if (is_string($source)) {
             $sourceAsArray = S3TransferManager::s3UriAsBucketAndKey($source);

@@ -5,9 +5,9 @@ namespace Aws\S3\S3Transfer\Models;
 class S3TransferManagerConfig
 {
     public const DEFAULT_TARGET_PART_SIZE_BYTES = 8388608; // 8MB
-    private const DEFAULT_MULTIPART_UPLOAD_THRESHOLD_BYTES = 16777216; // 16MB
+    public const DEFAULT_MULTIPART_UPLOAD_THRESHOLD_BYTES = 16777216; // 16MB
     public const DEFAULT_REQUEST_CHECKSUM_CALCULATION = 'when_supported';
-    private const DEFAULT_RESPONSE_CHECKSUM_VALIDATION = 'when_supported';
+    public const DEFAULT_RESPONSE_CHECKSUM_VALIDATION = 'when_supported';
     public const DEFAULT_MULTIPART_DOWNLOAD_TYPE = 'part';
     public const DEFAULT_CONCURRENCY = 5;
     private const DEFAULT_TRACK_PROGRESS = false;
@@ -91,7 +91,7 @@ class S3TransferManagerConfig
             ?? self::DEFAULT_TARGET_PART_SIZE_BYTES,
             $config['multipart_upload_threshold_bytes']
             ?? self::DEFAULT_MULTIPART_UPLOAD_THRESHOLD_BYTES,
-            'request_checksum_calculation'
+                $config['request_checksum_calculation']
             ?? self::DEFAULT_REQUEST_CHECKSUM_CALCULATION,
             $config['response_checksum_validation']
             ?? self::DEFAULT_RESPONSE_CHECKSUM_VALIDATION,

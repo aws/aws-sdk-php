@@ -6,9 +6,7 @@ use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
-use Aws\S3\S3Transfer\Models\MultipartUploaderConfig;
-use Aws\S3\S3Transfer\Models\PutObjectRequest;
-use Aws\S3\S3Transfer\Models\UploadResponse;
+use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
@@ -26,16 +24,16 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     public const PART_MIN_SIZE = 5 * 1024 * 1024; // 5 MiB
     public const PART_MAX_SIZE = 5 * 1024 * 1024 * 1024; // 5 GiB
     public const PART_MAX_NUM = 10000;
-    protected const DEFAULT_CHECKSUM_CALCULATION_ALGORITHM = 'crc32';
+    public const DEFAULT_CHECKSUM_CALCULATION_ALGORITHM = 'crc32';
 
     /** @var S3ClientInterface */
     protected readonly S3ClientInterface $s3Client;
 
-    /** @var PutObjectRequest @ */
-    protected readonly PutObjectRequest $putObjectRequest;
+    /** @var array @ */
+    protected readonly array $putObjectRequestArgs;
 
-    /** @var MultipartUploaderConfig @ */
-    protected readonly MultipartUploaderConfig $config;
+    /** @var array @ */
+    protected readonly array $config;
 
     /** @var string|null */
     protected string|null $uploadId;
@@ -44,7 +42,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected array $parts;
 
     /** @var array */
-    private array $deferFns = [];
+    protected array $onCompletionCallbacks = [];
 
     /** @var TransferListenerNotifier|null */
     protected ?TransferListenerNotifier $listenerNotifier;
@@ -69,8 +67,11 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
     /**
      * @param S3ClientInterface $s3Client
-     * @param PutObjectRequest $putObjectRequest
-     * @param MultipartUploaderConfig $config
+     * @param array $putObjectRequestArgs
+     * @param array $config
+     * - target_part_size_bytes: (int, optional)
+     * - request_checksum_calculation: (string, optional)
+     * - concurrency: (int, optional)
      * @param string|null $uploadId
      * @param array $parts
      * @param TransferProgressSnapshot|null $currentSnapshot
@@ -79,8 +80,8 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     public function __construct
     (
         S3ClientInterface $s3Client,
-        PutObjectRequest $putObjectRequest,
-        MultipartUploaderConfig $config,
+        array $putObjectRequestArgs,
+        array $config,
         ?string $uploadId = null,
         array $parts = [],
         ?TransferProgressSnapshot $currentSnapshot = null,
@@ -88,35 +89,35 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     )
     {
         $this->s3Client = $s3Client;
-        $this->putObjectRequest = $putObjectRequest;
+        $this->putObjectRequestArgs = $putObjectRequestArgs;
+        $this->validateConfig($config);
         $this->config = $config;
-        $this->validateConfig();
         $this->uploadId = $uploadId;
         $this->parts = $parts;
         $this->currentSnapshot = $currentSnapshot;
         $this->listenerNotifier = $listenerNotifier;
-        // Evaluation for custom provided checksums
-        $objectRequestArgs = $putObjectRequest->toArray();
-        $checksumName = self::filterChecksum($objectRequestArgs);
-        if ($checksumName !== null) {
-            $this->requestChecksum = $objectRequestArgs[$checksumName];
-            $this->requestChecksumAlgorithm = str_replace(
-                'Checksum',
-                '',
-                $checksumName
-            );
-        } else {
-            $this->requestChecksum = null;
-            $this->requestChecksumAlgorithm = null;
-        }
     }
 
     /**
+     * @param array $config
+     *
      * @return void
      */
-    protected function validateConfig(): void
+    protected function validateConfig(array &$config): void
     {
-        $partSize = $this->config->getTargetPartSizeBytes();
+        if (!isset($config['target_part_size_bytes'])) {
+            $config['target_part_size_bytes'] = S3TransferManagerConfig::DEFAULT_TARGET_PART_SIZE_BYTES;
+        }
+
+        if (!isset($config['concurrency'])) {
+            $config['concurrency'] = S3TransferManagerConfig::DEFAULT_CONCURRENCY;
+        }
+
+        if (!isset($config['request_checksum_calculation'])) {
+            $config['request_checksum_calculation'] = 'when_supported';
+        }
+
+        $partSize = $config['target_part_size_bytes'];
         if ($partSize < self::PART_MIN_SIZE || $partSize > self::PART_MAX_SIZE) {
             throw new \InvalidArgumentException(
                 "Part size config must be between " . self::PART_MIN_SIZE
@@ -166,7 +167,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
                 $this->operationFailed($e);
                 yield Create::rejectionFor($e);
             } finally {
-                $this->callDeferredFns();
+                $this->callOnCompletionCallbacks();
             }
         });
     }
@@ -176,12 +177,13 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      */
     protected function createMultipartUpload(): PromiseInterface
     {
-        $createMultipartUploadArgs = $this->putObjectRequest->toCreateMultipartRequest();
+        $createMultipartUploadArgs = $this->putObjectRequestArgs;
         if ($this->requestChecksum !== null) {
-             $createMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
+            $createMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
             $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
-        } elseif ($this->config->getRequestChecksumCalculation() === 'when_supported') {
-            $this->requestChecksumAlgorithm = self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM;
+        } elseif ($this->config['request_checksum_calculation'] === 'when_supported') {
+            $this->requestChecksumAlgorithm = $createMultipartUploadArgs['ChecksumAlgorithm']
+                ?? self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM;
             $createMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
             $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
         }
@@ -205,7 +207,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected function completeMultipartUpload(): PromiseInterface
     {
         $this->sortParts();
-        $completeMultipartUploadArgs = $this->putObjectRequest->toCompleteMultipartUploadRequest();
+        $completeMultipartUploadArgs = $this->putObjectRequestArgs;
         $completeMultipartUploadArgs['UploadId'] = $this->uploadId;
         $completeMultipartUploadArgs['MultipartUpload'] = [
             'Parts' => $this->parts
@@ -215,7 +217,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         if ($this->requestChecksum !== null) {
             $completeMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
             $completeMultipartUploadArgs[
-                'Checksum' . $this->requestChecksumAlgorithm
+                'Checksum' . ucfirst($this->requestChecksumAlgorithm)
             ] = $this->requestChecksum;
         }
 
@@ -236,7 +238,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      */
     protected function abortMultipartUpload(): PromiseInterface
     {
-        $abortMultipartUploadArgs = $this->putObjectRequest->toAbortMultipartRequest();
+        $abortMultipartUploadArgs = $this->putObjectRequestArgs;
         $abortMultipartUploadArgs['UploadId'] = $this->uploadId;
         $command = $this->s3Client->getCommand(
             'AbortMultipartUpload',
@@ -348,7 +350,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
         $this->listenerNotifier?->transferComplete([
             TransferListener::REQUEST_ARGS_KEY =>
-                $this->putObjectRequest->toCompleteMultipartUploadRequest(),
+                $this->putObjectRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
@@ -391,7 +393,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
         $this->listenerNotifier?->transferFail([
             TransferListener::REQUEST_ARGS_KEY =>
-                $this->putObjectRequest->toAbortMultipartRequest(),
+                $this->putObjectRequestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
         ]);
@@ -426,13 +428,13 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /**
      * @return void
      */
-    protected function callDeferredFns(): void
+    protected function callOnCompletionCallbacks(): void
     {
-        foreach ($this->deferFns as $fn) {
+        foreach ($this->onCompletionCallbacks as $fn) {
             $fn();
         }
 
-        $this->deferFns = [];
+        $this->onCompletionCallbacks = [];
     }
 
     /**
@@ -451,7 +453,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     {
         return max(
             $this->getTotalSize() / self::PART_MAX_NUM,
-            $this->config->getTargetPartSizeBytes()
+            $this->config['target_part_size_bytes']
         );
     }
 
@@ -468,32 +470,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /**
      * @param ResultInterface $result
      *
-     * @return UploadResponse
+     * @return mixed
      */
-    abstract protected function createResponse(ResultInterface $result): UploadResponse;
-
-    /**
-     * Filters a provided checksum if one was provided.
-     *
-     * @param array $requestArgs
-     *
-     * @return string | null
-     */
-    private static function filterChecksum(array $requestArgs):? string
-    {
-        static $algorithms = [
-            'ChecksumCRC32',
-            'ChecksumCRC32C',
-            'ChecksumCRC64NVME',
-            'ChecksumSHA1',
-            'ChecksumSHA256',
-        ];
-        foreach ($algorithms as $algorithm) {
-            if (isset($requestArgs[$algorithm])) {
-                return $algorithm;
-            }
-        }
-
-        return null;
-    }
+    abstract protected function createResponse(ResultInterface $result): mixed;
 }

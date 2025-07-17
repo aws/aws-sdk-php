@@ -5,12 +5,15 @@ namespace Aws\Test\S3\S3Transfer;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Models\DownloadResult;
+use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\MultipartDownloader;
 use Aws\S3\S3Transfer\PartGetMultipartDownloader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
+use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +31,7 @@ class MultipartDownloaderTest extends TestCase
     public function testChooseDownloaderClass(): void {
         $multipartDownloadTypes = [
             MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER => PartGetMultipartDownloader::class,
-            MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
+            MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER => RangeGetMultipartDownloader::class,
         ];
         foreach ($multipartDownloadTypes as $multipartDownloadType => $class) {
             $resolvedClass = MultipartDownloader::chooseDownloaderClass($multipartDownloadType);
@@ -57,8 +60,8 @@ class MultipartDownloaderTest extends TestCase
     public function testConstants(): void
     {
         $this->assertEquals('GetObject', MultipartDownloader::GET_OBJECT_COMMAND);
-        $this->assertEquals('partGet', MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER);
-        $this->assertEquals('rangeGet', MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER);
+        $this->assertEquals('part', MultipartDownloader::PART_GET_MULTIPART_DOWNLOADER);
+        $this->assertEquals('ranged', MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER);
     }
 
     /**
@@ -114,17 +117,17 @@ class MultipartDownloaderTest extends TestCase
             $s3Client,
             $requestArgs,
             [],
+            new StreamDownloadHandler(),
             0,
             0,
             0,
             '',
             null,
-            null,
-            $listenerNotifier
+            $listenerNotifier,
         );
 
         $response = $multipartDownloader->promise()->wait();
-        $this->assertInstanceOf(DownloadResponse::class, $response);
+        $this->assertInstanceOf(DownloadResult::class, $response);
     }
 
     /**
@@ -167,10 +170,10 @@ class MultipartDownloaderTest extends TestCase
             $s3Client,
             $requestArgs,
             [],
+            new StreamDownloadHandler(),
             0,
             0,
             0,
-            '',
             null,
             null,
             $listenerNotifier
@@ -218,16 +221,67 @@ class MultipartDownloaderTest extends TestCase
             $s3Client,
             $requestArgs,
             [],
+            new StreamDownloadHandler(),
             0,
             0,
             0,
-            '',
             null,
             null,
             $listenerNotifier
         );
 
         $response = $multipartDownloader->promise()->wait();
-        $this->assertInstanceOf(DownloadResponse::class, $response);
+        $this->assertInstanceOf(DownloadResult::class, $response);
+    }
+
+    /**
+     * @return void
+     */
+    public function testConfigIsSetToDefaultValues(): void {
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $multipartDownloader = new PartGetMultipartDownloader(
+            $mockClient,
+            [],
+            [],
+            new StreamDownloadHandler(),
+        );
+        $config = $multipartDownloader->getConfig();
+        $this->assertEquals(
+            S3TransferManagerConfig::DEFAULT_TARGET_PART_SIZE_BYTES,
+            $config['target_part_size_bytes']
+        );
+        $this->assertEquals(
+            S3TransferManagerConfig::DEFAULT_RESPONSE_CHECKSUM_VALIDATION,
+            $config['response_checksum_validation']
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomConfigIsSet(): void {
+        $mockClient = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $multipartDownloader = new PartGetMultipartDownloader(
+            $mockClient,
+            [],
+            [
+                'target_part_size_bytes' => 1024 * 1024 * 10,
+                'response_checksum_validation' => 'when_required',
+            ],
+            new StreamDownloadHandler(),
+        );
+        $config = $multipartDownloader->getConfig();
+        $this->assertEquals(
+            1024 * 1024 * 10,
+            $config['target_part_size_bytes']
+        );
+        $this->assertEquals(
+            'when_required',
+            $config['response_checksum_validation']
+        );
     }
 }

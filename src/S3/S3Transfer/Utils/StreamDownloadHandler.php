@@ -2,7 +2,6 @@
 
 namespace Aws\S3\S3Transfer\Utils;
 
-use Aws\S3\S3Transfer\Models\DownloadHandler;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\StreamInterface;

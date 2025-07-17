@@ -6,10 +6,7 @@ use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
-use Aws\S3\S3Transfer\Models\MultipartUploaderConfig;
-use Aws\S3\S3Transfer\Models\PutObjectRequest;
-use Aws\S3\S3Transfer\Models\PutObjectResponse;
-use Aws\S3\S3Transfer\Models\UploadResponse;
+use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use GuzzleHttp\Promise\Create;
@@ -37,8 +34,8 @@ class MultipartUploader extends AbstractMultipartUploader
 
     public function __construct(
         S3ClientInterface $s3Client,
-        PutObjectRequest $putObjectRequest,
-        MultipartUploaderConfig $config,
+        array $putObjectRequestArgs,
+        array $config,
         string | StreamInterface $source,
         ?string $uploadId = null,
         array $parts = [],
@@ -48,7 +45,7 @@ class MultipartUploader extends AbstractMultipartUploader
     {
         parent::__construct(
             $s3Client,
-            $putObjectRequest,
+            $putObjectRequestArgs,
             $config,
             $uploadId,
             $parts,
@@ -57,6 +54,7 @@ class MultipartUploader extends AbstractMultipartUploader
         );
         $this->body = $this->parseBody($source);
         $this->calculatedObjectSize = 0;
+        $this->evaluateCustomChecksum();
     }
 
     /**
@@ -77,7 +75,7 @@ class MultipartUploader extends AbstractMultipartUploader
             }
             $body = new LazyOpenStream($source, 'r');
             // To make sure the resource is closed.
-            $this->deferFns[] = function () use ($body) {
+            $this->onCompletionCallbacks[] = function () use ($body) {
                 $body->close();
             };
         } elseif ($source instanceof StreamInterface) {
@@ -91,25 +89,52 @@ class MultipartUploader extends AbstractMultipartUploader
         return $body;
     }
 
+    /**
+     * @return void
+     */
+    private function evaluateCustomChecksum(): void {
+        // Evaluation for custom provided checksums
+        $checksumName = self::filterChecksum($this->putObjectRequestArgs);
+        if ($checksumName !== null) {
+            $this->requestChecksum = $this->putObjectRequestArgs[$checksumName];
+            $this->requestChecksumAlgorithm = str_replace(
+                'Checksum',
+                '',
+                $checksumName
+            );
+        } else {
+            $this->requestChecksum = null;
+            $this->requestChecksumAlgorithm = null;
+        }
+    }
+
     protected function processMultipartOperation(): PromiseInterface
     {
+        $uploadPartCommandArgs = $this->putObjectRequestArgs;
         $this->calculatedObjectSize = 0;
         $partSize = $this->calculatePartSize();
         $partsCount = ceil($this->getTotalSize() / $partSize);
         $commands = [];
         $partNo = count($this->parts);
-        $uploadPartCommandArgs = $this->putObjectRequest->toUploadPartRequest();
         $uploadPartCommandArgs['UploadId'] = $this->uploadId;
         // Customer provided checksum
         $hashBody = false;
         if ($this->requestChecksum !== null) {
             // To avoid default calculation
             $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
-        } elseif ($this->requestChecksumAlgorithm === self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM) {
+            unset($uploadPartCommandArgs['Checksum'. ucfirst($this->requestChecksumAlgorithm)]);
+        } elseif ($this->requestChecksumAlgorithm !== null) {
+            // Normalize algorithm name
+            $algoName = strtolower($this->requestChecksumAlgorithm);
+            if ($algoName === self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM) {
+                $algoName = 'crc32b';
+            }
+
             $hashBody = true;
-            $this->hashContext = hash_init('crc32b');
+            $this->hashContext = hash_init($algoName);
             // To avoid default calculation
             $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
+            unset($uploadPartCommandArgs['Checksum'. ucfirst($this->requestChecksumAlgorithm)]);
         }
 
         while (!$this->body->eof()) {
@@ -163,7 +188,7 @@ class MultipartUploader extends AbstractMultipartUploader
             $this->s3Client,
             $commands,
             [
-                'concurrency' => $this->config->getConcurrency(),
+                'concurrency' => $this->config['concurrency'],
                 'fulfilled'   => function (ResultInterface $result, $index)
                 use ($commands) {
                     $command = $commands[$index];
@@ -201,14 +226,12 @@ class MultipartUploader extends AbstractMultipartUploader
     /**
      * @param ResultInterface $result
      *
-     * @return UploadResponse
+     * @return UploadResult
      */
-    protected function createResponse(ResultInterface $result): UploadResponse
+    protected function createResponse(ResultInterface $result): UploadResult
     {
-        return new UploadResponse(
-            PutObjectResponse::fromArray(
-                $result->toArray()
-            )->toMultipartUploadResponse()
+        return new UploadResult(
+            $result->toArray()
         );
     }
 
@@ -225,5 +248,30 @@ class MultipartUploader extends AbstractMultipartUploader
         return new HashingStream($stream, $hash, function ($result) use (&$data) {
             $data['ContentSHA256'] = bin2hex($result);
         });
+    }
+
+    /**
+     * Filters a provided checksum if one was provided.
+     *
+     * @param array $requestArgs
+     *
+     * @return string | null
+     */
+    private static function filterChecksum(array $requestArgs):? string
+    {
+        static $algorithms = [
+            'ChecksumCRC32',
+            'ChecksumCRC32C',
+            'ChecksumCRC64NVME',
+            'ChecksumSHA1',
+            'ChecksumSHA256',
+        ];
+        foreach ($algorithms as $algorithm) {
+            if (isset($requestArgs[$algorithm])) {
+                return $algorithm;
+            }
+        }
+
+        return null;
     }
 }

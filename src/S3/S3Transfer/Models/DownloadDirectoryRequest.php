@@ -14,45 +14,15 @@ class DownloadDirectoryRequest extends TransferRequest
     /** @var string */
     private string $destinationDirectory;
 
-    /** @var GetObjectRequest  */
-    private GetObjectRequest $getObjectRequest;
-
-    /** @var DownloadDirectoryRequestConfig */
-    private DownloadDirectoryRequestConfig $config;
-
-    /**
-     * @param string $sourceBucket
-     * @param string $destinationDirectory
-     * @param GetObjectRequest $getObjectRequest
-     * @param DownloadDirectoryRequestConfig $config
-     */
-    public function __construct(
-        string $sourceBucket,
-        string $destinationDirectory,
-        GetObjectRequest $getObjectRequest,
-        DownloadDirectoryRequestConfig $config,
-        array $listeners = [],
-        ?TransferListener $progressTracker = null
-    ) {
-        parent::__construct($listeners, $progressTracker);
-        if (ArnParser::isArn($sourceBucket)) {
-            $sourceBucket = ArnParser::parse($sourceBucket)->getResource();
-        }
-
-        $this->sourceBucket = $sourceBucket;
-        $this->destinationDirectory = $destinationDirectory;
-        $this->getObjectRequest = $getObjectRequest;
-        $this->config = $config;
-    }
+    /** @var array  */
+    private readonly array $getObjectRequestArgs;
 
     /**
      * @param string $sourceBucket The bucket from where the files are going to be
      * downloaded from.
      * @param string $destinationDirectory The destination path where the downloaded
      * files will be placed in.
-     * @param array $downloadDirectoryArgs The getObject request arguments to be provided
-     * as part of each get object request sent to the service, except for the
-     * bucket and key which will be resolved internally.
+     * @param array $getObjectRequestArgs
      * @param array $config The config options for this download directory operation.
      *  - s3_prefix: (string, optional) This parameter will be considered just if
      *    not provided as part of the list_object_v2_args config option.
@@ -90,6 +60,32 @@ class DownloadDirectoryRequest extends TransferRequest
      * @param TransferListener|null $progressTracker Ideally the progress
      * tracker implementation provided here should be able to track multiple
      * transfers at once. Please see MultiProgressTracker implementation.
+     */
+    public function __construct(
+        string $sourceBucket,
+        string $destinationDirectory,
+        array $getObjectRequestArgs,
+        array $config,
+        array $listeners = [],
+        ?TransferListener $progressTracker = null
+    ) {
+        parent::__construct($listeners, $progressTracker, $config);
+        if (ArnParser::isArn($sourceBucket)) {
+            $sourceBucket = ArnParser::parse($sourceBucket)->getResource();
+        }
+
+        $this->sourceBucket = $sourceBucket;
+        $this->destinationDirectory = $destinationDirectory;
+        $this->getObjectRequestArgs = $getObjectRequestArgs;
+    }
+
+    /**
+     * @param string $sourceBucket
+     * @param string $destinationDirectory
+     * @param array $downloadDirectoryArgs
+     * @param array $config
+     * @param array $listeners
+     * @param TransferListener|null $progressTracker
      *
      * @return DownloadDirectoryRequest
      */
@@ -104,8 +100,8 @@ class DownloadDirectoryRequest extends TransferRequest
         return new self(
             $sourceBucket,
             $destinationDirectory,
-            GetObjectRequest::fromArray($downloadDirectoryArgs),
-            DownloadDirectoryRequestConfig::fromArray($config),
+            $downloadDirectoryArgs,
+            $config,
             $listeners,
             $progressTracker
         );
@@ -128,19 +124,11 @@ class DownloadDirectoryRequest extends TransferRequest
     }
 
     /**
-     * @return GetObjectRequest
+     * @return array
      */
-    public function getGetObjectRequest(): GetObjectRequest
+    public function getGetObjectRequestArgs(): array
     {
-        return $this->getObjectRequest;
-    }
-
-    /**
-     * @return DownloadDirectoryRequestConfig
-     */
-    public function getConfig(): DownloadDirectoryRequestConfig
-    {
-        return $this->config;
+        return $this->getObjectRequestArgs;
     }
 
     /**

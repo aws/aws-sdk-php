@@ -6,6 +6,9 @@ use Aws\S3\S3Transfer\Progress\TransferListener;
 
 abstract class TransferRequest
 {
+    public static array $configKeys = [
+        'track_progress'
+    ];
 
     /** @var array  */
     protected array $listeners;
@@ -13,16 +16,22 @@ abstract class TransferRequest
     /** @var TransferListener|null  */
     protected ?TransferListener $progressTracker;
 
+    /** @var array */
+    protected array $config;
+
     /**
      * @param array $listeners
      * @param TransferListener|null $progressTracker
+     * @param array $config
      */
     public function __construct(
         array $listeners,
-        ?TransferListener $progressTracker
+        ?TransferListener $progressTracker,
+        array $config
     ) {
         $this->listeners = $listeners;
         $this->progressTracker = $progressTracker;
+        $this->config = $config;
     }
 
     /**
@@ -43,5 +52,25 @@ abstract class TransferRequest
     public function getProgressTracker(): ?TransferListener
     {
         return $this->progressTracker;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig(): array {
+        return $this->config;
+    }
+
+    /**
+     * @param array $defaultConfig
+     *
+     * @return void
+     */
+    public function updateConfigWithDefaults(array $defaultConfig): void {
+        foreach (static::$configKeys as $key) {
+            if (empty($this->config[$key])) {
+                $this->config[$key] = $defaultConfig[$key];
+            }
+        }
     }
 }

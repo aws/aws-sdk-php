@@ -14,36 +14,33 @@ class UploadDirectoryRequest extends TransferRequest
     /** @var string */
     private string $targetBucket;
 
-    /** @var PutObjectRequest */
-    private PutObjectRequest $putObjectRequest;
-
-    /** @var UploadDirectoryRequestConfig  */
-    private UploadDirectoryRequestConfig $config;
+    /** @var array */
+    private readonly array $putObjectRequestArgs;
 
     /**
      * @param string $sourceDirectory
      * @param string $targetBucket
-     * @param PutObjectRequest $putObjectRequest
-     * @param UploadDirectoryRequestConfig $config
+     * @param array $putObjectRequestArgs
+     * @param array $config
      * @param array $listeners
      * @param TransferListener|null $progressTracker
      */
     public function __construct(
         string $sourceDirectory,
         string $targetBucket,
-        PutObjectRequest $putObjectRequest,
-        UploadDirectoryRequestConfig $config,
-        array $listeners,
-        ?TransferListener $progressTracker
+        array $putObjectRequestArgs,
+        array $config = [],
+        array $listeners = [],
+        ?TransferListener $progressTracker = null
 
     ) {
-        parent::__construct($listeners, $progressTracker);
+        parent::__construct($listeners, $progressTracker, $config);
         $this->sourceDirectory = $sourceDirectory;
         if (ArnParser::isArn($targetBucket)) {
             $targetBucket =  ArnParser::parse($targetBucket)->getResource();
         }
         $this->targetBucket = $targetBucket;
-        $this->putObjectRequest = $putObjectRequest;
+        $this->putObjectRequestArgs = $putObjectRequestArgs;
         $this->config = $config;
     }
 
@@ -68,8 +65,8 @@ class UploadDirectoryRequest extends TransferRequest
         return new self(
             $sourceDirectory,
             $targetBucket,
-            PutObjectRequest::fromArray($uploadDirectoryRequestArgs),
-            UploadDirectoryRequestConfig::fromArray($config),
+            $uploadDirectoryRequestArgs,
+            $config,
             $listeners,
             $progressTracker
         );
@@ -92,19 +89,11 @@ class UploadDirectoryRequest extends TransferRequest
     }
 
     /**
-     * @return PutObjectRequest
+     * @return array
      */
-    public function getPutObjectRequest(): PutObjectRequest
+    public function getPutObjectRequestArgs(): array
     {
-        return $this->putObjectRequest;
-    }
-
-    /**
-     * @return UploadDirectoryRequestConfig
-     */
-    public function getConfig(): UploadDirectoryRequestConfig
-    {
-        return $this->config;
+        return $this->putObjectRequestArgs;
     }
 
     /**

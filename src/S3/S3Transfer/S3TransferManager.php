@@ -2,31 +2,24 @@
 
 namespace Aws\S3\S3Transfer;
 
-use Aws\Arn\ArnParser;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResponse;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
-use Aws\S3\S3Transfer\Models\DownloadHandler;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
-use Aws\S3\S3Transfer\Models\DownloadResponse;
-use Aws\S3\S3Transfer\Models\GetObjectRequest;
-use Aws\S3\S3Transfer\Models\MultipartDownloaderConfig;
-use Aws\S3\S3Transfer\Models\MultipartUploaderConfig;
-use Aws\S3\S3Transfer\Models\PutObjectRequest;
-use Aws\S3\S3Transfer\Models\PutObjectResponse;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResponse;
 use Aws\S3\S3Transfer\Models\UploadRequest;
-use Aws\S3\S3Transfer\Models\UploadResponse;
+use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\Progress\MultiProgressTracker;
 use Aws\S3\S3Transfer\Progress\SingleProgressTracker;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
+use Aws\S3\S3Transfer\Utils\DownloadHandler;
 use FilesystemIterator;
 use GuzzleHttp\Promise\Each;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -49,13 +42,18 @@ class S3TransferManager
      * @param S3ClientInterface | null $s3Client If provided as null then,
      * a default client will be created where its region will be the one
      * resolved from either the default from the config or the provided.
-     * @param S3TransferManagerConfig|null $config
+     * @param array|S3TransferManagerConfig|null $config
      */
     public function __construct(
         ?S3ClientInterface $s3Client = null,
-        ?S3TransferManagerConfig $config = null
+        array|S3TransferManagerConfig|null $config = null
     ) {
-        $this->config = $config ?? S3TransferManagerConfig::fromArray([]);
+        if ($config === null || is_array($config)) {
+            $this->config = S3TransferManagerConfig::fromArray($config ?? []);
+        } else {
+            $this->config = $config;
+        }
+
         if ($s3Client === null) {
             $this->s3Client = $this->defaultS3Client();
         } else {
@@ -92,12 +90,16 @@ class S3TransferManager
         // Valid required parameters
         $uploadRequest->validateRequiredParameters();
 
+        $uploadRequest->updateConfigWithDefaults(
+            $this->config->toArray()
+        );
+
         $config = $uploadRequest->getConfig();
 
         // Validate progress tracker
         $progressTracker = $uploadRequest->getProgressTracker();
         if ($progressTracker === null
-            && ($config->getTrackProgress()
+            && ($config['track_progress']
                 ?? $this->config->isTrackProgress())) {
             $progressTracker = new SingleProgressTracker();
         }
@@ -111,7 +113,7 @@ class S3TransferManager
         $listenerNotifier = new TransferListenerNotifier($listeners);
 
         // Validate multipart upload threshold
-        $mupThreshold = $config->getMultipartUploadThresholdBytes()
+        $mupThreshold = $config['multipart_upload_threshold_bytes']
             ?? $this->config->getMultipartUploadThresholdBytes();
         if ($mupThreshold < AbstractMultipartUploader::PART_MIN_SIZE) {
             throw new InvalidArgumentException(
@@ -129,7 +131,7 @@ class S3TransferManager
 
         return $this->trySingleUpload(
             $uploadRequest->getSource(),
-            $uploadRequest->getPutObjectRequest()->toSingleObjectRequest(),
+            $uploadRequest->getPutObjectRequestArgs(),
             $listenerNotifier
         );
     }
@@ -145,26 +147,49 @@ class S3TransferManager
     {
         $uploadDirectoryRequest->validateSourceDirectory();
         $targetBucket = $uploadDirectoryRequest->getTargetBucket();
+
+        $uploadDirectoryRequest->updateConfigWithDefaults(
+            $this->config->toArray()
+        );
+
         $config = $uploadDirectoryRequest->getConfig();
         $progressTracker = $uploadDirectoryRequest->getProgressTracker();
         if ($progressTracker === null
-            && ($config->getTrackProgress() ?? $this->config->isTrackProgress())) {
+            && ($config['track_progress'] ?? $this->config->isTrackProgress())) {
             $progressTracker = new MultiProgressTracker();
         }
 
         $filter = null;
-        if ($config->getFilter() !== null) {
-            $filter = $config->getFilter();
+        if (isset($config['filter'])) {
+            if (!is_callable($config['filter'])) {
+                throw new InvalidArgumentException(
+                    "The provided config `filter` must be callable."
+                );
+            }
+
+            $filter = $config['filter'];
         }
 
         $putObjectRequestCallback = null;
-        if ($config->getPutObjectRequestCallback() !== null) {
-            $putObjectRequestCallback = $config->getPutObjectRequestCallback();
+        if (isset($config['put_object_request_callback'])) {
+            if (!is_callable($config['put_object_request_callback'])) {
+                throw new InvalidArgumentException(
+                    "The provided config `put_object_request_callback` must be callable."
+                );
+            }
+
+            $putObjectRequestCallback = $config['put_object_request_callback'];
         }
 
         $failurePolicyCallback = null;
-        if ($config->getFailurePolicy() !== null) {
-            $failurePolicyCallback = $config->getFailurePolicy();
+        if (isset($config['failure_policy'])) {
+            if (!is_callable($config['failure_policy'])) {
+                throw new InvalidArgumentException(
+                    "The provided config `failure_policy` must be callable."
+                );
+            }
+
+            $failurePolicyCallback = $config['failure_policy'];
         }
 
         $sourceDirectory = $uploadDirectoryRequest->getSourceDirectory();
@@ -172,11 +197,11 @@ class S3TransferManager
             $sourceDirectory
         );
         $dirIterator->setFlags(FilesystemIterator::SKIP_DOTS);
-        if ($config->isFollowSymbolicLinks()) {
+        if ($config['follow_symbolic_links'] ?? false) {
             $dirIterator->setFlags(FilesystemIterator::FOLLOW_SYMLINKS);
         }
 
-        if ($config->isRecursive()) {
+        if ($config['recursive'] ?? false) {
             $dirIterator = new RecursiveIteratorIterator($dirIterator);
         }
 
@@ -191,12 +216,12 @@ class S3TransferManager
             }
         );
 
-        $prefix = $config->getS3Prefix() ?? '';
+        $prefix = $config['s3_prefix'] ?? '';
         if ($prefix !== '' && !str_ends_with($prefix, '/')) {
             $prefix .= '/';
         }
 
-        $delimiter = $config->getS3Delimiter();
+        $delimiter = $config['s3_delimiter'] ?? '/';
         $promises = [];
         $objectsUploaded = 0;
         $objectsFailed = 0;
@@ -214,11 +239,10 @@ class S3TransferManager
                 $delimiter,
                 $objectKey
             );
-            $putObjectRequestArgs = [
-                ...$uploadDirectoryRequest->getPutObjectRequest()->toArray(),
-                'Bucket' => $targetBucket,
-                'Key' => $objectKey
-            ];
+            $putObjectRequestArgs = $uploadDirectoryRequest->getPutObjectRequestArgs();
+            $putObjectRequestArgs['Bucket'] = $targetBucket;
+            $putObjectRequestArgs['Key'] = $objectKey;
+
             if ($putObjectRequestCallback !== null) {
                 $putObjectRequestCallback($putObjectRequestArgs);
             }
@@ -227,14 +251,14 @@ class S3TransferManager
                 UploadRequest::fromLegacyArgs(
                     $file,
                     $putObjectRequestArgs,
-                    $config->toArray(),
+                    $config,
                     array_map(
                         function ($listener) { return clone $listener; },
                         $uploadDirectoryRequest->getListeners()
                     ),
                     $progressTracker
                 )
-            )->then(function (UploadResponse $response) use (&$objectsUploaded) {
+            )->then(function (UploadResult $response) use (&$objectsUploaded) {
                 $objectsUploaded++;
 
                 return $response;
@@ -269,8 +293,8 @@ class S3TransferManager
             });
         }
 
-        return Each::ofLimitAll($promises, $this->config['concurrency'])
-            ->then(function ($_) use ($objectsUploaded, $objectsFailed) {
+        return Each::ofLimitAll($promises, $this->config->getConcurrency())
+            ->then(function ($_) use (&$objectsUploaded, &$objectsFailed) {
                 return new UploadDirectoryResponse($objectsUploaded, $objectsFailed);
             });
     }
@@ -283,29 +307,14 @@ class S3TransferManager
     public function download(DownloadRequest $downloadRequest): PromiseInterface
     {
         $sourceArgs = $downloadRequest->normalizeSourceAsArray();
-        $getObjectRequest = $downloadRequest->getGetObjectRequest();
-        $config = [
-            'response_checksum_validation_enabled' => false
-        ];
-        if (empty($getObjectRequest->getChecksumMode())) {
-            $requestChecksumValidation =
-                $downloadRequest->getConfig()->getRequestChecksumValidation()
-                ?? $this->config->getRequestChecksumCalculation();
+        $getObjectRequestArgs = $downloadRequest->getObjectRequestArgs();
 
-            if ($requestChecksumValidation === 'when_supported') {
-                $config['response_checksum_validation_enabled'] = true;
-            }
-        } else {
-            $config['response_checksum_validation_enabled'] = true;
-        }
+        $downloadRequest->updateConfigWithDefaults($this->config->toArray());
 
-        $config['multipart_download_type'] = $downloadRequest->getConfig()
-            ->getMultipartDownloadType() ?? $this->config->getMultipartDownloadType();
+        $config = $downloadRequest->getConfig();
 
         $progressTracker = $downloadRequest->getProgressTracker();
-        if ($progressTracker === null
-            && ($downloadRequest->getConfig()->getTrackProgress()
-                ?? $this->getConfig()->isTrackProgress())) {
+        if ($progressTracker === null && $config['track_progress']) {
             $progressTracker = new SingleProgressTracker();
         }
 
@@ -318,14 +327,13 @@ class S3TransferManager
         $listenerNotifier = new TransferListenerNotifier($listeners);
 
         // Assign source
-        $getObjectRequestArray = $getObjectRequest->toArray();
         foreach ($sourceArgs as $key => $value) {
-            $getObjectRequestArray[$key] = $value;
+            $getObjectRequestArgs[$key] = $value;
         }
 
         return $this->tryMultipartDownload(
-            GetObjectRequest::fromArray($getObjectRequestArray),
-            MultipartDownloaderConfig::fromArray($config),
+            $getObjectRequestArgs,
+            $config,
             $downloadRequest->getDownloadHandler(),
             $listenerNotifier,
         );
@@ -356,33 +364,43 @@ class S3TransferManager
         $destinationDirectory = $downloadDirectoryRequest->getDestinationDirectory();
         $sourceBucket = $downloadDirectoryRequest->getSourceBucket();
         $progressTracker = $downloadDirectoryRequest->getProgressTracker();
+
+        $downloadDirectoryRequest->updateConfigWithDefaults(
+            $this->config->toArray()
+        );
         $config = $downloadDirectoryRequest->getConfig();
-        if ($progressTracker === null
-            && ($config->getTrackProgress() ?? $this->config->isTrackProgress())) {
+        if ($progressTracker === null && $config['track_progress']) {
             $progressTracker = new MultiProgressTracker();
         }
 
         $listArgs = [
             'Bucket' => $sourceBucket,
-        ]  + ($config->getListObjectV2Args());
-        $s3Prefix = $config->getEffectivePrefix();
-        if ($s3Prefix !== null) {
+        ]  + ($config['list_object_v2_args'] ?? []);
+        $s3Prefix = $config['s3_prefix'] ?? null;
+        if (empty($listArgs['Prefix']) && $s3Prefix !== null) {
             $listArgs['Prefix'] = $s3Prefix;
         }
 
-        $listArgs['Delimiter'] = $listArgs['Delimiter'] ?? null;
+        $listArgs['Delimiter'] = $listArgs['Delimiter']
+            ?? $config['s3_delimiter'] ?? null;
 
         $objects = $this->s3Client
             ->getPaginator('ListObjectsV2', $listArgs)
             ->search('Contents[].Key');
 
-        $filter = $config->getFilter();
-        if ($filter !== null) {
+        if (isset($config['filter'])) {
+            if (!is_callable($config['filter'])) {
+                throw new InvalidArgumentException(
+                    "The provided config `filter` must be callable."
+                );
+            }
+
+            $filter = $config['filter'];
             $objects = filter($objects, function (string $key) use ($filter) {
                 return call_user_func($filter, $key) && !str_ends_with($key, "/");
             });
         } else {
-            $objects = filter($objects, function (string $key) use ($filter) {
+            $objects = filter($objects, function (string $key) {
                 return !str_ends_with($key, "/");
             });
         }
@@ -390,14 +408,27 @@ class S3TransferManager
         $objects = map($objects, function (string $key) use ($sourceBucket) {
             return  self::formatAsS3URI($sourceBucket, $key);
         });
+
         $getObjectRequestCallback = null;
-        if ($config->getGetObjectRequestCallback() !== null) {
-            $getObjectRequestCallback = $config->getGetObjectRequestCallback();
+        if (isset($config['get_object_request_callback'])) {
+            if (!is_callable($config['get_object_request_callback'])) {
+                throw new InvalidArgumentException(
+                    "The provided config `get_object_request_callback` must be callable."
+                );
+            }
+
+            $getObjectRequestCallback = $config['get_object_request_callback'];
         }
 
         $failurePolicyCallback = null;
-        if ($config->getFailurePolicy() !== null) {
-            $failurePolicyCallback = $config->getFailurePolicy();
+        if (isset($config['failure_policy'])) {
+            if (!is_callable($config['failure_policy'])) {
+                throw new InvalidArgumentException(
+                    "The provided config `failure_policy` must be callable."
+                );
+            }
+            
+            $failurePolicyCallback = $config['failure_policy'];
         }
 
         $promises = [];
@@ -415,7 +446,7 @@ class S3TransferManager
                 );
             }
 
-            $requestArgs = $downloadDirectoryRequest->getGetObjectRequest()->toArray();
+            $requestArgs = $downloadDirectoryRequest->getGetObjectRequestArgs();
             foreach ($bucketAndKeyArray as $key => $value) {
                 $requestArgs[$key] = $value;
             }
@@ -426,12 +457,12 @@ class S3TransferManager
             $promises[] = $this->downloadFile(
                 new DownloadFileRequest(
                     $destinationFile,
-                    $config->isFailsWhenDestinationExists(),
-                    DownloadRequest::fromLegacyArgs(
+                    $config['fails_when_destination_exists'] ?? false,
+                    new DownloadRequest(
                         null,
                         $requestArgs,
                         [
-                            'target_part_size_bytes' => $config->getTargetPartSizeBytes() ?? 0,
+                            'target_part_size_bytes' => $config['target_part_size_bytes'] ?? 0,
                         ],
                         null,
                         array_map(
@@ -488,26 +519,26 @@ class S3TransferManager
     /**
      * Tries an object multipart download.
      *
-     * @param GetObjectRequest $getObjectRequest
-     * @param MultipartDownloaderConfig $config
+     * @param array $getObjectRequestArgs
+     * @param array $config
      * @param DownloadHandler $downloadHandler
      * @param TransferListenerNotifier|null $listenerNotifier
      *
      * @return PromiseInterface
      */
     private function tryMultipartDownload(
-        GetObjectRequest $getObjectRequest,
-        MultipartDownloaderConfig $config,
+        array $getObjectRequestArgs,
+        array $config,
         DownloadHandler $downloadHandler,
         ?TransferListenerNotifier $listenerNotifier = null,
     ): PromiseInterface
     {
         $downloaderClassName = MultipartDownloader::chooseDownloaderClass(
-            $config->getMultipartDownloadType()
+            $config['multipart_download_type']
         );
         $multipartDownloader = new $downloaderClassName(
             $this->s3Client,
-            $getObjectRequest,
+            $getObjectRequestArgs,
             $config,
             $downloadHandler,
             listenerNotifier: $listenerNotifier,
@@ -524,7 +555,7 @@ class S3TransferManager
      * @return PromiseInterface
      */
     private function trySingleUpload(
-        string | StreamInterface $source,
+        string|StreamInterface $source,
         array $requestArgs,
         ?TransferListenerNotifier $listenerNotifier  = null
     ): PromiseInterface {
@@ -578,10 +609,8 @@ class S3TransferManager
                         ]
                     );
 
-                    return new UploadResponse(
-                        PutObjectResponse::fromArray(
-                            $result->toArray()
-                        )->toSingleUploadResponse()
+                    return new UploadResult(
+                        $result->toArray()
                     );
                 }
             )->otherwise(function ($reason) use ($objectSize, $requestArgs, $listenerNotifier) {
@@ -605,7 +634,7 @@ class S3TransferManager
 
         return $this->s3Client->executeAsync($command)
             ->then(function ($result) {
-                return new UploadResponse($result->toArray());
+                return new UploadResult($result->toArray());
             });
     }
 
@@ -621,10 +650,8 @@ class S3TransferManager
     ): PromiseInterface {
         return (new MultipartUploader(
             $this->s3Client,
-            $uploadRequest->getPutObjectRequest(),
-            MultipartUploaderConfig::fromArray(
-                $uploadRequest->getConfig()->toArray()
-            ),
+            $uploadRequest->getPutObjectRequestArgs(),
+            $uploadRequest->getConfig(),
             $uploadRequest->getSource(),
             listenerNotifier: $listenerNotifier,
         ))->promise();
@@ -665,7 +692,7 @@ class S3TransferManager
     private function defaultS3Client(): S3ClientInterface
     {
         return new S3Client([
-            'region' => $this->config['region'],
+            'region' => $this->config->getDefaultRegion(),
         ]);
     }
 

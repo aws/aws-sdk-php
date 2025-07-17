@@ -8,38 +8,23 @@ use Psr\Http\Message\StreamInterface;
 
 class UploadRequest extends TransferRequest
 {
+    public static array $configKeys = [
+        'multipart_upload_threshold_bytes',
+        'target_part_size_bytes',
+        'track_progress',
+        'concurrency',
+        'request_checksum_calculation'
+    ];
+
     /** @var StreamInterface|string  */
     private StreamInterface | string $source;
 
-    /** @var PutObjectRequest  */
-    private PutObjectRequest $putObjectRequest;
-
-    /** @var UploadRequestConfig */
-    private UploadRequestConfig $config;
-
-    /**
-     * @param StreamInterface|string $source
-     * @param PutObjectRequest $putObjectRequest
-     * @param UploadRequestConfig $config
-     * @param array $listeners
-     * @param TransferListener|null $progressTracker
-     */
-    public function __construct(
-        StreamInterface|string $source,
-        PutObjectRequest $putObjectRequest,
-        UploadRequestConfig $config,
-        array $listeners = [],
-        ?TransferListener $progressTracker  = null
-    ) {
-        parent::__construct($listeners, $progressTracker);
-        $this->source = $source;
-        $this->putObjectRequest = $putObjectRequest;
-        $this->config = $config;
-    }
+    /** @var array  */
+    private array $putObjectRequestArgs;
 
     /**
      * @param string|StreamInterface $source
-     * @param array $requestArgs The putObject request arguments.
+     * @param array $putObjectRequestArgs The putObject request arguments.
      * Required parameters would be:
      * - Bucket: (string, required)
      * - Key: (string, required)
@@ -53,20 +38,45 @@ class UploadRequest extends TransferRequest
      *   a progressTracker parameter is not provided then, a default implementation
      *   will be resolved. This option is intended to make the operation to use
      *   a default progress tracker implementation when $progressTracker is null.
+     * - concurrency: (int, optional)
+     * - request_checksum_calculation: (string, optional, defaulted to `when_supported`)
      * @param TransferListener[]|null $listeners
+     * @param TransferListener|null $progressTracker
+     *
+     */
+    public function __construct(
+        StreamInterface|string $source,
+        array $putObjectRequestArgs,
+        array $config,
+        array $listeners = [],
+        ?TransferListener $progressTracker  = null
+    ) {
+        parent::__construct($listeners, $progressTracker, $config);
+        $this->source = $source;
+        $this->putObjectRequestArgs = $putObjectRequestArgs;
+    }
+
+    /**
+     * @param string|StreamInterface $source
+     * @param array $putObjectRequestArgs
+     * @param array $config
+     * @param array $listeners
      * @param TransferListener|null $progressTracker
      *
      * @return UploadRequest
      */
-    public static function fromLegacyArgs(string | StreamInterface $source,
-                                          array $requestArgs = [],
-                                          array $config = [],
-                                          array $listeners = [],
-                                          ?TransferListener $progressTracker = null): UploadRequest {
+    public static function fromLegacyArgs(
+        string | StreamInterface $source,
+        array $putObjectRequestArgs = [],
+        array $config = [],
+        array $listeners = [],
+        ?TransferListener $progressTracker = null
+    ): UploadRequest
+    {
         return new UploadRequest(
             $source,
-            PutObjectRequest::fromArray($requestArgs),
-            UploadRequestConfig::fromArray($config),
+            $putObjectRequestArgs,
+            $config,
             $listeners,
             $progressTracker
         );
@@ -85,15 +95,11 @@ class UploadRequest extends TransferRequest
     /**
      * Get the put object request.
      *
-     * @return PutObjectRequest
+     * @return array
      */
-    public function getPutObjectRequest(): PutObjectRequest
+    public function getPutObjectRequestArgs(): array
     {
-        return $this->putObjectRequest;
-    }
-
-    public function getConfig(): UploadRequestConfig {
-        return $this->config;
+        return $this->putObjectRequestArgs;
     }
 
     /**
@@ -121,8 +127,8 @@ class UploadRequest extends TransferRequest
     ): void
     {
         $requiredParametersWithArgs = [
-            'Bucket' => $this->getPutObjectRequest()->getBucket(),
-            'Key' => $this->getPutObjectRequest()->getKey()
+            'Bucket' => $this->putObjectRequestArgs['Bucket'] ?? null,
+            'Key' => $this->putObjectRequestArgs['Key'] ?? null,
         ];
         foreach ($requiredParametersWithArgs as $key => $value) {
             if (empty($value)) {

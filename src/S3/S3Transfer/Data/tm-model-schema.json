@@ -1,0 +1,304 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aws.amazon.com/schemas/s3-transfer-manager/tm-model.json",
+  "title": "S3 Transfer Manager Model Configuration",
+  "description": "Configuration schema for S3 Transfer Manager field mappings and conversions between request/response types",
+  "type": "object",
+  "required": ["Definition", "Conversion"],
+  "properties": {
+    "Definition": {
+      "type": "object",
+      "description": "Defines the base field mappings for S3 Transfer Manager operations",
+      "required": ["UploadRequest", "UploadResponse", "DownloadRequest", "DownloadResponse"],
+      "properties": {
+        "UploadRequest": {
+          "type": "object",
+          "description": "Field mappings for upload request operations",
+          "required": ["PutObjectRequest"],
+          "properties": {
+            "PutObjectRequest": {
+              "type": "array",
+              "description": "List of fields available in PutObjectRequest that should be added to UploadRequest",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "UploadResponse": {
+          "type": "object",
+          "description": "Field mappings for upload response operations",
+          "required": ["PutObjectResponse"],
+          "properties": {
+            "PutObjectResponse": {
+              "type": "array",
+              "description": "List of fields available in PutObjectResponse that should be added to UploadResponse",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "DownloadRequest": {
+          "type": "object",
+          "description": "Field mappings for download request operations",
+          "required": ["GetObjectRequest"],
+          "properties": {
+            "GetObjectRequest": {
+              "type": "array",
+              "description": "List of fields available in GetObjectRequest that should be added to DownloadRequest",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "DownloadResponse": {
+          "type": "object",
+          "description": "Field mappings for download response operations",
+          "required": ["GetObjectResponse"],
+          "properties": {
+            "GetObjectResponse": {
+              "type": "array",
+              "description": "List of fields available in GetObjectResponse that should be added to DownloadResponse",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "Conversion": {
+      "type": "object",
+      "description": "Defines field conversion mappings between different S3 operation types",
+      "required": ["UploadRequest", "CompleteMultipartResponse", "PutObjectResponse", "GetObjectResponse"],
+      "properties": {
+        "UploadRequest": {
+          "type": "object",
+          "description": "Field conversion mappings for upload request operations",
+          "required": ["PutObjectRequest", "CreateMultipartRequest", "UploadPartReuqest", "CompleteMultipartRequest", "AbortMultipartRequest"],
+          "properties": {
+            "PutObjectRequest": {
+              "type": "array",
+              "description": "Fields to copy when converting UploadRequest to PutObjectRequest",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            },
+            "CreateMultipartRequest": {
+              "type": "array",
+              "description": "Fields to copy when converting UploadRequest to CreateMultipartRequest",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            },
+            "UploadPartReuqest": {
+              "type": "array",
+              "description": "Fields to copy when converting UploadRequest to UploadPartRequest",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            },
+            "CompleteMultipartRequest": {
+              "type": "array",
+              "description": "Fields to convert from UploadRequest to CompleteMultipartRequest",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            },
+            "AbortMultipartRequest": {
+              "type": "array",
+              "description": "Fields to copy when converting UploadRequest to AbortMultipartRequest",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "CompleteMultipartResponse": {
+          "type": "object",
+          "description": "Field conversion mappings for complete multipart response operations",
+          "required": ["UploadResponse"],
+          "properties": {
+            "UploadResponse": {
+              "type": "array",
+              "description": "Fields to copy when converting CompleteMultipartResponse to UploadResponse",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "PutObjectResponse": {
+          "type": "object",
+          "description": "Field conversion mappings for put object response operations",
+          "required": ["UploadResponse"],
+          "properties": {
+            "UploadResponse": {
+              "type": "array",
+              "description": "Fields to copy when converting PutObjectResponse to UploadResponse",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "GetObjectResponse": {
+          "type": "object",
+          "description": "Field conversion mappings for get object response operations",
+          "required": ["DowloadResponse"],
+          "properties": {
+            "DowloadResponse": {
+              "type": "array",
+              "description": "Fields to copy when converting GetObjectResponse to DownloadResponse",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+              },
+              "uniqueItems": true,
+              "minItems": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "S3FieldName": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*$",
+      "description": "Valid S3 API field name following PascalCase convention"
+    },
+    "S3FieldList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/S3FieldName"
+      },
+      "uniqueItems": true,
+      "minItems": 1,
+      "description": "List of unique S3 API field names"
+    }
+  },
+  "examples": [
+    {
+      "Definition": {
+        "UploadRequest": {
+          "PutObjectRequest": [
+            "Bucket",
+            "Key",
+            "ContentType",
+            "Metadata"
+          ]
+        },
+        "UploadResponse": {
+          "PutObjectResponse": [
+            "ETag",
+            "VersionId"
+          ]
+        },
+        "DownloadRequest": {
+          "GetObjectRequest": [
+            "Bucket",
+            "Key",
+            "Range"
+          ]
+        },
+        "DownloadResponse": {
+          "GetObjectResponse": [
+            "ContentLength",
+            "ContentType",
+            "ETag"
+          ]
+        }
+      },
+      "Conversion": {
+        "UploadRequest": {
+          "PutObjectRequest": [
+            "Bucket",
+            "Key"
+          ],
+          "CreateMultipartRequest": [
+            "Bucket",
+            "Key",
+            "ContentType"
+          ],
+          "UploadPartReuqest": [
+            "Bucket",
+            "Key"
+          ],
+          "CompleteMultipartRequest": [
+            "Bucket",
+            "Key"
+          ],
+          "AbortMultipartRequest": [
+            "Bucket",
+            "Key"
+          ]
+        },
+        "CompleteMultipartResponse": {
+          "UploadResponse": [
+            "ETag",
+            "VersionId"
+          ]
+        },
+        "PutObjectResponse": {
+          "UploadResponse": [
+            "ETag",
+            "VersionId"
+          ]
+        },
+        "GetObjectResponse": {
+          "DowloadResponse": [
+            "ContentLength",
+            "ContentType"
+          ]
+        }
+      }
+    }
+  ]
+}

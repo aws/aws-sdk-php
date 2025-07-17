@@ -6,8 +6,9 @@ use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
-use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
+use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
@@ -73,14 +74,15 @@ class RangeGetMultipartDownloaderTest extends TestCase
                 'Key' => $objectKey,
             ],
             [
-                'minimum_part_size' => $targetPartSize,
-            ]
+                'target_part_size_bytes' => $targetPartSize,
+            ],
+            new StreamDownloadHandler()
         );
-        /** @var DownloadResponse $response */
+        /** @var DownloadResult $response */
         $response = $downloader->promise()->wait();
         $snapshot = $downloader->getCurrentSnapshot();
 
-        $this->assertInstanceOf(DownloadResponse::class, $response);
+        $this->assertInstanceOf(DownloadResult::class, $response);
         $this->assertEquals($objectKey, $snapshot->getIdentifier());
         $this->assertEquals($objectSizeInBytes, $snapshot->getTotalBytes());
         $this->assertEquals($objectSizeInBytes, $snapshot->getTransferredBytes());
@@ -124,30 +126,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
     }
 
     /**
-     * Tests constructor throws exception when minimum_part_size is not provided.
-     *
-     * @return void
-     */
-    public function testConstructorThrowsExceptionWithoutMinimumPartSize(): void
-    {
-        $mockClient = $this->getMockBuilder(S3Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->expectException(S3TransferException::class);
-        $this->expectExceptionMessage('You must provide a valid minimum part size in bytes');
-
-        new RangeGetMultipartDownloader(
-            $mockClient,
-            [
-                'Bucket' => 'TestBucket',
-                'Key' => 'TestKey',
-            ],
-            [] // Missing minimum_part_size
-        );
-    }
-
-    /**
      * Tests nextCommand method generates correct range headers.
      *
      * @return void
@@ -171,8 +149,9 @@ class RangeGetMultipartDownloaderTest extends TestCase
                 'Key' => 'TestKey',
             ],
             [
-                'minimum_part_size' => $partSize,
-            ]
+                'target_part_size_bytes' => $partSize,
+            ],
+            new StreamDownloadHandler()
         );
 
         // Use reflection to test the protected nextCommand method
@@ -189,38 +168,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
         $command2 = $nextCommandMethod->invoke($downloader);
         $this->assertEquals('bytes=1024-2047', $command2['Range']);
         $this->assertEquals(2, $downloader->getCurrentPartNo());
-    }
-
-    /**
-     * Tests computeObjectDimensions method with known object size.
-     *
-     * @return void
-     */
-    public function testComputeObjectDimensionsWithKnownSize(): void
-    {
-        $mockClient = $this->getMockBuilder(S3Client::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $objectSize = 5120;
-        $partSize = 1024;
-        $downloader = new RangeGetMultipartDownloader(
-            $mockClient,
-            [
-                'Bucket' => 'TestBucket',
-                'Key' => 'TestKey',
-            ],
-            [
-                'minimum_part_size' => $partSize,
-            ],
-            0, // currentPartNo
-            0, // objectPartsCount
-            $objectSize // objectSizeInBytes - known at construction
-        );
-
-        // With known object size, parts count should be calculated during construction
-        $this->assertEquals(5, $downloader->getObjectPartsCount());
-        $this->assertEquals($objectSize, $downloader->getObjectSizeInBytes());
     }
 
     /**
@@ -243,7 +190,8 @@ class RangeGetMultipartDownloaderTest extends TestCase
             ],
             [
                 'minimum_part_size' => $partSize,
-            ]
+            ],
+            new StreamDownloadHandler(),
         );
 
         // Use reflection to test the protected computeObjectDimensions method
@@ -289,6 +237,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
             [
                 'minimum_part_size' => 1024,
             ],
+            new StreamDownloadHandler(),
             0, // currentPartNo
             0, // objectPartsCount
             0, // objectSizeInBytes

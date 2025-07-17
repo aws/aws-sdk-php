@@ -21,8 +21,8 @@ class RangeGetMultipartDownloader extends MultipartDownloader
             $this->currentPartNo++;
         }
 
-        $nextRequestArgs = $this->getObjectRequest->toArray();
-        $partSize = $this->config->getTargetPartSizeBytes();
+        $nextRequestArgs = $this->getObjectRequestArgs;
+        $partSize = $this->config['target_part_size_bytes'];
         $from = ($this->currentPartNo - 1) * $partSize;
         $to = ($this->currentPartNo * $partSize) - 1;
 
@@ -32,7 +32,7 @@ class RangeGetMultipartDownloader extends MultipartDownloader
 
         $nextRequestArgs['Range'] = "bytes=$from-$to";
 
-        if ($this->config->getResponseChecksumValidationEnabled()) {
+        if ($this->config['response_checksum_validation'] === 'when_supported') {
             $nextRequestArgs['ChecksumMode'] = 'ENABLED';
         }
 
@@ -62,7 +62,7 @@ class RangeGetMultipartDownloader extends MultipartDownloader
             );
         }
 
-        $partSize = $this->config->getTargetPartSizeBytes();
+        $partSize = $this->config['target_part_size_bytes'];
         if ($this->objectSizeInBytes > $partSize) {
             $this->objectPartsCount = intval(
                 ceil($this->objectSizeInBytes / $partSize)

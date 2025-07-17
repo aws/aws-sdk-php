@@ -8,9 +8,15 @@ use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Result;
 use Aws\S3\S3Client;
+use Aws\S3\S3Transfer\AbstractMultipartUploader;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
+use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResponse;
+use Aws\S3\S3Transfer\Models\DownloadRequest;
+use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
+use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResponse;
+use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\MultipartDownloader;
 use Aws\S3\S3Transfer\MultipartUploader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
@@ -34,35 +40,35 @@ class S3TransferManagerTest extends TestCase
         $manager = new S3TransferManager();
         $this->assertArrayHasKey(
             'target_part_size_bytes',
-            $manager->getConfig()
+            $manager->getConfig()->toArray()
         );
         $this->assertArrayHasKey(
             'multipart_upload_threshold_bytes',
-            $manager->getConfig()
+            $manager->getConfig()->toArray()
         );
         $this->assertArrayHasKey(
-            'checksum_validation_enabled',
-            $manager->getConfig()
+            'request_checksum_calculation',
+            $manager->getConfig()->toArray()
         );
         $this->assertArrayHasKey(
-            'checksum_algorithm',
-            $manager->getConfig()
+            'response_checksum_validation',
+            $manager->getConfig()->toArray()
         );
         $this->assertArrayHasKey(
             'multipart_download_type',
-            $manager->getConfig()
+            $manager->getConfig()->toArray()
         );
         $this->assertArrayHasKey(
             'concurrency',
-            $manager->getConfig()
+            $manager->getConfig()->toArray()
         );
         $this->assertArrayHasKey(
             'track_progress',
-            $manager->getConfig()
+            $manager->getConfig()->toArray()
         );
         $this->assertArrayHasKey(
-            'region',
-            $manager->getConfig()
+            'default_region',
+            $manager->getConfig()->toArray()
         );
         $this->assertInstanceOf(
             S3Client::class,
@@ -80,23 +86,24 @@ class S3TransferManagerTest extends TestCase
             [
                 'target_part_size_bytes' => 1024,
                 'multipart_upload_threshold_bytes' => 1024,
-                'checksum_validation_enabled' => false,
+                'request_checksum_calculation' => 'when_required',
+                'response_checksum_validation' => 'when_required',
                 'checksum_algorithm' => 'sha256',
                 'multipart_download_type' => 'partGet',
                 'concurrency' => 20,
                 'track_progress' => true,
-                'region' => 'us-west-1',
+                'default_region' => 'us-west-1',
             ]
         );
-        $config = $manager->getConfig();
+        $config = $manager->getConfig()->toArray();
         $this->assertEquals(1024, $config['target_part_size_bytes']);
         $this->assertEquals(1024, $config['multipart_upload_threshold_bytes']);
-        $this->assertFalse($config['checksum_validation_enabled']);
-        $this->assertEquals('sha256', $config['checksum_algorithm']);
+        $this->assertEquals('when_required', $config['request_checksum_calculation']);
+        $this->assertEquals('when_required', $config['response_checksum_validation']);
         $this->assertEquals('partGet', $config['multipart_download_type']);
         $this->assertEquals(20, $config['concurrency']);
         $this->assertTrue($config['track_progress']);
-        $this->assertEquals('us-west-1', $config['region']);
+        $this->assertEquals('us-west-1', $config['default_region']);
     }
 
     /**
@@ -108,12 +115,17 @@ class S3TransferManagerTest extends TestCase
         $this->expectExceptionMessage("Please provide a valid readable file path or a valid stream as source.");
         $manager = new S3TransferManager();
         $manager->upload(
-            "noreadablefile",
+            UploadRequest::fromLegacyArgs(
+                "noreadablefile"
+            ),
         )->wait();
     }
 
     /**
      * @dataProvider uploadBucketAndKeyProvider
+     *
+     * @param array $bucketKeyArgs
+     * @param string $missingProperty
      *
      * @return void
      */
@@ -126,8 +138,10 @@ class S3TransferManagerTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The `$missingProperty` parameter must be provided as part of the request arguments.");
         $manager->upload(
-            Utils::streamFor(),
-            $bucketKeyArgs
+            uploadRequest::fromLegacyArgs(
+                Utils::streamFor(),
+                $bucketKeyArgs
+            )
         )->wait();
     }
 
@@ -162,14 +176,16 @@ class S3TransferManagerTest extends TestCase
             . "must be greater than or equal to " . MultipartUploader::PART_MIN_SIZE);
         $manager = new S3TransferManager();
         $manager->upload(
-            Utils::streamFor(),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            [
-                'multipart_upload_threshold_bytes' => MultipartUploader::PART_MIN_SIZE - 1
-            ]
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(),
+                [
+                    'Bucket' => 'Bucket',
+                    'Key' => 'Key',
+                ],
+                [
+                    'multipart_upload_threshold_bytes' => MultipartUploader::PART_MIN_SIZE - 1
+                ]
+            )
         )->wait();
     }
 
@@ -191,20 +207,22 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
-            Utils::streamFor(
-                str_repeat("#", MultipartUploader::PART_MIN_SIZE * $expectedPartCount)
-            ),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            [
-                'part_size' => MultipartUploader::PART_MIN_SIZE,
-                'multipart_upload_threshold_bytes' => MultipartUploader::PART_MIN_SIZE,
-            ],
-            [
-                $transferListener,
-            ]
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(
+                    str_repeat("#", MultipartUploader::PART_MIN_SIZE * $expectedPartCount)
+                ),
+                [
+                    'Bucket' => 'Bucket',
+                    'Key' => 'Key',
+                ],
+                [
+                    'target_part_size_bytes' =>  MultipartUploader::PART_MIN_SIZE,
+                    'multipart_upload_threshold_bytes' => MultipartUploader::PART_MIN_SIZE,
+                ],
+                [
+                    $transferListener,
+                ]
+            )
         )->wait();
     }
 
@@ -221,19 +239,21 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->once())
             ->method('bytesTransferred');
         $manager->upload(
-            Utils::streamFor(
-                str_repeat("#", MultipartUploader::PART_MIN_SIZE - 1)
-            ),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            [
-                'multipart_upload_threshold_bytes' => MultipartUploader::PART_MIN_SIZE,
-            ],
-            [
-                $transferListener,
-            ]
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(
+                    str_repeat("#", MultipartUploader::PART_MIN_SIZE - 1)
+                ),
+                [
+                    'Bucket' => 'Bucket',
+                    'Key' => 'Key',
+                ],
+                [
+                    'multipart_upload_threshold_bytes' => MultipartUploader::PART_MIN_SIZE,
+                ],
+                [
+                    $transferListener,
+                ]
+            )
         )->wait();
     }
 
@@ -251,21 +271,23 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
-            Utils::streamFor(
-                str_repeat("#", $manager->getConfig()['multipart_upload_threshold_bytes'])
-            ),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            [
-                'part_size' => intval(
-                    $manager->getConfig()['multipart_upload_threshold_bytes'] / $expectedPartCount
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(
+                    str_repeat("#", $manager->getConfig()->toArray()['multipart_upload_threshold_bytes'])
                 ),
-            ],
-            [
-                $transferListener,
-            ]
+                [
+                    'Bucket' => 'Bucket',
+                    'Key' => 'Key',
+                ],
+                [
+                    'target_part_size_bytes' =>  intval(
+                        $manager->getConfig()->toArray()['multipart_upload_threshold_bytes'] / $expectedPartCount
+                    ),
+                ],
+                [
+                    $transferListener,
+                ]
+            )
         )->wait();
     }
 
@@ -303,20 +325,22 @@ class S3TransferManagerTest extends TestCase
                 $expectedIncrementalPartSize += $expectedPartSize;
             });
         $manager->upload(
-            Utils::streamFor(
-                str_repeat("#", $expectedPartSize * $expectedPartCount)
-            ),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            [
-                'multipart_upload_threshold_bytes' => $mupThreshold,
-                'part_size' => $expectedPartSize,
-            ],
-            [
-                $transferListener,
-            ]
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(
+                    str_repeat("#", $expectedPartSize * $expectedPartCount)
+                ),
+                [
+                    'Bucket' => 'Bucket',
+                    'Key' => 'Key',
+                ],
+                [
+                    'multipart_upload_threshold_bytes' => $mupThreshold,
+                    'target_part_size_bytes' => $expectedPartSize,
+                ],
+                [
+                    $transferListener,
+                ]
+            )
         )->wait();
         if ($isMultipartUpload) {
             $this->assertGreaterThan(1, $expectedPartCount);
@@ -330,13 +354,13 @@ class S3TransferManagerTest extends TestCase
     {
         return [
             'mup_threshold_multipart_upload' => [
-                'mup_threshold' => 1024 * 1024 * 7,
+                'multipart_upload_threshold_bytes' => 1024 * 1024 * 7,
                 'expected_part_count' => 3,
                 'expected_part_size' => 1024 * 1024 * 7,
                 'is_multipart_upload' => true,
             ],
             'mup_threshold_single_upload' => [
-                'mup_threshold' => 1024 * 1024 * 7,
+                'multipart_upload_threshold_bytes' => 1024 * 1024 * 7,
                 'expected_part_count' => 1,
                 'expected_part_size' => 1024 * 1024 * 5,
                 'is_multipart_upload' => false,
@@ -358,19 +382,21 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
-            Utils::streamFor(
-                str_repeat("#", $manager->getConfig()['target_part_size_bytes'] * $expectedPartCount)
-            ),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            [
-                'multipart_upload_threshold_bytes' => $manager->getConfig()['target_part_size_bytes'],
-            ],
-            [
-                $transferListener,
-            ]
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(
+                    str_repeat("#", $manager->getConfig()->toArray()['target_part_size_bytes'] * $expectedPartCount)
+                ),
+                [
+                    'Bucket' => 'Bucket',
+                    'Key' => 'Key',
+                ],
+                [
+                    'multipart_upload_threshold_bytes' => $manager->getConfig()->toArray()['target_part_size_bytes'],
+                ],
+                [
+                    $transferListener,
+                ]
+            )
         )->wait();
     }
 
@@ -403,20 +429,22 @@ class S3TransferManagerTest extends TestCase
             ->method('bytesTransferred');
 
         $manager->upload(
-            Utils::streamFor(
-                str_repeat("#", $expectedPartSize * $expectedPartCount)
-            ),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            [
-                'part_size' => $expectedPartSize,
-                'multipart_upload_threshold_bytes' => $expectedPartSize,
-            ],
-            [
-                $transferListener,
-            ]
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(
+                    str_repeat("#", $expectedPartSize * $expectedPartCount)
+                ),
+                [
+                    'Bucket' => 'Bucket',
+                    'Key' => 'Key',
+                ],
+                [
+                    'target_part_size_bytes' => $expectedPartSize,
+                    'multipart_upload_threshold_bytes' => $expectedPartSize,
+                ],
+                [
+                    $transferListener,
+                ]
+            )
         )->wait();
     }
 
@@ -427,8 +455,8 @@ class S3TransferManagerTest extends TestCase
     {
         $manager = new S3TransferManager();
         $this->testUploadResolvedChecksum(
-            [], // No checksum provided
-            $manager->getConfig()['checksum_algorithm'] // default checksum algo
+            null, // No checksum provided
+            AbstractMultipartUploader::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM,
         );
     }
 
@@ -444,7 +472,7 @@ class S3TransferManagerTest extends TestCase
     ): void
     {
         $this->testUploadResolvedChecksum(
-            ['checksum_algorithm' => $checksumAlgorithm],
+            $checksumAlgorithm,
             $checksumAlgorithm
         );
     }
@@ -471,13 +499,13 @@ class S3TransferManagerTest extends TestCase
     }
 
     /**
-     * @param array $config
+     * @param string|null $checksumAlgorithm
      * @param string $expectedChecksum
      *
      * @return void
      */
     private function testUploadResolvedChecksum(
-        array $config,
+        ?string $checksumAlgorithm,
         string $expectedChecksum
     ): void {
         $client = $this->getS3ClientMock([
@@ -487,10 +515,14 @@ class S3TransferManagerTest extends TestCase
             ) use (
                 $expectedChecksum
             ) {
-                $this->assertEquals(
-                    strtoupper($expectedChecksum),
-                    strtoupper($args['ChecksumAlgorithm'])
-                );
+                if ($commandName !== 'CompleteMultipartUpload') {
+                    $this->assertEquals(
+                        strtoupper($expectedChecksum),
+                        strtoupper($args['ChecksumAlgorithm'])
+                    );
+                } else {
+                    $this->assertTrue(true);
+                }
 
                 return new Command($commandName, $args);
             },
@@ -498,16 +530,22 @@ class S3TransferManagerTest extends TestCase
                 return Create::promiseFor(new Result([]));
             }
         ]);
+        $putObjectRequestArgs = [
+            'Bucket' => 'Bucket',
+            'Key' => 'Key',
+        ];
+        if ($checksumAlgorithm !== null) {
+            $putObjectRequestArgs['ChecksumAlgorithm'] = $checksumAlgorithm;
+        }
+
         $manager = new S3TransferManager(
             $client,
         );
         $manager->upload(
-            Utils::streamFor(),
-            [
-                'Bucket' => 'Bucket',
-                'Key' => 'Key',
-            ],
-            $config
+            UploadRequest::fromLegacyArgs(
+                Utils::streamFor(),
+                $putObjectRequestArgs,
+            )
         )->wait();
     }
 
@@ -537,8 +575,10 @@ class S3TransferManagerTest extends TestCase
             $this->getS3ClientMock(),
         );
         $manager->uploadDirectory(
-            $directory,
-            "Bucket",
+            UploadDirectoryRequest::fromLegacyArgs(
+                $directory,
+                "Bucket",
+            )
         )->wait();
         // Clean up resources
         if ($isDirectoryValid) {
@@ -556,13 +596,18 @@ class S3TransferManagerTest extends TestCase
             mkdir($validDirectory, 0777, true);
         }
 
+        $invalidDirectory = sys_get_temp_dir() . "/invalid-directory-test";
+        if (is_dir($invalidDirectory)) {
+            rmdir($invalidDirectory);
+        }
+
         return [
             'valid_directory' => [
                 'directory' => $validDirectory,
                 'is_valid_directory' => true,
             ],
             'invalid_directory' => [
-                'directory' => 'invalid-directory',
+                'directory' => $invalidDirectory,
                 'is_valid_directory' => false,
             ]
         ];
@@ -575,7 +620,7 @@ class S3TransferManagerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'The parameter $config[\'filter\'] must be callable'
+            'The provided config `filter` must be callable'
         );
         $directory = sys_get_temp_dir() . "/upload-directory-test";
         if (!is_dir($directory)) {
@@ -591,12 +636,14 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'filter' => 'invalid_filter',
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'filter' => 'invalid_filter',
+                    ]
+                )
             )->wait();
         } finally {
             rmdir($directory);
@@ -644,21 +691,23 @@ class S3TransferManagerTest extends TestCase
             );
             $calledTimes = 0;
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'filter' => function (string $objectKey) {
-                        return str_ends_with($objectKey, "-valid.txt");
-                    },
-                    'put_object_request_callback' => function ($requestArgs) use (&$calledTimes) {
-                        $this->assertStringContainsString(
-                            'valid.txt',
-                            $requestArgs["Key"]
-                        );
-                        $calledTimes++;
-                    }
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'filter' => function (string $objectKey) {
+                            return str_ends_with($objectKey, "-valid.txt");
+                        },
+                        'put_object_request_callback' => function ($requestArgs) use (&$calledTimes) {
+                            $this->assertStringContainsString(
+                                'valid.txt',
+                                $requestArgs["Key"]
+                            );
+                            $calledTimes++;
+                        }
+                    ]
+                )
             )->wait();
             $this->assertEquals($validFilesCount, $calledTimes);
         } finally {
@@ -711,12 +760,14 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'recursive' => true,
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'recursive' => true,
+                    ]
+                )
             )->wait();
             foreach ($objectKeys as $key => $validated) {
                 $this->assertTrue($validated);
@@ -773,12 +824,14 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'recursive' => false,
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'recursive' => false,
+                    ]
+                )
             )->wait();
             $subDirPrefix = str_replace($directory . "/", "", $subDirectory);
             foreach ($objectKeys as $key => $validated) {
@@ -856,13 +909,15 @@ class S3TransferManagerTest extends TestCase
             // First lets make sure that when follows_symbolic_link is false
             // the directory in the link will not be traversed.
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'recursive' => true,
-                    'follow_symbolic_links' => false,
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'recursive' => true,
+                        'follow_symbolic_links' => false,
+                    ]
+                )
             )->wait();
             foreach ($objectKeys as $key => $validated) {
                 if (str_contains($key, "symlink")) {
@@ -875,13 +930,15 @@ class S3TransferManagerTest extends TestCase
             // Now let's enable follow_symbolic_links and all files should have
             // been considered, included the ones in the symlink directory.
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'recursive' => true,
-                    'follow_symbolic_links' => true,
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'recursive' => true,
+                        'follow_symbolic_links' => true,
+                    ]
+                )
             )->wait();
             foreach ($objectKeys as $key => $validated) {
                 $this->assertTrue($validated, "Key {$key} should have been considered");
@@ -938,12 +995,14 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    's3_prefix' => $s3Prefix
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        's3_prefix' => $s3Prefix
+                    ]
+                )
             )->wait();
 
             foreach ($objectKeys as $key => $validated) {
@@ -1001,13 +1060,15 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    's3_prefix' => $s3Prefix,
-                    's3_delimiter' => $s3Delimiter,
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        's3_prefix' => $s3Prefix,
+                        's3_delimiter' => $s3Delimiter,
+                    ]
+                )
             )->wait();
 
             foreach ($objectKeys as $key => $validated) {
@@ -1027,7 +1088,7 @@ class S3TransferManagerTest extends TestCase
     public function testUploadDirectoryFailsOnInvalidPutObjectRequestCallback(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The parameter \$config['put_object_request_callback'] must be callable.");
+        $this->expectExceptionMessage("The provided config `put_object_request_callback` must be callable.");
         $directory = sys_get_temp_dir() . "/upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
@@ -1038,12 +1099,14 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'put_object_request_callback' => false,
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'put_object_request_callback' => false,
+                    ]
+                )
             )->wait();
         } finally {
             rmdir($directory);
@@ -1086,17 +1149,19 @@ class S3TransferManagerTest extends TestCase
             );
             $called = 0;
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'put_object_request_callback' => function (
-                        &$requestArgs
-                    ) use (&$called) {
-                        $requestArgs["FooParameter"] = "Test";
-                        $called++;
-                    },
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'put_object_request_callback' => function (
+                            &$requestArgs
+                        ) use (&$called) {
+                            $requestArgs["FooParameter"] = "Test";
+                            $called++;
+                        },
+                    ]
+                )
             )->wait();
             $this->assertEquals(count($files), $called);
         } finally {
@@ -1145,39 +1210,41 @@ class S3TransferManagerTest extends TestCase
             );
             $called = false;
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'failure_policy' => function (
-                        array $requestArgs,
-                        array $uploadDirectoryRequestArgs,
-                        \Throwable $reason,
-                        UploadDirectoryResponse $uploadDirectoryResponse
-                    ) use ($directory, &$called) {
-                        $called = true;
-                        $this->assertEquals(
-                            $directory,
-                            $uploadDirectoryRequestArgs["source_directory"]
-                        );
-                        $this->assertEquals(
-                            "Bucket",
-                            $uploadDirectoryRequestArgs["bucket_to"]
-                        );
-                        $this->assertEquals(
-                            "Failed uploading second file",
-                            $reason->getMessage()
-                        );
-                        $this->assertEquals(
-                            1,
-                            $uploadDirectoryResponse->getObjectsUploaded()
-                        );
-                        $this->assertEquals(
-                            1,
-                            $uploadDirectoryResponse->getObjectsFailed()
-                        );
-                    },
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'failure_policy' => function (
+                            array $requestArgs,
+                            array $uploadDirectoryRequestArgs,
+                            \Throwable $reason,
+                            UploadDirectoryResponse $uploadDirectoryResponse
+                        ) use ($directory, &$called) {
+                            $called = true;
+                            $this->assertEquals(
+                                $directory,
+                                $uploadDirectoryRequestArgs["source_directory"]
+                            );
+                            $this->assertEquals(
+                                "Bucket",
+                                $uploadDirectoryRequestArgs["bucket_to"]
+                            );
+                            $this->assertEquals(
+                                "Failed uploading second file",
+                                $reason->getMessage()
+                            );
+                            $this->assertEquals(
+                                1,
+                                $uploadDirectoryResponse->getObjectsUploaded()
+                            );
+                            $this->assertEquals(
+                                1,
+                                $uploadDirectoryResponse->getObjectsFailed()
+                            );
+                        },
+                    ]
+                )
             )->wait();
             $this->assertTrue($called);
         } finally {
@@ -1195,7 +1262,7 @@ class S3TransferManagerTest extends TestCase
     public function testUploadDirectoryFailsOnInvalidFailurePolicy(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The parameter \$config['failure_policy'] must be callable.");
+        $this->expectExceptionMessage("The provided config `failure_policy` must be callable.");
         $directory = sys_get_temp_dir() . "/upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
@@ -1206,12 +1273,14 @@ class S3TransferManagerTest extends TestCase
                 $client
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [
-                    'failure_policy' => false,
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [
+                        'failure_policy' => false,
+                    ]
+                )
             )->wait();
         } finally {
             rmdir($directory);
@@ -1249,10 +1318,12 @@ class S3TransferManagerTest extends TestCase
                 $client
             );
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                ['s3_delimiter' => $s3Delimiter]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    ['s3_delimiter' => $s3Delimiter]
+                )
             )->wait();
         } finally {
             foreach ($files as $file) {
@@ -1303,13 +1374,15 @@ class S3TransferManagerTest extends TestCase
                     $objectKeys[$snapshot->getIdentifier()] = true;
                 });
             $manager->uploadDirectory(
-                $directory,
-                "Bucket",
-                [],
-                [],
-                [
-                    $transferListener
-                ]
+                UploadDirectoryRequest::fromLegacyArgs(
+                    $directory,
+                    "Bucket",
+                    [],
+                    [],
+                    [
+                        $transferListener
+                    ]
+                )
             )->wait();
             foreach ($objectKeys as $key => $validated) {
                 $this->assertTrue(
@@ -1339,7 +1412,9 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            $invalidS3Uri
+            DownloadRequest::fromLegacyArgs(
+                $invalidS3Uri
+            )
         );
     }
 
@@ -1363,7 +1438,7 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            $sourceAsArray
+            DownloadRequest::fromLegacyArgs($sourceAsArray)
         );
     }
 
@@ -1377,13 +1452,13 @@ class S3TransferManagerTest extends TestCase
                 'source' => [
                     'Bucket' => 'bucket',
                 ],
-                'expected_exception' => "A valid key must be provided."
+                'expected_exception' => "`Key` is required but not provided"
             ],
             'missing_bucket' => [
                 'source' => [
                     'Key' => 'key',
                 ],
-                'expected_exception' => "A valid bucket must be provided."
+                'expected_exception' => "`Bucket` is required but not provided"
             ]
         ];
     }
@@ -1417,7 +1492,7 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            $sourceAsArray,
+            DownloadRequest::fromLegacyArgs($sourceAsArray)
         )->wait();
         $this->assertTrue($called);
     }
@@ -1451,7 +1526,9 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            $sourceAsS3Uri,
+            DownloadRequest::fromLegacyArgs(
+                $sourceAsS3Uri
+            ),
         )->wait();
         $this->assertTrue($called);
     }
@@ -1483,16 +1560,11 @@ class S3TransferManagerTest extends TestCase
                 $called = true;
                 if ($expectedChecksumMode) {
                     $this->assertEquals(
-                        'enabled',
+                        'ENABLED',
                         $command['ChecksumMode'],
                     );
                 } else {
-                    if (isset($command['ChecksumMode'])) {
-                        $this->assertEquals(
-                            'disabled',
-                            $command['ChecksumMode'],
-                        );
-                    }
+                    $this->assertArrayNotHasKey('ChecksumMode', $command);
                 }
 
                 if ($command->getName() === MultipartDownloader::GET_OBJECT_COMMAND) {
@@ -1510,9 +1582,11 @@ class S3TransferManagerTest extends TestCase
             $transferManagerConfig,
         );
         $manager->download(
-            "s3://bucket/key",
-            $downloadArgs,
-            $downloadConfig
+            DownloadRequest::fromLegacyArgs(
+                "s3://bucket/key",
+                $downloadArgs,
+                $downloadConfig
+            )
         )->wait();
         $this->assertTrue($called);
     }
@@ -1529,13 +1603,11 @@ class S3TransferManagerTest extends TestCase
                 'download_args' => [
                     'PartNumber' => 1
                 ],
-                'expected_checksum_mode' => S3TransferManager::getDefaultConfig()[
-                'checksum_validation_enabled'
-                ],
+                'expected_checksum_mode' => true,
             ],
             'checksum_mode_enabled_by_transfer_manager_config' => [
                 'transfer_manager_config' => [
-                    'checksum_validation_enabled' => true
+                    'response_checksum_validation' => 'when_supported'
                 ],
                 'download_config' => [],
                 'download_args' => [
@@ -1545,7 +1617,7 @@ class S3TransferManagerTest extends TestCase
             ],
             'checksum_mode_disabled_by_transfer_manager_config' => [
                 'transfer_manager_config' => [
-                    'checksum_validation_enabled' => false
+                    'response_checksum_validation' => 'when_required'
                 ],
                 'download_config' => [],
                 'download_args' => [
@@ -1556,7 +1628,7 @@ class S3TransferManagerTest extends TestCase
             'checksum_mode_enabled_by_download_config' => [
                 'transfer_manager_config' => [],
                 'download_config' => [
-                    'checksum_validation_enabled' => true
+                    'response_checksum_validation' => 'when_supported'
                 ],
                 'download_args' => [
                     'PartNumber' => 1
@@ -1566,7 +1638,7 @@ class S3TransferManagerTest extends TestCase
             'checksum_mode_disabled_by_download_config' => [
                 'transfer_manager_config' => [],
                 'download_config' => [
-                    'checksum_validation_enabled' => false
+                    'response_checksum_validation' => 'when_required'
                 ],
                 'download_args' => [
                     'PartNumber' => 1
@@ -1575,77 +1647,15 @@ class S3TransferManagerTest extends TestCase
             ],
             'checksum_mode_download_config_overrides_transfer_manager_config' => [
                 'transfer_manager_config' => [
-                    'checksum_validation_enabled' => false
+                    'response_checksum_validation' => 'when_required'
                 ],
                 'download_config' => [
-                    'checksum_validation_enabled' => true
+                    'response_checksum_validation' => 'when_supported'
                 ],
                 'download_args' => [
                     'PartNumber' => 1
                 ],
                 'expected_checksum_mode' => true,
-            ]
-        ];
-    }
-
-    /**
-     * @param array $downloadArgs
-     *
-     * @dataProvider singleDownloadWhenPartNumberOrRangeArePresentProvider
-     *
-     * @return void
-     */
-    public function testDoesSingleDownloadWhenPartNumberOrRangeArePresent(
-        array $downloadArgs,
-    ): void
-    {
-        $calledOnce = false;
-        $client = $this->getS3ClientMock([
-            'executeAsync' => function (CommandInterface $command) use (&$calledOnce) {
-                if ($command->getName() === MultipartDownloader::GET_OBJECT_COMMAND) {
-                    if ($calledOnce) {
-                        $this->fail(MultipartDownloader::GET_OBJECT_COMMAND . " should have been called once.");
-                    }
-
-                    $calledOnce = true;
-                    return Create::promiseFor(new Result([
-                        'PartsCount' => 2,
-                        'ContentRange' => 10240000,
-                        'Body' => Utils::streamFor(
-                            str_repeat("*", 1024 * 1024 * 20)
-                        ),
-                        '@metadata' => []
-                    ]));
-                } else {
-                    $this->fail("Unexpected command execution `" . $command->getName() . "`.");
-                }
-            }
-        ]);
-        $manager = new S3TransferManager(
-            $client,
-        );
-        $manager->download(
-            "s3://bucket/key",
-            $downloadArgs,
-        )->wait();
-        $this->assertTrue($calledOnce);
-    }
-
-    /**
-     * @return array
-     */
-    public function singleDownloadWhenPartNumberOrRangeArePresentProvider(): array
-    {
-        return [
-            'part_number_present' => [
-                'download_args' => [
-                    'PartNumber' => 1
-                ]
-            ],
-            'range_present' => [
-                'download_args' => [
-                    'Range' => '100-1024'
-                ]
             ]
         ];
     }
@@ -1684,9 +1694,11 @@ class S3TransferManagerTest extends TestCase
             $client,
         );
         $manager->download(
-            "s3://bucket/key",
-            [],
-            ['multipart_download_type' => $multipartDownloadType]
+            DownloadRequest::fromLegacyArgs(
+                "s3://bucket/key",
+                [],
+                ['multipart_download_type' => $multipartDownloadType]
+            )
         )->wait();
         $this->assertTrue($calledOnce);
     }
@@ -1702,7 +1714,7 @@ class S3TransferManagerTest extends TestCase
                 'expected_parameter' => 'PartNumber'
             ],
             'range_get_multipart_download' => [
-                'multipart_download_type' => MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER,
+                'multipart_download_type' => MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER,
                 'expected_parameter' => 'Range'
             ]
         ];
@@ -1711,11 +1723,12 @@ class S3TransferManagerTest extends TestCase
     /**
      * @param int $minimumPartSize
      * @param int $objectSize
-     * @param array $expectedPartsSize
+     * @param array $expectedRangeSizes
+     *
+     * @return void
      *
      * @dataProvider rangeGetMultipartDownloadMinimumPartSizeProvider
      *
-     * @return void
      */
     public function testRangeGetMultipartDownloadMinimumPartSize(
         int $minimumPartSize,
@@ -1741,7 +1754,8 @@ class S3TransferManagerTest extends TestCase
 
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
-                    'ContentRange' => $objectSize,
+                    'ContentRange' => "0-$objectSize/$objectSize",
+                    'ETag' => 'TestEtag',
                     '@metadata' => []
                 ]));
             }
@@ -1750,12 +1764,14 @@ class S3TransferManagerTest extends TestCase
             $client,
         );
         $manager->download(
-            "s3://bucket/key",
-            [],
-            [
-                'multipart_download_type' => MultipartDownloader::RANGE_GET_MULTIPART_DOWNLOADER,
-                'minimum_part_size' => $minimumPartSize,
-            ]
+            DownloadRequest::fromLegacyArgs(
+                "s3://bucket/key",
+                [],
+                [
+                    'multipart_download_type' => MultipartDownloader::RANGED_GET_MULTIPART_DOWNLOADER,
+                    'target_part_size_bytes' => $minimumPartSize,
+                ]
+            )
         )->wait();
         $this->assertEquals(count($expectedRangeSizes), $calledTimes);
     }
@@ -1808,19 +1824,51 @@ class S3TransferManagerTest extends TestCase
     /**
      * @return void
      */
-    public function testDownloadDirectoryValidatesDestinationDirectory(): void
+    public function testDownloadDirectoryCreatesDestinationDirectory(): void
     {
-        $destinationDirectory = "invalid-directory";
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Destination directory `$destinationDirectory` MUST exists.");
-        $client = $this->getS3ClientMock();
-        $manager = new S3TransferManager(
-            $client,
-        );
-        $manager->downloadDirectory(
-            "Bucket",
-            $destinationDirectory
-        );
+        $destinationDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . uniqid();
+        if (is_dir($destinationDirectory)) {
+            rmdir($destinationDirectory);
+        }
+
+        try {
+            $client = $this->getS3ClientMock([
+                'getApi' => function () {
+                    $service = $this->getMockBuilder(Service::class)
+                        ->disableOriginalConstructor()
+                        ->onlyMethods(["getPaginatorConfig"])
+                        ->getMock();
+                    $service->method('getPaginatorConfig')
+                        ->willReturn([
+                            'input_token'  => null,
+                            'output_token' => null,
+                            'limit_key'    => null,
+                            'result_key'   => null,
+                            'more_results' => null,
+                        ]);
+
+                    return $service;
+                },
+                'getHandlerList' => function () {
+                    return new HandlerList();
+                },
+                'executeAsync' => function (CommandInterface $command) {
+                   return Create::promiseFor(new Result([]));
+                }
+            ]);
+            $manager = new S3TransferManager(
+                $client,
+            );
+            $manager->downloadDirectory(
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory
+                )
+            )->wait();
+            $this->assertFileExists($destinationDirectory);
+        } finally {
+            rmdir($destinationDirectory);
+        }
     }
 
     /**
@@ -1884,10 +1932,12 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [],
-                $config
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [],
+                    $config
+                )
             )->wait();
 
             $this->assertTrue($called);
@@ -1990,10 +2040,12 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [],
-                $config
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [],
+                    $config
+                )
             )->wait();
 
             $this->assertTrue($called);
@@ -2041,7 +2093,7 @@ class S3TransferManagerTest extends TestCase
     public function testDownloadDirectoryFailsOnInvalidFilter(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The parameter \$config['filter'] must be callable.");
+        $this->expectExceptionMessage("The provided config `filter` must be callable.");
         $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
@@ -2079,10 +2131,12 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [],
-                ['filter' => false]
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [],
+                    ['filter' => false]
+                )
             )->wait();
             $this->assertTrue($called);
         } finally {
@@ -2096,7 +2150,7 @@ class S3TransferManagerTest extends TestCase
     public function testDownloadDirectoryFailsOnInvalidFailurePolicy(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The parameter \$config['failure_policy'] must be callable.");
+        $this->expectExceptionMessage("The provided config `failure_policy` must be callable.");
         $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
         if (!is_dir($destinationDirectory)) {
             mkdir($destinationDirectory, 0777, true);
@@ -2134,10 +2188,12 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [],
-                ['failure_policy' => false]
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [],
+                    ['failure_policy' => false]
+                )
             )->wait();
             $this->assertTrue($called);
         } finally {
@@ -2188,33 +2244,35 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [],
-                ['failure_policy' => function (
-                    array $requestArgs,
-                    array $uploadDirectoryRequestArgs,
-                    \Throwable $reason,
-                    DownloadDirectoryResponse $downloadDirectoryResponse
-                ) use ($destinationDirectory, &$called) {
-                    $called = true;
-                    $this->assertEquals(
-                        $destinationDirectory,
-                        $uploadDirectoryRequestArgs['destination_directory']
-                    );
-                    $this->assertEquals(
-                        "Failed downloading file",
-                        $reason->getMessage()
-                    );
-                    $this->assertEquals(
-                        1,
-                        $downloadDirectoryResponse->getObjectsDownloaded()
-                    );
-                    $this->assertEquals(
-                        1,
-                        $downloadDirectoryResponse->getObjectsFailed()
-                    );
-                }]
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [],
+                    ['failure_policy' => function (
+                        array $requestArgs,
+                        array $uploadDirectoryRequestArgs,
+                        \Throwable $reason,
+                        DownloadDirectoryResponse $downloadDirectoryResponse
+                    ) use ($destinationDirectory, &$called) {
+                        $called = true;
+                        $this->assertEquals(
+                            $destinationDirectory,
+                            $uploadDirectoryRequestArgs['destination_directory']
+                        );
+                        $this->assertEquals(
+                            "Failed downloading file",
+                            $reason->getMessage()
+                        );
+                        $this->assertEquals(
+                            1,
+                            $downloadDirectoryResponse->getObjectsDownloaded()
+                        );
+                        $this->assertEquals(
+                            1,
+                            $downloadDirectoryResponse->getObjectsFailed()
+                        );
+                    }]
+                )
             )->wait();
             $this->assertTrue($called);
         } finally {
@@ -2292,10 +2350,12 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [],
-                ['filter' => $filter]
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [],
+                    ['filter' => $filter]
+                )
             )->wait();
 
             $this->assertTrue($called);
@@ -2410,7 +2470,7 @@ class S3TransferManagerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            "The parameter \$config['get_object_request_callback'] must be callable."
+            "The provided config `get_object_request_callback` must be callable."
         );
         $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
         if (!is_dir($destinationDirectory)) {
@@ -2454,10 +2514,12 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [],
-                ['get_object_request_callback' => false]
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [],
+                    ['get_object_request_callback' => false]
+                )
             )->wait();
         } finally {
             rmdir($destinationDirectory);
@@ -2525,12 +2587,14 @@ class S3TransferManagerTest extends TestCase
                 );
             };
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
-                [
-                    'CustomParameter' => 'CustomParameterValue'
-                ],
-                ['get_object_request_callback' => $getObjectRequestCallback]
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                    [
+                        'CustomParameter' => 'CustomParameterValue'
+                    ],
+                    ['get_object_request_callback' => $getObjectRequestCallback]
+                )
             )->wait();
             $this->assertTrue($called);
         } finally {
@@ -2615,8 +2679,10 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                "Bucket",
-                $destinationDirectory,
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    "Bucket",
+                    $destinationDirectory,
+                )
             )->wait();
             $this->assertTrue($called);
             foreach ($expectedFileKeys as $key) {
@@ -2749,12 +2815,14 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                $bucket,
-                $fullDirectoryPath,
-                [],
-                [
-                    's3_prefix' => $prefix,
-                ]
+                DownloadDirectoryRequest::fromLegacyArgs(
+                    $bucket,
+                    $fullDirectoryPath,
+                    [],
+                    [
+                        's3_prefix' => $prefix,
+                    ]
+                )
             )->wait();
             $this->assertTrue($called);
         } finally {

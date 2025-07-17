@@ -5,8 +5,9 @@ namespace Aws\Test\S3\S3Transfer;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\S3\S3Transfer\Models\DownloadResponse;
+use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\PartGetMultipartDownloader;
+use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
@@ -73,13 +74,14 @@ class PartGetMultipartDownloaderTest extends TestCase
             ],
             [
                 'minimum_part_size' => $targetPartSize,
-            ]
+            ],
+            new StreamDownloadHandler()
         );
-        /** @var DownloadResponse $response */
+        /** @var DownloadResult $response */
         $response = $downloader->promise()->wait();
         $snapshot = $downloader->getCurrentSnapshot();
 
-        $this->assertInstanceOf(DownloadResponse::class, $response);
+        $this->assertInstanceOf(DownloadResult::class, $response);
         $this->assertEquals($objectKey, $snapshot->getIdentifier());
         $this->assertEquals($objectSizeInBytes, $snapshot->getTotalBytes());
         $this->assertEquals($objectSizeInBytes, $snapshot->getTransferredBytes());
@@ -143,7 +145,9 @@ class PartGetMultipartDownloaderTest extends TestCase
             [
                 'Bucket' => 'TestBucket',
                 'Key' => 'TestKey',
-            ]
+            ],
+            [],
+            new StreamDownloadHandler()
         );
 
         // Use reflection to test the protected nextCommand method
@@ -177,7 +181,9 @@ class PartGetMultipartDownloaderTest extends TestCase
             [
                 'Bucket' => 'TestBucket',
                 'Key' => 'TestKey',
-            ]
+            ],
+            [],
+            new StreamDownloadHandler()
         );
 
         // Use reflection to test the protected computeObjectDimensions method

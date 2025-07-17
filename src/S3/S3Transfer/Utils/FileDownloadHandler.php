@@ -3,7 +3,6 @@
 namespace Aws\S3\S3Transfer\Utils;
 
 use Aws\S3\S3Transfer\Exceptions\FileDownloadException;
-use Aws\S3\S3Transfer\Models\DownloadHandler;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 
 class FileDownloadHandler extends DownloadHandler

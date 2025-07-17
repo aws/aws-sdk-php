@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\S3\S3Transfer\Models;
+namespace Aws\S3\S3Transfer\Utils;
 
 use Aws\S3\S3Transfer\Progress\TransferListener;
 

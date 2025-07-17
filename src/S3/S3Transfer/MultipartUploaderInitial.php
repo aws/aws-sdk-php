@@ -7,7 +7,7 @@ use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
-use Aws\S3\S3Transfer\Models\UploadResponse;
+use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
@@ -147,9 +147,9 @@ class MultipartUploaderInitial implements PromisorInterface
     }
 
     /**
-     * @return UploadResponse
+     * @return UploadResult
      */
-    public function upload(): UploadResponse {
+    public function upload(): UploadResult {
         return $this->promise()->wait();
     }
 
@@ -164,7 +164,7 @@ class MultipartUploaderInitial implements PromisorInterface
                 yield $this->uploadParts();
                 $result = yield $this->completeMultipartUpload();
                 yield Create::promiseFor(
-                    new UploadResponse($result->toArray())
+                    new UploadResult($result->toArray())
                 );
             } catch (Throwable $e) {
                 $this->uploadFailed($e);
