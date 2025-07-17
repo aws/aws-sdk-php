@@ -150,9 +150,8 @@ class MultipartUploader extends AbstractMultipartUploader
                 hash_update($this->hashContext, $read);
             }
 
-            $partBody  = Utils::streamFor(
-                $read
-            );
+            $partBody = Utils::streamFor($read);
+
             $uploadPartCommandArgs['PartNumber'] = $partNo;
             $uploadPartCommandArgs['ContentLength'] = $partBody->getSize();
             // Attach body
