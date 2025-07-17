@@ -253,7 +253,7 @@ class S3TransferManager
                     $putObjectRequestArgs,
                     $config,
                     array_map(
-                        function ($listener) { return clone $listener; },
+                        fn($listener) => clone $listener,
                         $uploadDirectoryRequest->getListeners()
                     ),
                     $progressTracker
@@ -466,7 +466,7 @@ class S3TransferManager
                         ],
                         null,
                         array_map(
-                            function ($listener) { return clone $listener; },
+                            fn($listener) => clone $listener,
                             $downloadDirectoryRequest->getListeners()
                         ),
                         $progressTracker,
