@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.1 - 2025-07-17
 
 * `Aws\CloudFront` - Doc only update for CloudFront that fixes some customer-reported issues
 * `Aws\SFN` - Align input with style guidelines.
