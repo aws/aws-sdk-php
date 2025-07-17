@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-10-17",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"mail-manager",
     "jsonVersion":"1.0",
     "protocol":"json",
@@ -11,8 +12,7 @@
     "signatureVersion":"v4",
     "signingName":"ses",
     "targetPrefix":"MailManagerSvc",
-    "uid":"mailmanager-2023-10-17",
-    "auth":["aws.auth#sigv4"]
+    "uid":"mailmanager-2023-10-17"
   },
   "operations":{
     "CreateAddonInstance":{
@@ -932,10 +932,10 @@
     "AddonInstance":{
       "type":"structure",
       "members":{
-        "AddonInstanceArn":{"shape":"AddonInstanceArn"},
         "AddonInstanceId":{"shape":"AddonInstanceId"},
-        "AddonName":{"shape":"AddonName"},
         "AddonSubscriptionId":{"shape":"AddonSubscriptionId"},
+        "AddonName":{"shape":"AddonName"},
+        "AddonInstanceArn":{"shape":"AddonInstanceArn"},
         "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
@@ -944,7 +944,7 @@
       "type":"string",
       "max":67,
       "min":4,
-      "pattern":"^ai-[a-zA-Z0-9]{1,64}$"
+      "pattern":"ai-[a-zA-Z0-9]{1,64}"
     },
     "AddonInstances":{
       "type":"list",
@@ -954,9 +954,9 @@
     "AddonSubscription":{
       "type":"structure",
       "members":{
+        "AddonSubscriptionId":{"shape":"AddonSubscriptionId"},
         "AddonName":{"shape":"AddonName"},
         "AddonSubscriptionArn":{"shape":"AddonSubscriptionArn"},
-        "AddonSubscriptionId":{"shape":"AddonSubscriptionId"},
         "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
@@ -965,7 +965,7 @@
       "type":"string",
       "max":67,
       "min":4,
-      "pattern":"^as-[a-zA-Z0-9]{1,64}$"
+      "pattern":"as-[a-zA-Z0-9]{1,64}"
     },
     "AddonSubscriptions":{
       "type":"list",
@@ -986,15 +986,15 @@
     "AddressList":{
       "type":"structure",
       "required":[
-        "AddressListArn",
         "AddressListId",
+        "AddressListArn",
         "AddressListName",
         "CreatedTimestamp",
         "LastUpdatedTimestamp"
       ],
       "members":{
-        "AddressListArn":{"shape":"AddressListArn"},
         "AddressListId":{"shape":"AddressListId"},
+        "AddressListArn":{"shape":"AddressListArn"},
         "AddressListName":{"shape":"AddressListName"},
         "CreatedTimestamp":{"shape":"Timestamp"},
         "LastUpdatedTimestamp":{"shape":"Timestamp"}
@@ -1005,13 +1005,13 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "AddressListName":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_.-]+$"
+      "pattern":"[a-zA-Z0-9_.-]+"
     },
     "AddressLists":{
       "type":"list",
@@ -1042,7 +1042,7 @@
     },
     "AnalyzerArn":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9:_/+=,@.#-]+$"
+      "pattern":"[a-zA-Z0-9:_/+=,@.#-]+"
     },
     "Archive":{
       "type":"structure",
@@ -1095,8 +1095,8 @@
     "ArchiveFilterCondition":{
       "type":"structure",
       "members":{
-        "BooleanExpression":{"shape":"ArchiveBooleanExpression"},
-        "StringExpression":{"shape":"ArchiveStringExpression"}
+        "StringExpression":{"shape":"ArchiveStringExpression"},
+        "BooleanExpression":{"shape":"ArchiveBooleanExpression"}
       },
       "union":true
     },
@@ -1117,7 +1117,7 @@
       "type":"string",
       "max":66,
       "min":3,
-      "pattern":"^a-[\\w]{1,64}$"
+      "pattern":"a-[\\w]{1,64}"
     },
     "ArchiveIdString":{
       "type":"string",
@@ -1128,7 +1128,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]$"
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]"
     },
     "ArchiveRetention":{
       "type":"structure",
@@ -1199,11 +1199,11 @@
       "type":"structure",
       "required":["AddonSubscriptionId"],
       "members":{
-        "AddonSubscriptionId":{"shape":"AddonSubscriptionId"},
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
+        "AddonSubscriptionId":{"shape":"AddonSubscriptionId"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1218,11 +1218,11 @@
       "type":"structure",
       "required":["AddonName"],
       "members":{
-        "AddonName":{"shape":"AddonName"},
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
+        "AddonName":{"shape":"AddonName"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1237,17 +1237,17 @@
       "type":"structure",
       "required":[
         "AddressListId",
-        "ImportDataFormat",
-        "Name"
+        "Name",
+        "ImportDataFormat"
       ],
       "members":{
-        "AddressListId":{"shape":"AddressListId"},
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
-        "ImportDataFormat":{"shape":"ImportDataFormat"},
-        "Name":{"shape":"JobName"}
+        "AddressListId":{"shape":"AddressListId"},
+        "Name":{"shape":"JobName"},
+        "ImportDataFormat":{"shape":"ImportDataFormat"}
       }
     },
     "CreateAddressListImportJobResponse":{
@@ -1265,11 +1265,11 @@
       "type":"structure",
       "required":["AddressListName"],
       "members":{
-        "AddressListName":{"shape":"AddressListName"},
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
+        "AddressListName":{"shape":"AddressListName"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1284,13 +1284,13 @@
       "type":"structure",
       "required":["ArchiveName"],
       "members":{
-        "ArchiveName":{"shape":"ArchiveNameString"},
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
-        "KmsKeyArn":{"shape":"KmsKeyArn"},
+        "ArchiveName":{"shape":"ArchiveNameString"},
         "Retention":{"shape":"ArchiveRetention"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1305,22 +1305,22 @@
       "type":"structure",
       "required":[
         "IngressPointName",
+        "Type",
         "RuleSetId",
-        "TrafficPolicyId",
-        "Type"
+        "TrafficPolicyId"
       ],
       "members":{
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
-        "IngressPointConfiguration":{"shape":"IngressPointConfiguration"},
         "IngressPointName":{"shape":"IngressPointName"},
-        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
+        "Type":{"shape":"IngressPointType"},
         "RuleSetId":{"shape":"RuleSetId"},
-        "Tags":{"shape":"TagList"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
-        "Type":{"shape":"IngressPointType"}
+        "IngressPointConfiguration":{"shape":"IngressPointConfiguration"},
+        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateIngressPointResponse":{
@@ -1333,13 +1333,12 @@
     "CreateRelayRequest":{
       "type":"structure",
       "required":[
-        "Authentication",
         "RelayName",
         "ServerName",
-        "ServerPort"
+        "ServerPort",
+        "Authentication"
       ],
       "members":{
-        "Authentication":{"shape":"RelayAuthentication"},
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
@@ -1347,6 +1346,7 @@
         "RelayName":{"shape":"RelayName"},
         "ServerName":{"shape":"RelayServerName"},
         "ServerPort":{"shape":"RelayServerPort"},
+        "Authentication":{"shape":"RelayAuthentication"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1383,20 +1383,20 @@
     "CreateTrafficPolicyRequest":{
       "type":"structure",
       "required":[
-        "DefaultAction",
+        "TrafficPolicyName",
         "PolicyStatements",
-        "TrafficPolicyName"
+        "DefaultAction"
       ],
       "members":{
         "ClientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
+        "TrafficPolicyName":{"shape":"TrafficPolicyName"},
+        "PolicyStatements":{"shape":"PolicyStatementList"},
         "DefaultAction":{"shape":"AcceptAction"},
         "MaxMessageSizeBytes":{"shape":"MaxMessageSizeBytes"},
-        "PolicyStatements":{"shape":"PolicyStatementList"},
-        "Tags":{"shape":"TagList"},
-        "TrafficPolicyName":{"shape":"TrafficPolicyName"}
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateTrafficPolicyResponse":{
@@ -1415,8 +1415,7 @@
     },
     "DeleteAddonInstanceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAddonSubscriptionRequest":{
       "type":"structure",
@@ -1427,8 +1426,7 @@
     },
     "DeleteAddonSubscriptionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAddressListRequest":{
       "type":"structure",
@@ -1439,8 +1437,7 @@
     },
     "DeleteAddressListResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteArchiveRequest":{
       "type":"structure",
@@ -1451,8 +1448,7 @@
     },
     "DeleteArchiveResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteIngressPointRequest":{
       "type":"structure",
@@ -1463,8 +1459,7 @@
     },
     "DeleteIngressPointResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRelayRequest":{
       "type":"structure",
@@ -1475,8 +1470,7 @@
     },
     "DeleteRelayResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRuleSetRequest":{
       "type":"structure",
@@ -1487,8 +1481,7 @@
     },
     "DeleteRuleSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTrafficPolicyRequest":{
       "type":"structure",
@@ -1499,8 +1492,7 @@
     },
     "DeleteTrafficPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeliverToMailboxAction":{
       "type":"structure",
@@ -1531,18 +1523,17 @@
     "DeregisterMemberFromAddressListRequest":{
       "type":"structure",
       "required":[
-        "Address",
-        "AddressListId"
+        "AddressListId",
+        "Address"
       ],
       "members":{
-        "Address":{"shape":"Address"},
-        "AddressListId":{"shape":"AddressListId"}
+        "AddressListId":{"shape":"AddressListId"},
+        "Address":{"shape":"Address"}
       }
     },
     "DeregisterMemberFromAddressListResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Double":{
       "type":"double",
@@ -1550,14 +1541,13 @@
     },
     "DropAction":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EmailAddress":{
       "type":"string",
       "max":254,
       "min":0,
-      "pattern":"^[0-9A-Za-z@+.-]+$",
+      "pattern":"[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+",
       "sensitive":true
     },
     "EmailReceivedHeadersList":{
@@ -1567,8 +1557,8 @@
     "Envelope":{
       "type":"structure",
       "members":{
-        "From":{"shape":"String"},
         "Helo":{"shape":"String"},
+        "From":{"shape":"String"},
         "To":{"shape":"StringList"}
       }
     },
@@ -1603,10 +1593,10 @@
     "ExportStatus":{
       "type":"structure",
       "members":{
+        "SubmissionTimestamp":{"shape":"Timestamp"},
         "CompletionTimestamp":{"shape":"Timestamp"},
-        "ErrorMessage":{"shape":"ErrorMessage"},
         "State":{"shape":"ExportState"},
-        "SubmissionTimestamp":{"shape":"Timestamp"}
+        "ErrorMessage":{"shape":"ErrorMessage"}
       }
     },
     "ExportSummary":{
@@ -1630,9 +1620,9 @@
     "GetAddonInstanceResponse":{
       "type":"structure",
       "members":{
-        "AddonInstanceArn":{"shape":"AddonInstanceArn"},
-        "AddonName":{"shape":"AddonName"},
         "AddonSubscriptionId":{"shape":"AddonSubscriptionId"},
+        "AddonName":{"shape":"AddonName"},
+        "AddonInstanceArn":{"shape":"AddonInstanceArn"},
         "CreatedTimestamp":{"shape":"Timestamp"}
       }
     },
@@ -1661,27 +1651,27 @@
     "GetAddressListImportJobResponse":{
       "type":"structure",
       "required":[
-        "AddressListId",
-        "CreatedTimestamp",
-        "ImportDataFormat",
         "JobId",
         "Name",
+        "Status",
         "PreSignedUrl",
-        "Status"
+        "ImportDataFormat",
+        "AddressListId",
+        "CreatedTimestamp"
       ],
       "members":{
-        "AddressListId":{"shape":"AddressListId"},
-        "CompletedTimestamp":{"shape":"Timestamp"},
-        "CreatedTimestamp":{"shape":"Timestamp"},
-        "Error":{"shape":"ErrorMessage"},
-        "FailedItemsCount":{"shape":"JobItemsCount"},
-        "ImportDataFormat":{"shape":"ImportDataFormat"},
-        "ImportedItemsCount":{"shape":"JobItemsCount"},
         "JobId":{"shape":"JobId"},
         "Name":{"shape":"JobName"},
+        "Status":{"shape":"ImportJobStatus"},
         "PreSignedUrl":{"shape":"PreSignedUrl"},
+        "ImportedItemsCount":{"shape":"JobItemsCount"},
+        "FailedItemsCount":{"shape":"JobItemsCount"},
+        "ImportDataFormat":{"shape":"ImportDataFormat"},
+        "AddressListId":{"shape":"AddressListId"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
         "StartTimestamp":{"shape":"Timestamp"},
-        "Status":{"shape":"ImportJobStatus"}
+        "CompletedTimestamp":{"shape":"Timestamp"},
+        "Error":{"shape":"ErrorMessage"}
       }
     },
     "GetAddressListRequest":{
@@ -1694,15 +1684,15 @@
     "GetAddressListResponse":{
       "type":"structure",
       "required":[
-        "AddressListArn",
         "AddressListId",
+        "AddressListArn",
         "AddressListName",
         "CreatedTimestamp",
         "LastUpdatedTimestamp"
       ],
       "members":{
-        "AddressListArn":{"shape":"AddressListArn"},
         "AddressListId":{"shape":"AddressListId"},
+        "AddressListArn":{"shape":"AddressListArn"},
         "AddressListName":{"shape":"AddressListName"},
         "CreatedTimestamp":{"shape":"Timestamp"},
         "LastUpdatedTimestamp":{"shape":"Timestamp"}
@@ -1719,12 +1709,12 @@
       "type":"structure",
       "members":{
         "ArchiveId":{"shape":"ArchiveId"},
-        "ExportDestinationConfiguration":{"shape":"ExportDestinationConfiguration"},
         "Filters":{"shape":"ArchiveFilters"},
         "FromTimestamp":{"shape":"Timestamp"},
+        "ToTimestamp":{"shape":"Timestamp"},
         "MaxResults":{"shape":"ExportMaxResults"},
-        "Status":{"shape":"ExportStatus"},
-        "ToTimestamp":{"shape":"Timestamp"}
+        "ExportDestinationConfiguration":{"shape":"ExportDestinationConfiguration"},
+        "Status":{"shape":"ExportStatus"}
       }
     },
     "GetArchiveMessageContentRequest":{
@@ -1750,9 +1740,9 @@
     "GetArchiveMessageResponse":{
       "type":"structure",
       "members":{
-        "Envelope":{"shape":"Envelope"},
         "MessageDownloadLink":{"shape":"S3PresignedURL"},
-        "Metadata":{"shape":"Metadata"}
+        "Metadata":{"shape":"Metadata"},
+        "Envelope":{"shape":"Envelope"}
       }
     },
     "GetArchiveRequest":{
@@ -1765,21 +1755,21 @@
     "GetArchiveResponse":{
       "type":"structure",
       "required":[
-        "ArchiveArn",
         "ArchiveId",
         "ArchiveName",
+        "ArchiveArn",
         "ArchiveState",
         "Retention"
       ],
       "members":{
-        "ArchiveArn":{"shape":"ArchiveArn"},
         "ArchiveId":{"shape":"ArchiveIdString"},
         "ArchiveName":{"shape":"ArchiveNameString"},
+        "ArchiveArn":{"shape":"ArchiveArn"},
         "ArchiveState":{"shape":"ArchiveState"},
+        "Retention":{"shape":"ArchiveRetention"},
         "CreatedTimestamp":{"shape":"Timestamp"},
-        "KmsKeyArn":{"shape":"KmsKeyArn"},
         "LastUpdatedTimestamp":{"shape":"Timestamp"},
-        "Retention":{"shape":"ArchiveRetention"}
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "GetArchiveSearchRequest":{
@@ -1795,9 +1785,9 @@
         "ArchiveId":{"shape":"ArchiveId"},
         "Filters":{"shape":"ArchiveFilters"},
         "FromTimestamp":{"shape":"Timestamp"},
+        "ToTimestamp":{"shape":"Timestamp"},
         "MaxResults":{"shape":"SearchMaxResults"},
-        "Status":{"shape":"SearchStatus"},
-        "ToTimestamp":{"shape":"Timestamp"}
+        "Status":{"shape":"SearchStatus"}
       }
     },
     "GetArchiveSearchResultsRequest":{
@@ -1827,29 +1817,29 @@
         "IngressPointName"
       ],
       "members":{
-        "ARecord":{"shape":"IngressPointARecord"},
-        "CreatedTimestamp":{"shape":"Timestamp"},
-        "IngressPointArn":{"shape":"IngressPointArn"},
-        "IngressPointAuthConfiguration":{"shape":"IngressPointAuthConfiguration"},
         "IngressPointId":{"shape":"IngressPointId"},
         "IngressPointName":{"shape":"IngressPointName"},
-        "LastUpdatedTimestamp":{"shape":"Timestamp"},
-        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
-        "RuleSetId":{"shape":"RuleSetId"},
+        "IngressPointArn":{"shape":"IngressPointArn"},
         "Status":{"shape":"IngressPointStatus"},
+        "Type":{"shape":"IngressPointType"},
+        "ARecord":{"shape":"IngressPointARecord"},
+        "RuleSetId":{"shape":"RuleSetId"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
-        "Type":{"shape":"IngressPointType"}
+        "IngressPointAuthConfiguration":{"shape":"IngressPointAuthConfiguration"},
+        "NetworkConfiguration":{"shape":"NetworkConfiguration"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
       }
     },
     "GetMemberOfAddressListRequest":{
       "type":"structure",
       "required":[
-        "Address",
-        "AddressListId"
+        "AddressListId",
+        "Address"
       ],
       "members":{
-        "Address":{"shape":"Address"},
-        "AddressListId":{"shape":"AddressListId"}
+        "AddressListId":{"shape":"AddressListId"},
+        "Address":{"shape":"Address"}
       }
     },
     "GetMemberOfAddressListResponse":{
@@ -1874,14 +1864,14 @@
       "type":"structure",
       "required":["RelayId"],
       "members":{
-        "Authentication":{"shape":"RelayAuthentication"},
-        "CreatedTimestamp":{"shape":"Timestamp"},
-        "LastModifiedTimestamp":{"shape":"Timestamp"},
-        "RelayArn":{"shape":"RelayArn"},
         "RelayId":{"shape":"RelayId"},
+        "RelayArn":{"shape":"RelayArn"},
         "RelayName":{"shape":"RelayName"},
         "ServerName":{"shape":"RelayServerName"},
-        "ServerPort":{"shape":"RelayServerPort"}
+        "ServerPort":{"shape":"RelayServerPort"},
+        "Authentication":{"shape":"RelayAuthentication"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "LastModifiedTimestamp":{"shape":"Timestamp"}
       }
     },
     "GetRuleSetRequest":{
@@ -1894,19 +1884,19 @@
     "GetRuleSetResponse":{
       "type":"structure",
       "required":[
+        "RuleSetId",
+        "RuleSetArn",
+        "RuleSetName",
         "CreatedDate",
         "LastModificationDate",
-        "RuleSetArn",
-        "RuleSetId",
-        "RuleSetName",
         "Rules"
       ],
       "members":{
+        "RuleSetId":{"shape":"RuleSetId"},
+        "RuleSetArn":{"shape":"RuleSetArn"},
+        "RuleSetName":{"shape":"RuleSetName"},
         "CreatedDate":{"shape":"Timestamp"},
         "LastModificationDate":{"shape":"Timestamp"},
-        "RuleSetArn":{"shape":"RuleSetArn"},
-        "RuleSetId":{"shape":"RuleSetId"},
-        "RuleSetName":{"shape":"RuleSetName"},
         "Rules":{"shape":"Rules"}
       }
     },
@@ -1920,25 +1910,25 @@
     "GetTrafficPolicyResponse":{
       "type":"structure",
       "required":[
-        "TrafficPolicyId",
-        "TrafficPolicyName"
+        "TrafficPolicyName",
+        "TrafficPolicyId"
       ],
       "members":{
-        "CreatedTimestamp":{"shape":"Timestamp"},
-        "DefaultAction":{"shape":"AcceptAction"},
-        "LastUpdatedTimestamp":{"shape":"Timestamp"},
-        "MaxMessageSizeBytes":{"shape":"MaxMessageSizeBytes"},
-        "PolicyStatements":{"shape":"PolicyStatementList"},
-        "TrafficPolicyArn":{"shape":"TrafficPolicyArn"},
+        "TrafficPolicyName":{"shape":"TrafficPolicyName"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
-        "TrafficPolicyName":{"shape":"TrafficPolicyName"}
+        "TrafficPolicyArn":{"shape":"TrafficPolicyArn"},
+        "PolicyStatements":{"shape":"PolicyStatementList"},
+        "MaxMessageSizeBytes":{"shape":"MaxMessageSizeBytes"},
+        "DefaultAction":{"shape":"AcceptAction"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
       }
     },
     "HeaderName":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[xX]\\-[a-zA-Z0-9\\-]+$"
+      "pattern":"[xX]\\-[a-zA-Z0-9\\-]+"
     },
     "HeaderValue":{
       "type":"string",
@@ -1949,13 +1939,13 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^[a-zA-Z0-9:_/+=,@.#-]+$"
+      "pattern":"[a-zA-Z0-9:_/+=,@.#-]+"
     },
     "IdOrArn":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^[a-zA-Z0-9:_/+=,@.#-]+$"
+      "pattern":"[a-zA-Z0-9:_/+=,@.#-]+"
     },
     "IdempotencyToken":{
       "type":"string",
@@ -1979,27 +1969,27 @@
     "ImportJob":{
       "type":"structure",
       "required":[
-        "AddressListId",
-        "CreatedTimestamp",
-        "ImportDataFormat",
         "JobId",
         "Name",
+        "Status",
         "PreSignedUrl",
-        "Status"
+        "ImportDataFormat",
+        "AddressListId",
+        "CreatedTimestamp"
       ],
       "members":{
-        "AddressListId":{"shape":"AddressListId"},
-        "CompletedTimestamp":{"shape":"Timestamp"},
-        "CreatedTimestamp":{"shape":"Timestamp"},
-        "Error":{"shape":"ErrorMessage"},
-        "FailedItemsCount":{"shape":"JobItemsCount"},
-        "ImportDataFormat":{"shape":"ImportDataFormat"},
-        "ImportedItemsCount":{"shape":"JobItemsCount"},
         "JobId":{"shape":"JobId"},
         "Name":{"shape":"JobName"},
+        "Status":{"shape":"ImportJobStatus"},
         "PreSignedUrl":{"shape":"PreSignedUrl"},
+        "ImportedItemsCount":{"shape":"JobItemsCount"},
+        "FailedItemsCount":{"shape":"JobItemsCount"},
+        "ImportDataFormat":{"shape":"ImportDataFormat"},
+        "AddressListId":{"shape":"AddressListId"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
         "StartTimestamp":{"shape":"Timestamp"},
-        "Status":{"shape":"ImportJobStatus"}
+        "CompletedTimestamp":{"shape":"Timestamp"},
+        "Error":{"shape":"ErrorMessage"}
       }
     },
     "ImportJobStatus":{
@@ -2121,28 +2111,28 @@
     "IngressIsInAddressList":{
       "type":"structure",
       "required":[
-        "AddressLists",
-        "Attribute"
+        "Attribute",
+        "AddressLists"
       ],
       "members":{
-        "AddressLists":{"shape":"IngressAddressListArnList"},
-        "Attribute":{"shape":"IngressAddressListEmailAttribute"}
+        "Attribute":{"shape":"IngressAddressListEmailAttribute"},
+        "AddressLists":{"shape":"IngressAddressListArnList"}
       }
     },
     "IngressPoint":{
       "type":"structure",
       "required":[
-        "IngressPointId",
         "IngressPointName",
+        "IngressPointId",
         "Status",
         "Type"
       ],
       "members":{
-        "ARecord":{"shape":"IngressPointARecord"},
-        "IngressPointId":{"shape":"IngressPointId"},
         "IngressPointName":{"shape":"IngressPointName"},
+        "IngressPointId":{"shape":"IngressPointId"},
         "Status":{"shape":"IngressPointStatus"},
-        "Type":{"shape":"IngressPointType"}
+        "Type":{"shape":"IngressPointType"},
+        "ARecord":{"shape":"IngressPointARecord"}
       }
     },
     "IngressPointARecord":{"type":"string"},
@@ -2157,8 +2147,8 @@
     "IngressPointConfiguration":{
       "type":"structure",
       "members":{
-        "SecretArn":{"shape":"SecretArn"},
-        "SmtpPassword":{"shape":"SmtpPassword"}
+        "SmtpPassword":{"shape":"SmtpPassword"},
+        "SecretArn":{"shape":"SecretArn"}
       },
       "union":true
     },
@@ -2171,14 +2161,14 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[A-Za-z0-9_\\-]+$"
+      "pattern":"[A-Za-z0-9_\\-]+"
     },
     "IngressPointPasswordConfiguration":{
       "type":"structure",
       "members":{
-        "PreviousSmtpPasswordExpiryTimestamp":{"shape":"Timestamp"},
+        "SmtpPasswordVersion":{"shape":"String"},
         "PreviousSmtpPasswordVersion":{"shape":"String"},
-        "SmtpPasswordVersion":{"shape":"String"}
+        "PreviousSmtpPasswordExpiryTimestamp":{"shape":"Timestamp"}
       }
     },
     "IngressPointStatus":{
@@ -2240,8 +2230,8 @@
     "IngressStringToEvaluate":{
       "type":"structure",
       "members":{
-        "Analysis":{"shape":"IngressAnalysis"},
-        "Attribute":{"shape":"IngressStringEmailAttribute"}
+        "Attribute":{"shape":"IngressStringEmailAttribute"},
+        "Analysis":{"shape":"IngressAnalysis"}
       },
       "union":true
     },
@@ -2296,7 +2286,7 @@
     },
     "Ipv4Cidr":{
       "type":"string",
-      "pattern":"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/([0-9]|[12][0-9]|3[0-2])$"
+      "pattern":"((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/([0-9]|[12][0-9]|3[0-2])"
     },
     "Ipv4Cidrs":{
       "type":"list",
@@ -2306,7 +2296,7 @@
       "type":"string",
       "max":49,
       "min":0,
-      "pattern":"^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))\\/(12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9])$"
+      "pattern":"(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))\\/(12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9])"
     },
     "Ipv6Cidrs":{
       "type":"list",
@@ -2316,7 +2306,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "JobItemsCount":{
       "type":"integer",
@@ -2326,17 +2316,17 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_.-]+$"
+      "pattern":"[a-zA-Z0-9_.-]+"
     },
     "KmsKeyArn":{
       "type":"string",
-      "pattern":"^arn:aws(|-cn|-us-gov):kms:[a-z0-9-]{1,20}:[0-9]{12}:(key|alias)/.+$"
+      "pattern":"arn:aws(|-cn|-us-gov):kms:[a-z0-9-]{1,20}:[0-9]{12}:(key|alias)/.+"
     },
     "KmsKeyId":{
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^[a-zA-Z0-9-:/]+$"
+      "pattern":"[a-zA-Z0-9-:/]+"
     },
     "ListAddonInstancesRequest":{
       "type":"structure",
@@ -2426,8 +2416,8 @@
     "ListArchiveSearchesResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "Searches":{"shape":"SearchSummaryList"}
+        "Searches":{"shape":"SearchSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "ListArchivesRequest":{
@@ -2448,8 +2438,8 @@
     "ListIngressPointsRequest":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "PageSize":{"shape":"PageSize"}
+        "PageSize":{"shape":"PageSize"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "ListIngressPointsResponse":{
@@ -2480,16 +2470,16 @@
     "ListRelaysRequest":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "PageSize":{"shape":"Integer"}
+        "PageSize":{"shape":"Integer"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "ListRelaysResponse":{
       "type":"structure",
       "required":["Relays"],
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "Relays":{"shape":"Relays"}
+        "Relays":{"shape":"Relays"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "ListRuleSetsRequest":{
@@ -2503,8 +2493,8 @@
       "type":"structure",
       "required":["RuleSets"],
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "RuleSets":{"shape":"RuleSets"}
+        "RuleSets":{"shape":"RuleSets"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -2524,15 +2514,15 @@
     "ListTrafficPoliciesRequest":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "PageSize":{"shape":"PageSize"}
+        "PageSize":{"shape":"PageSize"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "ListTrafficPoliciesResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "TrafficPolicies":{"shape":"TrafficPolicyList"}
+        "TrafficPolicies":{"shape":"TrafficPolicyList"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "MailFrom":{
@@ -2550,51 +2540,50 @@
     "MessageBody":{
       "type":"structure",
       "members":{
+        "Text":{"shape":"String"},
         "Html":{"shape":"String"},
-        "MessageMalformed":{"shape":"Boolean"},
-        "Text":{"shape":"String"}
+        "MessageMalformed":{"shape":"Boolean"}
       }
     },
     "Metadata":{
       "type":"structure",
       "members":{
-        "ConfigurationSet":{"shape":"String"},
+        "Timestamp":{"shape":"Timestamp"},
         "IngressPointId":{"shape":"IngressPointId"},
+        "TrafficPolicyId":{"shape":"TrafficPolicyId"},
         "RuleSetId":{"shape":"RuleSetId"},
         "SenderHostname":{"shape":"String"},
         "SenderIpAddress":{"shape":"SenderIpAddress"},
-        "SendingMethod":{"shape":"String"},
-        "SendingPool":{"shape":"String"},
-        "SourceArn":{"shape":"String"},
-        "SourceIdentity":{"shape":"String"},
-        "Timestamp":{"shape":"Timestamp"},
         "TlsCipherSuite":{"shape":"String"},
         "TlsProtocol":{"shape":"String"},
-        "TrafficPolicyId":{"shape":"TrafficPolicyId"}
+        "SendingMethod":{"shape":"String"},
+        "SourceIdentity":{"shape":"String"},
+        "SendingPool":{"shape":"String"},
+        "ConfigurationSet":{"shape":"String"},
+        "SourceArn":{"shape":"String"}
       }
     },
     "MimeHeaderAttribute":{
       "type":"string",
-      "pattern":"^X-[a-zA-Z0-9-]{1,256}$"
+      "pattern":"X-[a-zA-Z0-9-]{1,256}"
     },
     "NameOrArn":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^[a-zA-Z0-9:_/+=,@.#-]+$"
+      "pattern":"[a-zA-Z0-9:_/+=,@.#-]+"
     },
     "NetworkConfiguration":{
       "type":"structure",
       "members":{
-        "PrivateNetworkConfiguration":{"shape":"PrivateNetworkConfiguration"},
-        "PublicNetworkConfiguration":{"shape":"PublicNetworkConfiguration"}
+        "PublicNetworkConfiguration":{"shape":"PublicNetworkConfiguration"},
+        "PrivateNetworkConfiguration":{"shape":"PrivateNetworkConfiguration"}
       },
       "union":true
     },
     "NoAuthentication":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PageSize":{
       "type":"integer",
@@ -2610,11 +2599,11 @@
     "PolicyCondition":{
       "type":"structure",
       "members":{
-        "BooleanExpression":{"shape":"IngressBooleanExpression"},
+        "StringExpression":{"shape":"IngressStringExpression"},
         "IpExpression":{"shape":"IngressIpv4Expression"},
         "Ipv6Expression":{"shape":"IngressIpv6Expression"},
-        "StringExpression":{"shape":"IngressStringExpression"},
-        "TlsExpression":{"shape":"IngressTlsProtocolExpression"}
+        "TlsExpression":{"shape":"IngressTlsProtocolExpression"},
+        "BooleanExpression":{"shape":"IngressBooleanExpression"}
       },
       "union":true
     },
@@ -2626,12 +2615,12 @@
     "PolicyStatement":{
       "type":"structure",
       "required":[
-        "Action",
-        "Conditions"
+        "Conditions",
+        "Action"
       ],
       "members":{
-        "Action":{"shape":"AcceptAction"},
-        "Conditions":{"shape":"PolicyConditions"}
+        "Conditions":{"shape":"PolicyConditions"},
+        "Action":{"shape":"AcceptAction"}
       }
     },
     "PolicyStatementList":{
@@ -2660,13 +2649,13 @@
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-z0-9-]+$"
+      "pattern":"[a-z0-9-]+"
     },
     "QBusinessIndexId":{
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[a-z0-9-]+$"
+      "pattern":"[a-z0-9-]+"
     },
     "Recipients":{
       "type":"list",
@@ -2677,25 +2666,24 @@
     "RegisterMemberToAddressListRequest":{
       "type":"structure",
       "required":[
-        "Address",
-        "AddressListId"
+        "AddressListId",
+        "Address"
       ],
       "members":{
-        "Address":{"shape":"Address"},
-        "AddressListId":{"shape":"AddressListId"}
+        "AddressListId":{"shape":"AddressListId"},
+        "Address":{"shape":"Address"}
       }
     },
     "RegisterMemberToAddressListResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Relay":{
       "type":"structure",
       "members":{
-        "LastModifiedTimestamp":{"shape":"Timestamp"},
         "RelayId":{"shape":"RelayId"},
-        "RelayName":{"shape":"RelayName"}
+        "RelayName":{"shape":"RelayName"},
+        "LastModifiedTimestamp":{"shape":"Timestamp"}
       }
     },
     "RelayAction":{
@@ -2703,16 +2691,16 @@
       "required":["Relay"],
       "members":{
         "ActionFailurePolicy":{"shape":"ActionFailurePolicy"},
-        "MailFrom":{"shape":"MailFrom"},
-        "Relay":{"shape":"IdOrArn"}
+        "Relay":{"shape":"IdOrArn"},
+        "MailFrom":{"shape":"MailFrom"}
       }
     },
     "RelayArn":{"type":"string"},
     "RelayAuthentication":{
       "type":"structure",
       "members":{
-        "NoAuthentication":{"shape":"NoAuthentication"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "NoAuthentication":{"shape":"NoAuthentication"}
       },
       "union":true
     },
@@ -2720,19 +2708,19 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "RelayName":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_]+$"
+      "pattern":"[a-zA-Z0-9-_]+"
     },
     "RelayServerName":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-\\.]+$"
+      "pattern":"[a-zA-Z0-9-\\.]+"
     },
     "RelayServerPort":{
       "type":"integer",
@@ -2761,7 +2749,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^(addon\\.)?[\\sa-zA-Z0-9_]+$"
+      "pattern":"(addon\\.)?[\\sa-zA-Z0-9_]+"
     },
     "RetentionPeriod":{
       "type":"string",
@@ -2788,24 +2776,24 @@
       "type":"structure",
       "members":{
         "ArchivedMessageId":{"shape":"ArchivedMessageId"},
-        "Cc":{"shape":"String"},
-        "Date":{"shape":"String"},
-        "Envelope":{"shape":"Envelope"},
-        "From":{"shape":"String"},
-        "HasAttachments":{"shape":"Boolean"},
-        "InReplyTo":{"shape":"String"},
-        "IngressPointId":{"shape":"IngressPointId"},
-        "MessageId":{"shape":"String"},
-        "ReceivedHeaders":{"shape":"EmailReceivedHeadersList"},
         "ReceivedTimestamp":{"shape":"Timestamp"},
-        "SenderHostname":{"shape":"String"},
-        "SenderIpAddress":{"shape":"SenderIpAddress"},
-        "SourceArn":{"shape":"String"},
-        "Subject":{"shape":"String"},
+        "Date":{"shape":"String"},
         "To":{"shape":"String"},
+        "From":{"shape":"String"},
+        "Cc":{"shape":"String"},
+        "Subject":{"shape":"String"},
+        "MessageId":{"shape":"String"},
+        "HasAttachments":{"shape":"Boolean"},
+        "ReceivedHeaders":{"shape":"EmailReceivedHeadersList"},
+        "InReplyTo":{"shape":"String"},
         "XMailer":{"shape":"String"},
         "XOriginalMailer":{"shape":"String"},
-        "XPriority":{"shape":"String"}
+        "XPriority":{"shape":"String"},
+        "IngressPointId":{"shape":"IngressPointId"},
+        "SenderHostname":{"shape":"String"},
+        "SenderIpAddress":{"shape":"SenderIpAddress"},
+        "Envelope":{"shape":"Envelope"},
+        "SourceArn":{"shape":"String"}
       }
     },
     "RowsList":{
@@ -2816,25 +2804,25 @@
       "type":"structure",
       "required":["Actions"],
       "members":{
-        "Actions":{"shape":"RuleActions"},
-        "Conditions":{"shape":"RuleConditions"},
         "Name":{"shape":"RuleName"},
-        "Unless":{"shape":"RuleConditions"}
+        "Conditions":{"shape":"RuleConditions"},
+        "Unless":{"shape":"RuleConditions"},
+        "Actions":{"shape":"RuleActions"}
       }
     },
     "RuleAction":{
       "type":"structure",
       "members":{
-        "AddHeader":{"shape":"AddHeaderAction"},
+        "Drop":{"shape":"DropAction"},
+        "Relay":{"shape":"RelayAction"},
         "Archive":{"shape":"ArchiveAction"},
+        "WriteToS3":{"shape":"S3Action"},
+        "Send":{"shape":"SendAction"},
+        "AddHeader":{"shape":"AddHeaderAction"},
+        "ReplaceRecipient":{"shape":"ReplaceRecipientAction"},
         "DeliverToMailbox":{"shape":"DeliverToMailboxAction"},
         "DeliverToQBusiness":{"shape":"DeliverToQBusinessAction"},
-        "Drop":{"shape":"DropAction"},
-        "PublishToSns":{"shape":"SnsAction"},
-        "Relay":{"shape":"RelayAction"},
-        "ReplaceRecipient":{"shape":"ReplaceRecipientAction"},
-        "Send":{"shape":"SendAction"},
-        "WriteToS3":{"shape":"S3Action"}
+        "PublishToSns":{"shape":"SnsAction"}
       },
       "union":true
     },
@@ -2890,8 +2878,8 @@
     "RuleBooleanToEvaluate":{
       "type":"structure",
       "members":{
-        "Analysis":{"shape":"Analysis"},
         "Attribute":{"shape":"RuleBooleanEmailAttribute"},
+        "Analysis":{"shape":"Analysis"},
         "IsInAddressList":{"shape":"RuleIsInAddressList"}
       },
       "union":true
@@ -2900,11 +2888,11 @@
       "type":"structure",
       "members":{
         "BooleanExpression":{"shape":"RuleBooleanExpression"},
-        "DmarcExpression":{"shape":"RuleDmarcExpression"},
-        "IpExpression":{"shape":"RuleIpExpression"},
-        "NumberExpression":{"shape":"RuleNumberExpression"},
         "StringExpression":{"shape":"RuleStringExpression"},
-        "VerdictExpression":{"shape":"RuleVerdictExpression"}
+        "NumberExpression":{"shape":"RuleNumberExpression"},
+        "IpExpression":{"shape":"RuleIpExpression"},
+        "VerdictExpression":{"shape":"RuleVerdictExpression"},
+        "DmarcExpression":{"shape":"RuleDmarcExpression"}
       },
       "union":true
     },
@@ -2974,7 +2962,7 @@
       "type":"string",
       "max":43,
       "min":1,
-      "pattern":"^(([0-9]|.|:|/)*)$"
+      "pattern":"(([0-9]|.|:|/)*)"
     },
     "RuleIpToEvaluate":{
       "type":"structure",
@@ -2992,19 +2980,19 @@
     "RuleIsInAddressList":{
       "type":"structure",
       "required":[
-        "AddressLists",
-        "Attribute"
+        "Attribute",
+        "AddressLists"
       ],
       "members":{
-        "AddressLists":{"shape":"RuleAddressListArnList"},
-        "Attribute":{"shape":"RuleAddressListEmailAttribute"}
+        "Attribute":{"shape":"RuleAddressListEmailAttribute"},
+        "AddressLists":{"shape":"RuleAddressListArnList"}
       }
     },
     "RuleName":{
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_.-]+$"
+      "pattern":"[a-zA-Z0-9_.-]+"
     },
     "RuleNumberEmailAttribute":{
       "type":"string",
@@ -3044,9 +3032,9 @@
     "RuleSet":{
       "type":"structure",
       "members":{
-        "LastModificationDate":{"shape":"Timestamp"},
         "RuleSetId":{"shape":"RuleSetId"},
-        "RuleSetName":{"shape":"RuleSetName"}
+        "RuleSetName":{"shape":"RuleSetName"},
+        "LastModificationDate":{"shape":"Timestamp"}
       }
     },
     "RuleSetArn":{"type":"string"},
@@ -3059,7 +3047,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_.-]+$"
+      "pattern":"[a-zA-Z0-9_.-]+"
     },
     "RuleSets":{
       "type":"list",
@@ -3110,9 +3098,9 @@
     "RuleStringToEvaluate":{
       "type":"structure",
       "members":{
-        "Analysis":{"shape":"Analysis"},
         "Attribute":{"shape":"RuleStringEmailAttribute"},
-        "MimeHeaderAttribute":{"shape":"MimeHeaderAttribute"}
+        "MimeHeaderAttribute":{"shape":"MimeHeaderAttribute"},
+        "Analysis":{"shape":"Analysis"}
       },
       "union":true
     },
@@ -3160,8 +3148,8 @@
     "RuleVerdictToEvaluate":{
       "type":"structure",
       "members":{
-        "Analysis":{"shape":"Analysis"},
-        "Attribute":{"shape":"RuleVerdictAttribute"}
+        "Attribute":{"shape":"RuleVerdictAttribute"},
+        "Analysis":{"shape":"Analysis"}
       },
       "union":true
     },
@@ -3195,7 +3183,7 @@
       "type":"string",
       "max":62,
       "min":1,
-      "pattern":"^[a-zA-Z0-9.-]+$"
+      "pattern":"[a-zA-Z0-9.-]+"
     },
     "S3ExportDestinationConfiguration":{
       "type":"structure",
@@ -3205,13 +3193,13 @@
     },
     "S3Location":{
       "type":"string",
-      "pattern":"^s3://[a-zA-Z0-9.-]{3,63}(/[a-zA-Z0-9!_.*'()/-]*)*$"
+      "pattern":"s3://[a-zA-Z0-9.-]{3,63}(/[a-zA-Z0-9!_.*'()/-]*)*"
     },
     "S3Prefix":{
       "type":"string",
       "max":62,
       "min":1,
-      "pattern":"^[a-zA-Z0-9!_.*'()/-]+$"
+      "pattern":"[a-zA-Z0-9!_.*'()/-]+"
     },
     "S3PresignedURL":{"type":"string"},
     "SavedAddress":{
@@ -3253,10 +3241,10 @@
     "SearchStatus":{
       "type":"structure",
       "members":{
+        "SubmissionTimestamp":{"shape":"Timestamp"},
         "CompletionTimestamp":{"shape":"Timestamp"},
-        "ErrorMessage":{"shape":"ErrorMessage"},
         "State":{"shape":"SearchState"},
-        "SubmissionTimestamp":{"shape":"Timestamp"}
+        "ErrorMessage":{"shape":"ErrorMessage"}
       }
     },
     "SearchSummary":{
@@ -3272,7 +3260,7 @@
     },
     "SecretArn":{
       "type":"string",
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):secretsmanager:[a-z0-9-]+:\\d{12}:secret:[a-zA-Z0-9/_+=,.@-]+$"
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):secretsmanager:[a-z0-9-]+:\\d{12}:secret:[a-zA-Z0-9/_+=,.@-]+"
     },
     "SendAction":{
       "type":"structure",
@@ -3297,21 +3285,21 @@
       "type":"string",
       "max":64,
       "min":8,
-      "pattern":"^[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{}|.,?]+$",
+      "pattern":"[A-Za-z0-9!@#$%^&*()_+\\-=\\[\\]{}|.,?]+",
       "sensitive":true
     },
     "SnsAction":{
       "type":"structure",
       "required":[
-        "RoleArn",
-        "TopicArn"
+        "TopicArn",
+        "RoleArn"
       ],
       "members":{
         "ActionFailurePolicy":{"shape":"ActionFailurePolicy"},
-        "Encoding":{"shape":"SnsNotificationEncoding"},
-        "PayloadType":{"shape":"SnsNotificationPayloadType"},
+        "TopicArn":{"shape":"SnsTopicArn"},
         "RoleArn":{"shape":"IamRoleArn"},
-        "TopicArn":{"shape":"SnsTopicArn"}
+        "Encoding":{"shape":"SnsNotificationEncoding"},
+        "PayloadType":{"shape":"SnsNotificationPayloadType"}
       }
     },
     "SnsNotificationEncoding":{
@@ -3332,7 +3320,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):sns:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:[\\w\\-]{1,256}$"
+      "pattern":"arn:(aws|aws-cn|aws-us-gov):sns:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:[\\w\\-]{1,256}"
     },
     "StartAddressListImportJobRequest":{
       "type":"structure",
@@ -3343,25 +3331,24 @@
     },
     "StartAddressListImportJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartArchiveExportRequest":{
       "type":"structure",
       "required":[
         "ArchiveId",
-        "ExportDestinationConfiguration",
         "FromTimestamp",
-        "ToTimestamp"
+        "ToTimestamp",
+        "ExportDestinationConfiguration"
       ],
       "members":{
         "ArchiveId":{"shape":"ArchiveId"},
-        "ExportDestinationConfiguration":{"shape":"ExportDestinationConfiguration"},
         "Filters":{"shape":"ArchiveFilters"},
         "FromTimestamp":{"shape":"Timestamp"},
-        "IncludeMetadata":{"shape":"Boolean"},
+        "ToTimestamp":{"shape":"Timestamp"},
         "MaxResults":{"shape":"ExportMaxResults"},
-        "ToTimestamp":{"shape":"Timestamp"}
+        "ExportDestinationConfiguration":{"shape":"ExportDestinationConfiguration"},
+        "IncludeMetadata":{"shape":"Boolean"}
       }
     },
     "StartArchiveExportResponse":{
@@ -3375,15 +3362,15 @@
       "required":[
         "ArchiveId",
         "FromTimestamp",
-        "MaxResults",
-        "ToTimestamp"
+        "ToTimestamp",
+        "MaxResults"
       ],
       "members":{
         "ArchiveId":{"shape":"ArchiveId"},
         "Filters":{"shape":"ArchiveFilters"},
         "FromTimestamp":{"shape":"Timestamp"},
-        "MaxResults":{"shape":"SearchMaxResults"},
-        "ToTimestamp":{"shape":"Timestamp"}
+        "ToTimestamp":{"shape":"Timestamp"},
+        "MaxResults":{"shape":"SearchMaxResults"}
       }
     },
     "StartArchiveSearchResponse":{
@@ -3401,8 +3388,7 @@
     },
     "StopAddressListImportJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopArchiveExportRequest":{
       "type":"structure",
@@ -3413,8 +3399,7 @@
     },
     "StopArchiveExportResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopArchiveSearchRequest":{
       "type":"structure",
@@ -3425,8 +3410,7 @@
     },
     "StopArchiveSearchResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String":{"type":"string"},
     "StringList":{
@@ -3459,7 +3443,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z0-9/_\\+=\\.:@\\-]+$"
+      "pattern":"[a-zA-Z0-9/_\\+=\\.:@\\-]+"
     },
     "TagKeyList":{
       "type":"list",
@@ -3486,20 +3470,19 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[a-zA-Z0-9/_\\+=\\.:@\\-]*$"
+      "pattern":"[a-zA-Z0-9/_\\+=\\.:@\\-]*"
     },
     "TaggableResourceArn":{
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"^arn:aws(|-cn|-us-gov):ses:[a-z0-9-]{1,20}:[0-9]{12}:(mailmanager-|addon-).+$"
+      "pattern":"arn:aws(|-cn|-us-gov):ses:[a-z0-9-]{1,20}:[0-9]{12}:(mailmanager-|addon-).+"
     },
     "ThrottlingException":{
       "type":"structure",
@@ -3512,14 +3495,14 @@
     "TrafficPolicy":{
       "type":"structure",
       "required":[
-        "DefaultAction",
+        "TrafficPolicyName",
         "TrafficPolicyId",
-        "TrafficPolicyName"
+        "DefaultAction"
       ],
       "members":{
-        "DefaultAction":{"shape":"AcceptAction"},
+        "TrafficPolicyName":{"shape":"TrafficPolicyName"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
-        "TrafficPolicyName":{"shape":"TrafficPolicyName"}
+        "DefaultAction":{"shape":"AcceptAction"}
       }
     },
     "TrafficPolicyArn":{"type":"string"},
@@ -3536,7 +3519,7 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[A-Za-z0-9_\\-]+$"
+      "pattern":"[A-Za-z0-9_\\-]+"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -3551,8 +3534,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateArchiveRequest":{
       "type":"structure",
@@ -3565,41 +3547,38 @@
     },
     "UpdateArchiveResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateIngressPointRequest":{
       "type":"structure",
       "required":["IngressPointId"],
       "members":{
-        "IngressPointConfiguration":{"shape":"IngressPointConfiguration"},
         "IngressPointId":{"shape":"IngressPointId"},
         "IngressPointName":{"shape":"IngressPointName"},
-        "RuleSetId":{"shape":"RuleSetId"},
         "StatusToUpdate":{"shape":"IngressPointStatusToUpdate"},
-        "TrafficPolicyId":{"shape":"TrafficPolicyId"}
+        "RuleSetId":{"shape":"RuleSetId"},
+        "TrafficPolicyId":{"shape":"TrafficPolicyId"},
+        "IngressPointConfiguration":{"shape":"IngressPointConfiguration"}
       }
     },
     "UpdateIngressPointResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateRelayRequest":{
       "type":"structure",
       "required":["RelayId"],
       "members":{
-        "Authentication":{"shape":"RelayAuthentication"},
         "RelayId":{"shape":"RelayId"},
         "RelayName":{"shape":"RelayName"},
         "ServerName":{"shape":"RelayServerName"},
-        "ServerPort":{"shape":"RelayServerPort"}
+        "ServerPort":{"shape":"RelayServerPort"},
+        "Authentication":{"shape":"RelayAuthentication"}
       }
     },
     "UpdateRelayResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateRuleSetRequest":{
       "type":"structure",
@@ -3612,24 +3591,22 @@
     },
     "UpdateRuleSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateTrafficPolicyRequest":{
       "type":"structure",
       "required":["TrafficPolicyId"],
       "members":{
-        "DefaultAction":{"shape":"AcceptAction"},
-        "MaxMessageSizeBytes":{"shape":"MaxMessageSizeBytes"},
-        "PolicyStatements":{"shape":"PolicyStatementList"},
         "TrafficPolicyId":{"shape":"TrafficPolicyId"},
-        "TrafficPolicyName":{"shape":"TrafficPolicyName"}
+        "TrafficPolicyName":{"shape":"TrafficPolicyName"},
+        "PolicyStatements":{"shape":"PolicyStatementList"},
+        "DefaultAction":{"shape":"AcceptAction"},
+        "MaxMessageSizeBytes":{"shape":"MaxMessageSizeBytes"}
       }
     },
     "UpdateTrafficPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationException":{
       "type":"structure",
@@ -3640,7 +3617,7 @@
     },
     "VpcEndpointId":{
       "type":"string",
-      "pattern":"^vpce-[a-zA-Z0-9]{17}$"
+      "pattern":"vpce-[a-zA-Z0-9]{17}"
     }
   }
 }

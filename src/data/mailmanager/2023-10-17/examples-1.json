@@ -1,5 +1,383 @@
 {
   "version": "1.0",
   "examples": {
+    "CreateIngressPoint": [
+      {
+        "input": {
+          "IngressPointName": "ingressPointName",
+          "RuleSetId": "rs-12345",
+          "Tags": [
+            {
+              "Key": "key",
+              "Value": "value"
+            }
+          ],
+          "TrafficPolicyId": "tp-12345",
+          "Type": "OPEN"
+        },
+        "output": {
+          "IngressPointId": "inp-12345"
+        },
+        "id": "example-1",
+        "title": "Create Open IngressPoint"
+      },
+      {
+        "input": {
+          "IngressPointConfiguration": {
+            "SmtpPassword": "smtpPassword"
+          },
+          "IngressPointName": "ingressPointName",
+          "RuleSetId": "rs-12345",
+          "Tags": [
+            {
+              "Key": "key",
+              "Value": "value"
+            }
+          ],
+          "TrafficPolicyId": "tp-12345",
+          "Type": "AUTH"
+        },
+        "output": {
+          "IngressPointId": "inp-12345"
+        },
+        "id": "example-2",
+        "title": "Create Auth IngressPoint with Password"
+      },
+      {
+        "input": {
+          "IngressPointConfiguration": {
+            "SecretArn": "arn:aws:secretsmanager:us-west-2:123456789012:secret:abcde"
+          },
+          "IngressPointName": "ingressPointName",
+          "RuleSetId": "rs-12345",
+          "Tags": [
+            {
+              "Key": "key",
+              "Value": "value"
+            }
+          ],
+          "TrafficPolicyId": "tp-12345",
+          "Type": "AUTH"
+        },
+        "output": {
+          "IngressPointId": "inp-12345"
+        },
+        "id": "example-3",
+        "title": "Create Auth IngressPoint with SecretsManager Secret"
+      }
+    ],
+    "CreateTrafficPolicy": [
+      {
+        "input": {
+          "DefaultAction": "DENY",
+          "PolicyStatements": [
+            {
+              "Action": "ALLOW",
+              "Conditions": [
+                {
+                  "IpExpression": {
+                    "Evaluate": {
+                      "Attribute": "SENDER_IP"
+                    },
+                    "Operator": "CIDR_MATCHES",
+                    "Values": [
+                      "0.0.0.0/12"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "TrafficPolicyName": "trafficPolicyName"
+        },
+        "output": {
+          "TrafficPolicyId": "tp-13245"
+        },
+        "id": "example-1",
+        "title": "Create TrafficPolicy"
+      }
+    ],
+    "DeleteIngressPoint": [
+      {
+        "input": {
+          "IngressPointId": "inp-12345"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Delete IngressPoint"
+      }
+    ],
+    "DeleteTrafficPolicy": [
+      {
+        "input": {
+          "TrafficPolicyId": "tp-12345"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Delete TrafficPolicy"
+      }
+    ],
+    "GetIngressPoint": [
+      {
+        "input": {
+          "IngressPointId": "inp-12345"
+        },
+        "output": {
+          "ARecord": "abcde123.prod.us-east-1.email-border.ses.aws.a2z.com",
+          "IngressPointArn": "arn:aws:ses:us-east-1:123456789012:mailmanager-ingress-point/inp-12345",
+          "IngressPointId": "inp-12345",
+          "IngressPointName": "ingressPointName",
+          "Status": "ACTIVE",
+          "Type": "OPEN"
+        },
+        "id": "example-1",
+        "title": "Get Open IngressPoint"
+      },
+      {
+        "input": {
+          "IngressPointId": "inp-12345"
+        },
+        "output": {
+          "ARecord": "abcde123.prod.us-east-1.email-border.ses.aws.a2z.com",
+          "IngressPointArn": "arn:aws:ses:us-east-1:123456789012:mailmanager-ingress-point/inp-12345",
+          "IngressPointAuthConfiguration": {
+            "SecretArn": "arn:aws:secretsmanager:us-west-2:123456789012:secret:abcde"
+          },
+          "IngressPointId": "inp-12345",
+          "IngressPointName": "ingressPointName",
+          "Status": "ACTIVE",
+          "Type": "AUTH"
+        },
+        "id": "example-2",
+        "title": "Get Auth IngressPoint"
+      }
+    ],
+    "GetTrafficPolicy": [
+      {
+        "input": {
+          "TrafficPolicyId": "tp-12345"
+        },
+        "output": {
+          "DefaultAction": "DENY",
+          "MaxMessageSizeBytes": 1000,
+          "PolicyStatements": [
+            {
+              "Action": "ALLOW",
+              "Conditions": [
+                {
+                  "StringExpression": {
+                    "Evaluate": {
+                      "Attribute": "RECIPIENT"
+                    },
+                    "Operator": "EQUALS",
+                    "Values": [
+                      "example@amazon.com",
+                      "example@gmail.com"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "TrafficPolicyArn": "arn:aws:ses:us-east-1:123456789012:mailmanager-traffic-policy/tp-12345",
+          "TrafficPolicyId": "tp-12345",
+          "TrafficPolicyName": "trafficPolicyName"
+        },
+        "id": "example-1",
+        "title": "Get TrafficPolicy"
+      }
+    ],
+    "ListIngressPoints": [
+      {
+        "input": {},
+        "output": {
+          "IngressPoints": [
+            {
+              "ARecord": "abcde123.prod.us-east-1.email-border.ses.aws.a2z.com",
+              "IngressPointId": "inp-12345",
+              "IngressPointName": "ingressPointName",
+              "Status": "ACTIVE",
+              "Type": "OPEN"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List IngressPoints"
+      },
+      {
+        "input": {
+          "PageSize": 10
+        },
+        "output": {
+          "IngressPoints": [
+            {
+              "ARecord": "abcde123.prod.us-east-1.email-border.ses.aws.a2z.com",
+              "IngressPointId": "inp-12345",
+              "IngressPointName": "ingressPointName",
+              "Status": "ACTIVE",
+              "Type": "OPEN"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "List IngressPoints with PageSize"
+      },
+      {
+        "input": {
+          "NextToken": "nextToken"
+        },
+        "output": {
+          "IngressPoints": [
+            {
+              "ARecord": "abcde123.prod.us-east-1.email-border.ses.aws.a2z.com",
+              "IngressPointId": "inp-12345",
+              "IngressPointName": "ingressPointName",
+              "Status": "ACTIVE",
+              "Type": "OPEN"
+            }
+          ]
+        },
+        "id": "example-3",
+        "title": "List IngressPoints with NextToken"
+      }
+    ],
+    "ListTrafficPolicies": [
+      {
+        "input": {},
+        "output": {
+          "TrafficPolicies": [
+            {
+              "DefaultAction": "DENY",
+              "TrafficPolicyId": "tp-12345",
+              "TrafficPolicyName": "trafficPolicyName"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "List TrafficPolicies"
+      },
+      {
+        "input": {
+          "PageSize": 10
+        },
+        "output": {
+          "TrafficPolicies": [
+            {
+              "DefaultAction": "DENY",
+              "TrafficPolicyId": "tp-12345",
+              "TrafficPolicyName": "trafficPolicyName"
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "List TrafficPolicies with PageSize"
+      },
+      {
+        "input": {
+          "NextToken": "nextToken"
+        },
+        "output": {
+          "TrafficPolicies": [
+            {
+              "DefaultAction": "DENY",
+              "TrafficPolicyId": "tp-12345",
+              "TrafficPolicyName": "trafficPolicyName"
+            }
+          ]
+        },
+        "id": "example-3",
+        "title": "List TrafficPolicies with NextToken"
+      }
+    ],
+    "UpdateIngressPoint": [
+      {
+        "input": {
+          "IngressPointId": "inp-12345",
+          "IngressPointName": "ingressPointNewName"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Update Open/Auth IngressPoint with new Name"
+      },
+      {
+        "input": {
+          "IngressPointId": "inp-12345",
+          "RuleSetId": "rs-12345",
+          "TrafficPolicyId": "tp-12345"
+        },
+        "output": {},
+        "id": "example-2",
+        "title": "Update Open/Auth IngressPoint with new RuleSetId / TrafficPolicyId"
+      },
+      {
+        "input": {
+          "IngressPointConfiguration": {
+            "SmtpPassword": "newSmtpPassword"
+          },
+          "IngressPointId": "inp-12345"
+        },
+        "output": {},
+        "id": "example-3",
+        "title": "Update Auth IngressPoint with new SmtpPassword"
+      },
+      {
+        "input": {
+          "IngressPointConfiguration": {
+            "SecretArn": "arn:aws:secretsmanager:us-west-2:123456789012:secret:abcde"
+          },
+          "IngressPointId": "inp-12345"
+        },
+        "output": {},
+        "id": "example-4",
+        "title": "Update Auth IngressPoint with new SecretArn"
+      }
+    ],
+    "UpdateTrafficPolicy": [
+      {
+        "input": {
+          "TrafficPolicyId": "tp-12345",
+          "TrafficPolicyName": "trafficPolicyNewName"
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Update TrafficPolicy with new Name"
+      },
+      {
+        "input": {
+          "PolicyStatements": [
+            {
+              "Action": "ALLOW",
+              "Conditions": [
+                {
+                  "StringExpression": {
+                    "Evaluate": {
+                      "Attribute": "RECIPIENT"
+                    },
+                    "Operator": "EQUALS",
+                    "Values": [
+                      "example@amazon.com",
+                      "example@gmail.com"
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "TrafficPolicyId": "tp-12345"
+        },
+        "output": {},
+        "id": "example-2",
+        "title": "Update TrafficPolicy with new PolicyStatements"
+      },
+      {
+        "input": {
+          "DefaultAction": "ALLOW",
+          "TrafficPolicyId": "tp-12345"
+        },
+        "output": {},
+        "id": "example-3",
+        "title": "Update TrafficPolicy with new DefaultAction"
+      }
+    ]
   }
 }

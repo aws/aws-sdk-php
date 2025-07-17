@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Doc only update for CloudFront that fixes some customer-reported issues
+* `Aws\SFN` - Align input with style guidelines.
+* `Aws\CleanRoomsML` - This release introduces Parquet result format support for ML Input Channel models in AWS Clean Rooms ML.
+* `Aws\MailManager` - Allow underscores in the local part of the input of the "Email recipients rewrite" action in rule sets.
+* `Aws\KeyspacesStreams` - Doc only update for the Amazon Keyspaces Streams API.
+* `Aws\Synthetics` - This feature allows AWS Synthetics customers to provide code dependencies using lambda layer while creating a canary
+* `Aws\MediaConvert` - This release expands the range of supported audio outputs to include xHE, 192khz FLAC and the deprecation of dual mono for AC3.
+* `Aws\EC2` - AWS Free Tier Version2 Support
+
 ## 3.351.0 - 2025-07-16
 
 * `Aws\SFN` - Doc-only update to introduction, and edits to clarify input parameter and the set of control characters.

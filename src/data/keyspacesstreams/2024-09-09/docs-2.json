@@ -40,7 +40,7 @@
     "GetRecordsInputMaxResultsInteger": {
       "base": null,
       "refs": {
-        "GetRecordsInput$maxResults": "<p> The maximum number of records to return in a single <code>GetRecords</code> request. Default value is 1000. You can specify a limit between 1 and 10000, but the actual number returned might be less than the specified maximum if the size of the data for the returned records exceeds the internal size limit. </p>"
+        "GetRecordsInput$maxResults": "<p> The maximum number of records to return in a single <code>GetRecords</code> request. Default value is 1000. You can specify a limit between 1 and 1000, but the actual number returned might be less than the specified maximum if the size of the data for the returned records exceeds the internal size limit. </p>"
       }
     },
     "GetRecordsOutput": {
@@ -66,7 +66,7 @@
     "GetStreamInputMaxResultsInteger": {
       "base": null,
       "refs": {
-        "GetStreamInput$maxResults": "<p> The maximum number of shard objects to return in a single <code>GetStream</code> request. Default value is 100. The minimum value is 1 and the maximum value is 1000. </p>"
+        "GetStreamInput$maxResults": "<p> The maximum number of shard objects to return in a single <code>GetStream</code> request. Default value is 100. The minimum value is 1 and the maximum value is 100. </p>"
       }
     },
     "GetStreamOutput": {
@@ -167,7 +167,7 @@
     "ListStreamsInputMaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListStreamsInput$maxResults": "<p> The maximum number of streams to return in a single <code>ListStreams</code> request. Default value is 100. The minimum value is 1 and the maximum value is 1000. </p>"
+        "ListStreamsInput$maxResults": "<p> The maximum number of streams to return in a single <code>ListStreams</code> request. Default value is 100. The minimum value is 1 and the maximum value is 100. </p>"
       }
     },
     "ListStreamsOutput": {
@@ -262,9 +262,9 @@
     "ShardIterator": {
       "base": null,
       "refs": {
-        "GetRecordsInput$shardIterator": "<p> The unique identifier of the shard iterator. A shard iterator specifies the position in the shard from which you want to start reading data records sequentially. You obtain this value by calling the <code>GetShardIterator</code> operation. Each shard iterator is valid for 5 minutes after creation. </p>",
+        "GetRecordsInput$shardIterator": "<p> The unique identifier of the shard iterator. A shard iterator specifies the position in the shard from which you want to start reading data records sequentially. You obtain this value by calling the <code>GetShardIterator</code> operation. Each shard iterator is valid for 15 minutes after creation. </p>",
         "GetRecordsOutput$nextShardIterator": "<p> The next position in the shard from which to start sequentially reading data records. If null, the shard has been closed and the requested iterator doesn't return any more data. </p>",
-        "GetShardIteratorOutput$shardIterator": "<p> The unique identifier for the shard iterator. This value is used in the <code>GetRecords</code> operation to retrieve data records from the specified shard. Each shard iterator expires 5 minutes after it is returned to the requester. </p>"
+        "GetShardIteratorOutput$shardIterator": "<p> The unique identifier for the shard iterator. This value is used in the <code>GetRecords</code> operation to retrieve data records from the specified shard. Each shard iterator expires 15 minutes after it is returned to the requester. </p>"
       }
     },
     "ShardIteratorType": {

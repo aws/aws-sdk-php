@@ -295,6 +295,25 @@
       "base": null,
       "refs": {}
     },
+    "Dependencies": {
+      "base": null,
+      "refs": {
+        "CanaryCodeInput$Dependencies": "<p>A list of dependencies that should be used for running this canary. Specify the dependencies as a key-value pair, where the key is the type of dependency and the value is the dependency reference.</p>",
+        "CanaryCodeOutput$Dependencies": "<p>A list of dependencies that are used for running this canary. The dependencies are specified as a key-value pair, where the key is the type of dependency and the value is the dependency reference.</p>"
+      }
+    },
+    "Dependency": {
+      "base": "<p>A structure that contains information about a dependency for a canary.</p>",
+      "refs": {
+        "Dependencies$member": null
+      }
+    },
+    "DependencyType": {
+      "base": null,
+      "refs": {
+        "Dependency$Type": "<p>The type of dependency. Valid value is <code>LambdaLayer</code>.</p>"
+      }
+    },
     "DescribeCanariesLastRunNameFilter": {
       "base": null,
       "refs": {
@@ -748,6 +767,7 @@
         "CanaryStatus$StateReason": "<p>If the canary creation or update failed, this field provides details on the failure.</p>",
         "CreateCanaryRequest$ArtifactS3Location": "<p>The location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary. Artifacts include the log file, screenshots, and HAR files. The name of the Amazon S3 bucket can't include a period (.).</p>",
         "CreateCanaryRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
+        "Dependency$Reference": "<p>The dependency reference. For Lambda layers, this is the ARN of the Lambda layer. For more information about Lambda ARN format, see <a href=\"https://docs.aws.amazon.com/lambda/latest/api/API_Layer.html\">Lambda</a>.</p>",
         "DryRunConfigOutput$LastDryRunExecutionStatus": "<p>Returns the last execution status for a canary's dry run.</p>",
         "Group$Id": "<p>The unique ID of the group.</p>",
         "GroupSummary$Id": "<p>The unique ID of the group.</p>",

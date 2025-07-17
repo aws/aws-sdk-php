@@ -461,14 +461,16 @@
         "S3Key":{"shape":"String"},
         "S3Version":{"shape":"String"},
         "ZipFile":{"shape":"Blob"},
-        "Handler":{"shape":"CodeHandler"}
+        "Handler":{"shape":"CodeHandler"},
+        "Dependencies":{"shape":"Dependencies"}
       }
     },
     "CanaryCodeOutput":{
       "type":"structure",
       "members":{
         "SourceLocationArn":{"shape":"String"},
-        "Handler":{"shape":"String"}
+        "Handler":{"shape":"String"},
+        "Dependencies":{"shape":"Dependencies"}
       }
     },
     "CanaryDryRunConfigOutput":{
@@ -726,6 +728,24 @@
     "DeleteGroupResponse":{
       "type":"structure",
       "members":{}
+    },
+    "Dependencies":{
+      "type":"list",
+      "member":{"shape":"Dependency"},
+      "max":1,
+      "min":0
+    },
+    "Dependency":{
+      "type":"structure",
+      "required":["Reference"],
+      "members":{
+        "Type":{"shape":"DependencyType"},
+        "Reference":{"shape":"String"}
+      }
+    },
+    "DependencyType":{
+      "type":"string",
+      "enum":["LambdaLayer"]
     },
     "DescribeCanariesLastRunNameFilter":{
       "type":"list",
