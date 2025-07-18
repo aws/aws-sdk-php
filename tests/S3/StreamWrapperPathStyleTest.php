@@ -294,7 +294,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame('HEAD', $entries[4]['request']->getMethod());
 
         $this->assertSame('PUT', $entries[1]['request']->getMethod());
-        $this->assertSame('/bucket/', $entries[1]['request']->getUri()->getPath());
+        $this->assertSame('/bucket', $entries[1]['request']->getUri()->getPath());
         $this->assertSame('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
         $this->assertSame('', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
         $this->assertSame('', (string) $entries[3]['request']->getHeaderLine('x-amz-acl'));
@@ -345,7 +345,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertCount(1, $history);
         $entries = $history->toArray();
         $this->assertSame('DELETE', $entries[0]['request']->getMethod());
-        $this->assertSame('/bucket/', $entries[0]['request']->getUri()->getPath());
+        $this->assertSame('/bucket', $entries[0]['request']->getUri()->getPath());
         $this->assertSame('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 

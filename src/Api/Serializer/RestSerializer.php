@@ -15,6 +15,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Serializes HTTP locations like header, uri, payload, etc...
@@ -34,8 +35,8 @@ abstract class RestSerializer
     private $isUseEndpointV2;
 
     /**
-     * @param Service $api      Service API description
-     * @param string  $endpoint Endpoint to connect to
+     * @param Service $api Service API description
+     * @param string $endpoint Endpoint to connect to
      */
     public function __construct(Service $api, $endpoint)
     {
@@ -45,13 +46,12 @@ abstract class RestSerializer
 
     /**
      * @param CommandInterface $command Command to serialize into a request.
-     * @param $clientArgs Client arguments used for dynamic endpoint resolution.
-     *
+     * @param mixed|null $endpoint
      * @return RequestInterface
      */
     public function __invoke(
         CommandInterface $command,
-        $endpoint = null
+        mixed $endpoint = null
     )
     {
         $operation = $this->api->getOperation($command->getName());
@@ -77,9 +77,9 @@ abstract class RestSerializer
     /**
      * Modifies a hash of request options for a payload body.
      *
-     * @param StructureShape   $member  Member to serialize
-     * @param array            $value   Value to serialize
-     * @param array            $opts    Request options to modify.
+     * @param StructureShape $member Member to serialize
+     * @param array $value Value to serialize
+     * @param array $opts Request options to modify.
      */
     abstract protected function payload(
         StructureShape $member,
@@ -131,7 +131,7 @@ abstract class RestSerializer
         $m = $input->getMember($name);
 
         if ($m['streaming'] ||
-           ($m['type'] == 'string' || $m['type'] == 'blob')
+            ($m['type'] == 'string' || $m['type'] == 'blob')
         ) {
             // Streaming bodies or payloads that are strings are
             // always just a stream of data.
@@ -198,79 +198,143 @@ abstract class RestSerializer
         }
     }
 
-    private function buildEndpoint(Operation $operation, array $args, array $opts)
+    private function buildEndpoint(
+        Operation $operation,
+        array $args,
+        array $opts
+    ): UriInterface
     {
-        $serviceName = $this->api->getServiceName();
-        // Create an associative array of variable definitions used in expansions
+        // Expand `requestUri` field members
+        $relativeUri = $this->expandUriTemplate($operation, $args);
+
+        // Add query members to relativeUri
+        if (!empty($opts['query'])) {
+            $relativeUri = $this->appendQuery($opts['query'], $relativeUri);
+        }
+
+        // Special case - S3 keys that need path preservation
+        if ($this->api->getServiceName() === 's3'
+            && isset($args['Key'])
+            && $this->shouldPreservePath($args['Key'])
+        ) {
+            return new Uri($this->endpoint . $relativeUri);
+        }
+
+        return $this->resolveUri($relativeUri, $opts);
+    }
+
+    /**
+     * Expands `requestUri` members
+     *
+     * @param Operation $operation
+     * @param array $args
+     *
+     * @return string
+     */
+    private function expandUriTemplate(Operation $operation, array $args): string
+    {
         $varDefinitions = $this->getVarDefinitions($operation, $args);
 
-        $relative = preg_replace_callback(
+        return preg_replace_callback(
             '/\{([^\}]+)\}/',
             function (array $matches) use ($varDefinitions) {
-                $isGreedy = substr($matches[1], -1, 1) == '+';
-                $k = $isGreedy ? substr($matches[1], 0, -1) : $matches[1];
-                if (!isset($varDefinitions[$k])) {
+                $isGreedy = str_ends_with($matches[1], '+');
+                $varName = $isGreedy ? substr($matches[1], 0, -1) : $matches[1];
+
+                if (!isset($varDefinitions[$varName])) {
                     return '';
                 }
 
+                $value = $varDefinitions[$varName];
+
                 if ($isGreedy) {
-                    return str_replace('%2F', '/', rawurlencode($varDefinitions[$k]));
+                    return str_replace('%2F', '/', rawurlencode($value));
                 }
 
-                return rawurlencode($varDefinitions[$k]);
+                return rawurlencode($value);
             },
             $operation['http']['requestUri']
         );
+    }
 
-        // Add the query string variables or appending to one if needed.
-        if (!empty($opts['query'])) {
-           $relative = $this->appendQuery($opts['query'], $relative);
-        }
-
-        $path = $this->endpoint->getPath();
-
-        if ($this->isUseEndpointV2 && $serviceName === 's3') {
-            if (substr($path, -1) === '/' && $relative[0] === '/') {
-                $path = rtrim($path, '/');
-            }
-            $relative = $path . $relative;
-
-            if (strpos($relative, '../') !== false
-                || substr($relative, -2) === '..'
-            ) {
-                if ($relative[0] !== '/') {
-                    $relative = '/' . $relative;
+    /**
+     * Checks for path-like key names. If detected, traditional
+     * URI resolution is bypassed.
+     *
+     * @param string $key
+     * @return bool
+     */
+    private function shouldPreservePath(string $key): bool
+    {
+        // Keys with dot segments
+        if (str_contains($key, '.')) {
+            $segments = explode('/', $key);
+            foreach ($segments as $segment) {
+                if ($segment === '.' || $segment === '..') {
+                    return true;
                 }
-
-                return new Uri($this->endpoint->withPath('') . $relative);
             }
         }
 
-        if (((!empty($relative) && $relative !== '/')
-            && !$this->isUseEndpointV2)
-            || (isset($serviceName) && str_starts_with($serviceName, 'geo-'))
-        ) {
-            $this->normalizePath($path);
+        // Keys starting with slash
+        if (isset($key[0]) && $key[0] === '/') {
+            return true;
         }
 
-        // If endpoint has path, remove leading '/' to preserve URI resolution.
-        if ($path && $relative[0] === '/') {
-            $relative = substr($relative, 1);
+        // Keys starting with double slash
+        if (str_starts_with($key, '//')) {
+            return true;
         }
 
-        //Append path to endpoint when leading '//...'
-        // present as uri cannot be properly resolved
-        if ($this->isUseEndpointV2 && strpos($relative, '//') === 0) {
-            return new Uri($this->endpoint . $relative);
+        return false;
+    }
+
+    /**
+     * @param string $relativeUri
+     * @param array $opts
+     *
+     * @return UriInterface
+     */
+    private function resolveUri(string $relativeUri, array $opts): UriInterface
+    {
+        $basePath = $this->endpoint->getPath();
+
+        // Only process if we have a non-empty base path
+        if (!empty($basePath) && $basePath !== '/') {
+            // if relative is just '/', we want just the base path without trailing slash
+            if ($relativeUri === '/' || empty($relativeUri)) {
+                // Remove trailing slash if present
+                return $this->endpoint->withPath(rtrim($basePath, '/'));
+            }
+
+            // if relative is '/?query', we want base path without trailing slash + query
+            // some operations model a query-like `requestUri`
+            if (empty($opts['query'])
+                && str_starts_with($relativeUri, '/?')
+            ) {
+                $query = substr($relativeUri, 2); // Remove '/?'
+                return $this->endpoint->withQuery($query);
+            }
+
+            // Ensure base path has trailing slash
+            if (!str_ends_with($basePath, '/')) {
+                $this->endpoint = $this->endpoint->withPath($basePath . '/');
+            }
+
+            // Remove leading slash from relative path to make it relative
+            if (isset($relativeUri[0]) && $relativeUri[0] === '/') {
+                $relativeUri = substr($relativeUri, 1);
+            }
         }
 
-        // Expand path place holders using Amazon's slightly different URI
-        // template syntax.
-        return UriResolver::resolve($this->endpoint, new Uri($relative));
+        return UriResolver::resolve($this->endpoint, new Uri($relativeUri));
     }
 
     /**
      * @param StructureShape $input
+     * @param $payload
+     *
+     * @return bool
      */
     private function hasPayloadParam(StructureShape $input, $payload)
     {
@@ -284,32 +348,48 @@ abstract class RestSerializer
                 return false;
             }
         }
+
         foreach ($input->getMembers() as $member) {
             if (!isset($member['location'])) {
                 return true;
             }
         }
+
         return false;
     }
 
-    private function appendQuery($query, $endpoint)
+    /**
+     * @param $query
+     * @param $relativeUri
+     *
+     * @return string
+     */
+    private function appendQuery($query, $relativeUri): string
     {
         $append = Psr7\Query::build($query);
-        return $endpoint .= strpos($endpoint, '?') !== false ? "&{$append}" : "?{$append}";
+        return $relativeUri
+            . (str_contains($relativeUri, '?') ? "&{$append}" : "?{$append}");
     }
 
-    private function getVarDefinitions($command, $args)
+    /**
+     * @param CommandInterface $command
+     * @param array $args
+     *
+     * @return array
+     */
+    private function getVarDefinitions(
+        Operation $operation,
+        array $args
+    ): array
     {
         $varDefinitions = [];
 
-        foreach ($command->getInput()->getMembers() as $name => $member) {
+        foreach ($operation->getInput()->getMembers() as $name => $member) {
             if ($member['location'] == 'uri') {
-                $varDefinitions[$member['locationName'] ?: $name] =
-                    isset($args[$name])
-                        ? $args[$name]
-                        : null;
+                $varDefinitions[$member['locationName'] ?: $name] = $args[$name] ?? null;
             }
         }
+
         return $varDefinitions;
     }
 
