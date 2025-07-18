@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.2 - 2025-07-18
 
 * `Aws\MediaConvert` - This release adds support for TAMS server integration with MediaConvert inputs.
 * `Aws\SSM` - July 2025 doc-only updates for Systems Manager.
