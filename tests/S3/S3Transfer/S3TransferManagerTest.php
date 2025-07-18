@@ -13,7 +13,6 @@ use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResponse;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
-use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResponse;
 use Aws\S3\S3Transfer\Models\UploadRequest;
@@ -2754,7 +2753,7 @@ class S3TransferManagerTest extends TestCase
      * @param array $expectedOutput
      *
      * @return void
-     * @dataProvider failsWhenKeyResolvesOutsideTargetDirectoryProvider
+     * @dataProvider resolvesOutsideTargetDirectoryProvider
      */
     public function testResolvesOutsideTargetDirectory(
         ?string $prefix,
