@@ -14,8 +14,8 @@ use XMLWriter;
  */
 class XmlBody
 {
-    /** @var \Aws\Api\Service */
-    private $api;
+    /** @var Service */
+    private Service $api;
 
     /**
      * @param Service $api API being used to create the XML body.
@@ -38,7 +38,12 @@ class XmlBody
         $xml = new XMLWriter();
         $xml->openMemory();
         $xml->startDocument('1.0', 'UTF-8');
-        $this->format($shape, $shape['locationName'] ?: $shape['name'], $args, $xml);
+
+        // Check if this is a payload member
+        $payloadMemberName = $shape['__payloadMemberName'] ?? null;
+        $rootElementName = $this->determineRootElementName($shape, $payloadMemberName);
+
+        $this->format($shape, $rootElementName, $args, $xml);
         $xml->endDocument();
 
         return $xml->outputMemory();
@@ -51,7 +56,7 @@ class XmlBody
         if ($ns = $shape['xmlNamespace']) {
             $xml->writeAttribute(
                 isset($ns['prefix']) ? "xmlns:{$ns['prefix']}" : 'xmlns',
-                $shape['xmlNamespace']['uri']
+                $ns['uri']
             );
         }
     }
@@ -93,9 +98,19 @@ class XmlBody
         $this->startElement($shape, $name, $xml);
 
         foreach ($this->getStructureMembers($shape, $value) as $k => $definition) {
+            // Default to member name
+            $elementName = $k;
+
+            // Only use locationName for non-structure members
+            if (!($definition['member'] instanceof StructureShape)
+                && $definition['member']['locationName']
+            ) {
+                $elementName = $definition['member']['locationName'];
+            }
+
             $this->format(
                 $definition['member'],
-                $definition['member']['locationName'] ?: $k,
+                $elementName,
                 $definition['value'],
                 $xml
             );
@@ -157,11 +172,13 @@ class XmlBody
         array $value,
         XMLWriter $xml
     ) {
-        $xmlEntry = $shape['flattened'] ? $shape['locationName'] : 'entry';
+        $xmlEntry = $shape['flattened'] ? $name : 'entry';
         $xmlKey = $shape->getKey()['locationName'] ?: 'key';
         $xmlValue = $shape->getValue()['locationName'] ?: 'value';
 
-        $this->startElement($shape, $name, $xml);
+        if (!$shape['flattened']) {
+            $this->startElement($shape, $name, $xml);
+        }
 
         foreach ($value as $key => $v) {
             $this->startElement($shape, $xmlEntry, $xml);
@@ -170,7 +187,9 @@ class XmlBody
             $xml->endElement();
         }
 
-        $xml->endElement();
+        if (!$shape['flattened']) {
+            $xml->endElement();
+        }
     }
 
     private function add_blob(Shape $shape, $name, $value, XMLWriter $xml)
@@ -216,5 +235,37 @@ class XmlBody
         } else {
             $this->defaultShape($shape, $name, $value, $xml);
         }
+    }
+
+    private function determineRootElementName(
+        Shape $shape,
+        ?string $payloadMemberName
+    ): string
+    {
+        $shapeName = $shape->getName();
+
+        // For payload members, check if locationName differs from member name
+        if ($payloadMemberName && $shape['locationName']) {
+            // Only use member's locationName if it's different from the member name
+            if ($shape['locationName'] !== $payloadMemberName) {
+                return $shape['locationName'];
+            }
+        }
+
+        // Look up the shape definition
+        if ($shapeName && $shape->getShapeMap()) {
+            $shapeMap = $shape->getShapeMap();
+            if (isset($shapeMap[$shapeName]['locationName'])) {
+                return $shapeMap[$shapeName]['locationName'];
+            }
+        }
+
+        // If no locationName found in definition, use shape name for payload members
+        // This handles the case where the shape has no explicit locationName
+        if ($payloadMemberName && $shapeName) {
+            return $shapeName;
+        }
+
+        return $shape['locationName'] ?? $shapeName;
     }
 }
