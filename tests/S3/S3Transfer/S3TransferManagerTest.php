@@ -1980,16 +1980,16 @@ class S3TransferManagerTest extends TestCase
     }
 
     /**
-     * @param array $config
-     * @param string $expectedS3Delimiter
+     * @param string|null $delimiter
+     * @param string|null $expectedS3Delimiter
      *
      * @dataProvider downloadDirectoryAppliesDelimiterProvider
      *
      * @return void
      */
     public function testDownloadDirectoryAppliesDelimiter(
-        array $config,
-        string $expectedS3Delimiter
+        ?string $delimiter,
+        ?string $expectedS3Delimiter
     ): void
     {
         $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
@@ -2010,7 +2010,7 @@ class S3TransferManagerTest extends TestCase
                         $listObjectsCalled = true;
                         $this->assertEquals(
                             $expectedS3Delimiter,
-                            $command['Delimiter']
+                            $command['Delimiter'] ?? null
                         );
                     }
 
@@ -2036,6 +2036,13 @@ class S3TransferManagerTest extends TestCase
                     return new HandlerList();
                 }
             ]);
+            $config = [];
+            if ($delimiter !== null) {
+                $config['list_object_v2_args'] = [
+                    'Delimiter' => $delimiter,
+                ];
+            }
+
             $manager = new S3TransferManager(
                 $client,
             );
@@ -2061,28 +2068,17 @@ class S3TransferManagerTest extends TestCase
     public function downloadDirectoryAppliesDelimiterProvider(): array
     {
         return [
-            's3_delimiter_from_config' => [
-                'config' => [
-                    's3_delimiter' => 'FooDelimiter',
-                ],
+            's3_delimiter_1' => [
+                'Delimiter' => 'FooDelimiter',
                 'expected_s3_delimiter' => 'FooDelimiter'
             ],
-            's3_delimiter_from_list_object_v2_args' => [
-                'config' => [
-                    'list_object_v2_args' => [
-                        'Delimiter' => 'DelimiterFromArgs'
-                    ],
-                ],
-                'expected_s3_delimiter' => 'DelimiterFromArgs'
+            's3_delimiter_2' => [
+                'Delimiter' => 'FooDelimiter2',
+                'expected_s3_delimiter' => 'FooDelimiter2'
             ],
-            's3_delimiter_from_config_is_ignored_when_present_in_list_object_args' => [
-                'config' => [
-                    's3_delimiter' => 'TestDelimiter',
-                    'list_object_v2_args' => [
-                        'Delimiter' => 'DelimiterFromArgs'
-                    ],
-                ],
-                'expected_s3_delimiter' => 'DelimiterFromArgs'
+            's3_delimiter_4_defaulted_to_null' => [
+                'Delimiter' => null,
+                'expected_s3_delimiter' => null
             ],
         ];
     }
