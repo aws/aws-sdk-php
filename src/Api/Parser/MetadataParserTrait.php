@@ -17,6 +17,10 @@ trait MetadataParserTrait
         &$result
     ) {
         $value = $response->getHeaderLine($shape['locationName'] ?: $name);
+        // Empty values should not be deserialized
+        if (empty($value)) {
+            return;
+        }
 
         switch ($shape->getType()) {
             case 'float':
