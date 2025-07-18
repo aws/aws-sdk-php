@@ -575,7 +575,8 @@ class S3TransferManager
         string|StreamInterface $source,
         array $requestArgs,
         ?TransferListenerNotifier $listenerNotifier  = null
-    ): PromiseInterface {
+    ): PromiseInterface
+    {
         if (is_string($source) && is_readable($source)) {
             $requestArgs['SourceFile'] = $source;
             $objectSize = filesize($source);
@@ -664,7 +665,8 @@ class S3TransferManager
     private function tryMultipartUpload(
         UploadRequest $uploadRequest,
         ?TransferListenerNotifier $listenerNotifier = null,
-    ): PromiseInterface {
+    ): PromiseInterface
+    {
         return (new MultipartUploader(
             $this->s3Client,
             $uploadRequest->getPutObjectRequestArgs(),

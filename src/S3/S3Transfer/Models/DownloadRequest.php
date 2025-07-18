@@ -136,7 +136,8 @@ final class DownloadRequest extends TransferRequest
     /**
      * @return DownloadHandler
      */
-    public function getDownloadHandler(): DownloadHandler {
+    public function getDownloadHandler(): DownloadHandler
+    {
         return $this->downloadHandler;
     }
 
@@ -147,7 +148,8 @@ final class DownloadRequest extends TransferRequest
      *
      * @return array
      */
-    public function normalizeSourceAsArray(): array {
+    public function normalizeSourceAsArray(): array
+    {
         // If source is null then fall back to getObjectRequest.
         $source = $this->getSource() ?? [
             'Bucket' => $this->getObjectRequestArgs['Bucket'] ?? null,

@@ -41,8 +41,7 @@ class MultipartUploader extends AbstractMultipartUploader
         array $parts = [],
         ?TransferProgressSnapshot $currentSnapshot = null,
         ?TransferListenerNotifier $listenerNotifier = null,
-    )
-    {
+    ) {
         parent::__construct(
             $s3Client,
             $putObjectRequestArgs,
@@ -92,7 +91,8 @@ class MultipartUploader extends AbstractMultipartUploader
     /**
      * @return void
      */
-    private function evaluateCustomChecksum(): void {
+    private function evaluateCustomChecksum(): void
+    {
         // Evaluation for custom provided checksums
         $checksumName = self::filterChecksum($this->putObjectRequestArgs);
         if ($checksumName !== null) {
@@ -240,7 +240,10 @@ class MultipartUploader extends AbstractMultipartUploader
      *
      * @return StreamInterface
      */
-    private function decorateWithHashes(StreamInterface $stream, array &$data): StreamInterface
+    private function decorateWithHashes(
+        StreamInterface $stream,
+        array &$data
+    ): StreamInterface
     {
         // Decorate source with a hashing stream
         $hash = new PhpHash('sha256');

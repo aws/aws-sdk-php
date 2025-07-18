@@ -19,7 +19,8 @@ abstract class ProgressBarFormat
         $this->args = $args;
     }
 
-    public function getArgs(): array {
+    public function getArgs(): array
+    {
         return $this->args;
     }
 
@@ -54,7 +55,8 @@ abstract class ProgressBarFormat
     /**
      * @return string
      */
-    public function format(): string {
+    public function format(): string
+    {
         $parameters = $this->getFormatParameters();
         $defaultParameterValues = $this->getFormatDefaultParameterValues();
         foreach ($parameters as $param) {

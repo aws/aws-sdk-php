@@ -7,7 +7,8 @@ use Aws\S3\S3Transfer\Exceptions\ProgressTrackerException;
 /**
  * To track single object transfers.
  */
-final class SingleProgressTracker extends TransferListener implements ProgressTrackerInterface
+final class SingleProgressTracker extends TransferListener
+    implements ProgressTrackerInterface
 {
     /** @var ProgressBarInterface */
     private ProgressBarInterface $progressBar;
@@ -37,8 +38,7 @@ final class SingleProgressTracker extends TransferListener implements ProgressTr
         bool $clear = true,
         ?TransferProgressSnapshot $currentSnapshot = null,
         bool $showProgressOnUpdate = true
-    )
-    {
+    ) {
         $this->progressBar = $progressBar;
         if (get_resource_type($output) !== 'stream') {
             throw new \InvalidArgumentException("The type for $output must be a stream");

@@ -24,8 +24,7 @@ final class DownloadFileRequest
         string $destination,
         bool $failsWhenDestinationExists,
         DownloadRequest $downloadRequest
-    )
-    {
+    ) {
         $this->destination = $destination;
         $this->failsWhenDestinationExists = $failsWhenDestinationExists;
         $this->downloadRequest = DownloadRequest::fromDownloadRequestAndDownloadHandler(

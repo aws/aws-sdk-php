@@ -61,7 +61,8 @@ class UploadDirectoryRequest extends TransferRequest
         array             $config = [],
         array             $listeners = [],
         ?TransferListener $progressTracker = null,
-    ): UploadDirectoryRequest {
+    ): UploadDirectoryRequest
+    {
         return new self(
             $sourceDirectory,
             $targetBucket,

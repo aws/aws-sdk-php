@@ -25,8 +25,10 @@ class FileDownloadHandler extends DownloadHandler
      * @param string $destination
      * @param bool $failsWhenDestinationExists
      */
-    public function __construct(string $destination, bool $failsWhenDestinationExists)
-    {
+    public function __construct(
+        string $destination,
+        bool $failsWhenDestinationExists
+    ) {
         $this->destination = $destination;
         $this->failsWhenDestinationExists = $failsWhenDestinationExists;
         $this->temporaryDestination = "";

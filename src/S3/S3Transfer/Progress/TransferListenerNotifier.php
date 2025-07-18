@@ -27,7 +27,8 @@ class TransferListenerNotifier extends TransferListener
      *
      * @return void
      */
-    public function addListener(TransferListener $listener): void {
+    public function addListener(TransferListener $listener): void
+    {
         $this->listeners[] = $listener;
     }
 

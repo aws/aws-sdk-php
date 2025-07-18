@@ -86,8 +86,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         array $parts = [],
         ?TransferProgressSnapshot $currentSnapshot = null,
         ?TransferListenerNotifier $listenerNotifier = null,
-    )
-    {
+    ) {
         $this->s3Client = $s3Client;
         $this->putObjectRequestArgs = $putObjectRequestArgs;
         $this->validateConfig($config);

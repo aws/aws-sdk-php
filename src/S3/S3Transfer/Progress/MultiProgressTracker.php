@@ -23,8 +23,8 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     /** @var int */
     private int $failed;
 
-    /** @var ProgressBarFactoryInterface | Closure | null */
-    private readonly ProgressBarFactoryInterface | Closure | null $progressBarFactory;
+    /** @var ProgressBarFactoryInterface|Closure|null */
+    private readonly ProgressBarFactoryInterface|Closure|null $progressBarFactory;
 
     /**
      * @param array $singleProgressTrackers
@@ -40,7 +40,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
         int $transferCount = 0,
         int $completed = 0,
         int $failed = 0,
-        ProgressBarFactoryInterface | Closure | null $progressBarFactory = null
+        ProgressBarFactoryInterface|Closure|null $progressBarFactory = null
     )
     {
         $this->singleProgressTrackers = $singleProgressTrackers;

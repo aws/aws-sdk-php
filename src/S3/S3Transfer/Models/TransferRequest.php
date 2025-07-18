@@ -57,7 +57,8 @@ abstract class TransferRequest
     /**
      * @return array
      */
-    public function getConfig(): array {
+    public function getConfig(): array
+    {
         return $this->config;
     }
 
@@ -66,7 +67,8 @@ abstract class TransferRequest
      *
      * @return void
      */
-    public function updateConfigWithDefaults(array $defaultConfig): void {
+    public function updateConfigWithDefaults(array $defaultConfig): void
+    {
         foreach (static::$configKeys as $key) {
             if (empty($this->config[$key])) {
                 $this->config[$key] = $defaultConfig[$key];

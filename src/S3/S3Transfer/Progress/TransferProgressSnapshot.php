@@ -65,7 +65,7 @@ class TransferProgressSnapshot
     /**
      * @return array|null
      */
-    public function getResponse(): array | null
+    public function getResponse(): array|null
     {
         return $this->response;
     }
@@ -90,6 +90,4 @@ class TransferProgressSnapshot
     {
         return $this->reason;
     }
-
-
 }

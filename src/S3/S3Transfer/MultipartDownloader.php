@@ -92,7 +92,8 @@ abstract class MultipartDownloader implements PromisorInterface
         $this->listenerNotifier  = $listenerNotifier;
     }
 
-    private function validateConfig(array &$config): void {
+    private function validateConfig(array &$config): void
+    {
         if (!isset($config['target_part_size_bytes'])) {
             $config['target_part_size_bytes'] = S3TransferManagerConfig::DEFAULT_TARGET_PART_SIZE_BYTES;
         }
@@ -145,7 +146,8 @@ abstract class MultipartDownloader implements PromisorInterface
     /**
      * @return DownloadResult
      */
-    public function download(): DownloadResult {
+    public function download(): DownloadResult
+    {
         return $this->promise()->wait();
     }
 
@@ -206,7 +208,8 @@ abstract class MultipartDownloader implements PromisorInterface
      *
      * @return PromiseInterface
      */
-    protected function initialRequest(): PromiseInterface {
+    protected function initialRequest(): PromiseInterface
+    {
         $command = $this->nextCommand();
         // Notify download initiated
         $this->downloadInitiated($command->toArray());

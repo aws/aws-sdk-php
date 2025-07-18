@@ -96,7 +96,8 @@ class DownloadDirectoryRequest extends TransferRequest
         array             $config = [],
         array             $listeners = [],
         ?TransferListener $progressTracker = null,
-    ): DownloadDirectoryRequest {
+    ): DownloadDirectoryRequest
+    {
         return new self(
             $sourceBucket,
             $destinationDirectory,

@@ -171,7 +171,8 @@ class S3TransferManagerConfig
     /**
      * @return array
      */
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'target_part_size_bytes' => $this->targetPartSizeBytes,
             'multipart_upload_threshold_bytes' => $this->multipartUploadThresholdBytes,
