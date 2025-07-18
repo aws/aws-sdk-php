@@ -14,6 +14,7 @@
     "GetConnection": "<note> <p> Amazon Web Services uses this action to install Outpost servers.</p> </note> <p> Gets information about the specified connection. </p> <p> Use CloudTrail to monitor this action or Amazon Web Services managed policy for Amazon Web Services Outposts to secure it. For more information, see <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/security-iam-awsmanpol.html\"> Amazon Web Services managed policies for Amazon Web Services Outposts</a> and <a href=\"https://docs.aws.amazon.com/outposts/latest/userguide/logging-using-cloudtrail.html\"> Logging Amazon Web Services Outposts API calls with Amazon Web Services CloudTrail</a> in the <i>Amazon Web Services Outposts User Guide</i>. </p>",
     "GetOrder": "<p>Gets information about the specified order.</p>",
     "GetOutpost": "<p>Gets information about the specified Outpost.</p>",
+    "GetOutpostBillingInformation": "<p>Gets current and historical billing information about the specified Outpost.</p>",
     "GetOutpostInstanceTypes": "<p>Gets the instance types for the specified Outpost.</p>",
     "GetOutpostSupportedInstanceTypes": "<p>Gets the instance types that an Outpost can support in <code>InstanceTypeCapacity</code>. This will generally include instance types that are not currently configured and therefore cannot be launched with the current Outpost capacity configuration.</p>",
     "GetSite": "<p>Gets information about the specified Outpost site.</p>",
@@ -572,6 +573,14 @@
       "base": null,
       "refs": {}
     },
+    "GetOutpostBillingInformationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetOutpostBillingInformationOutput": {
+      "base": null,
+      "refs": {}
+    },
     "GetOutpostInput": {
       "base": null,
       "refs": {}
@@ -640,7 +649,9 @@
         "OrderSummary$OrderFulfilledDate": "<p> The fulfilment date for the order. </p>",
         "StartCapacityTaskOutput$CreationDate": "<p>Date that the specified capacity task was created.</p>",
         "StartCapacityTaskOutput$CompletionDate": "<p>Date that the specified capacity task ran successfully.</p>",
-        "StartCapacityTaskOutput$LastModifiedDate": "<p>Date that the specified capacity task was last modified.</p>"
+        "StartCapacityTaskOutput$LastModifiedDate": "<p>Date that the specified capacity task was last modified.</p>",
+        "Subscription$BeginDate": "<p>The date your subscription starts.</p>",
+        "Subscription$EndDate": "<p>The date your subscription ends.</p>"
       }
     },
     "InstanceFamilies": {
@@ -884,6 +895,7 @@
     "MaxResults1000": {
       "base": "<p>The maximum page size.</p>",
       "refs": {
+        "GetOutpostBillingInformationInput$MaxResults": null,
         "GetOutpostInstanceTypesInput$MaxResults": null,
         "GetOutpostSupportedInstanceTypesInput$MaxResults": null,
         "ListAssetInstancesInput$MaxResults": null,
@@ -925,6 +937,13 @@
       "base": "<p>The specified request is not valid.</p>",
       "refs": {}
     },
+    "NullableDouble": {
+      "base": null,
+      "refs": {
+        "Subscription$MonthlyRecurringPrice": "<p>The amount you are billed each month in the subscription period.</p>",
+        "Subscription$UpfrontPrice": "<p>The amount billed when the subscription is created. This is a one-time charge.</p>"
+      }
+    },
     "OpticalStandard": {
       "base": null,
       "refs": {
@@ -952,6 +971,12 @@
         "OrderSummary$OrderId": "<p> The ID of the order. </p>",
         "StartCapacityTaskInput$OrderId": "<p>The ID of the Amazon Web Services Outposts order associated with the specified capacity task.</p>",
         "StartCapacityTaskOutput$OrderId": "<p>ID of the Amazon Web Services Outposts order of the host associated with the capacity task.</p>"
+      }
+    },
+    "OrderIdList": {
+      "base": null,
+      "refs": {
+        "Subscription$OrderIds": "<p>The order ID for your subscription.</p>"
       }
     },
     "OrderStatus": {
@@ -1010,7 +1035,7 @@
         "CapacityTaskSummary$OutpostId": "<p>The ID of the Outpost associated with the specified capacity task.</p>",
         "DeleteOutpostInput$OutpostId": "<p> The ID or ARN of the Outpost. </p>",
         "GetCapacityTaskOutput$OutpostId": "<p>ID of the Outpost associated with the specified capacity task.</p>",
-        "GetOutpostInput$OutpostId": "<p> The ID or ARN of the Outpost. </p>",
+        "GetOutpostInput$OutpostId": "<p>The ID or ARN of the Outpost.</p>",
         "GetOutpostInstanceTypesInput$OutpostId": "<p> The ID or ARN of the Outpost. </p>",
         "GetOutpostInstanceTypesOutput$OutpostId": "<p> The ID of the Outpost. </p>",
         "Outpost$OutpostId": "<p> The ID of the Outpost. </p>",
@@ -1031,6 +1056,7 @@
         "CancelCapacityTaskInput$OutpostIdentifier": "<p>ID or ARN of the Outpost associated with the capacity task that you want to cancel.</p>",
         "CreateOrderInput$OutpostIdentifier": "<p> The ID or the Amazon Resource Name (ARN) of the Outpost. </p>",
         "GetCapacityTaskInput$OutpostIdentifier": "<p>ID or ARN of the Outpost associated with the specified capacity task.</p>",
+        "GetOutpostBillingInformationInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
         "GetOutpostSupportedInstanceTypesInput$OutpostIdentifier": "<p>The ID or ARN of the Outpost.</p>",
         "ListAssetInstancesInput$OutpostIdentifier": "<p>The ID of the Outpost.</p>",
         "ListAssetsInput$OutpostIdentifier": "<p> The ID or the Amazon Resource Name (ARN) of the Outpost. </p>",
@@ -1280,7 +1306,34 @@
     "String": {
       "base": null,
       "refs": {
-        "ConflictException$ResourceId": "<p>The ID of the resource causing the conflict.</p>"
+        "ConflictException$ResourceId": "<p>The ID of the resource causing the conflict.</p>",
+        "GetOutpostBillingInformationOutput$ContractEndDate": "<p>The date the current contract term ends for the specified Outpost. You must start the renewal or decommission process at least 5 business days before the current term for your Amazon Web Services Outposts ends. Failing to complete these steps at least 5 business days before the current term ends might result in unanticipated charges.</p>",
+        "OrderIdList$member": null,
+        "Subscription$SubscriptionId": "<p>The ID of the subscription that appears on the Amazon Web Services Billing Center console.</p>"
+      }
+    },
+    "Subscription": {
+      "base": "<p>Provides information about your Amazon Web Services Outposts subscriptions.</p>",
+      "refs": {
+        "SubscriptionList$member": null
+      }
+    },
+    "SubscriptionList": {
+      "base": null,
+      "refs": {
+        "GetOutpostBillingInformationOutput$Subscriptions": "<p>The subscription details for the specified Outpost.</p>"
+      }
+    },
+    "SubscriptionStatus": {
+      "base": null,
+      "refs": {
+        "Subscription$SubscriptionStatus": "<p>The status of subscription which can be one of the following:</p> <ul> <li> <p> <b>INACTIVE</b> - Subscription requests that are inactive.</p> </li> <li> <p> <b>ACTIVE</b> - Subscription requests that are in progress and have an end date in the future.</p> </li> <li> <p> <b>CANCELLED</b> - Subscription requests that are cancelled.</p> </li> </ul>"
+      }
+    },
+    "SubscriptionType": {
+      "base": null,
+      "refs": {
+        "Subscription$SubscriptionType": "<p>The type of subscription which can be one of the following:</p> <ul> <li> <p> <b>ORIGINAL</b> - The first order on the Amazon Web Services Outposts.</p> </li> <li> <p> <b>RENEWAL</b> - Renewal requests, both month to month and longer term.</p> </li> <li> <p> <b>CAPACITY_INCREASE</b> - Capacity scaling orders.</p> </li> </ul>"
       }
     },
     "SupportedHardwareType": {
@@ -1365,6 +1418,8 @@
     "Token": {
       "base": "<p>The pagination token.</p>",
       "refs": {
+        "GetOutpostBillingInformationInput$NextToken": null,
+        "GetOutpostBillingInformationOutput$NextToken": null,
         "GetOutpostInstanceTypesInput$NextToken": null,
         "GetOutpostInstanceTypesOutput$NextToken": null,
         "GetOutpostSupportedInstanceTypesInput$NextToken": null,

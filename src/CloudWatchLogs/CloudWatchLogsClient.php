@@ -112,6 +112,8 @@ use Generator;
  * @method \GuzzleHttp\Promise\Promise getLogEventsAsync(array $args = [])
  * @method \Aws\Result getLogGroupFields(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLogGroupFieldsAsync(array $args = [])
+ * @method \Aws\Result getLogObject(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLogObjectAsync(array $args = [])
  * @method \Aws\Result getLogRecord(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLogRecordAsync(array $args = [])
  * @method \Aws\Result getQueryResults(array $args = [])

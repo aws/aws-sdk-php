@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaConvert` - This release adds support for TAMS server integration with MediaConvert inputs.
+* `Aws\SSM` - July 2025 doc-only updates for Systems Manager.
+* `Aws\AuditManager` - Updated error handling for RegisterOrganizationAdminAccount API to properly translate TooManyExceptions to HTTP 429 status code. This enhancement improves error handling consistency and provides clearer feedback when request limits are exceeded.
+* `Aws\CloudWatchLogs` - CloudWatchLogs launches GetLogObject API with streaming support for efficient log data retrieval. Logs added support for new AccountPolicy type METRIC_EXTRACTION_POLICY. For more information, see CloudWatch Logs API documentation
+* `Aws\SESv2` - Added IP Visibility support for managed dedicated pools. Enhanced GetDedicatedIp and GetDedicatedIps APIs to return managed IP addresses.
+* `Aws\Outposts` - Add AWS Outposts API to surface customer billing information
+
 ## 3.351.1 - 2025-07-17
 
 * `Aws\CloudFront` - Doc only update for CloudFront that fixes some customer-reported issues

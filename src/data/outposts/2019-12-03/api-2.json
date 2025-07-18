@@ -155,6 +155,7 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -200,6 +201,20 @@
         {"shape":"NotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "GetOutpostBillingInformation":{
+      "name":"GetOutpostBillingInformation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/outpost/{OutpostIdentifier}/billing-information"
+      },
+      "input":{"shape":"GetOutpostBillingInformationInput"},
+      "output":{"shape":"GetOutpostBillingInformationOutput"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"NotFoundException"}
       ]
     },
     "GetOutpostInstanceTypes":{
@@ -333,6 +348,7 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"NotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1175,6 +1191,35 @@
         "Order":{"shape":"Order"}
       }
     },
+    "GetOutpostBillingInformationInput":{
+      "type":"structure",
+      "required":["OutpostIdentifier"],
+      "members":{
+        "NextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults1000",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "OutpostIdentifier":{
+          "shape":"OutpostIdentifier",
+          "location":"uri",
+          "locationName":"OutpostIdentifier"
+        }
+      }
+    },
+    "GetOutpostBillingInformationOutput":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"Token"},
+        "Subscriptions":{"shape":"SubscriptionList"},
+        "ContractEndDate":{"shape":"String"}
+      }
+    },
     "GetOutpostInput":{
       "type":"structure",
       "required":["OutpostId"],
@@ -1820,6 +1865,7 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "NullableDouble":{"type":"double"},
     "OpticalStandard":{
       "type":"string",
       "enum":[
@@ -1857,6 +1903,10 @@
       "max":20,
       "min":1,
       "pattern":"oo-[a-f0-9]{17}$"
+    },
+    "OrderIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "OrderStatus":{
       "type":"string",
@@ -2222,6 +2272,39 @@
       "max":1000,
       "min":1,
       "pattern":"^[\\S \\n]+$"
+    },
+    "Subscription":{
+      "type":"structure",
+      "members":{
+        "SubscriptionId":{"shape":"String"},
+        "SubscriptionType":{"shape":"SubscriptionType"},
+        "SubscriptionStatus":{"shape":"SubscriptionStatus"},
+        "OrderIds":{"shape":"OrderIdList"},
+        "BeginDate":{"shape":"ISO8601Timestamp"},
+        "EndDate":{"shape":"ISO8601Timestamp"},
+        "MonthlyRecurringPrice":{"shape":"NullableDouble"},
+        "UpfrontPrice":{"shape":"NullableDouble"}
+      }
+    },
+    "SubscriptionList":{
+      "type":"list",
+      "member":{"shape":"Subscription"}
+    },
+    "SubscriptionStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE",
+        "CANCELLED"
+      ]
+    },
+    "SubscriptionType":{
+      "type":"string",
+      "enum":[
+        "ORIGINAL",
+        "RENEWAL",
+        "CAPACITY_INCREASE"
+      ]
     },
     "SupportedHardwareType":{
       "type":"string",

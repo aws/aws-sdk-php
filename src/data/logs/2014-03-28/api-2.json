@@ -775,6 +775,23 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "GetLogObject":{
+      "name":"GetLogObject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetLogObjectRequest"},
+      "output":{"shape":"GetLogObjectResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"streaming-"}
+    },
     "GetLogRecord":{
       "name":"GetLogRecord",
       "http":{
@@ -1710,6 +1727,7 @@
       "type":"list",
       "member":{"shape":"Arn"}
     },
+    "Data":{"type":"blob"},
     "DataAlreadyAcceptedException":{
       "type":"structure",
       "members":{
@@ -2579,6 +2597,13 @@
       "type":"list",
       "member":{"shape":"FieldIndex"}
     },
+    "FieldsData":{
+      "type":"structure",
+      "members":{
+        "data":{"shape":"Data"}
+      },
+      "event":true
+    },
     "FilterCount":{"type":"integer"},
     "FilterLogEventsRequest":{
       "type":"structure",
@@ -2789,6 +2814,28 @@
         "logGroupFields":{"shape":"LogGroupFieldList"}
       }
     },
+    "GetLogObjectRequest":{
+      "type":"structure",
+      "required":["logObjectPointer"],
+      "members":{
+        "unmask":{"shape":"Unmask"},
+        "logObjectPointer":{"shape":"LogObjectPointer"}
+      }
+    },
+    "GetLogObjectResponse":{
+      "type":"structure",
+      "members":{
+        "fieldStream":{"shape":"GetLogObjectResponseStream"}
+      }
+    },
+    "GetLogObjectResponseStream":{
+      "type":"structure",
+      "members":{
+        "fields":{"shape":"FieldsData"},
+        "InternalStreamingException":{"shape":"InternalStreamingException"}
+      },
+      "eventstream":true
+    },
     "GetLogRecordRequest":{
       "type":"structure",
       "required":["logRecordPointer"],
@@ -2960,6 +3007,13 @@
       "enum":["OPENSEARCH"]
     },
     "Interleaved":{"type":"boolean"},
+    "InternalStreamingException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"Message"}
+      },
+      "exception":true
+    },
     "InvalidOperationException":{
       "type":"structure",
       "members":{},
@@ -3290,6 +3344,11 @@
     "LogGroups":{
       "type":"list",
       "member":{"shape":"LogGroup"}
+    },
+    "LogObjectPointer":{
+      "type":"string",
+      "max":512,
+      "min":1
     },
     "LogRecord":{
       "type":"map",
@@ -3773,7 +3832,8 @@
         "DATA_PROTECTION_POLICY",
         "SUBSCRIPTION_FILTER_POLICY",
         "FIELD_INDEX_POLICY",
-        "TRANSFORMER_POLICY"
+        "TRANSFORMER_POLICY",
+        "METRIC_EXTRACTION_POLICY"
       ]
     },
     "Priority":{
