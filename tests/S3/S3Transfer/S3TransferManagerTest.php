@@ -2752,16 +2752,28 @@ class S3TransferManagerTest extends TestCase
     }
 
     /**
+     * @param string|null $prefix
+     * @param string|null $delimiter
      * @param array $objects
-     *
-     * @dataProvider failsWhenKeyResolvesOutsideTargetDirectoryProvider
+     * @param array $expectedOutput
      *
      * @return void
+     * @dataProvider failsWhenKeyResolvesOutsideTargetDirectoryProvider
      */
-    public function testFailsWhenKeyResolvesOutsideTargetDirectory(
-        string $prefix,
+    public function testResolvesOutsideTargetDirectory(
+        ?string $prefix,
+        ?string $delimiter,
         array $objects,
+        array $expectedOutput
     ) {
+        if ($expectedOutput['success'] === false) {
+            $this->expectException(S3TransferException::class);
+            $this->expectExceptionMessageMatches(
+                '/Cannot download key [^\s]+ its relative path'
+                .' resolves outside the parent directory\./'
+            );
+        }
+
         $bucket = "test-bucket";
         $directory = "test-directory";
         try {
@@ -2770,7 +2782,6 @@ class S3TransferManagerTest extends TestCase
                 TestsUtility::cleanUpDir($fullDirectoryPath);
             }
             mkdir($fullDirectoryPath, 0777, true);
-            $this->expectException(S3TransferException::class);
             $called = false;
             $client = $this->getS3ClientMock([
                 'executeAsync' => function (CommandInterface $command) use (
@@ -2821,10 +2832,19 @@ class S3TransferManagerTest extends TestCase
                     [],
                     [
                         's3_prefix' => $prefix,
+                        's3_delimiter' => $delimiter,
                     ]
                 )
             )->wait();
             $this->assertTrue($called);
+            // Validate the expected file output
+            if ($expectedOutput['success']) {
+                $this->assertFileExists(
+                    $fullDirectoryPath
+                    . DIRECTORY_SEPARATOR
+                    . $expectedOutput['filename']
+                );
+            }
         } finally {
             TestsUtility::cleanUpDir($directory);
         }
@@ -2833,46 +2853,120 @@ class S3TransferManagerTest extends TestCase
     /**
      * @return array
      */
-    public function failsWhenKeyResolvesOutsideTargetDirectoryProvider(): array {
+    public function resolvesOutsideTargetDirectoryProvider(): array {
         return [
-            'resolves_outside_target_directory_1' => [
-                'prefix' => 'foo-objects/',
+            'download_directory_1_linux' => [
+                'prefix' => null,
+                'delimiter' => null,
                 'objects' => [
                     [
-                        'Key' => '../outside/key1.txt'
+                        'Key' => '2023/Jan/1.png'
                     ],
                 ],
-            ],
-            'resolves_outside_target_directory_2' => [
-                'prefix' => 'foo-objects/',
-                'objects' => [
-                    [
-                        'Key' => '../../foo/key2.txt'
-                    ]
+                'expected_output' => [
+                    'success' => true,
+                    'filename' => '2023/Jan/1.png',
                 ]
             ],
-            'resolves_outside_target_directory_3' => [
-                'prefix' => 'buzz/',
+            'download_directory_2' => [
+                'prefix' => '2023/Jan/',
+                'delimiter' => null,
                 'objects' => [
                     [
-                        'Key' => '..//inner//key3.txt'
+                        'Key' => '2023/Jan/1.png'
                     ]
+                ],
+                'expected_output' => [
+                    'success' => true,
+                    'filename' => '1.png',
                 ]
             ],
-            'resolves_outside_target_directory_4' => [
-                'prefix' => 'test/',
+            'download_directory_3' => [
+                'prefix' => '2023/Jan',
+                'delimiter' => null,
                 'objects' => [
                     [
-                        'Key' => './../../key4.txt'
+                        'Key' => '2023/Jan/1.png'
                     ]
+                ],
+                'expected_output' => [
+                    'success' => true,
+                    'filename' => '1.png',
                 ]
             ],
-            'resolves_outside_target_directory_5' => [
-                'prefix' => 'test/',
+            'download_directory_4' => [
+                'prefix' => null,
+                'delimiter' => '-',
                 'objects' => [
                     [
-                        'Key' => './../another_dir/.././key1.txt',
-                    ],
+                        'Key' => '2023-Jan-1.png'
+                    ]
+                ],
+                'expected_output' => [
+                    'success' => true,
+                    'filename' => '2023/Jan/1.png',
+                ]
+            ],
+            'download_directory_5' => [
+                'prefix' => null,
+                'delimiter' => '-',
+                'objects' => [
+                    [
+                        'Key' => '2023-Jan-.png'
+                    ]
+                ],
+                'expected_output' => [
+                    'success' => true,
+                    'filename' => '2023/Jan/.png',
+                ]
+            ],
+            'download_directory_6' => [
+                'prefix' => '2023',
+                'delimiter' => '-',
+                'objects' => [
+                    [
+                        'Key' => '2023/Jan-1.png'
+                    ]
+                ],
+                'expected_output' => [
+                    'success' => true,
+                    'filename' => 'Jan/1.png',
+                ]
+            ],
+            'download_directory_7_fails' => [
+                'prefix' => null,
+                'delimiter' => null,
+                'objects' => [
+                    [
+                        'Key' => '../2023/Jan/1.png'
+                    ]
+                ],
+                'expected_output' => [
+                    'success' => false,
+                ]
+            ],
+            'download_directory_9_fails' => [
+                'prefix' => null,
+                'delimiter' => null,
+                'objects' => [
+                    [
+                        'Key' => 'foo/../2023/../../Jan/1.png'
+                    ]
+                ],
+                'expected_output' => [
+                    'success' => false,
+                ]
+            ],
+            'download_directory_10_fails' => [
+                'prefix' => null,
+                'delimiter' => null,
+                'objects' => [
+                    [
+                        'Key' => '../test-2/object.dat'
+                    ]
+                ],
+                'expected_output' => [
+                    'success' => false,
                 ]
             ],
         ];

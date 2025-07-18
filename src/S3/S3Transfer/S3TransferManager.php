@@ -446,12 +446,20 @@ class S3TransferManager
                 $objectKey = substr($objectKey, strlen($s3Prefix));
             }
 
+            // CONVERT THE KEY DIR SEPARATOR TO OS BASED DIR SEPARATOR
+            if (DIRECTORY_SEPARATOR !== $s3Delimiter) {
+                $objectKey = str_replace(
+                    $s3Delimiter,
+                    DIRECTORY_SEPARATOR,
+                    $objectKey
+                );
+            }
+
             $destinationFile = $destinationDirectory . DIRECTORY_SEPARATOR . $objectKey;
             if ($this->resolvesOutsideTargetDirectory($destinationFile, $objectKey)) {
                 throw new S3TransferException(
-                    "Cannot download key ' . $objectKey
-                    . ', its relative path resolves outside the'
-                    . ' parent directory"
+                    "Cannot download key $objectKey "
+                    ."its relative path resolves outside the parent directory."
                 );
             }
 
