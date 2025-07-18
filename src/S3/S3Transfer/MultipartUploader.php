@@ -34,7 +34,7 @@ class MultipartUploader extends AbstractMultipartUploader
 
     public function __construct(
         S3ClientInterface $s3Client,
-        array $putObjectRequestArgs,
+        array $requestArgs,
         array $config,
         string | StreamInterface $source,
         ?string $uploadId = null,
@@ -44,7 +44,7 @@ class MultipartUploader extends AbstractMultipartUploader
     ) {
         parent::__construct(
             $s3Client,
-            $putObjectRequestArgs,
+            $requestArgs,
             $config,
             $uploadId,
             $parts,
@@ -94,9 +94,9 @@ class MultipartUploader extends AbstractMultipartUploader
     private function evaluateCustomChecksum(): void
     {
         // Evaluation for custom provided checksums
-        $checksumName = self::filterChecksum($this->putObjectRequestArgs);
+        $checksumName = self::filterChecksum($this->requestArgs);
         if ($checksumName !== null) {
-            $this->requestChecksum = $this->putObjectRequestArgs[$checksumName];
+            $this->requestChecksum = $this->requestArgs[$checksumName];
             $this->requestChecksumAlgorithm = str_replace(
                 'Checksum',
                 '',
@@ -110,7 +110,7 @@ class MultipartUploader extends AbstractMultipartUploader
 
     protected function processMultipartOperation(): PromiseInterface
     {
-        $uploadPartCommandArgs = $this->putObjectRequestArgs;
+        $uploadPartCommandArgs = $this->requestArgs;
         $this->calculatedObjectSize = 0;
         $partSize = $this->calculatePartSize();
         $partsCount = ceil($this->getTotalSize() / $partSize);

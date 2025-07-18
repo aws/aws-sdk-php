@@ -30,7 +30,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected readonly S3ClientInterface $s3Client;
 
     /** @var array @ */
-    protected readonly array $putObjectRequestArgs;
+    protected readonly array $requestArgs;
 
     /** @var array @ */
     protected readonly array $config;
@@ -67,7 +67,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
     /**
      * @param S3ClientInterface $s3Client
-     * @param array $putObjectRequestArgs
+     * @param array $requestArgs
      * @param array $config
      * - target_part_size_bytes: (int, optional)
      * - request_checksum_calculation: (string, optional)
@@ -80,7 +80,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     public function __construct
     (
         S3ClientInterface $s3Client,
-        array $putObjectRequestArgs,
+        array $requestArgs,
         array $config,
         ?string $uploadId = null,
         array $parts = [],
@@ -88,7 +88,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         ?TransferListenerNotifier $listenerNotifier = null,
     ) {
         $this->s3Client = $s3Client;
-        $this->putObjectRequestArgs = $putObjectRequestArgs;
+        $this->requestArgs = $requestArgs;
         $this->validateConfig($config);
         $this->config = $config;
         $this->uploadId = $uploadId;
@@ -176,7 +176,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      */
     protected function createMultipartUpload(): PromiseInterface
     {
-        $createMultipartUploadArgs = $this->putObjectRequestArgs;
+        $createMultipartUploadArgs = $this->requestArgs;
         if ($this->requestChecksum !== null) {
             $createMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
             $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
@@ -206,7 +206,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected function completeMultipartUpload(): PromiseInterface
     {
         $this->sortParts();
-        $completeMultipartUploadArgs = $this->putObjectRequestArgs;
+        $completeMultipartUploadArgs = $this->requestArgs;
         $completeMultipartUploadArgs['UploadId'] = $this->uploadId;
         $completeMultipartUploadArgs['MultipartUpload'] = [
             'Parts' => $this->parts
@@ -237,7 +237,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      */
     protected function abortMultipartUpload(): PromiseInterface
     {
-        $abortMultipartUploadArgs = $this->putObjectRequestArgs;
+        $abortMultipartUploadArgs = $this->requestArgs;
         $abortMultipartUploadArgs['UploadId'] = $this->uploadId;
         $command = $this->s3Client->getCommand(
             'AbortMultipartUpload',
@@ -349,7 +349,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
         $this->listenerNotifier?->transferComplete([
             TransferListener::REQUEST_ARGS_KEY =>
-                $this->putObjectRequestArgs,
+                $this->requestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot
         ]);
     }
@@ -392,7 +392,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
 
         $this->listenerNotifier?->transferFail([
             TransferListener::REQUEST_ARGS_KEY =>
-                $this->putObjectRequestArgs,
+                $this->requestArgs,
             TransferListener::PROGRESS_SNAPSHOT_KEY => $this->currentSnapshot,
             'reason' => $reason,
         ]);
