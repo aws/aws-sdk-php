@@ -4,7 +4,6 @@ namespace Aws\Test\EndpointV2;
 use Aws\Api\Service;
 use Aws\Auth\Exception\UnresolvedAuthSchemeException;
 use Aws\AwsClient;
-use Aws\Credentials\Credentials;
 use Aws\EndpointV2\EndpointDefinitionProvider;
 use Aws\EndpointV2\EndpointProviderV2;
 use Aws\EndpointV2\Ruleset\Ruleset;
@@ -13,7 +12,6 @@ use Aws\Exception\CommonRuntimeException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Uri;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -28,7 +26,7 @@ class EndpointProviderV2Test extends TestCase
      * Iterates through test cases located in ../test-cases and
      * ../valid-rules, parses into parameters used for endpoint and error tests
      */
-    public function basicTestCaseProvider()
+    public function basicTestCaseProvider(): \Generator
     {
         $testfileNames = [
             "aws-region",
@@ -45,7 +43,6 @@ class EndpointProviderV2Test extends TestCase
             "valid-hostlabel",
             "string-array"
         ];
-        $providerCases = [];
 
         foreach ($testfileNames as $testFile) {
             $casesPath = __DIR__ . '/test-cases/' . $testFile . '.json';
@@ -64,11 +61,10 @@ class EndpointProviderV2Test extends TestCase
                     $providerCase[] = 'false';
                 }
                 array_push($providerCase, $inputParams, $expected);
-                $providerCases[] = $providerCase;
+
+                yield $providerCase;
             }
         }
-
-        return $providerCases;
     }
 
     /**
@@ -107,9 +103,8 @@ class EndpointProviderV2Test extends TestCase
      * Iterates through test cases located in each service's endpoint test file.
      * Parses into parameters used for endpoint and error tests
      */
-    public function serviceTestCaseProvider()
+    public function serviceTestCaseProvider(): \Generator
     {
-        $serviceTestCases = [];
         $services = \Aws\Manifest();
 
         foreach($services as $service => $data) {
@@ -128,11 +123,10 @@ class EndpointProviderV2Test extends TestCase
                     $testCase[] = 'false';
                 }
                 array_push($testCase, $inputParams, $expected);
-                $serviceTestCases[] = $testCase;
+
+                yield $testCase;
             }
         }
-
-        return $serviceTestCases;
     }
 
     /**
@@ -441,19 +435,17 @@ class EndpointProviderV2Test extends TestCase
         }
     }
 
-    public function stringArrayOperationInputsProvider()
+    public function stringArrayOperationInputsProvider(): \Generator
     {
         $cases = json_decode(
             file_get_contents(__DIR__ . '/test-cases/string-array.json'),
             true
         );
-        $providerCases = [];
 
         foreach ($cases['testCases'] as $case) {
             unset($case['documentation']);
-            $providerCases[] = $case;
-        }
 
-        return $providerCases;
+            yield $case;
+        }
     }
 }
