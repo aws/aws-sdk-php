@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.3 - 2025-07-21
 
 * `Aws\Api` - Updates for serialization in all protocols
 * `Aws\SageMaker` - This release adds 1/ Support for S3FileSystem in CustomFileSystems 2/ The ability for a customer to select their preferred IpAddressType for use with private Workforces 3/ Support for p4de instance type in SageMaker Training Plans
