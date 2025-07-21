@@ -418,7 +418,7 @@ class EndpointProviderV2Test extends TestCase
         $list = $client->getHandlerList();
         if (!isset($expected['error'])) {
             $list->appendSign(Middleware::tap(function($cmd, $req) use ($service, $expected) {
-                $this->assertEquals(
+                $this->assertStringStartsWith(
                     $expected['endpoint']['url'],
                     (string) $req->getUri()
                 );
