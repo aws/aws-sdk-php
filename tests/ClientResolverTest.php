@@ -6,7 +6,6 @@ use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
-use Aws\CommandInterface;
 use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
@@ -18,7 +17,6 @@ use Aws\Exception\InvalidRegionException;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
-use Aws\Sdk;
 use Aws\Result;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -1510,7 +1508,6 @@ EOF;
             }
         } finally {
             unlink($configFile);
-            rmdir($awsDir);
             if ($currentEnvConfigFile) {
                 putenv(
                     ConfigurationResolver::ENV_CONFIG_FILE

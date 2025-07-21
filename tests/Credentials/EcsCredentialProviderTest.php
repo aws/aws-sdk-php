@@ -193,14 +193,16 @@ class EcsCredentialProviderTest extends TestCase
         }
     }
 
-    public function uriAndTokenResolutionProvider()
+    public function uriAndTokenResolutionProvider(): \Generator
     {
         $cases = json_decode(file_get_contents(
             __DIR__ . '/fixtures/ecs/uri-token-resolution.json')
             , true
         );
 
-        return array_map(function ($case) { return [$case]; }, $cases);
+        foreach ($cases as $case) {
+            yield [$case];
+        }
     }
 
     private function getCredentialArray(

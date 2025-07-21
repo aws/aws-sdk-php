@@ -13,10 +13,8 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class DecodingEventStreamIteratorTest extends TestCase
 {
-    public function complianceTests()
+    public function complianceTests(): \Generator
     {
-        $cases = [];
-
         $dataFilesIterator = \Aws\recursive_dir_iterator(
             realpath(__DIR__ . '/../test_cases/eventstream/encoded/')
         );
@@ -25,7 +23,7 @@ class DecodingEventStreamIteratorTest extends TestCase
                 continue;
             }
 
-            $case = [
+            yield [
                 Psr7\Utils::streamFor(
                     file_get_contents($file)
                 ),
@@ -36,11 +34,7 @@ class DecodingEventStreamIteratorTest extends TestCase
                 ),
                 stripos($file, 'negative') !== false
             ];
-
-            $cases []= $case;
         }
-
-        return $cases;
     }
 
     /**
