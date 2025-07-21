@@ -4688,7 +4688,7 @@
       ],
       "members":{
         "Name":{
-          "shape":"string",
+          "shape":"FunctionName",
           "location":"uri",
           "locationName":"Name"
         },
@@ -4747,8 +4747,7 @@
     },
     "DeleteMonitoringSubscriptionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteOriginAccessControlRequest":{
       "type":"structure",
@@ -4873,7 +4872,7 @@
       "required":["Name"],
       "members":{
         "Name":{
-          "shape":"string",
+          "shape":"FunctionName",
           "location":"uri",
           "locationName":"Name"
         },
@@ -5155,7 +5154,7 @@
         "DefaultCacheBehavior":{"shape":"DefaultCacheBehavior"},
         "CacheBehaviors":{"shape":"CacheBehaviors"},
         "CustomErrorResponses":{"shape":"CustomErrorResponses"},
-        "Comment":{"shape":"string"},
+        "Comment":{"shape":"sensitiveStringType"},
         "PriceClass":{"shape":"PriceClass"},
         "Enabled":{"shape":"boolean"},
         "ViewerCertificate":{"shape":"ViewerCertificate"},
@@ -6213,7 +6212,7 @@
       "required":["Name"],
       "members":{
         "Name":{
-          "shape":"string",
+          "shape":"FunctionName",
           "location":"uri",
           "locationName":"Name"
         },
@@ -9052,7 +9051,7 @@
       ],
       "members":{
         "Name":{
-          "shape":"string",
+          "shape":"FunctionName",
           "location":"uri",
           "locationName":"Name"
         },
@@ -9600,6 +9599,11 @@
       "max":100.0,
       "min":0.0
     },
+    "ServerCertificateId":{
+      "type":"string",
+      "max":32,
+      "min":0
+    },
     "SessionStickinessConfig":{
       "type":"structure",
       "required":[
@@ -9829,7 +9833,7 @@
       "type":"structure",
       "required":["Required"],
       "members":{
-        "Comment":{"shape":"string"},
+        "Comment":{"shape":"sensitiveStringType"},
         "DefaultValue":{"shape":"ParameterValue"},
         "Required":{"shape":"boolean"}
       }
@@ -9924,7 +9928,7 @@
       ],
       "members":{
         "Name":{
-          "shape":"string",
+          "shape":"FunctionName",
           "location":"uri",
           "locationName":"Name"
         },
@@ -10984,7 +10988,7 @@
       ],
       "members":{
         "Name":{
-          "shape":"string",
+          "shape":"FunctionName",
           "location":"uri",
           "locationName":"Name"
         },
@@ -11356,7 +11360,7 @@
       "type":"structure",
       "members":{
         "CloudFrontDefaultCertificate":{"shape":"boolean"},
-        "IAMCertificateId":{"shape":"string"},
+        "IAMCertificateId":{"shape":"ServerCertificateId"},
         "ACMCertificateArn":{"shape":"string"},
         "SSLSupportMethod":{"shape":"SSLSupportMethod"},
         "MinimumProtocolVersion":{"shape":"MinimumProtocolVersion"},

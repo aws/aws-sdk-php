@@ -5795,7 +5795,7 @@
       "type":"integer",
       "box":true,
       "max":500,
-      "min":1
+      "min":0
     },
     "Branch":{
       "type":"string",
@@ -6539,7 +6539,6 @@
     },
     "ClusterEbsVolumeConfig":{
       "type":"structure",
-      "required":["VolumeSizeInGB"],
       "members":{
         "VolumeSizeInGB":{"shape":"ClusterEbsVolumeSizeInGB"}
       }
@@ -6656,7 +6655,7 @@
     "ClusterInstanceStorageConfigs":{
       "type":"list",
       "member":{"shape":"ClusterInstanceStorageConfig"},
-      "max":1,
+      "max":2,
       "min":0
     },
     "ClusterInstanceType":{
@@ -7288,10 +7287,7 @@
     },
     "ComputeQuotaResourceConfig":{
       "type":"structure",
-      "required":[
-        "InstanceType",
-        "Count"
-      ],
+      "required":["InstanceType"],
       "members":{
         "InstanceType":{"shape":"ClusterInstanceType"},
         "Count":{"shape":"InstanceCount"}
@@ -9172,7 +9168,8 @@
         "SourceIpConfig":{"shape":"SourceIpConfig"},
         "WorkforceName":{"shape":"WorkforceName"},
         "Tags":{"shape":"TagList"},
-        "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigRequest"}
+        "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigRequest"},
+        "IpAddressType":{"shape":"WorkforceIpAddressType"}
       }
     },
     "CreateWorkforceResponse":{
@@ -9235,7 +9232,8 @@
       "type":"structure",
       "members":{
         "EFSFileSystem":{"shape":"EFSFileSystem"},
-        "FSxLustreFileSystem":{"shape":"FSxLustreFileSystem"}
+        "FSxLustreFileSystem":{"shape":"FSxLustreFileSystem"},
+        "S3FileSystem":{"shape":"S3FileSystem"}
       },
       "union":true
     },
@@ -9243,7 +9241,8 @@
       "type":"structure",
       "members":{
         "EFSFileSystemConfig":{"shape":"EFSFileSystemConfig"},
-        "FSxLustreFileSystemConfig":{"shape":"FSxLustreFileSystemConfig"}
+        "FSxLustreFileSystemConfig":{"shape":"FSxLustreFileSystemConfig"},
+        "S3FileSystemConfig":{"shape":"S3FileSystemConfig"}
       },
       "union":true
     },
@@ -15818,7 +15817,8 @@
     "InstanceCount":{
       "type":"integer",
       "box":true,
-      "min":1
+      "max":10000000,
+      "min":0
     },
     "InstanceGroup":{
       "type":"structure",
@@ -23200,7 +23200,8 @@
         "ml.p5en.48xlarge",
         "ml.trn1.32xlarge",
         "ml.trn2.48xlarge",
-        "ml.p6-b200.48xlarge"
+        "ml.p6-b200.48xlarge",
+        "ml.p4de.24xlarge"
       ]
     },
     "ReservedCapacityOffering":{
@@ -23611,6 +23612,19 @@
         "Converse"
       ]
     },
+    "S3FileSystem":{
+      "type":"structure",
+      "members":{
+        "S3Uri":{"shape":"S3SchemaUri"}
+      }
+    },
+    "S3FileSystemConfig":{
+      "type":"structure",
+      "members":{
+        "MountPath":{"shape":"String1024"},
+        "S3Uri":{"shape":"S3SchemaUri"}
+      }
+    },
     "S3ModelDataSource":{
       "type":"structure",
       "required":[
@@ -23653,6 +23667,12 @@
       "members":{
         "IamPolicyConstraints":{"shape":"IamPolicyConstraints"}
       }
+    },
+    "S3SchemaUri":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"(s3)://([^/]+)/?(.*)"
     },
     "S3StorageConfig":{
       "type":"structure",
@@ -27565,7 +27585,8 @@
         "WorkforceName":{"shape":"WorkforceName"},
         "SourceIpConfig":{"shape":"SourceIpConfig"},
         "OidcConfig":{"shape":"OidcConfig"},
-        "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigRequest"}
+        "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigRequest"},
+        "IpAddressType":{"shape":"WorkforceIpAddressType"}
       }
     },
     "UpdateWorkforceResponse":{
@@ -27915,7 +27936,8 @@
         "CreateDate":{"shape":"Timestamp"},
         "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigResponse"},
         "Status":{"shape":"WorkforceStatus"},
-        "FailureReason":{"shape":"WorkforceFailureReason"}
+        "FailureReason":{"shape":"WorkforceFailureReason"},
+        "IpAddressType":{"shape":"WorkforceIpAddressType"}
       }
     },
     "WorkforceArn":{
@@ -27929,6 +27951,13 @@
       "max":1024,
       "min":1,
       "pattern":".+"
+    },
+    "WorkforceIpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dualstack"
+      ]
     },
     "WorkforceName":{
       "type":"string",

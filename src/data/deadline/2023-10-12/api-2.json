@@ -5576,6 +5576,8 @@
         "createdAt":{"shape":"CreatedAt"},
         "endedAt":{"shape":"EndedAt"},
         "startedAt":{"shape":"StartedAt"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"},
         "jobParameters":{"shape":"JobParameters"},
         "maxWorkerCount":{"shape":"MaxWorkerCount"},
         "sourceJobId":{"shape":"JobId"}
@@ -7685,6 +7687,7 @@
       "members":{
         "instanceCapabilities":{"shape":"ServiceManagedEc2InstanceCapabilities"},
         "instanceMarketOptions":{"shape":"ServiceManagedEc2InstanceMarketOptions"},
+        "vpcConfiguration":{"shape":"VpcConfiguration"},
         "storageProfileId":{"shape":"StorageProfileId"}
       }
     },
@@ -8186,8 +8189,11 @@
         "taskRunStatusCounts":{"shape":"TaskRunStatusCounts"},
         "taskFailureRetryCount":{"shape":"TaskFailureRetryCount"},
         "createdAt":{"shape":"CreatedAt"},
+        "createdBy":{"shape":"CreatedBy"},
         "startedAt":{"shape":"StartedAt"},
         "endedAt":{"shape":"EndedAt"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"},
         "parameterSpace":{"shape":"ParameterSpace"}
       }
     },
@@ -8469,7 +8475,9 @@
         "parameters":{"shape":"TaskParameters"},
         "failureRetryCount":{"shape":"TaskRetryCount"},
         "startedAt":{"shape":"StartedAt"},
-        "endedAt":{"shape":"EndedAt"}
+        "endedAt":{"shape":"EndedAt"},
+        "updatedAt":{"shape":"UpdatedAt"},
+        "updatedBy":{"shape":"UpdatedBy"}
       }
     },
     "TaskSummaries":{
@@ -9309,11 +9317,26 @@
         "OTHER"
       ]
     },
+    "VpcConfiguration":{
+      "type":"structure",
+      "members":{
+        "resourceConfigurationArns":{"shape":"VpcResourceConfigurationArns"}
+      }
+    },
     "VpcId":{
       "type":"string",
       "max":32,
       "min":1,
       "pattern":"vpc-[\\w]{1,120}"
+    },
+    "VpcResourceConfigurationArn":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "VpcResourceConfigurationArns":{
+      "type":"list",
+      "member":{"shape":"VpcResourceConfigurationArn"}
     },
     "WindowsUser":{
       "type":"structure",

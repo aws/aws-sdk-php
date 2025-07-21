@@ -831,6 +831,7 @@
         "QueueFleetAssociationSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "QueueLimitAssociationSummary$createdBy": "<p>The user identifier of the person that created the association.</p>",
         "QueueSummary$createdBy": "<p>The user or system that created this resource.</p>",
+        "StepSearchSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "StepSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "TaskSummary$createdBy": "<p>The user or system that created this resource.</p>",
         "WorkerSearchSummary$createdBy": "<p>The user or system that created this resource.</p>",
@@ -4547,6 +4548,7 @@
         "GetStorageProfileResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetTaskResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
         "GetWorkerResponse$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "JobSearchSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "JobSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "LimitSummary$updatedAt": "<p>The Unix timestamp of the date and time that the limit was last updated.</p>",
         "MonitorSummary$updatedAt": "<p>The UNIX timestamp of the date and time that the monitor was last updated.</p>",
@@ -4554,7 +4556,9 @@
         "QueueLimitAssociationSummary$updatedAt": "<p>The Unix timestamp of the date and time that the association was last updated.</p>",
         "QueueSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "SessionSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "StepSearchSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "StepSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
+        "TaskSearchSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "TaskSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "WorkerSearchSummary$updatedAt": "<p>The date and time the resource was updated.</p>",
         "WorkerSummary$updatedAt": "<p>The date and time the resource was updated.</p>"
@@ -4581,6 +4585,7 @@
         "GetStorageProfileResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetTaskResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
         "GetWorkerResponse$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "JobSearchSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "JobSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "LimitSummary$updatedBy": "<p>The user identifier of the person that last updated the limit.</p>",
         "MonitorSummary$updatedBy": "<p>The user name of the person that last updated the monitor.</p>",
@@ -4588,7 +4593,9 @@
         "QueueLimitAssociationSummary$updatedBy": "<p>The user identifier of the person that updated the association.</p>",
         "QueueSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "SessionSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "StepSearchSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "StepSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
+        "TaskSearchSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "TaskSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "WorkerSearchSummary$updatedBy": "<p>The user or system that updated this resource.</p>",
         "WorkerSummary$updatedBy": "<p>The user or system that updated this resource.</p>"
@@ -4699,12 +4706,30 @@
         "ValidationException$reason": "<p>The reason that the request failed validation.</p>"
       }
     },
+    "VpcConfiguration": {
+      "base": "<p>The configuration options for a service managed fleet's VPC.</p>",
+      "refs": {
+        "ServiceManagedEc2FleetConfiguration$vpcConfiguration": "<p>The VPC configuration details for a service managed Amazon EC2 fleet.</p>"
+      }
+    },
     "VpcId": {
       "base": null,
       "refs": {
         "CreateLicenseEndpointRequest$vpcId": "<p>The VPC (virtual private cloud) ID to use with the license endpoint.</p>",
         "GetLicenseEndpointResponse$vpcId": "<p>The VCP(virtual private cloud) ID associated with the license endpoint.</p>",
         "LicenseEndpointSummary$vpcId": "<p>The VCP(virtual private cloud) ID associated with the license endpoint.</p>"
+      }
+    },
+    "VpcResourceConfigurationArn": {
+      "base": null,
+      "refs": {
+        "VpcResourceConfigurationArns$member": null
+      }
+    },
+    "VpcResourceConfigurationArns": {
+      "base": null,
+      "refs": {
+        "VpcConfiguration$resourceConfigurationArns": "<p>The ARNs of the VPC Lattice resource configurations attached to the fleet.</p>"
       }
     },
     "WindowsUser": {
