@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.4 - 2025-07-22
 
 * `Aws\ECR` - Add support for Image Tag Mutability Exception feature, allowing repositories to define wildcard-based patterns that override the default image tag mutability settings.
 * `Aws\EMR` - This release adds new parameter 'ExtendedSupport' in AWS EMR RunJobFlow, ModifyCluster and DescribeCluster API.
