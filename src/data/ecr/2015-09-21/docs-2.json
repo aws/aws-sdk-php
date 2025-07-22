@@ -857,6 +857,36 @@
         "UpdateRepositoryCreationTemplateRequest$imageTagMutability": "<p>Updates the tag mutability setting for the repository. If this parameter is omitted, the default setting of <code>MUTABLE</code> will be used which will allow image tags to be overwritten. If <code>IMMUTABLE</code> is specified, all image tags within the repository will be immutable which will prevent them from being overwritten.</p>"
       }
     },
+    "ImageTagMutabilityExclusionFilter": {
+      "base": "<p>Overrides the default image tag mutability setting of the repository for image tags that match the specified filters.</p>",
+      "refs": {
+        "ImageTagMutabilityExclusionFilters$member": null
+      }
+    },
+    "ImageTagMutabilityExclusionFilterType": {
+      "base": null,
+      "refs": {
+        "ImageTagMutabilityExclusionFilter$filterType": "<p>Specifies the type of filter to use for excluding image tags from the repository's mutability setting.</p>"
+      }
+    },
+    "ImageTagMutabilityExclusionFilterValue": {
+      "base": null,
+      "refs": {
+        "ImageTagMutabilityExclusionFilter$filter": "<p>The value to use when filtering image tags. Must be either a regular expression pattern or a tag prefix value based on the specified filter type.</p>"
+      }
+    },
+    "ImageTagMutabilityExclusionFilters": {
+      "base": null,
+      "refs": {
+        "CreateRepositoryCreationTemplateRequest$imageTagMutabilityExclusionFilters": "<p>Creates a repository creation template with a list of filters that define which image tags can override the default image tag mutability setting.</p>",
+        "CreateRepositoryRequest$imageTagMutabilityExclusionFilters": "<p>Creates a repository with a list of filters that define which image tags can override the default image tag mutability setting.</p>",
+        "PutImageTagMutabilityRequest$imageTagMutabilityExclusionFilters": "<p>Creates or updates a repository with filters that define which image tags can override the default image tag mutability setting.</p>",
+        "PutImageTagMutabilityResponse$imageTagMutabilityExclusionFilters": "<p>Returns a list of filters that were defined for a repository. These filters determine which image tags can override the default image tag mutability setting of the repository.</p>",
+        "Repository$imageTagMutabilityExclusionFilters": "<p>The image tag mutability exclusion filters associated with the repository. These filters specify which image tags can override the repository's default image tag mutability setting.</p>",
+        "RepositoryCreationTemplate$imageTagMutabilityExclusionFilters": "<p>Defines the image tag mutability exclusion filters to apply when creating repositories from this template. These filters specify which image tags can override the repository's default image tag mutability setting.</p>",
+        "UpdateRepositoryCreationTemplateRequest$imageTagMutabilityExclusionFilters": "<p>Updates a repository with filters that define which image tags can override the default image tag mutability setting.</p>"
+      }
+    },
     "ImageTagsList": {
       "base": null,
       "refs": {

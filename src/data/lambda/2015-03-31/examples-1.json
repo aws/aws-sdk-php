@@ -14,12 +14,8 @@
           "RevisionId": "35d87451-f796-4a3f-a618-95a3671b0a0c",
           "Statement": "{\"Sid\":\"xaccount\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::223456789012:root\"},\"Action\":\"lambda:GetLayerVersion\",\"Resource\":\"arn:aws:lambda:us-east-2:123456789012:layer:my-layer:1\"}"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example grants permission for the account 223456789012 to use version 1 of a layer named my-layer.",
-        "id": "to-add-permissions-to-a-layer-version-1586479797163",
+        "id": "example-1",
         "title": "To add permissions to a layer version"
       }
     ],
@@ -36,12 +32,8 @@
         "output": {
           "Statement": "{\"Sid\":\"s3\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"s3.amazonaws.com\"},\"Action\":\"lambda:InvokeFunction\",\"Resource\":\"arn:aws:lambda:us-east-2:123456789012:function:my-function\",\"Condition\":{\"StringEquals\":{\"AWS:SourceAccount\":\"123456789012\"},\"ArnLike\":{\"AWS:SourceArn\":\"arn:aws:s3:::my-bucket-1xpuxmplzrlbh\"}}}"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example adds permission for Amazon S3 to invoke a Lambda function named my-function for notifications from a bucket named my-bucket-1xpuxmplzrlbh in account 123456789012.",
-        "id": "add-permission-1474651469455",
+        "id": "example-1",
         "title": "To grant Amazon S3 permission to invoke a function"
       },
       {
@@ -54,12 +46,8 @@
         "output": {
           "Statement": "{\"Sid\":\"xaccount\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::223456789012:root\"},\"Action\":\"lambda:InvokeFunction\",\"Resource\":\"arn:aws:lambda:us-east-2:123456789012:function:my-function\"}"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example adds permission for account 223456789012 invoke a Lambda function named my-function.",
-        "id": "add-permission-1474651469456",
+        "id": "example-2",
         "title": "To grant another account permission to invoke a function"
       }
     ],
@@ -78,12 +66,8 @@
           "Name": "LIVE",
           "RevisionId": "873282ed-xmpl-4dc8-a069-d0c647e470c6"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example creates an alias named LIVE that points to version 1 of the my-function Lambda function.",
-        "id": "to-create-an-alias-for-a-lambda-function-1586480324259",
+        "id": "example-1",
         "title": "To create an alias for a Lambda function"
       }
     ],
@@ -103,12 +87,8 @@
           "StateTransitionReason": "USER_INITIATED",
           "UUID": "a1b2c3d4-5678-90ab-cdef-11111EXAMPLE"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example creates a mapping between an SQS queue and the my-function Lambda function.",
-        "id": "to-create-a-mapping-between-an-event-source-and-an-aws-lambda-function-1586480555467",
+        "id": "example-1",
         "title": "To create a mapping between an event source and an AWS Lambda function"
       }
     ],
@@ -168,12 +148,8 @@
           },
           "Version": "1"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example creates a function with a deployment package in Amazon S3 and enables X-Ray tracing and environment variable encryption.",
-        "id": "to-create-a-function-1586492061186",
+        "id": "example-1",
         "title": "To create a function"
       }
     ],
@@ -183,12 +159,8 @@
           "FunctionName": "my-function",
           "Name": "BLUE"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes an alias named BLUE from a function named my-function",
-        "id": "to-delete-a-lambda-function-alias-1481660370804",
+        "id": "example-1",
         "title": "To delete a Lambda function alias"
       }
     ],
@@ -206,12 +178,8 @@
           "StateTransitionReason": "USER_INITIATED",
           "UUID": "14e0db71-xmpl-4eb5-b481-8945cf9d10c2"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes an event source mapping. To get a mapping's UUID, use ListEventSourceMappings.",
-        "id": "to-delete-a-lambda-function-event-source-mapping-1481658973862",
+        "id": "example-1",
         "title": "To delete a Lambda function event source mapping"
       }
     ],
@@ -221,12 +189,8 @@
           "FunctionName": "my-function",
           "Qualifier": "1"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes version 1 of a Lambda function named my-function.",
-        "id": "to-delete-a-lambda-function-1481648553696",
+        "id": "example-1",
         "title": "To delete a version of a Lambda function"
       }
     ],
@@ -235,12 +199,8 @@
         "input": {
           "FunctionName": "my-function"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes the reserved concurrent execution limit from a function named my-function.",
-        "id": "to-remove-the-reserved-concurrent-execution-limit-from-a-function-1586480714680",
+        "id": "example-1",
         "title": "To remove the reserved concurrent execution limit from a function"
       }
     ],
@@ -250,12 +210,8 @@
           "FunctionName": "my-function",
           "Qualifier": "GREEN"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes the asynchronous invocation configuration for the GREEN alias of a function named my-function.",
-        "id": "to-delete-an-asynchronous-invocation-configuration-1586481102187",
+        "id": "example-1",
         "title": "To delete an asynchronous invocation configuration"
       }
     ],
@@ -265,12 +221,8 @@
           "LayerName": "my-layer",
           "VersionNumber": 2
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes version 2 of a layer named my-layer.",
-        "id": "to-delete-a-version-of-a-lambda-layer-1586481157547",
+        "id": "example-1",
         "title": "To delete a version of a Lambda layer"
       }
     ],
@@ -280,12 +232,8 @@
           "FunctionName": "my-function",
           "Qualifier": "GREEN"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes the provisioned concurrency configuration for the GREEN alias of a function named my-function.",
-        "id": "to-delete-a-provisioned-concurrency-configuration-1586481032551",
+        "id": "example-1",
         "title": "To delete a provisioned concurrency configuration"
       }
     ],
@@ -305,12 +253,8 @@
             "TotalCodeSize": 9426
           }
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "This operation takes no parameters and returns details about storage and concurrency quotas in the current Region.",
-        "id": "to-get-account-settings-1481657495274",
+        "id": "example-1",
         "title": "To get account settings"
       }
     ],
@@ -327,12 +271,8 @@
           "Name": "BLUE",
           "RevisionId": "594f41fb-xmpl-4c20-95c7-6ca5f2a92c93"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns details about an alias named BLUE for a function named my-function",
-        "id": "to-retrieve-a-lambda-function-alias-1481648742254",
+        "id": "example-1",
         "title": "To get a Lambda function alias"
       }
     ],
@@ -355,12 +295,8 @@
           "StateTransitionReason": "User action",
           "UUID": "14e0db71-xmpl-4eb5-b481-8945cf9d10c2"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns details about an event source mapping. To get a mapping's UUID, use ListEventSourceMappings.",
-        "id": "to-get-a-lambda-functions-event-source-mapping-1481661622799",
+        "id": "example-1",
         "title": "To get a Lambda function's event source mapping"
       }
     ],
@@ -406,12 +342,8 @@
             "DEPARTMENT": "Assets"
           }
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns code and configuration details for version 1 of a function named my-function.",
-        "id": "to-get-a-lambda-function-1481661622799",
+        "id": "example-1",
         "title": "To get a Lambda function"
       }
     ],
@@ -423,12 +355,8 @@
         "output": {
           "ReservedConcurrentExecutions": 250
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns the reserved concurrency setting for a function named my-function.",
-        "id": "to-get-the-reserved-concurrency-setting-for-a-function-1586481279992",
+        "id": "example-1",
         "title": "To get the reserved concurrency setting for a function"
       }
     ],
@@ -465,12 +393,8 @@
           },
           "Version": "$LATEST"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns and configuration details for version 1 of a function named my-function.",
-        "id": "to-get-a-lambda-functions-event-source-mapping-1481661622799",
+        "id": "example-1",
         "title": "To get a Lambda function's event source mapping"
       }
     ],
@@ -492,12 +416,8 @@
           "MaximumEventAgeInSeconds": 3600,
           "MaximumRetryAttempts": 0
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns the asynchronous invocation configuration for the BLUE alias of a function named my-function.",
-        "id": "to-get-an-asynchronous-invocation-configuration-1586481338463",
+        "id": "example-1",
         "title": "To get an asynchronous invocation configuration"
       }
     ],
@@ -524,12 +444,8 @@
           "LicenseInfo": "MIT",
           "Version": 1
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns information for version 1 of a layer named my-layer.",
-        "id": "to-get-information-about-a-lambda-layer-version-1586481457839",
+        "id": "example-1",
         "title": "To get information about a Lambda layer version"
       }
     ],
@@ -553,12 +469,8 @@
           "LayerVersionArn": "arn:aws:lambda:us-east-2:123456789012:layer:blank-python-lib:3",
           "Version": 3
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns information about the layer version with the specified Amazon Resource Name (ARN).",
-        "id": "to-get-information-about-a-lambda-layer-version-1586481457839",
+        "id": "example-1",
         "title": "To get information about a Lambda layer version"
       }
     ],
@@ -572,12 +484,8 @@
           "Policy": "{\"Version\":\"2012-10-17\",\"Id\":\"default\",\"Statement\":[{\"Sid\":\"xaccount\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":\"lambda:InvokeFunction\",\"Resource\":\"arn:aws:lambda:us-east-2:123456789012:function:my-function:1\"}]}",
           "RevisionId": "4843f2f6-7c59-4fda-b484-afd0bc0e22b8"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns the resource-based policy for version 1 of a Lambda function named my-function.",
-        "id": "to-retrieve-a-lambda-function-policy-1481649319053",
+        "id": "example-1",
         "title": "To retrieve a Lambda function policy"
       }
     ],
@@ -594,12 +502,8 @@
           "RequestedProvisionedConcurrentExecutions": 100,
           "Status": "READY"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns details for the provisioned concurrency configuration for the BLUE alias of the specified function.",
-        "id": "to-get-a-provisioned-concurrency-configuration-1586490192690",
+        "id": "example-1",
         "title": "To get a provisioned concurrency configuration"
       },
       {
@@ -614,12 +518,8 @@
           "RequestedProvisionedConcurrentExecutions": 100,
           "Status": "READY"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example displays details for the provisioned concurrency configuration for the BLUE alias of the specified function.",
-        "id": "to-view-a-provisioned-concurrency-configuration-1586490192690",
+        "id": "example-2",
         "title": "To view a provisioned concurrency configuration"
       }
     ],
@@ -634,12 +534,8 @@
           "Payload": "200 SUCCESS",
           "StatusCode": 200
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example invokes version 1 of a function named my-function with an empty event payload.",
-        "id": "to-invoke-a-lambda-function-1481659683915",
+        "id": "example-1",
         "title": "To invoke a Lambda function"
       },
       {
@@ -653,12 +549,8 @@
           "Payload": "",
           "StatusCode": 202
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example invokes version 1 of a function named my-function asynchronously.",
-        "id": "to-invoke-a-lambda-function-async-1481659683915",
+        "id": "example-2",
         "title": "To invoke a Lambda function asynchronously"
       }
     ],
@@ -671,12 +563,8 @@
         "output": {
           "Status": 202
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example invokes a Lambda function asynchronously",
-        "id": "to-invoke-a-lambda-function-asynchronously-1481649694923",
+        "id": "example-1",
         "title": "To invoke a Lambda function asynchronously"
       }
     ],
@@ -708,12 +596,8 @@
             }
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns a list of aliases for a function named my-function.",
-        "id": "to-list-a-functions-aliases-1481650199732",
+        "id": "example-1",
         "title": "To list a function's aliases"
       }
     ],
@@ -735,12 +619,8 @@
             }
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns a list of the event source mappings for a function named my-function.",
-        "id": "to-list-the-event-source-mappings-for-a-function-1586490285906",
+        "id": "example-1",
         "title": "To list the event source mappings for a function"
       }
     ],
@@ -765,12 +645,8 @@
             }
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns a list of asynchronous invocation configurations for a function named my-function.",
-        "id": "to-view-a-list-of-asynchronous-invocation-configurations-1586490355611",
+        "id": "example-1",
         "title": "To view a list of asynchronous invocation configurations"
       }
     ],
@@ -823,12 +699,8 @@
           ],
           "NextMarker": ""
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "This operation returns a list of Lambda functions.",
-        "id": "to-get-a-list-of-lambda-functions-1481650507425",
+        "id": "example-1",
         "title": "To get a list of Lambda functions"
       }
     ],
@@ -859,12 +731,8 @@
             }
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example displays information about the versions for the layer named blank-java-lib",
-        "id": "to-list-versions-of-a-layer-1586490857297",
+        "id": "example-1",
         "title": "To list versions of a layer"
       }
     ],
@@ -891,12 +759,8 @@
             }
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns information about layers that are compatible with the Python 3.7 runtime.",
-        "id": "to-list-the-layers-that-are-compatible-with-your-functions-runtime-1586490857297",
+        "id": "example-1",
         "title": "To list the layers that are compatible with your function's runtime"
       }
     ],
@@ -925,12 +789,8 @@
             }
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns a list of provisioned concurrency configurations for a function named my-function.",
-        "id": "to-get-a-list-of-provisioned-concurrency-configurations-1586491032592",
+        "id": "example-1",
         "title": "To get a list of provisioned concurrency configurations"
       }
     ],
@@ -945,12 +805,8 @@
             "Department": "Sales"
           }
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example displays the tags attached to the my-function Lambda function.",
-        "id": "to-retrieve-the-list-of-tags-for-a-lambda-function-1586491111498",
+        "id": "example-1",
         "title": "To retrieve the list of tags for a Lambda function"
       }
     ],
@@ -1013,12 +869,8 @@
             }
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example returns a list of versions of a function named my-function",
-        "id": "to-list-versions-1481650603750",
+        "id": "example-1",
         "title": "To list versions of a function"
       }
     ],
@@ -1054,12 +906,8 @@
           "LicenseInfo": "MIT",
           "Version": 1
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example creates a new Python library layer version. The command retrieves the layer content a file named layer.zip in the specified S3 bucket.",
-        "id": "to-create-a-lambda-layer-version-1586491213595",
+        "id": "example-1",
         "title": "To create a Lambda layer version"
       }
     ],
@@ -1097,12 +945,8 @@
           },
           "Version": "1"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "This operation publishes a version of a Lambda function",
-        "id": "to-publish-a-version-of-a-lambda-function-1481650704986",
+        "id": "example-1",
         "title": "To publish a version of a Lambda function"
       }
     ],
@@ -1115,12 +959,8 @@
         "output": {
           "ReservedConcurrentExecutions": 100
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example configures 100 reserved concurrent executions for the my-function function.",
-        "id": "to-configure-a-reserved-concurrency-limit-for-a-function-1586491405956",
+        "id": "example-1",
         "title": "To configure a reserved concurrency limit for a function"
       }
     ],
@@ -1141,12 +981,8 @@
           "MaximumEventAgeInSeconds": 3600,
           "MaximumRetryAttempts": 0
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example sets a maximum event age of one hour and disables retries for the specified function.",
-        "id": "to-configure-error-handling-for-asynchronous-invocation-1586491524021",
+        "id": "example-1",
         "title": "To configure error handling for asynchronous invocation"
       }
     ],
@@ -1163,12 +999,8 @@
           "RequestedProvisionedConcurrentExecutions": 100,
           "Status": "IN_PROGRESS"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example allocates 100 provisioned concurrency for the BLUE alias of the specified function.",
-        "id": "to-allocate-provisioned-concurrency-1586491651377",
+        "id": "example-1",
         "title": "To allocate provisioned concurrency"
       }
     ],
@@ -1179,12 +1011,8 @@
           "StatementId": "xaccount",
           "VersionNumber": 1
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example deletes permission for an account to configure a layer version.",
-        "id": "to-delete-layer-version-permissions-1586491829416",
+        "id": "example-1",
         "title": "To delete layer-version permissions"
       }
     ],
@@ -1195,12 +1023,8 @@
           "Qualifier": "PROD",
           "StatementId": "xaccount"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example removes a permissions statement named xaccount from the PROD alias of a function named my-function.",
-        "id": "to-remove-a-lambda-functions-permissions-1481661337021",
+        "id": "example-1",
         "title": "To remove a Lambda function's permissions"
       }
     ],
@@ -1212,12 +1036,8 @@
             "DEPARTMENT": "Department A"
           }
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example adds a tag with the key name DEPARTMENT and a value of 'Department A' to the specified Lambda function.",
-        "id": "to-add-tags-to-an-existing-lambda-function-1586491890446",
+        "id": "example-1",
         "title": "To add tags to an existing Lambda function"
       }
     ],
@@ -1229,12 +1049,8 @@
             "DEPARTMENT"
           ]
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example removes the tag with the key name DEPARTMENT tag from the my-function Lambda function.",
-        "id": "to-remove-tags-from-an-existing-lambda-function-1586491956425",
+        "id": "example-1",
         "title": "To remove tags from an existing Lambda function"
       }
     ],
@@ -1262,12 +1078,8 @@
             }
           }
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example updates the alias named BLUE to send 30% of traffic to version 2 and 70% to version 1.",
-        "id": "to-update-a-function-alias-1481650817950",
+        "id": "example-1",
         "title": "To update a function alias"
       }
     ],
@@ -1289,12 +1101,8 @@
           "StateTransitionReason": "",
           "UUID": "1234xCy789012"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "This operation updates a Lambda function event source mapping",
-        "id": "to-update-a-lambda-function-event-source-mapping-1481650907413",
+        "id": "example-1",
         "title": "To update a Lambda function event source mapping"
       }
     ],
@@ -1323,12 +1131,8 @@
           },
           "Version": "$LATEST"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example replaces the code of the unpublished ($LATEST) version of a function named my-function with the contents of the specified zip file in Amazon S3.",
-        "id": "to-update-a-lambda-functions-code-1481650992672",
+        "id": "example-1",
         "title": "To update a Lambda function's code"
       }
     ],
@@ -1356,12 +1160,8 @@
           },
           "Version": "$LATEST"
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example modifies the memory size to be 256 MB for the unpublished ($LATEST) version of a function named my-function.",
-        "id": "to-update-a-lambda-functions-configuration-1481651096447",
+        "id": "example-1",
         "title": "To update a Lambda function's configuration"
       }
     ],
@@ -1387,12 +1187,8 @@
           "MaximumEventAgeInSeconds": 3600,
           "MaximumRetryAttempts": 0
         },
-        "comments": {
-          "input": {},
-          "output": {}
-        },
         "description": "The following example adds an on-failure destination to the existing asynchronous invocation configuration for a function named my-function.",
-        "id": "to-update-an-asynchronous-invocation-configuration-1586492061186",
+        "id": "example-1",
         "title": "To update an asynchronous invocation configuration"
       }
     ]

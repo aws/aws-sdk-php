@@ -821,8 +821,7 @@
     },
     "AddTagsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AdjustmentType":{
       "type":"string",
@@ -1054,7 +1053,8 @@
         "PlacementGroups":{"shape":"PlacementGroupConfigList"},
         "OSReleaseLabel":{"shape":"String"},
         "EbsRootVolumeIops":{"shape":"Integer"},
-        "EbsRootVolumeThroughput":{"shape":"Integer"}
+        "EbsRootVolumeThroughput":{"shape":"Integer"},
+        "ExtendedSupport":{"shape":"BooleanObject"}
       }
     },
     "ClusterId":{"type":"string"},
@@ -1293,8 +1293,7 @@
     },
     "DeleteSecurityConfigurationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteStudioInput":{
       "type":"structure",
@@ -1568,8 +1567,7 @@
     },
     "GetBlockPublicAccessConfigurationInput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetBlockPublicAccessConfigurationOutput":{
       "type":"structure",
@@ -2124,8 +2122,7 @@
     "Integer":{"type":"integer"},
     "InternalServerError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InternalServerException":{
@@ -2503,13 +2500,15 @@
       "required":["ClusterId"],
       "members":{
         "ClusterId":{"shape":"String"},
-        "StepConcurrencyLevel":{"shape":"Integer"}
+        "StepConcurrencyLevel":{"shape":"Integer"},
+        "ExtendedSupport":{"shape":"BooleanObject"}
       }
     },
     "ModifyClusterOutput":{
       "type":"structure",
       "members":{
-        "StepConcurrencyLevel":{"shape":"Integer"}
+        "StepConcurrencyLevel":{"shape":"Integer"},
+        "ExtendedSupport":{"shape":"BooleanObject"}
       }
     },
     "ModifyInstanceFleetInput":{
@@ -2802,8 +2801,7 @@
     },
     "PutAutoTerminationPolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutBlockPublicAccessConfigurationInput":{
       "type":"structure",
@@ -2814,8 +2812,7 @@
     },
     "PutBlockPublicAccessConfigurationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutManagedScalingPolicyInput":{
       "type":"structure",
@@ -2830,8 +2827,7 @@
     },
     "PutManagedScalingPolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ReconfigurationType":{
       "type":"string",
@@ -2860,8 +2856,7 @@
     },
     "RemoveAutoScalingPolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveAutoTerminationPolicyInput":{
       "type":"structure",
@@ -2872,8 +2867,7 @@
     },
     "RemoveAutoTerminationPolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveManagedScalingPolicyInput":{
       "type":"structure",
@@ -2884,8 +2878,7 @@
     },
     "RemoveManagedScalingPolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveTagsInput":{
       "type":"structure",
@@ -2900,8 +2893,7 @@
     },
     "RemoveTagsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RepoUpgradeOnBoot":{
       "type":"string",
@@ -2948,7 +2940,8 @@
         "AutoTerminationPolicy":{"shape":"AutoTerminationPolicy"},
         "OSReleaseLabel":{"shape":"XmlStringMaxLen256"},
         "EbsRootVolumeIops":{"shape":"Integer"},
-        "EbsRootVolumeThroughput":{"shape":"Integer"}
+        "EbsRootVolumeThroughput":{"shape":"Integer"},
+        "ExtendedSupport":{"shape":"BooleanObject"}
       }
     },
     "RunJobFlowOutput":{

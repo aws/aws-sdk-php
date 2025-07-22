@@ -992,6 +992,7 @@
         "encryptionConfiguration":{"shape":"EncryptionConfigurationForRepositoryCreationTemplate"},
         "resourceTags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "repositoryPolicy":{"shape":"RepositoryPolicyText"},
         "lifecyclePolicy":{"shape":"LifecyclePolicyTextForRepositoryCreationTemplate"},
         "appliedFor":{"shape":"RCTAppliedForList"},
@@ -1013,6 +1014,7 @@
         "repositoryName":{"shape":"RepositoryName"},
         "tags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
@@ -1699,8 +1701,37 @@
       "type":"string",
       "enum":[
         "MUTABLE",
-        "IMMUTABLE"
+        "IMMUTABLE",
+        "IMMUTABLE_WITH_EXCLUSION",
+        "MUTABLE_WITH_EXCLUSION"
       ]
+    },
+    "ImageTagMutabilityExclusionFilter":{
+      "type":"structure",
+      "required":[
+        "filterType",
+        "filter"
+      ],
+      "members":{
+        "filterType":{"shape":"ImageTagMutabilityExclusionFilterType"},
+        "filter":{"shape":"ImageTagMutabilityExclusionFilterValue"}
+      }
+    },
+    "ImageTagMutabilityExclusionFilterType":{
+      "type":"string",
+      "enum":["WILDCARD"]
+    },
+    "ImageTagMutabilityExclusionFilterValue":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z._*-]{1,128}$"
+    },
+    "ImageTagMutabilityExclusionFilters":{
+      "type":"list",
+      "member":{"shape":"ImageTagMutabilityExclusionFilter"},
+      "max":5,
+      "min":1
     },
     "ImageTagsList":{
       "type":"list",
@@ -2147,7 +2178,8 @@
       "members":{
         "registryId":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"},
-        "imageTagMutability":{"shape":"ImageTagMutability"}
+        "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"}
       }
     },
     "PutImageTagMutabilityResponse":{
@@ -2155,7 +2187,8 @@
       "members":{
         "registryId":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"},
-        "imageTagMutability":{"shape":"ImageTagMutability"}
+        "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"}
       }
     },
     "PutLifecyclePolicyRequest":{
@@ -2364,6 +2397,7 @@
         "repositoryUri":{"shape":"Url"},
         "createdAt":{"shape":"CreationTimestamp"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "encryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
@@ -2383,6 +2417,7 @@
         "encryptionConfiguration":{"shape":"EncryptionConfigurationForRepositoryCreationTemplate"},
         "resourceTags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "repositoryPolicy":{"shape":"RepositoryPolicyText"},
         "lifecyclePolicy":{"shape":"LifecyclePolicyTextForRepositoryCreationTemplate"},
         "appliedFor":{"shape":"RCTAppliedForList"},
@@ -2841,6 +2876,7 @@
         "encryptionConfiguration":{"shape":"EncryptionConfigurationForRepositoryCreationTemplate"},
         "resourceTags":{"shape":"TagList"},
         "imageTagMutability":{"shape":"ImageTagMutability"},
+        "imageTagMutabilityExclusionFilters":{"shape":"ImageTagMutabilityExclusionFilters"},
         "repositoryPolicy":{"shape":"RepositoryPolicyText"},
         "lifecyclePolicy":{"shape":"LifecyclePolicyTextForRepositoryCreationTemplate"},
         "appliedFor":{"shape":"RCTAppliedForList"},
