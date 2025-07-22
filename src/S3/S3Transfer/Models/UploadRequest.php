@@ -47,7 +47,7 @@ class UploadRequest extends TransferRequest
     public function __construct(
         StreamInterface|string $source,
         array $putObjectRequestArgs,
-        array $config,
+        array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker  = null
     ) {

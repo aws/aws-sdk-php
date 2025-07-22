@@ -65,7 +65,7 @@ class DownloadDirectoryRequest extends TransferRequest
         string $sourceBucket,
         string $destinationDirectory,
         array $getObjectRequestArgs,
-        array $config,
+        array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker = null
     ) {

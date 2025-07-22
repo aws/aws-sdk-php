@@ -52,8 +52,8 @@ final class DownloadRequest extends TransferRequest
     public function __construct(
         string|array|null $source,
         array $getObjectRequestArgs,
-        array $config,
-        ?DownloadHandler $downloadHandler,
+        array $config = [],
+        ?DownloadHandler $downloadHandler = null,
         array $listeners = [],
         ?TransferListener $progressTracker  = null
     ) {
