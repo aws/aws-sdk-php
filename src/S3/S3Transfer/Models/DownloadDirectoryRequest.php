@@ -47,7 +47,7 @@ class DownloadDirectoryRequest extends TransferRequest
      *  - track_progress: (bool, optional) Overrides the config option set
      *    in the transfer manager instantiation to decide whether transfer
      *    progress should be tracked.
-     *  - minimum_part_size: (int, optional) The minimum part size in bytes
+     *  - target_part_size_bytes: (int, optional) The part size in bytes
      *    to be used in a range multipart download.
      *  - list_object_v2_args: (array, optional) The arguments to be included
      *    as part of the listObjectV2 request in order to fetch the objects to
@@ -55,6 +55,8 @@ class DownloadDirectoryRequest extends TransferRequest
      *    - MaxKeys: (int) Sets the maximum number of keys returned in the response.
      *    - Prefix: (string) To limit the response to keys that begin with the
      *      specified prefix.
+     *    - fails_when_destination_exists: (bool) Whether to fail when a destination
+     *      file exists.
      * @param TransferListener[] $listeners The listeners for watching
      * transfer events. Each listener will be cloned per file upload.
      * @param TransferListener|null $progressTracker Ideally the progress
@@ -64,7 +66,7 @@ class DownloadDirectoryRequest extends TransferRequest
     public function __construct(
         string $sourceBucket,
         string $destinationDirectory,
-        array $getObjectRequestArgs,
+        array $getObjectRequestArgs = [],
         array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker = null
