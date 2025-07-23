@@ -114,6 +114,8 @@ class FileDownloadHandler extends DownloadHandler
                 throw new FileDownloadException(
                     "The destination '$this->destination' already exists."
                 );
+            } else {
+                unlink($this->destination);
             }
         }
 

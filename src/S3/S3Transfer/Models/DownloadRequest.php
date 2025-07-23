@@ -34,14 +34,14 @@ final class DownloadRequest extends TransferRequest
      * @param array $config The configuration to be used for this operation:
      *  - multipart_download_type: (string, optional)
      *    Overrides the resolved value from the transfer manager config.
-     *  - checksum_validation_enabled: (bool, optional) Overrides the resolved
+     *  - response_checksum_validation: (string, optional) Overrides the resolved
      *    value from transfer manager config for whether checksum validation
      *    should be done. This option will be considered just if ChecksumMode
      *    is not present in the request args.
      *  - track_progress: (bool) Overrides the config option set in the transfer
      *    manager instantiation to decide whether transfer progress should be
      *    tracked.
-     *  - minimum_part_size: (int) The minimum part size in bytes to be used
+     *  - target_part_size_bytes: (int) The part size in bytes to be used
      *    in a range multipart download. If this parameter is not provided
      *    then it fallbacks to the transfer manager `target_part_size_bytes`
      *    config value.
@@ -51,11 +51,11 @@ final class DownloadRequest extends TransferRequest
      */
     public function __construct(
         string|array|null $source,
-        array $getObjectRequestArgs,
+        array $getObjectRequestArgs = [],
         array $config = [],
         ?DownloadHandler $downloadHandler = null,
         array $listeners = [],
-        ?TransferListener $progressTracker  = null
+        ?TransferListener $progressTracker = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->source = $source;

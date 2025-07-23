@@ -74,7 +74,7 @@ class S3TransferManagerConfig
      *   The threshold to decided whether a multipart upload is needed.
      * - request_checksum_calculation: (string, default=`when_supported`)
      *   To decide whether a checksum validation will be applied to the response.
-     * - request_checksum_validation: (string, default=`when_supported`)
+     * - response_checksum_validation: (string, default=`when_supported`)
      * - multipart_download_type: (string, default='part')
      *   The download type to be used in a multipart download.
      * - concurrency: (int, default=5)

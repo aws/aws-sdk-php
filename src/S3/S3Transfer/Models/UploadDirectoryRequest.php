@@ -28,7 +28,7 @@ class UploadDirectoryRequest extends TransferRequest
     public function __construct(
         string $sourceDirectory,
         string $targetBucket,
-        array $putObjectRequestArgs,
+        array $putObjectRequestArgs = [],
         array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker = null

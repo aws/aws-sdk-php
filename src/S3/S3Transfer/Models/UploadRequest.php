@@ -38,7 +38,7 @@ class UploadRequest extends TransferRequest
      *   a progressTracker parameter is not provided then, a default implementation
      *   will be resolved. This option is intended to make the operation to use
      *   a default progress tracker implementation when $progressTracker is null.
-     * - concurrency: (int, optional)
+     * - concurrency: (int, optional) To override default value for concurrency.
      * - request_checksum_calculation: (string, optional, defaulted to `when_supported`)
      * @param TransferListener[]|null $listeners
      * @param TransferListener|null $progressTracker
