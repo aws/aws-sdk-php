@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Api\ApiProvider;
 use Aws\Api\DateTimeResult;
 use Aws\Command;
 use Aws\CommandInterface;
@@ -10,6 +9,7 @@ use Aws\Identity\S3\S3ExpressIdentity;
 use Aws\LruArrayCache;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Middleware;
+use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\Exception\PermanentRedirectException;
 use Aws\S3\Exception\S3Exception;
@@ -2895,5 +2895,148 @@ EOXML;
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringContainsString('x-amz-checksum-crc32=AAAAAA%3D%3D', $url);
         $this->assertStringNotContainsString('x-amz-sdk-checksum-algorithm=crc32', $url);
+    }
+
+    /**
+     * The purpose of this test is to ensure ApplyChecksumMiddleware is
+     * not invoked twice, ensuring checksum calculation is not repeated.
+     *
+     * @dataProvider retriesWithoutRecalculatingChecksumProvider
+     */
+    public function testRetriesWithoutRecalculatingChecksum(
+        string $commandName,
+        array $commandArgs,
+        string $retryMode
+    ): void
+    {
+        $checksumHeader = 'x-amz-checksum-crc32';
+        $checksumValue = 'V/RnXQ==';
+        $command = new Command($commandName, $commandArgs);
+        $mockHandler = new MockHandler([
+            new AwsException(
+                'Simulated retryable error',
+                $command,
+                [
+                    'code' => 'Throttling',
+                    'response' => new Response(500)
+                ]
+            ),
+            new Result([
+                'ETag' => '"abc123"',
+                '@metadata' => [
+                    'headers' => [
+                        $checksumHeader => $checksumValue
+                    ]
+                ]
+            ])
+        ]);
+
+        $client = $this->getTestClient('s3', [
+            'handler' => $mockHandler,
+            'retries' => [
+                'mode' => $retryMode,
+                'max_attempts' => 2
+            ],
+            'credentials' => [
+                'key' => 'foo',
+                'secret' => 'bar'
+            ]
+        ]);
+
+        $checksumMiddlewareCalls = 0;
+
+        // Add counter middleware ensuring handlerList is not resolved again
+        // i.e. ApplyChecksumMiddleware was not called again
+        $client->getHandlerList()->appendBuild(
+            Middleware::tap(function ($cmd, $req) use (
+                &$checksumMiddlewareCalls,
+                $checksumHeader,
+                $checksumValue
+            ) {
+                $this->assertTrue($req->hasHeader($checksumHeader));
+                $this->assertEquals($checksumValue, $req->getHeaderLine($checksumHeader));
+                $checksumMiddlewareCalls++;
+            })
+        );
+
+        $client->$commandName($commandArgs);
+
+        $this->assertEquals(
+            1,
+            $checksumMiddlewareCalls,
+            'middleware should only run once, not on retry'
+        );
+    }
+
+    public function retriesWithoutRecalculatingChecksumProvider(): array
+    {
+        return [
+            'PutObject legacy' => [
+                'PutObject',
+                [
+                    'Bucket' => 'my-bucket',
+                    'Key' => 'example.txt',
+                    'Body' => 'test content',
+                    'ChecksumAlgorithm' => 'CRC32'
+                ],
+                'legacy'
+            ],
+            'PutObject standard' => [
+                'PutObject',
+                [
+                    'Bucket' => 'my-bucket',
+                    'Key' => 'example.txt',
+                    'Body' => 'test content',
+                    'ChecksumAlgorithm' => 'CRC32'
+                ],
+                'standard'
+            ],
+            'PutObject adaptive' => [
+                'PutObject',
+                [
+                    'Bucket' => 'my-bucket',
+                    'Key' => 'example.txt',
+                    'Body' => 'test content',
+                    'ChecksumAlgorithm' => 'CRC32'
+                ],
+                'adaptive'
+            ],
+            'UploadPart legacy' => [
+                'UploadPart',
+                [
+                    'Bucket' => 'my-bucket',
+                    'Key' => 'example.txt',
+                    'Body' => 'test content',
+                    'PartNumber' => 1,
+                    'UploadId' => 'test-upload-id',
+                    'ChecksumAlgorithm' => 'CRC32'
+                ],
+                'legacy'
+            ],
+            'UploadPart standard' => [
+                'UploadPart',
+                [
+                    'Bucket' => 'my-bucket',
+                    'Key' => 'example.txt',
+                    'Body' => 'test content',
+                    'PartNumber' => 1,
+                    'UploadId' => 'test-upload-id',
+                    'ChecksumAlgorithm' => 'CRC32'
+                ],
+                'standard'
+            ],
+            'UploadPart adaptive' => [
+                'UploadPart',
+                [
+                    'Bucket' => 'my-bucket',
+                    'Key' => 'example.txt',
+                    'Body' => 'test content',
+                    'PartNumber' => 1,
+                    'UploadId' => 'test-upload-id',
+                    'ChecksumAlgorithm' => 'CRC32'
+                ],
+                'adaptive'
+            ]
+        ];
     }
 }
