@@ -11400,7 +11400,8 @@
         "ExecutionClass":{"shape":"ExecutionClass"},
         "MaintenanceWindow":{"shape":"MaintenanceWindow"},
         "ProfileName":{"shape":"NameString"},
-        "StateDetail":{"shape":"OrchestrationMessageString"}
+        "StateDetail":{"shape":"OrchestrationMessageString"},
+        "ExecutionRoleSessionPolicy":{"shape":"OrchestrationPolicyJsonString"}
       }
     },
     "JobRunList":{
@@ -12741,6 +12742,11 @@
       "box":true,
       "max":25,
       "min":1
+    },
+    "OrchestrationPolicyJsonString":{
+      "type":"string",
+      "max":2048,
+      "min":2
     },
     "OrchestrationRoleArn":{
       "type":"string",
@@ -14912,7 +14918,8 @@
         "NotificationProperty":{"shape":"NotificationProperty"},
         "WorkerType":{"shape":"WorkerType"},
         "NumberOfWorkers":{"shape":"NullableInteger"},
-        "ExecutionClass":{"shape":"ExecutionClass"}
+        "ExecutionClass":{"shape":"ExecutionClass"},
+        "ExecutionRoleSessionPolicy":{"shape":"OrchestrationPolicyJsonString"}
       }
     },
     "StartJobRunResponse":{

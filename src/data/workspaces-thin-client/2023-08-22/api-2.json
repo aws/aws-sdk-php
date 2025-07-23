@@ -508,7 +508,8 @@
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
         "arn":{"shape":"Arn"},
-        "kmsKeyArn":{"shape":"KmsKeyArn"}
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "lastUserId":{"shape":"UserId"}
       }
     },
     "DeviceCreationTagKey":{
@@ -580,7 +581,8 @@
         "lastPostureAt":{"shape":"Timestamp"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
-        "arn":{"shape":"Arn"}
+        "arn":{"shape":"Arn"},
+        "lastUserId":{"shape":"UserId"}
       }
     },
     "Environment":{
@@ -1110,6 +1112,10 @@
       "type":"structure",
       "members":{
       }
+    },
+    "UserId":{
+      "type":"string",
+      "sensitive":true
     },
     "ValidationException":{
       "type":"structure",
