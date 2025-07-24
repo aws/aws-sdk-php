@@ -2372,6 +2372,12 @@
       },
       "exception":true
     },
+    "ConnectionArn":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:aws(-[\\w]+)*:.+:.+:[0-9]{12}:.+"
+    },
     "CreateAnnotationStoreRequest":{
       "type":"structure",
       "required":["storeFormat"],
@@ -2703,7 +2709,13 @@
           "idempotencyToken":true
         },
         "accelerators":{"shape":"Accelerators"},
-        "storageType":{"shape":"StorageType"}
+        "storageType":{"shape":"StorageType"},
+        "readmeMarkdown":{"shape":"ReadmeMarkdown"},
+        "parameterTemplatePath":{"shape":"ParameterTemplatePath"},
+        "readmePath":{"shape":"ReadmePath"},
+        "definitionRepository":{"shape":"DefinitionRepository"},
+        "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"},
+        "readmeUri":{"shape":"S3UriForObject"}
       }
     },
     "CreateWorkflowRequestStorageCapacityInteger":{
@@ -2750,7 +2762,12 @@
         "storageType":{"shape":"StorageType"},
         "storageCapacity":{"shape":"CreateWorkflowVersionRequestStorageCapacityInteger"},
         "tags":{"shape":"TagMap"},
-        "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"}
+        "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"},
+        "readmeMarkdown":{"shape":"ReadmeMarkdown"},
+        "parameterTemplatePath":{"shape":"ParameterTemplatePath"},
+        "readmePath":{"shape":"ReadmePath"},
+        "definitionRepository":{"shape":"DefinitionRepository"},
+        "readmeUri":{"shape":"S3UriForObject"}
       }
     },
     "CreateWorkflowVersionRequestStorageCapacityInteger":{
@@ -2786,6 +2803,29 @@
         "IMPORT",
         "UPLOAD"
       ]
+    },
+    "DefinitionRepository":{
+      "type":"structure",
+      "required":[
+        "connectionArn",
+        "fullRepositoryId"
+      ],
+      "members":{
+        "connectionArn":{"shape":"ConnectionArn"},
+        "fullRepositoryId":{"shape":"FullRepositoryId"},
+        "sourceReference":{"shape":"SourceReference"},
+        "excludeFilePatterns":{"shape":"ExcludeFilePatternList"}
+      }
+    },
+    "DefinitionRepositoryDetails":{
+      "type":"structure",
+      "members":{
+        "connectionArn":{"shape":"ConnectionArn"},
+        "fullRepositoryId":{"shape":"FullRepositoryId"},
+        "sourceReference":{"shape":"SourceReference"},
+        "providerType":{"shape":"String"},
+        "providerEndpoint":{"shape":"String"}
+      }
     },
     "DeleteAnnotationStoreRequest":{
       "type":"structure",
@@ -3069,6 +3109,12 @@
       "min":1
     },
     "EscapeQuotes":{"type":"boolean"},
+    "ExcludeFilePatternList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":50,
+      "min":1
+    },
     "ExportJobId":{
       "type":"string",
       "max":36,
@@ -3204,6 +3250,10 @@
       "type":"string",
       "max":1000,
       "min":0
+    },
+    "FullRepositoryId":{
+      "type":"string",
+      "pattern":".+/.+"
     },
     "GeneratedFrom":{
       "type":"string",
@@ -4119,7 +4169,10 @@
         "metadata":{"shape":"WorkflowMetadata"},
         "accelerators":{"shape":"Accelerators"},
         "storageType":{"shape":"StorageType"},
-        "uuid":{"shape":"WorkflowUuid"}
+        "uuid":{"shape":"WorkflowUuid"},
+        "readme":{"shape":"ReadmeS3PresignedUrl"},
+        "definitionRepositoryDetails":{"shape":"DefinitionRepositoryDetails"},
+        "readmePath":{"shape":"ReadmePath"}
       }
     },
     "GetWorkflowResponseStorageCapacityInteger":{
@@ -4184,7 +4237,10 @@
         "type":{"shape":"WorkflowType"},
         "tags":{"shape":"TagMap"},
         "uuid":{"shape":"WorkflowUuid"},
-        "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"}
+        "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"},
+        "readme":{"shape":"ReadmeS3PresignedUrl"},
+        "definitionRepositoryDetails":{"shape":"DefinitionRepositoryDetails"},
+        "readmePath":{"shape":"ReadmePath"}
       }
     },
     "GetWorkflowVersionResponseStorageCapacityInteger":{
@@ -5269,6 +5325,12 @@
       "min":1,
       "pattern":"[0-9]+"
     },
+    "ParameterTemplatePath":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
     "PrimitiveBoolean":{"type":"boolean"},
     "PropagatedSetLevelTags":{
       "type":"list",
@@ -5592,6 +5654,19 @@
       "box":true,
       "max":5368709120,
       "min":1
+    },
+    "ReadmeMarkdown":{"type":"string"},
+    "ReadmePath":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "ReadmeS3PresignedUrl":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "ReferenceArn":{
       "type":"string",
@@ -6148,6 +6223,10 @@
       "type":"string",
       "pattern":"s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])(/(.{0,1024}))?"
     },
+    "S3UriForObject":{
+      "type":"string",
+      "pattern":"s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/((.{1,1024}))"
+    },
     "SampleId":{
       "type":"string",
       "max":127,
@@ -6338,6 +6417,26 @@
         "source2":{"shape":"S3Uri"}
       }
     },
+    "SourceReference":{
+      "type":"structure",
+      "required":[
+        "type",
+        "value"
+      ],
+      "members":{
+        "type":{"shape":"SourceReferenceType"},
+        "value":{"shape":"SourceReferenceValue"}
+      }
+    },
+    "SourceReferenceType":{
+      "type":"string",
+      "enum":[
+        "BRANCH",
+        "TAG",
+        "COMMIT"
+      ]
+    },
+    "SourceReferenceValue":{"type":"string"},
     "SseConfig":{
       "type":"structure",
       "required":["type"],
@@ -6731,7 +6830,7 @@
     },
     "TagArn":{
       "type":"string",
-      "max":128,
+      "max":150,
       "min":1,
       "pattern":"arn:.+"
     },
@@ -7173,7 +7272,8 @@
         "name":{"shape":"WorkflowName"},
         "description":{"shape":"WorkflowDescription"},
         "storageType":{"shape":"StorageType"},
-        "storageCapacity":{"shape":"UpdateWorkflowRequestStorageCapacityInteger"}
+        "storageCapacity":{"shape":"UpdateWorkflowRequestStorageCapacityInteger"},
+        "readmeMarkdown":{"shape":"ReadmeMarkdown"}
       }
     },
     "UpdateWorkflowRequestStorageCapacityInteger":{
@@ -7201,7 +7301,8 @@
         },
         "description":{"shape":"WorkflowVersionDescription"},
         "storageType":{"shape":"StorageType"},
-        "storageCapacity":{"shape":"UpdateWorkflowVersionRequestStorageCapacityInteger"}
+        "storageCapacity":{"shape":"UpdateWorkflowVersionRequestStorageCapacityInteger"},
+        "readmeMarkdown":{"shape":"ReadmeMarkdown"}
       }
     },
     "UpdateWorkflowVersionRequestStorageCapacityInteger":{
@@ -7465,7 +7566,10 @@
     },
     "WorkflowExport":{
       "type":"string",
-      "enum":["DEFINITION"],
+      "enum":[
+        "DEFINITION",
+        "README"
+      ],
       "max":64,
       "min":1
     },
@@ -7603,7 +7707,7 @@
     },
     "WorkflowVersionArn":{
       "type":"string",
-      "max":128,
+      "max":150,
       "min":1,
       "pattern":"arn:.+"
     },

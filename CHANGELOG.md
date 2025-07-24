@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataZone` - This release adds support for 1) highlighting relevant text in returned results for Search and SearchListings APIs and 2) returning aggregated counts of values for specified attributes for SearchListings API.
+* `Aws\Omics` - Add Git integration and README support for HealthOmics workflows
+
 ## 3.351.5 - 2025-07-23
 
 * `Aws\EC2` - Added support for skip-os-shutdown option for the EC2 instance stop and terminate operations. This feature enables customers to bypass the graceful OS shutdown, supporting faster state transitions when instance data preservation isn't critical.

@@ -278,6 +278,61 @@
         "PolicyGrantDetail$addToProjectMemberPool": "<p>Specifies that the policy grant is to be added to the members of the project.</p>"
       }
     },
+    "AggregationAttributeDisplayValue": {
+      "base": null,
+      "refs": {
+        "AggregationOutputItem$displayValue": "<p>The display value of the aggregation. If the attribute being aggregated corresponds to the id of a public resource, the service automatically resolves the id to the provided display value.</p>"
+      }
+    },
+    "AggregationAttributeValue": {
+      "base": null,
+      "refs": {
+        "AggregationOutputItem$value": "<p>The attribute value of the aggregation output item.</p>"
+      }
+    },
+    "AggregationDisplayValue": {
+      "base": null,
+      "refs": {
+        "AggregationListItem$displayValue": "<p>The display value of the aggregation list item. Supported values include <code>value</code> and <code>glossaryTerm.name</code>.</p>",
+        "AggregationOutput$displayValue": "<p>The display value of the aggregation output item.</p>"
+      }
+    },
+    "AggregationList": {
+      "base": null,
+      "refs": {
+        "SearchListingsInput$aggregations": "<p>Enables you to specify one or more attributes to compute and return counts grouped by field values.</p>"
+      }
+    },
+    "AggregationListItem": {
+      "base": "<p>An aggregation list item.</p>",
+      "refs": {
+        "AggregationList$member": null
+      }
+    },
+    "AggregationOutput": {
+      "base": "<p>The aggregation for an attribute.</p>",
+      "refs": {
+        "AggregationOutputList$member": null
+      }
+    },
+    "AggregationOutputItem": {
+      "base": "<p>An aggregation output item.</p>",
+      "refs": {
+        "AggregationOutputItems$member": null
+      }
+    },
+    "AggregationOutputItems": {
+      "base": null,
+      "refs": {
+        "AggregationOutput$items": "<p>A list of aggregation output items.</p>"
+      }
+    },
+    "AggregationOutputList": {
+      "base": null,
+      "refs": {
+        "SearchListingsOutput$aggregates": "<p>Contains computed counts grouped by field values based on the requested aggregation attributes for the matching listings.</p>"
+      }
+    },
     "AllDomainUnitsGrantFilter": {
       "base": "<p>The grant filter for all domain units.</p>",
       "refs": {
@@ -359,7 +414,7 @@
         "AssetItem$identifier": "<p>the identifier of the Amazon DataZone inventory asset.</p>",
         "CreateAssetRevisionInput$identifier": "<p>The identifier of the asset.</p>",
         "DeleteAssetInput$identifier": "<p>The identifier of the asset that is deleted.</p>",
-        "GetAssetInput$identifier": "<p>The ID of the Amazon DataZone asset.</p>",
+        "GetAssetInput$identifier": "<p>The ID of the Amazon DataZone asset.</p> <p>This parameter supports either the value of <code>assetId</code> or <code>externalIdentifier</code> as input. If you are passing the value of <code>externalIdentifier</code>, you must prefix this value with <code>externalIdentifer%2F</code>.</p>",
         "ListAssetRevisionsInput$identifier": "<p>The identifier of the asset.</p>",
         "RejectPredictionsInput$identifier": "<p>The identifier of the prediction.</p>"
       }
@@ -538,9 +593,12 @@
     "Attribute": {
       "base": null,
       "refs": {
+        "AggregationListItem$attribute": "<p>An attribute on which to compute aggregations.</p>",
+        "AggregationOutput$attribute": "<p>The attribute for this aggregation.</p>",
         "Filter$attribute": "<p>A search filter attribute in Amazon DataZone.</p>",
         "SearchInItem$attribute": "<p>The search attribute.</p>",
-        "SearchSort$attribute": "<p>The attribute detail of the way to sort search results.</p>"
+        "SearchSort$attribute": "<p>The attribute detail of the way to sort search results.</p>",
+        "TextMatchItem$attribute": "<p>The name of the attribute.</p>"
       }
     },
     "AuthType": {
@@ -1576,6 +1634,12 @@
       "base": "<p>The data product.</p>",
       "refs": {
         "DataProductItems$member": null
+      }
+    },
+    "DataProductItemAdditionalAttributes": {
+      "base": "<p>The additional attributes of an Amazon DataZone data product.</p>",
+      "refs": {
+        "DataProductResultItem$additionalAttributes": "<p>The additional attributes of an Amazon DataZone data product.</p>"
       }
     },
     "DataProductItemType": {
@@ -3100,7 +3164,7 @@
       "base": null,
       "refs": {
         "AssetItem$externalIdentifier": "<p>The external identifier of the Amazon DataZone inventory asset.</p>",
-        "CreateAssetInput$externalIdentifier": "<p>The external identifier of the asset.</p>",
+        "CreateAssetInput$externalIdentifier": "<p>The external identifier of the asset.</p> <p>If the value for the <code>externalIdentifier</code> parameter is specified, it must be a unique value.</p>",
         "CreateAssetOutput$externalIdentifier": "<p>The external identifier of the asset.</p>",
         "CreateAssetRevisionOutput$externalIdentifier": "<p>The external identifier of the asset.</p>",
         "GetAssetOutput$externalIdentifier": "<p>The external ID of the asset.</p>"
@@ -3758,6 +3822,12 @@
         "SearchInventoryResultItem$glossaryItem": "<p>The glossary item included in the search results.</p>"
       }
     },
+    "GlossaryItemAdditionalAttributes": {
+      "base": "<p>The additional attributes of an Amazon DataZone glossary.</p>",
+      "refs": {
+        "GlossaryItem$additionalAttributes": "<p>The additional attributes of an Amazon DataZone glossary.</p>"
+      }
+    },
     "GlossaryName": {
       "base": null,
       "refs": {
@@ -3802,6 +3872,12 @@
       "base": "<p>The details of a business glossary term.</p>",
       "refs": {
         "SearchInventoryResultItem$glossaryTermItem": "<p>The glossary term item included in the search results.</p>"
+      }
+    },
+    "GlossaryTermItemAdditionalAttributes": {
+      "base": "<p>The additional attributes of an Amazon DataZone glossary term.</p>",
+      "refs": {
+        "GlossaryTermItem$additionalAttributes": "<p>The additional attributes of an Amazon DataZone glossary term.</p>"
       }
     },
     "GlossaryTermName": {
@@ -4201,11 +4277,14 @@
       "base": null,
       "refs": {
         "AcceptChoice$predictionChoice": "<p>Specifies the prediction (aka, the automatically generated piece of metadata) that can be accepted.</p>",
+        "AggregationOutputItem$count": "<p>The count of the aggregation output item.</p>",
         "CreateEnvironmentInput$deploymentOrder": "<p>The deployment order of the environment.</p>",
         "DataSourceSummary$lastRunAssetCount": "<p>The count of the assets created during the last data source run.</p>",
         "GetDataSourceOutput$lastRunAssetCount": "<p>The number of assets created by the data source during its last run.</p>",
         "LineageSqlQueryRunDetails$numQueriesFailed": "<p>The number of queries that failed in the SQL query run details of a data lineage run.</p>",
         "LineageSqlQueryRunDetails$totalQueriesProcessed": "<p>The total queries processed in the SQL query run details of a data lineage run.</p>",
+        "MatchOffset$endOffset": "<p>The 0-indexed number indicating the end position (exclusive) of a matched term.</p>",
+        "MatchOffset$startOffset": "<p>The 0-indexed number indicating the start position (inclusive) of a matched term.</p>",
         "PhysicalEndpoint$port": "<p>The port in the physical endpoints of a connection.</p>",
         "PredictionChoices$member": null,
         "RedshiftPropertiesInput$port": "<p>The Amaon Redshift port.</p>",
@@ -4893,6 +4972,35 @@
       "base": null,
       "refs": {
         "GlueConnection$matchCriteria": "<p>The match criteria of the Amazon Web Services Glue connection.</p>"
+      }
+    },
+    "MatchOffset": {
+      "base": "<p>The offset of a matched term.</p>",
+      "refs": {
+        "MatchOffsets$member": null
+      }
+    },
+    "MatchOffsets": {
+      "base": null,
+      "refs": {
+        "TextMatchItem$matchOffsets": "<p>List of offsets indicating matching terms in the TextMatchItem text.</p>"
+      }
+    },
+    "MatchRationale": {
+      "base": null,
+      "refs": {
+        "AssetItemAdditionalAttributes$matchRationale": "<p>List of rationales indicating why this item was matched by search.</p>",
+        "AssetListingItemAdditionalAttributes$matchRationale": "<p>List of rationales indicating why this item was matched by search.</p>",
+        "DataProductItemAdditionalAttributes$matchRationale": "<p>List of rationales indicating why this item was matched by search.</p>",
+        "DataProductListingItemAdditionalAttributes$matchRationale": "<p>List of rationales indicating why this item was matched by search.</p>",
+        "GlossaryItemAdditionalAttributes$matchRationale": "<p>List of rationales indicating why this item was matched by search.</p>",
+        "GlossaryTermItemAdditionalAttributes$matchRationale": "<p>List of rationales indicating why this item was matched by search.</p>"
+      }
+    },
+    "MatchRationaleItem": {
+      "base": "<p>A rationale indicating why this item was matched by search. </p>",
+      "refs": {
+        "MatchRationale$member": null
       }
     },
     "MaxResults": {
@@ -6493,6 +6601,12 @@
       "refs": {
       }
     },
+    "SearchListingsInputSearchTextString": {
+      "base": null,
+      "refs": {
+        "SearchListingsInput$searchText": "<p>Specifies the text for which to search.</p>"
+      }
+    },
     "SearchListingsOutput": {
       "base": null,
       "refs": {
@@ -7107,7 +7221,6 @@
         "Resource$type": "<p>The type of a provisioned resource of this Amazon DataZone environment.</p>",
         "Resource$value": "<p>The value of a provisioned resource of this Amazon DataZone environment.</p>",
         "S3PropertiesOutput$errorMessage": "<p>The error message that gets displayed.</p>",
-        "SearchListingsInput$searchText": "<p>Specifies the text for which to search.</p>",
         "SelfGrantStatusDetail$failureCause": "<p>The reason for why the operation failed.</p>",
         "SparkEmrPropertiesOutput$computeArn": "<p>The compute ARN of the Spark EMR.</p>",
         "SparkEmrPropertiesOutput$instanceProfileArn": "<p>The instance profile ARN of the Spark EMR.</p>",
@@ -7135,6 +7248,7 @@
         "SubscriptionTargetSummary$provider": "<p>The provider of the subscription target.</p>",
         "SubscriptionTargetSummary$type": "<p>The type of the subscription target.</p>",
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource to be tagged in Amazon DataZone.</p>",
+        "TextMatchItem$text": "<p>Snippet of attribute text containing highlighted content.</p>",
         "Topic$subject": "<p>The subject of the resource mentioned in a notification.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource to be untagged in Amazon DataZone.</p>",
         "UpdateAssetFilterInput$name": "<p>The name of the asset filter.</p>",
@@ -7622,6 +7736,18 @@
       "base": null,
       "refs": {
         "TermRelations$isA": "<p>The <code>isA</code> property of the term relations.</p>"
+      }
+    },
+    "TextMatchItem": {
+      "base": "<p>A structure indicating matched terms for an attribute.</p>",
+      "refs": {
+        "TextMatches$member": null
+      }
+    },
+    "TextMatches": {
+      "base": null,
+      "refs": {
+        "MatchRationaleItem$textMatches": "<p>A list of TextMatchItems.</p>"
       }
     },
     "ThrottlingException": {
