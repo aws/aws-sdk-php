@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.6 - 2025-07-24
 
 * `Aws\DataZone` - This release adds support for 1) highlighting relevant text in returned results for Search and SearchListings APIs and 2) returning aggregated counts of values for specified attributes for SearchListings API.
 * `Aws\Omics` - Add Git integration and README support for HealthOmics workflows
