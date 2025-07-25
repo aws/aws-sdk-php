@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.7 - 2025-07-25
 
 * `Aws\MediaPackageV2` - This release adds support for specifying a preferred input for channels using CMAF ingest.
 * `Aws\SQS` - Documentation updates for Amazon SQS fair queues feature.
