@@ -2019,8 +2019,15 @@
     "InputSwitchConfiguration":{
       "type":"structure",
       "members":{
-        "MQCSInputSwitching":{"shape":"Boolean"}
+        "MQCSInputSwitching":{"shape":"Boolean"},
+        "PreferredInput":{"shape":"InputSwitchConfigurationPreferredInputInteger"}
       }
+    },
+    "InputSwitchConfigurationPreferredInputInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2,
+      "min":1
     },
     "InputType":{
       "type":"string",
@@ -2976,6 +2983,7 @@
         "CMAF_EXCLUDE_SEGMENT_DRM_METADATA_INCOMPATIBLE_CONTAINER_TYPE",
         "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_INPUT_SWITCHING",
         "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_PREFERRED_INPUT_CONFIGURATION",
         "TS_CONTAINER_TYPE_WITH_MSS_MANIFEST",
         "CMAF_CONTAINER_TYPE_WITH_MSS_MANIFEST",
         "ISM_CONTAINER_TYPE_WITH_HLS_MANIFEST",

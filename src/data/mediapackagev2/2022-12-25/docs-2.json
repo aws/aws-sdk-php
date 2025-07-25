@@ -12,14 +12,14 @@
     "DeleteChannelPolicy": "<p>Delete a channel policy.</p>",
     "DeleteOriginEndpoint": "<p>Origin endpoints can serve content until they're deleted. Delete the endpoint if it should no longer respond to playback requests. You must delete all endpoints from a channel before you can delete the channel.</p>",
     "DeleteOriginEndpointPolicy": "<p>Delete an origin endpoint policy.</p>",
-    "GetChannel": "<p>Retrieves the specified channel that's configured in AWS Elemental MediaPackage, including the origin endpoints that are associated with it.</p>",
-    "GetChannelGroup": "<p>Retrieves the specified channel group that's configured in AWS Elemental MediaPackage, including the channels and origin endpoints that are associated with it.</p>",
+    "GetChannel": "<p>Retrieves the specified channel that's configured in AWS Elemental MediaPackage.</p>",
+    "GetChannelGroup": "<p>Retrieves the specified channel group that's configured in AWS Elemental MediaPackage.</p>",
     "GetChannelPolicy": "<p>Retrieves the specified channel policy that's configured in AWS Elemental MediaPackage. With policies, you can specify who has access to AWS resources and what actions they can perform on those resources.</p>",
     "GetHarvestJob": "<p>Retrieves the details of a specific harvest job.</p>",
     "GetOriginEndpoint": "<p>Retrieves the specified origin endpoint that's configured in AWS Elemental MediaPackage to obtain its playback URL and to view the packaging settings that it's currently using.</p>",
     "GetOriginEndpointPolicy": "<p>Retrieves the specified origin endpoint policy that's configured in AWS Elemental MediaPackage.</p>",
     "ListChannelGroups": "<p>Retrieves all channel groups that are configured in Elemental MediaPackage.</p>",
-    "ListChannels": "<p>Retrieves all channels in a specific channel group that are configured in AWS Elemental MediaPackage, including the origin endpoints that are associated with it.</p>",
+    "ListChannels": "<p>Retrieves all channels in a specific channel group that are configured in AWS Elemental MediaPackage.</p>",
     "ListHarvestJobs": "<p>Retrieves a list of harvest jobs that match the specified criteria.</p>",
     "ListOriginEndpoints": "<p>Retrieves all origin endpoints in a specific channel that are configured in AWS Elemental MediaPackage.</p>",
     "ListTagsForResource": "<p>Lists the tags assigned to a resource.</p>",
@@ -912,6 +912,12 @@
         "GetChannelResponse$InputSwitchConfiguration": "<p>The configuration for input switching based on the media quality confidence score (MQCS) as provided from AWS Elemental MediaLive. This setting is valid only when <code>InputType</code> is <code>CMAF</code>.</p>",
         "UpdateChannelRequest$InputSwitchConfiguration": "<p>The configuration for input switching based on the media quality confidence score (MQCS) as provided from AWS Elemental MediaLive. This setting is valid only when <code>InputType</code> is <code>CMAF</code>.</p>",
         "UpdateChannelResponse$InputSwitchConfiguration": "<p>The configuration for input switching based on the media quality confidence score (MQCS) as provided from AWS Elemental MediaLive. This setting is valid only when <code>InputType</code> is <code>CMAF</code>.</p>"
+      }
+    },
+    "InputSwitchConfigurationPreferredInputInteger": {
+      "base": null,
+      "refs": {
+        "InputSwitchConfiguration$PreferredInput": "<p>For CMAF inputs, indicates which input MediaPackage should prefer when both inputs have equal MQCS scores. Select <code>1</code> to prefer the first ingest endpoint, or <code>2</code> to prefer the second ingest endpoint. If you don't specify a preferred input, MediaPackage uses its default switching behavior when MQCS scores are equal.</p>"
       }
     },
     "InputType": {

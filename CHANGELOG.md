@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaPackageV2` - This release adds support for specifying a preferred input for channels using CMAF ingest.
+* `Aws\SQS` - Documentation updates for Amazon SQS fair queues feature.
+* `Aws\ConfigService` - Documentation improvements have been made to the EvaluationModel and DescribeConfigurationRecorders APIs.
+* `Aws\KMS` - Doc only update: fixed grammatical errors.
+* `Aws\AppIntegrationsService` - Amazon AppIntegrations introduces new configuration capabilities to enable customers to manage iframe permissions, control application refresh behavior (per contact or per browser/cross-contact), and run background applications (service).
+* `Aws\EC2` - Transit Gateway native integration with AWS Network Firewall. Adding new enum value for the new Transit Gateway Attachment type.
+* `Aws\Budgets` - Adds IPv6 and PrivateLink support for AWS Budgets in IAD.
+* `Aws\SocialMessaging` - This release introduces new WhatsApp template management APIs that enable customers to programmatically create and submit templates for approval, monitor approval status, and manage the complete template lifecycle
+
 ## 3.351.6 - 2025-07-24
 
 * `Aws\DataZone` - This release adds support for 1) highlighting relevant text in returned results for Search and SearchListings APIs and 2) returning aggregated counts of values for specified attributes for SearchListings API.

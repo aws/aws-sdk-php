@@ -412,6 +412,12 @@
       "max":50,
       "min":1
     },
+    "ApplicationConfig":{
+      "type":"structure",
+      "members":{
+        "ContactHandling":{"shape":"ContactHandling"}
+      }
+    },
     "ApplicationName":{
       "type":"string",
       "max":255,
@@ -438,7 +444,8 @@
         "Name":{"shape":"ApplicationName"},
         "Namespace":{"shape":"ApplicationNamespace"},
         "CreatedTime":{"shape":"Timestamp"},
-        "LastModifiedTime":{"shape":"Timestamp"}
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "IsService":{"shape":"Boolean"}
       }
     },
     "ApplicationTrustedSource":{
@@ -465,6 +472,7 @@
       "min":1,
       "pattern":"^(arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})(:[\\w\\$]+)?$"
     },
+    "Boolean":{"type":"boolean"},
     "ClientAssociationMetadata":{
       "type":"map",
       "key":{"shape":"NonBlankString"},
@@ -475,6 +483,19 @@
       "max":255,
       "min":1,
       "pattern":".*"
+    },
+    "ContactHandling":{
+      "type":"structure",
+      "members":{
+        "Scope":{"shape":"ContactHandlingScope"}
+      }
+    },
+    "ContactHandlingScope":{
+      "type":"string",
+      "enum":[
+        "CROSS_CONTACTS",
+        "PER_CONTACT"
+      ]
     },
     "CreateApplicationRequest":{
       "type":"structure",
@@ -503,7 +524,11 @@
           "idempotencyToken":true
         },
         "Tags":{"shape":"TagMap"},
-        "Permissions":{"shape":"PermissionList"}
+        "Permissions":{"shape":"PermissionList"},
+        "IsService":{"shape":"Boolean"},
+        "InitializationTimeout":{"shape":"InitializationTimeout"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"},
+        "IframeConfig":{"shape":"IframeConfig"}
       }
     },
     "CreateApplicationResponse":{
@@ -646,8 +671,7 @@
     },
     "DeleteApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDataIntegrationRequest":{
       "type":"structure",
@@ -662,8 +686,7 @@
     },
     "DeleteDataIntegrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEventIntegrationRequest":{
       "type":"structure",
@@ -678,8 +701,7 @@
     },
     "DeleteEventIntegrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Description":{
       "type":"string",
@@ -862,7 +884,11 @@
         "CreatedTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "Tags":{"shape":"TagMap"},
-        "Permissions":{"shape":"PermissionList"}
+        "Permissions":{"shape":"PermissionList"},
+        "IsService":{"shape":"Boolean"},
+        "InitializationTimeout":{"shape":"InitializationTimeout"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"},
+        "IframeConfig":{"shape":"IframeConfig"}
       }
     },
     "GetDataIntegrationRequest":{
@@ -924,6 +950,30 @@
       "max":255,
       "min":1,
       "pattern":".*\\S.*"
+    },
+    "IframeConfig":{
+      "type":"structure",
+      "members":{
+        "Allow":{"shape":"IframePermissionList"},
+        "Sandbox":{"shape":"IframePermissionList"}
+      }
+    },
+    "IframePermission":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^[a-z-]+$"
+    },
+    "IframePermissionList":{
+      "type":"list",
+      "member":{"shape":"IframePermission"},
+      "max":25,
+      "min":0
+    },
+    "InitializationTimeout":{
+      "type":"integer",
+      "max":600000,
+      "min":1
     },
     "InternalServiceError":{
       "type":"structure",
@@ -1282,8 +1332,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1337,8 +1386,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateApplicationRequest":{
       "type":"structure",
@@ -1362,13 +1410,19 @@
           "deprecated":true,
           "deprecatedMessage":"Publications has been replaced with Permissions"
         },
-        "Permissions":{"shape":"PermissionList"}
+        "Permissions":{"shape":"PermissionList"},
+        "IsService":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "InitializationTimeout":{"shape":"InitializationTimeout"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"},
+        "IframeConfig":{"shape":"IframeConfig"}
       }
     },
     "UpdateApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDataIntegrationAssociationRequest":{
       "type":"structure",
@@ -1393,8 +1447,7 @@
     },
     "UpdateDataIntegrationAssociationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDataIntegrationRequest":{
       "type":"structure",
@@ -1411,8 +1464,7 @@
     },
     "UpdateDataIntegrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEventIntegrationRequest":{
       "type":"structure",
@@ -1428,8 +1480,7 @@
     },
     "UpdateEventIntegrationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     }
   }
 }
