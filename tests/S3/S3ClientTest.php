@@ -1409,7 +1409,7 @@ EOXML;
                 $req->getUri()->getHost()
             );
             $this->assertSame(
-                '/bucket/',
+                '/bucket',
                 $req->getUri()->getPath()
             );
             return Promise\Create::promiseFor(new Response);

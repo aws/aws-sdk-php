@@ -12,7 +12,7 @@ class BucketEndpointMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
-    public function testUsesHostStyleByDefault()
+    public function testUsesHostStyleByDefault(): void
     {
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [[]]);
@@ -26,7 +26,7 @@ class BucketEndpointMiddlewareTest extends TestCase
         $s3->execute($command);
     }
 
-    public function testUsesPathStyle()
+    public function testUsesPathStyle(): void
     {
         $s3 = $this->getTestClient('s3', [
             'use_path_style_endpoint' => true
@@ -42,7 +42,7 @@ class BucketEndpointMiddlewareTest extends TestCase
         $s3->execute($command);
     }
 
-    public function testIgnoresExcludedCommands()
+    public function testIgnoresExcludedCommands(): void
     {
         $s3 = $this->getTestClient('s3');
         $this->addMockResults($s3, [['bucket_endpoint' => true]]);
@@ -56,7 +56,7 @@ class BucketEndpointMiddlewareTest extends TestCase
         $s3->execute($command);
     }
 
-    public function testPathStyleIgnoresExcludedCommands()
+    public function testPathStyleIgnoresExcludedCommands(): void
     {
         $s3 = $this->getTestClient('s3', [
             'use_path_style_endpoint' => true
@@ -72,10 +72,15 @@ class BucketEndpointMiddlewareTest extends TestCase
         $s3->execute($command);
     }
 
-    public function testRemovesBucketWhenBucketEndpoint()
+    /**
+     * When using EndpointProviderV2, the bucket is added to the host by default
+     * This defeats the purpose of using CNAME-style bucket endpoints.  This test
+     * ensures the original host is preserved.
+     */
+    public function testRemovesBucketWhenBucketEndpoint(): void
     {
         $s3 = $this->getTestClient('s3', [
-            'endpoint'        => 'http://test.domain.com',
+            'endpoint'        => 'http://custom-domain.com',
             'bucket_endpoint' => true
         ]);
         $this->addMockResults($s3, [[]]);
@@ -85,14 +90,14 @@ class BucketEndpointMiddlewareTest extends TestCase
         ]);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
-                $this->assertSame('test.domain.com', $req->getUri()->getHost());
+                $this->assertSame('custom-domain.com', $req->getUri()->getHost());
                 $this->assertSame('/key', $req->getRequestTarget());
             })
         );
         $s3->execute($command);
     }
 
-    public function testHandlesTrailingForwardSlash()
+    public function testHandlesTrailingForwardSlash(): void
     {
         $s3 = $this->getTestClient('s3', [
             'endpoint'        => 'http://test.domain.com/test/',
@@ -106,13 +111,13 @@ class BucketEndpointMiddlewareTest extends TestCase
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
                 $this->assertSame('test.domain.com', $req->getUri()->getHost());
-                $this->assertSame('/test/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
+                $this->assertSame('/?prefix=%2F&encoding-type=url', $req->getRequestTarget());
             })
         );
         $s3->execute($command);
     }
 
-    public function testHandlesDuplicatePath()
+    public function testHandlesDuplicatePath(): void
     {
         $s3 = $this->getTestClient('s3', [
             'endpoint'        => 'http://domain.com/test',
@@ -126,13 +131,13 @@ class BucketEndpointMiddlewareTest extends TestCase
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
                 $this->assertSame('domain.com', $req->getUri()->getHost());
-                $this->assertSame('/test/', $req->getUri()->getPath());
+                $this->assertSame('/test', $req->getUri()->getPath());
             })
         );
         $s3->execute($command);
     }
 
-    public function keyContainsBucketNameProvider()
+    public function keyContainsBucketNameProvider(): iterable
     {
         return [
             ['bucketname'],
@@ -150,7 +155,7 @@ class BucketEndpointMiddlewareTest extends TestCase
      *
      * @param $key
      */
-    public function testsHandlesDuplicatePathWithKeyContainsBucketName($key)
+    public function testsHandlesDuplicatePathWithKeyContainsBucketName($key): void
     {
         $s3 = $this->getTestClient('s3', [
             'endpoint'        => 'http://domain.com/bucketname',
