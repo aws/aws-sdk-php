@@ -1199,7 +1199,8 @@
         "macSecCapable":{"shape":"MacSecCapable"},
         "portEncryptionStatus":{"shape":"PortEncryptionStatus"},
         "encryptionMode":{"shape":"EncryptionMode"},
-        "macSecKeys":{"shape":"MacSecKeyList"}
+        "macSecKeys":{"shape":"MacSecKeyList"},
+        "partnerInterconnectMacSecCapable":{"shape":"PartnerInterconnectMacSecCapable"}
       }
     },
     "ConnectionId":{"type":"string"},
@@ -1336,7 +1337,8 @@
         "location":{"shape":"LocationCode"},
         "lagId":{"shape":"LagId"},
         "tags":{"shape":"TagList"},
-        "providerName":{"shape":"ProviderName"}
+        "providerName":{"shape":"ProviderName"},
+        "requestMACSec":{"shape":"RequestMACSec"}
       }
     },
     "CreateLagRequest":{
@@ -1842,8 +1844,7 @@
     },
     "DuplicateTagKeysException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EnableSiteLink":{"type":"boolean"},
@@ -1885,7 +1886,11 @@
         "awsLogicalDeviceId":{"shape":"AwsLogicalDeviceId"},
         "hasLogicalRedundancy":{"shape":"HasLogicalRedundancy"},
         "tags":{"shape":"TagList"},
-        "providerName":{"shape":"ProviderName"}
+        "providerName":{"shape":"ProviderName"},
+        "macSecCapable":{"shape":"MacSecCapable"},
+        "portEncryptionStatus":{"shape":"PortEncryptionStatus"},
+        "encryptionMode":{"shape":"EncryptionMode"},
+        "macSecKeys":{"shape":"MacSecKeyList"}
       }
     },
     "InterconnectId":{"type":"string"},
@@ -2166,6 +2171,7 @@
     },
     "OwnerAccount":{"type":"string"},
     "PaginationToken":{"type":"string"},
+    "PartnerInterconnectMacSecCapable":{"type":"boolean"},
     "PartnerName":{"type":"string"},
     "Platform":{"type":"string"},
     "PortEncryptionStatus":{"type":"string"},
@@ -2291,8 +2297,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2307,8 +2312,7 @@
     "TestId":{"type":"string"},
     "TooManyTagsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "UntagResourceRequest":{
@@ -2324,8 +2328,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConnectionRequest":{
       "type":"structure",
@@ -2458,6 +2461,7 @@
         "pending",
         "available",
         "down",
+        "testing",
         "deleting",
         "deleted",
         "rejected",

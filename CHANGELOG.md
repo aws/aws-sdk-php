@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Standardizes URI resolution for rest protocols.
+* `Aws\OSIS` - Add Pipeline Role Arn as an optional parameter to the create / update pipeline APIs as an alternative to passing in the pipeline configuration body
+* `Aws\DirectConnect` - Enable MACSec support and features on Interconnects.
+* `Aws\IoTSiteWise` - Add support for native anomaly detection in IoT SiteWise using new Computation Model APIs
+
 ## 3.351.7 - 2025-07-25
 
 * `Aws\MediaPackageV2` - This release adds support for specifying a preferred input for channels using CMAF ingest.

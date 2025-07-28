@@ -249,6 +249,26 @@
       ],
       "endpoint":{"hostPrefix":"data."}
     },
+    "CreateComputationModel":{
+      "name":"CreateComputationModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/computation-models",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateComputationModelRequest"},
+      "output":{"shape":"CreateComputationModelResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "CreateDashboard":{
       "name":"CreateDashboard",
       "http":{
@@ -411,6 +431,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"ConflictingOperationException"},
         {"shape":"PreconditionFailedException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "DeleteComputationModel":{
+      "name":"DeleteComputationModel",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/computation-models/{computationModelId}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteComputationModelRequest"},
+      "output":{"shape":"DeleteComputationModelResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
       ],
       "endpoint":{"hostPrefix":"api."}
     },
@@ -645,6 +683,38 @@
       ],
       "endpoint":{"hostPrefix":"data."}
     },
+    "DescribeComputationModel":{
+      "name":"DescribeComputationModel",
+      "http":{
+        "method":"GET",
+        "requestUri":"/computation-models/{computationModelId}"
+      },
+      "input":{"shape":"DescribeComputationModelRequest"},
+      "output":{"shape":"DescribeComputationModelResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "DescribeComputationModelExecutionSummary":{
+      "name":"DescribeComputationModelExecutionSummary",
+      "http":{
+        "method":"GET",
+        "requestUri":"/computation-models/{computationModelId}/execution-summary"
+      },
+      "input":{"shape":"DescribeComputationModelExecutionSummaryRequest"},
+      "output":{"shape":"DescribeComputationModelExecutionSummaryResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "DescribeDashboard":{
       "name":"DescribeDashboard",
       "http":{
@@ -688,6 +758,22 @@
       "output":{"shape":"DescribeDefaultEncryptionConfigurationResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "DescribeExecution":{
+      "name":"DescribeExecution",
+      "http":{
+        "method":"GET",
+        "requestUri":"/executions/{executionId}"
+      },
+      "input":{"shape":"DescribeExecutionRequest"},
+      "output":{"shape":"DescribeExecutionResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"ThrottlingException"}
       ],
@@ -959,10 +1045,10 @@
       "errors":[
         {"shape":"InternalFailureException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"},
         {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ConflictingOperationException"}
       ],
       "endpoint":{"hostPrefix":"data."}
@@ -1142,6 +1228,52 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "ListComputationModelDataBindingUsages":{
+      "name":"ListComputationModelDataBindingUsages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/computation-models/data-binding-usages"
+      },
+      "input":{"shape":"ListComputationModelDataBindingUsagesRequest"},
+      "output":{"shape":"ListComputationModelDataBindingUsagesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "ListComputationModelResolveToResources":{
+      "name":"ListComputationModelResolveToResources",
+      "http":{
+        "method":"GET",
+        "requestUri":"/computation-models/{computationModelId}/resolve-to-resources"
+      },
+      "input":{"shape":"ListComputationModelResolveToResourcesRequest"},
+      "output":{"shape":"ListComputationModelResolveToResourcesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "ListComputationModels":{
+      "name":"ListComputationModels",
+      "http":{
+        "method":"GET",
+        "requestUri":"/computation-models"
+      },
+      "input":{"shape":"ListComputationModelsRequest"},
+      "output":{"shape":"ListComputationModelsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "ListDashboards":{
       "name":"ListDashboards",
       "http":{
@@ -1169,6 +1301,22 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "ListExecutions":{
+      "name":"ListExecutions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/executions"
+      },
+      "input":{"shape":"ListExecutionsRequest"},
+      "output":{"shape":"ListExecutionsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ],
       "endpoint":{"hostPrefix":"api."}
@@ -1457,6 +1605,26 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "UpdateComputationModel":{
+      "name":"UpdateComputationModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/computation-models/{computationModelId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateComputationModelRequest"},
+      "output":{"shape":"UpdateComputationModelResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "UpdateDashboard":{
       "name":"UpdateDashboard",
       "http":{
@@ -1637,7 +1805,8 @@
       "members":{
         "actionId":{"shape":"ID"},
         "actionDefinitionId":{"shape":"ID"},
-        "targetResource":{"shape":"TargetResource"}
+        "targetResource":{"shape":"TargetResource"},
+        "resolveTo":{"shape":"ResolveTo"}
       }
     },
     "AdaptiveIngestion":{"type":"boolean"},
@@ -1697,6 +1866,13 @@
       "type":"string",
       "max":1011,
       "min":1
+    },
+    "AssetBindingValueFilter":{
+      "type":"structure",
+      "required":["assetId"],
+      "members":{
+        "assetId":{"shape":"ID"}
+      }
     },
     "AssetCompositeModel":{
       "type":"structure",
@@ -1778,8 +1954,8 @@
       "required":["name"],
       "members":{
         "id":{"shape":"ID"},
-        "name":{"shape":"Name"},
-        "externalId":{"shape":"ExternalId"}
+        "externalId":{"shape":"ExternalId"},
+        "name":{"shape":"Name"}
       }
     },
     "AssetHierarchyInfo":{
@@ -1792,6 +1968,13 @@
     "AssetIDs":{
       "type":"list",
       "member":{"shape":"ID"}
+    },
+    "AssetModelBindingValueFilter":{
+      "type":"structure",
+      "required":["assetModelId"],
+      "members":{
+        "assetModelId":{"shape":"ID"}
+      }
     },
     "AssetModelCompositeModel":{
       "type":"structure",
@@ -1916,6 +2099,28 @@
         "unit":{"shape":"PropertyUnit"},
         "type":{"shape":"PropertyType"},
         "path":{"shape":"AssetModelPropertyPath"}
+      }
+    },
+    "AssetModelPropertyBindingValue":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "propertyId"
+      ],
+      "members":{
+        "assetModelId":{"shape":"ID"},
+        "propertyId":{"shape":"ID"}
+      }
+    },
+    "AssetModelPropertyBindingValueFilter":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "propertyId"
+      ],
+      "members":{
+        "assetModelId":{"shape":"ID"},
+        "propertyId":{"shape":"ID"}
       }
     },
     "AssetModelPropertyDefinition":{
@@ -2051,14 +2256,14 @@
       ],
       "members":{
         "id":{"shape":"ID"},
+        "externalId":{"shape":"ExternalId"},
         "name":{"shape":"Name"},
         "alias":{"shape":"PropertyAlias"},
         "notification":{"shape":"PropertyNotification"},
         "dataType":{"shape":"PropertyDataType"},
         "dataTypeSpec":{"shape":"Name"},
         "unit":{"shape":"PropertyUnit"},
-        "path":{"shape":"AssetPropertyPath"},
-        "externalId":{"shape":"ExternalId"}
+        "path":{"shape":"AssetPropertyPath"}
       }
     },
     "AssetPropertyAlias":{
@@ -2066,6 +2271,28 @@
       "max":2048,
       "min":1,
       "pattern":"[^\\u0000-\\u001F\\u007F]+"
+    },
+    "AssetPropertyBindingValue":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "propertyId"
+      ],
+      "members":{
+        "assetId":{"shape":"ID"},
+        "propertyId":{"shape":"ID"}
+      }
+    },
+    "AssetPropertyBindingValueFilter":{
+      "type":"structure",
+      "required":[
+        "assetId",
+        "propertyId"
+      ],
+      "members":{
+        "assetId":{"shape":"ID"},
+        "propertyId":{"shape":"ID"}
+      }
     },
     "AssetPropertyPath":{
       "type":"list",
@@ -2087,12 +2314,12 @@
       "required":["id"],
       "members":{
         "id":{"shape":"ID"},
+        "externalId":{"shape":"ExternalId"},
         "alias":{"shape":"PropertyAlias"},
         "unit":{"shape":"PropertyUnit"},
         "notification":{"shape":"PropertyNotification"},
         "assetCompositeModelId":{"shape":"ID"},
-        "path":{"shape":"AssetPropertyPath"},
-        "externalId":{"shape":"ExternalId"}
+        "path":{"shape":"AssetPropertyPath"}
       }
     },
     "AssetPropertyValue":{
@@ -2167,6 +2394,7 @@
       ],
       "members":{
         "id":{"shape":"ID"},
+        "externalId":{"shape":"ExternalId"},
         "arn":{"shape":"ARN"},
         "name":{"shape":"Name"},
         "assetModelId":{"shape":"ID"},
@@ -2174,8 +2402,7 @@
         "lastUpdateDate":{"shape":"Timestamp"},
         "status":{"shape":"AssetStatus"},
         "hierarchies":{"shape":"AssetHierarchies"},
-        "description":{"shape":"Description"},
-        "externalId":{"shape":"ExternalId"}
+        "description":{"shape":"Description"}
       }
     },
     "AssociateAssetsRequest":{
@@ -2246,6 +2473,7 @@
       ],
       "members":{
         "id":{"shape":"ID"},
+        "externalId":{"shape":"ExternalId"},
         "arn":{"shape":"ARN"},
         "name":{"shape":"Name"},
         "assetModelId":{"shape":"ID"},
@@ -2253,8 +2481,7 @@
         "lastUpdateDate":{"shape":"Timestamp"},
         "status":{"shape":"AssetStatus"},
         "hierarchies":{"shape":"AssetHierarchies"},
-        "description":{"shape":"Description"},
-        "externalId":{"shape":"ExternalId"}
+        "description":{"shape":"Description"}
       }
     },
     "Attribute":{
@@ -2728,6 +2955,10 @@
         "errorEntries":{"shape":"BatchPutAssetPropertyErrorEntries"}
       }
     },
+    "BindingValueList":{
+      "type":"list",
+      "member":{"shape":"ComputationModelDataBindingValue"}
+    },
     "BooleanValue":{"type":"boolean"},
     "Bucket":{
       "type":"string",
@@ -2853,6 +3084,134 @@
         "assetModelCompositeModelId":{"shape":"ID"},
         "assetModelCompositeModelType":{"shape":"Name"}
       }
+    },
+    "ComputationModelAnomalyDetectionConfiguration":{
+      "type":"structure",
+      "required":[
+        "inputProperties",
+        "resultProperty"
+      ],
+      "members":{
+        "inputProperties":{"shape":"InputProperties"},
+        "resultProperty":{"shape":"ResultProperty"}
+      }
+    },
+    "ComputationModelConfiguration":{
+      "type":"structure",
+      "members":{
+        "anomalyDetection":{"shape":"ComputationModelAnomalyDetectionConfiguration"}
+      }
+    },
+    "ComputationModelDataBinding":{
+      "type":"map",
+      "key":{"shape":"ComputationModelDataBindingVariable"},
+      "value":{"shape":"ComputationModelDataBindingValue"}
+    },
+    "ComputationModelDataBindingUsageSummaries":{
+      "type":"list",
+      "member":{"shape":"ComputationModelDataBindingUsageSummary"}
+    },
+    "ComputationModelDataBindingUsageSummary":{
+      "type":"structure",
+      "required":[
+        "computationModelIds",
+        "matchedDataBinding"
+      ],
+      "members":{
+        "computationModelIds":{"shape":"ComputationModelIdList"},
+        "matchedDataBinding":{"shape":"MatchedDataBinding"}
+      }
+    },
+    "ComputationModelDataBindingValue":{
+      "type":"structure",
+      "members":{
+        "assetModelProperty":{"shape":"AssetModelPropertyBindingValue"},
+        "assetProperty":{"shape":"AssetPropertyBindingValue"},
+        "list":{"shape":"BindingValueList"}
+      }
+    },
+    "ComputationModelDataBindingVariable":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-z][a-z0-9_]*$"
+    },
+    "ComputationModelExecutionSummary":{
+      "type":"map",
+      "key":{"shape":"ComputationModelExecutionSummaryKey"},
+      "value":{"shape":"ComputationModelExecutionSummaryValue"}
+    },
+    "ComputationModelExecutionSummaryKey":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "ComputationModelExecutionSummaryValue":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "ComputationModelIdList":{
+      "type":"list",
+      "member":{"shape":"ID"}
+    },
+    "ComputationModelResolveToResourceSummaries":{
+      "type":"list",
+      "member":{"shape":"ComputationModelResolveToResourceSummary"}
+    },
+    "ComputationModelResolveToResourceSummary":{
+      "type":"structure",
+      "members":{
+        "resolveTo":{"shape":"ResolveTo"}
+      }
+    },
+    "ComputationModelState":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "FAILED"
+      ]
+    },
+    "ComputationModelStatus":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"ComputationModelState"},
+        "error":{"shape":"ErrorDetails"}
+      }
+    },
+    "ComputationModelSummaries":{
+      "type":"list",
+      "member":{"shape":"ComputationModelSummary"}
+    },
+    "ComputationModelSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "arn",
+        "name",
+        "type",
+        "creationDate",
+        "lastUpdateDate",
+        "status",
+        "version"
+      ],
+      "members":{
+        "id":{"shape":"ID"},
+        "arn":{"shape":"ARN"},
+        "name":{"shape":"RestrictedName"},
+        "description":{"shape":"RestrictedDescription"},
+        "type":{"shape":"ComputationModelType"},
+        "creationDate":{"shape":"Timestamp"},
+        "lastUpdateDate":{"shape":"Timestamp"},
+        "status":{"shape":"ComputationModelStatus"},
+        "version":{"shape":"Version"}
+      }
+    },
+    "ComputationModelType":{
+      "type":"string",
+      "enum":["ANOMALY_DETECTION"]
     },
     "ComputeLocation":{
       "type":"string",
@@ -3054,14 +3413,14 @@
       "members":{
         "assetName":{"shape":"Name"},
         "assetModelId":{"shape":"CustomID"},
+        "assetId":{"shape":"ID"},
+        "assetExternalId":{"shape":"ExternalId"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
         "tags":{"shape":"TagMap"},
-        "assetDescription":{"shape":"Description"},
-        "assetId":{"shape":"ID"},
-        "assetExternalId":{"shape":"ExternalId"}
+        "assetDescription":{"shape":"Description"}
       }
     },
     "CreateAssetResponse":{
@@ -3107,6 +3466,38 @@
         "jobId":{"shape":"ID"},
         "jobName":{"shape":"Name"},
         "jobStatus":{"shape":"JobStatus"}
+      }
+    },
+    "CreateComputationModelRequest":{
+      "type":"structure",
+      "required":[
+        "computationModelName",
+        "computationModelConfiguration",
+        "computationModelDataBinding"
+      ],
+      "members":{
+        "computationModelName":{"shape":"RestrictedName"},
+        "computationModelDescription":{"shape":"RestrictedDescription"},
+        "computationModelConfiguration":{"shape":"ComputationModelConfiguration"},
+        "computationModelDataBinding":{"shape":"ComputationModelDataBinding"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateComputationModelResponse":{
+      "type":"structure",
+      "required":[
+        "computationModelId",
+        "computationModelArn",
+        "computationModelStatus"
+      ],
+      "members":{
+        "computationModelId":{"shape":"ID"},
+        "computationModelArn":{"shape":"ARN"},
+        "computationModelStatus":{"shape":"ComputationModelStatus"}
       }
     },
     "CreateDashboardRequest":{
@@ -3275,7 +3666,7 @@
       "type":"string",
       "max":139,
       "min":13,
-      "pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^externalId:[a-zA-Z0-9][a-zA-Z_\\-0-9.:]*[a-zA-Z0-9]+"
+      "pattern":"^(?!00000000-0000-0000-0000-000000000000)[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$|^externalId:[a-zA-Z0-9_][a-zA-Z_\\-0-9.:]*[a-zA-Z0-9_]+"
     },
     "CustomerManagedS3Storage":{
       "type":"structure",
@@ -3310,6 +3701,22 @@
         "description":{"shape":"Description"},
         "creationDate":{"shape":"Timestamp"},
         "lastUpdateDate":{"shape":"Timestamp"}
+      }
+    },
+    "DataBindingValue":{
+      "type":"structure",
+      "members":{
+        "assetModelProperty":{"shape":"AssetModelPropertyBindingValue"},
+        "assetProperty":{"shape":"AssetPropertyBindingValue"}
+      }
+    },
+    "DataBindingValueFilter":{
+      "type":"structure",
+      "members":{
+        "asset":{"shape":"AssetBindingValueFilter"},
+        "assetModel":{"shape":"AssetModelBindingValueFilter"},
+        "assetProperty":{"shape":"AssetPropertyBindingValueFilter"},
+        "assetModelProperty":{"shape":"AssetModelPropertyBindingValueFilter"}
       }
     },
     "DataSetReference":{
@@ -3418,8 +3825,7 @@
     },
     "DeleteAccessPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssetModelCompositeModelRequest":{
       "type":"structure",
@@ -3531,6 +3937,30 @@
         "assetStatus":{"shape":"AssetStatus"}
       }
     },
+    "DeleteComputationModelRequest":{
+      "type":"structure",
+      "required":["computationModelId"],
+      "members":{
+        "computationModelId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"computationModelId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteComputationModelResponse":{
+      "type":"structure",
+      "required":["computationModelStatus"],
+      "members":{
+        "computationModelStatus":{"shape":"ComputationModelStatus"}
+      }
+    },
     "DeleteDashboardRequest":{
       "type":"structure",
       "required":["dashboardId"],
@@ -3550,15 +3980,14 @@
     },
     "DeleteDashboardResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDatasetRequest":{
       "type":"structure",
       "required":["datasetId"],
       "members":{
         "datasetId":{
-          "shape":"CustomID",
+          "shape":"ID",
           "location":"uri",
           "locationName":"datasetId"
         },
@@ -3632,8 +4061,7 @@
     },
     "DeleteProjectResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTimeSeriesRequest":{
       "type":"structure",
@@ -3716,7 +4144,8 @@
         "targetResource":{"shape":"TargetResource"},
         "actionDefinitionId":{"shape":"ID"},
         "actionPayload":{"shape":"ActionPayload"},
-        "executionTime":{"shape":"Timestamp"}
+        "executionTime":{"shape":"Timestamp"},
+        "resolveTo":{"shape":"ResolveTo"}
       }
     },
     "DescribeAssetCompositeModelRequest":{
@@ -3897,11 +4326,11 @@
       ],
       "members":{
         "assetId":{"shape":"ID"},
+        "assetExternalId":{"shape":"ExternalId"},
         "assetName":{"shape":"Name"},
         "assetModelId":{"shape":"ID"},
         "assetProperty":{"shape":"Property"},
-        "compositeModel":{"shape":"CompositeModelProperty"},
-        "assetExternalId":{"shape":"ExternalId"}
+        "compositeModel":{"shape":"CompositeModelProperty"}
       }
     },
     "DescribeAssetRequest":{
@@ -3935,6 +4364,7 @@
       ],
       "members":{
         "assetId":{"shape":"ID"},
+        "assetExternalId":{"shape":"ExternalId"},
         "assetArn":{"shape":"ARN"},
         "assetName":{"shape":"Name"},
         "assetModelId":{"shape":"ID"},
@@ -3945,8 +4375,7 @@
         "assetLastUpdateDate":{"shape":"Timestamp"},
         "assetStatus":{"shape":"AssetStatus"},
         "assetDescription":{"shape":"Description"},
-        "assetCompositeModelSummaries":{"shape":"AssetCompositeModelSummaries"},
-        "assetExternalId":{"shape":"ExternalId"}
+        "assetCompositeModelSummaries":{"shape":"AssetCompositeModelSummaries"}
       }
     },
     "DescribeBulkImportJobRequest":{
@@ -3987,6 +4416,78 @@
         "deleteFilesAfterImport":{"shape":"DeleteFilesAfterImport"}
       }
     },
+    "DescribeComputationModelExecutionSummaryRequest":{
+      "type":"structure",
+      "required":["computationModelId"],
+      "members":{
+        "computationModelId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"computationModelId"
+        },
+        "resolveToResourceType":{
+          "shape":"ResolveToResourceType",
+          "location":"querystring",
+          "locationName":"resolveToResourceType"
+        },
+        "resolveToResourceId":{
+          "shape":"ID",
+          "location":"querystring",
+          "locationName":"resolveToResourceId"
+        }
+      }
+    },
+    "DescribeComputationModelExecutionSummaryResponse":{
+      "type":"structure",
+      "required":[
+        "computationModelId",
+        "computationModelExecutionSummary"
+      ],
+      "members":{
+        "computationModelId":{"shape":"ID"},
+        "resolveTo":{"shape":"ResolveTo"},
+        "computationModelExecutionSummary":{"shape":"ComputationModelExecutionSummary"}
+      }
+    },
+    "DescribeComputationModelRequest":{
+      "type":"structure",
+      "required":["computationModelId"],
+      "members":{
+        "computationModelId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"computationModelId"
+        }
+      }
+    },
+    "DescribeComputationModelResponse":{
+      "type":"structure",
+      "required":[
+        "computationModelId",
+        "computationModelArn",
+        "computationModelName",
+        "computationModelConfiguration",
+        "computationModelDataBinding",
+        "computationModelCreationDate",
+        "computationModelLastUpdateDate",
+        "computationModelStatus",
+        "computationModelVersion",
+        "actionDefinitions"
+      ],
+      "members":{
+        "computationModelId":{"shape":"ID"},
+        "computationModelArn":{"shape":"ARN"},
+        "computationModelName":{"shape":"RestrictedName"},
+        "computationModelDescription":{"shape":"RestrictedDescription"},
+        "computationModelConfiguration":{"shape":"ComputationModelConfiguration"},
+        "computationModelDataBinding":{"shape":"ComputationModelDataBinding"},
+        "computationModelCreationDate":{"shape":"Timestamp"},
+        "computationModelLastUpdateDate":{"shape":"Timestamp"},
+        "computationModelStatus":{"shape":"ComputationModelStatus"},
+        "computationModelVersion":{"shape":"Version"},
+        "actionDefinitions":{"shape":"ActionDefinitions"}
+      }
+    },
     "DescribeDashboardRequest":{
       "type":"structure",
       "required":["dashboardId"],
@@ -4025,7 +4526,7 @@
       "required":["datasetId"],
       "members":{
         "datasetId":{
-          "shape":"CustomID",
+          "shape":"ID",
           "location":"uri",
           "locationName":"datasetId"
         }
@@ -4057,8 +4558,7 @@
     },
     "DescribeDefaultEncryptionConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeDefaultEncryptionConfigurationResponse":{
       "type":"structure",
@@ -4070,6 +4570,40 @@
         "encryptionType":{"shape":"EncryptionType"},
         "kmsKeyArn":{"shape":"ARN"},
         "configurationStatus":{"shape":"ConfigurationStatus"}
+      }
+    },
+    "DescribeExecutionRequest":{
+      "type":"structure",
+      "required":["executionId"],
+      "members":{
+        "executionId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"executionId"
+        }
+      }
+    },
+    "DescribeExecutionResponse":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "targetResource",
+        "targetResourceVersion",
+        "executionStartTime",
+        "executionStatus"
+      ],
+      "members":{
+        "executionId":{"shape":"ID"},
+        "actionType":{"shape":"Name"},
+        "targetResource":{"shape":"TargetResource"},
+        "targetResourceVersion":{"shape":"Version"},
+        "resolveTo":{"shape":"ResolveTo"},
+        "executionStartTime":{"shape":"Timestamp"},
+        "executionEndTime":{"shape":"Timestamp"},
+        "executionStatus":{"shape":"ExecutionStatus"},
+        "executionResult":{"shape":"ExecutionResult"},
+        "executionDetails":{"shape":"ExecutionDetails"},
+        "executionEntityVersion":{"shape":"Version"}
       }
     },
     "DescribeGatewayCapabilityConfigurationRequest":{
@@ -4140,8 +4674,7 @@
     },
     "DescribeLoggingOptionsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeLoggingOptionsResponse":{
       "type":"structure",
@@ -4227,8 +4760,7 @@
     },
     "DescribeStorageConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeStorageConfigurationResponse":{
       "type":"structure",
@@ -4444,7 +4976,8 @@
         "targetResource":{"shape":"TargetResource"},
         "actionDefinitionId":{"shape":"ID"},
         "actionPayload":{"shape":"ActionPayload"},
-        "clientToken":{"shape":"ClientToken"}
+        "clientToken":{"shape":"ClientToken"},
+        "resolveTo":{"shape":"ResolveTo"}
       }
     },
     "ExecuteActionResponse":{
@@ -4482,6 +5015,72 @@
         "columns":{"shape":"ColumnsList"},
         "rows":{"shape":"Rows"},
         "nextToken":{"shape":"ExecuteQueryNextToken"}
+      }
+    },
+    "ExecutionDetails":{
+      "type":"map",
+      "key":{"shape":"ExecutionDetailsKey"},
+      "value":{"shape":"ExecutionDetailsValue"}
+    },
+    "ExecutionDetailsKey":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "ExecutionDetailsValue":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "ExecutionResult":{
+      "type":"map",
+      "key":{"shape":"ExecutionResultKey"},
+      "value":{"shape":"ExecutionResultValue"}
+    },
+    "ExecutionResultKey":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "ExecutionResultValue":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "ExecutionState":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "ExecutionStatus":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"ExecutionState"}
+      }
+    },
+    "ExecutionSummaries":{
+      "type":"list",
+      "member":{"shape":"ExecutionSummary"}
+    },
+    "ExecutionSummary":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "targetResource",
+        "targetResourceVersion",
+        "executionStartTime",
+        "executionStatus"
+      ],
+      "members":{
+        "executionId":{"shape":"ID"},
+        "actionType":{"shape":"Name"},
+        "targetResource":{"shape":"TargetResource"},
+        "targetResourceVersion":{"shape":"Version"},
+        "resolveTo":{"shape":"ResolveTo"},
+        "executionStartTime":{"shape":"Timestamp"},
+        "executionEndTime":{"shape":"Timestamp"},
+        "executionStatus":{"shape":"ExecutionStatus"},
+        "executionEntityVersion":{"shape":"Version"}
       }
     },
     "Expression":{
@@ -4895,7 +5494,7 @@
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      "pattern":"^(?!00000000-0000-0000-0000-000000000000)[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
     },
     "IDs":{
       "type":"list",
@@ -4969,6 +5568,12 @@
         "id":{"shape":"ID"},
         "url":{"shape":"Url"}
       }
+    },
+    "InputProperties":{
+      "type":"string",
+      "max":67,
+      "min":4,
+      "pattern":"^\\$\\{[a-z][a-z0-9_]*\\}"
     },
     "InternalFailureException":{
       "type":"structure",
@@ -5184,7 +5789,7 @@
           "locationName":"targetResourceType"
         },
         "targetResourceId":{
-          "shape":"CustomID",
+          "shape":"ID",
           "location":"querystring",
           "locationName":"targetResourceId"
         },
@@ -5197,6 +5802,16 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "resolveToResourceType":{
+          "shape":"ResolveToResourceType",
+          "location":"querystring",
+          "locationName":"resolveToResourceType"
+        },
+        "resolveToResourceId":{
+          "shape":"ID",
+          "location":"querystring",
+          "locationName":"resolveToResourceId"
         }
       }
     },
@@ -5554,6 +6169,80 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListComputationModelDataBindingUsagesRequest":{
+      "type":"structure",
+      "required":["dataBindingValueFilter"],
+      "members":{
+        "dataBindingValueFilter":{"shape":"DataBindingValueFilter"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListComputationModelDataBindingUsagesResponse":{
+      "type":"structure",
+      "required":["dataBindingUsageSummaries"],
+      "members":{
+        "dataBindingUsageSummaries":{"shape":"ComputationModelDataBindingUsageSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListComputationModelResolveToResourcesRequest":{
+      "type":"structure",
+      "required":["computationModelId"],
+      "members":{
+        "computationModelId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"computationModelId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListComputationModelResolveToResourcesResponse":{
+      "type":"structure",
+      "required":["computationModelResolveToResourceSummaries"],
+      "members":{
+        "computationModelResolveToResourceSummaries":{"shape":"ComputationModelResolveToResourceSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListComputationModelsRequest":{
+      "type":"structure",
+      "members":{
+        "computationModelType":{
+          "shape":"ComputationModelType",
+          "location":"querystring",
+          "locationName":"computationModelType"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListComputationModelsResponse":{
+      "type":"structure",
+      "required":["computationModelSummaries"],
+      "members":{
+        "computationModelSummaries":{"shape":"ComputationModelSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListDashboardsRequest":{
       "type":"structure",
       "required":["projectId"],
@@ -5609,6 +6298,58 @@
       "required":["datasetSummaries"],
       "members":{
         "datasetSummaries":{"shape":"DatasetSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListExecutionsRequest":{
+      "type":"structure",
+      "required":[
+        "targetResourceType",
+        "targetResourceId"
+      ],
+      "members":{
+        "targetResourceType":{
+          "shape":"TargetResourceType",
+          "location":"querystring",
+          "locationName":"targetResourceType"
+        },
+        "targetResourceId":{
+          "shape":"ID",
+          "location":"querystring",
+          "locationName":"targetResourceId"
+        },
+        "resolveToResourceType":{
+          "shape":"ResolveToResourceType",
+          "location":"querystring",
+          "locationName":"resolveToResourceType"
+        },
+        "resolveToResourceId":{
+          "shape":"ID",
+          "location":"querystring",
+          "locationName":"resolveToResourceId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "actionType":{
+          "shape":"Name",
+          "location":"querystring",
+          "locationName":"actionType"
+        }
+      }
+    },
+    "ListExecutionsResponse":{
+      "type":"structure",
+      "required":["executionSummaries"],
+      "members":{
+        "executionSummaries":{"shape":"ExecutionSummaries"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -5804,6 +6545,13 @@
       "min":1,
       "pattern":"[^\\u0000-\\u001F\\u007F]+"
     },
+    "MatchedDataBinding":{
+      "type":"structure",
+      "required":["value"],
+      "members":{
+        "value":{"shape":"DataBindingValue"}
+      }
+    },
     "MaxInterpolatedResults":{
       "type":"integer",
       "min":1
@@ -5911,8 +6659,7 @@
     },
     "Parquet":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Permission":{
       "type":"string",
@@ -6054,14 +6801,14 @@
       ],
       "members":{
         "id":{"shape":"ID"},
+        "externalId":{"shape":"ExternalId"},
         "name":{"shape":"Name"},
         "alias":{"shape":"PropertyAlias"},
         "notification":{"shape":"PropertyNotification"},
         "dataType":{"shape":"PropertyDataType"},
         "unit":{"shape":"PropertyUnit"},
         "type":{"shape":"PropertyType"},
-        "path":{"shape":"AssetPropertyPath"},
-        "externalId":{"shape":"ExternalId"}
+        "path":{"shape":"AssetPropertyPath"}
       }
     },
     "PropertyAlias":{
@@ -6171,8 +6918,7 @@
     },
     "PutLoggingOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutStorageConfigurationRequest":{
       "type":"structure",
@@ -6253,6 +6999,17 @@
       "min":2,
       "pattern":"1m|15m|1h|1d"
     },
+    "ResolveTo":{
+      "type":"structure",
+      "required":["assetId"],
+      "members":{
+        "assetId":{"shape":"ID"}
+      }
+    },
+    "ResolveToResourceType":{
+      "type":"string",
+      "enum":["ASSET"]
+    },
     "Resource":{
       "type":"structure",
       "members":{
@@ -6319,6 +7076,12 @@
       "max":256,
       "min":1,
       "pattern":"^[a-zA-Z0-9 _\\-#$*!@]+$"
+    },
+    "ResultProperty":{
+      "type":"string",
+      "max":67,
+      "min":4,
+      "pattern":"^\\$\\{[a-z][a-z0-9_]*\\}"
     },
     "RetentionPeriod":{
       "type":"structure",
@@ -6432,8 +7195,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -6442,14 +7204,17 @@
     },
     "TargetResource":{
       "type":"structure",
-      "required":["assetId"],
       "members":{
-        "assetId":{"shape":"CustomID"}
+        "assetId":{"shape":"ID"},
+        "computationModelId":{"shape":"ID"}
       }
     },
     "TargetResourceType":{
       "type":"string",
-      "enum":["ASSET"]
+      "enum":[
+        "ASSET",
+        "COMPUTATION_MODEL"
+      ]
     },
     "ThrottlingException":{
       "type":"structure",
@@ -6601,8 +7366,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAccessPolicyRequest":{
       "type":"structure",
@@ -6629,8 +7393,7 @@
     },
     "UpdateAccessPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAssetModelCompositeModelRequest":{
       "type":"structure",
@@ -6770,13 +7533,13 @@
           "location":"uri",
           "locationName":"assetId"
         },
+        "assetExternalId":{"shape":"ExternalId"},
         "assetName":{"shape":"Name"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "assetDescription":{"shape":"Description"},
-        "assetExternalId":{"shape":"ExternalId"}
+        "assetDescription":{"shape":"Description"}
       }
     },
     "UpdateAssetResponse":{
@@ -6784,6 +7547,37 @@
       "required":["assetStatus"],
       "members":{
         "assetStatus":{"shape":"AssetStatus"}
+      }
+    },
+    "UpdateComputationModelRequest":{
+      "type":"structure",
+      "required":[
+        "computationModelId",
+        "computationModelName",
+        "computationModelConfiguration",
+        "computationModelDataBinding"
+      ],
+      "members":{
+        "computationModelId":{
+          "shape":"ID",
+          "location":"uri",
+          "locationName":"computationModelId"
+        },
+        "computationModelName":{"shape":"RestrictedName"},
+        "computationModelDescription":{"shape":"RestrictedDescription"},
+        "computationModelConfiguration":{"shape":"ComputationModelConfiguration"},
+        "computationModelDataBinding":{"shape":"ComputationModelDataBinding"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateComputationModelResponse":{
+      "type":"structure",
+      "required":["computationModelStatus"],
+      "members":{
+        "computationModelStatus":{"shape":"ComputationModelStatus"}
       }
     },
     "UpdateDashboardRequest":{
@@ -6810,8 +7604,7 @@
     },
     "UpdateDashboardResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDatasetRequest":{
       "type":"structure",
@@ -6822,7 +7615,7 @@
       ],
       "members":{
         "datasetId":{
-          "shape":"CustomID",
+          "shape":"ID",
           "location":"uri",
           "locationName":"datasetId"
         },
@@ -6838,7 +7631,7 @@
     "UpdateDatasetResponse":{
       "type":"structure",
       "members":{
-        "datasetId":{"shape":"CustomID"},
+        "datasetId":{"shape":"ID"},
         "datasetArn":{"shape":"ARN"},
         "datasetStatus":{"shape":"DatasetStatus"}
       }
@@ -6944,8 +7737,7 @@
     },
     "UpdateProjectResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{
       "type":"string",

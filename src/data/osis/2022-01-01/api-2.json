@@ -342,7 +342,8 @@
         "VpcOptions":{"shape":"VpcOptions"},
         "BufferOptions":{"shape":"BufferOptions"},
         "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "PipelineRoleArn":{"shape":"PipelineRoleArn"}
       }
     },
     "CreatePipelineResponse":{
@@ -563,7 +564,8 @@
         "VpcEndpointService":{"shape":"String"},
         "ServiceVpcEndpoints":{"shape":"ServiceVpcEndpointsList"},
         "Destinations":{"shape":"PipelineDestinationList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "PipelineRoleArn":{"shape":"PipelineRoleArn"}
       }
     },
     "PipelineArn":{
@@ -618,6 +620,12 @@
       "max":28,
       "min":3,
       "pattern":"[a-z][a-z0-9\\-]+"
+    },
+    "PipelineRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:(aws|aws\\-cn|aws\\-us\\-gov|aws\\-iso|aws\\-iso\\-b|aws\\-iso\\-e|aws\\-iso\\-f):iam::[0-9]+:role\\/.*$"
     },
     "PipelineStatus":{
       "type":"string",
@@ -833,7 +841,8 @@
         "PipelineConfigurationBody":{"shape":"PipelineConfigurationBody"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
         "BufferOptions":{"shape":"BufferOptions"},
-        "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"}
+        "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
+        "PipelineRoleArn":{"shape":"PipelineRoleArn"}
       }
     },
     "UpdatePipelineResponse":{

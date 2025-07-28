@@ -14,7 +14,8 @@
     "CreateAsset": "<p>Creates an asset from an existing asset model. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/create-assets.html\">Creating assets</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "CreateAssetModel": "<p>Creates an asset model from specified property and hierarchy definitions. You create assets from asset models. With asset models, you can easily create assets of the same type that have standardized definitions. Each asset created from a model inherits the asset model's property and hierarchy definitions. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/define-models.html\">Defining asset models</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>You can create two types of asset models, <code>ASSET_MODEL</code> or <code>COMPONENT_MODEL</code>.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – (default) An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> </ul>",
     "CreateAssetModelCompositeModel": "<p>Creates a custom composite model from specified property and hierarchy definitions. There are two types of custom composite models, <code>inline</code> and <code>component-model-based</code>. </p> <p>Use component-model-based custom composite models to define standard, reusable components. A component-model-based custom composite model consists of a name, a description, and the ID of the component model it references. A component-model-based custom composite model has no properties of its own; its referenced component model provides its associated properties to any created assets. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/custom-composite-models.html\">Custom composite models (Components)</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>Use inline custom composite models to organize the properties of an asset model. The properties of inline custom composite models are local to the asset model where they are included and can't be used to create multiple assets.</p> <p>To create a component-model-based model, specify the <code>composedAssetModelId</code> of an existing asset model with <code>assetModelType</code> of <code>COMPONENT_MODEL</code>.</p> <p>To create an inline model, specify the <code>assetModelCompositeModelProperties</code> and don't include an <code>composedAssetModelId</code>.</p>",
-    "CreateBulkImportJob": "<p>Defines a job to ingest data to IoT SiteWise from Amazon S3. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/CreateBulkImportJob.html\">Create a bulk import job (CLI)</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <important> <p>Before you create a bulk import job, you must enable IoT SiteWise warm tier or IoT SiteWise cold tier. For more information about how to configure storage settings, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_PutStorageConfiguration.html\">PutStorageConfiguration</a>.</p> <p>Bulk import is designed to store historical data to IoT SiteWise. It does not trigger computations or notifications on IoT SiteWise warm or cold tier storage.</p> </important>",
+    "CreateBulkImportJob": "<p>Defines a job to ingest data to IoT SiteWise from Amazon S3. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/CreateBulkImportJob.html\">Create a bulk import job (CLI)</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <important> <p>Before you create a bulk import job, you must enable IoT SiteWise warm tier or IoT SiteWise cold tier. For more information about how to configure storage settings, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_PutStorageConfiguration.html\">PutStorageConfiguration</a>.</p> <p>Bulk import is designed to store historical data to IoT SiteWise.</p> <ul> <li> <p>Newly ingested data in the hot tier triggers notifications and computations.</p> </li> <li> <p>After data moves from the hot tier to the warm or cold tier based on retention settings, it does not trigger computations or notifications.</p> </li> <li> <p>Data older than 7 days does not trigger computations or notifications.</p> </li> </ul> </important>",
+    "CreateComputationModel": "<p>Create a computation model with a configuration and data binding.</p>",
     "CreateDashboard": "<p>Creates a dashboard in an IoT SiteWise Monitor project.</p>",
     "CreateDataset": "<p>Creates a dataset to connect an external datasource.</p>",
     "CreateGateway": "<p>Creates a gateway, which is a virtual or edge device that delivers industrial data streams from local servers to IoT SiteWise. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/gateway-connector.html\">Ingesting data using a gateway</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -24,6 +25,7 @@
     "DeleteAsset": "<p>Deletes an asset. This action can't be undone. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/delete-assets-and-models.html\">Deleting assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p> <note> <p>You can't delete an asset that's associated to another asset. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DisassociateAssets.html\">DisassociateAssets</a>.</p> </note>",
     "DeleteAssetModel": "<p>Deletes an asset model. This action can't be undone. You must delete all assets created from an asset model before you can delete the model. Also, you can't delete an asset model if a parent asset model exists that contains a property formula expression that depends on the asset model that you want to delete. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/delete-assets-and-models.html\">Deleting assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "DeleteAssetModelCompositeModel": "<p>Deletes a composite model. This action can't be undone. You must delete all assets created from a composite model before you can delete the model. Also, you can't delete a composite model if a parent asset model exists that contains a property formula expression that depends on the asset model that you want to delete. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/delete-assets-and-models.html\">Deleting assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+    "DeleteComputationModel": "<p>Deletes a computation model. This action can't be undone.</p>",
     "DeleteDashboard": "<p>Deletes a dashboard from IoT SiteWise Monitor.</p>",
     "DeleteDataset": "<p>Deletes a dataset. This cannot be undone.</p>",
     "DeleteGateway": "<p>Deletes a gateway from IoT SiteWise. When you delete a gateway, some of the gateway's files remain in your gateway's file system.</p>",
@@ -38,11 +40,14 @@
     "DescribeAssetModelCompositeModel": "<p>Retrieves information about an asset model composite model (also known as an asset model component). For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/custom-composite-models.html\">Custom composite models (Components)</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "DescribeAssetProperty": "<p>Retrieves information about an asset property.</p> <note> <p>When you call this operation for an attribute property, this response includes the default attribute value that you define in the asset model. If you update the default value in the model, this operation's response includes the new default value.</p> </note> <p>This operation doesn't return the value of the asset property. To get the value of an asset property, use <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValue.html\">GetAssetPropertyValue</a>.</p>",
     "DescribeBulkImportJob": "<p>Retrieves information about a bulk import job request. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/DescribeBulkImportJob.html\">Describe a bulk import job (CLI)</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p>",
+    "DescribeComputationModel": "<p>Retrieves information about a computation model.</p>",
+    "DescribeComputationModelExecutionSummary": "<p>Retrieves information about the execution summary of a computation model.</p>",
     "DescribeDashboard": "<p>Retrieves information about a dashboard.</p>",
     "DescribeDataset": "<p>Retrieves information about a dataset.</p>",
     "DescribeDefaultEncryptionConfiguration": "<p>Retrieves information about the default encryption configuration for the Amazon Web Services account in the default or specified Region. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/key-management.html\">Key management</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+    "DescribeExecution": "<p>Retrieves information about the execution.</p>",
     "DescribeGateway": "<p>Retrieves information about a gateway.</p>",
-    "DescribeGatewayCapabilityConfiguration": "<p>Retrieves information about a gateway capability configuration. Each gateway capability defines data sources for a gateway. A capability configuration can contain multiple data source configurations. If you define OPC-UA sources for a gateway in the IoT SiteWise console, all of your OPC-UA sources are stored in one capability configuration. To list all capability configurations for a gateway, use <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeGateway.html\">DescribeGateway</a>.</p>",
+    "DescribeGatewayCapabilityConfiguration": "<p>Each gateway capability defines data sources for a gateway. This is the namespace of the gateway capability.</p> <p>. The namespace follows the format <code>service:capability:version</code>, where:</p> <ul> <li> <p> <code>service</code> - The service providing the capability, or <code>iotsitewise</code>.</p> </li> <li> <p> <code>capability</code> - The specific capability type. Options include: <code>opcuacollector</code> for the OPC UA data source collector, or <code>publisher</code> for data publisher capability.</p> </li> <li> <p> <code>version</code> - The version number of the capability. Option include <code>2</code> for Classic streams, V2 gateways, and <code>3</code> for MQTT-enabled, V3 gateways.</p> </li> </ul> <p>After updating a capability configuration, the sync status becomes <code>OUT_OF_SYNC</code> until the gateway processes the configuration.Use <code>DescribeGatewayCapabilityConfiguration</code> to check the sync status and verify the configuration was applied.</p> <p>A gateway can have multiple capability configurations with different namespaces.</p>",
     "DescribeLoggingOptions": "<p>Retrieves the current IoT SiteWise logging options.</p>",
     "DescribePortal": "<p>Retrieves information about a portal.</p>",
     "DescribeProject": "<p>Retrieves information about a project.</p>",
@@ -68,8 +73,12 @@
     "ListAssociatedAssets": "<p>Retrieves a paginated list of associated assets.</p> <p>You can use this operation to do the following:</p> <ul> <li> <p> <code>CHILD</code> - List all child assets associated to the asset.</p> </li> <li> <p> <code>PARENT</code> - List the asset's parent asset.</p> </li> </ul>",
     "ListBulkImportJobs": "<p>Retrieves a paginated list of bulk import job requests. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/ListBulkImportJobs.html\">List bulk import jobs (CLI)</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "ListCompositionRelationships": "<p>Retrieves a paginated list of composition relationships for an asset model of type <code>COMPONENT_MODEL</code>.</p>",
+    "ListComputationModelDataBindingUsages": "<p> Lists all data binding usages for computation models. This allows to identify where specific data bindings are being utilized across the computation models. This track dependencies between data sources and computation models. </p>",
+    "ListComputationModelResolveToResources": "<p>Lists all distinct resources that are resolved from the executed actions of the computation model.</p>",
+    "ListComputationModels": "<p>Retrieves a paginated list of summaries of all computation models.</p>",
     "ListDashboards": "<p>Retrieves a paginated list of dashboards for an IoT SiteWise Monitor project.</p>",
     "ListDatasets": "<p>Retrieves a paginated list of datasets for a specific target resource.</p>",
+    "ListExecutions": "<p>Retrieves a paginated list of summaries of all executions.</p>",
     "ListGateways": "<p>Retrieves a paginated list of gateways.</p>",
     "ListPortals": "<p>Retrieves a paginated list of IoT SiteWise Monitor portals.</p>",
     "ListProjectAssets": "<p>Retrieves a paginated list of assets associated with an IoT SiteWise Monitor project.</p>",
@@ -86,10 +95,11 @@
     "UpdateAssetModel": "<p>Updates an asset model and all of the assets that were created from the model. Each asset created from the model inherits the updated asset model's property and hierarchy definitions. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/update-assets-and-models.html\">Updating assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p> <important> <p>If you remove a property from an asset model, IoT SiteWise deletes all previous data for that property. You can’t change the type or data type of an existing property.</p> <p>To replace an existing asset model property with a new one with the same <code>name</code>, do the following:</p> <ol> <li> <p>Submit an <code>UpdateAssetModel</code> request with the entire existing property removed.</p> </li> <li> <p>Submit a second <code>UpdateAssetModel</code> request that includes the new property. The new asset property will have the same <code>name</code> as the previous one and IoT SiteWise will generate a new unique <code>id</code>.</p> </li> </ol> </important>",
     "UpdateAssetModelCompositeModel": "<p>Updates a composite model and all of the assets that were created from the model. Each asset created from the model inherits the updated asset model's property and hierarchy definitions. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/update-assets-and-models.html\">Updating assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p> <important> <p>If you remove a property from a composite asset model, IoT SiteWise deletes all previous data for that property. You can’t change the type or data type of an existing property.</p> <p>To replace an existing composite asset model property with a new one with the same <code>name</code>, do the following:</p> <ol> <li> <p>Submit an <code>UpdateAssetModelCompositeModel</code> request with the entire existing property removed.</p> </li> <li> <p>Submit a second <code>UpdateAssetModelCompositeModel</code> request that includes the new property. The new asset property will have the same <code>name</code> as the previous one and IoT SiteWise will generate a new unique <code>id</code>.</p> </li> </ol> </important>",
     "UpdateAssetProperty": "<p>Updates an asset property's alias and notification state.</p> <important> <p>This operation overwrites the property's existing alias and notification state. To keep your existing property's alias or notification state, you must include the existing values in the UpdateAssetProperty request. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeAssetProperty.html\">DescribeAssetProperty</a>.</p> </important>",
+    "UpdateComputationModel": "<p>Updates the computation model.</p>",
     "UpdateDashboard": "<p>Updates an IoT SiteWise Monitor dashboard.</p>",
     "UpdateDataset": "<p>Updates a dataset.</p>",
     "UpdateGateway": "<p>Updates a gateway's name.</p>",
-    "UpdateGatewayCapabilityConfiguration": "<p>Updates a gateway capability configuration or defines a new capability configuration. Each gateway capability defines data sources for a gateway. A capability configuration can contain multiple data source configurations. If you define OPC-UA sources for a gateway in the IoT SiteWise console, all of your OPC-UA sources are stored in one capability configuration. To list all capability configurations for a gateway, use <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeGateway.html\">DescribeGateway</a>.</p>",
+    "UpdateGatewayCapabilityConfiguration": "<p>Updates a gateway capability configuration or defines a new capability configuration. Each gateway capability defines data sources for a gateway.</p> <p>Important workflow notes:</p> <p>Each gateway capability defines data sources for a gateway. This is the namespace of the gateway capability.</p> <p>. The namespace follows the format <code>service:capability:version</code>, where:</p> <ul> <li> <p> <code>service</code> - The service providing the capability, or <code>iotsitewise</code>.</p> </li> <li> <p> <code>capability</code> - The specific capability type. Options include: <code>opcuacollector</code> for the OPC UA data source collector, or <code>publisher</code> for data publisher capability.</p> </li> <li> <p> <code>version</code> - The version number of the capability. Option include <code>2</code> for Classic streams, V2 gateways, and <code>3</code> for MQTT-enabled, V3 gateways.</p> </li> </ul> <p>After updating a capability configuration, the sync status becomes <code>OUT_OF_SYNC</code> until the gateway processes the configuration.Use <code>DescribeGatewayCapabilityConfiguration</code> to check the sync status and verify the configuration was applied.</p> <p>A gateway can have multiple capability configurations with different namespaces.</p>",
     "UpdatePortal": "<p>Updates an IoT SiteWise Monitor portal.</p>",
     "UpdateProject": "<p>Updates an IoT SiteWise Monitor project.</p>"
   },
@@ -101,10 +111,12 @@
         "AssetModelSummary$arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset model, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset-model/${AssetModelId}</code> </p>",
         "AssetSummary$arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset/${AssetId}</code> </p>",
         "AssociatedAssetsSummary$arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset/${AssetId}</code> </p>",
+        "ComputationModelSummary$arn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the computation model, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:computation-model/${ComputationModelId}</code> </p>",
         "CreateAccessPolicyResponse$accessPolicyArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the access policy, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:access-policy/${AccessPolicyId}</code> </p>",
         "CreateAssetModelResponse$assetModelArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset model, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset-model/${AssetModelId}</code> </p>",
         "CreateAssetResponse$assetArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset/${AssetId}</code> </p>",
         "CreateBulkImportJobRequest$jobRoleArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the IAM role that allows IoT SiteWise to read Amazon S3 data.</p>",
+        "CreateComputationModelResponse$computationModelArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the computation model, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:computation-model/${ComputationModelId}</code> </p>",
         "CreateDashboardResponse$dashboardArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the dashboard, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:dashboard/${DashboardId}</code> </p>",
         "CreateDatasetResponse$datasetArn": "<p>The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html\">ARN</a> of the dataset. The format is <code>arn:${Partition}:iotsitewise:${Region}:${Account}:dataset/${DatasetId}</code>.</p>",
         "CreateGatewayResponse$gatewayArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the gateway, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:gateway/${GatewayId}</code> </p>",
@@ -117,6 +129,7 @@
         "DescribeAssetModelResponse$assetModelArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset model, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset-model/${AssetModelId}</code> </p>",
         "DescribeAssetResponse$assetArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset/${AssetId}</code> </p>",
         "DescribeBulkImportJobResponse$jobRoleArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the IAM role that allows IoT SiteWise to read Amazon S3 data.</p>",
+        "DescribeComputationModelResponse$computationModelArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the computation model, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:computation-model/${ComputationModelId}</code> </p>",
         "DescribeDashboardResponse$dashboardArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the dashboard, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:dashboard/${DashboardId}</code> </p>",
         "DescribeDatasetResponse$datasetArn": "<p>The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html\">ARN</a> of the dataset. The format is <code>arn:${Partition}:iotsitewise:${Region}:${Account}:dataset/${DatasetId}</code>.</p>",
         "DescribeDefaultEncryptionConfigurationResponse$kmsKeyArn": "<p>The key ARN of the customer managed key used for KMS encryption if you use <code>KMS_BASED_ENCRYPTION</code>.</p>",
@@ -160,7 +173,8 @@
       "base": null,
       "refs": {
         "DescribeAssetCompositeModelResponse$actionDefinitions": "<p>The available actions for a composite model on this asset.</p>",
-        "DescribeAssetModelCompositeModelResponse$actionDefinitions": "<p>The available actions for a composite model on this asset model.</p>"
+        "DescribeAssetModelCompositeModelResponse$actionDefinitions": "<p>The available actions for a composite model on this asset model.</p>",
+        "DescribeComputationModelResponse$actionDefinitions": "<p>The available actions for this computation model.</p>"
       }
     },
     "ActionPayload": {
@@ -255,6 +269,12 @@
         "UntagResourceRequest$resourceArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the resource to untag.</p>"
       }
     },
+    "AssetBindingValueFilter": {
+      "base": "<p>A filter used to match data bindings based on a specific asset. This filter identifies all computation models referencing a particular asset in their data bindings.</p>",
+      "refs": {
+        "DataBindingValueFilter$asset": "<p>Filter criteria for matching data bindings based on a specific asset. Used to list all data bindings referencing a particular asset or its properties.</p>"
+      }
+    },
     "AssetCompositeModel": {
       "base": "<p>Contains information about a composite model in an asset. This object contains the asset's properties that you define in the composite model.</p>",
       "refs": {
@@ -336,6 +356,12 @@
       "base": null,
       "refs": {
         "ListProjectAssetsResponse$assetIds": "<p>A list that contains the IDs of each asset associated with the project.</p>"
+      }
+    },
+    "AssetModelBindingValueFilter": {
+      "base": "<p>A filter used to match data bindings based on a specific asset model. This filter identifies all computation models referencing a particular asset model in their data bindings.</p>",
+      "refs": {
+        "DataBindingValueFilter$assetModel": "<p>Filter criteria for matching data bindings based on a specific asset model. Used to list all data bindings referencing a particular asset model or its properties.</p>"
       }
     },
     "AssetModelCompositeModel": {
@@ -431,6 +457,19 @@
       "base": "<p>Contains information about an asset model property.</p>",
       "refs": {
         "AssetModelProperties$member": null
+      }
+    },
+    "AssetModelPropertyBindingValue": {
+      "base": "<p>Contains information about an <code>assetModelProperty</code> binding value.</p>",
+      "refs": {
+        "ComputationModelDataBindingValue$assetModelProperty": "<p>Specifies an asset model property data binding value.</p>",
+        "DataBindingValue$assetModelProperty": null
+      }
+    },
+    "AssetModelPropertyBindingValueFilter": {
+      "base": "<p>A filter used to match data bindings based on a specific asset model property. This filter identifies all computation models that reference a particular property of an asset model in their data bindings.</p>",
+      "refs": {
+        "DataBindingValueFilter$assetModelProperty": "<p>Filter criteria for matching data bindings based on a specific asset model property. Used to list all data bindings referencing a particular property of an asset model.</p>"
       }
     },
     "AssetModelPropertyDefinition": {
@@ -560,6 +599,19 @@
         "PutAssetPropertyValueEntry$propertyAlias": "<p>The alias that identifies the property, such as an OPC-UA server data stream path (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/connect-data-streams.html\">Mapping industrial data streams to asset properties</a> in the <i>IoT SiteWise User Guide</i>.</p>"
       }
     },
+    "AssetPropertyBindingValue": {
+      "base": "<p>Represents a data binding value referencing a specific asset property. It's used to bind computation model variables to actual asset property values for processing.</p>",
+      "refs": {
+        "ComputationModelDataBindingValue$assetProperty": "<p>The asset property value used for computation model data binding.</p>",
+        "DataBindingValue$assetProperty": "<p>The asset property value used in the data binding.</p>"
+      }
+    },
+    "AssetPropertyBindingValueFilter": {
+      "base": "<p>A filter used to match data bindings based on a specific asset property. This filter helps identify all computation models referencing a particular property of an asset in their data bindings.</p>",
+      "refs": {
+        "DataBindingValueFilter$assetProperty": "<p>Filter criteria for matching data bindings based on a specific asset property. Used to list all data bindings referencing a particular property of an asset.</p>"
+      }
+    },
     "AssetPropertyPath": {
       "base": null,
       "refs": {
@@ -657,13 +709,11 @@
     },
     "AssociateAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateTimeSeriesToAssetPropertyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatedAssetsSummaries": {
       "base": null,
@@ -698,13 +748,11 @@
     },
     "BatchAssociateProjectAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchAssociateProjectAssetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateProjectAssetsErrors": {
       "base": null,
@@ -714,13 +762,11 @@
     },
     "BatchDisassociateProjectAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateProjectAssetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchEntryCompletionStatus": {
       "base": null,
@@ -775,13 +821,11 @@
     },
     "BatchGetAssetPropertyAggregatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetAssetPropertyAggregatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetAssetPropertyAggregatesSkippedEntries": {
       "base": null,
@@ -889,13 +933,11 @@
     },
     "BatchGetAssetPropertyValueHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetAssetPropertyValueHistoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetAssetPropertyValueHistorySkippedEntries": {
       "base": null,
@@ -923,13 +965,11 @@
     },
     "BatchGetAssetPropertyValueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetAssetPropertyValueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetAssetPropertyValueSkippedEntries": {
       "base": null,
@@ -987,12 +1027,16 @@
     },
     "BatchPutAssetPropertyValueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchPutAssetPropertyValueResponse": {
       "base": null,
+      "refs": {}
+    },
+    "BindingValueList": {
+      "base": null,
       "refs": {
+        "ComputationModelDataBindingValue$list": "<p>Specifies a list of data binding value.</p>"
       }
     },
     "BooleanValue": {
@@ -1018,19 +1062,19 @@
     "CapabilityNamespace": {
       "base": null,
       "refs": {
-        "DescribeGatewayCapabilityConfigurationRequest$capabilityNamespace": "<p>The namespace of the capability configuration. For example, if you configure OPC-UA sources from the IoT SiteWise console, your OPC-UA capability configuration has the namespace <code>iotsitewise:opcuacollector:version</code>, where <code>version</code> is a number such as <code>1</code>.</p>",
+        "DescribeGatewayCapabilityConfigurationRequest$capabilityNamespace": "<p>The namespace of the capability configuration. For example, if you configure OPC UA sources for an MQTT-enabled gateway, your OPC-UA capability configuration has the namespace <code>iotsitewise:opcuacollector:3</code>.</p>",
         "DescribeGatewayCapabilityConfigurationResponse$capabilityNamespace": "<p>The namespace of the gateway capability.</p>",
-        "GatewayCapabilitySummary$capabilityNamespace": "<p>The namespace of the capability configuration. For example, if you configure OPC-UA sources from the IoT SiteWise console, your OPC-UA capability configuration has the namespace <code>iotsitewise:opcuacollector:version</code>, where <code>version</code> is a number such as <code>1</code>.</p>",
-        "UpdateGatewayCapabilityConfigurationRequest$capabilityNamespace": "<p>The namespace of the gateway capability configuration to be updated. For example, if you configure OPC-UA sources from the IoT SiteWise console, your OPC-UA capability configuration has the namespace <code>iotsitewise:opcuacollector:version</code>, where <code>version</code> is a number such as <code>1</code>.</p>",
+        "GatewayCapabilitySummary$capabilityNamespace": "<p>The namespace of the capability configuration. For example, if you configure OPC UA sources for an MQTT-enabled gateway, your OPC-UA capability configuration has the namespace <code>iotsitewise:opcuacollector:3</code>.</p>",
+        "UpdateGatewayCapabilityConfigurationRequest$capabilityNamespace": "<p>The namespace of the gateway capability configuration to be updated. For example, if you configure OPC UA sources for an MQTT-enabled gateway, your OPC-UA capability configuration has the namespace <code>iotsitewise:opcuacollector:3</code>.</p>",
         "UpdateGatewayCapabilityConfigurationResponse$capabilityNamespace": "<p>The namespace of the gateway capability.</p>"
       }
     },
     "CapabilitySyncStatus": {
       "base": null,
       "refs": {
-        "DescribeGatewayCapabilityConfigurationResponse$capabilitySyncStatus": "<p>The synchronization status of the capability configuration. The sync status can be one of the following:</p> <ul> <li> <p> <code>IN_SYNC</code> – The gateway is running the capability configuration.</p> </li> <li> <p> <code>NOT_APPLICABLE</code> – Synchronization is not required for this capability configuration. This is most common when integrating partner data sources, because the data integration is handled externally by the partner.</p> </li> <li> <p> <code>OUT_OF_SYNC</code> – The gateway hasn't received the capability configuration.</p> </li> <li> <p> <code>SYNC_FAILED</code> – The gateway rejected the capability configuration.</p> </li> <li> <p> <code>UNKNOWN</code> – The synchronization status is currently unknown due to an undetermined or temporary error.</p> </li> </ul>",
-        "GatewayCapabilitySummary$capabilitySyncStatus": "<p>The synchronization status of the capability configuration. The sync status can be one of the following:</p> <ul> <li> <p> <code>IN_SYNC</code> – The gateway is running the capability configuration.</p> </li> <li> <p> <code>NOT_APPLICABLE</code> – Synchronization is not required for this capability configuration. This is most common when integrating partner data sources, because the data integration is handled externally by the partner.</p> </li> <li> <p> <code>OUT_OF_SYNC</code> – The gateway hasn't received the capability configuration.</p> </li> <li> <p> <code>SYNC_FAILED</code> – The gateway rejected the capability configuration.</p> </li> <li> <p> <code>UNKNOWN</code> – The synchronization status is currently unknown due to an undetermined or temporary error.</p> </li> </ul>",
-        "UpdateGatewayCapabilityConfigurationResponse$capabilitySyncStatus": "<p>The synchronization status of the capability configuration. The sync status can be one of the following:</p> <ul> <li> <p> <code>IN_SYNC</code> – The gateway is running the capability configuration.</p> </li> <li> <p> <code>NOT_APPLICABLE</code> – Synchronization is not required for this capability configuration. This is most common when integrating partner data sources, because the data integration is handled externally by the partner.</p> </li> <li> <p> <code>OUT_OF_SYNC</code> – The gateway hasn't received the capability configuration.</p> </li> <li> <p> <code>SYNC_FAILED</code> – The gateway rejected the capability configuration.</p> </li> <li> <p> <code>UNKNOWN</code> – The synchronization status is currently unknown due to an undetermined or temporary error.</p> </li> </ul> <p>After you update a capability configuration, its sync status is <code>OUT_OF_SYNC</code> until the gateway receives and applies or rejects the updated configuration.</p>"
+        "DescribeGatewayCapabilityConfigurationResponse$capabilitySyncStatus": "<p>The synchronization status of the gateway capability configuration. The sync status can be one of the following:</p> <ul> <li> <p> <code>IN_SYNC</code> - The gateway is running with the latest configuration.</p> </li> <li> <p> <code>OUT_OF_SYNC</code> - The gateway hasn't received the latest configuration.</p> </li> <li> <p> <code>SYNC_FAILED</code> - The gateway rejected the latest configuration.</p> </li> <li> <p> <code>UNKNOWN</code> - The gateway hasn't reported its sync status.</p> </li> <li> <p> <code>NOT_APPLICABLE</code> - The gateway doesn't support this capability. This is most common when integrating partner data sources, because the data integration is handled externally by the partner.</p> </li> </ul>",
+        "GatewayCapabilitySummary$capabilitySyncStatus": "<p>The synchronization status of the gateway capability configuration. The sync status can be one of the following:</p> <ul> <li> <p> <code>IN_SYNC</code> - The gateway is running with the latest configuration.</p> </li> <li> <p> <code>OUT_OF_SYNC</code> - The gateway hasn't received the latest configuration.</p> </li> <li> <p> <code>SYNC_FAILED</code> - The gateway rejected the latest configuration.</p> </li> <li> <p> <code>UNKNOWN</code> - The gateway hasn't reported its sync status.</p> </li> <li> <p> <code>NOT_APPLICABLE</code> - The gateway doesn't support this capability. This is most common when integrating partner data sources, because the data integration is handled externally by the partner.</p> </li> </ul>",
+        "UpdateGatewayCapabilityConfigurationResponse$capabilitySyncStatus": "<p>The synchronization status of the gateway capability configuration. The sync status can be one of the following:</p> <ul> <li> <p> <code>IN_SYNC</code> - The gateway is running with the latest configuration.</p> </li> <li> <p> <code>OUT_OF_SYNC</code> - The gateway hasn't received the latest configuration.</p> </li> <li> <p> <code>SYNC_FAILED</code> - The gateway rejected the latest configuration.</p> </li> <li> <p> <code>UNKNOWN</code> - The gateway hasn't reported its sync status.</p> </li> <li> <p> <code>NOT_APPLICABLE</code> - The gateway doesn't support this capability. This is most common when integrating partner data sources, because the data integration is handled externally by the partner.</p> </li> </ul> <p>After you update a capability configuration, its sync status is <code>OUT_OF_SYNC</code> until the gateway receives and applies or rejects the updated configuration.</p>"
       }
     },
     "Citation": {
@@ -1056,6 +1100,7 @@
         "CreateAssetModelCompositeModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreateAssetModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreateAssetRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
+        "CreateComputationModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreateDashboardRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreateDatasetRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "CreatePortalRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
@@ -1064,6 +1109,7 @@
         "DeleteAssetModelCompositeModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteAssetModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteAssetRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
+        "DeleteComputationModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteDashboardRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteDatasetRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeletePortalRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
@@ -1078,6 +1124,7 @@
         "UpdateAssetModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdateAssetPropertyRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdateAssetRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
+        "UpdateComputationModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdateDashboardRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdateDatasetRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdatePortalRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
@@ -1150,6 +1197,124 @@
         "CompositionRelationshipSummaries$member": null
       }
     },
+    "ComputationModelAnomalyDetectionConfiguration": {
+      "base": "<p>Contains the configuration of the type of anomaly detection computation model.</p>",
+      "refs": {
+        "ComputationModelConfiguration$anomalyDetection": "<p>The configuration for the anomaly detection type of computation model.</p>"
+      }
+    },
+    "ComputationModelConfiguration": {
+      "base": "<p>The configuration for the computation model.</p>",
+      "refs": {
+        "CreateComputationModelRequest$computationModelConfiguration": "<p>The configuration for the computation model.</p>",
+        "DescribeComputationModelResponse$computationModelConfiguration": "<p>The configuration for the computation model.</p>",
+        "UpdateComputationModelRequest$computationModelConfiguration": "<p>The configuration for the computation model.</p>"
+      }
+    },
+    "ComputationModelDataBinding": {
+      "base": null,
+      "refs": {
+        "CreateComputationModelRequest$computationModelDataBinding": "<p>The data binding for the computation model. Key is a variable name defined in configuration. Value is a <code>ComputationModelDataBindingValue</code> referenced by the variable.</p>",
+        "DescribeComputationModelResponse$computationModelDataBinding": "<p>The data binding for the computation model. Key is a variable name defined in configuration. Value is a <code>ComputationModelDataBindingValue</code> referenced by the variable.</p>",
+        "UpdateComputationModelRequest$computationModelDataBinding": "<p>The data binding for the computation model. Key is a variable name defined in configuration. Value is a <code>ComputationModelDataBindingValue</code> referenced by the variable.</p>"
+      }
+    },
+    "ComputationModelDataBindingUsageSummaries": {
+      "base": null,
+      "refs": {
+        "ListComputationModelDataBindingUsagesResponse$dataBindingUsageSummaries": "<p>A list of summaries describing the data binding usages across computation models. Each summary includes the computation model IDs and the matched data binding details.</p>"
+      }
+    },
+    "ComputationModelDataBindingUsageSummary": {
+      "base": "<p>A summary of how a specific data binding is used across computation models. This tracks dependencies between data sources and computation models, allowing you to understand the impact of changes to data sources.</p>",
+      "refs": {
+        "ComputationModelDataBindingUsageSummaries$member": null
+      }
+    },
+    "ComputationModelDataBindingValue": {
+      "base": "<p>Contains computation model data binding value information, which can be one of <code>assetModelProperty</code>, <code>list</code>.</p>",
+      "refs": {
+        "BindingValueList$member": null,
+        "ComputationModelDataBinding$value": null
+      }
+    },
+    "ComputationModelDataBindingVariable": {
+      "base": null,
+      "refs": {
+        "ComputationModelDataBinding$key": null
+      }
+    },
+    "ComputationModelExecutionSummary": {
+      "base": null,
+      "refs": {
+        "DescribeComputationModelExecutionSummaryResponse$computationModelExecutionSummary": "<p>Contains the execution summary of the computation model.</p>"
+      }
+    },
+    "ComputationModelExecutionSummaryKey": {
+      "base": null,
+      "refs": {
+        "ComputationModelExecutionSummary$key": null
+      }
+    },
+    "ComputationModelExecutionSummaryValue": {
+      "base": null,
+      "refs": {
+        "ComputationModelExecutionSummary$value": null
+      }
+    },
+    "ComputationModelIdList": {
+      "base": null,
+      "refs": {
+        "ComputationModelDataBindingUsageSummary$computationModelIds": "<p>The list of computation model IDs that use this data binding. This allows identification of all computation models affected by changes to the referenced data source.</p>"
+      }
+    },
+    "ComputationModelResolveToResourceSummaries": {
+      "base": null,
+      "refs": {
+        "ListComputationModelResolveToResourcesResponse$computationModelResolveToResourceSummaries": "<p>A list of summaries describing the distinct resources that this computation model resolves to when actions were executed.</p>"
+      }
+    },
+    "ComputationModelResolveToResourceSummary": {
+      "base": "<p>A summary of the resource that a computation model resolves to.</p>",
+      "refs": {
+        "ComputationModelResolveToResourceSummaries$member": null
+      }
+    },
+    "ComputationModelState": {
+      "base": null,
+      "refs": {
+        "ComputationModelStatus$state": "<p>The current state of the computation model.</p>"
+      }
+    },
+    "ComputationModelStatus": {
+      "base": "<p>Contains current status information for a computation model.</p>",
+      "refs": {
+        "ComputationModelSummary$status": "<p>The current status of the computation model.</p>",
+        "CreateComputationModelResponse$computationModelStatus": "<p>The status of the computation model, containing a state (CREATING after successfully calling this operation) and any error messages.</p>",
+        "DeleteComputationModelResponse$computationModelStatus": "<p>The status of the computation model. It contains a state (DELETING after successfully calling this operation) and any error messages.</p>",
+        "DescribeComputationModelResponse$computationModelStatus": "<p>The current status of the asset model, which contains a state and an error message if any.</p>",
+        "UpdateComputationModelResponse$computationModelStatus": "<p>The status of the computation model. It contains a state (UPDATING after successfully calling this operation) and an error message if any.</p>"
+      }
+    },
+    "ComputationModelSummaries": {
+      "base": null,
+      "refs": {
+        "ListComputationModelsResponse$computationModelSummaries": "<p>A list summarizing each computation model.</p>"
+      }
+    },
+    "ComputationModelSummary": {
+      "base": "<p>Contains a summary of a computation model.</p>",
+      "refs": {
+        "ComputationModelSummaries$member": null
+      }
+    },
+    "ComputationModelType": {
+      "base": null,
+      "refs": {
+        "ComputationModelSummary$type": "<p>The type of the computation model.</p>",
+        "ListComputationModelsRequest$computationModelType": "<p>The type of computation model. If a <code>computationModelType</code> is not provided, all types of computation models are returned.</p>"
+      }
+    },
     "ComputeLocation": {
       "base": null,
       "refs": {
@@ -1200,7 +1365,7 @@
     "CoreDeviceOperatingSystem": {
       "base": null,
       "refs": {
-        "GreengrassV2$coreDeviceOperatingSystem": "<p>The operating system of the core device in IoT Greengrass V2.</p>"
+        "GreengrassV2$coreDeviceOperatingSystem": "<p>The operating system of the core device in IoT Greengrass V2. Specifying the operating system is required for MQTT-enabled, V3 gateways (<code>gatewayVersion</code> <code>3</code>) and not applicable for Classic stream, V2 gateways (<code>gatewayVersion</code> <code>2</code>).</p>"
       }
     },
     "CoreDeviceThingName": {
@@ -1211,103 +1376,91 @@
     },
     "CreateAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssetModelCompositeModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssetModelCompositeModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssetModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssetModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAssetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBulkImportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBulkImportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateComputationModelRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateComputationModelResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateDashboardRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDashboardResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDatasetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDatasetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePortalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePortalResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProjectResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Csv": {
       "base": "<p>A .CSV file.</p>",
@@ -1336,7 +1489,6 @@
         "DeleteAssetModelCompositeModelRequest$assetModelCompositeModelId": "<p>The ID of a composite model on this asset model.</p>",
         "DeleteAssetModelRequest$assetModelId": "<p>The ID of the asset model to delete. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DeleteAssetRequest$assetId": "<p>The ID of the asset to delete. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "DeleteDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
         "DeleteTimeSeriesRequest$assetId": "<p>The ID of the asset in which the asset property was created. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DeleteTimeSeriesRequest$propertyId": "<p>The ID of the asset property. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeAssetCompositeModelRequest$assetId": "<p>The ID of the asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -1347,7 +1499,6 @@
         "DescribeAssetPropertyRequest$assetId": "<p>The ID of the asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeAssetPropertyRequest$propertyId": "<p>The ID of the asset property. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeAssetRequest$assetId": "<p>The ID of the asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "DescribeDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
         "DescribeTimeSeriesRequest$assetId": "<p>The ID of the asset in which the asset property was created. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeTimeSeriesRequest$propertyId": "<p>The ID of the asset property. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DisassociateAssetsRequest$assetId": "<p>The ID of the parent asset from which to disassociate the child asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -1355,7 +1506,6 @@
         "DisassociateAssetsRequest$childAssetId": "<p>The ID of the child asset to disassociate. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DisassociateTimeSeriesFromAssetPropertyRequest$assetId": "<p>The ID of the asset in which the asset property was created. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DisassociateTimeSeriesFromAssetPropertyRequest$propertyId": "<p>The ID of the asset property. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "ListActionsRequest$targetResourceId": "<p>The ID of the target resource.</p>",
         "ListAssetModelCompositeModelsRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListAssetModelPropertiesRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListAssetPropertiesRequest$assetId": "<p>The ID of the asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -1364,15 +1514,12 @@
         "ListAssociatedAssetsRequest$assetId": "<p>The ID of the asset to query. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListAssociatedAssetsRequest$hierarchyId": "<p>(Optional) If you don't provide a <code>hierarchyId</code>, all the immediate assets in the <code>traversalDirection</code> will be returned. </p> <p> The ID of the hierarchy by which child assets are associated to the asset. (This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.)</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-hierarchies.html\">Asset hierarchies</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListTimeSeriesRequest$assetId": "<p>The ID of the asset in which the asset property was created. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "TargetResource$assetId": "<p>The ID of the asset, in UUID format.</p>",
         "UpdateAssetModelCompositeModelRequest$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
         "UpdateAssetModelCompositeModelRequest$assetModelCompositeModelId": "<p>The ID of a composite model on this asset model.</p>",
         "UpdateAssetModelRequest$assetModelId": "<p>The ID of the asset model to update. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "UpdateAssetPropertyRequest$assetId": "<p>The ID of the asset to be updated. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "UpdateAssetPropertyRequest$propertyId": "<p>The ID of the asset property to be updated. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "UpdateAssetRequest$assetId": "<p>The ID of the asset to update. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "UpdateDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
-        "UpdateDatasetResponse$datasetId": "<p>The ID of the dataset.</p>"
+        "UpdateAssetRequest$assetId": "<p>The ID of the asset to update. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>"
       }
     },
     "CustomerManagedS3Storage": {
@@ -1399,6 +1546,18 @@
       "base": "<p>Contains a dashboard summary.</p>",
       "refs": {
         "DashboardSummaries$member": null
+      }
+    },
+    "DataBindingValue": {
+      "base": "<p>Represents a value used in a data binding. It can be an asset property or an asset model property.</p>",
+      "refs": {
+        "MatchedDataBinding$value": "<p>The value of the matched data binding.</p>"
+      }
+    },
+    "DataBindingValueFilter": {
+      "base": "<p>A filter used to match specific data binding values based on criteria. This filter allows searching for data bindings by asset, asset model, asset property, or asset model property.</p>",
+      "refs": {
+        "ListComputationModelDataBindingUsagesRequest$dataBindingValueFilter": "<p>A filter used to limit the returned data binding usages based on specific data binding values. You can filter by asset, asset model, asset property, or asset model property to find all computation models using these specific data sources.</p>"
       }
     },
     "DataSetReference": {
@@ -1477,63 +1636,59 @@
     },
     "DeleteAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssetModelCompositeModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssetModelCompositeModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssetModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssetModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAssetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteComputationModelRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteComputationModelResponse": {
+      "base": null,
+      "refs": {}
     },
     "DeleteDashboardRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDashboardResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDatasetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDatasetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFilesAfterImport": {
       "base": null,
@@ -1544,213 +1699,195 @@
     },
     "DeleteGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePortalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePortalResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProjectResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTimeSeriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetCompositeModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetCompositeModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetModelCompositeModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetModelCompositeModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetPropertyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetPropertyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAssetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBulkImportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBulkImportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeComputationModelExecutionSummaryRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeComputationModelExecutionSummaryResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeComputationModelRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeComputationModelResponse": {
+      "base": null,
+      "refs": {}
     },
     "DescribeDashboardRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDashboardResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDatasetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDatasetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDefaultEncryptionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDefaultEncryptionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeExecutionResponse": {
+      "base": null,
+      "refs": {}
     },
     "DescribeGatewayCapabilityConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGatewayCapabilityConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLoggingOptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLoggingOptionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePortalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePortalResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProjectResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStorageConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStorageConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTimeSeriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTimeSeriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -1821,13 +1958,11 @@
     },
     "DisassociateAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateTimeSeriesFromAssetPropertyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociatedDataStorageState": {
       "base": null,
@@ -1898,6 +2033,7 @@
       "refs": {
         "AssetModelStatus$error": "<p>Contains associated error information, if any.</p>",
         "AssetStatus$error": "<p>Contains associated error information, if any.</p>",
+        "ComputationModelStatus$error": null,
         "DatasetStatus$error": null
       }
     },
@@ -1947,18 +2083,16 @@
     },
     "ExecuteActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteQueryMaxResults": {
       "base": null,
       "refs": {
-        "ExecuteQueryRequest$maxResults": "<p>The maximum number of results to return at one time. The default is 25.</p>"
+        "ExecuteQueryRequest$maxResults": "<p>The maximum number of results to return at one time.</p> <ul> <li> <p>Minimum is 1</p> </li> <li> <p>Maximum is 20000</p> </li> <li> <p>Default is 250</p> </li> </ul>"
       }
     },
     "ExecuteQueryNextToken": {
@@ -1970,12 +2104,71 @@
     },
     "ExecuteQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteQueryResponse": {
       "base": null,
+      "refs": {}
+    },
+    "ExecutionDetails": {
+      "base": null,
       "refs": {
+        "DescribeExecutionResponse$executionDetails": "<p>Provides detailed information about the execution of your anomaly detection models. This includes model metrics and training timestamps for both training and inference actions.</p> <ul> <li> <p> The training action (Amazon Web Services/ANOMALY_DETECTION_TRAINING), includes performance metrics that help you compare different versions of your anomaly detection models. These metrics provide insights into the model's performance during the training process. </p> </li> <li> <p> The inference action (Amazon Web Services/ANOMALY_DETECTION_INFERENCE), includes information about the results of executing your anomaly detection models. This helps you understand the output of your models and assess their performance. </p> </li> </ul>"
+      }
+    },
+    "ExecutionDetailsKey": {
+      "base": null,
+      "refs": {
+        "ExecutionDetails$key": null
+      }
+    },
+    "ExecutionDetailsValue": {
+      "base": null,
+      "refs": {
+        "ExecutionDetails$value": null
+      }
+    },
+    "ExecutionResult": {
+      "base": null,
+      "refs": {
+        "DescribeExecutionResponse$executionResult": "<p>The result of the execution.</p>"
+      }
+    },
+    "ExecutionResultKey": {
+      "base": null,
+      "refs": {
+        "ExecutionResult$key": null
+      }
+    },
+    "ExecutionResultValue": {
+      "base": null,
+      "refs": {
+        "ExecutionResult$value": null
+      }
+    },
+    "ExecutionState": {
+      "base": null,
+      "refs": {
+        "ExecutionStatus$state": "<p>The current state of the computation model.</p>"
+      }
+    },
+    "ExecutionStatus": {
+      "base": "<p>The status of the execution.</p>",
+      "refs": {
+        "DescribeExecutionResponse$executionStatus": "<p>The status of the execution process.</p>",
+        "ExecutionSummary$executionStatus": "<p>The status of the execution process.</p>"
+      }
+    },
+    "ExecutionSummaries": {
+      "base": null,
+      "refs": {
+        "ListExecutionsResponse$executionSummaries": "<p>Contains the list of execution summaries of the computation models.</p>"
+      }
+    },
+    "ExecutionSummary": {
+      "base": "<p>Contains the execution summary of the computation model.</p>",
+      "refs": {
+        "ExecutionSummaries$member": null
       }
     },
     "Expression": {
@@ -2087,7 +2280,7 @@
       }
     },
     "GatewayPlatform": {
-      "base": "<p>Contains a gateway's platform information.</p>",
+      "base": "<p>The gateway's platform configuration. You can only specify one platform type in a gateway.</p> <p>(Legacy only) For Greengrass V1 gateways, specify the <code>greengrass</code> parameter with a valid Greengrass group ARN.</p> <p>For Greengrass V2 gateways, specify the <code>greengrassV2</code> parameter with a valid core device thing name. If creating a V3 gateway (<code>gatewayVersion=3</code>), you must also specify the <code>coreDeviceOperatingSystem</code>.</p> <p>For Siemens Industrial Edge gateways, specify the <code>siemensIE</code> parameter with a valid IoT Core thing name.</p>",
       "refs": {
         "CreateGatewayRequest$gatewayPlatform": "<p>The gateway's platform. You can only specify one platform in a gateway.</p>",
         "DescribeGatewayResponse$gatewayPlatform": "<p>The gateway's platform.</p>",
@@ -2107,22 +2300,20 @@
       }
     },
     "GatewayVersion": {
-      "base": null,
+      "base": "<p>The version of the gateway. Options include: </p> <ul> <li> <p> <code>2</code> - Classic streams, V2 gateway.</p> </li> <li> <p> <code>3</code> - MQTT-enabled, V3 gateway.</p> </li> </ul>",
       "refs": {
-        "CreateGatewayRequest$gatewayVersion": "<p>The version of the gateway to create. Specify <code>3</code> to create an MQTT-enabled, V3 gateway and <code>2</code> To create a Classic streams, V2 gateway. If the version isn't specified, a Classic streams, V2 gateway is created by default.</p> <p> We recommend creating an MQTT-enabled, V3 gateway for self-hosted gateways. SiteWise Edge gateways on Siemens Industrial Edge should use gateway version <code>2</code>. For more information on gateway versions, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/gw-self-host-gg2.html\"> Self-host a SiteWise Edge gateway with IoT Greengrass V2</a>.</p>",
+        "CreateGatewayRequest$gatewayVersion": "<p>The version of the gateway to create. Specify <code>3</code> to create an MQTT-enabled, V3 gateway and <code>2</code> to create a Classic streams, V2 gateway. If not specified, the default is <code>2</code> (Classic streams, V2 gateway).</p> <note> <p>When creating a V3 gateway (<code>gatewayVersion=3</code>) with the <code>GreengrassV2</code> platform, you must also specify the <code>coreDeviceOperatingSystem</code> parameter.</p> </note> <p> We recommend creating an MQTT-enabled gateway for self-hosted gateways and Siemens Industrial Edge gateways. For more information on gateway versions, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/gateways.html\">Use Amazon Web Services IoT SiteWise Edge Edge gateways</a>.</p>",
         "DescribeGatewayResponse$gatewayVersion": "<p>The version of the gateway. A value of <code>3</code> indicates an MQTT-enabled, V3 gateway, while <code>2</code> indicates a Classic streams, V2 gateway.</p>",
         "GatewaySummary$gatewayVersion": "<p>The version of the gateway. A value of <code>3</code> indicates an MQTT-enabled, V3 gateway, while <code>2</code> indicates a Classic streams, V2 gateway.</p>"
       }
     },
     "GetAssetPropertyAggregatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssetPropertyAggregatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssetPropertyValueAggregatesMaxResults": {
       "base": null,
@@ -2138,33 +2329,27 @@
     },
     "GetAssetPropertyValueHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssetPropertyValueHistoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssetPropertyValueRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAssetPropertyValueResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInterpolatedAssetPropertyValuesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInterpolatedAssetPropertyValuesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Greengrass": {
       "base": "<p>Contains details for a gateway that runs on IoT Greengrass. To create a gateway that runs on IoT Greengrass, you must add the IoT SiteWise connector to a Greengrass group and deploy it. Your Greengrass group must also have permissions to upload data to IoT SiteWise. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/gateway-connector.html\">Ingesting data using a gateway</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -2203,6 +2388,7 @@
         "ActionDefinition$actionDefinitionId": "<p>The ID of the action definition.</p>",
         "ActionSummary$actionId": "<p>The ID of the action.</p>",
         "ActionSummary$actionDefinitionId": "<p>The ID of the action definition.</p>",
+        "AssetBindingValueFilter$assetId": "<p>The ID of the asset to filter data bindings by. Only data bindings referencing this specific asset are matched.</p>",
         "AssetCompositeModel$id": "<p> The ID of the asset composite model. </p>",
         "AssetCompositeModelPathSegment$id": "<p>The ID of the path segment.</p>",
         "AssetCompositeModelSummary$id": "<p>The ID of the composite model that this summary describes.</p>",
@@ -2211,16 +2397,25 @@
         "AssetHierarchyInfo$parentAssetId": "<p>The ID of the parent asset in this asset relationship.</p>",
         "AssetHierarchyInfo$childAssetId": "<p>The ID of the child asset in this asset relationship.</p>",
         "AssetIDs$member": null,
+        "AssetModelBindingValueFilter$assetModelId": "<p>The ID of the asset model to filter data bindings by. Only data bindings referemncing this specific asset model are matched.</p>",
         "AssetModelCompositeModelDefinition$id": "<p>The ID to assign to the composite model, if desired. IoT SiteWise automatically generates a unique ID for you, so this parameter is never required. However, if you prefer to supply your own ID instead, you can specify it here in UUID format. If you specify your own ID, it must be globally unique.</p>",
         "AssetModelCompositeModelPathSegment$id": "<p>The ID of the path segment.</p>",
         "AssetModelCompositeModelSummary$id": "<p>The ID of the composite model that this summary describes..</p>",
         "AssetModelHierarchyDefinition$id": "<p>The ID to assign to the asset model hierarchy, if desired. IoT SiteWise automatically generates a unique ID for you, so this parameter is never required. However, if you prefer to supply your own ID instead, you can specify it here in UUID format. If you specify your own ID, it must be globally unique.</p>",
+        "AssetModelPropertyBindingValue$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
+        "AssetModelPropertyBindingValue$propertyId": "<p>The ID of the asset model property used in data binding value.</p>",
+        "AssetModelPropertyBindingValueFilter$assetModelId": "<p>The ID of the asset model containing the filter property. This identifies the specific asset model that contains the property of interest.</p>",
+        "AssetModelPropertyBindingValueFilter$propertyId": "<p>The ID of the property within the asset model to filter by. Only data bindings referencing this specific property of the specified asset model are matched.</p>",
         "AssetModelPropertyDefinition$id": "<p>The ID to assign to the asset model property, if desired. IoT SiteWise automatically generates a unique ID for you, so this parameter is never required. However, if you prefer to supply your own ID instead, you can specify it here in UUID format. If you specify your own ID, it must be globally unique.</p>",
         "AssetModelPropertyPathSegment$id": "<p>The ID of the path segment.</p>",
         "AssetModelPropertySummary$id": "<p>The ID of the property.</p>",
         "AssetModelPropertySummary$assetModelCompositeModelId": "<p> The ID of the composite model that contains the asset model property. </p>",
         "AssetModelSummary$id": "<p>The ID of the asset model (used with IoT SiteWise API operations).</p>",
         "AssetProperty$id": "<p>The ID of the asset property.</p>",
+        "AssetPropertyBindingValue$assetId": "<p>The ID of the asset containing the property. This identifies the specific asset instance's property value used in the computation model.</p>",
+        "AssetPropertyBindingValue$propertyId": "<p>The ID of the property within the asset. This identifies the specific property's value used in the computation model.</p>",
+        "AssetPropertyBindingValueFilter$assetId": "<p>The ID of the asset containing the property to filter by. This identifies the specific asset instance containing the property of interest.</p>",
+        "AssetPropertyBindingValueFilter$propertyId": "<p>The ID of the property within the asset to filter by. Only data bindings referencing this specific property of the specified asset are matched.</p>",
         "AssetPropertyPathSegment$id": "<p>The ID of the path segment.</p>",
         "AssetPropertySummary$id": "<p>The ID of the property.</p>",
         "AssetPropertySummary$assetCompositeModelId": "<p> The ID of the composite model that contains the asset property. </p>",
@@ -2240,6 +2435,8 @@
         "CompositionRelationshipItem$id": "<p>The ID of the component.</p>",
         "CompositionRelationshipSummary$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
         "CompositionRelationshipSummary$assetModelCompositeModelId": "<p>The ID of a composite model on this asset model.</p>",
+        "ComputationModelIdList$member": null,
+        "ComputationModelSummary$id": "<p>The ID of the computation model.</p>",
         "CreateAccessPolicyResponse$accessPolicyId": "<p>The ID of the access policy.</p>",
         "CreateAssetModelCompositeModelRequest$assetModelCompositeModelId": "<p>The ID of the composite model. IoT SiteWise automatically generates a unique ID for you, so this parameter is never required. However, if you prefer to supply your own ID instead, you can specify it here in UUID format. If you specify your own ID, it must be globally unique.</p>",
         "CreateAssetModelCompositeModelResponse$assetModelCompositeModelId": "<p>The ID of the composed asset model. You can use this ID when you call other IoT SiteWise APIs.</p>",
@@ -2248,6 +2445,7 @@
         "CreateAssetRequest$assetId": "<p>The ID to assign to the asset, if desired. IoT SiteWise automatically generates a unique ID for you, so this parameter is never required. However, if you prefer to supply your own ID instead, you can specify it here in UUID format. If you specify your own ID, it must be globally unique.</p>",
         "CreateAssetResponse$assetId": "<p>The ID of the asset, in UUID format. This ID uniquely identifies the asset within IoT SiteWise and can be used with other IoT SiteWise API operations.</p>",
         "CreateBulkImportJobResponse$jobId": "<p>The ID of the job.</p>",
+        "CreateComputationModelResponse$computationModelId": "<p>The ID of the computation model.</p>",
         "CreateDashboardRequest$projectId": "<p>The ID of the project in which to create the dashboard.</p>",
         "CreateDashboardResponse$dashboardId": "<p>The ID of the dashboard.</p>",
         "CreateDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
@@ -2259,7 +2457,9 @@
         "DashboardSummary$id": "<p>The ID of the dashboard.</p>",
         "DatasetSummary$id": "<p>The ID of the dataset.</p>",
         "DeleteAccessPolicyRequest$accessPolicyId": "<p>The ID of the access policy to be deleted.</p>",
+        "DeleteComputationModelRequest$computationModelId": "<p>The ID of the computation model.</p>",
         "DeleteDashboardRequest$dashboardId": "<p>The ID of the dashboard to delete.</p>",
+        "DeleteDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
         "DeleteGatewayRequest$gatewayId": "<p>The ID of the gateway to delete.</p>",
         "DeletePortalRequest$portalId": "<p>The ID of the portal to delete.</p>",
         "DeleteProjectRequest$projectId": "<p>The ID of the project.</p>",
@@ -2279,10 +2479,18 @@
         "DescribeAssetResponse$assetModelId": "<p>The ID of the asset model that was used to create the asset.</p>",
         "DescribeBulkImportJobRequest$jobId": "<p>The ID of the job.</p>",
         "DescribeBulkImportJobResponse$jobId": "<p>The ID of the job.</p>",
+        "DescribeComputationModelExecutionSummaryRequest$computationModelId": "<p>The ID of the computation model.</p>",
+        "DescribeComputationModelExecutionSummaryRequest$resolveToResourceId": "<p>The ID of the resolved resource.</p>",
+        "DescribeComputationModelExecutionSummaryResponse$computationModelId": "<p>The ID of the computation model.</p>",
+        "DescribeComputationModelRequest$computationModelId": "<p>The ID of the computation model.</p>",
+        "DescribeComputationModelResponse$computationModelId": "<p>The ID of the computation model.</p>",
         "DescribeDashboardRequest$dashboardId": "<p>The ID of the dashboard.</p>",
         "DescribeDashboardResponse$dashboardId": "<p>The ID of the dashboard.</p>",
         "DescribeDashboardResponse$projectId": "<p>The ID of the project that the dashboard is in.</p>",
+        "DescribeDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
         "DescribeDatasetResponse$datasetId": "<p>The ID of the dataset.</p>",
+        "DescribeExecutionRequest$executionId": "<p>The ID of the execution.</p>",
+        "DescribeExecutionResponse$executionId": "<p>The ID of the execution.</p>",
         "DescribeGatewayCapabilityConfigurationRequest$gatewayId": "<p>The ID of the gateway that defines the capability configuration.</p>",
         "DescribeGatewayCapabilityConfigurationResponse$gatewayId": "<p>The ID of the gateway that defines the capability configuration.</p>",
         "DescribeGatewayRequest$gatewayId": "<p>The ID of the gateway device.</p>",
@@ -2296,6 +2504,7 @@
         "DescribeTimeSeriesResponse$propertyId": "<p>The ID of the asset property, in UUID format.</p>",
         "ExecuteActionRequest$actionDefinitionId": "<p>The ID of the action definition.</p>",
         "ExecuteActionResponse$actionId": "<p>The ID of the action.</p>",
+        "ExecutionSummary$executionId": "<p>The ID of the execution.</p>",
         "GatewaySummary$gatewayId": "<p>The ID of the gateway device.</p>",
         "GetAssetPropertyAggregatesRequest$assetId": "<p>The ID of the asset, in UUID format.</p>",
         "GetAssetPropertyAggregatesRequest$propertyId": "<p>The ID of the asset property, in UUID format.</p>",
@@ -2310,8 +2519,13 @@
         "ImageLocation$id": "<p>The ID of the image.</p>",
         "JobSummary$id": "<p>The ID of the job.</p>",
         "ListAccessPoliciesRequest$resourceId": "<p>The ID of the resource. This parameter is required if you specify <code>resourceType</code>.</p>",
+        "ListActionsRequest$targetResourceId": "<p>The ID of the target resource.</p>",
+        "ListActionsRequest$resolveToResourceId": "<p>The ID of the resolved resource.</p>",
         "ListCompositionRelationshipsRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "ListComputationModelResolveToResourcesRequest$computationModelId": "<p>The ID of the computation model for which to list resolved resources.</p>",
         "ListDashboardsRequest$projectId": "<p>The ID of the project.</p>",
+        "ListExecutionsRequest$targetResourceId": "<p>The ID of the target resource.</p>",
+        "ListExecutionsRequest$resolveToResourceId": "<p>The ID of the resolved resource.</p>",
         "ListProjectAssetsRequest$projectId": "<p>The ID of the project.</p>",
         "ListProjectsRequest$portalId": "<p>The ID of the portal.</p>",
         "PortalResource$id": "<p>The ID of the portal.</p>",
@@ -2321,10 +2535,16 @@
         "Property$id": "<p>The ID of the asset property.</p>",
         "PutAssetPropertyValueEntry$assetId": "<p>The ID of the asset to update.</p>",
         "PutAssetPropertyValueEntry$propertyId": "<p>The ID of the asset property for this entry.</p>",
+        "ResolveTo$assetId": "<p>The ID of the asset that the resource resolves to.</p>",
+        "TargetResource$assetId": "<p>The ID of the asset, in UUID format.</p>",
+        "TargetResource$computationModelId": "<p>The ID of the computation model.</p>",
         "TimeSeriesSummary$assetId": "<p>The ID of the asset in which the asset property was created.</p>",
         "TimeSeriesSummary$propertyId": "<p>The ID of the asset property, in UUID format.</p>",
         "UpdateAccessPolicyRequest$accessPolicyId": "<p>The ID of the access policy.</p>",
+        "UpdateComputationModelRequest$computationModelId": "<p>The ID of the computation model.</p>",
         "UpdateDashboardRequest$dashboardId": "<p>The ID of the dashboard to update.</p>",
+        "UpdateDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
+        "UpdateDatasetResponse$datasetId": "<p>The ID of the dataset.</p>",
         "UpdateGatewayCapabilityConfigurationRequest$gatewayId": "<p>The ID of the gateway to be updated.</p>",
         "UpdateGatewayRequest$gatewayId": "<p>The ID of the gateway to update.</p>",
         "UpdatePortalRequest$portalId": "<p>The ID of the portal to update.</p>",
@@ -2405,6 +2625,12 @@
         "DescribePortalResponse$portalLogoImageLocation": "<p>The portal's logo image, which is available at a URL.</p>"
       }
     },
+    "InputProperties": {
+      "base": null,
+      "refs": {
+        "ComputationModelAnomalyDetectionConfiguration$inputProperties": "<p>Define the variable name associated with input properties, with the following format <code>${VariableName}</code>.</p>"
+      }
+    },
     "InternalFailureException": {
       "base": "<p>IoT SiteWise can't process your request right now. Try again later.</p>",
       "refs": {
@@ -2461,13 +2687,11 @@
     },
     "InvokeAssistantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokeAssistantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IotCoreThingName": {
       "base": null,
@@ -2515,40 +2739,34 @@
       }
     },
     "LimitExceededException": {
-      "base": "<p>You've reached the limit for a resource. For example, this can occur if you're trying to associate more than the allowed number of child assets or attempting to create more than the allowed number of properties for an asset model.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/quotas.html\">Quotas</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+      "base": "<p>You've reached the quota for a resource. For example, this can occur if you're trying to associate more than the allowed number of child assets or attempting to create more than the allowed number of properties for an asset model.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/quotas.html\">Quotas</a> in the <i>IoT SiteWise User Guide</i>.</p>",
       "refs": {
         "ResponseStream$limitExceededException": null
       }
     },
     "ListAccessPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetModelCompositeModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetModelCompositeModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetModelPropertiesFilter": {
       "base": null,
@@ -2558,23 +2776,19 @@
     },
     "ListAssetModelPropertiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetModelPropertiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetModelsTypeFilter": {
       "base": null,
@@ -2590,23 +2804,19 @@
     },
     "ListAssetPropertiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetPropertiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetRelationshipsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetRelationshipsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetsFilter": {
       "base": null,
@@ -2616,23 +2826,19 @@
     },
     "ListAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedAssetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBulkImportJobsFilter": {
       "base": null,
@@ -2642,103 +2848,115 @@
     },
     "ListBulkImportJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBulkImportJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCompositionRelationshipsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCompositionRelationshipsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListComputationModelDataBindingUsagesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComputationModelDataBindingUsagesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComputationModelResolveToResourcesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComputationModelResolveToResourcesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComputationModelsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListComputationModelsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListDashboardsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDashboardsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatasetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatasetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListExecutionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListExecutionsResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListGatewaysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGatewaysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPortalsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPortalsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProjectAssetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProjectAssetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProjectsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProjectsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTimeSeriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTimeSeriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTimeSeriesType": {
       "base": null,
@@ -2772,6 +2990,12 @@
         "VariableValue$hierarchyId": "<p>The ID of the hierarchy to query for the property ID. You can use the hierarchy's name instead of the hierarchy's ID. If the hierarchy has an external ID, you can specify <code>externalId:</code> followed by the external ID. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-ids\">Using external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>You use a hierarchy ID instead of a model ID because you can have several hierarchies using the same model and therefore the same <code>propertyId</code>. For example, you might have separately grouped assets that come from the same asset model. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-hierarchies.html\">Asset hierarchies</a> in the <i>IoT SiteWise User Guide</i>.</p>"
       }
     },
+    "MatchedDataBinding": {
+      "base": "<p>Represents a data binding that matches the specified filter criteria.</p>",
+      "refs": {
+        "ComputationModelDataBindingUsageSummary$matchedDataBinding": "<p>The data binding matched by the filter criteria. Contains details about specific data binding values used by the computation models.</p>"
+      }
+    },
     "MaxInterpolatedResults": {
       "base": null,
       "refs": {
@@ -2792,8 +3016,12 @@
         "ListAssociatedAssetsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
         "ListBulkImportJobsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p>",
         "ListCompositionRelationshipsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
+        "ListComputationModelDataBindingUsagesRequest$maxResults": "<p>The maximum number of results returned for each paginated request.</p>",
+        "ListComputationModelResolveToResourcesRequest$maxResults": "<p>The maximum number of results returned for each paginated request.</p>",
+        "ListComputationModelsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p>",
         "ListDashboardsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
         "ListDatasetsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p>",
+        "ListExecutionsRequest$maxResults": "<p>The maximum number of results returned for each paginated request.</p>",
         "ListGatewaysRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
         "ListPortalsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
         "ListProjectAssetsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
@@ -2918,10 +3146,13 @@
         "DescribeAssetResponse$assetName": "<p>The name of the asset.</p>",
         "DescribeBulkImportJobResponse$jobName": "<p>The unique name that helps identify the job request.</p>",
         "DescribeDashboardResponse$dashboardName": "<p>The name of the dashboard.</p>",
+        "DescribeExecutionResponse$actionType": "<p>The type of action exectued.</p>",
         "DescribePortalResponse$portalName": "<p>The name of the portal.</p>",
         "DescribeProjectResponse$projectName": "<p>The name of the project.</p>",
         "DescribeTimeSeriesResponse$dataTypeSpec": "<p>The data type of the structure for this time series. This parameter is required for time series that have the <code>STRUCT</code> data type.</p> <p>The options for this parameter depend on the type of the composite model in which you created the asset property that is associated with your time series. Use <code>AWS/ALARM_STATE</code> for alarm state in alarm composite models.</p>",
+        "ExecutionSummary$actionType": "<p>The type of action exectued.</p>",
         "JobSummary$name": "<p>The unique name that helps identify the job request.</p>",
+        "ListExecutionsRequest$actionType": "<p>The type of action exectued.</p>",
         "PortalSummary$name": "<p>The name of the portal.</p>",
         "PortalTools$member": null,
         "ProjectSummary$name": "<p>The name of the project.</p>",
@@ -2972,10 +3203,18 @@
         "ListBulkImportJobsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListCompositionRelationshipsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
         "ListCompositionRelationshipsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
+        "ListComputationModelDataBindingUsagesRequest$nextToken": "<p>The token used for the next set of paginated results.</p>",
+        "ListComputationModelDataBindingUsagesResponse$nextToken": "<p>The token for the next set of paginated results, or null if there are no additional results.</p>",
+        "ListComputationModelResolveToResourcesRequest$nextToken": "<p>The token used for the next set of paginated results.</p>",
+        "ListComputationModelResolveToResourcesResponse$nextToken": "<p>The token for the next set of paginated results, or null if there are no additional results.</p>",
+        "ListComputationModelsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
+        "ListComputationModelsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListDashboardsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
         "ListDashboardsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListDatasetsRequest$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListDatasetsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
+        "ListExecutionsRequest$nextToken": "<p>The token used for the next set of paginated results.</p>",
+        "ListExecutionsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListGatewaysRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
         "ListGatewaysResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListPortalsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
@@ -3107,8 +3346,7 @@
     },
     "PreconditionFailedException": {
       "base": "<p>The precondition in one or more of the request-header fields evaluated to <code>FALSE</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PrimitiveBoolean": {
       "base": null,
@@ -3255,33 +3493,27 @@
     },
     "PutDefaultEncryptionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutDefaultEncryptionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutLoggingOptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutLoggingOptionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutStorageConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutStorageConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Qualities": {
       "base": null,
@@ -3309,8 +3541,7 @@
     },
     "QueryTimeoutException": {
       "base": "<p>The query timed out.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RawValueType": {
       "base": null,
@@ -3331,6 +3562,26 @@
         "GetAssetPropertyAggregatesRequest$resolution": "<p>The time interval over which to aggregate data.</p>"
       }
     },
+    "ResolveTo": {
+      "base": "<p>The detailed resource this execution summary resolves to.</p>",
+      "refs": {
+        "ActionSummary$resolveTo": "<p>The detailed resource this action resolves to.</p>",
+        "ComputationModelResolveToResourceSummary$resolveTo": null,
+        "DescribeActionResponse$resolveTo": "<p>The detailed resource this action resolves to.</p>",
+        "DescribeComputationModelExecutionSummaryResponse$resolveTo": "<p>The detailed resource this execution summary resolves to.</p>",
+        "DescribeExecutionResponse$resolveTo": "<p>The detailed resource this execution resolves to.</p>",
+        "ExecuteActionRequest$resolveTo": "<p>The detailed resource this action resolves to.</p>",
+        "ExecutionSummary$resolveTo": "<p>The detailed resource this execution resolves to.</p>"
+      }
+    },
+    "ResolveToResourceType": {
+      "base": null,
+      "refs": {
+        "DescribeComputationModelExecutionSummaryRequest$resolveToResourceType": "<p>The type of the resolved resource.</p>",
+        "ListActionsRequest$resolveToResourceType": "<p>The type of the resolved resource.</p>",
+        "ListExecutionsRequest$resolveToResourceType": "<p>The type of the resolved resource.</p>"
+      }
+    },
     "Resource": {
       "base": "<p>Contains an IoT SiteWise Monitor resource ID for a portal or project.</p>",
       "refs": {
@@ -3342,8 +3593,7 @@
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The resource already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
@@ -3382,19 +3632,33 @@
     "RestrictedDescription": {
       "base": null,
       "refs": {
+        "ComputationModelSummary$description": "<p>The description of the computation model.</p>",
+        "CreateComputationModelRequest$computationModelDescription": "<p>The description of the computation model.</p>",
         "CreateDatasetRequest$datasetDescription": "<p>A description about the dataset, and its functionality.</p>",
         "DatasetSummary$description": "<p>A description about the dataset, and its functionality.</p>",
+        "DescribeComputationModelResponse$computationModelDescription": "<p>The description of the computation model.</p>",
         "DescribeDatasetResponse$datasetDescription": "<p>A description about the dataset, and its functionality.</p>",
+        "UpdateComputationModelRequest$computationModelDescription": "<p>The description of the computation model.</p>",
         "UpdateDatasetRequest$datasetDescription": "<p>A description about the dataset, and its functionality.</p>"
       }
     },
     "RestrictedName": {
       "base": null,
       "refs": {
+        "ComputationModelSummary$name": "<p>The name of the computation model.</p>",
+        "CreateComputationModelRequest$computationModelName": "<p>The name of the computation model.</p>",
         "CreateDatasetRequest$datasetName": "<p>The name of the dataset.</p>",
         "DatasetSummary$name": "<p>The name of the dataset.</p>",
+        "DescribeComputationModelResponse$computationModelName": "<p>The name of the computation model.</p>",
         "DescribeDatasetResponse$datasetName": "<p>The name of the dataset.</p>",
+        "UpdateComputationModelRequest$computationModelName": "<p>The name of the computation model.</p>",
         "UpdateDatasetRequest$datasetName": "<p>The name of the dataset.</p>"
+      }
+    },
+    "ResultProperty": {
+      "base": null,
+      "refs": {
+        "ComputationModelAnomalyDetectionConfiguration$resultProperty": "<p>Define the variable name associated with the result property, and the following format <code>${VariableName}</code>.</p>"
       }
     },
     "RetentionPeriod": {
@@ -3448,8 +3712,7 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>The requested service is unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SiemensIE": {
       "base": "<p>Contains details for a SiteWise Edge gateway that runs on a Siemens Industrial Edge Device.</p>",
@@ -3511,6 +3774,7 @@
         "CreateAccessPolicyRequest$tags": "<p>A list of key-value pairs that contain metadata for the access policy. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/tag-resources.html\">Tagging your IoT SiteWise resources</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "CreateAssetModelRequest$tags": "<p>A list of key-value pairs that contain metadata for the asset model. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/tag-resources.html\">Tagging your IoT SiteWise resources</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "CreateAssetRequest$tags": "<p>A list of key-value pairs that contain metadata for the asset. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/tag-resources.html\">Tagging your IoT SiteWise resources</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "CreateComputationModelRequest$tags": "<p>A list of key-value pairs that contain metadata for the asset. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/tag-resources.html\">Tagging your IoT SiteWise resources</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "CreateDashboardRequest$tags": "<p>A list of key-value pairs that contain metadata for the dashboard. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/tag-resources.html\">Tagging your IoT SiteWise resources</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "CreateDatasetRequest$tags": "<p>A list of key-value pairs that contain metadata for the access policy. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/tag-resources.html\">Tagging your IoT SiteWise resources</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "CreateGatewayRequest$tags": "<p>A list of key-value pairs that contain metadata for the gateway. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/tag-resources.html\">Tagging your IoT SiteWise resources</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -3522,13 +3786,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3541,13 +3803,16 @@
       "refs": {
         "ActionSummary$targetResource": "<p>The resource the action will be taken on.</p>",
         "DescribeActionResponse$targetResource": "<p>The resource the action will be taken on.</p>",
-        "ExecuteActionRequest$targetResource": "<p>The resource the action will be taken on.</p>"
+        "DescribeExecutionResponse$targetResource": null,
+        "ExecuteActionRequest$targetResource": "<p>The resource the action will be taken on.</p>",
+        "ExecutionSummary$targetResource": null
       }
     },
     "TargetResourceType": {
       "base": null,
       "refs": {
-        "ListActionsRequest$targetResourceType": "<p>The type of resource.</p>"
+        "ListActionsRequest$targetResourceType": "<p>The type of resource.</p>",
+        "ListExecutionsRequest$targetResourceType": "<p>The type of the target resource.</p>"
       }
     },
     "ThrottlingException": {
@@ -3619,6 +3884,8 @@
         "BatchGetAssetPropertyValueHistoryEntry$startDate": "<p>The exclusive start of the range from which to query historical data, expressed in seconds in Unix epoch time.</p>",
         "BatchGetAssetPropertyValueHistoryEntry$endDate": "<p>The inclusive end of the range from which to query historical data, expressed in seconds in Unix epoch time.</p>",
         "BatchGetAssetPropertyValueHistoryErrorInfo$errorTimestamp": "<p>The date the error occurred, in Unix epoch time.</p>",
+        "ComputationModelSummary$creationDate": "<p>The model creation date, in Unix epoch time.</p>",
+        "ComputationModelSummary$lastUpdateDate": "<p>The time the model was last updated, in Unix epoch time.</p>",
         "DashboardSummary$creationDate": "<p>The date the dashboard was created, in Unix epoch time.</p>",
         "DashboardSummary$lastUpdateDate": "<p>The date the dashboard was last updated, in Unix epoch time.</p>",
         "DatasetSummary$creationDate": "<p>The dataset creation date, in Unix epoch time.</p>",
@@ -3632,10 +3899,14 @@
         "DescribeAssetResponse$assetLastUpdateDate": "<p>The date the asset was last updated, in Unix epoch time.</p>",
         "DescribeBulkImportJobResponse$jobCreationDate": "<p>The date the job was created, in Unix epoch TIME.</p>",
         "DescribeBulkImportJobResponse$jobLastUpdateDate": "<p>The date the job was last updated, in Unix epoch time.</p>",
+        "DescribeComputationModelResponse$computationModelCreationDate": "<p>The model creation date, in Unix epoch time.</p>",
+        "DescribeComputationModelResponse$computationModelLastUpdateDate": "<p>The date the model was last updated, in Unix epoch time.</p>",
         "DescribeDashboardResponse$dashboardCreationDate": "<p>The date the dashboard was created, in Unix epoch time.</p>",
         "DescribeDashboardResponse$dashboardLastUpdateDate": "<p>The date the dashboard was last updated, in Unix epoch time.</p>",
         "DescribeDatasetResponse$datasetCreationDate": "<p>The dataset creation date, in Unix epoch time.</p>",
         "DescribeDatasetResponse$datasetLastUpdateDate": "<p>The date the dataset was last updated, in Unix epoch time.</p>",
+        "DescribeExecutionResponse$executionStartTime": "<p>The time the process started.</p>",
+        "DescribeExecutionResponse$executionEndTime": "<p>The time the process ended.</p>",
         "DescribeGatewayResponse$creationDate": "<p>The date the gateway was created, in Unix epoch time.</p>",
         "DescribeGatewayResponse$lastUpdateDate": "<p>The date the gateway was last updated, in Unix epoch time.</p>",
         "DescribePortalResponse$portalCreationDate": "<p>The date the portal was created, in Unix epoch time.</p>",
@@ -3645,6 +3916,8 @@
         "DescribeStorageConfigurationResponse$lastUpdateDate": "<p>The date the storage configuration was last updated, in Unix epoch time.</p>",
         "DescribeTimeSeriesResponse$timeSeriesCreationDate": "<p>The date that the time series was created, in Unix epoch time.</p>",
         "DescribeTimeSeriesResponse$timeSeriesLastUpdateDate": "<p>The date that the time series was last updated, in Unix epoch time.</p>",
+        "ExecutionSummary$executionStartTime": "<p>The time the process started.</p>",
+        "ExecutionSummary$executionEndTime": "<p>The time the process ended.</p>",
         "GatewaySummary$creationDate": "<p>The date the gateway was created, in Unix epoch time.</p>",
         "GatewaySummary$lastUpdateDate": "<p>The date the gateway was last updated, in Unix epoch time.</p>",
         "GetAssetPropertyAggregatesRequest$startDate": "<p>The exclusive start of the range from which to query historical data, expressed in seconds in Unix epoch time.</p>",
@@ -3666,9 +3939,8 @@
       }
     },
     "TooManyTagsException": {
-      "base": "<p>You've reached the limit for the number of tags allowed for a resource. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html#tag-conventions\">Tag naming limits and requirements</a> in the <i>Amazon Web Services General Reference</i>.</p>",
-      "refs": {
-      }
+      "base": "<p>You've reached the quota for the number of tags allowed for a resource. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html#tag-conventions\">Tag naming limits and requirements</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+      "refs": {}
     },
     "Trace": {
       "base": "<p>Contains tracing information of the SiteWise Assistant's reasoning and data access.</p>",
@@ -3708,8 +3980,7 @@
     },
     "UnauthorizedException": {
       "base": "<p>You are not authorized.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Unlimited": {
       "base": null,
@@ -3720,113 +3991,99 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssetModelCompositeModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssetModelCompositeModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssetModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssetModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssetPropertyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAssetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateComputationModelRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateComputationModelResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateDashboardRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDashboardResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDatasetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDatasetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewayCapabilityConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewayCapabilityConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePortalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePortalResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProjectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProjectResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -3845,8 +4102,7 @@
     },
     "ValidationException": {
       "base": "<p>The validation failed for this query.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VariableName": {
       "base": null,
@@ -3871,8 +4127,14 @@
       "base": null,
       "refs": {
         "AssetModelSummary$version": "<p>The version number of the asset model.</p>",
+        "ComputationModelSummary$version": "<p>The version of the computation model.</p>",
         "DescribeAssetModelResponse$assetModelVersion": "<p>The version of the asset model. See <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/model-active-version.html\"> Asset model versions</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-        "DescribeDatasetResponse$datasetVersion": "<p>The version of the dataset.</p>"
+        "DescribeComputationModelResponse$computationModelVersion": "<p>The version of the computation model.</p>",
+        "DescribeDatasetResponse$datasetVersion": "<p>The version of the dataset.</p>",
+        "DescribeExecutionResponse$targetResourceVersion": "<p>The version of the target resource.</p>",
+        "DescribeExecutionResponse$executionEntityVersion": "<p>Entity version used for the execution.</p>",
+        "ExecutionSummary$targetResourceVersion": "<p>The version of the target resource.</p>",
+        "ExecutionSummary$executionEntityVersion": "<p>The execution entity version associated with the summary.</p>"
       }
     },
     "WarmTierRetentionPeriod": {

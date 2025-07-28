@@ -10,7 +10,7 @@
     "AllocateTransitVirtualInterface": "<p>Provisions a transit virtual interface to be owned by the specified Amazon Web Services account. Use this type of interface to connect a transit gateway to your Direct Connect gateway.</p> <p>The owner of a connection provisions a transit virtual interface to be owned by the specified Amazon Web Services account.</p> <p>After you create a transit virtual interface, it must be confirmed by the owner using <a>ConfirmTransitVirtualInterface</a>. Until this step has been completed, the transit virtual interface is in the <code>requested</code> state and is not available to handle traffic.</p>",
     "AssociateConnectionWithLag": "<p>Associates an existing connection with a link aggregation group (LAG). The connection is interrupted and re-established as a member of the LAG (connectivity to Amazon Web Services is interrupted). The connection must be hosted on the same Direct Connect endpoint as the LAG, and its bandwidth must match the bandwidth for the LAG. You can re-associate a connection that's currently associated with a different LAG; however, if removing the connection would cause the original LAG to fall below its setting for minimum number of operational connections, the request fails.</p> <p>Any virtual interfaces that are directly associated with the connection are automatically re-associated with the LAG. If the connection was originally associated with a different LAG, the virtual interfaces remain associated with the original LAG.</p> <p>For interconnects, any hosted connections are automatically re-associated with the LAG. If the interconnect was originally associated with a different LAG, the hosted connections remain associated with the original LAG.</p>",
     "AssociateHostedConnection": "<p>Associates a hosted connection and its virtual interfaces with a link aggregation group (LAG) or interconnect. If the target interconnect or LAG has an existing hosted connection with a conflicting VLAN number or IP address, the operation fails. This action temporarily interrupts the hosted connection's connectivity to Amazon Web Services as it is being migrated.</p> <note> <p>Intended for use by Direct Connect Partners only.</p> </note>",
-    "AssociateMacSecKey": "<p>Associates a MAC Security (MACsec) Connection Key Name (CKN)/ Connectivity Association Key (CAK) pair with an Direct Connect dedicated connection.</p> <p>You must supply either the <code>secretARN,</code> or the CKN/CAK (<code>ckn</code> and <code>cak</code>) pair in the request.</p> <p>For information about MAC Security (MACsec) key considerations, see <a href=\"https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-mac-sec-getting-started.html#mac-sec-key-consideration\">MACsec pre-shared CKN/CAK key considerations </a> in the <i>Direct Connect User Guide</i>.</p>",
+    "AssociateMacSecKey": "<p>Associates a MAC Security (MACsec) Connection Key Name (CKN)/ Connectivity Association Key (CAK) pair with a Direct Connect connection.</p> <p>You must supply either the <code>secretARN,</code> or the CKN/CAK (<code>ckn</code> and <code>cak</code>) pair in the request.</p> <p>For information about MAC Security (MACsec) key considerations, see <a href=\"https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-mac-sec-getting-started.html#mac-sec-key-consideration\">MACsec pre-shared CKN/CAK key considerations </a> in the <i>Direct Connect User Guide</i>.</p>",
     "AssociateVirtualInterface": "<p>Associates a virtual interface with a specified link aggregation group (LAG) or connection. Connectivity to Amazon Web Services is temporarily interrupted as the virtual interface is being migrated. If the target connection or LAG has an associated virtual interface with a conflicting VLAN number or a conflicting IP address, the operation fails.</p> <p>Virtual interfaces associated with a hosted connection cannot be associated with a LAG; hosted connections must be migrated along with their virtual interfaces using <a>AssociateHostedConnection</a>.</p> <p>To reassociate a virtual interface to a new connection or LAG, the requester must own either the virtual interface itself or the connection to which the virtual interface is currently associated. Additionally, the requester must own the connection or LAG for the association.</p>",
     "ConfirmConnection": "<p>Confirms the creation of the specified hosted connection on an interconnect.</p> <p>Upon creation, the hosted connection is initially in the <code>Ordering</code> state, and remains in this state until the owner confirms creation of the hosted connection.</p>",
     "ConfirmCustomerAgreement": "<p> The confirmation of the terms of agreement when creating the connection/link aggregation group (LAG). </p>",
@@ -54,13 +54,13 @@
     "DescribeVirtualGateways": "<note> <p>Deprecated. Use <code>DescribeVpnGateways</code> instead. See <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeVpnGateways.html\">DescribeVPNGateways</a> in the <i>Amazon Elastic Compute Cloud API Reference</i>.</p> </note> <p>Lists the virtual private gateways owned by the Amazon Web Services account.</p> <p>You can create one or more Direct Connect private virtual interfaces linked to a virtual private gateway.</p>",
     "DescribeVirtualInterfaces": "<p>Displays all virtual interfaces for an Amazon Web Services account. Virtual interfaces deleted fewer than 15 minutes before you make the request are also returned. If you specify a connection ID, only the virtual interfaces associated with the connection are returned. If you specify a virtual interface ID, then only a single virtual interface is returned.</p> <p>A virtual interface (VLAN) transmits the traffic between the Direct Connect location and the customer network.</p>",
     "DisassociateConnectionFromLag": "<p>Disassociates a connection from a link aggregation group (LAG). The connection is interrupted and re-established as a standalone connection (the connection is not deleted; to delete the connection, use the <a>DeleteConnection</a> request). If the LAG has associated virtual interfaces or hosted connections, they remain associated with the LAG. A disassociated connection owned by an Direct Connect Partner is automatically converted to an interconnect.</p> <p>If disassociating the connection would cause the LAG to fall below its setting for minimum number of operational connections, the request fails, except when it's the last member of the LAG. If all connections are disassociated, the LAG continues to exist as an empty LAG with no physical connections. </p>",
-    "DisassociateMacSecKey": "<p>Removes the association between a MAC Security (MACsec) security key and an Direct Connect dedicated connection.</p>",
+    "DisassociateMacSecKey": "<p>Removes the association between a MAC Security (MACsec) security key and a Direct Connect connection.</p>",
     "ListVirtualInterfaceTestHistory": "<p>Lists the virtual interface failover test history.</p>",
     "StartBgpFailoverTest": "<p>Starts the virtual interface failover test that verifies your configuration meets your resiliency requirements by placing the BGP peering session in the DOWN state. You can then send traffic to verify that there are no outages.</p> <p>You can run the test on public, private, transit, and hosted virtual interfaces.</p> <p>You can use <a href=\"https://docs.aws.amazon.com/directconnect/latest/APIReference/API_ListVirtualInterfaceTestHistory.html\">ListVirtualInterfaceTestHistory</a> to view the virtual interface test history.</p> <p>If you need to stop the test before the test interval completes, use <a href=\"https://docs.aws.amazon.com/directconnect/latest/APIReference/API_StopBgpFailoverTest.html\">StopBgpFailoverTest</a>.</p>",
     "StopBgpFailoverTest": "<p>Stops the virtual interface failover test.</p>",
     "TagResource": "<p>Adds the specified tags to the specified Direct Connect resource. Each resource can have a maximum of 50 tags.</p> <p>Each tag consists of a key and an optional value. If a tag with the same key is already associated with the resource, this action updates its value.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified Direct Connect resource.</p>",
-    "UpdateConnection": "<p>Updates the Direct Connect dedicated connection configuration.</p> <p>You can update the following parameters for a connection:</p> <ul> <li> <p>The connection name</p> </li> <li> <p>The connection's MAC Security (MACsec) encryption mode.</p> </li> </ul>",
+    "UpdateConnection": "<p>Updates the Direct Connect connection configuration.</p> <p>You can update the following parameters for a connection:</p> <ul> <li> <p>The connection name</p> </li> <li> <p>The connection's MAC Security (MACsec) encryption mode.</p> </li> </ul>",
     "UpdateDirectConnectGateway": "<p>Updates the name of a current Direct Connect gateway.</p>",
     "UpdateDirectConnectGatewayAssociation": "<p>Updates the specified attributes of the Direct Connect gateway association.</p> <p>Add or remove prefixes from the association.</p>",
     "UpdateLag": "<p>Updates the attributes of the specified link aggregation group (LAG).</p> <p>You can update the following LAG attributes:</p> <ul> <li> <p>The name of the LAG.</p> </li> <li> <p>The value for the minimum number of connections that must be operational for the LAG itself to be operational. </p> </li> <li> <p>The LAG's MACsec encryption mode.</p> <p>Amazon Web Services assigns this value to each connection which is part of the LAG.</p> </li> <li> <p>The tags</p> </li> </ul> <note> <p>If you adjust the threshold value for the minimum number of operational connections, ensure that the new value does not cause the LAG to fall below the threshold and become non-operational.</p> </note>",
@@ -84,13 +84,11 @@
     },
     "AcceptDirectConnectGatewayAssociationProposalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AcceptDirectConnectGatewayAssociationProposalResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddressFamily": {
       "base": null,
@@ -121,33 +119,27 @@
     },
     "AllocateConnectionOnInterconnectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AllocateHostedConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AllocatePrivateVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AllocatePublicVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AllocateTransitVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AllocateTransitVirtualInterfaceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AmazonAddress": {
       "base": null,
@@ -165,28 +157,23 @@
     },
     "AssociateConnectionWithLagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateHostedConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMacSecKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMacSecKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatedCoreNetwork": {
       "base": "<p>The Amazon Web Services Cloud WAN core network that the Direct Connect gateway is associated to. This is only returned when a Direct Connect gateway is associated to a Cloud WAN core network.</p>",
@@ -330,65 +317,55 @@
     "Cak": {
       "base": null,
       "refs": {
-        "AssociateMacSecKeyRequest$cak": "<p>The MAC Security (MACsec) CAK to associate with the dedicated connection.</p> <p>You can create the CKN/CAK pair using an industry standard tool.</p> <p> The valid values are 64 hexadecimal characters (0-9, A-E).</p> <p>If you use this request parameter, you must use the <code>ckn</code> request parameter and not use the <code>secretARN</code> request parameter.</p>"
+        "AssociateMacSecKeyRequest$cak": "<p>The MAC Security (MACsec) CAK to associate with the connection.</p> <p>You can create the CKN/CAK pair using an industry standard tool.</p> <p> The valid values are 64 hexadecimal characters (0-9, A-E).</p> <p>If you use this request parameter, you must use the <code>ckn</code> request parameter and not use the <code>secretARN</code> request parameter.</p>"
       }
     },
     "Ckn": {
       "base": null,
       "refs": {
-        "AssociateMacSecKeyRequest$ckn": "<p>The MAC Security (MACsec) CKN to associate with the dedicated connection.</p> <p>You can create the CKN/CAK pair using an industry standard tool.</p> <p> The valid values are 64 hexadecimal characters (0-9, A-E).</p> <p>If you use this request parameter, you must use the <code>cak</code> request parameter and not use the <code>secretARN</code> request parameter.</p>",
+        "AssociateMacSecKeyRequest$ckn": "<p>The MAC Security (MACsec) CKN to associate with the connection.</p> <p>You can create the CKN/CAK pair using an industry standard tool.</p> <p> The valid values are 64 hexadecimal characters (0-9, A-E).</p> <p>If you use this request parameter, you must use the <code>cak</code> request parameter and not use the <code>secretARN</code> request parameter.</p>",
         "MacSecKey$ckn": "<p>The Connection Key Name (CKN) for the MAC Security secret key.</p>"
       }
     },
     "ConfirmConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmCustomerAgreementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmCustomerAgreementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmPrivateVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmPrivateVirtualInterfaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmPublicVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmPublicVirtualInterfaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmTransitVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmTransitVirtualInterfaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Connection": {
       "base": "<p>Information about an Direct Connect connection.</p>",
@@ -406,8 +383,8 @@
         "AssociateConnectionWithLagRequest$connectionId": "<p>The ID of the connection.</p>",
         "AssociateHostedConnectionRequest$connectionId": "<p>The ID of the hosted connection.</p>",
         "AssociateHostedConnectionRequest$parentConnectionId": "<p>The ID of the interconnect or the LAG.</p>",
-        "AssociateMacSecKeyRequest$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), or the ID of the LAG (dxlag-xxxx).</p> <p>You can use <a>DescribeConnections</a> or <a>DescribeLags</a> to retrieve connection ID.</p>",
-        "AssociateMacSecKeyResponse$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), or the ID of the LAG (dxlag-xxxx).</p>",
+        "AssociateMacSecKeyRequest$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), interconnect (dxcon-xxxx), or LAG (dxlag-xxxx).</p> <p>You can use <a>DescribeConnections</a>, <a>DescribeInterconnects</a>, or <a>DescribeLags</a> to retrieve connection ID.</p>",
+        "AssociateMacSecKeyResponse$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), interconnect (dxcon-xxxx), or LAG (dxlag-xxxx).</p>",
         "AssociateVirtualInterfaceRequest$connectionId": "<p>The ID of the LAG or connection.</p>",
         "ConfirmConnectionRequest$connectionId": "<p>The ID of the hosted connection.</p>",
         "Connection$connectionId": "<p>The ID of the connection.</p>",
@@ -422,9 +399,9 @@
         "DescribeLoaRequest$connectionId": "<p>The ID of a connection, LAG, or interconnect.</p>",
         "DescribeVirtualInterfacesRequest$connectionId": "<p>The ID of the connection.</p>",
         "DisassociateConnectionFromLagRequest$connectionId": "<p>The ID of the connection.</p>",
-        "DisassociateMacSecKeyRequest$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), or the ID of the LAG (dxlag-xxxx).</p> <p>You can use <a>DescribeConnections</a> or <a>DescribeLags</a> to retrieve connection ID.</p>",
-        "DisassociateMacSecKeyResponse$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), or the ID of the LAG (dxlag-xxxx).</p>",
-        "UpdateConnectionRequest$connectionId": "<p>The ID of the dedicated connection.</p> <p>You can use <a>DescribeConnections</a> to retrieve the connection ID.</p>",
+        "DisassociateMacSecKeyRequest$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), interconnect (dxcon-xxxx), or LAG (dxlag-xxxx).</p> <p>You can use <a>DescribeConnections</a>, <a>DescribeInterconnects</a>, or <a>DescribeLags</a> to retrieve connection ID.</p>",
+        "DisassociateMacSecKeyResponse$connectionId": "<p>The ID of the dedicated connection (dxcon-xxxx), interconnect (dxcon-xxxx), or LAG (dxlag-xxxx).</p>",
+        "UpdateConnectionRequest$connectionId": "<p>The ID of the connection.</p> <p>You can use <a>DescribeConnections</a> to retrieve the connection ID.</p>",
         "VirtualInterface$connectionId": "<p>The ID of the connection.</p>"
       }
     },
@@ -454,8 +431,7 @@
     },
     "Connections": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CoreNetworkAttachmentId": {
       "base": null,
@@ -480,78 +456,63 @@
     },
     "CreateBGPPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBGPPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectConnectGatewayAssociationProposalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectConnectGatewayAssociationProposalResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectConnectGatewayAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectConnectGatewayAssociationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectConnectGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectConnectGatewayResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInterconnectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrivateVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePublicVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTransitVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTransitVirtualInterfaceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomerAddress": {
       "base": null,
@@ -576,198 +537,159 @@
     },
     "DeleteBGPPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBGPPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectConnectGatewayAssociationProposalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectConnectGatewayAssociationProposalResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectConnectGatewayAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectConnectGatewayAssociationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectConnectGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectConnectGatewayResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInterconnectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInterconnectResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVirtualInterfaceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVirtualInterfaceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectionLoaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectionLoaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectionsOnInterconnectRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCustomerMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewayAssociationProposalsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewayAssociationProposalsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewayAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewayAssociationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewayAttachmentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewayAttachmentsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewaysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectConnectGatewaysResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeHostedConnectionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInterconnectLoaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInterconnectLoaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInterconnectsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLoaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRouterConfigurationRequest": {
       "base": "<p>Provides the details about a virtual interface's router.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRouterConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeVirtualInterfacesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectConnectClientException": {
       "base": "<p>One or more parameters are not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectConnectGateway": {
       "base": "<p>Information about a Direct Connect gateway, which enables you to connect virtual interfaces and virtual private gateway or transit gateways.</p>",
@@ -908,28 +830,23 @@
     },
     "DirectConnectServerException": {
       "base": "<p>A server-side error occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateConnectionFromLagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMacSecKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMacSecKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DuplicateTagKeysException": {
       "base": "<p>A tag key was specified more than once.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableSiteLink": {
       "base": null,
@@ -943,6 +860,7 @@
       "base": null,
       "refs": {
         "Connection$encryptionMode": "<p>The MAC Security (MACsec) connection encryption mode.</p> <p>The valid values are <code>no_encrypt</code>, <code>should_encrypt</code>, and <code>must_encrypt</code>.</p>",
+        "Interconnect$encryptionMode": "<p>The MAC Security (MACsec) encryption mode.</p> <p>The valid values are <code>no_encrypt</code>, <code>should_encrypt</code>, and <code>must_encrypt</code>.</p>",
         "Lag$encryptionMode": "<p>The LAG MAC Security (MACsec) encryption mode.</p> <p>The valid values are <code>no_encrypt</code>, <code>should_encrypt</code>, and <code>must_encrypt</code>.</p>",
         "UpdateConnectionRequest$encryptionMode": "<p>The connection MAC Security (MACsec) encryption mode.</p> <p>The valid values are <code>no_encrypt</code>, <code>should_encrypt</code>, and <code>must_encrypt</code>.</p>",
         "UpdateLagRequest$encryptionMode": "<p>The LAG MAC Security (MACsec) encryption mode.</p> <p>Amazon Web Services applies the value to all connections which are part of the LAG.</p>"
@@ -1034,8 +952,7 @@
     },
     "Interconnects": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "JumboFrameCapable": {
       "base": null,
@@ -1089,18 +1006,15 @@
     },
     "Lags": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVirtualInterfaceTestHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVirtualInterfaceTestHistoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Loa": {
       "base": "<p>Information about a Letter of Authorization - Connecting Facility Assignment (LOA-CFA) for a connection.</p>",
@@ -1164,8 +1078,7 @@
     },
     "Locations": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LongAsn": {
       "base": null,
@@ -1190,6 +1103,7 @@
       "base": null,
       "refs": {
         "Connection$macSecCapable": "<p>Indicates whether the connection supports MAC Security (MACsec).</p>",
+        "Interconnect$macSecCapable": "<p>Indicates whether the interconnect supports MAC Security (MACsec).</p>",
         "Lag$macSecCapable": "<p>Indicates whether the LAG supports MAC Security (MACsec).</p>"
       }
     },
@@ -1202,9 +1116,10 @@
     "MacSecKeyList": {
       "base": null,
       "refs": {
-        "AssociateMacSecKeyResponse$macSecKeys": "<p>The MAC Security (MACsec) security keys associated with the dedicated connection.</p>",
+        "AssociateMacSecKeyResponse$macSecKeys": "<p>The MAC Security (MACsec) security keys associated with the connection.</p>",
         "Connection$macSecKeys": "<p>The MAC Security (MACsec) security keys associated with the connection.</p>",
-        "DisassociateMacSecKeyResponse$macSecKeys": "<p>The MAC Security (MACsec) security keys no longer associated with the dedicated connection.</p>",
+        "DisassociateMacSecKeyResponse$macSecKeys": "<p>The MAC Security (MACsec) security keys no longer associated with the connection.</p>",
+        "Interconnect$macSecKeys": "<p>The MAC Security (MACsec) security keys.</p>",
         "Lag$macSecKeys": "<p>The MAC Security (MACsec) security keys associated with the LAG.</p>"
       }
     },
@@ -1304,6 +1219,12 @@
         "ListVirtualInterfaceTestHistoryResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
       }
     },
+    "PartnerInterconnectMacSecCapable": {
+      "base": null,
+      "refs": {
+        "Connection$partnerInterconnectMacSecCapable": "<p>Indicates whether the interconnect hosting this connection supports MAC Security (MACsec).</p>"
+      }
+    },
     "PartnerName": {
       "base": null,
       "refs": {
@@ -1319,7 +1240,8 @@
     "PortEncryptionStatus": {
       "base": null,
       "refs": {
-        "Connection$portEncryptionStatus": "<p>The MAC Security (MACsec) port link status of the connection.</p> <p>The valid values are <code>Encryption Up</code>, which means that there is an active Connection Key Name, or <code>Encryption Down</code>.</p>"
+        "Connection$portEncryptionStatus": "<p>The MAC Security (MACsec) port link status of the connection.</p> <p>The valid values are <code>Encryption Up</code>, which means that there is an active Connection Key Name, or <code>Encryption Down</code>.</p>",
+        "Interconnect$portEncryptionStatus": "<p>The MAC Security (MACsec) port link status.</p> <p>The valid values are <code>Encryption Up</code>, which means that there is an active Connection Key Name, or <code>Encryption Down</code>.</p>"
       }
     },
     "PortSpeed": {
@@ -1364,7 +1286,8 @@
     "RequestMACSec": {
       "base": null,
       "refs": {
-        "CreateConnectionRequest$requestMACSec": "<p>Indicates whether you want the connection to support MAC Security (MACsec).</p> <p>MAC Security (MACsec) is only available on dedicated connections. For information about MAC Security (MACsec) prerequisties, see <a href=\"https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-mac-sec-getting-started.html#mac-sec-prerequisites\">MACsec prerequisties</a> in the <i>Direct Connect User Guide</i>.</p>",
+        "CreateConnectionRequest$requestMACSec": "<p>Indicates whether you want the connection to support MAC Security (MACsec).</p> <p>MAC Security (MACsec) is unavailable on hosted connections. For information about MAC Security (MACsec) prerequisites, see <a href=\"https://docs.aws.amazon.com/directconnect/latest/UserGuide/MACSec.html\">MAC Security in Direct Connect</a> in the <i>Direct Connect User Guide</i>.</p>",
+        "CreateInterconnectRequest$requestMACSec": "<p>Indicates whether you want the interconnect to support MAC Security (MACsec).</p>",
         "CreateLagRequest$requestMACSec": "<p>Indicates whether the connection will support MAC Security (MACsec).</p> <note> <p>All connections in the LAG must be capable of supporting MAC Security (MACsec). For information about MAC Security (MACsec) prerequisties, see <a href=\"https://docs.aws.amazon.com/directconnect/latest/UserGuide/direct-connect-mac-sec-getting-started.html#mac-sec-prerequisites\">MACsec prerequisties</a> in the <i>Direct Connect User Guide</i>.</p> </note>"
       }
     },
@@ -1441,7 +1364,7 @@
     "SecretARN": {
       "base": null,
       "refs": {
-        "AssociateMacSecKeyRequest$secretARN": "<p>The Amazon Resource Name (ARN) of the MAC Security (MACsec) secret key to associate with the dedicated connection.</p> <p>You can use <a>DescribeConnections</a> or <a>DescribeLags</a> to retrieve the MAC Security (MACsec) secret key.</p> <p>If you use this request parameter, you do not use the <code>ckn</code> and <code>cak</code> request parameters.</p>",
+        "AssociateMacSecKeyRequest$secretARN": "<p>The Amazon Resource Name (ARN) of the MAC Security (MACsec) secret key to associate with the connection.</p> <p>You can use <a>DescribeConnections</a> or <a>DescribeLags</a> to retrieve the MAC Security (MACsec) secret key.</p> <p>If you use this request parameter, you do not use the <code>ckn</code> and <code>cak</code> request parameters.</p>",
         "DisassociateMacSecKeyRequest$secretARN": "<p>The Amazon Resource Name (ARN) of the MAC Security (MACsec) secret key.</p> <p>You can use <a>DescribeConnections</a> to retrieve the ARN of the MAC Security (MACsec) secret key.</p>",
         "MacSecKey$secretARN": "<p>The Amazon Resource Name (ARN) of the MAC Security (MACsec) secret key.</p>"
       }
@@ -1460,13 +1383,11 @@
     },
     "StartBgpFailoverTestRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBgpFailoverTestResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartOnDate": {
       "base": null,
@@ -1503,13 +1424,11 @@
     },
     "StopBgpFailoverTestRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopBgpFailoverTestResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Tag": {
       "base": "<p>Information about a tag.</p>",
@@ -1556,13 +1475,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1586,53 +1503,43 @@
     },
     "TooManyTagsException": {
       "base": "<p>You have reached the limit on the number of tags that can be assigned.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectConnectGatewayAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectConnectGatewayAssociationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectConnectGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectConnectGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLagRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVirtualInterfaceAttributesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "VLAN": {
       "base": null,
@@ -1694,8 +1601,7 @@
     },
     "VirtualGateways": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "VirtualInterface": {
       "base": "<p>Information about a virtual interface.</p>",
@@ -1788,8 +1694,7 @@
     },
     "VirtualInterfaces": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "XsltTemplateName": {
       "base": null,
