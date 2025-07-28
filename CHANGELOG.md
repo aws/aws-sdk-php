@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.8 - 2025-07-28
 
 * `Aws\Api` - Standardizes URI resolution for rest protocols.
 * `Aws\OSIS` - Add Pipeline Role Arn as an optional parameter to the create / update pipeline APIs as an alternative to passing in the pipeline configuration body
