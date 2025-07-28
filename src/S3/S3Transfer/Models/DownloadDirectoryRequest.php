@@ -6,7 +6,7 @@ use Aws\Arn\ArnParser;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use InvalidArgumentException;
 
-class DownloadDirectoryRequest extends TransferRequest
+final class DownloadDirectoryRequest extends TransferRequest
 {
     /** @var string */
     private string $sourceBucket;
@@ -89,7 +89,7 @@ class DownloadDirectoryRequest extends TransferRequest
      * @param array $listeners
      * @param TransferListener|null $progressTracker
      *
-     * @return DownloadDirectoryRequest
+     * @return self
      */
     public static function fromLegacyArgs(
         string            $sourceBucket,
@@ -98,7 +98,7 @@ class DownloadDirectoryRequest extends TransferRequest
         array             $config = [],
         array             $listeners = [],
         ?TransferListener $progressTracker = null,
-    ): DownloadDirectoryRequest
+    ): self
     {
         return new self(
             $sourceBucket,

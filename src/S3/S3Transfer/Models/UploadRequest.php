@@ -6,7 +6,7 @@ use Aws\S3\S3Transfer\Progress\TransferListener;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 
-class UploadRequest extends TransferRequest
+final class UploadRequest extends TransferRequest
 {
     public static array $configKeys = [
         'multipart_upload_threshold_bytes',
@@ -63,7 +63,7 @@ class UploadRequest extends TransferRequest
      * @param array $listeners
      * @param TransferListener|null $progressTracker
      *
-     * @return UploadRequest
+     * @return self
      */
     public static function fromLegacyArgs(
         string | StreamInterface $source,
@@ -71,9 +71,9 @@ class UploadRequest extends TransferRequest
         array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker = null
-    ): UploadRequest
+    ): self
     {
-        return new UploadRequest(
+        return new self(
             $source,
             $putObjectRequestArgs,
             $config,

@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-class DownloadDirectoryResponse
+final class DownloadDirectoryResponse
 {
     /** @var int */
     private int $objectsDownloaded;

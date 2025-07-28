@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-class S3TransferManagerConfig
+final class S3TransferManagerConfig
 {
     public const DEFAULT_TARGET_PART_SIZE_BYTES = 8388608; // 8MB
     public const DEFAULT_MULTIPART_UPLOAD_THRESHOLD_BYTES = 16777216; // 16MB

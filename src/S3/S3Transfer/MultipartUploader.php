@@ -57,6 +57,16 @@ class MultipartUploader extends AbstractMultipartUploader
     }
 
     /**
+     * Sync upload method.
+     *
+     * @return UploadResult
+     */
+    public function upload(): UploadResult
+    {
+        return $this->promise()->wait();
+    }
+
+    /**
      * @param string|StreamInterface $source
      *
      * @return StreamInterface

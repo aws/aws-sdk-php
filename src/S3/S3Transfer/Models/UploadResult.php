@@ -4,7 +4,7 @@ namespace Aws\S3\S3Transfer\Models;
 
 use Aws\Result;
 
-class UploadResult extends Result
+final class UploadResult extends Result
 {
     /**
      * @param array $data

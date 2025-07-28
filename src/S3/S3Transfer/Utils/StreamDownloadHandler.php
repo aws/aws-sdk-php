@@ -26,7 +26,7 @@ class StreamDownloadHandler extends DownloadHandler
      */
     public function transferInitiated(array $context): void
     {
-        if ($this->stream === null) {
+        if (is_null($this->stream)) {
             $this->stream = Utils::streamFor(
                 fopen('php://temp', 'w+')
             );
