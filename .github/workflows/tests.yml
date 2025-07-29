@@ -29,6 +29,7 @@ jobs:
             echo "$CHANGED_FILES"
             exit 1
           fi
+
   run:
     runs-on: ubuntu-latest
     strategy:
@@ -58,7 +59,7 @@ jobs:
       AWS_CSM_ENABLED: false
       AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
     steps:
-    # sets up the correct version of PHP with necessary config options
+      # sets up the correct version of PHP with necessary config options
       - name: Setup PHP with Xdebug
         uses: shivammathur/setup-php@v2
         with:
@@ -69,6 +70,8 @@ jobs:
       # checkout the codebase from github
       - name: Checkout codebase
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Added for code coverage
 
       # validate composer files
       - name: Validate composer.json and composer.lock
@@ -104,7 +107,4 @@ jobs:
       # generate code coverage
       - if: ${{ matrix.composer-options == '' }}
         name: Code Coverage
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - run: bash <(curl -s https://codecov.io/bash)
+        run: bash <(curl -s https://codecov.io/bash)
