@@ -22,6 +22,13 @@ use Throwable;
  */
 class MultipartUploader extends AbstractMultipartUploader
 {
+    static array $supportedAlgorithms = [
+        'ChecksumCRC32',
+        'ChecksumCRC32C',
+        'ChecksumCRC64NVME',
+        'ChecksumSHA1',
+        'ChecksumSHA256',
+    ];
 
     /** @var int */
     protected int $calculatedObjectSize;
@@ -36,7 +43,7 @@ class MultipartUploader extends AbstractMultipartUploader
         S3ClientInterface $s3Client,
         array $requestArgs,
         array $config,
-        string | StreamInterface $source,
+        string|StreamInterface $source,
         ?string $uploadId = null,
         array $parts = [],
         ?TransferProgressSnapshot $currentSnapshot = null,
@@ -271,14 +278,7 @@ class MultipartUploader extends AbstractMultipartUploader
      */
     private static function filterChecksum(array $requestArgs):? string
     {
-        static $algorithms = [
-            'ChecksumCRC32',
-            'ChecksumCRC32C',
-            'ChecksumCRC64NVME',
-            'ChecksumSHA1',
-            'ChecksumSHA256',
-        ];
-        foreach ($algorithms as $algorithm) {
+        foreach (self::$supportedAlgorithms as $algorithm) {
             if (isset($requestArgs[$algorithm])) {
                 return $algorithm;
             }

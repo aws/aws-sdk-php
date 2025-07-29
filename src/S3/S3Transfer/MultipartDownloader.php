@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\S3\S3Transfer;
 
 use Aws\CommandInterface;

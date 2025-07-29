@@ -174,10 +174,6 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     {
         fwrite($this->output, self::CLEAR_ASCII_CODE);
         $percentsSum = 0;
-        /**
-         * @var  $_
-         * @var SingleProgressTracker $progressTracker
-         */
         foreach ($this->singleProgressTrackers as $_ => $progressTracker) {
             $progressTracker->showProgress();
             $percentsSum += $progressTracker->getProgressBar()->getPercentCompleted();

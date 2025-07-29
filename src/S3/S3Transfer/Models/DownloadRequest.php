@@ -75,18 +75,18 @@ final class DownloadRequest extends TransferRequest
      * @param array $listeners
      * @param TransferListener|null $progressTracker
      *
-     * @return DownloadRequest
+     * @return self
      */
     public static function fromLegacyArgs(
-        string | array | null    $source,
+        string|array|null    $source,
         array             $downloadRequestArgs = [],
         array             $config = [],
         ?DownloadHandler $downloadHandler = null,
         array             $listeners = [],
         ?TransferListener $progressTracker = null,
-    ): DownloadRequest
+    ): self
     {
-        return new DownloadRequest(
+        return new self(
             $source,
             $downloadRequestArgs,
             $config,
@@ -100,14 +100,14 @@ final class DownloadRequest extends TransferRequest
      * @param DownloadRequest $downloadRequest
      * @param FileDownloadHandler $downloadHandler
      *
-     * @return DownloadRequest
+     * @return self
      */
     public static function fromDownloadRequestAndDownloadHandler(
         DownloadRequest $downloadRequest,
         FileDownloadHandler $downloadHandler
-    ): DownloadRequest
+    ): self
     {
-        return new DownloadRequest(
+        return new self(
             $downloadRequest->getSource(),
             $downloadRequest->getObjectRequestArgs(),
             $downloadRequest->getConfig(),

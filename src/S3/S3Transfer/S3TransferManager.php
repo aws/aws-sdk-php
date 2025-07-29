@@ -6,12 +6,12 @@ use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
-use Aws\S3\S3Transfer\Models\DownloadDirectoryResponse;
+use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
 use Aws\S3\S3Transfer\Models\DownloadFileRequest;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
-use Aws\S3\S3Transfer\Models\UploadDirectoryResponse;
+use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
 use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\Progress\MultiProgressTracker;
@@ -280,7 +280,7 @@ class S3TransferManager
                             "bucket_to" => $targetBucket,
                         ],
                         $reason,
-                        new UploadDirectoryResponse(
+                        new UploadDirectoryResult(
                             $objectsUploaded,
                             $objectsFailed
                         )
@@ -295,7 +295,7 @@ class S3TransferManager
 
         return Each::ofLimitAll($promises, $this->config->getConcurrency())
             ->then(function ($_) use (&$objectsUploaded, &$objectsFailed) {
-                return new UploadDirectoryResponse($objectsUploaded, $objectsFailed);
+                return new UploadDirectoryResult($objectsUploaded, $objectsFailed);
             });
     }
 
@@ -511,7 +511,7 @@ class S3TransferManager
                             "bucket" => $sourceBucket,
                         ],
                         $reason,
-                        new DownloadDirectoryResponse(
+                        new DownloadDirectoryResult(
                             $objectsDownloaded,
                             $objectsFailed
                         )
@@ -526,7 +526,7 @@ class S3TransferManager
 
         return Each::ofLimitAll($promises, $this->config->getConcurrency())
             ->then(function ($_) use (&$objectsFailed, &$objectsDownloaded) {
-                return new DownloadDirectoryResponse(
+                return new DownloadDirectoryResult(
                     $objectsDownloaded,
                     $objectsFailed
                 );

@@ -11,10 +11,10 @@ use Aws\S3\S3Client;
 use Aws\S3\S3Transfer\AbstractMultipartUploader;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
-use Aws\S3\S3Transfer\Models\DownloadDirectoryResponse;
+use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
-use Aws\S3\S3Transfer\Models\UploadDirectoryResponse;
+use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
 use Aws\S3\S3Transfer\Models\UploadRequest;
 use Aws\S3\S3Transfer\MultipartDownloader;
 use Aws\S3\S3Transfer\MultipartUploader;
@@ -1218,7 +1218,7 @@ class S3TransferManagerTest extends TestCase
                             array $requestArgs,
                             array $uploadDirectoryRequestArgs,
                             \Throwable $reason,
-                            UploadDirectoryResponse $uploadDirectoryResponse
+                            UploadDirectoryResult $uploadDirectoryResponse
                         ) use ($directory, &$called) {
                             $called = true;
                             $this->assertEquals(
@@ -2247,7 +2247,7 @@ class S3TransferManagerTest extends TestCase
                         array $requestArgs,
                         array $uploadDirectoryRequestArgs,
                         \Throwable $reason,
-                        DownloadDirectoryResponse $downloadDirectoryResponse
+                        DownloadDirectoryResult $downloadDirectoryResponse
                     ) use ($destinationDirectory, &$called) {
                         $called = true;
                         $this->assertEquals(

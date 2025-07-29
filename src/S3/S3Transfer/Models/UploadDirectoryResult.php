@@ -2,10 +2,10 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-final class DownloadDirectoryResponse
+final class UploadDirectoryResult
 {
     /** @var int */
-    private int $objectsDownloaded;
+    private int $objectsUploaded;
 
     /** @var int */
     private int $objectsFailed;
@@ -16,16 +16,16 @@ final class DownloadDirectoryResponse
      */
     public function __construct(int $objectsUploaded, int $objectsFailed)
     {
-        $this->objectsDownloaded = $objectsUploaded;
+        $this->objectsUploaded = $objectsUploaded;
         $this->objectsFailed = $objectsFailed;
     }
 
     /**
      * @return int
      */
-    public function getObjectsDownloaded(): int
+    public function getObjectsUploaded(): int
     {
-        return $this->objectsDownloaded;
+        return $this->objectsUploaded;
     }
 
     /**
@@ -34,14 +34,5 @@ final class DownloadDirectoryResponse
     public function getObjectsFailed(): int
     {
         return $this->objectsFailed;
-    }
-
-    public function __toString(): string
-    {
-        return sprintf(
-            "DownloadDirectoryResponse: %d objects downloaded, %d objects failed",
-            $this->objectsDownloaded,
-            $this->objectsFailed
-        );
     }
 }

@@ -11,7 +11,6 @@ use Aws\ResultInterface;
  */
 class PartGetMultipartDownloader extends MultipartDownloader
 {
-
     /**
      * @inheritDoc
      *

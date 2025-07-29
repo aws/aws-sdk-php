@@ -42,7 +42,7 @@ final class DownloadDirectoryRequest extends TransferRequest
      *    - $downloadDirectoryRequestArgs: (array) The arguments for the download
      *      directory request.
      *    - $reason: (Throwable) The exception that originated the request failure.
-     *    - $downloadDirectoryResponse: (DownloadDirectoryResponse) The download response
+     *    - $downloadDirectoryResponse: (DownloadDirectoryResult) The download response
      *      to that point in the upload process.
      *  - track_progress: (bool, optional) Overrides the config option set
      *    in the transfer manager instantiation to decide whether transfer

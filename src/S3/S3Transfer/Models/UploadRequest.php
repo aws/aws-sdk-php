@@ -66,7 +66,7 @@ final class UploadRequest extends TransferRequest
      * @return self
      */
     public static function fromLegacyArgs(
-        string | StreamInterface $source,
+        string|StreamInterface $source,
         array $putObjectRequestArgs = [],
         array $config = [],
         array $listeners = [],
