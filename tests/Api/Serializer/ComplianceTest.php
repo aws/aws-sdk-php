@@ -29,6 +29,14 @@ class ComplianceTest extends TestCase
         'NullAndEmptyHeaders' => true,
         'RestJsonHttpChecksumRequired' => true,
         'MediaTypeHeaderInputBase64' => true,
+        // For payload members, the behavior prescribed by Smithy
+        // contradicts expected behavior in actual AWS Services.
+        // See S3 PutBucketLifecycleConfiguration
+        'XmlAttributesOnPayload' => true,
+        'HttpPayloadWithXmlNamespaceAndPrefix' => true,
+        'HttpPayloadWithXmlNamespace' => true,
+        'RestXmlHttpPayloadWithUnion' => true,
+        'HttpPayloadWithMemberXmlName' => true
     ];
 
     /** @doesNotPerformAssertions */

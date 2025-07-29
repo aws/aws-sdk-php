@@ -168,15 +168,6 @@ abstract class RestSerializer
             return;
         }
 
-        // Payload members have special rules for locationName handling
-        // they should use their member-level locationName
-        // if it differs from the member name.
-        $type = $m->getType();
-        if ($type === 'structure') {
-            // Mark this as a payload member with its member name
-            $m['__payloadMemberName'] = $name;
-        }
-
         $this->payload($m, $args[$name], $opts);
     }
 

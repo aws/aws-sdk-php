@@ -757,6 +757,42 @@ class RestXmlSerializerTest extends TestCase
         ];
     }
 
+    public function testPayloadMemberRootElement()
+    {
+        $client = $this->getTestClient('s3', ['region' => 'us-east-1']);
+        $command = $client->getCommand('PutBucketLifecycleConfiguration', [
+            'Bucket' => 'test-bucket',
+            'LifecycleConfiguration' => [
+                'Rules' => [
+                    [
+                        'ID' => 'rule1',
+                        'Status' => 'Enabled',
+                        'Prefix' => 'documents/',
+                        'Transitions' => [
+                            [
+                                'Days' => 30,
+                                'StorageClass' => 'STANDARD_IA'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $serializer = new RestXmlSerializer($client->getApi(), $client->getEndpoint());
+        $request = $serializer($command);
+
+        $body = (string) $request->getBody();
+
+        $this->assertStringContainsString(
+            '<LifecycleConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">',
+            $body
+        );
+        $this->assertStringNotContainsString('<BucketLifecycleConfiguration', $body);
+        $this->assertStringContainsString('<Rule>', $body);
+        $this->assertStringContainsString('<ID>rule1</ID>', $body);
+    }
+
     private function getS3TestService(): Service
     {
         return new Service(
