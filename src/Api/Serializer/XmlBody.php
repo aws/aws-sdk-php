@@ -39,9 +39,7 @@ class XmlBody
         $xml->openMemory();
         $xml->startDocument('1.0', 'UTF-8');
 
-        // Check if this is a payload member
-        $payloadMemberName = $shape['__payloadMemberName'] ?? null;
-        $rootElementName = $this->determineRootElementName($shape, $payloadMemberName);
+        $rootElementName = $this->determineRootElementName($shape);
 
         $this->format($shape, $rootElementName, $args, $xml);
         $xml->endDocument();
@@ -237,35 +235,22 @@ class XmlBody
         }
     }
 
-    private function determineRootElementName(
-        Shape $shape,
-        ?string $payloadMemberName
-    ): string
+    private function determineRootElementName(Shape $shape): string
     {
         $shapeName = $shape->getName();
 
-        // For payload members, check if locationName differs from member name
-        if ($payloadMemberName && $shape['locationName']) {
-            // Only use member's locationName if it's different from the member name
-            if ($shape['locationName'] !== $payloadMemberName) {
-                return $shape['locationName'];
-            }
-        }
-
-        // Look up the shape definition
-        if ($shapeName && $shape->getShapeMap()) {
-            $shapeMap = $shape->getShapeMap();
+        // Look up the shape definition first
+        if ($shapeName && $shapeMap = $shape->getShapeMap()) {
             if (isset($shapeMap[$shapeName]['locationName'])) {
                 return $shapeMap[$shapeName]['locationName'];
             }
         }
 
-        // If no locationName found in definition, use shape name for payload members
-        // This handles the case where the shape has no explicit locationName
-        if ($payloadMemberName && $shapeName) {
-            return $shapeName;
+        // Fall back to shape's current locationName
+        if ($shape['locationName']) {
+            return $shape['locationName'];
         }
 
-        return $shape['locationName'] ?? $shapeName;
+        return $shapeName;
     }
 }
