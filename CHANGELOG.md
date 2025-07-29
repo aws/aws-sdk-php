@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.9 - 2025-07-29
 
 * `Aws\Api` - Fixes bug caused by #3144 which causes requests with payload members to resolve the wrong root xml element
 * `Aws\CleanRooms` - This feature provides the ability to update the table reference and allowed columns on an existing configured table.
