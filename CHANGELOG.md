@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixes bug caused by #3144 which causes requests with payload members to resolve the wrong root xml element
+* `Aws\CleanRooms` - This feature provides the ability to update the table reference and allowed columns on an existing configured table.
+* `Aws\Deadline` - Adds support for tag management on monitors.
+* `Aws\Batch` - AWS Batch for SageMaker Training jobs feature support. Includes new APIs for service job submission (e.g., SubmitServiceJob) and managing service environments (e.g., CreateServiceEnvironment) that enable queueing SageMaker Training jobs.
+* `Aws\LocationService` - This release 1) adds support for multi-polygon geofences with disconnected territories, and 2) enables polygon exclusion zones within geofences for more accurate representation of real-world boundaries.
+* `Aws\OpenSearchServerless` - This is to support Granular access control support for SAML with IAMFedraton in AOSS
+
 ## 3.351.8 - 2025-07-28
 
 * `Aws\Api` - Standardizes URI resolution for rest protocols.

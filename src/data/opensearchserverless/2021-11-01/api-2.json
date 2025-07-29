@@ -906,6 +906,7 @@
         "description":{"shape":"ConfigDescription"},
         "samlOptions":{"shape":"SamlConfigOptions"},
         "iamIdentityCenterOptions":{"shape":"CreateIamIdentityCenterConfigOptions"},
+        "iamFederationOptions":{"shape":"IamFederationConfigOptions"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1205,6 +1206,13 @@
       "type":"structure",
       "members":{
         "securityPolicyDetail":{"shape":"SecurityPolicyDetail"}
+      }
+    },
+    "IamFederationConfigOptions":{
+      "type":"structure",
+      "members":{
+        "groupAttribute":{"shape":"iamFederationGroupAttribute"},
+        "userAttribute":{"shape":"iamFederationUserAttribute"}
       }
     },
     "IamIdentityCenterApplicationArn":{
@@ -1593,6 +1601,7 @@
         "description":{"shape":"ConfigDescription"},
         "samlOptions":{"shape":"SamlConfigOptions"},
         "iamIdentityCenterOptions":{"shape":"IamIdentityCenterConfigOptions"},
+        "iamFederationOptions":{"shape":"IamFederationConfigOptions"},
         "createdDate":{"shape":"Long"},
         "lastModifiedDate":{"shape":"Long"}
       }
@@ -1627,7 +1636,8 @@
       "type":"string",
       "enum":[
         "saml",
-        "iamidentitycenter"
+        "iamidentitycenter",
+        "iamfederation"
       ]
     },
     "SecurityGroupId":{
@@ -1900,6 +1910,7 @@
         "description":{"shape":"ConfigDescription"},
         "samlOptions":{"shape":"SamlConfigOptions"},
         "iamIdentityCenterOptionsUpdates":{"shape":"UpdateIamIdentityCenterConfigOptions"},
+        "iamFederationOptions":{"shape":"IamFederationConfigOptions"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2056,6 +2067,18 @@
       "max":255,
       "min":1,
       "pattern":"vpc-[0-9a-z]*"
+    },
+    "iamFederationGroupAttribute":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z][A-Za-z0-9_.:/=+\\-@]*"
+    },
+    "iamFederationUserAttribute":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z][A-Za-z0-9_.:/=+\\-@]*"
     },
     "openSearchServerlessEntityId":{
       "type":"string",

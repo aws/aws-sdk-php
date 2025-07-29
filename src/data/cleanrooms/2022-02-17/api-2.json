@@ -1310,6 +1310,7 @@
       "output":{"shape":"UpdateConfiguredTableOutput"},
       "errors":[
         {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
@@ -3364,8 +3365,7 @@
     },
     "DeleteAnalysisTemplateOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCollaborationInput":{
       "type":"structure",
@@ -3380,8 +3380,7 @@
     },
     "DeleteCollaborationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConfiguredAudienceModelAssociationInput":{
       "type":"structure",
@@ -3404,8 +3403,7 @@
     },
     "DeleteConfiguredAudienceModelAssociationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConfiguredTableAnalysisRuleInput":{
       "type":"structure",
@@ -3428,8 +3426,7 @@
     },
     "DeleteConfiguredTableAnalysisRuleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConfiguredTableAssociationAnalysisRuleInput":{
       "type":"structure",
@@ -3458,8 +3455,7 @@
     },
     "DeleteConfiguredTableAssociationAnalysisRuleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConfiguredTableAssociationInput":{
       "type":"structure",
@@ -3482,8 +3478,7 @@
     },
     "DeleteConfiguredTableAssociationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConfiguredTableInput":{
       "type":"structure",
@@ -3498,8 +3493,7 @@
     },
     "DeleteConfiguredTableOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteIdMappingTableInput":{
       "type":"structure",
@@ -3522,8 +3516,7 @@
     },
     "DeleteIdMappingTableOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteIdNamespaceAssociationInput":{
       "type":"structure",
@@ -3546,8 +3539,7 @@
     },
     "DeleteIdNamespaceAssociationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMemberInput":{
       "type":"structure",
@@ -3570,8 +3562,7 @@
     },
     "DeleteMemberOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMembershipInput":{
       "type":"structure",
@@ -3586,8 +3577,7 @@
     },
     "DeleteMembershipOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePrivacyBudgetTemplateInput":{
       "type":"structure",
@@ -3610,8 +3600,7 @@
     },
     "DeletePrivacyBudgetTemplateOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DifferentialPrivacyAggregationExpression":{
       "type":"string",
@@ -3797,8 +3786,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "Double":{
@@ -6753,8 +6741,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -6808,8 +6795,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAnalysisTemplateInput":{
       "type":"structure",
@@ -6988,6 +6974,8 @@
         },
         "name":{"shape":"DisplayName"},
         "description":{"shape":"TableDescription"},
+        "tableReference":{"shape":"TableReference"},
+        "allowedColumns":{"shape":"AllowedColumnList"},
         "analysisMethod":{"shape":"AnalysisMethod"},
         "selectedAnalysisMethods":{"shape":"SelectedAnalysisMethods"}
       }

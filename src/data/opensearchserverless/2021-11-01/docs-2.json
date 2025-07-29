@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Use the Amazon OpenSearch Serverless API to create, configure, and manage OpenSearch Serverless collections and security policies.</p> <p>OpenSearch Serverless is an on-demand, pre-provisioned serverless configuration for Amazon OpenSearch Service. OpenSearch Serverless removes the operational complexities of provisioning, configuring, and tuning your OpenSearch clusters. It enables you to easily search and analyze petabytes of data without having to worry about the underlying infrastructure and data management.</p> <p> To learn more about OpenSearch Serverless, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html\">What is Amazon OpenSearch Serverless?</a> </p>",
+  "service": "<p>Use the Amazon OpenSearch Serverless API to create, configure, and manage OpenSearch Serverless collections and security policies.</p> <p>OpenSearch Serverless is an on-demand, pre-provisioned serverless configuration for Amazon OpenSearch Service. OpenSearch Serverless removes the operational complexities of provisioning, configuring, and tuning your OpenSearch clusters. It enables you to easily search and analyze petabytes of data without having to worry about the underlying infrastructure and data management.</p> <p>To learn more about OpenSearch Serverless, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html\">What is Amazon OpenSearch Serverless?</a> </p>",
   "operations": {
     "BatchGetCollection": "<p>Returns attributes for one or more collections, including the collection endpoint and the OpenSearch Dashboards endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "BatchGetEffectiveLifecyclePolicy": "<p>Returns a list of successful and failed retrievals for the OpenSearch Serverless indexes. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
@@ -9,7 +9,7 @@
     "CreateAccessPolicy": "<p>Creates a data access policy for OpenSearch Serverless. Access policies limit access to collections and the resources within them, and allow a user to access that data irrespective of the access mechanism or network source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "CreateCollection": "<p>Creates a new OpenSearch Serverless collection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "CreateLifecyclePolicy": "<p>Creates a lifecyle policy to be applied to OpenSearch Serverless indexes. Lifecycle policies define the number of days or hours to retain the data on an OpenSearch Serverless index. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-create\">Creating data lifecycle policies</a>.</p>",
-    "CreateSecurityConfig": "<p>Specifies a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>. </p>",
+    "CreateSecurityConfig": "<p>Specifies a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "CreateSecurityPolicy": "<p>Creates a security policy to be used by one or more OpenSearch Serverless collections. Security policies provide access to a collection and its OpenSearch Dashboards endpoint from public networks or specific VPC endpoints. They also allow you to secure a collection with a KMS encryption key. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html\">Network access for Amazon OpenSearch Serverless</a> and <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html\">Encryption at rest for Amazon OpenSearch Serverless</a>.</p>",
     "CreateVpcEndpoint": "<p>Creates an OpenSearch Serverless-managed interface VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
     "DeleteAccessPolicy": "<p>Deletes an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
@@ -83,7 +83,7 @@
       "base": "<p>OpenSearch Serverless-related information for the current account.</p>",
       "refs": {
         "GetAccountSettingsResponse$accountSettingsDetail": "<p>OpenSearch Serverless-related details for the current account.</p>",
-        "UpdateAccountSettingsResponse$accountSettingsDetail": "<p>OpenSearch Serverless-related settings for the current Amazon Web Services account. </p>"
+        "UpdateAccountSettingsResponse$accountSettingsDetail": "<p>OpenSearch Serverless-related settings for the current Amazon Web Services account.</p>"
       }
     },
     "Arn": {
@@ -197,7 +197,7 @@
     "CollectionFilters": {
       "base": "<p>A list of filter keys that you can use for LIST, UPDATE, and DELETE requests to OpenSearch Serverless collections.</p>",
       "refs": {
-        "ListCollectionsRequest$collectionFilters": "<p> A list of filter names and values that you can use for requests.</p>"
+        "ListCollectionsRequest$collectionFilters": "<p>A list of filter names and values that you can use for requests.</p>"
       }
     },
     "CollectionId": {
@@ -530,6 +530,14 @@
       "refs": {
       }
     },
+    "IamFederationConfigOptions": {
+      "base": "<p>Describes IAM federation options for an OpenSearch Serverless security configuration in the form of a key-value map. These options define how OpenSearch Serverless integrates with external identity providers using federation.</p>",
+      "refs": {
+        "CreateSecurityConfigRequest$iamFederationOptions": "<p>Describes IAM federation options in the form of a key-value map. This field is required if you specify <code>iamFederation</code> for the <code>type</code> parameter.</p>",
+        "SecurityConfigDetail$iamFederationOptions": "<p>Describes IAM federation options in the form of a key-value map. Contains configuration details about how OpenSearch Serverless integrates with external identity providers through federation.</p>",
+        "UpdateSecurityConfigRequest$iamFederationOptions": "<p>Describes IAM federation options in the form of a key-value map for updating an existing security configuration. Use this field to modify IAM federation settings for the security configuration.</p>"
+      }
+    },
     "IamIdentityCenterApplicationArn": {
       "base": null,
       "refs": {
@@ -657,7 +665,7 @@
         "LifecyclePolicyResourceIdentifier$type": "<p>The type of lifecycle policy.</p>",
         "LifecyclePolicySummary$type": "<p>The type of lifecycle policy.</p>",
         "ListLifecyclePoliciesRequest$type": "<p>The type of lifecycle policy.</p>",
-        "UpdateLifecyclePolicyRequest$type": "<p> The type of lifecycle policy.</p>"
+        "UpdateLifecyclePolicyRequest$type": "<p>The type of lifecycle policy.</p>"
       }
     },
     "LifecycleResource": {
@@ -756,7 +764,7 @@
     "ListSecurityPoliciesRequestResourceList": {
       "base": null,
       "refs": {
-        "ListSecurityPoliciesRequest$resource": "<p>Resource filters (can be collection or indexes) that policies can apply to. </p>"
+        "ListSecurityPoliciesRequest$resource": "<p>Resource filters (can be collection or indexes) that policies can apply to.</p>"
       }
     },
     "ListSecurityPoliciesResponse": {
@@ -826,7 +834,7 @@
       }
     },
     "OcuLimitExceededException": {
-      "base": "<p>Thrown when the collection you're attempting to create results in a number of search or indexing OCUs that exceeds the account limit. </p>",
+      "base": "<p>Thrown when the collection you're attempting to create results in a number of search or indexing OCUs that exceeds the account limit.</p>",
       "refs": {
       }
     },
@@ -929,7 +937,7 @@
     "SamlConfigOptions": {
       "base": "<p>Describes SAML options for an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
       "refs": {
-        "CreateSecurityConfigRequest$samlOptions": "<p>Describes SAML options in in the form of a key-value map. This field is required if you specify <code>saml</code> for the <code>type</code> parameter.</p>",
+        "CreateSecurityConfigRequest$samlOptions": "<p>Describes SAML options in in the form of a key-value map. This field is required if you specify <code>SAML</code> for the <code>type</code> parameter.</p>",
         "SecurityConfigDetail$samlOptions": "<p>SAML options for the security configuration in the form of a key-value map.</p>",
         "UpdateSecurityConfigRequest$samlOptions": "<p>SAML options in in the form of a key-value map.</p>"
       }
@@ -947,11 +955,11 @@
       }
     },
     "SecurityConfigDetail": {
-      "base": "<p>Details about a security configuration for OpenSearch Serverless. </p>",
+      "base": "<p>Details about a security configuration for OpenSearch Serverless.</p>",
       "refs": {
-        "CreateSecurityConfigResponse$securityConfigDetail": "<p>Details about the created security configuration. </p>",
+        "CreateSecurityConfigResponse$securityConfigDetail": "<p>Details about the created security configuration.</p>",
         "GetSecurityConfigResponse$securityConfigDetail": "<p>Details of the requested security configuration.</p>",
-        "UpdateSecurityConfigResponse$securityConfigDetail": "<p>Details about the updated security configuration. </p>"
+        "UpdateSecurityConfigResponse$securityConfigDetail": "<p>Details about the updated security configuration.</p>"
       }
     },
     "SecurityConfigId": {
@@ -1083,17 +1091,17 @@
         "InternalServerException$message": null,
         "LifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Lifecycle Policy is not found</code>.</p>",
         "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
-        "ListAccessPoliciesRequest$nextToken": "<p>If your initial <code>ListAccessPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListAccessPolicies</code> operations, which returns results in the next page. </p>",
+        "ListAccessPoliciesRequest$nextToken": "<p>If your initial <code>ListAccessPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListAccessPolicies</code> operations, which returns results in the next page.</p>",
         "ListAccessPoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListCollectionsRequest$nextToken": "<p>If your initial <code>ListCollections</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListCollections</code> operations, which returns results in the next page.</p>",
         "ListCollectionsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListLifecyclePoliciesRequest$nextToken": "<p>If your initial <code>ListLifecyclePolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListLifecyclePolicies</code> operations, which returns results in the next page.</p>",
         "ListLifecyclePoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
-        "ListSecurityConfigsRequest$nextToken": "<p>If your initial <code>ListSecurityConfigs</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityConfigs</code> operations, which returns results in the next page. </p>",
+        "ListSecurityConfigsRequest$nextToken": "<p>If your initial <code>ListSecurityConfigs</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityConfigs</code> operations, which returns results in the next page.</p>",
         "ListSecurityConfigsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
-        "ListSecurityPoliciesRequest$nextToken": "<p>If your initial <code>ListSecurityPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityPolicies</code> operations, which returns results in the next page. </p>",
+        "ListSecurityPoliciesRequest$nextToken": "<p>If your initial <code>ListSecurityPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityPolicies</code> operations, which returns results in the next page.</p>",
         "ListSecurityPoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
-        "ListVpcEndpointsRequest$nextToken": "<p>If your initial <code>ListVpcEndpoints</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListVpcEndpoints</code> operations, which returns results in the next page. </p>",
+        "ListVpcEndpointsRequest$nextToken": "<p>If your initial <code>ListVpcEndpoints</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListVpcEndpoints</code> operations, which returns results in the next page.</p>",
         "ListVpcEndpointsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "OcuLimitExceededException$message": "<p>Description of the error.</p>",
         "ResourceNotFoundException$message": null,
@@ -1370,10 +1378,22 @@
         "VpcEndpointDetail$vpcId": "<p>The ID of the VPC from which you access OpenSearch Serverless.</p>"
       }
     },
+    "iamFederationGroupAttribute": {
+      "base": null,
+      "refs": {
+        "IamFederationConfigOptions$groupAttribute": "<p>The group attribute for this IAM federation integration. This attribute is used to map identity provider groups to OpenSearch Serverless permissions.</p>"
+      }
+    },
+    "iamFederationUserAttribute": {
+      "base": null,
+      "refs": {
+        "IamFederationConfigOptions$userAttribute": "<p>The user attribute for this IAM federation integration. This attribute is used to identify users in the federated authentication process.</p>"
+      }
+    },
     "openSearchServerlessEntityId": {
       "base": null,
       "refs": {
-        "SamlConfigOptions$openSearchServerlessEntityId": "<p>Custom entity id attribute to override default entity id for this saml integration.</p>"
+        "SamlConfigOptions$openSearchServerlessEntityId": "<p>Custom entity ID attribute to override the default entity ID for this SAML integration.</p>"
       }
     },
     "samlGroupAttribute": {

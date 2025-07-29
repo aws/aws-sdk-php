@@ -1211,7 +1211,7 @@
     },
     "Base64EncodedGeobuf":{
       "type":"blob",
-      "max":600000,
+      "max":700000,
       "min":0,
       "sensitive":true
     },
@@ -1754,7 +1754,7 @@
       ],
       "members":{
         "Center":{"shape":"Position"},
-        "Radius":{"shape":"Double"}
+        "Radius":{"shape":"SensitiveDouble"}
       },
       "sensitive":true
     },
@@ -1777,13 +1777,15 @@
       "type":"string",
       "max":3,
       "min":3,
-      "pattern":"[A-Z]{3}"
+      "pattern":"[A-Z]{3}",
+      "sensitive":true
     },
     "CountryCode3OrEmpty":{
       "type":"string",
       "max":3,
       "min":0,
-      "pattern":"[A-Z]{3}$|^"
+      "pattern":"[A-Z]{3}$|^",
+      "sensitive":true
     },
     "CountryCodeList":{
       "type":"list",
@@ -2570,10 +2572,23 @@
     "GeofenceGeometry":{
       "type":"structure",
       "members":{
-        "Polygon":{"shape":"LinearRings"},
+        "Polygon":{"shape":"GeofenceGeometryPolygonList"},
         "Circle":{"shape":"Circle"},
-        "Geobuf":{"shape":"Base64EncodedGeobuf"}
+        "Geobuf":{"shape":"Base64EncodedGeobuf"},
+        "MultiPolygon":{"shape":"GeofenceGeometryMultiPolygonList"}
       }
+    },
+    "GeofenceGeometryMultiPolygonList":{
+      "type":"list",
+      "member":{"shape":"LinearRings"},
+      "max":250,
+      "min":1
+    },
+    "GeofenceGeometryPolygonList":{
+      "type":"list",
+      "member":{"shape":"LinearRing"},
+      "max":250,
+      "min":1
     },
     "GetDevicePositionHistoryRequest":{
       "type":"structure",
@@ -3671,7 +3686,8 @@
       "type":"double",
       "box":true,
       "max":10000000,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "PricingPlan":{
       "type":"string",
@@ -3738,7 +3754,8 @@
       "type":"string",
       "max":253,
       "min":0,
-      "pattern":"([$\\-._+!*\\x{60}(),;/?:@=&\\w]|%([0-9a-fA-F?]{2}|[0-9a-fA-F?]?[*]))+"
+      "pattern":"([$\\-._+!*\\x{60}(),;/?:@=&\\w]|%([0-9a-fA-F?]{2}|[0-9a-fA-F?]?[*]))+",
+      "sensitive":true
     },
     "ResourceDescription":{
       "type":"string",
@@ -4056,6 +4073,11 @@
         "FilterCategories":{"shape":"FilterPlaceCategoryList"}
       }
     },
+    "SensitiveDouble":{
+      "type":"double",
+      "box":true,
+      "sensitive":true
+    },
     "SensitiveString":{
       "type":"string",
       "sensitive":true
@@ -4196,6 +4218,7 @@
     },
     "Timestamp":{
       "type":"timestamp",
+      "sensitive":true,
       "timestampFormat":"iso8601"
     },
     "Token":{

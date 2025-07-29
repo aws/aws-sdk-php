@@ -15,7 +15,7 @@
     "CreateIdMappingTable": "<p>Creates an ID mapping table.</p>",
     "CreateIdNamespaceAssociation": "<p>Creates an ID namespace association.</p>",
     "CreateMembership": "<p>Creates a membership for a specific collaboration identifier and joins the collaboration.</p>",
-    "CreatePrivacyBudgetTemplate": "<p>Creates a privacy budget template for a specified membership. Each membership can have only one privacy budget template, but it can be deleted and recreated. If you need to change the privacy budget template for a membership, use the <a>UpdatePrivacyBudgetTemplate</a> operation.</p>",
+    "CreatePrivacyBudgetTemplate": "<p>Creates a privacy budget template for a specified collaboration. Each collaboration can have only one privacy budget template. If you need to change the privacy budget template, use the <a>UpdatePrivacyBudgetTemplate</a> operation.</p>",
     "DeleteAnalysisTemplate": "<p>Deletes an analysis template.</p>",
     "DeleteCollaboration": "<p>Deletes a collaboration. It can only be called by the collaboration owner.</p>",
     "DeleteConfiguredAudienceModelAssociation": "<p>Provides the information necessary to delete a configured audience model association.</p>",
@@ -27,7 +27,7 @@
     "DeleteIdNamespaceAssociation": "<p>Deletes an ID namespace association.</p>",
     "DeleteMember": "<p>Removes the specified member from a collaboration. The removed member is placed in the Removed status and can't interact with the collaboration. The removed member's data is inaccessible to active members of the collaboration.</p>",
     "DeleteMembership": "<p>Deletes a specified membership. All resources under a membership must be deleted.</p>",
-    "DeletePrivacyBudgetTemplate": "<p>Deletes a privacy budget template for a specified membership.</p>",
+    "DeletePrivacyBudgetTemplate": "<p>Deletes a privacy budget template for a specified collaboration.</p>",
     "GetAnalysisTemplate": "<p>Retrieves an analysis template.</p>",
     "GetCollaboration": "<p>Returns metadata about a collaboration.</p>",
     "GetCollaborationAnalysisTemplate": "<p>Retrieves an analysis template within a collaboration.</p>",
@@ -83,15 +83,14 @@
     "UpdateIdMappingTable": "<p>Provides the details that are necessary to update an ID mapping table.</p>",
     "UpdateIdNamespaceAssociation": "<p>Provides the details that are necessary to update an ID namespace association.</p>",
     "UpdateMembership": "<p>Updates a membership.</p>",
-    "UpdatePrivacyBudgetTemplate": "<p>Updates the privacy budget template for the specified membership.</p>",
+    "UpdatePrivacyBudgetTemplate": "<p>Updates the privacy budget template for the specified collaboration.</p>",
     "UpdateProtectedJob": "<p>Updates the processing of a currently running job.</p>",
     "UpdateProtectedQuery": "<p>Updates the processing of a currently running query.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Caller does not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedExceptionReason": {
       "base": null,
@@ -208,7 +207,8 @@
       "base": null,
       "refs": {
         "ConfiguredTable$allowedColumns": "<p>The columns within the underlying Glue table that can be utilized within collaborations.</p>",
-        "CreateConfiguredTableInput$allowedColumns": "<p>The columns of the underlying table that can be used by collaborations or analysis rules.</p>"
+        "CreateConfiguredTableInput$allowedColumns": "<p>The columns of the underlying table that can be used by collaborations or analysis rules.</p>",
+        "UpdateConfiguredTableInput$allowedColumns": "<p>The columns of the underlying table that can be used by collaborations or analysis rules.</p>"
       }
     },
     "AllowedResultReceivers": {
@@ -388,7 +388,7 @@
       "refs": {
         "AnalysisTemplate$source": "<p>The source of the analysis template.</p>",
         "CollaborationAnalysisTemplate$source": "<p>The source of the analysis template within a collaboration.</p>",
-        "CreateAnalysisTemplateInput$source": "<p>The information in the analysis template. Currently supports <code>text</code>, the query text for the analysis template.</p>"
+        "CreateAnalysisTemplateInput$source": "<p>The information in the analysis template.</p>"
       }
     },
     "AnalysisSourceMetadata": {
@@ -535,10 +535,10 @@
     "AnalyticsEngine": {
       "base": null,
       "refs": {
-        "Collaboration$analyticsEngine": "<p> The analytics engine for the collaboration.</p>",
-        "CollaborationSummary$analyticsEngine": "<p> The analytics engine.</p>",
-        "CreateCollaborationInput$analyticsEngine": "<p> The analytics engine.</p>",
-        "UpdateCollaborationInput$analyticsEngine": "<p>The analytics engine.</p>"
+        "Collaboration$analyticsEngine": "<p> The analytics engine for the collaboration.</p> <note> <p>After July 16, 2025, the <code>CLEAN_ROOMS_SQL</code> parameter will no longer be available. </p> </note>",
+        "CollaborationSummary$analyticsEngine": "<p> The analytics engine.</p> <note> <p>After July 16, 2025, the <code>CLEAN_ROOMS_SQL</code> parameter will no longer be available. </p> </note>",
+        "CreateCollaborationInput$analyticsEngine": "<p> The analytics engine.</p> <note> <p>After July 16, 2025, the <code>CLEAN_ROOMS_SQL</code> parameter will no longer be available. </p> </note>",
+        "UpdateCollaborationInput$analyticsEngine": "<p>The analytics engine.</p> <note> <p>After July 16, 2025, the <code>CLEAN_ROOMS_SQL</code> parameter will no longer be available. </p> </note>"
       }
     },
     "AthenaDatabaseName": {
@@ -585,13 +585,11 @@
     },
     "BatchGetCollaborationAnalysisTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetCollaborationAnalysisTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetSchemaAnalysisRuleError": {
       "base": "<p>An error that describes why a schema could not be fetched.</p>",
@@ -607,13 +605,11 @@
     },
     "BatchGetSchemaAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetSchemaAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetSchemaError": {
       "base": "<p>An error describing why a schema could not be fetched.</p>",
@@ -629,13 +625,11 @@
     },
     "BatchGetSchemaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetSchemaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BilledJobResourceUtilization": {
       "base": "<p> Information related to the utilization of resources that have been billed or charged for in a given context, such as a protected job.</p>",
@@ -1170,8 +1164,7 @@
     },
     "ConflictException": {
       "base": "<p>Updating or deleting a resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictExceptionReason": {
       "base": null,
@@ -1235,113 +1228,91 @@
     },
     "CreateAnalysisTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAnalysisTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCollaborationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCollaborationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredAudienceModelAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredAudienceModelAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableAssociationAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableAssociationAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdMappingTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdMappingTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdNamespaceAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdNamespaceAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembershipInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembershipOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrivacyBudgetTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrivacyBudgetTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomMLMemberAbilities": {
       "base": null,
@@ -1364,123 +1335,99 @@
     },
     "DeleteAnalysisTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAnalysisTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCollaborationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCollaborationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredAudienceModelAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredAudienceModelAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableAnalysisRuleOutput": {
       "base": "<p>An empty response that indicates a successful delete.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableAssociationAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableAssociationAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredTableOutput": {
       "base": "<p>The empty output for a successful deletion.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdMappingTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdMappingTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdNamespaceAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdNamespaceAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMemberInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMemberOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMembershipInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMembershipOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePrivacyBudgetTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePrivacyBudgetTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DifferentialPrivacyAggregationExpression": {
       "base": null,
@@ -1689,193 +1636,155 @@
     },
     "GetAnalysisTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnalysisTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationAnalysisTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationAnalysisTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationConfiguredAudienceModelAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationConfiguredAudienceModelAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationIdNamespaceAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationIdNamespaceAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationPrivacyBudgetTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationPrivacyBudgetTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredAudienceModelAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredAudienceModelAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableAssociationAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableAssociationAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdMappingTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdMappingTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdNamespaceAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdNamespaceAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembershipInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembershipOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPrivacyBudgetTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPrivacyBudgetTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProtectedJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProtectedJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProtectedQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProtectedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlueDatabaseName": {
       "base": null,
@@ -2070,8 +1979,7 @@
     },
     "InternalServerException": {
       "base": "<p>Unexpected error during processing of request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobComputePaymentConfig": {
       "base": "<p>An object representing the collaboration member's payment responsibilities set by the collaboration creator for query and job compute costs.</p>",
@@ -2119,203 +2027,163 @@
     },
     "ListAnalysisTemplatesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAnalysisTemplatesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationAnalysisTemplatesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationAnalysisTemplatesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationConfiguredAudienceModelAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationConfiguredAudienceModelAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationIdNamespaceAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationIdNamespaceAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationPrivacyBudgetTemplatesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationPrivacyBudgetTemplatesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationPrivacyBudgetsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationPrivacyBudgetsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredAudienceModelAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredAudienceModelAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredTableAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredTableAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredTablesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredTablesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdMappingTablesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdMappingTablesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdNamespaceAssociationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdNamespaceAssociationsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembershipsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembershipsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrivacyBudgetTemplatesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrivacyBudgetTemplatesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrivacyBudgetsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrivacyBudgetsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProtectedJobsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProtectedJobsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProtectedQueriesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProtectedQueriesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemasInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemasOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -2701,23 +2569,19 @@
     },
     "PopulateIdMappingTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PopulateIdMappingTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PreviewPrivacyImpactInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PreviewPrivacyImpactOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PreviewPrivacyImpactParametersInput": {
       "base": "<p>Specifies the updated epsilon and noise parameters to preview. The preview allows you to see how the maximum number of each type of aggregation function would change with the new parameters.</p>",
@@ -3270,8 +3134,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Request references a resource which does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -3458,8 +3321,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Request denied because service quota has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnowflakeAccountIdentifier": {
       "base": null,
@@ -3511,23 +3373,19 @@
     },
     "StartProtectedJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartProtectedJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartProtectedQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartProtectedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -3604,7 +3462,8 @@
       "base": "<p>A pointer to the dataset that underlies this table.</p>",
       "refs": {
         "ConfiguredTable$tableReference": "<p>The table that this configured table represents.</p>",
-        "CreateConfiguredTableInput$tableReference": "<p>A reference to the table being configured.</p>"
+        "CreateConfiguredTableInput$tableReference": "<p>A reference to the table being configured.</p>",
+        "UpdateConfiguredTableInput$tableReference": null
       }
     },
     "TagKey": {
@@ -3638,13 +3497,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3666,8 +3523,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -3813,143 +3669,115 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAnalysisTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAnalysisTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCollaborationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCollaborationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredAudienceModelAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredAudienceModelAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableAssociationAnalysisRuleInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableAssociationAnalysisRuleOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdMappingTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdMappingTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdNamespaceAssociationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdNamespaceAssociationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMembershipInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMembershipOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePrivacyBudgetTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePrivacyBudgetTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProtectedJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProtectedJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProtectedQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProtectedQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UsersNoisePerQuery": {
       "base": null,
@@ -3962,8 +3790,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the specified constraints.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Describes validation errors for specific input parameters.</p>",
