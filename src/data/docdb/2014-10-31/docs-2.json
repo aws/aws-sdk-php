@@ -773,6 +773,17 @@
       "refs": {
       }
     },
+    "DoubleOptional": {
+      "base": null,
+      "refs": {
+        "ServerlessV2FeaturesSupport$MinCapacity": "<p>The minimum number of Amazon DocumentDB capacity units (DCUs) for an instance in an Amazon DocumentDB Serverless cluster. You can specify DCU values in half-step increments, such as 8, 8.5, 9, and so on.</p>",
+        "ServerlessV2FeaturesSupport$MaxCapacity": "<p>The maximum number of Amazon DocumentDB capacity units (DCUs) for an instance in an Amazon DocumentDB Serverless cluster. You can specify DCU values in half-step increments, such as 32, 32.5, 33, and so on.</p>",
+        "ServerlessV2ScalingConfiguration$MinCapacity": "<p>The minimum number of Amazon DocumentDB capacity units (DCUs) for an instance in an Amazon DocumentDB Serverless cluster. You can specify DCU values in half-step increments, such as 8, 8.5, 9, and so on.</p>",
+        "ServerlessV2ScalingConfiguration$MaxCapacity": "<p>The maximum number of Amazon DocumentDB capacity units (DCUs) for an instance in an Amazon DocumentDB Serverless cluster. You can specify DCU values in half-step increments, such as 32, 32.5, 33, and so on.</p>",
+        "ServerlessV2ScalingConfigurationInfo$MinCapacity": "<p>The minimum number of Amazon DocumentDB capacity units (DCUs) for an instance in an Amazon DocumentDB Serverless cluster. You can specify DCU values in half-step increments, such as 8, 8.5, 9, and so on.</p>",
+        "ServerlessV2ScalingConfigurationInfo$MaxCapacity": "<p>The maximum number of Amazon DocumentDB capacity units (DCUs) for an instance in an Amazon DocumentDB Serverless cluster. You can specify DCU values in half-step increments, such as 32, 32.5, 33, and so on. </p>"
+      }
+    },
     "Endpoint": {
       "base": "<p>Network information for accessing a cluster or instance. Client programs must specify a valid endpoint to access these Amazon DocumentDB resources.</p>",
       "refs": {
@@ -1277,7 +1288,7 @@
     "ReadersArnList": {
       "base": null,
       "refs": {
-        "GlobalClusterMember$Readers": "<p>The Amazon Resource Name (ARN) for each read-only secondary cluster associated with the Aurora global cluster.</p>"
+        "GlobalClusterMember$Readers": "<p>The Amazon Resource Name (ARN) for each read-only secondary cluster associated with the Amazon DocumentDB global cluster.</p>"
       }
     },
     "RebootDBInstanceMessage": {
@@ -1365,6 +1376,27 @@
     "SNSTopicArnNotFoundFault": {
       "base": "<p>The SNS topic Amazon Resource Name (ARN) does not exist. </p>",
       "refs": {
+      }
+    },
+    "ServerlessV2FeaturesSupport": {
+      "base": "<p>Specifies any Amazon DocumentDB Serverless properties or limits that differ between Amazon DocumentDB engine versions. You can test the values of this attribute when deciding which Amazon DocumentDB version to use in a new or upgraded cluster. You can also retrieve the version of an existing cluster and check whether that version supports certain Amazon DocumentDB Serverless features before you attempt to use those features.</p>",
+      "refs": {
+        "DBEngineVersion$ServerlessV2FeaturesSupport": "<p>Specifies any Amazon DocumentDB Serverless properties or limits that differ between Amazon DocumentDB engine versions. You can test the values of this attribute when deciding which Amazon DocumentDB version to use in a new or upgraded cluster. You can also retrieve the version of an existing cluster and check whether that version supports certain Amazon DocumentDB Serverless features before you attempt to use those features.</p>"
+      }
+    },
+    "ServerlessV2ScalingConfiguration": {
+      "base": "<p>Sets the scaling configuration of an Amazon DocumentDB Serverless cluster.</p>",
+      "refs": {
+        "CreateDBClusterMessage$ServerlessV2ScalingConfiguration": "<p>Contains the scaling configuration of an Amazon DocumentDB Serverless cluster.</p>",
+        "ModifyDBClusterMessage$ServerlessV2ScalingConfiguration": "<p>Contains the scaling configuration of an Amazon DocumentDB Serverless cluster.</p>",
+        "RestoreDBClusterFromSnapshotMessage$ServerlessV2ScalingConfiguration": "<p>Contains the scaling configuration of an Amazon DocumentDB Serverless cluster.</p>",
+        "RestoreDBClusterToPointInTimeMessage$ServerlessV2ScalingConfiguration": "<p>Contains the scaling configuration of an Amazon DocumentDB Serverless cluster.</p>"
+      }
+    },
+    "ServerlessV2ScalingConfigurationInfo": {
+      "base": "<p>Retrieves the scaling configuration for an Amazon DocumentDB Serverless cluster.</p>",
+      "refs": {
+        "DBCluster$ServerlessV2ScalingConfiguration": "<p>The scaling configuration of an Amazon DocumentDB Serverless cluster.</p>"
       }
     },
     "SharedSnapshotQuotaExceededFault": {
@@ -1508,7 +1540,7 @@
         "DBCluster$DbClusterResourceId": "<p>The Amazon Web Services Region-unique, immutable identifier for the cluster. This identifier is found in CloudTrail log entries whenever the KMS key for the cluster is accessed.</p>",
         "DBCluster$DBClusterArn": "<p>The Amazon Resource Name (ARN) for the cluster.</p>",
         "DBCluster$CloneGroupId": "<p>Identifies the clone group to which the DB cluster is associated.</p>",
-        "DBCluster$StorageType": "<p>Storage type associated with your cluster</p> <p>Storage type associated with your cluster</p> <p>For information on storage types for Amazon DocumentDB clusters, see Cluster storage configurations in the <i>Amazon DocumentDB Developer Guide</i>.</p> <p>Valid values for storage type - <code>standard | iopt1</code> </p> <p>Default value is <code>standard </code> </p>",
+        "DBCluster$StorageType": "<p>Storage type associated with your cluster</p> <p>For information on storage types for Amazon DocumentDB clusters, see Cluster storage configurations in the <i>Amazon DocumentDB Developer Guide</i>.</p> <p>Valid values for storage type - <code>standard | iopt1</code> </p> <p>Default value is <code>standard </code> </p>",
         "DBClusterMember$DBInstanceIdentifier": "<p>Specifies the instance identifier for this member of the cluster.</p>",
         "DBClusterMember$DBClusterParameterGroupStatus": "<p>Specifies the status of the cluster parameter group for this member of the DB cluster.</p>",
         "DBClusterMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
@@ -1532,7 +1564,7 @@
         "DBClusterSnapshot$KmsKeyId": "<p>If <code>StorageEncrypted</code> is <code>true</code>, the KMS key identifier for the encrypted cluster snapshot.</p>",
         "DBClusterSnapshot$DBClusterSnapshotArn": "<p>The Amazon Resource Name (ARN) for the cluster snapshot.</p>",
         "DBClusterSnapshot$SourceDBClusterSnapshotArn": "<p>If the cluster snapshot was copied from a source cluster snapshot, the ARN for the source cluster snapshot; otherwise, a null value.</p>",
-        "DBClusterSnapshot$StorageType": "<p>Storage type associated with your cluster snapshot </p> <p>For information on storage types for Amazon DocumentDB clusters, see Cluster storage configurations in the <i>Amazon DocumentDB Developer Guide</i>.</p> <p>Valid values for storage type - <code>standard | iopt1</code> </p> <p>Default value is <code>standard </code> </p>",
+        "DBClusterSnapshot$StorageType": "<p>Storage type associated with your cluster snapshot</p> <p>For information on storage types for Amazon DocumentDB clusters, see Cluster storage configurations in the <i>Amazon DocumentDB Developer Guide</i>.</p> <p>Valid values for storage type - <code>standard | iopt1</code> </p> <p>Default value is <code>standard </code> </p>",
         "DBClusterSnapshotAttribute$AttributeName": "<p>The name of the manual cluster snapshot attribute.</p> <p>The attribute named <code>restore</code> refers to the list of Amazon Web Services accounts that have permission to copy or restore the manual cluster snapshot.</p>",
         "DBClusterSnapshotAttributesResult$DBClusterSnapshotIdentifier": "<p>The identifier of the cluster snapshot that the attributes apply to.</p>",
         "DBClusterSnapshotMessage$Marker": "<p>An optional pagination token provided by a previous request. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by <code>MaxRecords</code>.</p>",
@@ -1632,7 +1664,7 @@
         "FailoverDBClusterMessage$TargetDBInstanceIdentifier": "<p>The name of the instance to promote to the primary instance.</p> <p>You must specify the instance identifier for an Amazon DocumentDB replica in the cluster. For example, <code>mydbcluster-replica1</code>.</p>",
         "Filter$Name": "<p>The name of the filter. Filter names are case sensitive.</p>",
         "FilterValueList$member": null,
-        "GlobalCluster$GlobalClusterResourceId": "<p>The Amazon Web Services Region-unique, immutable identifier for the global database cluster. This identifier is found in CloudTrail log entries whenever the KMS customer master key (CMK) for the cluster is accessed. </p>",
+        "GlobalCluster$GlobalClusterResourceId": "<p>The Amazon Web Services RegionRegion-unique, immutable identifier for the global database cluster. This identifier is found in CloudTrail log entries whenever the KMS customer master key (CMK) for the cluster is accessed. </p>",
         "GlobalCluster$GlobalClusterArn": "<p>The Amazon Resource Name (ARN) for the global cluster.</p>",
         "GlobalCluster$Status": "<p>Specifies the current state of this global cluster.</p>",
         "GlobalCluster$Engine": "<p>The Amazon DocumentDB database engine used by the global cluster. </p>",

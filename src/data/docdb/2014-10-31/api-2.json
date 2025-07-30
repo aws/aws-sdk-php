@@ -1197,6 +1197,7 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
         "StorageType":{"shape":"String"},
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"}
       }
@@ -1372,6 +1373,7 @@
         "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"Boolean"},
         "StorageType":{"shape":"String"},
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfigurationInfo"},
         "MasterUserSecret":{"shape":"ClusterMasterUserSecret"}
       },
       "wrapper":true
@@ -1602,7 +1604,8 @@
         "ExportableLogTypes":{"shape":"LogTypeList"},
         "SupportsLogExportsToCloudwatchLogs":{"shape":"Boolean"},
         "SupportedCACertificateIdentifiers":{"shape":"CACertificateIdentifiersList"},
-        "SupportsCertificateRotationWithoutRestart":{"shape":"BooleanOptional"}
+        "SupportsCertificateRotationWithoutRestart":{"shape":"BooleanOptional"},
+        "ServerlessV2FeaturesSupport":{"shape":"ServerlessV2FeaturesSupport"}
       }
     },
     "DBEngineVersionList":{
@@ -2120,6 +2123,7 @@
         "MaxRecords":{"shape":"IntegerOptional"}
       }
     },
+    "DoubleOptional":{"type":"double"},
     "Endpoint":{
       "type":"structure",
       "members":{
@@ -2608,6 +2612,7 @@
         "AllowMajorVersionUpgrade":{"shape":"Boolean"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "StorageType":{"shape":"String"},
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "ManageMasterUserPassword":{"shape":"BooleanOptional"},
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "RotateMasterUserPassword":{"shape":"BooleanOptional"}
@@ -2949,6 +2954,7 @@
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "DBClusterParameterGroupName":{"shape":"String"},
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "StorageType":{"shape":"String"}
       }
     },
@@ -2977,6 +2983,7 @@
         "KmsKeyId":{"shape":"String"},
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "DeletionProtection":{"shape":"BooleanOptional"},
+        "ServerlessV2ScalingConfiguration":{"shape":"ServerlessV2ScalingConfiguration"},
         "StorageType":{"shape":"String"}
       }
     },
@@ -3018,6 +3025,27 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ServerlessV2FeaturesSupport":{
+      "type":"structure",
+      "members":{
+        "MinCapacity":{"shape":"DoubleOptional"},
+        "MaxCapacity":{"shape":"DoubleOptional"}
+      }
+    },
+    "ServerlessV2ScalingConfiguration":{
+      "type":"structure",
+      "members":{
+        "MinCapacity":{"shape":"DoubleOptional"},
+        "MaxCapacity":{"shape":"DoubleOptional"}
+      }
+    },
+    "ServerlessV2ScalingConfigurationInfo":{
+      "type":"structure",
+      "members":{
+        "MinCapacity":{"shape":"DoubleOptional"},
+        "MaxCapacity":{"shape":"DoubleOptional"}
+      }
     },
     "SharedSnapshotQuotaExceededFault":{
       "type":"structure",

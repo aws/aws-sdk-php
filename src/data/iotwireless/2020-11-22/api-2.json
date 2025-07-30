@@ -4885,7 +4885,11 @@
         "RaAllowed":{"shape":"RaAllowed"},
         "NwkGeoLoc":{"shape":"NwkGeoLoc"},
         "TargetPer":{"shape":"TargetPer"},
-        "MinGwDiversity":{"shape":"MinGwDiversity"}
+        "MinGwDiversity":{"shape":"MinGwDiversity"},
+        "TxPowerIndexMin":{"shape":"TxPowerIndexMin"},
+        "TxPowerIndexMax":{"shape":"TxPowerIndexMax"},
+        "NbTransMin":{"shape":"NbTransMin"},
+        "NbTransMax":{"shape":"NbTransMax"}
       }
     },
     "LoRaWANJoinEventNotificationConfigurations":{
@@ -4969,7 +4973,11 @@
         "DrMin":{"shape":"DrMinBox"},
         "DrMax":{"shape":"DrMaxBox"},
         "PrAllowed":{"shape":"PrAllowed"},
-        "RaAllowed":{"shape":"RaAllowed"}
+        "RaAllowed":{"shape":"RaAllowed"},
+        "TxPowerIndexMin":{"shape":"TxPowerIndexMin"},
+        "TxPowerIndexMax":{"shape":"TxPowerIndexMax"},
+        "NbTransMin":{"shape":"NbTransMin"},
+        "NbTransMax":{"shape":"NbTransMax"}
       }
     },
     "LoRaWANStartFuotaTask":{
@@ -5293,6 +5301,16 @@
       }
     },
     "NRCapable":{"type":"boolean"},
+    "NbTransMax":{
+      "type":"integer",
+      "max":15,
+      "min":0
+    },
+    "NbTransMin":{
+      "type":"integer",
+      "max":15,
+      "min":0
+    },
     "NetId":{
       "type":"string",
       "pattern":"[a-fA-F0-9]{6}"
@@ -6409,6 +6427,16 @@
     "TransmitMode":{
       "type":"integer",
       "max":1,
+      "min":0
+    },
+    "TxPowerIndexMax":{
+      "type":"integer",
+      "max":15,
+      "min":0
+    },
+    "TxPowerIndexMin":{
+      "type":"integer",
+      "max":15,
       "min":0
     },
     "UARFCN":{

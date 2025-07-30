@@ -8458,6 +8458,7 @@
         "VpcOriginConfig":{"shape":"VpcOriginConfig"},
         "ConnectionAttempts":{"shape":"integer"},
         "ConnectionTimeout":{"shape":"integer"},
+        "ResponseCompletionTimeout":{"shape":"integer"},
         "OriginShield":{"shape":"OriginShield"},
         "OriginAccessControlId":{"shape":"string"}
       }
@@ -9582,7 +9583,8 @@
       "type":"structure",
       "required":["OriginAccessIdentity"],
       "members":{
-        "OriginAccessIdentity":{"shape":"string"}
+        "OriginAccessIdentity":{"shape":"string"},
+        "OriginReadTimeout":{"shape":"integer"}
       }
     },
     "SSLSupportMethod":{

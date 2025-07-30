@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Updates for deserialization in all protocols
+* `Aws\DirectoryService` - This release adds support for AWS Managed Microsoft AD Hybrid Edition, introducing new operations: StartADAssessment, DescribeADAssessment, ListADAssessments, DeleteADAssessment, CreateHybridAD, UpdateHybridAD, and DescribeHybridADUpdate; and updated existing operation: DescribeDirectories.
+* `Aws\IoTWireless` - Added TxPowerIndexMin, TxPowerIndexMax, NbTransMin and NbTransMax params to ServiceProfile.
+* `Aws\EC2` - Release to show the next hop IP address for routes propagated by VPC Route Server into VPC route tables.
+* `Aws\CloudFront` - This release adds new origin timeout options: 1) ResponseCompletionTimeout and 2) OriginReadTimeout (for S3 origins)
+* `Aws\DocDB` - Add support for setting Serverless Scaling Configuration on clusters.
+
 ## 3.351.9 - 2025-07-29
 
 * `Aws\Api` - Fixes bug caused by #3144 which causes requests with payload members to resolve the wrong root xml element
