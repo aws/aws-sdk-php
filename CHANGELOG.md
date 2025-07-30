@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.10 - 2025-07-30
 
 * `Aws\Api` - Updates for deserialization in all protocols
 * `Aws\DirectoryService` - This release adds support for AWS Managed Microsoft AD Hybrid Edition, introducing new operations: StartADAssessment, DescribeADAssessment, ListADAssessments, DeleteADAssessment, CreateHybridAD, UpdateHybridAD, and DescribeHybridADUpdate; and updated existing operation: DescribeDirectories.
