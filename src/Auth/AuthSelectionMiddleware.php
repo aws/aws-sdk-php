@@ -120,46 +120,37 @@ class AuthSelectionMiddleware
     }
 
     /**
-     * This method will try to prioritize the
-     * user's preference order for auth scheme selection.
-     * This means that if user resolved preference is
-     * [anonymous, v4] then if anonymous is supported will
-     * take precedence over v4.
+     * Prioritizes auth schemes according to user preference order.
+     * User-preferred schemes that are available will be placed first,
+     * followed by remaining available schemes.
      *
-     * @param array $resolvableAuthSchemeList
-     * @param array|null $commandAuthSchemePreference
+     * @param array $resolvableAuthSchemeList Available auth schemes
+     * @param array|null $commandAuthSchemePreference Command-level preferences (overrides config)
      *
-     * @return array
+     * @return array Reordered auth schemes with user preferences first
      */
     private function buildAuthSchemeList(
         array $resolvableAuthSchemeList,
         ?array $commandAuthSchemePreference,
     ): array {
-        // Command preference takes precedence over config
-        $userPreferredAuthSchemes = $commandAuthSchemePreference
+        $userPreferences = $commandAuthSchemePreference
             ?? $this->userPreferredAuthSchemes;
 
-        // Just return $resolvableAuthSchemeList since user
-        // has not provided any preference.
-        if (empty($userPreferredAuthSchemes)) {
+        if (empty($userPreferences)) {
             return $resolvableAuthSchemeList;
         }
 
-        // Add user's preference first if available in $resolvableAuthSchemeList
-        $newResolvableAuthSchemeList = [];
-        foreach ($userPreferredAuthSchemes as $userPreferredAuthScheme) {
-            if (in_array($userPreferredAuthScheme, $resolvableAuthSchemeList, true)) {
-                $newResolvableAuthSchemeList[] = $userPreferredAuthScheme;
-            }
-        }
+        $availableSchemes = array_flip($resolvableAuthSchemeList);
 
-        // Add remaining from $resolvableAuthSchemeList into the new list
-        foreach ($resolvableAuthSchemeList as $resolvableAuthScheme) {
-            if (!in_array($resolvableAuthScheme, $newResolvableAuthSchemeList, true)) {
-                $newResolvableAuthSchemeList[] = $resolvableAuthScheme;
-            }
-        }
+        // Get preferred schemes that are actually available
+        $prioritizedSchemes = array_filter(
+            $userPreferences,
+            fn($scheme) => isset($availableSchemes[$scheme])
+        );
 
-        return $newResolvableAuthSchemeList;
+        // Get remaining schemes not in user preferences
+        $remainingSchemes = array_diff($resolvableAuthSchemeList, $prioritizedSchemes);
+
+        return array_merge($prioritizedSchemes, $remainingSchemes);
     }
 }
