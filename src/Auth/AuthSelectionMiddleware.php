@@ -28,6 +28,9 @@ class AuthSelectionMiddleware
     /** @var Service */
     private $api;
 
+    /** @var array|null */
+    private ?array $userPreferredAuthSchemes;
+
     /**
      * Create a middleware wrapper function
      *
@@ -37,29 +40,36 @@ class AuthSelectionMiddleware
      */
     public static function wrap(
         AuthSchemeResolverInterface $authResolver,
-        Service $api
+        Service $api,
+        ?array $userPreferredAuthSchemes
     ): Closure
     {
-        return function (callable $handler) use ($authResolver, $api) {
-            return new self($handler, $authResolver, $api);
+        return function (callable $handler) use (
+            $authResolver,
+            $api,
+            $userPreferredAuthSchemes
+        ) {
+            return new self($handler, $authResolver, $api, $userPreferredAuthSchemes);
         };
     }
 
     /**
      * @param callable $nextHandler
-     * @param $authResolver
-     * @param callable $identityProvider
+     * @param AuthSchemeResolverInterface $authResolver
      * @param Service $api
+     * @param array|null $userPreferredAuthSchemes
      */
     public function __construct(
         callable $nextHandler,
         AuthSchemeResolverInterface $authResolver,
-        Service $api
+        Service $api,
+        ?array $userPreferredAuthSchemes=null
     )
     {
         $this->nextHandler = $nextHandler;
         $this->authResolver = $authResolver;
         $this->api = $api;
+        $this->userPreferredAuthSchemes = $userPreferredAuthSchemes;
     }
 
     /**
@@ -86,21 +96,70 @@ class AuthSelectionMiddleware
             }
 
             try {
-                $selectedAuthScheme = $resolver->selectAuthScheme(
+                $authSchemeList = $this->buildAuthSchemeList(
                     $resolvableAuth,
+                    $command['@context']['auth_scheme_preference']
+                        ?? null,
+                );
+                $selectedAuthScheme = $resolver->selectAuthScheme(
+                    $authSchemeList,
                     ['unsigned_payload' => $unsignedPayload]
                 );
-            } catch (UnresolvedAuthSchemeException $e) {
+
+                if (!empty($selectedAuthScheme)) {
+                    $command['@context']['signature_version'] = $selectedAuthScheme;
+                }
+            } catch (UnresolvedAuthSchemeException $ignored) {
                 // There was an error resolving auth
                 // The signature version will fall back to the modeled `signatureVersion`
                 // or auth schemes resolved during endpoint resolution
             }
-
-            if (!empty($selectedAuthScheme)) {
-                $command['@context']['signature_version'] = $selectedAuthScheme;
-            }
         }
 
         return $nextHandler($command);
+    }
+
+    /**
+     * This method will try to prioritize the
+     * user's preference order for auth scheme selection.
+     * This means that if user resolved preference is
+     * [anonymous, v4] then if anonymous is supported will
+     * take precedence over v4.
+     *
+     * @param array $resolvableAuthSchemeList
+     * @param array|null $commandAuthSchemePreference
+     *
+     * @return array
+     */
+    private function buildAuthSchemeList(
+        array $resolvableAuthSchemeList,
+        ?array $commandAuthSchemePreference,
+    ): array {
+        // Command preference takes precedence over config
+        $userPreferredAuthSchemes = $commandAuthSchemePreference
+            ?? $this->userPreferredAuthSchemes;
+
+        // Just return $resolvableAuthSchemeList since user
+        // has not provided any preference.
+        if (empty($userPreferredAuthSchemes)) {
+            return $resolvableAuthSchemeList;
+        }
+
+        // Add user's preference first if available in $resolvableAuthSchemeList
+        $newResolvableAuthSchemeList = [];
+        foreach ($userPreferredAuthSchemes as $userPreferredAuthScheme) {
+            if (in_array($userPreferredAuthScheme, $resolvableAuthSchemeList, true)) {
+                $newResolvableAuthSchemeList[] = $userPreferredAuthScheme;
+            }
+        }
+
+        // Add remaining from $resolvableAuthSchemeList into the new list
+        foreach ($resolvableAuthSchemeList as $resolvableAuthScheme) {
+            if (!in_array($resolvableAuthScheme, $newResolvableAuthSchemeList, true)) {
+                $newResolvableAuthSchemeList[] = $resolvableAuthScheme;
+            }
+        }
+
+        return $newResolvableAuthSchemeList;
     }
 }

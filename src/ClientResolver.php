@@ -219,6 +219,13 @@ class ClientResolver
             'doc'     => 'An instance of Aws\Auth\AuthSchemeResolverInterface which selects a modeled auth scheme and returns a signature version',
             'default' => [__CLASS__, '_default_auth_scheme_resolver'],
         ],
+        'auth_scheme_preference' => [
+            'type'    => 'value',
+            'valid'   => ['string', 'array'],
+            'doc'     => 'A user\'s preferred auth scheme list',
+            'default' => self::DEFAULT_FROM_ENV_INI,
+            'fn' => [__CLASS__, '_apply_auth_scheme_preference'],
+        ],
         'endpoint_discovery' => [
             'type'     => 'value',
             'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'array', 'callable'],
@@ -1120,6 +1127,30 @@ class ClientResolver
     public static function _default_auth_scheme_resolver(array $args)
     {
         return new AuthSchemeResolver($args['credentials'], $args['token']);
+    }
+
+    public static function _apply_auth_scheme_preference(
+        string|array|null $value,
+        array &$args
+    ): void
+    {
+        // Not provided user's preference auth scheme list
+        if (empty($value)) {
+            return;
+        }
+
+        // Normalize it as an array
+        if (is_string($value)) {
+            $value = explode(',', $value);
+        }
+
+        // Let`s trim each value to remove break lines, spaces and/or tabs
+        foreach ($value as &$val) {
+            $val = trim($val);
+        }
+
+        // Assign user's preferred auth scheme list
+        $args['auth_scheme_preference'] = $value;
     }
 
     public static function _default_signature_version(array &$args)
