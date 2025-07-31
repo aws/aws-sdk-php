@@ -9,7 +9,12 @@ final class DownloadFileRequest
     /** @var string */
     private string $destination;
 
-    /** @var bool */
+    /**
+     * To decide whether an error should be raised
+     * if the destination file exists.
+     *
+     * @var bool
+     */
     private bool $failsWhenDestinationExists;
 
     /** @var DownloadRequest */

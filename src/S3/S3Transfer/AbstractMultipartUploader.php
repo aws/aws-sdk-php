@@ -262,8 +262,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      * @param CommandInterface $command
      * @return void
      */
-    protected function collectPart
-    (
+    protected function collectPart(
         ResultInterface $result,
         CommandInterface $command
     ): void
@@ -293,8 +292,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      * @param callable $rejectedCallback
      * @return PromiseInterface
      */
-    protected function createCommandPool
-    (
+    protected function createCommandPool(
         array $commands,
         callable $fulfilledCallback,
         callable $rejectedCallback
@@ -430,7 +428,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected function callOnCompletionCallbacks(): void
     {
         foreach ($this->onCompletionCallbacks as $fn) {
-            $fn();
+            if (is_callable($fn)) {
+                call_user_func($fn);
+            }
         }
 
         $this->onCompletionCallbacks = [];
