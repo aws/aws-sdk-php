@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.351.12 - 2025-07-31
 
 * `Aws\Sts` - Updates STS default endpoint configuration to `regional`
 * `Aws\IoT` - This release allows AWS IoT Core users to use their own AWS KMS keys for data protection
