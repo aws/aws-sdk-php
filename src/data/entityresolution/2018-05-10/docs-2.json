@@ -4,9 +4,9 @@
   "operations": {
     "AddPolicyStatement": "<p>Adds a policy statement object. To retrieve a list of existing policy statements, use the <code>GetPolicy</code> API.</p>",
     "BatchDeleteUniqueId": "<p>Deletes multiple unique IDs in a matching workflow.</p>",
-    "CreateIdMappingWorkflow": "<p>Creates an <code>IdMappingWorkflow</code> object which stores the configuration of the data processing job to be run. Each <code>IdMappingWorkflow</code> must have a unique workflow name. To modify an existing workflow, use the <code>UpdateIdMappingWorkflow</code> API.</p>",
-    "CreateIdNamespace": "<p>Creates an ID namespace object which will help customers provide metadata explaining their dataset and how to use it. Each ID namespace must have a unique name. To modify an existing ID namespace, use the <code>UpdateIdNamespace</code> API.</p>",
-    "CreateMatchingWorkflow": "<p>Creates a <code>MatchingWorkflow</code> object which stores the configuration of the data processing job to be run. It is important to note that there should not be a pre-existing <code>MatchingWorkflow</code> with the same name. To modify an existing workflow, utilize the <code>UpdateMatchingWorkflow</code> API.</p>",
+    "CreateIdMappingWorkflow": "<p>Creates an <code>IdMappingWorkflow</code> object which stores the configuration of the data processing job to be run. Each <code>IdMappingWorkflow</code> must have a unique workflow name. To modify an existing workflow, use the UpdateIdMappingWorkflow API.</p>",
+    "CreateIdNamespace": "<p>Creates an ID namespace object which will help customers provide metadata explaining their dataset and how to use it. Each ID namespace must have a unique name. To modify an existing ID namespace, use the UpdateIdNamespace API.</p>",
+    "CreateMatchingWorkflow": "<p>Creates a matching workflow that defines the configuration for a data processing job. The workflow name must be unique. To modify an existing workflow, use <code>UpdateMatchingWorkflow</code>. </p> <important> <p>For workflows where <code>resolutionType</code> is ML_MATCHING, incremental processing is not supported. </p> </important>",
     "CreateSchemaMapping": "<p>Creates a schema mapping, which defines the schema of the input customer records table. The <code>SchemaMapping</code> also provides Entity Resolution with some metadata about the table, such as the attribute types of the columns and which columns to match on.</p>",
     "DeleteIdMappingWorkflow": "<p>Deletes the <code>IdMappingWorkflow</code> with a given name. This operation will succeed even if a workflow with the given name does not exist.</p>",
     "DeleteIdNamespace": "<p>Deletes the <code>IdNamespace</code> with a given name.</p>",
@@ -36,33 +36,30 @@
     "StartMatchingJob": "<p>Starts the <code>MatchingJob</code> of a workflow. The workflow must have previously been created using the <code>CreateMatchingWorkflow</code> endpoint.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified Entity Resolution resource. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values. In Entity Resolution, <code>SchemaMapping</code> and <code>MatchingWorkflow</code> can be tagged. Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters. You can use the <code>TagResource</code> action with a resource that already has tags. If you specify a new tag key, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified Entity Resolution resource. In Entity Resolution, <code>SchemaMapping</code>, and <code>MatchingWorkflow</code> can be tagged.</p>",
-    "UpdateIdMappingWorkflow": "<p>Updates an existing <code>IdMappingWorkflow</code>. This method is identical to <code>CreateIdMappingWorkflow</code>, except it uses an HTTP <code>PUT</code> request instead of a <code>POST</code> request, and the <code>IdMappingWorkflow</code> must already exist for the method to succeed.</p>",
+    "UpdateIdMappingWorkflow": "<p>Updates an existing <code>IdMappingWorkflow</code>. This method is identical to CreateIdMappingWorkflow, except it uses an HTTP <code>PUT</code> request instead of a <code>POST</code> request, and the <code>IdMappingWorkflow</code> must already exist for the method to succeed.</p>",
     "UpdateIdNamespace": "<p>Updates an existing ID namespace.</p>",
-    "UpdateMatchingWorkflow": "<p>Updates an existing <code>MatchingWorkflow</code>. This method is identical to <code>CreateMatchingWorkflow</code>, except it uses an HTTP <code>PUT</code> request instead of a <code>POST</code> request, and the <code>MatchingWorkflow</code> must already exist for the method to succeed.</p>",
+    "UpdateMatchingWorkflow": "<p>Updates an existing matching workflow. The workflow must already exist for this operation to succeed.</p> <important> <p>For workflows where <code>resolutionType</code> is ML_MATCHING, incremental processing is not supported. </p> </important>",
     "UpdateSchemaMapping": "<p>Updates a schema mapping.</p> <note> <p>A schema is immutable if it is being used by a workflow. Therefore, you can't update a schema mapping if it's associated with a workflow. </p> </note>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddPolicyStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddPolicyStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttributeMatchingModel": {
       "base": null,
       "refs": {
-        "IdMappingRuleBasedProperties$attributeMatchingModel": "<p>The comparison type. You can either choose <code>ONE_TO_ONE</code> or <code>MANY_TO_MANY</code> as the <code>attributeMatchingModel</code>. </p> <p>If you choose <code>MANY_TO_MANY</code>, the system can match attributes across the sub-types of an attribute type. For example, if the value of the <code>Email</code> field of Profile A matches the value of the <code>BusinessEmail</code> field of Profile B, the two profiles are matched on the <code>Email</code> attribute type. </p> <p>If you choose <code>ONE_TO_ONE</code>, the system can only match attributes if the sub-types are an exact match. For example, for the <code>Email</code> attribute type, the system will only consider it a match if the value of the <code>Email</code> field of Profile A matches the value of the <code>Email</code> field of Profile B.</p>",
-        "NamespaceRuleBasedProperties$attributeMatchingModel": "<p>The comparison type. You can either choose <code>ONE_TO_ONE</code> or <code>MANY_TO_MANY</code> as the <code>attributeMatchingModel</code>. </p> <p>If you choose <code>MANY_TO_MANY</code>, the system can match attributes across the sub-types of an attribute type. For example, if the value of the <code>Email</code> field of Profile A matches the value of <code>BusinessEmail</code> field of Profile B, the two profiles are matched on the <code>Email</code> attribute type. </p> <p>If you choose <code>ONE_TO_ONE</code>, the system can only match attributes if the sub-types are an exact match. For example, for the <code>Email</code> attribute type, the system will only consider it a match if the value of the <code>Email</code> field of Profile A matches the value of the <code>Email</code> field of Profile B.</p>",
-        "RuleBasedProperties$attributeMatchingModel": "<p>The comparison type. You can either choose <code>ONE_TO_ONE</code> or <code>MANY_TO_MANY</code> as the <code>attributeMatchingModel</code>. </p> <p>If you choose <code>MANY_TO_MANY</code>, the system can match attributes across the sub-types of an attribute type. For example, if the value of the <code>Email</code> field of Profile A and the value of <code>BusinessEmail</code> field of Profile B matches, the two profiles are matched on the <code>Email</code> attribute type. </p> <p>If you choose <code>ONE_TO_ONE</code>, the system can only match attributes if the sub-types are an exact match. For example, for the <code>Email</code> attribute type, the system will only consider it a match if the value of the <code>Email</code> field of Profile A matches the value of the <code>Email</code> field of Profile B.</p>"
+        "IdMappingRuleBasedProperties$attributeMatchingModel": "<p>The comparison type. You can either choose <code>ONE_TO_ONE</code> or <code>MANY_TO_MANY</code> as the <code>attributeMatchingModel</code>. </p> <p>If you choose <code>ONE_TO_ONE</code>, the system can only match attributes if the sub-types are an exact match. For example, for the <code>Email</code> attribute type, the system will only consider it a match if the value of the <code>Email</code> field of Profile A matches the value of the <code>Email</code> field of Profile B.</p> <p>If you choose <code>MANY_TO_MANY</code>, the system can match attributes across the sub-types of an attribute type. For example, if the value of the <code>Email</code> field of Profile A matches the value of the <code>BusinessEmail</code> field of Profile B, the two profiles are matched on the <code>Email</code> attribute type. </p>",
+        "NamespaceRuleBasedProperties$attributeMatchingModel": "<p>The comparison type. You can either choose <code>ONE_TO_ONE</code> or <code>MANY_TO_MANY</code> as the <code>attributeMatchingModel</code>. </p> <p>If you choose <code>ONE_TO_ONE</code>, the system can only match attributes if the sub-types are an exact match. For example, for the <code>Email</code> attribute type, the system will only consider it a match if the value of the <code>Email</code> field of Profile A matches the value of the <code>Email</code> field of Profile B.</p> <p>If you choose <code>MANY_TO_MANY</code>, the system can match attributes across the sub-types of an attribute type. For example, if the value of the <code>Email</code> field of Profile A matches the value of <code>BusinessEmail</code> field of Profile B, the two profiles are matched on the <code>Email</code> attribute type. </p>",
+        "RuleBasedProperties$attributeMatchingModel": "<p>The comparison type. You can choose <code>ONE_TO_ONE</code> or <code>MANY_TO_MANY</code> as the <code>attributeMatchingModel</code>. </p> <p>If you choose <code>ONE_TO_ONE</code>, the system can only match attributes if the sub-types are an exact match. For example, for the <code>Email</code> attribute type, the system will only consider it a match if the value of the <code>Email</code> field of Profile A matches the value of the <code>Email</code> field of Profile B.</p> <p>If you choose <code>MANY_TO_MANY</code>, the system can match attributes across the sub-types of an attribute type. For example, if the value of the <code>Email</code> field of Profile A and the value of <code>BusinessEmail</code> field of Profile B matches, the two profiles are matched on the <code>Email</code> attribute type. </p>"
       }
     },
     "AttributeName": {
@@ -92,8 +89,7 @@
     },
     "BatchDeleteUniqueIdInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteUniqueIdInputInputSourceString": {
       "base": null,
@@ -103,8 +99,7 @@
     },
     "BatchDeleteUniqueIdOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -122,98 +117,79 @@
     },
     "ConflictException": {
       "base": "<p>The request could not be processed because of conflict in the current state of the resource. Example: Workflow already exists, Schema already exists, Workflow is currently running, etc. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdMappingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdMappingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdNamespaceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdNamespaceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMatchingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMatchingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSchemaMappingInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSchemaMappingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdMappingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdMappingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdNamespaceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdNamespaceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMatchingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMatchingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSchemaMappingInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSchemaMappingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUniqueIdError": {
       "base": "<p>The Delete Unique Id error.</p>",
@@ -383,8 +359,7 @@
     },
     "ExceedsLimitException": {
       "base": "<p>The request was rejected because it attempted to create resources beyond the current Entity Resolution account limits. The error message describes the limit exceeded. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "FailedRecord": {
       "base": "<p>The record that didn't generate a Match ID.</p>",
@@ -406,8 +381,7 @@
     },
     "GenerateMatchIdInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GenerateMatchIdInputRecordsList": {
       "base": null,
@@ -417,98 +391,79 @@
     },
     "GenerateMatchIdOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdMappingJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdMappingJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdMappingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdMappingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdNamespaceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdNamespaceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchIdInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchIdOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchingJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchingJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMatchingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProviderServiceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetProviderServiceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaMappingInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaMappingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HeaderSafeUniqueId": {
       "base": null,
@@ -526,7 +481,7 @@
       }
     },
     "IdMappingJobOutputSource": {
-      "base": "<p>An object containing <code>KMSArn</code>, <code>OutputS3Path</code>, and <code>RoleARN</code>.</p>",
+      "base": "<p>An object containing <code>KMSArn</code>, <code>outputS3Path</code>, and <code>roleARN</code>.</p>",
       "refs": {
         "IdMappingJobOutputSourceConfig$member": null
       }
@@ -589,7 +544,7 @@
       }
     },
     "IdMappingWorkflowInputSource": {
-      "base": "<p>An object containing <code>InputSourceARN</code>, <code>SchemaName</code>, and <code>Type</code>.</p>",
+      "base": "<p>An object containing <code>inputSourceARN</code>, <code>schemaName</code>, and <code>type</code>.</p>",
       "refs": {
         "IdMappingWorkflowInputSourceConfig$member": null
       }
@@ -625,11 +580,11 @@
     "IdMappingWorkflowOutputSourceConfig": {
       "base": null,
       "refs": {
-        "CreateIdMappingWorkflowInput$outputSourceConfig": "<p>A list of <code>IdMappingWorkflowOutputSource</code> objects, each of which contains fields <code>OutputS3Path</code> and <code>Output</code>.</p>",
-        "CreateIdMappingWorkflowOutput$outputSourceConfig": "<p>A list of <code>IdMappingWorkflowOutputSource</code> objects, each of which contains fields <code>OutputS3Path</code> and <code>Output</code>.</p>",
-        "GetIdMappingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code> and <code>KMSArn</code>.</p>",
-        "UpdateIdMappingWorkflowInput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code> and <code>KMSArn</code>.</p>",
-        "UpdateIdMappingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code> and <code>KMSArn</code>.</p>"
+        "CreateIdMappingWorkflowInput$outputSourceConfig": "<p>A list of <code>IdMappingWorkflowOutputSource</code> objects, each of which contains fields <code>outputS3Path</code> and <code>KMSArn</code>.</p>",
+        "CreateIdMappingWorkflowOutput$outputSourceConfig": "<p>A list of <code>IdMappingWorkflowOutputSource</code> objects, each of which contains fields <code>outputS3Path</code> and <code>KMSArn</code>.</p>",
+        "GetIdMappingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code> and <code>KMSArn</code>.</p>",
+        "UpdateIdMappingWorkflowInput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code> and <code>KMSArn</code>.</p>",
+        "UpdateIdMappingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code> and <code>KMSArn</code>.</p>"
       }
     },
     "IdMappingWorkflowRuleDefinitionType": {
@@ -673,7 +628,7 @@
       }
     },
     "IdNamespaceIdMappingWorkflowProperties": {
-      "base": "<p>An object containing <code>IdMappingType</code>, <code>ProviderProperties</code>, and <code>RuleBasedProperties</code>.</p>",
+      "base": "<p>An object containing <code>idMappingType</code>, <code>providerProperties</code>, and <code>ruleBasedProperties</code>.</p>",
       "refs": {
         "IdNamespaceIdMappingWorkflowPropertiesList$member": null
       }
@@ -689,7 +644,7 @@
       }
     },
     "IdNamespaceInputSource": {
-      "base": "<p>An object containing <code>InputSourceARN</code> and <code>SchemaName</code>.</p>",
+      "base": "<p>An object containing <code>inputSourceARN</code> and <code>schemaName</code>.</p>",
       "refs": {
         "IdNamespaceInputSourceConfig$member": null
       }
@@ -734,23 +689,23 @@
       }
     },
     "IncrementalRunConfig": {
-      "base": "<p>An object which defines an incremental run type and has only <code>incrementalRunType</code> as a field.</p>",
+      "base": "<p>Optional. An object that defines the incremental run type. This object contains only the <code>incrementalRunType</code> field, which appears as \"Automatic\" in the console. </p> <important> <p>For workflows where <code>resolutionType</code> is <code>ML_MATCHING</code>, incremental processing is not supported. </p> </important>",
       "refs": {
-        "CreateMatchingWorkflowInput$incrementalRunConfig": "<p>An object which defines an incremental run type and has only <code>incrementalRunType</code> as a field.</p>",
+        "CreateMatchingWorkflowInput$incrementalRunConfig": "<p>Optional. An object that defines the incremental run type. This object contains only the <code>incrementalRunType</code> field, which appears as \"Automatic\" in the console. </p> <important> <p>For workflows where <code>resolutionType</code> is <code>ML_MATCHING</code>, incremental processing is not supported. </p> </important>",
         "CreateMatchingWorkflowOutput$incrementalRunConfig": "<p>An object which defines an incremental run type and has only <code>incrementalRunType</code> as a field.</p>",
         "GetMatchingWorkflowOutput$incrementalRunConfig": "<p>An object which defines an incremental run type and has only <code>incrementalRunType</code> as a field.</p>",
-        "UpdateMatchingWorkflowInput$incrementalRunConfig": "<p>An object which defines an incremental run type and has only <code>incrementalRunType</code> as a field.</p>",
+        "UpdateMatchingWorkflowInput$incrementalRunConfig": "<p>Optional. An object that defines the incremental run type. This object contains only the <code>incrementalRunType</code> field, which appears as \"Automatic\" in the console. </p> <important> <p>For workflows where <code>resolutionType</code> is <code>ML_MATCHING</code>, incremental processing is not supported. </p> </important>",
         "UpdateMatchingWorkflowOutput$incrementalRunConfig": "<p>An object which defines an incremental run type and has only <code>incrementalRunType</code> as a field.</p>"
       }
     },
     "IncrementalRunType": {
       "base": null,
       "refs": {
-        "IncrementalRunConfig$incrementalRunType": "<p>The type of incremental run. It takes only one value: <code>IMMEDIATE</code>.</p>"
+        "IncrementalRunConfig$incrementalRunType": "<p>The type of incremental run. The only valid value is <code>IMMEDIATE</code>. This appears as \"Automatic\" in the console.</p> <important> <p>For workflows where <code>resolutionType</code> is <code>ML_MATCHING</code>, incremental processing is not supported. </p> </important>"
       }
     },
     "InputSource": {
-      "base": "<p>An object containing <code>InputSourceARN</code>, <code>SchemaName</code>, and <code>ApplyNormalization</code>.</p>",
+      "base": "<p>An object containing <code>inputSourceARN</code>, <code>schemaName</code>, and <code>applyNormalization</code>.</p>",
       "refs": {
         "InputSourceConfig$member": null
       }
@@ -796,8 +751,7 @@
     },
     "InternalServerException": {
       "base": "<p>This exception occurs when there is an internal failure in the Entity Resolution service. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobId": {
       "base": null,
@@ -819,13 +773,13 @@
       }
     },
     "JobMetrics": {
-      "base": "<p>An object containing <code>InputRecords</code>, <code>TotalRecordsProcessed</code>, <code>MatchIDs</code>, and <code>RecordsNotProcessed</code>.</p>",
+      "base": "<p>An object containing <code>inputRecords</code>, <code>totalRecordsProcessed</code>, <code>matchIDs</code>, and <code>recordsNotProcessed</code>.</p>",
       "refs": {
         "GetMatchingJobOutput$metrics": "<p>Metrics associated with the execution, specifically total records processed, unique IDs generated, and records the execution skipped.</p>"
       }
     },
     "JobOutputSource": {
-      "base": "<p>An object containing <code>KMSArn</code>, <code>OutputS3Path</code>, and <code>RoleArn</code>.</p>",
+      "base": "<p>An object containing <code>KMSArn</code>, <code>outputS3Path</code>, and <code>roleArn</code>.</p>",
       "refs": {
         "JobOutputSourceConfig$member": null
       }
@@ -845,7 +799,7 @@
       }
     },
     "JobSummary": {
-      "base": "<p>An object containing the <code>JobId</code>, <code>Status</code>, <code>StartTime</code>, and <code>EndTime</code> of a job.</p>",
+      "base": "<p>An object containing the <code>jobId</code>, <code>status</code>, <code>startTime</code>, and <code>endTime</code> of a job.</p>",
       "refs": {
         "JobList$member": null
       }
@@ -861,8 +815,7 @@
     },
     "ListIdMappingJobsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdMappingJobsInputMaxResultsInteger": {
       "base": null,
@@ -872,13 +825,11 @@
     },
     "ListIdMappingJobsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdMappingWorkflowsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdMappingWorkflowsInputMaxResultsInteger": {
       "base": null,
@@ -888,13 +839,11 @@
     },
     "ListIdMappingWorkflowsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdNamespacesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdNamespacesInputMaxResultsInteger": {
       "base": null,
@@ -904,13 +853,11 @@
     },
     "ListIdNamespacesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMatchingJobsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMatchingJobsInputMaxResultsInteger": {
       "base": null,
@@ -920,13 +867,11 @@
     },
     "ListMatchingJobsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMatchingWorkflowsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMatchingWorkflowsInputMaxResultsInteger": {
       "base": null,
@@ -936,13 +881,11 @@
     },
     "ListMatchingWorkflowsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProviderServicesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProviderServicesInputMaxResultsInteger": {
       "base": null,
@@ -952,13 +895,11 @@
     },
     "ListProviderServicesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemaMappingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemaMappingsInputMaxResultsInteger": {
       "base": null,
@@ -968,18 +909,15 @@
     },
     "ListSchemaMappingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MatchGroup": {
       "base": "<p>The match group.</p>",
@@ -1028,17 +966,17 @@
     "MatchingWorkflowList": {
       "base": null,
       "refs": {
-        "ListMatchingWorkflowsOutput$workflowSummaries": "<p>A list of <code>MatchingWorkflowSummary</code> objects, each of which contain the fields <code>WorkflowName</code>, <code>WorkflowArn</code>, <code>CreatedAt</code>, and <code>UpdatedAt</code>.</p>"
+        "ListMatchingWorkflowsOutput$workflowSummaries": "<p>A list of <code>MatchingWorkflowSummary</code> objects, each of which contain the fields <code>workflowName</code>, <code>workflowArn</code>, <code>resolutionType</code>, <code>createdAt</code>, and <code>updatedAt</code>.</p>"
       }
     },
     "MatchingWorkflowSummary": {
-      "base": "<p>A list of <code>MatchingWorkflowSummary</code> objects, each of which contain the fields <code>WorkflowName</code>, <code>WorkflowArn</code>, <code>CreatedAt</code>, <code>UpdatedAt</code>.</p>",
+      "base": "<p>A list of <code>MatchingWorkflowSummary</code> objects, each of which contain the fields <code>workflowName</code>, <code>workflowArn</code>, <code>resolutionType</code>, <code>createdAt</code>, <code>updatedAt</code>.</p>",
       "refs": {
         "MatchingWorkflowList$member": null
       }
     },
     "NamespaceProviderProperties": {
-      "base": "<p>An object containing <code>ProviderConfiguration</code> and <code>ProviderServiceArn</code>.</p>",
+      "base": "<p>An object containing <code>providerConfiguration</code> and <code>providerServiceArn</code>.</p>",
       "refs": {
         "IdNamespaceIdMappingWorkflowProperties$providerProperties": "<p>An object which defines any additional configurations required by the provider service.</p>"
       }
@@ -1089,11 +1027,11 @@
     "OutputSourceConfig": {
       "base": null,
       "refs": {
-        "CreateMatchingWorkflowInput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code>, <code>ApplyNormalization</code>, and <code>Output</code>.</p>",
-        "CreateMatchingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code>, <code>ApplyNormalization</code>, and <code>Output</code>.</p>",
-        "GetMatchingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code>, <code>ApplyNormalization</code>, and <code>Output</code>.</p>",
-        "UpdateMatchingWorkflowInput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code>, <code>ApplyNormalization</code>, and <code>Output</code>.</p>",
-        "UpdateMatchingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>OutputS3Path</code>, <code>ApplyNormalization</code>, and <code>Output</code>.</p>"
+        "CreateMatchingWorkflowInput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code>, <code>applyNormalization</code>, <code>KMSArn</code>, and <code>output</code>.</p>",
+        "CreateMatchingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code>, <code>applyNormalization</code>, <code>KMSArn</code>, and <code>output</code>.</p>",
+        "GetMatchingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code>, <code>applyNormalization</code>, <code>KMSArn</code>, and <code>output</code>.</p>",
+        "UpdateMatchingWorkflowInput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code>, <code>applyNormalization</code>, <code>KMSArn</code>, and <code>output</code>.</p>",
+        "UpdateMatchingWorkflowOutput$outputSourceConfig": "<p>A list of <code>OutputSource</code> objects, each of which contains fields <code>outputS3Path</code>, <code>applyNormalization</code>, <code>KMSArn</code>, and <code>output</code>.</p>"
       }
     },
     "OutputSourceOutputList": {
@@ -1208,13 +1146,11 @@
     },
     "PutPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Record": {
       "base": "<p> The record.</p>",
@@ -1302,8 +1238,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource could not be found. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
@@ -1318,7 +1253,7 @@
       }
     },
     "Rule": {
-      "base": "<p>An object containing <code>RuleName</code>, and <code>MatchingKeys</code>.</p>",
+      "base": "<p>An object containing the <code>ruleName</code> and <code>matchingKeys</code>.</p>",
       "refs": {
         "IdMappingRuleBasedPropertiesRulesList$member": null,
         "NamespaceRuleBasedPropertiesRulesList$member": null,
@@ -1326,15 +1261,45 @@
       }
     },
     "RuleBasedProperties": {
-      "base": "<p>An object which defines the list of matching rules to run in a matching workflow. RuleBasedProperties contain a <code>Rules</code> field, which is a list of rule objects.</p>",
+      "base": "<p>An object which defines the list of matching rules to run in a matching workflow. </p>",
       "refs": {
-        "ResolutionTechniques$ruleBasedProperties": "<p>An object which defines the list of matching rules to run and has a field <code>Rules</code>, which is a list of rule objects.</p>"
+        "ResolutionTechniques$ruleBasedProperties": "<p>An object which defines the list of matching rules to run and has a field <code>rules</code>, which is a list of rule objects.</p>"
       }
     },
     "RuleBasedPropertiesRulesList": {
       "base": null,
       "refs": {
         "RuleBasedProperties$rules": "<p>A list of <code>Rule</code> objects, each of which have fields <code>RuleName</code> and <code>MatchingKeys</code>.</p>"
+      }
+    },
+    "RuleCondition": {
+      "base": "<p>An object that defines the <code>ruleCondition</code> and the <code>ruleName</code> to use in a matching workflow.</p>",
+      "refs": {
+        "RuleConditionPropertiesRulesList$member": null
+      }
+    },
+    "RuleConditionConditionString": {
+      "base": null,
+      "refs": {
+        "RuleCondition$condition": "<p>A statement that specifies the conditions for a matching rule.</p> <p>If your data is accurate, use an Exact matching function: <code>Exact</code> or <code>ExactManyToMany</code>. </p> <p>If your data has variations in spelling or pronunciation, use a Fuzzy matching function: <code>Cosine</code>, <code>Levenshtein</code>, or <code>Soundex</code>. </p> <p>Use operators if you want to combine (<code>AND</code>), separate (<code>OR</code>), or group matching functions <code>(...)</code>.</p> <p>For example: <code>(Cosine(a, 10) AND Exact(b, true)) OR ExactManyToMany(c, d)</code> </p>"
+      }
+    },
+    "RuleConditionProperties": {
+      "base": "<p>The properties of a rule condition that provides the ability to use more complex syntax.</p>",
+      "refs": {
+        "ResolutionTechniques$ruleConditionProperties": "<p>An object containing the <code>rules</code> for a matching workflow.</p>"
+      }
+    },
+    "RuleConditionPropertiesRulesList": {
+      "base": null,
+      "refs": {
+        "RuleConditionProperties$rules": "<p> A list of rule objects, each of which have fields <code>ruleName</code> and <code>condition</code>. </p>"
+      }
+    },
+    "RuleConditionRuleNameString": {
+      "base": null,
+      "refs": {
+        "RuleCondition$ruleName": "<p>A name for the matching rule.</p> <p>For example: <code>Rule1</code> </p>"
       }
     },
     "RuleMatchingKeysList": {
@@ -1404,7 +1369,7 @@
       }
     },
     "SchemaMappingSummary": {
-      "base": "<p>An object containing <code>SchemaName</code>, <code>SchemaArn</code>, <code>CreatedAt</code>, and<code>UpdatedAt</code>.</p>",
+      "base": "<p>An object containing <code>schemaName</code>, <code>schemaArn</code>, <code>createdAt</code>, <code>updatedAt</code>, and <code>hasWorkflows</code>.</p>",
       "refs": {
         "SchemaMappingList$member": null
       }
@@ -1424,23 +1389,19 @@
     },
     "StartIdMappingJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartIdMappingJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMatchingJobInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMatchingJobOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StatementAction": {
       "base": null,
@@ -1544,13 +1505,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1560,8 +1519,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1608,58 +1566,47 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdMappingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdMappingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdNamespaceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdNamespaceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMatchingWorkflowInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMatchingWorkflowOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSchemaMappingInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSchemaMappingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by Entity Resolution. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VeniceGlobalArn": {
       "base": null,

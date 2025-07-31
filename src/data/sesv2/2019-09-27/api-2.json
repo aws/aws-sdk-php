@@ -251,6 +251,36 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "CreateTenant":{
+      "name":"CreateTenant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants"
+      },
+      "input":{"shape":"CreateTenantRequest"},
+      "output":{"shape":"CreateTenantResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "CreateTenantResourceAssociation":{
+      "name":"CreateTenantResourceAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/resources"
+      },
+      "input":{"shape":"CreateTenantResourceAssociationRequest"},
+      "output":{"shape":"CreateTenantResourceAssociationResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "DeleteConfigurationSet":{
       "name":"DeleteConfigurationSet",
       "http":{
@@ -408,6 +438,34 @@
         {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "DeleteTenant":{
+      "name":"DeleteTenant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/delete"
+      },
+      "input":{"shape":"DeleteTenantRequest"},
+      "output":{"shape":"DeleteTenantResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "DeleteTenantResourceAssociation":{
+      "name":"DeleteTenantResourceAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/resources/delete"
+      },
+      "input":{"shape":"DeleteTenantResourceAssociationRequest"},
+      "output":{"shape":"DeleteTenantResourceAssociationResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "GetAccount":{
@@ -703,6 +761,20 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "GetReputationEntity":{
+      "name":"GetReputationEntity",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/email/reputation/entities/{ReputationEntityType}/{ReputationEntityReference}"
+      },
+      "input":{"shape":"GetReputationEntityRequest"},
+      "output":{"shape":"GetReputationEntityResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "GetSuppressedDestination":{
       "name":"GetSuppressedDestination",
       "http":{
@@ -715,6 +787,20 @@
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"NotFoundException"}
+      ]
+    },
+    "GetTenant":{
+      "name":"GetTenant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/get"
+      },
+      "input":{"shape":"GetTenantRequest"},
+      "output":{"shape":"GetTenantResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "ListConfigurationSets":{
@@ -890,6 +976,33 @@
         {"shape":"NotFoundException"}
       ]
     },
+    "ListReputationEntities":{
+      "name":"ListReputationEntities",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/reputation/entities"
+      },
+      "input":{"shape":"ListReputationEntitiesRequest"},
+      "output":{"shape":"ListReputationEntitiesResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "ListResourceTenants":{
+      "name":"ListResourceTenants",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/resources/tenants/list"
+      },
+      "input":{"shape":"ListResourceTenantsRequest"},
+      "output":{"shape":"ListResourceTenantsResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "ListSuppressedDestinations":{
       "name":"ListSuppressedDestinations",
       "http":{
@@ -916,6 +1029,33 @@
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
         {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "ListTenantResources":{
+      "name":"ListTenantResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/resources/list"
+      },
+      "input":{"shape":"ListTenantResourcesRequest"},
+      "output":{"shape":"ListTenantResourcesResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "ListTenants":{
+      "name":"ListTenants",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/list"
+      },
+      "input":{"shape":"ListTenantsRequest"},
+      "output":{"shape":"ListTenantsResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "PutAccountDedicatedIpWarmupAttributes":{
@@ -1411,6 +1551,34 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "UpdateReputationEntityCustomerManagedStatus":{
+      "name":"UpdateReputationEntityCustomerManagedStatus",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/email/reputation/entities/{ReputationEntityType}/{ReputationEntityReference}/customer-managed-status"
+      },
+      "input":{"shape":"UpdateReputationEntityCustomerManagedStatusRequest"},
+      "output":{"shape":"UpdateReputationEntityCustomerManagedStatusResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "UpdateReputationEntityPolicy":{
+      "name":"UpdateReputationEntityPolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/email/reputation/entities/{ReputationEntityType}/{ReputationEntityReference}/policy"
+      },
+      "input":{"shape":"UpdateReputationEntityPolicyRequest"},
+      "output":{"shape":"UpdateReputationEntityPolicyResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"}
+      ]
     }
   },
   "shapes":{
@@ -1452,7 +1620,10 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
-    "AmazonResourceName":{"type":"string"},
+    "AmazonResourceName":{
+      "type":"string",
+      "min":1
+    },
     "ArchiveArn":{
       "type":"string",
       "max":1011,
@@ -2036,6 +2207,40 @@
         "EndpointId":{"shape":"EndpointId"}
       }
     },
+    "CreateTenantRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateTenantResourceAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "TenantName",
+        "ResourceArn"
+      ],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "CreateTenantResourceAssociationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "CreateTenantResponse":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "TenantArn":{"shape":"AmazonResourceName"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Tags":{"shape":"TagList"},
+        "SendingStatus":{"shape":"SendingStatus"}
+      }
+    },
     "CustomRedirectDomain":{"type":"string"},
     "CustomVerificationEmailTemplateMetadata":{
       "type":"structure",
@@ -2300,6 +2505,32 @@
       }
     },
     "DeleteSuppressedDestinationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteTenantRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"}
+      }
+    },
+    "DeleteTenantResourceAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "TenantName",
+        "ResourceArn"
+      ],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "DeleteTenantResourceAssociationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteTenantResponse":{
       "type":"structure",
       "members":{}
     },
@@ -3228,6 +3459,31 @@
         "LastUpdatedTimestamp":{"shape":"Timestamp"}
       }
     },
+    "GetReputationEntityRequest":{
+      "type":"structure",
+      "required":[
+        "ReputationEntityReference",
+        "ReputationEntityType"
+      ],
+      "members":{
+        "ReputationEntityReference":{
+          "shape":"ReputationEntityReference",
+          "location":"uri",
+          "locationName":"ReputationEntityReference"
+        },
+        "ReputationEntityType":{
+          "shape":"ReputationEntityType",
+          "location":"uri",
+          "locationName":"ReputationEntityType"
+        }
+      }
+    },
+    "GetReputationEntityResponse":{
+      "type":"structure",
+      "members":{
+        "ReputationEntity":{"shape":"ReputationEntity"}
+      }
+    },
     "GetSuppressedDestinationRequest":{
       "type":"structure",
       "required":["EmailAddress"],
@@ -3244,6 +3500,19 @@
       "required":["SuppressedDestination"],
       "members":{
         "SuppressedDestination":{"shape":"SuppressedDestination"}
+      }
+    },
+    "GetTenantRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"}
+      }
+    },
+    "GetTenantResponse":{
+      "type":"structure",
+      "members":{
+        "Tenant":{"shape":"Tenant"}
       }
     },
     "GuardianAttributes":{
@@ -3774,6 +4043,37 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListReputationEntitiesRequest":{
+      "type":"structure",
+      "members":{
+        "Filter":{"shape":"ReputationEntityFilter"},
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
+      }
+    },
+    "ListReputationEntitiesResponse":{
+      "type":"structure",
+      "members":{
+        "ReputationEntities":{"shape":"ReputationEntitiesList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResourceTenantsRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "PageSize":{"shape":"MaxItems"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResourceTenantsResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceTenants":{"shape":"ResourceTenantMetadataList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListSuppressedDestinationsRequest":{
       "type":"structure",
       "members":{
@@ -3827,6 +4127,51 @@
       "required":["Tags"],
       "members":{
         "Tags":{"shape":"TagList"}
+      }
+    },
+    "ListTenantResourcesFilter":{
+      "type":"map",
+      "key":{"shape":"ListTenantResourcesFilterKey"},
+      "value":{"shape":"ListTenantResourcesFilterValue"}
+    },
+    "ListTenantResourcesFilterKey":{
+      "type":"string",
+      "enum":["RESOURCE_TYPE"]
+    },
+    "ListTenantResourcesFilterValue":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "ListTenantResourcesRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "Filter":{"shape":"ListTenantResourcesFilter"},
+        "PageSize":{"shape":"MaxItems"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTenantResourcesResponse":{
+      "type":"structure",
+      "members":{
+        "TenantResources":{"shape":"TenantResourceList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTenantsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
+      }
+    },
+    "ListTenantsResponse":{
+      "type":"structure",
+      "members":{
+        "Tenants":{"shape":"TenantInfoList"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "MailFromAttributes":{
@@ -4538,7 +4883,10 @@
         "DMARC",
         "SPF",
         "BIMI",
-        "COMPLAINT"
+        "COMPLAINT",
+        "BOUNCE",
+        "FEEDBACK_3P",
+        "IP_LISTING"
       ]
     },
     "RecommendationsList":{
@@ -4565,12 +4913,76 @@
     },
     "ReportId":{"type":"string"},
     "ReportName":{"type":"string"},
+    "ReputationEntitiesList":{
+      "type":"list",
+      "member":{"shape":"ReputationEntity"}
+    },
+    "ReputationEntity":{
+      "type":"structure",
+      "members":{
+        "ReputationEntityReference":{"shape":"ReputationEntityReference"},
+        "ReputationEntityType":{"shape":"ReputationEntityType"},
+        "ReputationManagementPolicy":{"shape":"AmazonResourceName"},
+        "CustomerManagedStatus":{"shape":"StatusRecord"},
+        "AwsSesManagedStatus":{"shape":"StatusRecord"},
+        "SendingStatusAggregate":{"shape":"SendingStatus"},
+        "ReputationImpact":{"shape":"RecommendationImpact"}
+      }
+    },
+    "ReputationEntityFilter":{
+      "type":"map",
+      "key":{"shape":"ReputationEntityFilterKey"},
+      "value":{"shape":"ReputationEntityFilterValue"}
+    },
+    "ReputationEntityFilterKey":{
+      "type":"string",
+      "enum":[
+        "ENTITY_TYPE",
+        "REPUTATION_IMPACT",
+        "SENDING_STATUS",
+        "ENTITY_REFERENCE_PREFIX"
+      ]
+    },
+    "ReputationEntityFilterValue":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "ReputationEntityReference":{
+      "type":"string",
+      "min":1
+    },
+    "ReputationEntityType":{
+      "type":"string",
+      "enum":["RESOURCE"]
+    },
     "ReputationOptions":{
       "type":"structure",
       "members":{
         "ReputationMetricsEnabled":{"shape":"Enabled"},
         "LastFreshStart":{"shape":"LastFreshStart"}
       }
+    },
+    "ResourceTenantMetadata":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "AssociatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "ResourceTenantMetadataList":{
+      "type":"list",
+      "member":{"shape":"ResourceTenantMetadata"}
+    },
+    "ResourceType":{
+      "type":"string",
+      "enum":[
+        "EMAIL_IDENTITY",
+        "CONFIGURATION_SET",
+        "EMAIL_TEMPLATE"
+      ]
     },
     "ReviewDetails":{
       "type":"structure",
@@ -4654,7 +5066,8 @@
         "EndpointId":{
           "shape":"EndpointId",
           "contextParam":{"name":"EndpointId"}
-        }
+        },
+        "TenantName":{"shape":"TenantName"}
       }
     },
     "SendBulkEmailResponse":{
@@ -4699,6 +5112,7 @@
           "shape":"EndpointId",
           "contextParam":{"name":"EndpointId"}
         },
+        "TenantName":{"shape":"TenantName"},
         "ListManagementOptions":{"shape":"ListManagementOptions"}
       }
     },
@@ -4729,6 +5143,14 @@
       "exception":true
     },
     "SendingPoolName":{"type":"string"},
+    "SendingStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "REINSTATED",
+        "DISABLED"
+      ]
+    },
     "SentLast24Hours":{"type":"double"},
     "SerialNumber":{"type":"long"},
     "SnsDestination":{
@@ -4746,6 +5168,19 @@
         "FAILED",
         "DELETING"
       ]
+    },
+    "StatusCause":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "StatusRecord":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"SendingStatus"},
+        "Cause":{"shape":"StatusCause"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
+      }
     },
     "Subject":{"type":"string"},
     "SubscriptionStatus":{
@@ -4879,6 +5314,46 @@
       }
     },
     "TemplateContent":{"type":"string"},
+    "Tenant":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "TenantArn":{"shape":"AmazonResourceName"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Tags":{"shape":"TagList"},
+        "SendingStatus":{"shape":"SendingStatus"}
+      }
+    },
+    "TenantId":{"type":"string"},
+    "TenantInfo":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "TenantArn":{"shape":"AmazonResourceName"},
+        "CreatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "TenantInfoList":{
+      "type":"list",
+      "member":{"shape":"TenantInfo"}
+    },
+    "TenantName":{
+      "type":"string",
+      "min":1
+    },
+    "TenantResource":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"ResourceType"},
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "TenantResourceList":{
+      "type":"list",
+      "member":{"shape":"TenantResource"}
+    },
     "TestRenderEmailTemplateRequest":{
       "type":"structure",
       "required":[
@@ -5128,6 +5603,56 @@
       }
     },
     "UpdateEmailTemplateResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateReputationEntityCustomerManagedStatusRequest":{
+      "type":"structure",
+      "required":[
+        "ReputationEntityType",
+        "ReputationEntityReference",
+        "SendingStatus"
+      ],
+      "members":{
+        "ReputationEntityType":{
+          "shape":"ReputationEntityType",
+          "location":"uri",
+          "locationName":"ReputationEntityType"
+        },
+        "ReputationEntityReference":{
+          "shape":"ReputationEntityReference",
+          "location":"uri",
+          "locationName":"ReputationEntityReference"
+        },
+        "SendingStatus":{"shape":"SendingStatus"}
+      }
+    },
+    "UpdateReputationEntityCustomerManagedStatusResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateReputationEntityPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ReputationEntityType",
+        "ReputationEntityReference",
+        "ReputationEntityPolicy"
+      ],
+      "members":{
+        "ReputationEntityType":{
+          "shape":"ReputationEntityType",
+          "location":"uri",
+          "locationName":"ReputationEntityType"
+        },
+        "ReputationEntityReference":{
+          "shape":"ReputationEntityReference",
+          "location":"uri",
+          "locationName":"ReputationEntityReference"
+        },
+        "ReputationEntityPolicy":{"shape":"AmazonResourceName"}
+      }
+    },
+    "UpdateReputationEntityPolicyResponse":{
       "type":"structure",
       "members":{}
     },

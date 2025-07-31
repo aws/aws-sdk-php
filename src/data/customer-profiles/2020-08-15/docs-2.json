@@ -94,6 +94,7 @@
         "AdditionalSearchKey$KeyName": "<p>A searchable identifier of a customer profile.</p>",
         "BatchGetCalculatedAttributeForProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
         "BatchGetProfileRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "ContactPreference$KeyName": "<p>A searchable, unique identifier of a customer profile.</p>",
         "CreateCalculatedAttributeDefinitionRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateDomainLayoutRequest$DomainName": "<p>The unique name of the domain.</p>",
         "CreateDomainLayoutRequest$LayoutDefinitionName": "<p>The unique name of the layout.</p>",
@@ -570,6 +571,19 @@
         "GetAutoMergingPreviewRequest$Consolidation": "<p>A list of matching attributes that represent matching criteria.</p>"
       }
     },
+    "ContactPreference": {
+      "base": "<p>Object that defines users contact preference.</p>",
+      "refs": {
+        "EmailPreferenceList$member": null,
+        "PhonePreferenceList$member": null
+      }
+    },
+    "ContactType": {
+      "base": null,
+      "refs": {
+        "ContactPreference$ContactType": "<p>The contact type used for engagement. For example: HomePhoneNumber, PersonalEmailAddress.</p>"
+      }
+    },
     "CreateCalculatedAttributeDefinitionRequest": {
       "base": null,
       "refs": {}
@@ -881,10 +895,24 @@
         "AttributeTypesSelector$EmailAddress": "<p>The <code>Email</code> type. You can choose from <code>EmailAddress</code>, <code>BusinessEmailAddress</code> and <code>PersonalEmailAddress</code>.</p> <p>You only can use the <code>EmailAddress</code> type in the <code>MatchingRule</code>. For example, if you want to match profile based on <code>PersonalEmailAddress</code> or <code>BusinessEmailAddress</code>, you need to choose the <code>PersonalEmailAddress</code> and the <code>BusinessEmailAddress</code> to represent the <code>EmailAddress</code> type and only specify the <code>EmailAddress</code> on the matching rule.</p>"
       }
     },
+    "EmailPreferenceList": {
+      "base": null,
+      "refs": {
+        "EngagementPreferences$Email": "<p>A list of email-related contact preferences</p>"
+      }
+    },
     "End": {
       "base": null,
       "refs": {
         "RangeOverride$End": "<p>The end time of when to include objects.</p>"
+      }
+    },
+    "EngagementPreferences": {
+      "base": "<p>Object that defines users preferred methods of engagement.</p>",
+      "refs": {
+        "CreateProfileRequest$EngagementPreferences": "<p>Object that defines the preferred methods of engagement, per channel.</p>",
+        "Profile$EngagementPreferences": "<p>The customer or account’s engagement preferences.</p>",
+        "UpdateProfileRequest$EngagementPreferences": "<p>Object that defines users preferred methods of engagement.</p>"
       }
     },
     "EstimateStatus": {
@@ -1872,6 +1900,12 @@
         "AttributeTypesSelector$PhoneNumber": "<p>The <code>PhoneNumber</code> type. You can choose from <code>PhoneNumber</code>, <code>HomePhoneNumber</code>, and <code>MobilePhoneNumber</code>.</p> <p>You only can use the <code>PhoneNumber</code> type in the <code>MatchingRule</code>. For example, if you want to match a profile based on <code>Phone</code> or <code>HomePhone</code>, you need to choose the <code>Phone</code> and the <code>HomePhone</code> to represent the <code>PhoneNumber</code> type and only specify the <code>PhoneNumber</code> on the matching rule.</p>"
       }
     },
+    "PhonePreferenceList": {
+      "base": null,
+      "refs": {
+        "EngagementPreferences$Phone": "<p>A list of phone-related contact preferences</p>"
+      }
+    },
     "Profile": {
       "base": "<p>The standard profile of a customer.</p>",
       "refs": {
@@ -1979,6 +2013,33 @@
       "base": "<p>Object that holds the results for membership.</p>",
       "refs": {
         "Profiles$member": null
+      }
+    },
+    "ProfileType": {
+      "base": null,
+      "refs": {
+        "CreateProfileRequest$ProfileType": "<p>The type of the profile.</p>",
+        "Profile$ProfileType": "<p>The type of the profile.</p>",
+        "ProfileTypeValues$member": null,
+        "UpdateProfileRequest$ProfileType": "<p>Determines the type of the profile.</p>"
+      }
+    },
+    "ProfileTypeDimension": {
+      "base": "<p>Object to hold the dimension of a profile type field to segment on.</p>",
+      "refs": {
+        "ProfileAttributes$ProfileType": "<p>A field to describe values to segment on within profile type.</p>"
+      }
+    },
+    "ProfileTypeDimensionType": {
+      "base": null,
+      "refs": {
+        "ProfileTypeDimension$DimensionType": "<p>The action to segment on.</p>"
+      }
+    },
+    "ProfileTypeValues": {
+      "base": null,
+      "refs": {
+        "ProfileTypeDimension$Values": "<p>The values to apply the DimensionType on.</p>"
       }
     },
     "Profiles": {
@@ -3102,6 +3163,7 @@
         "CalculatedAttributeValue$IsDataPartial": "<p>Indicates whether the calculated attribute's value is based on partial data. If the data is partial, it is set to true.</p>",
         "CalculatedAttributeValue$Value": "<p>The value of the calculated attribute.</p>",
         "ConflictResolution$SourceName": "<p>The <code>ObjectType</code> name that is used to resolve profile merging conflicts when choosing <code>SOURCE</code> as the <code>ConflictResolvingModel</code>.</p>",
+        "ContactPreference$KeyValue": "<p>The key value used to look up profile based off the keyName.</p>",
         "CreateDomainLayoutResponse$Version": "<p>The version used to create layout.</p>",
         "CreateEventStreamRequest$Uri": "<p>The StreamARN of the destination to deliver profile events to. For example, arn:aws:kinesis:region:account-id:stream/stream-name</p>",
         "CreateEventStreamResponse$EventStreamArn": "<p>A unique identifier for the event stream.</p>",
@@ -3388,6 +3450,7 @@
         "BatchGetProfileError$ProfileId": "<p>The profile id that failed.</p>",
         "BatchGetProfileIdList$member": null,
         "CalculatedAttributeValue$ProfileId": "<p>The profile id belonging to this calculated attribute value.</p>",
+        "ContactPreference$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "CreateIntegrationWorkflowResponse$WorkflowId": "<p>Unique identifier for the workflow.</p>",
         "CreateProfileResponse$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "CreateSegmentSnapshotResponse$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
@@ -3415,6 +3478,8 @@
         "FieldSourceProfileIds$ShippingAddress": "<p>A unique identifier for the shipping address field to be merged.</p>",
         "FieldSourceProfileIds$MailingAddress": "<p>A unique identifier for the mailing address field to be merged.</p>",
         "FieldSourceProfileIds$BillingAddress": "<p>A unique identifier for the billing type field to be merged.</p>",
+        "FieldSourceProfileIds$ProfileType": "<p>A unique identifier for the profile type field to be merged.</p>",
+        "FieldSourceProfileIds$EngagementPreferences": "<p>A unique identifier for the engagement preferences field to be merged.</p>",
         "GetCalculatedAttributeForProfileRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "GetIdentityResolutionJobRequest$JobId": "<p>The unique identifier of the Identity Resolution Job.</p>",
         "GetIdentityResolutionJobResponse$JobId": "<p>The unique identifier of the Identity Resolution Job.</p>",

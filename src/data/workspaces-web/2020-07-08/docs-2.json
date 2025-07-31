@@ -6,6 +6,7 @@
     "AssociateDataProtectionSettings": "<p>Associates a data protection settings resource with a web portal.</p>",
     "AssociateIpAccessSettings": "<p>Associates an IP access settings resource with a web portal.</p>",
     "AssociateNetworkSettings": "<p>Associates a network settings resource with a web portal.</p>",
+    "AssociateSessionLogger": "<p>Associates a session logger with a portal.</p>",
     "AssociateTrustStore": "<p>Associates a trust store with a web portal.</p>",
     "AssociateUserAccessLoggingSettings": "<p>Associates a user access logging settings resource with a web portal.</p>",
     "AssociateUserSettings": "<p>Associates a user settings resource with a web portal.</p>",
@@ -15,6 +16,7 @@
     "CreateIpAccessSettings": "<p>Creates an IP access settings resource that can be associated with a web portal.</p>",
     "CreateNetworkSettings": "<p>Creates a network settings resource that can be associated with a web portal. Once associated with a web portal, network settings define how streaming instances will connect with your specified VPC. </p>",
     "CreatePortal": "<p>Creates a web portal.</p>",
+    "CreateSessionLogger": "<p>Creates a session logger.</p>",
     "CreateTrustStore": "<p>Creates a trust store that can be associated with a web portal. A trust store contains certificate authority (CA) certificates. Once associated with a web portal, the browser in a streaming session will recognize certificates that have been issued using any of the CAs in the trust store. If your organization has internal websites that use certificates issued by private CAs, you should add the private CA certificate to the trust store. </p>",
     "CreateUserAccessLoggingSettings": "<p>Creates a user access logging settings resource that can be associated with a web portal.</p>",
     "CreateUserSettings": "<p>Creates a user settings resource that can be associated with a web portal. Once associated with a web portal, user settings control how users can transfer data between a streaming session and the their local devices. </p>",
@@ -24,6 +26,7 @@
     "DeleteIpAccessSettings": "<p>Deletes IP access settings.</p>",
     "DeleteNetworkSettings": "<p>Deletes network settings.</p>",
     "DeletePortal": "<p>Deletes a web portal.</p>",
+    "DeleteSessionLogger": "<p>Deletes a session logger resource.</p>",
     "DeleteTrustStore": "<p>Deletes the trust store.</p>",
     "DeleteUserAccessLoggingSettings": "<p>Deletes user access logging settings.</p>",
     "DeleteUserSettings": "<p>Deletes user settings.</p>",
@@ -31,6 +34,7 @@
     "DisassociateDataProtectionSettings": "<p>Disassociates data protection settings from a web portal.</p>",
     "DisassociateIpAccessSettings": "<p>Disassociates IP access settings from a web portal.</p>",
     "DisassociateNetworkSettings": "<p>Disassociates network settings from a web portal.</p>",
+    "DisassociateSessionLogger": "<p>Disassociates a session logger from a portal.</p>",
     "DisassociateTrustStore": "<p>Disassociates a trust store from a web portal.</p>",
     "DisassociateUserAccessLoggingSettings": "<p>Disassociates user access logging settings from a web portal.</p>",
     "DisassociateUserSettings": "<p>Disassociates user settings from a web portal.</p>",
@@ -43,6 +47,7 @@
     "GetPortal": "<p>Gets the web portal.</p>",
     "GetPortalServiceProviderMetadata": "<p>Gets the service provider metadata.</p>",
     "GetSession": "<p>Gets information for a secure browser session.</p>",
+    "GetSessionLogger": "<p>Gets details about a specific session logger resource.</p>",
     "GetTrustStore": "<p>Gets the trust store.</p>",
     "GetTrustStoreCertificate": "<p>Gets the trust store certificate.</p>",
     "GetUserAccessLoggingSettings": "<p>Gets user access logging settings.</p>",
@@ -53,6 +58,7 @@
     "ListIpAccessSettings": "<p>Retrieves a list of IP access settings.</p>",
     "ListNetworkSettings": "<p>Retrieves a list of network settings.</p>",
     "ListPortals": "<p>Retrieves a list or web portals.</p>",
+    "ListSessionLoggers": "<p>Lists all available session logger resources.</p>",
     "ListSessions": "<p>Lists information for multiple secure browser sessions from a specific portal.</p>",
     "ListTagsForResource": "<p>Retrieves a list of tags for a resource.</p>",
     "ListTrustStoreCertificates": "<p>Retrieves a list of trust store certificates.</p>",
@@ -67,6 +73,7 @@
     "UpdateIpAccessSettings": "<p>Updates IP access settings.</p>",
     "UpdateNetworkSettings": "<p>Updates network settings.</p>",
     "UpdatePortal": "<p>Updates a web portal.</p>",
+    "UpdateSessionLogger": "<p>Updates the details of a session logger.</p>",
     "UpdateTrustStore": "<p>Updates the trust store.</p>",
     "UpdateUserAccessLoggingSettings": "<p>Updates the user access logging settings.</p>",
     "UpdateUserSettings": "<p>Updates the user settings.</p>"
@@ -76,22 +83,26 @@
       "base": null,
       "refs": {
         "ArnList$member": null,
-        "AssociateBrowserSettingsRequest$browserSettingsArn": "<p>The ARN of the browser settings.</p>",
         "AssociateBrowserSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
-        "AssociateBrowserSettingsResponse$browserSettingsArn": "<p>The ARN of the browser settings.</p>",
+        "AssociateBrowserSettingsRequest$browserSettingsArn": "<p>The ARN of the browser settings.</p>",
         "AssociateBrowserSettingsResponse$portalArn": "<p>The ARN of the web portal.</p>",
-        "AssociateDataProtectionSettingsRequest$dataProtectionSettingsArn": "<p>The ARN of the data protection settings.</p>",
+        "AssociateBrowserSettingsResponse$browserSettingsArn": "<p>The ARN of the browser settings.</p>",
         "AssociateDataProtectionSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
-        "AssociateDataProtectionSettingsResponse$dataProtectionSettingsArn": "<p>The ARN of the data protection settings resource.</p>",
+        "AssociateDataProtectionSettingsRequest$dataProtectionSettingsArn": "<p>The ARN of the data protection settings.</p>",
         "AssociateDataProtectionSettingsResponse$portalArn": "<p>The ARN of the web portal.</p>",
-        "AssociateIpAccessSettingsRequest$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
+        "AssociateDataProtectionSettingsResponse$dataProtectionSettingsArn": "<p>The ARN of the data protection settings resource.</p>",
         "AssociateIpAccessSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
-        "AssociateIpAccessSettingsResponse$ipAccessSettingsArn": "<p>The ARN of the IP access settings resource.</p>",
+        "AssociateIpAccessSettingsRequest$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
         "AssociateIpAccessSettingsResponse$portalArn": "<p>The ARN of the web portal.</p>",
-        "AssociateNetworkSettingsRequest$networkSettingsArn": "<p>The ARN of the network settings.</p>",
+        "AssociateIpAccessSettingsResponse$ipAccessSettingsArn": "<p>The ARN of the IP access settings resource.</p>",
         "AssociateNetworkSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
-        "AssociateNetworkSettingsResponse$networkSettingsArn": "<p>The ARN of the network settings.</p>",
+        "AssociateNetworkSettingsRequest$networkSettingsArn": "<p>The ARN of the network settings.</p>",
         "AssociateNetworkSettingsResponse$portalArn": "<p>The ARN of the web portal.</p>",
+        "AssociateNetworkSettingsResponse$networkSettingsArn": "<p>The ARN of the network settings.</p>",
+        "AssociateSessionLoggerRequest$portalArn": "<p>The ARN of the portal to associate to the session logger ARN.</p>",
+        "AssociateSessionLoggerRequest$sessionLoggerArn": "<p>The ARN of the session logger to associate to the portal ARN.</p>",
+        "AssociateSessionLoggerResponse$portalArn": "<p>The ARN of the portal.</p>",
+        "AssociateSessionLoggerResponse$sessionLoggerArn": "<p>The ARN of the session logger.</p>",
         "AssociateTrustStoreRequest$portalArn": "<p>The ARN of the web portal.</p>",
         "AssociateTrustStoreRequest$trustStoreArn": "<p>The ARN of the trust store.</p>",
         "AssociateTrustStoreResponse$portalArn": "<p>The ARN of the web portal.</p>",
@@ -112,6 +123,7 @@
         "CreateIpAccessSettingsResponse$ipAccessSettingsArn": "<p>The ARN of the IP access settings resource.</p>",
         "CreateNetworkSettingsResponse$networkSettingsArn": "<p>The ARN of the network settings.</p>",
         "CreatePortalResponse$portalArn": "<p>The ARN of the web portal.</p>",
+        "CreateSessionLoggerResponse$sessionLoggerArn": "<p>The ARN of the session logger.</p>",
         "CreateTrustStoreResponse$trustStoreArn": "<p>The ARN of the trust store.</p>",
         "CreateUserAccessLoggingSettingsResponse$userAccessLoggingSettingsArn": "<p>The ARN of the user access logging settings.</p>",
         "CreateUserSettingsResponse$userSettingsArn": "<p>The ARN of the user settings.</p>",
@@ -122,6 +134,7 @@
         "DeleteIpAccessSettingsRequest$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
         "DeleteNetworkSettingsRequest$networkSettingsArn": "<p>The ARN of the network settings.</p>",
         "DeletePortalRequest$portalArn": "<p>The ARN of the web portal.</p>",
+        "DeleteSessionLoggerRequest$sessionLoggerArn": "<p>The ARN of the session logger.</p>",
         "DeleteTrustStoreRequest$trustStoreArn": "<p>The ARN of the trust store.</p>",
         "DeleteUserAccessLoggingSettingsRequest$userAccessLoggingSettingsArn": "<p>The ARN of the user access logging settings.</p>",
         "DeleteUserSettingsRequest$userSettingsArn": "<p>The ARN of the user settings.</p>",
@@ -129,6 +142,7 @@
         "DisassociateDataProtectionSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
         "DisassociateIpAccessSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
         "DisassociateNetworkSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
+        "DisassociateSessionLoggerRequest$portalArn": "<p>The ARN of the portal to disassociate from the a session logger.</p>",
         "DisassociateTrustStoreRequest$portalArn": "<p>The ARN of the web portal.</p>",
         "DisassociateUserAccessLoggingSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
         "DisassociateUserSettingsRequest$portalArn": "<p>The ARN of the web portal.</p>",
@@ -139,6 +153,7 @@
         "GetPortalRequest$portalArn": "<p>The ARN of the web portal.</p>",
         "GetPortalServiceProviderMetadataRequest$portalArn": "<p>The ARN of the web portal.</p>",
         "GetPortalServiceProviderMetadataResponse$portalArn": "<p>The ARN of the web portal.</p>",
+        "GetSessionLoggerRequest$sessionLoggerArn": "<p>The ARN of the session logger.</p>",
         "GetTrustStoreCertificateRequest$trustStoreArn": "<p>The ARN of the trust store certificate.</p>",
         "GetTrustStoreCertificateResponse$trustStoreArn": "<p>The ARN of the trust store certificate.</p>",
         "GetTrustStoreRequest$trustStoreArn": "<p>The ARN of the trust store.</p>",
@@ -152,23 +167,27 @@
         "ListTrustStoreCertificatesResponse$trustStoreArn": "<p>The ARN of the trust store.</p>",
         "NetworkSettings$networkSettingsArn": "<p>The ARN of the network settings.</p>",
         "NetworkSettingsSummary$networkSettingsArn": "<p>The ARN of the network settings.</p>",
+        "Portal$portalArn": "<p>The ARN of the web portal.</p>",
         "Portal$browserSettingsArn": "<p>The ARN of the browser settings that is associated with this web portal.</p>",
         "Portal$dataProtectionSettingsArn": "<p>The ARN of the data protection settings.</p>",
-        "Portal$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
+        "Portal$userSettingsArn": "<p>The ARN of the user settings that is associated with the web portal.</p>",
         "Portal$networkSettingsArn": "<p>The ARN of the network settings that is associated with the web portal.</p>",
-        "Portal$portalArn": "<p>The ARN of the web portal.</p>",
+        "Portal$sessionLoggerArn": "<p>The ARN of the session logger that is assocaited with the portal.</p>",
         "Portal$trustStoreArn": "<p>The ARN of the trust store that is associated with the web portal.</p>",
         "Portal$userAccessLoggingSettingsArn": "<p>The ARN of the user access logging settings that is associated with the web portal.</p>",
-        "Portal$userSettingsArn": "<p>The ARN of the user settings that is associated with the web portal.</p>",
+        "Portal$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
+        "PortalSummary$portalArn": "<p>The ARN of the web portal.</p>",
         "PortalSummary$browserSettingsArn": "<p>The ARN of the browser settings that is associated with the web portal.</p>",
         "PortalSummary$dataProtectionSettingsArn": "<p>The ARN of the data protection settings.</p>",
-        "PortalSummary$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
+        "PortalSummary$userSettingsArn": "<p>The ARN of the user settings that is associated with the web portal.</p>",
         "PortalSummary$networkSettingsArn": "<p>The ARN of the network settings that is associated with the web portal.</p>",
-        "PortalSummary$portalArn": "<p>The ARN of the web portal.</p>",
+        "PortalSummary$sessionLoggerArn": "<p>The ARN of the session logger that is assocaited with the portal.</p>",
         "PortalSummary$trustStoreArn": "<p>The ARN of the trust that is associated with this web portal.</p>",
         "PortalSummary$userAccessLoggingSettingsArn": "<p>The ARN of the user access logging settings that is associated with the web portal.</p>",
-        "PortalSummary$userSettingsArn": "<p>The ARN of the user settings that is associated with the web portal.</p>",
+        "PortalSummary$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
         "Session$portalArn": "<p>The ARN of the web portal.</p>",
+        "SessionLogger$sessionLoggerArn": "<p>The ARN of the session logger resource.</p>",
+        "SessionLoggerSummary$sessionLoggerArn": "<p>The ARN of the session logger resource.</p>",
         "SessionSummary$portalArn": "<p>The ARN of the web portal.</p>",
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource.</p>",
         "TooManyTagsException$resourceName": "<p>Name of the resource affected.</p>",
@@ -180,6 +199,7 @@
         "UpdateIpAccessSettingsRequest$ipAccessSettingsArn": "<p>The ARN of the IP access settings.</p>",
         "UpdateNetworkSettingsRequest$networkSettingsArn": "<p>The ARN of the network settings.</p>",
         "UpdatePortalRequest$portalArn": "<p>The ARN of the web portal.</p>",
+        "UpdateSessionLoggerRequest$sessionLoggerArn": "<p>The ARN of the session logger to update.</p>",
         "UpdateTrustStoreRequest$trustStoreArn": "<p>The ARN of the trust store.</p>",
         "UpdateTrustStoreResponse$trustStoreArn": "<p>The ARN of the trust store.</p>",
         "UpdateUserAccessLoggingSettingsRequest$userAccessLoggingSettingsArn": "<p>The ARN of the user access logging settings.</p>",
@@ -202,6 +222,7 @@
         "DataProtectionSettings$associatedPortalArns": "<p>A list of web portal ARNs that this data protection settings resource is associated with.</p>",
         "IpAccessSettings$associatedPortalArns": "<p>A list of web portal ARNs that this IP access settings resource is associated with.</p>",
         "NetworkSettings$associatedPortalArns": "<p>A list of web portal ARNs that this network settings is associated with.</p>",
+        "SessionLogger$associatedPortalArns": "<p>The associated portal ARN.</p>",
         "TrustStore$associatedPortalArns": "<p>A list of web portal ARNs that this trust store is associated with.</p>",
         "UserAccessLoggingSettings$associatedPortalArns": "<p>A list of web portal ARNs that this user access logging settings is associated with.</p>",
         "UserSettings$associatedPortalArns": "<p>A list of web portal ARNs that this user settings is associated with.</p>"
@@ -243,6 +264,16 @@
       }
     },
     "AssociateNetworkSettingsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateSessionLoggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssociateSessionLoggerResponse": {
       "base": null,
       "refs": {
       }
@@ -349,10 +380,10 @@
     "CertificatePrincipal": {
       "base": null,
       "refs": {
-        "Certificate$issuer": "<p>The entity that issued the certificate.</p>",
         "Certificate$subject": "<p>The entity the certificate belongs to.</p>",
-        "CertificateSummary$issuer": "<p>The entity that issued the certificate.</p>",
-        "CertificateSummary$subject": "<p>The entity the certificate belongs to.</p>"
+        "Certificate$issuer": "<p>The entity that issued the certificate.</p>",
+        "CertificateSummary$subject": "<p>The entity the certificate belongs to.</p>",
+        "CertificateSummary$issuer": "<p>The entity that issued the certificate.</p>"
       }
     },
     "CertificateSummary": {
@@ -391,6 +422,7 @@
         "CreateIpAccessSettingsRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, subsequent retries with the same client token returns the result from the original successful request. </p> <p>If you do not specify a client token, one is automatically generated by the Amazon Web Services SDK.</p>",
         "CreateNetworkSettingsRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, subsequent retries with the same client token returns the result from the original successful request. </p> <p>If you do not specify a client token, one is automatically generated by the Amazon Web Services SDK.</p>",
         "CreatePortalRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, subsequent retries with the same client token returns the result from the original successful request. </p> <p>If you do not specify a client token, one is automatically generated by the Amazon Web Services SDK.</p>",
+        "CreateSessionLoggerRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, subsequent retries with the same client token returns the result from the original successful request. If you do not specify a client token, one is automatically generated by the AWS SDK.</p>",
         "CreateTrustStoreRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, subsequent retries with the same client token returns the result from the original successful request. </p> <p>If you do not specify a client token, one is automatically generated by the Amazon Web Services SDK.</p>",
         "CreateUserAccessLoggingSettingsRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, subsequent retries with the same client token returns the result from the original successful request. </p> <p>If you do not specify a client token, one is automatically generated by the Amazon Web Services SDK.</p>",
         "CreateUserSettingsRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, subsequent retries with the same client token returns the result from the original successful request. </p> <p>If you do not specify a client token, one is automatically generated by the Amazon Web Services SDK.</p>",
@@ -517,6 +549,16 @@
       "refs": {
       }
     },
+    "CreateSessionLoggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSessionLoggerResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateTrustStoreRequest": {
       "base": null,
       "refs": {
@@ -632,6 +674,16 @@
       "refs": {
       }
     },
+    "DeleteSessionLoggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteSessionLoggerResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteTrustStoreRequest": {
       "base": null,
       "refs": {
@@ -722,6 +774,16 @@
       "refs": {
       }
     },
+    "DisassociateSessionLoggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateSessionLoggerResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisassociateTrustStoreRequest": {
       "base": null,
       "refs": {
@@ -778,38 +840,42 @@
       "base": null,
       "refs": {
         "CreateDataProtectionSettingsRequest$displayName": "<p>The display name of the data protection settings.</p>",
+        "CreateSessionLoggerRequest$displayName": "<p>The human-readable display name for the session logger resource.</p>",
         "DataProtectionSettings$displayName": "<p>The display name of the data protection settings.</p>",
         "DataProtectionSettingsSummary$displayName": "<p>The display name of the data protection settings.</p>",
-        "UpdateDataProtectionSettingsRequest$displayName": "<p>The display name of the data protection settings.</p>"
+        "SessionLogger$displayName": "<p>The human-readable display name.</p>",
+        "SessionLoggerSummary$displayName": "<p>The human-readable display name.</p>",
+        "UpdateDataProtectionSettingsRequest$displayName": "<p>The display name of the data protection settings.</p>",
+        "UpdateSessionLoggerRequest$displayName": "<p>The updated display name.</p>"
       }
     },
     "EnabledType": {
       "base": null,
       "refs": {
         "CreateUserSettingsRequest$copyAllowed": "<p>Specifies whether the user can copy text from the streaming session to the local device.</p>",
-        "CreateUserSettingsRequest$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>",
-        "CreateUserSettingsRequest$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
         "CreateUserSettingsRequest$pasteAllowed": "<p>Specifies whether the user can paste text from the local device to the streaming session.</p>",
-        "CreateUserSettingsRequest$printAllowed": "<p>Specifies whether the user can print to the local device.</p>",
+        "CreateUserSettingsRequest$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
         "CreateUserSettingsRequest$uploadAllowed": "<p>Specifies whether the user can upload files from the local device to the streaming session.</p>",
+        "CreateUserSettingsRequest$printAllowed": "<p>Specifies whether the user can print to the local device.</p>",
+        "CreateUserSettingsRequest$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>",
         "UpdateUserSettingsRequest$copyAllowed": "<p>Specifies whether the user can copy text from the streaming session to the local device.</p>",
-        "UpdateUserSettingsRequest$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>",
-        "UpdateUserSettingsRequest$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
         "UpdateUserSettingsRequest$pasteAllowed": "<p>Specifies whether the user can paste text from the local device to the streaming session.</p>",
-        "UpdateUserSettingsRequest$printAllowed": "<p>Specifies whether the user can print to the local device.</p>",
+        "UpdateUserSettingsRequest$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
         "UpdateUserSettingsRequest$uploadAllowed": "<p>Specifies whether the user can upload files from the local device to the streaming session.</p>",
+        "UpdateUserSettingsRequest$printAllowed": "<p>Specifies whether the user can print to the local device.</p>",
+        "UpdateUserSettingsRequest$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>",
         "UserSettings$copyAllowed": "<p>Specifies whether the user can copy text from the streaming session to the local device.</p>",
-        "UserSettings$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>",
-        "UserSettings$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
         "UserSettings$pasteAllowed": "<p>Specifies whether the user can paste text from the local device to the streaming session.</p>",
-        "UserSettings$printAllowed": "<p>Specifies whether the user can print to the local device.</p>",
+        "UserSettings$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
         "UserSettings$uploadAllowed": "<p>Specifies whether the user can upload files from the local device to the streaming session.</p>",
+        "UserSettings$printAllowed": "<p>Specifies whether the user can print to the local device.</p>",
+        "UserSettings$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>",
         "UserSettingsSummary$copyAllowed": "<p>Specifies whether the user can copy text from the streaming session to the local device.</p>",
-        "UserSettingsSummary$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>",
-        "UserSettingsSummary$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
         "UserSettingsSummary$pasteAllowed": "<p>Specifies whether the user can paste text from the local device to the streaming session.</p>",
+        "UserSettingsSummary$downloadAllowed": "<p>Specifies whether the user can download files from the streaming session to the local device.</p>",
+        "UserSettingsSummary$uploadAllowed": "<p>Specifies whether the user can upload files from the local device to the streaming session.</p>",
         "UserSettingsSummary$printAllowed": "<p>Specifies whether the user can print to the local device.</p>",
-        "UserSettingsSummary$uploadAllowed": "<p>Specifies whether the user can upload files from the local device to the streaming session.</p>"
+        "UserSettingsSummary$deepLinkAllowed": "<p>Specifies whether the user can use deep links that open automatically when connecting to a session.</p>"
       }
     },
     "EncryptionContextMap": {
@@ -820,11 +886,33 @@
         "CreateDataProtectionSettingsRequest$additionalEncryptionContext": "<p>Additional encryption context of the data protection settings.</p>",
         "CreateIpAccessSettingsRequest$additionalEncryptionContext": "<p>Additional encryption context of the IP access settings.</p>",
         "CreatePortalRequest$additionalEncryptionContext": "<p>The additional encryption context of the portal.</p>",
+        "CreateSessionLoggerRequest$additionalEncryptionContext": "<p>The additional encryption context of the session logger.</p>",
         "CreateUserSettingsRequest$additionalEncryptionContext": "<p>The additional encryption context of the user settings.</p>",
         "DataProtectionSettings$additionalEncryptionContext": "<p>The additional encryption context of the data protection settings.</p>",
         "IpAccessSettings$additionalEncryptionContext": "<p>The additional encryption context of the IP access settings.</p>",
         "Portal$additionalEncryptionContext": "<p>The additional encryption context of the portal.</p>",
+        "SessionLogger$additionalEncryptionContext": "<p>The additional encryption context of the session logger.</p>",
         "UserSettings$additionalEncryptionContext": "<p>The additional encryption context of the user settings.</p>"
+      }
+    },
+    "Event": {
+      "base": null,
+      "refs": {
+        "Events$member": null
+      }
+    },
+    "EventFilter": {
+      "base": "<p>The filter that specifies the events to monitor.</p>",
+      "refs": {
+        "CreateSessionLoggerRequest$eventFilter": "<p>The filter that specifies the events to monitor.</p>",
+        "SessionLogger$eventFilter": "<p>The filter that specifies which events to monitor.</p>",
+        "UpdateSessionLoggerRequest$eventFilter": "<p>The updated eventFilter.</p>"
+      }
+    },
+    "Events": {
+      "base": null,
+      "refs": {
+        "EventFilter$include": "<p>The filter that monitors only the listed set of events. New events are not auto-monitored.</p>"
       }
     },
     "ExceptionMessage": {
@@ -854,6 +942,12 @@
       "base": null,
       "refs": {
         "ValidationExceptionField$name": "<p>The name of the field that failed validation.</p>"
+      }
+    },
+    "FolderStructure": {
+      "base": null,
+      "refs": {
+        "S3LogConfiguration$folderStructure": "<p>The folder structure that defines the organizational structure for log files in S3.</p>"
       }
     },
     "GetBrowserSettingsRequest": {
@@ -922,6 +1016,16 @@
       }
     },
     "GetPortalServiceProviderMetadataResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSessionLoggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSessionLoggerResponse": {
       "base": null,
       "refs": {
       }
@@ -1211,6 +1315,16 @@
       "refs": {
       }
     },
+    "ListSessionLoggersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionLoggersResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListSessionsRequest": {
       "base": null,
       "refs": {
@@ -1271,6 +1385,21 @@
       "refs": {
       }
     },
+    "LogConfiguration": {
+      "base": "<p>The configuration of the log.</p>",
+      "refs": {
+        "CreateSessionLoggerRequest$logConfiguration": "<p>The configuration that specifies where logs are delivered.</p>",
+        "SessionLogger$logConfiguration": "<p>The configuration that specifies where logs are fowarded.</p>",
+        "SessionLoggerSummary$logConfiguration": "<p>The configuration that specifies where the logs are fowarded.</p>",
+        "UpdateSessionLoggerRequest$logConfiguration": "<p>The updated logConfiguration.</p>"
+      }
+    },
+    "LogFileFormat": {
+      "base": null,
+      "refs": {
+        "S3LogConfiguration$logFileFormat": "<p>The format of the LogFile that is written to S3.</p>"
+      }
+    },
     "MaxConcurrentSessions": {
       "base": null,
       "refs": {
@@ -1295,6 +1424,7 @@
         "ListIpAccessSettingsRequest$maxResults": "<p>The maximum number of results to be included in the next page.</p>",
         "ListNetworkSettingsRequest$maxResults": "<p>The maximum number of results to be included in the next page.</p>",
         "ListPortalsRequest$maxResults": "<p>The maximum number of results to be included in the next page.</p>",
+        "ListSessionLoggersRequest$maxResults": "<p>The maximum number of results to be included in the next page.</p>",
         "ListSessionsRequest$maxResults": "<p>The maximum number of results to be included in the next page.</p>",
         "ListTrustStoreCertificatesRequest$maxResults": "<p>The maximum number of results to be included in the next page.</p>",
         "ListTrustStoresRequest$maxResults": "<p>The maximum number of results to be included in the next page.</p>",
@@ -1336,6 +1466,8 @@
         "ListNetworkSettingsResponse$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "ListPortalsRequest$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation. </p>",
         "ListPortalsResponse$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation. </p>",
+        "ListSessionLoggersRequest$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
+        "ListSessionLoggersResponse$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "ListSessionsRequest$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "ListSessionsResponse$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
         "ListTrustStoreCertificatesRequest$nextToken": "<p>The pagination token used to retrieve the next page of results for this operation.</p>",
@@ -1424,8 +1556,8 @@
     "Regex": {
       "base": null,
       "refs": {
-        "CustomPattern$keywordRegex": "<p>The keyword regex for the customer pattern. After there is a match to the pattern regex, the keyword regex is used to search within the proximity of the match. If there is a keyword match, then the match is confirmed. If no keyword regex is provided, the pattern regex match will automatically be confirmed. The format must follow JavaScript regex format. The pattern must be enclosed between slashes, and can have flags behind the second slash. For example, “/ab+c/gi”</p>",
-        "CustomPattern$patternRegex": "<p>The pattern regex for the customer pattern. The format must follow JavaScript regex format. The pattern must be enclosed between slashes, and can have flags behind the second slash. For example: “/ab+c/gi”.</p>"
+        "CustomPattern$patternRegex": "<p>The pattern regex for the customer pattern. The format must follow JavaScript regex format. The pattern must be enclosed between slashes, and can have flags behind the second slash. For example: “/ab+c/gi”.</p>",
+        "CustomPattern$keywordRegex": "<p>The keyword regex for the customer pattern. After there is a match to the pattern regex, the keyword regex is used to search within the proximity of the match. If there is a keyword match, then the match is confirmed. If no keyword regex is provided, the pattern regex match will automatically be confirmed. The format must follow JavaScript regex format. The pattern must be enclosed between slashes, and can have flags behind the second slash. For example, “/ab+c/gi”</p>"
       }
     },
     "RendererType": {
@@ -1461,6 +1593,30 @@
       "refs": {
         "InternalServerException$retryAfterSeconds": "<p>Advice to clients on when the call can be safely retried.</p>",
         "ThrottlingException$retryAfterSeconds": "<p>Advice to clients on when the call can be safely retried.</p>"
+      }
+    },
+    "S3Bucket": {
+      "base": null,
+      "refs": {
+        "S3LogConfiguration$bucket": "<p>The S3 bucket name where logs are delivered.</p>"
+      }
+    },
+    "S3BucketOwner": {
+      "base": null,
+      "refs": {
+        "S3LogConfiguration$bucketOwner": "<p>The expected bucket owner of the target S3 bucket. The caller must have permissions to write to the target bucket.</p>"
+      }
+    },
+    "S3KeyPrefix": {
+      "base": null,
+      "refs": {
+        "S3LogConfiguration$keyPrefix": "<p>The S3 path prefix that determines where log files are stored.</p>"
+      }
+    },
+    "S3LogConfiguration": {
+      "base": "<p>The S3 log configuration.</p>",
+      "refs": {
+        "LogConfiguration$s3": "<p>The configuration for delivering the logs to S3.</p>"
       }
     },
     "SamlMetadata": {
@@ -1507,6 +1663,25 @@
         "ExpireSessionRequest$sessionId": "<p>The ID of the session to expire.</p>",
         "GetSessionRequest$sessionId": "<p>The ID of the session.</p>",
         "ListSessionsRequest$sessionId": "<p>The ID of the session.</p>"
+      }
+    },
+    "SessionLogger": {
+      "base": "<p>The session logger resource.</p>",
+      "refs": {
+        "GetSessionLoggerResponse$sessionLogger": "<p>The session logger details.</p>",
+        "UpdateSessionLoggerResponse$sessionLogger": "<p>The updated details of the session logger.</p>"
+      }
+    },
+    "SessionLoggerList": {
+      "base": null,
+      "refs": {
+        "ListSessionLoggersResponse$sessionLoggers": "<p>The list of session loggers, including summaries of their details.</p>"
+      }
+    },
+    "SessionLoggerSummary": {
+      "base": "<p>The summary of the session logger resource.</p>",
+      "refs": {
+        "SessionLoggerList$member": null
       }
     },
     "SessionSortBy": {
@@ -1611,6 +1786,7 @@
         "CreateIpAccessSettingsRequest$tags": "<p>The tags to add to the IP access settings resource. A tag is a key-value pair.</p>",
         "CreateNetworkSettingsRequest$tags": "<p>The tags to add to the network settings resource. A tag is a key-value pair.</p>",
         "CreatePortalRequest$tags": "<p>The tags to add to the web portal. A tag is a key-value pair.</p>",
+        "CreateSessionLoggerRequest$tags": "<p>The tags to add to the session logger.</p>",
         "CreateTrustStoreRequest$tags": "<p>The tags to add to the trust store. A tag is a key-value pair.</p>",
         "CreateUserAccessLoggingSettingsRequest$tags": "<p>The tags to add to the user settings resource. A tag is a key-value pair.</p>",
         "CreateUserSettingsRequest$tags": "<p>The tags to add to the user settings resource. A tag is a key-value pair.</p>",
@@ -1642,20 +1818,22 @@
     "Timestamp": {
       "base": null,
       "refs": {
-        "Certificate$notValidAfter": "<p>The certificate is not valid after this date.</p>",
         "Certificate$notValidBefore": "<p>The certificate is not valid before this date.</p>",
-        "CertificateSummary$notValidAfter": "<p>The certificate is not valid after this date.</p>",
+        "Certificate$notValidAfter": "<p>The certificate is not valid after this date.</p>",
         "CertificateSummary$notValidBefore": "<p>The certificate is not valid before this date.</p>",
+        "CertificateSummary$notValidAfter": "<p>The certificate is not valid after this date.</p>",
         "DataProtectionSettings$creationDate": "<p>The creation date timestamp of the data protection settings.</p>",
         "DataProtectionSettingsSummary$creationDate": "<p>The creation date timestamp of the data protection settings.</p>",
         "IpAccessSettings$creationDate": "<p>The creation date timestamp of the IP access settings.</p>",
         "IpAccessSettingsSummary$creationDate": "<p>The creation date timestamp of the IP access settings.</p>",
         "Portal$creationDate": "<p>The creation date of the web portal.</p>",
         "PortalSummary$creationDate": "<p>The creation date of the web portal.</p>",
-        "Session$endTime": "<p>The end time of the session.</p>",
         "Session$startTime": "<p>The start time of the session.</p>",
-        "SessionSummary$endTime": "<p>The end time of the session.</p>",
-        "SessionSummary$startTime": "<p>The start time of the session.</p>"
+        "Session$endTime": "<p>The end time of the session.</p>",
+        "SessionLogger$creationDate": "<p>The date the session logger resource was created.</p>",
+        "SessionLoggerSummary$creationDate": "<p>The date the session logger resource was created.</p>",
+        "SessionSummary$startTime": "<p>The start time of the session.</p>",
+        "SessionSummary$endTime": "<p>The end time of the session.</p>"
       }
     },
     "TooManyTagsException": {
@@ -1700,6 +1878,12 @@
       "base": null,
       "refs": {
         "ListTrustStoresResponse$trustStores": "<p>The trust stores.</p>"
+      }
+    },
+    "Unit": {
+      "base": null,
+      "refs": {
+        "EventFilter$all": "<p>The filter that monitors all of the available events, including any new events emitted in the future.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -1768,6 +1952,16 @@
       }
     },
     "UpdatePortalResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSessionLoggerRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateSessionLoggerResponse": {
       "base": null,
       "refs": {
       }
@@ -1894,10 +2088,12 @@
         "CreateDataProtectionSettingsRequest$customerManagedKey": "<p>The custom managed key of the data protection settings.</p>",
         "CreateIpAccessSettingsRequest$customerManagedKey": "<p>The custom managed key of the IP access settings.</p>",
         "CreatePortalRequest$customerManagedKey": "<p>The customer managed key of the web portal.</p>",
+        "CreateSessionLoggerRequest$customerManagedKey": "<p>The custom managed key of the session logger.</p>",
         "CreateUserSettingsRequest$customerManagedKey": "<p>The customer managed key used to encrypt sensitive information in the user settings.</p>",
         "DataProtectionSettings$customerManagedKey": "<p>The customer managed key used to encrypt sensitive information in the data protection settings.</p>",
         "IpAccessSettings$customerManagedKey": "<p>The customer managed key used to encrypt sensitive information in the IP access settings.</p>",
         "Portal$customerManagedKey": "<p>The customer managed key used to encrypt sensitive information in the portal.</p>",
+        "SessionLogger$customerManagedKey": "<p>The custom managed key of the session logger.</p>",
         "UserSettings$customerManagedKey": "<p>The customer managed key used to encrypt sensitive information in the user settings.</p>"
       }
     }

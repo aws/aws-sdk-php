@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Sts` - Updates STS default endpoint configuration to `regional`
+* `Aws\IoT` - This release allows AWS IoT Core users to use their own AWS KMS keys for data protection
+* `Aws\ElasticLoadBalancingv2` - This release enables secondary IP addresses for Network Load Balancers.
+* `Aws\S3Control` - Add Tags field to CreateAccessPoint
+* `Aws\OpenSearchService` - Granular access control support for NEO-SAML with IAMFederation for AOS data source
+* `Aws\Inspector2` - Extend usage to include agentless hours and add CODE_REPOSITORY to aggregation resource type
+* `Aws\EC2` - Added support for the force option for the EC2 instance terminate command. This feature enables customers to recover resources associated with an instance stuck in the shutting-down state as a result of rare issues caused by a frozen operating system or an underlying hardware problem.
+* `Aws\WorkSpacesWeb` - Added ability to log session activity on a portal to an S3 bucket.
+* `Aws\Glue` - Added support for Route node, S3 Iceberg sources/targets, catalog Iceberg sources, DynamoDB ELT connector, AutoDataQuality evaluation, enhanced PII detection with redaction, Kinesis fan-out support, and new R-series worker types.
+* `Aws\CustomerProfiles` - The release updates standard profile with 2 new fields that supports account-level engagement. Updated APIs include CreateProfile, UpdateProfile, MergeProfiles, SearchProfiles, BatchGetProfile, GetSegmentMembership, CreateSegmentDefinition, CreateSegmentEstimate.
+* `Aws\QuickSight` - Added Impala connector support
+* `Aws\EntityResolution` - Add support for creating advanced rule-based matching workflows in AWS Entity Resolution.
+* `Aws\SESv2` - This release introduces support for Multi-tenant management
+
 ## 3.351.11 - 2025-07-31
 
 * `Aws\Api` - Fixes bug in resolving `locationName` properties for query services

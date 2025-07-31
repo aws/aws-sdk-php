@@ -4096,7 +4096,8 @@
       "type":"string",
       "enum":[
         "performanceTuning.caching",
-        "observations.scope"
+        "observations.scope",
+        "compositeRuleEvaluation.method"
       ]
     },
     "AdditionalOptions":{
@@ -4396,6 +4397,13 @@
       "members":{
         "AuthorizationCode":{"shape":"AuthorizationCode"},
         "RedirectUri":{"shape":"RedirectUri"}
+      }
+    },
+    "AutoDataQuality":{
+      "type":"structure",
+      "members":{
+        "IsEnabled":{"shape":"BooleanValue"},
+        "EvaluationContext":{"shape":"EnclosedInStringProperty"}
       }
     },
     "BackfillError":{
@@ -5175,6 +5183,21 @@
         "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
+    "CatalogIcebergSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalIcebergOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
     "CatalogIdString":{
       "type":"string",
       "max":255,
@@ -5286,7 +5309,9 @@
       "members":{
         "Name":{"shape":"NodeName"},
         "Database":{"shape":"EnclosedInStringProperty"},
-        "Table":{"shape":"EnclosedInStringProperty"}
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "PartitionPredicate":{"shape":"EnclosedInStringProperty"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "CatalogTablesList":{
@@ -5375,7 +5400,6 @@
         "RedshiftSource":{"shape":"RedshiftSource"},
         "S3CatalogSource":{"shape":"S3CatalogSource"},
         "S3CsvSource":{"shape":"S3CsvSource"},
-        "S3ExcelSource":{"shape":"S3ExcelSource"},
         "S3JsonSource":{"shape":"S3JsonSource"},
         "S3ParquetSource":{"shape":"S3ParquetSource"},
         "RelationalCatalogSource":{"shape":"RelationalCatalogSource"},
@@ -5386,9 +5410,7 @@
         "RedshiftTarget":{"shape":"RedshiftTarget"},
         "S3CatalogTarget":{"shape":"S3CatalogTarget"},
         "S3GlueParquetTarget":{"shape":"S3GlueParquetTarget"},
-        "S3HyperDirectTarget":{"shape":"S3HyperDirectTarget"},
         "S3DirectTarget":{"shape":"S3DirectTarget"},
-        "S3IcebergDirectTarget":{"shape":"S3IcebergDirectTarget"},
         "ApplyMapping":{"shape":"ApplyMapping"},
         "SelectFields":{"shape":"SelectFields"},
         "DropFields":{"shape":"DropFields"},
@@ -5421,6 +5443,7 @@
         "MySQLCatalogTarget":{"shape":"MySQLCatalogTarget"},
         "OracleSQLCatalogTarget":{"shape":"OracleSQLCatalogTarget"},
         "PostgreSQLCatalogTarget":{"shape":"PostgreSQLCatalogTarget"},
+        "Route":{"shape":"Route"},
         "DynamicTransform":{"shape":"DynamicTransform"},
         "EvaluateDataQuality":{"shape":"EvaluateDataQuality"},
         "S3CatalogHudiSource":{"shape":"S3CatalogHudiSource"},
@@ -5441,7 +5464,14 @@
         "SnowflakeSource":{"shape":"SnowflakeSource"},
         "SnowflakeTarget":{"shape":"SnowflakeTarget"},
         "ConnectorDataSource":{"shape":"ConnectorDataSource"},
-        "ConnectorDataTarget":{"shape":"ConnectorDataTarget"}
+        "ConnectorDataTarget":{"shape":"ConnectorDataTarget"},
+        "S3CatalogIcebergSource":{"shape":"S3CatalogIcebergSource"},
+        "CatalogIcebergSource":{"shape":"CatalogIcebergSource"},
+        "S3IcebergCatalogTarget":{"shape":"S3IcebergCatalogTarget"},
+        "S3IcebergDirectTarget":{"shape":"S3IcebergDirectTarget"},
+        "S3ExcelSource":{"shape":"S3ExcelSource"},
+        "S3HyperDirectTarget":{"shape":"S3HyperDirectTarget"},
+        "DynamoDBELTConnectorSource":{"shape":"DynamoDBELTConnectorSource"}
       }
     },
     "CodeGenConfigurationNodes":{
@@ -7198,6 +7228,26 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "DDBELTCatalogAdditionalOptions":{
+      "type":"structure",
+      "members":{
+        "DynamodbExport":{"shape":"EnclosedInStringProperty"},
+        "DynamodbUnnestDDBJson":{"shape":"BooleanValue"}
+      }
+    },
+    "DDBELTConnectionOptions":{
+      "type":"structure",
+      "required":["DynamodbTableArn"],
+      "members":{
+        "DynamodbExport":{"shape":"DdbExportType"},
+        "DynamodbUnnestDDBJson":{"shape":"BooleanValue"},
+        "DynamodbTableArn":{"shape":"EnclosedInStringProperty"},
+        "DynamodbS3Bucket":{"shape":"EnclosedInStringProperty"},
+        "DynamodbS3Prefix":{"shape":"EnclosedInStringProperty"},
+        "DynamodbS3BucketOwner":{"shape":"EnclosedInStringProperty"},
+        "DynamodbStsRoleArn":{"shape":"EnclosedInStringProperty"}
+      }
+    },
     "DQAdditionalOptions":{
       "type":"map",
       "key":{"shape":"AdditionalOptionKeys"},
@@ -7686,6 +7736,13 @@
         "NumberOfNulls":{"shape":"NonNegativeLong"},
         "NumberOfDistinctValues":{"shape":"NonNegativeLong"}
       }
+    },
+    "DdbExportType":{
+      "type":"string",
+      "enum":[
+        "ddb",
+        "s3"
+      ]
     },
     "DecimalColumnStatisticsData":{
       "type":"structure",
@@ -8361,7 +8418,8 @@
         "Table":{"shape":"EnclosedInStringProperty"},
         "ConnectionName":{"shape":"EnclosedInStringProperty"},
         "ConnectionType":{"shape":"JDBCConnectionType"},
-        "RedshiftTmpDir":{"shape":"EnclosedInStringProperty"}
+        "RedshiftTmpDir":{"shape":"EnclosedInStringProperty"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "DirectKafkaSource":{
@@ -8495,7 +8553,18 @@
       "members":{
         "Name":{"shape":"NodeName"},
         "Database":{"shape":"EnclosedInStringProperty"},
-        "Table":{"shape":"EnclosedInStringProperty"}
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "PitrEnabled":{"shape":"BoxedBoolean"},
+        "AdditionalOptions":{"shape":"DDBELTCatalogAdditionalOptions"}
+      }
+    },
+    "DynamoDBELTConnectorSource":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "ConnectionOptions":{"shape":"DDBELTConnectionOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "DynamoDBTarget":{
@@ -10521,7 +10590,8 @@
       "required":["Name"],
       "members":{
         "Name":{"shape":"GlueStudioColumnNameString"},
-        "Type":{"shape":"ColumnTypeString"}
+        "Type":{"shape":"ColumnTypeString"},
+        "GlueStudioType":{"shape":"ColumnTypeString"}
       }
     },
     "GlueStudioSchemaColumnList":{
@@ -10615,6 +10685,23 @@
       "max":2048,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\t]*"
+    },
+    "GroupFilters":{
+      "type":"structure",
+      "required":[
+        "GroupName",
+        "Filters",
+        "LogicalOperator"
+      ],
+      "members":{
+        "GroupName":{"shape":"GenericLimitedString"},
+        "Filters":{"shape":"FilterExpressions"},
+        "LogicalOperator":{"shape":"FilterLogicalOperator"}
+      }
+    },
+    "GroupFiltersList":{
+      "type":"list",
+      "member":{"shape":"GroupFilters"}
     },
     "HashString":{
       "type":"string",
@@ -11601,7 +11688,8 @@
         "RoleSessionName":{"shape":"EnclosedInStringProperty"},
         "AddRecordTimestamp":{"shape":"EnclosedInStringProperty"},
         "EmitConsumerLagMetrics":{"shape":"EnclosedInStringProperty"},
-        "StartingTimestamp":{"shape":"Iso8601DateTime"}
+        "StartingTimestamp":{"shape":"Iso8601DateTime"},
+        "FanoutConsumerARN":{"shape":"EnclosedInStringProperty"}
       }
     },
     "KmsKeyArn":{
@@ -12826,7 +12914,14 @@
         "OutputColumnName":{"shape":"EnclosedInStringProperty"},
         "SampleFraction":{"shape":"BoxedDoubleFraction"},
         "ThresholdFraction":{"shape":"BoxedDoubleFraction"},
-        "MaskValue":{"shape":"MaskValue"}
+        "MaskValue":{"shape":"MaskValue"},
+        "RedactText":{"shape":"EnclosedInStringProperty"},
+        "RedactChar":{"shape":"EnclosedInStringProperty"},
+        "MatchPattern":{"shape":"EnclosedInStringProperty"},
+        "NumLeftCharsToExclude":{"shape":"BoxedPositiveInt"},
+        "NumRightCharsToExclude":{"shape":"BoxedPositiveInt"},
+        "DetectionParameters":{"shape":"EnclosedInStringProperty"},
+        "DetectionSensitivity":{"shape":"EnclosedInStringProperty"}
       }
     },
     "PageSize":{
@@ -13043,8 +13138,11 @@
       "type":"string",
       "enum":[
         "RowAudit",
+        "RowHashing",
         "RowMasking",
+        "RowPartialMasking",
         "ColumnAudit",
+        "ColumnHashing",
         "ColumnMasking"
       ]
     },
@@ -13712,6 +13810,19 @@
       "pattern":"arn:aws:iam::\\d{12}:role/.*"
     },
     "RoleString":{"type":"string"},
+    "Route":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "GroupFiltersList"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "GroupFiltersList":{"shape":"GroupFiltersList"}
+      }
+    },
     "RowTag":{"type":"string"},
     "RuleMetricsMap":{
       "type":"map",
@@ -13795,6 +13906,21 @@
         "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
+    "S3CatalogIcebergSource":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Database",
+        "Table"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "AdditionalIcebergOptions":{"shape":"AdditionalOptions"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
     "S3CatalogSource":{
       "type":"structure",
       "required":[
@@ -13824,7 +13950,8 @@
         "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Table":{"shape":"EnclosedInStringProperty"},
         "Database":{"shape":"EnclosedInStringProperty"},
-        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"}
       }
     },
     "S3CsvSource":{
@@ -13872,7 +13999,9 @@
         "Table":{"shape":"EnclosedInStringProperty"},
         "Database":{"shape":"EnclosedInStringProperty"},
         "AdditionalOptions":{"shape":"AdditionalOptions"},
-        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "S3DeltaDirectTarget":{
@@ -13893,7 +14022,8 @@
         "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
         "Format":{"shape":"TargetFormat"},
         "AdditionalOptions":{"shape":"AdditionalOptions"},
-        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"}
       }
     },
     "S3DeltaSource":{
@@ -13935,7 +14065,9 @@
         "Compression":{"shape":"EnclosedInStringProperty"},
         "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
         "Format":{"shape":"TargetFormat"},
-        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "S3Encryption":{
@@ -13993,7 +14125,8 @@
         "Path":{"shape":"EnclosedInStringProperty"},
         "Compression":{"shape":"ParquetCompressionType"},
         "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
-        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"}
       }
     },
     "S3HudiCatalogTarget":{
@@ -14012,7 +14145,9 @@
         "Table":{"shape":"EnclosedInStringProperty"},
         "Database":{"shape":"EnclosedInStringProperty"},
         "AdditionalOptions":{"shape":"AdditionalOptions"},
-        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "S3HudiDirectTarget":{
@@ -14034,7 +14169,8 @@
         "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Format":{"shape":"TargetFormat"},
         "AdditionalOptions":{"shape":"AdditionalOptions"},
-        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"}
       }
     },
     "S3HudiSource":{
@@ -14061,10 +14197,32 @@
       "members":{
         "Name":{"shape":"NodeName"},
         "Inputs":{"shape":"OneInput"},
+        "Format":{"shape":"TargetFormat"},
         "PartitionKeys":{"shape":"GlueStudioPathList"},
         "Path":{"shape":"EnclosedInStringProperty"},
         "Compression":{"shape":"HyperTargetCompressionType"},
-        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"}
+        "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
+      }
+    },
+    "S3IcebergCatalogTarget":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Inputs",
+        "Table",
+        "Database"
+      ],
+      "members":{
+        "Name":{"shape":"NodeName"},
+        "Inputs":{"shape":"OneInput"},
+        "PartitionKeys":{"shape":"GlueStudioPathList"},
+        "Table":{"shape":"EnclosedInStringProperty"},
+        "Database":{"shape":"EnclosedInStringProperty"},
+        "AdditionalOptions":{"shape":"AdditionalOptions"},
+        "SchemaChangePolicy":{"shape":"CatalogSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"}
       }
     },
     "S3IcebergDirectTarget":{
@@ -14084,8 +14242,10 @@
         "Format":{"shape":"TargetFormat"},
         "AdditionalOptions":{"shape":"AdditionalOptions"},
         "SchemaChangePolicy":{"shape":"DirectSchemaChangePolicy"},
+        "AutoDataQuality":{"shape":"AutoDataQuality"},
         "Compression":{"shape":"IcebergTargetCompressionType"},
-        "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"}
+        "NumberTargetPartitions":{"shape":"NumberTargetPartitionsString"},
+        "OutputSchemas":{"shape":"GlueSchemas"}
       }
     },
     "S3JsonSource":{

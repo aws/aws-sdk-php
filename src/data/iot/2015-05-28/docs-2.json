@@ -103,6 +103,7 @@
     "DescribeDetectMitigationActionsTask": "<p> Gets information about a Device Defender ML Detect mitigation action. </p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeDetectMitigationActionsTask</a> action.</p>",
     "DescribeDimension": "<p>Provides details about a dimension that is defined in your Amazon Web Services accounts.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeDimension</a> action.</p>",
     "DescribeDomainConfiguration": "<p>Gets summary information about a domain configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeDomainConfiguration</a> action.</p>",
+    "DescribeEncryptionConfiguration": "<p>Retrieves the encryption configuration for resources and data of your Amazon Web Services account in Amazon Web Services IoT Core. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/key-management.html\">Key management in IoT</a> from the <i>Amazon Web Services IoT Core Developer Guide</i>.</p>",
     "DescribeEndpoint": "<p>Returns or creates a unique endpoint specific to the Amazon Web Services account making the call.</p> <note> <p>The first time <code>DescribeEndpoint</code> is called, an endpoint is created. All subsequent calls to <code>DescribeEndpoint</code> return the same endpoint.</p> </note> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeEndpoint</a> action.</p>",
     "DescribeEventConfigurations": "<p>Describes event configurations.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeEventConfigurations</a> action.</p>",
     "DescribeFleetMetric": "<p>Gets information about the specified fleet metric.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DescribeFleetMetric</a> action.</p>",
@@ -239,7 +240,7 @@
     "TagResource": "<p>Adds to or modifies the tags of the given resource. Tags are metadata which can be used to manage a resource.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TagResource</a> action.</p>",
     "TestAuthorization": "<p>Tests if a specified principal is authorized to perform an IoT action on a specified resource. Use this to test and debug the authorization behavior of devices that connect to the IoT device gateway.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TestAuthorization</a> action.</p>",
     "TestInvokeAuthorizer": "<p>Tests a custom authorization behavior by invoking a specified custom authorizer. Use this to test and debug the custom authorization behavior of devices that connect to the IoT device gateway.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TestInvokeAuthorizer</a> action.</p>",
-    "TransferCertificate": "<p>Transfers the specified certificate to the specified Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TransferCertificate</a> action.</p> <p>You can cancel the transfer until it is acknowledged by the recipient.</p> <p>No notification is sent to the transfer destination's account. It is up to the caller to notify the transfer target.</p> <p>The certificate being transferred must not be in the ACTIVE state. You can use the <a>UpdateCertificate</a> action to deactivate it.</p> <p>The certificate must not have any policies attached to it. You can use the <a>DetachPolicy</a> action to detach them.</p>",
+    "TransferCertificate": "<p>Transfers the specified certificate to the specified Amazon Web Services account.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">TransferCertificate</a> action.</p> <p>You can cancel the transfer until it is acknowledged by the recipient.</p> <p>No notification is sent to the transfer destination's account. It's up to the caller to notify the transfer target.</p> <p>The certificate being transferred must not be in the <code>ACTIVE</code> state. You can use the <a>UpdateCertificate</a> action to deactivate it.</p> <p>The certificate must not have any policies attached to it. You can use the <a>DetachPolicy</a> action to detach them.</p> <p> <b>Customer managed key behavior:</b> When you use a customer managed key to secure your data and then transfer the key to a customer in a different account using the <a>TransferCertificate</a> operation, the certificates will no longer be protected by their customer managed key configuration. During the transfer process, certificates are encrypted using IoT owned keys.</p> <p>While a certificate is in the <b>PENDING_TRANSFER</b> state, it's always protected by IoT owned keys, regardless of the customer managed key configuration of either the source or destination account. </p> <p>Once the transfer is completed through <a>AcceptCertificateTransfer</a>, <a>RejectCertificateTransfer</a>, or <a>CancelCertificateTransfer</a>, the certificate will be protected by the customer managed key configuration of the account that owns the certificate after the transfer operation:</p> <ul> <li> <p>If the transfer is accepted: The certificate is protected by the destination account's customer managed key configuration.</p> </li> <li> <p>If the transfer is rejected or cancelled: The certificate is protected by the source account's customer managed key configuration.</p> </li> </ul>",
     "UntagResource": "<p>Removes the given tags (metadata) from the resource.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UntagResource</a> action.</p>",
     "UpdateAccountAuditConfiguration": "<p>Configures or reconfigures the Device Defender audit settings for this account. Settings include how audit notifications are sent and which audit checks are enabled or disabled.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateAccountAuditConfiguration</a> action.</p>",
     "UpdateAuditSuppression": "<p> Updates a Device Defender audit suppression. </p>",
@@ -253,6 +254,7 @@
     "UpdateDimension": "<p>Updates the definition for a dimension. You cannot change the type of a dimension after it is created (you can delete it and recreate it).</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDimension</a> action.</p>",
     "UpdateDomainConfiguration": "<p>Updates values stored in the domain configuration. Domain configurations for default endpoints can't be updated.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDomainConfiguration</a> action.</p>",
     "UpdateDynamicThingGroup": "<p>Updates a dynamic thing group.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateDynamicThingGroup</a> action.</p>",
+    "UpdateEncryptionConfiguration": "<p>Updates the encryption configuration. By default, all Amazon Web Services IoT Core data at rest is encrypted using Amazon Web Services owned keys. Amazon Web Services IoT Core also supports symmetric customer managed keys from Amazon Web Services Key Management Service (KMS). With customer managed keys, you create, own, and manage the KMS keys in your Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/data-encryption.html\">Data encryption</a> in the <i>Amazon Web Services IoT Core Developer Guide</i>.</p>",
     "UpdateEventConfigurations": "<p>Updates the event configurations.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateEventConfigurations</a> action.</p>",
     "UpdateFleetMetric": "<p>Updates the data for a fleet metric.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateFleetMetric</a> action.</p>",
     "UpdateIndexingConfiguration": "<p>Updates the search configuration.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateIndexingConfiguration</a> action.</p>",
@@ -310,8 +312,7 @@
     },
     "AcceptCertificateTransferRequest": {
       "base": "<p>The input for the AcceptCertificateTransfer operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AcmCertificateArn": {
       "base": null,
@@ -357,23 +358,19 @@
     },
     "AddThingToBillingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddThingToBillingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddThingToThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddThingToThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddThingsToThingGroupParams": {
       "base": "<p>Parameters used when defining a mitigation action that move a set of things to a thing group.</p>",
@@ -618,53 +615,43 @@
     },
     "AssociateSbomWithPackageVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateSbomWithPackageVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateTargetsWithJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateTargetsWithJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachPrincipalPolicyRequest": {
       "base": "<p>The input for the AttachPrincipalPolicy operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachSecurityProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachSecurityProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachThingPrincipalRequest": {
       "base": "<p>The input for the AttachThingPrincipal operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachThingPrincipalResponse": {
       "base": "<p>The output from the AttachThingPrincipal operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AttributeKey": {
       "base": null,
@@ -1481,53 +1468,43 @@
     },
     "CancelAuditMitigationActionsTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelAuditMitigationActionsTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelAuditTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelAuditTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelCertificateTransferRequest": {
       "base": "<p>The input for the CancelCertificateTransfer operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelDetectMitigationActionsTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelDetectMitigationActionsTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelJobExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CanceledChecksCount": {
       "base": null,
@@ -1579,8 +1556,7 @@
     },
     "CertificateConflictException": {
       "base": "<p>Unable to verify the CA certificate used to sign the device certificate you are attempting to register. This is happens when you have registered more than one CA certificate that has the same subject field and public key.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateDescription": {
       "base": "<p>Describes a certificate.</p>",
@@ -1719,8 +1695,7 @@
     },
     "CertificateStateException": {
       "base": "<p>The certificate operation is not allowed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateStatus": {
       "base": null,
@@ -1734,8 +1709,7 @@
     },
     "CertificateValidationException": {
       "base": "<p>The certificate is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateValidity": {
       "base": "<p>When the certificate is valid.</p>",
@@ -1783,13 +1757,11 @@
     },
     "ClearDefaultAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClearDefaultAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientCertificateCallbackArn": {
       "base": null,
@@ -2107,15 +2079,25 @@
         "EventConfigurations$value": null
       }
     },
-    "ConfirmTopicRuleDestinationRequest": {
+    "ConfigurationDetails": {
+      "base": "<p>The encryption configuration details that include the status information of the Amazon Web Services Key Management Service (KMS) key and the KMS access role.</p>",
+      "refs": {
+        "DescribeEncryptionConfigurationResponse$configurationDetails": "<p>The encryption configuration details that include the status information of the KMS key and the KMS access role.</p>"
+      }
+    },
+    "ConfigurationStatus": {
       "base": null,
       "refs": {
+        "ConfigurationDetails$configurationStatus": "<p>The health status of KMS key and KMS access role. If either KMS key or KMS access role is <code>UNHEALTHY</code>, the return value will be <code>UNHEALTHY</code>. To use a customer-managed KMS key, the value of <code>configurationStatus</code> must be <code>HEALTHY</code>. </p>"
       }
+    },
+    "ConfirmTopicRuleDestinationRequest": {
+      "base": null,
+      "refs": {}
     },
     "ConfirmTopicRuleDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfirmationToken": {
       "base": null,
@@ -2125,13 +2107,11 @@
     },
     "ConflictException": {
       "base": "<p>The request conflicts with the current state of the resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictingResourceUpdateException": {
       "base": "<p>A conflicting resource update exception. This exception is thrown when two pending updates cause a conflict.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectionAttributeName": {
       "base": null,
@@ -2189,318 +2169,255 @@
     },
     "CreateAuditSuppressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAuditSuppressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBillingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBillingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateFromCsrRequest": {
       "base": "<p>The input for the CreateCertificateFromCsr operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateFromCsrResponse": {
       "base": "<p>The output from the CreateCertificateFromCsr operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateProviderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateProviderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCommandRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCommandResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomMetricResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDimensionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDimensionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDomainConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDomainConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDynamicThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDynamicThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetMetricResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKeysAndCertificateRequest": {
       "base": "<p>The input for the CreateKeysAndCertificate operation.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">CreateKeysAndCertificateRequest</a> action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKeysAndCertificateResponse": {
       "base": "<p>The output of the CreateKeysAndCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMitigationActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMitigationActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOTAUpdateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOTAUpdateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePackageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePackageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePackageVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePackageVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyRequest": {
       "base": "<p>The input for the CreatePolicy operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyResponse": {
       "base": "<p>The output from the CreatePolicy operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyVersionRequest": {
       "base": "<p>The input for the CreatePolicyVersion operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyVersionResponse": {
       "base": "<p>The output of the CreatePolicyVersion operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningClaimRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningClaimResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningTemplateVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProvisioningTemplateVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRoleAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRoleAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScheduledAuditRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScheduledAuditResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSecurityProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSecurityProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThingRequest": {
       "base": "<p>The input for the CreateThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThingResponse": {
       "base": "<p>The output of the CreateThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThingTypeRequest": {
       "base": "<p>The input for the CreateThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThingTypeResponse": {
       "base": "<p>The output of the CreateThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTopicRuleDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTopicRuleDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTopicRuleRequest": {
       "base": "<p>The input for the CreateTopicRule operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedAtDate": {
       "base": null,
@@ -2606,6 +2523,7 @@
         "DescribeCertificateProviderResponse$creationDate": "<p>The date-time string that indicates when the certificate provider was created.</p>",
         "DescribeCertificateProviderResponse$lastModifiedDate": "<p>The date-time string that indicates when the certificate provider was last updated.</p>",
         "DescribeDomainConfigurationResponse$lastStatusChangeDate": "<p>The date and time the domain configuration's status was last changed.</p>",
+        "DescribeEncryptionConfigurationResponse$lastModifiedDate": "<p>The date when encryption configuration is last updated.</p>",
         "DescribeJobTemplateResponse$createdAt": "<p>The time, in seconds since the epoch, when the job template was created.</p>",
         "DescribeProvisioningTemplateResponse$creationDate": "<p>The date when the provisioning template was created.</p>",
         "DescribeProvisioningTemplateResponse$lastModifiedDate": "<p>The date when the provisioning template was last modified.</p>",
@@ -2673,13 +2591,11 @@
     },
     "DeleteAccountAuditConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccountAuditConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAdditionalMetricsToRetain": {
       "base": null,
@@ -2695,23 +2611,19 @@
     },
     "DeleteAuditSuppressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAuditSuppressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBehaviors": {
       "base": null,
@@ -2721,123 +2633,99 @@
     },
     "DeleteBillingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBillingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCACertificateRequest": {
       "base": "<p>Input for the DeleteCACertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCACertificateResponse": {
       "base": "<p>The output for the DeleteCACertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCertificateProviderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCertificateProviderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCertificateRequest": {
       "base": "<p>The input for the DeleteCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCommandExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCommandExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCommandRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCommandResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConflictException": {
       "base": "<p>You can't delete the resource because it is attached to one or more resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomMetricResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDimensionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDimensionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDomainConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDomainConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDynamicThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDynamicThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFleetMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteJobTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMetricsExportConfig": {
       "base": null,
@@ -2847,103 +2735,83 @@
     },
     "DeleteMitigationActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMitigationActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOTAUpdateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOTAUpdateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePackageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePackageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePackageVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePackageVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyRequest": {
       "base": "<p>The input for the DeletePolicy operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyVersionRequest": {
       "base": "<p>The input for the DeletePolicyVersion operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisioningTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisioningTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisioningTemplateVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProvisioningTemplateVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRegistrationCodeRequest": {
       "base": "<p>The input for the DeleteRegistrationCode operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRegistrationCodeResponse": {
       "base": "<p>The output for the DeleteRegistrationCode operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRoleAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRoleAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteScheduledAuditRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteScheduledAuditResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteScheduledAudits": {
       "base": null,
@@ -2953,13 +2821,11 @@
     },
     "DeleteSecurityProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSecurityProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStream": {
       "base": null,
@@ -2969,63 +2835,51 @@
     },
     "DeleteStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThingRequest": {
       "base": "<p>The input for the DeleteThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThingResponse": {
       "base": "<p>The output of the DeleteThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThingTypeRequest": {
       "base": "<p>The input for the DeleteThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThingTypeResponse": {
       "base": "<p>The output for the DeleteThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTopicRuleDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTopicRuleDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTopicRuleRequest": {
       "base": "<p>The input for the DeleteTopicRule operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteV2LoggingLevelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeliveryStreamName": {
       "base": null,
@@ -3041,13 +2895,11 @@
     },
     "DeprecateThingTypeRequest": {
       "base": "<p>The input for the DeprecateThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeprecateThingTypeResponse": {
       "base": "<p>The output for the DeprecateThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeprecationDate": {
       "base": null,
@@ -3066,343 +2918,283 @@
     },
     "DescribeAccountAuditConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountAuditConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditFindingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditFindingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditMitigationActionsTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditMitigationActionsTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditSuppressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditSuppressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuditTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBillingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBillingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCACertificateRequest": {
       "base": "<p>The input for the DescribeCACertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCACertificateResponse": {
       "base": "<p>The output from the DescribeCACertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateProviderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateProviderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateRequest": {
       "base": "<p>The input for the DescribeCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateResponse": {
       "base": "<p>The output of the DescribeCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCustomMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCustomMetricResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDefaultAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDefaultAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDetectMitigationActionsTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDetectMitigationActionsTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDimensionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDimensionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDomainConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDomainConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeEncryptionConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeEncryptionConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "DescribeEndpointRequest": {
       "base": "<p>The input for the DescribeEndpoint operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointResponse": {
       "base": "<p>The output from the DescribeEndpoint operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFleetMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFleetMetricResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeJobTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeManagedJobTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeManagedJobTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMitigationActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeMitigationActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProvisioningTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProvisioningTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProvisioningTemplateVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProvisioningTemplateVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRoleAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRoleAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeScheduledAuditRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeScheduledAuditResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSecurityProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSecurityProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingRegistrationTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingRegistrationTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingRequest": {
       "base": "<p>The input for the DescribeThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingResponse": {
       "base": "<p>The output from the DescribeThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingTypeRequest": {
       "base": "<p>The input for the DescribeThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThingTypeResponse": {
       "base": "<p>The output for the DescribeThingType operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -3428,33 +3220,27 @@
     },
     "DetachPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachPrincipalPolicyRequest": {
       "base": "<p>The input for the DetachPrincipalPolicy operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachSecurityProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachSecurityProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachThingPrincipalRequest": {
       "base": "<p>The input for the DetachThingPrincipal operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachThingPrincipalResponse": {
       "base": "<p>The output from the DetachThingPrincipal operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DetailsKey": {
       "base": null,
@@ -3630,18 +3416,15 @@
     },
     "DisableTopicRuleRequest": {
       "base": "<p>The input for the DisableTopicRuleRequest operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateSbomFromPackageVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateSbomFromPackageVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisconnectReason": {
       "base": null,
@@ -3843,8 +3626,7 @@
     },
     "EnableTopicRuleRequest": {
       "base": "<p>The input for the EnableTopicRuleRequest operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Enabled": {
       "base": null,
@@ -3862,6 +3644,13 @@
       "base": null,
       "refs": {
         "VersionUpdateByJobsConfig$enabled": "<p>Indicates whether the Job is enabled or not.</p>"
+      }
+    },
+    "EncryptionType": {
+      "base": null,
+      "refs": {
+        "DescribeEncryptionConfigurationResponse$encryptionType": "<p>The type of the Amazon Web Services Key Management Service (KMS) key.</p>",
+        "UpdateEncryptionConfigurationRequest$encryptionType": "<p>The type of the Amazon Web Services Key Management Service (KMS) key.</p>"
       }
     },
     "EndpointAddress": {
@@ -3893,7 +3682,8 @@
       "base": null,
       "refs": {
         "AuditCheckDetails$errorCode": "<p>The code of any error encountered when this check is performed during this audit. One of \"INSUFFICIENT_PERMISSIONS\" or \"AUDIT_CHECK_DISABLED\".</p>",
-        "AuditMitigationActionExecutionMetadata$errorCode": "<p>If an error occurred, the code that indicates which type of error occurred.</p>"
+        "AuditMitigationActionExecutionMetadata$errorCode": "<p>If an error occurred, the code that indicates which type of error occurred.</p>",
+        "ConfigurationDetails$errorCode": "<p>The error code that indicates either the KMS key or the KMS access role is <code>UNHEALTHY</code>. Valid values: <code>KMS_KEY_VALIDATION_ERROR</code> and <code>ROLE_VALIDATION_ERROR</code>. </p>"
       }
     },
     "ErrorInfo": {
@@ -3907,6 +3697,7 @@
       "refs": {
         "AuditCheckDetails$message": "<p>The message associated with any error encountered when this check is performed during this audit.</p>",
         "AuditMitigationActionExecutionMetadata$message": "<p>If an error occurred, a message that describes the error.</p>",
+        "ConfigurationDetails$errorMessage": "<p>The detailed error message that corresponds to the <code>errorCode</code>.</p>",
         "DescribeThingRegistrationTaskResponse$message": "<p>The message.</p>",
         "DetectMitigationActionExecution$message": "<p> The message of a mitigation action. </p>",
         "ValidationError$errorMessage": "<p>The description of an error found in the behaviors.</p>"
@@ -4217,223 +4008,179 @@
     },
     "GetBehaviorModelTrainingSummariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBehaviorModelTrainingSummariesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketsAggregationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketsAggregationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCardinalityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCardinalityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCommandExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCommandExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCommandRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCommandResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEffectivePoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEffectivePoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIndexingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIndexingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobDocumentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoggingOptionsRequest": {
       "base": "<p>The input for the GetLoggingOptions operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoggingOptionsResponse": {
       "base": "<p>The output from the GetLoggingOptions operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOTAUpdateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOTAUpdateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPackageConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPackageConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPackageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPackageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPackageVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPackageVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPercentilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPercentilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyRequest": {
       "base": "<p>The input for the GetPolicy operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyResponse": {
       "base": "<p>The output from the GetPolicy operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyVersionRequest": {
       "base": "<p>The input for the GetPolicyVersion operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyVersionResponse": {
       "base": "<p>The output from the GetPolicyVersion operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRegistrationCodeRequest": {
       "base": "<p>The input to the GetRegistrationCode operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRegistrationCodeResponse": {
       "base": "<p>The output from the GetRegistrationCode operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetThingConnectivityDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetThingConnectivityDataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTopicRuleDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTopicRuleDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTopicRuleRequest": {
       "base": "<p>The input for the GetTopicRule operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTopicRuleResponse": {
       "base": "<p>The output from the GetTopicRule operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetV2LoggingOptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetV2LoggingOptionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GroupNameAndArn": {
       "base": "<p>The name and ARN of a group.</p>",
@@ -4602,8 +4349,7 @@
     },
     "IndexNotReadyException": {
       "base": "<p>The index is not ready.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IndexSchema": {
       "base": null,
@@ -4643,43 +4389,35 @@
     },
     "InternalException": {
       "base": "<p>An unexpected error has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalFailureException": {
       "base": "<p>An unexpected error has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>Internal error from the service that indicates an unexpected error or that the service is unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidAggregationException": {
       "base": "<p>The aggregation is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidQueryException": {
       "base": "<p>The query is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>The request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidResponseException": {
       "base": "<p>The response is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidStateTransitionException": {
       "base": "<p>An attempt was made to change to an invalid state, for example by deleting a job or a job execution which is \"IN_PROGRESS\" without setting the <code>force</code> parameter.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IotAnalyticsAction": {
       "base": "<p>Sends message data to an IoT Analytics channel.</p>",
@@ -5053,6 +4791,20 @@
         "Action$kinesis": "<p>Write data to an Amazon Kinesis stream.</p>"
       }
     },
+    "KmsAccessRoleArn": {
+      "base": null,
+      "refs": {
+        "DescribeEncryptionConfigurationResponse$kmsAccessRoleArn": "<p>The ARN of the customer-managed KMS key.</p>",
+        "UpdateEncryptionConfigurationRequest$kmsAccessRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role assumed by Amazon Web Services IoT Core to call KMS on behalf of the customer.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "DescribeEncryptionConfigurationResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the IAM role assumed by Amazon Web Services IoT Core to call KMS on behalf of the customer.</p>",
+        "UpdateEncryptionConfigurationRequest$kmsKeyArn": "<p>The ARN of the customer-managed KMS key.</p>"
+      }
+    },
     "LambdaAction": {
       "base": "<p>Describes an action to invoke a Lambda function.</p>",
       "refs": {
@@ -5090,488 +4842,391 @@
     },
     "LimitExceededException": {
       "base": "<p>A limit has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActiveViolationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListActiveViolationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAttachedPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAttachedPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditMitigationActionsExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditMitigationActionsExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditMitigationActionsTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditMitigationActionsTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditSuppressionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditSuppressionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuditTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuthorizersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAuthorizersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCACertificatesRequest": {
       "base": "<p>Input for the ListCACertificates operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCACertificatesResponse": {
       "base": "<p>The output from the ListCACertificates operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificateProvidersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificateProvidersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificatesByCARequest": {
       "base": "<p>The input to the ListCertificatesByCA operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificatesByCAResponse": {
       "base": "<p>The output of the ListCertificatesByCA operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificatesRequest": {
       "base": "<p>The input for the ListCertificates operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificatesResponse": {
       "base": "<p>The output of the ListCertificates operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCommandsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDetectMitigationActionsExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDetectMitigationActionsExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDetectMitigationActionsTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDetectMitigationActionsTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDimensionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDimensionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDomainConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDomainConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobExecutionsForJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobExecutionsForJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobExecutionsForThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobExecutionsForThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedJobTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedJobTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMetricValuesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMetricValuesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMitigationActionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMitigationActionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOTAUpdatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOTAUpdatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOutgoingCertificatesRequest": {
       "base": "<p>The input to the ListOutgoingCertificates operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOutgoingCertificatesResponse": {
       "base": "<p>The output from the ListOutgoingCertificates operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPackageVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPackageVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPackagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPackagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPoliciesRequest": {
       "base": "<p>The input for the ListPolicies operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPoliciesResponse": {
       "base": "<p>The output from the ListPolicies operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyPrincipalsRequest": {
       "base": "<p>The input for the ListPolicyPrincipals operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyPrincipalsResponse": {
       "base": "<p>The output from the ListPolicyPrincipals operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyVersionsRequest": {
       "base": "<p>The input for the ListPolicyVersions operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyVersionsResponse": {
       "base": "<p>The output from the ListPolicyVersions operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrincipalPoliciesRequest": {
       "base": "<p>The input for the ListPrincipalPolicies operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrincipalPoliciesResponse": {
       "base": "<p>The output from the ListPrincipalPolicies operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrincipalThingsRequest": {
       "base": "<p>The input for the ListPrincipalThings operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrincipalThingsResponse": {
       "base": "<p>The output from the ListPrincipalThings operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrincipalThingsV2Request": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrincipalThingsV2Response": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisioningTemplateVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisioningTemplateVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisioningTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProvisioningTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRelatedResourcesForAuditFindingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRelatedResourcesForAuditFindingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRoleAliasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRoleAliasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSbomValidationResultsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSbomValidationResultsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScheduledAuditsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScheduledAuditsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityProfilesForTargetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityProfilesForTargetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListStreamsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSuppressedAlerts": {
       "base": null,
@@ -5588,173 +5243,139 @@
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsForPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsForPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsForSecurityProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsForSecurityProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingGroupsForThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingGroupsForThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingPrincipalsRequest": {
       "base": "<p>The input for the ListThingPrincipal operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingPrincipalsResponse": {
       "base": "<p>The output from the ListThingPrincipals operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingPrincipalsV2Request": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingPrincipalsV2Response": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingRegistrationTaskReportsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingRegistrationTaskReportsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingRegistrationTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingRegistrationTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingTypesRequest": {
       "base": "<p>The input for the ListThingTypes operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingTypesResponse": {
       "base": "<p>The output for the ListThingTypes operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingsInBillingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingsInBillingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingsInThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingsInThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingsRequest": {
       "base": "<p>The input for the ListThings operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThingsResponse": {
       "base": "<p>The output from the ListThings operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTopicRuleDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTopicRuleDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTopicRulesRequest": {
       "base": "<p>The input for the ListTopicRules operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTopicRulesResponse": {
       "base": "<p>The output from the ListTopicRules operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListV2LoggingLevelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListV2LoggingLevelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListViolationEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListViolationEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LocationAction": {
       "base": "<p>The Amazon Location rule action sends device location updates from an MQTT message to an Amazon Location tracker resource.</p>",
@@ -5854,8 +5475,7 @@
     },
     "MalformedPolicyException": {
       "base": "<p>The policy documentation is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ManagedJobTemplateName": {
       "base": null,
@@ -6395,8 +6015,7 @@
     },
     "NotConfiguredException": {
       "base": "<p>The resource is not configured.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NullableBoolean": {
       "base": null,
@@ -7117,13 +6736,11 @@
     },
     "PutVerificationStateOnViolationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutVerificationStateOnViolationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Qos": {
       "base": null,
@@ -7249,43 +6866,35 @@
     },
     "RegisterCACertificateRequest": {
       "base": "<p>The input to the RegisterCACertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCACertificateResponse": {
       "base": "<p>The output from the RegisterCACertificateResponse operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCertificateRequest": {
       "base": "<p>The input to the RegisterCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCertificateResponse": {
       "base": "<p>The output from the RegisterCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCertificateWithoutCARequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCertificateWithoutCAResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegistrationCode": {
       "base": null,
@@ -7295,8 +6904,7 @@
     },
     "RegistrationCodeValidationException": {
       "base": "<p>The registration code is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegistrationConfig": {
       "base": "<p>The registration configuration.</p>",
@@ -7340,8 +6948,7 @@
     },
     "RejectCertificateTransferRequest": {
       "base": "<p>The input for the RejectCertificateTransfer operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RejectedThings": {
       "base": null,
@@ -7382,23 +6989,19 @@
     },
     "RemoveThingFromBillingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveThingFromBillingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveThingFromThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveThingFromThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveThingType": {
       "base": null,
@@ -7420,8 +7023,7 @@
     },
     "ReplaceTopicRuleRequest": {
       "base": "<p>The input for the ReplaceTopicRule operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReportType": {
       "base": null,
@@ -7454,8 +7056,7 @@
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The resource already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
@@ -7529,13 +7130,11 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceRegistrationFailureException": {
       "base": "<p>The resource registration failed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -7850,13 +7449,11 @@
     },
     "SearchIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchQueryMaxResults": {
       "base": null,
@@ -8037,8 +7634,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Service quota has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceType": {
       "base": null,
@@ -8051,8 +7647,7 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is temporarily unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetAsActive": {
       "base": null,
@@ -8078,33 +7673,27 @@
     },
     "SetDefaultAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetDefaultAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetDefaultPolicyVersionRequest": {
       "base": "<p>The input for the SetDefaultPolicyVersion operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetLoggingOptionsRequest": {
       "base": "<p>The input for the SetLoggingOptions operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetV2LoggingLevelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetV2LoggingOptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ShadowName": {
       "base": null,
@@ -8187,8 +7776,7 @@
     },
     "SqlParseException": {
       "base": "<p>The Rule-SQL expression can't be parsed correctly.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SqsAction": {
       "base": "<p>Describes an action to publish data to an Amazon SQS queue.</p>",
@@ -8198,33 +7786,27 @@
     },
     "StartAuditMitigationActionsTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAuditMitigationActionsTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDetectMitigationActionsTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDetectMitigationActionsTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartOnDemandAuditTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartOnDemandAuditTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSigningJobParameter": {
       "base": "<p>Information required to start a signing job.</p>",
@@ -8234,13 +7816,11 @@
     },
     "StartThingRegistrationTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartThingRegistrationTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StateMachineName": {
       "base": null,
@@ -8317,13 +7897,11 @@
     },
     "StopThingRegistrationTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopThingRegistrationTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Stream": {
       "base": "<p>Describes a group of files that can be streamed.</p>",
@@ -8597,13 +8175,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -8678,8 +8254,7 @@
     },
     "TaskAlreadyExistsException": {
       "base": "<p> This exception occurs if you attempt to start a task with the same task-id as an existing task but with a different clientRequestToken. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TaskId": {
       "base": null,
@@ -8790,23 +8365,19 @@
     },
     "TestAuthorizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestAuthorizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestInvokeAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestInvokeAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThingArn": {
       "base": null,
@@ -9136,8 +8707,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The rate exceeds the limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeFilter": {
       "base": "<p>A filter that can be used to list command executions for a device that started or completed before or after a particular date and time.</p>",
@@ -9424,23 +8994,19 @@
     },
     "TransferAlreadyCompletedException": {
       "base": "<p>You can't revert the certificate transfer because the transfer is already complete.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransferCertificateRequest": {
       "base": "<p>The input for the TransferCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransferCertificateResponse": {
       "base": "<p>The output from the TransferCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransferConflictException": {
       "base": "<p>You can't transfer the certificate because authorization policies are still attached.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransferData": {
       "base": "<p>Data used to transfer a certificate to an Amazon Web Services account.</p>",
@@ -9450,8 +9016,7 @@
     },
     "UnauthorizedException": {
       "base": "<p>You are not authorized to perform this operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UndoDeprecate": {
       "base": null,
@@ -9479,53 +9044,43 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountAuditConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountAuditConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAuditSuppressionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAuditSuppressionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAuthorizerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAuthorizerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBillingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBillingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCACertificateParams": {
       "base": "<p>Parameters to define a mitigation action that changes the state of the CA certificate to inactive.</p>",
@@ -9535,43 +9090,35 @@
     },
     "UpdateCACertificateRequest": {
       "base": "<p>The input to the UpdateCACertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCertificateProviderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCertificateProviderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCertificateRequest": {
       "base": "<p>The input for the UpdateCertificate operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCommandRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCommandResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomMetricResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDeviceCertificateParams": {
       "base": "<p>Parameters to define a mitigation action that changes the state of the device certificate to inactive.</p>",
@@ -9581,203 +9128,171 @@
     },
     "UpdateDimensionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDimensionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDomainConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDomainConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDynamicThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDynamicThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateEncryptionConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateEncryptionConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateEventConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFleetMetricRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIndexingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIndexingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMitigationActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMitigationActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePackageConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePackageConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePackageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePackageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePackageVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePackageVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProvisioningTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProvisioningTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRoleAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRoleAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateScheduledAuditRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateScheduledAuditResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSecurityProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSecurityProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStreamRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStreamResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingGroupsForThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingGroupsForThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingRequest": {
       "base": "<p>The input for the UpdateThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingResponse": {
       "base": "<p>The output from the UpdateThing operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTopicRuleDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTopicRuleDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -9833,13 +9348,11 @@
     },
     "ValidateSecurityProfileBehaviorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidateSecurityProfileBehaviorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationError": {
       "base": "<p>Information about an error found in a behavior specification.</p>",
@@ -9855,8 +9368,7 @@
     },
     "ValidationException": {
       "base": "<p>The request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Value": {
       "base": null,
@@ -9907,8 +9419,7 @@
     },
     "VersionConflictException": {
       "base": "<p>An exception thrown when the version of an entity specified with the <code>expectedVersion</code> parameter does not match the latest version in the system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VersionName": {
       "base": null,
@@ -9944,8 +9455,7 @@
     },
     "VersionsLimitExceededException": {
       "base": "<p>The number of policy versions exceeds the limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ViolationEvent": {
       "base": "<p>Information about a Device Defender security profile behavior violation.</p>",

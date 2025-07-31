@@ -1417,6 +1417,7 @@
         "InternalUserDatabaseEnabled":{"shape":"Boolean"},
         "SAMLOptions":{"shape":"SAMLOptionsOutput"},
         "JWTOptions":{"shape":"JWTOptionsOutput"},
+        "IAMFederationOptions":{"shape":"IAMFederationOptionsOutput"},
         "AnonymousAuthDisableDate":{"shape":"DisableTimestamp"},
         "AnonymousAuthEnabled":{"shape":"Boolean"}
       }
@@ -1429,6 +1430,7 @@
         "MasterUserOptions":{"shape":"MasterUserOptions"},
         "SAMLOptions":{"shape":"SAMLOptionsInput"},
         "JWTOptions":{"shape":"JWTOptionsInput"},
+        "IAMFederationOptions":{"shape":"IAMFederationOptionsInput"},
         "AnonymousAuthEnabled":{"shape":"Boolean"}
       }
     },
@@ -3307,6 +3309,34 @@
       }
     },
     "HostedZoneId":{"type":"string"},
+    "IAMFederationOptionsInput":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "SubjectKey":{"shape":"IAMFederationSubjectKey"},
+        "RolesKey":{"shape":"IAMFederationRolesKey"}
+      }
+    },
+    "IAMFederationOptionsOutput":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "SubjectKey":{"shape":"IAMFederationSubjectKey"},
+        "RolesKey":{"shape":"IAMFederationRolesKey"}
+      }
+    },
+    "IAMFederationRolesKey":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^(null|[A-Za-z][A-Za-z0-9_.:/=+\\-@]*)$"
+    },
+    "IAMFederationSubjectKey":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^(null|[A-Za-z][A-Za-z0-9_.:/=+\\-@]*)$"
+    },
     "IPAddressType":{
       "type":"string",
       "enum":[

@@ -822,7 +822,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ServiceUnavailableException"},
-        {"shape":"ConflictingResourceUpdateException"}
+        {"shape":"ConflictingResourceUpdateException"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "CreateTopicRuleDestination":{
@@ -838,7 +839,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ServiceUnavailableException"},
-        {"shape":"ConflictingResourceUpdateException"}
+        {"shape":"ConflictingResourceUpdateException"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "DeleteAccountAuditConfiguration":{
@@ -1665,6 +1667,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeEncryptionConfiguration":{
+      "name":"DescribeEncryptionConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/encryption-configuration"
+      },
+      "input":{"shape":"DescribeEncryptionConfigurationRequest"},
+      "output":{"shape":"DescribeEncryptionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
@@ -3411,7 +3429,8 @@
       "errors":[
         {"shape":"InternalException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "ListV2LoggingLevels":{
@@ -4050,6 +4069,22 @@
         {"shape":"InvalidQueryException"}
       ]
     },
+    "UpdateEncryptionConfiguration":{
+      "name":"UpdateEncryptionConfiguration",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/encryption-configuration"
+      },
+      "input":{"shape":"UpdateEncryptionConfigurationRequest"},
+      "output":{"shape":"UpdateEncryptionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateEventConfigurations":{
       "name":"UpdateEventConfigurations",
       "http":{
@@ -4492,8 +4527,7 @@
     },
     "AddThingToBillingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddThingToThingGroupRequest":{
       "type":"structure",
@@ -4507,8 +4541,7 @@
     },
     "AddThingToThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddThingsToThingGroupParams":{
       "type":"structure",
@@ -4774,8 +4807,7 @@
     },
     "AttachSecurityProfileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AttachThingPrincipalRequest":{
       "type":"structure",
@@ -4803,8 +4835,7 @@
     },
     "AttachThingPrincipalResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AttributeKey":{"type":"string"},
     "AttributeName":{
@@ -5461,8 +5492,7 @@
     },
     "CancelAuditMitigationActionsTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelAuditTaskRequest":{
       "type":"structure",
@@ -5477,8 +5507,7 @@
     },
     "CancelAuditTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelCertificateTransferRequest":{
       "type":"structure",
@@ -5504,8 +5533,7 @@
     },
     "CancelDetectMitigationActionsTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelJobExecutionRequest":{
       "type":"structure",
@@ -5733,13 +5761,11 @@
     },
     "ClearDefaultAuthorizerRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ClearDefaultAuthorizerResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ClientCertificateCallbackArn":{
       "type":"string",
@@ -6034,6 +6060,21 @@
         "Enabled":{"shape":"Enabled"}
       }
     },
+    "ConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "configurationStatus":{"shape":"ConfigurationStatus"},
+        "errorCode":{"shape":"ErrorCode"},
+        "errorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "ConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "HEALTHY",
+        "UNHEALTHY"
+      ]
+    },
     "ConfirmTopicRuleDestinationRequest":{
       "type":"structure",
       "required":["confirmationToken"],
@@ -6047,8 +6088,7 @@
     },
     "ConfirmTopicRuleDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConfirmationToken":{
       "type":"string",
@@ -6127,8 +6167,7 @@
     },
     "CreateAuditSuppressionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateAuthorizerRequest":{
       "type":"structure",
@@ -7035,8 +7074,7 @@
     },
     "DeleteAccountAuditConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAdditionalMetricsToRetain":{"type":"boolean"},
     "DeleteAlertTargets":{"type":"boolean"},
@@ -7053,8 +7091,7 @@
     },
     "DeleteAuditSuppressionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAuthorizerRequest":{
       "type":"structure",
@@ -7069,8 +7106,7 @@
     },
     "DeleteAuthorizerResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteBehaviors":{"type":"boolean"},
     "DeleteBillingGroupRequest":{
@@ -7091,8 +7127,7 @@
     },
     "DeleteBillingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCACertificateRequest":{
       "type":"structure",
@@ -7107,8 +7142,7 @@
     },
     "DeleteCACertificateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCertificateProviderRequest":{
       "type":"structure",
@@ -7123,8 +7157,7 @@
     },
     "DeleteCertificateProviderResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCertificateRequest":{
       "type":"structure",
@@ -7163,8 +7196,7 @@
     },
     "DeleteCommandExecutionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCommandRequest":{
       "type":"structure",
@@ -7207,8 +7239,7 @@
     },
     "DeleteCustomMetricResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDimensionRequest":{
       "type":"structure",
@@ -7223,8 +7254,7 @@
     },
     "DeleteDimensionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDomainConfigurationRequest":{
       "type":"structure",
@@ -7239,8 +7269,7 @@
     },
     "DeleteDomainConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDynamicThingGroupRequest":{
       "type":"structure",
@@ -7260,8 +7289,7 @@
     },
     "DeleteDynamicThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFleetMetricRequest":{
       "type":"structure",
@@ -7360,8 +7388,7 @@
     },
     "DeleteMitigationActionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteOTAUpdateRequest":{
       "type":"structure",
@@ -7386,8 +7413,7 @@
     },
     "DeleteOTAUpdateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePackageRequest":{
       "type":"structure",
@@ -7408,8 +7434,7 @@
     },
     "DeletePackageResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePackageVersionRequest":{
       "type":"structure",
@@ -7438,8 +7463,7 @@
     },
     "DeletePackageVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyRequest":{
       "type":"structure",
@@ -7484,8 +7508,7 @@
     },
     "DeleteProvisioningTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProvisioningTemplateVersionRequest":{
       "type":"structure",
@@ -7508,18 +7531,15 @@
     },
     "DeleteProvisioningTemplateVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegistrationCodeRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegistrationCodeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRoleAliasRequest":{
       "type":"structure",
@@ -7534,8 +7554,7 @@
     },
     "DeleteRoleAliasResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteScheduledAuditRequest":{
       "type":"structure",
@@ -7550,8 +7569,7 @@
     },
     "DeleteScheduledAuditResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteScheduledAudits":{"type":"boolean"},
     "DeleteSecurityProfileRequest":{
@@ -7572,8 +7590,7 @@
     },
     "DeleteSecurityProfileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteStream":{"type":"boolean"},
     "DeleteStreamRequest":{
@@ -7589,8 +7606,7 @@
     },
     "DeleteStreamResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteThingGroupRequest":{
       "type":"structure",
@@ -7610,8 +7626,7 @@
     },
     "DeleteThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteThingRequest":{
       "type":"structure",
@@ -7631,8 +7646,7 @@
     },
     "DeleteThingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteThingTypeRequest":{
       "type":"structure",
@@ -7647,8 +7661,7 @@
     },
     "DeleteThingTypeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTopicRuleDestinationRequest":{
       "type":"structure",
@@ -7663,8 +7676,7 @@
     },
     "DeleteTopicRuleDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTopicRuleRequest":{
       "type":"structure",
@@ -7718,15 +7730,13 @@
     },
     "DeprecateThingTypeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeprecationDate":{"type":"timestamp"},
     "DeprecationFlag":{"type":"boolean"},
     "DescribeAccountAuditConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAccountAuditConfigurationResponse":{
       "type":"structure",
@@ -7939,8 +7949,7 @@
     },
     "DescribeDefaultAuthorizerRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeDefaultAuthorizerResponse":{
       "type":"structure",
@@ -8017,6 +8026,20 @@
         "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
+    "DescribeEncryptionConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "DescribeEncryptionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "kmsAccessRoleArn":{"shape":"KmsAccessRoleArn"},
+        "configurationDetails":{"shape":"ConfigurationDetails"},
+        "lastModifiedDate":{"shape":"DateType"}
+      }
+    },
     "DescribeEndpointRequest":{
       "type":"structure",
       "members":{
@@ -8035,8 +8058,7 @@
     },
     "DescribeEventConfigurationsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeEventConfigurationsResponse":{
       "type":"structure",
@@ -8535,8 +8557,7 @@
     },
     "DetachSecurityProfileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DetachThingPrincipalRequest":{
       "type":"structure",
@@ -8559,8 +8580,7 @@
     },
     "DetachThingPrincipalResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DetailsKey":{
       "type":"string",
@@ -8744,8 +8764,7 @@
     },
     "DisassociateSbomFromPackageVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisconnectReason":{"type":"string"},
     "DisconnectReasonValue":{
@@ -8945,6 +8964,13 @@
     "EnabledBoolean":{
       "type":"boolean",
       "box":true
+    },
+    "EncryptionType":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED_KMS_KEY",
+        "AWS_OWNED_KMS_KEY"
+      ]
     },
     "EndpointAddress":{"type":"string"},
     "EndpointType":{
@@ -9334,8 +9360,7 @@
     },
     "GetIndexingConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetIndexingConfigurationResponse":{
       "type":"structure",
@@ -9368,8 +9393,7 @@
     },
     "GetLoggingOptionsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetLoggingOptionsResponse":{
       "type":"structure",
@@ -9397,8 +9421,7 @@
     },
     "GetPackageConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetPackageConfigurationResponse":{
       "type":"structure",
@@ -9539,8 +9562,7 @@
     },
     "GetRegistrationCodeRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetRegistrationCodeResponse":{
       "type":"structure",
@@ -9621,8 +9643,7 @@
     },
     "GetV2LoggingOptionsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetV2LoggingOptionsResponse":{
       "type":"structure",
@@ -10208,6 +10229,14 @@
         "streamName":{"shape":"StreamName"},
         "partitionKey":{"shape":"PartitionKey"}
       }
+    },
+    "KmsAccessRoleArn":{
+      "type":"string",
+      "max":2048
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048
     },
     "LambdaAction":{
       "type":"structure",
@@ -13175,8 +13204,7 @@
     },
     "PutVerificationStateOnViolationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Qos":{
       "type":"integer",
@@ -13378,8 +13406,7 @@
     },
     "RemoveThingFromBillingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveThingFromThingGroupRequest":{
       "type":"structure",
@@ -13392,8 +13419,7 @@
     },
     "RemoveThingFromThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveThingType":{"type":"boolean"},
     "RemovedThings":{"type":"integer"},
@@ -14261,8 +14287,7 @@
     },
     "StopThingRegistrationTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Stream":{
       "type":"structure",
@@ -14406,8 +14431,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -15087,8 +15111,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAccountAuditConfigurationRequest":{
       "type":"structure",
@@ -15100,8 +15123,7 @@
     },
     "UpdateAccountAuditConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAuditSuppressionRequest":{
       "type":"structure",
@@ -15119,8 +15141,7 @@
     },
     "UpdateAuditSuppressionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAuthorizerRequest":{
       "type":"structure",
@@ -15370,6 +15391,19 @@
         "version":{"shape":"Version"}
       }
     },
+    "UpdateEncryptionConfigurationRequest":{
+      "type":"structure",
+      "required":["encryptionType"],
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "kmsAccessRoleArn":{"shape":"KmsAccessRoleArn"}
+      }
+    },
+    "UpdateEncryptionConfigurationResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "UpdateEventConfigurationsRequest":{
       "type":"structure",
       "members":{
@@ -15378,8 +15412,7 @@
     },
     "UpdateEventConfigurationsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateFleetMetricRequest":{
       "type":"structure",
@@ -15413,8 +15446,7 @@
     },
     "UpdateIndexingConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateJobRequest":{
       "type":"structure",
@@ -15472,8 +15504,7 @@
     },
     "UpdatePackageConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePackageRequest":{
       "type":"structure",
@@ -15497,8 +15528,7 @@
     },
     "UpdatePackageResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePackageVersionRequest":{
       "type":"structure",
@@ -15532,8 +15562,7 @@
     },
     "UpdatePackageVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateProvisioningTemplateRequest":{
       "type":"structure",
@@ -15554,8 +15583,7 @@
     },
     "UpdateProvisioningTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateRoleAliasRequest":{
       "type":"structure",
@@ -15704,8 +15732,7 @@
     },
     "UpdateThingGroupsForThingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateThingRequest":{
       "type":"structure",
@@ -15724,8 +15751,7 @@
     },
     "UpdateThingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateThingTypeRequest":{
       "type":"structure",
@@ -15741,8 +15767,7 @@
     },
     "UpdateThingTypeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateTopicRuleDestinationRequest":{
       "type":"structure",
@@ -15757,8 +15782,7 @@
     },
     "UpdateTopicRuleDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{
       "type":"string",

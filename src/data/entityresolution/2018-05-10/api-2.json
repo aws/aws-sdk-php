@@ -1096,8 +1096,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "EntityName":{
@@ -2411,6 +2410,7 @@
       "members":{
         "resolutionType":{"shape":"ResolutionType"},
         "ruleBasedProperties":{"shape":"RuleBasedProperties"},
+        "ruleConditionProperties":{"shape":"RuleConditionProperties"},
         "providerProperties":{"shape":"ProviderProperties"}
       }
     },
@@ -2467,6 +2467,41 @@
       "member":{"shape":"Rule"},
       "max":25,
       "min":1
+    },
+    "RuleCondition":{
+      "type":"structure",
+      "required":[
+        "ruleName",
+        "condition"
+      ],
+      "members":{
+        "ruleName":{"shape":"RuleConditionRuleNameString"},
+        "condition":{"shape":"RuleConditionConditionString"}
+      }
+    },
+    "RuleConditionConditionString":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
+    "RuleConditionProperties":{
+      "type":"structure",
+      "required":["rules"],
+      "members":{
+        "rules":{"shape":"RuleConditionPropertiesRulesList"}
+      }
+    },
+    "RuleConditionPropertiesRulesList":{
+      "type":"list",
+      "member":{"shape":"RuleCondition"},
+      "max":25,
+      "min":1
+    },
+    "RuleConditionRuleNameString":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"[a-zA-Z_0-9- ]*"
     },
     "RuleMatchingKeysList":{
       "type":"list",
@@ -2689,8 +2724,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2741,8 +2775,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateIdMappingWorkflowInput":{
       "type":"structure",

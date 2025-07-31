@@ -2,8 +2,8 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-06-08",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"inspector2",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceAbbreviation":"Inspector2",
@@ -11,8 +11,7 @@
     "serviceId":"Inspector2",
     "signatureVersion":"v4",
     "signingName":"inspector2",
-    "uid":"inspector2-2020-06-08",
-    "auth":["aws.auth#sigv4"]
+    "uid":"inspector2-2020-06-08"
   },
   "operations":{
     "AssociateMember":{
@@ -1291,13 +1290,13 @@
       "type":"structure",
       "required":[
         "accountId",
-        "resourceStatus",
-        "status"
+        "status",
+        "resourceStatus"
       ],
       "members":{
         "accountId":{"shape":"AccountId"},
-        "resourceStatus":{"shape":"ResourceStatus"},
-        "status":{"shape":"Status"}
+        "status":{"shape":"Status"},
+        "resourceStatus":{"shape":"ResourceStatus"}
       }
     },
     "AccountAggregation":{
@@ -1305,24 +1304,24 @@
       "members":{
         "findingType":{"shape":"AggregationFindingType"},
         "resourceType":{"shape":"AggregationResourceType"},
-        "sortBy":{"shape":"AccountSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"AccountSortBy"}
       }
     },
     "AccountAggregationResponse":{
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
+        "severityCounts":{"shape":"SeverityCounts"},
         "exploitAvailableCount":{"shape":"Long"},
-        "fixAvailableCount":{"shape":"Long"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "fixAvailableCount":{"shape":"Long"}
       }
     },
     "AccountId":{
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"^\\d{12}$"
+      "pattern":"\\d{12}"
     },
     "AccountIdFilterList":{
       "type":"list",
@@ -1352,13 +1351,13 @@
       "type":"structure",
       "required":[
         "accountId",
-        "resourceState",
-        "state"
+        "state",
+        "resourceState"
       ],
       "members":{
         "accountId":{"shape":"AccountId"},
-        "resourceState":{"shape":"ResourceState"},
-        "state":{"shape":"State"}
+        "state":{"shape":"State"},
+        "resourceState":{"shape":"ResourceState"}
       }
     },
     "AccountStateList":{
@@ -1382,15 +1381,15 @@
         "accountAggregation":{"shape":"AccountAggregation"},
         "amiAggregation":{"shape":"AmiAggregation"},
         "awsEcrContainerAggregation":{"shape":"AwsEcrContainerAggregation"},
-        "codeRepositoryAggregation":{"shape":"CodeRepositoryAggregation"},
         "ec2InstanceAggregation":{"shape":"Ec2InstanceAggregation"},
         "findingTypeAggregation":{"shape":"FindingTypeAggregation"},
         "imageLayerAggregation":{"shape":"ImageLayerAggregation"},
-        "lambdaFunctionAggregation":{"shape":"LambdaFunctionAggregation"},
-        "lambdaLayerAggregation":{"shape":"LambdaLayerAggregation"},
         "packageAggregation":{"shape":"PackageAggregation"},
         "repositoryAggregation":{"shape":"RepositoryAggregation"},
-        "titleAggregation":{"shape":"TitleAggregation"}
+        "titleAggregation":{"shape":"TitleAggregation"},
+        "lambdaLayerAggregation":{"shape":"LambdaLayerAggregation"},
+        "lambdaFunctionAggregation":{"shape":"LambdaFunctionAggregation"},
+        "codeRepositoryAggregation":{"shape":"CodeRepositoryAggregation"}
       },
       "union":true
     },
@@ -1399,7 +1398,8 @@
       "enum":[
         "AWS_EC2_INSTANCE",
         "AWS_ECR_CONTAINER_IMAGE",
-        "AWS_LAMBDA_FUNCTION"
+        "AWS_LAMBDA_FUNCTION",
+        "CODE_REPOSITORY"
       ]
     },
     "AggregationResponse":{
@@ -1408,15 +1408,15 @@
         "accountAggregation":{"shape":"AccountAggregationResponse"},
         "amiAggregation":{"shape":"AmiAggregationResponse"},
         "awsEcrContainerAggregation":{"shape":"AwsEcrContainerAggregationResponse"},
-        "codeRepositoryAggregation":{"shape":"CodeRepositoryAggregationResponse"},
         "ec2InstanceAggregation":{"shape":"Ec2InstanceAggregationResponse"},
         "findingTypeAggregation":{"shape":"FindingTypeAggregationResponse"},
         "imageLayerAggregation":{"shape":"ImageLayerAggregationResponse"},
-        "lambdaFunctionAggregation":{"shape":"LambdaFunctionAggregationResponse"},
-        "lambdaLayerAggregation":{"shape":"LambdaLayerAggregationResponse"},
         "packageAggregation":{"shape":"PackageAggregationResponse"},
         "repositoryAggregation":{"shape":"RepositoryAggregationResponse"},
-        "titleAggregation":{"shape":"TitleAggregationResponse"}
+        "titleAggregation":{"shape":"TitleAggregationResponse"},
+        "lambdaLayerAggregation":{"shape":"LambdaLayerAggregationResponse"},
+        "lambdaFunctionAggregation":{"shape":"LambdaFunctionAggregationResponse"},
+        "codeRepositoryAggregation":{"shape":"CodeRepositoryAggregationResponse"}
       },
       "union":true
     },
@@ -1445,23 +1445,23 @@
       "type":"structure",
       "members":{
         "amis":{"shape":"StringFilterList"},
-        "sortBy":{"shape":"AmiSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"AmiSortBy"}
       }
     },
     "AmiAggregationResponse":{
       "type":"structure",
       "required":["ami"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "affectedInstances":{"shape":"Long"},
         "ami":{"shape":"AmiId"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "accountId":{"shape":"AccountId"},
+        "severityCounts":{"shape":"SeverityCounts"},
+        "affectedInstances":{"shape":"Long"}
       }
     },
     "AmiId":{
       "type":"string",
-      "pattern":"^ami-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
+      "pattern":"ami-([a-z0-9]{8}|[a-z0-9]{17}|\\*)"
     },
     "AmiSortBy":{
       "type":"string",
@@ -1493,12 +1493,12 @@
     "AssociateConfigurationRequest":{
       "type":"structure",
       "required":[
-        "resource",
-        "scanConfigurationArn"
+        "scanConfigurationArn",
+        "resource"
       ],
       "members":{
-        "resource":{"shape":"CodeSecurityResource"},
-        "scanConfigurationArn":{"shape":"ScanConfigurationArn"}
+        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
+        "resource":{"shape":"CodeSecurityResource"}
       }
     },
     "AssociateConfigurationRequestList":{
@@ -1556,75 +1556,75 @@
         "ecr"
       ],
       "members":{
-        "codeRepository":{"shape":"Boolean"},
         "ec2":{"shape":"Boolean"},
         "ecr":{"shape":"Boolean"},
         "lambda":{"shape":"Boolean"},
-        "lambdaCode":{"shape":"Boolean"}
+        "lambdaCode":{"shape":"Boolean"},
+        "codeRepository":{"shape":"Boolean"}
       }
     },
     "AwsEc2InstanceDetails":{
       "type":"structure",
       "members":{
-        "iamInstanceProfileArn":{"shape":"NonEmptyString"},
+        "type":{"shape":"NonEmptyString"},
         "imageId":{"shape":"NonEmptyString"},
         "ipV4Addresses":{"shape":"IpV4AddressList"},
         "ipV6Addresses":{"shape":"IpV6AddressList"},
         "keyName":{"shape":"NonEmptyString"},
-        "launchedAt":{"shape":"DateTimeTimestamp"},
-        "platform":{"shape":"Platform"},
+        "iamInstanceProfileArn":{"shape":"NonEmptyString"},
+        "vpcId":{"shape":"NonEmptyString"},
         "subnetId":{"shape":"NonEmptyString"},
-        "type":{"shape":"NonEmptyString"},
-        "vpcId":{"shape":"NonEmptyString"}
+        "launchedAt":{"shape":"DateTimeTimestamp"},
+        "platform":{"shape":"Platform"}
       }
     },
     "AwsEcrContainerAggregation":{
       "type":"structure",
       "members":{
-        "architectures":{"shape":"StringFilterList"},
-        "imageShas":{"shape":"StringFilterList"},
-        "imageTags":{"shape":"StringFilterList"},
-        "inUseCount":{"shape":"NumberFilterList"},
-        "lastInUseAt":{"shape":"DateFilterList"},
-        "repositories":{"shape":"StringFilterList"},
         "resourceIds":{"shape":"StringFilterList"},
+        "imageShas":{"shape":"StringFilterList"},
+        "repositories":{"shape":"StringFilterList"},
+        "architectures":{"shape":"StringFilterList"},
+        "imageTags":{"shape":"StringFilterList"},
+        "sortOrder":{"shape":"SortOrder"},
         "sortBy":{"shape":"AwsEcrContainerSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "lastInUseAt":{"shape":"DateFilterList"},
+        "inUseCount":{"shape":"NumberFilterList"}
       }
     },
     "AwsEcrContainerAggregationResponse":{
       "type":"structure",
       "required":["resourceId"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "architecture":{"shape":"String"},
-        "imageSha":{"shape":"String"},
-        "imageTags":{"shape":"StringList"},
-        "inUseCount":{"shape":"Long"},
-        "lastInUseAt":{"shape":"DateTimeTimestamp"},
-        "repository":{"shape":"String"},
         "resourceId":{"shape":"NonEmptyString"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "imageSha":{"shape":"String"},
+        "repository":{"shape":"String"},
+        "architecture":{"shape":"String"},
+        "imageTags":{"shape":"StringList"},
+        "accountId":{"shape":"AccountId"},
+        "severityCounts":{"shape":"SeverityCounts"},
+        "lastInUseAt":{"shape":"DateTimeTimestamp"},
+        "inUseCount":{"shape":"Long"}
       }
     },
     "AwsEcrContainerImageDetails":{
       "type":"structure",
       "required":[
+        "repositoryName",
         "imageHash",
-        "registry",
-        "repositoryName"
+        "registry"
       ],
       "members":{
-        "architecture":{"shape":"NonEmptyString"},
-        "author":{"shape":"String"},
-        "imageHash":{"shape":"ImageHash"},
+        "repositoryName":{"shape":"NonEmptyString"},
         "imageTags":{"shape":"ImageTagList"},
-        "inUseCount":{"shape":"Long"},
-        "lastInUseAt":{"shape":"DateTimeTimestamp"},
-        "platform":{"shape":"Platform"},
         "pushedAt":{"shape":"DateTimeTimestamp"},
+        "author":{"shape":"String"},
+        "architecture":{"shape":"NonEmptyString"},
+        "imageHash":{"shape":"ImageHash"},
         "registry":{"shape":"NonEmptyString"},
-        "repositoryName":{"shape":"NonEmptyString"}
+        "platform":{"shape":"Platform"},
+        "lastInUseAt":{"shape":"DateTimeTimestamp"},
+        "inUseCount":{"shape":"Long"}
       }
     },
     "AwsEcrContainerSortBy":{
@@ -1698,23 +1698,23 @@
     "AwsLambdaFunctionDetails":{
       "type":"structure",
       "required":[
-        "codeSha256",
-        "executionRoleArn",
         "functionName",
         "runtime",
-        "version"
+        "codeSha256",
+        "version",
+        "executionRoleArn"
       ],
       "members":{
-        "architectures":{"shape":"ArchitectureList"},
-        "codeSha256":{"shape":"NonEmptyString"},
-        "executionRoleArn":{"shape":"ExecutionRoleArn"},
         "functionName":{"shape":"FunctionName"},
-        "lastModifiedAt":{"shape":"Timestamp"},
-        "layers":{"shape":"LayerList"},
-        "packageType":{"shape":"PackageType"},
         "runtime":{"shape":"Runtime"},
+        "codeSha256":{"shape":"NonEmptyString"},
         "version":{"shape":"Version"},
-        "vpcConfig":{"shape":"LambdaVpcConfig"}
+        "executionRoleArn":{"shape":"ExecutionRoleArn"},
+        "layers":{"shape":"LayerList"},
+        "vpcConfig":{"shape":"LambdaVpcConfig"},
+        "packageType":{"shape":"PackageType"},
+        "architectures":{"shape":"ArchitectureList"},
+        "lastModifiedAt":{"shape":"Timestamp"}
       }
     },
     "BadRequestException":{
@@ -1801,8 +1801,8 @@
     "BatchGetFindingDetailsResponse":{
       "type":"structure",
       "members":{
-        "errors":{"shape":"FindingDetailsErrorList"},
-        "findingDetails":{"shape":"FindingDetails"}
+        "findingDetails":{"shape":"FindingDetails"},
+        "errors":{"shape":"FindingDetailsErrorList"}
       }
     },
     "BatchGetFreeTrialInfoRequest":{
@@ -1918,14 +1918,14 @@
       "type":"structure",
       "required":["scanArn"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "checkDescription":{"shape":"String"},
-        "checkId":{"shape":"String"},
-        "level":{"shape":"CisSecurityLevel"},
-        "platform":{"shape":"String"},
         "scanArn":{"shape":"CisScanArn"},
+        "checkId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "checkDescription":{"shape":"String"},
+        "level":{"shape":"CisSecurityLevel"},
+        "accountId":{"shape":"AccountId"},
         "statusCounts":{"shape":"StatusCounts"},
-        "title":{"shape":"String"}
+        "platform":{"shape":"String"}
       }
     },
     "CisCheckAggregationList":{
@@ -1943,7 +1943,7 @@
     },
     "CisFindingArn":{
       "type":"string",
-      "pattern":"^arn:aws(-gov|-cn)?:inspector2:[-.a-z0-9]{0,20}:\\d{12}:owner/\\d{12}/cis-finding/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "pattern":"arn:aws(-gov|-cn)?:inspector2:[-.a-z0-9]{0,20}:\\d{12}:owner/\\d{12}/cis-finding/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
     },
     "CisFindingArnFilterList":{
       "type":"list",
@@ -1983,8 +1983,8 @@
     "CisNumberFilter":{
       "type":"structure",
       "members":{
-        "lowerInclusive":{"shape":"Integer"},
-        "upperInclusive":{"shape":"Integer"}
+        "upperInclusive":{"shape":"Integer"},
+        "lowerInclusive":{"shape":"Integer"}
       }
     },
     "CisNumberFilterList":{
@@ -1995,7 +1995,7 @@
     },
     "CisOwnerId":{
       "type":"string",
-      "pattern":"^\\d{12}|o-[a-z0-9]{10,32}$"
+      "pattern":"\\d{12}|o-[a-z0-9]{10,32}"
     },
     "CisReportFormat":{
       "type":"string",
@@ -2065,21 +2065,21 @@
         "scanConfigurationArn"
       ],
       "members":{
-        "failedChecks":{"shape":"Integer"},
         "scanArn":{"shape":"CisScanArn"},
         "scanConfigurationArn":{"shape":"CisScanConfigurationArn"},
-        "scanDate":{"shape":"Timestamp"},
-        "scanName":{"shape":"CisScanName"},
-        "scheduledBy":{"shape":"String"},
-        "securityLevel":{"shape":"CisSecurityLevel"},
         "status":{"shape":"CisScanStatus"},
+        "scanName":{"shape":"CisScanName"},
+        "scanDate":{"shape":"Timestamp"},
+        "failedChecks":{"shape":"Integer"},
+        "totalChecks":{"shape":"Integer"},
         "targets":{"shape":"CisTargets"},
-        "totalChecks":{"shape":"Integer"}
+        "scheduledBy":{"shape":"String"},
+        "securityLevel":{"shape":"CisSecurityLevel"}
       }
     },
     "CisScanArn":{
       "type":"string",
-      "pattern":"^arn:aws(-us-gov|-cn)?:inspector2:[-.a-z0-9]{0,20}:\\d{12}:owner/(\\d{12}|o-[a-z0-9]{10,32})/cis-scan/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "pattern":"arn:aws(-us-gov|-cn)?:inspector2:[-.a-z0-9]{0,20}:\\d{12}:owner/(\\d{12}|o-[a-z0-9]{10,32})/cis-scan/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
     },
     "CisScanArnFilterList":{
       "type":"list",
@@ -2091,18 +2091,18 @@
       "type":"structure",
       "required":["scanConfigurationArn"],
       "members":{
-        "ownerId":{"shape":"CisOwnerId"},
         "scanConfigurationArn":{"shape":"CisScanConfigurationArn"},
+        "ownerId":{"shape":"CisOwnerId"},
         "scanName":{"shape":"CisScanName"},
-        "schedule":{"shape":"Schedule"},
         "securityLevel":{"shape":"CisSecurityLevel"},
-        "tags":{"shape":"CisTagMap"},
-        "targets":{"shape":"CisTargets"}
+        "schedule":{"shape":"Schedule"},
+        "targets":{"shape":"CisTargets"},
+        "tags":{"shape":"CisTagMap"}
       }
     },
     "CisScanConfigurationArn":{
       "type":"string",
-      "pattern":"^arn:aws(-us-gov|-cn)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-[0-9]{1}:[0-9]{12}:owner/(o-[a-z0-9]+|[0-9]{12})/cis-configuration/[0-9a-fA-F-]+$"
+      "pattern":"arn:aws(-us-gov|-cn)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-[0-9]{1}:[0-9]{12}:owner/(o-[a-z0-9]+|[0-9]{12})/cis-configuration/[0-9a-fA-F-]+"
     },
     "CisScanConfigurationArnFilterList":{
       "type":"list",
@@ -2150,28 +2150,28 @@
       "type":"structure",
       "required":["scanArn"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "checkDescription":{"shape":"String"},
-        "checkId":{"shape":"String"},
-        "findingArn":{"shape":"CisFindingArn"},
-        "level":{"shape":"CisSecurityLevel"},
-        "platform":{"shape":"String"},
-        "remediation":{"shape":"String"},
         "scanArn":{"shape":"CisScanArn"},
+        "accountId":{"shape":"AccountId"},
+        "targetResourceId":{"shape":"ResourceId"},
+        "platform":{"shape":"String"},
         "status":{"shape":"CisFindingStatus"},
         "statusReason":{"shape":"String"},
-        "targetResourceId":{"shape":"ResourceId"},
-        "title":{"shape":"String"}
+        "checkId":{"shape":"String"},
+        "title":{"shape":"String"},
+        "checkDescription":{"shape":"String"},
+        "remediation":{"shape":"String"},
+        "level":{"shape":"CisSecurityLevel"},
+        "findingArn":{"shape":"CisFindingArn"}
       }
     },
     "CisScanResultDetailsFilterCriteria":{
       "type":"structure",
       "members":{
-        "checkIdFilters":{"shape":"CheckIdFilterList"},
-        "findingArnFilters":{"shape":"CisFindingArnFilterList"},
         "findingStatusFilters":{"shape":"CisFindingStatusFilterList"},
+        "checkIdFilters":{"shape":"CheckIdFilterList"},
+        "titleFilters":{"shape":"TitleFilterList"},
         "securityLevelFilters":{"shape":"CisSecurityLevelFilterList"},
-        "titleFilters":{"shape":"TitleFilterList"}
+        "findingArnFilters":{"shape":"CisFindingArnFilterList"}
       }
     },
     "CisScanResultDetailsList":{
@@ -2192,10 +2192,10 @@
       "members":{
         "accountIdFilters":{"shape":"OneAccountIdFilterList"},
         "checkIdFilters":{"shape":"CheckIdFilterList"},
-        "failedResourcesFilters":{"shape":"CisNumberFilterList"},
+        "titleFilters":{"shape":"TitleFilterList"},
         "platformFilters":{"shape":"PlatformFilterList"},
-        "securityLevelFilters":{"shape":"CisSecurityLevelFilterList"},
-        "titleFilters":{"shape":"TitleFilterList"}
+        "failedResourcesFilters":{"shape":"CisNumberFilterList"},
+        "securityLevelFilters":{"shape":"CisSecurityLevelFilterList"}
       }
     },
     "CisScanResultsAggregatedByChecksSortBy":{
@@ -2212,14 +2212,14 @@
       "type":"structure",
       "members":{
         "accountIdFilters":{"shape":"AccountIdFilterList"},
-        "checkIdFilters":{"shape":"CheckIdFilterList"},
-        "failedChecksFilters":{"shape":"CisNumberFilterList"},
-        "platformFilters":{"shape":"PlatformFilterList"},
         "statusFilters":{"shape":"CisResultStatusFilterList"},
+        "checkIdFilters":{"shape":"CheckIdFilterList"},
         "targetResourceIdFilters":{"shape":"ResourceIdFilterList"},
         "targetResourceTagFilters":{"shape":"ResourceTagFilterList"},
+        "platformFilters":{"shape":"PlatformFilterList"},
         "targetStatusFilters":{"shape":"TargetStatusFilterList"},
-        "targetStatusReasonFilters":{"shape":"TargetStatusReasonFilterList"}
+        "targetStatusReasonFilters":{"shape":"TargetStatusReasonFilterList"},
+        "failedChecksFilters":{"shape":"CisNumberFilterList"}
       }
     },
     "CisScanResultsAggregatedByTargetResourceSortBy":{
@@ -2306,14 +2306,14 @@
     "CisSessionMessage":{
       "type":"structure",
       "required":[
-        "cisRuleDetails",
         "ruleId",
-        "status"
+        "status",
+        "cisRuleDetails"
       ],
       "members":{
-        "cisRuleDetails":{"shape":"CisRuleDetails"},
         "ruleId":{"shape":"RuleId"},
-        "status":{"shape":"CisRuleStatus"}
+        "status":{"shape":"CisRuleStatus"},
+        "cisRuleDetails":{"shape":"CisRuleDetails"}
       }
     },
     "CisSessionMessages":{
@@ -2357,12 +2357,12 @@
       "type":"structure",
       "required":["scanArn"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "platform":{"shape":"String"},
         "scanArn":{"shape":"CisScanArn"},
-        "statusCounts":{"shape":"StatusCounts"},
         "targetResourceId":{"shape":"ResourceId"},
+        "accountId":{"shape":"AccountId"},
         "targetResourceTags":{"shape":"TargetResourceTags"},
+        "statusCounts":{"shape":"StatusCounts"},
+        "platform":{"shape":"String"},
         "targetStatus":{"shape":"CisTargetStatus"},
         "targetStatusReason":{"shape":"CisTargetStatusReason"}
       }
@@ -2429,9 +2429,9 @@
     "CisaData":{
       "type":"structure",
       "members":{
-        "action":{"shape":"CisaAction"},
         "dateAdded":{"shape":"CisaDateAdded"},
-        "dateDue":{"shape":"CisaDateDue"}
+        "dateDue":{"shape":"CisaDateDue"},
+        "action":{"shape":"CisaAction"}
       }
     },
     "CisaDateAdded":{"type":"timestamp"},
@@ -2444,14 +2444,14 @@
     "ClusterDetails":{
       "type":"structure",
       "required":[
-        "clusterMetadata",
-        "lastInUse"
+        "lastInUse",
+        "clusterMetadata"
       ],
       "members":{
-        "clusterMetadata":{"shape":"ClusterMetadata"},
         "lastInUse":{"shape":"Timestamp"},
         "runningUnitCount":{"shape":"Long"},
-        "stoppedUnitCount":{"shape":"Long"}
+        "stoppedUnitCount":{"shape":"Long"},
+        "clusterMetadata":{"shape":"ClusterMetadata"}
       }
     },
     "ClusterForImageFilterCriteria":{
@@ -2463,7 +2463,7 @@
     },
     "ClusterForImageFilterCriteriaResourceIdString":{
       "type":"string",
-      "pattern":"^arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?$"
+      "pattern":"arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?"
     },
     "ClusterInformation":{
       "type":"structure",
@@ -2477,7 +2477,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(?:-[a-z0-9-]+)?:(?:ecs|eks):[a-z0-9-]+:[0-9]{12}:cluster/[a-zA-Z0-9_-]+$"
+      "pattern":"arn:aws(?:-[a-z0-9-]+)?:(?:ecs|eks):[a-z0-9-]+:[0-9]{12}:cluster/[a-zA-Z0-9_-]+"
     },
     "ClusterInformationClusterDetailsList":{
       "type":"list",
@@ -2502,16 +2502,16 @@
     "CodeFilePath":{
       "type":"structure",
       "required":[
-        "endLine",
         "fileName",
         "filePath",
-        "startLine"
+        "startLine",
+        "endLine"
       ],
       "members":{
-        "endLine":{"shape":"Integer"},
         "fileName":{"shape":"NonEmptyString"},
         "filePath":{"shape":"NonEmptyString"},
-        "startLine":{"shape":"Integer"}
+        "startLine":{"shape":"Integer"},
+        "endLine":{"shape":"Integer"}
       }
     },
     "CodeLine":{
@@ -2541,35 +2541,35 @@
       "members":{
         "projectNames":{"shape":"StringFilterList"},
         "providerTypes":{"shape":"StringFilterList"},
-        "resourceIds":{"shape":"StringFilterList"},
+        "sortOrder":{"shape":"SortOrder"},
         "sortBy":{"shape":"CodeRepositorySortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "resourceIds":{"shape":"StringFilterList"}
       }
     },
     "CodeRepositoryAggregationResponse":{
       "type":"structure",
       "required":["projectNames"],
       "members":{
-        "accountId":{"shape":"String"},
-        "exploitAvailableActiveFindingsCount":{"shape":"Long"},
-        "fixAvailableActiveFindingsCount":{"shape":"Long"},
         "projectNames":{"shape":"String"},
         "providerType":{"shape":"String"},
-        "resourceId":{"shape":"String"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "severityCounts":{"shape":"SeverityCounts"},
+        "exploitAvailableActiveFindingsCount":{"shape":"Long"},
+        "fixAvailableActiveFindingsCount":{"shape":"Long"},
+        "accountId":{"shape":"String"},
+        "resourceId":{"shape":"String"}
       }
     },
     "CodeRepositoryDetails":{
       "type":"structure",
       "members":{
-        "integrationArn":{"shape":"CodeRepositoryIntegrationArn"},
         "projectName":{"shape":"CodeRepositoryProjectName"},
+        "integrationArn":{"shape":"CodeRepositoryIntegrationArn"},
         "providerType":{"shape":"CodeRepositoryProviderType"}
       }
     },
     "CodeRepositoryIntegrationArn":{
       "type":"string",
-      "pattern":"^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:codesecurity-integration\\/[a-f0-9-]{36}$"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:codesecurity-integration\\/[a-f0-9-]{36}"
     },
     "CodeRepositoryMetadata":{
       "type":"structure",
@@ -2579,13 +2579,13 @@
         "providerTypeVisibility"
       ],
       "members":{
-        "integrationArn":{"shape":"CodeRepositoryIntegrationArn"},
-        "lastScannedCommitId":{"shape":"CommitId"},
-        "onDemandScan":{"shape":"CodeRepositoryOnDemandScan"},
         "projectName":{"shape":"CodeRepositoryMetadataProjectNameString"},
+        "integrationArn":{"shape":"CodeRepositoryIntegrationArn"},
         "providerType":{"shape":"CodeRepositoryMetadataProviderTypeString"},
         "providerTypeVisibility":{"shape":"CodeRepositoryMetadataProviderTypeVisibilityString"},
-        "scanConfiguration":{"shape":"ProjectCodeSecurityScanConfiguration"}
+        "lastScannedCommitId":{"shape":"CommitId"},
+        "scanConfiguration":{"shape":"ProjectCodeSecurityScanConfiguration"},
+        "onDemandScan":{"shape":"CodeRepositoryOnDemandScan"}
       }
     },
     "CodeRepositoryMetadataProjectNameString":{
@@ -2606,8 +2606,8 @@
     "CodeRepositoryOnDemandScan":{
       "type":"structure",
       "members":{
-        "lastScanAt":{"shape":"DateTimeTimestamp"},
         "lastScannedCommitId":{"shape":"CommitId"},
+        "lastScanAt":{"shape":"DateTimeTimestamp"},
         "scanStatus":{"shape":"ScanStatus"}
       }
     },
@@ -2644,32 +2644,32 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[\\S]+$"
+      "pattern":"[\\S]+"
     },
     "CodeSecurityIntegrationArn":{
       "type":"string",
-      "pattern":"^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:codesecurity-integration/[a-f0-9-]{36}$"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:codesecurity-integration/[a-f0-9-]{36}"
     },
     "CodeSecurityIntegrationSummary":{
       "type":"structure",
       "required":[
-        "createdOn",
         "integrationArn",
-        "lastUpdateOn",
         "name",
+        "type",
         "status",
         "statusReason",
-        "type"
+        "createdOn",
+        "lastUpdateOn"
       ],
       "members":{
-        "createdOn":{"shape":"Timestamp"},
         "integrationArn":{"shape":"CodeSecurityIntegrationArn"},
-        "lastUpdateOn":{"shape":"Timestamp"},
         "name":{"shape":"IntegrationName"},
+        "type":{"shape":"IntegrationType"},
         "status":{"shape":"IntegrationStatus"},
         "statusReason":{"shape":"String"},
-        "tags":{"shape":"TagMap"},
-        "type":{"shape":"IntegrationType"}
+        "createdOn":{"shape":"Timestamp"},
+        "lastUpdateOn":{"shape":"Timestamp"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "CodeSecurityResource":{
@@ -2683,8 +2683,8 @@
       "type":"structure",
       "required":["ruleSetCategories"],
       "members":{
-        "continuousIntegrationScanConfiguration":{"shape":"ContinuousIntegrationScanConfiguration"},
         "periodicScanConfiguration":{"shape":"PeriodicScanConfiguration"},
+        "continuousIntegrationScanConfiguration":{"shape":"ContinuousIntegrationScanConfiguration"},
         "ruleSetCategories":{"shape":"RuleSetCategories"}
       }
     },
@@ -2705,38 +2705,38 @@
     "CodeSecurityScanConfigurationSummary":{
       "type":"structure",
       "required":[
+        "scanConfigurationArn",
         "name",
         "ownerAccountId",
-        "ruleSetCategories",
-        "scanConfigurationArn"
+        "ruleSetCategories"
       ],
       "members":{
-        "continuousIntegrationScanSupportedEvents":{"shape":"ContinuousIntegrationScanSupportedEvents"},
-        "frequencyExpression":{"shape":"FrequencyExpression"},
+        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
         "name":{"shape":"ScanConfigurationName"},
         "ownerAccountId":{"shape":"OwnerId"},
         "periodicScanFrequency":{"shape":"PeriodicScanFrequency"},
+        "frequencyExpression":{"shape":"FrequencyExpression"},
+        "continuousIntegrationScanSupportedEvents":{"shape":"ContinuousIntegrationScanSupportedEvents"},
         "ruleSetCategories":{"shape":"RuleSetCategories"},
-        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
         "scopeSettings":{"shape":"ScopeSettings"},
         "tags":{"shape":"TagMap"}
       }
     },
     "CodeSecurityUuid":{
       "type":"string",
-      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "CodeSnippetError":{
       "type":"structure",
       "required":[
+        "findingArn",
         "errorCode",
-        "errorMessage",
-        "findingArn"
+        "errorMessage"
       ],
       "members":{
+        "findingArn":{"shape":"FindingArn"},
         "errorCode":{"shape":"CodeSnippetErrorCode"},
-        "errorMessage":{"shape":"NonEmptyString"},
-        "findingArn":{"shape":"FindingArn"}
+        "errorMessage":{"shape":"NonEmptyString"}
       }
     },
     "CodeSnippetErrorCode":{
@@ -2755,10 +2755,10 @@
     "CodeSnippetResult":{
       "type":"structure",
       "members":{
-        "codeSnippet":{"shape":"CodeLineList"},
-        "endLine":{"shape":"Integer"},
         "findingArn":{"shape":"FindingArn"},
         "startLine":{"shape":"Integer"},
+        "endLine":{"shape":"Integer"},
+        "codeSnippet":{"shape":"CodeLineList"},
         "suggestedFixes":{"shape":"SuggestedFixes"}
       }
     },
@@ -2769,27 +2769,27 @@
     "CodeVulnerabilityDetails":{
       "type":"structure",
       "required":[
-        "cwes",
+        "filePath",
         "detectorId",
         "detectorName",
-        "filePath"
+        "cwes"
       ],
       "members":{
-        "cwes":{"shape":"CweList"},
-        "detectorId":{"shape":"NonEmptyString"},
-        "detectorName":{"shape":"NonEmptyString"},
-        "detectorTags":{"shape":"DetectorTagList"},
         "filePath":{"shape":"CodeFilePath"},
+        "detectorTags":{"shape":"DetectorTagList"},
         "referenceUrls":{"shape":"ReferenceUrls"},
         "ruleId":{"shape":"NonEmptyString"},
-        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"}
+        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"},
+        "detectorId":{"shape":"NonEmptyString"},
+        "detectorName":{"shape":"NonEmptyString"},
+        "cwes":{"shape":"CweList"}
       }
     },
     "CommitId":{
       "type":"string",
       "max":40,
       "min":0,
-      "pattern":"^([a-f0-9]{40})$"
+      "pattern":"([a-f0-9]{40})"
     },
     "Component":{"type":"string"},
     "ComponentArn":{"type":"string"},
@@ -2797,8 +2797,8 @@
     "ComputePlatform":{
       "type":"structure",
       "members":{
-        "product":{"shape":"Product"},
         "vendor":{"shape":"Vendor"},
+        "product":{"shape":"Product"},
         "version":{"shape":"PlatformVersion"}
       }
     },
@@ -2863,8 +2863,8 @@
     "CoverageDateFilter":{
       "type":"structure",
       "members":{
-        "endInclusive":{"shape":"DateTimeTimestamp"},
-        "startInclusive":{"shape":"DateTimeTimestamp"}
+        "startInclusive":{"shape":"DateTimeTimestamp"},
+        "endInclusive":{"shape":"DateTimeTimestamp"}
       }
     },
     "CoverageDateFilterList":{
@@ -2876,27 +2876,27 @@
     "CoverageFilterCriteria":{
       "type":"structure",
       "members":{
+        "scanStatusCode":{"shape":"CoverageStringFilterList"},
+        "scanStatusReason":{"shape":"CoverageStringFilterList"},
         "accountId":{"shape":"CoverageStringFilterList"},
+        "resourceId":{"shape":"CoverageStringFilterList"},
+        "resourceType":{"shape":"CoverageStringFilterList"},
+        "scanType":{"shape":"CoverageStringFilterList"},
+        "ecrRepositoryName":{"shape":"CoverageStringFilterList"},
+        "ecrImageTags":{"shape":"CoverageStringFilterList"},
+        "ec2InstanceTags":{"shape":"CoverageMapFilterList"},
+        "lambdaFunctionName":{"shape":"CoverageStringFilterList"},
+        "lambdaFunctionTags":{"shape":"CoverageMapFilterList"},
+        "lambdaFunctionRuntime":{"shape":"CoverageStringFilterList"},
+        "lastScannedAt":{"shape":"CoverageDateFilterList"},
+        "scanMode":{"shape":"CoverageStringFilterList"},
+        "imagePulledAt":{"shape":"CoverageDateFilterList"},
+        "ecrImageLastInUseAt":{"shape":"CoverageDateFilterList"},
+        "ecrImageInUseCount":{"shape":"CoverageNumberFilterList"},
         "codeRepositoryProjectName":{"shape":"CoverageStringFilterList"},
         "codeRepositoryProviderType":{"shape":"CoverageStringFilterList"},
         "codeRepositoryProviderTypeVisibility":{"shape":"CoverageStringFilterList"},
-        "ec2InstanceTags":{"shape":"CoverageMapFilterList"},
-        "ecrImageInUseCount":{"shape":"CoverageNumberFilterList"},
-        "ecrImageLastInUseAt":{"shape":"CoverageDateFilterList"},
-        "ecrImageTags":{"shape":"CoverageStringFilterList"},
-        "ecrRepositoryName":{"shape":"CoverageStringFilterList"},
-        "imagePulledAt":{"shape":"CoverageDateFilterList"},
-        "lambdaFunctionName":{"shape":"CoverageStringFilterList"},
-        "lambdaFunctionRuntime":{"shape":"CoverageStringFilterList"},
-        "lambdaFunctionTags":{"shape":"CoverageMapFilterList"},
-        "lastScannedAt":{"shape":"CoverageDateFilterList"},
-        "lastScannedCommitId":{"shape":"CoverageStringFilterList"},
-        "resourceId":{"shape":"CoverageStringFilterList"},
-        "resourceType":{"shape":"CoverageStringFilterList"},
-        "scanMode":{"shape":"CoverageStringFilterList"},
-        "scanStatusCode":{"shape":"CoverageStringFilterList"},
-        "scanStatusReason":{"shape":"CoverageStringFilterList"},
-        "scanType":{"shape":"CoverageStringFilterList"}
+        "lastScannedCommitId":{"shape":"CoverageStringFilterList"}
       }
     },
     "CoverageMapComparison":{
@@ -2924,8 +2924,8 @@
     "CoverageNumberFilter":{
       "type":"structure",
       "members":{
-        "lowerInclusive":{"shape":"Long"},
-        "upperInclusive":{"shape":"Long"}
+        "upperInclusive":{"shape":"Long"},
+        "lowerInclusive":{"shape":"Long"}
       }
     },
     "CoverageNumberFilterList":{
@@ -2976,20 +2976,20 @@
     "CoveredResource":{
       "type":"structure",
       "required":[
-        "accountId",
-        "resourceId",
         "resourceType",
+        "resourceId",
+        "accountId",
         "scanType"
       ],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "lastScannedAt":{"shape":"DateTimeTimestamp"},
-        "resourceId":{"shape":"ResourceId"},
-        "resourceMetadata":{"shape":"ResourceScanMetadata"},
         "resourceType":{"shape":"CoverageResourceType"},
-        "scanMode":{"shape":"ScanMode"},
+        "resourceId":{"shape":"ResourceId"},
+        "accountId":{"shape":"AccountId"},
+        "scanType":{"shape":"ScanType"},
         "scanStatus":{"shape":"ScanStatus"},
-        "scanType":{"shape":"ScanType"}
+        "resourceMetadata":{"shape":"ResourceScanMetadata"},
+        "lastScannedAt":{"shape":"DateTimeTimestamp"},
+        "scanMode":{"shape":"ScanMode"}
       }
     },
     "CoveredResources":{
@@ -3000,16 +3000,16 @@
       "type":"structure",
       "required":[
         "scanName",
-        "schedule",
         "securityLevel",
+        "schedule",
         "targets"
       ],
       "members":{
         "scanName":{"shape":"CisScanName"},
-        "schedule":{"shape":"Schedule"},
         "securityLevel":{"shape":"CisSecurityLevel"},
-        "tags":{"shape":"CisTagMap"},
-        "targets":{"shape":"CreateCisTargets"}
+        "schedule":{"shape":"Schedule"},
+        "targets":{"shape":"CreateCisTargets"},
+        "tags":{"shape":"CisTagMap"}
       }
     },
     "CreateCisScanConfigurationResponse":{
@@ -3036,10 +3036,10 @@
         "type"
       ],
       "members":{
-        "details":{"shape":"CreateIntegrationDetail"},
         "name":{"shape":"IntegrationName"},
-        "tags":{"shape":"TagMap"},
-        "type":{"shape":"IntegrationType"}
+        "type":{"shape":"IntegrationType"},
+        "details":{"shape":"CreateIntegrationDetail"},
+        "tags":{"shape":"TagMap"}
       }
     },
     "CreateCodeSecurityIntegrationResponse":{
@@ -3049,22 +3049,22 @@
         "status"
       ],
       "members":{
-        "authorizationUrl":{"shape":"AuthorizationUrl"},
         "integrationArn":{"shape":"CodeSecurityIntegrationArn"},
-        "status":{"shape":"IntegrationStatus"}
+        "status":{"shape":"IntegrationStatus"},
+        "authorizationUrl":{"shape":"AuthorizationUrl"}
       }
     },
     "CreateCodeSecurityScanConfigurationRequest":{
       "type":"structure",
       "required":[
-        "configuration",
+        "name",
         "level",
-        "name"
+        "configuration"
       ],
       "members":{
-        "configuration":{"shape":"CodeSecurityScanConfiguration"},
-        "level":{"shape":"ConfigurationLevel"},
         "name":{"shape":"ScanConfigurationName"},
+        "level":{"shape":"ConfigurationLevel"},
+        "configuration":{"shape":"CodeSecurityScanConfiguration"},
         "scopeSettings":{"shape":"ScopeSettings"},
         "tags":{"shape":"TagMap"}
       }
@@ -3088,8 +3088,8 @@
         "description":{"shape":"FilterDescription"},
         "filterCriteria":{"shape":"FilterCriteria"},
         "name":{"shape":"FilterName"},
-        "reason":{"shape":"FilterReason"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "reason":{"shape":"FilterReason"}
       }
     },
     "CreateFilterResponse":{
@@ -3120,12 +3120,12 @@
     "CreateGitLabSelfManagedIntegrationDetail":{
       "type":"structure",
       "required":[
-        "accessToken",
-        "instanceUrl"
+        "instanceUrl",
+        "accessToken"
       ],
       "members":{
-        "accessToken":{"shape":"GitLabAccessToken"},
-        "instanceUrl":{"shape":"InstanceUrl"}
+        "instanceUrl":{"shape":"InstanceUrl"},
+        "accessToken":{"shape":"GitLabAccessToken"}
       }
     },
     "CreateIntegrationDetail":{
@@ -3142,8 +3142,8 @@
         "s3Destination"
       ],
       "members":{
-        "reportFormat":{"shape":"SbomReportFormat"},
         "resourceFilterCriteria":{"shape":"ResourceFilterCriteria"},
+        "reportFormat":{"shape":"SbomReportFormat"},
         "s3Destination":{"shape":"Destination"}
       }
     },
@@ -3186,14 +3186,14 @@
       "required":[
         "baseScore",
         "scoringVector",
-        "source",
-        "version"
+        "version",
+        "source"
       ],
       "members":{
         "baseScore":{"shape":"Double"},
         "scoringVector":{"shape":"NonEmptyString"},
-        "source":{"shape":"NonEmptyString"},
-        "version":{"shape":"NonEmptyString"}
+        "version":{"shape":"NonEmptyString"},
+        "source":{"shape":"NonEmptyString"}
       }
     },
     "CvssScoreAdjustment":{
@@ -3214,18 +3214,18 @@
     "CvssScoreDetails":{
       "type":"structure",
       "required":[
-        "score",
         "scoreSource",
-        "scoringVector",
-        "version"
+        "version",
+        "score",
+        "scoringVector"
       ],
       "members":{
-        "adjustments":{"shape":"CvssScoreAdjustmentList"},
-        "cvssSource":{"shape":"NonEmptyString"},
-        "score":{"shape":"Double"},
         "scoreSource":{"shape":"NonEmptyString"},
+        "cvssSource":{"shape":"NonEmptyString"},
+        "version":{"shape":"NonEmptyString"},
+        "score":{"shape":"Double"},
         "scoringVector":{"shape":"NonEmptyString"},
-        "version":{"shape":"NonEmptyString"}
+        "adjustments":{"shape":"CvssScoreAdjustmentList"}
       }
     },
     "CvssScoreList":{
@@ -3257,8 +3257,8 @@
     "DateFilter":{
       "type":"structure",
       "members":{
-        "endInclusive":{"shape":"Timestamp"},
-        "startInclusive":{"shape":"Timestamp"}
+        "startInclusive":{"shape":"Timestamp"},
+        "endInclusive":{"shape":"Timestamp"}
       }
     },
     "DateFilterList":{
@@ -3369,8 +3369,7 @@
     },
     "DescribeOrganizationConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeOrganizationConfigurationResponse":{
       "type":"structure",
@@ -3441,12 +3440,12 @@
     "DisassociateConfigurationRequest":{
       "type":"structure",
       "required":[
-        "resource",
-        "scanConfigurationArn"
+        "scanConfigurationArn",
+        "resource"
       ],
       "members":{
-        "resource":{"shape":"CodeSecurityResource"},
-        "scanConfigurationArn":{"shape":"ScanConfigurationArn"}
+        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
+        "resource":{"shape":"CodeSecurityResource"}
       }
     },
     "DisassociateConfigurationRequestList":{
@@ -3499,24 +3498,24 @@
       "type":"structure",
       "members":{
         "amis":{"shape":"StringFilterList"},
+        "operatingSystems":{"shape":"StringFilterList"},
         "instanceIds":{"shape":"StringFilterList"},
         "instanceTags":{"shape":"MapFilterList"},
-        "operatingSystems":{"shape":"StringFilterList"},
-        "sortBy":{"shape":"Ec2InstanceSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"Ec2InstanceSortBy"}
       }
     },
     "Ec2InstanceAggregationResponse":{
       "type":"structure",
       "required":["instanceId"],
       "members":{
-        "accountId":{"shape":"String"},
-        "ami":{"shape":"AmiId"},
         "instanceId":{"shape":"NonEmptyString"},
-        "instanceTags":{"shape":"TagMap"},
-        "networkFindings":{"shape":"Long"},
+        "ami":{"shape":"AmiId"},
         "operatingSystem":{"shape":"String"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "instanceTags":{"shape":"TagMap"},
+        "accountId":{"shape":"String"},
+        "severityCounts":{"shape":"SeverityCounts"},
+        "networkFindings":{"shape":"Long"}
       }
     },
     "Ec2InstanceSortBy":{
@@ -3531,9 +3530,9 @@
     "Ec2Metadata":{
       "type":"structure",
       "members":{
+        "tags":{"shape":"TagMap"},
         "amiId":{"shape":"AmiId"},
-        "platform":{"shape":"Ec2Platform"},
-        "tags":{"shape":"TagMap"}
+        "platform":{"shape":"Ec2Platform"}
       }
     },
     "Ec2Platform":{
@@ -3570,9 +3569,9 @@
       "type":"structure",
       "required":["rescanDuration"],
       "members":{
+        "rescanDuration":{"shape":"EcrRescanDuration"},
         "pullDateRescanDuration":{"shape":"EcrPullDateRescanDuration"},
-        "pullDateRescanMode":{"shape":"EcrPullDateRescanMode"},
-        "rescanDuration":{"shape":"EcrRescanDuration"}
+        "pullDateRescanMode":{"shape":"EcrPullDateRescanMode"}
       }
     },
     "EcrConfigurationState":{
@@ -3584,10 +3583,10 @@
     "EcrContainerImageMetadata":{
       "type":"structure",
       "members":{
+        "tags":{"shape":"TagList"},
         "imagePulledAt":{"shape":"DateTimeTimestamp"},
-        "inUseCount":{"shape":"Long"},
         "lastInUseAt":{"shape":"DateTimeTimestamp"},
-        "tags":{"shape":"TagList"}
+        "inUseCount":{"shape":"Long"}
       }
     },
     "EcrPullDateRescanDuration":{
@@ -3628,11 +3627,11 @@
     "EcrRescanDurationState":{
       "type":"structure",
       "members":{
-        "pullDateRescanDuration":{"shape":"EcrPullDateRescanDuration"},
-        "pullDateRescanMode":{"shape":"EcrPullDateRescanMode"},
         "rescanDuration":{"shape":"EcrRescanDuration"},
         "status":{"shape":"EcrRescanDurationStatus"},
-        "updatedAt":{"shape":"DateTimeTimestamp"}
+        "updatedAt":{"shape":"DateTimeTimestamp"},
+        "pullDateRescanDuration":{"shape":"EcrPullDateRescanDuration"},
+        "pullDateRescanMode":{"shape":"EcrPullDateRescanMode"}
       }
     },
     "EcrRescanDurationStatus":{
@@ -3655,11 +3654,11 @@
       "type":"structure",
       "required":["delegatedAdminAccountId"],
       "members":{
+        "delegatedAdminAccountId":{"shape":"AccountId"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "delegatedAdminAccountId":{"shape":"AccountId"}
+        }
       }
     },
     "EnableDelegatedAdminAccountResponse":{
@@ -3674,11 +3673,11 @@
       "required":["resourceTypes"],
       "members":{
         "accountIds":{"shape":"AccountIdSet"},
+        "resourceTypes":{"shape":"EnableResourceTypeList"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "resourceTypes":{"shape":"EnableResourceTypeList"}
+        }
       }
     },
     "EnableResourceTypeList":{
@@ -3738,8 +3737,8 @@
     "Evidence":{
       "type":"structure",
       "members":{
-        "evidenceDetail":{"shape":"EvidenceDetail"},
         "evidenceRule":{"shape":"EvidenceRule"},
+        "evidenceDetail":{"shape":"EvidenceDetail"},
         "severity":{"shape":"EvidenceSeverity"}
       }
     },
@@ -3761,7 +3760,7 @@
     },
     "ExecutionRoleArn":{
       "type":"string",
-      "pattern":"^arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+$"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
     },
     "ExploitAvailable":{
       "type":"string",
@@ -3773,8 +3772,8 @@
     "ExploitObserved":{
       "type":"structure",
       "members":{
-        "firstSeen":{"shape":"FirstSeen"},
-        "lastSeen":{"shape":"LastSeen"}
+        "lastSeen":{"shape":"LastSeen"},
+        "firstSeen":{"shape":"FirstSeen"}
       }
     },
     "ExploitabilityDetails":{
@@ -3801,10 +3800,10 @@
       ],
       "members":{
         "accountId":{"shape":"AccountId"},
-        "errorCode":{"shape":"ErrorCode"},
-        "errorMessage":{"shape":"NonEmptyString"},
+        "status":{"shape":"Status"},
         "resourceStatus":{"shape":"ResourceStatus"},
-        "status":{"shape":"Status"}
+        "errorCode":{"shape":"ErrorCode"},
+        "errorMessage":{"shape":"NonEmptyString"}
       }
     },
     "FailedAccountList":{
@@ -3816,8 +3815,8 @@
     "FailedAssociationResult":{
       "type":"structure",
       "members":{
-        "resource":{"shape":"CodeSecurityResource"},
         "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
+        "resource":{"shape":"CodeSecurityResource"},
         "statusCode":{"shape":"AssociationResultStatusCode"},
         "statusMessage":{"shape":"AssociationResultStatusMessage"}
       }
@@ -3849,25 +3848,25 @@
     "Filter":{
       "type":"structure",
       "required":[
-        "action",
         "arn",
-        "createdAt",
-        "criteria",
-        "name",
         "ownerId",
+        "name",
+        "criteria",
+        "action",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "action":{"shape":"FilterAction"},
         "arn":{"shape":"FilterArn"},
-        "createdAt":{"shape":"DateTimeTimestamp"},
-        "criteria":{"shape":"FilterCriteria"},
-        "description":{"shape":"FilterDescription"},
-        "name":{"shape":"FilterName"},
         "ownerId":{"shape":"OwnerId"},
+        "name":{"shape":"FilterName"},
+        "criteria":{"shape":"FilterCriteria"},
+        "action":{"shape":"FilterAction"},
+        "createdAt":{"shape":"DateTimeTimestamp"},
+        "updatedAt":{"shape":"DateTimeTimestamp"},
+        "description":{"shape":"FilterDescription"},
         "reason":{"shape":"FilterReason"},
-        "tags":{"shape":"TagMap"},
-        "updatedAt":{"shape":"DateTimeTimestamp"}
+        "tags":{"shape":"TagMap"}
       }
     },
     "FilterAction":{
@@ -3889,52 +3888,52 @@
     "FilterCriteria":{
       "type":"structure",
       "members":{
+        "findingArn":{"shape":"StringFilterList"},
         "awsAccountId":{"shape":"StringFilterList"},
-        "codeRepositoryProjectName":{"shape":"StringFilterList"},
-        "codeRepositoryProviderType":{"shape":"StringFilterList"},
-        "codeVulnerabilityDetectorName":{"shape":"StringFilterList"},
-        "codeVulnerabilityDetectorTags":{"shape":"StringFilterList"},
-        "codeVulnerabilityFilePath":{"shape":"StringFilterList"},
-        "componentId":{"shape":"StringFilterList"},
-        "componentType":{"shape":"StringFilterList"},
+        "findingType":{"shape":"StringFilterList"},
+        "severity":{"shape":"StringFilterList"},
+        "firstObservedAt":{"shape":"DateFilterList"},
+        "lastObservedAt":{"shape":"DateFilterList"},
+        "updatedAt":{"shape":"DateFilterList"},
+        "findingStatus":{"shape":"StringFilterList"},
+        "title":{"shape":"StringFilterList"},
+        "inspectorScore":{"shape":"NumberFilterList"},
+        "resourceType":{"shape":"StringFilterList"},
+        "resourceId":{"shape":"StringFilterList"},
+        "resourceTags":{"shape":"MapFilterList"},
         "ec2InstanceImageId":{"shape":"StringFilterList"},
-        "ec2InstanceSubnetId":{"shape":"StringFilterList"},
         "ec2InstanceVpcId":{"shape":"StringFilterList"},
-        "ecrImageArchitecture":{"shape":"StringFilterList"},
-        "ecrImageHash":{"shape":"StringFilterList"},
-        "ecrImageInUseCount":{"shape":"NumberFilterList"},
-        "ecrImageLastInUseAt":{"shape":"DateFilterList"},
+        "ec2InstanceSubnetId":{"shape":"StringFilterList"},
         "ecrImagePushedAt":{"shape":"DateFilterList"},
+        "ecrImageArchitecture":{"shape":"StringFilterList"},
         "ecrImageRegistry":{"shape":"StringFilterList"},
         "ecrImageRepositoryName":{"shape":"StringFilterList"},
         "ecrImageTags":{"shape":"StringFilterList"},
-        "epssScore":{"shape":"NumberFilterList"},
-        "exploitAvailable":{"shape":"StringFilterList"},
-        "findingArn":{"shape":"StringFilterList"},
-        "findingStatus":{"shape":"StringFilterList"},
-        "findingType":{"shape":"StringFilterList"},
-        "firstObservedAt":{"shape":"DateFilterList"},
-        "fixAvailable":{"shape":"StringFilterList"},
-        "inspectorScore":{"shape":"NumberFilterList"},
-        "lambdaFunctionExecutionRoleArn":{"shape":"StringFilterList"},
-        "lambdaFunctionLastModifiedAt":{"shape":"DateFilterList"},
-        "lambdaFunctionLayers":{"shape":"StringFilterList"},
-        "lambdaFunctionName":{"shape":"StringFilterList"},
-        "lambdaFunctionRuntime":{"shape":"StringFilterList"},
-        "lastObservedAt":{"shape":"DateFilterList"},
-        "networkProtocol":{"shape":"StringFilterList"},
+        "ecrImageHash":{"shape":"StringFilterList"},
+        "ecrImageLastInUseAt":{"shape":"DateFilterList"},
+        "ecrImageInUseCount":{"shape":"NumberFilterList"},
         "portRange":{"shape":"PortRangeFilterList"},
-        "relatedVulnerabilities":{"shape":"StringFilterList"},
-        "resourceId":{"shape":"StringFilterList"},
-        "resourceTags":{"shape":"MapFilterList"},
-        "resourceType":{"shape":"StringFilterList"},
-        "severity":{"shape":"StringFilterList"},
-        "title":{"shape":"StringFilterList"},
-        "updatedAt":{"shape":"DateFilterList"},
-        "vendorSeverity":{"shape":"StringFilterList"},
+        "networkProtocol":{"shape":"StringFilterList"},
+        "componentId":{"shape":"StringFilterList"},
+        "componentType":{"shape":"StringFilterList"},
         "vulnerabilityId":{"shape":"StringFilterList"},
         "vulnerabilitySource":{"shape":"StringFilterList"},
-        "vulnerablePackages":{"shape":"PackageFilterList"}
+        "vendorSeverity":{"shape":"StringFilterList"},
+        "vulnerablePackages":{"shape":"PackageFilterList"},
+        "relatedVulnerabilities":{"shape":"StringFilterList"},
+        "fixAvailable":{"shape":"StringFilterList"},
+        "lambdaFunctionName":{"shape":"StringFilterList"},
+        "lambdaFunctionLayers":{"shape":"StringFilterList"},
+        "lambdaFunctionRuntime":{"shape":"StringFilterList"},
+        "lambdaFunctionLastModifiedAt":{"shape":"DateFilterList"},
+        "lambdaFunctionExecutionRoleArn":{"shape":"StringFilterList"},
+        "exploitAvailable":{"shape":"StringFilterList"},
+        "codeVulnerabilityDetectorName":{"shape":"StringFilterList"},
+        "codeVulnerabilityDetectorTags":{"shape":"StringFilterList"},
+        "codeVulnerabilityFilePath":{"shape":"StringFilterList"},
+        "epssScore":{"shape":"NumberFilterList"},
+        "codeRepositoryProjectName":{"shape":"StringFilterList"},
+        "codeRepositoryProviderType":{"shape":"StringFilterList"}
       }
     },
     "FilterDescription":{
@@ -3959,46 +3958,46 @@
     "Finding":{
       "type":"structure",
       "required":[
-        "awsAccountId",
-        "description",
         "findingArn",
+        "awsAccountId",
+        "type",
+        "description",
+        "remediation",
+        "severity",
         "firstObservedAt",
         "lastObservedAt",
-        "remediation",
-        "resources",
-        "severity",
         "status",
-        "type"
+        "resources"
       ],
       "members":{
-        "awsAccountId":{"shape":"AccountId"},
-        "codeVulnerabilityDetails":{"shape":"CodeVulnerabilityDetails"},
-        "description":{"shape":"FindingDescription"},
-        "epss":{"shape":"EpssDetails"},
-        "exploitAvailable":{"shape":"ExploitAvailable"},
-        "exploitabilityDetails":{"shape":"ExploitabilityDetails"},
         "findingArn":{"shape":"FindingArn"},
+        "awsAccountId":{"shape":"AccountId"},
+        "type":{"shape":"FindingType"},
+        "description":{"shape":"FindingDescription"},
+        "title":{"shape":"FindingTitle"},
+        "remediation":{"shape":"Remediation"},
+        "severity":{"shape":"Severity"},
         "firstObservedAt":{"shape":"DateTimeTimestamp"},
-        "fixAvailable":{"shape":"FixAvailable"},
+        "lastObservedAt":{"shape":"DateTimeTimestamp"},
+        "updatedAt":{"shape":"DateTimeTimestamp"},
+        "status":{"shape":"FindingStatus"},
+        "resources":{"shape":"ResourceList"},
         "inspectorScore":{"shape":"Double"},
         "inspectorScoreDetails":{"shape":"InspectorScoreDetails"},
-        "lastObservedAt":{"shape":"DateTimeTimestamp"},
         "networkReachabilityDetails":{"shape":"NetworkReachabilityDetails"},
         "packageVulnerabilityDetails":{"shape":"PackageVulnerabilityDetails"},
-        "remediation":{"shape":"Remediation"},
-        "resources":{"shape":"ResourceList"},
-        "severity":{"shape":"Severity"},
-        "status":{"shape":"FindingStatus"},
-        "title":{"shape":"FindingTitle"},
-        "type":{"shape":"FindingType"},
-        "updatedAt":{"shape":"DateTimeTimestamp"}
+        "fixAvailable":{"shape":"FixAvailable"},
+        "exploitAvailable":{"shape":"ExploitAvailable"},
+        "exploitabilityDetails":{"shape":"ExploitabilityDetails"},
+        "codeVulnerabilityDetails":{"shape":"CodeVulnerabilityDetails"},
+        "epss":{"shape":"EpssDetails"}
       }
     },
     "FindingArn":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:finding/[a-f0-9]{32}$"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:finding/[a-f0-9]{32}"
     },
     "FindingArnList":{
       "type":"list",
@@ -4014,16 +4013,16 @@
     "FindingDetail":{
       "type":"structure",
       "members":{
-        "cisaData":{"shape":"CisaData"},
-        "cwes":{"shape":"Cwes"},
-        "epssScore":{"shape":"Double"},
-        "evidences":{"shape":"EvidenceList"},
-        "exploitObserved":{"shape":"ExploitObserved"},
         "findingArn":{"shape":"FindingArn"},
-        "referenceUrls":{"shape":"VulnerabilityReferenceUrls"},
+        "cisaData":{"shape":"CisaData"},
         "riskScore":{"shape":"RiskScore"},
+        "evidences":{"shape":"EvidenceList"},
+        "ttps":{"shape":"Ttps"},
         "tools":{"shape":"Tools"},
-        "ttps":{"shape":"Ttps"}
+        "exploitObserved":{"shape":"ExploitObserved"},
+        "referenceUrls":{"shape":"VulnerabilityReferenceUrls"},
+        "cwes":{"shape":"Cwes"},
+        "epssScore":{"shape":"Double"}
       }
     },
     "FindingDetails":{
@@ -4034,14 +4033,14 @@
     "FindingDetailsError":{
       "type":"structure",
       "required":[
+        "findingArn",
         "errorCode",
-        "errorMessage",
-        "findingArn"
+        "errorMessage"
       ],
       "members":{
+        "findingArn":{"shape":"FindingArn"},
         "errorCode":{"shape":"FindingDetailsErrorCode"},
-        "errorMessage":{"shape":"NonEmptyString"},
-        "findingArn":{"shape":"FindingArn"}
+        "errorMessage":{"shape":"NonEmptyString"}
       }
     },
     "FindingDetailsErrorCode":{
@@ -4089,17 +4088,17 @@
       "members":{
         "findingType":{"shape":"AggregationFindingType"},
         "resourceType":{"shape":"AggregationResourceType"},
-        "sortBy":{"shape":"FindingTypeSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"FindingTypeSortBy"}
       }
     },
     "FindingTypeAggregationResponse":{
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
+        "severityCounts":{"shape":"SeverityCounts"},
         "exploitAvailableCount":{"shape":"Long"},
-        "fixAvailableCount":{"shape":"Long"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "fixAvailableCount":{"shape":"Long"}
       }
     },
     "FindingTypeSortBy":{
@@ -4137,16 +4136,16 @@
     "FreeTrialInfo":{
       "type":"structure",
       "required":[
-        "end",
+        "type",
         "start",
-        "status",
-        "type"
+        "end",
+        "status"
       ],
       "members":{
-        "end":{"shape":"Timestamp"},
+        "type":{"shape":"FreeTrialType"},
         "start":{"shape":"Timestamp"},
-        "status":{"shape":"FreeTrialStatus"},
-        "type":{"shape":"FreeTrialType"}
+        "end":{"shape":"Timestamp"},
+        "status":{"shape":"FreeTrialStatus"}
       }
     },
     "FreeTrialInfoError":{
@@ -4201,22 +4200,22 @@
     },
     "FunctionName":{
       "type":"string",
-      "pattern":"^[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"
+      "pattern":"[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
     },
     "GetCisScanReportRequest":{
       "type":"structure",
       "required":["scanArn"],
       "members":{
-        "reportFormat":{"shape":"CisReportFormat"},
         "scanArn":{"shape":"CisScanArn"},
-        "targetAccounts":{"shape":"ReportTargetAccounts"}
+        "targetAccounts":{"shape":"ReportTargetAccounts"},
+        "reportFormat":{"shape":"CisReportFormat"}
       }
     },
     "GetCisScanReportResponse":{
       "type":"structure",
       "members":{
-        "status":{"shape":"CisReportStatus"},
-        "url":{"shape":"String"}
+        "url":{"shape":"String"},
+        "status":{"shape":"CisReportStatus"}
       }
     },
     "GetCisScanResultDetailsMaxResults":{
@@ -4228,26 +4227,26 @@
     "GetCisScanResultDetailsRequest":{
       "type":"structure",
       "required":[
-        "accountId",
         "scanArn",
-        "targetResourceId"
+        "targetResourceId",
+        "accountId"
       ],
       "members":{
+        "scanArn":{"shape":"CisScanArn"},
+        "targetResourceId":{"shape":"ResourceId"},
         "accountId":{"shape":"AccountId"},
         "filterCriteria":{"shape":"CisScanResultDetailsFilterCriteria"},
-        "maxResults":{"shape":"GetCisScanResultDetailsMaxResults"},
-        "nextToken":{"shape":"NextToken"},
-        "scanArn":{"shape":"CisScanArn"},
         "sortBy":{"shape":"CisScanResultDetailsSortBy"},
         "sortOrder":{"shape":"CisSortOrder"},
-        "targetResourceId":{"shape":"ResourceId"}
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"GetCisScanResultDetailsMaxResults"}
       }
     },
     "GetCisScanResultDetailsResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "scanResultDetails":{"shape":"CisScanResultDetailsList"}
+        "scanResultDetails":{"shape":"CisScanResultDetailsList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "GetClustersForImageNextToken":{
@@ -4289,24 +4288,24 @@
     "GetCodeSecurityIntegrationResponse":{
       "type":"structure",
       "required":[
-        "createdOn",
         "integrationArn",
-        "lastUpdateOn",
         "name",
+        "type",
         "status",
         "statusReason",
-        "type"
+        "createdOn",
+        "lastUpdateOn"
       ],
       "members":{
-        "authorizationUrl":{"shape":"AuthorizationUrl"},
-        "createdOn":{"shape":"Timestamp"},
         "integrationArn":{"shape":"CodeSecurityIntegrationArn"},
-        "lastUpdateOn":{"shape":"Timestamp"},
         "name":{"shape":"IntegrationName"},
+        "type":{"shape":"IntegrationType"},
         "status":{"shape":"IntegrationStatus"},
         "statusReason":{"shape":"String"},
+        "createdOn":{"shape":"Timestamp"},
+        "lastUpdateOn":{"shape":"Timestamp"},
         "tags":{"shape":"TagMap"},
-        "type":{"shape":"IntegrationType"}
+        "authorizationUrl":{"shape":"AuthorizationUrl"}
       }
     },
     "GetCodeSecurityScanConfigurationRequest":{
@@ -4319,13 +4318,13 @@
     "GetCodeSecurityScanConfigurationResponse":{
       "type":"structure",
       "members":{
+        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
+        "name":{"shape":"ScanConfigurationName"},
         "configuration":{"shape":"CodeSecurityScanConfiguration"},
+        "level":{"shape":"ConfigurationLevel"},
+        "scopeSettings":{"shape":"ScopeSettings"},
         "createdAt":{"shape":"Timestamp"},
         "lastUpdatedAt":{"shape":"Timestamp"},
-        "level":{"shape":"ConfigurationLevel"},
-        "name":{"shape":"ScanConfigurationName"},
-        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
-        "scopeSettings":{"shape":"ScopeSettings"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -4343,32 +4342,30 @@
     "GetCodeSecurityScanResponse":{
       "type":"structure",
       "members":{
-        "accountId":{"shape":"String"},
-        "createdAt":{"shape":"Timestamp"},
-        "lastCommitId":{"shape":"String"},
-        "resource":{"shape":"CodeSecurityResource"},
         "scanId":{"shape":"CodeSecurityUuid"},
+        "resource":{"shape":"CodeSecurityResource"},
+        "accountId":{"shape":"String"},
         "status":{"shape":"CodeScanStatus"},
         "statusReason":{"shape":"String"},
-        "updatedAt":{"shape":"Timestamp"}
+        "createdAt":{"shape":"Timestamp"},
+        "updatedAt":{"shape":"Timestamp"},
+        "lastCommitId":{"shape":"String"}
       }
     },
     "GetConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetConfigurationResponse":{
       "type":"structure",
       "members":{
-        "ec2Configuration":{"shape":"Ec2ConfigurationState"},
-        "ecrConfiguration":{"shape":"EcrConfigurationState"}
+        "ecrConfiguration":{"shape":"EcrConfigurationState"},
+        "ec2Configuration":{"shape":"Ec2ConfigurationState"}
       }
     },
     "GetDelegatedAdminAccountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetDelegatedAdminAccountResponse":{
       "type":"structure",
@@ -4378,34 +4375,33 @@
     },
     "GetEc2DeepInspectionConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetEc2DeepInspectionConfigurationResponse":{
       "type":"structure",
       "members":{
-        "errorMessage":{"shape":"NonEmptyString"},
-        "orgPackagePaths":{"shape":"PathList"},
         "packagePaths":{"shape":"PathList"},
-        "status":{"shape":"Ec2DeepInspectionStatus"}
+        "orgPackagePaths":{"shape":"PathList"},
+        "status":{"shape":"Ec2DeepInspectionStatus"},
+        "errorMessage":{"shape":"NonEmptyString"}
       }
     },
     "GetEncryptionKeyRequest":{
       "type":"structure",
       "required":[
-        "resourceType",
-        "scanType"
+        "scanType",
+        "resourceType"
       ],
       "members":{
-        "resourceType":{
-          "shape":"ResourceType",
-          "location":"querystring",
-          "locationName":"resourceType"
-        },
         "scanType":{
           "shape":"ScanType",
           "location":"querystring",
           "locationName":"scanType"
+        },
+        "resourceType":{
+          "shape":"ResourceType",
+          "location":"querystring",
+          "locationName":"resourceType"
         }
       }
     },
@@ -4425,12 +4421,12 @@
     "GetFindingsReportStatusResponse":{
       "type":"structure",
       "members":{
-        "destination":{"shape":"Destination"},
+        "reportId":{"shape":"ReportId"},
+        "status":{"shape":"ExternalReportStatus"},
         "errorCode":{"shape":"ReportingErrorCode"},
         "errorMessage":{"shape":"ErrorMessage"},
-        "filterCriteria":{"shape":"FilterCriteria"},
-        "reportId":{"shape":"ReportId"},
-        "status":{"shape":"ExternalReportStatus"}
+        "destination":{"shape":"Destination"},
+        "filterCriteria":{"shape":"FilterCriteria"}
       }
     },
     "GetMemberRequest":{
@@ -4456,13 +4452,13 @@
     "GetSbomExportResponse":{
       "type":"structure",
       "members":{
+        "reportId":{"shape":"ReportId"},
+        "format":{"shape":"SbomReportFormat"},
+        "status":{"shape":"ExternalReportStatus"},
         "errorCode":{"shape":"ReportingErrorCode"},
         "errorMessage":{"shape":"NonEmptyString"},
-        "filterCriteria":{"shape":"ResourceFilterCriteria"},
-        "format":{"shape":"SbomReportFormat"},
-        "reportId":{"shape":"ReportId"},
         "s3Destination":{"shape":"Destination"},
-        "status":{"shape":"ExternalReportStatus"}
+        "filterCriteria":{"shape":"ResourceFilterCriteria"}
       }
     },
     "GitHubAuthCode":{
@@ -4500,31 +4496,31 @@
       "type":"string",
       "max":71,
       "min":71,
-      "pattern":"^sha256:[a-z0-9]{64}$"
+      "pattern":"sha256:[a-z0-9]{64}"
     },
     "ImageLayerAggregation":{
       "type":"structure",
       "members":{
-        "layerHashes":{"shape":"StringFilterList"},
         "repositories":{"shape":"StringFilterList"},
         "resourceIds":{"shape":"StringFilterList"},
-        "sortBy":{"shape":"ImageLayerSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "layerHashes":{"shape":"StringFilterList"},
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"ImageLayerSortBy"}
       }
     },
     "ImageLayerAggregationResponse":{
       "type":"structure",
       "required":[
-        "accountId",
-        "layerHash",
         "repository",
-        "resourceId"
+        "resourceId",
+        "layerHash",
+        "accountId"
       ],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "layerHash":{"shape":"NonEmptyString"},
         "repository":{"shape":"NonEmptyString"},
         "resourceId":{"shape":"NonEmptyString"},
+        "layerHash":{"shape":"NonEmptyString"},
+        "accountId":{"shape":"AccountId"},
         "severityCounts":{"shape":"SeverityCounts"}
       }
     },
@@ -4548,7 +4544,7 @@
     },
     "InstanceUrl":{
       "type":"string",
-      "pattern":"^https://[-a-zA-Z0-9()@:%_+.~#?&//=]{1,1024}$",
+      "pattern":"https://[-a-zA-Z0-9()@:%_+.~#?&//=]{1,1024}",
       "sensitive":true
     },
     "Integer":{
@@ -4559,7 +4555,7 @@
       "type":"string",
       "max":60,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_$:.]*$"
+      "pattern":"[a-zA-Z0-9-_$:.]*"
     },
     "IntegrationStatus":{
       "type":"string",
@@ -4604,7 +4600,7 @@
       "type":"string",
       "max":15,
       "min":7,
-      "pattern":"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+      "pattern":"(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"
     },
     "IpV4AddressList":{
       "type":"list",
@@ -4621,38 +4617,38 @@
     },
     "KmsKeyArn":{
       "type":"string",
-      "pattern":"^arn:aws(-(us-gov|cn))?:kms:([a-z0-9][-.a-z0-9]{0,62})?:[0-9]{12}?:key/(([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})|(mrk-[0-9a-zA-Z]{32}))$"
+      "pattern":"arn:aws(-(us-gov|cn))?:kms:([a-z0-9][-.a-z0-9]{0,62})?:[0-9]{12}?:key/(([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})|(mrk-[0-9a-zA-Z]{32}))"
     },
     "LambdaFunctionAggregation":{
       "type":"structure",
       "members":{
-        "functionNames":{"shape":"StringFilterList"},
-        "functionTags":{"shape":"MapFilterList"},
         "resourceIds":{"shape":"StringFilterList"},
+        "functionNames":{"shape":"StringFilterList"},
         "runtimes":{"shape":"StringFilterList"},
-        "sortBy":{"shape":"LambdaFunctionSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "functionTags":{"shape":"MapFilterList"},
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"LambdaFunctionSortBy"}
       }
     },
     "LambdaFunctionAggregationResponse":{
       "type":"structure",
       "required":["resourceId"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "functionName":{"shape":"String"},
-        "lambdaTags":{"shape":"TagMap"},
-        "lastModifiedAt":{"shape":"DateTimeTimestamp"},
         "resourceId":{"shape":"NonEmptyString"},
+        "functionName":{"shape":"String"},
         "runtime":{"shape":"String"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "lambdaTags":{"shape":"TagMap"},
+        "accountId":{"shape":"AccountId"},
+        "severityCounts":{"shape":"SeverityCounts"},
+        "lastModifiedAt":{"shape":"DateTimeTimestamp"}
       }
     },
     "LambdaFunctionMetadata":{
       "type":"structure",
       "members":{
-        "functionName":{"shape":"String"},
         "functionTags":{"shape":"TagMap"},
         "layers":{"shape":"LambdaLayerList"},
+        "functionName":{"shape":"String"},
         "runtime":{"shape":"Runtime"}
       }
     },
@@ -4668,31 +4664,31 @@
       "type":"structure",
       "members":{
         "functionNames":{"shape":"StringFilterList"},
-        "layerArns":{"shape":"StringFilterList"},
         "resourceIds":{"shape":"StringFilterList"},
-        "sortBy":{"shape":"LambdaLayerSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "layerArns":{"shape":"StringFilterList"},
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"LambdaLayerSortBy"}
       }
     },
     "LambdaLayerAggregationResponse":{
       "type":"structure",
       "required":[
-        "accountId",
         "functionName",
+        "resourceId",
         "layerArn",
-        "resourceId"
+        "accountId"
       ],
       "members":{
-        "accountId":{"shape":"AccountId"},
         "functionName":{"shape":"NonEmptyString"},
-        "layerArn":{"shape":"NonEmptyString"},
         "resourceId":{"shape":"NonEmptyString"},
+        "layerArn":{"shape":"NonEmptyString"},
+        "accountId":{"shape":"AccountId"},
         "severityCounts":{"shape":"SeverityCounts"}
       }
     },
     "LambdaLayerArn":{
       "type":"string",
-      "pattern":"^arn:[a-zA-Z0-9-]+:lambda:[a-zA-Z0-9-]+:\\d{12}:layer:[a-zA-Z0-9-_]+:[0-9]+$"
+      "pattern":"arn:[a-zA-Z0-9-]+:lambda:[a-zA-Z0-9-]+:\\d{12}:layer:[a-zA-Z0-9-_]+:[0-9]+"
     },
     "LambdaLayerList":{
       "type":"list",
@@ -4711,8 +4707,8 @@
     "LambdaVpcConfig":{
       "type":"structure",
       "members":{
-        "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "subnetIds":{"shape":"SubnetIdList"},
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
         "vpcId":{"shape":"VpcId"}
       }
     },
@@ -4732,25 +4728,25 @@
     "ListAccountPermissionsRequest":{
       "type":"structure",
       "members":{
+        "service":{"shape":"Service"},
         "maxResults":{"shape":"ListAccountPermissionsMaxResults"},
-        "nextToken":{"shape":"NextToken"},
-        "service":{"shape":"Service"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListAccountPermissionsResponse":{
       "type":"structure",
       "required":["permissions"],
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "permissions":{"shape":"Permissions"}
+        "permissions":{"shape":"Permissions"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListCisScanConfigurationsFilterCriteria":{
       "type":"structure",
       "members":{
-        "scanConfigurationArnFilters":{"shape":"CisScanConfigurationArnFilterList"},
         "scanNameFilters":{"shape":"CisScanNameFilterList"},
-        "targetResourceTagFilters":{"shape":"ResourceTagFilterList"}
+        "targetResourceTagFilters":{"shape":"ResourceTagFilterList"},
+        "scanConfigurationArnFilters":{"shape":"CisScanConfigurationArnFilterList"}
       }
     },
     "ListCisScanConfigurationsMaxResults":{
@@ -4763,29 +4759,29 @@
       "type":"structure",
       "members":{
         "filterCriteria":{"shape":"ListCisScanConfigurationsFilterCriteria"},
-        "maxResults":{"shape":"ListCisScanConfigurationsMaxResults"},
-        "nextToken":{"shape":"NextToken"},
         "sortBy":{"shape":"CisScanConfigurationsSortBy"},
-        "sortOrder":{"shape":"CisSortOrder"}
+        "sortOrder":{"shape":"CisSortOrder"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"ListCisScanConfigurationsMaxResults"}
       }
     },
     "ListCisScanConfigurationsResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "scanConfigurations":{"shape":"CisScanConfigurationList"}
+        "scanConfigurations":{"shape":"CisScanConfigurationList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListCisScanResultsAggregatedByChecksRequest":{
       "type":"structure",
       "required":["scanArn"],
       "members":{
-        "filterCriteria":{"shape":"CisScanResultsAggregatedByChecksFilterCriteria"},
-        "maxResults":{"shape":"CisScanResultsMaxResults"},
-        "nextToken":{"shape":"NextToken"},
         "scanArn":{"shape":"CisScanArn"},
+        "filterCriteria":{"shape":"CisScanResultsAggregatedByChecksFilterCriteria"},
         "sortBy":{"shape":"CisScanResultsAggregatedByChecksSortBy"},
-        "sortOrder":{"shape":"CisSortOrder"}
+        "sortOrder":{"shape":"CisSortOrder"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"CisScanResultsMaxResults"}
       }
     },
     "ListCisScanResultsAggregatedByChecksResponse":{
@@ -4799,19 +4795,19 @@
       "type":"structure",
       "required":["scanArn"],
       "members":{
-        "filterCriteria":{"shape":"CisScanResultsAggregatedByTargetResourceFilterCriteria"},
-        "maxResults":{"shape":"CisScanResultsMaxResults"},
-        "nextToken":{"shape":"NextToken"},
         "scanArn":{"shape":"CisScanArn"},
+        "filterCriteria":{"shape":"CisScanResultsAggregatedByTargetResourceFilterCriteria"},
         "sortBy":{"shape":"CisScanResultsAggregatedByTargetResourceSortBy"},
-        "sortOrder":{"shape":"CisSortOrder"}
+        "sortOrder":{"shape":"CisSortOrder"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"CisScanResultsMaxResults"}
       }
     },
     "ListCisScanResultsAggregatedByTargetResourceResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "targetResourceAggregations":{"shape":"CisTargetResourceAggregationList"}
+        "targetResourceAggregations":{"shape":"CisTargetResourceAggregationList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListCisScansDetailLevel":{
@@ -4824,16 +4820,16 @@
     "ListCisScansFilterCriteria":{
       "type":"structure",
       "members":{
-        "failedChecksFilters":{"shape":"CisNumberFilterList"},
-        "scanArnFilters":{"shape":"CisScanArnFilterList"},
+        "scanNameFilters":{"shape":"CisScanNameFilterList"},
+        "targetResourceTagFilters":{"shape":"ResourceTagFilterList"},
+        "targetResourceIdFilters":{"shape":"ResourceIdFilterList"},
+        "scanStatusFilters":{"shape":"CisScanStatusFilterList"},
         "scanAtFilters":{"shape":"CisScanDateFilterList"},
         "scanConfigurationArnFilters":{"shape":"CisScanConfigurationArnFilterList"},
-        "scanNameFilters":{"shape":"CisScanNameFilterList"},
-        "scanStatusFilters":{"shape":"CisScanStatusFilterList"},
+        "scanArnFilters":{"shape":"CisScanArnFilterList"},
         "scheduledByFilters":{"shape":"CisScheduledByFilterList"},
-        "targetAccountIdFilters":{"shape":"AccountIdFilterList"},
-        "targetResourceIdFilters":{"shape":"ResourceIdFilterList"},
-        "targetResourceTagFilters":{"shape":"ResourceTagFilterList"}
+        "failedChecksFilters":{"shape":"CisNumberFilterList"},
+        "targetAccountIdFilters":{"shape":"AccountIdFilterList"}
       }
     },
     "ListCisScansMaxResults":{
@@ -4845,19 +4841,19 @@
     "ListCisScansRequest":{
       "type":"structure",
       "members":{
-        "detailLevel":{"shape":"ListCisScansDetailLevel"},
         "filterCriteria":{"shape":"ListCisScansFilterCriteria"},
-        "maxResults":{"shape":"ListCisScansMaxResults"},
-        "nextToken":{"shape":"NextToken"},
+        "detailLevel":{"shape":"ListCisScansDetailLevel"},
         "sortBy":{"shape":"ListCisScansSortBy"},
-        "sortOrder":{"shape":"CisSortOrder"}
+        "sortOrder":{"shape":"CisSortOrder"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"ListCisScansMaxResults"}
       }
     },
     "ListCisScansResponse":{
       "type":"structure",
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "scans":{"shape":"CisScanList"}
+        "scans":{"shape":"CisScanList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListCisScansSortBy":{
@@ -4872,15 +4868,15 @@
     "ListCodeSecurityIntegrationsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListCodeSecurityIntegrationsRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
         "nextToken":{
           "shape":"String",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListCodeSecurityIntegrationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
         }
       }
     },
@@ -4901,17 +4897,17 @@
       "type":"structure",
       "required":["scanConfigurationArn"],
       "members":{
-        "maxResults":{
-          "shape":"ListCodeSecurityScanConfigurationAssociationsRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
+        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
         "nextToken":{
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
         },
-        "scanConfigurationArn":{"shape":"ScanConfigurationArn"}
+        "maxResults":{
+          "shape":"ListCodeSecurityScanConfigurationAssociationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
       }
     },
     "ListCodeSecurityScanConfigurationAssociationsRequestMaxResultsInteger":{
@@ -4930,15 +4926,15 @@
     "ListCodeSecurityScanConfigurationsRequest":{
       "type":"structure",
       "members":{
-        "maxResults":{
-          "shape":"ListCodeSecurityScanConfigurationsRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
         "nextToken":{
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListCodeSecurityScanConfigurationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
         }
       }
     },
@@ -4964,16 +4960,16 @@
     "ListCoverageRequest":{
       "type":"structure",
       "members":{
-        "filterCriteria":{"shape":"CoverageFilterCriteria"},
         "maxResults":{"shape":"ListCoverageMaxResults"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "filterCriteria":{"shape":"CoverageFilterCriteria"}
       }
     },
     "ListCoverageResponse":{
       "type":"structure",
       "members":{
-        "coveredResources":{"shape":"CoveredResources"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "coveredResources":{"shape":"CoveredResources"}
       }
     },
     "ListCoverageStatisticsRequest":{
@@ -4989,8 +4985,8 @@
       "required":["totalCounts"],
       "members":{
         "countsByGroup":{"shape":"CountsList"},
-        "nextToken":{"shape":"NextToken"},
-        "totalCounts":{"shape":"Long"}
+        "totalCounts":{"shape":"Long"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListDelegatedAdminAccountsRequest":{
@@ -5022,10 +5018,10 @@
     "ListFiltersRequest":{
       "type":"structure",
       "members":{
-        "action":{"shape":"FilterAction"},
         "arns":{"shape":"FilterArnList"},
-        "maxResults":{"shape":"ListFilterMaxResults"},
-        "nextToken":{"shape":"NextToken"}
+        "action":{"shape":"FilterAction"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"ListFilterMaxResults"}
       }
     },
     "ListFiltersResponse":{
@@ -5046,11 +5042,11 @@
       "type":"structure",
       "required":["aggregationType"],
       "members":{
-        "accountIds":{"shape":"StringFilterList"},
-        "aggregationRequest":{"shape":"AggregationRequest"},
         "aggregationType":{"shape":"AggregationType"},
+        "nextToken":{"shape":"NextToken"},
         "maxResults":{"shape":"ListFindingAggregationsMaxResults"},
-        "nextToken":{"shape":"NextToken"}
+        "accountIds":{"shape":"StringFilterList"},
+        "aggregationRequest":{"shape":"AggregationRequest"}
       }
     },
     "ListFindingAggregationsResponse":{
@@ -5058,8 +5054,8 @@
       "required":["aggregationType"],
       "members":{
         "aggregationType":{"shape":"AggregationType"},
-        "nextToken":{"shape":"NextToken"},
-        "responses":{"shape":"AggregationResponseList"}
+        "responses":{"shape":"AggregationResponseList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListFindingsMaxResults":{
@@ -5071,17 +5067,17 @@
     "ListFindingsRequest":{
       "type":"structure",
       "members":{
-        "filterCriteria":{"shape":"FilterCriteria"},
         "maxResults":{"shape":"ListFindingsMaxResults"},
         "nextToken":{"shape":"NextToken"},
+        "filterCriteria":{"shape":"FilterCriteria"},
         "sortCriteria":{"shape":"SortCriteria"}
       }
     },
     "ListFindingsResponse":{
       "type":"structure",
       "members":{
-        "findings":{"shape":"FindingList"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "findings":{"shape":"FindingList"}
       }
     },
     "ListMembersMaxResults":{
@@ -5093,9 +5089,9 @@
     "ListMembersRequest":{
       "type":"structure",
       "members":{
+        "onlyAssociated":{"shape":"Boolean"},
         "maxResults":{"shape":"ListMembersMaxResults"},
-        "nextToken":{"shape":"NextToken"},
-        "onlyAssociated":{"shape":"Boolean"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListMembersResponse":{
@@ -5135,9 +5131,9 @@
     "ListUsageTotalsRequest":{
       "type":"structure",
       "members":{
-        "accountIds":{"shape":"UsageAccountIdList"},
         "maxResults":{"shape":"ListUsageTotalsMaxResults"},
-        "nextToken":{"shape":"ListUsageTotalsNextToken"}
+        "nextToken":{"shape":"ListUsageTotalsNextToken"},
+        "accountIds":{"shape":"UsageAccountIdList"}
       }
     },
     "ListUsageTotalsResponse":{
@@ -5187,8 +5183,8 @@
       "type":"structure",
       "members":{
         "accountId":{"shape":"AccountId"},
-        "delegatedAdminAccountId":{"shape":"AccountId"},
         "relationshipStatus":{"shape":"RelationshipStatus"},
+        "delegatedAdminAccountId":{"shape":"AccountId"},
         "updatedAt":{"shape":"DateTimeTimestamp"}
       }
     },
@@ -5214,8 +5210,8 @@
       "required":["accountId"],
       "members":{
         "accountId":{"shape":"AccountId"},
-        "errorMessage":{"shape":"NonEmptyString"},
-        "status":{"shape":"Ec2DeepInspectionStatus"}
+        "status":{"shape":"Ec2DeepInspectionStatus"},
+        "errorMessage":{"shape":"NonEmptyString"}
       }
     },
     "MemberAccountEc2DeepInspectionStatusStateList":{
@@ -5232,7 +5228,7 @@
     },
     "MeteringAccountId":{
       "type":"string",
-      "pattern":"[0-9]{12}"
+      "pattern":".*[0-9]{12}.*"
     },
     "MonthlyCostEstimate":{
       "type":"double",
@@ -5241,12 +5237,12 @@
     "MonthlySchedule":{
       "type":"structure",
       "required":[
-        "day",
-        "startTime"
+        "startTime",
+        "day"
       ],
       "members":{
-        "day":{"shape":"Day"},
-        "startTime":{"shape":"Time"}
+        "startTime":{"shape":"Time"},
+        "day":{"shape":"Day"}
       }
     },
     "NetworkPath":{
@@ -5265,14 +5261,14 @@
     "NetworkReachabilityDetails":{
       "type":"structure",
       "required":[
-        "networkPath",
         "openPortRange",
-        "protocol"
+        "protocol",
+        "networkPath"
       ],
       "members":{
-        "networkPath":{"shape":"NetworkPath"},
         "openPortRange":{"shape":"PortRange"},
-        "protocol":{"shape":"NetworkProtocol"}
+        "protocol":{"shape":"NetworkProtocol"},
+        "networkPath":{"shape":"NetworkPath"}
       }
     },
     "NextToken":{
@@ -5291,8 +5287,8 @@
     "NumberFilter":{
       "type":"structure",
       "members":{
-        "lowerInclusive":{"shape":"Double"},
-        "upperInclusive":{"shape":"Double"}
+        "upperInclusive":{"shape":"Double"},
+        "lowerInclusive":{"shape":"Double"}
       }
     },
     "NumberFilterList":{
@@ -5309,8 +5305,7 @@
     },
     "OneTimeSchedule":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Operation":{
       "type":"string",
@@ -5325,22 +5320,22 @@
       "type":"string",
       "max":34,
       "min":12,
-      "pattern":"(^\\d{12}$)|(^o-[a-z0-9]{10,32}$)"
+      "pattern":".*(^\\d{12}$)|(^o-[a-z0-9]{10,32}$).*"
     },
     "PackageAggregation":{
       "type":"structure",
       "members":{
         "packageNames":{"shape":"StringFilterList"},
-        "sortBy":{"shape":"PackageSortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"PackageSortBy"}
       }
     },
     "PackageAggregationResponse":{
       "type":"structure",
       "required":["packageName"],
       "members":{
-        "accountId":{"shape":"AccountId"},
         "packageName":{"shape":"NonEmptyString"},
+        "accountId":{"shape":"AccountId"},
         "severityCounts":{"shape":"SeverityCounts"}
       }
     },
@@ -5353,14 +5348,14 @@
     "PackageFilter":{
       "type":"structure",
       "members":{
-        "architecture":{"shape":"StringFilter"},
-        "epoch":{"shape":"NumberFilter"},
-        "filePath":{"shape":"StringFilter"},
         "name":{"shape":"StringFilter"},
+        "version":{"shape":"StringFilter"},
+        "epoch":{"shape":"NumberFilter"},
         "release":{"shape":"StringFilter"},
-        "sourceLambdaLayerArn":{"shape":"StringFilter"},
+        "architecture":{"shape":"StringFilter"},
         "sourceLayerHash":{"shape":"StringFilter"},
-        "version":{"shape":"StringFilter"}
+        "sourceLambdaLayerArn":{"shape":"StringFilter"},
+        "filePath":{"shape":"StringFilter"}
       }
     },
     "PackageFilterList":{
@@ -5425,27 +5420,27 @@
     "PackageVulnerabilityDetails":{
       "type":"structure",
       "required":[
-        "source",
-        "vulnerabilityId"
+        "vulnerabilityId",
+        "source"
       ],
       "members":{
-        "cvss":{"shape":"CvssScoreList"},
-        "referenceUrls":{"shape":"NonEmptyStringList"},
-        "relatedVulnerabilities":{"shape":"VulnerabilityIdList"},
-        "source":{"shape":"NonEmptyString"},
-        "sourceUrl":{"shape":"NonEmptyString"},
-        "vendorCreatedAt":{"shape":"DateTimeTimestamp"},
-        "vendorSeverity":{"shape":"NonEmptyString"},
-        "vendorUpdatedAt":{"shape":"DateTimeTimestamp"},
         "vulnerabilityId":{"shape":"VulnerabilityId"},
-        "vulnerablePackages":{"shape":"VulnerablePackageList"}
+        "vulnerablePackages":{"shape":"VulnerablePackageList"},
+        "source":{"shape":"NonEmptyString"},
+        "cvss":{"shape":"CvssScoreList"},
+        "relatedVulnerabilities":{"shape":"VulnerabilityIdList"},
+        "sourceUrl":{"shape":"NonEmptyString"},
+        "vendorSeverity":{"shape":"NonEmptyString"},
+        "vendorCreatedAt":{"shape":"DateTimeTimestamp"},
+        "vendorUpdatedAt":{"shape":"DateTimeTimestamp"},
+        "referenceUrls":{"shape":"NonEmptyStringList"}
       }
     },
     "Path":{
       "type":"string",
       "max":512,
       "min":1,
-      "pattern":"^(?:/(?:\\.[-\\w]+|[-\\w]+(?:\\.[-\\w]+)?))+/?$"
+      "pattern":"(?:/(?:\\.[-\\w]+|[-\\w]+(?:\\.[-\\w]+)?))+/?"
     },
     "PathList":{
       "type":"list",
@@ -5471,12 +5466,12 @@
     "Permission":{
       "type":"structure",
       "required":[
-        "operation",
-        "service"
+        "service",
+        "operation"
       ],
       "members":{
-        "operation":{"shape":"Operation"},
-        "service":{"shape":"Service"}
+        "service":{"shape":"Service"},
+        "operation":{"shape":"Operation"}
       }
     },
     "Permissions":{
@@ -5539,15 +5534,15 @@
     "ProjectCodeSecurityScanConfiguration":{
       "type":"structure",
       "members":{
-        "continuousIntegrationScanConfigurations":{"shape":"ProjectContinuousIntegrationScanConfigurationList"},
-        "periodicScanConfigurations":{"shape":"ProjectPeriodicScanConfigurationList"}
+        "periodicScanConfigurations":{"shape":"ProjectPeriodicScanConfigurationList"},
+        "continuousIntegrationScanConfigurations":{"shape":"ProjectContinuousIntegrationScanConfigurationList"}
       }
     },
     "ProjectContinuousIntegrationScanConfiguration":{
       "type":"structure",
       "members":{
-        "ruleSetCategories":{"shape":"RuleSetCategories"},
-        "supportedEvent":{"shape":"ContinuousIntegrationScanEvent"}
+        "supportedEvent":{"shape":"ContinuousIntegrationScanEvent"},
+        "ruleSetCategories":{"shape":"RuleSetCategories"}
       }
     },
     "ProjectContinuousIntegrationScanConfigurationList":{
@@ -5556,7 +5551,7 @@
     },
     "ProjectId":{
       "type":"string",
-      "pattern":"^project-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"project-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "ProjectPeriodicScanConfiguration":{
       "type":"structure",
@@ -5581,8 +5576,8 @@
     "Recommendation":{
       "type":"structure",
       "members":{
-        "Url":{"shape":"NonEmptyString"},
-        "text":{"shape":"NonEmptyString"}
+        "text":{"shape":"NonEmptyString"},
+        "Url":{"shape":"NonEmptyString"}
       }
     },
     "ReferenceUrls":{
@@ -5633,7 +5628,7 @@
     },
     "ReportId":{
       "type":"string",
-      "pattern":"\\b[a-f0-9]{8}\\b-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-\\b[a-f0-9]{12}\\b"
+      "pattern":".*\\b[a-f0-9]{8}\\b-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-\\b[a-f0-9]{12}\\b.*"
     },
     "ReportTargetAccounts":{
       "type":"list",
@@ -5656,18 +5651,18 @@
       "type":"structure",
       "members":{
         "repositories":{"shape":"StringFilterList"},
-        "sortBy":{"shape":"RepositorySortBy"},
-        "sortOrder":{"shape":"SortOrder"}
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"RepositorySortBy"}
       }
     },
     "RepositoryAggregationResponse":{
       "type":"structure",
       "required":["repository"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "affectedImages":{"shape":"Long"},
         "repository":{"shape":"NonEmptyString"},
-        "severityCounts":{"shape":"SeverityCounts"}
+        "accountId":{"shape":"AccountId"},
+        "severityCounts":{"shape":"SeverityCounts"},
+        "affectedImages":{"shape":"Long"}
       }
     },
     "RepositorySortBy":{
@@ -5682,32 +5677,31 @@
     "ResetEncryptionKeyRequest":{
       "type":"structure",
       "required":[
-        "resourceType",
-        "scanType"
+        "scanType",
+        "resourceType"
       ],
       "members":{
-        "resourceType":{"shape":"ResourceType"},
-        "scanType":{"shape":"ScanType"}
+        "scanType":{"shape":"ScanType"},
+        "resourceType":{"shape":"ResourceType"}
       }
     },
     "ResetEncryptionKeyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Resource":{
       "type":"structure",
       "required":[
-        "id",
-        "type"
+        "type",
+        "id"
       ],
       "members":{
-        "details":{"shape":"ResourceDetails"},
+        "type":{"shape":"ResourceType"},
         "id":{"shape":"NonEmptyString"},
         "partition":{"shape":"NonEmptyString"},
         "region":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagMap"},
-        "type":{"shape":"ResourceType"}
+        "details":{"shape":"ResourceDetails"}
       }
     },
     "ResourceDetails":{
@@ -5723,20 +5717,20 @@
       "type":"structure",
       "members":{
         "accountId":{"shape":"ResourceStringFilterList"},
-        "ec2InstanceTags":{"shape":"ResourceMapFilterList"},
-        "ecrImageTags":{"shape":"ResourceStringFilterList"},
+        "resourceId":{"shape":"ResourceStringFilterList"},
+        "resourceType":{"shape":"ResourceStringFilterList"},
         "ecrRepositoryName":{"shape":"ResourceStringFilterList"},
         "lambdaFunctionName":{"shape":"ResourceStringFilterList"},
-        "lambdaFunctionTags":{"shape":"ResourceMapFilterList"},
-        "resourceId":{"shape":"ResourceStringFilterList"},
-        "resourceType":{"shape":"ResourceStringFilterList"}
+        "ecrImageTags":{"shape":"ResourceStringFilterList"},
+        "ec2InstanceTags":{"shape":"ResourceMapFilterList"},
+        "lambdaFunctionTags":{"shape":"ResourceMapFilterList"}
       }
     },
     "ResourceId":{
       "type":"string",
       "max":341,
       "min":10,
-      "pattern":"(^arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?$)|(^i-([a-z0-9]{8}|[a-z0-9]{17}|\\\\*)$|(^arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$)|(^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:codesecurity-integration\\/[a-f0-9-]{36}\\/project-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$))"
+      "pattern":".*(^arn:.*:ecr:.*:\\d{12}:repository\\/(?:[a-z0-9]+(?:[._-][a-z0-9]+)*\\/)*[a-z0-9]+(?:[._-][a-z0-9]+)*(\\/sha256:[a-z0-9]{64})?$)|(^i-([a-z0-9]{8}|[a-z0-9]{17}|\\\\*)$|(^arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$)|(^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:codesecurity-integration\\/[a-f0-9-]{36}\\/project-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$)).*"
     },
     "ResourceIdFilterList":{
       "type":"list",
@@ -5787,11 +5781,11 @@
     "ResourceScanMetadata":{
       "type":"structure",
       "members":{
-        "codeRepository":{"shape":"CodeRepositoryMetadata"},
-        "ec2":{"shape":"Ec2Metadata"},
-        "ecrImage":{"shape":"EcrContainerImageMetadata"},
         "ecrRepository":{"shape":"EcrRepositoryMetadata"},
-        "lambdaFunction":{"shape":"LambdaFunctionMetadata"}
+        "ecrImage":{"shape":"EcrContainerImageMetadata"},
+        "ec2":{"shape":"Ec2Metadata"},
+        "lambdaFunction":{"shape":"LambdaFunctionMetadata"},
+        "codeRepository":{"shape":"CodeRepositoryMetadata"}
       }
     },
     "ResourceScanType":{
@@ -5811,11 +5805,11 @@
         "ecr"
       ],
       "members":{
-        "codeRepository":{"shape":"State"},
         "ec2":{"shape":"State"},
         "ecr":{"shape":"State"},
         "lambda":{"shape":"State"},
-        "lambdaCode":{"shape":"State"}
+        "lambdaCode":{"shape":"State"},
+        "codeRepository":{"shape":"State"}
       }
     },
     "ResourceStatus":{
@@ -5825,11 +5819,11 @@
         "ecr"
       ],
       "members":{
-        "codeRepository":{"shape":"Status"},
         "ec2":{"shape":"Status"},
         "ecr":{"shape":"Status"},
         "lambda":{"shape":"Status"},
-        "lambdaCode":{"shape":"Status"}
+        "lambdaCode":{"shape":"Status"},
+        "codeRepository":{"shape":"Status"}
       }
     },
     "ResourceStringComparison":{
@@ -5935,13 +5929,13 @@
     },
     "ScanConfigurationArn":{
       "type":"string",
-      "pattern":"^arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:owner/(\\d{12}|o-[a-z0-9]{10,32})/codesecurity-configuration/[a-f0-9-]{36}$"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:inspector2:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:owner/(\\d{12}|o-[a-z0-9]{10,32})/codesecurity-configuration/[a-f0-9-]{36}"
     },
     "ScanConfigurationName":{
       "type":"string",
       "max":60,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_$:.]*$"
+      "pattern":"[a-zA-Z0-9-_$:.]*"
     },
     "ScanMode":{
       "type":"string",
@@ -5953,12 +5947,12 @@
     "ScanStatus":{
       "type":"structure",
       "required":[
-        "reason",
-        "statusCode"
+        "statusCode",
+        "reason"
       ],
       "members":{
-        "reason":{"shape":"ScanStatusReason"},
-        "statusCode":{"shape":"ScanStatusCode"}
+        "statusCode":{"shape":"ScanStatusCode"},
+        "reason":{"shape":"ScanStatusReason"}
       }
     },
     "ScanStatusCode":{
@@ -6016,10 +6010,10 @@
     "Schedule":{
       "type":"structure",
       "members":{
-        "daily":{"shape":"DailySchedule"},
-        "monthly":{"shape":"MonthlySchedule"},
         "oneTime":{"shape":"OneTimeSchedule"},
-        "weekly":{"shape":"WeeklySchedule"}
+        "daily":{"shape":"DailySchedule"},
+        "weekly":{"shape":"WeeklySchedule"},
+        "monthly":{"shape":"MonthlySchedule"}
       },
       "union":true
     },
@@ -6048,13 +6042,13 @@
       "type":"structure",
       "required":["vulnerabilities"],
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "vulnerabilities":{"shape":"Vulnerabilities"}
+        "vulnerabilities":{"shape":"Vulnerabilities"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "SecurityGroupId":{
       "type":"string",
-      "pattern":"^sg-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
+      "pattern":"sg-([a-z0-9]{8}|[a-z0-9]{17}|\\*)"
     },
     "SecurityGroupIdList":{
       "type":"list",
@@ -6075,26 +6069,24 @@
     },
     "SendCisSessionHealthResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "SendCisSessionTelemetryRequest":{
       "type":"structure",
       "required":[
-        "messages",
         "scanJobId",
-        "sessionToken"
+        "sessionToken",
+        "messages"
       ],
       "members":{
-        "messages":{"shape":"CisSessionMessages"},
         "scanJobId":{"shape":"UUID"},
-        "sessionToken":{"shape":"UUID"}
+        "sessionToken":{"shape":"UUID"},
+        "messages":{"shape":"CisSessionMessages"}
       }
     },
     "SendCisSessionTelemetryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Service":{
       "type":"string",
@@ -6135,9 +6127,9 @@
       "type":"structure",
       "members":{
         "all":{"shape":"Long"},
-        "critical":{"shape":"Long"},
+        "medium":{"shape":"Long"},
         "high":{"shape":"Long"},
-        "medium":{"shape":"Long"}
+        "critical":{"shape":"Long"}
       }
     },
     "SortCriteria":{
@@ -6184,7 +6176,7 @@
       "type":"string",
       "max":71,
       "min":71,
-      "pattern":"^sha256:[a-z0-9]{64}$"
+      "pattern":"sha256:[a-z0-9]{64}"
     },
     "StartCisSessionMessage":{
       "type":"structure",
@@ -6196,18 +6188,17 @@
     "StartCisSessionRequest":{
       "type":"structure",
       "required":[
-        "message",
-        "scanJobId"
+        "scanJobId",
+        "message"
       ],
       "members":{
-        "message":{"shape":"StartCisSessionMessage"},
-        "scanJobId":{"shape":"UUID"}
+        "scanJobId":{"shape":"UUID"},
+        "message":{"shape":"StartCisSessionMessage"}
       }
     },
     "StartCisSessionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartCodeSecurityScanRequest":{
       "type":"structure",
@@ -6230,14 +6221,14 @@
     "State":{
       "type":"structure",
       "required":[
+        "status",
         "errorCode",
-        "errorMessage",
-        "status"
+        "errorMessage"
       ],
       "members":{
+        "status":{"shape":"Status"},
         "errorCode":{"shape":"ErrorCode"},
-        "errorMessage":{"shape":"NonEmptyString"},
-        "status":{"shape":"Status"}
+        "errorMessage":{"shape":"NonEmptyString"}
       }
     },
     "Status":{
@@ -6255,8 +6246,8 @@
       "type":"structure",
       "members":{
         "failed":{"shape":"Integer"},
-        "passed":{"shape":"Integer"},
-        "skipped":{"shape":"Integer"}
+        "skipped":{"shape":"Integer"},
+        "passed":{"shape":"Integer"}
       }
     },
     "Step":{
@@ -6266,9 +6257,9 @@
         "componentType"
       ],
       "members":{
-        "componentArn":{"shape":"ComponentArn"},
         "componentId":{"shape":"Component"},
-        "componentType":{"shape":"ComponentType"}
+        "componentType":{"shape":"ComponentType"},
+        "componentArn":{"shape":"ComponentArn"}
       }
     },
     "StepList":{
@@ -6280,48 +6271,47 @@
     "StopCisMessageProgress":{
       "type":"structure",
       "members":{
-        "errorChecks":{"shape":"CheckCount"},
-        "failedChecks":{"shape":"CheckCount"},
-        "informationalChecks":{"shape":"CheckCount"},
-        "notApplicableChecks":{"shape":"CheckCount"},
-        "notEvaluatedChecks":{"shape":"CheckCount"},
-        "successfulChecks":{"shape":"CheckCount"},
         "totalChecks":{"shape":"CheckCount"},
-        "unknownChecks":{"shape":"CheckCount"}
+        "successfulChecks":{"shape":"CheckCount"},
+        "failedChecks":{"shape":"CheckCount"},
+        "notEvaluatedChecks":{"shape":"CheckCount"},
+        "unknownChecks":{"shape":"CheckCount"},
+        "notApplicableChecks":{"shape":"CheckCount"},
+        "informationalChecks":{"shape":"CheckCount"},
+        "errorChecks":{"shape":"CheckCount"}
       }
     },
     "StopCisSessionMessage":{
       "type":"structure",
       "required":[
-        "progress",
-        "status"
+        "status",
+        "progress"
       ],
       "members":{
-        "benchmarkProfile":{"shape":"BenchmarkProfile"},
-        "benchmarkVersion":{"shape":"BenchmarkVersion"},
-        "computePlatform":{"shape":"ComputePlatform"},
-        "progress":{"shape":"StopCisMessageProgress"},
+        "status":{"shape":"StopCisSessionStatus"},
         "reason":{"shape":"Reason"},
-        "status":{"shape":"StopCisSessionStatus"}
+        "progress":{"shape":"StopCisMessageProgress"},
+        "computePlatform":{"shape":"ComputePlatform"},
+        "benchmarkVersion":{"shape":"BenchmarkVersion"},
+        "benchmarkProfile":{"shape":"BenchmarkProfile"}
       }
     },
     "StopCisSessionRequest":{
       "type":"structure",
       "required":[
-        "message",
         "scanJobId",
-        "sessionToken"
+        "sessionToken",
+        "message"
       ],
       "members":{
-        "message":{"shape":"StopCisSessionMessage"},
         "scanJobId":{"shape":"UUID"},
-        "sessionToken":{"shape":"UUID"}
+        "sessionToken":{"shape":"UUID"},
+        "message":{"shape":"StopCisSessionMessage"}
       }
     },
     "StopCisSessionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopCisSessionStatus":{
       "type":"string",
@@ -6369,7 +6359,7 @@
     },
     "SubnetId":{
       "type":"string",
-      "pattern":"^subnet-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
+      "pattern":"subnet-([a-z0-9]{8}|[a-z0-9]{17}|\\*)"
     },
     "SubnetIdList":{
       "type":"list",
@@ -6380,8 +6370,8 @@
     "SuccessfulAssociationResult":{
       "type":"structure",
       "members":{
-        "resource":{"shape":"CodeSecurityResource"},
-        "scanConfigurationArn":{"shape":"ScanConfigurationArn"}
+        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
+        "resource":{"shape":"CodeSecurityResource"}
       }
     },
     "SuccessfulAssociationResultList":{
@@ -6391,8 +6381,8 @@
     "SuggestedFix":{
       "type":"structure",
       "members":{
-        "code":{"shape":"SuggestedFixCodeString"},
-        "description":{"shape":"SuggestedFixDescriptionString"}
+        "description":{"shape":"SuggestedFixDescriptionString"},
+        "code":{"shape":"SuggestedFixCodeString"}
       }
     },
     "SuggestedFixCodeString":{
@@ -6432,7 +6422,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
     },
     "TagKeyList":{
       "type":"list",
@@ -6466,8 +6456,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValueList":{
       "type":"list",
@@ -6482,7 +6471,7 @@
     },
     "TargetAccount":{
       "type":"string",
-      "pattern":"^\\d{12}|ALL_ACCOUNTS|SELF$"
+      "pattern":"\\d{12}|ALL_ACCOUNTS|SELF"
     },
     "TargetAccountList":{
       "type":"list",
@@ -6501,7 +6490,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:/=\\-@]*$"
+      "pattern":"[\\p{L}\\p{Z}\\p{N}_.:/=\\-@]*"
     },
     "TargetResourceTagsValue":{
       "type":"string",
@@ -6556,7 +6545,7 @@
     },
     "TimeOfDay":{
       "type":"string",
-      "pattern":"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+      "pattern":"([0-1]?[0-9]|2[0-3]):[0-5][0-9]"
     },
     "Timestamp":{"type":"timestamp"},
     "Timezone":{
@@ -6567,22 +6556,22 @@
     "TitleAggregation":{
       "type":"structure",
       "members":{
-        "findingType":{"shape":"AggregationFindingType"},
-        "resourceType":{"shape":"AggregationResourceType"},
-        "sortBy":{"shape":"TitleSortBy"},
-        "sortOrder":{"shape":"SortOrder"},
         "titles":{"shape":"StringFilterList"},
-        "vulnerabilityIds":{"shape":"StringFilterList"}
+        "vulnerabilityIds":{"shape":"StringFilterList"},
+        "resourceType":{"shape":"AggregationResourceType"},
+        "sortOrder":{"shape":"SortOrder"},
+        "sortBy":{"shape":"TitleSortBy"},
+        "findingType":{"shape":"AggregationFindingType"}
       }
     },
     "TitleAggregationResponse":{
       "type":"structure",
       "required":["title"],
       "members":{
-        "accountId":{"shape":"AccountId"},
-        "severityCounts":{"shape":"SeverityCounts"},
         "title":{"shape":"NonEmptyString"},
-        "vulnerabilityId":{"shape":"String"}
+        "vulnerabilityId":{"shape":"String"},
+        "accountId":{"shape":"AccountId"},
+        "severityCounts":{"shape":"SeverityCounts"}
       }
     },
     "TitleFilterList":{
@@ -6619,7 +6608,7 @@
     },
     "UUID":{
       "type":"string",
-      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -6642,8 +6631,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCisScanConfigurationRequest":{
       "type":"structure",
@@ -6651,8 +6639,8 @@
       "members":{
         "scanConfigurationArn":{"shape":"CisScanConfigurationArn"},
         "scanName":{"shape":"CisScanName"},
-        "schedule":{"shape":"Schedule"},
         "securityLevel":{"shape":"CisSecurityLevel"},
+        "schedule":{"shape":"Schedule"},
         "targets":{"shape":"UpdateCisTargets"}
       }
     },
@@ -6673,12 +6661,12 @@
     "UpdateCodeSecurityIntegrationRequest":{
       "type":"structure",
       "required":[
-        "details",
-        "integrationArn"
+        "integrationArn",
+        "details"
       ],
       "members":{
-        "details":{"shape":"UpdateIntegrationDetails"},
-        "integrationArn":{"shape":"CodeSecurityIntegrationArn"}
+        "integrationArn":{"shape":"CodeSecurityIntegrationArn"},
+        "details":{"shape":"UpdateIntegrationDetails"}
       }
     },
     "UpdateCodeSecurityIntegrationResponse":{
@@ -6695,12 +6683,12 @@
     "UpdateCodeSecurityScanConfigurationRequest":{
       "type":"structure",
       "required":[
-        "configuration",
-        "scanConfigurationArn"
+        "scanConfigurationArn",
+        "configuration"
       ],
       "members":{
-        "configuration":{"shape":"CodeSecurityScanConfiguration"},
-        "scanConfigurationArn":{"shape":"ScanConfigurationArn"}
+        "scanConfigurationArn":{"shape":"ScanConfigurationArn"},
+        "configuration":{"shape":"CodeSecurityScanConfiguration"}
       }
     },
     "UpdateCodeSecurityScanConfigurationResponse":{
@@ -6712,14 +6700,13 @@
     "UpdateConfigurationRequest":{
       "type":"structure",
       "members":{
-        "ec2Configuration":{"shape":"Ec2Configuration"},
-        "ecrConfiguration":{"shape":"EcrConfiguration"}
+        "ecrConfiguration":{"shape":"EcrConfiguration"},
+        "ec2Configuration":{"shape":"Ec2Configuration"}
       }
     },
     "UpdateConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEc2DeepInspectionConfigurationRequest":{
       "type":"structure",
@@ -6731,29 +6718,28 @@
     "UpdateEc2DeepInspectionConfigurationResponse":{
       "type":"structure",
       "members":{
-        "errorMessage":{"shape":"NonEmptyString"},
-        "orgPackagePaths":{"shape":"PathList"},
         "packagePaths":{"shape":"PathList"},
-        "status":{"shape":"Ec2DeepInspectionStatus"}
+        "orgPackagePaths":{"shape":"PathList"},
+        "status":{"shape":"Ec2DeepInspectionStatus"},
+        "errorMessage":{"shape":"NonEmptyString"}
       }
     },
     "UpdateEncryptionKeyRequest":{
       "type":"structure",
       "required":[
         "kmsKeyId",
-        "resourceType",
-        "scanType"
+        "scanType",
+        "resourceType"
       ],
       "members":{
         "kmsKeyId":{"shape":"KmsKeyArn"},
-        "resourceType":{"shape":"ResourceType"},
-        "scanType":{"shape":"ScanType"}
+        "scanType":{"shape":"ScanType"},
+        "resourceType":{"shape":"ResourceType"}
       }
     },
     "UpdateEncryptionKeyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateFilterRequest":{
       "type":"structure",
@@ -6761,9 +6747,9 @@
       "members":{
         "action":{"shape":"FilterAction"},
         "description":{"shape":"FilterDescription"},
-        "filterArn":{"shape":"FilterArn"},
         "filterCriteria":{"shape":"FilterCriteria"},
         "name":{"shape":"FilterName"},
+        "filterArn":{"shape":"FilterArn"},
         "reason":{"shape":"FilterReason"}
       }
     },
@@ -6795,8 +6781,8 @@
     "UpdateIntegrationDetails":{
       "type":"structure",
       "members":{
-        "github":{"shape":"UpdateGitHubIntegrationDetail"},
-        "gitlabSelfManaged":{"shape":"UpdateGitLabSelfManagedIntegrationDetail"}
+        "gitlabSelfManaged":{"shape":"UpdateGitLabSelfManagedIntegrationDetail"},
+        "github":{"shape":"UpdateGitHubIntegrationDetail"}
       },
       "union":true
     },
@@ -6809,8 +6795,7 @@
     },
     "UpdateOrgEc2DeepInspectionConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateOrganizationConfigurationRequest":{
       "type":"structure",
@@ -6829,15 +6814,15 @@
     "Usage":{
       "type":"structure",
       "members":{
-        "currency":{"shape":"Currency"},
-        "estimatedMonthlyCost":{"shape":"MonthlyCostEstimate"},
+        "type":{"shape":"UsageType"},
         "total":{"shape":"UsageValue"},
-        "type":{"shape":"UsageType"}
+        "estimatedMonthlyCost":{"shape":"MonthlyCostEstimate"},
+        "currency":{"shape":"Currency"}
       }
     },
     "UsageAccountId":{
       "type":"string",
-      "pattern":"[0-9]{12}"
+      "pattern":".*[0-9]{12}.*"
     },
     "UsageAccountIdList":{
       "type":"list",
@@ -6870,7 +6855,8 @@
         "LAMBDA_FUNCTION_CODE_HOURS",
         "CODE_REPOSITORY_SAST",
         "CODE_REPOSITORY_IAC",
-        "CODE_REPOSITORY_SCA"
+        "CODE_REPOSITORY_SCA",
+        "EC2_AGENTLESS_INSTANCE_HOURS"
       ]
     },
     "UsageValue":{
@@ -6884,9 +6870,9 @@
         "reason"
       ],
       "members":{
-        "fields":{"shape":"ValidationExceptionFields"},
         "message":{"shape":"String"},
-        "reason":{"shape":"ValidationExceptionReason"}
+        "reason":{"shape":"ValidationExceptionReason"},
+        "fields":{"shape":"ValidationExceptionFields"}
       },
       "error":{
         "httpStatusCode":400,
@@ -6897,12 +6883,12 @@
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "message",
-        "name"
+        "name",
+        "message"
       ],
       "members":{
-        "message":{"shape":"String"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "message":{"shape":"String"}
       }
     },
     "ValidationExceptionFields":{
@@ -6931,15 +6917,15 @@
     "VendorUpdatedAt":{"type":"timestamp"},
     "Version":{
       "type":"string",
-      "pattern":"^\\$LATEST|[0-9]+$"
+      "pattern":"\\$LATEST|[0-9]+"
     },
     "VpcId":{
       "type":"string",
-      "pattern":"^vpc-([a-z0-9]{8}|[a-z0-9]{17}|\\*)$"
+      "pattern":"vpc-([a-z0-9]{8}|[a-z0-9]{17}|\\*)"
     },
     "VulnId":{
       "type":"string",
-      "pattern":"^CVE-[12][0-9]{3}-[0-9]{1,10}$"
+      "pattern":"CVE-[12][0-9]{3}-[0-9]{1,10}"
     },
     "VulnIdList":{
       "type":"list",
@@ -6957,23 +6943,23 @@
       "type":"structure",
       "required":["id"],
       "members":{
-        "atigData":{"shape":"AtigData"},
-        "cisaData":{"shape":"CisaData"},
-        "cvss2":{"shape":"Cvss2"},
-        "cvss3":{"shape":"Cvss3"},
-        "cwes":{"shape":"Cwes"},
-        "description":{"shape":"VulnerabilityDescription"},
-        "detectionPlatforms":{"shape":"DetectionPlatforms"},
-        "epss":{"shape":"Epss"},
-        "exploitObserved":{"shape":"ExploitObserved"},
         "id":{"shape":"NonEmptyString"},
-        "referenceUrls":{"shape":"VulnerabilityReferenceUrls"},
-        "relatedVulnerabilities":{"shape":"RelatedVulnerabilities"},
+        "cwes":{"shape":"Cwes"},
+        "cisaData":{"shape":"CisaData"},
         "source":{"shape":"VulnerabilitySource"},
-        "sourceUrl":{"shape":"VulnerabilitySourceUrl"},
-        "vendorCreatedAt":{"shape":"VendorCreatedAt"},
+        "description":{"shape":"VulnerabilityDescription"},
+        "atigData":{"shape":"AtigData"},
         "vendorSeverity":{"shape":"VendorSeverity"},
-        "vendorUpdatedAt":{"shape":"VendorUpdatedAt"}
+        "cvss3":{"shape":"Cvss3"},
+        "relatedVulnerabilities":{"shape":"RelatedVulnerabilities"},
+        "cvss2":{"shape":"Cvss2"},
+        "vendorCreatedAt":{"shape":"VendorCreatedAt"},
+        "vendorUpdatedAt":{"shape":"VendorUpdatedAt"},
+        "sourceUrl":{"shape":"VulnerabilitySourceUrl"},
+        "referenceUrls":{"shape":"VulnerabilityReferenceUrls"},
+        "exploitObserved":{"shape":"ExploitObserved"},
+        "detectionPlatforms":{"shape":"DetectionPlatforms"},
+        "epss":{"shape":"Epss"}
       }
     },
     "VulnerabilityDescription":{"type":"string"},
@@ -7011,17 +6997,17 @@
         "version"
       ],
       "members":{
-        "arch":{"shape":"PackageArchitecture"},
+        "name":{"shape":"PackageName"},
+        "version":{"shape":"PackageVersion"},
+        "sourceLayerHash":{"shape":"SourceLayerHash"},
         "epoch":{"shape":"PackageEpoch"},
+        "release":{"shape":"PackageRelease"},
+        "arch":{"shape":"PackageArchitecture"},
+        "packageManager":{"shape":"PackageManager"},
         "filePath":{"shape":"FilePath"},
         "fixedInVersion":{"shape":"PackageVersion"},
-        "name":{"shape":"PackageName"},
-        "packageManager":{"shape":"PackageManager"},
-        "release":{"shape":"PackageRelease"},
         "remediation":{"shape":"VulnerablePackageRemediation"},
-        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"},
-        "sourceLayerHash":{"shape":"SourceLayerHash"},
-        "version":{"shape":"PackageVersion"}
+        "sourceLambdaLayerArn":{"shape":"LambdaLayerArn"}
       }
     },
     "VulnerablePackageList":{
@@ -7036,12 +7022,12 @@
     "WeeklySchedule":{
       "type":"structure",
       "required":[
-        "days",
-        "startTime"
+        "startTime",
+        "days"
       ],
       "members":{
-        "days":{"shape":"DaysList"},
-        "startTime":{"shape":"Time"}
+        "startTime":{"shape":"Time"},
+        "days":{"shape":"DaysList"}
       }
     }
   }

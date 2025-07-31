@@ -501,6 +501,8 @@
         "DomainStatus$UpgradeProcessing": "<p>The status of a domain version upgrade to a new version of OpenSearch or Elasticsearch. True if OpenSearch Service is in the process of a version upgrade. False if the configuration is active.</p>",
         "EBSOptions$EBSEnabled": "<p>Indicates whether EBS volumes are attached to data nodes in an OpenSearch Service domain.</p>",
         "EncryptionAtRestOptions$Enabled": "<p>True to enable encryption at rest.</p>",
+        "IAMFederationOptionsInput$Enabled": "<p>True to enable IAM federation authentication for a domain.</p>",
+        "IAMFederationOptionsOutput$Enabled": "<p>True if IAM federation is enabled.</p>",
         "IamIdentityCenterOptions$enabled": "<p>Indicates whether IAM Identity Center is enabled for the OpenSearch application.</p>",
         "IamIdentityCenterOptionsInput$enabled": "<p>Specifies whether IAM Identity Center is enabled or disabled.</p>",
         "IdentityCenterOptions$EnabledAPIAccess": "<p>Indicates whether IAM Identity Center is enabled for the application.</p>",
@@ -1618,6 +1620,32 @@
       "base": null,
       "refs": {
         "DomainStatus$DomainEndpointV2HostedZoneId": "<p>The dual stack hosted zone ID for the domain. </p>"
+      }
+    },
+    "IAMFederationOptionsInput": {
+      "base": "<p>The IAM federation authentication configuration for an Amazon OpenSearch Service domain.</p>",
+      "refs": {
+        "AdvancedSecurityOptionsInput$IAMFederationOptions": "<p>Container for information about the IAM federation configuration for an OpenSearch UI application.</p>"
+      }
+    },
+    "IAMFederationOptionsOutput": {
+      "base": "<p>Describes the IAM federation options configured for the domain.</p>",
+      "refs": {
+        "AdvancedSecurityOptions$IAMFederationOptions": "<p>Container for information about the IAM federation configuration for an OpenSearch UI application.</p>"
+      }
+    },
+    "IAMFederationRolesKey": {
+      "base": null,
+      "refs": {
+        "IAMFederationOptionsInput$RolesKey": "<p>Element of the IAM federation assertion to use for backend roles. Default is <code>roles</code>.</p>",
+        "IAMFederationOptionsOutput$RolesKey": "<p>The key used for matching the IAM federation roles attribute.</p>"
+      }
+    },
+    "IAMFederationSubjectKey": {
+      "base": null,
+      "refs": {
+        "IAMFederationOptionsInput$SubjectKey": "<p>Element of the IAM federation assertion to use for the user name. Default is <code>sub</code>.</p>",
+        "IAMFederationOptionsOutput$SubjectKey": "<p>The key used for matching the IAM federation subject attribute.</p>"
       }
     },
     "IPAddressType": {

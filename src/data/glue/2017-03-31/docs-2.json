@@ -311,15 +311,18 @@
       "refs": {
         "CatalogDeltaSource$AdditionalDeltaOptions": "<p>Specifies additional connection options.</p>",
         "CatalogHudiSource$AdditionalHudiOptions": "<p>Specifies additional connection options.</p>",
+        "CatalogIcebergSource$AdditionalIcebergOptions": "<p>Specifies additional connection options for the Iceberg data source.</p>",
         "JDBCConnectorTarget$AdditionalOptions": "<p>Additional connection options for the connector.</p>",
         "S3CatalogDeltaSource$AdditionalDeltaOptions": "<p>Specifies additional connection options.</p>",
         "S3CatalogHudiSource$AdditionalHudiOptions": "<p>Specifies additional connection options.</p>",
+        "S3CatalogIcebergSource$AdditionalIcebergOptions": "<p>Specifies additional connection options for the Iceberg data source.</p>",
         "S3DeltaCatalogTarget$AdditionalOptions": "<p>Specifies additional connection options for the connector.</p>",
         "S3DeltaDirectTarget$AdditionalOptions": "<p>Specifies additional connection options for the connector.</p>",
         "S3DeltaSource$AdditionalDeltaOptions": "<p>Specifies additional connection options.</p>",
         "S3HudiCatalogTarget$AdditionalOptions": "<p>Specifies additional connection options for the connector.</p>",
         "S3HudiDirectTarget$AdditionalOptions": "<p>Specifies additional connection options for the connector.</p>",
         "S3HudiSource$AdditionalHudiOptions": "<p>Specifies additional connection options.</p>",
+        "S3IcebergCatalogTarget$AdditionalOptions": "<p>Specifies additional connection options for the Iceberg catalog target.</p>",
         "S3IcebergDirectTarget$AdditionalOptions": "<p>Provides additional configuration options for customizing the Iceberg table behavior.</p>",
         "SnowflakeNodeData$AdditionalOptions": "<p>Specifies additional options passed to the Snowflake connector. If options are specified elsewhere in this node, this will take precedence.</p>",
         "SparkConnectorSource$AdditionalOptions": "<p>Additional connection options for the connector.</p>",
@@ -555,6 +558,21 @@
       "base": "<p>The set of properties required for the the OAuth2 <code>AUTHORIZATION_CODE</code> grant type workflow.</p>",
       "refs": {
         "OAuth2PropertiesInput$AuthorizationCodeProperties": "<p>The set of properties required for the the OAuth2 <code>AUTHORIZATION_CODE</code> grant type.</p>"
+      }
+    },
+    "AutoDataQuality": {
+      "base": "<p>Specifies configuration options for automatic data quality evaluation in Glue jobs. This structure enables automated data quality checks and monitoring during ETL operations, helping to ensure data integrity and reliability without manual intervention.</p>",
+      "refs": {
+        "S3CatalogTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 catalog target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3DeltaCatalogTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Delta catalog target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3DeltaDirectTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Delta direct target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3DirectTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 direct target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3GlueParquetTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Glue Parquet target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3HudiCatalogTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Hudi catalog target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3HudiDirectTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Hudi direct target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3HyperDirectTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Hyper direct target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3IcebergCatalogTarget$AutoDataQuality": "<p>Specifies whether to automatically enable data quality evaluation for the S3 Iceberg catalog target. When set to <code>true</code>, data quality checks are performed automatically during the write operation.</p>",
+        "S3IcebergDirectTarget$AutoDataQuality": null
       }
     },
     "BackfillError": {
@@ -1008,7 +1026,10 @@
       "base": null,
       "refs": {
         "AmazonRedshiftNodeData$Upsert": "<p>The action used on Redshift sinks when doing an APPEND.</p>",
+        "AutoDataQuality$IsEnabled": "<p>Specifies whether automatic data quality evaluation is enabled. When set to <code>true</code>, data quality checks are performed automatically.</p>",
         "CreateTriggerRequest$StartOnCreation": "<p>Set to <code>true</code> to start <code>SCHEDULED</code> and <code>CONDITIONAL</code> triggers when created. True is not supported for <code>ON_DEMAND</code> triggers.</p>",
+        "DDBELTCatalogAdditionalOptions$DynamodbUnnestDDBJson": "<p>Specifies whether to unnest DynamoDB JSON format. When set to <code>true</code>, nested JSON structures in DynamoDB items are flattened.</p>",
+        "DDBELTConnectionOptions$DynamodbUnnestDDBJson": "<p>A boolean value that specifies whether to unnest DynamoDB JSON format during data extraction. When set to <code>true</code>, the connector will flatten nested JSON structures from DynamoDB items. When set to <code>false</code>, the original DynamoDB JSON structure is preserved.</p>",
         "GetJobRunRequest$PredecessorsIncluded": "<p>True if a list of predecessor runs should be returned.</p>",
         "S3CsvSource$OptimizePerformance": "<p>A Boolean value that specifies whether to use the advanced SIMD CSV reader along with Apache Arrow based columnar memory formats. Only available in Glue version 3.0.</p>",
         "SnowflakeNodeData$Upsert": "<p>Used when Action is <code>append</code>. Specifies the resolution behavior when a row already exists. If true, preexisting rows will be updated. If false, those rows will be inserted.</p>",
@@ -1035,6 +1056,7 @@
         "DirectKafkaSource$DetectSchema": "<p>Whether to automatically determine the schema from the incoming data.</p>",
         "DirectKinesisSource$DetectSchema": "<p>Whether to automatically determine the schema from the incoming data.</p>",
         "DirectSchemaChangePolicy$EnableUpdateCatalog": "<p>Whether to use the specified update behavior when the crawler finds a changed schema.</p>",
+        "DynamoDBCatalogSource$PitrEnabled": "<p>Specifies whether Point-in-Time Recovery (PITR) is enabled for the DynamoDB table. When set to <code>true</code>, allows reading from a specific point in time. The default value is <code>false</code>.</p>",
         "FilterExpression$Negated": "<p>Whether the expression is to be negated.</p>",
         "KafkaStreamingSourceOptions$IncludeHeaders": "<p>Whether to include the Kafka headers. When the option is set to \"true\", the data output will contain an additional column named \"glue_streaming_kafka_headers\" with type <code>Array[Struct(key: String, value: String)]</code>. The default value is \"false\". This option is available in Glue version 3.0 or later only.</p>",
         "KinesisStreamingSourceOptions$AddIdleTimeBetweenReads": "<p>Adds a time delay between two consecutive getRecords operations. The default value is <code>\"False\"</code>. This option is only configurable for Glue version 2.0 and above.</p>",
@@ -1114,7 +1136,9 @@
         "CatalogKafkaSource$WindowSize": "<p>The amount of time to spend processing each micro batch.</p>",
         "CatalogKinesisSource$WindowSize": "<p>The amount of time to spend processing each micro batch.</p>",
         "DirectKafkaSource$WindowSize": "<p>The amount of time to spend processing each micro batch.</p>",
-        "DirectKinesisSource$WindowSize": "<p>The amount of time to spend processing each micro batch.</p>"
+        "DirectKinesisSource$WindowSize": "<p>The amount of time to spend processing each micro batch.</p>",
+        "PIIDetection$NumLeftCharsToExclude": "<p>The number of characters to exclude from redaction on the left side of detected PII content. This allows preserving context around the sensitive data.</p>",
+        "PIIDetection$NumRightCharsToExclude": "<p>The number of characters to exclude from redaction on the right side of detected PII content. This allows preserving context around the sensitive data.</p>"
       }
     },
     "CancelDataQualityRuleRecommendationRunRequest": {
@@ -1203,6 +1227,12 @@
       "base": "<p>Specifies a Hudi data source that is registered in the Glue Data Catalog.</p>",
       "refs": {
         "CodeGenConfigurationNode$CatalogHudiSource": "<p>Specifies a Hudi data source that is registered in the Glue Data Catalog.</p>"
+      }
+    },
+    "CatalogIcebergSource": {
+      "base": "<p>Specifies an Apache Iceberg data source that is registered in the Glue Data Catalog.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$CatalogIcebergSource": "<p>Specifies an Apache Iceberg data source that is registered in the Glue Data Catalog.</p>"
       }
     },
     "CatalogIdString": {
@@ -1345,7 +1375,8 @@
         "GovernedCatalogTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the governed catalog.</p>",
         "S3CatalogTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
         "S3DeltaCatalogTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
-        "S3HudiCatalogTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>"
+        "S3HudiCatalogTarget$SchemaChangePolicy": "<p>A policy that specifies update behavior for the crawler.</p>",
+        "S3IcebergCatalogTarget$SchemaChangePolicy": "<p>The policy for handling schema changes in the catalog target.</p>"
       }
     },
     "CatalogSource": {
@@ -1658,6 +1689,7 @@
       "refs": {
         "Column$Type": "<p>The data type of the <code>Column</code>.</p>",
         "GlueStudioSchemaColumn$Type": "<p>The hive type for this column in the Glue Studio schema.</p>",
+        "GlueStudioSchemaColumn$GlueStudioType": "<p>The data type of the column as defined in Glue Studio.</p>",
         "KeySchemaElement$Type": "<p>The type of a partition key.</p>",
         "SchemaColumn$DataType": "<p>The type of data in the column.</p>"
       }
@@ -2557,6 +2589,18 @@
         "Field$CustomProperties": "<p>Optional map of keys which may be returned.</p>"
       }
     },
+    "DDBELTCatalogAdditionalOptions": {
+      "base": "<p>Specifies additional options for DynamoDB ELT catalog operations.</p>",
+      "refs": {
+        "DynamoDBCatalogSource$AdditionalOptions": "<p>Specifies additional connection options for the DynamoDB data source.</p>"
+      }
+    },
+    "DDBELTConnectionOptions": {
+      "base": "<p>Specifies connection options for DynamoDB ELT (Extract, Load, Transform) operations. This structure contains configuration parameters for connecting to and extracting data from DynamoDB tables using the ELT connector.</p>",
+      "refs": {
+        "DynamoDBELTConnectorSource$ConnectionOptions": "<p>The connection options for the DynamoDB ELT connector source.</p>"
+      }
+    },
     "DQAdditionalOptions": {
       "base": null,
       "refs": {
@@ -2996,6 +3040,12 @@
       "base": "<p>Defines column statistics supported for timestamp data columns.</p>",
       "refs": {
         "ColumnStatisticsData$DateColumnStatisticsData": "<p>Date column statistics data.</p>"
+      }
+    },
+    "DdbExportType": {
+      "base": null,
+      "refs": {
+        "DDBELTConnectionOptions$DynamodbExport": "<p>Specifies the export type for DynamoDB data extraction. This parameter determines how data is exported from the DynamoDB table during the ELT process.</p>"
       }
     },
     "DecimalColumnStatisticsData": {
@@ -3512,6 +3562,12 @@
         "CodeGenConfigurationNode$DynamoDBCatalogSource": "<p>Specifies a DynamoDBC Catalog data store in the Glue Data Catalog.</p>"
       }
     },
+    "DynamoDBELTConnectorSource": {
+      "base": "<p>Specifies a DynamoDB ELT connector source for extracting data from DynamoDB tables.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$DynamoDBELTConnectorSource": "<p>Specifies a DynamoDB ELT connector source for extracting data from DynamoDB tables.</p>"
+      }
+    },
     "DynamoDBTarget": {
       "base": "<p>Specifies an Amazon DynamoDB table to crawl.</p>",
       "refs": {
@@ -3588,21 +3644,31 @@
         "AthenaConnectorSource$ConnectorName": "<p>The name of a connector that assists with accessing the data store in Glue Studio.</p>",
         "AthenaConnectorSource$ConnectionType": "<p>The type of connection, such as marketplace.athena or custom.athena, designating a connection to an Amazon Athena data store.</p>",
         "AthenaConnectorSource$SchemaName": "<p>The name of the Cloudwatch log group to read from. For example, <code>/aws-glue/jobs/output</code>.</p>",
+        "AutoDataQuality$EvaluationContext": "<p>The evaluation context for the automatic data quality checks. This defines the scope and parameters for the data quality evaluation.</p>",
         "BasicCatalogTarget$Database": "<p>The database that contains the table you want to use as the target. This database must already exist in the Data Catalog.</p>",
         "BasicCatalogTarget$Table": "<p>The table that defines the schema of your output data. This table must already exist in the Data Catalog.</p>",
         "CatalogDeltaSource$Database": "<p>The name of the database to read from.</p>",
         "CatalogDeltaSource$Table": "<p>The name of the table in the database to read from.</p>",
         "CatalogHudiSource$Database": "<p>The name of the database to read from.</p>",
         "CatalogHudiSource$Table": "<p>The name of the table in the database to read from.</p>",
+        "CatalogIcebergSource$Database": "<p>The name of the database to read from.</p>",
+        "CatalogIcebergSource$Table": "<p>The name of the table in the database to read from.</p>",
         "CatalogKafkaSource$Table": "<p>The name of the table in the database to read from.</p>",
         "CatalogKafkaSource$Database": "<p>The name of the database to read from.</p>",
         "CatalogKinesisSource$Table": "<p>The name of the table in the database to read from.</p>",
         "CatalogKinesisSource$Database": "<p>The name of the database to read from.</p>",
         "CatalogSource$Database": "<p>The name of the database to read from.</p>",
         "CatalogSource$Table": "<p>The name of the table in the database to read from.</p>",
+        "CatalogSource$PartitionPredicate": "<p> Partitions satisfying this predicate are deleted. Files within the retention period in these partitions are not deleted. </p>",
         "ConnectorDataSource$ConnectionType": "<p>The <code>connectionType</code>, as provided to the underlying Glue library. This node type supports the following connection types: </p> <ul> <li> <p> <code>opensearch</code> </p> </li> <li> <p> <code>azuresql</code> </p> </li> <li> <p> <code>azurecosmos</code> </p> </li> <li> <p> <code>bigquery</code> </p> </li> <li> <p> <code>saphana</code> </p> </li> <li> <p> <code>teradata</code> </p> </li> <li> <p> <code>vertica</code> </p> </li> </ul>",
         "ConnectorDataTarget$ConnectionType": "<p>The <code>connectionType</code>, as provided to the underlying Glue library. This node type supports the following connection types: </p> <ul> <li> <p> <code>opensearch</code> </p> </li> <li> <p> <code>azuresql</code> </p> </li> <li> <p> <code>azurecosmos</code> </p> </li> <li> <p> <code>bigquery</code> </p> </li> <li> <p> <code>saphana</code> </p> </li> <li> <p> <code>teradata</code> </p> </li> <li> <p> <code>vertica</code> </p> </li> </ul>",
         "CustomCode$ClassName": "<p>The name defined for the custom code node class.</p>",
+        "DDBELTCatalogAdditionalOptions$DynamodbExport": "<p>Specifies the DynamoDB export configuration for the ELT operation.</p>",
+        "DDBELTConnectionOptions$DynamodbTableArn": "<p>The Amazon Resource Name (ARN) of the DynamoDB table to extract data from. This parameter specifies the source table for the ELT operation. </p>",
+        "DDBELTConnectionOptions$DynamodbS3Bucket": "<p>The name of the Amazon S3 bucket used for intermediate storage during the DynamoDB ELT process. This bucket is used to temporarily store exported DynamoDB data before it is processed by the ELT job.</p>",
+        "DDBELTConnectionOptions$DynamodbS3Prefix": "<p>The S3 object key prefix for files stored in the intermediate S3 bucket during the DynamoDB ELT process. This prefix helps organize and identify the temporary files created during data extraction.</p>",
+        "DDBELTConnectionOptions$DynamodbS3BucketOwner": "<p>The Amazon Web Services account ID of the owner of the S3 bucket specified in <code>DynamodbS3Bucket</code>. This parameter is required when the S3 bucket is owned by a different Amazon Web Services account than the one running the ELT job, enabling cross-account access to the intermediate storage bucket.</p>",
+        "DDBELTConnectionOptions$DynamodbStsRoleArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Security Token Service (STS) role to assume for accessing DynamoDB and S3 resources during the ELT operation. This role must have the necessary permissions to read from the DynamoDB table and write to the intermediate S3 bucket. </p>",
         "DQDLAliases$value": null,
         "DQResultsPublishingOptions$ResultsS3Prefix": "<p>The Amazon S3 prefix prepended to the results.</p>",
         "DirectJDBCSource$Database": "<p>The database of the JDBC source connection.</p>",
@@ -3658,6 +3724,7 @@
         "KinesisStreamingSourceOptions$RoleSessionName": "<p>An identifier for the session assuming the role using AWS STS. You must use this parameter when accessing a data stream in a different account. Used in conjunction with <code>\"awsSTSRoleARN\"</code>.</p>",
         "KinesisStreamingSourceOptions$AddRecordTimestamp": "<p>When this option is set to 'true', the data output will contain an additional column named \"__src_timestamp\" that indicates the time when the corresponding record received by the stream. The default value is 'false'. This option is supported in Glue version 4.0 or later.</p>",
         "KinesisStreamingSourceOptions$EmitConsumerLagMetrics": "<p>When this option is set to 'true', for each batch, it will emit the metrics for the duration between the oldest record received by the stream and the time it arrives in Glue to CloudWatch. The metric's name is \"glue.driver.streaming.maxConsumerLagInMs\". The default value is 'false'. This option is supported in Glue version 4.0 or later.</p>",
+        "KinesisStreamingSourceOptions$FanoutConsumerARN": "<p>The Amazon Resource Name (ARN) of the Kinesis Data Streams enhanced fan-out consumer. When specified, enables enhanced fan-out for dedicated throughput and lower latency data consumption.</p>",
         "Mapping$ToKey": "<p>After the apply mapping, what the name of the column should be. Can be the same as <code>FromPath</code>.</p>",
         "Mapping$FromType": "<p>The type of the data to be modified.</p>",
         "Mapping$ToType": "<p>The data type that the data is to be modified to.</p>",
@@ -3678,6 +3745,11 @@
         "OracleSQLCatalogTarget$Database": "<p>The name of the database to write to.</p>",
         "OracleSQLCatalogTarget$Table": "<p>The name of the table in the database to write to.</p>",
         "PIIDetection$OutputColumnName": "<p>Indicates the output column name that will contain any entity type detected in that row. </p>",
+        "PIIDetection$RedactText": "<p>Specifies whether to redact the detected PII text. When set to <code>true</code>, PII content is replaced with redaction characters.</p>",
+        "PIIDetection$RedactChar": "<p>The character used to replace detected PII content when redaction is enabled. The default redaction character is <code>*</code>.</p>",
+        "PIIDetection$MatchPattern": "<p>A regular expression pattern used to identify additional PII content beyond the standard detection algorithms.</p>",
+        "PIIDetection$DetectionParameters": "<p>Additional parameters for configuring PII detection behavior and sensitivity settings.</p>",
+        "PIIDetection$DetectionSensitivity": "<p>The sensitivity level for PII detection. Higher sensitivity levels detect more potential PII but may result in more false positives.</p>",
         "PostgreSQLCatalogSource$Database": "<p>The name of the database to read from.</p>",
         "PostgreSQLCatalogSource$Table": "<p>The name of the table in the database to read from.</p>",
         "PostgreSQLCatalogTarget$Database": "<p>The name of the database to write to.</p>",
@@ -3697,6 +3769,8 @@
         "S3CatalogDeltaSource$Table": "<p>The name of the table in the database to read from.</p>",
         "S3CatalogHudiSource$Database": "<p>The name of the database to read from.</p>",
         "S3CatalogHudiSource$Table": "<p>The name of the table in the database to read from.</p>",
+        "S3CatalogIcebergSource$Database": "<p>The name of the database to read from.</p>",
+        "S3CatalogIcebergSource$Table": "<p>The name of the table in the database to read from.</p>",
         "S3CatalogSource$Database": "<p>The database to read from.</p>",
         "S3CatalogSource$Table": "<p>The database table to read from.</p>",
         "S3CatalogSource$PartitionPredicate": "<p>Partitions satisfying this predicate are deleted. Files within the retention period in these partitions are not deleted. Set to <code>\"\"</code> – empty by default.</p>",
@@ -3717,6 +3791,8 @@
         "S3HudiCatalogTarget$Database": "<p>The name of the database to write to.</p>",
         "S3HudiDirectTarget$Path": "<p>The Amazon S3 path of your Hudi data source to write to.</p>",
         "S3HyperDirectTarget$Path": "<p>The S3 location where the output data will be written.</p>",
+        "S3IcebergCatalogTarget$Table": "<p>The name of the table to write to in the catalog.</p>",
+        "S3IcebergCatalogTarget$Database": "<p>The name of the database to write to.</p>",
         "S3IcebergDirectTarget$Path": "<p>Defines the S3 location where the Iceberg table data will be stored.</p>",
         "S3JsonSource$GroupSize": "<p>The target group size in bytes. The default is computed based on the input data size and the size of your cluster. When there are fewer than 50,000 input files, <code>\"groupFiles\"</code> must be set to <code>\"inPartition\"</code> for this to take effect.</p>",
         "S3JsonSource$GroupFiles": "<p>Grouping files is turned on by default when the input contains more than 50,000 files. To turn on grouping with fewer than 50,000 files, set this parameter to \"inPartition\". To disable grouping when there are more than 50,000 files, set this parameter to <code>\"none\"</code>.</p>",
@@ -4077,13 +4153,15 @@
     "FilterExpressions": {
       "base": null,
       "refs": {
-        "Filter$Filters": "<p>Specifies a filter expression.</p>"
+        "Filter$Filters": "<p>Specifies a filter expression.</p>",
+        "GroupFilters$Filters": "<p>A list of filter expressions that define the conditions for this group.</p>"
       }
     },
     "FilterLogicalOperator": {
       "base": null,
       "refs": {
-        "Filter$LogicalOperator": "<p>The operator used to filter rows by comparing the key value to a specified value.</p>"
+        "Filter$LogicalOperator": "<p>The operator used to filter rows by comparing the key value to a specified value.</p>",
+        "GroupFilters$LogicalOperator": "<p>The logical operator used to combine the filters in this group. Determines whether all filters must match (AND) or any filter can match (OR).</p>"
       }
     },
     "FilterOperation": {
@@ -4194,6 +4272,7 @@
         "DQResultsPublishingOptions$EvaluationContext": "<p>The context of the evaluation.</p>",
         "Datatype$Id": "<p>The datatype of the value.</p>",
         "Datatype$Label": "<p>A label assigned to the datatype.</p>",
+        "GroupFilters$GroupName": "<p>The name of the filter group.</p>",
         "LimitedStringList$member": null,
         "SnowflakeNodeData$SourceType": "<p>Specifies how retrieved data is specified. Valid values: <code>\"table\"</code>, <code> \"query\"</code>.</p>",
         "SnowflakeNodeData$MergeAction": "<p>Specifies a merge action. Valid values: <code>simple</code>, <code>custom</code>. If simple, merge behavior is defined by <code>MergeWhenMatched</code> and <code> MergeWhenNotMatched</code>. If custom, defined by <code>MergeClause</code>.</p>",
@@ -5034,17 +5113,27 @@
         "AthenaConnectorSource$OutputSchemas": "<p>Specifies the data schema for the custom Athena source.</p>",
         "CatalogDeltaSource$OutputSchemas": "<p>Specifies the data schema for the Delta Lake source.</p>",
         "CatalogHudiSource$OutputSchemas": "<p>Specifies the data schema for the Hudi source.</p>",
+        "CatalogIcebergSource$OutputSchemas": "<p>Specifies the data schema for the Iceberg source.</p>",
+        "CatalogSource$OutputSchemas": "<p>Specifies the data schema for the catalog source.</p>",
         "ConnectorDataSource$OutputSchemas": "<p>Specifies the data schema for this source.</p>",
         "CustomCode$OutputSchemas": "<p>Specifies the data schema for the custom code transform.</p>",
+        "DirectJDBCSource$OutputSchemas": "<p>Specifies the data schema for the direct JDBC source.</p>",
         "DynamicTransform$OutputSchemas": "<p>Specifies the data schema for the dynamic transform.</p>",
+        "DynamoDBELTConnectorSource$OutputSchemas": "<p>Specifies the data schema for the DynamoDB ELT connector source.</p>",
         "JDBCConnectorSource$OutputSchemas": "<p>Specifies the data schema for the custom JDBC source.</p>",
         "JDBCConnectorTarget$OutputSchemas": "<p>Specifies the data schema for the JDBC target.</p>",
         "S3CatalogDeltaSource$OutputSchemas": "<p>Specifies the data schema for the Delta Lake source.</p>",
         "S3CatalogHudiSource$OutputSchemas": "<p>Specifies the data schema for the Hudi source.</p>",
+        "S3CatalogIcebergSource$OutputSchemas": "<p>Specifies the data schema for the Iceberg source.</p>",
         "S3CsvSource$OutputSchemas": "<p>Specifies the data schema for the S3 CSV source.</p>",
+        "S3DeltaCatalogTarget$OutputSchemas": "<p>Specifies the data schema for the S3 Delta catalog target.</p>",
         "S3DeltaSource$OutputSchemas": "<p>Specifies the data schema for the Delta Lake source.</p>",
-        "S3ExcelSource$OutputSchemas": "<p>The AWS Glue schemas to apply to the processed data.</p>",
+        "S3DirectTarget$OutputSchemas": "<p>Specifies the data schema for the S3 direct target.</p>",
+        "S3ExcelSource$OutputSchemas": "<p>The Glue schemas to apply to the processed data.</p>",
+        "S3HudiCatalogTarget$OutputSchemas": "<p>Specifies the data schema for the S3 Hudi catalog target.</p>",
         "S3HudiSource$OutputSchemas": "<p>Specifies the data schema for the Hudi source.</p>",
+        "S3HyperDirectTarget$OutputSchemas": "<p>Specifies the data schema for the S3 Hyper direct target.</p>",
+        "S3IcebergDirectTarget$OutputSchemas": "<p>Specifies the data schema for the S3 Iceberg direct target.</p>",
         "S3JsonSource$OutputSchemas": "<p>Specifies the data schema for the S3 JSON source.</p>",
         "S3ParquetSource$OutputSchemas": "<p>Specifies the data schema for the S3 Parquet source.</p>",
         "SnowflakeSource$OutputSchemas": "<p>Specifies user-defined schemas for your output data.</p>",
@@ -5076,6 +5165,7 @@
         "S3HudiCatalogTarget$PartitionKeys": "<p>Specifies native partitioning using a sequence of keys.</p>",
         "S3HudiDirectTarget$PartitionKeys": "<p>Specifies native partitioning using a sequence of keys.</p>",
         "S3HyperDirectTarget$PartitionKeys": "<p>Defines the partitioning strategy for the output data.</p>",
+        "S3IcebergCatalogTarget$PartitionKeys": "<p>A list of partition keys for the Iceberg table.</p>",
         "S3IcebergDirectTarget$PartitionKeys": "<p>Specifies the columns used to partition the Iceberg table data in S3.</p>",
         "SelectFields$Paths": "<p>A JSON path to a variable in the data structure.</p>",
         "SplitFields$Paths": "<p>A JSON path to a variable in the data structure.</p>"
@@ -5157,6 +5247,18 @@
         "CreateGrokClassifierRequest$GrokPattern": "<p>The grok pattern used by this classifier.</p>",
         "GrokClassifier$GrokPattern": "<p>The grok pattern applied to a data store by this classifier. For more information, see built-in patterns in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html\">Writing Custom Classifiers</a>.</p>",
         "UpdateGrokClassifierRequest$GrokPattern": "<p>The grok pattern used by this classifier.</p>"
+      }
+    },
+    "GroupFilters": {
+      "base": "<p>Specifies a group of filters with a logical operator that determines how the filters are combined to evaluate routing conditions.</p>",
+      "refs": {
+        "GroupFiltersList$member": null
+      }
+    },
+    "GroupFiltersList": {
+      "base": null,
+      "refs": {
+        "Route$GroupFiltersList": "<p>A list of group filters that define the routing conditions and criteria for directing data to different output paths.</p>"
       }
     },
     "HashString": {
@@ -7218,6 +7320,7 @@
         "BasicCatalogTarget$Name": "<p>The name of your data target.</p>",
         "CatalogDeltaSource$Name": "<p>The name of the Delta Lake data source.</p>",
         "CatalogHudiSource$Name": "<p>The name of the Hudi data source.</p>",
+        "CatalogIcebergSource$Name": "<p>The name of the Iceberg data source.</p>",
         "CatalogKafkaSource$Name": "<p>The name of the data store.</p>",
         "CatalogKinesisSource$Name": "<p>The name of the data source.</p>",
         "CatalogSource$Name": "<p>The name of the data store.</p>",
@@ -7232,6 +7335,7 @@
         "DropFields$Name": "<p>The name of the transform node.</p>",
         "DropNullFields$Name": "<p>The name of the transform node.</p>",
         "DynamoDBCatalogSource$Name": "<p>The name of the data source.</p>",
+        "DynamoDBELTConnectorSource$Name": "<p>The name of the DynamoDB ELT connector source.</p>",
         "EvaluateDataQuality$Name": "<p>The name of the data quality evaluation.</p>",
         "EvaluateDataQualityMultiFrame$Name": "<p>The name of the data quality evaluation.</p>",
         "FillMissingValues$Name": "<p>The name of the transform node.</p>",
@@ -7256,8 +7360,10 @@
         "RedshiftTarget$Name": "<p>The name of the data target.</p>",
         "RelationalCatalogSource$Name": "<p>The name of the data source.</p>",
         "RenameField$Name": "<p>The name of the transform node.</p>",
+        "Route$Name": "<p>The name of the route node.</p>",
         "S3CatalogDeltaSource$Name": "<p>The name of the Delta Lake data source.</p>",
         "S3CatalogHudiSource$Name": "<p>The name of the Hudi data source.</p>",
+        "S3CatalogIcebergSource$Name": "<p>The name of the Iceberg data source.</p>",
         "S3CatalogSource$Name": "<p>The name of the data store.</p>",
         "S3CatalogTarget$Name": "<p>The name of the data target.</p>",
         "S3CsvSource$Name": "<p>The name of the data store.</p>",
@@ -7271,6 +7377,7 @@
         "S3HudiDirectTarget$Name": "<p>The name of the data target.</p>",
         "S3HudiSource$Name": "<p>The name of the Hudi source.</p>",
         "S3HyperDirectTarget$Name": "<p>The unique identifier for the HyperDirect target node.</p>",
+        "S3IcebergCatalogTarget$Name": "<p>The name of the Iceberg catalog target.</p>",
         "S3IcebergDirectTarget$Name": "<p>Specifies the unique identifier for the Iceberg target node in your data pipeline.</p>",
         "S3JsonSource$Name": "<p>The name of the data store.</p>",
         "S3ParquetSource$Name": "<p>The name of the data store.</p>",
@@ -7509,7 +7616,7 @@
       "refs": {
         "S3DeltaDirectTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions for distributing Delta Lake dataset files across Amazon S3.</p>",
         "S3DirectTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions when writing data directly to Amazon S3.</p>",
-        "S3GlueParquetTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions for Parquet files when writing to Amazon S3 using AWS Glue.</p>",
+        "S3GlueParquetTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions for Parquet files when writing to Amazon S3 using Glue.</p>",
         "S3HudiDirectTarget$NumberTargetPartitions": "<p>Specifies the number of target partitions for distributing Hudi dataset files across Amazon S3.</p>",
         "S3IcebergDirectTarget$NumberTargetPartitions": "<p>Sets the number of target partitions for distributing Iceberg table files across S3.</p>"
       }
@@ -7571,6 +7678,7 @@
         "Recipe$Inputs": "<p>The nodes that are inputs to the recipe node, identified by id.</p>",
         "RedshiftTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "RenameField$Inputs": "<p>The data inputs identified by their node names.</p>",
+        "Route$Inputs": "<p>The input connection for the route node.</p>",
         "S3CatalogTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "S3DeltaCatalogTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "S3DeltaDirectTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
@@ -7579,6 +7687,7 @@
         "S3HudiCatalogTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "S3HudiDirectTarget$Inputs": "<p>The nodes that are inputs to the data target.</p>",
         "S3HyperDirectTarget$Inputs": "<p>Specifies the input source for the HyperDirect target.</p>",
+        "S3IcebergCatalogTarget$Inputs": "<p>The input connection for the Iceberg catalog target.</p>",
         "S3IcebergDirectTarget$Inputs": "<p>Defines the single input source that provides data to this Iceberg target.</p>",
         "SelectFields$Inputs": "<p>The data inputs identified by their node names.</p>",
         "SelectFromCollection$Inputs": "<p>The data inputs identified by their node names.</p>",
@@ -8658,6 +8767,12 @@
         "UpdateMLTransformRequest$Role": "<p>The name or Amazon Resource Name (ARN) of the IAM role with the required permissions.</p>"
       }
     },
+    "Route": {
+      "base": "<p>Specifies a route node that directs data to different output paths based on defined filtering conditions.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$Route": "<p>Specifies a route node that directs data to different output paths based on defined filtering conditions.</p>"
+      }
+    },
     "RowTag": {
       "base": null,
       "refs": {
@@ -8724,6 +8839,12 @@
       "base": "<p>Specifies a Hudi data source that is registered in the Glue Data Catalog. The Hudi data source must be stored in Amazon S3.</p>",
       "refs": {
         "CodeGenConfigurationNode$S3CatalogHudiSource": "<p>Specifies a Hudi data source that is registered in the Glue Data Catalog. The data source must be stored in Amazon S3.</p>"
+      }
+    },
+    "S3CatalogIcebergSource": {
+      "base": "<p>Specifies an Apache Iceberg data source that is registered in the Glue Data Catalog. The Iceberg data source must be stored in Amazon S3.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$S3CatalogIcebergSource": "<p>Specifies an Apache Iceberg data source that is registered in the Glue Data Catalog. The Iceberg data source must be stored in Amazon S3.</p>"
       }
     },
     "S3CatalogSource": {
@@ -8831,6 +8952,12 @@
       "base": "<p>Specifies a HyperDirect data target that writes to Amazon S3.</p>",
       "refs": {
         "CodeGenConfigurationNode$S3HyperDirectTarget": "<p>Defines configuration parameters for writing data to Amazon S3 using HyperDirect optimization.</p>"
+      }
+    },
+    "S3IcebergCatalogTarget": {
+      "base": "<p>Specifies an Apache Iceberg catalog target that writes data to Amazon S3 and registers the table in the Glue Data Catalog.</p>",
+      "refs": {
+        "CodeGenConfigurationNode$S3IcebergCatalogTarget": "<p>Specifies an Apache Iceberg catalog target that writes data to Amazon S3 and registers the table in the Glue Data Catalog.</p>"
       }
     },
     "S3IcebergDirectTarget": {
@@ -10050,6 +10177,7 @@
         "S3DeltaDirectTarget$Format": "<p>Specifies the data output format for the target.</p>",
         "S3DirectTarget$Format": "<p>Specifies the data output format for the target.</p>",
         "S3HudiDirectTarget$Format": "<p>Specifies the data output format for the target.</p>",
+        "S3HyperDirectTarget$Format": "<p>Specifies the data output format for the HyperDirect target.</p>",
         "S3IcebergDirectTarget$Format": "<p>Specifies the file format used for storing Iceberg table data (e.g., Parquet, ORC).</p>"
       }
     },
@@ -11170,12 +11298,12 @@
       "refs": {
         "CreateDevEndpointRequest$WorkerType": "<p>The type of predefined worker that is allocated to the development endpoint. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> </ul> <p>Known issue: when a development endpoint is created with the <code>G.2X</code> <code>WorkerType</code> configuration, the Spark drivers for the development endpoint will run on 4 vCPU, 16 GB of memory, and a 64 GB disk. </p>",
         "CreateDevEndpointResponse$WorkerType": "<p>The type of predefined worker that is allocated to the development endpoint. May be a value of Standard, G.1X, or G.2X.</p>",
-        "CreateJobRequest$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value Z.2X for Ray jobs.</p> <ul> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB of memory) with 94GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB of memory) with 138GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.4X</code> worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB of memory) with 256GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs in the following Amazon Web Services Regions: US East (Ohio), US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt), Europe (Ireland), and Europe (Stockholm).</p> </li> <li> <p>For the <code>G.8X</code> worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB of memory) with 512GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs, in the same Amazon Web Services Regions as supported for the <code>G.4X</code> worker type.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPUs, 4 GB of memory) with 84GB disk, and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 or later streaming jobs.</p> </li> <li> <p>For the <code>Z.2X</code> worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB of memory) with 128 GB disk, and provides up to 8 Ray workers based on the autoscaler.</p> </li> </ul>",
+        "CreateJobRequest$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value Z.2X for Ray jobs.</p> <ul> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB of memory) with 94GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB of memory) with 138GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.4X</code> worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB of memory) with 256GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs in the following Amazon Web Services Regions: US East (Ohio), US East (N. Virginia), US West (N. California), US West (Oregon), Asia Pacific (Mumbai), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt), Europe (Ireland), Europe (London), Europe (Spain), Europe (Stockholm), and South America (São Paulo).</p> </li> <li> <p>For the <code>G.8X</code> worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB of memory) with 512GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs, in the same Amazon Web Services Regions as supported for the <code>G.4X</code> worker type.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPUs, 4 GB of memory) with 84GB disk, and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 or later streaming jobs.</p> </li> <li> <p>For the <code>Z.2X</code> worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB of memory) with 128 GB disk, and provides up to 8 Ray workers based on the autoscaler.</p> </li> </ul>",
         "CreateMLTransformRequest$WorkerType": "<p>The type of predefined worker that is allocated when this task runs. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p> </li> </ul> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul>",
         "CreateSessionRequest$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of G.1X, G.2X, G.4X, or G.8X for Spark jobs. Accepts the value Z.2X for Ray notebooks.</p> <ul> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB of memory) with 94GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB of memory) with 138GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.4X</code> worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB of memory) with 256GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs in the following Amazon Web Services Regions: US East (Ohio), US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt), Europe (Ireland), and Europe (Stockholm).</p> </li> <li> <p>For the <code>G.8X</code> worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB of memory) with 512GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs, in the same Amazon Web Services Regions as supported for the <code>G.4X</code> worker type.</p> </li> <li> <p>For the <code>Z.2X</code> worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB of memory) with 128 GB disk, and provides up to 8 Ray workers based on the autoscaler.</p> </li> </ul>",
         "DevEndpoint$WorkerType": "<p>The type of predefined worker that is allocated to the development endpoint. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of memory, 128 GB disk), and provides 1 executor per worker. We recommend this worker type for memory-intensive jobs.</p> </li> </ul> <p>Known issue: when a development endpoint is created with the <code>G.2X</code> <code>WorkerType</code> configuration, the Spark drivers for the development endpoint will run on 4 vCPU, 16 GB of memory, and a 64 GB disk. </p>",
         "GetMLTransformResponse$WorkerType": "<p>The type of predefined worker that is allocated when this task runs. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p> </li> </ul>",
-        "Job$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value Z.2X for Ray jobs.</p> <ul> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB of memory) with 94GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB of memory) with 138GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.4X</code> worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB of memory) with 256GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs in the following Amazon Web Services Regions: US East (Ohio), US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt), Europe (Ireland), and Europe (Stockholm).</p> </li> <li> <p>For the <code>G.8X</code> worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB of memory) with 512GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs, in the same Amazon Web Services Regions as supported for the <code>G.4X</code> worker type.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPUs, 4 GB of memory) with 84GB disk, and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 or later streaming jobs.</p> </li> <li> <p>For the <code>Z.2X</code> worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB of memory) with 128 GB disk, and provides up to 8 Ray workers based on the autoscaler.</p> </li> </ul>",
+        "Job$WorkerType": "<p>The type of predefined worker that is allocated when a job runs.</p> <p>Glue provides multiple worker types to accommodate different workload requirements:</p> <p>G Worker Types (General-purpose compute workers):</p> <ul> <li> <p>G.1X: 1 DPU (4 vCPUs, 16 GB memory, 94GB disk)</p> </li> <li> <p>G.2X: 2 DPU (8 vCPUs, 32 GB memory, 138GB disk)</p> </li> <li> <p>G.4X: 4 DPU (16 vCPUs, 64 GB memory, 256GB disk)</p> </li> <li> <p>G.8X: 8 DPU (32 vCPUs, 128 GB memory, 512GB disk)</p> </li> <li> <p>G.12X: 12 DPU (48 vCPUs, 192 GB memory, 768GB disk)</p> </li> <li> <p>G.16X: 16 DPU (64 vCPUs, 256 GB memory, 1024GB disk)</p> </li> </ul> <p>R Worker Types (Memory-optimized workers):</p> <ul> <li> <p>R.1X: 1 M-DPU (4 vCPUs, 32 GB memory)</p> </li> <li> <p>R.2X: 2 M-DPU (8 vCPUs, 64 GB memory)</p> </li> <li> <p>R.4X: 4 M-DPU (16 vCPUs, 128 GB memory)</p> </li> <li> <p>R.8X: 8 M-DPU (32 vCPUs, 256 GB memory)</p> </li> </ul>",
         "JobRun$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value Z.2X for Ray jobs.</p> <ul> <li> <p>For the <code>G.1X</code> worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB of memory) with 94GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB of memory) with 138GB disk, and provides 1 executor per worker. We recommend this worker type for workloads such as data transforms, joins, and queries, to offers a scalable and cost effective way to run most jobs.</p> </li> <li> <p>For the <code>G.4X</code> worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB of memory) with 256GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs in the following Amazon Web Services Regions: US East (Ohio), US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt), Europe (Ireland), and Europe (Stockholm).</p> </li> <li> <p>For the <code>G.8X</code> worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB of memory) with 512GB disk, and provides 1 executor per worker. We recommend this worker type for jobs whose workloads contain your most demanding transforms, aggregations, joins, and queries. This worker type is available only for Glue version 3.0 or later Spark ETL jobs, in the same Amazon Web Services Regions as supported for the <code>G.4X</code> worker type.</p> </li> <li> <p>For the <code>G.025X</code> worker type, each worker maps to 0.25 DPU (2 vCPUs, 4 GB of memory) with 84GB disk, and provides 1 executor per worker. We recommend this worker type for low volume streaming jobs. This worker type is only available for Glue version 3.0 or later streaming jobs.</p> </li> <li> <p>For the <code>Z.2X</code> worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB of memory) with 128 GB disk, and provides up to 8 Ray workers based on the autoscaler.</p> </li> </ul>",
         "JobUpdate$WorkerType": "<p>The type of predefined worker that is allocated when a job runs. Accepts a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value Z.2X for Ray jobs. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-job.html#create-job\">Defining job properties for Spark jobs </a> </p>",
         "MLTransform$WorkerType": "<p>The type of predefined worker that is allocated when a task of this transform runs. Accepts a value of Standard, G.1X, or G.2X.</p> <ul> <li> <p>For the <code>Standard</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 50GB disk, and 2 executors per worker.</p> </li> <li> <p>For the <code>G.1X</code> worker type, each worker provides 4 vCPU, 16 GB of memory and a 64GB disk, and 1 executor per worker.</p> </li> <li> <p>For the <code>G.2X</code> worker type, each worker provides 8 vCPU, 32 GB of memory and a 128GB disk, and 1 executor per worker.</p> </li> </ul> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul>",

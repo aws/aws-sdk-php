@@ -1849,6 +1849,27 @@
         "MatchingAttributesList":{"shape":"MatchingAttributesList"}
       }
     },
+    "ContactPreference":{
+      "type":"structure",
+      "members":{
+        "KeyName":{"shape":"name"},
+        "KeyValue":{"shape":"string1To255"},
+        "ProfileId":{"shape":"uuid"},
+        "ContactType":{"shape":"ContactType"}
+      }
+    },
+    "ContactType":{
+      "type":"string",
+      "enum":[
+        "PhoneNumber",
+        "MobilePhoneNumber",
+        "HomePhoneNumber",
+        "BusinessPhoneNumber",
+        "EmailAddress",
+        "PersonalEmailAddress",
+        "BusinessEmailAddress"
+      ]
+    },
     "CreateCalculatedAttributeDefinitionRequest":{
       "type":"structure",
       "required":[
@@ -2124,7 +2145,9 @@
         "BillingAddress":{"shape":"Address"},
         "Attributes":{"shape":"Attributes"},
         "PartyTypeString":{"shape":"sensitiveString1To255"},
-        "GenderString":{"shape":"sensitiveString1To255"}
+        "GenderString":{"shape":"sensitiveString1To255"},
+        "ProfileType":{"shape":"ProfileType"},
+        "EngagementPreferences":{"shape":"EngagementPreferences"}
       }
     },
     "CreateProfileResponse":{
@@ -2714,7 +2737,19 @@
       "max":3,
       "min":1
     },
+    "EmailPreferenceList":{
+      "type":"list",
+      "member":{"shape":"ContactPreference"}
+    },
     "End":{"type":"integer"},
+    "EngagementPreferences":{
+      "type":"structure",
+      "members":{
+        "Phone":{"shape":"PhonePreferenceList"},
+        "Email":{"shape":"EmailPreferenceList"}
+      },
+      "sensitive":true
+    },
     "EstimateStatus":{
       "type":"string",
       "enum":[
@@ -2928,7 +2963,9 @@
         "ShippingAddress":{"shape":"uuid"},
         "MailingAddress":{"shape":"uuid"},
         "BillingAddress":{"shape":"uuid"},
-        "Attributes":{"shape":"AttributeSourceIdMap"}
+        "Attributes":{"shape":"AttributeSourceIdMap"},
+        "ProfileType":{"shape":"uuid"},
+        "EngagementPreferences":{"shape":"uuid"}
       }
     },
     "Filter":{
@@ -4950,6 +4987,10 @@
       "max":4,
       "min":1
     },
+    "PhonePreferenceList":{
+      "type":"list",
+      "member":{"shape":"ContactPreference"}
+    },
     "Profile":{
       "type":"structure",
       "members":{
@@ -4977,7 +5018,9 @@
         "Attributes":{"shape":"Attributes"},
         "FoundByItems":{"shape":"foundByList"},
         "PartyTypeString":{"shape":"sensitiveString1To255"},
-        "GenderString":{"shape":"sensitiveString1To255"}
+        "GenderString":{"shape":"sensitiveString1To255"},
+        "ProfileType":{"shape":"ProfileType"},
+        "EngagementPreferences":{"shape":"EngagementPreferences"}
       }
     },
     "ProfileAttributeValuesRequest":{
@@ -5097,6 +5140,10 @@
         "Attributes":{
           "shape":"CustomAttributes",
           "locationName":"Attributes"
+        },
+        "ProfileType":{
+          "shape":"ProfileTypeDimension",
+          "locationName":"ProfileType"
         }
       },
       "sensitive":true
@@ -5193,6 +5240,44 @@
           "locationName":"Profile"
         }
       }
+    },
+    "ProfileType":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT_PROFILE",
+        "PROFILE"
+      ],
+      "sensitive":true
+    },
+    "ProfileTypeDimension":{
+      "type":"structure",
+      "required":[
+        "DimensionType",
+        "Values"
+      ],
+      "members":{
+        "DimensionType":{
+          "shape":"ProfileTypeDimensionType",
+          "locationName":"DimensionType"
+        },
+        "Values":{
+          "shape":"ProfileTypeValues",
+          "locationName":"Values"
+        }
+      }
+    },
+    "ProfileTypeDimensionType":{
+      "type":"string",
+      "enum":[
+        "INCLUSIVE",
+        "EXCLUSIVE"
+      ]
+    },
+    "ProfileTypeValues":{
+      "type":"list",
+      "member":{"shape":"ProfileType"},
+      "max":1,
+      "min":1
     },
     "Profiles":{
       "type":"list",
@@ -6227,7 +6312,9 @@
         "BillingAddress":{"shape":"UpdateAddress"},
         "Attributes":{"shape":"UpdateAttributes"},
         "PartyTypeString":{"shape":"sensitiveString0To255"},
-        "GenderString":{"shape":"sensitiveString0To255"}
+        "GenderString":{"shape":"sensitiveString0To255"},
+        "ProfileType":{"shape":"ProfileType"},
+        "EngagementPreferences":{"shape":"EngagementPreferences"}
       }
     },
     "UpdateProfileResponse":{

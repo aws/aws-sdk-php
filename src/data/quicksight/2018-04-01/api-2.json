@@ -8558,7 +8558,8 @@
         "DatabricksParameters":{"shape":"DatabricksParameters"},
         "StarburstParameters":{"shape":"StarburstParameters"},
         "TrinoParameters":{"shape":"TrinoParameters"},
-        "BigQueryParameters":{"shape":"BigQueryParameters"}
+        "BigQueryParameters":{"shape":"BigQueryParameters"},
+        "ImpalaParameters":{"shape":"ImpalaParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -14337,6 +14338,20 @@
       "members":{
         "StaticFileId":{"shape":"ShortRestrictiveResourceId"},
         "Source":{"shape":"StaticFileSource"}
+      }
+    },
+    "ImpalaParameters":{
+      "type":"structure",
+      "required":[
+        "Host",
+        "Port",
+        "SqlEndpointPath"
+      ],
+      "members":{
+        "Host":{"shape":"Host"},
+        "Port":{"shape":"Port"},
+        "Database":{"shape":"Database"},
+        "SqlEndpointPath":{"shape":"SqlEndpointPath"}
       }
     },
     "IncludeFolderMembers":{
