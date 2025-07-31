@@ -49,4 +49,40 @@ class StructureShapeTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         (new StructureShape([], new ShapeMap([])))->getMember('foo');
     }
+
+    public function testReturnsOriginalDefinitionWithoutMergedProperties(): void
+    {
+        $shapeMap = new ShapeMap([
+            'ParentStructure' => [
+                'type' => 'structure',
+                'members' => [
+                    'nested' => [
+                        'shape' => 'PayloadStructure',
+                        'locationName' => 'nestedElement'  // Member adds its own locationName
+                    ]
+                ]
+            ],
+            'PayloadStructure' => [
+                'type' => 'structure',
+                'locationName' => 'Hello',  // Shape's own locationName
+                'members' => [
+                    'data' => ['shape' => 'StringType']
+                ]
+            ],
+            'StringType' => [
+                'type' => 'string'
+            ]
+        ]);
+
+        $parent = $shapeMap->resolve(['shape' => 'ParentStructure']);
+        // Get the nested member - this should have merged properties
+        $nestedMember = $parent->getMember('nested');
+        // The nested member has locationName from the member reference, not the shape
+        $this->assertSame('nestedElement', $nestedMember['locationName']);
+        // getOriginalDefinition returns the unmerged PayloadStructure definition
+        $originalDef = $nestedMember->getOriginalDefinition('PayloadStructure');
+        $this->assertSame('Hello', $originalDef['locationName']);
+
+        $this->assertNotSame($nestedMember['locationName'], $originalDef['locationName']);
+    }
 }
