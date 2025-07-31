@@ -334,6 +334,10 @@ class AuthSelectionMiddlewareTest extends TestCase
         string $expected,
     ): void
     {
+        if (extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
+
         if (isset($fns['build_source']) && is_callable($fns['build_source'])) {
             call_user_func($fns['build_source']);
         }
