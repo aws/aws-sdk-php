@@ -76,10 +76,15 @@ class XmlParser
 
     private function memberKey(Shape $shape, $name)
     {
-        // Only use locationName for non-structure shapes
-        // For structures referenced as members, always use the member name
-        if ($shape instanceof StructureShape) {
-            return $name;
+        // Check if locationName came from shape definition
+        if ($shape instanceof StructureShape && isset($shape['locationName'])) {
+            $originalDef = $shape->getOriginalDefinition($shape->getName());
+
+            if ($originalDef && isset($originalDef['locationName'])
+                && $originalDef['locationName'] === $shape['locationName']
+            ) {
+                return $name;
+            }
         }
 
         return $shape['locationName'] ?? $name;

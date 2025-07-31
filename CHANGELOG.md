@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.351.11 - 2025-07-31
+
+* `Aws\Api` - Fixes bug in resolving `locationName` properties for query services
+
 ## 3.351.10 - 2025-07-30
 
 * `Aws\Api` - Updates for deserialization in all protocols

@@ -82,6 +82,18 @@ class StructureShape extends Shape
         return $this->shapeMap;
     }
 
+    /**
+     * Used to look up a shape's original definition.
+     *
+     * @param string $name
+     *
+     * @return array|null
+     */
+    public function getOriginalDefinition(string $name): ?array
+    {
+        return $this->shapeMap[$name] ?? null;
+    }
+
     private function generateMembersHash()
     {
         $this->members = [];
