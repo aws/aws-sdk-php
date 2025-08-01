@@ -28,6 +28,9 @@ class AuthSelectionMiddleware
     /** @var Service */
     private $api;
 
+    /** @var array|null */
+    private ?array $userPreferredAuthSchemes;
+
     /**
      * Create a middleware wrapper function
      *
@@ -37,29 +40,36 @@ class AuthSelectionMiddleware
      */
     public static function wrap(
         AuthSchemeResolverInterface $authResolver,
-        Service $api
+        Service $api,
+        ?array $userPreferredAuthSchemes
     ): Closure
     {
-        return function (callable $handler) use ($authResolver, $api) {
-            return new self($handler, $authResolver, $api);
+        return function (callable $handler) use (
+            $authResolver,
+            $api,
+            $userPreferredAuthSchemes
+        ) {
+            return new self($handler, $authResolver, $api, $userPreferredAuthSchemes);
         };
     }
 
     /**
      * @param callable $nextHandler
-     * @param $authResolver
-     * @param callable $identityProvider
+     * @param AuthSchemeResolverInterface $authResolver
      * @param Service $api
+     * @param array|null $userPreferredAuthSchemes
      */
     public function __construct(
         callable $nextHandler,
         AuthSchemeResolverInterface $authResolver,
-        Service $api
+        Service $api,
+        ?array $userPreferredAuthSchemes=null
     )
     {
         $this->nextHandler = $nextHandler;
         $this->authResolver = $authResolver;
         $this->api = $api;
+        $this->userPreferredAuthSchemes = $userPreferredAuthSchemes;
     }
 
     /**
@@ -86,21 +96,61 @@ class AuthSelectionMiddleware
             }
 
             try {
-                $selectedAuthScheme = $resolver->selectAuthScheme(
+                $authSchemeList = $this->buildAuthSchemeList(
                     $resolvableAuth,
+                    $command['@context']['auth_scheme_preference']
+                        ?? null,
+                );
+                $selectedAuthScheme = $resolver->selectAuthScheme(
+                    $authSchemeList,
                     ['unsigned_payload' => $unsignedPayload]
                 );
-            } catch (UnresolvedAuthSchemeException $e) {
+
+                if (!empty($selectedAuthScheme)) {
+                    $command['@context']['signature_version'] = $selectedAuthScheme;
+                }
+            } catch (UnresolvedAuthSchemeException $ignored) {
                 // There was an error resolving auth
                 // The signature version will fall back to the modeled `signatureVersion`
                 // or auth schemes resolved during endpoint resolution
             }
-
-            if (!empty($selectedAuthScheme)) {
-                $command['@context']['signature_version'] = $selectedAuthScheme;
-            }
         }
 
         return $nextHandler($command);
+    }
+
+    /**
+     * Prioritizes auth schemes according to user preference order.
+     * User-preferred schemes that are available will be placed first,
+     * followed by remaining available schemes.
+     *
+     * @param array $resolvableAuthSchemeList Available auth schemes
+     * @param array|null $commandAuthSchemePreference Command-level preferences (overrides config)
+     *
+     * @return array Reordered auth schemes with user preferences first
+     */
+    private function buildAuthSchemeList(
+        array $resolvableAuthSchemeList,
+        ?array $commandAuthSchemePreference,
+    ): array {
+        $userPreferences = $commandAuthSchemePreference
+            ?? $this->userPreferredAuthSchemes;
+
+        if (empty($userPreferences)) {
+            return $resolvableAuthSchemeList;
+        }
+
+        $availableSchemes = array_flip($resolvableAuthSchemeList);
+
+        // Get preferred schemes that are actually available
+        $prioritizedSchemes = array_filter(
+            $userPreferences,
+            fn($scheme) => isset($availableSchemes[$scheme])
+        );
+
+        // Get remaining schemes not in user preferences
+        $remainingSchemes = array_diff($resolvableAuthSchemeList, $prioritizedSchemes);
+
+        return array_merge($prioritizedSchemes, $remainingSchemes);
     }
 }
