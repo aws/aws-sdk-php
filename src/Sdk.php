@@ -8,6 +8,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionACMPCA(array $args = [])
  * @method \Aws\AIOps\AIOpsClient createAIOps(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAIOps(array $args = [])
+ * @method \Aws\ARCRegionSwitch\ARCRegionSwitchClient createARCRegionSwitch(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionARCRegionSwitch(array $args = [])
  * @method \Aws\ARCZonalShift\ARCZonalShiftClient createARCZonalShift(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionARCZonalShift(array $args = [])
  * @method \Aws\AccessAnalyzer\AccessAnalyzerClient createAccessAnalyzer(array $args = [])

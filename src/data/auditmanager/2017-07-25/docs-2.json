@@ -668,7 +668,7 @@
     "ControlSets": {
       "base": null,
       "refs": {
-        "Framework$controlSets": "<p> The control sets that are associated with the framework. </p>"
+        "Framework$controlSets": "<p> The control sets that are associated with the framework. </p> <note> <p>The <code>Controls</code> object returns a partial response when called through Framework APIs. For a complete <code>Controls</code> object, use <code>GetControl</code>.</p> </note>"
       }
     },
     "ControlSetsCount": {
@@ -682,7 +682,7 @@
       "refs": {
         "Control$controlSources": "<p> The data source types that determine where Audit Manager collects evidence from for the control. </p>",
         "ControlMetadata$controlSources": "<p> The data source that determines where Audit Manager collects evidence from for the control. </p>",
-        "Framework$controlSources": "<p> The control data sources where Audit Manager collects evidence from.</p>"
+        "Framework$controlSources": "<p> The control data sources where Audit Manager collects evidence from.</p> <important> <p>This API parameter is no longer supported.</p> </important>"
       }
     },
     "ControlState": {
@@ -732,7 +732,7 @@
     "CreateAssessmentFrameworkControlSets": {
       "base": null,
       "refs": {
-        "CreateAssessmentFrameworkRequest$controlSets": "<p> The control sets that are associated with the framework. </p>"
+        "CreateAssessmentFrameworkRequest$controlSets": "<p> The control sets that are associated with the framework. </p> <note> <p>The <code>Controls</code> object returns a partial response when called through Framework APIs. For a complete <code>Controls</code> object, use <code>GetControl</code>.</p> </note>"
       }
     },
     "CreateAssessmentFrameworkControls": {
@@ -1065,9 +1065,9 @@
     "Framework": {
       "base": "<p> The file that's used to structure and automate Audit Manager assessments for a given compliance standard. </p>",
       "refs": {
-        "CreateAssessmentFrameworkResponse$framework": "<p> The name of the new framework that the <code>CreateAssessmentFramework</code> API returned. </p>",
-        "GetAssessmentFrameworkResponse$framework": "<p> The framework that the <code>GetAssessmentFramework</code> API returned. </p>",
-        "UpdateAssessmentFrameworkResponse$framework": "<p> The name of the framework. </p>"
+        "CreateAssessmentFrameworkResponse$framework": "<p> The new framework object that the <code>CreateAssessmentFramework</code> API returned. </p>",
+        "GetAssessmentFrameworkResponse$framework": "<p> The framework that the <code>GetAssessmentFramework</code> API returned. </p> <note> <p>The <code>Controls</code> object returns a partial response when called through Framework APIs. For a complete <code>Controls</code> object, use <code>GetControl</code>.</p> </note>",
+        "UpdateAssessmentFrameworkResponse$framework": "<p> The framework object. </p>"
       }
     },
     "FrameworkDescription": {
@@ -2053,7 +2053,7 @@
     "UpdateAssessmentFrameworkControlSets": {
       "base": null,
       "refs": {
-        "UpdateAssessmentFrameworkRequest$controlSets": "<p> The control sets that are associated with the framework. </p>"
+        "UpdateAssessmentFrameworkRequest$controlSets": "<p> The control sets that are associated with the framework. </p> <note> <p>The <code>Controls</code> object returns a partial response when called through Framework APIs. For a complete <code>Controls</code> object, use <code>GetControl</code>.</p> </note>"
       }
     },
     "UpdateAssessmentFrameworkRequest": {

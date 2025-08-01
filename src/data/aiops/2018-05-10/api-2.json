@@ -312,8 +312,7 @@
     },
     "DeleteInvestigationGroupPolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteInvestigationGroupPolicyRequest":{
       "type":"structure",
@@ -395,9 +394,9 @@
       "type":"structure",
       "members":{
         "createdBy":{"shape":"IdentifierStringWithPatternAndLengthLimits"},
-        "createdAt":{"shape":"Timestamp"},
+        "createdAt":{"shape":"Long"},
         "lastModifiedBy":{"shape":"IdentifierStringWithPatternAndLengthLimits"},
-        "lastModifiedAt":{"shape":"Timestamp"},
+        "lastModifiedAt":{"shape":"Long"},
         "name":{"shape":"StringWithPatternAndLengthLimits"},
         "arn":{"shape":"InvestigationGroupArn"},
         "roleArn":{"shape":"RoleArn"},
@@ -499,6 +498,10 @@
           "locationName":"resourceArn"
         }
       }
+    },
+    "Long":{
+      "type":"long",
+      "box":true
     },
     "PutInvestigationGroupPolicyRequest":{
       "type":"structure",
@@ -611,8 +614,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -636,7 +638,6 @@
       },
       "exception":true
     },
-    "Timestamp":{"type":"timestamp"},
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -658,13 +659,11 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateInvestigationGroupOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateInvestigationGroupRequest":{
       "type":"structure",

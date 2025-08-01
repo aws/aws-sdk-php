@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - Doc-only update to add more information to GetCertificate action.
+* `Aws\ARCRegionSwitch` - This is the initial SDK release for Region switch
+* `Aws\AuditManager` - Added a note to Framework APIs (CreateAssessmentFramework, GetAssessmentFramework, UpdateAssessmentFramework) clarifying that the Controls object returns a partial response when called through Framework APIs. Added documentation that the Framework's controlSources parameter is no longer supported.
+* `Aws\Lightsail` - This release adds support for the Asia Pacific (Jakarta) (ap-southeast-3) Region.
+* `Aws\SecurityHub` - Release new resource detail type CodeRepository
+* `Aws\ObservabilityAdmin` - CloudWatch Observability Admin adds the ability to enable telemetry on AWS resources such as Amazon VPCs (Flow Logs) in customers AWS Accounts and Organizations. The release introduces new APIs to manage telemetry rules, which define telemetry settings to be applied on AWS resources.
+* `Aws\SNS` - Amazon SNS support for Amazon SQS fair queues
+* `Aws\PCS` - Add support for IPv6 Networking for Clusters.
+* `Aws\AIOps` - This release includes fix for InvestigationGroup timestamp conversion issue.
+
 ## 3.351.12 - 2025-07-31
 
 * `Aws\Sts` - Updates STS default endpoint configuration to `regional`

@@ -710,8 +710,7 @@
     },
     "DeleteClusterResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteComputeNodeGroupRequest":{
       "type":"structure",
@@ -730,8 +729,7 @@
     },
     "DeleteComputeNodeGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteQueueRequest":{
       "type":"structure",
@@ -750,8 +748,7 @@
     },
     "DeleteQueueResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Endpoint":{
       "type":"structure",
@@ -764,6 +761,7 @@
         "type":{"shape":"EndpointType"},
         "privateIpAddress":{"shape":"String"},
         "publicIpAddress":{"shape":"String"},
+        "ipv6Address":{"shape":"String"},
         "port":{"shape":"String"}
       }
     },
@@ -932,18 +930,27 @@
       "max":100,
       "min":1
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6"
+      ]
+    },
     "Networking":{
       "type":"structure",
       "members":{
         "subnetIds":{"shape":"SubnetIdList"},
-        "securityGroupIds":{"shape":"SecurityGroupIdList"}
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
+        "networkType":{"shape":"NetworkType"}
       }
     },
     "NetworkingRequest":{
       "type":"structure",
       "members":{
         "subnetIds":{"shape":"SubnetIdList"},
-        "securityGroupIds":{"shape":"SecurityGroupIdList"}
+        "securityGroupIds":{"shape":"SecurityGroupIdList"},
+        "networkType":{"shape":"NetworkType"}
       }
     },
     "PurchaseOption":{

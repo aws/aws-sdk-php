@@ -1,0 +1,1216 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon Application Recovery Controller (ARC) Region switch helps you to quickly and reliably shift traffic away from an impaired Amazon Web Services Region to a healthy Region. With Region switch, you can create plans that define the steps to shift traffic for your application from one Amazon Web Services Region to another. You can test your plans in practice mode before using them in a real recovery scenario.</p> <p>Region switch provides a structured approach to multi-Region failover, helping you to meet your recovery time objectives (RTOs) and maintain business continuity during regional disruptions.</p>",
+  "operations": {
+    "ApprovePlanExecutionStep": "<p>Approves a step in a plan execution that requires manual approval. When you create a plan, you can include approval steps that require manual intervention before the execution can proceed. This operation allows you to provide that approval.</p> <p>You must specify the plan ARN, execution ID, step name, and approval status. You can also provide an optional comment explaining the approval decision.</p>",
+    "CancelPlanExecution": "<p>Cancels an in-progress plan execution. This operation stops the execution of the plan and prevents any further steps from being processed.</p> <p>You must specify the plan ARN and execution ID. You can also provide an optional comment explaining why the execution was canceled.</p>",
+    "CreatePlan": "<p>Creates a new Region switch plan. A plan defines the steps required to shift traffic from one Amazon Web Services Region to another.</p> <p>You must specify a name for the plan, the primary Region, and at least one additional Region. You can also provide a description, execution role, recovery time objective, associated alarms, triggers, and workflows that define the steps to execute during a Region switch.</p>",
+    "DeletePlan": "<p>Deletes a Region switch plan. You must specify the ARN of the plan to delete.</p> <p>You cannot delete a plan that has an active execution in progress.</p>",
+    "GetPlan": "<p>Retrieves detailed information about a Region switch plan. You must specify the ARN of the plan.</p>",
+    "GetPlanEvaluationStatus": "<p>Retrieves the evaluation status of a Region switch plan. The evaluation status provides information about the last time the plan was evaluated and any warnings or issues detected.</p>",
+    "GetPlanExecution": "<p>Retrieves detailed information about a specific plan execution. You must specify the plan ARN and execution ID.</p>",
+    "GetPlanInRegion": "<p>Retrieves information about a Region switch plan in a specific Amazon Web Services Region. This operation is useful for getting Region-specific information about a plan.</p>",
+    "ListPlanExecutionEvents": "<p>Lists the events that occurred during a plan execution. These events provide a detailed timeline of the execution process.</p>",
+    "ListPlanExecutions": "<p>Lists the executions of a Region switch plan. This operation returns information about both current and historical executions.</p>",
+    "ListPlans": "<p>Lists all Region switch plans in your Amazon Web Services account.</p>",
+    "ListPlansInRegion": "<p>Lists all Region switch plans in your Amazon Web Services account that are available in the current Amazon Web Services Region.</p>",
+    "ListRoute53HealthChecks": "<p>List the Amazon Route 53 health checks.</p>",
+    "ListTagsForResource": "<p>Lists the tags attached to a Region switch resource.</p>",
+    "StartPlanExecution": "<p>Starts the execution of a Region switch plan. You can execute a plan in either PRACTICE or RECOVERY mode.</p> <p>In PRACTICE mode, the execution simulates the steps without making actual changes to your application's traffic routing. In RECOVERY mode, the execution performs actual changes to shift traffic between Regions.</p>",
+    "TagResource": "<p>Adds or updates tags for a Region switch resource. You can assign metadata to your resources in the form of tags, which are key-value pairs.</p>",
+    "UntagResource": "<p>Removes tags from a Region switch resource.</p>",
+    "UpdatePlan": "<p>Updates an existing Region switch plan. You can modify the plan's description, workflows, execution role, recovery time objective, associated alarms, and triggers.</p>",
+    "UpdatePlanExecution": "<p>Updates an in-progress plan execution. This operation allows you to modify certain aspects of the execution, such as adding a comment or changing the action.</p>",
+    "UpdatePlanExecutionStep": "<p>Updates a specific step in an in-progress plan execution. This operation allows you to modify the step's comment or action.</p>"
+  },
+  "shapes": {
+    "AbbreviatedExecution": {
+      "base": "<p>A summarized representation of a plan execution. This structure contains key information about an execution without all the detailed step data.</p>",
+      "refs": {
+        "AbbreviatedExecutionsList$member": null
+      }
+    },
+    "AbbreviatedExecutionsList": {
+      "base": null,
+      "refs": {
+        "ListPlanExecutionsResponse$items": "<p>The items in the plan execution to return.</p>"
+      }
+    },
+    "AbbreviatedPlan": {
+      "base": "<p>A summarized representation of a Region switch plan. This structure contains key information about a plan without all the detailed workflow and step data.</p>",
+      "refs": {
+        "PlanList$member": null
+      }
+    },
+    "AbbreviatedPlanRecoveryTimeObjectiveMinutesInteger": {
+      "base": null,
+      "refs": {
+        "AbbreviatedPlan$recoveryTimeObjectiveMinutes": "<p>The recovery time objective that you've specified.</p>"
+      }
+    },
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p> <p>HTTP Status Code: 403</p>",
+      "refs": {}
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "AbbreviatedPlan$owner": "<p>The owner of a Region switch plan.</p>",
+        "Plan$owner": "<p>The owner of a plan.</p>"
+      }
+    },
+    "AlarmCondition": {
+      "base": null,
+      "refs": {
+        "TriggerCondition$condition": "<p>The condition that must be met. Valid values include ALARM and OK.</p>"
+      }
+    },
+    "AlarmType": {
+      "base": null,
+      "refs": {
+        "AssociatedAlarm$alarmType": "<p>The alarm type for an associated alarm. An associated CloudWatch alarm can be an application health alarm or a trigger alarm.</p>"
+      }
+    },
+    "Approval": {
+      "base": null,
+      "refs": {
+        "ApprovePlanExecutionStepRequest$approval": "<p>The status of approval for a plan execution step. </p>"
+      }
+    },
+    "ApprovePlanExecutionStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ApprovePlanExecutionStepResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ArcRoutingControlConfiguration": {
+      "base": "<p>Configuration for ARC routing controls used in a Region switch plan. Routing controls are simple on/off switches that you can use to shift traffic away from an impaired Region.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$arcRoutingControlConfig": "<p>An ARC routing control execution block.</p>"
+      }
+    },
+    "ArcRoutingControlConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "ArcRoutingControlConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "ArcRoutingControlState": {
+      "base": "<p>Represents the state of an ARC routing control.</p>",
+      "refs": {
+        "ArcRoutingControlStates$member": null
+      }
+    },
+    "ArcRoutingControlStates": {
+      "base": null,
+      "refs": {
+        "RegionAndRoutingControls$value": null
+      }
+    },
+    "Asg": {
+      "base": "<p>Configuration for an Amazon EC2 Auto Scaling group used in a Region switch plan.</p>",
+      "refs": {
+        "AsgList$member": null
+      }
+    },
+    "AsgArn": {
+      "base": null,
+      "refs": {
+        "Asg$arn": "<p>The Amazon Resource Name (ARN) of the EC2 Auto Scaling group.</p>"
+      }
+    },
+    "AsgList": {
+      "base": null,
+      "refs": {
+        "Ec2AsgCapacityIncreaseConfiguration$asgs": "<p>The EC2 Auto Scaling groups for the configuration.</p>"
+      }
+    },
+    "AssociatedAlarm": {
+      "base": "<p>An Amazon CloudWatch alarm associated with a Region switch plan. These alarms can be used to trigger automatic execution of the plan.</p>",
+      "refs": {
+        "AssociatedAlarmMap$value": null
+      }
+    },
+    "AssociatedAlarmMap": {
+      "base": null,
+      "refs": {
+        "CreatePlanRequest$associatedAlarms": "<p>The alarms associated with a Region switch plan.</p>",
+        "Plan$associatedAlarms": "<p>The associated application health alarms for a plan.</p>",
+        "UpdatePlanRequest$associatedAlarms": "<p>The updated CloudWatch alarms associated with the plan.</p>"
+      }
+    },
+    "AuroraClusterArn": {
+      "base": null,
+      "refs": {
+        "AuroraClusterArns$member": null
+      }
+    },
+    "AuroraClusterArns": {
+      "base": null,
+      "refs": {
+        "GlobalAuroraConfiguration$databaseClusterArns": "<p>The database cluster Amazon Resource Names (ARNs) for a global database.</p>"
+      }
+    },
+    "CancelPlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CancelPlanExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreatePlanRequestRecoveryTimeObjectiveMinutesInteger": {
+      "base": null,
+      "refs": {
+        "CreatePlanRequest$recoveryTimeObjectiveMinutes": "<p>Optionally, you can specify an recovery time objective for a Region switch plan, in minutes.</p>"
+      }
+    },
+    "CreatePlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CustomActionLambdaConfiguration": {
+      "base": "<p>Configuration for Amazon Web Services Lambda functions that perform custom actions during a Region switch.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$customActionLambdaConfig": "<p>An Amazon Web Services Lambda execution block.</p>"
+      }
+    },
+    "CustomActionLambdaConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "CustomActionLambdaConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "DeletePlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeletePlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Duration": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$actualRecoveryTime": "<p>The actual recovery time that Region switch calculates for a plan execution. Actual recovery time includes the time for the plan to run added to the time elapsed until the application health alarms that you've specified are healthy again.</p>",
+        "GetPlanExecutionResponse$actualRecoveryTime": "<p>The actual recovery time that Region switch calculates for a plan execution. Actual recovery time includes the time for the plan to run added to the time elapsed until the application health alarms that you've specified are healthy again.</p>"
+      }
+    },
+    "Ec2AsgCapacityIncreaseConfiguration": {
+      "base": "<p>Configuration for increasing the capacity of Amazon EC2 Auto Scaling groups during a Region switch.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$ec2AsgCapacityIncreaseConfig": "<p>An EC2 Auto Scaling group execution block.</p>"
+      }
+    },
+    "Ec2AsgCapacityIncreaseConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "Ec2AsgCapacityIncreaseConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "Ec2AsgCapacityMonitoringApproach": {
+      "base": null,
+      "refs": {
+        "Ec2AsgCapacityIncreaseConfiguration$capacityMonitoringApproach": "<p>The monitoring approach that you specify EC2 Auto Scaling groups for the configuration.</p>"
+      }
+    },
+    "Ec2Ungraceful": {
+      "base": "<p>Configuration for handling failures when performing operations on EC2 resources.</p>",
+      "refs": {
+        "Ec2AsgCapacityIncreaseConfiguration$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "Ec2UngracefulMinimumSuccessPercentageInteger": {
+      "base": null,
+      "refs": {
+        "Ec2Ungraceful$minimumSuccessPercentage": "<p>The minimum success percentage that you specify for EC2 Auto Scaling groups.</p>"
+      }
+    },
+    "EcsCapacityIncreaseConfiguration": {
+      "base": "<p>The configuration for an Amazon Web Services ECS capacity increase.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$ecsCapacityIncreaseConfig": "<p>The capacity increase specified for the configuration.</p>"
+      }
+    },
+    "EcsCapacityIncreaseConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "EcsCapacityIncreaseConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "EcsCapacityMonitoringApproach": {
+      "base": null,
+      "refs": {
+        "EcsCapacityIncreaseConfiguration$capacityMonitoringApproach": "<p>The monitoring approach specified for the configuration, for example, <code>Most_Recent</code>.</p>"
+      }
+    },
+    "EcsClusterArn": {
+      "base": null,
+      "refs": {
+        "Service$clusterArn": "<p>The cluster Amazon Resource Name (ARN) for a service.</p>"
+      }
+    },
+    "EcsServiceArn": {
+      "base": null,
+      "refs": {
+        "Service$serviceArn": "<p>The Amazon Resource Name (ARN) for a service.</p>"
+      }
+    },
+    "EcsUngraceful": {
+      "base": "<p>The settings for ungraceful execution.</p>",
+      "refs": {
+        "EcsCapacityIncreaseConfiguration$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "EcsUngracefulMinimumSuccessPercentageInteger": {
+      "base": null,
+      "refs": {
+        "EcsUngraceful$minimumSuccessPercentage": "<p>The minimum success percentage specified for the configuration.</p>"
+      }
+    },
+    "EksCapacityMonitoringApproach": {
+      "base": null,
+      "refs": {
+        "EksResourceScalingConfiguration$capacityMonitoringApproach": "<p>The monitoring approach for the configuration, that is, whether it was sampled in the last 24 hours or autoscaled in the last 24 hours.</p>"
+      }
+    },
+    "EksCluster": {
+      "base": "<p>The Amazon Web Services EKS cluster execution block configuration.</p>",
+      "refs": {
+        "EksClusters$member": null
+      }
+    },
+    "EksClusterArn": {
+      "base": null,
+      "refs": {
+        "EksCluster$clusterArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services EKS cluster.</p>"
+      }
+    },
+    "EksClusters": {
+      "base": null,
+      "refs": {
+        "EksResourceScalingConfiguration$eksClusters": "<p>The clusters for the configuration.</p>"
+      }
+    },
+    "EksResourceScalingConfiguration": {
+      "base": "<p>The Amazon Web Services EKS resource scaling configuration.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$eksResourceScalingConfig": "<p>An Amazon Web Services EKS resource scaling execution block.</p>"
+      }
+    },
+    "EksResourceScalingConfigurationTargetPercentInteger": {
+      "base": null,
+      "refs": {
+        "EksResourceScalingConfiguration$targetPercent": "<p>The target percentage for the configuration.</p>"
+      }
+    },
+    "EksResourceScalingConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "EksResourceScalingConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "EksResourceScalingUngraceful": {
+      "base": "<p>The ungraceful settings for Amazon Web Services EKS resource scaling.</p>",
+      "refs": {
+        "EksResourceScalingConfiguration$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "EksResourceScalingUngracefulMinimumSuccessPercentageInteger": {
+      "base": null,
+      "refs": {
+        "EksResourceScalingUngraceful$minimumSuccessPercentage": "<p>The minimum success percentage for the configuration.</p>"
+      }
+    },
+    "EvaluationStatus": {
+      "base": null,
+      "refs": {
+        "GetPlanEvaluationStatusResponse$evaluationState": "<p>The evaluation state for the plan.</p>"
+      }
+    },
+    "ExecutionAction": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$executionAction": "<p>The plan execution action. Valid values are <code>Activate</code>, to activate an Amazon Web Services Region, or <code>Deactivate</code>, to deactivate a Region.</p>",
+        "GetPlanExecutionResponse$executionAction": "<p>The plan execution action. Valid values are <code>Activate</code>, to activate an Amazon Web Services Region, or <code>Deactivate</code>, to deactivate a Region.</p>",
+        "MinimalWorkflow$action": "<p>The action for a minimal workflow, which can be Activate or Deactivate.</p>",
+        "StartPlanExecutionRequest$action": "<p>The action to perform. Valid values are ACTIVATE (to shift traffic to the target Region) or DEACTIVATE (to shift traffic away from the target Region).</p>"
+      }
+    },
+    "ExecutionApprovalConfiguration": {
+      "base": "<p>Configuration for approval steps in a Region switch plan execution. Approval steps require manual intervention before the execution can proceed.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$executionApprovalConfig": "<p>A manual approval execution block.</p>"
+      }
+    },
+    "ExecutionApprovalConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "ExecutionApprovalConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "ExecutionBlockConfiguration": {
+      "base": "<p>Execution block configurations for a workflow in a Region switch plan. An execution block represents a specific type of action to perform during a Region switch.</p>",
+      "refs": {
+        "Step$executionBlockConfiguration": "<p>The configuration for an execution block in a workflow.</p>"
+      }
+    },
+    "ExecutionBlockType": {
+      "base": null,
+      "refs": {
+        "ExecutionEvent$executionBlockType": "<p>The execution block type for an execution event.</p>",
+        "Step$executionBlockType": "<p>The type of an execution block in a workflow.</p>"
+      }
+    },
+    "ExecutionComment": {
+      "base": null,
+      "refs": {
+        "ApprovePlanExecutionStepRequest$comment": "<p>A comment that you can enter about a plan execution.</p>",
+        "CancelPlanExecutionRequest$comment": "<p>A comment that you can enter about canceling a plan execution step.</p>",
+        "StartPlanExecutionRequest$comment": "<p>An optional comment explaining why the plan execution is being started.</p>",
+        "UpdatePlanExecutionRequest$comment": "<p>An optional comment about the plan execution.</p>",
+        "UpdatePlanExecutionStepRequest$comment": "<p>An optional comment about the plan execution.</p>"
+      }
+    },
+    "ExecutionEvent": {
+      "base": "<p>Represents an event that occurred during a plan execution. These events provide a detailed timeline of the execution process.</p>",
+      "refs": {
+        "ExecutionEventList$member": null
+      }
+    },
+    "ExecutionEventList": {
+      "base": null,
+      "refs": {
+        "ListPlanExecutionEventsResponse$items": "<p>The items in the plan execution event.</p>"
+      }
+    },
+    "ExecutionEventType": {
+      "base": null,
+      "refs": {
+        "ExecutionEvent$type": "<p>The type of an execution event.</p>"
+      }
+    },
+    "ExecutionId": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "AbbreviatedPlan$activePlanExecution": "<p>Specifies if this is the active plan execution at this time.</p>",
+        "ApprovePlanExecutionStepRequest$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "CancelPlanExecutionRequest$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "GetPlanExecutionRequest$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "GetPlanExecutionResponse$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "ListPlanExecutionEventsRequest$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "StartPlanExecutionResponse$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "UpdatePlanExecutionRequest$executionId": "<p>The execution identifier of a plan execution.</p>",
+        "UpdatePlanExecutionStepRequest$executionId": "<p>The unique identifier of the plan execution containing the step to update.</p>"
+      }
+    },
+    "ExecutionMode": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$mode": "<p>The plan execution mode. Valid values are <code>Practice</code>, for testing without making actual changes, or <code>Recovery</code>, for actual traffic shifting and application recovery.</p>",
+        "GetPlanExecutionResponse$mode": "<p>The plan execution mode. Valid values are <code>Practice</code>, for testing without making actual changes, or <code>Recovery</code>, for actual traffic shifting and application recovery.</p>",
+        "StartPlanExecutionRequest$mode": "<p>The plan execution mode. Valid values are <code>Practice</code>, for testing without making actual changes, or <code>Recovery</code>, for actual traffic shifting and application recovery.</p>",
+        "StepState$stepMode": "<p>The mode for a step execution. The mode can be Graceful or Ungraceful.</p>"
+      }
+    },
+    "ExecutionState": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$executionState": "<p>The plan execution state. Provides the state of a plan execution, for example, In Progress or Paused by Operator.</p>",
+        "GetPlanExecutionResponse$executionState": "<p>The plan execution state. Provides the state of a plan execution, for example, In Progress or Paused by Operator.</p>",
+        "ListPlanExecutionsRequest$state": "<p>The state of the plan execution. For example, the plan execution might be In Progress.</p>"
+      }
+    },
+    "Float": {
+      "base": null,
+      "refs": {
+        "CustomActionLambdaConfiguration$retryIntervalMinutes": "<p>The retry interval specified.</p>"
+      }
+    },
+    "GetPlanEvaluationStatusRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPlanEvaluationStatusResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPlanExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPlanExecutionStepStatesMaxResults": {
+      "base": null,
+      "refs": {
+        "GetPlanExecutionRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>"
+      }
+    },
+    "GetPlanInRegionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPlanInRegionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetPlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GlobalAuroraConfiguration": {
+      "base": "<p>Configuration for Amazon Aurora global databases used in a Region switch plan.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$globalAuroraConfig": "<p>An Aurora Global Database execution block.</p>"
+      }
+    },
+    "GlobalAuroraConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "GlobalAuroraConfiguration$timeoutMinutes": "<p>The timeout value specified for the configuration.</p>"
+      }
+    },
+    "GlobalAuroraDefaultBehavior": {
+      "base": null,
+      "refs": {
+        "GlobalAuroraConfiguration$behavior": "<p>The behavior for a global database, that is, only allow switchover or also allow failover.</p>"
+      }
+    },
+    "GlobalAuroraUngraceful": {
+      "base": "<p>Configuration for handling failures when performing operations on Aurora global databases.</p>",
+      "refs": {
+        "GlobalAuroraConfiguration$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "GlobalAuroraUngracefulBehavior": {
+      "base": null,
+      "refs": {
+        "GlobalAuroraUngraceful$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "GlobalClusterIdentifier": {
+      "base": null,
+      "refs": {
+        "GlobalAuroraConfiguration$globalClusterIdentifier": "<p>The global cluster identifier for a global database.</p>"
+      }
+    },
+    "IamRoleArn": {
+      "base": null,
+      "refs": {
+        "ArcRoutingControlConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "Asg$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "AssociatedAlarm$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "CreatePlanRequest$executionRole": "<p>An execution role is a way to categorize a Region switch plan.</p>",
+        "EksCluster$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "GlobalAuroraConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "Lambdas$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "Plan$executionRole": "<p>The execution role for a plan.</p>",
+        "RegionSwitchPlanConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "Route53HealthCheckConfiguration$crossAccountRole": "<p>The cross account role for the configuration.</p>",
+        "Service$crossAccountRole": "<p>The cross account role for a service.</p>",
+        "UpdatePlanRequest$executionRole": "<p>The updated IAM role ARN that grants Region switch the permissions needed to execute the plan steps.</p>"
+      }
+    },
+    "IllegalArgumentException": {
+      "base": "<p>The request processing has an invalid argument.</p>",
+      "refs": {}
+    },
+    "IllegalStateException": {
+      "base": "<p>The operation failed because the current state of the resource doesn't allow the operation to proceed.</p> <p>HTTP Status Code: 400</p>",
+      "refs": {}
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "Ec2AsgCapacityIncreaseConfiguration$targetPercent": "<p>The target percentage that you specify for EC2 Auto Scaling groups.</p>",
+        "EcsCapacityIncreaseConfiguration$targetPercent": "<p>The target percentage specified for the configuration.</p>",
+        "Trigger$minDelayMinutesBetweenExecutions": "<p>The minimum time, in minutes, that must elapse between automatic executions of the plan.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing has failed because of an unknown error, exception, or failure.</p> <p>HTTP Status Code: 500</p>",
+      "refs": {}
+    },
+    "KubernetesNamespace": {
+      "base": null,
+      "refs": {
+        "KubernetesScalingResource$namespace": "<p>The namespace for the Kubernetes resource.</p>"
+      }
+    },
+    "KubernetesResourceType": {
+      "base": "<p>Defines the type of Kubernetes resource to scale in an Amazon EKS cluster.</p>",
+      "refs": {
+        "EksResourceScalingConfiguration$kubernetesResourceType": "<p>The Kubernetes resource type for the configuration.</p>"
+      }
+    },
+    "KubernetesScalingApplication": {
+      "base": null,
+      "refs": {
+        "KubernetesScalingApps$member": null
+      }
+    },
+    "KubernetesScalingApps": {
+      "base": null,
+      "refs": {
+        "EksResourceScalingConfiguration$scalingResources": "<p>The scaling resources for the configuration.</p>"
+      }
+    },
+    "KubernetesScalingResource": {
+      "base": "<p>Defines a Kubernetes resource to scale in an Amazon EKS cluster.</p>",
+      "refs": {
+        "RegionalScalingResource$value": null
+      }
+    },
+    "LambdaArn": {
+      "base": null,
+      "refs": {
+        "Lambdas$arn": "<p>The Amazon Resource Name (ARN) of the Lambda function.</p>"
+      }
+    },
+    "LambdaList": {
+      "base": null,
+      "refs": {
+        "CustomActionLambdaConfiguration$lambdas": "<p>The Amazon Web Services Lambda functions for the execution block.</p>"
+      }
+    },
+    "LambdaUngraceful": {
+      "base": "<p>Configuration for handling failures when invoking Lambda functions.</p>",
+      "refs": {
+        "CustomActionLambdaConfiguration$ungraceful": "<p>The settings for ungraceful execution.</p>"
+      }
+    },
+    "LambdaUngracefulBehavior": {
+      "base": null,
+      "refs": {
+        "LambdaUngraceful$behavior": "<p>The ungraceful behavior for a Lambda function, which must be set to <code>skip</code>.</p>"
+      }
+    },
+    "Lambdas": {
+      "base": "<p>Configuration for Amazon Web Services Lambda functions used in a Region switch plan.</p>",
+      "refs": {
+        "LambdaList$member": null
+      }
+    },
+    "ListExecutionEventsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListPlanExecutionEventsRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>"
+      }
+    },
+    "ListExecutionsMaxResults": {
+      "base": null,
+      "refs": {
+        "ListPlanExecutionsRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>"
+      }
+    },
+    "ListPlanExecutionEventsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPlanExecutionEventsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPlanExecutionsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPlanExecutionsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPlansInRegionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPlansInRegionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPlansRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListPlansResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRoute53HealthChecksRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRoute53HealthChecksRequestMaxResultsInteger": {
+      "base": null,
+      "refs": {
+        "ListRoute53HealthChecksRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>"
+      }
+    },
+    "ListRoute53HealthChecksResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "GetPlanEvaluationStatusRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>",
+        "ListPlansInRegionRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>",
+        "ListPlansRequest$maxResults": "<p>The number of objects that you want to return with this call.</p>"
+      }
+    },
+    "MinimalWorkflow": {
+      "base": "<p>A simplified representation of a workflow in a Region switch plan.</p>",
+      "refs": {
+        "ResourceWarning$workflow": "<p>The workflow for the resource warning.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "GetPlanEvaluationStatusRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "GetPlanEvaluationStatusResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListPlansInRegionRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListPlansInRegionResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListPlansRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListPlansResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListRoute53HealthChecksRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListRoute53HealthChecksResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>"
+      }
+    },
+    "ParallelExecutionBlockConfiguration": {
+      "base": "<p>Configuration for steps that should be executed in parallel during a Region switch.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$parallelConfig": "<p>A parallel configuration execution block.</p>"
+      }
+    },
+    "Plan": {
+      "base": "<p>Represents a Region switch plan. A plan defines the steps required to shift traffic from one Amazon Web Services Region to another.</p>",
+      "refs": {
+        "CreatePlanResponse$plan": "<p>The details of the created Region switch plan.</p>",
+        "GetPlanExecutionResponse$plan": "<p>The details of the Region switch plan.</p>",
+        "GetPlanInRegionResponse$plan": "<p>The details of the Region switch plan.</p>",
+        "GetPlanResponse$plan": "<p>The detailed information about the requested Region switch plan.</p>",
+        "UpdatePlanResponse$plan": "<p>The details of the updated Region switch plan.</p>"
+      }
+    },
+    "PlanArn": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$planArn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "AbbreviatedPlan$arn": "<p>The Amazon Resource Name (ARN) of the Region switch plan.</p>",
+        "ApprovePlanExecutionStepRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "CancelPlanExecutionRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "DeletePlanRequest$arn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "GetPlanEvaluationStatusRequest$planArn": "<p>The Amazon Resource Name (ARN) of the Region switch plan to retrieve evaluation status for.</p>",
+        "GetPlanEvaluationStatusResponse$planArn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "GetPlanExecutionRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan with the execution to retrieve.</p>",
+        "GetPlanExecutionResponse$planArn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "GetPlanInRegionRequest$arn": "<p>The Amazon Resource Name (ARN) of the plan in Region.</p>",
+        "GetPlanRequest$arn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "ListPlanExecutionEventsRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "ListPlanExecutionsRequest$planArn": "<p>The ARN for the plan.</p>",
+        "ListRoute53HealthChecksRequest$arn": "<p>The Amazon Resource Name (ARN) of the Amazon Route 53 health check request.</p>",
+        "ListTagsForResourceRequest$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "Plan$arn": "<p>The Amazon Resource Name (ARN) of the plan.</p>",
+        "RegionSwitchPlanConfiguration$arn": "<p>The Amazon Resource Name (ARN) of the plan configuration.</p>",
+        "StartPlanExecutionRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan to execute.</p>",
+        "StartPlanExecutionResponse$plan": "<p>The details of the Region switch plan.</p>",
+        "TagResourceRequest$arn": "<p>The Amazon Resource Name (ARN) for a tag that you add to a resource.</p>",
+        "UntagResourceRequest$arn": "<p>The Amazon Resource Name (ARN) for a tag you remove a resource from.</p>",
+        "UpdatePlanExecutionRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan with the execution to update.</p>",
+        "UpdatePlanExecutionStepRequest$planArn": "<p>The Amazon Resource Name (ARN) of the plan containing the execution step to update.</p>",
+        "UpdatePlanRequest$arn": "<p>The Amazon Resource Name (ARN) of the plan.</p>"
+      }
+    },
+    "PlanList": {
+      "base": null,
+      "refs": {
+        "ListPlansInRegionResponse$plans": "<p>The plans that were requested.</p>",
+        "ListPlansResponse$plans": "<p>The plans that were requested.</p>"
+      }
+    },
+    "PlanName": {
+      "base": null,
+      "refs": {
+        "AbbreviatedPlan$name": "<p>The name of a Region switch plan.</p>",
+        "CreatePlanRequest$name": "<p>The name of a Region switch plan.</p>",
+        "Plan$name": "<p>The name for a plan.</p>"
+      }
+    },
+    "PlanRecoveryTimeObjectiveMinutesInteger": {
+      "base": null,
+      "refs": {
+        "Plan$recoveryTimeObjectiveMinutes": "<p>The recovery time objective for a plan.</p>"
+      }
+    },
+    "PlanWarnings": {
+      "base": null,
+      "refs": {
+        "GetPlanEvaluationStatusResponse$warnings": "<p>The current evaluation warnings for the plan. </p>"
+      }
+    },
+    "RecoveryApproach": {
+      "base": null,
+      "refs": {
+        "AbbreviatedPlan$recoveryApproach": "<p>The recovery approach for a Region switch plan, which can be active/active (activeActive) or active/passive (activePassive).</p>",
+        "CreatePlanRequest$recoveryApproach": "<p>The recovery approach for a Region switch plan, which can be active/active (activeActive) or active/passive (activePassive).</p>",
+        "Plan$recoveryApproach": "<p>The recovery approach for a Region switch plan, which can be active/active (activeActive) or active/passive (activePassive).</p>"
+      }
+    },
+    "Region": {
+      "base": null,
+      "refs": {
+        "AbbreviatedPlan$primaryRegion": "<p>The primary Region for a plan.</p>",
+        "CreatePlanRequest$primaryRegion": "<p>The primary Amazon Web Services Region for the application. This is the Region where the application normally runs before any Region switch occurs.</p>",
+        "GetPlanEvaluationStatusResponse$region": "<p>The Amazon Web Services Region for the plan.</p>",
+        "Plan$primaryRegion": "<p>The primary Region for a plan.</p>",
+        "RegionList$member": null,
+        "RegionalScalingResource$key": null,
+        "Route53HealthCheck$region": "<p>The Amazon Route 53 Region.</p>",
+        "Route53ResourceRecordSet$region": "<p>The Amazon Route 53 record set Region.</p>",
+        "Trigger$targetRegion": "<p>The Amazon Web Services Region for a trigger.</p>",
+        "Workflow$workflowTargetRegion": "<p>The Amazon Web Services Region that the workflow targets.</p>"
+      }
+    },
+    "RegionAndRoutingControls": {
+      "base": null,
+      "refs": {
+        "ArcRoutingControlConfiguration$regionAndRoutingControls": "<p>The Region and ARC routing controls for the configuration.</p>"
+      }
+    },
+    "RegionList": {
+      "base": null,
+      "refs": {
+        "AbbreviatedPlan$regions": "<p>The Amazon Web Services Region specified for a Region switch plan.</p>",
+        "CreatePlanRequest$regions": "<p>An array that specifies the Amazon Web Services Regions for a Region switch plan. Specify two Regions.</p>",
+        "Plan$regions": "<p>The Amazon Web Services Regions for a plan.</p>"
+      }
+    },
+    "RegionSwitchPlanConfiguration": {
+      "base": "<p>Configuration for nested Region switch plans. This allows one Region switch plan to trigger another plan as part of its execution.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$regionSwitchPlanConfig": "<p>A Region switch plan execution block.</p>"
+      }
+    },
+    "RegionToRunIn": {
+      "base": null,
+      "refs": {
+        "CustomActionLambdaConfiguration$regionToRun": "<p>The Amazon Web Services Region for the function to run in.</p>"
+      }
+    },
+    "RegionalScalingResource": {
+      "base": null,
+      "refs": {
+        "KubernetesScalingApplication$value": null
+      }
+    },
+    "ResourceArn": {
+      "base": null,
+      "refs": {
+        "ResourceWarning$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource was not found.</p> <p>HTTP Status Code: 404</p>",
+      "refs": {}
+    },
+    "ResourceWarning": {
+      "base": "<p>Represents a warning about a resource in a Region switch plan.</p>",
+      "refs": {
+        "PlanWarnings$member": null
+      }
+    },
+    "ResourceWarningStatus": {
+      "base": null,
+      "refs": {
+        "ResourceWarning$warningStatus": "<p>The status of the resource warning.</p>"
+      }
+    },
+    "Resources": {
+      "base": null,
+      "refs": {
+        "ExecutionEvent$resources": "<p>The resources for an execution event.</p>"
+      }
+    },
+    "RoleArn": {
+      "base": null,
+      "refs": {
+        "ExecutionApprovalConfiguration$approvalRole": "<p>The IAM approval role for the configuration.</p>"
+      }
+    },
+    "Route53HealthCheck": {
+      "base": "<p>The Amazon Route 53 health check.</p>",
+      "refs": {
+        "Route53HealthCheckList$member": null
+      }
+    },
+    "Route53HealthCheckConfiguration": {
+      "base": "<p>The Amazon Route 53 health check configuration.</p>",
+      "refs": {
+        "ExecutionBlockConfiguration$route53HealthCheckConfig": "<p>The Amazon Route 53 health check configuration.</p>"
+      }
+    },
+    "Route53HealthCheckConfigurationTimeoutMinutesInteger": {
+      "base": null,
+      "refs": {
+        "Route53HealthCheckConfiguration$timeoutMinutes": "<p>The Amazon Route 53 health check configuration time out (in minutes).</p>"
+      }
+    },
+    "Route53HealthCheckId": {
+      "base": null,
+      "refs": {
+        "Route53HealthCheck$healthCheckId": "<p>The Amazon Route 53 health check ID.</p>"
+      }
+    },
+    "Route53HealthCheckList": {
+      "base": null,
+      "refs": {
+        "ListRoute53HealthChecksResponse$healthChecks": "<p>List of the health checks requested.</p>"
+      }
+    },
+    "Route53HostedZoneId": {
+      "base": null,
+      "refs": {
+        "ListRoute53HealthChecksRequest$hostedZoneId": "<p>The hosted zone ID for the health checks.</p>",
+        "Route53HealthCheck$hostedZoneId": "<p>The Amazon Route 53 health check hosted zone ID.</p>",
+        "Route53HealthCheckConfiguration$hostedZoneId": "<p>The Amazon Route 53 health check configuration hosted zone ID.</p>"
+      }
+    },
+    "Route53RecordName": {
+      "base": null,
+      "refs": {
+        "ListRoute53HealthChecksRequest$recordName": "<p>The record name for the health checks.</p>",
+        "Route53HealthCheck$recordName": "<p>The Amazon Route 53 record name.</p>",
+        "Route53HealthCheckConfiguration$recordName": "<p>The Amazon Route 53 health check configuration record name.</p>"
+      }
+    },
+    "Route53ResourceRecordSet": {
+      "base": "<p>The Amazon Route 53 record set.</p>",
+      "refs": {
+        "Route53ResourceRecordSetList$member": null
+      }
+    },
+    "Route53ResourceRecordSetIdentifier": {
+      "base": null,
+      "refs": {
+        "Route53ResourceRecordSet$recordSetIdentifier": "<p>The Amazon Route 53 record set identifier.</p>"
+      }
+    },
+    "Route53ResourceRecordSetList": {
+      "base": null,
+      "refs": {
+        "Route53HealthCheckConfiguration$recordSets": "<p>The Amazon Route 53 health check configuration record sets.</p>"
+      }
+    },
+    "RoutingControlArn": {
+      "base": null,
+      "refs": {
+        "ArcRoutingControlState$routingControlArn": "<p>The Amazon Resource Name (ARN) of a routing control.</p>"
+      }
+    },
+    "RoutingControlStateChange": {
+      "base": null,
+      "refs": {
+        "ArcRoutingControlState$state": "<p>The state of an ARC routing control, On or Off.</p>"
+      }
+    },
+    "Service": {
+      "base": "<p>The service for a cross account role.</p>",
+      "refs": {
+        "ServiceList$member": null
+      }
+    },
+    "ServiceList": {
+      "base": null,
+      "refs": {
+        "EcsCapacityIncreaseConfiguration$services": "<p>The services specified for the configuration.</p>"
+      }
+    },
+    "StartPlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartPlanExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Step": {
+      "base": "<p>Represents a step in a Region switch plan workflow. Each step performs a specific action during the Region switch process.</p>",
+      "refs": {
+        "Steps$member": null
+      }
+    },
+    "StepName": {
+      "base": null,
+      "refs": {
+        "ApprovePlanExecutionStepRequest$stepName": "<p>The name of a step in a plan execution.</p>",
+        "ExecutionEvent$stepName": "<p>The step name for an execution event.</p>",
+        "ListPlanExecutionEventsRequest$name": "<p>The name of the plan execution event.</p>",
+        "ResourceWarning$stepName": "<p>The name of the step for the resource warning.</p>",
+        "Step$name": "<p>The name of a step in a workflow.</p>",
+        "StepState$name": "<p>The name of a step in a workflow.</p>"
+      }
+    },
+    "StepState": {
+      "base": "<p>Represents the state of a step in a plan execution.</p>",
+      "refs": {
+        "StepStates$member": null
+      }
+    },
+    "StepStates": {
+      "base": null,
+      "refs": {
+        "GetPlanExecutionResponse$stepStates": "<p>The states of the steps in the plan execution.</p>"
+      }
+    },
+    "StepStatus": {
+      "base": null,
+      "refs": {
+        "StepState$status": "<p>The status of a step in a workflow. For example, a status might be Completed or Pending Approval.</p>"
+      }
+    },
+    "Steps": {
+      "base": null,
+      "refs": {
+        "ParallelExecutionBlockConfiguration$steps": "<p>The steps for a parallel execution block.</p>",
+        "Workflow$steps": "<p>The steps that make up the workflow.</p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$version": "<p>The version for the plan.</p>",
+        "AbbreviatedExecution$comment": "<p>An optional comment about the plan execution.</p>",
+        "AbbreviatedExecution$executionRegion": "<p>The Amazon Web Services Region for a plan execution.</p>",
+        "AbbreviatedPlan$version": "<p>The version for the plan.</p>",
+        "AbbreviatedPlan$description": "<p>The description of a Region switch plan.</p>",
+        "AbbreviatedPlan$executionRole": "<p>The execution role is a way to categorize a Region switch plan. </p>",
+        "AccessDeniedException$message": null,
+        "ArcRoutingControlConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "Asg$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "AssociatedAlarm$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "AssociatedAlarm$resourceIdentifier": "<p>The resource identifier for alarms that you associate with a plan.</p>",
+        "AssociatedAlarmMap$key": null,
+        "CreatePlanRequest$description": "<p>The description of a Region switch plan.</p>",
+        "EksCluster$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "ExecutionEvent$error": "<p>Errors for an execution event.</p>",
+        "ExecutionEvent$description": "<p>The description for an execution event.</p>",
+        "ExecutionEvent$eventId": "<p>The event ID for an execution event.</p>",
+        "ExecutionEvent$previousEventId": "<p>The event ID of the previous execution event.</p>",
+        "GetPlanEvaluationStatusResponse$lastEvaluatedVersion": "<p>The version of the last evaluation of the plan.</p>",
+        "GetPlanExecutionRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "GetPlanExecutionResponse$version": "<p>The version for the plan.</p>",
+        "GetPlanExecutionResponse$comment": "<p>A comment included on the plan execution.</p>",
+        "GetPlanExecutionResponse$executionRegion": "<p>The Amazon Web Services Region for a plan execution.</p>",
+        "GetPlanExecutionResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "GlobalAuroraConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "IllegalArgumentException$message": null,
+        "IllegalStateException$message": null,
+        "InternalServerException$message": null,
+        "KubernetesResourceType$apiVersion": "<p>The API version type for the Kubernetes resource.</p>",
+        "KubernetesResourceType$kind": "<p>The kind for the Kubernetes resource.</p>",
+        "KubernetesScalingApplication$key": null,
+        "KubernetesScalingResource$name": "<p>The name for the Kubernetes resource.</p>",
+        "KubernetesScalingResource$hpaName": "<p>The hpaname for the Kubernetes resource.</p>",
+        "Lambdas$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "ListPlanExecutionEventsRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListPlanExecutionEventsResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListPlanExecutionsRequest$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "ListPlanExecutionsResponse$nextToken": "<p>Specifies that you want to receive the next page of results. Valid only if you received a <code>nextToken</code> response in the previous request. If you did, it indicates that more output is available. Set this parameter to the value provided by the previous call's <code>nextToken</code> response to request the next page of results.</p>",
+        "MinimalWorkflow$name": "<p>The name for a minimal workflow</p>",
+        "Plan$description": "<p>The description for a plan.</p>",
+        "Plan$version": "<p>The version for the plan.</p>",
+        "RegionAndRoutingControls$key": null,
+        "RegionSwitchPlanConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "ResourceNotFoundException$message": null,
+        "ResourceWarning$version": "<p>The version for the resource warning.</p>",
+        "ResourceWarning$warningMessage": "<p>The warning message about what needs to be corrected.</p>",
+        "Resources$member": null,
+        "Route53HealthCheckConfiguration$externalId": "<p>The external ID (secret key) for the configuration.</p>",
+        "Service$externalId": "<p>The external ID (secret key) for the service.</p>",
+        "StartPlanExecutionRequest$targetRegion": "<p>The Amazon Web Services Region to target with this execution. This is the Region that traffic will be shifted to or from, depending on the action.</p>",
+        "StartPlanExecutionRequest$latestVersion": "<p>A boolean value indicating whether to use the latest version of the plan. If set to false, you must specify a specific version.</p>",
+        "StartPlanExecutionResponse$planVersion": "<p>The version of the plan, a unique number generated by Region switch.</p>",
+        "StartPlanExecutionResponse$activateRegion": "<p>The Amazon Web Services Region to activate.</p>",
+        "StartPlanExecutionResponse$deactivateRegion": "<p>The Amazon Web Services Region to deactivate.</p>",
+        "Step$description": "<p>The description of a step in a workflow.</p>",
+        "Trigger$description": "<p>The description for a trigger.</p>",
+        "TriggerCondition$associatedAlarmName": "<p>The name of the CloudWatch alarm associated with the condition.</p>",
+        "UpdatePlanExecutionStepRequest$stepName": "<p>The name of the execution step to update.</p>",
+        "UpdatePlanRequest$description": "<p>The updated description for the Region switch plan.</p>",
+        "Workflow$workflowDescription": "<p>The description of the workflow.</p>"
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeys$member": null,
+        "Tags$key": null
+      }
+    },
+    "TagKeys": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$resourceTagKeys": "<p>Tag keys that you remove from a resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tags$value": null
+      }
+    },
+    "Tags": {
+      "base": null,
+      "refs": {
+        "CreatePlanRequest$tags": "<p>The tags to apply to the Region switch plan.</p>",
+        "ListTagsForResourceResponse$resourceTags": "<p>The tags for a resource.</p>",
+        "TagResourceRequest$tags": "<p>Tags that you add to a resource. You can add a maximum of 50 tags in Region switch.</p>"
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "AbbreviatedExecution$updatedAt": "<p>The timestamp when the plan execution was last updated.</p>",
+        "AbbreviatedExecution$startTime": "<p>The timestamp when the plan execution was started.</p>",
+        "AbbreviatedExecution$endTime": "<p>The timestamp when the plan execution was ended.</p>",
+        "AbbreviatedPlan$updatedAt": "<p>The timestamp when the plan execution was last updated.</p>",
+        "ExecutionEvent$timestamp": "<p>The timestamp for an execution event.</p>",
+        "GetPlanEvaluationStatusResponse$lastEvaluationTime": "<p>The time of the last time that Region switch ran an evaluation of the plan.</p>",
+        "GetPlanExecutionResponse$updatedAt": "<p>The timestamp when the plan execution was last updated.</p>",
+        "GetPlanExecutionResponse$startTime": "<p>The time (UTC) when the plan execution started.</p>",
+        "GetPlanExecutionResponse$endTime": "<p>The time (UTC) when the plan execution ended.</p>",
+        "Plan$updatedAt": "<p>The timestamp when the plan was last updated.</p>",
+        "ResourceWarning$warningUpdatedTime": "<p>The timestamp when the warning was last updated.</p>",
+        "StepState$startTime": "<p>The timestamp when a step started execution.</p>",
+        "StepState$endTime": "<p>The timestamp when a step endeded execution.</p>"
+      }
+    },
+    "Trigger": {
+      "base": "<p>Defines a condition that can automatically trigger the execution of a Region switch plan.</p>",
+      "refs": {
+        "TriggerList$member": null
+      }
+    },
+    "TriggerCondition": {
+      "base": "<p>Defines a condition that must be met for a trigger to fire.</p>",
+      "refs": {
+        "TriggerConditionList$member": null
+      }
+    },
+    "TriggerConditionList": {
+      "base": null,
+      "refs": {
+        "Trigger$conditions": "<p>The conditions that must be met for the trigger to fire.</p>"
+      }
+    },
+    "TriggerList": {
+      "base": null,
+      "refs": {
+        "CreatePlanRequest$triggers": "<p>The triggers associated with a Region switch plan.</p>",
+        "Plan$triggers": "<p>The triggers for a plan.</p>",
+        "UpdatePlanRequest$triggers": "<p>The updated conditions that can automatically trigger the execution of the plan.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePlanExecutionAction": {
+      "base": null,
+      "refs": {
+        "UpdatePlanExecutionRequest$action": "<p>The action specified for a plan execution, for example, Switch to Graceful or Pause.</p>"
+      }
+    },
+    "UpdatePlanExecutionRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePlanExecutionResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePlanExecutionStepAction": {
+      "base": null,
+      "refs": {
+        "UpdatePlanExecutionStepRequest$actionToTake": "<p>The updated action to take for the step. This can be used to skip or retry a step.</p>"
+      }
+    },
+    "UpdatePlanExecutionStepRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePlanExecutionStepResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdatePlanRequestRecoveryTimeObjectiveMinutesInteger": {
+      "base": null,
+      "refs": {
+        "UpdatePlanRequest$recoveryTimeObjectiveMinutes": "<p>The updated target recovery time objective (RTO) in minutes for the plan.</p>"
+      }
+    },
+    "UpdatePlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Workflow": {
+      "base": "<p>Represents a workflow in a Region switch plan. A workflow defines a sequence of steps to execute during a Region switch.</p>",
+      "refs": {
+        "WorkflowList$member": null
+      }
+    },
+    "WorkflowList": {
+      "base": null,
+      "refs": {
+        "CreatePlanRequest$workflows": "<p>An array of workflows included in a Region switch plan.</p>",
+        "Plan$workflows": "<p>The workflows for a plan.</p>",
+        "UpdatePlanRequest$workflows": "<p>The updated workflows for the Region switch plan.</p>"
+      }
+    },
+    "WorkflowTargetAction": {
+      "base": null,
+      "refs": {
+        "Trigger$action": "<p>The action to perform when the trigger fires. Valid values include ACTIVATE and DEACTIVATE.</p>",
+        "Workflow$workflowTargetAction": "<p>The action that the workflow performs. Valid values include ACTIVATE and DEACTIVATE.</p>"
+      }
+    }
+  }
+}

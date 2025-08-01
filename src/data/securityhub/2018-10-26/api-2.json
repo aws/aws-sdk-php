@@ -8061,6 +8061,14 @@
         "Id":{"shape":"NonEmptyString"}
       }
     },
+    "CodeRepositoryDetails":{
+      "type":"structure",
+      "members":{
+        "ProviderType":{"shape":"NonEmptyString"},
+        "ProjectName":{"shape":"NonEmptyString"},
+        "CodeSecurityIntegrationArn":{"shape":"NonEmptyString"}
+      }
+    },
     "CodeVulnerabilitiesFilePath":{
       "type":"structure",
       "members":{
@@ -11130,7 +11138,8 @@
         "AwsRoute53HostedZone":{"shape":"AwsRoute53HostedZoneDetails"},
         "AwsMskCluster":{"shape":"AwsMskClusterDetails"},
         "AwsS3AccessPoint":{"shape":"AwsS3AccessPointDetails"},
-        "AwsEc2ClientVpnEndpoint":{"shape":"AwsEc2ClientVpnEndpointDetails"}
+        "AwsEc2ClientVpnEndpoint":{"shape":"AwsEc2ClientVpnEndpointDetails"},
+        "CodeRepository":{"shape":"CodeRepositoryDetails"}
       }
     },
     "ResourceFindingsSummary":{

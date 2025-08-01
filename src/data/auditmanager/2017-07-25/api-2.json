@@ -856,7 +856,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "UpdateAssessmentFrameworkShare":{
@@ -2214,7 +2215,12 @@
         "complianceType":{"shape":"ComplianceType"},
         "description":{"shape":"FrameworkDescription"},
         "logo":{"shape":"Filename"},
-        "controlSources":{"shape":"ControlSources"},
+        "controlSources":{
+          "shape":"ControlSources",
+          "deprecated":true,
+          "deprecatedMessage":"Use controlSources from the Control",
+          "deprecatedSince":"2025-07-24"
+        },
         "controlSets":{"shape":"ControlSets"},
         "createdAt":{"shape":"Timestamp"},
         "lastUpdatedAt":{"shape":"Timestamp"},
@@ -3230,7 +3236,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^(S|s)3:\\/\\/[a-zA-Z0-9\\-\\.\\(\\)\\'\\*\\_\\!\\/]+$"
+      "pattern":"^(S|s)3:\\/\\/[a-zA-Z0-9\\-\\.\\(\\)\\'\\*\\_\\!\\=\\+\\@\\:\\s\\,\\?\\/]+$"
     },
     "SNSTopic":{
       "type":"string",

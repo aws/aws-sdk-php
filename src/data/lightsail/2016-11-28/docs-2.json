@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon Lightsail is the easiest way to get started with Amazon Web Services (Amazon Web Services) for developers who need to build websites or web applications. It includes everything you need to launch your project quickly - instances (virtual private servers), container services, storage buckets, managed databases, SSD-based block storage, static IP addresses, load balancers, content delivery network (CDN) distributions, DNS management of registered domains, and resource snapshots (backups) - for a low, predictable monthly price.</p> <p>You can manage your Lightsail resources using the Lightsail console, Lightsail API, Command Line Interface (CLI), or SDKs. For more information about Lightsail concepts and tasks, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-how-to-set-up-access-keys-to-use-sdk-api-cli\">Amazon Lightsail Developer Guide</a>.</p> <p>This API Reference provides detailed information about the actions, data types, parameters, and errors of the Lightsail service. For more information about the supported Amazon Web Services Regions, endpoints, and service quotas of the Lightsail service, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/lightsail.html\">Amazon Lightsail Endpoints and Quotas</a> in the <i>Amazon Web Services General Reference</i>.</p>",
+  "service": "<p>Amazon Lightsail is the easiest way to get started with Amazon Web Services (Amazon Web Services) for developers who need to build websites or web applications. It includes everything you need to launch your project quickly - instances (virtual private servers), container services, storage buckets, managed databases, SSD-based block storage, static IP addresses, load balancers, content delivery network (CDN) distributions, DNS management of registered domains, and resource snapshots (backups) - for a low, predictable monthly price.</p> <p>You can manage your Lightsail resources using the Lightsail console, Lightsail API, Command Line Interface (CLI), or SDKs. For more information about Lightsail concepts and tasks, see the <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-how-to-set-up-and-configure-aws-cli\">Amazon Lightsail Developer Guide</a>.</p> <p>This API Reference provides detailed information about the actions, data types, parameters, and errors of the Lightsail service. For more information about the supported Amazon Web Services Regions, endpoints, and service quotas of the Lightsail service, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/lightsail.html\">Amazon Lightsail Endpoints and Quotas</a> in the <i>Amazon Web Services General Reference</i>.</p>",
   "operations": {
     "AllocateStaticIp": "<p>Allocates a static IP address.</p>",
     "AttachCertificateToDistribution": "<p>Attaches an SSL/TLS certificate to your Amazon Lightsail content delivery network (CDN) distribution.</p> <p>After the certificate is attached, your distribution accepts HTTPS traffic for all of the domains that are associated with the certificate.</p> <p>Use the <code>CreateCertificate</code> action to create a certificate that you can attach to your distribution.</p> <important> <p>Only certificates created in the <code>us-east-1</code> Amazon Web Services Region can be attached to Lightsail distributions. Lightsail distributions are global resources that can reference an origin in any Amazon Web Services Region, and distribute its content globally. However, all distributions are located in the <code>us-east-1</code> Region.</p> </important>",
@@ -167,8 +167,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Lightsail throws this exception when the user cannot be authenticated or uses invalid credentials to access a resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDirection": {
       "base": null,
@@ -228,8 +227,7 @@
     },
     "AccountSetupInProgressException": {
       "base": "<p>Lightsail throws this exception when an account is still in the setup in progress state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddOn": {
       "base": "<p>Describes an add-on that is enabled for an Amazon Lightsail resource.</p>",
@@ -289,13 +287,11 @@
     },
     "AllocateStaticIpRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AllocateStaticIpResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AppCategory": {
       "base": null,
@@ -314,53 +310,43 @@
     },
     "AttachCertificateToDistributionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachCertificateToDistributionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachDiskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachDiskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachInstancesToLoadBalancerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachInstancesToLoadBalancerResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachLoadBalancerTlsCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachLoadBalancerTlsCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachStaticIpRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachStaticIpResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachedDisk": {
       "base": "<p>Describes a block storage disk that is attached to an instance, and is included in an automatic snapshot.</p>",
@@ -639,13 +625,11 @@
     },
     "CloseInstancePublicPortsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CloseInstancePublicPortsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CloudFormationStackRecord": {
       "base": "<p>Describes a CloudFormation stack record created as a result of the <code>create cloud formation stack</code> action.</p> <p>A CloudFormation stack record provides information about the AWS CloudFormation stack used to create a new Amazon Elastic Compute Cloud instance from an exported Lightsail instance snapshot.</p>",
@@ -952,8 +936,7 @@
     },
     "ContainerServicesListResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CookieObject": {
       "base": "<p>Describes whether an Amazon Lightsail content delivery network (CDN) distribution forwards cookies to the origin and, if so, which ones.</p> <p>For the cookies that you specify, your distribution caches separate versions of the specified content based on the cookie values in viewer requests.</p>",
@@ -963,13 +946,11 @@
     },
     "CopySnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CopySnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CostEstimate": {
       "base": "<p>Describes the estimated cost for resources in your Lightsail for Research account.</p>",
@@ -985,243 +966,195 @@
     },
     "CreateBucketAccessKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBucketAccessKeyResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBucketRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBucketResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCloudFormationStackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCloudFormationStackResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContactMethodRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContactMethodResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerServiceDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerServiceDeploymentResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerServiceRegistryLoginRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerServiceRegistryLoginResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerServiceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDiskFromSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDiskFromSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDiskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDiskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDiskSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDiskSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDistributionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDistributionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDomainEntryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDomainEntryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDomainResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGUISessionAccessDetailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGUISessionAccessDetailsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstanceSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstanceSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstancesFromSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstancesFromSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstancesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateKeyPairResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLoadBalancerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLoadBalancerResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLoadBalancerTlsCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLoadBalancerTlsCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRelationalDatabaseFromSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRelationalDatabaseFromSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRelationalDatabaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRelationalDatabaseResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRelationalDatabaseSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRelationalDatabaseSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Currency": {
       "base": null,
@@ -1231,213 +1164,171 @@
     },
     "DeleteAlarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAlarmResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutoSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAutoSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketAccessKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketAccessKeyResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBucketResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContactMethodRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContactMethodResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContainerImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContainerImageResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContainerServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContainerServiceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDiskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDiskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDiskSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDiskSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDistributionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDistributionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDomainEntryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDomainEntryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDomainResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKeyPairResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnownHostKeysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteKnownHostKeysResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLoadBalancerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLoadBalancerResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLoadBalancerTlsCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLoadBalancerTlsCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRelationalDatabaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRelationalDatabaseResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRelationalDatabaseSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRelationalDatabaseSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationInfo": {
       "base": "<p>Describes the destination of a record.</p>",
@@ -1448,53 +1339,43 @@
     },
     "DetachCertificateFromDistributionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachCertificateFromDistributionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachDiskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachDiskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachInstancesFromLoadBalancerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachInstancesFromLoadBalancerResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachStaticIpRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachStaticIpResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableAddOnRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableAddOnResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Disk": {
       "base": "<p>Describes a block storage disk.</p>",
@@ -1694,13 +1575,11 @@
     },
     "DownloadDefaultKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DownloadDefaultKeyPairResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EligibleToRenew": {
       "base": null,
@@ -1716,13 +1595,11 @@
     },
     "EnableAddOnRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableAddOnResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EndpointRequest": {
       "base": "<p>Describes the settings of a public endpoint for an Amazon Lightsail container service.</p>",
@@ -1775,13 +1652,11 @@
     },
     "ExportSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ForwardValues": {
       "base": null,
@@ -1792,648 +1667,519 @@
     },
     "GetActiveNamesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetActiveNamesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAlarmsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAlarmsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutoSnapshotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAutoSnapshotsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBlueprintsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBlueprintsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketAccessKeysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketAccessKeysResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketBundlesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketBundlesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketMetricDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketMetricDataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBucketsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBundlesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBundlesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCertificatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCertificatesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCloudFormationStackRecordsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCloudFormationStackRecordsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContactMethodsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContactMethodsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerAPIMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerAPIMetadataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerImagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerImagesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerLogRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerLogResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerServiceDeploymentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerServiceDeploymentsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerServiceMetricDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerServiceMetricDataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerServicePowersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerServicePowersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerServicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostEstimateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostEstimateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDiskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDiskResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDiskSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDiskSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDiskSnapshotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDiskSnapshotsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDisksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDisksResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionBundlesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionBundlesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionLatestCacheResetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionLatestCacheResetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionMetricDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionMetricDataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDomainRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDomainResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDomainsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDomainsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExportSnapshotRecordsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExportSnapshotRecordsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceAccessDetailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceAccessDetailsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceMetricDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceMetricDataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstancePortStatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstancePortStatesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceSnapshotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceSnapshotsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstanceStateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInstancesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKeyPairResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKeyPairsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetKeyPairsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerMetricDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerMetricDataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerTlsCertificatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerTlsCertificatesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerTlsPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancerTlsPoliciesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLoadBalancersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationsForResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOperationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRegionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRegionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseBlueprintsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseBlueprintsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseBundlesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseBundlesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseEventsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseLogEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseLogEventsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseLogStreamsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseLogStreamsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseMasterUserPasswordRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseMasterUserPasswordResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseMetricDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseMetricDataResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseParametersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseParametersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseSnapshotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseSnapshotResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseSnapshotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabaseSnapshotsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRelationalDatabasesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSetupHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSetupHistoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStaticIpRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStaticIpResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStaticIpsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStaticIpsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HeaderEnum": {
       "base": null,
@@ -2494,13 +2240,11 @@
     },
     "ImportKeyPairRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportKeyPairResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InUseResourceCount": {
       "base": null,
@@ -2685,8 +2429,7 @@
     },
     "InvalidInputException": {
       "base": "<p>Lightsail throws this exception when user input does not conform to the validation rules of an input field.</p> <note> <p>Domain and distribution APIs are only available in the N. Virginia (<code>us-east-1</code>) Amazon Web Services Region. Please set your Amazon Web Services Region configuration to <code>us-east-1</code> to create, view, or edit these resources.</p> </note>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddress": {
       "base": null,
@@ -2725,13 +2468,11 @@
     },
     "IsVpcPeeredRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IsVpcPeeredResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IsoDate": {
       "base": null,
@@ -3217,8 +2958,7 @@
     },
     "NotFoundException": {
       "base": "<p>Lightsail throws this exception when it cannot find a resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NotificationTriggerList": {
       "base": null,
@@ -3229,13 +2969,11 @@
     },
     "OpenInstancePublicPortsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "OpenInstancePublicPortsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Operation": {
       "base": "<p>Describes the API operation.</p>",
@@ -3266,8 +3004,7 @@
     },
     "OperationFailureException": {
       "base": "<p>Lightsail throws this exception when an operation fails to execute.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OperationList": {
       "base": null,
@@ -3382,13 +3119,11 @@
     },
     "PeerVpcRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PeerVpcResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PendingMaintenanceAction": {
       "base": "<p>Describes a pending database maintenance action.</p>",
@@ -3486,23 +3221,19 @@
     },
     "PutAlarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutAlarmResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutInstancePublicPortsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutInstancePublicPortsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryStringObject": {
       "base": "<p>Describes the query string parameters that an Amazon Lightsail content delivery network (CDN) distribution to bases caching on.</p> <p>For the query strings that you specify, your distribution caches separate versions of the specified content based on the query string values in viewer requests.</p>",
@@ -3524,23 +3255,19 @@
     },
     "RebootInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RebootInstanceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RebootRelationalDatabaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RebootRelationalDatabaseResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RecordState": {
       "base": null,
@@ -3571,15 +3298,17 @@
         "ResourceLocation$regionName": "<p>The Amazon Web Services Region name.</p>"
       }
     },
+    "RegionSetupInProgressException": {
+      "base": "<p>Lightsail throws this exception when an operation is performed on resources in an opt-in Region that is currently being set up.</p>",
+      "refs": {}
+    },
     "RegisterContainerImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterContainerImageResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisteredDomainDelegationInfo": {
       "base": "<p>Describes the delegation state of an Amazon Route 53 registered domain to Amazon Lightsail.</p> <p>When you delegate an Amazon Route 53 registered domain to Lightsail, you can manage the DNS of the domain using a Lightsail DNS zone. You no longer use the Route 53 hosted zone to manage the DNS of the domain. To delegate the domain, Lightsail automatically updates the domain's name servers in Route 53 to the name servers of the Lightsail DNS zone. Then, Lightsail automatically deletes the Route 53 hosted zone for the domain.</p> <p>All of the following conditions must be true for automatic domain delegation to be successful:</p> <ul> <li> <p>The registered domain must be in the same Amazon Web Services account as the Lightsail account making the request.</p> </li> <li> <p>The user or entity making the request must have permission to manage domains in Route 53.</p> </li> <li> <p>The Route 53 hosted zone for the domain must be empty. It cannot contain DNS records other than start of authority (SOA) and name server records.</p> </li> </ul> <p>If automatic domain delegation fails, or if you manage the DNS of your domain using a service other than Route 53, then you must manually add the Lightsail DNS zone name servers to your domain in order to delegate management of its DNS to Lightsail. For more information, see <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/lightsail-how-to-create-dns-entry\">Creating a DNS zone to manage your domain’s records in Amazon Lightsail</a> in the <i>Amazon Lightsail Developer Guide</i>.</p>",
@@ -3695,13 +3424,11 @@
     },
     "ReleaseStaticIpRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReleaseStaticIpResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RenewalStatus": {
       "base": null,
@@ -3729,13 +3456,11 @@
     },
     "ResetDistributionCacheRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetDistributionCacheResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
@@ -4014,13 +3739,11 @@
     },
     "SendContactMethodVerificationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendContactMethodVerificationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SensitiveNonEmptyString": {
       "base": null,
@@ -4044,8 +3767,7 @@
     },
     "ServiceException": {
       "base": "<p>A general service exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Session": {
       "base": "<p>Describes a web-based, remote graphical user interface (GUI), Amazon DCV session. The session is used to access a virtual computer’s operating system or application.</p>",
@@ -4061,23 +3783,19 @@
     },
     "SetIpAddressTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetIpAddressTypeResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetResourceAccessForBucketRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetResourceAccessForBucketResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetupDomainName": {
       "base": null,
@@ -4125,13 +3843,11 @@
     },
     "SetupInstanceHttpsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetupInstanceHttpsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SetupRequest": {
       "base": "<p>Returns information that was submitted during the <code>SetupInstanceHttps</code> request. Email information is redacted for privacy.</p>",
@@ -4148,33 +3864,27 @@
     },
     "StartGUISessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartGUISessionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartInstanceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRelationalDatabaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRelationalDatabaseResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StaticIp": {
       "base": "<p>Describes a static IP.</p>",
@@ -4203,13 +3913,11 @@
     },
     "StopGUISessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopGUISessionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopInstanceOnIdleRequest": {
       "base": "<p>Describes a request to create or edit the <code>StopInstanceOnIdle</code> add-on.</p> <important> <p>This add-on only applies to Lightsail for Research resources.</p> </important>",
@@ -4219,23 +3927,19 @@
     },
     "StopInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopInstanceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopRelationalDatabaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopRelationalDatabaseResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StringList": {
       "base": null,
@@ -4336,13 +4040,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -4352,13 +4054,11 @@
     },
     "TestAlarmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestAlarmResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeOfDay": {
       "base": null,
@@ -4383,128 +4083,103 @@
     },
     "UnauthenticatedException": {
       "base": "<p>Lightsail throws this exception when the user has not been authenticated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnpeerVpcRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnpeerVpcResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBucketBundleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBucketBundleResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBucketRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBucketResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateContainerServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateContainerServiceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDistributionBundleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDistributionBundleResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDistributionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDistributionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDomainEntryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDomainEntryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInstanceMetadataOptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInstanceMetadataOptionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLoadBalancerAttributeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLoadBalancerAttributeResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRelationalDatabaseParametersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRelationalDatabaseParametersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRelationalDatabaseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRelationalDatabaseResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ViewerMinimumTlsProtocolVersionEnum": {
       "base": null,
@@ -4895,6 +4570,10 @@
         "Region$continentCode": "<p>The continent code (<code>NA</code>, meaning North America).</p>",
         "Region$description": "<p>The description of the Amazon Web Services Region (<code>This region is recommended to serve users in the eastern United States and eastern Canada</code>).</p>",
         "Region$displayName": "<p>The display name (<code>Ohio</code>).</p>",
+        "RegionSetupInProgressException$code": null,
+        "RegionSetupInProgressException$docs": "<p> <a href=\"https://docs.aws.amazon.com/lightsail/latest/userguide/understanding-regions-and-availability-zones-in-amazon-lightsail.html\">Regions and Availability Zones for Lightsail</a> </p>",
+        "RegionSetupInProgressException$message": null,
+        "RegionSetupInProgressException$tip": "<p>Opt-in Regions typically take a few minutes to finish setting up before you can work with them. Wait a few minutes and try again.</p>",
         "RegisterContainerImageRequest$digest": "<p>The digest of the container image to be registered.</p>",
         "RelationalDatabase$supportCode": "<p>The support code for the database. Include this code in your email to support when you have questions about a database in Lightsail. This code enables our support team to look up your Lightsail information more easily.</p>",
         "RelationalDatabase$masterDatabaseName": "<p>The name of the master database created when the Lightsail database resource is created.</p>",

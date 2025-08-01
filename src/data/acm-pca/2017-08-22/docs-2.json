@@ -5,12 +5,12 @@
     "CreateCertificateAuthority": "<p>Creates a root or subordinate private certificate authority (CA). You must specify the CA configuration, an optional configuration for Online Certificate Status Protocol (OCSP) and/or a certificate revocation list (CRL), the CA type, and an optional idempotency token to avoid accidental creation of multiple CAs. The CA configuration specifies the name of the algorithm and key size to be used to create the CA private key, the type of signing algorithm that the CA uses, and X.500 subject information. The OCSP configuration can optionally specify a custom URL for the OCSP responder. The CRL configuration specifies the CRL expiration period in days (the validity period of the CRL), the Amazon S3 bucket that will contain the CRL, and a CNAME alias for the S3 bucket that is included in certificates issued by the CA. If successful, this action returns the Amazon Resource Name (ARN) of the CA.</p> <note> <p>Both Amazon Web Services Private CA and the IAM principal must have permission to write to the S3 bucket that you specify. If the IAM principal making the call does not have permission to write to the bucket, then an exception is thrown. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/crl-planning.html#s3-policies\">Access policies for CRLs in Amazon S3</a>.</p> </note> <p>Amazon Web Services Private CA assets that are stored in Amazon S3 can be protected with encryption. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/crl-planning.html#crl-encryption\">Encrypting Your CRLs</a>.</p>",
     "CreateCertificateAuthorityAuditReport": "<p>Creates an audit report that lists every time that your CA private key is used to issue a certificate. The <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_IssueCertificate.html\">IssueCertificate</a> and <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_RevokeCertificate.html\">RevokeCertificate</a> actions use the private key.</p> <p>To save the audit report to your designated Amazon S3 bucket, you must create a bucket policy that grants Amazon Web Services Private CA permission to access and write to it. For an example policy, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/PcaAuditReport.html#s3-access\">Prepare an Amazon S3 bucket for audit reports</a>.</p> <p>Amazon Web Services Private CA assets that are stored in Amazon S3 can be protected with encryption. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/PcaAuditReport.html#audit-report-encryption\">Encrypting Your Audit Reports</a>.</p> <note> <p>You can generate a maximum of one report every 30 minutes.</p> </note>",
     "CreatePermission": "<p>Grants one or more permissions on a private CA to the Certificate Manager (ACM) service principal (<code>acm.amazonaws.com</code>). These permissions allow ACM to issue and renew ACM certificates that reside in the same Amazon Web Services account as the CA.</p> <p>You can list current permissions with the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_ListPermissions.html\">ListPermissions</a> action and revoke them with the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_DeletePermission.html\">DeletePermission</a> action.</p> <p class=\"title\"> <b>About Permissions</b> </p> <ul> <li> <p>If the private CA and the certificates it issues reside in the same account, you can use <code>CreatePermission</code> to grant permissions for ACM to carry out automatic certificate renewals.</p> </li> <li> <p>For automatic certificate renewal to succeed, the ACM service principal needs permissions to create, retrieve, and list certificates.</p> </li> <li> <p>If the private CA and the ACM certificates reside in different accounts, then permissions cannot be used to enable automatic renewals. Instead, the ACM certificate owner must set up a resource-based policy to enable cross-account issuance and renewals. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/pca-rbp.html\">Using a Resource Based Policy with Amazon Web Services Private CA</a>.</p> </li> </ul>",
-    "DeleteCertificateAuthority": "<p>Deletes a private certificate authority (CA). You must provide the Amazon Resource Name (ARN) of the private CA that you want to delete. You can find the ARN by calling the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_ListCertificateAuthorities.html\">ListCertificateAuthorities</a> action. </p> <note> <p>Deleting a CA will invalidate other CAs and certificates below it in your CA hierarchy.</p> </note> <p>Before you can delete a CA that you have created and activated, you must disable it. To do this, call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_UpdateCertificateAuthority.html\">UpdateCertificateAuthority</a> action and set the <b>CertificateAuthorityStatus</b> parameter to <code>DISABLED</code>. </p> <p>Additionally, you can delete a CA if you are waiting for it to be created (that is, the status of the CA is <code>CREATING</code>). You can also delete it if the CA has been created but you haven't yet imported the signed certificate into Amazon Web Services Private CA (that is, the status of the CA is <code>PENDING_CERTIFICATE</code>). </p> <p>When you successfully call <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_DeleteCertificateAuthority.html\">DeleteCertificateAuthority</a>, the CA's status changes to <code>DELETED</code>. However, the CA won't be permanently deleted until the restoration period has passed. By default, if you do not set the <code>PermanentDeletionTimeInDays</code> parameter, the CA remains restorable for 30 days. You can set the parameter from 7 to 30 days. The <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_DescribeCertificateAuthority.html\">DescribeCertificateAuthority</a> action returns the time remaining in the restoration window of a private CA in the <code>DELETED</code> state. To restore an eligible CA, call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_RestoreCertificateAuthority.html\">RestoreCertificateAuthority</a> action.</p>",
+    "DeleteCertificateAuthority": "<p>Deletes a private certificate authority (CA). You must provide the Amazon Resource Name (ARN) of the private CA that you want to delete. You can find the ARN by calling the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_ListCertificateAuthorities.html\">ListCertificateAuthorities</a> action. </p> <note> <p>Deleting a CA will invalidate other CAs and certificates below it in your CA hierarchy.</p> </note> <p>Before you can delete a CA that you have created and activated, you must disable it. To do this, call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_UpdateCertificateAuthority.html\">UpdateCertificateAuthority</a> action and set the <b>CertificateAuthorityStatus</b> parameter to <code>DISABLED</code>. </p> <p>Additionally, you can delete a CA if you are waiting for it to be created (that is, the status of the CA is <code>CREATING</code>). You can also delete it if the CA has been created but you haven't yet imported the signed certificate into Amazon Web Services Private CA (that is, the status of the CA is <code>PENDING_CERTIFICATE</code>). </p> <p>When you successfully call <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_DeleteCertificateAuthority.html\">DeleteCertificateAuthority</a>, the CA's status changes to <code>DELETED</code>. However, the CA won't be permanently deleted until the restoration period has passed. By default, if you do not set the <code>PermanentDeletionTimeInDays</code> parameter, the CA remains restorable for 30 days. You can set the parameter from 7 to 30 days. The <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_DescribeCertificateAuthority.html\">DescribeCertificateAuthority</a> action returns the time remaining in the restoration window of a private CA in the <code>DELETED</code> state. To restore an eligible CA, call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_RestoreCertificateAuthority.html\">RestoreCertificateAuthority</a> action.</p> <important> <p>A private CA can be deleted if it is in the <code>PENDING_CERTIFICATE</code>, <code>CREATING</code>, <code>EXPIRED</code>, <code>DISABLED</code>, or <code>FAILED</code> state. To delete a CA in the <code>ACTIVE</code> state, you must first disable it, or else the delete request results in an exception. If you are deleting a private CA in the <code>PENDING_CERTIFICATE</code> or <code>DISABLED</code> state, you can set the length of its restoration period to 7-30 days. The default is 30. During this time, the status is set to <code>DELETED</code> and the CA can be restored. A private CA deleted in the <code>CREATING</code> or <code>FAILED</code> state has no assigned restoration period and cannot be restored.</p> </important>",
     "DeletePermission": "<p>Revokes permissions on a private CA granted to the Certificate Manager (ACM) service principal (acm.amazonaws.com). </p> <p>These permissions allow ACM to issue and renew ACM certificates that reside in the same Amazon Web Services account as the CA. If you revoke these permissions, ACM will no longer renew the affected certificates automatically.</p> <p>Permissions can be granted with the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreatePermission.html\">CreatePermission</a> action and listed with the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_ListPermissions.html\">ListPermissions</a> action. </p> <p class=\"title\"> <b>About Permissions</b> </p> <ul> <li> <p>If the private CA and the certificates it issues reside in the same account, you can use <code>CreatePermission</code> to grant permissions for ACM to carry out automatic certificate renewals.</p> </li> <li> <p>For automatic certificate renewal to succeed, the ACM service principal needs permissions to create, retrieve, and list certificates.</p> </li> <li> <p>If the private CA and the ACM certificates reside in different accounts, then permissions cannot be used to enable automatic renewals. Instead, the ACM certificate owner must set up a resource-based policy to enable cross-account issuance and renewals. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/pca-rbp.html\">Using a Resource Based Policy with Amazon Web Services Private CA</a>.</p> </li> </ul>",
     "DeletePolicy": "<p>Deletes the resource-based policy attached to a private CA. Deletion will remove any access that the policy has granted. If there is no policy attached to the private CA, this action will return successful.</p> <p>If you delete a policy that was applied through Amazon Web Services Resource Access Manager (RAM), the CA will be removed from all shares in which it was included. </p> <p>The Certificate Manager Service Linked Role that the policy supports is not affected when you delete the policy. </p> <p>The current policy can be shown with <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_GetPolicy.html\">GetPolicy</a> and updated with <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_PutPolicy.html\">PutPolicy</a>.</p> <p class=\"title\"> <b>About Policies</b> </p> <ul> <li> <p>A policy grants access on a private CA to an Amazon Web Services customer account, to Amazon Web Services Organizations, or to an Amazon Web Services Organizations unit. Policies are under the control of a CA administrator. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/pca-rbp.html\">Using a Resource Based Policy with Amazon Web Services Private CA</a>.</p> </li> <li> <p>A policy permits a user of Certificate Manager (ACM) to issue ACM certificates signed by a CA in another account.</p> </li> <li> <p>For ACM to manage automatic renewal of these certificates, the ACM user must configure a Service Linked Role (SLR). The SLR allows the ACM service to assume the identity of the user, subject to confirmation against the Amazon Web Services Private CA policy. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-slr.html\">Using a Service Linked Role with ACM</a>.</p> </li> <li> <p>Updates made in Amazon Web Services Resource Manager (RAM) are reflected in policies. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/pca-ram.html\">Attach a Policy for Cross-Account Access</a>.</p> </li> </ul>",
     "DescribeCertificateAuthority": "<p>Lists information about your private certificate authority (CA) or one that has been shared with you. You specify the private CA on input by its ARN (Amazon Resource Name). The output contains the status of your CA. This can be any of the following: </p> <ul> <li> <p> <code>CREATING</code> - Amazon Web Services Private CA is creating your private certificate authority.</p> </li> <li> <p> <code>PENDING_CERTIFICATE</code> - The certificate is pending. You must use your Amazon Web Services Private CA-hosted or on-premises root or subordinate CA to sign your private CA CSR and then import it into Amazon Web Services Private CA. </p> </li> <li> <p> <code>ACTIVE</code> - Your private CA is active.</p> </li> <li> <p> <code>DISABLED</code> - Your private CA has been disabled.</p> </li> <li> <p> <code>EXPIRED</code> - Your private CA certificate has expired.</p> </li> <li> <p> <code>FAILED</code> - Your private CA has failed. Your CA can fail because of problems such a network outage or back-end Amazon Web Services failure or other errors. A failed CA can never return to the pending state. You must create a new CA. </p> </li> <li> <p> <code>DELETED</code> - Your private CA is within the restoration period, after which it is permanently deleted. The length of time remaining in the CA's restoration period is also included in this action's output.</p> </li> </ul>",
     "DescribeCertificateAuthorityAuditReport": "<p>Lists information about a specific audit report created by calling the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthorityAuditReport.html\">CreateCertificateAuthorityAuditReport</a> action. Audit information is created every time the certificate authority (CA) private key is used. The private key is used when you call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_IssueCertificate.html\">IssueCertificate</a> action or the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_RevokeCertificate.html\">RevokeCertificate</a> action. </p>",
-    "GetCertificate": "<p>Retrieves a certificate from your private CA or one that has been shared with you. The ARN of the certificate is returned when you call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_IssueCertificate.html\">IssueCertificate</a> action. You must specify both the ARN of your private CA and the ARN of the issued certificate when calling the <b>GetCertificate</b> action. You can retrieve the certificate if it is in the <b>ISSUED</b> state. You can call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthorityAuditReport.html\">CreateCertificateAuthorityAuditReport</a> action to create a report that contains information about all of the certificates issued and revoked by your private CA. </p>",
+    "GetCertificate": "<p>Retrieves a certificate from your private CA or one that has been shared with you. The ARN of the certificate is returned when you call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_IssueCertificate.html\">IssueCertificate</a> action. You must specify both the ARN of your private CA and the ARN of the issued certificate when calling the <b>GetCertificate</b> action. You can retrieve the certificate if it is in the <b>ISSUED</b>, <b>EXPIRED</b>, or <b>REVOKED</b> state. You can call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthorityAuditReport.html\">CreateCertificateAuthorityAuditReport</a> action to create a report that contains information about all of the certificates issued and revoked by your private CA. </p>",
     "GetCertificateAuthorityCertificate": "<p>Retrieves the certificate and certificate chain for your private certificate authority (CA) or one that has been shared with you. Both the certificate and the chain are base64 PEM-encoded. The chain does not include the CA certificate. Each certificate in the chain signs the one before it. </p>",
     "GetCertificateAuthorityCsr": "<p>Retrieves the certificate signing request (CSR) for your private certificate authority (CA). The CSR is created when you call the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html\">CreateCertificateAuthority</a> action. Sign the CSR with your Amazon Web Services Private CA-hosted or on-premises root or subordinate CA. Then import the signed certificate back into Amazon Web Services Private CA by calling the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_ImportCertificateAuthorityCertificate.html\">ImportCertificateAuthorityCertificate</a> action. The CSR is returned as a base64 PEM-encoded string. </p>",
     "GetPolicy": "<p>Retrieves the resource-based policy attached to a private CA. If either the private CA resource or the policy cannot be found, this action returns a <code>ResourceNotFoundException</code>. </p> <p>The policy can be attached or updated with <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_PutPolicy.html\">PutPolicy</a> and removed with <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_DeletePolicy.html\">DeletePolicy</a>.</p> <p class=\"title\"> <b>About Policies</b> </p> <ul> <li> <p>A policy grants access on a private CA to an Amazon Web Services customer account, to Amazon Web Services Organizations, or to an Amazon Web Services Organizations unit. Policies are under the control of a CA administrator. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/pca-rbp.html\">Using a Resource Based Policy with Amazon Web Services Private CA</a>.</p> </li> <li> <p>A policy permits a user of Certificate Manager (ACM) to issue ACM certificates signed by a CA in another account.</p> </li> <li> <p>For ACM to manage automatic renewal of these certificates, the ACM user must configure a Service Linked Role (SLR). The SLR allows the ACM service to assume the identity of the user, subject to confirmation against the Amazon Web Services Private CA policy. For more information, see <a href=\"https://docs.aws.amazon.com/acm/latest/userguide/acm-slr.html\">Using a Service Linked Role with ACM</a>.</p> </li> <li> <p>Updates made in Amazon Web Services Resource Manager (RAM) are reflected in policies. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/pca-ram.html\">Attach a Policy for Cross-Account Access</a>.</p> </li> </ul>",
@@ -118,7 +118,7 @@
         "GetCertificateAuthorityCsrRequest$CertificateAuthorityArn": "<p>The Amazon Resource Name (ARN) that was returned when you called the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html\">CreateCertificateAuthority</a> action. This must be of the form: </p> <p> <code>arn:aws:acm-pca:<i>region</i>:<i>account</i>:certificate-authority/<i>12345678-1234-1234-1234-123456789012</i> </code> </p>",
         "GetCertificateRequest$CertificateAuthorityArn": "<p>The Amazon Resource Name (ARN) that was returned when you called <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html\">CreateCertificateAuthority</a>. This must be of the form: </p> <p> <code>arn:aws:acm-pca:<i>region</i>:<i>account</i>:certificate-authority/<i>12345678-1234-1234-1234-123456789012</i> </code>. </p>",
         "GetCertificateRequest$CertificateArn": "<p>The ARN of the issued certificate. The ARN contains the certificate serial number and must be in the following form: </p> <p> <code>arn:aws:acm-pca:<i>region</i>:<i>account</i>:certificate-authority/<i>12345678-1234-1234-1234-123456789012</i>/certificate/<i>286535153982981100925020015808220737245</i> </code> </p>",
-        "GetPolicyRequest$ResourceArn": "<p>The Amazon Resource Number (ARN) of the private CA that will have its policy retrieved. You can find the CA's ARN by calling the ListCertificateAuthorities action. <pre><code> &lt;/p&gt; </code></pre>",
+        "GetPolicyRequest$ResourceArn": "<p>The Amazon Resource Number (ARN) of the private CA that will have its policy retrieved. You can find the CA's ARN by calling the ListCertificateAuthorities action. </p>",
         "ImportCertificateAuthorityCertificateRequest$CertificateAuthorityArn": "<p>The Amazon Resource Name (ARN) that was returned when you called <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html\">CreateCertificateAuthority</a>. This must be of the form: </p> <p> <code>arn:aws:acm-pca:<i>region</i>:<i>account</i>:certificate-authority/<i>12345678-1234-1234-1234-123456789012</i> </code> </p>",
         "IssueCertificateRequest$CertificateAuthorityArn": "<p>The Amazon Resource Name (ARN) that was returned when you called <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html\">CreateCertificateAuthority</a>. This must be of the form:</p> <p> <code>arn:aws:acm-pca:<i>region</i>:<i>account</i>:certificate-authority/<i>12345678-1234-1234-1234-123456789012</i> </code> </p>",
         "IssueCertificateRequest$TemplateArn": "<p>Specifies a custom configuration template to use when issuing a certificate. If this parameter is not provided, Amazon Web Services Private CA defaults to the <code>EndEntityCertificate/V1</code> template. For CA certificates, you should choose the shortest path length that meets your needs. The path length is indicated by the PathLen<i>N</i> portion of the ARN, where <i>N</i> is the <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/PcaTerms.html#terms-cadepth\">CA depth</a>.</p> <p>Note: The CA depth configured on a subordinate CA certificate must not exceed the limit set by its parents in the CA hierarchy.</p> <p>For a list of <code>TemplateArn</code> values supported by Amazon Web Services Private CA, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/UsingTemplates.html\">Understanding Certificate Templates</a>.</p>",
@@ -246,8 +246,7 @@
     },
     "CertificateMismatchException": {
       "base": "<p>The certificate authority certificate you are importing does not comply with conditions specified in the certificate that signed it.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificatePolicyList": {
       "base": null,
@@ -264,8 +263,7 @@
     },
     "ConcurrentModificationException": {
       "base": "<p>A previous update to your private CA is still ongoing.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CountryCodeString": {
       "base": null,
@@ -275,28 +273,23 @@
     },
     "CreateCertificateAuthorityAuditReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateAuthorityAuditReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateAuthorityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCertificateAuthorityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CrlConfiguration": {
       "base": "<p>Contains configuration information for a certificate revocation list (CRL). Your private certificate authority (CA) creates base CRLs. Delta CRLs are not supported. You can enable CRLs for your new or an existing private CA by setting the <b>Enabled</b> parameter to <code>true</code>. Your private CA writes CRLs to an S3 bucket that you specify in the <b>S3BucketName</b> parameter. You can hide the name of your bucket by specifying a value for the <b>CustomCname</b> parameter. Your private CA by default copies the CNAME or the S3 bucket name to the <b>CRL Distribution Points</b> extension of each certificate it issues. If you want to configure this default behavior to be something different, you can set the <b>CrlDistributionPointExtensionConfiguration</b> parameter. Your S3 bucket policy must give write permission to Amazon Web Services Private CA. </p> <p>Amazon Web Services Private CA assets that are stored in Amazon S3 can be protected with encryption. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/crl-planning.html#crl-encryption\">Encrypting Your CRLs</a>.</p> <p>Your private CA uses the value in the <b>ExpirationInDays</b> parameter to calculate the <b>nextUpdate</b> field in the CRL. The CRL is refreshed prior to a certificate's expiration date or when a certificate is revoked. When a certificate is revoked, it appears in the CRL until the certificate expires, and then in one additional CRL after expiration, and it always appears in the audit report.</p> <p>A CRL is typically updated approximately 30 minutes after a certificate is revoked. If for any reason a CRL update fails, Amazon Web Services Private CA makes further attempts every 15 minutes.</p> <p>CRLs contain the following fields:</p> <ul> <li> <p> <b>Version</b>: The current version number defined in RFC 5280 is V2. The integer value is 0x1. </p> </li> <li> <p> <b>Signature Algorithm</b>: The name of the algorithm used to sign the CRL.</p> </li> <li> <p> <b>Issuer</b>: The X.500 distinguished name of your private CA that issued the CRL.</p> </li> <li> <p> <b>Last Update</b>: The issue date and time of this CRL.</p> </li> <li> <p> <b>Next Update</b>: The day and time by which the next CRL will be issued.</p> </li> <li> <p> <b>Revoked Certificates</b>: List of revoked certificates. Each list item contains the following information.</p> <ul> <li> <p> <b>Serial Number</b>: The serial number, in hexadecimal format, of the revoked certificate.</p> </li> <li> <p> <b>Revocation Date</b>: Date and time the certificate was revoked.</p> </li> <li> <p> <b>CRL Entry Extensions</b>: Optional extensions for the CRL entry.</p> <ul> <li> <p> <b>X509v3 CRL Reason Code</b>: Reason the certificate was revoked.</p> </li> </ul> </li> </ul> </li> <li> <p> <b>CRL Extensions</b>: Optional extensions for the CRL.</p> <ul> <li> <p> <b>X509v3 Authority Key Identifier</b>: Identifies the public key associated with the private key used to sign the certificate.</p> </li> <li> <p> <b>X509v3 CRL Number:</b>: Decimal sequence number for the CRL.</p> </li> </ul> </li> <li> <p> <b>Signature Algorithm</b>: Algorithm used by your private CA to sign the CRL.</p> </li> <li> <p> <b>Signature Value</b>: Signature computed over the CRL.</p> </li> </ul> <p>Certificate revocation lists created by Amazon Web Services Private CA are DER-encoded. You can use the following OpenSSL command to list a CRL.</p> <p> <code>openssl crl -inform DER -text -in <i>crl_path</i> -noout</code> </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/crl-planning.html\">Planning a certificate revocation list (CRL)</a> in the <i>Amazon Web Services Private Certificate Authority User Guide</i> </p>",
@@ -378,38 +371,31 @@
     },
     "DeleteCertificateAuthorityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePermissionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateAuthorityAuditReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateAuthorityAuditReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateAuthorityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateAuthorityResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EdiPartyName": {
       "base": "<p>Describes an Electronic Data Interchange (EDI) entity as described in as defined in <a href=\"https://datatracker.ietf.org/doc/html/rfc5280\">Subject Alternative Name</a> in RFC 5280.</p>",
@@ -462,43 +448,35 @@
     },
     "GetCertificateAuthorityCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCertificateAuthorityCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCertificateAuthorityCsrRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCertificateAuthorityCsrResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IdempotencyToken": {
       "base": null,
@@ -509,8 +487,7 @@
     },
     "ImportCertificateAuthorityCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer1To5000": {
       "base": null,
@@ -520,48 +497,39 @@
     },
     "InvalidArgsException": {
       "base": "<p>One or more of the specified arguments was not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidArnException": {
       "base": "<p>The requested Amazon Resource Name (ARN) does not refer to an existing resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNextTokenException": {
       "base": "<p>The token specified in the <code>NextToken</code> argument is not valid. Use the token returned from your previous call to <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_ListCertificateAuthorities.html\">ListCertificateAuthorities</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPolicyException": {
       "base": "<p>The resource policy is invalid or is missing a required statement. For general information about IAM policy and statement structure, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#access_policies-json\">Overview of JSON Policies</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>The request action cannot be performed or is prohibited.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidStateException": {
       "base": "<p>The state of the private CA does not allow this action to occur.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTagException": {
       "base": "<p>The tag associated with the CA is not valid. The invalid argument is contained in the message field.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IssueCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IssueCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "KeyAlgorithm": {
       "base": null,
@@ -572,8 +540,8 @@
     "KeyStorageSecurityStandard": {
       "base": null,
       "refs": {
-        "CertificateAuthority$KeyStorageSecurityStandard": "<p>Defines a cryptographic key management compliance standard used for handling CA keys. </p> <p>Default: FIPS_140_2_LEVEL_3_OR_HIGHER</p> <p>Note: Amazon Web Services Region ap-northeast-3 supports only FIPS_140_2_LEVEL_2_OR_HIGHER. You must explicitly specify this parameter and value when creating a CA in that Region. Specifying a different value (or no value) results in an <code>InvalidArgsException</code> with the message \"A certificate authority cannot be created in this region with the specified security standard.\"</p>",
-        "CreateCertificateAuthorityRequest$KeyStorageSecurityStandard": "<p>Specifies a cryptographic key management compliance standard used for handling CA keys.</p> <p>Default: FIPS_140_2_LEVEL_3_OR_HIGHER</p> <note> <p>Some Amazon Web Services Regions do not support the default. When creating a CA in these Regions, you must provide <code>FIPS_140_2_LEVEL_2_OR_HIGHER</code> as the argument for <code>KeyStorageSecurityStandard</code>. Failure to do this results in an <code>InvalidArgsException</code> with the message, \"A certificate authority cannot be created in this region with the specified security standard.\"</p> <p>For information about security standard support in various Regions, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/data-protection.html#private-keys\">Storage and security compliance of Amazon Web Services Private CA private keys</a>.</p> </note>"
+        "CertificateAuthority$KeyStorageSecurityStandard": "<p>Defines a cryptographic key management compliance standard for handling and protecting CA keys.</p> <p>Default: FIPS_140_2_LEVEL_3_OR_HIGHER</p> <note> <p>Starting January 26, 2023, Amazon Web Services Private CA protects all CA private keys in non-China regions using hardware security modules (HSMs) that comply with FIPS PUB 140-2 Level 3.</p> <p>For information about security standard support in different Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/data-protection.html#private-keys\">Storage and security compliance of Amazon Web Services Private CA private keys</a>.</p> </note>",
+        "CreateCertificateAuthorityRequest$KeyStorageSecurityStandard": "<p>Specifies a cryptographic key management compliance standard for handling and protecting CA keys.</p> <p>Default: FIPS_140_2_LEVEL_3_OR_HIGHER</p> <note> <p>Some Amazon Web Services Regions don't support the default value. When you create a CA in these Regions, you must use <code>CCPC_LEVEL_1_OR_HIGHER</code> for the <code>KeyStorageSecurityStandard</code> parameter. If you don't, the operation returns an <code>InvalidArgsException</code> with this message: \"A certificate authority cannot be created in this region with the specified security standard.\"</p> <p>For information about security standard support in different Amazon Web Services Regions, see <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/data-protection.html#private-keys\">Storage and security compliance of Amazon Web Services Private CA private keys</a>.</p> </note>"
       }
     },
     "KeyUsage": {
@@ -585,53 +553,43 @@
     },
     "LimitExceededException": {
       "base": "<p>An Amazon Web Services Private CA quota has been exceeded. See the exception message returned to determine the quota that was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificateAuthoritiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificateAuthoritiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LockoutPreventedException": {
       "base": "<p>The current action was prevented because it would lock the caller out from performing subsequent actions. Verify that the specified parameters would not result in the caller being denied access to the resource. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MalformedCSRException": {
       "base": "<p>The certificate signing request is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MalformedCertificateException": {
       "base": "<p>One or more fields in the certificate are invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -678,8 +636,7 @@
     },
     "PermissionAlreadyExistsException": {
       "base": "<p>The designated permission has already been given to the user.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PermissionList": {
       "base": null,
@@ -727,8 +684,7 @@
     },
     "PutPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Qualifier": {
       "base": "<p>Defines a <code>PolicyInformation</code> qualifier. Amazon Web Services Private CA supports the <a href=\"https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.4\">certification practice statement (CPS) qualifier</a> defined in RFC 5280. </p>",
@@ -738,23 +694,19 @@
     },
     "RequestAlreadyProcessedException": {
       "base": "<p>Your request has already been completed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestFailedException": {
       "base": "<p>The request has failed for an unspecified reason.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RequestInProgressException": {
       "base": "<p>Your request is already in progress.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>A resource such as a private CA, S3 bucket, certificate, audit report, or policy cannot be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceOwner": {
       "base": null,
@@ -764,8 +716,7 @@
     },
     "RestoreCertificateAuthorityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RevocationConfiguration": {
       "base": "<p>Certificate revocation information used by the <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_CreateCertificateAuthority.html\">CreateCertificateAuthority</a> and <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_UpdateCertificateAuthority.html\">UpdateCertificateAuthority</a> actions. Your private certificate authority (CA) can configure Online Certificate Status Protocol (OCSP) support and/or maintain a certificate revocation list (CRL). OCSP returns validation information about certificates as requested by clients, and a CRL contains an updated list of certificates revoked by your CA. For more information, see <a href=\"https://docs.aws.amazon.com/privateca/latest/APIReference/API_RevokeCertificate.html\">RevokeCertificate</a> and <a href=\"https://docs.aws.amazon.com/privateca/latest/userguide/revocation-setup.html\">Setting up a certificate revocation method</a> in the <i>Amazon Web Services Private Certificate Authority User Guide</i>.</p>",
@@ -783,8 +734,7 @@
     },
     "RevokeCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "S3BucketName": {
       "base": null,
@@ -935,8 +885,7 @@
     },
     "TagCertificateAuthorityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagKey": {
       "base": null,
@@ -961,18 +910,15 @@
     },
     "TooManyTagsException": {
       "base": "<p>You can associate up to 50 tags with a private CA. Exception information is contained in the exception message field.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagCertificateAuthorityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCertificateAuthorityRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Validity": {
       "base": "<p>Validity specifies the period of time during which a certificate is valid. Validity can be expressed as an explicit date and time when the validity of a certificate starts or expires, or as a span of time after issuance, stated in days, months, or years. For more information, see <a href=\"https://tools.ietf.org/html/rfc5280#section-4.1.2.5\">Validity</a> in RFC 5280.</p> <p>Amazon Web Services Private CA API consumes the <code>Validity</code> data type differently in two distinct parameters of the <code>IssueCertificate</code> action. The required parameter <code>IssueCertificate</code>:<code>Validity</code> specifies the end of a certificate's validity period. The optional parameter <code>IssueCertificate</code>:<code>ValidityNotBefore</code> specifies a customized starting time for the validity period.</p>",
