@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.352.0 - 2025-08-01
 
 * `Aws\ACMPCA` - Doc-only update to add more information to GetCertificate action.
 * `Aws\ARCRegionSwitch` - This is the initial SDK release for Region switch
