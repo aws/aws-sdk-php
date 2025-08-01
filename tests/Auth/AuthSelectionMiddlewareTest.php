@@ -317,13 +317,14 @@ class AuthSelectionMiddlewareTest extends TestCase
     /**
      * Test auth select is done based on user's provided auth schemes.
      *
-     * @dataProvider authSelectionBasedOnUserPreferenceWithoutCRTProvider
+     * @dataProvider authSelectionBasedOnUserPreferenceProvider
      *
      * @param array $supportedAuthSchemes
      * @param array|null $serviceAuthSchemes
      * @param array|null $operationAuthSchemes
      * @param array|null $userPreferredAuthSchemes
      * @param string $expected
+     *
      * @return void
      */
     public function testAuthSelectionBasedOnUserPreference(
@@ -334,8 +335,10 @@ class AuthSelectionMiddlewareTest extends TestCase
         string $expected,
     ): void
     {
-        if (extension_loaded('awscrt')) {
-            $this->markTestSkipped();
+        if (!extension_loaded('awscrt') && $expected === 'v4a') {
+            $this->markTestSkipped(
+                "The awscrt extension is required to run this test."
+            );
         }
 
         if (isset($fns['build_source']) && is_callable($fns['build_source'])) {
@@ -381,7 +384,7 @@ class AuthSelectionMiddlewareTest extends TestCase
     /**
      * @return \Generator
      */
-    public function authSelectionBasedOnUserPreferenceWithoutCRTProvider(): \Generator
+    public function authSelectionBasedOnUserPreferenceProvider(): \Generator
     {
         $cases = [
             'user_auth_scheme_preferred_none' => [
