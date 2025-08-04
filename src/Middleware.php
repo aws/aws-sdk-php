@@ -142,8 +142,12 @@ final class Middleware
      *
      * @return callable
      */
-    public static function signer(callable $credProvider, callable $signatureFunction, $tokenProvider = null, $config = [])
-    {
+    public static function signer(
+        callable $credProvider,
+        callable $signatureFunction,
+        $tokenProvider = null,
+        $config = []
+    ) {
         return function (callable $handler) use ($signatureFunction, $credProvider, $tokenProvider, $config) {
             return function (
                 CommandInterface $command,

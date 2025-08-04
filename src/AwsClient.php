@@ -272,7 +272,7 @@ class AwsClient implements AwsClientInterface
         if ($this->isUseEndpointV2()) {
             $this->addEndpointV2Middleware();
         }
-        $this->addAuthSelectionMiddleware($args);
+        $this->addAuthSelectionMiddleware($config);
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
@@ -300,6 +300,12 @@ class AwsClient implements AwsClientInterface
     public function getCredentials()
     {
         $fn = $this->credentialProvider;
+        return $fn();
+    }
+
+    public function getToken()
+    {
+        $fn = $this->tokenProvider;
         return $fn();
     }
 
