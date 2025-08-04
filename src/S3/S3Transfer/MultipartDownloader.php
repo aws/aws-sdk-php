@@ -67,7 +67,7 @@ abstract class MultipartDownloader implements PromisorInterface
         protected readonly S3ClientInterface $s3Client,
         array $getObjectRequestArgs,
         array $config,
-        ?DownloadHandler $downloadHandler,
+        ?DownloadHandler $downloadHandler = null,
         int $currentPartNo = 0,
         int $objectPartsCount = 0,
         int $objectSizeInBytes = 0,
