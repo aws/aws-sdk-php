@@ -5,6 +5,7 @@ on:
     types: [opened, edited]
 jobs:
   add-regression-label:
+    if: github.repository_owner == 'aws'
     runs-on: ubuntu-latest
     permissions:
       issues: write
