@@ -15,24 +15,25 @@ class TransferProgressSnapshot
     /** @var int */
     private int $totalBytes;
 
-    /** @var array | null */
-    private array | null $response;
+    /** @var array|null */
+    private array|null $response;
 
-    /** @var Throwable | string | null */
-    private Throwable | string | null $reason;
+    /** @var Throwable|string|null */
+    private Throwable|string|null $reason;
 
     /**
      * @param string $identifier
      * @param int $transferredBytes
      * @param int $totalBytes
-     * @param array | null $response
+     * @param array|null $response
+     * @param Throwable|string|null $reason
      */
     public function __construct(
         string $identifier,
         int $transferredBytes,
         int $totalBytes,
         ?array $response = null,
-        Throwable | string | null $reason = null,
+        Throwable|string|null $reason = null,
     ) {
         $this->identifier = $identifier;
         $this->transferredBytes = $transferredBytes;

@@ -19,7 +19,7 @@ final class SingleProgressTracker extends TransferListener
     /** @var bool */
     private bool $clear;
 
-    /** @var TransferProgressSnapshot | null */
+    /** @var TransferProgressSnapshot|null */
     private ?TransferProgressSnapshot $currentSnapshot;
 
     /** @var bool */

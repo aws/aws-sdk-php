@@ -17,7 +17,7 @@ final class UploadRequest extends TransferRequest
     ];
 
     /** @var StreamInterface|string  */
-    private StreamInterface | string $source;
+    private StreamInterface|string $source;
 
     /** @var array  */
     private array $putObjectRequestArgs;

@@ -39,7 +39,7 @@ class S3TransferManager
     private S3TransferManagerConfig $config;
 
     /**
-     * @param S3ClientInterface | null $s3Client If provided as null then,
+     * @param S3ClientInterface|null $s3Client If provided as null then,
      * a default client will be created where its region will be the one
      * resolved from either the default from the config or the provided.
      * @param array|S3TransferManagerConfig|null $config
@@ -574,7 +574,7 @@ class S3TransferManager
     private function trySingleUpload(
         string|StreamInterface $source,
         array $requestArgs,
-        ?TransferListenerNotifier $listenerNotifier  = null
+        ?TransferListenerNotifier $listenerNotifier = null
     ): PromiseInterface
     {
         if (is_string($source) && is_readable($source)) {
@@ -683,7 +683,7 @@ class S3TransferManager
      * @return bool
      */
     private function requiresMultipartUpload(
-        string | StreamInterface $source,
+        string|StreamInterface $source,
         int $mupThreshold
     ): bool
     {

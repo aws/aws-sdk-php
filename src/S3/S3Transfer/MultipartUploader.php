@@ -79,7 +79,7 @@ class MultipartUploader extends AbstractMultipartUploader
      * @return StreamInterface
      */
     private function parseBody(
-        string | StreamInterface $source
+        string|StreamInterface $source
     ): StreamInterface
     {
         if (is_string($source)) {
@@ -274,7 +274,7 @@ class MultipartUploader extends AbstractMultipartUploader
      *
      * @param array $requestArgs
      *
-     * @return string | null
+     * @return string|null
      */
     private static function filterChecksum(array $requestArgs):? string
     {

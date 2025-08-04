@@ -11,6 +11,7 @@ use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\DownloadHandler;
+use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
 use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -44,7 +45,7 @@ abstract class MultipartDownloader implements PromisorInterface
     /** @var string|null */
     protected ?string $eTag;
 
-    /** @var TransferListenerNotifier | null */
+    /** @var TransferListenerNotifier|null */
     private readonly ?TransferListenerNotifier $listenerNotifier;
 
     /** Tracking Members */
@@ -54,7 +55,7 @@ abstract class MultipartDownloader implements PromisorInterface
      * @param S3ClientInterface $s3Client
      * @param array $getObjectRequestArgs
      * @param array $config
-     * @param DownloadHandler $downloadHandler
+     * @param ?DownloadHandler $downloadHandler
      * @param int $currentPartNo
      * @param int $objectPartsCount
      * @param int $objectSizeInBytes
@@ -66,7 +67,7 @@ abstract class MultipartDownloader implements PromisorInterface
         protected readonly S3ClientInterface $s3Client,
         array $getObjectRequestArgs,
         array $config,
-        DownloadHandler $downloadHandler,
+        ?DownloadHandler $downloadHandler,
         int $currentPartNo = 0,
         int $objectPartsCount = 0,
         int $objectSizeInBytes = 0,
@@ -77,6 +78,9 @@ abstract class MultipartDownloader implements PromisorInterface
         $this->getObjectRequestArgs = $getObjectRequestArgs;
         $this->validateConfig($config);
         $this->config = $config;
+        if ($downloadHandler === null) {
+            $downloadHandler = new StreamDownloadHandler();
+        }
         $this->downloadHandler = $downloadHandler;
         $this->currentPartNo = $currentPartNo;
         $this->objectPartsCount = $objectPartsCount;

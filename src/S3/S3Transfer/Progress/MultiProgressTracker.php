@@ -94,7 +94,7 @@ final class MultiProgressTracker extends TransferListener implements ProgressTra
     /**
      * @return ProgressBarFactoryInterface|Closure|null
      */
-    public function getProgressBarFactory(): ProgressBarFactoryInterface | Closure | null
+    public function getProgressBarFactory(): ProgressBarFactoryInterface|Closure|null
     {
         return $this->progressBarFactory;
     }

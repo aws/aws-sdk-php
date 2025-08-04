@@ -18,12 +18,27 @@ final class UploadDirectoryRequest extends TransferRequest
     private readonly array $putObjectRequestArgs;
 
     /**
-     * @param string $sourceDirectory
-     * @param string $targetBucket
-     * @param array $putObjectRequestArgs
+     * @param string $sourceDirectory The source directory to upload.
+     * @param string $targetBucket The name of the bucket to upload objects to.
+     * @param array $putObjectRequestArgs The extract arguments to be passed in
+     * each upload request.
      * @param array $config
-     * @param array $listeners
-     * @param TransferListener|null $progressTracker
+     * - follow_symbolic_links: (boolean, optional) Whether to follow symbolic links when
+     *   traversing the file tree.
+     * - recursive: (boolean, optional) Whether to upload directories recursively.
+     * - s3_prefix: (string, optional) The S3 key prefix to use for each object.
+     *   If not provided, files will be uploaded to the root of the bucket.
+     * - filter: (callable, optional) A callback to allow users to filter out unwanted files.
+     *   It is invoked for each file. An example implementation is a predicate
+     *   that takes a file and returns a boolean indicating whether this file
+     *   should be uploaded.
+     * - s3_delimiter: The S3 delimiter. A delimiter causes a list operation
+     *   to roll up all the keys that share a common prefix into a single summary list result.
+     * - put_object_request_callback: (callable, optional) A callback mechanism
+     *   to allow customers to update individual putObjectRequest that the S3 Transfer Manager generates.
+     * - failure_policy: (callable, optional) The failure policy to handle failed requests.
+     * @param array $listeners For listening to transfer events such as transferInitiated.
+     * @param TransferListener|null $progressTracker For showing progress in transfers.
      */
     public function __construct(
         string $sourceDirectory,

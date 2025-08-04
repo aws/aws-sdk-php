@@ -54,14 +54,14 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /**
      * This will be used for custom or default checksum.
      *
-     * @var string | null
+     * @var string|null
      */
     protected ?string $requestChecksum;
 
     /**
      * This will be used for custom or default checksum.
      *
-     * @var string | null
+     * @var string|null
      */
     protected ?string $requestChecksumAlgorithm;
 
@@ -77,8 +77,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      * @param TransferProgressSnapshot|null $currentSnapshot
      * @param TransferListenerNotifier|null $listenerNotifier
      */
-    public function __construct
-    (
+    public function __construct(
         S3ClientInterface $s3Client,
         array $requestArgs,
         array $config,
