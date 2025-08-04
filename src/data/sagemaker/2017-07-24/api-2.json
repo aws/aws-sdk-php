@@ -51,6 +51,18 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "AttachClusterNodeVolume":{
+      "name":"AttachClusterNodeVolume",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AttachClusterNodeVolumeRequest"},
+      "output":{"shape":"AttachClusterNodeVolumeResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "BatchDeleteClusterNodes":{
       "name":"BatchDeleteClusterNodes",
       "http":{
@@ -2269,6 +2281,18 @@
       },
       "input":{"shape":"DescribeWorkteamRequest"},
       "output":{"shape":"DescribeWorkteamResponse"}
+    },
+    "DetachClusterNodeVolume":{
+      "name":"DetachClusterNodeVolume",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DetachClusterNodeVolumeRequest"},
+      "output":{"shape":"DetachClusterNodeVolumeResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
     },
     "DisableSagemakerServicecatalogPortfolio":{
       "name":"DisableSagemakerServicecatalogPortfolio",
@@ -5010,6 +5034,38 @@
       "max":128,
       "min":1,
       "pattern":"[a-zA-Z0-9._-]+"
+    },
+    "AttachClusterNodeVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "NodeId",
+        "VolumeId"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "NodeId":{"shape":"ClusterNodeId"},
+        "VolumeId":{"shape":"VolumeId"}
+      }
+    },
+    "AttachClusterNodeVolumeResponse":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "NodeId",
+        "VolumeId",
+        "AttachTime",
+        "Status",
+        "DeviceName"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "NodeId":{"shape":"ClusterNodeId"},
+        "VolumeId":{"shape":"VolumeId"},
+        "AttachTime":{"shape":"Timestamp"},
+        "Status":{"shape":"VolumeAttachmentStatus"},
+        "DeviceName":{"shape":"VolumeDeviceName"}
+      }
     },
     "AttributeName":{
       "type":"string",
@@ -12379,6 +12435,38 @@
       "max":512,
       "min":0,
       "pattern":"(https|s3)://([^/])/?(.*)"
+    },
+    "DetachClusterNodeVolumeRequest":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "NodeId",
+        "VolumeId"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "NodeId":{"shape":"ClusterNodeId"},
+        "VolumeId":{"shape":"VolumeId"}
+      }
+    },
+    "DetachClusterNodeVolumeResponse":{
+      "type":"structure",
+      "required":[
+        "ClusterArn",
+        "NodeId",
+        "VolumeId",
+        "AttachTime",
+        "Status",
+        "DeviceName"
+      ],
+      "members":{
+        "ClusterArn":{"shape":"ClusterArn"},
+        "NodeId":{"shape":"ClusterNodeId"},
+        "VolumeId":{"shape":"VolumeId"},
+        "AttachTime":{"shape":"Timestamp"},
+        "Status":{"shape":"VolumeAttachmentStatus"},
+        "DeviceName":{"shape":"VolumeDeviceName"}
+      }
     },
     "DetailedAlgorithmStatus":{
       "type":"string",
@@ -27837,6 +27925,28 @@
       "max":256,
       "min":0,
       "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
+    },
+    "VolumeAttachmentStatus":{
+      "type":"string",
+      "enum":[
+        "attaching",
+        "attached",
+        "detaching",
+        "detached",
+        "busy"
+      ]
+    },
+    "VolumeDeviceName":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"/dev/(xvd[a-z]|sd[b-z]|sd[f-p][1-6])"
+    },
+    "VolumeId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"vol-[a-f0-9]{8}(?:[a-f0-9]{9})?"
     },
     "VolumeSizeInGB":{
       "type":"integer",

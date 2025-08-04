@@ -12,7 +12,7 @@
     "BatchPutAssetPropertyValue": "<p>Sends a list of asset property values to IoT SiteWise. Each value is a timestamp-quality-value (TQV) data point. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/ingest-api.html\">Ingesting data using the API</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>To identify an asset property, you must specify one of the following:</p> <ul> <li> <p>The <code>assetId</code> and <code>propertyId</code> of an asset property.</p> </li> <li> <p>A <code>propertyAlias</code>, which is a data stream alias (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). To define an asset property's alias, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html\">UpdateAssetProperty</a>.</p> </li> </ul> <important> <p>With respect to Unix epoch time, IoT SiteWise accepts only TQVs that have a timestamp of no more than 7 days in the past and no more than 10 minutes in the future. IoT SiteWise rejects timestamps outside of the inclusive range of [-7 days, +10 minutes] and returns a <code>TimestampOutOfRangeException</code> error.</p> <p>For each asset property, IoT SiteWise overwrites TQVs with duplicate timestamps unless the newer TQV has a different quality. For example, if you store a TQV <code>{T1, GOOD, V1}</code>, then storing <code>{T1, GOOD, V2}</code> replaces the existing TQV.</p> </important> <p>IoT SiteWise authorizes access to each <code>BatchPutAssetPropertyValue</code> entry individually. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/security_iam_service-with-iam.html#security_iam_service-with-iam-id-based-policies-batchputassetpropertyvalue-action\">BatchPutAssetPropertyValue authorization</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "CreateAccessPolicy": "<p>Creates an access policy that grants the specified identity (IAM Identity Center user, IAM Identity Center group, or IAM user) access to the specified IoT SiteWise Monitor portal or project resource.</p>",
     "CreateAsset": "<p>Creates an asset from an existing asset model. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/create-assets.html\">Creating assets</a> in the <i>IoT SiteWise User Guide</i>.</p>",
-    "CreateAssetModel": "<p>Creates an asset model from specified property and hierarchy definitions. You create assets from asset models. With asset models, you can easily create assets of the same type that have standardized definitions. Each asset created from a model inherits the asset model's property and hierarchy definitions. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/define-models.html\">Defining asset models</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>You can create two types of asset models, <code>ASSET_MODEL</code> or <code>COMPONENT_MODEL</code>.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – (default) An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> </ul>",
+    "CreateAssetModel": "<p>Creates an asset model from specified property and hierarchy definitions. You create assets from asset models. With asset models, you can easily create assets of the same type that have standardized definitions. Each asset created from a model inherits the asset model's property and hierarchy definitions. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/define-models.html\">Defining asset models</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>You can create three types of asset models, <code>ASSET_MODEL</code>, <code>COMPONENT_MODEL</code>, or an <code>INTERFACE</code>.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – (default) An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> <li> <p> <b>INTERFACE</b> – An interface is a type of model that defines a standard structure that can be applied to different asset models.</p> </li> </ul>",
     "CreateAssetModelCompositeModel": "<p>Creates a custom composite model from specified property and hierarchy definitions. There are two types of custom composite models, <code>inline</code> and <code>component-model-based</code>. </p> <p>Use component-model-based custom composite models to define standard, reusable components. A component-model-based custom composite model consists of a name, a description, and the ID of the component model it references. A component-model-based custom composite model has no properties of its own; its referenced component model provides its associated properties to any created assets. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/custom-composite-models.html\">Custom composite models (Components)</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>Use inline custom composite models to organize the properties of an asset model. The properties of inline custom composite models are local to the asset model where they are included and can't be used to create multiple assets.</p> <p>To create a component-model-based model, specify the <code>composedAssetModelId</code> of an existing asset model with <code>assetModelType</code> of <code>COMPONENT_MODEL</code>.</p> <p>To create an inline model, specify the <code>assetModelCompositeModelProperties</code> and don't include an <code>composedAssetModelId</code>.</p>",
     "CreateBulkImportJob": "<p>Defines a job to ingest data to IoT SiteWise from Amazon S3. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/CreateBulkImportJob.html\">Create a bulk import job (CLI)</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> <important> <p>Before you create a bulk import job, you must enable IoT SiteWise warm tier or IoT SiteWise cold tier. For more information about how to configure storage settings, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_PutStorageConfiguration.html\">PutStorageConfiguration</a>.</p> <p>Bulk import is designed to store historical data to IoT SiteWise.</p> <ul> <li> <p>Newly ingested data in the hot tier triggers notifications and computations.</p> </li> <li> <p>After data moves from the hot tier to the warm or cold tier based on retention settings, it does not trigger computations or notifications.</p> </li> <li> <p>Data older than 7 days does not trigger computations or notifications.</p> </li> </ul> </important>",
     "CreateComputationModel": "<p>Create a computation model with a configuration and data binding.</p>",
@@ -25,6 +25,7 @@
     "DeleteAsset": "<p>Deletes an asset. This action can't be undone. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/delete-assets-and-models.html\">Deleting assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p> <note> <p>You can't delete an asset that's associated to another asset. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DisassociateAssets.html\">DisassociateAssets</a>.</p> </note>",
     "DeleteAssetModel": "<p>Deletes an asset model. This action can't be undone. You must delete all assets created from an asset model before you can delete the model. Also, you can't delete an asset model if a parent asset model exists that contains a property formula expression that depends on the asset model that you want to delete. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/delete-assets-and-models.html\">Deleting assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "DeleteAssetModelCompositeModel": "<p>Deletes a composite model. This action can't be undone. You must delete all assets created from a composite model before you can delete the model. Also, you can't delete a composite model if a parent asset model exists that contains a property formula expression that depends on the asset model that you want to delete. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/delete-assets-and-models.html\">Deleting assets and models</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+    "DeleteAssetModelInterfaceRelationship": "<p>Deletes an interface relationship between an asset model and an interface asset model.</p>",
     "DeleteComputationModel": "<p>Deletes a computation model. This action can't be undone.</p>",
     "DeleteDashboard": "<p>Deletes a dashboard from IoT SiteWise Monitor.</p>",
     "DeleteDataset": "<p>Deletes a dataset. This cannot be undone.</p>",
@@ -36,8 +37,9 @@
     "DescribeAction": "<p>Retrieves information about an action.</p>",
     "DescribeAsset": "<p>Retrieves information about an asset.</p>",
     "DescribeAssetCompositeModel": "<p>Retrieves information about an asset composite model (also known as an asset component). An <code>AssetCompositeModel</code> is an instance of an <code>AssetModelCompositeModel</code>. If you want to see information about the model this is based on, call <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_DescribeAssetModelCompositeModel.html\">DescribeAssetModelCompositeModel</a>.</p>",
-    "DescribeAssetModel": "<p>Retrieves information about an asset model.</p>",
+    "DescribeAssetModel": "<p>Retrieves information about an asset model. This includes details about the asset model's properties, hierarchies, composite models, and any interface relationships if the asset model implements interfaces.</p>",
     "DescribeAssetModelCompositeModel": "<p>Retrieves information about an asset model composite model (also known as an asset model component). For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/custom-composite-models.html\">Custom composite models (Components)</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+    "DescribeAssetModelInterfaceRelationship": "<p>Retrieves information about an interface relationship between an asset model and an interface asset model.</p>",
     "DescribeAssetProperty": "<p>Retrieves information about an asset property.</p> <note> <p>When you call this operation for an attribute property, this response includes the default attribute value that you define in the asset model. If you update the default value in the model, this operation's response includes the new default value.</p> </note> <p>This operation doesn't return the value of the asset property. To get the value of an asset property, use <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_GetAssetPropertyValue.html\">GetAssetPropertyValue</a>.</p>",
     "DescribeBulkImportJob": "<p>Retrieves information about a bulk import job request. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/DescribeBulkImportJob.html\">Describe a bulk import job (CLI)</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p>",
     "DescribeComputationModel": "<p>Retrieves information about a computation model.</p>",
@@ -80,11 +82,13 @@
     "ListDatasets": "<p>Retrieves a paginated list of datasets for a specific target resource.</p>",
     "ListExecutions": "<p>Retrieves a paginated list of summaries of all executions.</p>",
     "ListGateways": "<p>Retrieves a paginated list of gateways.</p>",
+    "ListInterfaceRelationships": "<p>Retrieves a paginated list of asset models that have a specific interface asset model applied to them.</p>",
     "ListPortals": "<p>Retrieves a paginated list of IoT SiteWise Monitor portals.</p>",
     "ListProjectAssets": "<p>Retrieves a paginated list of assets associated with an IoT SiteWise Monitor project.</p>",
     "ListProjects": "<p>Retrieves a paginated list of projects for an IoT SiteWise Monitor portal.</p>",
     "ListTagsForResource": "<p>Retrieves the list of tags for an IoT SiteWise resource.</p>",
     "ListTimeSeries": "<p>Retrieves a paginated list of time series (data streams).</p>",
+    "PutAssetModelInterfaceRelationship": "<p>Creates or updates an interface relationship between an asset model and an interface asset model. This operation applies an interface to an asset model.</p>",
     "PutDefaultEncryptionConfiguration": "<p>Sets the default encryption configuration for the Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/key-management.html\">Key management</a> in the <i>IoT SiteWise User Guide</i>.</p>",
     "PutLoggingOptions": "<p>Sets logging options for IoT SiteWise.</p>",
     "PutStorageConfiguration": "<p>Configures storage settings for IoT SiteWise.</p>",
@@ -125,6 +129,7 @@
         "CustomerManagedS3Storage$s3ResourceArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the Amazon S3 object. For more information about how to find the ARN for an Amazon S3 object, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-arn-format.html\">Amazon S3 resources</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p>",
         "CustomerManagedS3Storage$roleArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the Identity and Access Management role that allows IoT SiteWise to send data to Amazon S3.</p>",
         "DatasetSummary$arn": "<p>The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html\">ARN</a> of the dataset. The format is <code>arn:${Partition}:iotsitewise:${Region}:${Account}:dataset/${DatasetId}</code>.</p>",
+        "DeleteAssetModelInterfaceRelationshipResponse$assetModelArn": "<p>The ARN of the asset model, which has the following format. <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset-model/${AssetModelId}</code> </p>",
         "DescribeAccessPolicyResponse$accessPolicyArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the access policy, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:access-policy/${AccessPolicyId}</code> </p>",
         "DescribeAssetModelResponse$assetModelArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset model, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset-model/${AssetModelId}</code> </p>",
         "DescribeAssetResponse$assetArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the asset, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset/${AssetId}</code> </p>",
@@ -140,6 +145,7 @@
         "Greengrass$groupArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the Greengrass group. For more information about how to find a group's ARN, see <a href=\"https://docs.aws.amazon.com/greengrass/v1/apireference/listgroups-get.html\">ListGroups</a> and <a href=\"https://docs.aws.amazon.com/greengrass/v1/apireference/getgroup-get.html\">GetGroup</a> in the <i>IoT Greengrass V1 API Reference</i>.</p>",
         "KendraSourceDetail$knowledgeBaseArn": "<p>The <code>knowledgeBaseArn</code> details for the Kendra dataset source.</p>",
         "KendraSourceDetail$roleArn": "<p>The <code>roleARN</code> details for the Kendra dataset source.</p>",
+        "PutAssetModelInterfaceRelationshipResponse$assetModelArn": "<p>The ARN of the asset model, which has the following format. <code>arn:${Partition}:iotsitewise:${Region}:${Account}:asset-model/${AssetModelId}</code> </p>",
         "PutDefaultEncryptionConfigurationResponse$kmsKeyArn": "<p>The Key ARN of the KMS key used for KMS encryption if you use <code>KMS_BASED_ENCRYPTION</code>.</p>",
         "TimeSeriesSummary$timeSeriesArn": "<p>The <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html\">ARN</a> of the time series, which has the following format.</p> <p> <code>arn:${Partition}:iotsitewise:${Region}:${Account}:time-series/${TimeSeriesId}</code> </p>",
         "UpdateDatasetResponse$datasetArn": "<p>The <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference-arns.html\">ARN</a> of the dataset. The format is <code>arn:${Partition}:iotsitewise:${Region}:${Account}:dataset/${DatasetId}</code>.</p>"
@@ -197,7 +203,7 @@
       }
     },
     "ActionSummary": {
-      "base": "<p>Contains the summary of the actions.</p>",
+      "base": "<p>Contains the summary of the actions, including information about where the action resolves to.</p>",
       "refs": {
         "ActionSummaries$member": null
       }
@@ -507,7 +513,7 @@
       }
     },
     "AssetModelPropertySummary": {
-      "base": "<p>Contains a summary of a property associated with a model.</p>",
+      "base": "<p>Contains a summary of a property associated with a model. This includes information about which interfaces the property belongs to, if any.</p>",
       "refs": {
         "AssetModelPropertySummaries$member": null
       }
@@ -525,8 +531,10 @@
         "CreateAssetModelCompositeModelResponse$assetModelStatus": null,
         "CreateAssetModelResponse$assetModelStatus": "<p>The status of the asset model, which contains a state (<code>CREATING</code> after successfully calling this operation) and any error message.</p>",
         "DeleteAssetModelCompositeModelResponse$assetModelStatus": null,
+        "DeleteAssetModelInterfaceRelationshipResponse$assetModelStatus": null,
         "DeleteAssetModelResponse$assetModelStatus": "<p>The status of the asset model, which contains a state (<code>DELETING</code> after successfully calling this operation) and any error message.</p>",
         "DescribeAssetModelResponse$assetModelStatus": "<p>The current status of the asset model, which contains a state and any error message.</p>",
+        "PutAssetModelInterfaceRelationshipResponse$assetModelStatus": null,
         "UpdateAssetModelCompositeModelResponse$assetModelStatus": null,
         "UpdateAssetModelResponse$assetModelStatus": "<p>The status of the asset model, which contains a state (<code>UPDATING</code> after successfully calling this operation) and any error message.</p>"
       }
@@ -1107,6 +1115,7 @@
         "CreateProjectRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteAccessPolicyRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteAssetModelCompositeModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
+        "DeleteAssetModelInterfaceRelationshipRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteAssetModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteAssetRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "DeleteComputationModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
@@ -1119,6 +1128,7 @@
         "DisassociateTimeSeriesFromAssetPropertyRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "ExecuteActionRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "ExecuteQueryRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
+        "PutAssetModelInterfaceRelationshipRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdateAccessPolicyRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdateAssetModelCompositeModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
         "UpdateAssetModelRequest$clientToken": "<p>A unique case-sensitive identifier that you can provide to ensure the idempotency of the request. Don't reuse this client token if a new idempotent request is required.</p>",
@@ -1446,6 +1456,12 @@
       "base": null,
       "refs": {}
     },
+    "CreateMissingProperty": {
+      "base": null,
+      "refs": {
+        "PropertyMappingConfiguration$createMissingProperty": "<p>If true, missing properties from the interface asset model are automatically created in the asset model where the interface is applied.</p>"
+      }
+    },
     "CreatePortalRequest": {
       "base": null,
       "refs": {}
@@ -1487,6 +1503,8 @@
         "CreateAssetRequest$assetModelId": "<p>The ID of the asset model from which to create the asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DeleteAssetModelCompositeModelRequest$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
         "DeleteAssetModelCompositeModelRequest$assetModelCompositeModelId": "<p>The ID of a composite model on this asset model.</p>",
+        "DeleteAssetModelInterfaceRelationshipRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else externalId: followed by the external ID.</p>",
+        "DeleteAssetModelInterfaceRelationshipRequest$interfaceAssetModelId": "<p>The ID of the interface asset model. This can be either the actual ID in UUID format, or else externalId: followed by the external ID.</p>",
         "DeleteAssetModelRequest$assetModelId": "<p>The ID of the asset model to delete. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DeleteAssetRequest$assetId": "<p>The ID of the asset to delete. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DeleteTimeSeriesRequest$assetId": "<p>The ID of the asset in which the asset property was created. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -1495,6 +1513,8 @@
         "DescribeAssetCompositeModelRequest$assetCompositeModelId": "<p>The ID of a composite model on this asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeAssetModelCompositeModelRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeAssetModelCompositeModelRequest$assetModelCompositeModelId": "<p>The ID of a composite model on this asset model. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "DescribeAssetModelInterfaceRelationshipRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else externalId: followed by the external ID.</p>",
+        "DescribeAssetModelInterfaceRelationshipRequest$interfaceAssetModelId": "<p>The ID of the interface asset model. This can be either the actual ID in UUID format, or else externalId: followed by the external ID.</p>",
         "DescribeAssetModelRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeAssetPropertyRequest$assetId": "<p>The ID of the asset. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "DescribeAssetPropertyRequest$propertyId": "<p>The ID of the asset property. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -1513,7 +1533,12 @@
         "ListAssetsRequest$assetModelId": "<p>The ID of the asset model by which to filter the list of assets. This parameter is required if you choose <code>ALL</code> for <code>filter</code>. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListAssociatedAssetsRequest$assetId": "<p>The ID of the asset to query. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
         "ListAssociatedAssetsRequest$hierarchyId": "<p>(Optional) If you don't provide a <code>hierarchyId</code>, all the immediate assets in the <code>traversalDirection</code> will be returned. </p> <p> The ID of the hierarchy by which child assets are associated to the asset. (This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.)</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-hierarchies.html\">Asset hierarchies</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "ListInterfaceRelationshipsRequest$interfaceAssetModelId": "<p>The ID of the interface asset model. This can be either the actual ID in UUID format, or else externalId: followed by the external ID.</p>",
         "ListTimeSeriesRequest$assetId": "<p>The ID of the asset in which the asset property was created. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+        "PropertyMapping$assetModelPropertyId": "<p>The ID of the property in the asset model where the interface is applied.</p>",
+        "PropertyMapping$interfaceAssetModelPropertyId": "<p>The ID of the property in the interface asset model.</p>",
+        "PutAssetModelInterfaceRelationshipRequest$assetModelId": "<p>The ID of the asset model. This can be either the actual ID in UUID format, or else externalId: followed by the external ID.</p>",
+        "PutAssetModelInterfaceRelationshipRequest$interfaceAssetModelId": "<p>The ID of the interface asset model. This can be either the actual ID in UUID format, or else externalId: followed by the external ID.</p>",
         "UpdateAssetModelCompositeModelRequest$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
         "UpdateAssetModelCompositeModelRequest$assetModelCompositeModelId": "<p>The ID of a composite model on this asset model.</p>",
         "UpdateAssetModelRequest$assetModelId": "<p>The ID of the asset model to update. This can be either the actual ID in UUID format, or else <code>externalId:</code> followed by the external ID, if it has one. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-id-references\">Referencing objects with external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p>",
@@ -1650,6 +1675,14 @@
       "base": null,
       "refs": {}
     },
+    "DeleteAssetModelInterfaceRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteAssetModelInterfaceRelationshipResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteAssetModelRequest": {
       "base": null,
       "refs": {}
@@ -1750,6 +1783,14 @@
       "refs": {}
     },
     "DescribeAssetModelCompositeModelResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAssetModelInterfaceRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAssetModelInterfaceRelationshipResponse": {
       "base": null,
       "refs": {}
     },
@@ -2369,6 +2410,18 @@
         "Identity$group": "<p>An IAM Identity Center group identity.</p>"
       }
     },
+    "HierarchyMapping": {
+      "base": "<p>Maps a hierarchy from an interface asset model to a hierarchy in the asset model where the interface is applied.</p>",
+      "refs": {
+        "HierarchyMappings$member": null
+      }
+    },
+    "HierarchyMappings": {
+      "base": null,
+      "refs": {
+        "DescribeAssetModelInterfaceRelationshipResponse$hierarchyMappings": "<p>A list of hierarchy mappings between the interface asset model and the asset model where the interface is applied.</p>"
+      }
+    },
     "IAMRoleIdentity": {
       "base": "<p>Contains information about an Identity and Access Management role. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html\">IAM roles</a> in the <i>IAM User Guide</i>.</p>",
       "refs": {
@@ -2457,6 +2510,8 @@
         "DashboardSummary$id": "<p>The ID of the dashboard.</p>",
         "DatasetSummary$id": "<p>The ID of the dataset.</p>",
         "DeleteAccessPolicyRequest$accessPolicyId": "<p>The ID of the access policy to be deleted.</p>",
+        "DeleteAssetModelInterfaceRelationshipResponse$assetModelId": "<p>The ID of the asset model.</p>",
+        "DeleteAssetModelInterfaceRelationshipResponse$interfaceAssetModelId": "<p>The ID of the interface asset model.</p>",
         "DeleteComputationModelRequest$computationModelId": "<p>The ID of the computation model.</p>",
         "DeleteDashboardRequest$dashboardId": "<p>The ID of the dashboard to delete.</p>",
         "DeleteDatasetRequest$datasetId": "<p>The ID of the dataset.</p>",
@@ -2472,6 +2527,8 @@
         "DescribeAssetCompositeModelResponse$assetCompositeModelId": "<p>The ID of a composite model on this asset.</p>",
         "DescribeAssetModelCompositeModelResponse$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
         "DescribeAssetModelCompositeModelResponse$assetModelCompositeModelId": "<p>The ID of a composite model on this asset model.</p>",
+        "DescribeAssetModelInterfaceRelationshipResponse$assetModelId": "<p>The ID of the asset model.</p>",
+        "DescribeAssetModelInterfaceRelationshipResponse$interfaceAssetModelId": "<p>The ID of the interface asset model.</p>",
         "DescribeAssetModelResponse$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
         "DescribeAssetPropertyResponse$assetId": "<p>The ID of the asset, in UUID format.</p>",
         "DescribeAssetPropertyResponse$assetModelId": "<p>The ID of the asset model, in UUID format.</p>",
@@ -2514,9 +2571,15 @@
         "GetAssetPropertyValueRequest$propertyId": "<p>The ID of the asset property, in UUID format.</p>",
         "GetInterpolatedAssetPropertyValuesRequest$assetId": "<p>The ID of the asset, in UUID format.</p>",
         "GetInterpolatedAssetPropertyValuesRequest$propertyId": "<p>The ID of the asset property, in UUID format.</p>",
+        "HierarchyMapping$assetModelHierarchyId": "<p>The ID of the hierarchy in the asset model where the interface is applied.</p>",
+        "HierarchyMapping$interfaceAssetModelHierarchyId": "<p>The ID of the hierarchy in the interface asset model.</p>",
         "IDs$member": null,
         "Image$id": "<p>The ID of an existing image. Specify this parameter to keep an existing image.</p>",
         "ImageLocation$id": "<p>The ID of the image.</p>",
+        "InterfaceRelationship$id": "<p>The ID of the asset model that has the interface applied to it.</p>",
+        "InterfaceRelationshipSummary$id": "<p>The ID of the asset model that has the interface applied to it.</p>",
+        "InterfaceSummary$interfaceAssetModelId": "<p>The ID of the interface asset model that contains this property.</p>",
+        "InterfaceSummary$interfaceAssetModelPropertyId": "<p>The ID of the property in the interface asset model that corresponds to this property.</p>",
         "JobSummary$id": "<p>The ID of the job.</p>",
         "ListAccessPoliciesRequest$resourceId": "<p>The ID of the resource. This parameter is required if you specify <code>resourceType</code>.</p>",
         "ListActionsRequest$targetResourceId": "<p>The ID of the target resource.</p>",
@@ -2533,6 +2596,8 @@
         "ProjectResource$id": "<p>The ID of the project.</p>",
         "ProjectSummary$id": "<p>The ID of the project.</p>",
         "Property$id": "<p>The ID of the asset property.</p>",
+        "PutAssetModelInterfaceRelationshipResponse$assetModelId": "<p>The ID of the asset model.</p>",
+        "PutAssetModelInterfaceRelationshipResponse$interfaceAssetModelId": "<p>The ID of the interface asset model.</p>",
         "PutAssetPropertyValueEntry$assetId": "<p>The ID of the asset to update.</p>",
         "PutAssetPropertyValueEntry$propertyId": "<p>The ID of the asset property for this entry.</p>",
         "ResolveTo$assetId": "<p>The ID of the asset that the resource resolves to.</p>",
@@ -2629,6 +2694,42 @@
       "base": null,
       "refs": {
         "ComputationModelAnomalyDetectionConfiguration$inputProperties": "<p>Define the variable name associated with input properties, with the following format <code>${VariableName}</code>.</p>"
+      }
+    },
+    "InterfaceDetails": {
+      "base": null,
+      "refs": {
+        "DescribeAssetModelResponse$interfaceDetails": "<p>A list of interface details that describe the interfaces implemented by this asset model, including interface asset model IDs and property mappings.</p>"
+      }
+    },
+    "InterfaceRelationship": {
+      "base": "<p>Contains information about the relationship between an asset model and an interface asset model that is applied to it.</p>",
+      "refs": {
+        "InterfaceDetails$member": null
+      }
+    },
+    "InterfaceRelationshipSummaries": {
+      "base": null,
+      "refs": {
+        "ListInterfaceRelationshipsResponse$interfaceRelationshipSummaries": "<p>A list that summarizes each interface relationship.</p>"
+      }
+    },
+    "InterfaceRelationshipSummary": {
+      "base": "<p>Contains summary information about an interface relationship, which defines how an interface is applied to an asset model. This summary provides the essential identifiers needed to retrieve detailed information about the relationship.</p>",
+      "refs": {
+        "InterfaceRelationshipSummaries$member": null
+      }
+    },
+    "InterfaceSummaries": {
+      "base": null,
+      "refs": {
+        "AssetModelPropertySummary$interfaceSummaries": "<p>A list of interface summaries that describe which interfaces this property belongs to, including the interface asset model ID and the corresponding property ID in the interface.</p>"
+      }
+    },
+    "InterfaceSummary": {
+      "base": "<p>Contains summary information about an interface that a property belongs to.</p>",
+      "refs": {
+        "InterfaceSummaries$member": null
       }
     },
     "InternalFailureException": {
@@ -2793,7 +2894,7 @@
     "ListAssetModelsTypeFilter": {
       "base": null,
       "refs": {
-        "ListAssetModelsRequest$assetModelTypes": "<p>The type of asset model. If you don't provide an <code>assetModelTypes</code>, all types of asset models are returned.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> </ul>"
+        "ListAssetModelsRequest$assetModelTypes": "<p>The type of asset model. If you don't provide an <code>assetModelTypes</code>, all types of asset models are returned.</p> <ul> <li> <p> <b>ASSET_MODEL</b> – An asset model that you can use to create assets. Can't be included as a component in another asset model.</p> </li> <li> <p> <b>COMPONENT_MODEL</b> – A reusable component that you can include in the composite models of other asset models. You can't create assets directly from this type of asset model. </p> </li> <li> <p> <b>INTERFACE</b> – An interface is a type of model that defines a standard structure that can be applied to different asset models.</p> </li> </ul>"
       }
     },
     "ListAssetPropertiesFilter": {
@@ -2918,6 +3019,14 @@
       "base": null,
       "refs": {}
     },
+    "ListInterfaceRelationshipsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListInterfaceRelationshipsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListPortalsRequest": {
       "base": null,
       "refs": {}
@@ -2990,6 +3099,12 @@
         "VariableValue$hierarchyId": "<p>The ID of the hierarchy to query for the property ID. You can use the hierarchy's name instead of the hierarchy's ID. If the hierarchy has an external ID, you can specify <code>externalId:</code> followed by the external ID. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/object-ids.html#external-ids\">Using external IDs</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>You use a hierarchy ID instead of a model ID because you can have several hierarchies using the same model and therefore the same <code>propertyId</code>. For example, you might have separately grouped assets that come from the same asset model. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-hierarchies.html\">Asset hierarchies</a> in the <i>IoT SiteWise User Guide</i>.</p>"
       }
     },
+    "MatchByPropertyName": {
+      "base": null,
+      "refs": {
+        "PropertyMappingConfiguration$matchByPropertyName": "<p>If true, properties are matched by name between the interface asset model and the asset model where the interface is applied.</p>"
+      }
+    },
     "MatchedDataBinding": {
       "base": "<p>Represents a data binding that matches the specified filter criteria.</p>",
       "refs": {
@@ -3023,6 +3138,7 @@
         "ListDatasetsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p>",
         "ListExecutionsRequest$maxResults": "<p>The maximum number of results returned for each paginated request.</p>",
         "ListGatewaysRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
+        "ListInterfaceRelationshipsRequest$maxResults": "<p>The maximum number of results to return for each paginated request. Default: 50</p>",
         "ListPortalsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
         "ListProjectAssetsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
         "ListProjectsRequest$maxResults": "<p>The maximum number of results to return for each paginated request.</p> <p>Default: 50</p>",
@@ -3217,6 +3333,8 @@
         "ListExecutionsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListGatewaysRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
         "ListGatewaysResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
+        "ListInterfaceRelationshipsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
+        "ListInterfaceRelationshipsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListPortalsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
         "ListPortalsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListProjectAssetsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
@@ -3407,6 +3525,25 @@
         "TimeSeriesSummary$dataType": "<p>The data type of the time series.</p> <p>If you specify <code>STRUCT</code>, you must also specify <code>dataTypeSpec</code> to identify the type of the structure for this time series.</p>"
       }
     },
+    "PropertyMapping": {
+      "base": "<p>Maps a property from an interface asset model to a property in the asset model where the interface is applied.</p>",
+      "refs": {
+        "PropertyMappings$member": null
+      }
+    },
+    "PropertyMappingConfiguration": {
+      "base": "<p>Contains configuration options for mapping properties from an interface asset model to an asset model where the interface is applied.</p>",
+      "refs": {
+        "PutAssetModelInterfaceRelationshipRequest$propertyMappingConfiguration": "<p>The configuration for mapping properties from the interface asset model to the asset model where the interface is applied. This configuration controls how properties are matched and created during the interface application process.</p>"
+      }
+    },
+    "PropertyMappings": {
+      "base": null,
+      "refs": {
+        "DescribeAssetModelInterfaceRelationshipResponse$propertyMappings": "<p>A list of property mappings between the interface asset model and the asset model where the interface is applied.</p>",
+        "PropertyMappingConfiguration$overrides": "<p>A list of specific property mappings that override the automatic mapping by name when an interface is applied to an asset model.</p>"
+      }
+    },
     "PropertyNotification": {
       "base": "<p>Contains asset property value notification information. When the notification state is enabled, IoT SiteWise publishes property value updates to a unique MQTT topic. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/interact-with-other-services.html\">Interacting with other services</a> in the <i>IoT SiteWise User Guide</i>.</p>",
       "refs": {
@@ -3478,6 +3615,14 @@
       "refs": {
         "Variant$stringValue": "<p> Asset property data of type string (sequence of characters). The allowed pattern: \"^$|[^\\u0000-\\u001F\\u007F]+\". The max length is 1024. </p>"
       }
+    },
+    "PutAssetModelInterfaceRelationshipRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutAssetModelInterfaceRelationshipResponse": {
+      "base": null,
+      "refs": {}
     },
     "PutAssetPropertyValueEntries": {
       "base": null,
@@ -3799,7 +3944,7 @@
       }
     },
     "TargetResource": {
-      "base": "<p>The resource the action will be taken on.</p>",
+      "base": "<p>The resource the action will be taken on. This can include asset-based resources and computation model resources.</p>",
       "refs": {
         "ActionSummary$targetResource": "<p>The resource the action will be taken on.</p>",
         "DescribeActionResponse$targetResource": "<p>The resource the action will be taken on.</p>",

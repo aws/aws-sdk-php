@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTSiteWise` - Support Interface for IoT SiteWise Asset Modeling
+* `Aws\BedrockAgentCore` - Remove superfluous field from API
+* `Aws\SageMaker` - This release adds the ability for customers to attach and detach their EBS volumes to EKS-orchestrated HyperPod cluster nodes.
+* `Aws\CodeConnections` - New integration with Azure DevOps provider type.
+* `Aws\Evs` - TagResource API now throws ServiceQuotaExceededException when the number of tags on the Amazon EVS resource exceeds the maximum allowed. TooManyTagsException is deprecated.
+
 ## 3.352.0 - 2025-08-01
 
 * `Aws\ACMPCA` - Doc-only update to add more information to GetCertificate action.

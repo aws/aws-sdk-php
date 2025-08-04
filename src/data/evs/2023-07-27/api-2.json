@@ -143,6 +143,7 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"TooManyTagsException"},
         {"shape":"TagPolicyException"}
@@ -690,6 +691,14 @@
         "securityGroups":{"shape":"SecurityGroups"}
       }
     },
+    "ServiceQuotaExceededException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "SolutionKey":{
       "type":"string",
       "pattern":"[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}"
@@ -735,8 +744,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -776,8 +784,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "VSanLicenseKey":{
       "type":"string",

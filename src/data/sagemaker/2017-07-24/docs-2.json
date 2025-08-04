@@ -5,6 +5,7 @@
     "AddAssociation": "<p>Creates an <i>association</i> between the source and the destination. A source can be associated with multiple destinations, and a destination can be associated with multiple sources. An association is a lineage tracking entity. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
     "AddTags": "<p>Adds or overwrites one or more tags for the specified SageMaker resource. You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints.</p> <p>Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see For more information, see <a href=\"https://aws.amazon.com/answers/account-management/aws-tagging-strategies/\">Amazon Web Services Tagging Strategies</a>.</p> <note> <p>Tags that you add to a hyperparameter tuning job by calling this API are also added to any training jobs that the hyperparameter tuning job launches after you call this API, but not to training jobs that the hyperparameter tuning job launched before you called this API. To make sure that the tags associated with a hyperparameter tuning job are also added to all training jobs that the hyperparameter tuning job launches, add the tags when you first create the tuning job by specifying them in the <code>Tags</code> parameter of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateHyperParameterTuningJob.html\">CreateHyperParameterTuningJob</a> </p> </note> <note> <p>Tags that you add to a SageMaker Domain or User Profile by calling this API are also added to any Apps that the Domain or User Profile launches after you call this API, but not to Apps that the Domain or User Profile launched before you called this API. To make sure that the tags associated with a Domain or User Profile are also added to all Apps that the Domain or User Profile launches, add the tags when you first create the Domain or User Profile by specifying them in the <code>Tags</code> parameter of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateUserProfile.html\">CreateUserProfile</a>.</p> </note>",
     "AssociateTrialComponent": "<p>Associates a trial component with a trial. A trial component can be associated with multiple trials. To disassociate a trial component from a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DisassociateTrialComponent.html\">DisassociateTrialComponent</a> API.</p>",
+    "AttachClusterNodeVolume": "<p> Attaches your Amazon Elastic Block Store (Amazon EBS) volume to a node in your EKS-orchestrated HyperPod cluster. </p> <p> This API works with the Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver to manage the lifecycle of persistent storage in your HyperPod EKS clusters. </p>",
     "BatchDeleteClusterNodes": "<p>Deletes specific nodes within a SageMaker HyperPod cluster. <code>BatchDeleteClusterNodes</code> accepts a cluster name and a list of node IDs.</p> <important> <ul> <li> <p>To safeguard your work, back up your data to Amazon S3 or an FSx for Lustre file system before invoking the API on a worker node group. This will help prevent any potential data loss from the instance root volume. For more information about backup, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate-cli-command.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software-backup\">Use the backup script provided by SageMaker HyperPod</a>. </p> </li> <li> <p>If you want to invoke this API on an existing cluster, you'll first need to patch the cluster by running the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateClusterSoftware.html\">UpdateClusterSoftware API</a>. For more information about patching a cluster, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate-cli-command.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software\">Update the SageMaker HyperPod platform software of a cluster</a>.</p> </li> </ul> </important>",
     "BatchDescribeModelPackage": "<p>This action batch describes a list of versioned model packages</p>",
     "CreateAction": "<p>Creates an <i>action</i>. An action is a lineage tracking entity that represents an action or activity. For example, a model deployment or an HPO job. Generally, an action involves at least one input or output artifact. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
@@ -196,6 +197,7 @@
     "DescribeUserProfile": "<p>Describes a user profile. For more information, see <code>CreateUserProfile</code>.</p>",
     "DescribeWorkforce": "<p>Lists private workforce information, including workforce name, Amazon Resource Name (ARN), and, if applicable, allowed IP address ranges (<a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html\">CIDRs</a>). Allowable IP address ranges are the IP addresses that workers can use to access tasks. </p> <important> <p>This operation applies only to private workforces.</p> </important>",
     "DescribeWorkteam": "<p>Gets information about a specific work team. You can see information such as the creation date, the last updated date, membership information, and the work team's Amazon Resource Name (ARN).</p>",
+    "DetachClusterNodeVolume": "<p> Detaches your Amazon Elastic Block Store (Amazon EBS) volume from a node in your EKS-orchestrated SageMaker HyperPod cluster.</p> <p> This API works with the Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver to manage the lifecycle of persistent storage in your HyperPod EKS clusters. </p>",
     "DisableSagemakerServicecatalogPortfolio": "<p>Disables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
     "DisassociateTrialComponent": "<p>Disassociates a trial component from a trial. This doesn't effect other trials the component is associated with. Before you can delete a component, you must disassociate the component from all trials it is associated with. To associate a trial component with a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AssociateTrialComponent.html\">AssociateTrialComponent</a> API.</p> <p>To get a list of the trials a component is associated with, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API. Specify <code>ExperimentTrialComponent</code> for the <code>Resource</code> parameter. The list appears in the response under <code>Results.TrialComponent.Parents</code>.</p>",
     "EnableSagemakerServicecatalogPortfolio": "<p>Enables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
@@ -362,7 +364,7 @@
     "UpdateTrial": "<p>Updates the display name of a trial.</p>",
     "UpdateTrialComponent": "<p>Updates one or more properties of a trial component.</p>",
     "UpdateUserProfile": "<p>Updates a user profile.</p>",
-    "UpdateWorkforce": "<p>Use this operation to update your workforce. You can use this operation to require that workers use specific IP addresses to work on tasks and to update your OpenID Connect (OIDC) Identity Provider (IdP) workforce configuration.</p> <p>The worker portal is now supported in VPC and public internet.</p> <p> Use <code>SourceIpConfig</code> to restrict worker access to tasks to a specific range of IP addresses. You specify allowed IP addresses by creating a list of up to ten <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html\">CIDRs</a>. By default, a workforce isn't restricted to specific IP addresses. If you specify a range of IP addresses, workers who attempt to access tasks using any IP address outside the specified range are denied and get a <code>Not Found</code> error message on the worker portal.</p> <p>To restrict access to all the workers in public internet, add the <code>SourceIpConfig</code> CIDR value as \"10.0.0.0/16\".</p> <important> <p>Amazon SageMaker does not support Source Ip restriction for worker portals in VPC.</p> </important> <p>Use <code>OidcConfig</code> to update the configuration of a workforce created using your own OIDC IdP. </p> <important> <p>You can only update your OIDC IdP configuration when there are no work teams associated with your workforce. You can delete work teams using the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteWorkteam.html\">DeleteWorkteam</a> operation.</p> </important> <p>After restricting access to a range of IP addresses or updating your OIDC IdP configuration with this operation, you can view details about your update workforce using the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeWorkforce.html\">DescribeWorkforce</a> operation.</p> <important> <p>This operation only applies to private workforces.</p> </important>",
+    "UpdateWorkforce": "<p>Use this operation to update your workforce. You can use this operation to require that workers use specific IP addresses to work on tasks and to update your OpenID Connect (OIDC) Identity Provider (IdP) workforce configuration.</p> <p>The worker portal is now supported in VPC and public internet.</p> <p> Use <code>SourceIpConfig</code> to restrict worker access to tasks to a specific range of IP addresses. You specify allowed IP addresses by creating a list of up to ten <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html\">CIDRs</a>. By default, a workforce isn't restricted to specific IP addresses. If you specify a range of IP addresses, workers who attempt to access tasks using any IP address outside the specified range are denied and get a <code>Not Found</code> error message on the worker portal.</p> <p>To restrict public internet access for all workers, configure the <code>SourceIpConfig</code> CIDR value. For example, when using <code>SourceIpConfig</code> with an <code>IpAddressType</code> of <code>IPv4</code>, you can restrict access to the IPv4 CIDR block \"10.0.0.0/16\". When using an <code>IpAddressType</code> of <code>dualstack</code>, you can specify both the IPv4 and IPv6 CIDR blocks, such as \"10.0.0.0/16\" for IPv4 only, \"2001:db8:1234:1a00::/56\" for IPv6 only, or \"10.0.0.0/16\" and \"2001:db8:1234:1a00::/56\" for dual stack.</p> <important> <p>Amazon SageMaker does not support Source Ip restriction for worker portals in VPC.</p> </important> <p>Use <code>OidcConfig</code> to update the configuration of a workforce created using your own OIDC IdP. </p> <important> <p>You can only update your OIDC IdP configuration when there are no work teams associated with your workforce. You can delete work teams using the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DeleteWorkteam.html\">DeleteWorkteam</a> operation.</p> </important> <p>After restricting access to a range of IP addresses or updating your OIDC IdP configuration with this operation, you can view details about your update workforce using the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DescribeWorkforce.html\">DescribeWorkforce</a> operation.</p> <important> <p>This operation only applies to private workforces.</p> </important>",
     "UpdateWorkteam": "<p>Updates an existing work team with new member definitions or description.</p>"
   },
   "shapes": {
@@ -1028,6 +1030,14 @@
       "refs": {
         "AthenaDatasetDefinition$WorkGroup": null
       }
+    },
+    "AttachClusterNodeVolumeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AttachClusterNodeVolumeResponse": {
+      "base": null,
+      "refs": {}
     },
     "AttributeName": {
       "base": null,
@@ -2303,6 +2313,8 @@
     "ClusterArn": {
       "base": null,
       "refs": {
+        "AttachClusterNodeVolumeRequest$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster containing the target node. Your cluster must use EKS as the orchestration and be in the <code>InService</code> state. </p>",
+        "AttachClusterNodeVolumeResponse$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster where the volume attachment operation was performed. </p>",
         "ClusterSchedulerConfigSummary$ClusterArn": "<p>ARN of the cluster.</p>",
         "ClusterSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "ComputeQuotaSummary$ClusterArn": "<p>ARN of the cluster.</p>",
@@ -2313,6 +2325,8 @@
         "DescribeClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "DescribeClusterSchedulerConfigResponse$ClusterArn": "<p>ARN of the cluster where the cluster policy is applied.</p>",
         "DescribeComputeQuotaResponse$ClusterArn": "<p>ARN of the cluster.</p>",
+        "DetachClusterNodeVolumeRequest$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster containing the target node. Your cluster must use EKS as the orchestration and be in the <code>InService</code> state. </p>",
+        "DetachClusterNodeVolumeResponse$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster where the volume detachment operation was performed. </p>",
         "ListClusterSchedulerConfigsRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
         "ListComputeQuotasRequest$ClusterArn": "<p>Filter for ARN of the cluster.</p>",
         "UpdateClusterResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the updated SageMaker HyperPod cluster.</p>",
@@ -2487,9 +2501,13 @@
     "ClusterNodeId": {
       "base": null,
       "refs": {
+        "AttachClusterNodeVolumeRequest$NodeId": "<p> The unique identifier of the cluster node to which you want to attach the volume. The node must belong to your specified HyperPod cluster and cannot be part of a Restricted Instance Group (RIG). </p>",
+        "AttachClusterNodeVolumeResponse$NodeId": "<p> The unique identifier of the cluster node where your volume was attached. </p>",
         "BatchDeleteClusterNodesError$NodeId": "<p>The ID of the node that encountered an error during the deletion process.</p>",
         "ClusterNodeIds$member": null,
-        "DescribeClusterNodeRequest$NodeId": "<p>The ID of the SageMaker HyperPod cluster node.</p>"
+        "DescribeClusterNodeRequest$NodeId": "<p>The ID of the SageMaker HyperPod cluster node.</p>",
+        "DetachClusterNodeVolumeRequest$NodeId": "<p> The unique identifier of the cluster node from which you want to detach the volume. </p>",
+        "DetachClusterNodeVolumeResponse$NodeId": "<p> The unique identifier of the cluster node from which your volume was detached. </p>"
       }
     },
     "ClusterNodeIds": {
@@ -4996,6 +5014,14 @@
         "InferenceExperimentDataStorageConfig$Destination": "<p>The Amazon S3 bucket where the inference request and response data is stored. </p>",
         "ProductionVariantCoreDumpConfig$DestinationS3Uri": "<p>The Amazon S3 bucket to send the core dump to.</p>"
       }
+    },
+    "DetachClusterNodeVolumeRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DetachClusterNodeVolumeResponse": {
+      "base": null,
+      "refs": {}
     },
     "DetailedAlgorithmStatus": {
       "base": null,
@@ -14924,7 +14950,7 @@
       "base": null,
       "refs": {
         "DescribeDomainResponse$SingleSignOnApplicationArn": "<p>The ARN of the application managed by SageMaker AI in IAM Identity Center. This value is only returned for domains created after October 1, 2023.</p>",
-        "UnifiedStudioSettings$SingleSignOnApplicationArn": "<p>The ARN of the application managed by SageMaker AI and SageMaker Unified Studio in the Amazon Web Services IAM Identity Center.</p>"
+        "UnifiedStudioSettings$SingleSignOnApplicationArn": "<p>The ARN of the Amazon DataZone application managed by Amazon SageMaker Unified Studio in the Amazon Web Services IAM Identity Center.</p>"
       }
     },
     "SingleSignOnUserIdentifier": {
@@ -16253,6 +16279,7 @@
         "ArtifactSummary$CreationTime": "<p>When the artifact was created.</p>",
         "ArtifactSummary$LastModifiedTime": "<p>When the artifact was last modified.</p>",
         "AssociationSummary$CreationTime": "<p>When the association was created.</p>",
+        "AttachClusterNodeVolumeResponse$AttachTime": "<p> The timestamp when the volume attachment operation was initiated by the SageMaker HyperPod service. </p>",
         "AutoMLCandidate$CreationTime": "<p>The creation time.</p>",
         "AutoMLCandidate$EndTime": "<p>The end time.</p>",
         "AutoMLCandidate$LastModifiedTime": "<p>The last modified time.</p>",
@@ -16383,6 +16410,7 @@
         "DescribeTrialComponentResponse$LastModifiedTime": "<p>When the component was last modified.</p>",
         "DescribeTrialResponse$CreationTime": "<p>When the trial was created.</p>",
         "DescribeTrialResponse$LastModifiedTime": "<p>When the trial was last modified.</p>",
+        "DetachClusterNodeVolumeResponse$AttachTime": "<p> The original timestamp when your volume was initially attached to the node. </p>",
         "DeviceDeploymentSummary$DeploymentStartTime": "<p>The time when the deployment on the device started.</p>",
         "DeviceFleetSummary$CreationTime": "<p>Timestamp of when the device fleet was created.</p>",
         "DeviceFleetSummary$LastModifiedTime": "<p>Timestamp of when the device fleet was last updated.</p>",
@@ -18277,6 +18305,29 @@
       "base": null,
       "refs": {
         "VisibilityConditions$Value": "<p>The value for the tag that you're using to filter the search results.</p>"
+      }
+    },
+    "VolumeAttachmentStatus": {
+      "base": null,
+      "refs": {
+        "AttachClusterNodeVolumeResponse$Status": "<p> The current status of your volume attachment operation. </p>",
+        "DetachClusterNodeVolumeResponse$Status": "<p> The current status of your volume detachment operation. </p>"
+      }
+    },
+    "VolumeDeviceName": {
+      "base": null,
+      "refs": {
+        "AttachClusterNodeVolumeResponse$DeviceName": "<p> The device name assigned to your attached volume on the target instance. </p>",
+        "DetachClusterNodeVolumeResponse$DeviceName": "<p> The device name assigned to your attached volume on the target instance. </p>"
+      }
+    },
+    "VolumeId": {
+      "base": null,
+      "refs": {
+        "AttachClusterNodeVolumeRequest$VolumeId": "<p> The unique identifier of your EBS volume to attach. The volume must be in the <code>available</code> state. </p>",
+        "AttachClusterNodeVolumeResponse$VolumeId": "<p> The unique identifier of your EBS volume that was attached. </p>",
+        "DetachClusterNodeVolumeRequest$VolumeId": "<p> The unique identifier of your EBS volume that you want to detach. Your volume must be currently attached to the specified node. </p>",
+        "DetachClusterNodeVolumeResponse$VolumeId": "<p> The unique identifier of your EBS volume that was detached. </p>"
       }
     },
     "VolumeSizeInGB": {

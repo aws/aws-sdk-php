@@ -434,6 +434,24 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "DeleteAssetModelInterfaceRelationship":{
+      "name":"DeleteAssetModelInterfaceRelationship",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/asset-models/{assetModelId}/interface/{interfaceAssetModelId}/asset-model-interface-relationship",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteAssetModelInterfaceRelationshipRequest"},
+      "output":{"shape":"DeleteAssetModelInterfaceRelationshipResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictingOperationException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "DeleteComputationModel":{
       "name":"DeleteComputationModel",
       "http":{
@@ -643,6 +661,22 @@
       },
       "input":{"shape":"DescribeAssetModelCompositeModelRequest"},
       "output":{"shape":"DescribeAssetModelCompositeModelResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "DescribeAssetModelInterfaceRelationship":{
+      "name":"DescribeAssetModelInterfaceRelationship",
+      "http":{
+        "method":"GET",
+        "requestUri":"/asset-models/{assetModelId}/interface/{interfaceAssetModelId}/asset-model-interface-relationship"
+      },
+      "input":{"shape":"DescribeAssetModelInterfaceRelationshipRequest"},
+      "output":{"shape":"DescribeAssetModelInterfaceRelationshipResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -1336,6 +1370,22 @@
       ],
       "endpoint":{"hostPrefix":"api."}
     },
+    "ListInterfaceRelationships":{
+      "name":"ListInterfaceRelationships",
+      "http":{
+        "method":"GET",
+        "requestUri":"/interface/{interfaceAssetModelId}/asset-models"
+      },
+      "input":{"shape":"ListInterfaceRelationshipsRequest"},
+      "output":{"shape":"ListInterfaceRelationshipsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
     "ListPortals":{
       "name":"ListPortals",
       "http":{
@@ -1416,6 +1466,25 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"api."}
+    },
+    "PutAssetModelInterfaceRelationship":{
+      "name":"PutAssetModelInterfaceRelationship",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/asset-models/{assetModelId}/interface/{interfaceAssetModelId}/asset-model-interface-relationship",
+        "responseCode":202
+      },
+      "input":{"shape":"PutAssetModelInterfaceRelationshipRequest"},
+      "output":{"shape":"PutAssetModelInterfaceRelationshipResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
       ],
       "endpoint":{"hostPrefix":"api."}
     },
@@ -2175,7 +2244,8 @@
         "unit":{"shape":"PropertyUnit"},
         "type":{"shape":"PropertyType"},
         "assetModelCompositeModelId":{"shape":"ID"},
-        "path":{"shape":"AssetModelPropertyPath"}
+        "path":{"shape":"AssetModelPropertyPath"},
+        "interfaceSummaries":{"shape":"InterfaceSummaries"}
       }
     },
     "AssetModelState":{
@@ -2229,7 +2299,8 @@
       "type":"string",
       "enum":[
         "ASSET_MODEL",
-        "COMPONENT_MODEL"
+        "COMPONENT_MODEL",
+        "INTERFACE"
       ]
     },
     "AssetModelVersionFilter":{
@@ -3585,6 +3656,7 @@
         "gatewayArn":{"shape":"ARN"}
       }
     },
+    "CreateMissingProperty":{"type":"boolean"},
     "CreatePortalRequest":{
       "type":"structure",
       "required":[
@@ -3871,6 +3943,46 @@
       "type":"structure",
       "required":["assetModelStatus"],
       "members":{
+        "assetModelStatus":{"shape":"AssetModelStatus"}
+      }
+    },
+    "DeleteAssetModelInterfaceRelationshipRequest":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "interfaceAssetModelId"
+      ],
+      "members":{
+        "assetModelId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"assetModelId"
+        },
+        "interfaceAssetModelId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"interfaceAssetModelId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteAssetModelInterfaceRelationshipResponse":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "interfaceAssetModelId",
+        "assetModelArn",
+        "assetModelStatus"
+      ],
+      "members":{
+        "assetModelId":{"shape":"ID"},
+        "interfaceAssetModelId":{"shape":"ID"},
+        "assetModelArn":{"shape":"ARN"},
         "assetModelStatus":{"shape":"AssetModelStatus"}
       }
     },
@@ -4242,6 +4354,40 @@
         "actionDefinitions":{"shape":"ActionDefinitions"}
       }
     },
+    "DescribeAssetModelInterfaceRelationshipRequest":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "interfaceAssetModelId"
+      ],
+      "members":{
+        "assetModelId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"assetModelId"
+        },
+        "interfaceAssetModelId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"interfaceAssetModelId"
+        }
+      }
+    },
+    "DescribeAssetModelInterfaceRelationshipResponse":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "interfaceAssetModelId",
+        "propertyMappings",
+        "hierarchyMappings"
+      ],
+      "members":{
+        "assetModelId":{"shape":"ID"},
+        "interfaceAssetModelId":{"shape":"ID"},
+        "propertyMappings":{"shape":"PropertyMappings"},
+        "hierarchyMappings":{"shape":"HierarchyMappings"}
+      }
+    },
     "DescribeAssetModelRequest":{
       "type":"structure",
       "required":["assetModelId"],
@@ -4291,6 +4437,7 @@
         "assetModelLastUpdateDate":{"shape":"Timestamp"},
         "assetModelStatus":{"shape":"AssetModelStatus"},
         "assetModelVersion":{"shape":"Version"},
+        "interfaceDetails":{"shape":"InterfaceDetails"},
         "eTag":{
           "shape":"ETag",
           "location":"header",
@@ -5086,7 +5233,7 @@
     "Expression":{
       "type":"string",
       "max":1024,
-      "min":1
+      "min":0
     },
     "ExpressionVariable":{
       "type":"structure",
@@ -5476,6 +5623,21 @@
         "id":{"shape":"IdentityId"}
       }
     },
+    "HierarchyMapping":{
+      "type":"structure",
+      "required":[
+        "assetModelHierarchyId",
+        "interfaceAssetModelHierarchyId"
+      ],
+      "members":{
+        "assetModelHierarchyId":{"shape":"ID"},
+        "interfaceAssetModelHierarchyId":{"shape":"ID"}
+      }
+    },
+    "HierarchyMappings":{
+      "type":"list",
+      "member":{"shape":"HierarchyMapping"}
+    },
     "IAMRoleIdentity":{
       "type":"structure",
       "required":["arn"],
@@ -5574,6 +5736,43 @@
       "max":67,
       "min":4,
       "pattern":"^\\$\\{[a-z][a-z0-9_]*\\}"
+    },
+    "InterfaceDetails":{
+      "type":"list",
+      "member":{"shape":"InterfaceRelationship"}
+    },
+    "InterfaceRelationship":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"ID"}
+      }
+    },
+    "InterfaceRelationshipSummaries":{
+      "type":"list",
+      "member":{"shape":"InterfaceRelationshipSummary"}
+    },
+    "InterfaceRelationshipSummary":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"ID"}
+      }
+    },
+    "InterfaceSummaries":{
+      "type":"list",
+      "member":{"shape":"InterfaceSummary"}
+    },
+    "InterfaceSummary":{
+      "type":"structure",
+      "required":[
+        "interfaceAssetModelId",
+        "interfaceAssetModelPropertyId"
+      ],
+      "members":{
+        "interfaceAssetModelId":{"shape":"ID"},
+        "interfaceAssetModelPropertyId":{"shape":"ID"}
+      }
     },
     "InternalFailureException":{
       "type":"structure",
@@ -6376,6 +6575,35 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListInterfaceRelationshipsRequest":{
+      "type":"structure",
+      "required":["interfaceAssetModelId"],
+      "members":{
+        "interfaceAssetModelId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"interfaceAssetModelId"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListInterfaceRelationshipsResponse":{
+      "type":"structure",
+      "required":["interfaceRelationshipSummaries"],
+      "members":{
+        "interfaceRelationshipSummaries":{"shape":"InterfaceRelationshipSummaries"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListPortalsRequest":{
       "type":"structure",
       "members":{
@@ -6545,6 +6773,7 @@
       "min":1,
       "pattern":"[^\\u0000-\\u001F\\u007F]+"
     },
+    "MatchByPropertyName":{"type":"boolean"},
     "MatchedDataBinding":{
       "type":"structure",
       "required":["value"],
@@ -6582,11 +6811,7 @@
     },
     "Metric":{
       "type":"structure",
-      "required":[
-        "expression",
-        "variables",
-        "window"
-      ],
+      "required":["window"],
       "members":{
         "expression":{"shape":"Expression"},
         "variables":{"shape":"ExpressionVariables"},
@@ -6826,6 +7051,29 @@
         "STRUCT"
       ]
     },
+    "PropertyMapping":{
+      "type":"structure",
+      "required":[
+        "assetModelPropertyId",
+        "interfaceAssetModelPropertyId"
+      ],
+      "members":{
+        "assetModelPropertyId":{"shape":"CustomID"},
+        "interfaceAssetModelPropertyId":{"shape":"CustomID"}
+      }
+    },
+    "PropertyMappingConfiguration":{
+      "type":"structure",
+      "members":{
+        "matchByPropertyName":{"shape":"MatchByPropertyName"},
+        "createMissingProperty":{"shape":"CreateMissingProperty"},
+        "overrides":{"shape":"PropertyMappings"}
+      }
+    },
+    "PropertyMappings":{
+      "type":"list",
+      "member":{"shape":"PropertyMapping"}
+    },
     "PropertyNotification":{
       "type":"structure",
       "required":[
@@ -6871,6 +7119,46 @@
       }
     },
     "PropertyValueStringValue":{"type":"string"},
+    "PutAssetModelInterfaceRelationshipRequest":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "interfaceAssetModelId",
+        "propertyMappingConfiguration"
+      ],
+      "members":{
+        "assetModelId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"assetModelId"
+        },
+        "interfaceAssetModelId":{
+          "shape":"CustomID",
+          "location":"uri",
+          "locationName":"interfaceAssetModelId"
+        },
+        "propertyMappingConfiguration":{"shape":"PropertyMappingConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "PutAssetModelInterfaceRelationshipResponse":{
+      "type":"structure",
+      "required":[
+        "assetModelId",
+        "interfaceAssetModelId",
+        "assetModelArn",
+        "assetModelStatus"
+      ],
+      "members":{
+        "assetModelId":{"shape":"ID"},
+        "interfaceAssetModelId":{"shape":"ID"},
+        "assetModelArn":{"shape":"ARN"},
+        "assetModelStatus":{"shape":"AssetModelStatus"}
+      }
+    },
     "PutAssetPropertyValueEntries":{
       "type":"list",
       "member":{"shape":"PutAssetPropertyValueEntry"}
