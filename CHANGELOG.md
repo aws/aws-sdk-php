@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.352.1 - 2025-08-04
 
 * `Aws\IoTSiteWise` - Support Interface for IoT SiteWise Asset Modeling
 * `Aws\BedrockAgentCore` - Remove superfluous field from API
