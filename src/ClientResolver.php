@@ -222,7 +222,7 @@ class ClientResolver
         'auth_scheme_preference' => [
             'type'    => 'value',
             'valid'   => ['string', 'array'],
-            'doc'     => 'A user\'s preferred auth scheme list',
+            'doc'     => 'Comma-separated list of authentication scheme preferences in priority order. Configure via environment variable `AWS_AUTH_SCHEME_PREFERENCE`, INI config file `auth_scheme_preference`, or client constructor parameter `auth_scheme_preference` (string or array).\nExample: `AWS_AUTH_SCHEME_PREFERENCE=aws.auth#sigv4a,aws.auth#sigv4,smithy.api#httpBearerAuth`',
             'default' => self::DEFAULT_FROM_ENV_INI,
             'fn' => [__CLASS__, '_apply_auth_scheme_preference'],
         ],

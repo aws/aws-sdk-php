@@ -29,27 +29,29 @@ class AuthSelectionMiddleware
     private $api;
 
     /** @var array|null */
-    private ?array $userPreferredAuthSchemes;
+    private ?array $configuredAuthSchemes;
 
     /**
      * Create a middleware wrapper function
      *
      * @param AuthSchemeResolverInterface $authResolver
      * @param Service $api
+     * @param array|null $configuredAuthSchemes
+     * 
      * @return Closure
      */
     public static function wrap(
         AuthSchemeResolverInterface $authResolver,
         Service $api,
-        ?array $userPreferredAuthSchemes
+        ?array $configuredAuthSchemes
     ): Closure
     {
         return function (callable $handler) use (
             $authResolver,
             $api,
-            $userPreferredAuthSchemes
+            $configuredAuthSchemes
         ) {
-            return new self($handler, $authResolver, $api, $userPreferredAuthSchemes);
+            return new self($handler, $authResolver, $api, $configuredAuthSchemes);
         };
     }
 
@@ -57,19 +59,19 @@ class AuthSelectionMiddleware
      * @param callable $nextHandler
      * @param AuthSchemeResolverInterface $authResolver
      * @param Service $api
-     * @param array|null $userPreferredAuthSchemes
+     * @param array|null $configuredAuthSchemes
      */
     public function __construct(
         callable $nextHandler,
         AuthSchemeResolverInterface $authResolver,
         Service $api,
-        ?array $userPreferredAuthSchemes=null
+        ?array $configuredAuthSchemes = null
     )
     {
         $this->nextHandler = $nextHandler;
         $this->authResolver = $authResolver;
         $this->api = $api;
-        $this->userPreferredAuthSchemes = $userPreferredAuthSchemes;
+        $this->configuredAuthSchemes = $configuredAuthSchemes;
     }
 
     /**
@@ -125,32 +127,32 @@ class AuthSelectionMiddleware
      * followed by remaining available schemes.
      *
      * @param array $resolvableAuthSchemeList Available auth schemes
-     * @param array|null $commandAuthSchemePreference Command-level preferences (overrides config)
+     * @param array|null $commandConfiguredAuthSchemes Command-level preferences (overrides config)
      *
      * @return array Reordered auth schemes with user preferences first
      */
     private function buildAuthSchemeList(
         array $resolvableAuthSchemeList,
-        ?array $commandAuthSchemePreference,
+        ?array $commandConfiguredAuthSchemes,
     ): array {
-        $userPreferences = $commandAuthSchemePreference
-            ?? $this->userPreferredAuthSchemes;
+        $userConfiguredAuthSchemes = $commandConfiguredAuthSchemes
+            ?? $this->configuredAuthSchemes;
 
-        if (empty($userPreferences)) {
+        if (empty($userConfiguredAuthSchemes)) {
             return $resolvableAuthSchemeList;
         }
 
-        $availableSchemes = array_flip($resolvableAuthSchemeList);
-
-        // Get preferred schemes that are actually available
-        $prioritizedSchemes = array_filter(
-            $userPreferences,
-            fn($scheme) => isset($availableSchemes[$scheme])
+        $prioritizedAuthSchemes = array_intersect(
+            $userConfiguredAuthSchemes,
+            $resolvableAuthSchemeList
         );
 
         // Get remaining schemes not in user preferences
-        $remainingSchemes = array_diff($resolvableAuthSchemeList, $prioritizedSchemes);
+        $remainingAuthSchemes = array_diff(
+            $resolvableAuthSchemeList,
+            $prioritizedAuthSchemes
+        );
 
-        return array_merge($prioritizedSchemes, $remainingSchemes);
+        return array_merge($prioritizedAuthSchemes, $remainingAuthSchemes);
     }
 }
