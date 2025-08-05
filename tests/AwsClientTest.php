@@ -10,7 +10,6 @@ use Aws\Ec2\Ec2Client;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
 use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
 use Aws\EndpointV2\EndpointProviderV2;
-use Aws\MetricsBuilder;
 use Aws\Middleware;
 use Aws\ResultPaginator;
 use Aws\S3\Exception\S3Exception;
@@ -23,6 +22,7 @@ use Aws\Sts\StsClient;
 use Aws\Token\Token;
 use Aws\Waiter;
 use Aws\WrappedHttpHandler;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -232,6 +232,13 @@ class AwsClientTest extends TestCase
         $this->assertInstanceOf(Waiter::class, $waiter);
         $promise = $waiter->promise();
         $promise->wait();
+    }
+
+    public function testGetToken(): void
+    {
+        $client = $this->createClient();
+        $tokenPromise = $client->getToken();
+        $this->assertInstanceOf(PromiseInterface::class, $tokenPromise);
     }
 
     public function testCreatesClientsFromConstructor()

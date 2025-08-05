@@ -303,6 +303,12 @@ class AwsClient implements AwsClientInterface
         return $fn();
     }
 
+    public function getToken()
+    {
+        $fn = $this->tokenProvider;
+        return $fn();
+    }
+
 
     public function getEndpoint()
     {

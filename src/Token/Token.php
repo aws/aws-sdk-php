@@ -2,7 +2,6 @@
 namespace Aws\Token;
 
 use Aws\Identity\BearerTokenIdentity;
-use Aws\Token\TokenInterface;
 
 /**
  * Basic implementation of the AWS Token interface that allows callers to

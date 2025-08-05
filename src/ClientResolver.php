@@ -34,6 +34,7 @@ use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenInterface;
+use Aws\Token\BedrockTokenProvider;
 use Aws\Token\TokenProvider;
 use GuzzleHttp\Promise\PromiseInterface;
 use InvalidArgumentException as IAE;
@@ -706,6 +707,15 @@ class ClientResolver
 
     public static function _default_token_provider(array $args)
     {
+        if (($args['config']['signing_name'] ?? '') === 'bedrock') {
+            // Checks for env value, if present, sets auth_scheme_preference
+            // to bearer auth and returns a provider
+            $provider = BedrockTokenProvider::createIfAvailable($args);
+            if (!is_null($provider)) {
+                return $provider;
+            }
+        }
+
         return TokenProvider::defaultProvider($args);
     }
 
