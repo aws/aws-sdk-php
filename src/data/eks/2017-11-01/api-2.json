@@ -229,7 +229,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ClientException"},
         {"shape":"ServerException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"}
       ]
     },
     "DeleteEksAnywhereSubscription":{
@@ -1345,7 +1346,8 @@
         "zonalShiftConfig":{"shape":"ZonalShiftConfigResponse"},
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigResponse"},
         "computeConfig":{"shape":"ComputeConfigResponse"},
-        "storageConfig":{"shape":"StorageConfigResponse"}
+        "storageConfig":{"shape":"StorageConfigResponse"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "ClusterHealth":{
@@ -1603,7 +1605,8 @@
         "zonalShiftConfig":{"shape":"ZonalShiftConfigRequest"},
         "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
         "computeConfig":{"shape":"ComputeConfigRequest"},
-        "storageConfig":{"shape":"StorageConfigRequest"}
+        "storageConfig":{"shape":"StorageConfigRequest"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "CreateClusterResponse":{
@@ -3852,7 +3855,8 @@
         "computeConfig":{"shape":"ComputeConfigRequest"},
         "kubernetesNetworkConfig":{"shape":"KubernetesNetworkConfigRequest"},
         "storageConfig":{"shape":"StorageConfigRequest"},
-        "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"}
+        "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "UpdateClusterConfigResponse":{
@@ -4031,7 +4035,8 @@
         "ComputeConfig",
         "StorageConfig",
         "KubernetesNetworkConfig",
-        "RemoteNetworkConfig"
+        "RemoteNetworkConfig",
+        "DeletionProtection"
       ]
     },
     "UpdateParams":{
@@ -4102,7 +4107,8 @@
         "UpgradePolicyUpdate",
         "ZonalShiftConfigUpdate",
         "AutoModeUpdate",
-        "RemoteNetworkConfigUpdate"
+        "RemoteNetworkConfigUpdate",
+        "DeletionProtectionUpdate"
       ]
     },
     "UpgradePolicyRequest":{

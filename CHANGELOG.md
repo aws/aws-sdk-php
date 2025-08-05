@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Add support for SageMaker Hyperpod continuous scaling and custom AMI; Introduce new APIs: ListClusterEvents, DescribeClusterEvent, BatchAddClusterNodes
+* `Aws\RDS` - Adds a new Aurora Serverless v2 attribute to the DBCluster resource to expose the platform version. Also updates the attribute to be part of both the engine version and platform version descriptions.
+* `Aws\BedrockRuntime` - This release adds support for Automated Reasoning checks output models for the Amazon Bedrock Guardrails ApplyGuardrail API.
+* `Aws\EKS` - Add support for deletion protection on EKS clusters
+* `Aws\Bedrock` - This release introduces Automated Reasoning checks for Amazon Bedrock Guardrails. The feature adds new APIs for policy building, refinement, version management, and testing. Guardrail APIs now support Automated Reasoning policy configuration and validation output.
+
 ## 3.352.1 - 2025-08-04
 
 * `Aws\IoTSiteWise` - Support Interface for IoT SiteWise Asset Modeling

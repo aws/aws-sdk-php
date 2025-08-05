@@ -3,6 +3,10 @@
   "service": "<p>Describes the API operations for creating, managing, fine-turning, and evaluating Amazon Bedrock models.</p>",
   "operations": {
     "BatchDeleteEvaluationJob": "<p>Deletes a batch of evaluation jobs. An evaluation job can only be deleted if it has following status <code>FAILED</code>, <code>COMPLETED</code>, and <code>STOPPED</code>. You can request up to 25 model evaluation jobs be deleted in a single request.</p>",
+    "CancelAutomatedReasoningPolicyBuildWorkflow": "<p>Cancels a running Automated Reasoning policy build workflow. This stops the policy generation process and prevents further processing of the source documents.</p>",
+    "CreateAutomatedReasoningPolicy": "<p>Creates an Automated Reasoning policy for Amazon Bedrock Guardrails. Automated Reasoning policies use mathematical techniques to detect hallucinations, suggest corrections, and highlight unstated assumptions in the responses of your GenAI application.</p> <p>To create a policy, you upload a source document that describes the rules that you're encoding. Automated Reasoning extracts important concepts from the source document that will become variables in the policy and infers policy rules.</p>",
+    "CreateAutomatedReasoningPolicyTestCase": "<p>Creates a test for an Automated Reasoning policy. Tests validate that your policy works as expected by providing sample inputs and expected outcomes. Use tests to verify policy behavior before deploying to production.</p>",
+    "CreateAutomatedReasoningPolicyVersion": "<p>Creates a new version of an existing Automated Reasoning policy. This allows you to iterate on your policy rules while maintaining previous versions for rollback or comparison purposes.</p>",
     "CreateCustomModel": "<p>Creates a new custom model in Amazon Bedrock. After the model is active, you can use it for inference.</p> <p>To use the model for inference, you must purchase Provisioned Throughput for it. You can't use On-demand inference with these custom models. For more information about Provisioned Throughput, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a>.</p> <p>The model appears in <code>ListCustomModels</code> with a <code>customizationType</code> of <code>imported</code>. To track the status of the new model, you use the <code>GetCustomModel</code> API operation. The model can be in the following states:</p> <ul> <li> <p> <code>Creating</code> - Initial state during validation and registration</p> </li> <li> <p> <code>Active</code> - Model is ready for use in inference</p> </li> <li> <p> <code>Failed</code> - Creation process encountered an error</p> </li> </ul> <p> <b>Related APIs</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModel.html\">GetCustomModel</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModels.html\">ListCustomModels</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModel.html\">DeleteCustomModel</a> </p> </li> </ul>",
     "CreateCustomModelDeployment": "<p>Deploys a custom model for on-demand inference in Amazon Bedrock. After you deploy your custom model, you use the deployment's Amazon Resource Name (ARN) as the <code>modelId</code> parameter when you submit prompts and generate responses with model inference.</p> <p> For more information about setting up on-demand inference for custom models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html\">Set up inference for a custom model</a>. </p> <p>The following actions are related to the <code>CreateCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "CreateEvaluationJob": "<p>Creates an evaluation job.</p>",
@@ -17,6 +21,9 @@
     "CreateModelInvocationJob": "<p>Creates a batch inference job to invoke a model on multiple prompts. Format your data according to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data\">Format your inference data</a> and upload it to an Amazon S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference.html\">Process multiple prompts with batch inference</a>.</p> <p>The response returns a <code>jobArn</code> that you can use to stop or get details about the job.</p>",
     "CreatePromptRouter": "<p>Creates a prompt router that manages the routing of requests between multiple foundation models based on the routing criteria.</p>",
     "CreateProvisionedModelThroughput": "<p>Creates dedicated throughput for a base or custom model with the model units and for the duration that you specify. For pricing details, see <a href=\"http://aws.amazon.com/bedrock/pricing/\">Amazon Bedrock Pricing</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "DeleteAutomatedReasoningPolicy": "<p>Deletes an Automated Reasoning policy or policy version. This operation is idempotent. If you delete a policy more than once, each call succeeds. Deleting a policy removes it permanently and cannot be undone.</p>",
+    "DeleteAutomatedReasoningPolicyBuildWorkflow": "<p>Deletes an Automated Reasoning policy build workflow and its associated artifacts. This permanently removes the workflow history and any generated assets.</p>",
+    "DeleteAutomatedReasoningPolicyTestCase": "<p>Deletes an Automated Reasoning policy test. This operation is idempotent; if you delete a test more than once, each call succeeds.</p>",
     "DeleteCustomModel": "<p>Deletes a custom model that you created earlier. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeleteCustomModelDeployment": "<p>Deletes a custom model deployment. This operation stops the deployment and removes it from your account. After deletion, the deployment ARN can no longer be used for inference requests.</p> <p>The following actions are related to the <code>DeleteCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> </ul>",
     "DeleteFoundationModelAgreement": "<p>Delete the model access agreement for the specified model.</p>",
@@ -28,6 +35,14 @@
     "DeletePromptRouter": "<p>Deletes a specified prompt router. This action cannot be undone.</p>",
     "DeleteProvisionedModelThroughput": "<p>Deletes a Provisioned Throughput. You can't delete a Provisioned Throughput before the commitment term is over. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "DeregisterMarketplaceModelEndpoint": "<p>Deregisters an endpoint for a model from Amazon Bedrock Marketplace. This operation removes the endpoint's association with Amazon Bedrock but does not delete the underlying Amazon SageMaker endpoint.</p>",
+    "ExportAutomatedReasoningPolicyVersion": "<p>Exports the policy definition for an Automated Reasoning policy version. Returns the complete policy definition including rules, variables, and custom variable types in a structured format.</p>",
+    "GetAutomatedReasoningPolicy": "<p>Retrieves details about an Automated Reasoning policy or policy version. Returns information including the policy definition, metadata, and timestamps.</p>",
+    "GetAutomatedReasoningPolicyAnnotations": "<p>Retrieves the current annotations for an Automated Reasoning policy build workflow. Annotations contain corrections to the rules, variables and types to be applied to the policy.</p>",
+    "GetAutomatedReasoningPolicyBuildWorkflow": "<p>Retrieves detailed information about an Automated Reasoning policy build workflow, including its status, configuration, and metadata.</p>",
+    "GetAutomatedReasoningPolicyBuildWorkflowResultAssets": "<p>Retrieves the resulting assets from a completed Automated Reasoning policy build workflow, including build logs, quality reports, and generated policy artifacts.</p>",
+    "GetAutomatedReasoningPolicyNextScenario": "<p>Retrieves the next test scenario for validating an Automated Reasoning policy. This is used during the interactive policy refinement process to test policy behavior.</p>",
+    "GetAutomatedReasoningPolicyTestCase": "<p>Retrieves details about a specific Automated Reasoning policy test.</p>",
+    "GetAutomatedReasoningPolicyTestResult": "<p>Retrieves the test result for a specific Automated Reasoning policy test. Returns detailed validation findings and execution status.</p>",
     "GetCustomModel": "<p>Get the properties associated with a Amazon Bedrock custom model that you have created. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetCustomModelDeployment": "<p>Retrieves information about a custom model deployment, including its status, configuration, and metadata. Use this operation to monitor the deployment status and retrieve details needed for inference requests.</p> <p>The following actions are related to the <code>GetCustomModelDeployment</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListCustomModelDeployments.html\">ListCustomModelDeployments</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "GetEvaluationJob": "<p>Gets information about an evaluation job, such as the status of the job.</p>",
@@ -45,6 +60,10 @@
     "GetPromptRouter": "<p>Retrieves details about a prompt router.</p>",
     "GetProvisionedModelThroughput": "<p>Returns details for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "GetUseCaseForModelAccess": "<p>Get usecase for model access.</p>",
+    "ListAutomatedReasoningPolicies": "<p>Lists all Automated Reasoning policies in your account, with optional filtering by policy ARN. This helps you manage and discover existing policies.</p>",
+    "ListAutomatedReasoningPolicyBuildWorkflows": "<p>Lists all build workflows for an Automated Reasoning policy, showing the history of policy creation and modification attempts.</p>",
+    "ListAutomatedReasoningPolicyTestCases": "<p>Lists tests for an Automated Reasoning policy. We recommend using pagination to ensure that the operation returns quickly and successfully.</p>",
+    "ListAutomatedReasoningPolicyTestResults": "<p>Lists test results for an Automated Reasoning policy, showing how the policy performed against various test scenarios and validation checks.</p>",
     "ListCustomModelDeployments": "<p>Lists custom model deployments in your account. You can filter the results by creation time, name, status, and associated model. Use this operation to manage and monitor your custom model deployments.</p> <p>We recommend using pagination to ensure that the operation returns quickly and successfully.</p> <p>The following actions are related to the <code>ListCustomModelDeployments</code> operation:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModelDeployment.html\">CreateCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetCustomModelDeployment.html\">GetCustomModelDeployment</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_DeleteCustomModelDeployment.html\">DeleteCustomModelDeployment</a> </p> </li> </ul>",
     "ListCustomModels": "<p>Returns a list of the custom models that you have created with the <code>CreateModelCustomizationJob</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "ListEvaluationJobs": "<p>Lists all existing evaluation jobs.</p>",
@@ -64,11 +83,16 @@
     "PutModelInvocationLoggingConfiguration": "<p>Set the configuration values for model invocation logging.</p>",
     "PutUseCaseForModelAccess": "<p>Put usecase for model access.</p>",
     "RegisterMarketplaceModelEndpoint": "<p>Registers an existing Amazon SageMaker endpoint with Amazon Bedrock Marketplace, allowing it to be used with Amazon Bedrock APIs.</p>",
+    "StartAutomatedReasoningPolicyBuildWorkflow": "<p>Starts a new build workflow for an Automated Reasoning policy. This initiates the process of analyzing source documents and generating policy rules, variables, and types.</p>",
+    "StartAutomatedReasoningPolicyTestWorkflow": "<p>Initiates a test workflow to validate Automated Reasoning policy tests. The workflow executes the specified tests against the policy and generates validation results.</p>",
     "StopEvaluationJob": "<p>Stops an evaluation job that is current being created or running.</p>",
     "StopModelCustomizationJob": "<p>Stops an active model customization job. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models.html\">Custom models</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "StopModelInvocationJob": "<p>Stops a batch inference job. You're only charged for tokens that were already processed. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-stop.html\">Stop a batch inference job</a>.</p>",
     "TagResource": "<p>Associate tags with a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
     "UntagResource": "<p>Remove one or more tags from a resource. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
+    "UpdateAutomatedReasoningPolicy": "<p>Updates an existing Automated Reasoning policy with new rules, variables, or configuration. This creates a new version of the policy while preserving the previous version.</p>",
+    "UpdateAutomatedReasoningPolicyAnnotations": "<p>Updates the annotations for an Automated Reasoning policy build workflow. This allows you to modify extracted rules, variables, and types before finalizing the policy.</p>",
+    "UpdateAutomatedReasoningPolicyTestCase": "<p>Updates an existing Automated Reasoning policy test. You can modify the content, query, expected result, and confidence threshold.</p>",
     "UpdateGuardrail": "<p>Updates a guardrail with the values you specify.</p> <ul> <li> <p>Specify a <code>name</code> and optional <code>description</code>.</p> </li> <li> <p>Specify messages for when the guardrail successfully blocks a prompt or a model response in the <code>blockedInputMessaging</code> and <code>blockedOutputsMessaging</code> fields.</p> </li> <li> <p>Specify topics for the guardrail to deny in the <code>topicPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailTopicConfig.html\">GuardrailTopicConfig</a> object in the <code>topicsConfig</code> list pertains to one topic.</p> <ul> <li> <p>Give a <code>name</code> and <code>description</code> so that the guardrail can properly identify the topic.</p> </li> <li> <p>Specify <code>DENY</code> in the <code>type</code> field.</p> </li> <li> <p>(Optional) Provide up to five prompts that you would categorize as belonging to the topic in the <code>examples</code> list.</p> </li> </ul> </li> <li> <p>Specify filter strengths for the harmful categories defined in Amazon Bedrock in the <code>contentPolicyConfig</code> object. Each <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a> object in the <code>filtersConfig</code> list pertains to a harmful category. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-content-filters\">Content filters</a>. For more information about the fields in a content filter, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> <ul> <li> <p>Specify the category in the <code>type</code> field.</p> </li> <li> <p>Specify the strength of the filter for prompts in the <code>inputStrength</code> field and for model responses in the <code>strength</code> field of the <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GuardrailContentFilterConfig.html\">GuardrailContentFilterConfig</a>.</p> </li> </ul> </li> <li> <p>(Optional) For security, include the ARN of a KMS key in the <code>kmsKeyId</code> field.</p> </li> </ul>",
     "UpdateMarketplaceModelEndpoint": "<p>Updates the configuration of an existing endpoint for a model from Amazon Bedrock Marketplace.</p>",
     "UpdateProvisionedModelThroughput": "<p>Updates the name or associated model for a Provisioned Throughput. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html\">Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>"
@@ -190,6 +214,1023 @@
       "base": null,
       "refs": {
         "AutomatedEvaluationCustomMetricConfig$customMetrics": "<p>Defines a list of custom metrics to be used in an Amazon Bedrock evaluation job.</p>"
+      }
+    },
+    "AutomatedReasoningCheckDifferenceScenarioList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckTranslationAmbiguousFinding$differenceScenarios": "<p>Scenarios showing how the different translation options differ in meaning.</p>"
+      }
+    },
+    "AutomatedReasoningCheckFinding": {
+      "base": "<p>Represents the result of an Automated Reasoning validation check, indicating whether the content is logically valid, invalid, or falls into other categories based on the policy rules.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFindingList$member": null
+      }
+    },
+    "AutomatedReasoningCheckFindingList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyTestResult$testFindings": "<p>Detailed findings from the test run, including any issues, violations, or unexpected behaviors discovered.</p>"
+      }
+    },
+    "AutomatedReasoningCheckImpossibleFinding": {
+      "base": "<p>Indicates that no valid claims can be made due to logical contradictions in the premises or rules.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFinding$impossible": "<p>Indicates that Automated Reasoning cannot make a statement about the claims. This can happen if the premises are logically incorrect, or if there is a conflict within the Automated Reasoning policy itself.</p>"
+      }
+    },
+    "AutomatedReasoningCheckInputTextReference": {
+      "base": "<p>References a portion of the original input text that corresponds to logical elements.</p>",
+      "refs": {
+        "AutomatedReasoningCheckInputTextReferenceList$member": null
+      }
+    },
+    "AutomatedReasoningCheckInputTextReferenceList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckTranslation$untranslatedPremises": "<p>References to portions of the original input text that correspond to the premises but could not be fully translated.</p>",
+        "AutomatedReasoningCheckTranslation$untranslatedClaims": "<p>References to portions of the original input text that correspond to the claims but could not be fully translated.</p>"
+      }
+    },
+    "AutomatedReasoningCheckInvalidFinding": {
+      "base": "<p>Indicates that the claims are logically false and contradictory to the established rules or premises.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFinding$invalid": "<p>Indicates that the claims are false. The claims are not implied by the premises and Automated Reasoning policy. Furthermore, there exist different claims that are consistent with the premises and Automated Reasoning policy.</p>"
+      }
+    },
+    "AutomatedReasoningCheckLogicWarning": {
+      "base": "<p>Identifies logical issues in the translated statements that exist independent of any policy rules, such as statements that are always true or always false.</p>",
+      "refs": {
+        "AutomatedReasoningCheckImpossibleFinding$logicWarning": "<p>Indication of a logic issue with the translation without needing to consider the automated reasoning policy rules.</p>",
+        "AutomatedReasoningCheckInvalidFinding$logicWarning": "<p>Indication of a logic issue with the translation without needing to consider the automated reasoning policy rules.</p>",
+        "AutomatedReasoningCheckSatisfiableFinding$logicWarning": "<p>Indication of a logic issue with the translation without needing to consider the automated reasoning policy rules.</p>",
+        "AutomatedReasoningCheckValidFinding$logicWarning": "<p>Indication of a logic issue with the translation without needing to consider the automated reasoning policy rules.</p>"
+      }
+    },
+    "AutomatedReasoningCheckLogicWarningType": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckLogicWarning$type": "<p>The category of the detected logical issue, such as statements that are always true or always false.</p>"
+      }
+    },
+    "AutomatedReasoningCheckNoTranslationsFinding": {
+      "base": "<p>Indicates that no relevant logical information could be extracted from the input for validation.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFinding$noTranslations": "<p>Identifies that some or all of the input prompt wasn't translated into logic. This can happen if the input isn't relevant to the Automated Reasoning policy, or if the policy doesn't have variables to model relevant input.</p>"
+      }
+    },
+    "AutomatedReasoningCheckResult": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyScenario$expectedResult": "<p>The expected outcome when this scenario is evaluated against the policy (e.g., PASS, FAIL, VIOLATION).</p>",
+        "AutomatedReasoningPolicyTestCase$expectedAggregatedFindingsResult": "<p>The expected result of the Automated Reasoning check for this test.</p>",
+        "AutomatedReasoningPolicyTestResult$aggregatedTestFindingsResult": "<p>A summary of all test findings, aggregated to provide an overall assessment of policy quality and correctness.</p>",
+        "CreateAutomatedReasoningPolicyTestCaseRequest$expectedAggregatedFindingsResult": "<p>The expected result of the Automated Reasoning check. Valid values include: , TOO_COMPLEX, and NO_TRANSLATIONS.</p> <ul> <li> <p> <code>VALID</code> - The claims are true. The claims are implied by the premises and the Automated Reasoning policy. Given the Automated Reasoning policy and premises, it is not possible for these claims to be false. In other words, there are no alternative answers that are true that contradict the claims.</p> </li> <li> <p> <code>INVALID</code> - The claims are false. The claims are not implied by the premises and Automated Reasoning policy. Furthermore, there exists different claims that are consistent with the premises and Automated Reasoning policy.</p> </li> <li> <p> <code>SATISFIABLE</code> - The claims can be true or false. It depends on what assumptions are made for the claim to be implied from the premises and Automated Reasoning policy rules. In this situation, different assumptions can make input claims false and alternative claims true.</p> </li> <li> <p> <code>IMPOSSIBLE</code> - Automated Reasoning can’t make a statement about the claims. This can happen if the premises are logically incorrect, or if there is a conflict within the Automated Reasoning policy itself.</p> </li> <li> <p> <code>TRANSLATION_AMBIGUOUS</code> - Detected an ambiguity in the translation meant it would be unsound to continue with validity checking. Additional context or follow-up questions might be needed to get translation to succeed.</p> </li> <li> <p> <code>TOO_COMPLEX</code> - The input contains too much information for Automated Reasoning to process within its latency limits.</p> </li> <li> <p> <code>NO_TRANSLATIONS</code> - Identifies that some or all of the input prompt wasn't translated into logic. This can happen if the input isn't relevant to the Automated Reasoning policy, or if the policy doesn't have variables to model relevant input. If Automated Reasoning can't translate anything, you get a single <code>NO_TRANSLATIONS</code> finding. You might also see a <code>NO_TRANSLATIONS</code> (along with other findings) if some part of the validation isn't translated.</p> </li> </ul>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$expectedAggregatedFindingsResult": "<p>The updated expected result of the Automated Reasoning check.</p>"
+      }
+    },
+    "AutomatedReasoningCheckRule": {
+      "base": "<p>References a specific automated reasoning policy rule that was applied during evaluation.</p>",
+      "refs": {
+        "AutomatedReasoningCheckRuleList$member": null
+      }
+    },
+    "AutomatedReasoningCheckRuleList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckImpossibleFinding$contradictingRules": "<p>The automated reasoning policy rules that contradict the claims and/or premises in the input.</p>",
+        "AutomatedReasoningCheckInvalidFinding$contradictingRules": "<p>The automated reasoning policy rules that contradict the claims in the input.</p>",
+        "AutomatedReasoningCheckValidFinding$supportingRules": "<p>The automated reasoning policy rules that support why this result is considered valid.</p>"
+      }
+    },
+    "AutomatedReasoningCheckSatisfiableFinding": {
+      "base": "<p>Indicates that the claims could be either true or false depending on additional assumptions not provided in the input.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFinding$satisfiable": "<p>Indicates that the claims can be true or false. It depends on what assumptions are made for the claim to be implied from the premises and Automated Reasoning policy rules. In this situation, different assumptions can make input claims false and alternative claims true.</p>"
+      }
+    },
+    "AutomatedReasoningCheckScenario": {
+      "base": "<p>Represents a logical scenario where claims can be evaluated as true or false, containing specific logical assignments.</p>",
+      "refs": {
+        "AutomatedReasoningCheckDifferenceScenarioList$member": null,
+        "AutomatedReasoningCheckSatisfiableFinding$claimsTrueScenario": "<p>An example scenario demonstrating how the claims could be logically true.</p>",
+        "AutomatedReasoningCheckSatisfiableFinding$claimsFalseScenario": "<p>An example scenario demonstrating how the claims could be logically false.</p>",
+        "AutomatedReasoningCheckValidFinding$claimsTrueScenario": "<p>An example scenario demonstrating how the claims are logically true.</p>"
+      }
+    },
+    "AutomatedReasoningCheckTooComplexFinding": {
+      "base": "<p>Indicates that the input exceeds the processing capacity due to the volume or complexity of the logical information.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFinding$tooComplex": "<p>Indicates that the input contains too much information for Automated Reasoning to process within its latency limits.</p>"
+      }
+    },
+    "AutomatedReasoningCheckTranslation": {
+      "base": "<p>Contains the logical translation of natural language input into formal logical statements, including premises, claims, and confidence scores.</p>",
+      "refs": {
+        "AutomatedReasoningCheckImpossibleFinding$translation": "<p>The logical translation of the input that this finding evaluates.</p>",
+        "AutomatedReasoningCheckInvalidFinding$translation": "<p>The logical translation of the input that this finding invalidates.</p>",
+        "AutomatedReasoningCheckSatisfiableFinding$translation": "<p>The logical translation of the input that this finding evaluates.</p>",
+        "AutomatedReasoningCheckTranslationList$member": null,
+        "AutomatedReasoningCheckValidFinding$translation": "<p>The logical translation of the input that this finding validates.</p>"
+      }
+    },
+    "AutomatedReasoningCheckTranslationAmbiguousFinding": {
+      "base": "<p>Indicates that the input has multiple valid logical interpretations, requiring additional context or clarification.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFinding$translationAmbiguous": "<p>Indicates that an ambiguity was detected in the translation, making it unsound to continue with validity checking. Additional context or follow-up questions might be needed to get translation to succeed.</p>"
+      }
+    },
+    "AutomatedReasoningCheckTranslationConfidence": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckTranslation$confidence": "<p>A confidence score between 0 and 1 indicating how certain the system is about the logical translation.</p>",
+        "AutomatedReasoningPolicyTestCase$confidenceThreshold": "<p>The minimum confidence level for logic validation. Content meeting this threshold is considered high-confidence and can be validated.</p>",
+        "CreateAutomatedReasoningPolicyTestCaseRequest$confidenceThreshold": "<p>The minimum confidence level for logic validation. Content that meets the threshold is considered a high-confidence finding that can be validated.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$confidenceThreshold": "<p>The updated minimum confidence level for logic validation. If null is provided, the threshold will be removed.</p>"
+      }
+    },
+    "AutomatedReasoningCheckTranslationList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckTranslationOption$translations": "<p>Different logical interpretations that were detected during translation of the input.</p>"
+      }
+    },
+    "AutomatedReasoningCheckTranslationOption": {
+      "base": "<p>Represents one possible logical interpretation of ambiguous input content.</p>",
+      "refs": {
+        "AutomatedReasoningCheckTranslationOptionList$member": null
+      }
+    },
+    "AutomatedReasoningCheckTranslationOptionList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckTranslationAmbiguousFinding$options": "<p>Different logical interpretations that were detected during translation of the input.</p>"
+      }
+    },
+    "AutomatedReasoningCheckValidFinding": {
+      "base": "<p>Indicates that the claims are definitively true and logically implied by the premises, with no possible alternative interpretations.</p>",
+      "refs": {
+        "AutomatedReasoningCheckFinding$valid": "<p>Indicates that the claims are true. The claims are implied by the premises and the Automated Reasoning policy. Given the Automated Reasoning policy and premises, it is not possible for these claims to be false.</p>"
+      }
+    },
+    "AutomatedReasoningConfidenceFilterThreshold": {
+      "base": null,
+      "refs": {
+        "GuardrailAutomatedReasoningPolicy$confidenceThreshold": "<p>The minimum confidence level required for Automated Reasoning policy violations to trigger guardrail actions. Values range from 0.0 to 1.0.</p>",
+        "GuardrailAutomatedReasoningPolicyConfig$confidenceThreshold": "<p>The confidence threshold for triggering guardrail actions based on Automated Reasoning policy violations.</p>"
+      }
+    },
+    "AutomatedReasoningLogicStatement": {
+      "base": "<p>Represents a logical statement that can be expressed both in formal logic notation and natural language, providing dual representations for better understanding and validation.</p>",
+      "refs": {
+        "AutomatedReasoningLogicStatementList$member": null
+      }
+    },
+    "AutomatedReasoningLogicStatementContent": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningLogicStatement$logic": "<p>The formal logic representation of the statement using mathematical notation and logical operators.</p>"
+      }
+    },
+    "AutomatedReasoningLogicStatementList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckLogicWarning$premises": "<p>The logical statements that serve as premises under which the claims are validated.</p>",
+        "AutomatedReasoningCheckLogicWarning$claims": "<p>The logical statements that are validated while assuming the policy and premises.</p>",
+        "AutomatedReasoningCheckScenario$statements": "<p>List of logical assignments and statements that define this scenario.</p>",
+        "AutomatedReasoningCheckTranslation$premises": "<p>The logical statements that serve as the foundation or assumptions for the claims.</p>",
+        "AutomatedReasoningCheckTranslation$claims": "<p>The logical statements that are being validated against the premises and policy rules.</p>"
+      }
+    },
+    "AutomatedReasoningNaturalLanguageStatementContent": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckInputTextReference$text": "<p>The specific text from the original input that this reference points to.</p>",
+        "AutomatedReasoningLogicStatement$naturalLanguage": "<p>The natural language representation of the logical statement, providing a human-readable interpretation of the formal logic.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddRuleAnnotation": {
+      "base": "<p>An annotation for adding a new rule to an Automated Reasoning policy using a formal logical expression.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$addRule": "<p>An operation to add a new logical rule to the policy using formal mathematical expressions.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddRuleFromNaturalLanguageAnnotation": {
+      "base": "<p>An annotation for adding a new rule to the policy by converting a natural language description into a formal logical expression.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$addRuleFromNaturalLanguage": "<p>An operation to add a new rule by converting natural language descriptions into formal logical expressions.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddRuleMutation": {
+      "base": "<p>A mutation operation that adds a new rule to the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$addRule": "<p>A mutation to add a new rule to the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddTypeAnnotation": {
+      "base": "<p>An annotation for adding a new custom type to an Automated Reasoning policy, defining a set of possible values for variables.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$addType": "<p>An operation to add a new custom type to the policy, defining a set of possible values for policy variables.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddTypeMutation": {
+      "base": "<p>A mutation operation that adds a new custom type to the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$addType": "<p>A mutation to add a new custom type to the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddTypeValue": {
+      "base": "<p>Represents a single value that can be added to an existing custom type in the policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyTypeValueAnnotation$addTypeValue": "<p>An operation to add a new value to an existing custom type.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddVariableAnnotation": {
+      "base": "<p>An annotation for adding a new variable to an Automated Reasoning policy, which can be used in rule expressions.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$addVariable": "<p>An operation to add a new variable to the policy, which can be used in rule expressions to represent dynamic values.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAddVariableMutation": {
+      "base": "<p>A mutation operation that adds a new variable to the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$addVariable": "<p>A mutation to add a new variable to the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotation": {
+      "base": "<p>Contains the various operations that can be performed on an Automated Reasoning policy, including adding, updating, and deleting rules, variables, and types.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotationList$member": null,
+        "AutomatedReasoningPolicyBuildLogEntry$annotation": "<p>The annotation or operation that was being processed when this log entry was created.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotationFeedbackNaturalLanguage": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyUpdateFromRuleFeedbackAnnotation$feedback": "<p>The feedback information about rule performance, including suggestions for improvements or corrections.</p>",
+        "AutomatedReasoningPolicyUpdateFromScenarioFeedbackAnnotation$feedback": "<p>The feedback information about scenario performance, including any issues or improvements identified.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotationIngestContent": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyIngestContentAnnotation$content": "<p>The new content to be analyzed and incorporated into the policy, such as additional documents or rule descriptions.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotationList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowRepairContent$annotations": "<p>Specific annotations or modifications to apply during the policy repair process, such as rule corrections or variable updates.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsResponse$annotations": "<p>The current set of annotations containing rules, variables, and types extracted from the source documents. These can be modified before finalizing the policy.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsRequest$annotations": "<p>The updated annotations containing modified rules, variables, and types for the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotationRuleNaturalLanguage": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddRuleFromNaturalLanguageAnnotation$naturalLanguage": "<p>The natural language description of the rule that should be converted into a formal logical expression.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyAnnotationStatus": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildLogEntry$status": "<p>The status of the build step (e.g., SUCCESS, FAILED, IN_PROGRESS).</p>"
+      }
+    },
+    "AutomatedReasoningPolicyArn": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckRule$policyVersionArn": "<p>The ARN of the automated reasoning policy version that contains this rule.</p>",
+        "AutomatedReasoningPolicyBuildWorkflowSummary$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy associated with this build workflow.</p>",
+        "AutomatedReasoningPolicySummary$policyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>",
+        "AutomatedReasoningPolicyTestResult$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy that was tested.</p>",
+        "CancelAutomatedReasoningPolicyBuildWorkflowRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose build workflow you want to cancel.</p>",
+        "CreateAutomatedReasoningPolicyResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy that you created.</p>",
+        "CreateAutomatedReasoningPolicyTestCaseRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy for which to create the test.</p>",
+        "CreateAutomatedReasoningPolicyTestCaseResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy for which the test was created.</p>",
+        "CreateAutomatedReasoningPolicyVersionRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy for which to create a version.</p>",
+        "CreateAutomatedReasoningPolicyVersionResponse$policyArn": "<p>The versioned Amazon Resource Name (ARN) of the policy version.</p>",
+        "DeleteAutomatedReasoningPolicyBuildWorkflowRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose build workflow you want to delete.</p>",
+        "DeleteAutomatedReasoningPolicyRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy to delete.</p>",
+        "DeleteAutomatedReasoningPolicyTestCaseRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy that contains the test.</p>",
+        "ExportAutomatedReasoningPolicyVersionRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy to export. Can be either the unversioned ARN for the draft policy or a versioned ARN for a specific policy version.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose annotations you want to retrieve.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose build workflow you want to retrieve.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose build workflow assets you want to retrieve.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy.</p>",
+        "GetAutomatedReasoningPolicyNextScenarioRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy for which you want to get the next test scenario.</p>",
+        "GetAutomatedReasoningPolicyNextScenarioResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy.</p>",
+        "GetAutomatedReasoningPolicyRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy to retrieve. Can be either the unversioned ARN for the draft policy or an ARN for a specific policy version.</p>",
+        "GetAutomatedReasoningPolicyResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>",
+        "GetAutomatedReasoningPolicyTestCaseRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy that contains the test.</p>",
+        "GetAutomatedReasoningPolicyTestCaseResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy that contains the test.</p>",
+        "GetAutomatedReasoningPolicyTestResultRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy.</p>",
+        "GuardrailAutomatedReasoningPolicyConfigPoliciesList$member": null,
+        "GuardrailAutomatedReasoningPolicyPoliciesList$member": null,
+        "ListAutomatedReasoningPoliciesRequest$policyArn": "<p>Optional filter to list only the policy versions with the specified Amazon Resource Name (ARN). If not provided, the DRAFT versions for all policies are listed.</p>",
+        "ListAutomatedReasoningPolicyBuildWorkflowsRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose build workflows you want to list.</p>",
+        "ListAutomatedReasoningPolicyTestCasesRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy for which to list tests.</p>",
+        "ListAutomatedReasoningPolicyTestResultsRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose test results you want to list.</p>",
+        "StartAutomatedReasoningPolicyBuildWorkflowRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy for which to start the build workflow.</p>",
+        "StartAutomatedReasoningPolicyBuildWorkflowResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy.</p>",
+        "StartAutomatedReasoningPolicyTestWorkflowRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy to test.</p>",
+        "StartAutomatedReasoningPolicyTestWorkflowResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy for which the test workflow was started.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy whose annotations you want to update.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy.</p>",
+        "UpdateAutomatedReasoningPolicyRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy to update. This must be the ARN of a draft policy.</p>",
+        "UpdateAutomatedReasoningPolicyResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the updated policy.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$policyArn": "<p>The Amazon Resource Name (ARN) of the Automated Reasoning policy that contains the test.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy that contains the updated test.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildDocumentContentType": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowDocument$documentContentType": "<p>The MIME type of the document content (e.g., text/plain, application/pdf, text/markdown).</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$documentContentType": "<p>The content type of the source document (e.g., text/plain, application/pdf).</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildDocumentDescription": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowDocument$documentDescription": "<p>A detailed description of the document's content and how it should be used in the policy generation process.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$documentDescription": "<p>A detailed description of the document's content and how it should be used in the policy generation process.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildDocumentName": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowDocument$documentName": "<p>A descriptive name for the document that helps identify its purpose and content.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$documentName": "<p>The name of the source document used in the build workflow.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildLog": {
+      "base": "<p>Contains detailed logging information about the policy build process, including steps taken, decisions made, and any issues encountered.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$buildLog": "<p>The complete build log containing detailed information about each step in the policy generation process.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildLogEntry": {
+      "base": "<p>Represents a single entry in the policy build log, containing information about a specific step or event in the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildLogEntryList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyBuildLogEntryList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildLog$entries": "<p>A list of log entries documenting each step in the policy build process, including timestamps, status, and detailed messages.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildMessageType": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildStepMessage$messageType": "<p>The type of message (e.g., INFO, WARNING, ERROR) indicating its severity and purpose.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildResultAssetType": {
+      "base": null,
+      "refs": {
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest$assetType": "<p>The type of asset to retrieve (e.g., BUILD_LOG, QUALITY_REPORT, POLICY_DEFINITION).</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildResultAssets": {
+      "base": "<p>Contains the various assets generated during a policy build workflow, including logs, quality reports, and the final policy definition.</p>",
+      "refs": {
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsResponse$buildWorkflowAssets": "<p>The requested build workflow asset. This is a union type that returns only one of the available asset types (logs, reports, or generated artifacts) based on the specific asset type requested in the API call.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildStep": {
+      "base": "<p>Represents a single step in the policy build process, containing context about what was being processed and any messages or results.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildStepList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyBuildStepContext": {
+      "base": "<p>Provides context about what type of operation was being performed during a build step.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildStep$context": "<p>Contextual information about what was being processed during this build step, such as the type of operation or the source material being analyzed.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildStepList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildLogEntry$buildSteps": "<p>Detailed information about the specific build steps that were executed, including any sub-operations or transformations.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildStepMessage": {
+      "base": "<p>Represents a message generated during a build step, providing information about what happened or any issues encountered.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildStepMessageList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyBuildStepMessageList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildStep$messages": "<p>A list of messages generated during this build step, including informational messages, warnings, and error details.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowDocument": {
+      "base": "<p>Represents a source document used in the policy build workflow, containing the content and metadata needed for policy generation.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowDocumentList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowDocumentDocumentBlob": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowDocument$document": "<p>The actual content of the source document that will be analyzed to extract policy rules and concepts.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowDocumentList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyWorkflowTypeContent$documents": "<p>The list of documents to be processed in a document ingestion workflow.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowId": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowSummary$buildWorkflowId": "<p>The unique identifier of the build workflow.</p>",
+        "CancelAutomatedReasoningPolicyBuildWorkflowRequest$buildWorkflowId": "<p>The unique identifier of the build workflow to cancel. You can get this ID from the StartAutomatedReasoningPolicyBuildWorkflow response or by listing build workflows.</p>",
+        "DeleteAutomatedReasoningPolicyBuildWorkflowRequest$buildWorkflowId": "<p>The unique identifier of the build workflow to delete.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsRequest$buildWorkflowId": "<p>The unique identifier of the build workflow whose annotations you want to retrieve.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsResponse$buildWorkflowId": "<p>The unique identifier of the build workflow.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowRequest$buildWorkflowId": "<p>The unique identifier of the build workflow to retrieve.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$buildWorkflowId": "<p>The unique identifier of the build workflow.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest$buildWorkflowId": "<p>The unique identifier of the build workflow whose result assets you want to retrieve.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsResponse$buildWorkflowId": "<p>The unique identifier of the build workflow.</p>",
+        "GetAutomatedReasoningPolicyNextScenarioRequest$buildWorkflowId": "<p>The unique identifier of the build workflow associated with the test scenarios.</p>",
+        "GetAutomatedReasoningPolicyTestResultRequest$buildWorkflowId": "<p>The build workflow identifier. The build workflow must display a <code>COMPLETED</code> status to get results.</p>",
+        "ListAutomatedReasoningPolicyTestResultsRequest$buildWorkflowId": "<p>The unique identifier of the build workflow whose test results you want to list.</p>",
+        "StartAutomatedReasoningPolicyBuildWorkflowResponse$buildWorkflowId": "<p>The unique identifier of the newly started build workflow. Use this ID to track the workflow's progress and retrieve its results.</p>",
+        "StartAutomatedReasoningPolicyTestWorkflowRequest$buildWorkflowId": "<p>The build workflow identifier. The build workflow must show a <code>COMPLETED</code> status before running tests.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsRequest$buildWorkflowId": "<p>The unique identifier of the build workflow whose annotations you want to update.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsResponse$buildWorkflowId": "<p>The unique identifier of the build workflow.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowRepairContent": {
+      "base": "<p>Contains content and instructions for repairing or improving an existing Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyWorkflowTypeContent$policyRepairAssets": "<p>The assets and instructions needed for a policy repair workflow, including repair annotations and guidance.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowSource": {
+      "base": "<p>Defines the source content for a policy build workflow, which can include documents, repair instructions, or other input materials.</p>",
+      "refs": {
+        "StartAutomatedReasoningPolicyBuildWorkflowRequest$sourceContent": "<p>The source content for the build workflow, such as documents to analyze or repair instructions for existing policies.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowStatus": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowSummary$status": "<p>The current status of the build workflow (e.g., RUNNING, COMPLETED, FAILED, CANCELLED).</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$status": "<p>The current status of the build workflow (e.g., RUNNING, COMPLETED, FAILED, CANCELLED).</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowSummaries": {
+      "base": null,
+      "refs": {
+        "ListAutomatedReasoningPolicyBuildWorkflowsResponse$automatedReasoningPolicyBuildWorkflowSummaries": "<p>A list of build workflow summaries, each containing key information about a build workflow including its status and timestamps.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowSummary": {
+      "base": "<p>Provides a summary of a policy build workflow, including its current status, timing information, and key identifiers.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowSummaries$member": null
+      }
+    },
+    "AutomatedReasoningPolicyBuildWorkflowType": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowSummary$buildWorkflowType": "<p>The type of build workflow (e.g., DOCUMENT_INGESTION, POLICY_REPAIR).</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$buildWorkflowType": "<p>The type of build workflow being executed (e.g., DOCUMENT_INGESTION, POLICY_REPAIR).</p>",
+        "StartAutomatedReasoningPolicyBuildWorkflowRequest$buildWorkflowType": "<p>The type of build workflow to start (e.g., DOCUMENT_INGESTION for processing new documents, POLICY_REPAIR for fixing existing policies).</p>"
+      }
+    },
+    "AutomatedReasoningPolicyConflictedRuleIdList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionQualityReport$conflictingRules": "<p>A list of rules that may conflict with each other, potentially leading to inconsistent policy behavior.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinition": {
+      "base": "<p>Contains the formal logic rules, variables, and custom variable types that define an Automated Reasoning policy. The policy definition specifies the constraints used to validate foundation model responses for accuracy and logical consistency.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$policyDefinition": null,
+        "AutomatedReasoningPolicyBuildWorkflowSource$policyDefinition": null,
+        "CreateAutomatedReasoningPolicyRequest$policyDefinition": "<p>The policy definition that contains the formal logic rules, variables, and custom variable types used to validate foundation model responses in your application.</p>",
+        "ExportAutomatedReasoningPolicyVersionResponse$policyDefinition": "<p>The exported policy definition containing the formal logic rules, variables, and custom variable types.</p>",
+        "UpdateAutomatedReasoningPolicyRequest$policyDefinition": "<p>The updated policy definition containing the formal logic rules, variables, and types.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionElement": {
+      "base": "<p>Represents a single element in an Automated Reasoning policy definition, such as a rule, variable, or type definition.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildStep$priorElement": "<p>Reference to the previous element or step in the build process, helping to trace the sequence of operations.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionQualityReport": {
+      "base": "<p>Provides a comprehensive analysis of the quality and completeness of an Automated Reasoning policy definition, highlighting potential issues and optimization opportunities.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildResultAssets$qualityReport": "<p>A comprehensive report analyzing the quality of the generated policy, including metrics about rule coverage, potential conflicts, and unused elements.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionRule": {
+      "base": "<p>Represents a formal logic rule in an Automated Reasoning policy. For example, rules can be expressed as if-then statements that define logical constraints.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAddRuleMutation$rule": null,
+        "AutomatedReasoningPolicyDefinitionElement$policyDefinitionRule": null,
+        "AutomatedReasoningPolicyDefinitionRuleList$member": null,
+        "AutomatedReasoningPolicyUpdateRuleMutation$rule": null
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionRuleAlternateExpression": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionRule$alternateExpression": "<p>The human-readable form of the rule expression, often in natural language or simplified notation.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionRuleExpression": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddRuleAnnotation$expression": "<p>The formal logical expression that defines the rule, using mathematical notation and referencing policy variables and types.</p>",
+        "AutomatedReasoningPolicyDefinitionRule$expression": "<p>The formal logic expression of the rule.</p>",
+        "AutomatedReasoningPolicyUpdateRuleAnnotation$expression": "<p>The new formal logical expression for the rule, replacing the previous expression.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionRuleId": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningCheckRule$id": "<p>The unique identifier of the automated reasoning rule.</p>",
+        "AutomatedReasoningPolicyConflictedRuleIdList$member": null,
+        "AutomatedReasoningPolicyDefinitionRule$id": "<p>The unique identifier of the rule within the policy.</p>",
+        "AutomatedReasoningPolicyDefinitionRuleIdList$member": null,
+        "AutomatedReasoningPolicyDeleteRuleAnnotation$ruleId": "<p>The unique identifier of the rule to delete from the policy.</p>",
+        "AutomatedReasoningPolicyDeleteRuleMutation$id": "<p>The unique identifier of the rule to delete.</p>",
+        "AutomatedReasoningPolicyDisjointedRuleIdList$member": null,
+        "AutomatedReasoningPolicyUpdateRuleAnnotation$ruleId": "<p>The unique identifier of the rule to update.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionRuleIdList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyScenario$ruleIds": "<p>The list of rule identifiers that are expected to be triggered or evaluated by this test scenario.</p>",
+        "AutomatedReasoningPolicyUpdateFromRuleFeedbackAnnotation$ruleIds": "<p>The list of rule identifiers that the feedback applies to.</p>",
+        "AutomatedReasoningPolicyUpdateFromScenarioFeedbackAnnotation$ruleIds": "<p>The list of rule identifiers that were involved in the scenario being evaluated.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionRuleList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinition$rules": "<p>The formal logic rules extracted from the source document. Rules define the logical constraints that determine whether model responses are valid, invalid, or satisfiable.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionType": {
+      "base": "<p>Represents a custom user-defined viarble type in an Automated Reasoning policy. Types are enum-based and provide additional context beyond predefined variable types.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAddTypeMutation$type": null,
+        "AutomatedReasoningPolicyDefinitionElement$policyDefinitionType": null,
+        "AutomatedReasoningPolicyDefinitionTypeList$member": null,
+        "AutomatedReasoningPolicyUpdateTypeMutation$type": null
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeDescription": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddTypeAnnotation$description": "<p>A description of what the custom type represents and how it should be used in the policy.</p>",
+        "AutomatedReasoningPolicyDefinitionType$description": "<p>The description of what the custom type represents.</p>",
+        "AutomatedReasoningPolicyUpdateTypeAnnotation$description": "<p>The new description for the custom type, replacing the previous description.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinition$types": "<p>The custom user-defined vairable types used in the policy. Types are enum-based variable types that provide additional context beyond the predefined variable types.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeName": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddTypeAnnotation$name": "<p>The name of the new custom type. This name will be used to reference the type in variable definitions and rules.</p>",
+        "AutomatedReasoningPolicyAddVariableAnnotation$type": "<p>The type of the variable, which can be a built-in type (like string or number) or a custom type defined in the policy.</p>",
+        "AutomatedReasoningPolicyDefinitionType$name": "<p>The name of the custom type.</p>",
+        "AutomatedReasoningPolicyDefinitionTypeNameList$member": null,
+        "AutomatedReasoningPolicyDefinitionTypeValuePair$typeName": "<p>The name of the custom type that contains the referenced value.</p>",
+        "AutomatedReasoningPolicyDefinitionVariable$type": "<p>The data type of the variable. Valid types include bool, int, real, enum, and custom types that you can provide.</p>",
+        "AutomatedReasoningPolicyDeleteTypeAnnotation$name": "<p>The name of the custom type to delete from the policy. The type must not be referenced by any variables or rules.</p>",
+        "AutomatedReasoningPolicyDeleteTypeMutation$name": "<p>The name of the custom type to delete.</p>",
+        "AutomatedReasoningPolicyUpdateTypeAnnotation$name": "<p>The current name of the custom type to update.</p>",
+        "AutomatedReasoningPolicyUpdateTypeAnnotation$newName": "<p>The new name for the custom type, if you want to rename it. If not provided, the name remains unchanged.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeNameList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionQualityReport$unusedTypes": "<p>A list of custom types that are defined but not referenced by any variables or rules, suggesting they may be unnecessary.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeValue": {
+      "base": "<p>Represents a single value within a custom type definition, including its identifier and description.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionTypeValueList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeValueDescription": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddTypeValue$description": "<p>A description of what this new type value represents and when it should be used.</p>",
+        "AutomatedReasoningPolicyDefinitionTypeValue$description": "<p>A human-readable description explaining what this type value represents and when it should be used.</p>",
+        "AutomatedReasoningPolicyUpdateTypeValue$description": "<p>The new description for the type value, replacing the previous description.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeValueList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddTypeAnnotation$values": "<p>The list of possible values that variables of this type can take, each with its own description and identifier.</p>",
+        "AutomatedReasoningPolicyDefinitionType$values": "<p>The possible values for this enum-based type, each with its own description.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeValueName": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddTypeValue$value": "<p>The identifier or name of the new value to add to the type.</p>",
+        "AutomatedReasoningPolicyDefinitionTypeValue$value": "<p>The actual value or identifier for this type value.</p>",
+        "AutomatedReasoningPolicyDefinitionTypeValuePair$valueName": "<p>The name of the specific value within the type.</p>",
+        "AutomatedReasoningPolicyDeleteTypeValue$value": "<p>The identifier or name of the value to remove from the type.</p>",
+        "AutomatedReasoningPolicyUpdateTypeValue$value": "<p>The current identifier or name of the type value to update.</p>",
+        "AutomatedReasoningPolicyUpdateTypeValue$newValue": "<p>The new identifier or name for the type value, if you want to rename it.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeValuePair": {
+      "base": "<p>Associates a type name with a specific value name, used for referencing type values in rules and other policy elements.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionTypeValuePairList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionTypeValuePairList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionQualityReport$unusedTypeValues": "<p>A list of type values that are defined but never used in any rules, indicating potential cleanup opportunities.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionVariable": {
+      "base": "<p>Represents a variable in an Automated Reasoning policy. Variables represent concepts that can have values assigned during natural language translation.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAddVariableMutation$variable": null,
+        "AutomatedReasoningPolicyDefinitionElement$policyDefinitionVariable": null,
+        "AutomatedReasoningPolicyDefinitionVariableList$member": null,
+        "AutomatedReasoningPolicyUpdateVariableMutation$variable": null
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionVariableDescription": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddVariableAnnotation$description": "<p>A description of what the variable represents and how it should be used in rules.</p>",
+        "AutomatedReasoningPolicyDefinitionVariable$description": "<p>The description of the variable that explains what it represents and how users might refer to it. Clear and comprehensive descriptions are essential for accurate natural language translation.</p>",
+        "AutomatedReasoningPolicyUpdateVariableAnnotation$description": "<p>The new description for the variable, replacing the previous description.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionVariableList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinition$variables": "<p>The variables that represent concepts in the policy. Variables can have values assigned when translating natural language into formal logic. Their descriptions are crucial for accurate translation.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionVariableName": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyAddVariableAnnotation$name": "<p>The name of the new variable. This name will be used to reference the variable in rule expressions.</p>",
+        "AutomatedReasoningPolicyDefinitionVariable$name": "<p>The name of the variable. Use descriptive names that clearly indicate the concept being represented.</p>",
+        "AutomatedReasoningPolicyDefinitionVariableNameList$member": null,
+        "AutomatedReasoningPolicyDeleteVariableAnnotation$name": "<p>The name of the variable to delete from the policy. The variable must not be referenced by any rules.</p>",
+        "AutomatedReasoningPolicyDeleteVariableMutation$name": "<p>The name of the variable to delete.</p>",
+        "AutomatedReasoningPolicyUpdateVariableAnnotation$name": "<p>The current name of the variable to update.</p>",
+        "AutomatedReasoningPolicyUpdateVariableAnnotation$newName": "<p>The new name for the variable, if you want to rename it. If not provided, the name remains unchanged.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDefinitionVariableNameList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionQualityReport$unusedVariables": "<p>A list of variables that are defined but not referenced by any rules, suggesting they may be unnecessary.</p>",
+        "AutomatedReasoningPolicyDisjointRuleSet$variables": "<p>The set of variables that are used by the rules in this disjoint set.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDeleteRuleAnnotation": {
+      "base": "<p>An annotation for removing a rule from an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$deleteRule": "<p>An operation to remove a rule from the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDeleteRuleMutation": {
+      "base": "<p>A mutation operation that removes a rule from the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$deleteRule": "<p>A mutation to remove a rule from the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDeleteTypeAnnotation": {
+      "base": "<p>An annotation for removing a custom type from an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$deleteType": "<p>An operation to remove a custom type from the policy. The type must not be referenced by any variables or rules.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDeleteTypeMutation": {
+      "base": "<p>A mutation operation that removes a custom type from the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$deleteType": "<p>A mutation to remove a custom type from the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDeleteTypeValue": {
+      "base": "<p>Represents a value to be removed from an existing custom type in the policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyTypeValueAnnotation$deleteTypeValue": "<p>An operation to remove a value from an existing custom type.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDeleteVariableAnnotation": {
+      "base": "<p>An annotation for removing a variable from an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$deleteVariable": "<p>An operation to remove a variable from the policy. The variable must not be referenced by any rules.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDeleteVariableMutation": {
+      "base": "<p>A mutation operation that removes a variable from the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$deleteVariable": "<p>A mutation to remove a variable from the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDescription": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicySummary$description": "<p>The description of the policy.</p>",
+        "CreateAutomatedReasoningPolicyRequest$description": "<p>A description of the Automated Reasoning policy. Use this to provide context about the policy's purpose and the types of validations it performs.</p>",
+        "CreateAutomatedReasoningPolicyResponse$description": "<p>The description of the Automated Reasoning policy.</p>",
+        "CreateAutomatedReasoningPolicyVersionResponse$description": "<p>The description of the policy version.</p>",
+        "GetAutomatedReasoningPolicyResponse$description": "<p>The description of the policy.</p>",
+        "UpdateAutomatedReasoningPolicyRequest$description": "<p>The updated description for the Automated Reasoning policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDisjointRuleSet": {
+      "base": "<p>Represents a set of rules that operate on completely separate variables, indicating they address different concerns or domains within the policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyDisjointRuleSetList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyDisjointRuleSetList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinitionQualityReport$disjointRuleSets": "<p>Groups of rules that operate on completely separate sets of variables, indicating the policy may be addressing multiple unrelated concerns.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyDisjointedRuleIdList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDisjointRuleSet$rules": "<p>The list of rules that form this disjoint set, all operating on the same set of variables.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyFormatVersion": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyDefinition$version": "<p>The version of the policy definition format.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyHash": {
+      "base": null,
+      "refs": {
+        "CreateAutomatedReasoningPolicyResponse$definitionHash": "<p>The hash of the policy definition. This is used as a concurrency token for creating policy versions that you can use in your application.</p>",
+        "CreateAutomatedReasoningPolicyVersionRequest$lastUpdatedDefinitionHash": "<p>The hash of the current policy definition used as a concurrency token to ensure the policy hasn't been modified since you last retrieved it.</p>",
+        "CreateAutomatedReasoningPolicyVersionResponse$definitionHash": "<p>The hash of the policy definition for this version.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsResponse$annotationSetHash": "<p>A hash value representing the current state of the annotations. This is used for optimistic concurrency control when updating annotations.</p>",
+        "GetAutomatedReasoningPolicyResponse$definitionHash": "<p>The hash of the policy definition used as a concurrency token.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsRequest$lastUpdatedAnnotationSetHash": "<p>The hash value of the annotation set that you're updating. This is used for optimistic concurrency control to prevent conflicting updates.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsResponse$annotationSetHash": "<p>The new hash value representing the updated state of the annotations.</p>",
+        "UpdateAutomatedReasoningPolicyResponse$definitionHash": "<p>The hash of the updated policy definition.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyId": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicySummary$policyId": "<p>The unique identifier of the policy.</p>",
+        "GetAutomatedReasoningPolicyResponse$policyId": "<p>The unique identifier of the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyIngestContentAnnotation": {
+      "base": "<p>An annotation for processing and incorporating new content into an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$ingestContent": "<p>An operation to process and incorporate new content into the policy, extracting additional rules and concepts.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyMutation": {
+      "base": "<p>A container for various mutation operations that can be applied to an Automated Reasoning policy, including adding, updating, and deleting policy elements.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildStepContext$mutation": "<p>Indicates that this build step involved modifying the policy structure, such as adding or updating rules, variables, or types.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyName": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicySummary$name": "<p>The name of the policy.</p>",
+        "CreateAutomatedReasoningPolicyRequest$name": "<p>A unique name for the Automated Reasoning policy. The name must be between 1 and 63 characters and can contain letters, numbers, hyphens, and underscores.</p>",
+        "CreateAutomatedReasoningPolicyResponse$name": "<p>The name of the Automated Reasoning policy.</p>",
+        "CreateAutomatedReasoningPolicyVersionResponse$name": "<p>The name of the policy version.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsResponse$name": "<p>The name of the Automated Reasoning policy.</p>",
+        "GetAutomatedReasoningPolicyResponse$name": "<p>The name of the policy.</p>",
+        "UpdateAutomatedReasoningPolicyRequest$name": "<p>The updated name for the Automated Reasoning policy.</p>",
+        "UpdateAutomatedReasoningPolicyResponse$name": "<p>The updated name of the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyPlanning": {
+      "base": "<p>Represents the planning phase of policy build workflow, where the system analyzes source content and determines what operations to perform.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildStepContext$planning": "<p>Indicates that this build step was part of the planning phase, where the system determines what operations to perform.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyScenario": {
+      "base": "<p>Represents a test scenario used to validate an Automated Reasoning policy, including the test conditions and expected outcomes.</p>",
+      "refs": {
+        "GetAutomatedReasoningPolicyNextScenarioResponse$scenario": "<p>The next test scenario to validate, including the test expression and expected results.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyScenarioAlternateExpression": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyScenario$alternateExpression": "<p>An alternative way to express the same test scenario, used for validation and comparison purposes.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyScenarioExpression": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyScenario$expression": "<p>The logical expression or condition that defines this test scenario.</p>",
+        "AutomatedReasoningPolicyUpdateFromScenarioFeedbackAnnotation$scenarioExpression": "<p>The logical expression that defines the test scenario that generated this feedback.</p>"
+      }
+    },
+    "AutomatedReasoningPolicySummaries": {
+      "base": null,
+      "refs": {
+        "ListAutomatedReasoningPoliciesResponse$automatedReasoningPolicySummaries": "<p>A list of Automated Reasoning policy summaries.</p>"
+      }
+    },
+    "AutomatedReasoningPolicySummary": {
+      "base": "<p>Contains summary information about an Automated Reasoning policy, including metadata and timestamps.</p>",
+      "refs": {
+        "AutomatedReasoningPolicySummaries$member": null
+      }
+    },
+    "AutomatedReasoningPolicyTestCase": {
+      "base": "<p>Represents a test for validating an Automated Reasoning policy. tests contain sample inputs and expected outcomes to verify policy behavior.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyTestCaseList$member": null,
+        "AutomatedReasoningPolicyTestResult$testCase": null,
+        "GetAutomatedReasoningPolicyTestCaseResponse$testCase": "<p>The test details including the content, query, expected result, and metadata.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestCaseId": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyTestCase$testCaseId": "<p>The unique identifier of the test.</p>",
+        "AutomatedReasoningPolicyTestCaseIdList$member": null,
+        "CreateAutomatedReasoningPolicyTestCaseResponse$testCaseId": "<p>The unique identifier of the created test.</p>",
+        "DeleteAutomatedReasoningPolicyTestCaseRequest$testCaseId": "<p>The unique identifier of the test to delete.</p>",
+        "GetAutomatedReasoningPolicyTestCaseRequest$testCaseId": "<p>The unique identifier of the test to retrieve.</p>",
+        "GetAutomatedReasoningPolicyTestResultRequest$testCaseId": "<p>The unique identifier of the test for which to retrieve results.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$testCaseId": "<p>The unique identifier of the test to update.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseResponse$testCaseId": "<p>The unique identifier of the updated test.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestCaseIdList": {
+      "base": null,
+      "refs": {
+        "StartAutomatedReasoningPolicyTestWorkflowRequest$testCaseIds": "<p>The list of test identifiers to run. If not provided, all tests for the policy are run.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestCaseList": {
+      "base": null,
+      "refs": {
+        "ListAutomatedReasoningPolicyTestCasesResponse$testCases": "<p>A list of tests for the specified policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestGuardContent": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyTestCase$guardContent": "<p>The output content to be validated by the policy, typically representing a foundation model response.</p>",
+        "CreateAutomatedReasoningPolicyTestCaseRequest$guardContent": "<p>The output content that's validated by the Automated Reasoning policy. This represents the foundation model response that will be checked for accuracy.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$guardContent": "<p>The updated content to be validated by the Automated Reasoning policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestList": {
+      "base": null,
+      "refs": {
+        "ListAutomatedReasoningPolicyTestResultsResponse$testResults": "<p>A list of test results, each containing information about how the policy performed on specific test scenarios.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestQueryContent": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyTestCase$queryContent": "<p>The input query or prompt that generated the content. This provides context for the validation.</p>",
+        "CreateAutomatedReasoningPolicyTestCaseRequest$queryContent": "<p>The input query or prompt that generated the content. This provides context for the validation.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$queryContent": "<p>The updated input query or prompt that generated the content.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestResult": {
+      "base": "<p>Contains the results of testing an Automated Reasoning policy against various scenarios and validation checks.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyTestList$member": null,
+        "GetAutomatedReasoningPolicyTestResultResponse$testResult": "<p>The test result containing validation findings, execution status, and detailed analysis.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestRunResult": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyTestResult$testRunResult": "<p>The overall result of the test run, indicating whether the policy passed or failed validation.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTestRunStatus": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyTestResult$testRunStatus": "<p>The overall status of the test run (e.g., COMPLETED, FAILED, IN_PROGRESS).</p>"
+      }
+    },
+    "AutomatedReasoningPolicyTypeValueAnnotation": {
+      "base": "<p>An annotation for managing values within custom types, including adding, updating, or removing specific type values.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyTypeValueAnnotationList$member": null
+      }
+    },
+    "AutomatedReasoningPolicyTypeValueAnnotationList": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyUpdateTypeAnnotation$values": "<p>The updated list of values for the custom type, which can include additions, modifications, or removals.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateFromRuleFeedbackAnnotation": {
+      "base": "<p>An annotation for updating the policy based on feedback about how specific rules performed during testing or real-world usage.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$updateFromRulesFeedback": "<p>An operation to update the policy based on feedback about how specific rules performed during testing or validation.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateFromScenarioFeedbackAnnotation": {
+      "base": "<p>An annotation for updating the policy based on feedback about how it performed on specific test scenarios.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$updateFromScenarioFeedback": "<p>An operation to update the policy based on feedback about how it performed on specific test scenarios.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateRuleAnnotation": {
+      "base": "<p>An annotation for modifying an existing rule in an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$updateRule": "<p>An operation to modify an existing rule in the policy, such as changing its logical expression or conditions.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateRuleMutation": {
+      "base": "<p>A mutation operation that modifies an existing rule in the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$updateRule": "<p>A mutation to modify an existing rule in the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateTypeAnnotation": {
+      "base": "<p>An annotation for modifying an existing custom type in an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$updateType": "<p>An operation to modify an existing custom type in the policy, such as changing its name, description, or allowed values.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateTypeMutation": {
+      "base": "<p>A mutation operation that modifies an existing custom type in the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$updateType": "<p>A mutation to modify an existing custom type in the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateTypeValue": {
+      "base": "<p>Represents a modification to a value within an existing custom type.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyTypeValueAnnotation$updateTypeValue": "<p>An operation to modify an existing value within a custom type.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateVariableAnnotation": {
+      "base": "<p>An annotation for modifying an existing variable in an Automated Reasoning policy.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyAnnotation$updateVariable": "<p>An operation to modify an existing variable in the policy, such as changing its name, type, or description.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyUpdateVariableMutation": {
+      "base": "<p>A mutation operation that modifies an existing variable in the policy definition during the build process.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyMutation$updateVariable": "<p>A mutation to modify an existing variable in the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyVersion": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicySummary$version": "<p>The version of the policy.</p>",
+        "CreateAutomatedReasoningPolicyResponse$version": "<p>The version number of the newly created Automated Reasoning policy. The initial version is always DRAFT.</p>",
+        "CreateAutomatedReasoningPolicyVersionResponse$version": "<p>The version number of the policy version.</p>",
+        "GetAutomatedReasoningPolicyResponse$version": "<p>The version of the policy.</p>"
+      }
+    },
+    "AutomatedReasoningPolicyWorkflowTypeContent": {
+      "base": "<p>Defines the content and configuration for different types of policy build workflows.</p>",
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowSource$workflowContent": "<p>The actual content to be processed in the build workflow, such as documents to analyze or repair instructions to apply.</p>"
       }
     },
     "BaseModelIdentifier": {
@@ -337,6 +1378,16 @@
         "ExternalSource$byteContent": "<p>The identifier, content type, and data of the external source wrapper object.</p>"
       }
     },
+    "CancelAutomatedReasoningPolicyBuildWorkflowRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelAutomatedReasoningPolicyBuildWorkflowResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CloudWatchConfig": {
       "base": "<p>CloudWatch logging configuration.</p>",
       "refs": {
@@ -360,6 +1411,36 @@
       "base": null,
       "refs": {
         "ByteContentDoc$contentType": "<p>The MIME type of the document contained in the wrapper object.</p>"
+      }
+    },
+    "CreateAutomatedReasoningPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAutomatedReasoningPolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAutomatedReasoningPolicyTestCaseRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAutomatedReasoningPolicyTestCaseResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAutomatedReasoningPolicyVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAutomatedReasoningPolicyVersionResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateCustomModelDeploymentRequest": {
@@ -651,6 +1732,36 @@
       "base": "<p>For a Distillation job, the status details for the data processing sub-task of the job.</p>",
       "refs": {
         "StatusDetails$dataProcessingDetails": "<p>The status details for the data processing sub-task of the job.</p>"
+      }
+    },
+    "DeleteAutomatedReasoningPolicyBuildWorkflowRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAutomatedReasoningPolicyBuildWorkflowResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAutomatedReasoningPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAutomatedReasoningPolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAutomatedReasoningPolicyTestCaseRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAutomatedReasoningPolicyTestCaseResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteCustomModelDeploymentRequest": {
@@ -1108,6 +2219,16 @@
         "EvaluationSummary$customMetricsEvaluatorModelIdentifiers": "<p>The Amazon Resource Names (ARNs) of the models used to compute custom metrics in an Amazon Bedrock evaluation job.</p>"
       }
     },
+    "ExportAutomatedReasoningPolicyVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ExportAutomatedReasoningPolicyVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ExternalSource": {
       "base": "<p>The unique external source of the content contained in the wrapper object.</p>",
       "refs": {
@@ -1244,6 +2365,76 @@
       "base": "<p>The configuration details for response generation based on retrieved text chunks.</p>",
       "refs": {
         "KnowledgeBaseRetrieveAndGenerateConfiguration$generationConfiguration": "<p>Contains configurations details for response generation based on retrieved text chunks.</p>"
+      }
+    },
+    "GetAutomatedReasoningPolicyAnnotationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyAnnotationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyBuildWorkflowRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyBuildWorkflowResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyBuildWorkflowResultAssetsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyNextScenarioRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyNextScenarioResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyTestCaseRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyTestCaseResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyTestResultRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAutomatedReasoningPolicyTestResultResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetCustomModelDeploymentRequest": {
@@ -1423,6 +2614,31 @@
         "GetGuardrailResponse$guardrailArn": "<p>The ARN of the guardrail.</p>",
         "GuardrailSummary$arn": "<p>The ARN of the guardrail.</p>",
         "UpdateGuardrailResponse$guardrailArn": "<p>The ARN of the guardrail.</p>"
+      }
+    },
+    "GuardrailAutomatedReasoningPolicy": {
+      "base": "<p>Represents the configuration of Automated Reasoning policies within a Amazon Bedrock Guardrail, including the policies to apply and confidence thresholds.</p>",
+      "refs": {
+        "GetGuardrailResponse$automatedReasoningPolicy": "<p>The current Automated Reasoning policy configuration for the guardrail, if any is configured.</p>"
+      }
+    },
+    "GuardrailAutomatedReasoningPolicyConfig": {
+      "base": "<p>Configuration settings for integrating Automated Reasoning policies with Amazon Bedrock Guardrails.</p>",
+      "refs": {
+        "CreateGuardrailRequest$automatedReasoningPolicyConfig": "<p>Optional configuration for integrating Automated Reasoning policies with the new guardrail.</p>",
+        "UpdateGuardrailRequest$automatedReasoningPolicyConfig": "<p>Updated configuration for Automated Reasoning policies associated with the guardrail.</p>"
+      }
+    },
+    "GuardrailAutomatedReasoningPolicyConfigPoliciesList": {
+      "base": null,
+      "refs": {
+        "GuardrailAutomatedReasoningPolicyConfig$policies": "<p>The list of Automated Reasoning policy ARNs to include in the guardrail configuration.</p>"
+      }
+    },
+    "GuardrailAutomatedReasoningPolicyPoliciesList": {
+      "base": null,
+      "refs": {
+        "GuardrailAutomatedReasoningPolicy$policies": "<p>The list of Automated Reasoning policy ARNs that should be applied as part of this guardrail configuration.</p>"
       }
     },
     "GuardrailBlockedMessaging": {
@@ -2096,6 +3312,9 @@
     "IdempotencyToken": {
       "base": null,
       "refs": {
+        "CreateAutomatedReasoningPolicyRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request but doesn't return an error.</p>",
+        "CreateAutomatedReasoningPolicyTestCaseRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>",
+        "CreateAutomatedReasoningPolicyVersionRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>",
         "CreateCustomModelDeploymentRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateCustomModelRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "CreateEvaluationJobRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
@@ -2109,6 +3328,9 @@
         "CreatePromptRouterRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of your requests. If not specified, the Amazon Web Services SDK automatically generates one for you.</p>",
         "CreateProvisionedModelThroughputRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the Amazon S3 User Guide.</p>",
         "GetModelCustomizationJobResponse$clientRequestToken": "<p>The token that you specified in the <code>CreateCustomizationJob</code> request.</p>",
+        "StartAutomatedReasoningPolicyBuildWorkflowRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than once. If this token matches a previous request, Amazon Bedrock ignores the request but doesn't return an error.</p>",
+        "StartAutomatedReasoningPolicyTestWorkflowRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but doesn't return an error.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$clientRequestToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request, but does not return an error.</p>",
         "UpdateMarketplaceModelEndpointRequest$clientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. This token is listed as not required because Amazon Web Services SDKs automatically generate it for you and set this parameter. If you're not using the Amazon Web Services SDK or the CLI, you must provide this token or the action will fail.</p>"
       }
     },
@@ -2290,6 +3512,9 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AutomatedReasoningPolicyDefinitionQualityReport$typeCount": "<p>The total number of custom types defined in the policy.</p>",
+        "AutomatedReasoningPolicyDefinitionQualityReport$variableCount": "<p>The total number of variables defined in the policy.</p>",
+        "AutomatedReasoningPolicyDefinitionQualityReport$ruleCount": "<p>The total number of rules defined in the policy.</p>",
         "CustomModelUnits$customModelUnitsPerModelCopy": "<p>The number of custom model units used to host a model copy. </p>",
         "TeacherModelConfig$maxResponseLengthForInference": "<p>The maximum number of tokens requested when the customization job invokes the teacher model.</p>"
       }
@@ -2357,7 +3582,8 @@
         "GetModelCopyJobResponse$targetModelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key encrypting the copied model.</p>",
         "GetModelCustomizationJobResponse$outputModelKmsKeyArn": "<p>The custom model is encrypted at rest using this key.</p>",
         "GetModelImportJobResponse$importedModelKmsKeyArn": "<p>The imported model is encrypted at rest using this key.</p>",
-        "ModelCopyJobSummary$targetModelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the copied model.</p>"
+        "ModelCopyJobSummary$targetModelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the copied model.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$kmsKeyArn": "<p>The KMS key ARN for encrypting the test at rest. If not provided, the key will not be updated. Use <code>DISCARD</code> to remove the key.</p>"
       }
     },
     "KmsKeyId": {
@@ -2417,6 +3643,46 @@
       "base": "<p>The legal term of the agreement.</p>",
       "refs": {
         "TermDetails$legalTerm": "<p>Describes the legal terms.</p>"
+      }
+    },
+    "ListAutomatedReasoningPoliciesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAutomatedReasoningPoliciesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAutomatedReasoningPolicyBuildWorkflowsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAutomatedReasoningPolicyBuildWorkflowsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAutomatedReasoningPolicyTestCasesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAutomatedReasoningPolicyTestCasesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAutomatedReasoningPolicyTestResultsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAutomatedReasoningPolicyTestResultsResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ListCustomModelDeploymentsRequest": {
@@ -2616,6 +3882,10 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListAutomatedReasoningPoliciesRequest$maxResults": "<p>The maximum number of policies to return in a single call.</p>",
+        "ListAutomatedReasoningPolicyBuildWorkflowsRequest$maxResults": "<p>The maximum number of build workflows to return in a single response. Valid range is 1-100.</p>",
+        "ListAutomatedReasoningPolicyTestCasesRequest$maxResults": "<p>The maximum number of tests to return in a single call.</p>",
+        "ListAutomatedReasoningPolicyTestResultsRequest$maxResults": "<p>The maximum number of test results to return in a single response. Valid range is 1-100.</p>",
         "ListCustomModelDeploymentsRequest$maxResults": "<p>The maximum number of results to return in a single call.</p>",
         "ListCustomModelsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>",
         "ListEvaluationJobsRequest$maxResults": "<p>The maximum number of results to return.</p>",
@@ -3005,6 +4275,7 @@
         "AccessDeniedException$message": null,
         "ConflictException$message": null,
         "InternalServerException$message": null,
+        "ResourceInUseException$message": null,
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": null,
         "ServiceUnavailableException$message": null,
@@ -3061,6 +4332,14 @@
     "PaginationToken": {
       "base": null,
       "refs": {
+        "ListAutomatedReasoningPoliciesRequest$nextToken": "<p>The pagination token from a previous request to retrieve the next page of results.</p>",
+        "ListAutomatedReasoningPoliciesResponse$nextToken": "<p>The pagination token to use in a subsequent request to retrieve the next page of results.</p>",
+        "ListAutomatedReasoningPolicyBuildWorkflowsRequest$nextToken": "<p>A pagination token from a previous request to continue listing build workflows from where the previous request left off.</p>",
+        "ListAutomatedReasoningPolicyBuildWorkflowsResponse$nextToken": "<p>A pagination token to use in subsequent requests to retrieve additional build workflows.</p>",
+        "ListAutomatedReasoningPolicyTestCasesRequest$nextToken": "<p>The pagination token from a previous request to retrieve the next page of results.</p>",
+        "ListAutomatedReasoningPolicyTestCasesResponse$nextToken": "<p>The pagination token to use in a subsequent request to retrieve the next page of results.</p>",
+        "ListAutomatedReasoningPolicyTestResultsRequest$nextToken": "<p>A pagination token from a previous request to continue listing test results from where the previous request left off.</p>",
+        "ListAutomatedReasoningPolicyTestResultsResponse$nextToken": "<p>A pagination token to use in subsequent requests to retrieve additional test results.</p>",
         "ListCustomModelDeploymentsRequest$nextToken": "<p>The token for the next set of results. Use this token to retrieve additional results when the response is truncated.</p>",
         "ListCustomModelDeploymentsResponse$nextToken": "<p>The token for the next set of results. This value is null when there are no more results to return.</p>",
         "ListCustomModelsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
@@ -3412,6 +4691,11 @@
         "MetadataConfigurationForReranking$selectiveModeConfiguration": "<p>Configuration for selective mode, which allows you to explicitly include or exclude specific metadata fields during reranking. This is only used when selectionMode is set to SELECTIVE.</p>"
       }
     },
+    "ResourceInUseException": {
+      "base": "<p>Thrown when attempting to delete or modify a resource that is currently being used by other resources or operations. For example, trying to delete an Automated Reasoning policy that is referenced by an active guardrail.</p>",
+      "refs": {
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource Amazon Resource Name (ARN) was not found. Check the Amazon Resource Name (ARN) and try your request again.</p>",
       "refs": {
@@ -3597,6 +4881,26 @@
         "ListProvisionedModelThroughputsRequest$sortOrder": "<p>The sort order of the results.</p>"
       }
     },
+    "StartAutomatedReasoningPolicyBuildWorkflowRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAutomatedReasoningPolicyBuildWorkflowResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAutomatedReasoningPolicyTestWorkflowRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAutomatedReasoningPolicyTestWorkflowResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Status": {
       "base": null,
       "refs": {
@@ -3645,6 +4949,7 @@
       "base": null,
       "refs": {
         "AgreementAvailability$errorMessage": "<p>Error message.</p>",
+        "AutomatedReasoningPolicyBuildStepMessage$message": "<p>The content of the message, describing what occurred during the build step.</p>",
         "BatchDeleteEvaluationJobError$code": "<p>A HTTP status code of the evaluation job being deleted.</p>",
         "BatchDeleteEvaluationJobError$message": "<p>A status message about the evaluation job deletion.</p>",
         "DimensionalPriceRate$dimension": "<p>Dimension for the price rate.</p>",
@@ -3703,6 +5008,8 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateAutomatedReasoningPolicyRequest$tags": "<p>A list of tags to associate with the Automated Reasoning policy. Tags help you organize and manage your policies.</p>",
+        "CreateAutomatedReasoningPolicyVersionRequest$tags": "<p>A list of tags to associate with the policy version.</p>",
         "CreateCustomModelDeploymentRequest$tags": "<p>Tags to assign to the custom model deployment. You can use tags to organize and track your Amazon Web Services resources for cost allocation and management purposes.</p>",
         "CreateCustomModelRequest$modelTags": "<p>A list of key-value pairs to associate with the custom model resource. You can use these tags to organize and identify your resources.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html\">Tagging resources</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
         "CreateEvaluationJobRequest$jobTags": "<p>Tags to attach to the model evaluation job.</p>",
@@ -3792,13 +5099,30 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowSummary$createdAt": "<p>The timestamp when the build workflow was created.</p>",
+        "AutomatedReasoningPolicyBuildWorkflowSummary$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",
+        "AutomatedReasoningPolicySummary$createdAt": "<p>The timestamp when the policy was created.</p>",
+        "AutomatedReasoningPolicySummary$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
+        "AutomatedReasoningPolicyTestCase$createdAt": "<p>The timestamp when the test was created.</p>",
+        "AutomatedReasoningPolicyTestCase$updatedAt": "<p>The timestamp when the test was last updated.</p>",
+        "AutomatedReasoningPolicyTestResult$updatedAt": "<p>The timestamp when the test results were last updated.</p>",
+        "CreateAutomatedReasoningPolicyResponse$createdAt": "<p>The timestamp when the policy was created.</p>",
+        "CreateAutomatedReasoningPolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
+        "CreateAutomatedReasoningPolicyVersionResponse$createdAt": "<p>The timestamp when the policy version was created.</p>",
         "CreateGuardrailResponse$createdAt": "<p>The time at which the guardrail was created.</p>",
         "CustomModelDeploymentSummary$createdAt": "<p>The date and time when the custom model deployment was created.</p>",
         "CustomModelDeploymentSummary$lastUpdatedAt": "<p>The date and time when the custom model deployment was last modified.</p>",
         "CustomModelSummary$creationTime": "<p>Creation time of the model.</p>",
         "DataProcessingDetails$creationTime": "<p>The start time of the data processing sub-task of the job.</p>",
         "DataProcessingDetails$lastModifiedTime": "<p>The latest update to the data processing sub-task of the job.</p>",
+        "DeleteAutomatedReasoningPolicyBuildWorkflowRequest$lastUpdatedAt": "<p>The timestamp when the build workflow was last updated. This is used for optimistic concurrency control to prevent accidental deletion of workflows that have been modified.</p>",
+        "DeleteAutomatedReasoningPolicyTestCaseRequest$lastUpdatedAt": "<p>The timestamp when the test was last updated. This is used as a concurrency token to prevent conflicting modifications.</p>",
         "EvaluationSummary$creationTime": "<p>The time the evaluation job was created.</p>",
+        "GetAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were last updated.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$createdAt": "<p>The timestamp when the build workflow was created.</p>",
+        "GetAutomatedReasoningPolicyBuildWorkflowResponse$updatedAt": "<p>The timestamp when the build workflow was last updated.</p>",
+        "GetAutomatedReasoningPolicyResponse$createdAt": "<p>The timestamp when the policy was created.</p>",
+        "GetAutomatedReasoningPolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
         "GetCustomModelDeploymentResponse$createdAt": "<p>The date and time when the custom model deployment was created.</p>",
         "GetCustomModelDeploymentResponse$lastUpdatedAt": "<p>The date and time when the custom model deployment was last updated.</p>",
         "GetCustomModelResponse$creationTime": "<p>Creation time of the model.</p>",
@@ -3870,6 +5194,9 @@
         "ProvisionedModelSummary$lastModifiedTime": "<p>The time that the Provisioned Throughput was last modified. </p>",
         "TrainingDetails$creationTime": "<p>The start time of the training sub-task of the job.</p>",
         "TrainingDetails$lastModifiedTime": "<p>The latest update to the training sub-task of the job.</p>",
+        "UpdateAutomatedReasoningPolicyAnnotationsResponse$updatedAt": "<p>The timestamp when the annotations were updated.</p>",
+        "UpdateAutomatedReasoningPolicyResponse$updatedAt": "<p>The timestamp when the policy was last updated.</p>",
+        "UpdateAutomatedReasoningPolicyTestCaseRequest$lastUpdatedAt": "<p>The timestamp when the test was last updated. This is used as a concurrency token to prevent conflicting modifications.</p>",
         "UpdateGuardrailResponse$updatedAt": "<p>The date and time at which the guardrail was updated.</p>",
         "ValidationDetails$creationTime": "<p>The start time of the validation sub-task of the job.</p>",
         "ValidationDetails$lastModifiedTime": "<p>The latest update to the validation sub-task of the job.</p>"
@@ -3913,6 +5240,36 @@
       }
     },
     "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAutomatedReasoningPolicyAnnotationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAutomatedReasoningPolicyAnnotationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAutomatedReasoningPolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAutomatedReasoningPolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAutomatedReasoningPolicyTestCaseRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAutomatedReasoningPolicyTestCaseResponse": {
       "base": null,
       "refs": {
       }

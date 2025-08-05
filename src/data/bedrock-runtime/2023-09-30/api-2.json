@@ -521,6 +521,12 @@
             "type": "structure",
             "members": []
         },
+        "AutomatedReasoningRuleIdentifier": {
+            "type": "string",
+            "max": 12,
+            "min": 0,
+            "pattern": "[a-z0-9]{12}"
+        },
         "BidirectionalInputPayloadPart": {
             "type": "structure",
             "members": {
@@ -1341,6 +1347,9 @@
                 "contextualGroundingPolicy": {
                     "shape": "GuardrailContextualGroundingPolicyAssessment"
                 },
+                "automatedReasoningPolicy": {
+                    "shape": "GuardrailAutomatedReasoningPolicyAssessment"
+                },
                 "invocationMetrics": {
                     "shape": "GuardrailInvocationMetrics"
                 }
@@ -1368,6 +1377,287 @@
             },
             "value": {
                 "shape": "GuardrailAssessment"
+            }
+        },
+        "GuardrailAutomatedReasoningDifferenceScenarioList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailAutomatedReasoningScenario"
+            },
+            "max": 2,
+            "min": 0
+        },
+        "GuardrailAutomatedReasoningFinding": {
+            "type": "structure",
+            "members": {
+                "valid": {
+                    "shape": "GuardrailAutomatedReasoningValidFinding"
+                },
+                "invalid": {
+                    "shape": "GuardrailAutomatedReasoningInvalidFinding"
+                },
+                "satisfiable": {
+                    "shape": "GuardrailAutomatedReasoningSatisfiableFinding"
+                },
+                "impossible": {
+                    "shape": "GuardrailAutomatedReasoningImpossibleFinding"
+                },
+                "translationAmbiguous": {
+                    "shape": "GuardrailAutomatedReasoningTranslationAmbiguousFinding"
+                },
+                "tooComplex": {
+                    "shape": "GuardrailAutomatedReasoningTooComplexFinding"
+                },
+                "noTranslations": {
+                    "shape": "GuardrailAutomatedReasoningNoTranslationsFinding"
+                }
+            },
+            "union": true
+        },
+        "GuardrailAutomatedReasoningFindingList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailAutomatedReasoningFinding"
+            }
+        },
+        "GuardrailAutomatedReasoningImpossibleFinding": {
+            "type": "structure",
+            "members": {
+                "translation": {
+                    "shape": "GuardrailAutomatedReasoningTranslation"
+                },
+                "contradictingRules": {
+                    "shape": "GuardrailAutomatedReasoningRuleList"
+                },
+                "logicWarning": {
+                    "shape": "GuardrailAutomatedReasoningLogicWarning"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningInputTextReference": {
+            "type": "structure",
+            "members": {
+                "text": {
+                    "shape": "GuardrailAutomatedReasoningStatementNaturalLanguageContent"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningInputTextReferenceList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailAutomatedReasoningInputTextReference"
+            }
+        },
+        "GuardrailAutomatedReasoningInvalidFinding": {
+            "type": "structure",
+            "members": {
+                "translation": {
+                    "shape": "GuardrailAutomatedReasoningTranslation"
+                },
+                "contradictingRules": {
+                    "shape": "GuardrailAutomatedReasoningRuleList"
+                },
+                "logicWarning": {
+                    "shape": "GuardrailAutomatedReasoningLogicWarning"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningLogicWarning": {
+            "type": "structure",
+            "members": {
+                "type": {
+                    "shape": "GuardrailAutomatedReasoningLogicWarningType"
+                },
+                "premises": {
+                    "shape": "GuardrailAutomatedReasoningStatementList"
+                },
+                "claims": {
+                    "shape": "GuardrailAutomatedReasoningStatementList"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningLogicWarningType": {
+            "type": "string",
+            "enum": [
+                "ALWAYS_FALSE",
+                "ALWAYS_TRUE"
+            ]
+        },
+        "GuardrailAutomatedReasoningNoTranslationsFinding": {
+            "type": "structure",
+            "members": []
+        },
+        "GuardrailAutomatedReasoningPoliciesProcessed": {
+            "type": "integer",
+            "box": true
+        },
+        "GuardrailAutomatedReasoningPolicyAssessment": {
+            "type": "structure",
+            "members": {
+                "findings": {
+                    "shape": "GuardrailAutomatedReasoningFindingList"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningPolicyUnitsProcessed": {
+            "type": "integer",
+            "box": true
+        },
+        "GuardrailAutomatedReasoningPolicyVersionArn": {
+            "type": "string",
+            "max": 2048,
+            "min": 0,
+            "pattern": "arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:automated-reasoning-policy\/[a-z0-9]{12}(:([1-9][0-9]{0,11}))?"
+        },
+        "GuardrailAutomatedReasoningRule": {
+            "type": "structure",
+            "members": {
+                "identifier": {
+                    "shape": "AutomatedReasoningRuleIdentifier"
+                },
+                "policyVersionArn": {
+                    "shape": "GuardrailAutomatedReasoningPolicyVersionArn"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningRuleList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailAutomatedReasoningRule"
+            }
+        },
+        "GuardrailAutomatedReasoningSatisfiableFinding": {
+            "type": "structure",
+            "members": {
+                "translation": {
+                    "shape": "GuardrailAutomatedReasoningTranslation"
+                },
+                "claimsTrueScenario": {
+                    "shape": "GuardrailAutomatedReasoningScenario"
+                },
+                "claimsFalseScenario": {
+                    "shape": "GuardrailAutomatedReasoningScenario"
+                },
+                "logicWarning": {
+                    "shape": "GuardrailAutomatedReasoningLogicWarning"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningScenario": {
+            "type": "structure",
+            "members": {
+                "statements": {
+                    "shape": "GuardrailAutomatedReasoningStatementList"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningStatement": {
+            "type": "structure",
+            "members": {
+                "logic": {
+                    "shape": "GuardrailAutomatedReasoningStatementLogicContent"
+                },
+                "naturalLanguage": {
+                    "shape": "GuardrailAutomatedReasoningStatementNaturalLanguageContent"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningStatementList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailAutomatedReasoningStatement"
+            }
+        },
+        "GuardrailAutomatedReasoningStatementLogicContent": {
+            "type": "string",
+            "max": 1000,
+            "min": 0,
+            "sensitive": true
+        },
+        "GuardrailAutomatedReasoningStatementNaturalLanguageContent": {
+            "type": "string",
+            "max": 1000,
+            "min": 0,
+            "sensitive": true
+        },
+        "GuardrailAutomatedReasoningTooComplexFinding": {
+            "type": "structure",
+            "members": []
+        },
+        "GuardrailAutomatedReasoningTranslation": {
+            "type": "structure",
+            "members": {
+                "premises": {
+                    "shape": "GuardrailAutomatedReasoningStatementList"
+                },
+                "claims": {
+                    "shape": "GuardrailAutomatedReasoningStatementList"
+                },
+                "untranslatedPremises": {
+                    "shape": "GuardrailAutomatedReasoningInputTextReferenceList"
+                },
+                "untranslatedClaims": {
+                    "shape": "GuardrailAutomatedReasoningInputTextReferenceList"
+                },
+                "confidence": {
+                    "shape": "GuardrailAutomatedReasoningTranslationConfidence"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningTranslationAmbiguousFinding": {
+            "type": "structure",
+            "members": {
+                "options": {
+                    "shape": "GuardrailAutomatedReasoningTranslationOptionList"
+                },
+                "differenceScenarios": {
+                    "shape": "GuardrailAutomatedReasoningDifferenceScenarioList"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningTranslationConfidence": {
+            "type": "double",
+            "box": true,
+            "max": 1,
+            "min": 0
+        },
+        "GuardrailAutomatedReasoningTranslationList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailAutomatedReasoningTranslation"
+            }
+        },
+        "GuardrailAutomatedReasoningTranslationOption": {
+            "type": "structure",
+            "members": {
+                "translations": {
+                    "shape": "GuardrailAutomatedReasoningTranslationList"
+                }
+            }
+        },
+        "GuardrailAutomatedReasoningTranslationOptionList": {
+            "type": "list",
+            "member": {
+                "shape": "GuardrailAutomatedReasoningTranslationOption"
+            },
+            "max": 2,
+            "min": 0
+        },
+        "GuardrailAutomatedReasoningValidFinding": {
+            "type": "structure",
+            "members": {
+                "translation": {
+                    "shape": "GuardrailAutomatedReasoningTranslation"
+                },
+                "claimsTrueScenario": {
+                    "shape": "GuardrailAutomatedReasoningScenario"
+                },
+                "supportingRules": {
+                    "shape": "GuardrailAutomatedReasoningRuleList"
+                },
+                "logicWarning": {
+                    "shape": "GuardrailAutomatedReasoningLogicWarning"
+                }
             }
         },
         "GuardrailConfiguration": {
@@ -2114,6 +2404,12 @@
                 },
                 "contentPolicyImageUnits": {
                     "shape": "GuardrailContentPolicyImageUnitsProcessed"
+                },
+                "automatedReasoningPolicyUnits": {
+                    "shape": "GuardrailAutomatedReasoningPolicyUnitsProcessed"
+                },
+                "automatedReasoningPolicies": {
+                    "shape": "GuardrailAutomatedReasoningPoliciesProcessed"
                 }
             }
         },
