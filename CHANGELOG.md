@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.352.2 - 2025-08-05
 
 * `Aws\SageMaker` - Add support for SageMaker Hyperpod continuous scaling and custom AMI; Introduce new APIs: ListClusterEvents, DescribeClusterEvent, BatchAddClusterNodes
 * `Aws\RDS` - Adds a new Aurora Serverless v2 attribute to the DBCluster resource to expose the platform version. Also updates the attribute to be part of both the engine version and platform version descriptions.
