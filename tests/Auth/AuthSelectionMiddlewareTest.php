@@ -341,10 +341,6 @@ class AuthSelectionMiddlewareTest extends TestCase
             );
         }
 
-        if (isset($fns['build_source']) && is_callable($fns['build_source'])) {
-            call_user_func($fns['build_source']);
-        }
-
         $nextHandler = function (CommandInterface $command) use ($expected) {
             $this->assertEquals(
                 $expected,
