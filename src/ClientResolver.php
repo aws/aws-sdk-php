@@ -206,6 +206,13 @@ class ClientResolver
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [__CLASS__, '_default_credential_provider'],
         ],
+        'auth_scheme_preference' => [
+            'type'    => 'value',
+            'valid'   => ['string', 'array'],
+            'doc'     => 'Comma-separated list of authentication scheme preferences in priority order. Configure via environment variable `AWS_AUTH_SCHEME_PREFERENCE`, INI config file `auth_scheme_preference`, or client constructor parameter `auth_scheme_preference` (string or array).\nExample: `AWS_AUTH_SCHEME_PREFERENCE=aws.auth#sigv4a,aws.auth#sigv4,smithy.api#httpBearerAuth`',
+            'default' => self::DEFAULT_FROM_ENV_INI,
+            'fn' => [__CLASS__, '_apply_auth_scheme_preference'],
+        ],
         'token' => [
             'type'    => 'value',
             'valid'   => [TokenInterface::class, CacheInterface::class, 'array', 'bool', 'callable'],
@@ -1120,6 +1127,30 @@ class ClientResolver
     public static function _default_auth_scheme_resolver(array $args)
     {
         return new AuthSchemeResolver($args['credentials'], $args['token']);
+    }
+
+    public static function _apply_auth_scheme_preference(
+        string|array|null $value,
+        array &$args
+    ): void
+    {
+        // Not provided user's preference auth scheme list
+        if (empty($value)) {
+            return;
+        }
+
+        // Normalize it as an array
+        if (is_string($value)) {
+            $value = explode(',', $value);
+        }
+
+        // Let`s trim each value to remove break lines, spaces and/or tabs
+        foreach ($value as &$val) {
+            $val = trim($val);
+        }
+
+        // Assign user's preferred auth scheme list
+        $args['auth_scheme_preference'] = $value;
     }
 
     public static function _default_signature_version(array &$args)

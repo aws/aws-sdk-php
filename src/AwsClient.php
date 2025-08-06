@@ -272,7 +272,7 @@ class AwsClient implements AwsClientInterface
         if ($this->isUseEndpointV2()) {
             $this->addEndpointV2Middleware();
         }
-        $this->addAuthSelectionMiddleware();
+        $this->addAuthSelectionMiddleware($args);
 
         if (!is_null($this->api->getMetadata('awsQueryCompatible'))) {
             $this->addQueryCompatibleInputMiddleware($this->api);
@@ -589,14 +589,15 @@ class AwsClient implements AwsClientInterface
         );
     }
 
-    private function addAuthSelectionMiddleware()
+    private function addAuthSelectionMiddleware(array $args)
     {
         $list = $this->getHandlerList();
 
         $list->prependBuild(
             AuthSelectionMiddleware::wrap(
                 $this->authSchemeResolver,
-                $this->getApi()
+                $this->getApi(),
+                $args['auth_scheme_preference'] ?? null
             ),
             'auth-selection'
         );
