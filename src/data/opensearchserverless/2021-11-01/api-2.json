@@ -100,6 +100,22 @@
       ],
       "idempotent":true
     },
+    "CreateIndex":{
+      "name":"CreateIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIndexRequest"},
+      "output":{"shape":"CreateIndexResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "CreateLifecyclePolicy":{
       "name":"CreateLifecyclePolicy",
       "http":{
@@ -196,6 +212,21 @@
       ],
       "idempotent":true
     },
+    "DeleteIndex":{
+      "name":"DeleteIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIndexRequest"},
+      "output":{"shape":"DeleteIndexResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
     "DeleteLifecyclePolicy":{
       "name":"DeleteLifecyclePolicy",
       "http":{
@@ -284,6 +315,20 @@
       "output":{"shape":"GetAccountSettingsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "GetIndex":{
+      "name":"GetIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIndexRequest"},
+      "output":{"shape":"GetIndexResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -490,6 +535,21 @@
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateIndex":{
+      "name":"UpdateIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateIndexRequest"},
+      "output":{"shape":"UpdateIndexResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -870,6 +930,23 @@
         "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"}
       }
     },
+    "CreateIndexRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "indexName"
+      ],
+      "members":{
+        "id":{"shape":"CollectionId"},
+        "indexName":{"shape":"IndexName"},
+        "indexSchema":{"shape":"IndexSchema"}
+      }
+    },
+    "CreateIndexResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "CreateLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
@@ -1020,6 +1097,22 @@
         "deleteCollectionDetail":{"shape":"DeleteCollectionDetail"}
       }
     },
+    "DeleteIndexRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "indexName"
+      ],
+      "members":{
+        "id":{"shape":"CollectionId"},
+        "indexName":{"shape":"IndexName"}
+      }
+    },
+    "DeleteIndexResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteLifecyclePolicyRequest":{
       "type":"structure",
       "required":[
@@ -1163,6 +1256,23 @@
         "accountSettingsDetail":{"shape":"AccountSettingsDetail"}
       }
     },
+    "GetIndexRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "indexName"
+      ],
+      "members":{
+        "id":{"shape":"CollectionId"},
+        "indexName":{"shape":"IndexName"}
+      }
+    },
+    "GetIndexResponse":{
+      "type":"structure",
+      "members":{
+        "indexSchema":{"shape":"IndexSchema"}
+      }
+    },
     "GetPoliciesStatsRequest":{
       "type":"structure",
       "members":{
@@ -1252,6 +1362,13 @@
         "UserName",
         "Email"
       ]
+    },
+    "IndexName":{"type":"string"},
+    "IndexSchema":{
+      "type":"structure",
+      "members":{
+      },
+      "document":true
     },
     "IndexingCapacityValue":{
       "type":"integer",
@@ -1871,6 +1988,23 @@
       "members":{
         "userAttribute":{"shape":"IamIdentityCenterUserAttribute"},
         "groupAttribute":{"shape":"IamIdentityCenterGroupAttribute"}
+      }
+    },
+    "UpdateIndexRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "indexName"
+      ],
+      "members":{
+        "id":{"shape":"CollectionId"},
+        "indexName":{"shape":"IndexName"},
+        "indexSchema":{"shape":"IndexSchema"}
+      }
+    },
+    "UpdateIndexResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "UpdateLifecyclePolicyRequest":{

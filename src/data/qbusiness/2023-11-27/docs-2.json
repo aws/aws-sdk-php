@@ -17,7 +17,7 @@
     "CreateIndex": "<p>Creates an Amazon Q Business index.</p> <p>To determine if index creation has completed, check the <code>Status</code> field returned from a call to <code>DescribeIndex</code>. The <code>Status</code> field is set to <code>ACTIVE</code> when the index is ready to use.</p> <p>Once the index is active, you can index your documents using the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_BatchPutDocument.html\"> <code>BatchPutDocument</code> </a> API or the <a href=\"https://docs.aws.amazon.com/amazonq/latest/api-reference/API_CreateDataSource.html\"> <code>CreateDataSource</code> </a> API.</p>",
     "CreatePlugin": "<p>Creates an Amazon Q Business plugin.</p>",
     "CreateRetriever": "<p>Adds a retriever to your Amazon Q Business application.</p>",
-    "CreateSubscription": "<p>Subscribes an IAM Identity Center user or a group to a pricing tier for an Amazon Q Business application.</p> <p>Amazon Q Business offers two subscription tiers: <code>Q_LITE</code> and <code>Q_BUSINESS</code>. Subscription tier determines feature access for the user. For more information on subscriptions and pricing tiers, see <a href=\"https://aws.amazon.com/q/business/pricing/\">Amazon Q Business pricing</a>.</p>",
+    "CreateSubscription": "<p>Subscribes an IAM Identity Center user or a group to a pricing tier for an Amazon Q Business application.</p> <p>Amazon Q Business offers two subscription tiers: <code>Q_LITE</code> and <code>Q_BUSINESS</code>. Subscription tier determines feature access for the user. For more information on subscriptions and pricing tiers, see <a href=\"https://aws.amazon.com/q/business/pricing/\">Amazon Q Business pricing</a>.</p> <note> <p>For an example IAM role policy for assigning subscriptions, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/setting-up.html#permissions\">Set up required permissions</a> in the Amazon Q Business User Guide.</p> </note>",
     "CreateUser": "<p>Creates a universally unique identifier (UUID) mapped to a list of local user ids within an application.</p>",
     "CreateWebExperience": "<p>Creates an Amazon Q Business web experience.</p>",
     "DeleteApplication": "<p>Deletes an Amazon Q Business application.</p>",
@@ -39,6 +39,7 @@
     "GetChatResponseConfiguration": "<p>Retrieves detailed information about a specific chat response configuration from an Amazon Q Business application. This operation returns the complete configuration settings and metadata.</p>",
     "GetDataAccessor": "<p>Retrieves information about a specified data accessor. This operation returns details about the data accessor, including its display name, unique identifier, Amazon Resource Name (ARN), the associated Amazon Q Business application and IAM Identity Center application, the IAM role for the ISV, the action configurations, and the timestamps for when the data accessor was created and last updated.</p>",
     "GetDataSource": "<p>Gets information about an existing Amazon Q Business data source connector.</p>",
+    "GetDocumentContent": "<p>Retrieves the content of a document that was ingested into Amazon Q Business. This API validates user authorization against document ACLs before returning a pre-signed URL for secure document access. You can download or view source documents referenced in chat responses through the URL.</p>",
     "GetGroup": "<p>Describes a group by group name.</p>",
     "GetIndex": "<p>Gets information about an existing Amazon Q Business index.</p>",
     "GetMedia": "<p>Returns the image bytes corresponding to a media object. If you have implemented your own application with the Chat and ChatSync APIs, and have enabled content extraction from visual data in Amazon Q Business, you use the GetMedia API operation to download the images so you can show them in your UI with responses.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/extracting-meaning-from-images.html\">Extracting semantic meaning from images and visuals</a>.</p>",
@@ -320,6 +321,7 @@
         "GetDataAccessorResponse$applicationId": "<p>The unique identifier of the Amazon Q Business application associated with this data accessor.</p>",
         "GetDataSourceRequest$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
         "GetDataSourceResponse$applicationId": "<p>The identifier of the Amazon Q Business application.</p>",
+        "GetDocumentContentRequest$applicationId": "<p>The unique identifier of the Amazon Q Business application containing the document. This ensures the request is scoped to the correct application environment and its associated security policies.</p>",
         "GetGroupRequest$applicationId": "<p>The identifier of the application id the group is attached to.</p>",
         "GetIndexRequest$applicationId": "<p>The identifier of the Amazon Q Business application connected to the index.</p>",
         "GetIndexResponse$applicationId": "<p>The identifier of the Amazon Q Business application associated with the index.</p>",
@@ -1226,6 +1228,7 @@
         "FailedDocument$dataSourceId": "<p>The identifier of the Amazon Q Business data source connector that contains the failed document.</p>",
         "GetDataSourceRequest$dataSourceId": "<p>The identifier of the data source connector.</p>",
         "GetDataSourceResponse$dataSourceId": "<p>The identifier of the data source connector.</p>",
+        "GetDocumentContentRequest$dataSourceId": "<p>The identifier of the data source from which the document was ingested. This field is not present if the document is ingested by directly calling the BatchPutDocument API. If the document is from a file-upload data source, the datasource will be \"uploaded-docs-file-stat-datasourceid\".</p>",
         "GetGroupRequest$dataSourceId": "<p>The identifier of the data source the group is attached to.</p>",
         "ListDataSourceSyncJobsRequest$dataSourceId": "<p> The identifier of the data source connector.</p>",
         "ListGroupsRequest$dataSourceId": "<p>The identifier of the data source for getting a list of groups mapped to users.</p>",
@@ -1636,7 +1639,7 @@
       }
     },
     "DocumentContent": {
-      "base": "<p>The contents of a document.</p>",
+      "base": "<p>The contents of a document.</p> <note> <p>Documents have size limitations. The maximum file size for a document is 50 MB. The maximum amount of text that can be extracted from a single document is 5 MB. For more information, see <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/doc-types.html\">Supported document formats in Amazon Q Business</a>.</p> </note>",
       "refs": {
         "Document$content": "<p>The contents of the document.</p>"
       }
@@ -1682,6 +1685,7 @@
         "Document$id": "<p>The identifier of the document.</p>",
         "DocumentDetails$documentId": "<p>The identifier of the document.</p>",
         "FailedDocument$id": "<p>The identifier of the document that couldn't be removed from the Amazon Q Business index.</p>",
+        "GetDocumentContentRequest$documentId": "<p>The unique identifier of the document that is indexed via BatchPutDocument API or file-upload or connector sync. It is also found in chat or chatSync response.</p>",
         "RelevantContent$documentId": "<p>The unique identifier of the document containing the relevant content.</p>"
       }
     },
@@ -1869,6 +1873,16 @@
       }
     },
     "GetDataSourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDocumentContentRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetDocumentContentResponse": {
       "base": null,
       "refs": {
       }
@@ -2133,6 +2147,7 @@
         "EligibleDataSource$indexId": "<p>The identifier of the index the data source is attached to.</p>",
         "GetDataSourceRequest$indexId": "<p>The identfier of the index used with the data source connector.</p>",
         "GetDataSourceResponse$indexId": "<p>The identifier of the index linked to the data source connector.</p>",
+        "GetDocumentContentRequest$indexId": "<p>The identifier of the index where documents are indexed.</p>",
         "GetGroupRequest$indexId": "<p>The identifier of the index the group is attached to.</p>",
         "GetIndexRequest$indexId": "<p>The identifier of the Amazon Q Business index you want information on.</p>",
         "GetIndexResponse$indexId": "<p>The identifier of the Amazon Q Business index.</p>",
@@ -2863,6 +2878,12 @@
         "WebExperienceOrigins$member": null
       }
     },
+    "OutputFormat": {
+      "base": null,
+      "refs": {
+        "GetDocumentContentRequest$outputFormat": "<p>Raw document outputFormat.</p>"
+      }
+    },
     "Payload": {
       "base": null,
       "refs": {
@@ -3492,6 +3513,8 @@
         "DocumentAclUser$id": "<p>The unique identifier of the user in the document's ACL. This is used to identify the user when applying access rules.</p>",
         "DocumentAttributeStringListValue$member": null,
         "GetDataSourceResponse$type": "<p>The type of the data source connector. For example, <code>S3</code>.</p>",
+        "GetDocumentContentResponse$presignedUrl": "<p>A pre-signed URL that provides temporary access to download the document content directly from Amazon Q Business. The URL expires after 5 minutes for security purposes. This URL is generated only after successful ACL validation.</p>",
+        "GetDocumentContentResponse$mimeType": "<p>The MIME type of the document content (e.g., application/pdf, text/plain, application/vnd.openxmlformats-officedocument.wordprocessingml.document).</p>",
         "GetMediaResponse$mediaMimeType": "<p>The MIME type of the media object (image/png).</p>",
         "GetPolicyResponse$policy": "<p>The JSON representation of the permission policy.</p>",
         "GetUserRequest$userId": "<p>The user email address attached to the user.</p>",
@@ -3507,6 +3530,9 @@
         "SourceAttribution$title": "<p>The title of the document which is the source for the Amazon Q Business generated response. </p>",
         "SourceAttribution$snippet": "<p>The content extract from the document on which the generated response is based. </p>",
         "SourceAttribution$url": "<p>The URL of the document which is the source for the Amazon Q Business generated response. </p>",
+        "SourceAttribution$documentId": "<p>The unique identifier of the source document used in the citation, obtained from the Amazon Q Business index during chat response generation. This ID is used as input to the <code>GetDocumentContent</code> API to retrieve the actual document content for user verification.</p>",
+        "SourceAttribution$indexId": "<p>The identifier of the index containing the source document's metadata and access control information. This links the citation back to the specific Amazon Q Business index where the document's searchable content and permissions are stored.</p>",
+        "SourceAttribution$datasourceId": "<p>The identifier of the data source from which the document was ingested. This field is not present if the document is ingested by directly calling the BatchPutDocument API (similar to checkDocumentAccess). If the document is from a file-upload data source, the datasource will be \"uploaded-docs-file-stat-datasourceid\".</p>",
         "StringAttributeValueBoosting$key": null,
         "TextOutputEvent$systemMessage": "<p>An AI-generated message in a <code>TextOutputEvent</code>.</p>",
         "TextSegment$mediaMimeType": "<p>The MIME type (image/png) of the media object associated with the text segment in the source attribution.</p>",

@@ -30,7 +30,8 @@
         {"shape":"DuplicateRecordException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"NotFoundException"}
       ]
     },
     "CreateBudgetAction":{
@@ -619,6 +620,12 @@
         "FORECAST"
       ]
     },
+    "BillingViewArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[a-zA-Z0-9/:_+=.\\-@]{0,75}[a-zA-Z0-9]$"
+    },
     "Budget":{
       "type":"structure",
       "required":[
@@ -649,7 +656,9 @@
         "LastUpdatedTime":{"shape":"GenericTimestamp"},
         "AutoAdjustData":{"shape":"AutoAdjustData"},
         "FilterExpression":{"shape":"Expression"},
-        "Metrics":{"shape":"Metrics"}
+        "Metrics":{"shape":"Metrics"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
+        "HealthStatus":{"shape":"HealthStatus"}
       }
     },
     "BudgetName":{
@@ -678,6 +687,7 @@
         "CostFilters":{"shape":"CostFilters"},
         "CostTypes":{"shape":"CostTypes"},
         "TimeUnit":{"shape":"TimeUnit"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "BudgetedAndActualAmountsList":{"shape":"BudgetedAndActualAmountsList"}
       }
     },
@@ -1298,6 +1308,29 @@
       "member":{"shape":"Group"},
       "max":100,
       "min":1
+    },
+    "HealthStatus":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"HealthStatusValue"},
+        "StatusReason":{"shape":"HealthStatusReason"},
+        "LastUpdatedTime":{"shape":"GenericTimestamp"}
+      }
+    },
+    "HealthStatusReason":{
+      "type":"string",
+      "enum":[
+        "BILLING_VIEW_NO_ACCESS",
+        "BILLING_VIEW_UNHEALTHY",
+        "FILTER_INVALID"
+      ]
+    },
+    "HealthStatusValue":{
+      "type":"string",
+      "enum":[
+        "HEALTHY",
+        "UNHEALTHY"
+      ]
     },
     "HistoricalOptions":{
       "type":"structure",
