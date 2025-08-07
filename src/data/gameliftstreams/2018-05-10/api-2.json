@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"gameliftstreams",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"Amazon GameLift Streams",
     "serviceId":"GameLiftStreams",
     "signatureVersion":"v4",
     "signingName":"gameliftstreams",
-    "uid":"gameliftstreams-2018-05-10",
-    "auth":["aws.auth#sigv4"]
+    "uid":"gameliftstreams-2018-05-10"
   },
   "operations":{
     "AddStreamGroupLocations":{
@@ -482,7 +481,7 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^$|^s3://([a-zA-Z0-9][a-zA-Z0-9._-]{1,61}[a-zA-Z0-9])(/[a-zA-Z0-9._-]+)*/?$"
+      "pattern":"$|^s3://([a-zA-Z0-9][a-zA-Z0-9._-]{1,61}[a-zA-Z0-9])(/[a-zA-Z0-9._-]+)*/?"
     },
     "ApplicationSourceUri":{
       "type":"string",
@@ -511,12 +510,12 @@
       "required":["Arn"],
       "members":{
         "Arn":{"shape":"Identifier"},
-        "CreatedAt":{"shape":"Timestamp"},
-        "Description":{"shape":"Description"},
         "Id":{"shape":"Id"},
+        "Description":{"shape":"Description"},
+        "Status":{"shape":"ApplicationStatus"},
+        "CreatedAt":{"shape":"Timestamp"},
         "LastUpdatedAt":{"shape":"Timestamp"},
-        "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
-        "Status":{"shape":"ApplicationStatus"}
+        "RuntimeEnvironment":{"shape":"RuntimeEnvironment"}
       }
     },
     "ApplicationSummaryList":{
@@ -527,7 +526,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^arn:aws:gameliftstreams:([^: ]*):([0-9]{12}):([^: ]*)$"
+      "pattern":"arn:aws:gameliftstreams:([^: ]*):([0-9]{12}):([^: ]*)"
     },
     "ArnList":{
       "type":"list",
@@ -536,23 +535,23 @@
     "AssociateApplicationsInput":{
       "type":"structure",
       "required":[
-        "ApplicationIdentifiers",
-        "Identifier"
+        "Identifier",
+        "ApplicationIdentifiers"
       ],
       "members":{
-        "ApplicationIdentifiers":{"shape":"Identifiers"},
         "Identifier":{
           "shape":"Identifier",
           "location":"uri",
           "locationName":"Identifier"
-        }
+        },
+        "ApplicationIdentifiers":{"shape":"Identifiers"}
       }
     },
     "AssociateApplicationsOutput":{
       "type":"structure",
       "members":{
-        "ApplicationArns":{"shape":"ArnList"},
-        "Arn":{"shape":"Arn"}
+        "Arn":{"shape":"Arn"},
+        "ApplicationArns":{"shape":"ArnList"}
       }
     },
     "CapacityValue":{
@@ -564,7 +563,7 @@
       "type":"string",
       "max":128,
       "min":32,
-      "pattern":"^[\\x21-\\x7E]+$"
+      "pattern":"[\\x21-\\x7E]+"
     },
     "ConflictException":{
       "type":"structure",
@@ -587,43 +586,43 @@
     "CreateApplicationInput":{
       "type":"structure",
       "required":[
-        "ApplicationSourceUri",
         "Description",
+        "RuntimeEnvironment",
         "ExecutablePath",
-        "RuntimeEnvironment"
+        "ApplicationSourceUri"
       ],
       "members":{
-        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
-        "ApplicationLogPaths":{"shape":"FilePaths"},
+        "Description":{"shape":"Description"},
+        "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
+        "ExecutablePath":{"shape":"ExecutablePath"},
         "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
+        "ApplicationLogPaths":{"shape":"FilePaths"},
+        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
+        "Tags":{"shape":"Tags"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "Description":{"shape":"Description"},
-        "ExecutablePath":{"shape":"ExecutablePath"},
-        "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
-        "Tags":{"shape":"Tags"}
+        }
       }
     },
     "CreateApplicationOutput":{
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
-        "ApplicationLogPaths":{"shape":"FilePaths"},
-        "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
         "Arn":{"shape":"Identifier"},
-        "AssociatedStreamGroups":{"shape":"ArnList"},
-        "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
-        "ExecutablePath":{"shape":"ExecutablePath"},
-        "Id":{"shape":"Id"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
-        "ReplicationStatuses":{"shape":"ReplicationStatuses"},
         "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
+        "ExecutablePath":{"shape":"ExecutablePath"},
+        "ApplicationLogPaths":{"shape":"FilePaths"},
+        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
+        "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
+        "Id":{"shape":"Id"},
         "Status":{"shape":"ApplicationStatus"},
-        "StatusReason":{"shape":"ApplicationStatusReason"}
+        "StatusReason":{"shape":"ApplicationStatusReason"},
+        "ReplicationStatuses":{"shape":"ReplicationStatuses"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "AssociatedStreamGroups":{"shape":"ArnList"}
       }
     },
     "CreateStreamGroupInput":{
@@ -633,15 +632,15 @@
         "StreamClass"
       ],
       "members":{
+        "Description":{"shape":"Description"},
+        "StreamClass":{"shape":"StreamClass"},
+        "DefaultApplicationIdentifier":{"shape":"Identifier"},
+        "LocationConfigurations":{"shape":"LocationConfigurations"},
+        "Tags":{"shape":"Tags"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "DefaultApplicationIdentifier":{"shape":"Identifier"},
-        "Description":{"shape":"Description"},
-        "LocationConfigurations":{"shape":"LocationConfigurations"},
-        "StreamClass":{"shape":"StreamClass"},
-        "Tags":{"shape":"Tags"}
+        }
       }
     },
     "CreateStreamGroupOutput":{
@@ -649,24 +648,24 @@
       "required":["Arn"],
       "members":{
         "Arn":{"shape":"Identifier"},
-        "AssociatedApplications":{"shape":"ArnList"},
-        "CreatedAt":{"shape":"Timestamp"},
-        "DefaultApplication":{"shape":"DefaultApplication"},
         "Description":{"shape":"Description"},
-        "Id":{"shape":"Id"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
+        "DefaultApplication":{"shape":"DefaultApplication"},
         "LocationStates":{"shape":"LocationStates"},
+        "StreamClass":{"shape":"StreamClass"},
+        "Id":{"shape":"Id"},
         "Status":{"shape":"StreamGroupStatus"},
         "StatusReason":{"shape":"StreamGroupStatusReason"},
-        "StreamClass":{"shape":"StreamClass"}
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "AssociatedApplications":{"shape":"ArnList"}
       }
     },
     "CreateStreamSessionConnectionInput":{
       "type":"structure",
       "required":[
         "Identifier",
-        "SignalRequest",
-        "StreamSessionIdentifier"
+        "StreamSessionIdentifier",
+        "SignalRequest"
       ],
       "members":{
         "ClientToken":{
@@ -678,12 +677,12 @@
           "location":"uri",
           "locationName":"Identifier"
         },
-        "SignalRequest":{"shape":"SignalRequest"},
         "StreamSessionIdentifier":{
           "shape":"Identifier",
           "location":"uri",
           "locationName":"StreamSessionIdentifier"
-        }
+        },
+        "SignalRequest":{"shape":"SignalRequest"}
       }
     },
     "CreateStreamSessionConnectionOutput":{
@@ -695,8 +694,8 @@
     "DefaultApplication":{
       "type":"structure",
       "members":{
-        "Arn":{"shape":"Arn"},
-        "Id":{"shape":"Id"}
+        "Id":{"shape":"Id"},
+        "Arn":{"shape":"Arn"}
       }
     },
     "DeleteApplicationInput":{
@@ -725,28 +724,28 @@
       "type":"string",
       "max":80,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-_.!+@/][a-zA-Z0-9-_.!+@/ ]*$"
+      "pattern":"[a-zA-Z0-9-_.!+@/][a-zA-Z0-9-_.!+@/ ]*"
     },
     "DisassociateApplicationsInput":{
       "type":"structure",
       "required":[
-        "ApplicationIdentifiers",
-        "Identifier"
+        "Identifier",
+        "ApplicationIdentifiers"
       ],
       "members":{
-        "ApplicationIdentifiers":{"shape":"Identifiers"},
         "Identifier":{
           "shape":"Identifier",
           "location":"uri",
           "locationName":"Identifier"
-        }
+        },
+        "ApplicationIdentifiers":{"shape":"Identifiers"}
       }
     },
     "DisassociateApplicationsOutput":{
       "type":"structure",
       "members":{
-        "ApplicationArns":{"shape":"ArnList"},
-        "Arn":{"shape":"Arn"}
+        "Arn":{"shape":"Arn"},
+        "ApplicationArns":{"shape":"ArnList"}
       }
     },
     "EnvironmentVariables":{
@@ -760,7 +759,7 @@
       "type":"string",
       "max":256,
       "min":1,
-      "pattern":"^[_a-zA-Z][_a-zA-Z0-9]*$"
+      "pattern":"[_a-zA-Z][_a-zA-Z0-9]*"
     },
     "EnvironmentVariablesValueString":{
       "type":"string",
@@ -775,9 +774,9 @@
     "ExportFilesMetadata":{
       "type":"structure",
       "members":{
-        "OutputUri":{"shape":"OutputUri"},
         "Status":{"shape":"ExportFilesStatus"},
-        "StatusReason":{"shape":"ExportFilesReason"}
+        "StatusReason":{"shape":"ExportFilesReason"},
+        "OutputUri":{"shape":"OutputUri"}
       }
     },
     "ExportFilesReason":{
@@ -797,8 +796,8 @@
       "type":"structure",
       "required":[
         "Identifier",
-        "OutputUri",
-        "StreamSessionIdentifier"
+        "StreamSessionIdentifier",
+        "OutputUri"
       ],
       "members":{
         "Identifier":{
@@ -806,18 +805,17 @@
           "location":"uri",
           "locationName":"Identifier"
         },
-        "OutputUri":{"shape":"OutputUri"},
         "StreamSessionIdentifier":{
           "shape":"Identifier",
           "location":"uri",
           "locationName":"StreamSessionIdentifier"
-        }
+        },
+        "OutputUri":{"shape":"OutputUri"}
       }
     },
     "ExportStreamSessionFilesOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "FileLocationUri":{"type":"string"},
     "FilePath":{
@@ -852,20 +850,20 @@
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
-        "ApplicationLogPaths":{"shape":"FilePaths"},
-        "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
         "Arn":{"shape":"Identifier"},
-        "AssociatedStreamGroups":{"shape":"ArnList"},
-        "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
-        "ExecutablePath":{"shape":"ExecutablePath"},
-        "Id":{"shape":"Id"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
-        "ReplicationStatuses":{"shape":"ReplicationStatuses"},
         "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
+        "ExecutablePath":{"shape":"ExecutablePath"},
+        "ApplicationLogPaths":{"shape":"FilePaths"},
+        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
+        "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
+        "Id":{"shape":"Id"},
         "Status":{"shape":"ApplicationStatus"},
-        "StatusReason":{"shape":"ApplicationStatusReason"}
+        "StatusReason":{"shape":"ApplicationStatusReason"},
+        "ReplicationStatuses":{"shape":"ReplicationStatuses"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "AssociatedStreamGroups":{"shape":"ArnList"}
       }
     },
     "GetStreamGroupInput":{
@@ -884,16 +882,16 @@
       "required":["Arn"],
       "members":{
         "Arn":{"shape":"Identifier"},
-        "AssociatedApplications":{"shape":"ArnList"},
-        "CreatedAt":{"shape":"Timestamp"},
-        "DefaultApplication":{"shape":"DefaultApplication"},
         "Description":{"shape":"Description"},
-        "Id":{"shape":"Id"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
+        "DefaultApplication":{"shape":"DefaultApplication"},
         "LocationStates":{"shape":"LocationStates"},
+        "StreamClass":{"shape":"StreamClass"},
+        "Id":{"shape":"Id"},
         "Status":{"shape":"StreamGroupStatus"},
         "StatusReason":{"shape":"StreamGroupStatusReason"},
-        "StreamClass":{"shape":"StreamClass"}
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "AssociatedApplications":{"shape":"ArnList"}
       }
     },
     "GetStreamSessionInput":{
@@ -918,39 +916,39 @@
     "GetStreamSessionOutput":{
       "type":"structure",
       "members":{
-        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
-        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
-        "ApplicationArn":{"shape":"Arn"},
         "Arn":{"shape":"Arn"},
-        "ConnectionTimeoutSeconds":{"shape":"ConnectionTimeoutSeconds"},
-        "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
-        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
-        "Location":{"shape":"LocationName"},
-        "LogFileLocationUri":{"shape":"FileLocationUri"},
-        "Protocol":{"shape":"Protocol"},
-        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
-        "SignalRequest":{"shape":"SignalRequest"},
-        "SignalResponse":{"shape":"SignalResponse"},
-        "Status":{"shape":"StreamSessionStatus"},
-        "StatusReason":{"shape":"StreamSessionStatusReason"},
         "StreamGroupId":{"shape":"Id"},
         "UserId":{"shape":"UserId"},
-        "WebSdkProtocolUrl":{"shape":"WebSdkProtocolUrl"}
+        "Status":{"shape":"StreamSessionStatus"},
+        "StatusReason":{"shape":"StreamSessionStatusReason"},
+        "Protocol":{"shape":"Protocol"},
+        "Location":{"shape":"LocationName"},
+        "SignalRequest":{"shape":"SignalRequest"},
+        "SignalResponse":{"shape":"SignalResponse"},
+        "ConnectionTimeoutSeconds":{"shape":"ConnectionTimeoutSeconds"},
+        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
+        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
+        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "LogFileLocationUri":{"shape":"FileLocationUri"},
+        "WebSdkProtocolUrl":{"shape":"WebSdkProtocolUrl"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ApplicationArn":{"shape":"Arn"},
+        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"}
       }
     },
     "Id":{
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "Identifier":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(^[a-zA-Z0-9-]+$)|(^arn:aws:gameliftstreams:([^: ]*):([0-9]{12}):([^: ]*)$)$"
+      "pattern":"(^[a-zA-Z0-9-]+$)|(^arn:aws:gameliftstreams:([^: ]*):([0-9]{12}):([^: ]*)$)"
     },
     "Identifiers":{
       "type":"list",
@@ -972,15 +970,15 @@
     "ListApplicationsInput":{
       "type":"structure",
       "members":{
-        "MaxResults":{
-          "shape":"MaxResults",
-          "location":"querystring",
-          "locationName":"MaxResults"
-        },
         "NextToken":{
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
         }
       }
     },
@@ -994,15 +992,15 @@
     "ListStreamGroupsInput":{
       "type":"structure",
       "members":{
-        "MaxResults":{
-          "shape":"MaxResults",
-          "location":"querystring",
-          "locationName":"MaxResults"
-        },
         "NextToken":{
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
         }
       }
     },
@@ -1016,25 +1014,25 @@
     "ListStreamSessionsByAccountInput":{
       "type":"structure",
       "members":{
+        "Status":{
+          "shape":"StreamSessionStatus",
+          "location":"querystring",
+          "locationName":"Status"
+        },
         "ExportFilesStatus":{
           "shape":"ExportFilesStatus",
           "location":"querystring",
           "locationName":"ExportFilesStatus"
-        },
-        "MaxResults":{
-          "shape":"MaxResults",
-          "location":"querystring",
-          "locationName":"MaxResults"
         },
         "NextToken":{
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
         },
-        "Status":{
-          "shape":"StreamSessionStatus",
+        "MaxResults":{
+          "shape":"MaxResults",
           "location":"querystring",
-          "locationName":"Status"
+          "locationName":"MaxResults"
         }
       }
     },
@@ -1049,30 +1047,30 @@
       "type":"structure",
       "required":["Identifier"],
       "members":{
+        "Status":{
+          "shape":"StreamSessionStatus",
+          "location":"querystring",
+          "locationName":"Status"
+        },
         "ExportFilesStatus":{
           "shape":"ExportFilesStatus",
           "location":"querystring",
           "locationName":"ExportFilesStatus"
-        },
-        "Identifier":{
-          "shape":"Identifier",
-          "location":"uri",
-          "locationName":"Identifier"
-        },
-        "MaxResults":{
-          "shape":"MaxResults",
-          "location":"querystring",
-          "locationName":"MaxResults"
         },
         "NextToken":{
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
         },
-        "Status":{
-          "shape":"StreamSessionStatus",
+        "MaxResults":{
+          "shape":"MaxResults",
           "location":"querystring",
-          "locationName":"Status"
+          "locationName":"MaxResults"
+        },
+        "Identifier":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"Identifier"
         }
       }
     },
@@ -1104,8 +1102,8 @@
       "type":"structure",
       "required":["LocationName"],
       "members":{
-        "AlwaysOnCapacity":{"shape":"AlwaysOnCapacity"},
         "LocationName":{"shape":"LocationName"},
+        "AlwaysOnCapacity":{"shape":"AlwaysOnCapacity"},
         "OnDemandCapacity":{"shape":"OnDemandCapacity"}
       }
     },
@@ -1124,18 +1122,18 @@
       "type":"string",
       "max":20,
       "min":1,
-      "pattern":"^[a-zA-Z0-9-]+$"
+      "pattern":"[a-zA-Z0-9-]+"
     },
     "LocationState":{
       "type":"structure",
       "members":{
-        "AllocatedCapacity":{"shape":"CapacityValue"},
-        "AlwaysOnCapacity":{"shape":"AlwaysOnCapacity"},
-        "IdleCapacity":{"shape":"CapacityValue"},
         "LocationName":{"shape":"LocationName"},
+        "Status":{"shape":"StreamGroupLocationStatus"},
+        "AlwaysOnCapacity":{"shape":"AlwaysOnCapacity"},
         "OnDemandCapacity":{"shape":"OnDemandCapacity"},
         "RequestedCapacity":{"shape":"CapacityValue"},
-        "Status":{"shape":"StreamGroupLocationStatus"}
+        "AllocatedCapacity":{"shape":"CapacityValue"},
+        "IdleCapacity":{"shape":"CapacityValue"}
       }
     },
     "LocationStates":{
@@ -1164,7 +1162,7 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^s3://.*(/|\\.zip|\\.ZIP)$"
+      "pattern":"s3://.*(/|\\.zip|\\.ZIP)"
     },
     "Protocol":{
       "type":"string",
@@ -1273,56 +1271,56 @@
     "StartStreamSessionInput":{
       "type":"structure",
       "required":[
-        "ApplicationIdentifier",
         "Identifier",
         "Protocol",
-        "SignalRequest"
+        "SignalRequest",
+        "ApplicationIdentifier"
       ],
       "members":{
-        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
-        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
-        "ApplicationIdentifier":{"shape":"Identifier"},
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "ConnectionTimeoutSeconds":{"shape":"ConnectionTimeoutSeconds"},
         "Description":{"shape":"Description"},
         "Identifier":{
           "shape":"Identifier",
           "location":"uri",
           "locationName":"Identifier"
         },
-        "Locations":{"shape":"LocationList"},
         "Protocol":{"shape":"Protocol"},
-        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
         "SignalRequest":{"shape":"SignalRequest"},
-        "UserId":{"shape":"UserId"}
+        "ApplicationIdentifier":{"shape":"Identifier"},
+        "UserId":{"shape":"UserId"},
+        "Locations":{"shape":"LocationList"},
+        "ConnectionTimeoutSeconds":{"shape":"ConnectionTimeoutSeconds"},
+        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
+        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
+        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"}
       }
     },
     "StartStreamSessionOutput":{
       "type":"structure",
       "members":{
-        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
-        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
-        "ApplicationArn":{"shape":"Arn"},
         "Arn":{"shape":"Arn"},
-        "ConnectionTimeoutSeconds":{"shape":"ConnectionTimeoutSeconds"},
-        "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
-        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
-        "Location":{"shape":"LocationName"},
-        "LogFileLocationUri":{"shape":"FileLocationUri"},
-        "Protocol":{"shape":"Protocol"},
-        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
-        "SignalRequest":{"shape":"SignalRequest"},
-        "SignalResponse":{"shape":"SignalResponse"},
-        "Status":{"shape":"StreamSessionStatus"},
-        "StatusReason":{"shape":"StreamSessionStatusReason"},
         "StreamGroupId":{"shape":"Id"},
         "UserId":{"shape":"UserId"},
-        "WebSdkProtocolUrl":{"shape":"WebSdkProtocolUrl"}
+        "Status":{"shape":"StreamSessionStatus"},
+        "StatusReason":{"shape":"StreamSessionStatusReason"},
+        "Protocol":{"shape":"Protocol"},
+        "Location":{"shape":"LocationName"},
+        "SignalRequest":{"shape":"SignalRequest"},
+        "SignalResponse":{"shape":"SignalResponse"},
+        "ConnectionTimeoutSeconds":{"shape":"ConnectionTimeoutSeconds"},
+        "SessionLengthSeconds":{"shape":"SessionLengthSeconds"},
+        "AdditionalLaunchArgs":{"shape":"GameLaunchArgList"},
+        "AdditionalEnvironmentVariables":{"shape":"EnvironmentVariables"},
+        "LogFileLocationUri":{"shape":"FileLocationUri"},
+        "WebSdkProtocolUrl":{"shape":"WebSdkProtocolUrl"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ApplicationArn":{"shape":"Arn"},
+        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"}
       }
     },
     "StreamClass":{
@@ -1368,13 +1366,13 @@
       "required":["Arn"],
       "members":{
         "Arn":{"shape":"Identifier"},
-        "CreatedAt":{"shape":"Timestamp"},
-        "DefaultApplication":{"shape":"DefaultApplication"},
-        "Description":{"shape":"Description"},
         "Id":{"shape":"Id"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
+        "Description":{"shape":"Description"},
+        "DefaultApplication":{"shape":"DefaultApplication"},
+        "StreamClass":{"shape":"StreamClass"},
         "Status":{"shape":"StreamGroupStatus"},
-        "StreamClass":{"shape":"StreamClass"}
+        "CreatedAt":{"shape":"Timestamp"},
+        "LastUpdatedAt":{"shape":"Timestamp"}
       }
     },
     "StreamGroupSummaryList":{
@@ -1406,15 +1404,15 @@
     "StreamSessionSummary":{
       "type":"structure",
       "members":{
-        "ApplicationArn":{"shape":"Arn"},
         "Arn":{"shape":"Arn"},
-        "CreatedAt":{"shape":"Timestamp"},
-        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
-        "Location":{"shape":"LocationName"},
-        "Protocol":{"shape":"Protocol"},
+        "UserId":{"shape":"UserId"},
         "Status":{"shape":"StreamSessionStatus"},
-        "UserId":{"shape":"UserId"}
+        "Protocol":{"shape":"Protocol"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ApplicationArn":{"shape":"Arn"},
+        "ExportFilesMetadata":{"shape":"ExportFilesMetadata"},
+        "Location":{"shape":"LocationName"}
       }
     },
     "StreamSessionSummaryList":{
@@ -1450,8 +1448,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1519,54 +1516,53 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateApplicationInput":{
       "type":"structure",
       "required":["Identifier"],
       "members":{
-        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
-        "ApplicationLogPaths":{"shape":"FilePaths"},
-        "Description":{"shape":"Description"},
         "Identifier":{
           "shape":"Identifier",
           "location":"uri",
           "locationName":"Identifier"
-        }
+        },
+        "Description":{"shape":"Description"},
+        "ApplicationLogPaths":{"shape":"FilePaths"},
+        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"}
       }
     },
     "UpdateApplicationOutput":{
       "type":"structure",
       "required":["Arn"],
       "members":{
-        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
-        "ApplicationLogPaths":{"shape":"FilePaths"},
-        "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
         "Arn":{"shape":"Identifier"},
-        "AssociatedStreamGroups":{"shape":"ArnList"},
-        "CreatedAt":{"shape":"Timestamp"},
         "Description":{"shape":"Description"},
-        "ExecutablePath":{"shape":"ExecutablePath"},
-        "Id":{"shape":"Id"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
-        "ReplicationStatuses":{"shape":"ReplicationStatuses"},
         "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
+        "ExecutablePath":{"shape":"ExecutablePath"},
+        "ApplicationLogPaths":{"shape":"FilePaths"},
+        "ApplicationLogOutputUri":{"shape":"ApplicationLogOutputUri"},
+        "ApplicationSourceUri":{"shape":"ApplicationSourceUri"},
+        "Id":{"shape":"Id"},
         "Status":{"shape":"ApplicationStatus"},
-        "StatusReason":{"shape":"ApplicationStatusReason"}
+        "StatusReason":{"shape":"ApplicationStatusReason"},
+        "ReplicationStatuses":{"shape":"ReplicationStatuses"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "AssociatedStreamGroups":{"shape":"ArnList"}
       }
     },
     "UpdateStreamGroupInput":{
       "type":"structure",
       "required":["Identifier"],
       "members":{
-        "Description":{"shape":"Description"},
         "Identifier":{
           "shape":"Identifier",
           "location":"uri",
           "locationName":"Identifier"
         },
-        "LocationConfigurations":{"shape":"LocationConfigurations"}
+        "LocationConfigurations":{"shape":"LocationConfigurations"},
+        "Description":{"shape":"Description"}
       }
     },
     "UpdateStreamGroupOutput":{
@@ -1574,23 +1570,23 @@
       "required":["Arn"],
       "members":{
         "Arn":{"shape":"Identifier"},
-        "AssociatedApplications":{"shape":"ArnList"},
-        "CreatedAt":{"shape":"Timestamp"},
-        "DefaultApplication":{"shape":"DefaultApplication"},
         "Description":{"shape":"Description"},
-        "Id":{"shape":"Id"},
-        "LastUpdatedAt":{"shape":"Timestamp"},
+        "DefaultApplication":{"shape":"DefaultApplication"},
         "LocationStates":{"shape":"LocationStates"},
+        "StreamClass":{"shape":"StreamClass"},
+        "Id":{"shape":"Id"},
         "Status":{"shape":"StreamGroupStatus"},
         "StatusReason":{"shape":"StreamGroupStatusReason"},
-        "StreamClass":{"shape":"StreamClass"}
+        "LastUpdatedAt":{"shape":"Timestamp"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "AssociatedApplications":{"shape":"ArnList"}
       }
     },
     "UserId":{
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[-_a-zA-Z0-9/=+]*$"
+      "pattern":"[-_a-zA-Z0-9/=+]*"
     },
     "ValidationException":{
       "type":"structure",

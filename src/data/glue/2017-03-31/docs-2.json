@@ -1874,6 +1874,12 @@
         "ConfigurationMap$value": null
       }
     },
+    "ConfigurationSource": {
+      "base": null,
+      "refs": {
+        "TableOptimizer$configurationSource": "<p> Specifies the source of the optimizer configuration. This indicates how the table optimizer was configured and which entity or service initiated the configuration. </p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>The <code>CreatePartitions</code> API was called on a table that has indexes enabled. </p>",
       "refs": {}
@@ -5389,7 +5395,9 @@
       "refs": {
         "DataLakeAccessProperties$DataTransferRole": "<p>A role that will be assumed by Glue for transferring data into/out of the staging bucket during a query.</p>",
         "DataLakeAccessPropertiesOutput$DataTransferRole": "<p>A role that will be assumed by Glue for transferring data into/out of the staging bucket during a query.</p>",
-        "EncryptionAtRest$CatalogEncryptionServiceRole": "<p>The role that Glue assumes to encrypt and decrypt the Data Catalog objects on the caller's behalf.</p>"
+        "EncryptionAtRest$CatalogEncryptionServiceRole": "<p>The role that Glue assumes to encrypt and decrypt the Data Catalog objects on the caller's behalf.</p>",
+        "IcebergOptimizationProperties$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that will be assumed to perform Iceberg table optimization operations.</p>",
+        "IcebergOptimizationPropertiesOutput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that is used to perform Iceberg table optimization operations.</p>"
       }
     },
     "IcebergCompactionConfiguration": {
@@ -5420,6 +5428,18 @@
       "base": null,
       "refs": {
         "IcebergSortField$NullOrder": "<p>The ordering behavior for null values in this field, specifying whether nulls should appear first or last in the sort order.</p>"
+      }
+    },
+    "IcebergOptimizationProperties": {
+      "base": "<p>A structure that specifies Iceberg table optimization properties for the catalog, including configurations for compaction, retention, and orphan file deletion operations.</p>",
+      "refs": {
+        "CatalogProperties$IcebergOptimizationProperties": "<p>A structure that specifies Iceberg table optimization properties for the catalog. This includes configuration for compaction, retention, and orphan file deletion operations that can be applied to Iceberg tables in this catalog.</p>"
+      }
+    },
+    "IcebergOptimizationPropertiesOutput": {
+      "base": "<p>A structure that contains the output properties of Iceberg table optimization configuration for your catalog resource in the Glue Data Catalog.</p>",
+      "refs": {
+        "CatalogPropertiesOutput$IcebergOptimizationProperties": "<p>An <code>IcebergOptimizationPropertiesOutput</code> object that specifies Iceberg table optimization settings for the catalog, including configurations for compaction, retention, and orphan file deletion operations.</p>"
       }
     },
     "IcebergOrphanFileDeletionConfiguration": {
@@ -7581,9 +7601,13 @@
         "GetMLTransformResponse$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>",
         "GetMLTransformResponse$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
         "HudiTarget$MaximumTraversalDepth": "<p>The maximum depth of Amazon S3 paths that the crawler can traverse to discover the Hudi metadata folder in your Amazon S3 path. Used to limit the crawler run time.</p>",
+        "IcebergCompactionConfiguration$minInputFiles": "<p>The minimum number of data files that must be present in a partition before compaction will actually compact files. This parameter helps control when compaction is triggered, preventing unnecessary compaction operations on partitions with few files. If an input is not provided, the default value 100 will be used.</p>",
+        "IcebergCompactionConfiguration$deleteFileThreshold": "<p>The minimum number of deletes that must be present in a data file to make it eligible for compaction. This parameter helps optimize compaction by focusing on files that contain a significant number of delete operations, which can improve query performance by removing deleted records. If an input is not provided, the default value 1 will be used.</p>",
         "IcebergOrphanFileDeletionConfiguration$orphanFileRetentionPeriodInDays": "<p>The number of days that orphan files should be retained before file deletion. If an input is not provided, the default value 3 will be used.</p>",
+        "IcebergOrphanFileDeletionConfiguration$runRateInHours": "<p>The interval in hours between orphan file deletion job runs. This parameter controls how frequently the orphan file deletion optimizer will run to clean up orphan files. The value must be between 3 and 168 hours (7 days). If an input is not provided, the default value 24 will be used.</p>",
         "IcebergRetentionConfiguration$snapshotRetentionPeriodInDays": "<p>The number of days to retain the Iceberg snapshots. If an input is not provided, the corresponding Iceberg table configuration field will be used or if not present, the default value 5 will be used.</p>",
         "IcebergRetentionConfiguration$numberOfSnapshotsToRetain": "<p>The number of Iceberg snapshots to retain within the retention period. If an input is not provided, the corresponding Iceberg table configuration field will be used or if not present, the default value 1 will be used.</p>",
+        "IcebergRetentionConfiguration$runRateInHours": "<p>The interval in hours between retention job runs. This parameter controls how frequently the retention optimizer will run to clean up expired snapshots. The value must be between 3 and 168 hours (7 days). If an input is not provided, the default value 24 will be used.</p>",
         "IcebergTarget$MaximumTraversalDepth": "<p>The maximum depth of Amazon S3 paths that the crawler can traverse to discover the Iceberg metadata folder in your Amazon S3 path. Used to limit the crawler run time.</p>",
         "Job$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
         "JobRun$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p>",
@@ -8012,6 +8036,12 @@
         "Column$Parameters": "<p>These key-value pairs define properties associated with the column.</p>",
         "Database$Parameters": "<p>These key-value pairs define parameters and properties of the database.</p>",
         "DatabaseInput$Parameters": "<p>These key-value pairs define parameters and properties of the database.</p> <p>These key-value pairs define parameters and properties of the database.</p>",
+        "IcebergOptimizationProperties$Compaction": "<p>A map of key-value pairs that specify configuration parameters for Iceberg table compaction operations, which optimize the layout of data files to improve query performance.</p>",
+        "IcebergOptimizationProperties$Retention": "<p>A map of key-value pairs that specify configuration parameters for Iceberg table retention operations, which manage the lifecycle of table snapshots to control storage costs.</p>",
+        "IcebergOptimizationProperties$OrphanFileDeletion": "<p>A map of key-value pairs that specify configuration parameters for Iceberg orphan file deletion operations, which identify and remove files that are no longer referenced by the table metadata.</p>",
+        "IcebergOptimizationPropertiesOutput$Compaction": "<p>A map of key-value pairs that specify configuration parameters for Iceberg table compaction operations, which optimize the layout of data files to improve query performance.</p>",
+        "IcebergOptimizationPropertiesOutput$Retention": "<p>A map of key-value pairs that specify configuration parameters for Iceberg table retention operations, which manage the lifecycle of table snapshots to control storage costs.</p>",
+        "IcebergOptimizationPropertiesOutput$OrphanFileDeletion": "<p>A map of key-value pairs that specify configuration parameters for Iceberg orphan file deletion operations, which identify and remove files that are no longer referenced by the table metadata.</p>",
         "Partition$Parameters": "<p>These key-value pairs define partition parameters.</p>",
         "PartitionInput$Parameters": "<p>These key-value pairs define partition parameters.</p>",
         "SerDeInfo$Parameters": "<p>These key-value pairs define initialization parameters for the SerDe.</p>",
@@ -10374,6 +10404,7 @@
         "GluePolicy$UpdateTime": "<p>The date and time at which the policy was last updated.</p>",
         "GrokClassifier$CreationTime": "<p>The time that this classifier was registered.</p>",
         "GrokClassifier$LastUpdated": "<p>The time that this classifier was last updated.</p>",
+        "IcebergOptimizationPropertiesOutput$LastUpdatedTime": "<p>The timestamp when the Iceberg optimization properties were last updated.</p>",
         "JsonClassifier$CreationTime": "<p>The time that this classifier was registered.</p>",
         "JsonClassifier$LastUpdated": "<p>The time that this classifier was last updated.</p>",
         "LastCrawlInfo$StartTime": "<p>The time at which the crawl started.</p>",
@@ -10880,7 +10911,7 @@
       }
     },
     "UpdateIcebergTableInput": {
-      "base": "<p>Contains the update operations to be applied to an existing Iceberg table in AWS Glue Data Catalog, defining the new state of the table metadata. </p>",
+      "base": "<p>Contains the update operations to be applied to an existing Iceberg table inGlue Data Catalog, defining the new state of the table metadata. </p>",
       "refs": {
         "UpdateIcebergInput$UpdateIcebergTableInput": "<p>The specific update operations to be applied to the Iceberg table, containing a list of updates that define the new state of the table including schema, partitions, and properties.</p>"
       }

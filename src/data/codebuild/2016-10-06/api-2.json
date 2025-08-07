@@ -1419,7 +1419,8 @@
         "filterGroups":{"shape":"FilterGroups"},
         "buildType":{"shape":"WebhookBuildType"},
         "manualCreation":{"shape":"WrapperBoolean"},
-        "scopeConfiguration":{"shape":"ScopeConfiguration"}
+        "scopeConfiguration":{"shape":"ScopeConfiguration"},
+        "pullRequestBuildPolicy":{"shape":"PullRequestBuildPolicy"}
       }
     },
     "CreateWebhookOutput":{
@@ -2496,6 +2497,45 @@
         "orderedProxyRules":{"shape":"FleetProxyRules"}
       }
     },
+    "PullRequestBuildApproverRole":{
+      "type":"string",
+      "enum":[
+        "GITHUB_READ",
+        "GITHUB_TRIAGE",
+        "GITHUB_WRITE",
+        "GITHUB_MAINTAIN",
+        "GITHUB_ADMIN",
+        "GITLAB_GUEST",
+        "GITLAB_PLANNER",
+        "GITLAB_REPORTER",
+        "GITLAB_DEVELOPER",
+        "GITLAB_MAINTAINER",
+        "GITLAB_OWNER",
+        "BITBUCKET_READ",
+        "BITBUCKET_WRITE",
+        "BITBUCKET_ADMIN"
+      ]
+    },
+    "PullRequestBuildApproverRoles":{
+      "type":"list",
+      "member":{"shape":"PullRequestBuildApproverRole"}
+    },
+    "PullRequestBuildCommentApproval":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "ALL_PULL_REQUESTS",
+        "FORK_PULL_REQUESTS"
+      ]
+    },
+    "PullRequestBuildPolicy":{
+      "type":"structure",
+      "required":["requiresCommentApproval"],
+      "members":{
+        "requiresCommentApproval":{"shape":"PullRequestBuildCommentApproval"},
+        "approverRoles":{"shape":"PullRequestBuildApproverRoles"}
+      }
+    },
     "PutResourcePolicyInput":{
       "type":"structure",
       "required":[
@@ -3301,7 +3341,8 @@
         "branchFilter":{"shape":"String"},
         "rotateSecret":{"shape":"Boolean"},
         "filterGroups":{"shape":"FilterGroups"},
-        "buildType":{"shape":"WebhookBuildType"}
+        "buildType":{"shape":"WebhookBuildType"},
+        "pullRequestBuildPolicy":{"shape":"PullRequestBuildPolicy"}
       }
     },
     "UpdateWebhookOutput":{

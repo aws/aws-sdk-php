@@ -5282,6 +5282,7 @@
       "type":"structure",
       "members":{
         "DataLakeAccessProperties":{"shape":"DataLakeAccessProperties"},
+        "IcebergOptimizationProperties":{"shape":"IcebergOptimizationProperties"},
         "CustomProperties":{"shape":"ParametersMap"}
       }
     },
@@ -5289,6 +5290,7 @@
       "type":"structure",
       "members":{
         "DataLakeAccessProperties":{"shape":"DataLakeAccessPropertiesOutput"},
+        "IcebergOptimizationProperties":{"shape":"IcebergOptimizationPropertiesOutput"},
         "CustomProperties":{"shape":"ParametersMap"}
       }
     },
@@ -5933,6 +5935,13 @@
         "MinValue":{"shape":"ConfigValueString"},
         "MaxValue":{"shape":"ConfigValueString"}
       }
+    },
+    "ConfigurationSource":{
+      "type":"string",
+      "enum":[
+        "catalog",
+        "table"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -10742,7 +10751,9 @@
     "IcebergCompactionConfiguration":{
       "type":"structure",
       "members":{
-        "strategy":{"shape":"CompactionStrategy"}
+        "strategy":{"shape":"CompactionStrategy"},
+        "minInputFiles":{"shape":"NullableInteger"},
+        "deleteFileThreshold":{"shape":"NullableInteger"}
       }
     },
     "IcebergCompactionMetrics":{
@@ -10776,11 +10787,31 @@
         "nulls-last"
       ]
     },
+    "IcebergOptimizationProperties":{
+      "type":"structure",
+      "members":{
+        "RoleArn":{"shape":"IAMRoleArn"},
+        "Compaction":{"shape":"ParametersMap"},
+        "Retention":{"shape":"ParametersMap"},
+        "OrphanFileDeletion":{"shape":"ParametersMap"}
+      }
+    },
+    "IcebergOptimizationPropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "RoleArn":{"shape":"IAMRoleArn"},
+        "Compaction":{"shape":"ParametersMap"},
+        "Retention":{"shape":"ParametersMap"},
+        "OrphanFileDeletion":{"shape":"ParametersMap"},
+        "LastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
     "IcebergOrphanFileDeletionConfiguration":{
       "type":"structure",
       "members":{
         "orphanFileRetentionPeriodInDays":{"shape":"NullableInteger"},
-        "location":{"shape":"MessageString"}
+        "location":{"shape":"MessageString"},
+        "runRateInHours":{"shape":"NullableInteger"}
       }
     },
     "IcebergOrphanFileDeletionMetrics":{
@@ -10823,7 +10854,8 @@
       "members":{
         "snapshotRetentionPeriodInDays":{"shape":"NullableInteger"},
         "numberOfSnapshotsToRetain":{"shape":"NullableInteger"},
-        "cleanExpiredFiles":{"shape":"NullableBoolean"}
+        "cleanExpiredFiles":{"shape":"NullableBoolean"},
+        "runRateInHours":{"shape":"NullableInteger"}
       }
     },
     "IcebergRetentionMetrics":{
@@ -15529,7 +15561,8 @@
       "members":{
         "type":{"shape":"TableOptimizerType"},
         "configuration":{"shape":"TableOptimizerConfiguration"},
-        "lastRun":{"shape":"TableOptimizerRun"}
+        "lastRun":{"shape":"TableOptimizerRun"},
+        "configurationSource":{"shape":"ConfigurationSource"}
       }
     },
     "TableOptimizerConfiguration":{
