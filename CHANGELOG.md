@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.352.4 - 2025-08-07
 
 * `Aws\GameLiftStreams` - Adds Proton 9.0-2 to the list of runtime environment options available when creating an Amazon GameLift Streams application
 * `Aws\CloudFront` - Added new viewer security policy, TLSv1.3_2025, for CloudFront.
