@@ -665,6 +665,29 @@ class StreamWrapperTest extends TestCase
         $this->assertSame($ts, $stat['ctime']);
     }
 
+    public function testStatsRegularObjectWithKeyContainingColonSlashSlash()
+    {
+        $this->cache->set('s3://foo/https://thisObjectNameContainsColonSlashSlash', ['size' => 123, 7 => 123]);
+        $this->assertSame(123, filesize('s3://foo/https://thisObjectNameContainsColonSlashSlash'));
+    }
+
+    public function testCanOpenStreamsWithKeyContainingColonSlashSlash()
+    {
+        $history = new History();
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
+        $this->addMockResults($this->client, [new Result()]);
+        $s = fopen('s3://bucket/https://thisObjectNameContainsColonSlashSlash', 'w');
+        $this->assertSame(4, fwrite($s, 'test'));
+        $this->assertTrue(fclose($s));
+
+        $this->assertCount(1, $history);
+        $cmd = $history->getLastCommand();
+        $this->assertSame('PutObject', $cmd->getName());
+        $this->assertSame('bucket', $cmd['Bucket']);
+        $this->assertSame('https://thisObjectNameContainsColonSlashSlash', $cmd['Key']);
+        $this->assertSame('test', (string) $cmd['Body']);
+    }
+
     public function testCanStatPrefix()
     {
         $this->addMockResults($this->client, [
