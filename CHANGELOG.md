@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.352.5 - 2025-08-08
 
 * `Aws\TranscribeService` - Update documentation to use key ARN only in OutputEncryptionKMSKeyId request parameter
 * `Aws\WorkspacesInstances` - Removed incorrect endpoint tests
