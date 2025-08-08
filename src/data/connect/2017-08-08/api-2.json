@@ -2027,6 +2027,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "GetContactMetrics":{
+      "name":"GetContactMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metrics/contact"
+      },
+      "input":{"shape":"GetContactMetricsRequest"},
+      "output":{"shape":"GetContactMetricsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "GetCurrentMetricData":{
       "name":"GetCurrentMetricData",
       "http":{
@@ -5912,7 +5929,8 @@
     "CommonAttributeAndCondition":{
       "type":"structure",
       "members":{
-        "TagConditions":{"shape":"TagAndConditionList"}
+        "TagConditions":{"shape":"TagAndConditionList"},
+        "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },
     "CommonAttributeOrConditionList":{
@@ -6359,6 +6377,44 @@
         "AGENT_REPLY",
         "FLOW"
       ]
+    },
+    "ContactMetricInfo":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"ContactMetricName"}
+      }
+    },
+    "ContactMetricName":{
+      "type":"string",
+      "enum":["POSITION_IN_QUEUE"]
+    },
+    "ContactMetricResult":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"ContactMetricName"},
+        "Value":{"shape":"ContactMetricValue"}
+      }
+    },
+    "ContactMetricResults":{
+      "type":"list",
+      "member":{"shape":"ContactMetricResult"}
+    },
+    "ContactMetricValue":{
+      "type":"structure",
+      "members":{
+        "Number":{"shape":"Double"}
+      },
+      "union":true
+    },
+    "ContactMetrics":{
+      "type":"list",
+      "member":{"shape":"ContactMetricInfo"},
+      "min":1
     },
     "ContactNotFoundException":{
       "type":"structure",
@@ -10369,6 +10425,27 @@
       "type":"structure",
       "members":{
         "Attributes":{"shape":"Attributes"}
+      }
+    },
+    "GetContactMetricsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "Metrics"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceIdOrArn"},
+        "ContactId":{"shape":"InstanceIdOrArn"},
+        "Metrics":{"shape":"ContactMetrics"}
+      }
+    },
+    "GetContactMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "MetricResults":{"shape":"ContactMetricResults"},
+        "Id":{"shape":"ContactId"},
+        "Arn":{"shape":"ARN"}
       }
     },
     "GetCurrentMetricDataRequest":{
@@ -19005,7 +19082,8 @@
       "members":{
         "OrConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
         "AndConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
-        "StringCondition":{"shape":"StringCondition"}
+        "StringCondition":{"shape":"StringCondition"},
+        "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },
     "UserHierarchyGroupSearchFilter":{

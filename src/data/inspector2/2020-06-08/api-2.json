@@ -3160,27 +3160,25 @@
     "Cvss2":{
       "type":"structure",
       "members":{
-        "baseScore":{"shape":"Cvss2BaseScore"},
-        "scoringVector":{"shape":"Cvss2ScoringVector"}
+        "baseScore":{"shape":"CvssBaseScore"},
+        "scoringVector":{"shape":"CvssScoringVector"}
       }
-    },
-    "Cvss2BaseScore":{"type":"double"},
-    "Cvss2ScoringVector":{
-      "type":"string",
-      "min":0
     },
     "Cvss3":{
       "type":"structure",
       "members":{
-        "baseScore":{"shape":"Cvss3BaseScore"},
-        "scoringVector":{"shape":"Cvss3ScoringVector"}
+        "baseScore":{"shape":"CvssBaseScore"},
+        "scoringVector":{"shape":"CvssScoringVector"}
       }
     },
-    "Cvss3BaseScore":{"type":"double"},
-    "Cvss3ScoringVector":{
-      "type":"string",
-      "min":0
+    "Cvss4":{
+      "type":"structure",
+      "members":{
+        "baseScore":{"shape":"CvssBaseScore"},
+        "scoringVector":{"shape":"CvssScoringVector"}
+      }
     },
+    "CvssBaseScore":{"type":"double"},
     "CvssScore":{
       "type":"structure",
       "required":[
@@ -3231,6 +3229,10 @@
     "CvssScoreList":{
       "type":"list",
       "member":{"shape":"CvssScore"}
+    },
+    "CvssScoringVector":{
+      "type":"string",
+      "min":0
     },
     "Cwe":{
       "type":"string",
@@ -3426,7 +3428,7 @@
     "DisableResourceTypeList":{
       "type":"list",
       "member":{"shape":"ResourceScanType"},
-      "max":3,
+      "max":5,
       "min":0
     },
     "DisableResponse":{
@@ -3683,7 +3685,7 @@
     "EnableResourceTypeList":{
       "type":"list",
       "member":{"shape":"ResourceScanType"},
-      "max":3,
+      "max":5,
       "min":1
     },
     "EnableResponse":{
@@ -6950,6 +6952,7 @@
         "description":{"shape":"VulnerabilityDescription"},
         "atigData":{"shape":"AtigData"},
         "vendorSeverity":{"shape":"VendorSeverity"},
+        "cvss4":{"shape":"Cvss4"},
         "cvss3":{"shape":"Cvss3"},
         "relatedVulnerabilities":{"shape":"RelatedVulnerabilities"},
         "cvss2":{"shape":"Cvss2"},

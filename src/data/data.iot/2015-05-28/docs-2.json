@@ -2,19 +2,31 @@
   "version": "2.0",
   "service": "<fullname>IoT data</fullname> <p>IoT data enables secure, bi-directional communication between Internet-connected things (such as sensors, actuators, embedded devices, or smart appliances) and the Amazon Web Services cloud. It implements a broker for applications and things to publish messages over HTTP (Publish) and retrieve, update, and delete shadows. A shadow is a persistent representation of your things and their state in the Amazon Web Services cloud.</p> <p>Find the endpoint address for actions in IoT data by running this CLI command:</p> <p> <code>aws iot describe-endpoint --endpoint-type iot:Data-ATS</code> </p> <p>The service name used by <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Amazon Web ServicesSignature Version 4</a> to sign requests is: <i>iotdevicegateway</i>.</p>",
   "operations": {
+    "DeleteConnection": "<p>Disconnects a connected MQTT client from Amazon Web Services IoT Core. When you disconnect a client, Amazon Web Services IoT Core closes the client's network connection and optionally cleans the session state.</p>",
     "DeleteThingShadow": "<p>Deletes the shadow for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">DeleteThingShadow</a> action.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/API_DeleteThingShadow.html\">DeleteThingShadow</a> in the IoT Developer Guide.</p>",
-    "GetRetainedMessage": "<p>Gets the details of a single retained message for the specified topic.</p> <p>This action returns the message payload of the retained message, which can incur messaging costs. To list only the topic names of the retained messages, call <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_iotdata_ListRetainedMessages.html\">ListRetainedMessages</a>.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiotfleethubfordevicemanagement.html#awsiotfleethubfordevicemanagement-actions-as-permissions\">GetRetainedMessage</a> action.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
+    "GetRetainedMessage": "<p>Gets the details of a single retained message for the specified topic.</p> <p>This action returns the message payload of the retained message, which can incur messaging costs. To list only the topic names of the retained messages, call <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_iotdata_ListRetainedMessages.html\">ListRetainedMessages</a>.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html\">GetRetainedMessage</a> action.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
     "GetThingShadow": "<p>Gets the shadow for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">GetThingShadow</a> action.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/API_GetThingShadow.html\">GetThingShadow</a> in the IoT Developer Guide.</p>",
     "ListNamedShadowsForThing": "<p>Lists the shadows for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">ListNamedShadowsForThing</a> action.</p>",
-    "ListRetainedMessages": "<p>Lists summary information about the retained messages stored for the account.</p> <p>This action returns only the topic names of the retained messages. It doesn't return any message payloads. Although this action doesn't return a message payload, it can still incur messaging costs.</p> <p>To get the message payload of a retained message, call <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_iotdata_GetRetainedMessage.html\">GetRetainedMessage</a> with the topic name of the retained message.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiotfleethubfordevicemanagement.html#awsiotfleethubfordevicemanagement-actions-as-permissions\">ListRetainedMessages</a> action.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
+    "ListRetainedMessages": "<p>Lists summary information about the retained messages stored for the account.</p> <p>This action returns only the topic names of the retained messages. It doesn't return any message payloads. Although this action doesn't return a message payload, it can still incur messaging costs.</p> <p>To get the message payload of a retained message, call <a href=\"https://docs.aws.amazon.com/iot/latest/apireference/API_iotdata_GetRetainedMessage.html\">GetRetainedMessage</a> with the topic name of the retained message.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html\">ListRetainedMessages</a> action.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
     "Publish": "<p>Publishes an MQTT message.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">Publish</a> action.</p> <p>For more information about MQTT messages, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/mqtt.html\">MQTT Protocol</a> in the IoT Developer Guide.</p> <p>For more information about messaging costs, see <a href=\"http://aws.amazon.com/iot-core/pricing/#Messaging\">Amazon Web Services IoT Core pricing - Messaging</a>.</p>",
     "UpdateThingShadow": "<p>Updates the shadow for the specified thing.</p> <p>Requires permission to access the <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions\">UpdateThingShadow</a> action.</p> <p>For more information, see <a href=\"http://docs.aws.amazon.com/iot/latest/developerguide/API_UpdateThingShadow.html\">UpdateThingShadow</a> in the IoT Developer Guide.</p>"
   },
   "shapes": {
+    "CleanSession": {
+      "base": null,
+      "refs": {
+        "DeleteConnectionRequest$cleanSession": "<p>Specifies whether to remove the client's session state when disconnecting. Set to <code>TRUE</code> to delete all session information, including subscriptions and queued messages. Set to <code>FALSE</code> to preserve the session state. By default, this is set to <code>FALSE</code> (preserves the session state).</p>"
+      }
+    },
+    "ClientId": {
+      "base": null,
+      "refs": {
+        "DeleteConnectionRequest$clientId": "<p>The unique identifier of the MQTT client to disconnect. The client ID can't start with a dollar sign ($).</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>The specified version does not match the version of the document.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContentType": {
       "base": null,
@@ -28,45 +40,45 @@
         "PublishRequest$correlationData": "<p>The base64-encoded binary data used by the sender of the request message to identify which request the response message is for when it's received. <code>correlationData</code> is an HTTP header value in the API.</p>"
       }
     },
+    "DeleteConnectionRequest": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteThingShadowRequest": {
       "base": "<p>The input for the DeleteThingShadow operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThingShadowResponse": {
       "base": "<p>The output from the DeleteThingShadow operation.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ForbiddenException": {
+      "base": "<p>The caller isn't authorized to make the request.</p>",
+      "refs": {}
     },
     "GetRetainedMessageRequest": {
       "base": "<p>The input for the GetRetainedMessage operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRetainedMessageResponse": {
       "base": "<p>The output from the GetRetainedMessage operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetThingShadowRequest": {
       "base": "<p>The input for the GetThingShadow operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetThingShadowResponse": {
       "base": "<p>The output from the GetThingShadow operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalFailureException": {
       "base": "<p>An unexpected error has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>The request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JsonDocument": {
       "base": null,
@@ -79,23 +91,19 @@
     },
     "ListNamedShadowsForThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNamedShadowsForThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRetainedMessagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRetainedMessagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -111,8 +119,7 @@
     },
     "MethodNotAllowedException": {
       "base": "<p>The specified combination of HTTP verb and URI is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NamedShadowList": {
       "base": null,
@@ -154,10 +161,15 @@
         "RetainedMessageSummary$payloadSize": "<p>The size of the retained message's payload in bytes.</p>"
       }
     },
+    "PreventWillMessage": {
+      "base": null,
+      "refs": {
+        "DeleteConnectionRequest$preventWillMessage": "<p>Controls if Amazon Web Services IoT Core publishes the client's Last Will and Testament (LWT) message upon disconnection. Set to <code>TRUE</code> to prevent publishing the LWT message. Set to <code>FALSE</code> to allow publishing. By default, this is set to <code>FALSE</code> (allows publishing the LWT message).</p>"
+      }
+    },
     "PublishRequest": {
       "base": "<p>The input for the Publish operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Qos": {
       "base": null,
@@ -169,13 +181,11 @@
     },
     "RequestEntityTooLargeException": {
       "base": "<p>The payload exceeds the maximum size allowed.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResponseTopic": {
       "base": null,
@@ -203,8 +213,7 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is temporarily unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ShadowName": {
       "base": null,
@@ -226,8 +235,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The rate exceeds the limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -248,23 +256,19 @@
     },
     "UnauthorizedException": {
       "base": "<p>You are not authorized to perform this operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedDocumentEncodingException": {
       "base": "<p>The document encoding is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingShadowRequest": {
       "base": "<p>The input for the UpdateThingShadow operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThingShadowResponse": {
       "base": "<p>The output from the UpdateThingShadow operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UserProperties": {
       "base": null,
@@ -282,6 +286,7 @@
       "base": null,
       "refs": {
         "ConflictException$message": "<p>The message for the exception.</p>",
+        "ForbiddenException$message": null,
         "InternalFailureException$message": "<p>The message for the exception.</p>",
         "InvalidRequestException$message": "<p>The message for the exception.</p>",
         "MethodNotAllowedException$message": "<p>The message for the exception.</p>",

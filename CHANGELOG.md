@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\TranscribeService` - Update documentation to use key ARN only in OutputEncryptionKMSKeyId request parameter
+* `Aws\WorkspacesInstances` - Removed incorrect endpoint tests
+* `Aws\PartnerCentralSelling` - Removed incorrect endpoint tests
+* `Aws\Inspector2` - Add CVSSV4 to Vulnerability Search API and update enable/disable account id list length to 5
+* `Aws\SecurityIR` - Removed incorrect endpoint tests
+* `Aws\MPA` - Removed incorrect endpoint tests
+* `Aws\BackupSearch` - Removed incorrect endpoint tests
+* `Aws\Notifications` - Removed incorrect endpoint tests
+* `Aws\BCMPricingCalculator` - Removed incorrect endpoint tests
+* `Aws\DSQL` - Removed incorrect endpoint tests
+* `Aws\GameLiftStreams` - Removed incorrect endpoint tests
+* `Aws\Billing` - Removed incorrect endpoint tests
+* `Aws\Connect` - This release adds a new API GetContactMetrics for Amazon Connect.
+* `Aws\KeyspacesStreams` - Removed incorrect endpoint tests
+* `Aws\NotificationsContacts` - Removed incorrect endpoint tests
+* `Aws\Invoicing` - Removed incorrect endpoint tests
+* `Aws\NetworkFlowMonitor` - Removed incorrect endpoint tests
+* `Aws\ApplicationSignals` - Removed incorrect endpoint tests
+* `Aws\SageMaker` - Adds support for GB200 UltraServers in Amazon SageMaker training jobs, training plans, and HyperPod clusters
+* `Aws\IoTManagedIntegrations` - Removed incorrect endpoint tests
+* `Aws\S3Vectors` - Removed incorrect endpoint tests
+* `Aws\IoTDataPlane` - Adding DeleteConnection API to IoT Data Plane
+
 ## 3.352.4 - 2025-08-07
 
 * `Aws\GameLiftStreams` - Adds Proton 9.0-2 to the list of runtime environment options available when creating an Amazon GameLift Streams application

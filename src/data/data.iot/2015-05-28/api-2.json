@@ -13,6 +13,21 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "DeleteConnection":{
+      "name":"DeleteConnection",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/connections/{clientId}"
+      },
+      "input":{"shape":"DeleteConnectionRequest"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DeleteThingShadow":{
       "name":"DeleteThingShadow",
       "http":{
@@ -141,6 +156,13 @@
     }
   },
   "shapes":{
+    "CleanSession":{"type":"boolean"},
+    "ClientId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^[^$].*"
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -151,6 +173,27 @@
     },
     "ContentType":{"type":"string"},
     "CorrelationData":{"type":"string"},
+    "DeleteConnectionRequest":{
+      "type":"structure",
+      "required":["clientId"],
+      "members":{
+        "clientId":{
+          "shape":"ClientId",
+          "location":"uri",
+          "locationName":"clientId"
+        },
+        "cleanSession":{
+          "shape":"CleanSession",
+          "location":"querystring",
+          "locationName":"cleanSession"
+        },
+        "preventWillMessage":{
+          "shape":"PreventWillMessage",
+          "location":"querystring",
+          "locationName":"preventWillMessage"
+        }
+      }
+    },
     "DeleteThingShadowRequest":{
       "type":"structure",
       "required":["thingName"],
@@ -174,6 +217,14 @@
         "payload":{"shape":"JsonDocument"}
       },
       "payload":"payload"
+    },
+    "ForbiddenException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
     },
     "GetRetainedMessageRequest":{
       "type":"structure",
@@ -321,6 +372,7 @@
       ]
     },
     "PayloadSize":{"type":"long"},
+    "PreventWillMessage":{"type":"boolean"},
     "PublishRequest":{
       "type":"structure",
       "required":["topic"],

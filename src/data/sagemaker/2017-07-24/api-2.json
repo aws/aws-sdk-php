@@ -2183,6 +2183,18 @@
       "input":{"shape":"DescribeProjectInput"},
       "output":{"shape":"DescribeProjectOutput"}
     },
+    "DescribeReservedCapacity":{
+      "name":"DescribeReservedCapacity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeReservedCapacityRequest"},
+      "output":{"shape":"DescribeReservedCapacityResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "DescribeSpace":{
       "name":"DescribeSpace",
       "http":{
@@ -3211,6 +3223,18 @@
       },
       "input":{"shape":"ListTrialsRequest"},
       "output":{"shape":"ListTrialsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "ListUltraServersByReservedCapacity":{
+      "name":"ListUltraServersByReservedCapacity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListUltraServersByReservedCapacityRequest"},
+      "output":{"shape":"ListUltraServersByReservedCapacityResponse"},
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
@@ -5722,6 +5746,11 @@
       "box":true,
       "min":0
     },
+    "AvailableSpareInstanceCount":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
     "AwsManagedHumanLoopRequestSource":{
       "type":"string",
       "enum":[
@@ -7116,7 +7145,8 @@
         "PrivateDnsHostname":{"shape":"ClusterPrivateDnsHostname"},
         "Placement":{"shape":"ClusterInstancePlacement"},
         "CurrentImageId":{"shape":"ImageId"},
-        "DesiredImageId":{"shape":"ImageId"}
+        "DesiredImageId":{"shape":"ImageId"},
+        "UltraServerInfo":{"shape":"UltraServerInfo"}
       }
     },
     "ClusterNodeId":{
@@ -7174,7 +7204,8 @@
         "InstanceType":{"shape":"ClusterInstanceType"},
         "LaunchTime":{"shape":"Timestamp"},
         "LastSoftwareUpdateTime":{"shape":"Timestamp"},
-        "InstanceStatus":{"shape":"ClusterInstanceStatusDetails"}
+        "InstanceStatus":{"shape":"ClusterInstanceStatusDetails"},
+        "UltraServerInfo":{"shape":"UltraServerInfo"}
       }
     },
     "ClusterNonNegativeInstanceCount":{
@@ -7681,6 +7712,11 @@
       "max":256,
       "min":0,
       "pattern":".*"
+    },
+    "ConfiguredSpareInstanceCount":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "ConflictException":{
       "type":"structure",
@@ -9367,6 +9403,7 @@
       "members":{
         "TrainingPlanName":{"shape":"TrainingPlanName"},
         "TrainingPlanOfferingId":{"shape":"TrainingPlanOfferingId"},
+        "SpareInstanceCountPerUltraServer":{"shape":"SpareInstanceCountPerUltraServer"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -12370,6 +12407,36 @@
         "LastModifiedBy":{"shape":"UserContext"}
       }
     },
+    "DescribeReservedCapacityRequest":{
+      "type":"structure",
+      "required":["ReservedCapacityArn"],
+      "members":{
+        "ReservedCapacityArn":{"shape":"ReservedCapacityArn"}
+      }
+    },
+    "DescribeReservedCapacityResponse":{
+      "type":"structure",
+      "required":[
+        "ReservedCapacityArn",
+        "InstanceType",
+        "TotalInstanceCount"
+      ],
+      "members":{
+        "ReservedCapacityArn":{"shape":"ReservedCapacityArn"},
+        "ReservedCapacityType":{"shape":"ReservedCapacityType"},
+        "Status":{"shape":"ReservedCapacityStatus"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "DurationHours":{"shape":"ReservedCapacityDurationHours"},
+        "DurationMinutes":{"shape":"ReservedCapacityDurationMinutes"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "InstanceType":{"shape":"ReservedCapacityInstanceType"},
+        "TotalInstanceCount":{"shape":"TotalInstanceCount"},
+        "AvailableInstanceCount":{"shape":"AvailableInstanceCount"},
+        "InUseInstanceCount":{"shape":"InUseInstanceCount"},
+        "UltraServerSummary":{"shape":"UltraServerSummary"}
+      }
+    },
     "DescribeSpaceRequest":{
       "type":"structure",
       "required":[
@@ -12534,6 +12601,9 @@
         "TotalInstanceCount":{"shape":"TotalInstanceCount"},
         "AvailableInstanceCount":{"shape":"AvailableInstanceCount"},
         "InUseInstanceCount":{"shape":"InUseInstanceCount"},
+        "UnhealthyInstanceCount":{"shape":"UnhealthyInstanceCount"},
+        "AvailableSpareInstanceCount":{"shape":"AvailableSpareInstanceCount"},
+        "TotalUltraServerCount":{"shape":"UltraServerCount"},
         "TargetResources":{"shape":"SageMakerResourceNames"},
         "ReservedCapacitySummaries":{"shape":"ReservedCapacitySummaries"}
       }
@@ -16315,6 +16385,16 @@
         "MinimumInstanceMetadataServiceVersion":{"shape":"MinimumInstanceMetadataServiceVersion"}
       }
     },
+    "InstancePlacementConfig":{
+      "type":"structure",
+      "members":{
+        "EnableMultipleJobs":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "PlacementSpecifications":{"shape":"PlacementSpecifications"}
+      }
+    },
     "InstanceType":{
       "type":"string",
       "enum":[
@@ -18761,6 +18841,23 @@
       "members":{
         "TrialSummaries":{"shape":"TrialSummaries"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListUltraServersByReservedCapacityRequest":{
+      "type":"structure",
+      "required":["ReservedCapacityArn"],
+      "members":{
+        "ReservedCapacityArn":{"shape":"ReservedCapacityArn"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListUltraServersByReservedCapacityResponse":{
+      "type":"structure",
+      "required":["UltraServers"],
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "UltraServers":{"shape":"UltraServers"}
       }
     },
     "ListUserProfilesRequest":{
@@ -21863,6 +21960,23 @@
       "max":100,
       "min":0
     },
+    "PlacementSpecification":{
+      "type":"structure",
+      "required":["InstanceCount"],
+      "members":{
+        "UltraServerId":{"shape":"String256"},
+        "InstanceCount":{
+          "shape":"TrainingInstanceCount",
+          "box":true
+        }
+      }
+    },
+    "PlacementSpecifications":{
+      "type":"list",
+      "member":{"shape":"PlacementSpecification"},
+      "max":10,
+      "min":0
+    },
     "PlatformIdentifier":{
       "type":"string",
       "max":15,
@@ -23679,7 +23793,8 @@
         "ml.trn1.32xlarge",
         "ml.trn2.48xlarge",
         "ml.p6-b200.48xlarge",
-        "ml.p4de.24xlarge"
+        "ml.p4de.24xlarge",
+        "ml.p6e-gb200.36xlarge"
       ]
     },
     "ReservedCapacityOffering":{
@@ -23689,6 +23804,9 @@
         "InstanceCount"
       ],
       "members":{
+        "ReservedCapacityType":{"shape":"ReservedCapacityType"},
+        "UltraServerType":{"shape":"UltraServerType"},
+        "UltraServerCount":{"shape":"UltraServerCount"},
         "InstanceType":{"shape":"ReservedCapacityInstanceType"},
         "InstanceCount":{
           "shape":"ReservedCapacityInstanceCount",
@@ -23733,6 +23851,9 @@
       ],
       "members":{
         "ReservedCapacityArn":{"shape":"ReservedCapacityArn"},
+        "ReservedCapacityType":{"shape":"ReservedCapacityType"},
+        "UltraServerType":{"shape":"UltraServerType"},
+        "UltraServerCount":{"shape":"UltraServerCount"},
         "InstanceType":{"shape":"ReservedCapacityInstanceType"},
         "TotalInstanceCount":{"shape":"TotalInstanceCount"},
         "Status":{"shape":"ReservedCapacityStatus"},
@@ -23742,6 +23863,13 @@
         "StartTime":{"shape":"Timestamp"},
         "EndTime":{"shape":"Timestamp"}
       }
+    },
+    "ReservedCapacityType":{
+      "type":"string",
+      "enum":[
+        "UltraServer",
+        "Instance"
+      ]
     },
     "ResolvedAttributes":{
       "type":"structure",
@@ -23819,7 +23947,8 @@
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "KeepAlivePeriodInSeconds":{"shape":"KeepAlivePeriodInSeconds"},
         "InstanceGroups":{"shape":"InstanceGroups"},
-        "TrainingPlanArn":{"shape":"TrainingPlanArn"}
+        "TrainingPlanArn":{"shape":"TrainingPlanArn"},
+        "InstancePlacementConfig":{"shape":"InstancePlacementConfig"}
       }
     },
     "ResourceConfigForUpdate":{
@@ -24397,6 +24526,8 @@
           "shape":"ReservedCapacityInstanceCount",
           "box":true
         },
+        "UltraServerType":{"shape":"UltraServerType"},
+        "UltraServerCount":{"shape":"UltraServerCount"},
         "StartTimeAfter":{"shape":"Timestamp"},
         "EndTimeBefore":{"shape":"Timestamp"},
         "DurationHours":{"shape":"TrainingPlanDurationHoursInput"},
@@ -24954,6 +25085,11 @@
       "members":{
         "EbsStorageSettings":{"shape":"EbsStorageSettings"}
       }
+    },
+    "SpareInstanceCountPerUltraServer":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "SpawnRate":{
       "type":"integer",
@@ -26213,7 +26349,8 @@
         "ml.r7i.12xlarge",
         "ml.r7i.16xlarge",
         "ml.r7i.24xlarge",
-        "ml.r7i.48xlarge"
+        "ml.r7i.48xlarge",
+        "ml.p6e-gb200.36xlarge"
       ]
     },
     "TrainingInstanceTypes":{
@@ -26526,6 +26663,7 @@
         "TotalInstanceCount":{"shape":"TotalInstanceCount"},
         "AvailableInstanceCount":{"shape":"AvailableInstanceCount"},
         "InUseInstanceCount":{"shape":"InUseInstanceCount"},
+        "TotalUltraServerCount":{"shape":"UltraServerCount"},
         "TargetResources":{"shape":"SageMakerResourceNames"},
         "ReservedCapacitySummaries":{"shape":"ReservedCapacitySummaries"}
       }
@@ -27185,6 +27323,79 @@
       "box":true,
       "max":4000000,
       "min":10000
+    },
+    "UltraServer":{
+      "type":"structure",
+      "required":[
+        "UltraServerId",
+        "UltraServerType",
+        "AvailabilityZone",
+        "InstanceType",
+        "TotalInstanceCount"
+      ],
+      "members":{
+        "UltraServerId":{"shape":"NonEmptyString256"},
+        "UltraServerType":{"shape":"UltraServerType"},
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "InstanceType":{"shape":"ReservedCapacityInstanceType"},
+        "TotalInstanceCount":{"shape":"TotalInstanceCount"},
+        "ConfiguredSpareInstanceCount":{"shape":"ConfiguredSpareInstanceCount"},
+        "AvailableInstanceCount":{"shape":"AvailableInstanceCount"},
+        "InUseInstanceCount":{"shape":"InUseInstanceCount"},
+        "AvailableSpareInstanceCount":{"shape":"AvailableSpareInstanceCount"},
+        "UnhealthyInstanceCount":{"shape":"UnhealthyInstanceCount"},
+        "HealthStatus":{"shape":"UltraServerHealthStatus"}
+      }
+    },
+    "UltraServerCount":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "UltraServerHealthStatus":{
+      "type":"string",
+      "enum":[
+        "OK",
+        "Impaired",
+        "Insufficient-Data"
+      ]
+    },
+    "UltraServerInfo":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"String"}
+      }
+    },
+    "UltraServerSummary":{
+      "type":"structure",
+      "required":[
+        "UltraServerType",
+        "InstanceType"
+      ],
+      "members":{
+        "UltraServerType":{"shape":"UltraServerType"},
+        "InstanceType":{"shape":"ReservedCapacityInstanceType"},
+        "UltraServerCount":{"shape":"UltraServerCount"},
+        "AvailableSpareInstanceCount":{"shape":"AvailableSpareInstanceCount"},
+        "UnhealthyInstanceCount":{"shape":"UnhealthyInstanceCount"}
+      }
+    },
+    "UltraServerType":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"ml.[a-z0-9\\-.]+"
+    },
+    "UltraServers":{
+      "type":"list",
+      "member":{"shape":"UltraServer"},
+      "max":100,
+      "min":0
+    },
+    "UnhealthyInstanceCount":{
+      "type":"integer",
+      "box":true,
+      "min":0
     },
     "UnifiedStudioDomainId":{
       "type":"string",

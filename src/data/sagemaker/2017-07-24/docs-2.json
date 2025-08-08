@@ -5,7 +5,7 @@
     "AddAssociation": "<p>Creates an <i>association</i> between the source and the destination. A source can be associated with multiple destinations, and a destination can be associated with multiple sources. An association is a lineage tracking entity. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
     "AddTags": "<p>Adds or overwrites one or more tags for the specified SageMaker resource. You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints.</p> <p>Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see For more information, see <a href=\"https://aws.amazon.com/answers/account-management/aws-tagging-strategies/\">Amazon Web Services Tagging Strategies</a>.</p> <note> <p>Tags that you add to a hyperparameter tuning job by calling this API are also added to any training jobs that the hyperparameter tuning job launches after you call this API, but not to training jobs that the hyperparameter tuning job launched before you called this API. To make sure that the tags associated with a hyperparameter tuning job are also added to all training jobs that the hyperparameter tuning job launches, add the tags when you first create the tuning job by specifying them in the <code>Tags</code> parameter of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateHyperParameterTuningJob.html\">CreateHyperParameterTuningJob</a> </p> </note> <note> <p>Tags that you add to a SageMaker Domain or User Profile by calling this API are also added to any Apps that the Domain or User Profile launches after you call this API, but not to Apps that the Domain or User Profile launched before you called this API. To make sure that the tags associated with a Domain or User Profile are also added to all Apps that the Domain or User Profile launches, add the tags when you first create the Domain or User Profile by specifying them in the <code>Tags</code> parameter of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> or <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateUserProfile.html\">CreateUserProfile</a>.</p> </note>",
     "AssociateTrialComponent": "<p>Associates a trial component with a trial. A trial component can be associated with multiple trials. To disassociate a trial component from a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_DisassociateTrialComponent.html\">DisassociateTrialComponent</a> API.</p>",
-    "AttachClusterNodeVolume": "<p> Attaches your Amazon Elastic Block Store (Amazon EBS) volume to a node in your EKS-orchestrated HyperPod cluster. </p> <p> This API works with the Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver to manage the lifecycle of persistent storage in your HyperPod EKS clusters. </p>",
+    "AttachClusterNodeVolume": "<p> Attaches your Amazon Elastic Block Store (Amazon EBS) volume to a node in your EKS orchestrated HyperPod cluster. </p> <p> This API works with the Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver to manage the lifecycle of persistent storage in your HyperPod EKS clusters. </p>",
     "BatchAddClusterNodes": "<p>Adds nodes to a HyperPod cluster by incrementing the target count for one or more instance groups. This operation returns a unique <code>NodeLogicalId</code> for each node being added, which can be used to track the provisioning status of the node. This API provides a safer alternative to <code>UpdateCluster</code> for scaling operations by avoiding unintended configuration changes.</p> <note> <p>This API is only supported for clusters using <code>Continuous</code> as the <code>NodeProvisioningMode</code>.</p> </note>",
     "BatchDeleteClusterNodes": "<p>Deletes specific nodes within a SageMaker HyperPod cluster. <code>BatchDeleteClusterNodes</code> accepts a cluster name and a list of node IDs.</p> <important> <ul> <li> <p>To safeguard your work, back up your data to Amazon S3 or an FSx for Lustre file system before invoking the API on a worker node group. This will help prevent any potential data loss from the instance root volume. For more information about backup, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate-cli-command.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software-backup\">Use the backup script provided by SageMaker HyperPod</a>. </p> </li> <li> <p>If you want to invoke this API on an existing cluster, you'll first need to patch the cluster by running the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_UpdateClusterSoftware.html\">UpdateClusterSoftware API</a>. For more information about patching a cluster, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-hyperpod-operate-cli-command.html#sagemaker-hyperpod-operate-cli-command-update-cluster-software\">Update the SageMaker HyperPod platform software of a cluster</a>.</p> </li> </ul> </important>",
     "BatchDescribeModelPackage": "<p>This action batch describes a list of versioned model packages</p>",
@@ -188,6 +188,7 @@
     "DescribePipelineExecution": "<p>Describes the details of a pipeline execution.</p>",
     "DescribeProcessingJob": "<p>Returns a description of a processing job.</p>",
     "DescribeProject": "<p>Describes the details of a project.</p>",
+    "DescribeReservedCapacity": "<p>Retrieves details about a reserved capacity.</p>",
     "DescribeSpace": "<p>Describes the space.</p>",
     "DescribeStudioLifecycleConfig": "<p>Describes the Amazon SageMaker AI Studio Lifecycle Configuration.</p>",
     "DescribeSubscribedWorkteam": "<p>Gets information about a work team provided by a vendor. It returns details about the subscription with a vendor in the Amazon Web Services Marketplace.</p>",
@@ -199,7 +200,7 @@
     "DescribeUserProfile": "<p>Describes a user profile. For more information, see <code>CreateUserProfile</code>.</p>",
     "DescribeWorkforce": "<p>Lists private workforce information, including workforce name, Amazon Resource Name (ARN), and, if applicable, allowed IP address ranges (<a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html\">CIDRs</a>). Allowable IP address ranges are the IP addresses that workers can use to access tasks. </p> <important> <p>This operation applies only to private workforces.</p> </important>",
     "DescribeWorkteam": "<p>Gets information about a specific work team. You can see information such as the creation date, the last updated date, membership information, and the work team's Amazon Resource Name (ARN).</p>",
-    "DetachClusterNodeVolume": "<p> Detaches your Amazon Elastic Block Store (Amazon EBS) volume from a node in your EKS-orchestrated SageMaker HyperPod cluster.</p> <p> This API works with the Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver to manage the lifecycle of persistent storage in your HyperPod EKS clusters. </p>",
+    "DetachClusterNodeVolume": "<p> Detaches your Amazon Elastic Block Store (Amazon EBS) volume from a node in your EKS orchestrated SageMaker HyperPod cluster.</p> <p> This API works with the Amazon Elastic Block Store (Amazon EBS) Container Storage Interface (CSI) driver to manage the lifecycle of persistent storage in your HyperPod EKS clusters. </p>",
     "DisableSagemakerServicecatalogPortfolio": "<p>Disables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
     "DisassociateTrialComponent": "<p>Disassociates a trial component from a trial. This doesn't effect other trials the component is associated with. Before you can delete a component, you must disassociate the component from all trials it is associated with. To associate a trial component with a trial, call the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_AssociateTrialComponent.html\">AssociateTrialComponent</a> API.</p> <p>To get a list of the trials a component is associated with, use the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_Search.html\">Search</a> API. Specify <code>ExperimentTrialComponent</code> for the <code>Resource</code> parameter. The list appears in the response under <code>Results.TrialComponent.Parents</code>.</p>",
     "EnableSagemakerServicecatalogPortfolio": "<p>Enables using Service Catalog in SageMaker. Service Catalog is used to create SageMaker projects.</p>",
@@ -290,6 +291,7 @@
     "ListTransformJobs": "<p>Lists transform jobs.</p>",
     "ListTrialComponents": "<p>Lists the trial components in your account. You can sort the list by trial component name or creation time. You can filter the list to show only components that were created in a specific time range. You can also filter on one of the following:</p> <ul> <li> <p> <code>ExperimentName</code> </p> </li> <li> <p> <code>SourceArn</code> </p> </li> <li> <p> <code>TrialName</code> </p> </li> </ul>",
     "ListTrials": "<p>Lists the trials in your account. Specify an experiment name to limit the list to the trials that are part of that experiment. Specify a trial component name to limit the list to the trials that associated with that trial component. The list can be filtered to show only trials that were created in a specific time range. The list can be sorted by trial name or creation time.</p>",
+    "ListUltraServersByReservedCapacity": "<p>Lists all UltraServers that are part of a specified reserved capacity.</p>",
     "ListUserProfiles": "<p>Lists user profiles.</p>",
     "ListWorkforces": "<p>Use this operation to list all private and vendor workforces in an Amazon Web Services Region. Note that you can only have one private workforce per Amazon Web Services Region.</p>",
     "ListWorkteams": "<p>Gets a list of private work teams that you have defined in a region. The list may be empty if no work team satisfies the filter specified in the <code>NameContains</code> parameter.</p>",
@@ -1541,15 +1543,27 @@
     "AvailabilityZone": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$AvailabilityZone": "<p>The Availability Zone where the reserved capacity is provisioned.</p>",
         "ReservedCapacityOffering$AvailabilityZone": "<p>The availability zone for the reserved capacity offering.</p>",
-        "ReservedCapacitySummary$AvailabilityZone": "<p>The availability zone for the reserved capacity.</p>"
+        "ReservedCapacitySummary$AvailabilityZone": "<p>The availability zone for the reserved capacity.</p>",
+        "UltraServer$AvailabilityZone": "<p>The name of the Availability Zone where the UltraServer is provisioned.</p>"
       }
     },
     "AvailableInstanceCount": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$AvailableInstanceCount": "<p>The number of instances currently available for use in this reserved capacity.</p>",
         "DescribeTrainingPlanResponse$AvailableInstanceCount": "<p>The number of instances currently available for use in this training plan.</p>",
-        "TrainingPlanSummary$AvailableInstanceCount": "<p>The number of instances currently available for use in this training plan.</p>"
+        "TrainingPlanSummary$AvailableInstanceCount": "<p>The number of instances currently available for use in this training plan.</p>",
+        "UltraServer$AvailableInstanceCount": "<p>The number of instances currently available for use in this UltraServer.</p>"
+      }
+    },
+    "AvailableSpareInstanceCount": {
+      "base": null,
+      "refs": {
+        "DescribeTrainingPlanResponse$AvailableSpareInstanceCount": "<p>The number of available spare instances in the training plan.</p>",
+        "UltraServer$AvailableSpareInstanceCount": "<p>The number of available spare instances in the UltraServer.</p>",
+        "UltraServerSummary$AvailableSpareInstanceCount": "<p>The number of available spare instances in the UltraServers.</p>"
       }
     },
     "AwsManagedHumanLoopRequestSource": {
@@ -1763,6 +1777,7 @@
         "HyperParameterTrainingJobDefinition$EnableNetworkIsolation": "<p>Isolates the training container. No inbound or outbound network calls can be made, except for calls between peers within a training cluster for distributed training. If network isolation is used for training jobs that are configured to use a VPC, SageMaker downloads and uploads customer data and model artifacts through the specified VPC, but the training container does not have network access.</p>",
         "HyperParameterTrainingJobDefinition$EnableInterContainerTrafficEncryption": "<p>To encrypt all communications between ML compute instances in distributed training, choose <code>True</code>. Encryption provides greater security for distributed training, but training might take longer. How long it takes depends on the amount of communication between compute instances, especially if you use a deep learning algorithm in distributed training.</p>",
         "HyperParameterTrainingJobDefinition$EnableManagedSpotTraining": "<p>A Boolean indicating whether managed spot training is enabled (<code>True</code>) or not (<code>False</code>).</p>",
+        "InstancePlacementConfig$EnableMultipleJobs": "<p>If set to true, allows multiple jobs to share the same UltraServer instances. If set to false, ensures this job's instances are placed on an UltraServer exclusively, with no other jobs sharing the same UltraServer. Default is false.</p>",
         "ListStageDevicesRequest$ExcludeDevicesDeployedInOtherStage": "<p>Toggle for excluding devices deployed in other stages.</p>",
         "Model$EnableNetworkIsolation": "<p>Isolates the model container. No inbound or outbound network calls can be made to or from the model container.</p>",
         "ModelDashboardIndicatorAction$Enabled": "<p>Indicates whether the alert action is turned on.</p>",
@@ -2406,8 +2421,8 @@
       "refs": {
         "AttachClusterNodeVolumeRequest$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster containing the target node. Your cluster must use EKS as the orchestration and be in the <code>InService</code> state. </p>",
         "AttachClusterNodeVolumeResponse$ClusterArn": "<p> The Amazon Resource Name (ARN) of your SageMaker HyperPod cluster where the volume attachment operation was performed. </p>",
-        "ClusterEventDetail$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster associated with the event.</p>",
-        "ClusterEventSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster associated with the event.</p>",
+        "ClusterEventDetail$ClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster associated with the event.</p>",
+        "ClusterEventSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the HyperPod cluster associated with the event.</p>",
         "ClusterSchedulerConfigSummary$ClusterArn": "<p>ARN of the cluster.</p>",
         "ClusterSummary$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster.</p>",
         "ComputeQuotaSummary$ClusterArn": "<p>ARN of the cluster.</p>",
@@ -2465,8 +2480,8 @@
     "ClusterEventResourceType": {
       "base": null,
       "refs": {
-        "ClusterEventDetail$ResourceType": "<p>The type of resource associated with the event. Valid values are \"Cluster\", \"InstanceGroup\", or \"Instance\".</p>",
-        "ClusterEventSummary$ResourceType": "<p>The type of resource associated with the event. Valid values are \"Cluster\", \"InstanceGroup\", or \"Instance\".</p>",
+        "ClusterEventDetail$ResourceType": "<p>The type of resource associated with the event. Valid values are <code>Cluster</code>, <code>InstanceGroup</code>, or <code>Instance</code>.</p>",
+        "ClusterEventSummary$ResourceType": "<p>The type of resource associated with the event. Valid values are <code>Cluster</code>, <code>InstanceGroup</code>, or <code>Instance</code>.</p>",
         "ListClusterEventsRequest$ResourceType": "<p>The type of resource for which to filter events. Valid values are <code>Cluster</code>, <code>InstanceGroup</code>, or <code>Instance</code>.</p>"
       }
     },
@@ -2477,7 +2492,7 @@
       }
     },
     "ClusterEventSummary": {
-      "base": "<p>A summary of an event in a SageMaker HyperPod cluster.</p>",
+      "base": "<p>A summary of an event in a HyperPod cluster.</p>",
       "refs": {
         "ClusterEventSummaries$member": null
       }
@@ -2604,7 +2619,7 @@
       }
     },
     "ClusterMetadata": {
-      "base": "<p>Metadata information about a SageMaker HyperPod cluster showing information about the cluster level operations, such as creating, updating, and deleting.</p>",
+      "base": "<p>Metadata information about a HyperPod cluster showing information about the cluster level operations, such as creating, updating, and deleting.</p>",
       "refs": {
         "EventMetadata$Cluster": "<p>Metadata specific to cluster-level events.</p>"
       }
@@ -2612,8 +2627,8 @@
     "ClusterName": {
       "base": null,
       "refs": {
-        "ClusterEventDetail$ClusterName": "<p>The name of the SageMaker HyperPod cluster associated with the event.</p>",
-        "ClusterEventSummary$ClusterName": "<p>The name of the SageMaker HyperPod cluster associated with the event.</p>",
+        "ClusterEventDetail$ClusterName": "<p>The name of the HyperPod cluster associated with the event.</p>",
+        "ClusterEventSummary$ClusterName": "<p>The name of the HyperPod cluster associated with the event.</p>",
         "ClusterSummary$ClusterName": "<p>The name of the SageMaker HyperPod cluster.</p>",
         "CreateClusterRequest$ClusterName": "<p>The name for the new SageMaker HyperPod cluster.</p>",
         "DescribeClusterResponse$ClusterName": "<p>The name of the SageMaker HyperPod cluster.</p>"
@@ -2715,7 +2730,7 @@
     "ClusterOrchestrator": {
       "base": "<p>The type of orchestrator used for the SageMaker HyperPod cluster.</p>",
       "refs": {
-        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service (EKS) cluster as the orchestrator.</p>",
+        "CreateClusterRequest$Orchestrator": "<p>The type of orchestrator to use for the SageMaker HyperPod cluster. Currently, the only supported value is <code>\"eks\"</code>, which is to use an Amazon Elastic Kubernetes Service cluster as the orchestrator.</p>",
         "DescribeClusterResponse$Orchestrator": "<p>The type of orchestrator used for the SageMaker HyperPod cluster. </p>"
       }
     },
@@ -3142,6 +3157,12 @@
         "HookParameters$value": null,
         "ProfilingParameters$value": null,
         "RuleParameters$value": null
+      }
+    },
+    "ConfiguredSpareInstanceCount": {
+      "base": null,
+      "refs": {
+        "UltraServer$ConfiguredSpareInstanceCount": "<p>The number of spare instances configured for this UltraServer to provide enhanced resiliency.</p>"
       }
     },
     "ConflictException": {
@@ -5071,6 +5092,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeReservedCapacityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeReservedCapacityResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeSpaceRequest": {
       "base": null,
       "refs": {}
@@ -5815,7 +5844,7 @@
     "EksRoleAccessEntries": {
       "base": null,
       "refs": {
-        "ClusterMetadata$EksRoleAccessEntries": "<p>A list of Amazon EKS IAM role ARNs associated with the cluster. This is created by SageMaker HyperPod on your behalf and only applies for EKS-orchestrated clusters.</p>"
+        "ClusterMetadata$EksRoleAccessEntries": "<p>A list of Amazon EKS IAM role ARNs associated with the cluster. This is created by HyperPod on your behalf and only applies for EKS orchestrated clusters.</p>"
       }
     },
     "EmrServerlessComputeConfig": {
@@ -8196,8 +8225,10 @@
     "InUseInstanceCount": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$InUseInstanceCount": "<p>The number of instances currently in use from this reserved capacity.</p>",
         "DescribeTrainingPlanResponse$InUseInstanceCount": "<p>The number of instances currently in use from this training plan.</p>",
-        "TrainingPlanSummary$InUseInstanceCount": "<p>The number of instances currently in use from this training plan.</p>"
+        "TrainingPlanSummary$InUseInstanceCount": "<p>The number of instances currently in use from this training plan.</p>",
+        "UltraServer$InUseInstanceCount": "<p>The number of instances currently in use in this UltraServer.</p>"
       }
     },
     "IncludeNodeLogicalIdsBoolean": {
@@ -8599,7 +8630,7 @@
       }
     },
     "InstanceGroupMetadata": {
-      "base": "<p>Metadata information about an instance group in a SageMaker HyperPod cluster.</p>",
+      "base": "<p>Metadata information about an instance group in a HyperPod cluster.</p>",
       "refs": {
         "EventMetadata$InstanceGroup": "<p>Metadata specific to instance group-level events.</p>"
       }
@@ -8656,6 +8687,12 @@
         "CreateNotebookInstanceInput$InstanceMetadataServiceConfiguration": "<p>Information on the IMDS configuration of the notebook instance</p>",
         "DescribeNotebookInstanceOutput$InstanceMetadataServiceConfiguration": "<p>Information on the IMDS configuration of the notebook instance</p>",
         "UpdateNotebookInstanceInput$InstanceMetadataServiceConfiguration": "<p>Information on the IMDS configuration of the notebook instance</p>"
+      }
+    },
+    "InstancePlacementConfig": {
+      "base": "<p>Configuration for how instances are placed and allocated within UltraServers. This is only applicable for UltraServer capacity.</p>",
+      "refs": {
+        "ResourceConfig$InstancePlacementConfig": "<p>Configuration for how training job instances are placed and allocated within UltraServers. Only applicable for UltraServer capacity.</p>"
       }
     },
     "InstanceType": {
@@ -9981,6 +10018,14 @@
       "base": null,
       "refs": {}
     },
+    "ListUltraServersByReservedCapacityRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListUltraServersByReservedCapacityResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListUserProfilesRequest": {
       "base": null,
       "refs": {}
@@ -10238,6 +10283,7 @@
         "ListTransformJobsRequest$MaxResults": "<p>The maximum number of transform jobs to return in the response. The default value is <code>10</code>.</p>",
         "ListTrialComponentsRequest$MaxResults": "<p>The maximum number of components to return in the response. The default value is 10.</p>",
         "ListTrialsRequest$MaxResults": "<p>The maximum number of trials to return in the response. The default value is 10.</p>",
+        "ListUltraServersByReservedCapacityRequest$MaxResults": "<p>The maximum number of UltraServers to return in the response. The default value is 10.</p>",
         "ListUserProfilesRequest$MaxResults": "<p>This parameter defines the maximum number of results that can be return in a single response. The <code>MaxResults</code> parameter is an upper bound, not a target. If there are more results available than the value specified, a <code>NextToken</code> is provided in the response. The <code>NextToken</code> indicates that the user should get the next set of results by providing this token as a part of a subsequent call. The default value for <code>MaxResults</code> is 10.</p>",
         "ListWorkforcesRequest$MaxResults": "<p>The maximum number of workforces returned in the response.</p>",
         "ListWorkteamsRequest$MaxResults": "<p>The maximum number of work teams to return in each page of the response.</p>",
@@ -11971,6 +12017,8 @@
         "ListTrialComponentsResponse$NextToken": "<p>A token for getting the next set of components, if there are any.</p>",
         "ListTrialsRequest$NextToken": "<p>If the previous call to <code>ListTrials</code> didn't return the full set of trials, the call returns a token for getting the next set of trials.</p>",
         "ListTrialsResponse$NextToken": "<p>A token for getting the next set of trials, if there are any.</p>",
+        "ListUltraServersByReservedCapacityRequest$NextToken": "<p>If the previous response was truncated, you receive this token. Use it in your next request to receive the next set of results.</p>",
+        "ListUltraServersByReservedCapacityResponse$NextToken": "<p>If the response is truncated, SageMaker returns this token. Use it in the next request to retrieve the next set of UltraServers.</p>",
         "ListUserProfilesRequest$NextToken": "<p>If the previous response was truncated, you will receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListUserProfilesResponse$NextToken": "<p>If the previous response was truncated, you will receive this token. Use it in your next request to receive the next set of results.</p>",
         "ListWorkforcesRequest$NextToken": "<p>A token to resume pagination.</p>",
@@ -12013,7 +12061,8 @@
         "ErrorInfo$Reason": "<p>The failure reason for the operation.</p>",
         "OptimizationJobEnvironmentVariables$key": null,
         "PartnerAppAdminUserList$member": null,
-        "PartnerAppArguments$key": null
+        "PartnerAppArguments$key": null,
+        "UltraServer$UltraServerId": "<p>The unique identifier for the UltraServer.</p>"
       }
     },
     "NonEmptyString64": {
@@ -13096,6 +13145,18 @@
       "base": null,
       "refs": {
         "ListPipelineVersionsResponse$PipelineVersionSummaries": "<p>Contains a sorted list of pipeline version summary objects matching the specified filters. Each version summary includes the pipeline version ID, the creation date, and the last pipeline execution created from that version. This list can be empty.</p>"
+      }
+    },
+    "PlacementSpecification": {
+      "base": "<p>Specifies how instances should be placed on a specific UltraServer.</p>",
+      "refs": {
+        "PlacementSpecifications$member": null
+      }
+    },
+    "PlacementSpecifications": {
+      "base": null,
+      "refs": {
+        "InstancePlacementConfig$PlacementSpecifications": "<p>A list of specifications for how instances should be placed on specific UltraServers. Maximum of 10 items is supported.</p>"
       }
     },
     "PlatformIdentifier": {
@@ -14265,12 +14326,16 @@
     "ReservedCapacityArn": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityRequest$ReservedCapacityArn": "<p>ARN of the reserved capacity to describe.</p>",
+        "DescribeReservedCapacityResponse$ReservedCapacityArn": "<p>ARN of the reserved capacity.</p>",
+        "ListUltraServersByReservedCapacityRequest$ReservedCapacityArn": "<p>The ARN of the reserved capacity to list UltraServers for.</p>",
         "ReservedCapacitySummary$ReservedCapacityArn": "<p>The Amazon Resource Name (ARN); of the reserved capacity.</p>"
       }
     },
     "ReservedCapacityDurationHours": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$DurationHours": "<p>The total duration of the reserved capacity in hours.</p>",
         "ReservedCapacityOffering$DurationHours": "<p>The number of whole hours in the total duration for this reserved capacity offering.</p>",
         "ReservedCapacitySummary$DurationHours": "<p>The number of whole hours in the total duration for this reserved capacity.</p>"
       }
@@ -14278,6 +14343,7 @@
     "ReservedCapacityDurationMinutes": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$DurationMinutes": "<p>The number of minutes for the duration of the reserved capacity. For example, if a reserved capacity starts at 08:55 and ends at 11:30, the minutes field would be 35.</p>",
         "ReservedCapacityOffering$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this reserved capacity offering.</p>",
         "ReservedCapacitySummary$DurationMinutes": "<p>The additional minutes beyond whole hours in the total duration for this reserved capacity.</p>"
       }
@@ -14292,9 +14358,12 @@
     "ReservedCapacityInstanceType": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$InstanceType": "<p>The Amazon EC2 instance type used in the reserved capacity.</p>",
         "ReservedCapacityOffering$InstanceType": "<p>The instance type for the reserved capacity offering.</p>",
         "ReservedCapacitySummary$InstanceType": "<p>The instance type for the reserved capacity.</p>",
-        "SearchTrainingPlanOfferingsRequest$InstanceType": "<p>The type of instance you want to search for in the available training plan offerings. This field allows you to filter the search results based on the specific compute resources you require for your SageMaker training jobs or SageMaker HyperPod clusters. When searching for training plan offerings, specifying the instance type helps you find Reserved Instances that match your computational needs.</p>"
+        "SearchTrainingPlanOfferingsRequest$InstanceType": "<p>The type of instance you want to search for in the available training plan offerings. This field allows you to filter the search results based on the specific compute resources you require for your SageMaker training jobs or SageMaker HyperPod clusters. When searching for training plan offerings, specifying the instance type helps you find Reserved Instances that match your computational needs.</p>",
+        "UltraServer$InstanceType": "<p>The Amazon EC2 instance type used in the UltraServer.</p>",
+        "UltraServerSummary$InstanceType": "<p>The Amazon EC2 instance type used in the UltraServer.</p>"
       }
     },
     "ReservedCapacityOffering": {
@@ -14312,6 +14381,7 @@
     "ReservedCapacityStatus": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$Status": "<p>The current status of the reserved capacity.</p>",
         "ReservedCapacitySummary$Status": "<p>The current status of the reserved capacity.</p>"
       }
     },
@@ -14326,6 +14396,14 @@
       "base": "<p>Details of a reserved capacity for the training plan.</p> <p>For more information about how to reserve GPU capacity for your SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see <code> <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateTrainingPlan.html\">CreateTrainingPlan</a> </code>.</p>",
       "refs": {
         "ReservedCapacitySummaries$member": null
+      }
+    },
+    "ReservedCapacityType": {
+      "base": null,
+      "refs": {
+        "DescribeReservedCapacityResponse$ReservedCapacityType": "<p>The type of reserved capacity.</p>",
+        "ReservedCapacityOffering$ReservedCapacityType": "<p>The type of reserved capacity offering.</p>",
+        "ReservedCapacitySummary$ReservedCapacityType": "<p>The type of reserved capacity.</p>"
       }
     },
     "ResolvedAttributes": {
@@ -15569,6 +15647,12 @@
         "SpaceSettingsSummary$SpaceStorageSettings": "<p>The storage settings for a space.</p>"
       }
     },
+    "SpareInstanceCountPerUltraServer": {
+      "base": null,
+      "refs": {
+        "CreateTrainingPlanRequest$SpareInstanceCountPerUltraServer": "<p>Number of spare instances to reserve per UltraServer for enhanced resiliency. Default is 1.</p>"
+      }
+    },
     "SpawnRate": {
       "base": null,
       "refs": {
@@ -15804,11 +15888,11 @@
         "CapacityReservation$Arn": "<p>The Amazon Resource Name (ARN) of the Capacity Reservation.</p>",
         "ClusterEventDetail$InstanceId": "<p>The EC2 instance ID associated with the event, if applicable.</p>",
         "ClusterEventDetail$Description": "<p>A human-readable description of the event.</p>",
-        "ClusterEventSummary$InstanceId": "<p>The EC2 instance ID associated with the event, if applicable.</p>",
+        "ClusterEventSummary$InstanceId": "<p>The Amazon Elastic Compute Cloud (EC2) instance ID associated with the event, if applicable.</p>",
         "ClusterEventSummary$Description": "<p>A brief, human-readable description of the event.</p>",
         "ClusterInstanceStatusDetails$Message": "<p>The message from an instance in a SageMaker HyperPod cluster.</p>",
         "ClusterMetadata$FailureMessage": "<p>An error message describing why the cluster level operation (such as creating, updating, or deleting) failed.</p>",
-        "ClusterMetadata$SlrAccessEntry": "<p>The Service-Linked Role (SLR) associated with the cluster. This is created by SageMaker HyperPod on your behalf and only applies for EKS-orchestrated clusters.</p>",
+        "ClusterMetadata$SlrAccessEntry": "<p>The Service-Linked Role (SLR) associated with the cluster. This is created by HyperPod on your behalf and only applies for EKS orchestrated clusters.</p>",
         "ClusterNodeDetails$InstanceId": "<p>The ID of the instance.</p>",
         "ClusterNodeSummary$InstanceId": "<p>The ID of the instance.</p>",
         "ClusterNodeSummary$NodeLogicalId": "<p>A unique identifier for the node that persists throughout its lifecycle, from provisioning request to termination. This identifier can be used to track the node even before it has an assigned <code>InstanceId</code>. This field is only included when <code>IncludeNodeLogicalIds</code> is set to <code>True</code> in the <code>ListClusterNodes</code> request.</p>",
@@ -15892,6 +15976,7 @@
         "SourceAlgorithm$ModelDataETag": "<p>The ETag associated with Model Data URL.</p>",
         "SubscribedWorkteam$SellerName": "<p>The name of the vendor in the Amazon Marketplace.</p>",
         "SubscribedWorkteam$ListingId": "<p>Marketplace product listing ID.</p>",
+        "UltraServerInfo$Id": "<p>The unique identifier of the UltraServer.</p>",
         "UserContext$UserProfileArn": "<p>The Amazon Resource Name (ARN) of the user's profile.</p>",
         "UserContext$UserProfileName": "<p>The name of the user's profile.</p>",
         "UserContext$DomainId": "<p>The domain associated with the user.</p>",
@@ -15985,6 +16070,7 @@
         "ModelStepMetadata$Arn": "<p>The Amazon Resource Name (ARN) of the created model.</p>",
         "OptimizationJobEnvironmentVariables$value": null,
         "OutputParameter$Name": "<p>The name of the output parameter.</p>",
+        "PlacementSpecification$UltraServerId": "<p>The unique identifier of the UltraServer where instances should be placed.</p>",
         "QualityCheckStepMetadata$CheckType": "<p>The type of the Quality check step.</p>",
         "QualityCheckStepMetadata$ModelPackageGroupName": "<p>The model package group name.</p>",
         "QualityCheckStepMetadata$CheckJobArn": "<p>The Amazon Resource Name (ARN) of the Quality check processing job that was run by this step execution.</p>",
@@ -16696,6 +16782,8 @@
         "DescribeProcessingJobResponse$CreationTime": "<p>The time at which the processing job was created.</p>",
         "DescribeProjectOutput$CreationTime": "<p>The time when the project was created.</p>",
         "DescribeProjectOutput$LastModifiedTime": "<p>The timestamp when project was last modified.</p>",
+        "DescribeReservedCapacityResponse$StartTime": "<p>The timestamp when the reserved capacity becomes active.</p>",
+        "DescribeReservedCapacityResponse$EndTime": "<p>The timestamp when the reserved capacity expires.</p>",
         "DescribeStudioLifecycleConfigResponse$CreationTime": "<p>The creation time of the Amazon SageMaker AI Studio Lifecycle Configuration.</p>",
         "DescribeStudioLifecycleConfigResponse$LastModifiedTime": "<p>This value is equivalent to CreationTime because Amazon SageMaker AI Studio Lifecycle Configurations are immutable.</p>",
         "DescribeTrainingJobResponse$CreationTime": "<p>A timestamp that indicates when the training job was created.</p>",
@@ -17057,9 +17145,11 @@
     "TotalInstanceCount": {
       "base": null,
       "refs": {
+        "DescribeReservedCapacityResponse$TotalInstanceCount": "<p>The total number of instances allocated to this reserved capacity.</p>",
         "DescribeTrainingPlanResponse$TotalInstanceCount": "<p>The total number of instances reserved in this training plan.</p>",
         "ReservedCapacitySummary$TotalInstanceCount": "<p>The total number of instances in the reserved capacity.</p>",
-        "TrainingPlanSummary$TotalInstanceCount": "<p>The total number of instances reserved in this training plan.</p>"
+        "TrainingPlanSummary$TotalInstanceCount": "<p>The total number of instances reserved in this training plan.</p>",
+        "UltraServer$TotalInstanceCount": "<p>The total number of instances in this UltraServer.</p>"
       }
     },
     "TrackingServerArn": {
@@ -17226,6 +17316,7 @@
         "HyperParameterTuningInstanceConfig$InstanceCount": "<p>The number of instances of the type specified by <code>InstanceType</code>. Choose an instance count larger than 1 for distributed training algorithms. See <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/data-parallel-use-api.html\">Step 2: Launch a SageMaker Distributed Training Job Using the SageMaker Python SDK</a> for more information.</p>",
         "HyperParameterTuningResourceConfig$InstanceCount": "<p>The number of compute instances of type <code>InstanceType</code> to use. For <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/data-parallel-use-api.html\">distributed training</a>, select a value greater than 1.</p>",
         "InstanceGroup$InstanceCount": "<p>Specifies the number of instances of the instance group.</p>",
+        "PlacementSpecification$InstanceCount": "<p>The number of ML compute instances required to be placed together on the same UltraServer. Minimum value of 1.</p>",
         "ResourceConfig$InstanceCount": "<p>The number of ML compute instances to use. For distributed training, provide a value greater than 1. </p>"
       }
     },
@@ -17933,6 +18024,66 @@
       "base": null,
       "refs": {
         "CustomPosixUserConfig$Uid": "<p>The POSIX user ID.</p>"
+      }
+    },
+    "UltraServer": {
+      "base": "<p>Represents a high-performance compute server used for distributed training in SageMaker AI. An UltraServer consists of multiple instances within a shared NVLink interconnect domain.</p>",
+      "refs": {
+        "UltraServers$member": null
+      }
+    },
+    "UltraServerCount": {
+      "base": null,
+      "refs": {
+        "DescribeTrainingPlanResponse$TotalUltraServerCount": "<p>The total number of UltraServers reserved to this training plan.</p>",
+        "ReservedCapacityOffering$UltraServerCount": "<p>The number of UltraServers included in this reserved capacity offering.</p>",
+        "ReservedCapacitySummary$UltraServerCount": "<p>The number of UltraServers included in this reserved capacity.</p>",
+        "SearchTrainingPlanOfferingsRequest$UltraServerCount": "<p>The number of UltraServers to search for.</p>",
+        "TrainingPlanSummary$TotalUltraServerCount": "<p>The total number of UltraServers allocated to this training plan.</p>",
+        "UltraServerSummary$UltraServerCount": "<p>The number of UltraServers of this type.</p>"
+      }
+    },
+    "UltraServerHealthStatus": {
+      "base": null,
+      "refs": {
+        "UltraServer$HealthStatus": "<p>The overall health status of the UltraServer.</p>"
+      }
+    },
+    "UltraServerInfo": {
+      "base": "<p>Contains information about the UltraServer object.</p>",
+      "refs": {
+        "ClusterNodeDetails$UltraServerInfo": "<p>Contains information about the UltraServer.</p>",
+        "ClusterNodeSummary$UltraServerInfo": "<p>Contains information about the UltraServer.</p>"
+      }
+    },
+    "UltraServerSummary": {
+      "base": "<p>A summary of UltraServer resources and their current status.</p>",
+      "refs": {
+        "DescribeReservedCapacityResponse$UltraServerSummary": "<p>A summary of the UltraServer associated with this reserved capacity.</p>"
+      }
+    },
+    "UltraServerType": {
+      "base": null,
+      "refs": {
+        "ReservedCapacityOffering$UltraServerType": "<p>The type of UltraServer included in this reserved capacity offering, such as ml.u-p6e-gb200x72.</p>",
+        "ReservedCapacitySummary$UltraServerType": "<p>The type of UltraServer included in this reserved capacity, such as ml.u-p6e-gb200x72.</p>",
+        "SearchTrainingPlanOfferingsRequest$UltraServerType": "<p>The type of UltraServer to search for, such as ml.u-p6e-gb200x72.</p>",
+        "UltraServer$UltraServerType": "<p>The type of UltraServer, such as ml.u-p6e-gb200x72.</p>",
+        "UltraServerSummary$UltraServerType": "<p>The type of UltraServer, such as ml.u-p6e-gb200x72.</p>"
+      }
+    },
+    "UltraServers": {
+      "base": null,
+      "refs": {
+        "ListUltraServersByReservedCapacityResponse$UltraServers": "<p>A list of UltraServers that are part of the specified reserved capacity.</p>"
+      }
+    },
+    "UnhealthyInstanceCount": {
+      "base": null,
+      "refs": {
+        "DescribeTrainingPlanResponse$UnhealthyInstanceCount": "<p>The number of instances in the training plan that are currently in an unhealthy state.</p>",
+        "UltraServer$UnhealthyInstanceCount": "<p>The number of instances in this UltraServer that are currently in an unhealthy state.</p>",
+        "UltraServerSummary$UnhealthyInstanceCount": "<p>The total number of instances across all UltraServers of this type that are currently in an unhealthy state.</p>"
       }
     },
     "UnifiedStudioDomainId": {
