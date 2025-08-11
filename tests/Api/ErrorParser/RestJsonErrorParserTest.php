@@ -228,6 +228,72 @@ class RestJsonErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
+            // Test zero value in header
+            [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "TestHeader: 0\r\n" .
+                "x-amzn-requestid: xyz\r\n\r\n" .
+                '{ "code": "TestException" }',
+                $command,
+                new RestJsonErrorParser($service),
+                [
+                    'code'       => 'TestException',
+                    'type'       => 'client',
+                    'request_id' => 'xyz',
+                    'parsed'     => ['code' => 'TestException'],
+                    'body' => [
+                        'TestHeaderMember'  => '0',  // Zero preserved
+                        'TestHeaders'       => [],   // Empty array
+                        'TestStatus'        => 400,
+                    ],
+                    'message' => null,
+                    'error_shape' => $errorShape
+                ]
+            ],
+            // Test false value in header
+            [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "TestHeader: false\r\n" .
+                "x-amzn-requestid: xyz\r\n\r\n" .
+                '{ "code": "TestException" }',
+                $command,
+                new RestJsonErrorParser($service),
+                [
+                    'code'       => 'TestException',
+                    'type'       => 'client',
+                    'request_id' => 'xyz',
+                    'parsed'     => ['code' => 'TestException'],
+                    'body' => [
+                        'TestHeaderMember'  => 'false',  // False preserved
+                        'TestHeaders'       => [],        // Empty array
+                        'TestStatus'        => 400,
+                    ],
+                    'message' => null,
+                    'error_shape' => $errorShape
+                ]
+            ],
+            // Test empty string in header (should be skipped)
+            [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "TestHeader: \r\n" .
+                "x-amzn-requestid: xyz\r\n\r\n" .
+                '{ "code": "TestException" }',
+                $command,
+                new RestJsonErrorParser($service),
+                [
+                    'code'       => 'TestException',
+                    'type'       => 'client',
+                    'request_id' => 'xyz',
+                    'parsed'     => ['code' => 'TestException'],
+                    'body' => [
+                        // TestHeaderMember should NOT be present
+                        'TestHeaders'       => [],   // Empty array
+                        'TestStatus'        => 400,
+                    ],
+                    'message' => null,
+                    'error_shape' => $errorShape
+                ]
+            ]
         ];
     }
 }

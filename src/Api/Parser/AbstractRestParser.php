@@ -107,7 +107,7 @@ abstract class AbstractRestParser extends AbstractParser
     ) {
         $value = $response->getHeaderLine($shape['locationName'] ?: $name);
         // Empty headers should not be deserialized
-        if (empty($value)) {
+        if ($value === null || $value === '') {
             return;
         }
 
@@ -120,6 +120,7 @@ abstract class AbstractRestParser extends AbstractParser
                 };
                 break;
             case 'long':
+            case 'integer':
                 $value = (int) $value;
                 break;
             case 'boolean':
