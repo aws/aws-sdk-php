@@ -248,7 +248,7 @@ class S3TransferManager
             }
 
             $promises[] = $this->upload(
-                UploadRequest::fromLegacyArgs(
+                new UploadRequest(
                     $file,
                     $putObjectRequestArgs,
                     $config,
