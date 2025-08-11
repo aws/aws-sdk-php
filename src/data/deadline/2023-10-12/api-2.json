@@ -2338,7 +2338,8 @@
     },
     "AssociateMemberToFarmResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "AssociateMemberToFleetRequest":{
       "type":"structure",
@@ -2373,7 +2374,8 @@
     },
     "AssociateMemberToFleetResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "AssociateMemberToJobRequest":{
       "type":"structure",
@@ -2414,7 +2416,8 @@
     },
     "AssociateMemberToJobResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "AssociateMemberToQueueRequest":{
       "type":"structure",
@@ -2449,7 +2452,8 @@
     },
     "AssociateMemberToQueueResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "AssumeFleetRoleForReadRequest":{
       "type":"structure",
@@ -3238,7 +3242,8 @@
     },
     "CreateQueueFleetAssociationResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "CreateQueueLimitAssociationRequest":{
       "type":"structure",
@@ -3259,7 +3264,8 @@
     },
     "CreateQueueLimitAssociationResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "CreateQueueRequest":{
       "type":"structure",
@@ -3462,7 +3468,8 @@
     },
     "DeleteBudgetResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteFarmRequest":{
       "type":"structure",
@@ -3477,7 +3484,8 @@
     },
     "DeleteFarmResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteFleetRequest":{
       "type":"structure",
@@ -3506,7 +3514,8 @@
     },
     "DeleteFleetResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteLicenseEndpointRequest":{
       "type":"structure",
@@ -3521,7 +3530,8 @@
     },
     "DeleteLicenseEndpointResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteLimitRequest":{
       "type":"structure",
@@ -3544,7 +3554,8 @@
     },
     "DeleteLimitResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteMeteredProductRequest":{
       "type":"structure",
@@ -3567,7 +3578,8 @@
     },
     "DeleteMeteredProductResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteMonitorRequest":{
       "type":"structure",
@@ -3582,7 +3594,8 @@
     },
     "DeleteMonitorResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteQueueEnvironmentRequest":{
       "type":"structure",
@@ -3611,7 +3624,8 @@
     },
     "DeleteQueueEnvironmentResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteQueueFleetAssociationRequest":{
       "type":"structure",
@@ -3640,7 +3654,8 @@
     },
     "DeleteQueueFleetAssociationResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteQueueLimitAssociationRequest":{
       "type":"structure",
@@ -3669,7 +3684,8 @@
     },
     "DeleteQueueLimitAssociationResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteQueueRequest":{
       "type":"structure",
@@ -3692,7 +3708,8 @@
     },
     "DeleteQueueResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteStorageProfileRequest":{
       "type":"structure",
@@ -3715,7 +3732,8 @@
     },
     "DeleteStorageProfileResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DeleteWorkerRequest":{
       "type":"structure",
@@ -3744,7 +3762,8 @@
     },
     "DeleteWorkerResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DependenciesList":{
       "type":"list",
@@ -3803,7 +3822,8 @@
     },
     "DisassociateMemberFromFarmResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DisassociateMemberFromFleetRequest":{
       "type":"structure",
@@ -3832,7 +3852,8 @@
     },
     "DisassociateMemberFromFleetResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DisassociateMemberFromJobRequest":{
       "type":"structure",
@@ -3867,7 +3888,8 @@
     },
     "DisassociateMemberFromJobResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DisassociateMemberFromQueueRequest":{
       "type":"structure",
@@ -3896,12 +3918,14 @@
     },
     "DisassociateMemberFromQueueResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "DnsName":{"type":"string"},
     "Document":{
       "type":"structure",
-      "members":{},
+      "members":{
+      },
       "document":true,
       "sensitive":true
     },
@@ -3933,7 +3957,8 @@
       "type":"string",
       "enum":[
         "on-demand",
-        "spot"
+        "spot",
+        "wait-and-save"
       ]
     },
     "EndedAt":{
@@ -4224,7 +4249,8 @@
         "CREATE_IN_PROGRESS",
         "UPDATE_IN_PROGRESS",
         "CREATE_FAILED",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "SUSPENDED"
       ]
     },
     "FleetSummaries":{
@@ -4250,6 +4276,7 @@
         "farmId":{"shape":"FarmId"},
         "displayName":{"shape":"ResourceName"},
         "status":{"shape":"FleetStatus"},
+        "statusMessage":{"shape":"String"},
         "autoScalingStatus":{"shape":"AutoScalingStatus"},
         "targetWorkerCount":{"shape":"Integer"},
         "workerCount":{"shape":"Integer"},
@@ -4393,6 +4420,7 @@
         "displayName":{"shape":"ResourceName"},
         "description":{"shape":"Description"},
         "status":{"shape":"FleetStatus"},
+        "statusMessage":{"shape":"String"},
         "autoScalingStatus":{"shape":"AutoScalingStatus"},
         "targetWorkerCount":{"shape":"Integer"},
         "workerCount":{"shape":"Integer"},
@@ -5496,7 +5524,8 @@
     },
     "JobParameterDefinition":{
       "type":"structure",
-      "members":{},
+      "members":{
+      },
       "document":true
     },
     "JobParameterDefinitions":{
@@ -7141,7 +7170,8 @@
     },
     "PutMeteredProductResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "QueueBlockedReason":{
       "type":"string",
@@ -8315,7 +8345,8 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "Tags":{
       "type":"map",
@@ -8556,7 +8587,8 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateBudgetRequest":{
       "type":"structure",
@@ -8592,7 +8624,8 @@
     },
     "UpdateBudgetResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateFarmRequest":{
       "type":"structure",
@@ -8609,7 +8642,8 @@
     },
     "UpdateFarmResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateFleetRequest":{
       "type":"structure",
@@ -8645,7 +8679,8 @@
     },
     "UpdateFleetResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateJobLifecycleStatus":{
       "type":"string",
@@ -8690,7 +8725,8 @@
     },
     "UpdateJobResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateLimitRequest":{
       "type":"structure",
@@ -8716,7 +8752,8 @@
     },
     "UpdateLimitResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateMonitorRequest":{
       "type":"structure",
@@ -8734,7 +8771,8 @@
     },
     "UpdateMonitorResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateQueueEnvironmentRequest":{
       "type":"structure",
@@ -8772,7 +8810,8 @@
     },
     "UpdateQueueEnvironmentResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateQueueFleetAssociationRequest":{
       "type":"structure",
@@ -8803,7 +8842,8 @@
     },
     "UpdateQueueFleetAssociationResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateQueueFleetAssociationStatus":{
       "type":"string",
@@ -8842,7 +8882,8 @@
     },
     "UpdateQueueLimitAssociationResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateQueueLimitAssociationStatus":{
       "type":"string",
@@ -8889,7 +8930,8 @@
     },
     "UpdateQueueResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateSessionRequest":{
       "type":"structure",
@@ -8932,7 +8974,8 @@
     },
     "UpdateSessionResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateStepRequest":{
       "type":"structure",
@@ -8975,7 +9018,8 @@
     },
     "UpdateStepResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateStorageProfileRequest":{
       "type":"structure",
@@ -9008,7 +9052,8 @@
     },
     "UpdateStorageProfileResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateTaskRequest":{
       "type":"structure",
@@ -9057,7 +9102,8 @@
     },
     "UpdateTaskResponse":{
       "type":"structure",
-      "members":{}
+      "members":{
+      }
     },
     "UpdateWorkerRequest":{
       "type":"structure",

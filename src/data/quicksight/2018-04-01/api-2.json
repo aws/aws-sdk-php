@@ -5827,7 +5827,7 @@
     "CalculatedFields":{
       "type":"list",
       "member":{"shape":"CalculatedField"},
-      "max":500
+      "max":2000
     },
     "CalculatedMeasureField":{
       "type":"structure",
@@ -13980,7 +13980,9 @@
       "members":{
         "FieldWells":{"shape":"HeatMapFieldWells"},
         "SortConfiguration":{"shape":"HeatMapSortConfiguration"},
+        "RowAxisDisplayOptions":{"shape":"AxisDisplayOptions"},
         "RowLabelOptions":{"shape":"ChartAxisLabelOptions"},
+        "ColumnAxisDisplayOptions":{"shape":"AxisDisplayOptions"},
         "ColumnLabelOptions":{"shape":"ChartAxisLabelOptions"},
         "ColorScale":{"shape":"ColorScale"},
         "Legend":{"shape":"LegendOptions"},
@@ -18041,6 +18043,7 @@
         "Title":{"shape":"VisualTitleLabelOptions"},
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"PluginVisualConfiguration"},
+        "Actions":{"shape":"VisualCustomActionList"},
         "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },

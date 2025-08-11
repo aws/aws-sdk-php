@@ -39,6 +39,7 @@
     "GetApplicationAssignmentConfiguration": "<p>Retrieves the configuration of <a>PutApplicationAssignmentConfiguration</a>.</p>",
     "GetApplicationAuthenticationMethod": "<p>Retrieves details about an authentication method used by an application.</p>",
     "GetApplicationGrant": "<p>Retrieves details about an application grant.</p>",
+    "GetApplicationSessionConfiguration": "<p>Retrieves the session configuration for an application in IAM Identity Center.</p> <p>The session configuration determines how users can access an application. This includes whether user background sessions are enabled. User background sessions allow users to start a job on a supported Amazon Web Services managed application without having to remain signed in to an active session while the job runs.</p>",
     "GetInlinePolicyForPermissionSet": "<p>Obtains the inline policy assigned to the permission set.</p>",
     "GetPermissionsBoundaryForPermissionSet": "<p>Obtains the permissions boundary for a specified <a>PermissionSet</a>.</p>",
     "ListAccountAssignmentCreationStatus": "<p>Lists the status of the Amazon Web Services account assignment creation requests for a specified IAM Identity Center instance.</p>",
@@ -66,6 +67,7 @@
     "PutApplicationAssignmentConfiguration": "<p>Configure how users gain access to an application. If <code>AssignmentsRequired</code> is <code>true</code> (default value), users don’t have access to the application unless an assignment is created using the <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_CreateApplicationAssignment.html\">CreateApplicationAssignment API</a>. If <code>false</code>, all users have access to the application. If an assignment is created using <a href=\"https://docs.aws.amazon.com/singlesignon/latest/APIReference/API_CreateApplicationAssignment.html\">CreateApplicationAssignment</a>., the user retains access if <code>AssignmentsRequired</code> is set to <code>true</code>. </p>",
     "PutApplicationAuthenticationMethod": "<p>Adds or updates an authentication method for an application.</p>",
     "PutApplicationGrant": "<p>Creates a configuration for an application to use grants. Conceptually grants are authorization to request actions related to tokens. This configuration will be used when parties are requesting and receiving tokens during the trusted identity propagation process. For more information on the IAM Identity Center supported grant workflows, see <a href=\"https://docs.aws.amazon.com/singlesignon/latest/userguide/customermanagedapps-saml2-oauth2.html\">SAML 2.0 and OAuth 2.0</a>.</p> <p>A grant is created between your applications and Identity Center instance which enables an application to use specified mechanisms to obtain tokens. These tokens are used by your applications to gain access to Amazon Web Services resources on behalf of users. The following elements are within these exchanges:</p> <ul> <li> <p> <b>Requester</b> - The application requesting access to Amazon Web Services resources.</p> </li> <li> <p> <b>Subject</b> - Typically the user that is requesting access to Amazon Web Services resources.</p> </li> <li> <p> <b>Grant</b> - Conceptually, a grant is authorization to access Amazon Web Services resources. These grants authorize token generation for authenticating access to the requester and for the request to make requests on behalf of the subjects. There are four types of grants:</p> <ul> <li> <p> <b>AuthorizationCode</b> - Allows an application to request authorization through a series of user-agent redirects.</p> </li> <li> <p> <b>JWT bearer </b> - Authorizes an application to exchange a JSON Web Token that came from an external identity provider. To learn more, see <a href=\"https://datatracker.ietf.org/doc/html/rfc6749\">RFC 6479</a>.</p> </li> <li> <p> <b>Refresh token</b> - Enables application to request new access tokens to replace expiring or expired access tokens.</p> </li> <li> <p> <b>Exchange token</b> - A grant that requests tokens from the authorization server by providing a ‘subject’ token with access scope authorizing trusted identity propagation to this application. To learn more, see <a href=\"https://datatracker.ietf.org/doc/html/rfc8693\">RFC 8693</a>.</p> </li> </ul> </li> <li> <p> <b>Authorization server</b> - IAM Identity Center requests tokens.</p> </li> </ul> <p>User credentials are never shared directly within these exchanges. Instead, applications use grants to request access tokens from IAM Identity Center. For more information, see <a href=\"https://datatracker.ietf.org/doc/html/rfc6749\">RFC 6479</a>.</p> <p class=\"title\"> <b>Use cases</b> </p> <ul> <li> <p>Connecting to custom applications.</p> </li> <li> <p>Configuring an Amazon Web Services service to make calls to another Amazon Web Services services using JWT tokens.</p> </li> </ul>",
+    "PutApplicationSessionConfiguration": "<p>Updates the session configuration for an application in IAM Identity Center.</p> <p>The session configuration determines how users can access an application. This includes whether user background sessions are enabled. User background sessions allow users to start a job on a supported Amazon Web Services managed application without having to remain signed in to an active session while the job runs.</p>",
     "PutInlinePolicyToPermissionSet": "<p>Attaches an inline policy to a permission set.</p> <note> <p>If the permission set is already referenced by one or more account assignments, you will need to call <code> <a>ProvisionPermissionSet</a> </code> after this action to apply the corresponding IAM policy updates to all assigned accounts.</p> </note>",
     "PutPermissionsBoundaryToPermissionSet": "<p>Attaches an Amazon Web Services managed or customer managed policy to the specified <a>PermissionSet</a> as a permissions boundary.</p>",
     "TagResource": "<p>Associates a set of tags with a specified resource.</p>",
@@ -115,8 +117,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedExceptionMessage": {
       "base": null,
@@ -225,6 +226,7 @@
         "GetApplicationAssignmentConfigurationRequest$ApplicationArn": "<p>Specifies the ARN of the application. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "GetApplicationAuthenticationMethodRequest$ApplicationArn": "<p>Specifies the ARN of the application.</p>",
         "GetApplicationGrantRequest$ApplicationArn": "<p>Specifies the ARN of the application that contains the grant.</p>",
+        "GetApplicationSessionConfigurationRequest$ApplicationArn": "<p>The Amazon Resource Name (ARN) of the application for which to retrieve the session configuration.</p>",
         "ListApplicationAccessScopesRequest$ApplicationArn": "<p>Specifies the ARN of the application.</p>",
         "ListApplicationAssignmentsFilter$ApplicationArn": "<p>The ARN of an application.</p>",
         "ListApplicationAssignmentsRequest$ApplicationArn": "<p>Specifies the ARN of the application.</p>",
@@ -234,6 +236,7 @@
         "PutApplicationAssignmentConfigurationRequest$ApplicationArn": "<p>Specifies the ARN of the application. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>",
         "PutApplicationAuthenticationMethodRequest$ApplicationArn": "<p>Specifies the ARN of the application with the authentication method to add or update.</p>",
         "PutApplicationGrantRequest$ApplicationArn": "<p>Specifies the ARN of the application to update.</p>",
+        "PutApplicationSessionConfigurationRequest$ApplicationArn": "<p>The Amazon Resource Name (ARN) of the application for which to update the session configuration.</p>",
         "UpdateApplicationRequest$ApplicationArn": "<p>Specifies the ARN of the application. For more information about ARNs, see <a href=\"/general/latest/gr/aws-arns-and-namespaces.html\">Amazon Resource Names (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web Services General Reference</i>.</p>"
       }
     },
@@ -270,7 +273,9 @@
     "ApplicationNameType": {
       "base": null,
       "refs": {
+        "Application$Name": "<p>The name of the application.</p>",
         "CreateApplicationRequest$Name": "<p>The name of the .</p>",
+        "DescribeApplicationResponse$Name": "<p>The application name.</p>",
         "UpdateApplicationRequest$Name": "<p>Specifies the updated name for the application.</p>"
       }
     },
@@ -328,23 +333,19 @@
     },
     "AttachCustomerManagedPolicyReferenceToPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachCustomerManagedPolicyReferenceToPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachManagedPolicyToPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachManagedPolicyToPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttachedManagedPolicy": {
       "base": "<p>A structure that stores a list of managed policy ARNs that describe the associated Amazon Web Services managed policy.</p>",
@@ -422,8 +423,7 @@
     },
     "ConflictException": {
       "base": "<p>Occurs when a conflict with a previous successful write is detected. This generally occurs when the previous write did not have time to propagate to the host serving the current request. A retry (with appropriate backoff logic) is the recommended response to this exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictExceptionMessage": {
       "base": null,
@@ -433,73 +433,59 @@
     },
     "CreateAccountAssignmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccountAssignmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApplicationAssignmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApplicationAssignmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstanceAccessControlAttributeConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstanceAccessControlAttributeConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInstanceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrustedTokenIssuerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrustedTokenIssuerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomerManagedPolicyReference": {
       "base": "<p>Specifies the name and path of a customer managed policy. You must have an IAM policy that matches the name and path in each Amazon Web Services account where you want to deploy your permission set.</p>",
@@ -532,208 +518,167 @@
     },
     "DeleteAccountAssignmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccountAssignmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationAccessScopeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationAssignmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationAssignmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationAuthenticationMethodRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInlinePolicyFromPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInlinePolicyFromPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceAccessControlAttributeConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceAccessControlAttributeConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInstanceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePermissionsBoundaryFromPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePermissionsBoundaryFromPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTrustedTokenIssuerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTrustedTokenIssuerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountAssignmentCreationStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountAssignmentCreationStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountAssignmentDeletionStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountAssignmentDeletionStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationAssignmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationAssignmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationProviderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationProviderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceAccessControlAttributeConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceAccessControlAttributeConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeInstanceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePermissionSetProvisioningStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePermissionSetProvisioningStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTrustedTokenIssuerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTrustedTokenIssuerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -749,23 +694,19 @@
     },
     "DetachCustomerManagedPolicyReferenceFromPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachCustomerManagedPolicyReferenceFromPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachManagedPolicyFromPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetachManagedPolicyFromPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisplayData": {
       "base": "<p>A structure that describes how the portal represents an application provider.</p>",
@@ -791,63 +732,59 @@
     },
     "GetApplicationAccessScopeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationAccessScopeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationAssignmentConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationAssignmentConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationAuthenticationMethodRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationAuthenticationMethodResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApplicationGrantResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetApplicationSessionConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetApplicationSessionConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetInlinePolicyForPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInlinePolicyForPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPermissionsBoundaryForPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPermissionsBoundaryForPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Grant": {
       "base": "<p>The Grant union represents the set of possible configuration options for the selected grant type. Exactly one member of the union must be specified, and must match the grant type selected.</p>",
@@ -999,8 +936,7 @@
     },
     "InternalServerException": {
       "base": "<p>The request processing has failed because of an unknown error, exception, or failure with an internal server.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JMESPath": {
       "base": null,
@@ -1024,23 +960,19 @@
     },
     "ListAccountAssignmentCreationStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssignmentCreationStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssignmentDeletionStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssignmentDeletionStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssignmentsFilter": {
       "base": "<p>A structure that describes a filter for account assignments.</p>",
@@ -1050,38 +982,31 @@
     },
     "ListAccountAssignmentsForPrincipalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssignmentsForPrincipalResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssignmentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountAssignmentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountsForProvisionedPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccountsForProvisionedPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAccessScopesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAccessScopesRequestMaxResultsInteger": {
       "base": null,
@@ -1091,8 +1016,7 @@
     },
     "ListApplicationAccessScopesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAssignmentsFilter": {
       "base": "<p>A structure that describes a filter for application assignments.</p>",
@@ -1102,53 +1026,43 @@
     },
     "ListApplicationAssignmentsForPrincipalRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAssignmentsForPrincipalResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAssignmentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAssignmentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAuthenticationMethodsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationAuthenticationMethodsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationGrantsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationGrantsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationProvidersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationProvidersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationsFilter": {
       "base": "<p>A structure that describes a filter for applications.</p>",
@@ -1158,93 +1072,75 @@
     },
     "ListApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomerManagedPolicyReferencesInPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomerManagedPolicyReferencesInPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInstancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInstancesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedPoliciesInPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListManagedPoliciesInPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionSetProvisioningStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionSetProvisioningStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionSetsProvisionedToAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionSetsProvisionedToAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPermissionSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrustedTokenIssuersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrustedTokenIssuersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ManagedPolicyArn": {
       "base": null,
@@ -1298,9 +1194,7 @@
     "NameType": {
       "base": null,
       "refs": {
-        "Application$Name": "<p>The name of the application.</p>",
         "CreateInstanceRequest$Name": "<p>The name of the instance of IAM Identity Center.</p>",
-        "DescribeApplicationResponse$Name": "<p>The application name.</p>",
         "DescribeInstanceResponse$Name": "<p>Specifies the instance name.</p>",
         "InstanceMetadata$Name": "<p>The name of the Identity Center instance.</p>",
         "UpdateInstanceRequest$Name": "<p>Updates the instance name.</p>"
@@ -1465,13 +1359,11 @@
     },
     "ProvisionPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ProvisionPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ProvisionTargetType": {
       "base": null,
@@ -1488,48 +1380,47 @@
     },
     "PutApplicationAccessScopeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutApplicationAssignmentConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutApplicationAssignmentConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutApplicationAuthenticationMethodRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutApplicationGrantRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "PutApplicationSessionConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "PutApplicationSessionConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "PutInlinePolicyToPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutInlinePolicyToPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPermissionsBoundaryToPermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPermissionsBoundaryToPermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Reason": {
       "base": null,
@@ -1560,8 +1451,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Indicates that a requested resource is not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundMessage": {
       "base": null,
@@ -1632,8 +1522,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Indicates that the principal has crossed the permitted number of resources that can be created.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceQuotaExceededMessage": {
       "base": null,
@@ -1696,13 +1585,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1738,8 +1625,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Indicates that the principal has crossed the throttling limits of the API operations.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingExceptionMessage": {
       "base": null,
@@ -1890,13 +1776,11 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationPortalOptions": {
       "base": "<p>A structure that describes the options for the access portal associated with an application that can be updated.</p>",
@@ -1906,58 +1790,54 @@
     },
     "UpdateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInstanceAccessControlAttributeConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInstanceAccessControlAttributeConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInstanceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInstanceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePermissionSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePermissionSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTrustedTokenIssuerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTrustedTokenIssuerResponse": {
       "base": null,
+      "refs": {}
+    },
+    "UserBackgroundSessionApplicationStatus": {
+      "base": null,
       "refs": {
+        "GetApplicationSessionConfigurationResponse$UserBackgroundSessionApplicationStatus": "<p>The status of user background sessions for the application. </p>",
+        "PutApplicationSessionConfigurationRequest$UserBackgroundSessionApplicationStatus": "<p>The status of user background sessions for the application.</p>"
       }
     },
     "ValidationException": {
       "base": "<p>The request failed because it contains a syntax error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionMessage": {
       "base": null,

@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Bugfix for #3167 where zero or `false` is skipped in header parsing.
+* `Aws\Evs` - Update for general availability of Amazon Elastic VMware Service (EVS).
+* `Aws\Deadline` - Adds support for Wait and Save feature in service-managed fleets
+* `Aws\SSOAdmin` - Added support for managing user background session for applications
+* `Aws\Connect` - Updating SearchUserHierarchyGroups API
+* `Aws\Bedrock` - This release includes model updates and enhanced SDK documentation for union fields in automated reasoning policy components. Added docs cover policy definitions, mutations (add/update for rules/types/variables), build assets, workflow sources, test results, and tag exception handling.
+* `Aws\CognitoIdentityProvider` - Remove SigV4 auth requirement for GetTokensFromRefreshToken
+* `Aws\Lambda` - Doc-only update for Lambda that updates the maximum payload size for response streaming invocations to 200 MB.
+* `Aws\EC2` - This release adds AvailabilityZoneId support for CreateVolume, DescribeVolume, LaunchTemplates, RunInstances, DescribeInstances, CreateDefaultSubnet, SpotInstances, and CreateDefaultSubnet APIs.
+* `Aws\QuickSight` - Add RowAxisDisplayOptions and ColumnAxisDisplayOptions to HeatMapConfiguration, add Actions to PluginVisual, increase limit for CalculatedFields list
+
 ## 3.352.5 - 2025-08-08
 
 * `Aws\TranscribeService` - Update documentation to use key ARN only in OutputEncryptionKMSKeyId request parameter

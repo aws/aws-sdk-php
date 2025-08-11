@@ -11936,11 +11936,11 @@
     },
     "CreateDefaultSubnetRequest":{
       "type":"structure",
-      "required":["AvailabilityZone"],
       "members":{
         "AvailabilityZone":{"shape":"AvailabilityZoneName"},
         "DryRun":{"shape":"Boolean"},
-        "Ipv6Native":{"shape":"Boolean"}
+        "Ipv6Native":{"shape":"Boolean"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"}
       }
     },
     "CreateDefaultSubnetResult":{
@@ -14399,9 +14399,9 @@
     },
     "CreateVolumeRequest":{
       "type":"structure",
-      "required":["AvailabilityZone"],
       "members":{
         "AvailabilityZone":{"shape":"AvailabilityZoneName"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "Encrypted":{
           "shape":"Boolean",
           "locationName":"encrypted"
@@ -20768,6 +20768,7 @@
     "DescribeSpotPriceHistoryRequest":{
       "type":"structure",
       "members":{
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -29162,6 +29163,10 @@
           "shape":"String",
           "locationName":"availabilityZone"
         },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
         "BytesConverted":{
           "shape":"Long",
           "locationName":"bytesConverted"
@@ -29330,11 +29335,11 @@
     "ImportVolumeRequest":{
       "type":"structure",
       "required":[
-        "AvailabilityZone",
         "Image",
         "Volume"
       ],
       "members":{
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -29372,6 +29377,10 @@
         "AvailabilityZone":{
           "shape":"String",
           "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         },
         "BytesConverted":{
           "shape":"Long",
@@ -31061,6 +31070,10 @@
         "AvailabilityZone":{
           "shape":"String",
           "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
         },
         "OutpostArn":{
           "shape":"String",
@@ -35071,6 +35084,10 @@
           "shape":"String",
           "locationName":"availabilityZone"
         },
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
         "Affinity":{
           "shape":"String",
           "locationName":"affinity"
@@ -35109,6 +35126,7 @@
       "type":"structure",
       "members":{
         "AvailabilityZone":{"shape":"String"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "Affinity":{"shape":"String"},
         "GroupName":{"shape":"PlacementGroupName"},
         "HostId":{"shape":"DedicatedHostId"},
@@ -40608,6 +40626,10 @@
     "Placement":{
       "type":"structure",
       "members":{
+        "AvailabilityZoneId":{
+          "shape":"AvailabilityZoneId",
+          "locationName":"availabilityZoneId"
+        },
         "Affinity":{
           "shape":"String",
           "locationName":"affinity"
@@ -45903,6 +45925,10 @@
           "shape":"ServiceState",
           "locationName":"serviceState"
         },
+        "AvailabilityZoneIds":{
+          "shape":"ValueStringList",
+          "locationName":"availabilityZoneIdSet"
+        },
         "AvailabilityZones":{
           "shape":"ValueStringList",
           "locationName":"availabilityZoneSet"
@@ -45989,6 +46015,10 @@
         "ServiceRegion":{
           "shape":"String",
           "locationName":"serviceRegion"
+        },
+        "AvailabilityZoneIds":{
+          "shape":"ValueStringList",
+          "locationName":"availabilityZoneIdSet"
         },
         "AvailabilityZones":{
           "shape":"ValueStringList",
@@ -46978,6 +47008,10 @@
           "shape":"String",
           "locationName":"launchedAvailabilityZone"
         },
+        "LaunchedAvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"launchedAvailabilityZoneId"
+        },
         "ProductDescription":{
           "shape":"RIProductDescription",
           "locationName":"productDescription"
@@ -47209,6 +47243,10 @@
         "AvailabilityZone":{
           "shape":"String",
           "locationName":"availabilityZone"
+        },
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
         },
         "InstanceType":{
           "shape":"InstanceType",
@@ -51662,6 +51700,10 @@
     "Volume":{
       "type":"structure",
       "members":{
+        "AvailabilityZoneId":{
+          "shape":"String",
+          "locationName":"availabilityZoneId"
+        },
         "OutpostArn":{
           "shape":"String",
           "locationName":"outpostArn"
