@@ -18,7 +18,7 @@ trait MetadataParserTrait
     ) {
         $value = $response->getHeaderLine($shape['locationName'] ?: $name);
         // Empty values should not be deserialized
-        if (empty($value)) {
+        if ($value === null || $value === '') {
             return;
         }
 
@@ -28,6 +28,7 @@ trait MetadataParserTrait
                 $value = (float) $value;
                 break;
             case 'long':
+            case 'integer':
                 $value = (int) $value;
                 break;
             case 'boolean':
