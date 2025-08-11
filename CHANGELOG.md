@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.352.6 - 2025-08-11
 
 * `Aws\Api` - Bugfix for #3167 where zero or `false` is skipped in header parsing.
 * `Aws\Evs` - Update for general availability of Amazon Elastic VMware Service (EVS).
