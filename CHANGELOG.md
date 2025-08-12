@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.352.7 - 2025-08-12
 
 * `Aws\Rds` - Ensures `DestinationRegion` is signed during presigning.
 * `Aws\CodeBuild` - AWS CodeBuild now supports PullRequestBuildPolicy in webhook object.
