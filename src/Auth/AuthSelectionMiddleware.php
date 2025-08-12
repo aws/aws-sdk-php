@@ -134,7 +134,8 @@ class AuthSelectionMiddleware
     private function buildAuthSchemeList(
         array $resolvableAuthSchemeList,
         ?array $commandConfiguredAuthSchemes,
-    ): array {
+    ): array
+    {
         $userConfiguredAuthSchemes = $commandConfiguredAuthSchemes
             ?? $this->configuredAuthSchemes;
 
