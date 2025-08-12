@@ -789,6 +789,44 @@
         "title": "To retrieve a list of all of the accounts in a root or OU"
       }
     ],
+    "ListAccountsWithInvalidEffectivePolicy": [
+      {
+        "input": {
+          "PolicyType": "BACKUP_POLICY"
+        },
+        "output": {
+          "Accounts": [
+            {
+              "Email": "bill@example.com",
+              "Id": "111111111111",
+              "Name": "Management Account"
+            },
+            {
+              "Email": "alice@example.com",
+              "Id": "222222222222",
+              "Name": "Developer Account"
+            },
+            {
+              "Email": "juan@example.com",
+              "Id": "333333333333",
+              "Name": "Test Account"
+            },
+            {
+              "Email": "anika@example.com",
+              "Id": "444444444444",
+              "Name": "Production Account"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows you how to request a list of the accounts in an organization having invalid effective policy for a policy type:",
+        "id": "to-list-all-accounts-in-an-organization-with-invalid-effective-policy",
+        "title": "To list all accounts in an organization with invalid effective policy"
+      }
+    ],
     "ListChildren": [
       {
         "input": {
@@ -866,6 +904,46 @@
         "description": "The following example shows a user requesting a list of only the in-progress account creation requests made for the current organization:",
         "id": "to-get-a-list-of-all-account-creation-requests-made-in-the-organization-1472509174532",
         "title": "To get a list of all account creation requests made in the organization"
+      }
+    ],
+    "ListEffectivePolicyValidationErrors": [
+      {
+        "input": {
+          "AccountId": "111111111111",
+          "PolicyType": "BACKUP_POLICY"
+        },
+        "output": {
+          "AccountId": "111111111111",
+          "EffectivePolicyValidationErrors": [
+            {
+              "ContributingPolicies": [
+                "p-examplepolicyid111"
+              ],
+              "ErrorCode": "ELEMENTS_TOO_FEW",
+              "ErrorMessage": "tag_value is less than the allowed minimum limit 1",
+              "PathToError": "plans/backup_daily/selections/tags/dailydatatype/tag_value"
+            },
+            {
+              "ContributingPolicies": [
+                "p-examplepolicyid111",
+                "p-examplepolicyid222"
+              ],
+              "ErrorCode": "ELEMENTS_TOO_MANY",
+              "ErrorMessage": "rules exceeds the allowed maximum limit 10",
+              "PathToError": "plans/backup_daily/rules"
+            }
+          ],
+          "EvaluationTimestamp": "2024-03-04T19:39:38.376000+00:00",
+          "Path": "o-exampleorgid/r-examplerootid111/111111111111/",
+          "PolicyType": "BACKUP_POLICY"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "The following example shows you how to request a list of effective policy validation errors for an account and policy type:",
+        "id": "to-list-all-effective-policy-validation-errors-for-an-account-policy-type",
+        "title": "To list all effective policy validation errors for an account policy type"
       }
     ],
     "ListHandshakesForAccount": [

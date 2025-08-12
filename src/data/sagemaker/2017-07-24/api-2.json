@@ -10677,6 +10677,7 @@
         "UserProfileName":{"shape":"UserProfileName"},
         "SpaceName":{"shape":"SpaceName"},
         "Status":{"shape":"AppStatus"},
+        "EffectiveTrustedIdentityPropagationStatus":{"shape":"FeatureStatus"},
         "RecoveryMode":{
           "shape":"Boolean",
           "box":true
@@ -13121,6 +13122,7 @@
         "SecurityGroupIds":{"shape":"DomainSecurityGroupIds"},
         "RStudioServerProDomainSettings":{"shape":"RStudioServerProDomainSettings"},
         "ExecutionRoleIdentityConfig":{"shape":"ExecutionRoleIdentityConfig"},
+        "TrustedIdentityPropagationSettings":{"shape":"TrustedIdentityPropagationSettings"},
         "DockerSettings":{"shape":"DockerSettings"},
         "AmazonQSettings":{"shape":"AmazonQSettings"},
         "UnifiedStudioSettings":{"shape":"UnifiedStudioSettings"}
@@ -13132,6 +13134,7 @@
         "RStudioServerProDomainSettingsForUpdate":{"shape":"RStudioServerProDomainSettingsForUpdate"},
         "ExecutionRoleIdentityConfig":{"shape":"ExecutionRoleIdentityConfig"},
         "SecurityGroupIds":{"shape":"DomainSecurityGroupIds"},
+        "TrustedIdentityPropagationSettings":{"shape":"TrustedIdentityPropagationSettings"},
         "DockerSettings":{"shape":"DockerSettings"},
         "AmazonQSettings":{"shape":"AmazonQSettings"},
         "UnifiedStudioSettings":{"shape":"UnifiedStudioSettings"}
@@ -27242,6 +27245,13 @@
         "TrialSource":{"shape":"TrialSource"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"}
+      }
+    },
+    "TrustedIdentityPropagationSettings":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"FeatureStatus"}
       }
     },
     "TtlDuration":{

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rds` - Ensures `DestinationRegion` is signed during presigning.
+* `Aws\CodeBuild` - AWS CodeBuild now supports PullRequestBuildPolicy in webhook object.
+* `Aws\SageMaker` - IAM Identity Center trusted identity propagation is now supported in SageMaker Studio.
+* `Aws\TranscribeService` - AWS HealthScribe now supports specifying preferred patient pronouns through the MedicalScribeContext parameter for use in the generated clinical notes.
+* `Aws\BackupSearch` - Using recommended smithy trait to generate regional endpoints for Backup Search
+* `Aws\Organizations` - This release introduces 2 new APIs in Organizations: 1. ListAccountsWithInvalidEffectivePolicy 2. ListEffectivePolicyValidationErrors
+* `Aws\EC2` - Release to allow route table association with a PublicIpv4Pool.
+
 ## 3.352.6 - 2025-08-11
 
 * `Aws\Api` - Bugfix for #3167 where zero or `false` is skipped in header parsing.

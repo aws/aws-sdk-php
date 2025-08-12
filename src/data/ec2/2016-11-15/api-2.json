@@ -7952,6 +7952,7 @@
       "required":["RouteTableId"],
       "members":{
         "GatewayId":{"shape":"RouteGatewayId"},
+        "PublicIpv4Pool":{"shape":"Ipv4PoolEc2Id"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -44820,6 +44821,10 @@
         "GatewayId":{
           "shape":"String",
           "locationName":"gatewayId"
+        },
+        "PublicIpv4Pool":{
+          "shape":"String",
+          "locationName":"publicIpv4Pool"
         },
         "AssociationState":{
           "shape":"RouteTableAssociationState",

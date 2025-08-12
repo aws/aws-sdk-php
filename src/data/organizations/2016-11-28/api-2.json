@@ -662,6 +662,25 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "ListAccountsWithInvalidEffectivePolicy":{
+      "name":"ListAccountsWithInvalidEffectivePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAccountsWithInvalidEffectivePolicyRequest"},
+      "output":{"shape":"ListAccountsWithInvalidEffectivePolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"EffectivePolicyNotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"UnsupportedAPIEndpointException"}
+      ]
+    },
     "ListChildren":{
       "name":"ListChildren",
       "http":{
@@ -731,6 +750,26 @@
         {"shape":"InvalidInputException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ServiceException"},
+        {"shape":"UnsupportedAPIEndpointException"}
+      ]
+    },
+    "ListEffectivePolicyValidationErrors":{
+      "name":"ListEffectivePolicyValidationErrors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEffectivePolicyValidationErrorsRequest"},
+      "output":{"shape":"ListEffectivePolicyValidationErrorsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"EffectivePolicyNotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"AccountNotFoundException"},
+        {"shape":"InvalidInputException"},
         {"shape":"UnsupportedAPIEndpointException"}
       ]
     },
@@ -1729,6 +1768,19 @@
         "SECURITYHUB_POLICY"
       ]
     },
+    "EffectivePolicyValidationError":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "ErrorMessage":{"shape":"ErrorMessage"},
+        "PathToError":{"shape":"PathToError"},
+        "ContributingPolicies":{"shape":"PolicyIds"}
+      }
+    },
+    "EffectivePolicyValidationErrors":{
+      "type":"list",
+      "member":{"shape":"EffectivePolicyValidationError"}
+    },
     "Email":{
       "type":"string",
       "max":64,
@@ -1781,6 +1833,8 @@
       "type":"list",
       "member":{"shape":"EnabledServicePrincipal"}
     },
+    "ErrorCode":{"type":"string"},
+    "ErrorMessage":{"type":"string"},
     "ExceptionMessage":{"type":"string"},
     "ExceptionType":{"type":"string"},
     "FinalizingOrganizationException":{
@@ -2056,6 +2110,23 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListAccountsWithInvalidEffectivePolicyRequest":{
+      "type":"structure",
+      "required":["PolicyType"],
+      "members":{
+        "PolicyType":{"shape":"EffectivePolicyType"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListAccountsWithInvalidEffectivePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "Accounts":{"shape":"Accounts"},
+        "PolicyType":{"shape":"EffectivePolicyType"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListChildrenRequest":{
       "type":"structure",
       "required":[
@@ -2120,6 +2191,30 @@
       "members":{
         "DelegatedServices":{"shape":"DelegatedServices"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListEffectivePolicyValidationErrorsRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyType"
+      ],
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "PolicyType":{"shape":"EffectivePolicyType"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListEffectivePolicyValidationErrorsResponse":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "PolicyType":{"shape":"EffectivePolicyType"},
+        "Path":{"shape":"Path"},
+        "EvaluationTimestamp":{"shape":"Timestamp"},
+        "NextToken":{"shape":"NextToken"},
+        "EffectivePolicyValidationErrors":{"shape":"EffectivePolicyValidationErrors"}
       }
     },
     "ListHandshakesForAccountRequest":{
@@ -2408,6 +2503,11 @@
       "type":"list",
       "member":{"shape":"Parent"}
     },
+    "Path":{
+      "type":"string",
+      "pattern":"^(o-[a-z0-9]{10,32}\\/r-[0-9a-z]{4,32}(\\/ou\\-[0-9a-z]{4,32}-[a-z0-9]{8,32})*(\\/\\d{12})*)\\/"
+    },
+    "PathToError":{"type":"string"},
     "Policies":{
       "type":"list",
       "member":{"shape":"PolicySummary"}
@@ -2444,6 +2544,10 @@
       "type":"string",
       "max":130,
       "pattern":"^p-[0-9a-zA-Z_]{8,128}$"
+    },
+    "PolicyIds":{
+      "type":"list",
+      "member":{"shape":"PolicyId"}
     },
     "PolicyInUseException":{
       "type":"structure",

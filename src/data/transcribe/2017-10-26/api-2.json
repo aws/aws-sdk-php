@@ -1621,6 +1621,12 @@
       "max":1,
       "min":0
     },
+    "MedicalScribeContext":{
+      "type":"structure",
+      "members":{
+        "PatientContext":{"shape":"MedicalScribePatientContext"}
+      }
+    },
     "MedicalScribeJob":{
       "type":"structure",
       "members":{
@@ -1636,6 +1642,7 @@
         "Settings":{"shape":"MedicalScribeSettings"},
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "ChannelDefinitions":{"shape":"MedicalScribeChannelDefinitions"},
+        "MedicalScribeContextProvided":{"shape":"Boolean"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1697,6 +1704,12 @@
         "PATIENT",
         "CLINICIAN"
       ]
+    },
+    "MedicalScribePatientContext":{
+      "type":"structure",
+      "members":{
+        "Pronouns":{"shape":"Pronouns"}
+      }
     },
     "MedicalScribeSettings":{
       "type":"structure",
@@ -1882,6 +1895,15 @@
       "max":11,
       "min":0
     },
+    "Pronouns":{
+      "type":"string",
+      "enum":[
+        "HE_HIM",
+        "SHE_HER",
+        "THEY_THEM"
+      ],
+      "sensitive":true
+    },
     "RedactionOutput":{
       "type":"string",
       "enum":[
@@ -2002,7 +2024,8 @@
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "Settings":{"shape":"MedicalScribeSettings"},
         "ChannelDefinitions":{"shape":"MedicalScribeChannelDefinitions"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "MedicalScribeContext":{"shape":"MedicalScribeContext"}
       }
     },
     "StartMedicalScribeJobResponse":{
