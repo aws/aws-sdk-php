@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added support for configuring auth schemes based on user's preference. The order in which these auth schemes are provided will define the priority of the auth schemes selection.
+* `Aws\Braket` - Add support for Braket program sets.
+* `Aws\FSx` - Add Dual-Stack support for Amazon FSx for OpenZFS file systems
+* `Aws\PartnerCentralSelling` - Add Tagging Support for Opportunity resources
+* `Aws\SecurityIR` - Added support for Organizational Unit-level Membership configuration and the ability to resume a cancelled membership.
+* `Aws\DataZone` - Adds support for account pools and project profile account decoupling
+* `Aws\SageMaker` - This release introduces compute quota for GPU, Trainium accelerators, vCPU, and vCPU memory utilization across teams in HyperPod clusters
+
 ## 3.352.7 - 2025-08-12
 
 * `Aws\Rds` - Ensures `DestinationRegion` is signed during presigning.

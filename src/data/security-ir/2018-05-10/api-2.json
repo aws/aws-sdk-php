@@ -524,6 +524,7 @@
       "enum":[
         "af-south-1",
         "ap-east-1",
+        "ap-east-2",
         "ap-northeast-1",
         "ap-northeast-2",
         "ap-northeast-3",
@@ -561,7 +562,7 @@
     "AwsService":{
       "type":"string",
       "max":50,
-      "min":3,
+      "min":2,
       "pattern":"[a-zA-Z0-9 -.():]+"
     },
     "BatchGetMemberAccountDetailsRequest":{
@@ -847,7 +848,8 @@
         "membershipName":{"shape":"MembershipName"},
         "incidentResponseTeam":{"shape":"IncidentResponseTeam"},
         "optInFeatures":{"shape":"OptInFeatures"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "coverEntireOrganization":{"shape":"Boolean"}
       }
     },
     "CreateMembershipRequestClientTokenString":{
@@ -1043,7 +1045,8 @@
         "customerType":{"shape":"CustomerType"},
         "numberOfAccountsCovered":{"shape":"Long"},
         "incidentResponseTeam":{"shape":"IncidentResponseTeam"},
-        "optInFeatures":{"shape":"OptInFeatures"}
+        "optInFeatures":{"shape":"OptInFeatures"},
+        "membershipAccountsConfigurations":{"shape":"MembershipAccountsConfigurations"}
       }
     },
     "IPAddress":{
@@ -1332,12 +1335,43 @@
       "type":"string",
       "enum":[
         "Associated",
-        "Disassociated"
+        "Disassociated",
+        "Unassociated"
       ]
     },
     "MembershipAccountRelationshipType":{
       "type":"string",
-      "enum":["Organization"]
+      "enum":[
+        "Organization",
+        "Unrelated"
+      ]
+    },
+    "MembershipAccountsConfigurations":{
+      "type":"structure",
+      "members":{
+        "coverEntireOrganization":{"shape":"Boolean"},
+        "organizationalUnits":{"shape":"OrganizationalUnits"}
+      }
+    },
+    "MembershipAccountsConfigurationsUpdate":{
+      "type":"structure",
+      "members":{
+        "coverEntireOrganization":{"shape":"Boolean"},
+        "organizationalUnitsToAdd":{"shape":"MembershipAccountsConfigurationsUpdateOrganizationalUnitsToAddList"},
+        "organizationalUnitsToRemove":{"shape":"MembershipAccountsConfigurationsUpdateOrganizationalUnitsToRemoveList"}
+      }
+    },
+    "MembershipAccountsConfigurationsUpdateOrganizationalUnitsToAddList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"},
+      "max":5,
+      "min":1
+    },
+    "MembershipAccountsConfigurationsUpdateOrganizationalUnitsToRemoveList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"},
+      "max":5,
+      "min":1
     },
     "MembershipArn":{
       "type":"string",
@@ -1385,6 +1419,14 @@
       "member":{"shape":"OptInFeature"},
       "max":2,
       "min":1
+    },
+    "OrganizationalUnitId":{
+      "type":"string",
+      "pattern":"ou-[0-9a-z]{4,32}-[a-z0-9]{8,32}"
+    },
+    "OrganizationalUnits":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitId"}
     },
     "PendingAction":{
       "type":"string",
@@ -1499,8 +1541,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1563,8 +1604,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCaseCommentRequest":{
       "type":"structure",
@@ -1623,8 +1663,7 @@
     },
     "UpdateCaseResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCaseStatusRequest":{
       "type":"structure",
@@ -1658,13 +1697,14 @@
         },
         "membershipName":{"shape":"MembershipName"},
         "incidentResponseTeam":{"shape":"IncidentResponseTeam"},
-        "optInFeatures":{"shape":"OptInFeatures"}
+        "optInFeatures":{"shape":"OptInFeatures"},
+        "membershipAccountsConfigurationsUpdate":{"shape":"MembershipAccountsConfigurationsUpdate"},
+        "undoMembershipCancellation":{"shape":"Boolean"}
       }
     },
     "UpdateMembershipResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateResolverTypeRequest":{
       "type":"structure",

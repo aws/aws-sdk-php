@@ -151,6 +151,26 @@
       ],
       "idempotent":true
     },
+    "CreateAccountPool":{
+      "name":"CreateAccountPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/account-pools",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateAccountPoolInput"},
+      "output":{"shape":"CreateAccountPoolOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "CreateAsset":{
       "name":"CreateAsset",
       "http":{
@@ -668,6 +688,25 @@
       ],
       "idempotent":true
     },
+    "DeleteAccountPool":{
+      "name":"DeleteAccountPool",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/account-pools/{identifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteAccountPoolInput"},
+      "output":{"shape":"DeleteAccountPoolOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "DeleteAsset":{
       "name":"DeleteAsset",
       "http":{
@@ -1145,6 +1184,24 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "GetAccountPool":{
+      "name":"GetAccountPool",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/account-pools/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAccountPoolInput"},
+      "output":{"shape":"GetAccountPoolOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ]
@@ -1758,6 +1815,41 @@
       },
       "input":{"shape":"GetUserProfileInput"},
       "output":{"shape":"GetUserProfileOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListAccountPools":{
+      "name":"ListAccountPools",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/account-pools",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAccountPoolsInput"},
+      "output":{"shape":"ListAccountPoolsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "ListAccountsInAccountPool":{
+      "name":"ListAccountsInAccountPool",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/domains/{domainIdentifier}/account-pools/{identifier}/accounts",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAccountsInAccountPoolInput"},
+      "output":{"shape":"ListAccountsInAccountPoolOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -2647,6 +2739,27 @@
       ],
       "idempotent":true
     },
+    "UpdateAccountPool":{
+      "name":"UpdateAccountPool",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/account-pools/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateAccountPoolInput"},
+      "output":{"shape":"UpdateAccountPoolOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
     "UpdateAssetFilter":{
       "name":"UpdateAssetFilter",
       "http":{
@@ -3168,6 +3281,65 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "AccountInfo":{
+      "type":"structure",
+      "required":[
+        "awsAccountId",
+        "supportedRegions"
+      ],
+      "members":{
+        "awsAccountId":{"shape":"AwsAccountId"},
+        "awsAccountName":{"shape":"AwsAccountName"},
+        "supportedRegions":{"shape":"AwsRegionList"}
+      }
+    },
+    "AccountInfoList":{
+      "type":"list",
+      "member":{"shape":"AccountInfo"},
+      "max":25,
+      "min":1
+    },
+    "AccountPoolId":{
+      "type":"string",
+      "pattern":"^[a-zA-Z0-9_-]{1,36}$"
+    },
+    "AccountPoolList":{
+      "type":"list",
+      "member":{"shape":"AccountPoolId"},
+      "max":10,
+      "min":1
+    },
+    "AccountPoolName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\w -]+$",
+      "sensitive":true
+    },
+    "AccountPoolSummaries":{
+      "type":"list",
+      "member":{"shape":"AccountPoolSummary"}
+    },
+    "AccountPoolSummary":{
+      "type":"structure",
+      "members":{
+        "createdBy":{"shape":"CreatedBy"},
+        "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
+        "id":{"shape":"AccountPoolId"},
+        "name":{"shape":"AccountPoolName"},
+        "resolutionStrategy":{"shape":"ResolutionStrategy"},
+        "updatedBy":{"shape":"UpdatedBy"}
+      }
+    },
+    "AccountSource":{
+      "type":"structure",
+      "members":{
+        "accounts":{"shape":"AccountInfoList"},
+        "customAccountPoolHandler":{"shape":"CustomAccountPoolHandler"}
+      },
+      "union":true
     },
     "ActionLink":{
       "type":"string",
@@ -3715,6 +3887,12 @@
       "type":"string",
       "pattern":"^\\d{12}$"
     },
+    "AwsAccountName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "sensitive":true
+    },
     "AwsConsoleLinkParameters":{
       "type":"structure",
       "members":{
@@ -3737,6 +3915,12 @@
     "AwsRegion":{
       "type":"string",
       "pattern":"^[a-z]{2}-[a-z]{4,10}-\\d$"
+    },
+    "AwsRegionList":{
+      "type":"list",
+      "member":{"shape":"AwsRegion"},
+      "max":3,
+      "min":1
     },
     "BasicAuthenticationCredentials":{
       "type":"structure",
@@ -4056,6 +4240,46 @@
         "VERTICA",
         "WORKFLOWS_MWAA"
       ]
+    },
+    "CreateAccountPoolInput":{
+      "type":"structure",
+      "required":[
+        "accountSource",
+        "domainIdentifier",
+        "name",
+        "resolutionStrategy"
+      ],
+      "members":{
+        "accountSource":{"shape":"AccountSource"},
+        "description":{"shape":"Description"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "name":{"shape":"AccountPoolName"},
+        "resolutionStrategy":{"shape":"ResolutionStrategy"}
+      }
+    },
+    "CreateAccountPoolOutput":{
+      "type":"structure",
+      "required":[
+        "accountSource",
+        "createdBy"
+      ],
+      "members":{
+        "accountSource":{"shape":"AccountSource"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"Description"},
+        "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
+        "id":{"shape":"AccountPoolId"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "name":{"shape":"AccountPoolName"},
+        "resolutionStrategy":{"shape":"ResolutionStrategy"},
+        "updatedBy":{"shape":"UpdatedBy"}
+      }
     },
     "CreateAssetFilterInput":{
       "type":"structure",
@@ -5389,6 +5613,14 @@
       "min":1,
       "pattern":"cron\\((\\b[0-5]?[0-9]\\b) (\\b2[0-3]\\b|\\b[0-1]?[0-9]\\b) ([-?*,/\\dLW]){1,83} ([-*,/\\d]|[a-zA-Z]{3}){1,23} ([-?#*,/\\dL]|[a-zA-Z]{3}){1,13} ([^\\)]+)\\)"
     },
+    "CustomAccountPoolHandler":{
+      "type":"structure",
+      "required":["lambdaFunctionArn"],
+      "members":{
+        "lambdaExecutionRoleArn":{"shape":"LambdaExecutionRoleArn"},
+        "lambdaFunctionArn":{"shape":"LambdaFunctionArn"}
+      }
+    },
     "CustomParameter":{
       "type":"structure",
       "required":[
@@ -5745,6 +5977,30 @@
       "max":4096,
       "min":1,
       "sensitive":true
+    },
+    "DeleteAccountPoolInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"AccountPoolId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "DeleteAccountPoolOutput":{
+      "type":"structure",
+      "members":{
+      }
     },
     "DeleteAssetFilterInput":{
       "type":"structure",
@@ -6807,12 +7063,11 @@
     "EnvironmentConfiguration":{
       "type":"structure",
       "required":[
-        "awsAccount",
-        "awsRegion",
         "environmentBlueprintId",
         "name"
       ],
       "members":{
+        "accountPools":{"shape":"AccountPoolList"},
         "awsAccount":{"shape":"AwsAccount"},
         "awsRegion":{"shape":"Region"},
         "configurationParameters":{"shape":"EnvironmentConfigurationParametersDetails"},
@@ -6865,7 +7120,8 @@
       "members":{
         "environmentConfigurationName":{"shape":"EnvironmentConfigurationName"},
         "environmentId":{"shape":"EnvironmentId"},
-        "environmentParameters":{"shape":"EnvironmentParametersList"}
+        "environmentParameters":{"shape":"EnvironmentParametersList"},
+        "environmentResolvedAccount":{"shape":"EnvironmentResolvedAccount"}
       }
     },
     "EnvironmentConfigurationUserParametersList":{
@@ -6958,6 +7214,18 @@
         "name":{"shape":"EnvironmentProfileName"},
         "projectId":{"shape":"ProjectId"},
         "updatedAt":{"shape":"SyntheticTimestamp_date_time"}
+      }
+    },
+    "EnvironmentResolvedAccount":{
+      "type":"structure",
+      "required":[
+        "awsAccountId",
+        "regionName"
+      ],
+      "members":{
+        "awsAccountId":{"shape":"AwsAccountId"},
+        "regionName":{"shape":"AwsRegion"},
+        "sourceAccountPoolId":{"shape":"AccountPoolId"}
       }
     },
     "EnvironmentStatus":{
@@ -7261,6 +7529,45 @@
       "value":{"shape":"FormEntryOutput"},
       "max":10,
       "min":0
+    },
+    "GetAccountPoolInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"AccountPoolId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
+    },
+    "GetAccountPoolOutput":{
+      "type":"structure",
+      "required":[
+        "accountSource",
+        "createdBy"
+      ],
+      "members":{
+        "accountSource":{"shape":"AccountSource"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"Description"},
+        "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
+        "id":{"shape":"AccountPoolId"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "name":{"shape":"AccountPoolName"},
+        "resolutionStrategy":{"shape":"ResolutionStrategy"},
+        "updatedBy":{"shape":"UpdatedBy"}
+      }
     },
     "GetAssetFilterInput":{
       "type":"structure",
@@ -9390,6 +9697,14 @@
         "locationRegistrationRole":{"shape":"RoleArn"}
       }
     },
+    "LambdaExecutionRoleArn":{
+      "type":"string",
+      "pattern":"^arn:aws[^:]*:iam::\\d{12}:(role|role/service-role)/[\\w+=,.@-]*$"
+    },
+    "LambdaFunctionArn":{
+      "type":"string",
+      "pattern":"^arn:(?:aws|aws-cn|aws-us-gov):lambda:(?:[a-z]{2}(?:-gov)?-[a-z]+-\\d{1,}):(\\d{12}):function:[a-zA-Z0-9-_]+(?::[a-zA-Z0-9-_]+)?(?:\\$[\\w-]+)?$"
+    },
     "LastName":{
       "type":"string",
       "sensitive":true
@@ -9572,6 +9887,85 @@
     "LineageSyncScheduleScheduleString":{
       "type":"string",
       "pattern":"^cron\\((\\b[0-5]?[0-9]\\b) (\\b2[0-3]\\b|\\b[0-1]?[0-9]\\b) ([-?*,/\\dLW]){1,83} ([-*,/\\d]|[a-zA-Z]{3}){1,23} ([-?#*,/\\dL]|[a-zA-Z]{3}){1,13} ([^\\)]+)\\)$"
+    },
+    "ListAccountPoolsInput":{
+      "type":"structure",
+      "required":["domainIdentifier"],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "name":{
+          "shape":"AccountPoolName",
+          "location":"querystring",
+          "locationName":"name"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "sortBy":{
+          "shape":"SortFieldAccountPool",
+          "location":"querystring",
+          "locationName":"sortBy"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListAccountPoolsOutput":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"AccountPoolSummaries"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListAccountsInAccountPoolInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"AccountPoolId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAccountsInAccountPoolOutput":{
+      "type":"structure",
+      "members":{
+        "items":{"shape":"AccountInfoList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
     },
     "ListAssetFiltersInput":{
       "type":"structure",
@@ -12446,6 +12840,10 @@
       "max":5,
       "min":1
     },
+    "ResolutionStrategy":{
+      "type":"string",
+      "enum":["MANUAL"]
+    },
     "Resource":{
       "type":"structure",
       "required":[
@@ -13082,6 +13480,10 @@
       "type":"string",
       "max":100000,
       "min":1
+    },
+    "SortFieldAccountPool":{
+      "type":"string",
+      "enum":["NAME"]
     },
     "SortFieldConnection":{
       "type":"string",
@@ -14104,6 +14506,49 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateAccountPoolInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "accountSource":{"shape":"AccountSource"},
+        "description":{"shape":"Description"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"AccountPoolId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "name":{"shape":"AccountPoolName"},
+        "resolutionStrategy":{"shape":"ResolutionStrategy"}
+      }
+    },
+    "UpdateAccountPoolOutput":{
+      "type":"structure",
+      "required":[
+        "accountSource",
+        "createdBy"
+      ],
+      "members":{
+        "accountSource":{"shape":"AccountSource"},
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "createdBy":{"shape":"CreatedBy"},
+        "description":{"shape":"Description"},
+        "domainId":{"shape":"DomainId"},
+        "domainUnitId":{"shape":"DomainUnitId"},
+        "id":{"shape":"AccountPoolId"},
+        "lastUpdatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "name":{"shape":"AccountPoolName"},
+        "resolutionStrategy":{"shape":"ResolutionStrategy"},
+        "updatedBy":{"shape":"UpdatedBy"}
       }
     },
     "UpdateAssetFilterInput":{

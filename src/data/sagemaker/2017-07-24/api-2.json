@@ -4192,6 +4192,12 @@
     }
   },
   "shapes":{
+    "AcceleratorsAmount":{
+      "type":"integer",
+      "box":true,
+      "max":10000000,
+      "min":0
+    },
     "Accept":{
       "type":"string",
       "max":256,
@@ -7634,7 +7640,10 @@
       "required":["InstanceType"],
       "members":{
         "InstanceType":{"shape":"ClusterInstanceType"},
-        "Count":{"shape":"InstanceCount"}
+        "Count":{"shape":"InstanceCount"},
+        "Accelerators":{"shape":"AcceleratorsAmount"},
+        "VCpu":{"shape":"VCpuAmount"},
+        "MemoryInGiB":{"shape":"MemoryInGiBAmount"}
       }
     },
     "ComputeQuotaResourceConfigList":{
@@ -19095,6 +19104,12 @@
       "max":10,
       "min":1
     },
+    "MemoryInGiBAmount":{
+      "type":"float",
+      "box":true,
+      "max":10000000,
+      "min":0
+    },
     "MemoryInMb":{
       "type":"integer",
       "box":true,
@@ -28418,6 +28433,12 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "VCpuAmount":{
+      "type":"float",
+      "box":true,
+      "max":10000000,
+      "min":0
     },
     "ValidationFraction":{
       "type":"float",

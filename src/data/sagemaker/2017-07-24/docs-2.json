@@ -373,6 +373,12 @@
     "UpdateWorkteam": "<p>Updates an existing work team with new member definitions or description.</p>"
   },
   "shapes": {
+    "AcceleratorsAmount": {
+      "base": null,
+      "refs": {
+        "ComputeQuotaResourceConfig$Accelerators": "<p>The number of accelerators to allocate. If you don't specify a value for vCPU and MemoryInGiB, SageMaker AI automatically allocates ratio-based values for those parameters based on the number of accelerators you provide. For example, if you allocate 16 out of 32 total accelerators, SageMaker AI uses the ratio of 0.5 and allocates values to vCPU and MemoryInGiB.</p>"
+      }
+    },
     "Accept": {
       "base": null,
       "refs": {
@@ -10344,6 +10350,12 @@
         "Workteam$MemberDefinitions": "<p>A list of <code>MemberDefinition</code> objects that contains objects that identify the workers that make up the work team. </p> <p>Workforces can be created using Amazon Cognito or your own OIDC Identity Provider (IdP). For private workforces created using Amazon Cognito use <code>CognitoMemberDefinition</code>. For workforces created using your own OIDC identity provider (IdP) use <code>OidcMemberDefinition</code>.</p>"
       }
     },
+    "MemoryInGiBAmount": {
+      "base": null,
+      "refs": {
+        "ComputeQuotaResourceConfig$MemoryInGiB": "<p>The amount of memory in GiB to allocate. If you specify a value only for this parameter, SageMaker AI automatically allocates a ratio-based value for vCPU based on this memory that you provide. For example, if you allocate 200 out of 400 total memory in GiB, SageMaker AI uses the ratio of 0.5 and allocates values to vCPU. Accelerators are set to 0.</p>"
+      }
+    },
     "MemoryInMb": {
       "base": null,
       "refs": {
@@ -18640,6 +18652,12 @@
       "refs": {
         "GetScalingConfigurationRecommendationRequest$TargetCpuUtilizationPerCore": "<p>The percentage of how much utilization you want an instance to use before autoscaling. The default value is 50%.</p>",
         "GetScalingConfigurationRecommendationResponse$TargetCpuUtilizationPerCore": "<p>The percentage of how much utilization you want an instance to use before autoscaling, which you specified in the request. The default value is 50%.</p>"
+      }
+    },
+    "VCpuAmount": {
+      "base": null,
+      "refs": {
+        "ComputeQuotaResourceConfig$VCpu": "<p>The number of vCPU to allocate. If you specify a value only for vCPU, SageMaker AI automatically allocates ratio-based values for MemoryInGiB based on this vCPU parameter. For example, if you allocate 20 out of 40 total vCPU, SageMaker AI uses the ratio of 0.5 and allocates values to MemoryInGiB. Accelerators are set to 0.</p>"
       }
     },
     "ValidationFraction": {

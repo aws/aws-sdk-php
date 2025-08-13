@@ -9,6 +9,7 @@
     "AssociateEnvironmentRole": "<p>Associates the environment role in Amazon DataZone.</p>",
     "CancelMetadataGenerationRun": "<p>Cancels the metadata generation run.</p>",
     "CancelSubscription": "<p>Cancels the subscription to the specified asset.</p>",
+    "CreateAccountPool": "<p>Creates an account pool. </p>",
     "CreateAsset": "<p>Creates an asset in Amazon DataZone catalog.</p>",
     "CreateAssetFilter": "<p>Creates a data asset filter.</p>",
     "CreateAssetRevision": "<p>Creates a revision of the asset.</p>",
@@ -35,6 +36,7 @@
     "CreateSubscriptionRequest": "<p>Creates a subscription request in Amazon DataZone.</p>",
     "CreateSubscriptionTarget": "<p>Creates a subscription target in Amazon DataZone.</p>",
     "CreateUserProfile": "<p>Creates a user profile in Amazon DataZone.</p>",
+    "DeleteAccountPool": "<p>Deletes an account pool.</p>",
     "DeleteAsset": "<p>Deletes an asset in Amazon DataZone.</p>",
     "DeleteAssetFilter": "<p>Deletes an asset filter.</p>",
     "DeleteAssetType": "<p>Deletes an asset type in Amazon DataZone.</p>",
@@ -60,6 +62,7 @@
     "DeleteSubscriptionTarget": "<p>Deletes a subscription target in Amazon DataZone.</p>",
     "DeleteTimeSeriesDataPoints": "<p>Deletes the specified time series form for the specified asset. </p>",
     "DisassociateEnvironmentRole": "<p>Disassociates the environment role in Amazon DataZone.</p>",
+    "GetAccountPool": "<p>Gets the details of the account pool.</p>",
     "GetAsset": "<p>Gets an Amazon DataZone asset.</p>",
     "GetAssetFilter": "<p>Gets an asset filter.</p>",
     "GetAssetType": "<p>Gets an Amazon DataZone asset type.</p>",
@@ -94,6 +97,8 @@
     "GetSubscriptionTarget": "<p>Gets the subscription target in Amazon DataZone.</p>",
     "GetTimeSeriesDataPoint": "<p>Gets the existing data point for the asset.</p>",
     "GetUserProfile": "<p>Gets a user profile in Amazon DataZone.</p>",
+    "ListAccountPools": "<p>Lists existing account pools.</p>",
+    "ListAccountsInAccountPool": "<p>Lists the accounts in the specified account pool.</p>",
     "ListAssetFilters": "<p>Lists asset filters.</p>",
     "ListAssetRevisions": "<p>Lists the revisions for the asset.</p>",
     "ListConnections": "<p>Lists connections. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
@@ -142,6 +147,7 @@
     "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p>",
     "TagResource": "<p>Tags a resource in Amazon DataZone.</p>",
     "UntagResource": "<p>Untags a resource in Amazon DataZone.</p>",
+    "UpdateAccountPool": "<p>Updates the account pool.</p>",
     "UpdateAssetFilter": "<p>Updates an asset filter.</p>",
     "UpdateConnection": "<p>Updates a connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
     "UpdateDataSource": "<p>Updates the specified data source in Amazon DataZone.</p>",
@@ -233,6 +239,74 @@
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {
+      }
+    },
+    "AccountInfo": {
+      "base": "<p>The account information within an account pool.</p>",
+      "refs": {
+        "AccountInfoList$member": null
+      }
+    },
+    "AccountInfoList": {
+      "base": null,
+      "refs": {
+        "AccountSource$accounts": "<p>The static list of accounts within an account pool.</p>",
+        "ListAccountsInAccountPoolOutput$items": "<p>The results of the ListAccountsInAccountPool operation.</p>"
+      }
+    },
+    "AccountPoolId": {
+      "base": null,
+      "refs": {
+        "AccountPoolList$member": null,
+        "AccountPoolSummary$id": "<p>The ID of the account pool.</p>",
+        "CreateAccountPoolOutput$id": "<p>The ID of the account pool.</p>",
+        "DeleteAccountPoolInput$identifier": "<p>The ID of the account pool to be deleted.</p>",
+        "EnvironmentResolvedAccount$sourceAccountPoolId": "<p>The ID of the account pool.</p>",
+        "GetAccountPoolInput$identifier": "<p>The ID of the account pool whose details are to be displayed.</p>",
+        "GetAccountPoolOutput$id": "<p>The ID of the account pool.</p>",
+        "ListAccountsInAccountPoolInput$identifier": "<p>The ID of the account pool whose accounts are to be listed.</p>",
+        "UpdateAccountPoolInput$identifier": "<p>The ID of the account pool that is to be updated.</p>",
+        "UpdateAccountPoolOutput$id": "<p>The ID of the account pool that is to be updated.</p>"
+      }
+    },
+    "AccountPoolList": {
+      "base": null,
+      "refs": {
+        "EnvironmentConfiguration$accountPools": "<p>The account pools used by a custom project profile.</p>"
+      }
+    },
+    "AccountPoolName": {
+      "base": null,
+      "refs": {
+        "AccountPoolSummary$name": "<p>The name of the account pool.</p>",
+        "CreateAccountPoolInput$name": "<p>The name of the account pool.</p>",
+        "CreateAccountPoolOutput$name": "<p>The name of the account pool.</p>",
+        "GetAccountPoolOutput$name": "<p>The name of the account pool.</p>",
+        "ListAccountPoolsInput$name": "<p>The name of the account pool to be listed.</p>",
+        "UpdateAccountPoolInput$name": "<p>The name of the account pool that is to be updated.</p>",
+        "UpdateAccountPoolOutput$name": "<p>The name of the account pool that is to be updated.</p>"
+      }
+    },
+    "AccountPoolSummaries": {
+      "base": null,
+      "refs": {
+        "ListAccountPoolsOutput$items": "<p>The results of the ListAccountPools operation.</p>"
+      }
+    },
+    "AccountPoolSummary": {
+      "base": "<p>The summary of the account pool.</p>",
+      "refs": {
+        "AccountPoolSummaries$member": null
+      }
+    },
+    "AccountSource": {
+      "base": "<p>The source of accounts for the account pool. In the current release, it's either a static list of accounts provided by the customer or a custom Amazon Web Services Lambda handler. </p>",
+      "refs": {
+        "CreateAccountPoolInput$accountSource": "<p>The source of accounts for the account pool. In the current release, it's either a static list of accounts provided by the customer or a custom Amazon Web Services Lambda handler. </p>",
+        "CreateAccountPoolOutput$accountSource": "<p>The source of accounts for the account pool. In the current release, it's either a static list of accounts provided by the customer or a custom Amazon Web Services Lambda handler. </p>",
+        "GetAccountPoolOutput$accountSource": "<p>The source of accounts for the account pool. In the current release, it's either a static list of accounts provided by the customer or a custom Amazon Web Services Lambda handler. </p>",
+        "UpdateAccountPoolInput$accountSource": "<p>The source of accounts for the account pool. In the current release, it's either a static list of accounts provided by the customer or a custom Amazon Web Services Lambda handler. </p>",
+        "UpdateAccountPoolOutput$accountSource": "<p>The source of accounts for the account pool. In the current release, it's either a static list of accounts provided by the customer or a custom Amazon Web Services Lambda handler. </p>"
       }
     },
     "ActionLink": {
@@ -700,12 +774,14 @@
     "AwsAccountId": {
       "base": null,
       "refs": {
+        "AccountInfo$awsAccountId": "<p>The account ID.</p>",
         "AwsAccount$awsAccountId": "<p>The account ID of a project.</p>",
         "AwsLocation$awsAccountId": "<p>The account ID of a connection.</p>",
         "CreateEnvironmentOutput$awsAccountId": "<p>The Amazon Web Services account in which the Amazon DataZone environment is created.</p>",
         "CreateEnvironmentProfileInput$awsAccountId": "<p>The Amazon Web Services account in which the Amazon DataZone environment is created.</p>",
         "CreateEnvironmentProfileOutput$awsAccountId": "<p>The Amazon Web Services account ID in which this Amazon DataZone environment profile is created.</p>",
         "EnvironmentProfileSummary$awsAccountId": "<p>The identifier of an Amazon Web Services account in which an environment profile exists.</p>",
+        "EnvironmentResolvedAccount$awsAccountId": "<p>The ID of the resolved account.</p>",
         "EnvironmentSummary$awsAccountId": "<p>The identifier of the Amazon Web Services account in which an environment exists.</p>",
         "GetEnvironmentOutput$awsAccountId": "<p>The ID of the Amazon Web Services account where the environment exists.</p>",
         "GetEnvironmentProfileOutput$awsAccountId": "<p>The ID of the Amazon Web Services account where this environment profile exists.</p>",
@@ -714,6 +790,12 @@
         "UpdateEnvironmentOutput$awsAccountId": "<p>The identifier of the Amazon Web Services account in which the environment is to be updated.</p>",
         "UpdateEnvironmentProfileInput$awsAccountId": "<p>The Amazon Web Services account in which a specified environment profile is to be udpated.</p>",
         "UpdateEnvironmentProfileOutput$awsAccountId": "<p>The Amazon Web Services account in which a specified environment profile is to be udpated.</p>"
+      }
+    },
+    "AwsAccountName": {
+      "base": null,
+      "refs": {
+        "AccountInfo$awsAccountName": "<p>The account name.</p>"
       }
     },
     "AwsConsoleLinkParameters": {
@@ -740,10 +822,12 @@
       "base": null,
       "refs": {
         "AwsLocation$awsRegion": "<p>The Region of a connection.</p>",
+        "AwsRegionList$member": null,
         "CreateEnvironmentOutput$awsAccountRegion": "<p>The Amazon Web Services region in which the Amazon DataZone environment is created.</p>",
         "CreateEnvironmentProfileInput$awsAccountRegion": "<p>The Amazon Web Services region in which this environment profile is created.</p>",
         "CreateEnvironmentProfileOutput$awsAccountRegion": "<p>The Amazon Web Services region in which this Amazon DataZone environment profile is created.</p>",
         "EnvironmentProfileSummary$awsAccountRegion": "<p>The Amazon Web Services Region in which an environment profile exists.</p>",
+        "EnvironmentResolvedAccount$regionName": "<p>The name of the resolved Region.</p>",
         "EnvironmentSummary$awsAccountRegion": "<p>The Amazon Web Services Region in which an environment exists.</p>",
         "GetEnvironmentOutput$awsAccountRegion": "<p>The Amazon Web Services region where the environment exists.</p>",
         "GetEnvironmentProfileOutput$awsAccountRegion": "<p>The Amazon Web Services region where this environment profile exists.</p>",
@@ -752,6 +836,12 @@
         "UpdateEnvironmentOutput$awsAccountRegion": "<p>The Amazon Web Services Region in which the environment is updated.</p>",
         "UpdateEnvironmentProfileInput$awsAccountRegion": "<p>The Amazon Web Services Region in which a specified environment profile is to be updated.</p>",
         "UpdateEnvironmentProfileOutput$awsAccountRegion": "<p>The Amazon Web Services Region in which a specified environment profile is to be updated.</p>"
+      }
+    },
+    "AwsRegionList": {
+      "base": null,
+      "refs": {
+        "AccountInfo$supportedRegions": "<p>The regions supported for an account within an account pool. </p>"
       }
     },
     "BasicAuthenticationCredentials": {
@@ -1047,6 +1137,16 @@
         "GlueConnection$connectionType": "<p>The type of the Amazon Web Services Glue connection.</p>",
         "ListConnectionsInput$type": "<p>The type of connection.</p>",
         "UpdateConnectionOutput$type": "<p>The connection type.</p>"
+      }
+    },
+    "CreateAccountPoolInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateAccountPoolOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateAssetFilterInput": {
@@ -1468,12 +1568,14 @@
       "base": null,
       "refs": {
         "AcceptSubscriptionRequestOutput$createdBy": "<p>Specifies the Amazon DataZone user that accepted the specified subscription request.</p>",
+        "AccountPoolSummary$createdBy": "<p>The user who created the account pool.</p>",
         "AssetItem$createdBy": "<p>The Amazon DataZone user who created the inventory asset.</p>",
         "AssetItem$firstRevisionCreatedBy": "<p>The Amazon DataZone user who created the first revision of the inventory asset.</p>",
         "AssetListingItem$listingCreatedBy": "<p>The Amazon DataZone user who created the listing.</p>",
         "AssetRevision$createdBy": "<p>The Amazon DataZone user who created the asset revision.</p>",
         "AssetTypeItem$createdBy": "<p>The Amazon DataZone user who created the asset type.</p>",
         "CancelSubscriptionOutput$createdBy": "<p>Specifies the Amazon DataZone user who is cancelling the subscription.</p>",
+        "CreateAccountPoolOutput$createdBy": "<p>The user who created the account pool.</p>",
         "CreateAssetOutput$createdBy": "<p>The Amazon DataZone user that created this asset in the catalog.</p>",
         "CreateAssetOutput$firstRevisionCreatedBy": "<p>The Amazon DataZone user that made the first revision of the asset.</p>",
         "CreateAssetRevisionOutput$createdBy": "<p>The Amazon DataZone user who performed the asset revision.</p>",
@@ -1496,6 +1598,7 @@
         "DataProductRevision$createdBy": "<p>The user who created the data product revision.</p>",
         "DeleteSubscriptionGrantOutput$createdBy": "<p>The Amazon DataZone user who created the subscription grant that is deleted.</p>",
         "FormTypeData$createdBy": "<p>The Amazon DataZone user who created teh metadata form type.</p>",
+        "GetAccountPoolOutput$createdBy": "<p>The user who created the account pool.</p>",
         "GetAssetOutput$createdBy": "<p>The Amazon DataZone user who created the asset.</p>",
         "GetAssetOutput$firstRevisionCreatedBy": "<p>The Amazon DataZone user who created the first revision of the asset.</p>",
         "GetAssetTypeOutput$createdBy": "<p>The Amazon DataZone user who created the asset type.</p>",
@@ -1532,6 +1635,7 @@
         "SubscriptionRequestSummary$createdBy": "<p>The Amazon DataZone user who created the subscription request.</p>",
         "SubscriptionSummary$createdBy": "<p>The Amazon DataZone user who created the subscription.</p>",
         "SubscriptionTargetSummary$createdBy": "<p>The Amazon DataZone user who created the subscription target.</p>",
+        "UpdateAccountPoolOutput$createdBy": "<p>The user who created the account pool.</p>",
         "UpdateDomainUnitOutput$createdBy": "<p>The user who created the domain unit that you want to update.</p>",
         "UpdateProjectOutput$createdBy": "<p>The Amazon DataZone user who created the project.</p>",
         "UpdateProjectProfileOutput$createdBy": "<p>The user who created a project profile.</p>",
@@ -1563,6 +1667,12 @@
       "base": null,
       "refs": {
         "ScheduleConfiguration$schedule": "<p>The schedule of the data source runs.</p>"
+      }
+    },
+    "CustomAccountPoolHandler": {
+      "base": "<p>The custom Amazon Web Services Lambda handler within an account pool.</p>",
+      "refs": {
+        "AccountSource$customAccountPoolHandler": "<p>The custom Amazon Web Services Lambda handler within an account pool.</p>"
       }
     },
     "CustomParameter": {
@@ -1925,6 +2035,16 @@
         "UpdateSubscriptionRequestOutput$decisionComment": "<p>The decision comment of the <code>UpdateSubscriptionRequest</code> action.</p>"
       }
     },
+    "DeleteAccountPoolInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteAccountPoolOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteAssetFilterInput": {
       "base": null,
       "refs": {
@@ -2207,6 +2327,8 @@
         "AssetItem$description": "<p>The description of an Amazon DataZone inventory asset.</p>",
         "AssetListingItem$description": "<p>The description of an asset published in an Amazon DataZone catalog.</p>",
         "AssetTypeItem$description": "<p>The description of the asset type.</p>",
+        "CreateAccountPoolInput$description": "<p>The description of the account pool.</p>",
+        "CreateAccountPoolOutput$description": "<p>The description of the account pool.</p>",
         "CreateAssetFilterInput$description": "<p>The description of the asset filter.</p>",
         "CreateAssetFilterOutput$description": "<p>The description of the asset filter.</p>",
         "CreateAssetInput$description": "<p>Asset description.</p>",
@@ -2239,6 +2361,7 @@
         "EnvironmentProfileSummary$description": "<p>The description of the environment profile.</p>",
         "EnvironmentSummary$description": "<p>The description of the environment.</p>",
         "FormTypeData$description": "<p>The description of the metadata form type.</p>",
+        "GetAccountPoolOutput$description": "<p>The description of the account pool.</p>",
         "GetAssetFilterOutput$description": "<p>The description of the asset filter.</p>",
         "GetAssetOutput$description": "<p>The description of the Amazon DataZone asset.</p>",
         "GetAssetTypeOutput$description": "<p>The description of the asset type.</p>",
@@ -2255,6 +2378,8 @@
         "ProjectProfileSummary$description": "<p>The description of the project profile.</p>",
         "ProjectSummary$description": "<p>The description of a project.</p>",
         "SubscribedListing$description": "<p>The description of the published asset for which the subscription grant is created.</p>",
+        "UpdateAccountPoolInput$description": "<p>The description of the account pool that is to be udpated.</p>",
+        "UpdateAccountPoolOutput$description": "<p>The description of the account pool that is to be udpated.</p>",
         "UpdateAssetFilterInput$description": "<p>The description of the asset filter.</p>",
         "UpdateAssetFilterOutput$description": "<p>The description of the asset filter.</p>",
         "UpdateConnectionOutput$description": "<p>The connection description.</p>",
@@ -2312,6 +2437,7 @@
         "AcceptPredictionsOutput$domainId": "<p>The identifier of the Amazon DataZone domain.</p>",
         "AcceptSubscriptionRequestInput$domainIdentifier": "<p>The Amazon DataZone domain where the specified subscription request is being accepted.</p>",
         "AcceptSubscriptionRequestOutput$domainId": "<p>The unique identifier of the Amazon DataZone domain where the specified subscription request was accepted.</p>",
+        "AccountPoolSummary$domainId": "<p>The ID of the domain.</p>",
         "AddEntityOwnerInput$domainIdentifier": "<p>The ID of the domain in which you want to add the entity owner.</p>",
         "AddPolicyGrantInput$domainIdentifier": "<p>The ID of the domain where you want to add a policy grant.</p>",
         "AssetFilterSummary$domainId": "<p>The ID of the domain where the asset filter lives.</p>",
@@ -2324,6 +2450,8 @@
         "CancelSubscriptionInput$domainIdentifier": "<p>The unique identifier of the Amazon DataZone domain where the subscription request is being cancelled.</p>",
         "CancelSubscriptionOutput$domainId": "<p>The unique identifier of the Amazon DataZone domain where the subscription is being cancelled.</p>",
         "ConnectionSummary$domainId": "<p>The domain ID of a connection.</p>",
+        "CreateAccountPoolInput$domainIdentifier": "<p>The ID of the domain where the account pool is created.</p>",
+        "CreateAccountPoolOutput$domainId": "<p>The ID of the domain where the account pool is created.</p>",
         "CreateAssetFilterInput$domainIdentifier": "<p>The ID of the domain in which you want to create an asset filter.</p>",
         "CreateAssetFilterOutput$domainId": "<p>The ID of the domain where the asset filter is created.</p>",
         "CreateAssetInput$domainIdentifier": "<p>Amazon DataZone domain where the asset is created.</p>",
@@ -2377,6 +2505,7 @@
         "DataProductResultItem$domainId": "<p>The ID of the domain where the data product lives.</p>",
         "DataProductRevision$domainId": "<p>The ID of the domain where the data product revision lives.</p>",
         "DataSourceSummary$domainId": "<p>The ID of the Amazon DataZone domain in which the data source exists.</p>",
+        "DeleteAccountPoolInput$domainIdentifier": "<p>The ID of the domain where the account pool is deleted.</p>",
         "DeleteAssetFilterInput$domainIdentifier": "<p>The ID of the domain where you want to delete an asset filter.</p>",
         "DeleteAssetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset is deleted.</p>",
         "DeleteAssetTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the asset type is deleted.</p>",
@@ -2411,6 +2540,8 @@
         "EnvironmentSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which the environment exists.</p>",
         "FormTypeData$domainId": "<p>The identifier of the Amazon DataZone domain in which the form type exists.</p>",
         "FormTypeData$originDomainId": "<p>The identifier of the Amazon DataZone domain in which the form type was originally created.</p>",
+        "GetAccountPoolInput$domainIdentifier": "<p>The ID of the domain in which the account pool lives whose details are to be displayed.</p>",
+        "GetAccountPoolOutput$domainId": "<p>The ID of the domain in which the account pool lives whose details are to be displayed.</p>",
         "GetAssetFilterInput$domainIdentifier": "<p>The ID of the domain where you want to get an asset filter.</p>",
         "GetAssetFilterOutput$domainId": "<p>The ID of the domain where you want to get an asset filter.</p>",
         "GetAssetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain to which the asset belongs.</p>",
@@ -2484,6 +2615,8 @@
         "LineageEventSummary$domainId": "<p>The domain ID of the lineage event.</p>",
         "LineageNodeSummary$domainId": "<p>The ID of the domain of the data lineage node.</p>",
         "LineageNodeTypeItem$domainId": "<p>The ID of the domain where the data lineage node type lives.</p>",
+        "ListAccountPoolsInput$domainIdentifier": "<p>The ID of the domain where exsting account pools are to be listed.</p>",
+        "ListAccountsInAccountPoolInput$domainIdentifier": "<p>The ID of the domain in which the accounts in the specified account pool are to be listed.</p>",
         "ListAssetFiltersInput$domainIdentifier": "<p>The ID of the domain where you want to list asset filters.</p>",
         "ListAssetRevisionsInput$domainIdentifier": "<p>The identifier of the domain.</p>",
         "ListConnectionsInput$domainIdentifier": "<p>The ID of the domain where you want to list connections.</p>",
@@ -2544,6 +2677,8 @@
         "SubscriptionRequestSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription request exists.</p>",
         "SubscriptionSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which a subscription exists.</p>",
         "SubscriptionTargetSummary$domainId": "<p>The identifier of the Amazon DataZone domain in which the subscription target exists.</p>",
+        "UpdateAccountPoolInput$domainIdentifier": "<p>The domain ID where the account pool that is to be updated lives.</p>",
+        "UpdateAccountPoolOutput$domainId": "<p>The domain ID where the account pool that is to be updated lives.</p>",
         "UpdateAssetFilterInput$domainIdentifier": "<p>The ID of the domain where you want to update an asset filter.</p>",
         "UpdateAssetFilterOutput$domainId": "<p>The ID of the domain where the asset filter was created.</p>",
         "UpdateConnectionInput$domainIdentifier": "<p>The ID of the domain where a connection is to be updated.</p>",
@@ -2647,7 +2782,9 @@
     "DomainUnitId": {
       "base": null,
       "refs": {
+        "AccountPoolSummary$domainUnitId": "<p>The ID of the domain unit.</p>",
         "ConnectionSummary$domainUnitId": "<p>The domain unit ID of a connection.</p>",
+        "CreateAccountPoolOutput$domainUnitId": "<p>The ID of the domain where the account pool is created.</p>",
         "CreateConnectionOutput$domainUnitId": "<p>The ID of the domain unit where the connection is created.</p>",
         "CreateDomainOutput$rootDomainUnitId": "<p>The ID of the root domain unit.</p>",
         "CreateDomainUnitInput$parentDomainUnitIdentifier": "<p>The ID of the parent domain unit.</p>",
@@ -2664,6 +2801,7 @@
         "DomainUnitPolicyGrantPrincipal$domainUnitIdentifier": "<p>The ID of the domain unit.</p>",
         "DomainUnitSummary$id": "<p>The ID of the domain unit summary.</p>",
         "DomainUnitTarget$domainUnitId": "<p>The ID of the domain unit.</p>",
+        "GetAccountPoolOutput$domainUnitId": "<p>The domain unit ID of the account pool.</p>",
         "GetConnectionOutput$domainUnitId": "<p>The domain unit ID of the connection.</p>",
         "GetDomainOutput$rootDomainUnitId": "<p>The ID of the root domain in Amazon Datazone.</p>",
         "GetDomainUnitInput$identifier": "<p>The identifier of the domain unit that you want to get.</p>",
@@ -2674,6 +2812,7 @@
         "ListDomainUnitsForParentInput$parentDomainUnitIdentifier": "<p>The ID of the parent domain unit.</p>",
         "ProjectProfileSummary$domainUnitId": "<p>The domain unit ID of the project profile.</p>",
         "ProjectSummary$domainUnitId": "<p>The ID of the domain unit.</p>",
+        "UpdateAccountPoolOutput$domainUnitId": "<p>The domain ID in which the account pool that is to be updated lives.</p>",
         "UpdateConnectionOutput$domainUnitId": "<p>The ID of the domain unit where a connection is to be updated.</p>",
         "UpdateDomainOutput$rootDomainUnitId": "<p>The ID of the root domain unit.</p>",
         "UpdateDomainUnitInput$identifier": "<p>The ID of the domain unit that you want to update.</p>",
@@ -3113,6 +3252,12 @@
         "EnvironmentProfileSummaries$member": null
       }
     },
+    "EnvironmentResolvedAccount": {
+      "base": "<p>Specifies the account/Region that is to be used during project creation for a particular blueprint.</p>",
+      "refs": {
+        "EnvironmentConfigurationUserParameter$environmentResolvedAccount": "<p>Specifies the account/Region that is to be used during project creation for a particular blueprint.</p>"
+      }
+    },
     "EnvironmentStatus": {
       "base": null,
       "refs": {
@@ -3435,6 +3580,16 @@
         "CreateAssetTypeOutput$formsOutput": "<p>The metadata forms that are attached to the asset type.</p>",
         "GetAssetTypeOutput$formsOutput": "<p>The metadata forms attached to the asset type.</p>",
         "LineageNodeTypeItem$formsOutput": "<p>The forms output of the data lineage node type.</p>"
+      }
+    },
+    "GetAccountPoolInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAccountPoolOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "GetAssetFilterInput": {
@@ -4393,6 +4548,18 @@
         "ProvisioningConfiguration$lakeFormationConfiguration": "<p>The Lake Formation configuration of the Data Lake blueprint.</p>"
       }
     },
+    "LambdaExecutionRoleArn": {
+      "base": null,
+      "refs": {
+        "CustomAccountPoolHandler$lambdaExecutionRoleArn": "<p>The ARN of the IAM role that enables Amazon SageMaker Unified Studio to invoke the Amazon Web Services Lambda funtion if the account source is the custom account pool handler.</p>"
+      }
+    },
+    "LambdaFunctionArn": {
+      "base": null,
+      "refs": {
+        "CustomAccountPoolHandler$lambdaFunctionArn": "<p>The ARN of the Amazon Web Services Lambda function for the custom Amazon Web Services Lambda handler.</p>"
+      }
+    },
     "LastName": {
       "base": null,
       "refs": {
@@ -4541,6 +4708,26 @@
       "base": null,
       "refs": {
         "LineageSyncSchedule$schedule": "<p>The lineage sync schedule.</p>"
+      }
+    },
+    "ListAccountPoolsInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAccountPoolsOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAccountsInAccountPoolInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAccountsInAccountPoolOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "ListAssetFiltersInput": {
@@ -5006,6 +5193,8 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListAccountPoolsInput$maxResults": "<p>The maximum number of account pools to return in a single call to ListAccountPools. When the number of account pools to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListAccountPools to list the next set of account pools.</p>",
+        "ListAccountsInAccountPoolInput$maxResults": "<p>The maximum number of accounts to return in a single call to ListAccountsInAccountPool. When the number of accounts to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListAccountsInAccountPool to list the next set of accounts.</p>",
         "ListAssetFiltersInput$maxResults": "<p>The maximum number of asset filters to return in a single call to <code>ListAssetFilters</code>. When the number of asset filters to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
         "ListAssetRevisionsInput$maxResults": "<p>The maximum number of revisions to return in a single call to <code>ListAssetRevisions</code>. When the number of revisions to be listed is greater than the value of <code>MaxResults</code>, the response contains a <code>NextToken</code> value that you can use in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
         "ListConnectionsInput$maxResults": "<p>The maximum number of connections to return in a single call to ListConnections. When the number of connections to be listed is greater than the value of MaxResults, the response contains a NextToken value that you can use in a subsequent call to ListConnections to list the next set of connections.</p>",
@@ -5372,6 +5561,10 @@
     "PaginationToken": {
       "base": null,
       "refs": {
+        "ListAccountPoolsInput$nextToken": "<p>When the number of account pools is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of account pools, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListAccountPools to list the next set of account pools.</p>",
+        "ListAccountPoolsOutput$nextToken": "<p>When the number of account pools is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of account pools, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListAccountPools to list the next set of account pools.</p>",
+        "ListAccountsInAccountPoolInput$nextToken": "<p>When the number of accounts is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of accounts, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListAccountsInAccountPool to list the next set of accounts.</p>",
+        "ListAccountsInAccountPoolOutput$nextToken": "<p>When the number of accounts is greater than the default value for the MaxResults parameter, or if you explicitly specify a value for MaxResults that is less than the number of accounts, the response includes a pagination token named NextToken. You can specify this NextToken value in a subsequent call to ListAccountsInAccountPool to list the next set of accounts.</p>",
         "ListAssetFiltersInput$nextToken": "<p>When the number of asset filters is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of asset filters, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
         "ListAssetFiltersOutput$nextToken": "<p>When the number of asset filters is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of asset filters, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetFilters</code> to list the next set of asset filters.</p>",
         "ListAssetRevisionsInput$nextToken": "<p>When the number of revisions is greater than the default value for the <code>MaxResults</code> parameter, or if you explicitly specify a value for <code>MaxResults</code> that is less than the number of revisions, the response includes a pagination token named <code>NextToken</code>. You can specify this <code>NextToken</code> value in a subsequent call to <code>ListAssetRevisions</code> to list the next set of revisions.</p>",
@@ -6178,6 +6371,17 @@
         "MetadataFormEnforcementDetail$requiredMetadataForms": "<p>The required metadata forms.</p>"
       }
     },
+    "ResolutionStrategy": {
+      "base": null,
+      "refs": {
+        "AccountPoolSummary$resolutionStrategy": "<p>The mechanism used to resolve the account selection from the account pool.</p>",
+        "CreateAccountPoolInput$resolutionStrategy": "<p>The mechanism used to resolve the account selection from the account pool.</p>",
+        "CreateAccountPoolOutput$resolutionStrategy": "<p>The mechanism used to resolve the account selection from the account pool.</p>",
+        "GetAccountPoolOutput$resolutionStrategy": "<p>The mechanism used to resolve the account selection from the account pool.</p>",
+        "UpdateAccountPoolInput$resolutionStrategy": "<p>The mechanism used to resolve the account selection from the account pool.</p>",
+        "UpdateAccountPoolOutput$resolutionStrategy": "<p>The mechanism used to resolve the account selection from the account pool.</p>"
+      }
+    },
     "Resource": {
       "base": "<p>The details of a provisioned resource of this Amazon DataZone environment.</p>",
       "refs": {
@@ -6779,6 +6983,12 @@
         "Model$smithy": "<p>Indicates the smithy model of the API.</p>"
       }
     },
+    "SortFieldAccountPool": {
+      "base": null,
+      "refs": {
+        "ListAccountPoolsInput$sortBy": "<p>The sort by mechanism in which the existing account pools are to be listed.</p>"
+      }
+    },
     "SortFieldConnection": {
       "base": null,
       "refs": {
@@ -6804,6 +7014,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
+        "ListAccountPoolsInput$sortOrder": "<p>The sort order in which the existing account pools are to be listed.</p>",
         "ListConnectionsInput$sortOrder": "<p>Specifies the sort order for the listed connections.</p>",
         "ListJobRunsInput$sortOrder": "<p>Specifies the order in which job runs are to be sorted.</p>",
         "ListLineageEventsInput$sortOrder": "<p>The sort order of the lineage events.</p>",
@@ -7609,6 +7820,8 @@
       "base": null,
       "refs": {
         "ConnectionCredentials$expiration": "<p>The expiration of the connection credentials.</p>",
+        "CreateAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
+        "CreateAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
         "CreateEnvironmentOutput$createdAt": "<p>The timestamp of when the environment was created.</p>",
         "CreateEnvironmentOutput$updatedAt": "<p>The timestamp of when this environment was updated.</p>",
         "CreateEnvironmentProfileOutput$createdAt": "<p>The timestamp of when this environment profile was created.</p>",
@@ -7625,6 +7838,8 @@
         "EnvironmentProfileSummary$updatedAt": "<p>The timestamp of when the environment profile was updated.</p>",
         "EnvironmentSummary$createdAt": "<p>The timestamp of when the environment was created.</p>",
         "EnvironmentSummary$updatedAt": "<p>The timestamp of when the environment was updated.</p>",
+        "GetAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
+        "GetAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$createdAt": "<p>The timestamp of when this blueprint was created.</p>",
         "GetEnvironmentBlueprintConfigurationOutput$updatedAt": "<p>The timestamp of when this blueprint was upated.</p>",
         "GetEnvironmentBlueprintOutput$createdAt": "<p>A timestamp of when this blueprint was created.</p>",
@@ -7645,6 +7860,8 @@
         "PutEnvironmentBlueprintConfigurationOutput$createdAt": "<p>The timestamp of when the environment blueprint was created.</p>",
         "PutEnvironmentBlueprintConfigurationOutput$updatedAt": "<p>The timestamp of when the environment blueprint was updated.</p>",
         "SparkEmrPropertiesOutput$credentialsExpiration": "<p>The credential expiration of the Spark EMR.</p>",
+        "UpdateAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
+        "UpdateAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
         "UpdateEnvironmentOutput$createdAt": "<p>The timestamp of when the environment was created.</p>",
         "UpdateEnvironmentOutput$updatedAt": "<p>The timestamp of when the environment was updated.</p>",
         "UpdateEnvironmentProfileOutput$createdAt": "<p>The timestamp of when the environment profile was created.</p>",
@@ -7973,6 +8190,16 @@
       "refs": {
       }
     },
+    "UpdateAccountPoolInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAccountPoolOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateAssetFilterInput": {
       "base": null,
       "refs": {
@@ -8218,15 +8445,18 @@
       "base": null,
       "refs": {
         "AcceptSubscriptionRequestOutput$updatedBy": "<p>Specifies the Amazon DataZone user who updated the subscription request.</p>",
+        "AccountPoolSummary$updatedBy": "<p>The user who updated the account pool.</p>",
         "AssetListingItem$listingUpdatedBy": "<p>The Amazon DataZone user who updated the listing.</p>",
         "AssetTypeItem$updatedBy": "<p>The Amazon DataZone user who updated the asset type.</p>",
         "CancelSubscriptionOutput$updatedBy": "<p>The Amazon DataZone user that cancelled the subscription.</p>",
+        "CreateAccountPoolOutput$updatedBy": "<p>The user who last updated the account pool.</p>",
         "CreateAssetTypeOutput$updatedBy": "<p>The Amazon DataZone user that created the custom asset type.</p>",
         "CreateSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant.</p>",
         "CreateSubscriptionRequestOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription request.</p>",
         "CreateSubscriptionTargetOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
         "DataProductListingItem$listingUpdatedBy": "<p>The user who updated the listing.</p>",
         "DeleteSubscriptionGrantOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant that is deleted.</p>",
+        "GetAccountPoolOutput$updatedBy": "<p>The user who last updated the account pool.</p>",
         "GetAssetTypeOutput$updatedBy": "<p>The Amazon DataZone user that updated the asset type.</p>",
         "GetDomainUnitOutput$lastUpdatedBy": "<p>The user who last updated the domain unit.</p>",
         "GetGlossaryOutput$updatedBy": "<p>The Amazon DataZone user who updated the business glossary.</p>",
@@ -8249,6 +8479,7 @@
         "SubscriptionRequestSummary$updatedBy": "<p>The identifier of the Amazon DataZone user who updated the subscription request.</p>",
         "SubscriptionSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription.</p>",
         "SubscriptionTargetSummary$updatedBy": "<p>The Amazon DataZone user who updated the subscription target.</p>",
+        "UpdateAccountPoolOutput$updatedBy": "<p>The user who last updated the account pool.</p>",
         "UpdateDomainUnitOutput$lastUpdatedBy": "<p>The user who last updated the domain unit.</p>",
         "UpdateRuleOutput$lastUpdatedBy": "<p>The timestamp at which the rule was last updated.</p>",
         "UpdateSubscriptionGrantStatusOutput$updatedBy": "<p>The Amazon DataZone user who updated the subscription grant status.</p>",
