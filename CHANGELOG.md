@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.353.0 - 2025-08-13
 
 * `Aws\` - Added support for configuring auth schemes based on user's preference. The order in which these auth schemes are provided will define the priority of the auth schemes selection.
 * `Aws\Braket` - Add support for Braket program sets.
