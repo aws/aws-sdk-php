@@ -1561,7 +1561,7 @@ EOF;
                 $currentEnvAwsConfigFile
             ) {
                 if ($currentEnvAwsConfigFile !== false) {
-                    putenv("AWS_CONFIG_FILE=$tempConfigFile");
+                    putenv("AWS_CONFIG_FILE=$currentEnvAwsConfigFile");
                 } else {
                     putenv('AWS_CONFIG_FILE=');
                 }
