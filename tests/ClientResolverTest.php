@@ -18,6 +18,7 @@ use Aws\LruArrayCache;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Result;
+use Generator;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -1517,6 +1518,201 @@ EOF;
             } else {
                 putenv(ConfigurationResolver::ENV_CONFIG_FILE);
             }
+        }
+    }
+
+    /**
+     * @param bool $isExpected
+     * @param array $expectedValue
+     * @param array $args
+     * @param string|null $ini
+     * @param string|null $env
+     * @return void
+     *
+     * @dataProvider resolvesAuthSchemePreferenceProvider
+     */
+    public function testResolvesAuthSchemePreference(
+        bool $isExpected,
+        array $expectedValue,
+        array $args = [],
+        ?string $ini = null,
+        ?string $env = null,
+    ): void
+    {
+        // Callback list to be executed after test is executed
+        $onCompletionCallbacks = [];
+        if ($ini !== null) {
+            $currentEnvAwsConfigFile = getenv('AWS_CONFIG_FILE');
+            $tempDir = sys_get_temp_dir() . '/test-auth-preference/.aws/';
+            $tempConfigFile = $tempDir . 'config';
+            $configContent = "[default]\nauth_scheme_preference=$ini";
+
+            // If the temp directory does not exist then we create it
+            if (!is_dir($tempDir)) {
+                mkdir($tempDir, 0777, true);
+            }
+
+            file_put_contents($tempConfigFile, $configContent);
+            putenv("AWS_CONFIG_FILE=$tempConfigFile");
+
+            $onCompletionCallbacks[] = function () use (
+                $tempConfigFile,
+                $tempDir,
+                $currentEnvAwsConfigFile
+            ) {
+                if ($currentEnvAwsConfigFile !== false) {
+                    putenv("AWS_CONFIG_FILE=$currentEnvAwsConfigFile");
+                } else {
+                    putenv('AWS_CONFIG_FILE=');
+                }
+                unlink($tempConfigFile);
+                rmdir($tempDir);
+            };
+        }
+
+        if ($env !== null) {
+            $currentEnvAuthSchemePreference = getenv('AWS_AUTH_SCHEME_PREFERENCE');
+            putenv(
+                "AWS_AUTH_SCHEME_PREFERENCE=$env",
+            );
+            $onCompletionCallbacks[] = function () use (
+                $currentEnvAuthSchemePreference
+            ) {
+                if ($currentEnvAuthSchemePreference !== false) {
+                    putenv(
+                        "AWS_AUTH_SCHEME_PREFERENCE=$currentEnvAuthSchemePreference"
+                    );
+                } else {
+                    putenv('AWS_AUTH_SCHEME_PREFERENCE=');
+                }
+            };
+        }
+
+        try {
+            // To create the source such as env or from ini
+            $clientResolver = new ClientResolver(
+                ClientResolver::getDefaultArguments()
+            );
+            $resolvedConfig = $clientResolver->resolve([
+                    'service' => 's3',
+                    'region' => 'us-east-1'
+                ] + $args, new HandlerList());
+
+            if ($isExpected) {
+                $this->assertArrayHasKey(
+                    'auth_scheme_preference',
+                    $resolvedConfig
+                );
+                $this->assertTrue(
+                    is_array($resolvedConfig['auth_scheme_preference'])
+                );
+                $this->assertEquals(
+                    $expectedValue,
+                    $resolvedConfig['auth_scheme_preference']
+                );
+            } else {
+                $this->assertArrayNotHasKey(
+                    'auth_scheme_preference',
+                    $resolvedConfig
+                );
+            }
+        } finally {
+            foreach ($onCompletionCallbacks as $onCompletionCallback) {
+                call_user_func($onCompletionCallback);
+            }
+        }
+    }
+
+    /**
+     * @return Generator
+     */
+    public function resolvesAuthSchemePreferenceProvider(): Generator
+    {
+        $cases = [
+            'provided_at_client_construction' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#httpBearerAuth',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [
+                    'auth_scheme_preference' => [
+                        'smithy.api#httpBearerAuth',
+                        'smithy.api#noAuth',
+                    ]
+                ],
+            ],
+            'provided_auth_scheme_preference_from_env_1' => [
+                'is_expected' => true,
+                'expected' => [
+                    'aws.auth#sigv4a',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'aws.auth#sigv4a,smithy.api#noAuth',
+            ],
+            'provided_auth_scheme_preference_from_env_ignore_spaces' => [
+                'is_expected' => true,
+                'expected' => [
+                    'aws.auth#sigv4a',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'aws.auth#sigv4a,      smithy.api#noAuth'
+            ],
+            'provided_auth_scheme_preference_from_ini' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#noAuth',
+                    'aws.auth#sigv4'
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'smithy.api#noAuth, aws.auth#sigv4'
+            ],
+            'provided_auth_scheme_preference_from_ini_ignores_tab_and_spaces' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#noAuth',
+                    'aws.auth#sigv4',
+                    'aws.auth#sigv4a'
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'smithy.api#noAuth,   aws.auth#sigv4 , aws.auth#sigv4a'
+            ],
+            'provided_at_client_construction_takes_precedence_over' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#httpBearerAuth',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [
+                    'auth_scheme_preference' => [
+                        'smithy.api#httpBearerAuth',
+                        'smithy.api#noAuth',
+                    ]
+                ],
+                'ini' => 'aws.auth#sigv4,aws.auth#sigv4a',
+                'env' => 'smithy.api#noAuth,aws.auth#sigv4,aws.auth#sigv4a'
+            ],
+            'provided_at_env_takes_precedence_over_ini' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#noAuth',
+                    'aws.auth#sigv4',
+                    'aws.auth#sigv4a'
+                ],
+                'args' => [],
+                'ini' => 'aws.auth#sigv4,aws.auth#sigv4a',
+                'env' => 'smithy.api#noAuth,aws.auth#sigv4,aws.auth#sigv4a'
+            ]
+        ];
+
+        foreach ($cases as $key => $case) {
+            yield $key => $case;
         }
     }
 }
