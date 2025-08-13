@@ -91,7 +91,8 @@ abstract class AbstractRestParser extends AbstractParser
 
             $result[$payload] = [];
             $this->payload($response, $member, $result[$payload]);
-        } elseif (!$body->isSeekable() || $body->getSize()) {
+        } else {
+            // Always set the payload to the body stream, regardless of content
             $result[$payload] = $body;
         }
     }
