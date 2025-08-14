@@ -35,6 +35,11 @@ class ComplianceTest extends TestCase
         'Ec2QueryDateTimeWithFractionalSeconds' => true,
         'AwsJson11DateTimeWithFractionalSeconds' => true,
         'RestXmlDateTimeWithFractionalSeconds' => true,
+        // Certain packages depend on a non-empty payload field
+        // In particular, S3 where some packages always expect a 'Body'
+        // regardless of its contents (empty vs non-empty)
+        'HttpPayloadTraitsWithNoBlobBody' => true,
+        'RestJsonHttpPayloadTraitsWithNoBlobBody' => true,
         // previously we used a flattened list's target shape `locationName`
         // to determine flattened list location names. This contradicts the
         // behavior prescribed by Smithy, but only seems to have applied to

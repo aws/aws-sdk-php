@@ -26,6 +26,7 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 use Aws\Exception\UnresolvedEndpointException;
 
@@ -3038,5 +3039,32 @@ EOXML;
                 'adaptive'
             ]
         ];
+    }
+
+    public function testEmptyPayloadIsAlwaysDeserializedAsStream()
+    {
+        $client = $this->getTestClient('S3', [
+            'http_handler' => function ($request, array $options) {
+                // Return a response with an empty body
+                return Promise\Create::promiseFor(
+                    new Psr7\Response(200, [], '')
+                );
+            },
+            'credentials' => [
+                'key' => 'foo',
+                'secret' => 'bar'
+            ]
+        ]);
+
+        $result = $client->getObject([
+            'Bucket' => 'foo',
+            'Key'    => 'bar',
+        ]);
+
+        // Assert that Body exists and is a StreamInterface even when empty
+        $this->assertArrayHasKey('Body', $result);
+        $this->assertInstanceOf(StreamInterface::class, $result['Body']);
+        $this->assertSame('', (string) $result['Body']);
+        $this->assertSame(0, $result['Body']->getSize());
     }
 }
