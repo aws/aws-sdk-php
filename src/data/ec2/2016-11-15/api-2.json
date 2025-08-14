@@ -4990,6 +4990,15 @@
       "input":{"shape":"ModifyInstanceCapacityReservationAttributesRequest"},
       "output":{"shape":"ModifyInstanceCapacityReservationAttributesResult"}
     },
+    "ModifyInstanceConnectEndpoint":{
+      "name":"ModifyInstanceConnectEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyInstanceConnectEndpointRequest"},
+      "output":{"shape":"ModifyInstanceConnectEndpointResult"}
+    },
     "ModifyInstanceCpuOptions":{
       "name":"ModifyInstanceCpuOptions",
       "http":{
@@ -23771,6 +23780,10 @@
         "IpAddressType":{
           "shape":"IpAddressType",
           "locationName":"ipAddressType"
+        },
+        "PublicDnsNames":{
+          "shape":"InstanceConnectEndpointPublicDnsNames",
+          "locationName":"publicDnsNames"
         }
       }
     },
@@ -23782,7 +23795,10 @@
         "create-failed",
         "delete-in-progress",
         "delete-complete",
-        "delete-failed"
+        "delete-failed",
+        "update-in-progress",
+        "update-complete",
+        "update-failed"
       ]
     },
     "EfaInfo":{
@@ -29932,11 +29948,37 @@
         }
       }
     },
+    "InstanceConnectEndpointDnsNames":{
+      "type":"structure",
+      "members":{
+        "DnsName":{
+          "shape":"String",
+          "locationName":"dnsName"
+        },
+        "FipsDnsName":{
+          "shape":"String",
+          "locationName":"fipsDnsName"
+        }
+      }
+    },
     "InstanceConnectEndpointId":{"type":"string"},
     "InstanceConnectEndpointMaxResults":{
       "type":"integer",
       "max":50,
       "min":1
+    },
+    "InstanceConnectEndpointPublicDnsNames":{
+      "type":"structure",
+      "members":{
+        "Ipv4":{
+          "shape":"InstanceConnectEndpointDnsNames",
+          "locationName":"ipv4"
+        },
+        "Dualstack":{
+          "shape":"InstanceConnectEndpointDnsNames",
+          "locationName":"dualstack"
+        }
+      }
     },
     "InstanceConnectEndpointSet":{
       "type":"list",
@@ -36868,6 +36910,29 @@
       }
     },
     "ModifyInstanceCapacityReservationAttributesResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
+    "ModifyInstanceConnectEndpointRequest":{
+      "type":"structure",
+      "required":["InstanceConnectEndpointId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "InstanceConnectEndpointId":{"shape":"InstanceConnectEndpointId"},
+        "IpAddressType":{"shape":"IpAddressType"},
+        "SecurityGroupIds":{
+          "shape":"SecurityGroupIdStringListRequest",
+          "locationName":"SecurityGroupId"
+        },
+        "PreserveClientIp":{"shape":"Boolean"}
+      }
+    },
+    "ModifyInstanceConnectEndpointResult":{
       "type":"structure",
       "members":{
         "Return":{

@@ -246,6 +246,12 @@
         "AutoScalingPolicyUpdate$TargetTrackingScalingPolicyConfiguration": "<p>Represents a target tracking scaling policy configuration.</p>"
       }
     },
+    "AvailabilityErrorMessage": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$message": null
+      }
+    },
     "Backfilling": {
       "base": null,
       "refs": {
@@ -643,6 +649,15 @@
       "base": null,
       "refs": {
         "UpdateContributorInsightsInput$ContributorInsightsAction": "<p>Represents the contributor insights action.</p>"
+      }
+    },
+    "ContributorInsightsMode": {
+      "base": null,
+      "refs": {
+        "ContributorInsightsSummary$ContributorInsightsMode": "<p>Indicates the current mode of CloudWatch Contributor Insights, specifying whether it tracks all access and throttled events or throttled events only for the DynamoDB table or index.</p>",
+        "DescribeContributorInsightsOutput$ContributorInsightsMode": "<p>The mode of CloudWatch Contributor Insights for DynamoDB that determines which events are emitted. Can be set to track all access and throttled events or throttled events only.</p>",
+        "UpdateContributorInsightsInput$ContributorInsightsMode": "<p>Specifies whether to track all access and throttled events or throttled events only for the DynamoDB table or index.</p>",
+        "UpdateContributorInsightsOutput$ContributorInsightsMode": "<p>The updated mode of CloudWatch Contributor Insights that determines whether to monitor all access and throttled events or to track throttled events exclusively.</p>"
       }
     },
     "ContributorInsightsRule": {
@@ -2219,7 +2234,7 @@
       }
     },
     "ProvisionedThroughputExceededException": {
-      "base": "<p>Your request rate is too high. The Amazon Web Services SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Programming.Errors.html#Programming.Errors.RetryAndBackoff\">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
+      "base": "<p>The request was denied due to request throttling. For detailed information about why the request was throttled and the ARN of the impacted resource, find the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> field in the returned exception. The Amazon Web Services SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Programming.Errors.html#Programming.Errors.RetryAndBackoff\">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
       "refs": {}
     },
     "ProvisionedThroughputOverride": {
@@ -2275,6 +2290,12 @@
     "QueryOutput": {
       "base": "<p>Represents the output of a <code>Query</code> operation.</p>",
       "refs": {}
+    },
+    "Reason": {
+      "base": null,
+      "refs": {
+        "ThrottlingReason$reason": "<p>The reason for throttling. The throttling reason follows a specific format: <code>ResourceType+OperationType+LimitType</code>:</p> <ul> <li> <p>Resource Type (What is being throttled): Table or Index</p> </li> <li> <p>Operation Type (What kind of operation): Read or Write</p> </li> <li> <p>Limit Type (Why the throttling occurred):</p> <ul> <li> <p> <code>ProvisionedThroughputExceeded</code>: The request rate is exceeding the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html\">provisioned throughput capacity</a> (read or write capacity units) configured for a table or a global secondary index (GSI) in provisioned capacity mode.</p> </li> <li> <p> <code>AccountLimitExceeded</code>: The request rate has caused a table or global secondary index (GSI) in on-demand mode to exceed the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ServiceQuotas.html#default-limits-throughput\">per-table account-level service quotas</a> for read/write throughput in the current Amazon Web Services Region. </p> </li> <li> <p> <code>KeyRangeThroughputExceeded</code>: The request rate directed at a specific partition key value has exceeded the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html\">internal partition-level throughput limits</a>, indicating uneven access patterns across the table's or GSI's key space.</p> </li> <li> <p> <code>MaxOnDemandThroughputExceeded</code>: The request rate has exceeded the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode-max-throughput.html\">configured maximum throughput limits</a> set for a table or index in on-demand capacity mode.</p> </li> </ul> </li> </ul> <p>Examples of complete throttling reasons:</p> <ul> <li> <p>TableReadProvisionedThroughputExceeded</p> </li> <li> <p>IndexWriteAccountLimitExceeded</p> </li> </ul> <p>This helps identify exactly what resource is being throttled, what type of operation caused it, and why the throttling occurred.</p>"
+      }
     },
     "RecoveryPeriodInDays": {
       "base": null,
@@ -2508,8 +2529,14 @@
       }
     },
     "RequestLimitExceeded": {
-      "base": "<p>Throughput exceeds the current throughput quota for your account. Please contact <a href=\"https://aws.amazon.com/support\">Amazon Web ServicesSupport</a> to request a quota increase.</p>",
+      "base": "<p>Throughput exceeds the current throughput quota for your account. For detailed information about why the request was throttled and the ARN of the impacted resource, find the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> field in the returned exception. Contact <a href=\"https://aws.amazon.com/support\">Amazon Web ServicesSupport</a> to request a quota increase.</p>",
       "refs": {}
+    },
+    "Resource": {
+      "base": null,
+      "refs": {
+        "ThrottlingReason$resource": "<p>The Amazon Resource Name (ARN) of the DynamoDB table or index that experienced the throttling event.</p>"
+      }
     },
     "ResourceArnString": {
       "base": null,
@@ -3021,6 +3048,24 @@
       "base": null,
       "refs": {
         "Tag$Value": "<p>The value of the tag. Tag values are case-sensitive and can be null.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling. For detailed information about why the request was throttled and the ARN of the impacted resource, find the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> field in the returned exception.</p>",
+      "refs": {}
+    },
+    "ThrottlingReason": {
+      "base": "<p>Represents the specific reason why a DynamoDB request was throttled and the ARN of the impacted resource. This helps identify exactly what resource is being throttled, what type of operation caused it, and why the throttling occurred.</p>",
+      "refs": {
+        "ThrottlingReasonList$member": null
+      }
+    },
+    "ThrottlingReasonList": {
+      "base": null,
+      "refs": {
+        "ProvisionedThroughputExceededException$ThrottlingReasons": "<p>A list of <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> that provide detailed diagnostic information about why the request was throttled. </p>",
+        "RequestLimitExceeded$ThrottlingReasons": "<p>A list of <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> that provide detailed diagnostic information about why the request was throttled. </p>",
+        "ThrottlingException$throttlingReasons": "<p>A list of <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> that provide detailed diagnostic information about why the request was throttled. </p>"
       }
     },
     "TimeRangeLowerBound": {

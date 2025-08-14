@@ -39,6 +39,7 @@
     "DescribeConnectClientAddIns": "<p>Retrieves a list of Amazon Connect client add-ins that have been created.</p>",
     "DescribeConnectionAliasPermissions": "<p>Describes the permissions that the owner of a connection alias has granted to another Amazon Web Services account for the specified connection alias. For more information, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/cross-region-redirection.html\"> Cross-Region Redirection for Amazon WorkSpaces</a>.</p>",
     "DescribeConnectionAliases": "<p>Retrieves a list that describes the connection aliases used for cross-Region redirection. For more information, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/cross-region-redirection.html\"> Cross-Region Redirection for Amazon WorkSpaces</a>.</p>",
+    "DescribeCustomWorkspaceImageImport": "<p>Retrieves information about a WorkSpace BYOL image being imported via ImportCustomWorkspaceImage.</p>",
     "DescribeImageAssociations": "<p>Describes the associations between the applications and the specified image.</p>",
     "DescribeIpGroups": "<p>Describes one or more of your IP access control groups.</p>",
     "DescribeTags": "<p>Describes the specified tags for the specified WorkSpaces resource.</p>",
@@ -57,6 +58,7 @@
     "DisassociateWorkspaceApplication": "<p>Disassociates the specified application from a WorkSpace.</p>",
     "GetAccountLink": "<p>Retrieves account link information.</p>",
     "ImportClientBranding": "<p>Imports client branding. Client branding allows you to customize your WorkSpace's client login portal. You can tailor your login portal company logo, the support email address, support link, link to reset password, and a custom message for users trying to sign in.</p> <p>After you import client branding, the default branding experience for the specified platform type is replaced with the imported experience</p> <note> <ul> <li> <p>You must specify at least one platform type when importing client branding.</p> </li> <li> <p>You can import up to 6 MB of data with each request. If your request exceeds this limit, you can import client branding for different platform types using separate requests.</p> </li> <li> <p>In each platform type, the <code>SupportEmail</code> and <code>SupportLink</code> parameters are mutually exclusive. You can specify only one parameter for each platform type, but not both.</p> </li> <li> <p>Imported data can take up to a minute to appear in the WorkSpaces client.</p> </li> </ul> </note>",
+    "ImportCustomWorkspaceImage": "<p>Imports the specified Windows 10 or 11 Bring Your Own License (BYOL) image into Amazon WorkSpaces using EC2 Image Builder. The image must be an already licensed image that is in your Amazon Web Services account, and you must own the image. For more information about creating BYOL images, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.html\"> Bring Your Own Windows Desktop Licenses</a>. </p>",
     "ImportWorkspaceImage": "<p>Imports the specified Windows 10 or 11 Bring Your Own License (BYOL) image into Amazon WorkSpaces. The image must be an already licensed Amazon EC2 image that is in your Amazon Web Services account, and you must own the image. For more information about creating BYOL images, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/byol-windows-images.html\"> Bring Your Own Windows Desktop Licenses</a>.</p>",
     "ListAccountLinks": "<p>Lists all account links.</p>",
     "ListAvailableManagementCidrRanges": "<p>Retrieves a list of IP address ranges, specified as IPv4 CIDR blocks, that you can use for the network management interface when you enable Bring Your Own License (BYOL). </p> <p>This operation can be run only by Amazon Web Services accounts that are enabled for BYOL. If your account isn't enabled for BYOL, you'll receive an <code>AccessDeniedException</code> error.</p> <p>The management network interface is connected to a secure Amazon WorkSpaces management network. It is used for interactive streaming of the WorkSpace desktop to Amazon WorkSpaces clients, and to allow Amazon WorkSpaces to manage the WorkSpace.</p>",
@@ -849,6 +851,31 @@
       "base": null,
       "refs": {}
     },
+    "CustomImageProtocol": {
+      "base": null,
+      "refs": {
+        "ImportCustomWorkspaceImageRequest$Protocol": "<p>The supported protocol for the WorkSpace image. Windows 11 does not support PCOIP protocol.</p>"
+      }
+    },
+    "CustomWorkspaceImageImportErrorDetails": {
+      "base": "<p>Describes in-depth details about the error. These details include the possible causes of the error and troubleshooting information.</p>",
+      "refs": {
+        "CustomWorkspaceImageImportErrorDetailsList$member": null
+      }
+    },
+    "CustomWorkspaceImageImportErrorDetailsList": {
+      "base": null,
+      "refs": {
+        "DescribeCustomWorkspaceImageImportResult$ErrorDetails": "<p>Describes in-depth details about the error. These details include the possible causes of the error and troubleshooting information.</p>"
+      }
+    },
+    "CustomWorkspaceImageImportState": {
+      "base": null,
+      "refs": {
+        "DescribeCustomWorkspaceImageImportResult$State": "<p>The state of the WorkSpace image.</p>",
+        "ImportCustomWorkspaceImageResult$State": "<p>The state of the WorkSpace image.</p>"
+      }
+    },
     "DataReplication": {
       "base": null,
       "refs": {
@@ -1129,6 +1156,14 @@
       "refs": {}
     },
     "DescribeConnectionAliasesResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeCustomWorkspaceImageImportRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeCustomWorkspaceImageImportResult": {
       "base": null,
       "refs": {}
     },
@@ -1421,7 +1456,14 @@
     "Ec2ImageId": {
       "base": null,
       "refs": {
+        "ImageSourceIdentifier$Ec2ImageId": "<p>The identifier of the EC2 image.</p>",
         "ImportWorkspaceImageRequest$Ec2ImageId": "<p>The identifier of the EC2 image.</p>"
+      }
+    },
+    "Ec2ImportTaskId": {
+      "base": null,
+      "refs": {
+        "ImageSourceIdentifier$Ec2ImportTaskId": "<p>The EC2 import task ID to import the image from the Amazon EC2 VM import process.</p>"
       }
     },
     "EndpointEncryptionMode": {
@@ -1429,6 +1471,12 @@
       "refs": {
         "ModifyEndpointEncryptionModeRequest$EndpointEncryptionMode": "<p>The encryption mode used for endpoint connections when streaming to WorkSpaces Personal or WorkSpace Pools.</p>",
         "WorkspaceDirectory$EndpointEncryptionMode": "<p>Endpoint encryption mode that allows you to configure the specified directory between Standard TLS and FIPS 140-2 validated mode.</p>"
+      }
+    },
+    "ErrorCode": {
+      "base": null,
+      "refs": {
+        "CustomWorkspaceImageImportErrorDetails$ErrorCode": "<p>The error code that is returned for the image import.</p>"
       }
     },
     "ErrorDetails": {
@@ -1595,6 +1643,24 @@
         "DescribeImageAssociationsRequest$AssociatedResourceTypes": "<p>The resource types of the associated resource.</p>"
       }
     },
+    "ImageBuildVersionArn": {
+      "base": null,
+      "refs": {
+        "ImageSourceIdentifier$ImageBuildVersionArn": "<p>The ARN of the EC2 Image Builder image.</p>"
+      }
+    },
+    "ImageComputeType": {
+      "base": null,
+      "refs": {
+        "ImportCustomWorkspaceImageRequest$ComputeType": "<p>The supported compute type for the WorkSpace image.</p>"
+      }
+    },
+    "ImageErrorMessage": {
+      "base": null,
+      "refs": {
+        "CustomWorkspaceImageImportErrorDetails$ErrorMessage": "<p>The text of the error message that is returned for the image import.</p>"
+      }
+    },
     "ImagePermission": {
       "base": "<p>Describes the Amazon Web Services accounts that have been granted permission to use a shared image. For more information about sharing images, see <a href=\"https://docs.aws.amazon.com/workspaces/latest/adminguide/share-custom-image.html\"> Share or Unshare a Custom WorkSpaces Image</a>.</p>",
       "refs": {
@@ -1619,6 +1685,13 @@
         "DescribeImageAssociationsResult$Associations": "<p>List of information about the specified associations.</p>"
       }
     },
+    "ImageSourceIdentifier": {
+      "base": "<p>Describes the image import source.</p>",
+      "refs": {
+        "DescribeCustomWorkspaceImageImportResult$ImageSource": "<p>Describes the image import source.</p>",
+        "ImportCustomWorkspaceImageRequest$ImageSource": "<p>The options for image import source.</p>"
+      }
+    },
     "ImageType": {
       "base": null,
       "refs": {
@@ -1633,6 +1706,14 @@
       "base": null,
       "refs": {}
     },
+    "ImportCustomWorkspaceImageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ImportCustomWorkspaceImageResult": {
+      "base": null,
+      "refs": {}
+    },
     "ImportWorkspaceImageRequest": {
       "base": null,
       "refs": {}
@@ -1644,6 +1725,13 @@
     "IncompatibleApplicationsException": {
       "base": "<p>The specified application is not compatible with the resource.</p>",
       "refs": {}
+    },
+    "InfrastructureConfigurationArn": {
+      "base": null,
+      "refs": {
+        "DescribeCustomWorkspaceImageImportResult$InfrastructureConfigurationArn": "<p>The infrastructure configuration ARN that specifies how the WorkSpace image is built.</p>",
+        "ImportCustomWorkspaceImageRequest$InfrastructureConfigurationArn": "<p>The infrastructure configuration ARN that specifies how the WorkSpace image is built.</p>"
+      }
     },
     "InternalServerException": {
       "base": "<p>Unexpected server error occured.</p>",
@@ -1874,6 +1962,13 @@
         "UserSetting$MaximumLength": "<p>Indicates the maximum character length for the specified user setting.</p>"
       }
     },
+    "Message": {
+      "base": null,
+      "refs": {
+        "DescribeAccountResult$Message": "<p>The text message to describe the status of BYOL.</p>",
+        "ModifyAccountResult$Message": "<p>The text message to describe the status of BYOL modification.</p>"
+      }
+    },
     "MicrosoftEntraConfig": {
       "base": "<p>Specifies the configurations of the Microsoft Entra.</p>",
       "refs": {
@@ -2024,6 +2119,7 @@
         "CreateTagsRequest$ResourceId": "<p>The identifier of the WorkSpaces resource. The supported resource types are WorkSpaces, registered directories, images, custom bundles, IP access control groups, and connection aliases.</p>",
         "DeleteTagsRequest$ResourceId": "<p>The identifier of the WorkSpaces resource. The supported resource types are WorkSpaces, registered directories, images, custom bundles, IP access control groups, and connection aliases.</p>",
         "DescribeConnectionAliasesRequest$ResourceId": "<p>The identifier of the directory associated with the connection alias.</p>",
+        "DescribeCustomWorkspaceImageImportResult$ImageBuilderInstanceId": "<p>The image builder instance ID of the WorkSpace image.</p>",
         "DescribeTagsRequest$ResourceId": "<p>The identifier of the WorkSpaces resource. The supported resource types are WorkSpaces, registered directories, images, custom bundles, IP access control groups, and connection aliases.</p>",
         "ImageResourceAssociation$AssociatedResourceId": "<p>The identifier of the associated resource.</p>",
         "ModifyClientPropertiesRequest$ResourceId": "<p>The resource identifiers, in the form of directory IDs.</p>",
@@ -2040,6 +2136,12 @@
         "WorkSpaceApplication$Name": "<p>The name of the WorkSpace application.</p>",
         "WorkspaceBundle$Name": "<p>The name of the bundle.</p>",
         "WorkspaceResourceAssociation$AssociatedResourceId": "<p>The identifier of the associated resource.</p>"
+      }
+    },
+    "OSVersion": {
+      "base": null,
+      "refs": {
+        "ImportCustomWorkspaceImageRequest$OsVersion": "<p>The OS version for the WorkSpace image source.</p>"
       }
     },
     "OperatingSystem": {
@@ -2130,6 +2232,12 @@
       "base": null,
       "refs": {
         "CreateStandbyWorkspacesResult$PendingStandbyRequests": "<p>Information about the standby WorkSpace that was created.</p>"
+      }
+    },
+    "Platform": {
+      "base": null,
+      "refs": {
+        "ImportCustomWorkspaceImageRequest$Platform": "<p>The platform for the WorkSpace image source.</p>"
       }
     },
     "PoolsRunningMode": {
@@ -2574,6 +2682,7 @@
         "CreateWorkspaceImageRequest$Tags": "<p>The tags that you want to add to the new WorkSpace image. To add tags when you're creating the image, you must create an IAM policy that grants your IAM user permission to use <code>workspaces:CreateTags</code>.</p>",
         "CreateWorkspacesPoolRequest$Tags": "<p>The tags for the pool.</p>",
         "DescribeTagsResult$TagList": "<p>The tags.</p>",
+        "ImportCustomWorkspaceImageRequest$Tags": "<p>The resource tags. Each WorkSpaces resource can have a maximum of 50 tags.</p>",
         "ImportWorkspaceImageRequest$Tags": "<p>The tags. Each WorkSpaces resource can have a maximum of 50 tags.</p>",
         "RegisterWorkspaceDirectoryRequest$Tags": "<p>The tags associated with the directory.</p>",
         "StandbyWorkspace$Tags": "<p>The tags associated with the standby WorkSpace.</p>",
@@ -2653,6 +2762,8 @@
         "BundleResourceAssociation$LastUpdatedTime": "<p>The time the association status was last updated.</p>",
         "CreateWorkspaceImageResult$Created": "<p>The date when the image was created.</p>",
         "DataReplicationSettings$RecoverySnapshotTime": "<p>The date and time at which the last successful snapshot was taken of the primary WorkSpace used for replicating data.</p>",
+        "DescribeCustomWorkspaceImageImportResult$Created": "<p>The timestamp when the WorkSpace image import was created.</p>",
+        "DescribeCustomWorkspaceImageImportResult$LastUpdatedTime": "<p>The timestamp when the WorkSpace image import was last updated.</p>",
         "ImageResourceAssociation$Created": "<p>The time the association is created.</p>",
         "ImageResourceAssociation$LastUpdatedTime": "<p>The time the association status was last updated.</p>",
         "Snapshot$SnapshotTime": "<p>The time when the snapshot was created.</p>",
@@ -3030,6 +3141,7 @@
         "CreateUpdatedWorkspaceImageRequest$Description": "<p>A description of whether updates for the WorkSpace image are available.</p>",
         "CreateWorkspaceImageRequest$Description": "<p>The description of the new WorkSpace image.</p>",
         "CreateWorkspaceImageResult$Description": "<p>The description of the image.</p>",
+        "ImportCustomWorkspaceImageRequest$ImageDescription": "<p>The description of the WorkSpace image.</p>",
         "ImportWorkspaceImageRequest$ImageDescription": "<p>The description of the WorkSpace image.</p>",
         "WorkspaceImage$Description": "<p>The description of the image.</p>"
       }
@@ -3056,10 +3168,13 @@
         "CreateWorkspaceBundleRequest$ImageId": "<p>The identifier of the image that is used to create the bundle.</p>",
         "CreateWorkspaceImageResult$ImageId": "<p>The identifier of the new WorkSpace image.</p>",
         "DeleteWorkspaceImageRequest$ImageId": "<p>The identifier of the image.</p>",
+        "DescribeCustomWorkspaceImageImportRequest$ImageId": "<p>The identifier of the WorkSpace image.</p>",
+        "DescribeCustomWorkspaceImageImportResult$ImageId": "<p>The identifier of the WorkSpace image.</p>",
         "DescribeImageAssociationsRequest$ImageId": "<p>The identifier of the image.</p>",
         "DescribeWorkspaceImagePermissionsRequest$ImageId": "<p>The identifier of the image.</p>",
         "DescribeWorkspaceImagePermissionsResult$ImageId": "<p>The identifier of the image.</p>",
         "ImageResourceAssociation$ImageId": "<p>The identifier of the image.</p>",
+        "ImportCustomWorkspaceImageResult$ImageId": "<p>The identifier of the WorkSpace image.</p>",
         "ImportWorkspaceImageResult$ImageId": "<p>The identifier of the WorkSpace image.</p>",
         "UpdateWorkspaceBundleRequest$ImageId": "<p>The identifier of the image.</p>",
         "UpdateWorkspaceImagePermissionRequest$ImageId": "<p>The identifier of the image.</p>",
@@ -3093,6 +3208,7 @@
         "CreateUpdatedWorkspaceImageRequest$Name": "<p>The name of the new updated WorkSpace image.</p>",
         "CreateWorkspaceImageRequest$Name": "<p>The name of the new WorkSpace image.</p>",
         "CreateWorkspaceImageResult$Name": "<p>The name of the image.</p>",
+        "ImportCustomWorkspaceImageRequest$ImageName": "<p>The name of the WorkSpace image.</p>",
         "ImportWorkspaceImageRequest$ImageName": "<p>The name of the WorkSpace image.</p>",
         "WorkspaceImage$Name": "<p>The name of the image.</p>"
       }

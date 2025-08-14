@@ -587,6 +587,19 @@
         {"shape":"OperationNotSupportedException"}
       ]
     },
+    "DescribeCustomWorkspaceImageImport":{
+      "name":"DescribeCustomWorkspaceImageImport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCustomWorkspaceImageImportRequest"},
+      "output":{"shape":"DescribeCustomWorkspaceImageImportResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DescribeImageAssociations":{
       "name":"DescribeImageAssociations",
       "http":{
@@ -835,6 +848,23 @@
         {"shape":"ResourceLimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ImportCustomWorkspaceImage":{
+      "name":"ImportCustomWorkspaceImage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ImportCustomWorkspaceImageRequest"},
+      "output":{"shape":"ImportCustomWorkspaceImageResult"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceLimitExceededException"}
       ]
     },
     "ImportWorkspaceImage":{
@@ -2224,6 +2254,34 @@
         "PendingRequests":{"shape":"WorkspaceList"}
       }
     },
+    "CustomImageProtocol":{
+      "type":"string",
+      "enum":[
+        "PCOIP",
+        "DCV",
+        "BYOP"
+      ]
+    },
+    "CustomWorkspaceImageImportErrorDetails":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "ErrorMessage":{"shape":"ImageErrorMessage"}
+      }
+    },
+    "CustomWorkspaceImageImportErrorDetailsList":{
+      "type":"list",
+      "member":{"shape":"CustomWorkspaceImageImportErrorDetails"}
+    },
+    "CustomWorkspaceImageImportState":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETED",
+        "ERROR"
+      ]
+    },
     "DataReplication":{
       "type":"string",
       "enum":[
@@ -2477,7 +2535,8 @@
       "members":{
         "DedicatedTenancySupport":{"shape":"DedicatedTenancySupportResultEnum"},
         "DedicatedTenancyManagementCidrRange":{"shape":"DedicatedTenancyManagementCidrRange"},
-        "DedicatedTenancyAccountType":{"shape":"DedicatedTenancyAccountType"}
+        "DedicatedTenancyAccountType":{"shape":"DedicatedTenancyAccountType"},
+        "Message":{"shape":"Message"}
       }
     },
     "DescribeApplicationAssociationsRequest":{
@@ -2614,6 +2673,26 @@
       "members":{
         "ConnectionAliases":{"shape":"ConnectionAliasList"},
         "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DescribeCustomWorkspaceImageImportRequest":{
+      "type":"structure",
+      "required":["ImageId"],
+      "members":{
+        "ImageId":{"shape":"WorkspaceImageId"}
+      }
+    },
+    "DescribeCustomWorkspaceImageImportResult":{
+      "type":"structure",
+      "members":{
+        "ImageId":{"shape":"WorkspaceImageId"},
+        "InfrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
+        "State":{"shape":"CustomWorkspaceImageImportState"},
+        "Created":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "ImageSource":{"shape":"ImageSourceIdentifier"},
+        "ImageBuilderInstanceId":{"shape":"NonEmptyString"},
+        "ErrorDetails":{"shape":"CustomWorkspaceImageImportErrorDetailsList"}
       }
     },
     "DescribeImageAssociationsRequest":{
@@ -2983,12 +3062,23 @@
       "type":"string",
       "pattern":"^ami\\-([a-f0-9]{8}|[a-f0-9]{17})$"
     },
+    "Ec2ImportTaskId":{
+      "type":"string",
+      "max":28,
+      "min":19,
+      "pattern":"^import-ami\\-([a-zA-Z0-9]{8}|[a-zA-Z0-9]{17})$"
+    },
     "EndpointEncryptionMode":{
       "type":"string",
       "enum":[
         "STANDARD_TLS",
         "FIPS_VALIDATED"
       ]
+    },
+    "ErrorCode":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "ErrorDetails":{
       "type":"structure",
@@ -3106,6 +3196,24 @@
       "type":"list",
       "member":{"shape":"ImageAssociatedResourceType"}
     },
+    "ImageBuildVersionArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):image/[a-z0-9-_]+/(?:(?:([0-9]+|x)\\.([0-9]+|x)\\.([0-9]+|x))|(?:[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+))$"
+    },
+    "ImageComputeType":{
+      "type":"string",
+      "enum":[
+        "BASE",
+        "GRAPHICS_G4DN"
+      ]
+    },
+    "ImageErrorMessage":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "ImagePermission":{
       "type":"structure",
       "members":{
@@ -3131,6 +3239,15 @@
     "ImageResourceAssociationList":{
       "type":"list",
       "member":{"shape":"ImageResourceAssociation"}
+    },
+    "ImageSourceIdentifier":{
+      "type":"structure",
+      "members":{
+        "Ec2ImportTaskId":{"shape":"Ec2ImportTaskId"},
+        "ImageBuildVersionArn":{"shape":"ImageBuildVersionArn"},
+        "Ec2ImageId":{"shape":"Ec2ImageId"}
+      },
+      "union":true
     },
     "ImageType":{
       "type":"string",
@@ -3163,6 +3280,37 @@
         "DeviceTypeWeb":{"shape":"DefaultClientBrandingAttributes"}
       }
     },
+    "ImportCustomWorkspaceImageRequest":{
+      "type":"structure",
+      "required":[
+        "ImageName",
+        "ImageDescription",
+        "ComputeType",
+        "Protocol",
+        "ImageSource",
+        "InfrastructureConfigurationArn",
+        "Platform",
+        "OsVersion"
+      ],
+      "members":{
+        "ImageName":{"shape":"WorkspaceImageName"},
+        "ImageDescription":{"shape":"WorkspaceImageDescription"},
+        "ComputeType":{"shape":"ImageComputeType"},
+        "Protocol":{"shape":"CustomImageProtocol"},
+        "ImageSource":{"shape":"ImageSourceIdentifier"},
+        "InfrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
+        "Platform":{"shape":"Platform"},
+        "OsVersion":{"shape":"OSVersion"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "ImportCustomWorkspaceImageResult":{
+      "type":"structure",
+      "members":{
+        "ImageId":{"shape":"WorkspaceImageId"},
+        "State":{"shape":"CustomWorkspaceImageImportState"}
+      }
+    },
     "ImportWorkspaceImageRequest":{
       "type":"structure",
       "required":[
@@ -3190,6 +3338,12 @@
       "type":"structure",
       "members":{},
       "exception":true
+    },
+    "InfrastructureConfigurationArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):infrastructure-configuration/[a-z0-9-_]+$"
     },
     "InternalServerException":{
       "type":"structure",
@@ -3373,6 +3527,7 @@
       "type":"integer",
       "min":0
     },
+    "Message":{"type":"string"},
     "MicrosoftEntraConfig":{
       "type":"structure",
       "members":{
@@ -3437,7 +3592,9 @@
     },
     "ModifyAccountResult":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "Message":{"shape":"Message"}
+      }
     },
     "ModifyCertificateBasedAuthPropertiesRequest":{
       "type":"structure",
@@ -3591,6 +3748,13 @@
       "type":"string",
       "min":1
     },
+    "OSVersion":{
+      "type":"string",
+      "enum":[
+        "Windows_10",
+        "Windows_11"
+      ]
+    },
     "OperatingSystem":{
       "type":"structure",
       "members":{
@@ -3663,6 +3827,10 @@
     "PendingCreateStandbyWorkspacesRequestList":{
       "type":"list",
       "member":{"shape":"PendingCreateStandbyWorkspacesRequest"}
+    },
+    "Platform":{
+      "type":"string",
+      "enum":["WINDOWS"]
     },
     "PoolsRunningMode":{
       "type":"string",

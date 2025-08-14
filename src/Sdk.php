@@ -80,6 +80,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBCMDataExports(array $args = [])
  * @method \Aws\BCMPricingCalculator\BCMPricingCalculatorClient createBCMPricingCalculator(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBCMPricingCalculator(array $args = [])
+ * @method \Aws\BCMRecommendedActions\BCMRecommendedActionsClient createBCMRecommendedActions(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionBCMRecommendedActions(array $args = [])
  * @method \Aws\Backup\BackupClient createBackup(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBackup(array $args = [])
  * @method \Aws\BackupGateway\BackupGatewayClient createBackupGateway(array $args = [])

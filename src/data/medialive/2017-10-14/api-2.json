@@ -17549,6 +17549,10 @@
         "TimedMetadataPassthrough": {
           "shape": "CmafTimedMetadataPassthrough",
           "locationName": "timedMetadataPassthrough"
+        },
+        "AdditionalDestinations": {
+          "shape": "__listOfAdditionalDestinations",
+          "locationName": "additionalDestinations"
         }
       },
       "required": [
@@ -21665,7 +21669,7 @@
           "locationName": "afdSignaling"
         },
         "BufSize": {
-          "shape": "__integerMin50000Max16000000",
+          "shape": "__integerMin50000Max24000000",
           "locationName": "bufSize"
         },
         "ColorSpaceSettings": {
@@ -21701,7 +21705,7 @@
           "locationName": "lookAheadRateControl"
         },
         "MaxBitrate": {
-          "shape": "__integerMin50000Max8000000",
+          "shape": "__integerMin50000Max12000000",
           "locationName": "maxBitrate"
         },
         "MinIInterval": {
@@ -21729,7 +21733,7 @@
           "locationName": "timecodeBurninSettings"
         },
         "Bitrate": {
-          "shape": "__integerMin50000Max8000000",
+          "shape": "__integerMin50000Max12000000",
           "locationName": "bitrate"
         },
         "RateControlMode": {
@@ -23853,15 +23857,15 @@
       "min": 40,
       "max": 16000
     },
-    "__integerMin50000Max16000000": {
+    "__integerMin50000Max24000000": {
       "type": "integer",
       "min": 50000,
-      "max": 16000000
+      "max": 24000000
     },
-    "__integerMin50000Max8000000": {
+    "__integerMin50000Max12000000": {
       "type": "integer",
       "min": 50000,
-      "max": 8000000
+      "max": 12000000
     },
     "__listOfDescribeChannelPlacementGroupSummary": {
       "type": "list",
@@ -24589,6 +24593,24 @@
         "CBR",
         "QVBR"
       ]
+    },
+    "AdditionalDestinations": {
+      "type": "structure",
+      "members": {
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        }
+      },
+      "required": [
+        "Destination"
+      ]
+    },
+    "__listOfAdditionalDestinations": {
+      "type": "list",
+      "member": {
+        "shape": "AdditionalDestinations"
+      }
     }
   }
 }

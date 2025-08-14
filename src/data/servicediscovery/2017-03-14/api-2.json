@@ -443,6 +443,11 @@
     }
   },
   "shapes":{
+    "AWSAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12
+    },
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
@@ -536,7 +541,7 @@
       "required":["Name"],
       "members":{
         "Name":{"shape":"ServiceName"},
-        "NamespaceId":{"shape":"ResourceId"},
+        "NamespaceId":{"shape":"Arn"},
         "CreatorRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
@@ -573,7 +578,7 @@
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"ResourceId"}
+        "Id":{"shape":"Arn"}
       }
     },
     "DeleteNamespaceResponse":{
@@ -589,26 +594,24 @@
         "Attributes"
       ],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "Attributes":{"shape":"ServiceAttributeKeyList"}
       }
     },
     "DeleteServiceAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteServiceRequest":{
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"ResourceId"}
+        "Id":{"shape":"Arn"}
       }
     },
     "DeleteServiceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterInstanceRequest":{
       "type":"structure",
@@ -617,7 +620,7 @@
         "InstanceId"
       ],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "InstanceId":{"shape":"ResourceId"}
       }
     },
@@ -639,7 +642,8 @@
         "MaxResults":{"shape":"DiscoverMaxResults"},
         "QueryParameters":{"shape":"Attributes"},
         "OptionalParameters":{"shape":"Attributes"},
-        "HealthStatus":{"shape":"HealthStatusFilter"}
+        "HealthStatus":{"shape":"HealthStatusFilter"},
+        "OwnerAccount":{"shape":"AWSAccountId"}
       }
     },
     "DiscoverInstancesResponse":{
@@ -657,7 +661,8 @@
       ],
       "members":{
         "NamespaceName":{"shape":"NamespaceName"},
-        "ServiceName":{"shape":"ServiceName"}
+        "ServiceName":{"shape":"ServiceName"},
+        "OwnerAccount":{"shape":"AWSAccountId"}
       }
     },
     "DiscoverInstancesRevisionResponse":{
@@ -717,7 +722,7 @@
       "type":"structure",
       "members":{
         "Message":{"shape":"ErrorMessage"},
-        "DuplicateOperationId":{"shape":"ResourceId"}
+        "DuplicateOperationId":{"shape":"OperationId"}
       },
       "exception":true
     },
@@ -752,13 +757,14 @@
         "InstanceId"
       ],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "InstanceId":{"shape":"ResourceId"}
       }
     },
     "GetInstanceResponse":{
       "type":"structure",
       "members":{
+        "ResourceOwner":{"shape":"AWSAccountId"},
         "Instance":{"shape":"Instance"}
       }
     },
@@ -766,7 +772,7 @@
       "type":"structure",
       "required":["ServiceId"],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "Instances":{"shape":"InstanceIdList"},
         "MaxResults":{"shape":"MaxResults"},
         "NextToken":{"shape":"NextToken"}
@@ -783,7 +789,7 @@
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"ResourceId"}
+        "Id":{"shape":"Arn"}
       }
     },
     "GetNamespaceResponse":{
@@ -796,7 +802,8 @@
       "type":"structure",
       "required":["OperationId"],
       "members":{
-        "OperationId":{"shape":"ResourceId"}
+        "OperationId":{"shape":"OperationId"},
+        "OwnerAccount":{"shape":"AWSAccountId"}
       }
     },
     "GetOperationResponse":{
@@ -809,7 +816,7 @@
       "type":"structure",
       "required":["ServiceId"],
       "members":{
-        "ServiceId":{"shape":"ResourceId"}
+        "ServiceId":{"shape":"Arn"}
       }
     },
     "GetServiceAttributesResponse":{
@@ -822,7 +829,7 @@
       "type":"structure",
       "required":["Id"],
       "members":{
-        "Id":{"shape":"ResourceId"}
+        "Id":{"shape":"Arn"}
       }
     },
     "GetServiceResponse":{
@@ -908,7 +915,8 @@
       "members":{
         "Id":{"shape":"ResourceId"},
         "CreatorRequestId":{"shape":"ResourceId"},
-        "Attributes":{"shape":"Attributes"}
+        "Attributes":{"shape":"Attributes"},
+        "CreatedByAccount":{"shape":"AWSAccountId"}
       }
     },
     "InstanceHealthStatusMap":{
@@ -937,7 +945,8 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"ResourceId"},
-        "Attributes":{"shape":"Attributes"}
+        "Attributes":{"shape":"Attributes"},
+        "CreatedByAccount":{"shape":"AWSAccountId"}
       }
     },
     "InstanceSummaryList":{
@@ -955,7 +964,7 @@
       "type":"structure",
       "required":["ServiceId"],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"MaxResults"}
       }
@@ -963,6 +972,7 @@
     "ListInstancesResponse":{
       "type":"structure",
       "members":{
+        "ResourceOwner":{"shape":"AWSAccountId"},
         "Instances":{"shape":"InstanceSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
@@ -1036,6 +1046,7 @@
       "members":{
         "Id":{"shape":"ResourceId"},
         "Arn":{"shape":"Arn"},
+        "ResourceOwner":{"shape":"AWSAccountId"},
         "Name":{"shape":"NamespaceName"},
         "Type":{"shape":"NamespaceType"},
         "Description":{"shape":"ResourceDescription"},
@@ -1071,7 +1082,8 @@
       "enum":[
         "TYPE",
         "NAME",
-        "HTTP_NAME"
+        "HTTP_NAME",
+        "RESOURCE_OWNER"
       ]
     },
     "NamespaceFilters":{
@@ -1086,12 +1098,12 @@
     "NamespaceNameHttp":{
       "type":"string",
       "max":1024,
-      "pattern":"^[!-~]{1,1024}$"
+      "pattern":"^(?!arn:)[!-~]{1,1024}$"
     },
     "NamespaceNamePrivate":{
       "type":"string",
       "max":253,
-      "pattern":"^[!-~]{1,253}$"
+      "pattern":"^(?!arn:)[!-~]{1,253}$"
     },
     "NamespaceNamePublic":{
       "type":"string",
@@ -1121,6 +1133,7 @@
       "members":{
         "Id":{"shape":"ResourceId"},
         "Arn":{"shape":"Arn"},
+        "ResourceOwner":{"shape":"AWSAccountId"},
         "Name":{"shape":"NamespaceName"},
         "Type":{"shape":"NamespaceType"},
         "Description":{"shape":"ResourceDescription"},
@@ -1145,6 +1158,7 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"OperationId"},
+        "OwnerAccount":{"shape":"AWSAccountId"},
         "Type":{"shape":"OperationType"},
         "Status":{"shape":"OperationStatus"},
         "ErrorMessage":{"shape":"Message"},
@@ -1327,7 +1341,7 @@
         "Attributes"
       ],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "InstanceId":{"shape":"InstanceId"},
         "CreatorRequestId":{
           "shape":"ResourceId",
@@ -1410,6 +1424,7 @@
       "members":{
         "Id":{"shape":"ResourceId"},
         "Arn":{"shape":"Arn"},
+        "ResourceOwner":{"shape":"AWSAccountId"},
         "Name":{"shape":"ServiceName"},
         "NamespaceId":{"shape":"ResourceId"},
         "Description":{"shape":"ResourceDescription"},
@@ -1419,7 +1434,8 @@
         "HealthCheckConfig":{"shape":"HealthCheckConfig"},
         "HealthCheckCustomConfig":{"shape":"HealthCheckCustomConfig"},
         "CreateDate":{"shape":"Timestamp"},
-        "CreatorRequestId":{"shape":"ResourceId"}
+        "CreatorRequestId":{"shape":"ResourceId"},
+        "CreatedByAccount":{"shape":"AWSAccountId"}
       }
     },
     "ServiceAlreadyExists":{
@@ -1427,7 +1443,8 @@
       "members":{
         "Message":{"shape":"ErrorMessage"},
         "CreatorRequestId":{"shape":"ResourceId"},
-        "ServiceId":{"shape":"ResourceId"}
+        "ServiceId":{"shape":"ResourceId"},
+        "ServiceArn":{"shape":"Arn"}
       },
       "exception":true
     },
@@ -1449,6 +1466,7 @@
       "type":"structure",
       "members":{
         "ServiceArn":{"shape":"Arn"},
+        "ResourceOwner":{"shape":"AWSAccountId"},
         "Attributes":{"shape":"ServiceAttributesMap"}
       }
     },
@@ -1488,7 +1506,10 @@
     },
     "ServiceFilterName":{
       "type":"string",
-      "enum":["NAMESPACE_ID"]
+      "enum":[
+        "NAMESPACE_ID",
+        "RESOURCE_OWNER"
+      ]
     },
     "ServiceFilters":{
       "type":"list",
@@ -1514,6 +1535,7 @@
       "members":{
         "Id":{"shape":"ResourceId"},
         "Arn":{"shape":"Arn"},
+        "ResourceOwner":{"shape":"AWSAccountId"},
         "Name":{"shape":"ServiceName"},
         "Type":{"shape":"ServiceType"},
         "Description":{"shape":"ResourceDescription"},
@@ -1521,7 +1543,8 @@
         "DnsConfig":{"shape":"DnsConfig"},
         "HealthCheckConfig":{"shape":"HealthCheckConfig"},
         "HealthCheckCustomConfig":{"shape":"HealthCheckCustomConfig"},
-        "CreateDate":{"shape":"Timestamp"}
+        "CreateDate":{"shape":"Timestamp"},
+        "CreatedByAccount":{"shape":"AWSAccountId"}
       }
     },
     "ServiceType":{
@@ -1577,8 +1600,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1607,8 +1629,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateHttpNamespaceRequest":{
       "type":"structure",
@@ -1617,7 +1638,7 @@
         "Namespace"
       ],
       "members":{
-        "Id":{"shape":"ResourceId"},
+        "Id":{"shape":"Arn"},
         "UpdaterRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
@@ -1639,7 +1660,7 @@
         "Status"
       ],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "InstanceId":{"shape":"ResourceId"},
         "Status":{"shape":"CustomHealthStatus"}
       }
@@ -1651,7 +1672,7 @@
         "Namespace"
       ],
       "members":{
-        "Id":{"shape":"ResourceId"},
+        "Id":{"shape":"Arn"},
         "UpdaterRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
@@ -1672,7 +1693,7 @@
         "Namespace"
       ],
       "members":{
-        "Id":{"shape":"ResourceId"},
+        "Id":{"shape":"Arn"},
         "UpdaterRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
@@ -1693,14 +1714,13 @@
         "Attributes"
       ],
       "members":{
-        "ServiceId":{"shape":"ResourceId"},
+        "ServiceId":{"shape":"Arn"},
         "Attributes":{"shape":"ServiceAttributesMap"}
       }
     },
     "UpdateServiceAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateServiceRequest":{
       "type":"structure",
@@ -1709,7 +1729,7 @@
         "Service"
       ],
       "members":{
-        "Id":{"shape":"ResourceId"},
+        "Id":{"shape":"Arn"},
         "Service":{"shape":"ServiceChange"}
       }
     },

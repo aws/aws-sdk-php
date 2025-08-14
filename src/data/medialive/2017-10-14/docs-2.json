@@ -2863,7 +2863,8 @@
         "RtmpOutputSettings$Destination": "The RTMP endpoint excluding the stream name (eg. rtmp://host/appname). For connection to Akamai, a username and password must be supplied. URI fields accept format identifiers.",
         "UdpOutputSettings$Destination": "Destination address and port number for RTP or UDP packets. Can be unicast or multicast RTP or UDP (eg. rtp://239.10.10.10:5001 or udp://10.100.100.100:5002).",
         "CmafIngestGroupSettings$Destination": "A HTTP destination for the tracks",
-        "SrtOutputSettings$Destination": null
+        "SrtOutputSettings$Destination": null,
+        "AdditionalDestinations$Destination": "The destination location"
       }
     },
     "OutputLockingSettings": {
@@ -6718,13 +6719,13 @@
         "SrtOutputSettings$Latency": "The latency value, in milliseconds, that is proposed during the SRT connection handshake. SRT will choose the maximum of the values proposed by the sender and receiver. On the sender side, latency is the amount of time a packet is held to give it a chance to be delivered successfully. On the receiver side, latency is the amount of time the packet is held before delivering to the application, aiding in packet recovery and matching as closely as possible the packet timing of the sender. Range: 40-16000 milliseconds."
       }
     },
-    "__integerMin50000Max16000000": {
+    "__integerMin50000Max24000000": {
       "base": null,
       "refs": {
         "Av1Settings$BufSize": "The size of the buffer (HRD buffer model) in bits."
       }
     },
-    "__integerMin50000Max8000000": {
+    "__integerMin50000Max12000000": {
       "base": null,
       "refs": {
         "Av1Settings$MaxBitrate": "The maximum bitrate to assign.\nFor recommendations, see the description for qvbrQualityLevel.",
@@ -7165,6 +7166,18 @@
       "base": "Av1 Rate Control Mode",
       "refs": {
         "Av1Settings$RateControlMode": "Rate control mode.\n\nQVBR: Quality will match the specified quality level except when it is constrained by the\nmaximum bitrate.  Recommended if you or your viewers pay for bandwidth.\n\nCBR: Quality varies, depending on the video complexity. Recommended only if you distribute\nyour assets to devices that cannot handle variable bitrates."
+      }
+    },
+    "AdditionalDestinations": {
+      "base": "Additional output destinations for a CMAF Ingest output group",
+      "refs": {
+        "__listOfAdditionalDestinations$member": null
+      }
+    },
+    "__listOfAdditionalDestinations": {
+      "base": null,
+      "refs": {
+        "CmafIngestGroupSettings$AdditionalDestinations": "Optional an array of additional destinational HTTP destinations for the OutputGroup outputs"
       }
     }
   },

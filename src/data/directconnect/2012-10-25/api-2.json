@@ -1063,6 +1063,7 @@
       "members":{
         "bgpPeerId":{"shape":"BGPPeerId"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "authKey":{"shape":"BGPAuthKey"},
         "addressFamily":{"shape":"AddressFamily"},
         "amazonAddress":{"shape":"AmazonAddress"},
@@ -1226,7 +1227,8 @@
     "Connections":{
       "type":"structure",
       "members":{
-        "connections":{"shape":"ConnectionList"}
+        "connections":{"shape":"ConnectionList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "CoreNetworkAttachmentId":{
@@ -1413,6 +1415,7 @@
       "members":{
         "virtualInterfaceId":{"shape":"VirtualInterfaceId"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "customerAddress":{"shape":"CustomerAddress"},
         "bgpPeerId":{"shape":"BGPPeerId"}
       }
@@ -1528,7 +1531,9 @@
     "DescribeConnectionsRequest":{
       "type":"structure",
       "members":{
-        "connectionId":{"shape":"ConnectionId"}
+        "connectionId":{"shape":"ConnectionId"},
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeCustomerMetadataResponse":{
@@ -1608,7 +1613,9 @@
       "type":"structure",
       "required":["connectionId"],
       "members":{
-        "connectionId":{"shape":"ConnectionId"}
+        "connectionId":{"shape":"ConnectionId"},
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeInterconnectLoaRequest":{
@@ -1629,13 +1636,17 @@
     "DescribeInterconnectsRequest":{
       "type":"structure",
       "members":{
-        "interconnectId":{"shape":"InterconnectId"}
+        "interconnectId":{"shape":"InterconnectId"},
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeLagsRequest":{
       "type":"structure",
       "members":{
-        "lagId":{"shape":"LagId"}
+        "lagId":{"shape":"LagId"},
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeLoaRequest":{
@@ -1681,7 +1692,9 @@
       "type":"structure",
       "members":{
         "connectionId":{"shape":"ConnectionId"},
-        "virtualInterfaceId":{"shape":"VirtualInterfaceId"}
+        "virtualInterfaceId":{"shape":"VirtualInterfaceId"},
+        "maxResults":{"shape":"MaxResultSetSize"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "DirectConnectClientException":{
@@ -1914,7 +1927,8 @@
     "Interconnects":{
       "type":"structure",
       "members":{
-        "interconnects":{"shape":"InterconnectList"}
+        "interconnects":{"shape":"InterconnectList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "JumboFrameCapable":{"type":"boolean"},
@@ -1965,7 +1979,8 @@
     "Lags":{
       "type":"structure",
       "members":{
-        "lags":{"shape":"LagList"}
+        "lags":{"shape":"LagList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListVirtualInterfaceTestHistoryRequest":{
@@ -2046,6 +2061,7 @@
       "type":"structure",
       "members":{
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "authKey":{"shape":"BGPAuthKey"},
         "addressFamily":{"shape":"AddressFamily"},
         "amazonAddress":{"shape":"AmazonAddress"},
@@ -2056,13 +2072,13 @@
       "type":"structure",
       "required":[
         "virtualInterfaceName",
-        "vlan",
-        "asn"
+        "vlan"
       ],
       "members":{
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
         "vlan":{"shape":"VLAN"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "mtu":{"shape":"MTU"},
         "authKey":{"shape":"BGPAuthKey"},
         "amazonAddress":{"shape":"AmazonAddress"},
@@ -2078,13 +2094,13 @@
       "type":"structure",
       "required":[
         "virtualInterfaceName",
-        "vlan",
-        "asn"
+        "vlan"
       ],
       "members":{
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
         "vlan":{"shape":"VLAN"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "mtu":{"shape":"MTU"},
         "authKey":{"shape":"BGPAuthKey"},
         "amazonAddress":{"shape":"AmazonAddress"},
@@ -2097,13 +2113,13 @@
       "type":"structure",
       "required":[
         "virtualInterfaceName",
-        "vlan",
-        "asn"
+        "vlan"
       ],
       "members":{
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
         "vlan":{"shape":"VLAN"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "authKey":{"shape":"BGPAuthKey"},
         "amazonAddress":{"shape":"AmazonAddress"},
         "customerAddress":{"shape":"CustomerAddress"},
@@ -2116,13 +2132,13 @@
       "type":"structure",
       "required":[
         "virtualInterfaceName",
-        "vlan",
-        "asn"
+        "vlan"
       ],
       "members":{
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
         "vlan":{"shape":"VLAN"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "authKey":{"shape":"BGPAuthKey"},
         "amazonAddress":{"shape":"AmazonAddress"},
         "customerAddress":{"shape":"CustomerAddress"},
@@ -2137,6 +2153,7 @@
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
         "vlan":{"shape":"VLAN"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "mtu":{"shape":"MTU"},
         "authKey":{"shape":"BGPAuthKey"},
         "amazonAddress":{"shape":"AmazonAddress"},
@@ -2153,6 +2170,7 @@
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
         "vlan":{"shape":"VLAN"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "mtu":{"shape":"MTU"},
         "authKey":{"shape":"BGPAuthKey"},
         "amazonAddress":{"shape":"AmazonAddress"},
@@ -2426,6 +2444,7 @@
         "virtualInterfaceName":{"shape":"VirtualInterfaceName"},
         "vlan":{"shape":"VLAN"},
         "asn":{"shape":"ASN"},
+        "asnLong":{"shape":"LongAsn"},
         "amazonSideAsn":{"shape":"LongAsn"},
         "authKey":{"shape":"BGPAuthKey"},
         "amazonAddress":{"shape":"AmazonAddress"},
@@ -2489,7 +2508,8 @@
     "VirtualInterfaces":{
       "type":"structure",
       "members":{
-        "virtualInterfaces":{"shape":"VirtualInterfaceList"}
+        "virtualInterfaces":{"shape":"VirtualInterfaceList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "XsltTemplateName":{"type":"string"},

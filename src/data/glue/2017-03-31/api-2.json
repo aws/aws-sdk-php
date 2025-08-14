@@ -536,6 +536,23 @@
         {"shape":"ResourceNumberLimitExceededException"}
       ]
     },
+    "CreateGlueIdentityCenterConfiguration":{
+      "name":"CreateGlueIdentityCenterConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateGlueIdentityCenterConfigurationRequest"},
+      "output":{"shape":"CreateGlueIdentityCenterConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "CreateIntegration":{
       "name":"CreateIntegration",
       "http":{
@@ -1045,6 +1062,23 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InvalidInputException"}
+      ]
+    },
+    "DeleteGlueIdentityCenterConfiguration":{
+      "name":"DeleteGlueIdentityCenterConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteGlueIdentityCenterConfigurationRequest"},
+      "output":{"shape":"DeleteGlueIdentityCenterConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "DeleteIntegration":{
@@ -1898,6 +1932,23 @@
         {"shape":"ValidationException"},
         {"shape":"FederationSourceException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetGlueIdentityCenterConfiguration":{
+      "name":"GetGlueIdentityCenterConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetGlueIdentityCenterConfigurationRequest"},
+      "output":{"shape":"GetGlueIdentityCenterConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "GetIntegrationResourceProperty":{
@@ -3790,6 +3841,23 @@
         {"shape":"ValidationException"}
       ]
     },
+    "UpdateGlueIdentityCenterConfiguration":{
+      "name":"UpdateGlueIdentityCenterConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateGlueIdentityCenterConfigurationRequest"},
+      "output":{"shape":"UpdateGlueIdentityCenterConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "UpdateIntegrationResourceProperty":{
       "name":"UpdateIntegrationResourceProperty",
       "http":{
@@ -4280,6 +4348,11 @@
       "max":256,
       "min":1,
       "pattern":"[a-zA-Z0-9.-]*"
+    },
+    "ApplicationArn":{
+      "type":"string",
+      "max":1224,
+      "min":10
     },
     "ApplyMapping":{
       "type":"structure",
@@ -6640,6 +6713,20 @@
         "Arguments":{"shape":"MapValue"}
       }
     },
+    "CreateGlueIdentityCenterConfigurationRequest":{
+      "type":"structure",
+      "required":["InstanceArn"],
+      "members":{
+        "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
+        "Scopes":{"shape":"IdentityCenterScopesList"}
+      }
+    },
+    "CreateGlueIdentityCenterConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ApplicationArn":{"shape":"ApplicationArn"}
+      }
+    },
     "CreateGrokClassifierRequest":{
       "type":"structure",
       "required":[
@@ -7946,6 +8033,14 @@
       }
     },
     "DeleteDevEndpointResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteGlueIdentityCenterConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteGlueIdentityCenterConfigurationResponse":{
       "type":"structure",
       "members":{}
     },
@@ -9669,6 +9764,18 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "GetGlueIdentityCenterConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetGlueIdentityCenterConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ApplicationArn":{"shape":"ApplicationArn"},
+        "InstanceArn":{"shape":"IdentityCenterInstanceArn"},
+        "Scopes":{"shape":"OrchestrationStringList"}
+      }
+    },
     "GetIntegrationResourcePropertyRequest":{
       "type":"structure",
       "required":["ResourceArn"],
@@ -10993,6 +11100,21 @@
         "Message":{"shape":"MessageString"}
       },
       "exception":true
+    },
+    "IdentityCenterInstanceArn":{
+      "type":"string",
+      "max":1224,
+      "min":10
+    },
+    "IdentityCenterScope":{
+      "type":"string",
+      "max":50
+    },
+    "IdentityCenterScopesList":{
+      "type":"list",
+      "member":{"shape":"IdentityCenterScope"},
+      "max":50,
+      "min":1
     },
     "IdleTimeout":{
       "type":"integer",
@@ -16404,6 +16526,16 @@
       }
     },
     "UpdateDevEndpointResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateGlueIdentityCenterConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "Scopes":{"shape":"IdentityCenterScopesList"}
+      }
+    },
+    "UpdateGlueIdentityCenterConfigurationResponse":{
       "type":"structure",
       "members":{}
     },

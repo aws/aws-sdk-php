@@ -1206,6 +1206,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyFpgaImageAttributeAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyInstanceCapacityReservationAttributes(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyInstanceCapacityReservationAttributesAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyInstanceConnectEndpoint(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyInstanceConnectEndpointAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyInstanceCpuOptions(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyInstanceCpuOptionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyInstanceCreditSpecification(array $args = []) (supported in versions 2016-11-15)

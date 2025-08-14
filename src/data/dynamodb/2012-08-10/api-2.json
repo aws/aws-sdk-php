@@ -25,7 +25,8 @@
       "output":{"shape":"BatchExecuteStatementOutput"},
       "errors":[
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "BatchGetItem":{
@@ -40,7 +41,8 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{},
       "operationContextParams":{
@@ -61,7 +63,8 @@
         {"shape":"ItemCollectionSizeLimitExceededException"},
         {"shape":"RequestLimitExceeded"},
         {"shape":"InternalServerError"},
-        {"shape":"ReplicatedWriteConflictException"}
+        {"shape":"ReplicatedWriteConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{},
       "operationContextParams":{
@@ -149,7 +152,8 @@
         {"shape":"TransactionConflictException"},
         {"shape":"RequestLimitExceeded"},
         {"shape":"InternalServerError"},
-        {"shape":"ReplicatedWriteConflictException"}
+        {"shape":"ReplicatedWriteConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{}
     },
@@ -407,7 +411,8 @@
         {"shape":"TransactionConflictException"},
         {"shape":"RequestLimitExceeded"},
         {"shape":"InternalServerError"},
-        {"shape":"DuplicateItemException"}
+        {"shape":"DuplicateItemException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ExecuteTransaction":{
@@ -425,7 +430,8 @@
         {"shape":"IdempotentParameterMismatchException"},
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ExportTableToPointInTime":{
@@ -457,7 +463,8 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{}
     },
@@ -600,7 +607,8 @@
         {"shape":"TransactionConflictException"},
         {"shape":"RequestLimitExceeded"},
         {"shape":"InternalServerError"},
-        {"shape":"ReplicatedWriteConflictException"}
+        {"shape":"ReplicatedWriteConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{}
     },
@@ -633,7 +641,8 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{}
     },
@@ -686,7 +695,8 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{}
     },
@@ -718,7 +728,8 @@
         {"shape":"TransactionCanceledException"},
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{},
       "operationContextParams":{
@@ -740,7 +751,8 @@
         {"shape":"IdempotentParameterMismatchException"},
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"RequestLimitExceeded"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{},
       "operationContextParams":{
@@ -841,7 +853,8 @@
         {"shape":"TransactionConflictException"},
         {"shape":"RequestLimitExceeded"},
         {"shape":"InternalServerError"},
-        {"shape":"ReplicatedWriteConflictException"}
+        {"shape":"ReplicatedWriteConflictException"},
+        {"shape":"ThrottlingException"}
       ],
       "endpointdiscovery":{}
     },
@@ -1065,6 +1078,7 @@
         "TargetValue":{"shape":"DoubleObject"}
       }
     },
+    "AvailabilityErrorMessage":{"type":"string"},
     "Backfilling":{"type":"boolean"},
     "BackupArn":{
       "type":"string",
@@ -1449,6 +1463,13 @@
         "DISABLE"
       ]
     },
+    "ContributorInsightsMode":{
+      "type":"string",
+      "enum":[
+        "ACCESSED_AND_THROTTLED_KEYS",
+        "THROTTLED_KEYS"
+      ]
+    },
     "ContributorInsightsRule":{
       "type":"string",
       "pattern":"[A-Za-z0-9][A-Za-z0-9\\-\\_\\.]{0,126}[A-Za-z0-9]"
@@ -1476,7 +1497,8 @@
       "members":{
         "TableName":{"shape":"TableName"},
         "IndexName":{"shape":"IndexName"},
-        "ContributorInsightsStatus":{"shape":"ContributorInsightsStatus"}
+        "ContributorInsightsStatus":{"shape":"ContributorInsightsStatus"},
+        "ContributorInsightsMode":{"shape":"ContributorInsightsMode"}
       }
     },
     "CreateBackupInput":{
@@ -1803,7 +1825,8 @@
         "ContributorInsightsRuleList":{"shape":"ContributorInsightsRuleList"},
         "ContributorInsightsStatus":{"shape":"ContributorInsightsStatus"},
         "LastUpdateDateTime":{"shape":"LastUpdateDateTime"},
-        "FailureException":{"shape":"FailureException"}
+        "FailureException":{"shape":"FailureException"},
+        "ContributorInsightsMode":{"shape":"ContributorInsightsMode"}
       }
     },
     "DescribeEndpointsRequest":{
@@ -3161,7 +3184,8 @@
     "ProvisionedThroughputExceededException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "ThrottlingReasons":{"shape":"ThrottlingReasonList"}
       },
       "exception":true
     },
@@ -3287,6 +3311,7 @@
         "ConsumedCapacity":{"shape":"ConsumedCapacity"}
       }
     },
+    "Reason":{"type":"string"},
     "RecoveryPeriodInDays":{
       "type":"integer",
       "max":35,
@@ -3535,10 +3560,12 @@
     "RequestLimitExceeded":{
       "type":"structure",
       "members":{
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "ThrottlingReasons":{"shape":"ThrottlingReasonList"}
       },
       "exception":true
     },
+    "Resource":{"type":"string"},
     "ResourceArnString":{
       "type":"string",
       "max":1283,
@@ -4031,6 +4058,26 @@
       "max":256,
       "min":0
     },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"AvailabilityErrorMessage"},
+        "throttlingReasons":{"shape":"ThrottlingReasonList"}
+      },
+      "exception":true,
+      "synthetic":true
+    },
+    "ThrottlingReason":{
+      "type":"structure",
+      "members":{
+        "reason":{"shape":"Reason"},
+        "resource":{"shape":"Resource"}
+      }
+    },
+    "ThrottlingReasonList":{
+      "type":"list",
+      "member":{"shape":"ThrottlingReason"}
+    },
     "TimeRangeLowerBound":{"type":"timestamp"},
     "TimeRangeUpperBound":{"type":"timestamp"},
     "TimeToLiveAttributeName":{
@@ -4214,7 +4261,8 @@
           "contextParam":{"name":"ResourceArn"}
         },
         "IndexName":{"shape":"IndexName"},
-        "ContributorInsightsAction":{"shape":"ContributorInsightsAction"}
+        "ContributorInsightsAction":{"shape":"ContributorInsightsAction"},
+        "ContributorInsightsMode":{"shape":"ContributorInsightsMode"}
       }
     },
     "UpdateContributorInsightsOutput":{
@@ -4222,7 +4270,8 @@
       "members":{
         "TableName":{"shape":"TableName"},
         "IndexName":{"shape":"IndexName"},
-        "ContributorInsightsStatus":{"shape":"ContributorInsightsStatus"}
+        "ContributorInsightsStatus":{"shape":"ContributorInsightsStatus"},
+        "ContributorInsightsMode":{"shape":"ContributorInsightsMode"}
       }
     },
     "UpdateExpression":{"type":"string"},
