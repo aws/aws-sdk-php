@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.354.0 - 2025-08-14
 
 * `Aws\Api` - Reverts to previous behavior changed by #3146 when deserializing empty payload members.
 * `Aws\ServiceDiscovery` - Added support for cross account through Id parameter overloading with ARN and allow owner account for some APIs instead of ARN
