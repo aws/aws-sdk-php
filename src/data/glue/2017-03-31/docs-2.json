@@ -2068,6 +2068,12 @@
         "GetCustomEntityTypeResponse$ContextWords": "<p>A list of context words if specified when you created the custom pattern. If none of these context words are found within the vicinity of the regular expression the data will not be detected as sensitive data.</p>"
       }
     },
+    "ContinuousSync": {
+      "base": null,
+      "refs": {
+        "IntegrationConfig$ContinuousSync": "<p>Enables continuous synchronization for on-demand data extractions from SaaS applications to Amazon Web Services data services like Amazon Redshift and Amazon S3.</p>"
+      }
+    },
     "Crawl": {
       "base": "<p>The details of a crawl in the workflow.</p>",
       "refs": {
@@ -5800,7 +5806,9 @@
         "CreateIntegrationRequest$IntegrationConfig": "<p>The configuration settings.</p>",
         "CreateIntegrationResponse$IntegrationConfig": "<p>The configuration settings.</p>",
         "InboundIntegration$IntegrationConfig": "<p>Properties associated with the integration.</p>",
-        "Integration$IntegrationConfig": "<p>Properties associated with the integration.</p>"
+        "Integration$IntegrationConfig": "<p>Properties associated with the integration.</p>",
+        "ModifyIntegrationRequest$IntegrationConfig": null,
+        "ModifyIntegrationResponse$IntegrationConfig": null
       }
     },
     "IntegrationConflictOperationFault": {
@@ -9948,7 +9956,7 @@
         "IntegrationFilter$Name": "<p>The name of the filter.</p>",
         "IntegrationFilterValues$member": null,
         "IntegrationPartition$FieldName": "<p>The field name used to partition data on the target. Avoid using columns that have unique values for each row (for example, `LastModifiedTimestamp`, `SystemModTimeStamp`) as the partition column. These columns are not suitable for partitioning because they create a large number of small partitions, which can lead to performance issues.</p>",
-        "IntegrationPartition$FunctionSpec": "<p>Specifies the function used to partition data on the target. The only accepted value for this parameter is `'identity'` (string). The `'identity'` function ensures that the data partitioning on the target follows the same scheme as the source. In other words, the partitioning structure of the source data is preserved in the target destination.</p>",
+        "IntegrationPartition$FunctionSpec": "<p>Specifies the function used to partition data on the target. The accepted values for this parameter are:</p> <ul> <li> <p> <code>identity</code> - Uses source values directly without transformation</p> </li> <li> <p> <code>year</code> - Extracts the year from timestamp values (e.g., 2023)</p> </li> <li> <p> <code>month</code> - Extracts the month from timestamp values (e.g., 2023-01)</p> </li> <li> <p> <code>day</code> - Extracts the day from timestamp values (e.g., 2023-01-15)</p> </li> <li> <p> <code>hour</code> - Extracts the hour from timestamp values (e.g., 2023-01-15-14)</p> </li> </ul>",
         "IntegrationPartition$ConversionSpec": "<p>Specifies the timestamp format of the source data. Valid values are:</p> <ul> <li> <p> <code>epoch_sec</code> - Unix epoch timestamp in seconds</p> </li> <li> <p> <code>epoch_milli</code> - Unix epoch timestamp in milliseconds</p> </li> <li> <p> <code>iso</code> - ISO 8601 formatted timestamp</p> </li> </ul> <note> <p> Only specify <code>ConversionSpec</code> when using timestamp-based partition functions (year, month, day, or hour). Glue Zero-ETL uses this parameter to correctly transform source data into timestamp format before partitioning. </p> <p> Do not use high-cardinality columns with the <code>identity</code> partition function. High-cardinality columns include: </p> <ul> <li> <p>Primary keys</p> </li> <li> <p>Timestamp fields (such as <code>LastModifiedTimestamp</code>, <code>CreatedDate</code>)</p> </li> <li> <p>System-generated timestamps</p> </li> </ul> <p> Using high-cardinality columns with identity partitioning creates many small partitions, which can significantly degrade ingestion performance. </p> </note>",
         "ModifyIntegrationRequest$IntegrationIdentifier": "<p>The Amazon Resource Name (ARN) for the integration.</p>",
         "ModifyIntegrationRequest$IntegrationName": "<p>A unique name for an integration in Glue.</p>",

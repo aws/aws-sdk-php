@@ -1,5 +1,272 @@
 {
   "version": "1.0",
   "examples": {
+    "CreateScraper": [
+      {
+        "input": {
+          "alias": "alias",
+          "clientToken": "token",
+          "destination": {
+            "ampConfiguration": {
+              "workspaceArn": "arn:aws:aps:us-west-2:123456789012:workspace/ws-ogh2u499-ce12-hg89-v6c7-123412341234"
+            }
+          },
+          "scrapeConfiguration": {
+            "configurationBlob": "blob"
+          },
+          "source": {
+            "eksConfiguration": {
+              "clusterArn": "arn:aws:eks:us-west-2:123456789012:cluster/example",
+              "securityGroupIds": [
+                "sg-abc123"
+              ],
+              "subnetIds": [
+                "subnet-abc123"
+              ]
+            }
+          },
+          "tags": {
+            "exampleTag": "exampleValue"
+          }
+        },
+        "output": {
+          "arn": "arn:aws:aps:us-west-2:123456789012:scraper/scraper-123",
+          "scraperId": "scraper-123",
+          "status": {
+            "statusCode": "CREATING"
+          },
+          "tags": {
+            "exampleTag": "exampleValue"
+          }
+        },
+        "id": "example-1",
+        "title": "CreateScraper with optional alias input, optional clientToken input, and one set of tags"
+      }
+    ],
+    "DeleteScraper": [
+      {
+        "input": {
+          "clientToken": "token",
+          "scraperId": "scraper-123"
+        },
+        "output": {
+          "scraperId": "scraper-123",
+          "status": {
+            "statusCode": "DELETING"
+          }
+        },
+        "id": "example-1",
+        "title": "DeleteScraper with optional clientToken input"
+      }
+    ],
+    "DescribeScraper": [
+      {
+        "input": {
+          "scraperId": "scraper-123"
+        },
+        "output": {
+          "scraper": {
+            "alias": "alias",
+            "arn": "arn:aws:aps:us-west-2:123456789012:scraper/scraper-123",
+            "createdAt": "2023-01-01T00:00:00Z",
+            "destination": {
+              "ampConfiguration": {
+                "workspaceArn": "arn:aws:aps:us-west-2:123456789012:workspace/ws-ogh2u499-ce12-hg89-v6c7-123412341234"
+              }
+            },
+            "lastModifiedAt": "2020-01-02T00:00:00Z",
+            "roleArn": "arn:aws:iam::123456789012:role/exampleRole",
+            "scrapeConfiguration": {
+              "configurationBlob": "blob"
+            },
+            "scraperId": "scraper-123",
+            "source": {
+              "eksConfiguration": {
+                "clusterArn": "arn:aws:eks:us-west-2:123456789012:cluster/example",
+                "securityGroupIds": [
+                  "sg-abc123"
+                ],
+                "subnetIds": [
+                  "subnet-abc123"
+                ]
+              }
+            },
+            "status": {
+              "statusCode": "ACTIVE"
+            },
+            "tags": {
+              "exampleTag": "exampleValue"
+            }
+          }
+        },
+        "id": "example-1",
+        "title": "DescribeScraper, with no statusReason to report"
+      }
+    ],
+    "GetDefaultScraperConfiguration": [
+      {
+        "input": {
+        },
+        "output": {
+          "configuration": "blob"
+        },
+        "id": "example-1",
+        "title": "GetDefaultScraperConfiguration"
+      }
+    ],
+    "ListScrapers": [
+      {
+        "input": {
+          "maxResults": 2,
+          "nextToken": "previouslyGeneratedToken"
+        },
+        "output": {
+          "scrapers": [
+            {
+              "alias": "alias1",
+              "arn": "arn:aws:aps:us-west-2:123456789012:scraper/scraper-123",
+              "createdAt": "2023-01-01T00:00:00Z",
+              "destination": {
+                "ampConfiguration": {
+                  "workspaceArn": "arn:aws:aps:us-west-2:123456789012:workspace/ws-ogh2u499-ce12-hg89-v6c7-123412341234"
+                }
+              },
+              "lastModifiedAt": "2020-01-02T00:00:00Z",
+              "roleArn": "arn:aws:iam::123456789012:role/exampleRole",
+              "scraperId": "scraper-123",
+              "source": {
+                "eksConfiguration": {
+                  "clusterArn": "arn:aws:eks:us-west-2:123456789012:cluster/example1",
+                  "securityGroupIds": [
+                    "sg-abc123"
+                  ],
+                  "subnetIds": [
+                    "subnet-abc123"
+                  ]
+                }
+              },
+              "status": {
+                "statusCode": "ACTIVE"
+              },
+              "tags": {
+                "exampleTag": "exampleValue"
+              }
+            },
+            {
+              "alias": "alias2",
+              "arn": "arn:aws:aps:us-west-2:123456789012:scraper/scraper-456",
+              "createdAt": "2023-01-01T00:00:00Z",
+              "destination": {
+                "ampConfiguration": {
+                  "workspaceArn": "arn:aws:aps:us-west-2:123456789012:workspace/ws-ogh2u499-ce12-hg89-v6c7-123412341234"
+                }
+              },
+              "lastModifiedAt": "2020-01-02T00:00:00Z",
+              "roleArn": "arn:aws:iam::123456789012:role/exampleRole",
+              "scraperId": "scraper-456",
+              "source": {
+                "eksConfiguration": {
+                  "clusterArn": "arn:aws:eks:us-west-2:123456789012:cluster/example2",
+                  "securityGroupIds": [
+                    "sg-abc456"
+                  ],
+                  "subnetIds": [
+                    "subnet-abc456"
+                  ]
+                }
+              },
+              "status": {
+                "statusCode": "CREATING"
+              },
+              "tags": {
+                "exampleTag": "exampleValue"
+              }
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "ListScrapers, with a max result of 2, using a pagination token from a previous call to ListScrapers"
+      },
+      {
+        "input": {
+          "filters": {
+            "alias": [
+              "alias1"
+            ],
+            "sourceArn": [
+              "arn:aws:eks:us-west-2:123456789012:cluster/example1"
+            ],
+            "status": [
+              "ACTIVE"
+            ]
+          }
+        },
+        "output": {
+          "scrapers": [
+            {
+              "alias": "alias1",
+              "arn": "arn:aws:aps:us-west-2:123456789012:scraper/scraper-123",
+              "createdAt": "2023-01-01T00:00:00Z",
+              "destination": {
+                "ampConfiguration": {
+                  "workspaceArn": "arn:aws:aps:us-west-2:123456789012:workspace/ws-ogh2u499-ce12-hg89-v6c7-123412341234"
+                }
+              },
+              "lastModifiedAt": "2020-01-02T00:00:00Z",
+              "roleArn": "arn:aws:iam::123456789012:role/exampleRole",
+              "scraperId": "scraper-123",
+              "source": {
+                "eksConfiguration": {
+                  "clusterArn": "arn:aws:eks:us-west-2:123456789012:cluster/example1",
+                  "securityGroupIds": [
+                    "sg-abc123"
+                  ],
+                  "subnetIds": [
+                    "subnet-abc123"
+                  ]
+                }
+              },
+              "status": {
+                "statusCode": "ACTIVE"
+              },
+              "tags": {
+                "exampleTag": "exampleValue"
+              }
+            }
+          ]
+        },
+        "id": "example-2",
+        "title": "ListScrapers, with filters"
+      }
+    ],
+    "UpdateScraper": [
+      {
+        "input": {
+          "alias": "alias-update",
+          "clientToken": "token",
+          "destination": {
+            "ampConfiguration": {
+              "workspaceArn": "arn:aws:aps:us-west-2:123456789012:workspace/ws-ogh2u499-ce12-hg89-v6c7-123412341234-update"
+            }
+          },
+          "scrapeConfiguration": {
+            "configurationBlob": "blob-update"
+          },
+          "scraperId": "scraper-123"
+        },
+        "output": {
+          "arn": "arn:aws:aps:us-west-2:123456789012:scraper/scraper-123",
+          "scraperId": "scraper-123",
+          "status": {
+            "statusCode": "UPDATING"
+          },
+          "tags": {
+            "exampleTag": "exampleValue"
+          }
+        },
+        "id": "example-1",
+        "title": "UpdateScraper with all optional parameters"
+      }
+    ]
   }
 }

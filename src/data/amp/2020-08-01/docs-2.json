@@ -11,12 +11,14 @@
     "DeleteAlertManagerDefinition": "<p>Deletes the alert manager definition from a workspace.</p>",
     "DeleteLoggingConfiguration": "<p>Deletes the rules and alerting logging configuration for a workspace.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
     "DeleteQueryLoggingConfiguration": "<p>Deletes the query logging configuration for the specified workspace.</p>",
+    "DeleteResourcePolicy": "<p>Deletes the resource-based policy attached to an Amazon Managed Service for Prometheus workspace.</p>",
     "DeleteRuleGroupsNamespace": "<p>Deletes one rule groups namespace and its associated rule groups definition.</p>",
     "DeleteScraper": "<p>The <code>DeleteScraper</code> operation deletes one scraper, and stops any metrics collection that the scraper performs.</p>",
     "DeleteWorkspace": "<p>Deletes an existing workspace. </p> <note> <p>When you delete a workspace, the data that has been ingested into it is not immediately deleted. It will be permanently deleted within one month.</p> </note>",
     "DescribeAlertManagerDefinition": "<p>Retrieves the full information about the alert manager definition for a workspace.</p>",
     "DescribeLoggingConfiguration": "<p>Returns complete information about the current rules and alerting logging configuration of the workspace.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
     "DescribeQueryLoggingConfiguration": "<p>Retrieves the details of the query logging configuration for the specified workspace.</p>",
+    "DescribeResourcePolicy": "<p>Returns information about the resource-based policy attached to an Amazon Managed Service for Prometheus workspace.</p>",
     "DescribeRuleGroupsNamespace": "<p>Returns complete information about one rule groups namespace. To retrieve a list of rule groups namespaces, use <code>ListRuleGroupsNamespaces</code>.</p>",
     "DescribeScraper": "<p>The <code>DescribeScraper</code> operation displays information about an existing scraper.</p>",
     "DescribeWorkspace": "<p>Returns information about an existing workspace. </p>",
@@ -27,6 +29,7 @@
     "ListTagsForResource": "<p>The <code>ListTagsForResource</code> operation returns the tags that are associated with an Amazon Managed Service for Prometheus resource. Currently, the only resources that can be tagged are scrapers, workspaces, and rule groups namespaces. </p>",
     "ListWorkspaces": "<p>Lists all of the Amazon Managed Service for Prometheus workspaces in your account. This includes workspaces being created or deleted. </p>",
     "PutAlertManagerDefinition": "<p>Updates an existing alert manager definition in a workspace. If the workspace does not already have an alert manager definition, don't use this operation to create it. Instead, use <code>CreateAlertManagerDefinition</code>.</p>",
+    "PutResourcePolicy": "<p>Creates or updates a resource-based policy for an Amazon Managed Service for Prometheus workspace. Use resource-based policies to grant permissions to other AWS accounts or services to access your workspace.</p> <p>Only Prometheus-compatible APIs can be used for workspace sharing. You can add non-Prometheus-compatible APIs to the policy, but they will be ignored. For more information, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-APIReference-Prometheus-Compatible-Apis.html\">Prometheus-compatible APIs</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> <p>If your workspace uses customer-managed KMS keys for encryption, you must grant the principals in your resource-based policy access to those KMS keys. You can do this by creating KMS grants. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/APIReference/API_CreateGrant.html\">CreateGrant</a> in the <i>AWS Key Management Service API Reference</i> and <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/encryption-at-rest-Amazon-Service-Prometheus.html\">Encryption at rest</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p> <p>For more information about working with IAM, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/userguide/security_iam_service-with-iam.html\">Using Amazon Managed Service for Prometheus with IAM</a> in the <i>Amazon Managed Service for Prometheus User Guide</i>.</p>",
     "PutRuleGroupsNamespace": "<p>Updates an existing rule groups namespace within a workspace. A rule groups namespace is associated with exactly one rules file. A workspace can have multiple rule groups namespaces.</p> <p>Use this operation only to update existing rule groups namespaces. To create a new rule groups namespace, use <code>CreateRuleGroupsNamespace</code>.</p> <p>You can't use this operation to add tags to an existing rule groups namespace. Instead, use <code>TagResource</code>.</p>",
     "TagResource": "<p>The <code>TagResource</code> operation associates tags with an Amazon Managed Service for Prometheus resource. The only resources that can be tagged are rule groups namespaces, scrapers, and workspaces.</p> <p>If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag. To remove a tag, use <code>UntagResource</code>.</p>",
     "UntagResource": "<p>Removes the specified tags from an Amazon Managed Service for Prometheus resource. The only resources that can be tagged are rule groups namespaces, scrapers, and workspaces. </p>",
@@ -175,6 +178,11 @@
       "refs": {
       }
     },
+    "DeleteResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteRuleGroupsNamespaceRequest": {
       "base": "<p>Represents the input of a <code>DeleteRuleGroupsNamespace</code> operation.</p>",
       "refs": {
@@ -221,6 +229,16 @@
       }
     },
     "DescribeQueryLoggingConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeResourcePolicyResponse": {
       "base": null,
       "refs": {
       }
@@ -329,10 +347,12 @@
         "DeleteAlertManagerDefinitionRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "DeleteLoggingConfigurationRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "DeleteQueryLoggingConfigurationRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
+        "DeleteResourcePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the request is safe to retry (idempotent).</p>",
         "DeleteRuleGroupsNamespaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "DeleteScraperRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "DeleteWorkspaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "PutAlertManagerDefinitionRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
+        "PutResourcePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the request is safe to retry (idempotent).</p>",
         "PutRuleGroupsNamespaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "UpdateLoggingConfigurationRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "UpdateQueryLoggingConfigurationRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
@@ -536,6 +556,16 @@
     },
     "PutAlertManagerDefinitionResponse": {
       "base": "<p>Represents the output of a <code>PutAlertManagerDefinition</code> operation.</p>",
+      "refs": {
+      }
+    },
+    "PutResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutResourcePolicyResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -766,27 +796,33 @@
         "ConflictException$message": "<p>Description of the error.</p>",
         "ConflictException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ConflictException$resourceType": "<p>Type of the resource affected.</p>",
+        "DeleteResourcePolicyRequest$revisionId": "<p>The revision ID of the policy to delete. Use this parameter to ensure that you are deleting the correct version of the policy.</p>",
+        "DescribeResourcePolicyResponse$policyDocument": "<p>The JSON policy document for the resource-based policy attached to the workspace.</p>",
+        "DescribeResourcePolicyResponse$revisionId": "<p>The revision ID of the current resource-based policy.</p>",
         "InternalServerException$message": "<p>Description of the error.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>The ARN of the resource to list tages for. Must be a workspace, scraper, or rule groups namespace resource.</p>",
         "LoggingConfigurationStatus$statusReason": "<p>If failed, the reason for the failure.</p>",
+        "PutResourcePolicyRequest$policyDocument": "<p>The JSON policy document to use as the resource-based policy. This policy defines the permissions that other AWS accounts or services have to access your workspace.</p>",
+        "PutResourcePolicyRequest$revisionId": "<p>The revision ID of the policy to update. Use this parameter to ensure that you are updating the correct version of the policy. If you don't specify a revision ID, the policy is updated regardless of its current revision.</p> <p>For the first <b>PUT</b> request on a workspace that doesn't have an existing resource policy, you can specify <code>NO_POLICY</code> as the revision ID.</p>",
+        "PutResourcePolicyResponse$revisionId": "<p>The revision ID of the newly created or updated resource-based policy.</p>",
         "QueryLoggingConfigurationStatus$statusReason": "<p>If there is a failure, the reason for the failure.</p>",
         "ResourceNotFoundException$message": "<p>Description of the error.</p>",
         "ResourceNotFoundException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ResourceNotFoundException$resourceType": "<p>Type of the resource affected.</p>",
         "RuleGroupsNamespaceStatus$statusReason": "<p>The reason for the failure, if any.</p>",
         "ServiceQuotaExceededException$message": "<p>Description of the error.</p>",
-        "ServiceQuotaExceededException$quotaCode": "<p>Service quotas code of the originating quota.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>Type of the resource affected.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>Service quotas code for the originating service.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>Service quotas code of the originating quota.</p>",
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource to apply tags to.</p>",
         "ThrottlingException$message": "<p>Description of the error.</p>",
-        "ThrottlingException$quotaCode": "<p>Service quotas code for the originating quota.</p>",
         "ThrottlingException$serviceCode": "<p>Service quotas code for the originating service.</p>",
+        "ThrottlingException$quotaCode": "<p>Service quotas code for the originating quota.</p>",
         "UntagResourceRequest$resourceArn": "<p>The ARN of the resource from which to remove a tag.</p>",
         "ValidationException$message": "<p>Description of the error.</p>",
-        "ValidationExceptionField$message": "<p>A message describing why the field caused an exception.</p>",
         "ValidationExceptionField$name": "<p>The name of the field that caused an exception.</p>",
+        "ValidationExceptionField$message": "<p>A message describing why the field caused an exception.</p>",
         "WorkspaceConfigurationStatus$statusReason": "<p>The reason for the current status, if a reason is available.</p>"
       }
     },
@@ -1029,17 +1065,20 @@
         "DeleteAlertManagerDefinitionRequest$workspaceId": "<p>The ID of the workspace to delete the alert manager definition from.</p>",
         "DeleteLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace containing the logging configuration to delete.</p>",
         "DeleteQueryLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace from which to delete the query logging configuration.</p>",
+        "DeleteResourcePolicyRequest$workspaceId": "<p>The ID of the workspace from which to delete the resource-based policy.</p>",
         "DeleteRuleGroupsNamespaceRequest$workspaceId": "<p>The ID of the workspace containing the rule groups namespace and definition to delete.</p>",
         "DeleteWorkspaceRequest$workspaceId": "<p>The ID of the workspace to delete.</p>",
         "DescribeAlertManagerDefinitionRequest$workspaceId": "<p>The ID of the workspace to retrieve the alert manager definition from.</p>",
         "DescribeLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace to describe the logging configuration for.</p>",
         "DescribeQueryLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace for which to retrieve the query logging configuration.</p>",
+        "DescribeResourcePolicyRequest$workspaceId": "<p>The ID of the workspace to describe the resource-based policy for.</p>",
         "DescribeRuleGroupsNamespaceRequest$workspaceId": "<p>The ID of the workspace containing the rule groups namespace.</p>",
         "DescribeWorkspaceConfigurationRequest$workspaceId": "<p>The ID of the workspace that you want to retrieve information for. To find the IDs of your workspaces, use the <a href=\"https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm\">ListWorkspaces</a> operation.</p>",
         "DescribeWorkspaceRequest$workspaceId": "<p>The ID of the workspace to describe.</p>",
         "ListRuleGroupsNamespacesRequest$workspaceId": "<p>The ID of the workspace containing the rule groups namespaces.</p>",
         "LoggingConfigurationMetadata$workspace": "<p>The ID of the workspace the logging configuration is for.</p>",
         "PutAlertManagerDefinitionRequest$workspaceId": "<p>The ID of the workspace to update the alert manager definition in.</p>",
+        "PutResourcePolicyRequest$workspaceId": "<p>The ID of the workspace to attach the resource-based policy to.</p>",
         "PutRuleGroupsNamespaceRequest$workspaceId": "<p>The ID of the workspace where you are updating the rule groups namespace.</p>",
         "QueryLoggingConfigurationMetadata$workspace": "<p>The ID of the workspace associated with this query logging configuration.</p>",
         "UpdateLoggingConfigurationRequest$workspaceId": "<p>The ID of the workspace to update the logging configuration for.</p>",
@@ -1048,6 +1087,13 @@
         "UpdateWorkspaceConfigurationRequest$workspaceId": "<p>The ID of the workspace that you want to update. To find the IDs of your workspaces, use the <a href=\"https://docs.aws.amazon.com/prometheus/latest/APIReference/API_ListWorkspaces.htm\">ListWorkspaces</a> operation.</p>",
         "WorkspaceDescription$workspaceId": "<p>The unique ID for the workspace. For example, <code>ws-example1-1234-abcd-5678-ef90abcd1234</code>.</p>",
         "WorkspaceSummary$workspaceId": "<p>The unique ID for the workspace.</p>"
+      }
+    },
+    "WorkspacePolicyStatusCode": {
+      "base": null,
+      "refs": {
+        "DescribeResourcePolicyResponse$policyStatus": "<p>The current status of the resource-based policy.</p>",
+        "PutResourcePolicyResponse$policyStatus": "<p>The current status of the resource-based policy.</p>"
       }
     },
     "WorkspaceStatus": {

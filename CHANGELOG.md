@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockAgent` - This release adds support for saving Bedrock Flows while node configuration is still in progress, even if the Flow is not yet able to be invoked
+* `Aws\PrometheusService` - Add Resource-based Policy APIs for Amazon Prometheus
+* `Aws\Glue` - AWS Glue Zero ETL now supports On-demand snapshot load
+
 ## 3.354.0 - 2025-08-14
 
 * `Aws\Api` - Reverts to previous behavior changed by #3146 when deserializing empty payload members.

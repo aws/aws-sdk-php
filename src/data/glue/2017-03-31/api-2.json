@@ -6300,6 +6300,7 @@
       "max":20,
       "min":1
     },
+    "ContinuousSync":{"type":"boolean"},
     "Crawl":{
       "type":"structure",
       "members":{
@@ -11238,7 +11239,8 @@
       "type":"structure",
       "members":{
         "RefreshInterval":{"shape":"String128"},
-        "SourceProperties":{"shape":"IntegrationSourcePropertiesMap"}
+        "SourceProperties":{"shape":"IntegrationSourcePropertiesMap"},
+        "ContinuousSync":{"shape":"ContinuousSync"}
       }
     },
     "IntegrationConflictOperationFault":{
@@ -12617,6 +12619,7 @@
         "IntegrationIdentifier":{"shape":"String128"},
         "Description":{"shape":"IntegrationDescription"},
         "DataFilter":{"shape":"String2048"},
+        "IntegrationConfig":{"shape":"IntegrationConfig"},
         "IntegrationName":{"shape":"String128"}
       }
     },
@@ -12642,7 +12645,8 @@
         "Status":{"shape":"IntegrationStatus"},
         "CreateTime":{"shape":"IntegrationTimestamp"},
         "Errors":{"shape":"IntegrationErrorList"},
-        "DataFilter":{"shape":"String2048"}
+        "DataFilter":{"shape":"String2048"},
+        "IntegrationConfig":{"shape":"IntegrationConfig"}
       }
     },
     "MongoDBTarget":{

@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-08-01",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"aps",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"Amazon Prometheus Service",
     "serviceId":"amp",
     "signatureVersion":"v4",
     "signingName":"aps",
-    "uid":"amp-2020-08-01",
-    "auth":["aws.auth#sigv4"]
+    "uid":"amp-2020-08-01"
   },
   "operations":{
     "CreateAlertManagerDefinition":{
@@ -179,6 +178,24 @@
       ],
       "idempotent":true
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/workspaces/{workspaceId}/policy",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteRuleGroupsNamespace":{
       "name":"DeleteRuleGroupsNamespace",
       "http":{
@@ -277,6 +294,23 @@
       "input":{"shape":"DescribeQueryLoggingConfigurationRequest"},
       "output":{"shape":"DescribeQueryLoggingConfigurationResponse"},
       "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeResourcePolicy":{
+      "name":"DescribeResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/workspaces/{workspaceId}/policy",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeResourcePolicyRequest"},
+      "output":{"shape":"DescribeResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -452,6 +486,25 @@
       ],
       "idempotent":true
     },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/workspaces/{workspaceId}/policy",
+        "responseCode":202
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "PutRuleGroupsNamespace":{
       "name":"PutRuleGroupsNamespace",
       "http":{
@@ -620,16 +673,16 @@
     "AlertManagerDefinitionDescription":{
       "type":"structure",
       "required":[
-        "createdAt",
+        "status",
         "data",
-        "modifiedAt",
-        "status"
+        "createdAt",
+        "modifiedAt"
       ],
       "members":{
-        "createdAt":{"shape":"Timestamp"},
+        "status":{"shape":"AlertManagerDefinitionStatus"},
         "data":{"shape":"AlertManagerDefinitionData"},
-        "modifiedAt":{"shape":"Timestamp"},
-        "status":{"shape":"AlertManagerDefinitionStatus"}
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"}
       }
     },
     "AlertManagerDefinitionStatus":{
@@ -668,7 +721,7 @@
     },
     "ClusterArn":{
       "type":"string",
-      "pattern":"^arn:aws[-a-z]*:eks:[-a-z0-9]+:[0-9]{12}:cluster/.+$"
+      "pattern":"arn:aws[-a-z]*:eks:[-a-z0-9]+:[0-9]{12}:cluster/.+"
     },
     "ConflictException":{
       "type":"structure",
@@ -691,19 +744,19 @@
     "CreateAlertManagerDefinitionRequest":{
       "type":"structure",
       "required":[
-        "data",
-        "workspaceId"
+        "workspaceId",
+        "data"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "data":{"shape":"AlertManagerDefinitionData"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "data":{"shape":"AlertManagerDefinitionData"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
@@ -717,19 +770,19 @@
     "CreateLoggingConfigurationRequest":{
       "type":"structure",
       "required":[
-        "logGroupArn",
-        "workspaceId"
+        "workspaceId",
+        "logGroupArn"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "logGroupArn":{"shape":"LogGroupArn"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "logGroupArn":{"shape":"LogGroupArn"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
@@ -743,19 +796,19 @@
     "CreateQueryLoggingConfigurationRequest":{
       "type":"structure",
       "required":[
-        "destinations",
-        "workspaceId"
+        "workspaceId",
+        "destinations"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "destinations":{"shape":"LoggingDestinations"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "destinations":{"shape":"LoggingDestinations"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
@@ -769,35 +822,35 @@
     "CreateRuleGroupsNamespaceRequest":{
       "type":"structure",
       "required":[
-        "data",
+        "workspaceId",
         "name",
-        "workspaceId"
+        "data"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "data":{"shape":"RuleGroupsNamespaceData"},
-        "name":{"shape":"RuleGroupsNamespaceName"},
-        "tags":{"shape":"TagMap"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
-        }
+        },
+        "name":{"shape":"RuleGroupsNamespaceName"},
+        "data":{"shape":"RuleGroupsNamespaceData"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagMap"}
       }
     },
     "CreateRuleGroupsNamespaceResponse":{
       "type":"structure",
       "required":[
-        "arn",
         "name",
+        "arn",
         "status"
       ],
       "members":{
-        "arn":{"shape":"RuleGroupsNamespaceArn"},
         "name":{"shape":"RuleGroupsNamespaceName"},
+        "arn":{"shape":"RuleGroupsNamespaceArn"},
         "status":{"shape":"RuleGroupsNamespaceStatus"},
         "tags":{"shape":"TagMap"}
       }
@@ -805,33 +858,33 @@
     "CreateScraperRequest":{
       "type":"structure",
       "required":[
-        "destination",
         "scrapeConfiguration",
-        "source"
+        "source",
+        "destination"
       ],
       "members":{
         "alias":{"shape":"ScraperAlias"},
+        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
+        "source":{"shape":"Source"},
+        "destination":{"shape":"Destination"},
+        "roleConfiguration":{"shape":"RoleConfiguration"},
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
-        "destination":{"shape":"Destination"},
-        "roleConfiguration":{"shape":"RoleConfiguration"},
-        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
-        "source":{"shape":"Source"},
         "tags":{"shape":"TagMap"}
       }
     },
     "CreateScraperResponse":{
       "type":"structure",
       "required":[
-        "arn",
         "scraperId",
+        "arn",
         "status"
       ],
       "members":{
-        "arn":{"shape":"ScraperArn"},
         "scraperId":{"shape":"ScraperId"},
+        "arn":{"shape":"ScraperArn"},
         "status":{"shape":"ScraperStatus"},
         "tags":{"shape":"TagMap"}
       }
@@ -844,39 +897,39 @@
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
-        "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "CreateWorkspaceResponse":{
       "type":"structure",
       "required":[
+        "workspaceId",
         "arn",
-        "status",
-        "workspaceId"
+        "status"
       ],
       "members":{
+        "workspaceId":{"shape":"WorkspaceId"},
         "arn":{"shape":"WorkspaceArn"},
-        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "status":{"shape":"WorkspaceStatus"},
         "tags":{"shape":"TagMap"},
-        "workspaceId":{"shape":"WorkspaceId"}
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "DeleteAlertManagerDefinitionRequest":{
       "type":"structure",
       "required":["workspaceId"],
       "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true,
           "location":"querystring",
           "locationName":"clientToken"
-        },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
         }
       }
     },
@@ -884,16 +937,16 @@
       "type":"structure",
       "required":["workspaceId"],
       "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true,
           "location":"querystring",
           "locationName":"clientToken"
-        },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
         }
       }
     },
@@ -901,41 +954,63 @@
       "type":"structure",
       "required":["workspaceId"],
       "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["workspaceId"],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true,
           "location":"querystring",
           "locationName":"clientToken"
         },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
+        "revisionId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"revisionId"
         }
       }
     },
     "DeleteRuleGroupsNamespaceRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "workspaceId"
+        "workspaceId",
+        "name"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true,
-          "location":"querystring",
-          "locationName":"clientToken"
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
         },
         "name":{
           "shape":"RuleGroupsNamespaceName",
           "location":"uri",
           "locationName":"name"
         },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -943,16 +1018,16 @@
       "type":"structure",
       "required":["scraperId"],
       "members":{
+        "scraperId":{
+          "shape":"ScraperId",
+          "location":"uri",
+          "locationName":"scraperId"
+        },
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true,
           "location":"querystring",
           "locationName":"clientToken"
-        },
-        "scraperId":{
-          "shape":"ScraperId",
-          "location":"uri",
-          "locationName":"scraperId"
         }
       }
     },
@@ -971,16 +1046,16 @@
       "type":"structure",
       "required":["workspaceId"],
       "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true,
           "location":"querystring",
           "locationName":"clientToken"
-        },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
         }
       }
     },
@@ -1038,22 +1113,46 @@
         "queryLoggingConfiguration":{"shape":"QueryLoggingConfigurationMetadata"}
       }
     },
-    "DescribeRuleGroupsNamespaceRequest":{
+    "DescribeResourcePolicyRequest":{
       "type":"structure",
-      "required":[
-        "name",
-        "workspaceId"
-      ],
+      "required":["workspaceId"],
       "members":{
-        "name":{
-          "shape":"RuleGroupsNamespaceName",
-          "location":"uri",
-          "locationName":"name"
-        },
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        }
+      }
+    },
+    "DescribeResourcePolicyResponse":{
+      "type":"structure",
+      "required":[
+        "policyDocument",
+        "policyStatus",
+        "revisionId"
+      ],
+      "members":{
+        "policyDocument":{"shape":"String"},
+        "policyStatus":{"shape":"WorkspacePolicyStatusCode"},
+        "revisionId":{"shape":"String"}
+      }
+    },
+    "DescribeRuleGroupsNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "name"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "name":{
+          "shape":"RuleGroupsNamespaceName",
+          "location":"uri",
+          "locationName":"name"
         }
       }
     },
@@ -1167,13 +1266,13 @@
     },
     "IamRoleArn":{
       "type":"string",
-      "pattern":"^arn:aws[-a-z]*:iam::[0-9]{12}:role/.+$"
+      "pattern":"arn:aws[-a-z]*:iam::[0-9]{12}:role/.+"
     },
     "IdempotencyToken":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[!-~]+$"
+      "pattern":"[!-~]+"
     },
     "Integer":{
       "type":"integer",
@@ -1199,12 +1298,12 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[-a-z]*:kms:[-a-z0-9]+:[0-9]{12}:key/[-a-f0-9]+$"
+      "pattern":"arn:aws[-a-z]*:kms:[-a-z0-9]+:[0-9]{12}:key/[-a-f0-9]+"
     },
     "LabelName":{
       "type":"string",
       "min":1,
-      "pattern":"^[a-zA-Z_][a-zA-Z0-9_]*$"
+      "pattern":"[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "LabelSet":{
       "type":"map",
@@ -1218,12 +1317,12 @@
     "LimitsPerLabelSet":{
       "type":"structure",
       "required":[
-        "labelSet",
-        "limits"
+        "limits",
+        "labelSet"
       ],
       "members":{
-        "labelSet":{"shape":"LabelSet"},
-        "limits":{"shape":"LimitsPerLabelSetEntry"}
+        "limits":{"shape":"LimitsPerLabelSetEntry"},
+        "labelSet":{"shape":"LabelSet"}
       }
     },
     "LimitsPerLabelSetEntry":{
@@ -1245,10 +1344,10 @@
       "type":"structure",
       "required":["workspaceId"],
       "members":{
-        "maxResults":{
-          "shape":"ListRuleGroupsNamespacesRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
         },
         "name":{
           "shape":"RuleGroupsNamespaceName",
@@ -1260,10 +1359,10 @@
           "location":"querystring",
           "locationName":"nextToken"
         },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
+        "maxResults":{
+          "shape":"ListRuleGroupsNamespacesRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
         }
       }
     },
@@ -1277,8 +1376,8 @@
       "type":"structure",
       "required":["ruleGroupsNamespaces"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "ruleGroupsNamespaces":{"shape":"RuleGroupsNamespaceSummaryList"}
+        "ruleGroupsNamespaces":{"shape":"RuleGroupsNamespaceSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListScrapersRequest":{
@@ -1288,15 +1387,15 @@
           "shape":"ScraperFilters",
           "location":"querystring"
         },
-        "maxResults":{
-          "shape":"ListScrapersRequestMaxResultsInteger",
-          "location":"querystring",
-          "locationName":"maxResults"
-        },
         "nextToken":{
           "shape":"PaginationToken",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"ListScrapersRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
         }
       }
     },
@@ -1310,8 +1409,8 @@
       "type":"structure",
       "required":["scrapers"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "scrapers":{"shape":"ScraperSummaryList"}
+        "scrapers":{"shape":"ScraperSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -1334,6 +1433,11 @@
     "ListWorkspacesRequest":{
       "type":"structure",
       "members":{
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
         "alias":{
           "shape":"WorkspaceAlias",
           "location":"querystring",
@@ -1343,11 +1447,6 @@
           "shape":"ListWorkspacesRequestMaxResultsInteger",
           "location":"querystring",
           "locationName":"maxResults"
-        },
-        "nextToken":{
-          "shape":"PaginationToken",
-          "location":"querystring",
-          "locationName":"nextToken"
         }
       }
     },
@@ -1361,29 +1460,29 @@
       "type":"structure",
       "required":["workspaces"],
       "members":{
-        "nextToken":{"shape":"PaginationToken"},
-        "workspaces":{"shape":"WorkspaceSummaryList"}
+        "workspaces":{"shape":"WorkspaceSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "LogGroupArn":{
       "type":"string",
-      "pattern":"^arn:aws[-a-z]*:logs:[-a-z0-9]+:[0-9]{12}:log-group:[A-Za-z0-9\\.\\-\\_\\#/]{1,512}\\:\\*$"
+      "pattern":"arn:aws[a-z0-9-]*:logs:[a-z0-9-]+:[0-9]{12}:log-group:[A-Za-z0-9\\.\\-\\_\\#/]{1,512}\\:\\*"
     },
     "LoggingConfigurationMetadata":{
       "type":"structure",
       "required":[
-        "createdAt",
-        "logGroupArn",
-        "modifiedAt",
         "status",
-        "workspace"
+        "workspace",
+        "logGroupArn",
+        "createdAt",
+        "modifiedAt"
       ],
       "members":{
-        "createdAt":{"shape":"Timestamp"},
-        "logGroupArn":{"shape":"LogGroupArn"},
-        "modifiedAt":{"shape":"Timestamp"},
         "status":{"shape":"LoggingConfigurationStatus"},
-        "workspace":{"shape":"WorkspaceId"}
+        "workspace":{"shape":"WorkspaceId"},
+        "logGroupArn":{"shape":"LogGroupArn"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"}
       }
     },
     "LoggingConfigurationStatus":{
@@ -1442,19 +1541,19 @@
     "PutAlertManagerDefinitionRequest":{
       "type":"structure",
       "required":[
-        "data",
-        "workspaceId"
+        "workspaceId",
+        "data"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "data":{"shape":"AlertManagerDefinitionData"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "data":{"shape":"AlertManagerDefinitionData"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
@@ -1465,41 +1564,72 @@
         "status":{"shape":"AlertManagerDefinitionStatus"}
       }
     },
-    "PutRuleGroupsNamespaceRequest":{
+    "PutResourcePolicyRequest":{
       "type":"structure",
       "required":[
-        "data",
-        "name",
-        "workspaceId"
+        "workspaceId",
+        "policyDocument"
       ],
       "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
+        "policyDocument":{"shape":"String"},
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
-        "data":{"shape":"RuleGroupsNamespaceData"},
+        "revisionId":{"shape":"String"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "required":[
+        "policyStatus",
+        "revisionId"
+      ],
+      "members":{
+        "policyStatus":{"shape":"WorkspacePolicyStatusCode"},
+        "revisionId":{"shape":"String"}
+      }
+    },
+    "PutRuleGroupsNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "workspaceId",
+        "name",
+        "data"
+      ],
+      "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
         "name":{
           "shape":"RuleGroupsNamespaceName",
           "location":"uri",
           "locationName":"name"
         },
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
+        "data":{"shape":"RuleGroupsNamespaceData"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
     "PutRuleGroupsNamespaceResponse":{
       "type":"structure",
       "required":[
-        "arn",
         "name",
+        "arn",
         "status"
       ],
       "members":{
-        "arn":{"shape":"RuleGroupsNamespaceArn"},
         "name":{"shape":"RuleGroupsNamespaceName"},
+        "arn":{"shape":"RuleGroupsNamespaceArn"},
         "status":{"shape":"RuleGroupsNamespaceStatus"},
         "tags":{"shape":"TagMap"}
       }
@@ -1507,18 +1637,18 @@
     "QueryLoggingConfigurationMetadata":{
       "type":"structure",
       "required":[
-        "createdAt",
-        "destinations",
-        "modifiedAt",
         "status",
-        "workspace"
+        "workspace",
+        "destinations",
+        "createdAt",
+        "modifiedAt"
       ],
       "members":{
-        "createdAt":{"shape":"Timestamp"},
-        "destinations":{"shape":"LoggingDestinations"},
-        "modifiedAt":{"shape":"Timestamp"},
         "status":{"shape":"QueryLoggingConfigurationStatus"},
-        "workspace":{"shape":"WorkspaceId"}
+        "workspace":{"shape":"WorkspaceId"},
+        "destinations":{"shape":"LoggingDestinations"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"}
       }
     },
     "QueryLoggingConfigurationStatus":{
@@ -1571,19 +1701,19 @@
       "type":"structure",
       "required":[
         "arn",
-        "createdAt",
-        "data",
-        "modifiedAt",
         "name",
-        "status"
+        "status",
+        "data",
+        "createdAt",
+        "modifiedAt"
       ],
       "members":{
         "arn":{"shape":"RuleGroupsNamespaceArn"},
-        "createdAt":{"shape":"Timestamp"},
-        "data":{"shape":"RuleGroupsNamespaceData"},
-        "modifiedAt":{"shape":"Timestamp"},
         "name":{"shape":"RuleGroupsNamespaceName"},
         "status":{"shape":"RuleGroupsNamespaceStatus"},
+        "data":{"shape":"RuleGroupsNamespaceData"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1591,7 +1721,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[0-9A-Za-z][-.0-9A-Z_a-z]*"
+      "pattern":".*[0-9A-Za-z][-.0-9A-Z_a-z]*.*"
     },
     "RuleGroupsNamespaceStatus":{
       "type":"structure",
@@ -1616,17 +1746,17 @@
       "type":"structure",
       "required":[
         "arn",
-        "createdAt",
-        "modifiedAt",
         "name",
-        "status"
+        "status",
+        "createdAt",
+        "modifiedAt"
       ],
       "members":{
         "arn":{"shape":"RuleGroupsNamespaceArn"},
-        "createdAt":{"shape":"Timestamp"},
-        "modifiedAt":{"shape":"Timestamp"},
         "name":{"shape":"RuleGroupsNamespaceName"},
         "status":{"shape":"RuleGroupsNamespaceStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "modifiedAt":{"shape":"Timestamp"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1645,36 +1775,36 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[0-9A-Za-z][-.0-9A-Z_a-z]*$"
+      "pattern":"[0-9A-Za-z][-.0-9A-Z_a-z]*"
     },
     "ScraperArn":{"type":"string"},
     "ScraperDescription":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "destination",
-        "lastModifiedAt",
-        "roleArn",
-        "scrapeConfiguration",
         "scraperId",
+        "arn",
+        "roleArn",
+        "status",
+        "createdAt",
+        "lastModifiedAt",
+        "scrapeConfiguration",
         "source",
-        "status"
+        "destination"
       ],
       "members":{
         "alias":{"shape":"ScraperAlias"},
-        "arn":{"shape":"ScraperArn"},
-        "createdAt":{"shape":"Timestamp"},
-        "destination":{"shape":"Destination"},
-        "lastModifiedAt":{"shape":"Timestamp"},
-        "roleArn":{"shape":"IamRoleArn"},
-        "roleConfiguration":{"shape":"RoleConfiguration"},
-        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
         "scraperId":{"shape":"ScraperId"},
-        "source":{"shape":"Source"},
+        "arn":{"shape":"ScraperArn"},
+        "roleArn":{"shape":"IamRoleArn"},
         "status":{"shape":"ScraperStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastModifiedAt":{"shape":"Timestamp"},
+        "tags":{"shape":"TagMap"},
         "statusReason":{"shape":"StatusReason"},
-        "tags":{"shape":"TagMap"}
+        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
+        "source":{"shape":"Source"},
+        "destination":{"shape":"Destination"},
+        "roleConfiguration":{"shape":"RoleConfiguration"}
       }
     },
     "ScraperFilters":{
@@ -1688,7 +1818,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[0-9A-Za-z][-.0-9A-Z_a-z]*$"
+      "pattern":"[0-9A-Za-z][-.0-9A-Z_a-z]*"
     },
     "ScraperStatus":{
       "type":"structure",
@@ -1712,28 +1842,28 @@
     "ScraperSummary":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "destination",
-        "lastModifiedAt",
-        "roleArn",
         "scraperId",
+        "arn",
+        "roleArn",
+        "status",
+        "createdAt",
+        "lastModifiedAt",
         "source",
-        "status"
+        "destination"
       ],
       "members":{
         "alias":{"shape":"ScraperAlias"},
-        "arn":{"shape":"ScraperArn"},
-        "createdAt":{"shape":"Timestamp"},
-        "destination":{"shape":"Destination"},
-        "lastModifiedAt":{"shape":"Timestamp"},
-        "roleArn":{"shape":"IamRoleArn"},
-        "roleConfiguration":{"shape":"RoleConfiguration"},
         "scraperId":{"shape":"ScraperId"},
-        "source":{"shape":"Source"},
+        "arn":{"shape":"ScraperArn"},
+        "roleArn":{"shape":"IamRoleArn"},
         "status":{"shape":"ScraperStatus"},
+        "createdAt":{"shape":"Timestamp"},
+        "lastModifiedAt":{"shape":"Timestamp"},
+        "tags":{"shape":"TagMap"},
         "statusReason":{"shape":"StatusReason"},
-        "tags":{"shape":"TagMap"}
+        "source":{"shape":"Source"},
+        "destination":{"shape":"Destination"},
+        "roleConfiguration":{"shape":"RoleConfiguration"}
       }
     },
     "ScraperSummaryList":{
@@ -1744,7 +1874,7 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^sg-[0-9a-z]+$"
+      "pattern":"sg-[0-9a-z]+"
     },
     "SecurityGroupIds":{
       "type":"list",
@@ -1756,17 +1886,17 @@
       "type":"structure",
       "required":[
         "message",
-        "quotaCode",
         "resourceId",
         "resourceType",
-        "serviceCode"
+        "serviceCode",
+        "quotaCode"
       ],
       "members":{
         "message":{"shape":"String"},
-        "quotaCode":{"shape":"String"},
         "resourceId":{"shape":"String"},
         "resourceType":{"shape":"String"},
-        "serviceCode":{"shape":"String"}
+        "serviceCode":{"shape":"String"},
+        "quotaCode":{"shape":"String"}
       },
       "error":{
         "httpStatusCode":402,
@@ -1791,7 +1921,7 @@
       "type":"string",
       "max":255,
       "min":0,
-      "pattern":"^subnet-[0-9a-z]+$"
+      "pattern":"subnet-[0-9a-z]+"
     },
     "SubnetIds":{
       "type":"list",
@@ -1803,7 +1933,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "TagKeys":{
       "type":"list",
@@ -1840,20 +1970,20 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+      "pattern":"([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)"
     },
     "ThrottlingException":{
       "type":"structure",
       "required":["message"],
       "members":{
         "message":{"shape":"String"},
+        "serviceCode":{"shape":"String"},
         "quotaCode":{"shape":"String"},
         "retryAfterSeconds":{
           "shape":"Integer",
           "location":"header",
           "locationName":"Retry-After"
-        },
-        "serviceCode":{"shape":"String"}
+        }
       },
       "error":{
         "httpStatusCode":429,
@@ -1890,19 +2020,19 @@
     "UpdateLoggingConfigurationRequest":{
       "type":"structure",
       "required":[
-        "logGroupArn",
-        "workspaceId"
+        "workspaceId",
+        "logGroupArn"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "logGroupArn":{"shape":"LogGroupArn"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "logGroupArn":{"shape":"LogGroupArn"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
@@ -1916,19 +2046,19 @@
     "UpdateQueryLoggingConfigurationRequest":{
       "type":"structure",
       "required":[
-        "destinations",
-        "workspaceId"
+        "workspaceId",
+        "destinations"
       ],
       "members":{
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "destinations":{"shape":"LoggingDestinations"},
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "destinations":{"shape":"LoggingDestinations"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
@@ -1943,31 +2073,31 @@
       "type":"structure",
       "required":["scraperId"],
       "members":{
-        "alias":{"shape":"ScraperAlias"},
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
-        "destination":{"shape":"Destination"},
-        "roleConfiguration":{"shape":"RoleConfiguration"},
-        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
         "scraperId":{
           "shape":"ScraperId",
           "location":"uri",
           "locationName":"scraperId"
+        },
+        "alias":{"shape":"ScraperAlias"},
+        "scrapeConfiguration":{"shape":"ScrapeConfiguration"},
+        "destination":{"shape":"Destination"},
+        "roleConfiguration":{"shape":"RoleConfiguration"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
     "UpdateScraperResponse":{
       "type":"structure",
       "required":[
-        "arn",
         "scraperId",
+        "arn",
         "status"
       ],
       "members":{
-        "arn":{"shape":"ScraperArn"},
         "scraperId":{"shape":"ScraperId"},
+        "arn":{"shape":"ScraperArn"},
         "status":{"shape":"ScraperStatus"},
         "tags":{"shape":"TagMap"}
       }
@@ -1976,15 +2106,15 @@
       "type":"structure",
       "required":["workspaceId"],
       "members":{
-        "alias":{"shape":"WorkspaceAlias"},
-        "clientToken":{
-          "shape":"IdempotencyToken",
-          "idempotencyToken":true
-        },
         "workspaceId":{
           "shape":"WorkspaceId",
           "location":"uri",
           "locationName":"workspaceId"
+        },
+        "alias":{"shape":"WorkspaceAlias"},
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
         }
       }
     },
@@ -1992,17 +2122,17 @@
       "type":"structure",
       "required":["workspaceId"],
       "members":{
+        "workspaceId":{
+          "shape":"WorkspaceId",
+          "location":"uri",
+          "locationName":"workspaceId"
+        },
         "clientToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true
         },
         "limitsPerLabelSet":{"shape":"LimitsPerLabelSetList"},
-        "retentionPeriodInDays":{"shape":"UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger"},
-        "workspaceId":{
-          "shape":"WorkspaceId",
-          "location":"uri",
-          "locationName":"workspaceId"
-        }
+        "retentionPeriodInDays":{"shape":"UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger"}
       }
     },
     "UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger":{
@@ -2029,9 +2159,9 @@
         "reason"
       ],
       "members":{
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
         "message":{"shape":"String"},
-        "reason":{"shape":"ValidationExceptionReason"}
+        "reason":{"shape":"ValidationExceptionReason"},
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -2042,12 +2172,12 @@
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "message",
-        "name"
+        "name",
+        "message"
       ],
       "members":{
-        "message":{"shape":"String"},
-        "name":{"shape":"String"}
+        "name":{"shape":"String"},
+        "message":{"shape":"String"}
       }
     },
     "ValidationExceptionFieldList":{
@@ -2070,15 +2200,15 @@
     },
     "WorkspaceArn":{
       "type":"string",
-      "pattern":"^arn:aws[-a-z]*:aps:[-a-z0-9]+:[0-9]{12}:workspace/.+$"
+      "pattern":"arn:aws[-a-z]*:aps:[-a-z0-9]+:[0-9]{12}:workspace/.+"
     },
     "WorkspaceConfigurationDescription":{
       "type":"structure",
       "required":["status"],
       "members":{
+        "status":{"shape":"WorkspaceConfigurationStatus"},
         "limitsPerLabelSet":{"shape":"LimitsPerLabelSetList"},
-        "retentionPeriodInDays":{"shape":"WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger"},
-        "status":{"shape":"WorkspaceConfigurationStatus"}
+        "retentionPeriodInDays":{"shape":"WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger"}
       }
     },
     "WorkspaceConfigurationDescriptionRetentionPeriodInDaysInteger":{
@@ -2105,27 +2235,36 @@
     "WorkspaceDescription":{
       "type":"structure",
       "required":[
+        "workspaceId",
         "arn",
-        "createdAt",
         "status",
-        "workspaceId"
+        "createdAt"
       ],
       "members":{
+        "workspaceId":{"shape":"WorkspaceId"},
         "alias":{"shape":"WorkspaceAlias"},
         "arn":{"shape":"WorkspaceArn"},
-        "createdAt":{"shape":"Timestamp"},
-        "kmsKeyArn":{"shape":"KmsKeyArn"},
-        "prometheusEndpoint":{"shape":"Uri"},
         "status":{"shape":"WorkspaceStatus"},
+        "prometheusEndpoint":{"shape":"Uri"},
+        "createdAt":{"shape":"Timestamp"},
         "tags":{"shape":"TagMap"},
-        "workspaceId":{"shape":"WorkspaceId"}
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "WorkspaceId":{
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"[0-9A-Za-z][-.0-9A-Z_a-z]*"
+      "pattern":".*[0-9A-Za-z][-.0-9A-Z_a-z]*.*"
+    },
+    "WorkspacePolicyStatusCode":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING"
+      ]
     },
     "WorkspaceStatus":{
       "type":"structure",
@@ -2147,19 +2286,19 @@
     "WorkspaceSummary":{
       "type":"structure",
       "required":[
+        "workspaceId",
         "arn",
-        "createdAt",
         "status",
-        "workspaceId"
+        "createdAt"
       ],
       "members":{
+        "workspaceId":{"shape":"WorkspaceId"},
         "alias":{"shape":"WorkspaceAlias"},
         "arn":{"shape":"WorkspaceArn"},
-        "createdAt":{"shape":"Timestamp"},
-        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "status":{"shape":"WorkspaceStatus"},
+        "createdAt":{"shape":"Timestamp"},
         "tags":{"shape":"TagMap"},
-        "workspaceId":{"shape":"WorkspaceId"}
+        "kmsKeyArn":{"shape":"KmsKeyArn"}
       }
     },
     "WorkspaceSummaryList":{

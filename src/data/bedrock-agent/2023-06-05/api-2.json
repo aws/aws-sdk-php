@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-06-05",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"bedrock-agent",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"Agents for Amazon Bedrock",
     "serviceId":"Bedrock Agent",
     "signatureVersion":"v4",
     "signingName":"bedrock",
-    "uid":"bedrock-agent-2023-06-05",
-    "auth":["aws.auth#sigv4"]
+    "uid":"bedrock-agent-2023-06-05"
   },
   "operations":{
     "AssociateAgentCollaborator":{
@@ -1338,8 +1337,8 @@
     "APISchema":{
       "type":"structure",
       "members":{
-        "payload":{"shape":"Payload"},
-        "s3":{"shape":"S3Identifier"}
+        "s3":{"shape":"S3Identifier"},
+        "payload":{"shape":"Payload"}
       },
       "union":true
     },
@@ -1357,8 +1356,8 @@
     "ActionGroupExecutor":{
       "type":"structure",
       "members":{
-        "customControl":{"shape":"CustomControlMethod"},
-        "lambda":{"shape":"LambdaArn"}
+        "lambda":{"shape":"LambdaArn"},
+        "customControl":{"shape":"CustomControlMethod"}
       },
       "union":true
     },
@@ -1435,109 +1434,109 @@
     "Agent":{
       "type":"structure",
       "required":[
-        "agentArn",
         "agentId",
         "agentName",
-        "agentResourceRoleArn",
-        "agentStatus",
+        "agentArn",
         "agentVersion",
-        "createdAt",
+        "agentStatus",
         "idleSessionTTLInSeconds",
+        "agentResourceRoleArn",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "agentArn":{"shape":"AgentArn"},
-        "agentCollaboration":{"shape":"AgentCollaboration"},
         "agentId":{"shape":"Id"},
         "agentName":{"shape":"Name"},
-        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
-        "agentStatus":{"shape":"AgentStatus"},
+        "agentArn":{"shape":"AgentArn"},
         "agentVersion":{"shape":"DraftVersion"},
         "clientToken":{"shape":"ClientToken"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "customOrchestration":{"shape":"CustomOrchestration"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "description":{"shape":"Description"},
-        "failureReasons":{"shape":"FailureReasons"},
-        "foundationModel":{"shape":"ModelIdentifier"},
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
-        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "instruction":{"shape":"Instruction"},
-        "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "agentStatus":{"shape":"AgentStatus"},
+        "foundationModel":{"shape":"ModelIdentifier"},
+        "description":{"shape":"Description"},
         "orchestrationType":{"shape":"OrchestrationType"},
+        "customOrchestration":{"shape":"CustomOrchestration"},
+        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
+        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
         "preparedAt":{"shape":"DateTimestamp"},
-        "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
+        "failureReasons":{"shape":"FailureReasons"},
         "recommendedActions":{"shape":"RecommendedActions"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
+        "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "agentCollaboration":{"shape":"AgentCollaboration"}
       }
     },
     "AgentActionGroup":{
       "type":"structure",
       "required":[
-        "actionGroupId",
-        "actionGroupName",
-        "actionGroupState",
         "agentId",
         "agentVersion",
+        "actionGroupId",
+        "actionGroupName",
         "createdAt",
-        "updatedAt"
+        "updatedAt",
+        "actionGroupState"
       ],
       "members":{
-        "actionGroupExecutor":{"shape":"ActionGroupExecutor"},
-        "actionGroupId":{"shape":"Id"},
-        "actionGroupName":{"shape":"Name"},
-        "actionGroupState":{"shape":"ActionGroupState"},
         "agentId":{"shape":"Id"},
         "agentVersion":{"shape":"Version"},
-        "apiSchema":{"shape":"APISchema"},
+        "actionGroupId":{"shape":"Id"},
+        "actionGroupName":{"shape":"Name"},
         "clientToken":{"shape":"ClientToken"},
-        "createdAt":{"shape":"DateTimestamp"},
         "description":{"shape":"Description"},
-        "functionSchema":{"shape":"FunctionSchema"},
-        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
         "parentActionSignature":{"shape":"ActionGroupSignature"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"},
+        "actionGroupExecutor":{"shape":"ActionGroupExecutor"},
+        "apiSchema":{"shape":"APISchema"},
+        "functionSchema":{"shape":"FunctionSchema"},
+        "actionGroupState":{"shape":"ActionGroupState"}
       }
     },
     "AgentAlias":{
       "type":"structure",
       "required":[
-        "agentAliasArn",
+        "agentId",
         "agentAliasId",
         "agentAliasName",
-        "agentAliasStatus",
-        "agentId",
-        "createdAt",
+        "agentAliasArn",
         "routingConfiguration",
-        "updatedAt"
+        "createdAt",
+        "updatedAt",
+        "agentAliasStatus"
       ],
       "members":{
-        "agentAliasArn":{"shape":"AgentAliasArn"},
-        "agentAliasHistoryEvents":{"shape":"AgentAliasHistoryEvents"},
+        "agentId":{"shape":"Id"},
         "agentAliasId":{"shape":"AgentAliasId"},
         "agentAliasName":{"shape":"Name"},
-        "agentAliasStatus":{"shape":"AgentAliasStatus"},
-        "agentId":{"shape":"Id"},
-        "aliasInvocationState":{"shape":"AliasInvocationState"},
+        "agentAliasArn":{"shape":"AgentAliasArn"},
         "clientToken":{"shape":"ClientToken"},
-        "createdAt":{"shape":"DateTimestamp"},
         "description":{"shape":"Description"},
-        "failureReasons":{"shape":"FailureReasons"},
         "routingConfiguration":{"shape":"AgentAliasRoutingConfiguration"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "agentAliasHistoryEvents":{"shape":"AgentAliasHistoryEvents"},
+        "agentAliasStatus":{"shape":"AgentAliasStatus"},
+        "failureReasons":{"shape":"FailureReasons"},
+        "aliasInvocationState":{"shape":"AliasInvocationState"}
       }
     },
     "AgentAliasArn":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:agent-alias/[0-9a-zA-Z]{10}/[0-9a-zA-Z]{10}$"
+      "pattern":"arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:agent-alias/[0-9a-zA-Z]{10}/[0-9a-zA-Z]{10}"
     },
     "AgentAliasHistoryEvent":{
       "type":"structure",
       "members":{
-        "endDate":{"shape":"DateTimestamp"},
         "routingConfiguration":{"shape":"AgentAliasRoutingConfiguration"},
+        "endDate":{"shape":"DateTimestamp"},
         "startDate":{"shape":"DateTimestamp"}
       }
     },
@@ -1551,7 +1550,7 @@
       "type":"string",
       "max":10,
       "min":10,
-      "pattern":"^(\\bTSTALIASID\\b|[0-9a-zA-Z]+)$"
+      "pattern":"(\\bTSTALIASID\\b|[0-9a-zA-Z]+)"
     },
     "AgentAliasRoutingConfiguration":{
       "type":"list",
@@ -1595,19 +1594,19 @@
       "members":{
         "agentAliasId":{"shape":"AgentAliasId"},
         "agentAliasName":{"shape":"Name"},
-        "agentAliasStatus":{"shape":"AgentAliasStatus"},
-        "aliasInvocationState":{"shape":"AliasInvocationState"},
-        "createdAt":{"shape":"DateTimestamp"},
         "description":{"shape":"Description"},
         "routingConfiguration":{"shape":"AgentAliasRoutingConfiguration"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "agentAliasStatus":{"shape":"AgentAliasStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "aliasInvocationState":{"shape":"AliasInvocationState"}
       }
     },
     "AgentArn":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:agent/[0-9a-zA-Z]{10}$"
+      "pattern":"arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:agent/[0-9a-zA-Z]{10}"
     },
     "AgentCollaboration":{
       "type":"string",
@@ -1620,26 +1619,26 @@
     "AgentCollaborator":{
       "type":"structure",
       "required":[
-        "agentDescriptor",
         "agentId",
         "agentVersion",
-        "collaborationInstruction",
+        "agentDescriptor",
         "collaboratorId",
+        "collaborationInstruction",
         "collaboratorName",
         "createdAt",
         "lastUpdatedAt"
       ],
       "members":{
-        "agentDescriptor":{"shape":"AgentDescriptor"},
         "agentId":{"shape":"Id"},
         "agentVersion":{"shape":"Version"},
-        "clientToken":{"shape":"ClientToken"},
-        "collaborationInstruction":{"shape":"CollaborationInstruction"},
+        "agentDescriptor":{"shape":"AgentDescriptor"},
         "collaboratorId":{"shape":"Id"},
+        "collaborationInstruction":{"shape":"CollaborationInstruction"},
         "collaboratorName":{"shape":"Name"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
-        "relayConversationHistory":{"shape":"RelayConversationHistory"}
+        "relayConversationHistory":{"shape":"RelayConversationHistory"},
+        "clientToken":{"shape":"ClientToken"}
       }
     },
     "AgentCollaboratorSummaries":{
@@ -1651,26 +1650,26 @@
     "AgentCollaboratorSummary":{
       "type":"structure",
       "required":[
-        "agentDescriptor",
         "agentId",
         "agentVersion",
-        "collaborationInstruction",
         "collaboratorId",
+        "agentDescriptor",
+        "collaborationInstruction",
+        "relayConversationHistory",
         "collaboratorName",
         "createdAt",
-        "lastUpdatedAt",
-        "relayConversationHistory"
+        "lastUpdatedAt"
       ],
       "members":{
-        "agentDescriptor":{"shape":"AgentDescriptor"},
         "agentId":{"shape":"Id"},
         "agentVersion":{"shape":"Version"},
-        "collaborationInstruction":{"shape":"CollaborationInstruction"},
         "collaboratorId":{"shape":"Id"},
+        "agentDescriptor":{"shape":"AgentDescriptor"},
+        "collaborationInstruction":{"shape":"CollaborationInstruction"},
+        "relayConversationHistory":{"shape":"RelayConversationHistory"},
         "collaboratorName":{"shape":"Name"},
         "createdAt":{"shape":"DateTimestamp"},
-        "lastUpdatedAt":{"shape":"DateTimestamp"},
-        "relayConversationHistory":{"shape":"RelayConversationHistory"}
+        "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
     },
     "AgentDescriptor":{
@@ -1683,7 +1682,7 @@
       "type":"structure",
       "required":["agentAliasArn"],
       "members":{
-        "agentAliasArn":{"shape":"AgentAliasArn"}
+        "agentAliasArn":{"shape":"FlowAgentAliasArn"}
       }
     },
     "AgentKnowledgeBase":{
@@ -1691,20 +1690,20 @@
       "required":[
         "agentId",
         "agentVersion",
-        "createdAt",
-        "description",
         "knowledgeBaseId",
-        "knowledgeBaseState",
-        "updatedAt"
+        "description",
+        "createdAt",
+        "updatedAt",
+        "knowledgeBaseState"
       ],
       "members":{
         "agentId":{"shape":"Id"},
         "agentVersion":{"shape":"Version"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{"shape":"Id"},
-        "knowledgeBaseState":{"shape":"KnowledgeBaseState"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "description":{"shape":"Description"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "knowledgeBaseState":{"shape":"KnowledgeBaseState"}
       }
     },
     "AgentKnowledgeBaseSummaries":{
@@ -1721,8 +1720,8 @@
         "updatedAt"
       ],
       "members":{
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{"shape":"Id"},
+        "description":{"shape":"Description"},
         "knowledgeBaseState":{"shape":"KnowledgeBaseState"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
@@ -1731,7 +1730,7 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+$"
+      "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
     },
     "AgentStatus":{
       "type":"string",
@@ -1765,44 +1764,44 @@
         "agentName":{"shape":"Name"},
         "agentStatus":{"shape":"AgentStatus"},
         "description":{"shape":"Description"},
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
+        "updatedAt":{"shape":"DateTimestamp"},
         "latestAgentVersion":{"shape":"Version"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"}
       }
     },
     "AgentVersion":{
       "type":"structure",
       "required":[
-        "agentArn",
         "agentId",
         "agentName",
-        "agentResourceRoleArn",
+        "agentArn",
+        "version",
         "agentStatus",
-        "createdAt",
         "idleSessionTTLInSeconds",
-        "updatedAt",
-        "version"
+        "agentResourceRoleArn",
+        "createdAt",
+        "updatedAt"
       ],
       "members":{
-        "agentArn":{"shape":"AgentArn"},
-        "agentCollaboration":{"shape":"AgentCollaboration"},
         "agentId":{"shape":"Id"},
         "agentName":{"shape":"Name"},
-        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
-        "agentStatus":{"shape":"AgentStatus"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "description":{"shape":"Description"},
-        "failureReasons":{"shape":"FailureReasons"},
-        "foundationModel":{"shape":"ModelIdentifier"},
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
-        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
+        "agentArn":{"shape":"AgentArn"},
+        "version":{"shape":"NumericalVersion"},
         "instruction":{"shape":"Instruction"},
-        "memoryConfiguration":{"shape":"MemoryConfiguration"},
-        "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
-        "recommendedActions":{"shape":"RecommendedActions"},
+        "agentStatus":{"shape":"AgentStatus"},
+        "foundationModel":{"shape":"ModelIdentifier"},
+        "description":{"shape":"Description"},
+        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
+        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
-        "version":{"shape":"NumericalVersion"}
+        "failureReasons":{"shape":"FailureReasons"},
+        "recommendedActions":{"shape":"RecommendedActions"},
+        "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
+        "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "agentCollaboration":{"shape":"AgentCollaboration"}
       }
     },
     "AgentVersionSummaries":{
@@ -1825,9 +1824,9 @@
         "agentStatus":{"shape":"AgentStatus"},
         "agentVersion":{"shape":"Version"},
         "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
         "description":{"shape":"Description"},
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"}
       }
     },
     "AliasInvocationState":{
@@ -1845,14 +1844,13 @@
     "AssociateAgentCollaboratorRequest":{
       "type":"structure",
       "required":[
-        "agentDescriptor",
         "agentId",
         "agentVersion",
-        "collaborationInstruction",
-        "collaboratorName"
+        "agentDescriptor",
+        "collaboratorName",
+        "collaborationInstruction"
       ],
       "members":{
-        "agentDescriptor":{"shape":"AgentDescriptor"},
         "agentId":{
           "shape":"Id",
           "location":"uri",
@@ -1863,13 +1861,14 @@
           "location":"uri",
           "locationName":"agentVersion"
         },
+        "agentDescriptor":{"shape":"AgentDescriptor"},
+        "collaboratorName":{"shape":"Name"},
+        "collaborationInstruction":{"shape":"CollaborationInstruction"},
+        "relayConversationHistory":{"shape":"RelayConversationHistory"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "collaborationInstruction":{"shape":"CollaborationInstruction"},
-        "collaboratorName":{"shape":"Name"},
-        "relayConversationHistory":{"shape":"RelayConversationHistory"}
+        }
       }
     },
     "AssociateAgentCollaboratorResponse":{
@@ -1884,8 +1883,8 @@
       "required":[
         "agentId",
         "agentVersion",
-        "description",
-        "knowledgeBaseId"
+        "knowledgeBaseId",
+        "description"
       ],
       "members":{
         "agentId":{
@@ -1898,8 +1897,8 @@
           "location":"uri",
           "locationName":"agentVersion"
         },
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{"shape":"Id"},
+        "description":{"shape":"Description"},
         "knowledgeBaseState":{"shape":"KnowledgeBaseState"}
       }
     },
@@ -1919,7 +1918,7 @@
       "type":"string",
       "max":200,
       "min":1,
-      "pattern":"^.*\\.*$"
+      "pattern":".*\\.*"
     },
     "AwsDataCatalogTableNames":{
       "type":"list",
@@ -1943,7 +1942,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
+      "pattern":"(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?"
     },
     "BedrockEmbeddingModelConfiguration":{
       "type":"structure",
@@ -1957,8 +1956,8 @@
       "required":["modelArn"],
       "members":{
         "modelArn":{"shape":"BedrockModelArn"},
-        "parsingModality":{"shape":"ParsingModality"},
-        "parsingPrompt":{"shape":"ParsingPrompt"}
+        "parsingPrompt":{"shape":"ParsingPrompt"},
+        "parsingModality":{"shape":"ParsingModality"}
       }
     },
     "BedrockFoundationModelContextEnrichmentConfiguration":{
@@ -1976,13 +1975,13 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
+      "pattern":"(arn:aws(-[^:]{1,12})?:(bedrock):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?"
     },
     "BedrockRerankingModelArn":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/(.*))?$"
+      "pattern":"(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}::foundation-model/(.*))?"
     },
     "Boolean":{
       "type":"boolean",
@@ -1992,7 +1991,7 @@
       "type":"string",
       "max":12,
       "min":12,
-      "pattern":"^[0-9]{12}$"
+      "pattern":"[0-9]{12}"
     },
     "ByteContentBlob":{
       "type":"blob",
@@ -2003,17 +2002,17 @@
     "ByteContentDoc":{
       "type":"structure",
       "required":[
-        "data",
-        "mimeType"
+        "mimeType",
+        "data"
       ],
       "members":{
-        "data":{"shape":"ByteContentBlob"},
-        "mimeType":{"shape":"ByteContentDocMimeTypeString"}
+        "mimeType":{"shape":"ByteContentDocMimeTypeString"},
+        "data":{"shape":"ByteContentBlob"}
       }
     },
     "ByteContentDocMimeTypeString":{
       "type":"string",
-      "pattern":"[a-z]{1,20}/.{1,20}"
+      "pattern":".*[a-z]{1,20}/.{1,20}.*"
     },
     "CachePointBlock":{
       "type":"structure",
@@ -2030,9 +2029,9 @@
       "type":"structure",
       "required":["messages"],
       "members":{
-        "inputVariables":{"shape":"PromptInputVariablesList"},
         "messages":{"shape":"Messages"},
         "system":{"shape":"SystemContentBlocks"},
+        "inputVariables":{"shape":"PromptInputVariablesList"},
         "toolConfiguration":{"shape":"ToolConfiguration"}
       },
       "sensitive":true
@@ -2060,7 +2059,7 @@
       "type":"string",
       "max":256,
       "min":33,
-      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,256}$"
+      "pattern":"[a-zA-Z0-9](-*[a-zA-Z0-9]){0,256}"
     },
     "CollaborationInstruction":{
       "type":"string",
@@ -2077,7 +2076,7 @@
       "type":"string",
       "max":63,
       "min":0,
-      "pattern":"^[a-zA-Z0-9_\\-]+$"
+      "pattern":"[a-zA-Z0-9_\\-]+"
     },
     "ConcurrencyType":{
       "type":"string",
@@ -2121,8 +2120,8 @@
       "type":"structure",
       "required":["sourceConfiguration"],
       "members":{
-        "crawlerConfiguration":{"shape":"ConfluenceCrawlerConfiguration"},
-        "sourceConfiguration":{"shape":"ConfluenceSourceConfiguration"}
+        "sourceConfiguration":{"shape":"ConfluenceSourceConfiguration"},
+        "crawlerConfiguration":{"shape":"ConfluenceCrawlerConfiguration"}
       }
     },
     "ConfluenceHostType":{
@@ -2132,23 +2131,23 @@
     "ConfluenceSourceConfiguration":{
       "type":"structure",
       "required":[
-        "authType",
-        "credentialsSecretArn",
+        "hostUrl",
         "hostType",
-        "hostUrl"
+        "authType",
+        "credentialsSecretArn"
       ],
       "members":{
-        "authType":{"shape":"ConfluenceAuthType"},
-        "credentialsSecretArn":{"shape":"SecretArn"},
+        "hostUrl":{"shape":"HttpsUrl"},
         "hostType":{"shape":"ConfluenceHostType"},
-        "hostUrl":{"shape":"HttpsUrl"}
+        "authType":{"shape":"ConfluenceAuthType"},
+        "credentialsSecretArn":{"shape":"SecretArn"}
       }
     },
     "ContentBlock":{
       "type":"structure",
       "members":{
-        "cachePoint":{"shape":"CachePointBlock"},
-        "text":{"shape":"String"}
+        "text":{"shape":"String"},
+        "cachePoint":{"shape":"CachePointBlock"}
       },
       "sensitive":true,
       "union":true
@@ -2168,8 +2167,8 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "bedrockFoundationModelConfiguration":{"shape":"BedrockFoundationModelContextEnrichmentConfiguration"},
-        "type":{"shape":"ContextEnrichmentType"}
+        "type":{"shape":"ContextEnrichmentType"},
+        "bedrockFoundationModelConfiguration":{"shape":"BedrockFoundationModelContextEnrichmentConfiguration"}
       }
     },
     "ContextEnrichmentType":{
@@ -2187,8 +2186,8 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "patternObjectFilter":{"shape":"PatternObjectFilterConfiguration"},
-        "type":{"shape":"CrawlFilterConfigurationType"}
+        "type":{"shape":"CrawlFilterConfigurationType"},
+        "patternObjectFilter":{"shape":"PatternObjectFilterConfiguration"}
       }
     },
     "CrawlFilterConfigurationType":{
@@ -2198,14 +2197,11 @@
     "CreateAgentActionGroupRequest":{
       "type":"structure",
       "required":[
-        "actionGroupName",
         "agentId",
-        "agentVersion"
+        "agentVersion",
+        "actionGroupName"
       ],
       "members":{
-        "actionGroupExecutor":{"shape":"ActionGroupExecutor"},
-        "actionGroupName":{"shape":"Name"},
-        "actionGroupState":{"shape":"ActionGroupState"},
         "agentId":{
           "shape":"Id",
           "location":"uri",
@@ -2216,15 +2212,18 @@
           "location":"uri",
           "locationName":"agentVersion"
         },
-        "apiSchema":{"shape":"APISchema"},
+        "actionGroupName":{"shape":"Name"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
         "description":{"shape":"Description"},
-        "functionSchema":{"shape":"FunctionSchema"},
         "parentActionGroupSignature":{"shape":"ActionGroupSignature"},
-        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"}
+        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"},
+        "actionGroupExecutor":{"shape":"ActionGroupExecutor"},
+        "apiSchema":{"shape":"APISchema"},
+        "actionGroupState":{"shape":"ActionGroupState"},
+        "functionSchema":{"shape":"FunctionSchema"}
       }
     },
     "CreateAgentActionGroupResponse":{
@@ -2237,16 +2236,16 @@
     "CreateAgentAliasRequest":{
       "type":"structure",
       "required":[
-        "agentAliasName",
-        "agentId"
+        "agentId",
+        "agentAliasName"
       ],
       "members":{
-        "agentAliasName":{"shape":"Name"},
         "agentId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"agentId"
         },
+        "agentAliasName":{"shape":"Name"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2267,24 +2266,24 @@
       "type":"structure",
       "required":["agentName"],
       "members":{
-        "agentCollaboration":{"shape":"AgentCollaboration"},
         "agentName":{"shape":"Name"},
-        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "customOrchestration":{"shape":"CustomOrchestration"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "description":{"shape":"Description"},
-        "foundationModel":{"shape":"ModelIdentifier"},
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
-        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "instruction":{"shape":"Instruction"},
-        "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "foundationModel":{"shape":"ModelIdentifier"},
+        "description":{"shape":"Description"},
         "orchestrationType":{"shape":"OrchestrationType"},
+        "customOrchestration":{"shape":"CustomOrchestration"},
+        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
+        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "tags":{"shape":"TagsMap"},
         "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
-        "tags":{"shape":"TagsMap"}
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
+        "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "agentCollaboration":{"shape":"AgentCollaboration"}
       }
     },
     "CreateAgentResponse":{
@@ -2297,24 +2296,24 @@
     "CreateDataSourceRequest":{
       "type":"structure",
       "required":[
-        "dataSourceConfiguration",
         "knowledgeBaseId",
-        "name"
+        "name",
+        "dataSourceConfiguration"
       ],
       "members":{
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
-        "dataDeletionPolicy":{"shape":"DataDeletionPolicy"},
-        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"},
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"knowledgeBaseId"
         },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "name":{"shape":"Name"},
+        "description":{"shape":"Description"},
+        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"},
+        "dataDeletionPolicy":{"shape":"DataDeletionPolicy"},
         "serverSideEncryptionConfiguration":{"shape":"ServerSideEncryptionConfiguration"},
         "vectorIngestionConfiguration":{"shape":"VectorIngestionConfiguration"}
       }
@@ -2329,151 +2328,151 @@
     "CreateFlowAliasRequest":{
       "type":"structure",
       "required":[
-        "flowIdentifier",
         "name",
-        "routingConfiguration"
+        "routingConfiguration",
+        "flowIdentifier"
       ],
       "members":{
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
-        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
+        "name":{"shape":"Name"},
         "description":{"shape":"Description"},
+        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
         "flowIdentifier":{
           "shape":"FlowIdentifier",
           "location":"uri",
           "locationName":"flowIdentifier"
         },
-        "name":{"shape":"Name"},
-        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "tags":{"shape":"TagsMap"}
       }
     },
     "CreateFlowAliasResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "flowId",
-        "id",
         "name",
         "routingConfiguration",
+        "flowId",
+        "id",
+        "arn",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"FlowAliasArn"},
-        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"Name"},
         "description":{"shape":"Description"},
+        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
         "flowId":{"shape":"FlowId"},
         "id":{"shape":"FlowAliasId"},
-        "name":{"shape":"Name"},
-        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "arn":{"shape":"FlowAliasArn"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "CreateFlowRequest":{
       "type":"structure",
       "required":[
-        "executionRoleArn",
-        "name"
+        "name",
+        "executionRoleArn"
       ],
       "members":{
+        "name":{"shape":"FlowName"},
+        "description":{"shape":"FlowDescription"},
+        "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "definition":{"shape":"FlowDefinition"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "definition":{"shape":"FlowDefinition"},
-        "description":{"shape":"FlowDescription"},
-        "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
-        "name":{"shape":"FlowName"},
         "tags":{"shape":"TagsMap"}
       }
     },
     "CreateFlowResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
+        "name",
         "executionRoleArn",
         "id",
-        "name",
+        "arn",
         "status",
+        "createdAt",
         "updatedAt",
         "version"
       ],
       "members":{
-        "arn":{"shape":"FlowArn"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "definition":{"shape":"FlowDefinition"},
+        "name":{"shape":"FlowName"},
         "description":{"shape":"FlowDescription"},
         "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "id":{"shape":"FlowId"},
-        "name":{"shape":"FlowName"},
+        "arn":{"shape":"FlowArn"},
         "status":{"shape":"FlowStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
-        "version":{"shape":"DraftVersion"}
+        "version":{"shape":"DraftVersion"},
+        "definition":{"shape":"FlowDefinition"}
       }
     },
     "CreateFlowVersionRequest":{
       "type":"structure",
       "required":["flowIdentifier"],
       "members":{
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
-        "description":{"shape":"FlowDescription"},
         "flowIdentifier":{
           "shape":"FlowIdentifier",
           "location":"uri",
           "locationName":"flowIdentifier"
+        },
+        "description":{"shape":"FlowDescription"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
         }
       }
     },
     "CreateFlowVersionResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
+        "name",
         "executionRoleArn",
         "id",
-        "name",
+        "arn",
         "status",
+        "createdAt",
         "version"
       ],
       "members":{
-        "arn":{"shape":"FlowArn"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "definition":{"shape":"FlowDefinition"},
+        "name":{"shape":"FlowName"},
         "description":{"shape":"FlowDescription"},
         "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "id":{"shape":"FlowId"},
-        "name":{"shape":"FlowName"},
+        "arn":{"shape":"FlowArn"},
         "status":{"shape":"FlowStatus"},
-        "version":{"shape":"NumericalVersion"}
+        "createdAt":{"shape":"DateTimestamp"},
+        "version":{"shape":"NumericalVersion"},
+        "definition":{"shape":"FlowDefinition"}
       }
     },
     "CreateKnowledgeBaseRequest":{
       "type":"structure",
       "required":[
-        "knowledgeBaseConfiguration",
         "name",
-        "roleArn"
+        "roleArn",
+        "knowledgeBaseConfiguration"
       ],
       "members":{
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "description":{"shape":"Description"},
-        "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
         "name":{"shape":"Name"},
+        "description":{"shape":"Description"},
         "roleArn":{"shape":"KnowledgeBaseRoleArn"},
+        "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
         "storageConfiguration":{"shape":"StorageConfiguration"},
         "tags":{"shape":"TagsMap"}
       }
@@ -2489,54 +2488,54 @@
       "type":"structure",
       "required":["name"],
       "members":{
+        "name":{"shape":"PromptName"},
+        "description":{"shape":"PromptDescription"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "defaultVariant":{"shape":"PromptVariantName"},
+        "variants":{"shape":"PromptVariantList"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "defaultVariant":{"shape":"PromptVariantName"},
-        "description":{"shape":"PromptDescription"},
-        "name":{"shape":"PromptName"},
-        "tags":{"shape":"TagsMap"},
-        "variants":{"shape":"PromptVariantList"}
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreatePromptResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "id",
         "name",
-        "updatedAt",
-        "version"
+        "id",
+        "arn",
+        "version",
+        "createdAt",
+        "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"PromptArn"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"PromptName"},
+        "description":{"shape":"PromptDescription"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "defaultVariant":{"shape":"PromptVariantName"},
-        "description":{"shape":"PromptDescription"},
-        "id":{"shape":"PromptId"},
-        "name":{"shape":"PromptName"},
-        "updatedAt":{"shape":"DateTimestamp"},
         "variants":{"shape":"PromptVariantList"},
-        "version":{"shape":"Version"}
+        "id":{"shape":"PromptId"},
+        "arn":{"shape":"PromptArn"},
+        "version":{"shape":"Version"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "CreatePromptVersionRequest":{
       "type":"structure",
       "required":["promptIdentifier"],
       "members":{
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
-        },
-        "description":{"shape":"PromptDescription"},
         "promptIdentifier":{
           "shape":"PromptIdentifier",
           "location":"uri",
           "locationName":"promptIdentifier"
+        },
+        "description":{"shape":"PromptDescription"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
         },
         "tags":{"shape":"TagsMap"}
       }
@@ -2544,24 +2543,24 @@
     "CreatePromptVersionResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "id",
         "name",
-        "updatedAt",
-        "version"
+        "id",
+        "arn",
+        "version",
+        "createdAt",
+        "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"PromptArn"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"PromptName"},
+        "description":{"shape":"PromptDescription"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "defaultVariant":{"shape":"PromptVariantName"},
-        "description":{"shape":"PromptDescription"},
-        "id":{"shape":"PromptId"},
-        "name":{"shape":"PromptName"},
-        "updatedAt":{"shape":"DateTimestamp"},
         "variants":{"shape":"PromptVariantList"},
-        "version":{"shape":"Version"}
+        "id":{"shape":"PromptId"},
+        "arn":{"shape":"PromptArn"},
+        "version":{"shape":"Version"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "CreationMode":{
@@ -2596,9 +2595,9 @@
       ],
       "members":{
         "customDocumentIdentifier":{"shape":"CustomDocumentIdentifier"},
-        "inlineContent":{"shape":"InlineContent"},
+        "sourceType":{"shape":"CustomSourceType"},
         "s3Location":{"shape":"CustomS3Location"},
-        "sourceType":{"shape":"CustomSourceType"}
+        "inlineContent":{"shape":"InlineContent"}
       }
     },
     "CustomControlMethod":{
@@ -2627,8 +2626,8 @@
       "type":"structure",
       "required":["uri"],
       "members":{
-        "bucketOwnerAccountId":{"shape":"BucketOwnerAccountId"},
-        "uri":{"shape":"S3ObjectUri"}
+        "uri":{"shape":"S3ObjectUri"},
+        "bucketOwnerAccountId":{"shape":"BucketOwnerAccountId"}
       }
     },
     "CustomSourceType":{
@@ -2672,39 +2671,39 @@
     "DataSource":{
       "type":"structure",
       "required":[
-        "createdAt",
-        "dataSourceConfiguration",
-        "dataSourceId",
         "knowledgeBaseId",
+        "dataSourceId",
         "name",
         "status",
+        "dataSourceConfiguration",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "createdAt":{"shape":"DateTimestamp"},
-        "dataDeletionPolicy":{"shape":"DataDeletionPolicy"},
-        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"},
-        "dataSourceId":{"shape":"Id"},
-        "description":{"shape":"Description"},
-        "failureReasons":{"shape":"FailureReasons"},
         "knowledgeBaseId":{"shape":"Id"},
+        "dataSourceId":{"shape":"Id"},
         "name":{"shape":"Name"},
-        "serverSideEncryptionConfiguration":{"shape":"ServerSideEncryptionConfiguration"},
         "status":{"shape":"DataSourceStatus"},
+        "description":{"shape":"Description"},
+        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"},
+        "serverSideEncryptionConfiguration":{"shape":"ServerSideEncryptionConfiguration"},
+        "vectorIngestionConfiguration":{"shape":"VectorIngestionConfiguration"},
+        "dataDeletionPolicy":{"shape":"DataDeletionPolicy"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
-        "vectorIngestionConfiguration":{"shape":"VectorIngestionConfiguration"}
+        "failureReasons":{"shape":"FailureReasons"}
       }
     },
     "DataSourceConfiguration":{
       "type":"structure",
       "required":["type"],
       "members":{
-        "confluenceConfiguration":{"shape":"ConfluenceDataSourceConfiguration"},
-        "s3Configuration":{"shape":"S3DataSourceConfiguration"},
-        "salesforceConfiguration":{"shape":"SalesforceDataSourceConfiguration"},
-        "sharePointConfiguration":{"shape":"SharePointDataSourceConfiguration"},
         "type":{"shape":"DataSourceType"},
-        "webConfiguration":{"shape":"WebDataSourceConfiguration"}
+        "s3Configuration":{"shape":"S3DataSourceConfiguration"},
+        "webConfiguration":{"shape":"WebDataSourceConfiguration"},
+        "confluenceConfiguration":{"shape":"ConfluenceDataSourceConfiguration"},
+        "salesforceConfiguration":{"shape":"SalesforceDataSourceConfiguration"},
+        "sharePointConfiguration":{"shape":"SharePointDataSourceConfiguration"}
       }
     },
     "DataSourceStatus":{
@@ -2722,18 +2721,18 @@
     "DataSourceSummary":{
       "type":"structure",
       "required":[
-        "dataSourceId",
         "knowledgeBaseId",
+        "dataSourceId",
         "name",
         "status",
         "updatedAt"
       ],
       "members":{
-        "dataSourceId":{"shape":"Id"},
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{"shape":"Id"},
+        "dataSourceId":{"shape":"Id"},
         "name":{"shape":"Name"},
         "status":{"shape":"DataSourceStatus"},
+        "description":{"shape":"Description"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
@@ -2756,16 +2755,11 @@
     "DeleteAgentActionGroupRequest":{
       "type":"structure",
       "required":[
-        "actionGroupId",
         "agentId",
-        "agentVersion"
+        "agentVersion",
+        "actionGroupId"
       ],
       "members":{
-        "actionGroupId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"actionGroupId"
-        },
         "agentId":{
           "shape":"Id",
           "location":"uri",
@@ -2775,6 +2769,11 @@
           "shape":"DraftVersion",
           "location":"uri",
           "locationName":"agentVersion"
+        },
+        "actionGroupId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"actionGroupId"
         },
         "skipResourceInUseCheck":{
           "shape":"Boolean",
@@ -2791,33 +2790,33 @@
     "DeleteAgentAliasRequest":{
       "type":"structure",
       "required":[
-        "agentAliasId",
-        "agentId"
+        "agentId",
+        "agentAliasId"
       ],
       "members":{
-        "agentAliasId":{
-          "shape":"AgentAliasId",
-          "location":"uri",
-          "locationName":"agentAliasId"
-        },
         "agentId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"agentId"
+        },
+        "agentAliasId":{
+          "shape":"AgentAliasId",
+          "location":"uri",
+          "locationName":"agentAliasId"
         }
       }
     },
     "DeleteAgentAliasResponse":{
       "type":"structure",
       "required":[
+        "agentId",
         "agentAliasId",
-        "agentAliasStatus",
-        "agentId"
+        "agentAliasStatus"
       ],
       "members":{
+        "agentId":{"shape":"Id"},
         "agentAliasId":{"shape":"AgentAliasId"},
-        "agentAliasStatus":{"shape":"AgentAliasStatus"},
-        "agentId":{"shape":"Id"}
+        "agentAliasStatus":{"shape":"AgentAliasStatus"}
       }
     },
     "DeleteAgentRequest":{
@@ -2875,63 +2874,63 @@
       "type":"structure",
       "required":[
         "agentId",
-        "agentStatus",
-        "agentVersion"
+        "agentVersion",
+        "agentStatus"
       ],
       "members":{
         "agentId":{"shape":"Id"},
-        "agentStatus":{"shape":"AgentStatus"},
-        "agentVersion":{"shape":"NumericalVersion"}
+        "agentVersion":{"shape":"NumericalVersion"},
+        "agentStatus":{"shape":"AgentStatus"}
       }
     },
     "DeleteDataSourceRequest":{
       "type":"structure",
       "required":[
-        "dataSourceId",
-        "knowledgeBaseId"
+        "knowledgeBaseId",
+        "dataSourceId"
       ],
       "members":{
-        "dataSourceId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"dataSourceId"
-        },
         "knowledgeBaseId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"knowledgeBaseId"
+        },
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
         }
       }
     },
     "DeleteDataSourceResponse":{
       "type":"structure",
       "required":[
-        "dataSourceId",
         "knowledgeBaseId",
+        "dataSourceId",
         "status"
       ],
       "members":{
-        "dataSourceId":{"shape":"Id"},
         "knowledgeBaseId":{"shape":"Id"},
+        "dataSourceId":{"shape":"Id"},
         "status":{"shape":"DataSourceStatus"}
       }
     },
     "DeleteFlowAliasRequest":{
       "type":"structure",
       "required":[
-        "aliasIdentifier",
-        "flowIdentifier"
+        "flowIdentifier",
+        "aliasIdentifier"
       ],
       "members":{
-        "aliasIdentifier":{
-          "shape":"FlowAliasIdentifier",
-          "location":"uri",
-          "locationName":"aliasIdentifier"
-        },
         "flowIdentifier":{
           "shape":"FlowIdentifier",
           "location":"uri",
           "locationName":"flowIdentifier"
+        },
+        "aliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"aliasIdentifier"
         }
       }
     },
@@ -3007,26 +3006,26 @@
     "DeleteKnowledgeBaseDocumentsRequest":{
       "type":"structure",
       "required":[
+        "knowledgeBaseId",
         "dataSourceId",
-        "documentIdentifiers",
-        "knowledgeBaseId"
+        "documentIdentifiers"
       ],
       "members":{
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
         },
         "dataSourceId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"dataSourceId"
         },
-        "documentIdentifiers":{"shape":"DocumentIdentifiers"},
-        "knowledgeBaseId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"knowledgeBaseId"
-        }
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "documentIdentifiers":{"shape":"DocumentIdentifiers"}
       }
     },
     "DeleteKnowledgeBaseDocumentsResponse":{
@@ -3167,8 +3166,8 @@
       "type":"structure",
       "required":["dataSourceType"],
       "members":{
-        "custom":{"shape":"CustomContent"},
         "dataSourceType":{"shape":"ContentDataSourceType"},
+        "custom":{"shape":"CustomContent"},
         "s3":{"shape":"S3Content"}
       }
     },
@@ -3176,9 +3175,9 @@
       "type":"structure",
       "required":["dataSourceType"],
       "members":{
-        "custom":{"shape":"CustomDocumentIdentifier"},
         "dataSourceType":{"shape":"ContentDataSourceType"},
-        "s3":{"shape":"S3Location"}
+        "s3":{"shape":"S3Location"},
+        "custom":{"shape":"CustomDocumentIdentifier"}
       }
     },
     "DocumentIdentifiers":{
@@ -3191,9 +3190,9 @@
       "type":"structure",
       "required":["type"],
       "members":{
+        "type":{"shape":"MetadataSourceType"},
         "inlineAttributes":{"shape":"DocumentMetadataInlineAttributesList"},
-        "s3Location":{"shape":"CustomS3Location"},
-        "type":{"shape":"MetadataSourceType"}
+        "s3Location":{"shape":"CustomS3Location"}
       }
     },
     "DocumentMetadataInlineAttributesList":{
@@ -3223,17 +3222,17 @@
       "type":"string",
       "max":5,
       "min":5,
-      "pattern":"^DRAFT$"
+      "pattern":"DRAFT"
     },
     "DuplicateConditionExpressionFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "expression",
-        "node"
+        "node",
+        "expression"
       ],
       "members":{
-        "expression":{"shape":"FlowConditionExpression"},
-        "node":{"shape":"FlowNodeName"}
+        "node":{"shape":"FlowNodeName"},
+        "expression":{"shape":"FlowConditionExpression"}
       }
     },
     "DuplicateConnectionsFlowValidationDetails":{
@@ -3309,7 +3308,7 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "FieldsForReranking":{
       "type":"list",
@@ -3359,16 +3358,22 @@
       "max":99,
       "min":1
     },
+    "FlowAgentAliasArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"$|^arn:aws(-cn|-us-gov|-eusc|-iso(-[b-f])?)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:agent-alias/[0-9a-zA-Z]{10}/[0-9a-zA-Z]{10}"
+    },
     "FlowAliasArn":{
       "type":"string",
-      "pattern":"^arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}/alias/(TSTALIASID|[0-9a-zA-Z]{10})$"
+      "pattern":"arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}/alias/(TSTALIASID|[0-9a-zA-Z]{10})"
     },
     "FlowAliasConcurrencyConfiguration":{
       "type":"structure",
       "required":["type"],
       "members":{
-        "maxConcurrency":{"shape":"FlowAliasConcurrencyConfigurationMaxConcurrencyInteger"},
-        "type":{"shape":"ConcurrencyType"}
+        "type":{"shape":"ConcurrencyType"},
+        "maxConcurrency":{"shape":"FlowAliasConcurrencyConfigurationMaxConcurrencyInteger"}
       }
     },
     "FlowAliasConcurrencyConfigurationMaxConcurrencyInteger":{
@@ -3379,11 +3384,11 @@
     },
     "FlowAliasId":{
       "type":"string",
-      "pattern":"^(TSTALIASID|[0-9a-zA-Z]{10})$"
+      "pattern":"(TSTALIASID|[0-9a-zA-Z]{10})"
     },
     "FlowAliasIdentifier":{
       "type":"string",
-      "pattern":"^(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}/alias/[0-9a-zA-Z]{10})|(TSTALIASID|[0-9a-zA-Z]{10})$"
+      "pattern":"(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}/alias/[0-9a-zA-Z]{10})|(TSTALIASID|[0-9a-zA-Z]{10})"
     },
     "FlowAliasRoutingConfiguration":{
       "type":"list",
@@ -3406,36 +3411,36 @@
     "FlowAliasSummary":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "flowId",
-        "id",
         "name",
         "routingConfiguration",
+        "flowId",
+        "id",
+        "arn",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"FlowAliasArn"},
-        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"Name"},
         "description":{"shape":"Description"},
+        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
         "flowId":{"shape":"FlowId"},
         "id":{"shape":"FlowAliasId"},
-        "name":{"shape":"Name"},
-        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "arn":{"shape":"FlowAliasArn"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "FlowArn":{
       "type":"string",
-      "pattern":"^arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}$"
+      "pattern":"arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10}"
     },
     "FlowCondition":{
       "type":"structure",
       "required":["name"],
       "members":{
-        "expression":{"shape":"FlowConditionExpression"},
-        "name":{"shape":"FlowConditionName"}
+        "name":{"shape":"FlowConditionName"},
+        "expression":{"shape":"FlowConditionExpression"}
       }
     },
     "FlowConditionExpression":{
@@ -3446,7 +3451,7 @@
     },
     "FlowConditionName":{
       "type":"string",
-      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}$"
+      "pattern":"[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}"
     },
     "FlowConditionalConnectionConfiguration":{
       "type":"structure",
@@ -3464,30 +3469,30 @@
     "FlowConnection":{
       "type":"structure",
       "required":[
+        "type",
         "name",
         "source",
-        "target",
-        "type"
+        "target"
       ],
       "members":{
-        "configuration":{"shape":"FlowConnectionConfiguration"},
+        "type":{"shape":"FlowConnectionType"},
         "name":{"shape":"FlowConnectionName"},
         "source":{"shape":"FlowNodeName"},
         "target":{"shape":"FlowNodeName"},
-        "type":{"shape":"FlowConnectionType"}
+        "configuration":{"shape":"FlowConnectionConfiguration"}
       }
     },
     "FlowConnectionConfiguration":{
       "type":"structure",
       "members":{
-        "conditional":{"shape":"FlowConditionalConnectionConfiguration"},
-        "data":{"shape":"FlowDataConnectionConfiguration"}
+        "data":{"shape":"FlowDataConnectionConfiguration"},
+        "conditional":{"shape":"FlowConditionalConnectionConfiguration"}
       },
       "union":true
     },
     "FlowConnectionName":{
       "type":"string",
-      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){1,100}$"
+      "pattern":"[a-zA-Z]([_]?[0-9a-zA-Z]){1,100}"
     },
     "FlowConnectionType":{
       "type":"string",
@@ -3516,8 +3521,8 @@
     "FlowDefinition":{
       "type":"structure",
       "members":{
-        "connections":{"shape":"FlowConnections"},
-        "nodes":{"shape":"FlowNodes"}
+        "nodes":{"shape":"FlowNodes"},
+        "connections":{"shape":"FlowConnections"}
       },
       "sensitive":true
     },
@@ -3530,19 +3535,42 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/(service-role/)?.+$"
+      "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/(service-role/)?.+"
     },
     "FlowId":{
       "type":"string",
-      "pattern":"^[0-9a-zA-Z]{10}$"
+      "pattern":"[0-9a-zA-Z]{10}"
     },
     "FlowIdentifier":{
       "type":"string",
-      "pattern":"^(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10})|([0-9a-zA-Z]{10})$"
+      "pattern":"(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:flow/[0-9a-zA-Z]{10})|([0-9a-zA-Z]{10})"
+    },
+    "FlowKnowledgeBaseId":{
+      "type":"string",
+      "max":10,
+      "min":0,
+      "pattern":"$|^[0-9a-zA-Z]+"
+    },
+    "FlowLambdaArn":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"$|^arn:aws(-cn|-us-gov|-eusc|-iso(-[b-f])?)?:lambda:([a-z]{2,}-){2,}\\d:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+    },
+    "FlowLexBotAliasArn":{
+      "type":"string",
+      "max":78,
+      "min":0,
+      "pattern":"$|^arn:aws(-cn|-us-gov|-eusc|-iso(-[b-f])?)?:lex:([a-z]{2,}-){2,}\\d:\\d{12}:bot-alias/[0-9a-zA-Z]+/[0-9a-zA-Z]+"
+    },
+    "FlowLexBotLocaleId":{
+      "type":"string",
+      "max":10,
+      "min":0
     },
     "FlowName":{
       "type":"string",
-      "pattern":"^([0-9a-zA-Z][_-]?){1,100}$"
+      "pattern":"([0-9a-zA-Z][_-]?){1,100}"
     },
     "FlowNode":{
       "type":"structure",
@@ -3551,32 +3579,32 @@
         "type"
       ],
       "members":{
+        "name":{"shape":"FlowNodeName"},
+        "type":{"shape":"FlowNodeType"},
         "configuration":{"shape":"FlowNodeConfiguration"},
         "inputs":{"shape":"FlowNodeInputs"},
-        "name":{"shape":"FlowNodeName"},
-        "outputs":{"shape":"FlowNodeOutputs"},
-        "type":{"shape":"FlowNodeType"}
+        "outputs":{"shape":"FlowNodeOutputs"}
       }
     },
     "FlowNodeConfiguration":{
       "type":"structure",
       "members":{
-        "agent":{"shape":"AgentFlowNodeConfiguration"},
-        "collector":{"shape":"CollectorFlowNodeConfiguration"},
-        "condition":{"shape":"ConditionFlowNodeConfiguration"},
-        "inlineCode":{"shape":"InlineCodeFlowNodeConfiguration"},
         "input":{"shape":"InputFlowNodeConfiguration"},
-        "iterator":{"shape":"IteratorFlowNodeConfiguration"},
-        "knowledgeBase":{"shape":"KnowledgeBaseFlowNodeConfiguration"},
-        "lambdaFunction":{"shape":"LambdaFunctionFlowNodeConfiguration"},
-        "lex":{"shape":"LexFlowNodeConfiguration"},
-        "loop":{"shape":"LoopFlowNodeConfiguration"},
-        "loopController":{"shape":"LoopControllerFlowNodeConfiguration"},
-        "loopInput":{"shape":"LoopInputFlowNodeConfiguration"},
         "output":{"shape":"OutputFlowNodeConfiguration"},
+        "knowledgeBase":{"shape":"KnowledgeBaseFlowNodeConfiguration"},
+        "condition":{"shape":"ConditionFlowNodeConfiguration"},
+        "lex":{"shape":"LexFlowNodeConfiguration"},
         "prompt":{"shape":"PromptFlowNodeConfiguration"},
+        "lambdaFunction":{"shape":"LambdaFunctionFlowNodeConfiguration"},
+        "storage":{"shape":"StorageFlowNodeConfiguration"},
+        "agent":{"shape":"AgentFlowNodeConfiguration"},
         "retrieval":{"shape":"RetrievalFlowNodeConfiguration"},
-        "storage":{"shape":"StorageFlowNodeConfiguration"}
+        "iterator":{"shape":"IteratorFlowNodeConfiguration"},
+        "collector":{"shape":"CollectorFlowNodeConfiguration"},
+        "inlineCode":{"shape":"InlineCodeFlowNodeConfiguration"},
+        "loop":{"shape":"LoopFlowNodeConfiguration"},
+        "loopInput":{"shape":"LoopInputFlowNodeConfiguration"},
+        "loopController":{"shape":"LoopControllerFlowNodeConfiguration"}
       },
       "union":true
     },
@@ -3593,15 +3621,15 @@
     "FlowNodeInput":{
       "type":"structure",
       "required":[
-        "expression",
         "name",
-        "type"
+        "type",
+        "expression"
       ],
       "members":{
-        "category":{"shape":"FlowNodeInputCategory"},
-        "expression":{"shape":"FlowNodeInputExpression"},
         "name":{"shape":"FlowNodeInputName"},
-        "type":{"shape":"FlowNodeIODataType"}
+        "type":{"shape":"FlowNodeIODataType"},
+        "expression":{"shape":"FlowNodeInputExpression"},
+        "category":{"shape":"FlowNodeInputCategory"}
       }
     },
     "FlowNodeInputCategory":{
@@ -3620,7 +3648,7 @@
     },
     "FlowNodeInputName":{
       "type":"string",
-      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}$"
+      "pattern":"[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}"
     },
     "FlowNodeInputs":{
       "type":"list",
@@ -3630,7 +3658,7 @@
     },
     "FlowNodeName":{
       "type":"string",
-      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}$"
+      "pattern":"[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}"
     },
     "FlowNodeOutput":{
       "type":"structure",
@@ -3645,7 +3673,7 @@
     },
     "FlowNodeOutputName":{
       "type":"string",
-      "pattern":"^[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}$"
+      "pattern":"[a-zA-Z]([_]?[0-9a-zA-Z]){1,50}"
     },
     "FlowNodeOutputs":{
       "type":"list",
@@ -3680,6 +3708,22 @@
       "max":40,
       "min":0
     },
+    "FlowPromptArn":{
+      "type":"string",
+      "pattern":"$|^(arn:aws(-cn|-us-gov|-eusc|-iso(-[b-f])?)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?)"
+    },
+    "FlowPromptModelIdentifier":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"$|^(arn:aws(-cn|-us-gov|-eusc|-iso(-[b-f])?)?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?"
+    },
+    "FlowS3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":0,
+      "pattern":"$|^[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]"
+    },
     "FlowStatus":{
       "type":"string",
       "enum":[
@@ -3698,21 +3742,21 @@
     "FlowSummary":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "id",
         "name",
+        "id",
+        "arn",
         "status",
+        "createdAt",
         "updatedAt",
         "version"
       ],
       "members":{
-        "arn":{"shape":"FlowArn"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"FlowName"},
         "description":{"shape":"FlowDescription"},
         "id":{"shape":"FlowId"},
-        "name":{"shape":"FlowName"},
+        "arn":{"shape":"FlowArn"},
         "status":{"shape":"FlowStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
         "version":{"shape":"DraftVersion"}
       }
@@ -3724,9 +3768,9 @@
         "severity"
       ],
       "members":{
-        "details":{"shape":"FlowValidationDetails"},
         "message":{"shape":"NonBlankString"},
         "severity":{"shape":"FlowValidationSeverity"},
+        "details":{"shape":"FlowValidationDetails"},
         "type":{"shape":"FlowValidationType"}
       }
     },
@@ -3734,38 +3778,38 @@
       "type":"structure",
       "members":{
         "cyclicConnection":{"shape":"CyclicConnectionFlowValidationDetails"},
-        "duplicateConditionExpression":{"shape":"DuplicateConditionExpressionFlowValidationDetails"},
         "duplicateConnections":{"shape":"DuplicateConnectionsFlowValidationDetails"},
-        "incompatibleConnectionDataType":{"shape":"IncompatibleConnectionDataTypeFlowValidationDetails"},
-        "invalidLoopBoundary":{"shape":"InvalidLoopBoundaryFlowValidationDetails"},
-        "loopIncompatibleNodeType":{"shape":"LoopIncompatibleNodeTypeFlowValidationDetails"},
-        "malformedConditionExpression":{"shape":"MalformedConditionExpressionFlowValidationDetails"},
-        "malformedNodeInputExpression":{"shape":"MalformedNodeInputExpressionFlowValidationDetails"},
-        "mismatchedNodeInputType":{"shape":"MismatchedNodeInputTypeFlowValidationDetails"},
-        "mismatchedNodeOutputType":{"shape":"MismatchedNodeOutputTypeFlowValidationDetails"},
-        "missingConnectionConfiguration":{"shape":"MissingConnectionConfigurationFlowValidationDetails"},
-        "missingDefaultCondition":{"shape":"MissingDefaultConditionFlowValidationDetails"},
-        "missingEndingNodes":{"shape":"MissingEndingNodesFlowValidationDetails"},
-        "missingLoopControllerNode":{"shape":"MissingLoopControllerNodeFlowValidationDetails"},
-        "missingLoopInputNode":{"shape":"MissingLoopInputNodeFlowValidationDetails"},
-        "missingNodeConfiguration":{"shape":"MissingNodeConfigurationFlowValidationDetails"},
-        "missingNodeInput":{"shape":"MissingNodeInputFlowValidationDetails"},
-        "missingNodeOutput":{"shape":"MissingNodeOutputFlowValidationDetails"},
-        "missingStartingNodes":{"shape":"MissingStartingNodesFlowValidationDetails"},
-        "multipleLoopControllerNodes":{"shape":"MultipleLoopControllerNodesFlowValidationDetails"},
-        "multipleLoopInputNodes":{"shape":"MultipleLoopInputNodesFlowValidationDetails"},
-        "multipleNodeInputConnections":{"shape":"MultipleNodeInputConnectionsFlowValidationDetails"},
-        "unfulfilledNodeInput":{"shape":"UnfulfilledNodeInputFlowValidationDetails"},
-        "unknownConnectionCondition":{"shape":"UnknownConnectionConditionFlowValidationDetails"},
+        "duplicateConditionExpression":{"shape":"DuplicateConditionExpressionFlowValidationDetails"},
+        "unreachableNode":{"shape":"UnreachableNodeFlowValidationDetails"},
         "unknownConnectionSource":{"shape":"UnknownConnectionSourceFlowValidationDetails"},
         "unknownConnectionSourceOutput":{"shape":"UnknownConnectionSourceOutputFlowValidationDetails"},
         "unknownConnectionTarget":{"shape":"UnknownConnectionTargetFlowValidationDetails"},
         "unknownConnectionTargetInput":{"shape":"UnknownConnectionTargetInputFlowValidationDetails"},
+        "unknownConnectionCondition":{"shape":"UnknownConnectionConditionFlowValidationDetails"},
+        "malformedConditionExpression":{"shape":"MalformedConditionExpressionFlowValidationDetails"},
+        "malformedNodeInputExpression":{"shape":"MalformedNodeInputExpressionFlowValidationDetails"},
+        "mismatchedNodeInputType":{"shape":"MismatchedNodeInputTypeFlowValidationDetails"},
+        "mismatchedNodeOutputType":{"shape":"MismatchedNodeOutputTypeFlowValidationDetails"},
+        "incompatibleConnectionDataType":{"shape":"IncompatibleConnectionDataTypeFlowValidationDetails"},
+        "missingConnectionConfiguration":{"shape":"MissingConnectionConfigurationFlowValidationDetails"},
+        "missingDefaultCondition":{"shape":"MissingDefaultConditionFlowValidationDetails"},
+        "missingEndingNodes":{"shape":"MissingEndingNodesFlowValidationDetails"},
+        "missingNodeConfiguration":{"shape":"MissingNodeConfigurationFlowValidationDetails"},
+        "missingNodeInput":{"shape":"MissingNodeInputFlowValidationDetails"},
+        "missingNodeOutput":{"shape":"MissingNodeOutputFlowValidationDetails"},
+        "missingStartingNodes":{"shape":"MissingStartingNodesFlowValidationDetails"},
+        "multipleNodeInputConnections":{"shape":"MultipleNodeInputConnectionsFlowValidationDetails"},
+        "unfulfilledNodeInput":{"shape":"UnfulfilledNodeInputFlowValidationDetails"},
+        "unsatisfiedConnectionConditions":{"shape":"UnsatisfiedConnectionConditionsFlowValidationDetails"},
+        "unspecified":{"shape":"UnspecifiedFlowValidationDetails"},
         "unknownNodeInput":{"shape":"UnknownNodeInputFlowValidationDetails"},
         "unknownNodeOutput":{"shape":"UnknownNodeOutputFlowValidationDetails"},
-        "unreachableNode":{"shape":"UnreachableNodeFlowValidationDetails"},
-        "unsatisfiedConnectionConditions":{"shape":"UnsatisfiedConnectionConditionsFlowValidationDetails"},
-        "unspecified":{"shape":"UnspecifiedFlowValidationDetails"}
+        "missingLoopInputNode":{"shape":"MissingLoopInputNodeFlowValidationDetails"},
+        "missingLoopControllerNode":{"shape":"MissingLoopControllerNodeFlowValidationDetails"},
+        "multipleLoopInputNodes":{"shape":"MultipleLoopInputNodesFlowValidationDetails"},
+        "multipleLoopControllerNodes":{"shape":"MultipleLoopControllerNodesFlowValidationDetails"},
+        "loopIncompatibleNodeType":{"shape":"LoopIncompatibleNodeTypeFlowValidationDetails"},
+        "invalidLoopBoundary":{"shape":"InvalidLoopBoundaryFlowValidationDetails"}
       },
       "union":true
     },
@@ -3829,17 +3873,17 @@
     "FlowVersionSummary":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
         "id",
+        "arn",
         "status",
+        "createdAt",
         "version"
       ],
       "members":{
-        "arn":{"shape":"FlowArn"},
-        "createdAt":{"shape":"DateTimestamp"},
         "id":{"shape":"FlowId"},
+        "arn":{"shape":"FlowArn"},
         "status":{"shape":"FlowStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
         "version":{"shape":"NumericalVersion"}
       }
     },
@@ -3847,8 +3891,8 @@
       "type":"structure",
       "required":["name"],
       "members":{
-        "description":{"shape":"FunctionDescription"},
         "name":{"shape":"Name"},
+        "description":{"shape":"FunctionDescription"},
         "parameters":{"shape":"ParameterMap"},
         "requireConfirmation":{"shape":"RequireConfirmation"}
       }
@@ -3872,16 +3916,11 @@
     "GetAgentActionGroupRequest":{
       "type":"structure",
       "required":[
-        "actionGroupId",
         "agentId",
-        "agentVersion"
+        "agentVersion",
+        "actionGroupId"
       ],
       "members":{
-        "actionGroupId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"actionGroupId"
-        },
         "agentId":{
           "shape":"Id",
           "location":"uri",
@@ -3891,6 +3930,11 @@
           "shape":"Version",
           "location":"uri",
           "locationName":"agentVersion"
+        },
+        "actionGroupId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"actionGroupId"
         }
       }
     },
@@ -3904,19 +3948,19 @@
     "GetAgentAliasRequest":{
       "type":"structure",
       "required":[
-        "agentAliasId",
-        "agentId"
+        "agentId",
+        "agentAliasId"
       ],
       "members":{
-        "agentAliasId":{
-          "shape":"AgentAliasId",
-          "location":"uri",
-          "locationName":"agentAliasId"
-        },
         "agentId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"agentId"
+        },
+        "agentAliasId":{
+          "shape":"AgentAliasId",
+          "location":"uri",
+          "locationName":"agentAliasId"
         }
       }
     },
@@ -4038,19 +4082,19 @@
     "GetDataSourceRequest":{
       "type":"structure",
       "required":[
-        "dataSourceId",
-        "knowledgeBaseId"
+        "knowledgeBaseId",
+        "dataSourceId"
       ],
       "members":{
-        "dataSourceId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"dataSourceId"
-        },
         "knowledgeBaseId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"knowledgeBaseId"
+        },
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
         }
       }
     },
@@ -4064,42 +4108,42 @@
     "GetFlowAliasRequest":{
       "type":"structure",
       "required":[
-        "aliasIdentifier",
-        "flowIdentifier"
+        "flowIdentifier",
+        "aliasIdentifier"
       ],
       "members":{
-        "aliasIdentifier":{
-          "shape":"FlowAliasIdentifier",
-          "location":"uri",
-          "locationName":"aliasIdentifier"
-        },
         "flowIdentifier":{
           "shape":"FlowIdentifier",
           "location":"uri",
           "locationName":"flowIdentifier"
+        },
+        "aliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"aliasIdentifier"
         }
       }
     },
     "GetFlowAliasResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "flowId",
-        "id",
         "name",
         "routingConfiguration",
+        "flowId",
+        "id",
+        "arn",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"FlowAliasArn"},
-        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"Name"},
         "description":{"shape":"Description"},
+        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
         "flowId":{"shape":"FlowId"},
         "id":{"shape":"FlowAliasId"},
-        "name":{"shape":"Name"},
-        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "arn":{"shape":"FlowAliasArn"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
@@ -4117,28 +4161,28 @@
     "GetFlowResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
+        "name",
         "executionRoleArn",
         "id",
-        "name",
+        "arn",
         "status",
+        "createdAt",
         "updatedAt",
         "version"
       ],
       "members":{
-        "arn":{"shape":"FlowArn"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "definition":{"shape":"FlowDefinition"},
+        "name":{"shape":"FlowName"},
         "description":{"shape":"FlowDescription"},
         "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "id":{"shape":"FlowId"},
-        "name":{"shape":"FlowName"},
+        "arn":{"shape":"FlowArn"},
         "status":{"shape":"FlowStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
-        "validations":{"shape":"FlowValidations"},
-        "version":{"shape":"DraftVersion"}
+        "version":{"shape":"DraftVersion"},
+        "definition":{"shape":"FlowDefinition"},
+        "validations":{"shape":"FlowValidations"}
       }
     },
     "GetFlowVersionRequest":{
@@ -4163,35 +4207,40 @@
     "GetFlowVersionResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
+        "name",
         "executionRoleArn",
         "id",
-        "name",
+        "arn",
         "status",
+        "createdAt",
         "version"
       ],
       "members":{
-        "arn":{"shape":"FlowArn"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "definition":{"shape":"FlowDefinition"},
+        "name":{"shape":"FlowName"},
         "description":{"shape":"FlowDescription"},
         "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "id":{"shape":"FlowId"},
-        "name":{"shape":"FlowName"},
+        "arn":{"shape":"FlowArn"},
         "status":{"shape":"FlowStatus"},
-        "version":{"shape":"NumericalVersion"}
+        "createdAt":{"shape":"DateTimestamp"},
+        "version":{"shape":"NumericalVersion"},
+        "definition":{"shape":"FlowDefinition"}
       }
     },
     "GetIngestionJobRequest":{
       "type":"structure",
       "required":[
+        "knowledgeBaseId",
         "dataSourceId",
-        "ingestionJobId",
-        "knowledgeBaseId"
+        "ingestionJobId"
       ],
       "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
         "dataSourceId":{
           "shape":"Id",
           "location":"uri",
@@ -4201,11 +4250,6 @@
           "shape":"Id",
           "location":"uri",
           "locationName":"ingestionJobId"
-        },
-        "knowledgeBaseId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"knowledgeBaseId"
         }
       }
     },
@@ -4219,22 +4263,22 @@
     "GetKnowledgeBaseDocumentsRequest":{
       "type":"structure",
       "required":[
+        "knowledgeBaseId",
         "dataSourceId",
-        "documentIdentifiers",
-        "knowledgeBaseId"
+        "documentIdentifiers"
       ],
       "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
         "dataSourceId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"dataSourceId"
         },
-        "documentIdentifiers":{"shape":"DocumentIdentifiers"},
-        "knowledgeBaseId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"knowledgeBaseId"
-        }
+        "documentIdentifiers":{"shape":"DocumentIdentifiers"}
       }
     },
     "GetKnowledgeBaseDocumentsResponse":{
@@ -4280,31 +4324,31 @@
     "GetPromptResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "id",
         "name",
-        "updatedAt",
-        "version"
+        "id",
+        "arn",
+        "version",
+        "createdAt",
+        "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"PromptArn"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"PromptName"},
+        "description":{"shape":"PromptDescription"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "defaultVariant":{"shape":"PromptVariantName"},
-        "description":{"shape":"PromptDescription"},
-        "id":{"shape":"PromptId"},
-        "name":{"shape":"PromptName"},
-        "updatedAt":{"shape":"DateTimestamp"},
         "variants":{"shape":"PromptVariantList"},
-        "version":{"shape":"Version"}
+        "id":{"shape":"PromptId"},
+        "arn":{"shape":"PromptArn"},
+        "version":{"shape":"Version"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "GraphArn":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^arn:aws(|-cn|-us-gov):neptune-graph:[a-zA-Z0-9-]*:[0-9]{12}:graph/g-[a-zA-Z0-9]{10}$",
+      "pattern":"arn:aws(|-cn|-us-gov):neptune-graph:[a-zA-Z0-9-]*:[0-9]{12}:graph/g-[a-zA-Z0-9]{10}",
       "sensitive":true
     },
     "GuardrailConfiguration":{
@@ -4318,11 +4362,11 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^(([a-z0-9]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail/[a-z0-9]+))$"
+      "pattern":"(([a-z0-9]+)|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:guardrail/[a-z0-9]+))"
     },
     "GuardrailVersion":{
       "type":"string",
-      "pattern":"^(([0-9]{1,8})|(DRAFT))$"
+      "pattern":"(([0-9]{1,8})|(DRAFT))"
     },
     "HierarchicalChunkingConfiguration":{
       "type":"structure",
@@ -4361,11 +4405,11 @@
     },
     "HttpsUrl":{
       "type":"string",
-      "pattern":"^https://[A-Za-z0-9][^\\s]*$"
+      "pattern":"https://[A-Za-z0-9][^\\s]*"
     },
     "Id":{
       "type":"string",
-      "pattern":"^[0-9a-zA-Z]{10}$"
+      "pattern":"[0-9a-zA-Z]{10}"
     },
     "IncludeExclude":{
       "type":"string",
@@ -4403,36 +4447,36 @@
     "InferenceConfiguration":{
       "type":"structure",
       "members":{
-        "maximumLength":{"shape":"MaximumLength"},
-        "stopSequences":{"shape":"StopSequences"},
         "temperature":{"shape":"Temperature"},
+        "topP":{"shape":"TopP"},
         "topK":{"shape":"TopK"},
-        "topP":{"shape":"TopP"}
+        "maximumLength":{"shape":"MaximumLength"},
+        "stopSequences":{"shape":"StopSequences"}
       }
     },
     "IngestKnowledgeBaseDocumentsRequest":{
       "type":"structure",
       "required":[
+        "knowledgeBaseId",
         "dataSourceId",
-        "documents",
-        "knowledgeBaseId"
+        "documents"
       ],
       "members":{
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
         },
         "dataSourceId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"dataSourceId"
         },
-        "documents":{"shape":"KnowledgeBaseDocuments"},
-        "knowledgeBaseId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"knowledgeBaseId"
-        }
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "documents":{"shape":"KnowledgeBaseDocuments"}
       }
     },
     "IngestKnowledgeBaseDocumentsResponse":{
@@ -4444,22 +4488,22 @@
     "IngestionJob":{
       "type":"structure",
       "required":[
+        "knowledgeBaseId",
         "dataSourceId",
         "ingestionJobId",
-        "knowledgeBaseId",
-        "startedAt",
         "status",
+        "startedAt",
         "updatedAt"
       ],
       "members":{
-        "dataSourceId":{"shape":"Id"},
-        "description":{"shape":"Description"},
-        "failureReasons":{"shape":"FailureReasons"},
-        "ingestionJobId":{"shape":"Id"},
         "knowledgeBaseId":{"shape":"Id"},
-        "startedAt":{"shape":"DateTimestamp"},
-        "statistics":{"shape":"IngestionJobStatistics"},
+        "dataSourceId":{"shape":"Id"},
+        "ingestionJobId":{"shape":"Id"},
+        "description":{"shape":"Description"},
         "status":{"shape":"IngestionJobStatus"},
+        "statistics":{"shape":"IngestionJobStatistics"},
+        "failureReasons":{"shape":"FailureReasons"},
+        "startedAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
@@ -4488,7 +4532,7 @@
       "type":"string",
       "max":100,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "IngestionJobFilterValues":{
       "type":"list",
@@ -4523,13 +4567,13 @@
     "IngestionJobStatistics":{
       "type":"structure",
       "members":{
-        "numberOfDocumentsDeleted":{"shape":"PrimitiveLong"},
-        "numberOfDocumentsFailed":{"shape":"PrimitiveLong"},
         "numberOfDocumentsScanned":{"shape":"PrimitiveLong"},
-        "numberOfMetadataDocumentsModified":{"shape":"PrimitiveLong"},
         "numberOfMetadataDocumentsScanned":{"shape":"PrimitiveLong"},
+        "numberOfNewDocumentsIndexed":{"shape":"PrimitiveLong"},
         "numberOfModifiedDocumentsIndexed":{"shape":"PrimitiveLong"},
-        "numberOfNewDocumentsIndexed":{"shape":"PrimitiveLong"}
+        "numberOfMetadataDocumentsModified":{"shape":"PrimitiveLong"},
+        "numberOfDocumentsDeleted":{"shape":"PrimitiveLong"},
+        "numberOfDocumentsFailed":{"shape":"PrimitiveLong"}
       }
     },
     "IngestionJobStatus":{
@@ -4550,28 +4594,28 @@
     "IngestionJobSummary":{
       "type":"structure",
       "required":[
+        "knowledgeBaseId",
         "dataSourceId",
         "ingestionJobId",
-        "knowledgeBaseId",
-        "startedAt",
         "status",
+        "startedAt",
         "updatedAt"
       ],
       "members":{
-        "dataSourceId":{"shape":"Id"},
-        "description":{"shape":"Description"},
-        "ingestionJobId":{"shape":"Id"},
         "knowledgeBaseId":{"shape":"Id"},
-        "startedAt":{"shape":"DateTimestamp"},
-        "statistics":{"shape":"IngestionJobStatistics"},
+        "dataSourceId":{"shape":"Id"},
+        "ingestionJobId":{"shape":"Id"},
+        "description":{"shape":"Description"},
         "status":{"shape":"IngestionJobStatus"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "startedAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "statistics":{"shape":"IngestionJobStatistics"}
       }
     },
     "InlineCode":{
       "type":"string",
       "max":5000000,
-      "min":1,
+      "min":0,
       "sensitive":true
     },
     "InlineCodeFlowNodeConfiguration":{
@@ -4589,9 +4633,9 @@
       "type":"structure",
       "required":["type"],
       "members":{
+        "type":{"shape":"InlineContentType"},
         "byteContent":{"shape":"ByteContentDoc"},
-        "textContent":{"shape":"TextContentDoc"},
-        "type":{"shape":"InlineContentType"}
+        "textContent":{"shape":"TextContentDoc"}
       }
     },
     "InlineContentType":{
@@ -4648,7 +4692,7 @@
     },
     "KendraIndexArn":{
       "type":"string",
-      "pattern":"^arn:aws(|-cn|-us-gov):kendra:[a-z0-9-]{1,20}:([0-9]{12}|):index/([a-zA-Z0-9][a-zA-Z0-9-]{35}|[a-zA-Z0-9][a-zA-Z0-9-]{35}-[a-zA-Z0-9][a-zA-Z0-9-]{35})$"
+      "pattern":"arn:aws(|-cn|-us-gov):kendra:[a-z0-9-]{1,20}:([0-9]{12}|):index/([a-zA-Z0-9][a-zA-Z0-9-]{35}|[a-zA-Z0-9][a-zA-Z0-9-]{35}-[a-zA-Z0-9][a-zA-Z0-9-]{35})"
     },
     "KendraKnowledgeBaseConfiguration":{
       "type":"structure",
@@ -4667,71 +4711,71 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}$"
+      "pattern":"arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}"
     },
     "KnowledgeBase":{
       "type":"structure",
       "required":[
-        "createdAt",
-        "knowledgeBaseArn",
-        "knowledgeBaseConfiguration",
         "knowledgeBaseId",
         "name",
+        "knowledgeBaseArn",
         "roleArn",
+        "knowledgeBaseConfiguration",
         "status",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "createdAt":{"shape":"DateTimestamp"},
-        "description":{"shape":"Description"},
-        "failureReasons":{"shape":"FailureReasons"},
-        "knowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
-        "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
         "knowledgeBaseId":{"shape":"Id"},
         "name":{"shape":"Name"},
+        "knowledgeBaseArn":{"shape":"KnowledgeBaseArn"},
+        "description":{"shape":"Description"},
         "roleArn":{"shape":"KnowledgeBaseRoleArn"},
-        "status":{"shape":"KnowledgeBaseStatus"},
+        "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
         "storageConfiguration":{"shape":"StorageConfiguration"},
-        "updatedAt":{"shape":"DateTimestamp"}
+        "status":{"shape":"KnowledgeBaseStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"},
+        "failureReasons":{"shape":"FailureReasons"}
       }
     },
     "KnowledgeBaseArn":{
       "type":"string",
       "max":128,
       "min":0,
-      "pattern":"^arn:aws(|-cn|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:knowledge-base/[0-9a-zA-Z]+$"
+      "pattern":"arn:aws(|-cn|-us-gov):bedrock:[a-zA-Z0-9-]*:[0-9]{12}:knowledge-base/[0-9a-zA-Z]+"
     },
     "KnowledgeBaseConfiguration":{
       "type":"structure",
       "required":["type"],
       "members":{
-        "kendraKnowledgeBaseConfiguration":{"shape":"KendraKnowledgeBaseConfiguration"},
-        "sqlKnowledgeBaseConfiguration":{"shape":"SqlKnowledgeBaseConfiguration"},
         "type":{"shape":"KnowledgeBaseType"},
-        "vectorKnowledgeBaseConfiguration":{"shape":"VectorKnowledgeBaseConfiguration"}
+        "vectorKnowledgeBaseConfiguration":{"shape":"VectorKnowledgeBaseConfiguration"},
+        "kendraKnowledgeBaseConfiguration":{"shape":"KendraKnowledgeBaseConfiguration"},
+        "sqlKnowledgeBaseConfiguration":{"shape":"SqlKnowledgeBaseConfiguration"}
       }
     },
     "KnowledgeBaseDocument":{
       "type":"structure",
       "required":["content"],
       "members":{
-        "content":{"shape":"DocumentContent"},
-        "metadata":{"shape":"DocumentMetadata"}
+        "metadata":{"shape":"DocumentMetadata"},
+        "content":{"shape":"DocumentContent"}
       }
     },
     "KnowledgeBaseDocumentDetail":{
       "type":"structure",
       "required":[
-        "dataSourceId",
-        "identifier",
         "knowledgeBaseId",
-        "status"
+        "dataSourceId",
+        "status",
+        "identifier"
       ],
       "members":{
-        "dataSourceId":{"shape":"Id"},
-        "identifier":{"shape":"DocumentIdentifier"},
         "knowledgeBaseId":{"shape":"Id"},
+        "dataSourceId":{"shape":"Id"},
         "status":{"shape":"DocumentStatus"},
+        "identifier":{"shape":"DocumentIdentifier"},
         "statusReason":{"shape":"String"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
@@ -4750,14 +4794,14 @@
       "type":"structure",
       "required":["knowledgeBaseId"],
       "members":{
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
-        "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
-        "knowledgeBaseId":{"shape":"KnowledgeBaseId"},
+        "knowledgeBaseId":{"shape":"FlowKnowledgeBaseId"},
         "modelId":{"shape":"KnowledgeBaseModelIdentifier"},
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
         "numberOfResults":{"shape":"KnowledgeBaseFlowNodeConfigurationNumberOfResultsInteger"},
-        "orchestrationConfiguration":{"shape":"KnowledgeBaseOrchestrationConfiguration"},
         "promptTemplate":{"shape":"KnowledgeBasePromptTemplate"},
-        "rerankingConfiguration":{"shape":"VectorSearchRerankingConfiguration"}
+        "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
+        "rerankingConfiguration":{"shape":"VectorSearchRerankingConfiguration"},
+        "orchestrationConfiguration":{"shape":"KnowledgeBaseOrchestrationConfiguration"}
       }
     },
     "KnowledgeBaseFlowNodeConfigurationNumberOfResultsInteger":{
@@ -4766,25 +4810,19 @@
       "max":100,
       "min":1
     },
-    "KnowledgeBaseId":{
-      "type":"string",
-      "max":10,
-      "min":0,
-      "pattern":"^[0-9a-zA-Z]+$"
-    },
     "KnowledgeBaseModelIdentifier":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
+      "pattern":"(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?"
     },
     "KnowledgeBaseOrchestrationConfiguration":{
       "type":"structure",
       "members":{
-        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
+        "promptTemplate":{"shape":"KnowledgeBasePromptTemplate"},
         "inferenceConfig":{"shape":"PromptInferenceConfiguration"},
-        "performanceConfig":{"shape":"PerformanceConfiguration"},
-        "promptTemplate":{"shape":"KnowledgeBasePromptTemplate"}
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
+        "performanceConfig":{"shape":"PerformanceConfiguration"}
       }
     },
     "KnowledgeBasePromptTemplate":{
@@ -4797,7 +4835,7 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+$"
+      "pattern":"arn:aws(-[^:]+)?:iam::([0-9]{12})?:role/.+"
     },
     "KnowledgeBaseState":{
       "type":"string",
@@ -4843,9 +4881,9 @@
         "updatedAt"
       ],
       "members":{
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{"shape":"Id"},
         "name":{"shape":"Name"},
+        "description":{"shape":"Description"},
         "status":{"shape":"KnowledgeBaseStatus"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
@@ -4868,25 +4906,14 @@
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_\\.]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
     },
     "LambdaFunctionFlowNodeConfiguration":{
       "type":"structure",
       "required":["lambdaArn"],
       "members":{
-        "lambdaArn":{"shape":"LambdaArn"}
+        "lambdaArn":{"shape":"FlowLambdaArn"}
       }
-    },
-    "LexBotAliasArn":{
-      "type":"string",
-      "max":78,
-      "min":0,
-      "pattern":"^arn:aws(|-us-gov):lex:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:bot-alias/[0-9a-zA-Z]+/[0-9a-zA-Z]+$"
-    },
-    "LexBotLocaleId":{
-      "type":"string",
-      "max":10,
-      "min":1
     },
     "LexFlowNodeConfiguration":{
       "type":"structure",
@@ -4895,8 +4922,8 @@
         "localeId"
       ],
       "members":{
-        "botAliasArn":{"shape":"LexBotAliasArn"},
-        "localeId":{"shape":"LexBotLocaleId"}
+        "botAliasArn":{"shape":"FlowLexBotAliasArn"},
+        "localeId":{"shape":"FlowLexBotLocaleId"}
       }
     },
     "ListAgentActionGroupsRequest":{
@@ -5148,24 +5175,24 @@
     "ListIngestionJobsRequest":{
       "type":"structure",
       "required":[
-        "dataSourceId",
-        "knowledgeBaseId"
+        "knowledgeBaseId",
+        "dataSourceId"
       ],
       "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
         "dataSourceId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"dataSourceId"
         },
         "filters":{"shape":"IngestionJobFilters"},
-        "knowledgeBaseId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"knowledgeBaseId"
-        },
+        "sortBy":{"shape":"IngestionJobSortBy"},
         "maxResults":{"shape":"MaxResults"},
-        "nextToken":{"shape":"NextToken"},
-        "sortBy":{"shape":"IngestionJobSortBy"}
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListIngestionJobsResponse":{
@@ -5179,19 +5206,19 @@
     "ListKnowledgeBaseDocumentsRequest":{
       "type":"structure",
       "required":[
-        "dataSourceId",
-        "knowledgeBaseId"
+        "knowledgeBaseId",
+        "dataSourceId"
       ],
       "members":{
-        "dataSourceId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"dataSourceId"
-        },
         "knowledgeBaseId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"knowledgeBaseId"
+        },
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
         },
         "maxResults":{"shape":"MaxResults"},
         "nextToken":{"shape":"NextToken"}
@@ -5223,6 +5250,11 @@
     "ListPromptsRequest":{
       "type":"structure",
       "members":{
+        "promptIdentifier":{
+          "shape":"PromptIdentifier",
+          "location":"querystring",
+          "locationName":"promptIdentifier"
+        },
         "maxResults":{
           "shape":"MaxResults",
           "location":"querystring",
@@ -5232,11 +5264,6 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
-        },
-        "promptIdentifier":{
-          "shape":"PromptIdentifier",
-          "location":"querystring",
-          "locationName":"promptIdentifier"
         }
       }
     },
@@ -5244,8 +5271,8 @@
       "type":"structure",
       "required":["promptSummaries"],
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "promptSummaries":{"shape":"PromptSummaries"}
+        "promptSummaries":{"shape":"PromptSummaries"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -5289,14 +5316,14 @@
     "LoopIncompatibleNodeTypeFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "incompatibleNodeName",
+        "node",
         "incompatibleNodeType",
-        "node"
+        "incompatibleNodeName"
       ],
       "members":{
-        "incompatibleNodeName":{"shape":"FlowNodeName"},
+        "node":{"shape":"FlowNodeName"},
         "incompatibleNodeType":{"shape":"IncompatibleLoopNodeType"},
-        "node":{"shape":"FlowNodeName"}
+        "incompatibleNodeName":{"shape":"FlowNodeName"}
       }
     },
     "LoopInputFlowNodeConfiguration":{
@@ -5307,27 +5334,27 @@
     "MalformedConditionExpressionFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "cause",
+        "node",
         "condition",
-        "node"
+        "cause"
       ],
       "members":{
-        "cause":{"shape":"ErrorMessage"},
+        "node":{"shape":"FlowNodeName"},
         "condition":{"shape":"FlowConditionName"},
-        "node":{"shape":"FlowNodeName"}
+        "cause":{"shape":"ErrorMessage"}
       }
     },
     "MalformedNodeInputExpressionFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "cause",
+        "node",
         "input",
-        "node"
+        "cause"
       ],
       "members":{
-        "cause":{"shape":"ErrorMessage"},
+        "node":{"shape":"FlowNodeName"},
         "input":{"shape":"FlowNodeInputName"},
-        "node":{"shape":"FlowNodeName"}
+        "cause":{"shape":"ErrorMessage"}
       }
     },
     "MaxRecentSessions":{
@@ -5351,8 +5378,8 @@
       "required":["enabledMemoryTypes"],
       "members":{
         "enabledMemoryTypes":{"shape":"EnabledMemoryTypes"},
-        "sessionSummaryConfiguration":{"shape":"SessionSummaryConfiguration"},
-        "storageDays":{"shape":"StorageDays"}
+        "storageDays":{"shape":"StorageDays"},
+        "sessionSummaryConfiguration":{"shape":"SessionSummaryConfiguration"}
       }
     },
     "MemoryType":{
@@ -5362,12 +5389,12 @@
     "Message":{
       "type":"structure",
       "required":[
-        "content",
-        "role"
+        "role",
+        "content"
       ],
       "members":{
-        "content":{"shape":"ContentBlocks"},
-        "role":{"shape":"ConversationRole"}
+        "role":{"shape":"ConversationRole"},
+        "content":{"shape":"ContentBlocks"}
       }
     },
     "Messages":{
@@ -5389,11 +5416,11 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "booleanValue":{"shape":"Boolean"},
+        "type":{"shape":"MetadataValueType"},
         "numberValue":{"shape":"NumberValue"},
-        "stringListValue":{"shape":"MetadataAttributeValueStringListValueList"},
+        "booleanValue":{"shape":"Boolean"},
         "stringValue":{"shape":"StringValue"},
-        "type":{"shape":"MetadataValueType"}
+        "stringListValue":{"shape":"MetadataAttributeValueStringListValueList"}
       }
     },
     "MetadataAttributeValueStringListValueList":{
@@ -5430,32 +5457,32 @@
       "type":"string",
       "max":36,
       "min":36,
-      "pattern":"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
     },
     "MismatchedNodeInputTypeFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "expectedType",
+        "node",
         "input",
-        "node"
+        "expectedType"
       ],
       "members":{
-        "expectedType":{"shape":"FlowNodeIODataType"},
+        "node":{"shape":"FlowNodeName"},
         "input":{"shape":"FlowNodeInputName"},
-        "node":{"shape":"FlowNodeName"}
+        "expectedType":{"shape":"FlowNodeIODataType"}
       }
     },
     "MismatchedNodeOutputTypeFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "expectedType",
         "node",
-        "output"
+        "output",
+        "expectedType"
       ],
       "members":{
-        "expectedType":{"shape":"FlowNodeIODataType"},
         "node":{"shape":"FlowNodeName"},
-        "output":{"shape":"FlowNodeOutputName"}
+        "output":{"shape":"FlowNodeOutputName"},
+        "expectedType":{"shape":"FlowNodeIODataType"}
       }
     },
     "MissingConnectionConfigurationFlowValidationDetails":{
@@ -5501,12 +5528,12 @@
     "MissingNodeInputFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "input",
-        "node"
+        "node",
+        "input"
       ],
       "members":{
-        "input":{"shape":"FlowNodeInputName"},
-        "node":{"shape":"FlowNodeName"}
+        "node":{"shape":"FlowNodeName"},
+        "input":{"shape":"FlowNodeInputName"}
       }
     },
     "MissingNodeOutputFlowValidationDetails":{
@@ -5529,71 +5556,71 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
+      "pattern":"(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?"
     },
     "MongoDbAtlasCollectionName":{
       "type":"string",
       "max":63,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "MongoDbAtlasConfiguration":{
       "type":"structure",
       "required":[
-        "collectionName",
-        "credentialsSecretArn",
-        "databaseName",
         "endpoint",
-        "fieldMapping",
-        "vectorIndexName"
+        "databaseName",
+        "collectionName",
+        "vectorIndexName",
+        "credentialsSecretArn",
+        "fieldMapping"
       ],
       "members":{
-        "collectionName":{"shape":"MongoDbAtlasCollectionName"},
-        "credentialsSecretArn":{"shape":"SecretArn"},
-        "databaseName":{"shape":"MongoDbAtlasDatabaseName"},
         "endpoint":{"shape":"MongoDbAtlasEndpoint"},
-        "endpointServiceName":{"shape":"MongoDbAtlasEndpointServiceName"},
+        "databaseName":{"shape":"MongoDbAtlasDatabaseName"},
+        "collectionName":{"shape":"MongoDbAtlasCollectionName"},
+        "vectorIndexName":{"shape":"MongoDbAtlasIndexName"},
+        "credentialsSecretArn":{"shape":"SecretArn"},
         "fieldMapping":{"shape":"MongoDbAtlasFieldMapping"},
-        "textIndexName":{"shape":"MongoDbAtlasIndexName"},
-        "vectorIndexName":{"shape":"MongoDbAtlasIndexName"}
+        "endpointServiceName":{"shape":"MongoDbAtlasEndpointServiceName"},
+        "textIndexName":{"shape":"MongoDbAtlasIndexName"}
       }
     },
     "MongoDbAtlasDatabaseName":{
       "type":"string",
       "max":63,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "MongoDbAtlasEndpoint":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "MongoDbAtlasEndpointServiceName":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^(?:arn:aws(?:-us-gov|-cn|-iso|-iso-[a-z])*:.+:.*:\\d+:.+/.+$|[a-zA-Z0-9*]+[a-zA-Z0-9._-]*)$"
+      "pattern":"(?:arn:aws(?:-us-gov|-cn|-iso|-iso-[a-z])*:.+:.*:\\d+:.+/.+$|[a-zA-Z0-9*]+[a-zA-Z0-9._-]*)"
     },
     "MongoDbAtlasFieldMapping":{
       "type":"structure",
       "required":[
-        "metadataField",
+        "vectorField",
         "textField",
-        "vectorField"
+        "metadataField"
       ],
       "members":{
-        "metadataField":{"shape":"FieldName"},
+        "vectorField":{"shape":"FieldName"},
         "textField":{"shape":"FieldName"},
-        "vectorField":{"shape":"FieldName"}
+        "metadataField":{"shape":"FieldName"}
       }
     },
     "MongoDbAtlasIndexName":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "MultipleLoopControllerNodesFlowValidationDetails":{
       "type":"structure",
@@ -5612,17 +5639,17 @@
     "MultipleNodeInputConnectionsFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "input",
-        "node"
+        "node",
+        "input"
       ],
       "members":{
-        "input":{"shape":"FlowNodeInputName"},
-        "node":{"shape":"FlowNodeName"}
+        "node":{"shape":"FlowNodeName"},
+        "input":{"shape":"FlowNodeInputName"}
       }
     },
     "Name":{
       "type":"string",
-      "pattern":"^([0-9a-zA-Z][_-]?){1,100}$"
+      "pattern":"([0-9a-zA-Z][_-]?){1,100}"
     },
     "NaturalLanguageString":{
       "type":"string",
@@ -5632,34 +5659,34 @@
     "NeptuneAnalyticsConfiguration":{
       "type":"structure",
       "required":[
-        "fieldMapping",
-        "graphArn"
+        "graphArn",
+        "fieldMapping"
       ],
       "members":{
-        "fieldMapping":{"shape":"NeptuneAnalyticsFieldMapping"},
-        "graphArn":{"shape":"GraphArn"}
+        "graphArn":{"shape":"GraphArn"},
+        "fieldMapping":{"shape":"NeptuneAnalyticsFieldMapping"}
       }
     },
     "NeptuneAnalyticsFieldMapping":{
       "type":"structure",
       "required":[
-        "metadataField",
-        "textField"
+        "textField",
+        "metadataField"
       ],
       "members":{
-        "metadataField":{"shape":"FieldName"},
-        "textField":{"shape":"FieldName"}
+        "textField":{"shape":"FieldName"},
+        "metadataField":{"shape":"FieldName"}
       }
     },
     "NextToken":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^\\S*$"
+      "pattern":"\\S*"
     },
     "NonBlankString":{
       "type":"string",
-      "pattern":"^[\\s\\S]+$"
+      "pattern":"[\\s\\S]+"
     },
     "NonEmptyString":{
       "type":"string",
@@ -5672,92 +5699,92 @@
     },
     "NumericalVersion":{
       "type":"string",
-      "pattern":"^[0-9]{1,5}$"
+      "pattern":"[0-9]{1,5}"
     },
     "OpenSearchManagedClusterConfiguration":{
       "type":"structure",
       "required":[
-        "domainArn",
         "domainEndpoint",
-        "fieldMapping",
-        "vectorIndexName"
+        "domainArn",
+        "vectorIndexName",
+        "fieldMapping"
       ],
       "members":{
-        "domainArn":{"shape":"OpenSearchManagedClusterDomainArn"},
         "domainEndpoint":{"shape":"OpenSearchManagedClusterDomainEndpoint"},
-        "fieldMapping":{"shape":"OpenSearchManagedClusterFieldMapping"},
-        "vectorIndexName":{"shape":"OpenSearchManagedClusterIndexName"}
+        "domainArn":{"shape":"OpenSearchManagedClusterDomainArn"},
+        "vectorIndexName":{"shape":"OpenSearchManagedClusterIndexName"},
+        "fieldMapping":{"shape":"OpenSearchManagedClusterFieldMapping"}
       }
     },
     "OpenSearchManagedClusterDomainArn":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:aws(|-cn|-us-gov|-iso):es:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:domain/[a-z][a-z0-9-]{3,28}$"
+      "pattern":"arn:aws(|-cn|-us-gov|-iso):es:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:domain/[a-z][a-z0-9-]{3,28}"
     },
     "OpenSearchManagedClusterDomainEndpoint":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^https://.*$"
+      "pattern":"https://.*"
     },
     "OpenSearchManagedClusterFieldMapping":{
       "type":"structure",
       "required":[
-        "metadataField",
+        "vectorField",
         "textField",
-        "vectorField"
+        "metadataField"
       ],
       "members":{
-        "metadataField":{"shape":"FieldName"},
+        "vectorField":{"shape":"FieldName"},
         "textField":{"shape":"FieldName"},
-        "vectorField":{"shape":"FieldName"}
+        "metadataField":{"shape":"FieldName"}
       }
     },
     "OpenSearchManagedClusterIndexName":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(?![\\-_+.])[a-z0-9][a-z0-9\\-_\\.]*$",
+      "pattern":"(?![\\-_+.])[a-z0-9][a-z0-9\\-_\\.]*",
       "sensitive":true
     },
     "OpenSearchServerlessCollectionArn":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^arn:aws:aoss:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:collection/[a-z0-9-]{3,32}$"
+      "pattern":"arn:aws:aoss:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:collection/[a-z0-9-]{3,32}"
     },
     "OpenSearchServerlessConfiguration":{
       "type":"structure",
       "required":[
         "collectionArn",
-        "fieldMapping",
-        "vectorIndexName"
+        "vectorIndexName",
+        "fieldMapping"
       ],
       "members":{
         "collectionArn":{"shape":"OpenSearchServerlessCollectionArn"},
-        "fieldMapping":{"shape":"OpenSearchServerlessFieldMapping"},
-        "vectorIndexName":{"shape":"OpenSearchServerlessIndexName"}
+        "vectorIndexName":{"shape":"OpenSearchServerlessIndexName"},
+        "fieldMapping":{"shape":"OpenSearchServerlessFieldMapping"}
       }
     },
     "OpenSearchServerlessFieldMapping":{
       "type":"structure",
       "required":[
-        "metadataField",
+        "vectorField",
         "textField",
-        "vectorField"
+        "metadataField"
       ],
       "members":{
-        "metadataField":{"shape":"FieldName"},
+        "vectorField":{"shape":"FieldName"},
         "textField":{"shape":"FieldName"},
-        "vectorField":{"shape":"FieldName"}
+        "metadataField":{"shape":"FieldName"}
       }
     },
     "OpenSearchServerlessIndexName":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "OrchestrationExecutor":{
       "type":"structure",
@@ -5788,8 +5815,8 @@
       "required":["type"],
       "members":{
         "description":{"shape":"ParameterDescription"},
-        "required":{"shape":"Boolean"},
-        "type":{"shape":"Type"}
+        "type":{"shape":"Type"},
+        "required":{"shape":"Boolean"}
       }
     },
     "ParameterMap":{
@@ -5801,9 +5828,9 @@
       "type":"structure",
       "required":["parsingStrategy"],
       "members":{
-        "bedrockDataAutomationConfiguration":{"shape":"BedrockDataAutomationConfiguration"},
+        "parsingStrategy":{"shape":"ParsingStrategy"},
         "bedrockFoundationModelConfiguration":{"shape":"BedrockFoundationModelConfiguration"},
-        "parsingStrategy":{"shape":"ParsingStrategy"}
+        "bedrockDataAutomationConfiguration":{"shape":"BedrockDataAutomationConfiguration"}
       }
     },
     "ParsingModality":{
@@ -5833,9 +5860,9 @@
       "type":"structure",
       "required":["objectType"],
       "members":{
-        "exclusionFilters":{"shape":"FilterList"},
+        "objectType":{"shape":"FilteredObjectType"},
         "inclusionFilters":{"shape":"FilterList"},
-        "objectType":{"shape":"FilteredObjectType"}
+        "exclusionFilters":{"shape":"FilterList"}
       }
     },
     "PatternObjectFilterConfiguration":{
@@ -5879,32 +5906,32 @@
       "members":{
         "connectionString":{"shape":"PineconeConnectionString"},
         "credentialsSecretArn":{"shape":"SecretArn"},
-        "fieldMapping":{"shape":"PineconeFieldMapping"},
-        "namespace":{"shape":"PineconeNamespace"}
+        "namespace":{"shape":"PineconeNamespace"},
+        "fieldMapping":{"shape":"PineconeFieldMapping"}
       }
     },
     "PineconeConnectionString":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "PineconeFieldMapping":{
       "type":"structure",
       "required":[
-        "metadataField",
-        "textField"
+        "textField",
+        "metadataField"
       ],
       "members":{
-        "metadataField":{"shape":"FieldName"},
-        "textField":{"shape":"FieldName"}
+        "textField":{"shape":"FieldName"},
+        "metadataField":{"shape":"FieldName"}
       }
     },
     "PineconeNamespace":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "PrepareAgentRequest":{
       "type":"structure",
@@ -5965,19 +5992,19 @@
     },
     "PromptArn":{
       "type":"string",
-      "pattern":"^(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?)$"
+      "pattern":"(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10}(?::[0-9]{1,5})?)"
     },
     "PromptConfiguration":{
       "type":"structure",
       "members":{
-        "additionalModelRequestFields":{"shape":"Document"},
-        "basePromptTemplate":{"shape":"BasePromptTemplate"},
-        "foundationModel":{"shape":"ModelIdentifier"},
-        "inferenceConfiguration":{"shape":"InferenceConfiguration"},
-        "parserMode":{"shape":"CreationMode"},
+        "promptType":{"shape":"PromptType"},
         "promptCreationMode":{"shape":"CreationMode"},
         "promptState":{"shape":"PromptState"},
-        "promptType":{"shape":"PromptType"}
+        "basePromptTemplate":{"shape":"BasePromptTemplate"},
+        "inferenceConfiguration":{"shape":"InferenceConfiguration"},
+        "parserMode":{"shape":"CreationMode"},
+        "foundationModel":{"shape":"ModelIdentifier"},
+        "additionalModelRequestFields":{"shape":"Document"}
       }
     },
     "PromptConfigurations":{
@@ -5995,37 +6022,37 @@
       "type":"structure",
       "required":["sourceConfiguration"],
       "members":{
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
-        "sourceConfiguration":{"shape":"PromptFlowNodeSourceConfiguration"}
+        "sourceConfiguration":{"shape":"PromptFlowNodeSourceConfiguration"},
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"}
       }
     },
     "PromptFlowNodeInlineConfiguration":{
       "type":"structure",
       "required":[
-        "modelId",
+        "templateType",
         "templateConfiguration",
-        "templateType"
+        "modelId"
       ],
       "members":{
-        "additionalModelRequestFields":{"shape":"Document"},
-        "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
-        "modelId":{"shape":"PromptModelIdentifier"},
+        "templateType":{"shape":"PromptTemplateType"},
         "templateConfiguration":{"shape":"PromptTemplateConfiguration"},
-        "templateType":{"shape":"PromptTemplateType"}
+        "modelId":{"shape":"FlowPromptModelIdentifier"},
+        "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
+        "additionalModelRequestFields":{"shape":"Document"}
       }
     },
     "PromptFlowNodeResourceConfiguration":{
       "type":"structure",
       "required":["promptArn"],
       "members":{
-        "promptArn":{"shape":"PromptArn"}
+        "promptArn":{"shape":"FlowPromptArn"}
       }
     },
     "PromptFlowNodeSourceConfiguration":{
       "type":"structure",
       "members":{
-        "inline":{"shape":"PromptFlowNodeInlineConfiguration"},
-        "resource":{"shape":"PromptFlowNodeResourceConfiguration"}
+        "resource":{"shape":"PromptFlowNodeResourceConfiguration"},
+        "inline":{"shape":"PromptFlowNodeInlineConfiguration"}
       },
       "union":true
     },
@@ -6039,11 +6066,11 @@
     },
     "PromptId":{
       "type":"string",
-      "pattern":"^[0-9a-zA-Z]{10}$"
+      "pattern":"[0-9a-zA-Z]{10}"
     },
     "PromptIdentifier":{
       "type":"string",
-      "pattern":"^([0-9a-zA-Z]{10})|(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10})(?::[0-9]{1,5})?$"
+      "pattern":"([0-9a-zA-Z]{10})|(arn:aws:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:prompt/[0-9a-zA-Z]{10})(?::[0-9]{1,5})?"
     },
     "PromptInferenceConfiguration":{
       "type":"structure",
@@ -6060,7 +6087,7 @@
     },
     "PromptInputVariableName":{
       "type":"string",
-      "pattern":"^([0-9a-zA-Z][_-]?){1,100}$"
+      "pattern":"([0-9a-zA-Z][_-]?){1,100}"
     },
     "PromptInputVariablesList":{
       "type":"list",
@@ -6085,7 +6112,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$",
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*",
       "sensitive":true
     },
     "PromptMetadataList":{
@@ -6099,34 +6126,34 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$",
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*",
       "sensitive":true
     },
     "PromptModelIdentifier":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?$"
+      "pattern":"(arn:aws(-[^:]{1,12})?:(bedrock|sagemaker):[a-z0-9-]{1,20}:([0-9]{12})?:([a-z-]+/)?)?([a-zA-Z0-9.-]{1,63}){0,2}(([:][a-z0-9-]{1,63}){0,2})?(/[a-z0-9]{1,12})?"
     },
     "PromptModelInferenceConfiguration":{
       "type":"structure",
       "members":{
-        "maxTokens":{"shape":"MaximumLength"},
-        "stopSequences":{"shape":"StopSequences"},
         "temperature":{"shape":"Temperature"},
-        "topP":{"shape":"TopP"}
+        "topP":{"shape":"TopP"},
+        "maxTokens":{"shape":"MaximumLength"},
+        "stopSequences":{"shape":"StopSequences"}
       }
     },
     "PromptName":{
       "type":"string",
-      "pattern":"^([0-9a-zA-Z][_-]?){1,100}$"
+      "pattern":"([0-9a-zA-Z][_-]?){1,100}"
     },
     "PromptOverrideConfiguration":{
       "type":"structure",
       "required":["promptConfigurations"],
       "members":{
-        "overrideLambda":{"shape":"LambdaArn"},
-        "promptConfigurations":{"shape":"PromptConfigurations"}
+        "promptConfigurations":{"shape":"PromptConfigurations"},
+        "overrideLambda":{"shape":"LambdaArn"}
       },
       "sensitive":true
     },
@@ -6146,28 +6173,28 @@
     "PromptSummary":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "id",
         "name",
-        "updatedAt",
-        "version"
+        "id",
+        "arn",
+        "version",
+        "createdAt",
+        "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"PromptArn"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"PromptName"},
         "description":{"shape":"PromptDescription"},
         "id":{"shape":"PromptId"},
-        "name":{"shape":"PromptName"},
-        "updatedAt":{"shape":"DateTimestamp"},
-        "version":{"shape":"Version"}
+        "arn":{"shape":"PromptArn"},
+        "version":{"shape":"Version"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "PromptTemplateConfiguration":{
       "type":"structure",
       "members":{
-        "chat":{"shape":"ChatPromptTemplateConfiguration"},
-        "text":{"shape":"TextPromptTemplateConfiguration"}
+        "text":{"shape":"TextPromptTemplateConfiguration"},
+        "chat":{"shape":"ChatPromptTemplateConfiguration"}
       },
       "union":true
     },
@@ -6192,18 +6219,18 @@
       "type":"structure",
       "required":[
         "name",
-        "templateConfiguration",
-        "templateType"
+        "templateType",
+        "templateConfiguration"
       ],
       "members":{
-        "additionalModelRequestFields":{"shape":"Document"},
-        "genAiResource":{"shape":"PromptGenAiResource"},
+        "name":{"shape":"PromptVariantName"},
+        "templateType":{"shape":"PromptTemplateType"},
+        "templateConfiguration":{"shape":"PromptTemplateConfiguration"},
+        "modelId":{"shape":"PromptModelIdentifier"},
         "inferenceConfiguration":{"shape":"PromptInferenceConfiguration"},
         "metadata":{"shape":"PromptMetadataList"},
-        "modelId":{"shape":"PromptModelIdentifier"},
-        "name":{"shape":"PromptVariantName"},
-        "templateConfiguration":{"shape":"PromptTemplateConfiguration"},
-        "templateType":{"shape":"PromptTemplateType"}
+        "additionalModelRequestFields":{"shape":"Document"},
+        "genAiResource":{"shape":"PromptGenAiResource"}
       },
       "sensitive":true
     },
@@ -6216,13 +6243,13 @@
     },
     "PromptVariantName":{
       "type":"string",
-      "pattern":"^([0-9a-zA-Z][_-]?){1,100}$"
+      "pattern":"([0-9a-zA-Z][_-]?){1,100}"
     },
     "ProvisionedModelIdentifier":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^((([0-9a-zA-Z][_-]?){1,63})|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:provisioned-model/[a-z0-9]{12}))$"
+      "pattern":"((([0-9a-zA-Z][_-]?){1,63})|(arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:provisioned-model/[a-z0-9]{12}))"
     },
     "QueryEngineType":{
       "type":"string",
@@ -6237,9 +6264,9 @@
     "QueryGenerationColumn":{
       "type":"structure",
       "members":{
+        "name":{"shape":"QueryGenerationColumnName"},
         "description":{"shape":"DescriptionString"},
-        "inclusion":{"shape":"IncludeExclude"},
-        "name":{"shape":"QueryGenerationColumnName"}
+        "inclusion":{"shape":"IncludeExclude"}
       }
     },
     "QueryGenerationColumnName":{
@@ -6261,8 +6288,8 @@
     "QueryGenerationContext":{
       "type":"structure",
       "members":{
-        "curatedQueries":{"shape":"CuratedQueries"},
-        "tables":{"shape":"QueryGenerationTables"}
+        "tables":{"shape":"QueryGenerationTables"},
+        "curatedQueries":{"shape":"CuratedQueries"}
       },
       "sensitive":true
     },
@@ -6270,15 +6297,15 @@
       "type":"structure",
       "required":["name"],
       "members":{
-        "columns":{"shape":"QueryGenerationColumns"},
+        "name":{"shape":"QueryGenerationTableName"},
         "description":{"shape":"DescriptionString"},
         "inclusion":{"shape":"IncludeExclude"},
-        "name":{"shape":"QueryGenerationTableName"}
+        "columns":{"shape":"QueryGenerationColumns"}
       }
     },
     "QueryGenerationTableName":{
       "type":"string",
-      "pattern":"^.*\\..*\\..*$"
+      "pattern":".*\\..*\\..*"
     },
     "QueryGenerationTables":{
       "type":"list",
@@ -6288,52 +6315,52 @@
     },
     "RdsArn":{
       "type":"string",
-      "pattern":"^arn:aws(|-cn|-us-gov):rds:[a-zA-Z0-9-]*:[0-9]{12}:cluster:[a-zA-Z0-9-]{1,63}$"
+      "pattern":"arn:aws(|-cn|-us-gov):rds:[a-zA-Z0-9-]*:[0-9]{12}:cluster:[a-zA-Z0-9-]{1,63}"
     },
     "RdsConfiguration":{
       "type":"structure",
       "required":[
+        "resourceArn",
         "credentialsSecretArn",
         "databaseName",
-        "fieldMapping",
-        "resourceArn",
-        "tableName"
+        "tableName",
+        "fieldMapping"
       ],
       "members":{
+        "resourceArn":{"shape":"RdsArn"},
         "credentialsSecretArn":{"shape":"SecretArn"},
         "databaseName":{"shape":"RdsDatabaseName"},
-        "fieldMapping":{"shape":"RdsFieldMapping"},
-        "resourceArn":{"shape":"RdsArn"},
-        "tableName":{"shape":"RdsTableName"}
+        "tableName":{"shape":"RdsTableName"},
+        "fieldMapping":{"shape":"RdsFieldMapping"}
       }
     },
     "RdsDatabaseName":{
       "type":"string",
       "max":63,
       "min":0,
-      "pattern":"^[a-zA-Z0-9_\\-]+$"
+      "pattern":"[a-zA-Z0-9_\\-]+"
     },
     "RdsFieldMapping":{
       "type":"structure",
       "required":[
-        "metadataField",
         "primaryKeyField",
+        "vectorField",
         "textField",
-        "vectorField"
+        "metadataField"
       ],
       "members":{
-        "customMetadataField":{"shape":"ColumnName"},
-        "metadataField":{"shape":"ColumnName"},
         "primaryKeyField":{"shape":"ColumnName"},
+        "vectorField":{"shape":"ColumnName"},
         "textField":{"shape":"ColumnName"},
-        "vectorField":{"shape":"ColumnName"}
+        "metadataField":{"shape":"ColumnName"},
+        "customMetadataField":{"shape":"ColumnName"}
       }
     },
     "RdsTableName":{
       "type":"string",
       "max":63,
       "min":0,
-      "pattern":"^[a-zA-Z0-9_\\.\\-]+$"
+      "pattern":"[a-zA-Z0-9_\\.\\-]+"
     },
     "RecommendedAction":{
       "type":"string",
@@ -6349,42 +6376,42 @@
     "RedisEnterpriseCloudConfiguration":{
       "type":"structure",
       "required":[
-        "credentialsSecretArn",
         "endpoint",
-        "fieldMapping",
-        "vectorIndexName"
+        "vectorIndexName",
+        "credentialsSecretArn",
+        "fieldMapping"
       ],
       "members":{
-        "credentialsSecretArn":{"shape":"SecretArn"},
         "endpoint":{"shape":"RedisEnterpriseCloudEndpoint"},
-        "fieldMapping":{"shape":"RedisEnterpriseCloudFieldMapping"},
-        "vectorIndexName":{"shape":"RedisEnterpriseCloudIndexName"}
+        "vectorIndexName":{"shape":"RedisEnterpriseCloudIndexName"},
+        "credentialsSecretArn":{"shape":"SecretArn"},
+        "fieldMapping":{"shape":"RedisEnterpriseCloudFieldMapping"}
       }
     },
     "RedisEnterpriseCloudEndpoint":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "RedisEnterpriseCloudFieldMapping":{
       "type":"structure",
       "required":[
-        "metadataField",
+        "vectorField",
         "textField",
-        "vectorField"
+        "metadataField"
       ],
       "members":{
-        "metadataField":{"shape":"FieldName"},
+        "vectorField":{"shape":"FieldName"},
         "textField":{"shape":"FieldName"},
-        "vectorField":{"shape":"FieldName"}
+        "metadataField":{"shape":"FieldName"}
       }
     },
     "RedisEnterpriseCloudIndexName":{
       "type":"string",
       "max":2048,
       "min":0,
-      "pattern":"^.*$"
+      "pattern":".*"
     },
     "RedshiftClusterIdentifier":{
       "type":"string",
@@ -6394,13 +6421,13 @@
     "RedshiftConfiguration":{
       "type":"structure",
       "required":[
-        "queryEngineConfiguration",
-        "storageConfigurations"
+        "storageConfigurations",
+        "queryEngineConfiguration"
       ],
       "members":{
+        "storageConfigurations":{"shape":"RedshiftQueryEngineStorageConfigurations"},
         "queryEngineConfiguration":{"shape":"RedshiftQueryEngineConfiguration"},
-        "queryGenerationConfiguration":{"shape":"QueryGenerationConfiguration"},
-        "storageConfigurations":{"shape":"RedshiftQueryEngineStorageConfigurations"}
+        "queryGenerationConfiguration":{"shape":"QueryGenerationConfiguration"}
       }
     },
     "RedshiftDatabase":{
@@ -6412,8 +6439,8 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "databaseUser":{"shape":"String"},
         "type":{"shape":"RedshiftProvisionedAuthType"},
+        "databaseUser":{"shape":"String"},
         "usernamePasswordSecretArn":{"shape":"SecretArn"}
       }
     },
@@ -6428,12 +6455,12 @@
     "RedshiftProvisionedConfiguration":{
       "type":"structure",
       "required":[
-        "authConfiguration",
-        "clusterIdentifier"
+        "clusterIdentifier",
+        "authConfiguration"
       ],
       "members":{
-        "authConfiguration":{"shape":"RedshiftProvisionedAuthConfiguration"},
-        "clusterIdentifier":{"shape":"RedshiftClusterIdentifier"}
+        "clusterIdentifier":{"shape":"RedshiftClusterIdentifier"},
+        "authConfiguration":{"shape":"RedshiftProvisionedAuthConfiguration"}
       }
     },
     "RedshiftQueryEngineAwsDataCatalogStorageConfiguration":{
@@ -6447,9 +6474,9 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "provisionedConfiguration":{"shape":"RedshiftProvisionedConfiguration"},
+        "type":{"shape":"RedshiftQueryEngineType"},
         "serverlessConfiguration":{"shape":"RedshiftServerlessConfiguration"},
-        "type":{"shape":"RedshiftQueryEngineType"}
+        "provisionedConfiguration":{"shape":"RedshiftProvisionedConfiguration"}
       }
     },
     "RedshiftQueryEngineRedshiftStorageConfiguration":{
@@ -6463,9 +6490,9 @@
       "type":"structure",
       "required":["type"],
       "members":{
+        "type":{"shape":"RedshiftQueryEngineStorageType"},
         "awsDataCatalogConfiguration":{"shape":"RedshiftQueryEngineAwsDataCatalogStorageConfiguration"},
-        "redshiftConfiguration":{"shape":"RedshiftQueryEngineRedshiftStorageConfiguration"},
-        "type":{"shape":"RedshiftQueryEngineStorageType"}
+        "redshiftConfiguration":{"shape":"RedshiftQueryEngineRedshiftStorageConfiguration"}
       }
     },
     "RedshiftQueryEngineStorageConfigurations":{
@@ -6506,12 +6533,12 @@
     "RedshiftServerlessConfiguration":{
       "type":"structure",
       "required":[
-        "authConfiguration",
-        "workgroupArn"
+        "workgroupArn",
+        "authConfiguration"
       ],
       "members":{
-        "authConfiguration":{"shape":"RedshiftServerlessAuthConfiguration"},
-        "workgroupArn":{"shape":"WorkgroupArn"}
+        "workgroupArn":{"shape":"WorkgroupArn"},
+        "authConfiguration":{"shape":"RedshiftServerlessAuthConfiguration"}
       }
     },
     "RelayConversationHistory":{
@@ -6538,8 +6565,8 @@
     "RerankingMetadataSelectiveModeConfiguration":{
       "type":"structure",
       "members":{
-        "fieldsToExclude":{"shape":"FieldsForReranking"},
-        "fieldsToInclude":{"shape":"FieldsForReranking"}
+        "fieldsToInclude":{"shape":"FieldsForReranking"},
+        "fieldsToExclude":{"shape":"FieldsForReranking"}
       },
       "union":true
     },
@@ -6565,7 +6592,7 @@
       "type":"structure",
       "required":["bucketName"],
       "members":{
-        "bucketName":{"shape":"S3BucketName"}
+        "bucketName":{"shape":"FlowS3BucketName"}
       }
     },
     "RetrievalFlowNodeServiceConfiguration":{
@@ -6579,19 +6606,19 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^arn:aws(|-cn|-us-gov):s3:::[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$"
+      "pattern":"arn:aws(|-cn|-us-gov):s3:::[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]"
     },
     "S3BucketName":{
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]$"
+      "pattern":"[a-z0-9][\\.\\-a-z0-9]{1,61}[a-z0-9]"
     },
     "S3BucketUri":{
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"^s3://.{1,128}$"
+      "pattern":"s3://.{1,128}"
     },
     "S3Content":{
       "type":"structure",
@@ -6605,8 +6632,8 @@
       "required":["bucketArn"],
       "members":{
         "bucketArn":{"shape":"S3BucketArn"},
-        "bucketOwnerAccountId":{"shape":"BucketOwnerAccountId"},
-        "inclusionPrefixes":{"shape":"S3Prefixes"}
+        "inclusionPrefixes":{"shape":"S3Prefixes"},
+        "bucketOwnerAccountId":{"shape":"BucketOwnerAccountId"}
       }
     },
     "S3Identifier":{
@@ -6627,13 +6654,13 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^[\\.\\-\\!\\*\\_\\'\\(\\)a-zA-Z0-9][\\.\\-\\!\\*\\_\\'\\(\\)\\/a-zA-Z0-9]*$"
+      "pattern":"[\\.\\-\\!\\*\\_\\'\\(\\)a-zA-Z0-9][\\.\\-\\!\\*\\_\\'\\(\\)\\/a-zA-Z0-9]*"
     },
     "S3ObjectUri":{
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.{1,1024}$"
+      "pattern":"s3://[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]/.{1,1024}"
     },
     "S3Prefix":{
       "type":"string",
@@ -6650,9 +6677,9 @@
     "S3VectorsConfiguration":{
       "type":"structure",
       "members":{
+        "vectorBucketArn":{"shape":"VectorBucketArn"},
         "indexArn":{"shape":"IndexArn"},
-        "indexName":{"shape":"IndexName"},
-        "vectorBucketArn":{"shape":"VectorBucketArn"}
+        "indexName":{"shape":"IndexName"}
       }
     },
     "SalesforceAuthType":{
@@ -6669,26 +6696,26 @@
       "type":"structure",
       "required":["sourceConfiguration"],
       "members":{
-        "crawlerConfiguration":{"shape":"SalesforceCrawlerConfiguration"},
-        "sourceConfiguration":{"shape":"SalesforceSourceConfiguration"}
+        "sourceConfiguration":{"shape":"SalesforceSourceConfiguration"},
+        "crawlerConfiguration":{"shape":"SalesforceCrawlerConfiguration"}
       }
     },
     "SalesforceSourceConfiguration":{
       "type":"structure",
       "required":[
+        "hostUrl",
         "authType",
-        "credentialsSecretArn",
-        "hostUrl"
+        "credentialsSecretArn"
       ],
       "members":{
+        "hostUrl":{"shape":"HttpsUrl"},
         "authType":{"shape":"SalesforceAuthType"},
-        "credentialsSecretArn":{"shape":"SecretArn"},
-        "hostUrl":{"shape":"HttpsUrl"}
+        "credentialsSecretArn":{"shape":"SecretArn"}
       }
     },
     "SecretArn":{
       "type":"string",
-      "pattern":"^arn:aws(|-cn|-us-gov):secretsmanager:[a-z0-9-]{1,20}:([0-9]{12}|):secret:[a-zA-Z0-9!/_+=.@-]{1,512}$"
+      "pattern":"arn:aws(|-cn|-us-gov):secretsmanager:[a-z0-9-]{1,20}:([0-9]{12}|):secret:[a-zA-Z0-9!/_+=.@-]{1,512}"
     },
     "SeedUrl":{
       "type":"structure",
@@ -6705,14 +6732,14 @@
     "SemanticChunkingConfiguration":{
       "type":"structure",
       "required":[
-        "breakpointPercentileThreshold",
+        "maxTokens",
         "bufferSize",
-        "maxTokens"
+        "breakpointPercentileThreshold"
       ],
       "members":{
-        "breakpointPercentileThreshold":{"shape":"SemanticChunkingConfigurationBreakpointPercentileThresholdInteger"},
+        "maxTokens":{"shape":"SemanticChunkingConfigurationMaxTokensInteger"},
         "bufferSize":{"shape":"SemanticChunkingConfigurationBufferSizeInteger"},
-        "maxTokens":{"shape":"SemanticChunkingConfigurationMaxTokensInteger"}
+        "breakpointPercentileThreshold":{"shape":"SemanticChunkingConfigurationBreakpointPercentileThresholdInteger"}
       }
     },
     "SemanticChunkingConfigurationBreakpointPercentileThresholdInteger":{
@@ -6778,8 +6805,8 @@
       "type":"structure",
       "required":["sourceConfiguration"],
       "members":{
-        "crawlerConfiguration":{"shape":"SharePointCrawlerConfiguration"},
-        "sourceConfiguration":{"shape":"SharePointSourceConfiguration"}
+        "sourceConfiguration":{"shape":"SharePointSourceConfiguration"},
+        "crawlerConfiguration":{"shape":"SharePointCrawlerConfiguration"}
       }
     },
     "SharePointDomain":{
@@ -6800,19 +6827,19 @@
     "SharePointSourceConfiguration":{
       "type":"structure",
       "required":[
-        "authType",
-        "credentialsSecretArn",
         "domain",
+        "siteUrls",
         "hostType",
-        "siteUrls"
+        "authType",
+        "credentialsSecretArn"
       ],
       "members":{
-        "authType":{"shape":"SharePointAuthType"},
-        "credentialsSecretArn":{"shape":"SecretArn"},
+        "tenantId":{"shape":"Microsoft365TenantId"},
         "domain":{"shape":"SharePointDomain"},
-        "hostType":{"shape":"SharePointHostType"},
         "siteUrls":{"shape":"SharePointSiteUrls"},
-        "tenantId":{"shape":"Microsoft365TenantId"}
+        "hostType":{"shape":"SharePointHostType"},
+        "authType":{"shape":"SharePointAuthType"},
+        "credentialsSecretArn":{"shape":"SecretArn"}
       }
     },
     "SortOrder":{
@@ -6833,8 +6860,8 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "redshiftConfiguration":{"shape":"RedshiftConfiguration"},
-        "type":{"shape":"QueryEngineType"}
+        "type":{"shape":"QueryEngineType"},
+        "redshiftConfiguration":{"shape":"RedshiftConfiguration"}
       }
     },
     "SqlString":{
@@ -6845,25 +6872,25 @@
     "StartIngestionJobRequest":{
       "type":"structure",
       "required":[
-        "dataSourceId",
-        "knowledgeBaseId"
+        "knowledgeBaseId",
+        "dataSourceId"
       ],
       "members":{
-        "clientToken":{
-          "shape":"ClientToken",
-          "idempotencyToken":true
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
         },
         "dataSourceId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"dataSourceId"
         },
-        "description":{"shape":"Description"},
-        "knowledgeBaseId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"knowledgeBaseId"
-        }
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "description":{"shape":"Description"}
       }
     },
     "StartIngestionJobResponse":{
@@ -6880,11 +6907,16 @@
     "StopIngestionJobRequest":{
       "type":"structure",
       "required":[
+        "knowledgeBaseId",
         "dataSourceId",
-        "ingestionJobId",
-        "knowledgeBaseId"
+        "ingestionJobId"
       ],
       "members":{
+        "knowledgeBaseId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"knowledgeBaseId"
+        },
         "dataSourceId":{
           "shape":"Id",
           "location":"uri",
@@ -6894,11 +6926,6 @@
           "shape":"Id",
           "location":"uri",
           "locationName":"ingestionJobId"
-        },
-        "knowledgeBaseId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"knowledgeBaseId"
         }
       }
     },
@@ -6919,15 +6946,15 @@
       "type":"structure",
       "required":["type"],
       "members":{
+        "type":{"shape":"KnowledgeBaseStorageType"},
+        "opensearchServerlessConfiguration":{"shape":"OpenSearchServerlessConfiguration"},
+        "opensearchManagedClusterConfiguration":{"shape":"OpenSearchManagedClusterConfiguration"},
+        "pineconeConfiguration":{"shape":"PineconeConfiguration"},
+        "redisEnterpriseCloudConfiguration":{"shape":"RedisEnterpriseCloudConfiguration"},
+        "rdsConfiguration":{"shape":"RdsConfiguration"},
         "mongoDbAtlasConfiguration":{"shape":"MongoDbAtlasConfiguration"},
         "neptuneAnalyticsConfiguration":{"shape":"NeptuneAnalyticsConfiguration"},
-        "opensearchManagedClusterConfiguration":{"shape":"OpenSearchManagedClusterConfiguration"},
-        "opensearchServerlessConfiguration":{"shape":"OpenSearchServerlessConfiguration"},
-        "pineconeConfiguration":{"shape":"PineconeConfiguration"},
-        "rdsConfiguration":{"shape":"RdsConfiguration"},
-        "redisEnterpriseCloudConfiguration":{"shape":"RedisEnterpriseCloudConfiguration"},
-        "s3VectorsConfiguration":{"shape":"S3VectorsConfiguration"},
-        "type":{"shape":"KnowledgeBaseStorageType"}
+        "s3VectorsConfiguration":{"shape":"S3VectorsConfiguration"}
       }
     },
     "StorageDays":{
@@ -6947,7 +6974,7 @@
       "type":"structure",
       "required":["bucketName"],
       "members":{
-        "bucketName":{"shape":"S3BucketName"}
+        "bucketName":{"shape":"FlowS3BucketName"}
       }
     },
     "StorageFlowNodeServiceConfiguration":{
@@ -6975,8 +7002,8 @@
       "type":"structure",
       "required":["type"],
       "members":{
-        "s3Location":{"shape":"S3Location"},
-        "type":{"shape":"SupplementalDataStorageLocationType"}
+        "type":{"shape":"SupplementalDataStorageLocationType"},
+        "s3Location":{"shape":"S3Location"}
       }
     },
     "SupplementalDataStorageLocationType":{
@@ -6996,8 +7023,8 @@
     "SystemContentBlock":{
       "type":"structure",
       "members":{
-        "cachePoint":{"shape":"CachePointBlock"},
-        "text":{"shape":"NonEmptyString"}
+        "text":{"shape":"NonEmptyString"},
+        "cachePoint":{"shape":"CachePointBlock"}
       },
       "sensitive":true,
       "union":true
@@ -7010,7 +7037,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$"
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
     },
     "TagKeyList":{
       "type":"list",
@@ -7042,13 +7069,13 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[a-zA-Z0-9\\s._:/=+@-]*$"
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
     },
     "TaggableResourcesArn":{
       "type":"string",
       "max":1011,
       "min":20,
-      "pattern":"(^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:(agent|agent-alias|knowledge-base|flow|prompt)/[A-Z0-9]{10}(?:/[A-Z0-9]{10})?$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:flow/([A-Z0-9]{10})/alias/([A-Z0-9]{10})$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:prompt/([A-Z0-9]{10})?(?::/d+)?$)"
+      "pattern":".*(^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:(agent|agent-alias|knowledge-base|flow|prompt)/[A-Z0-9]{10}(?:/[A-Z0-9]{10})?$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:flow/([A-Z0-9]{10})/alias/([A-Z0-9]{10})$|^arn:aws:bedrock:[a-zA-Z0-9-]+:/d{12}:prompt/([A-Z0-9]{10})?(?::/d+)?$).*"
     },
     "TagsMap":{
       "type":"map",
@@ -7077,9 +7104,9 @@
       "type":"structure",
       "required":["text"],
       "members":{
+        "text":{"shape":"TextPrompt"},
         "cachePoint":{"shape":"CachePointBlock"},
-        "inputVariables":{"shape":"PromptInputVariablesList"},
-        "text":{"shape":"TextPrompt"}
+        "inputVariables":{"shape":"PromptInputVariablesList"}
       },
       "sensitive":true
     },
@@ -7097,16 +7124,16 @@
     "Tool":{
       "type":"structure",
       "members":{
-        "cachePoint":{"shape":"CachePointBlock"},
-        "toolSpec":{"shape":"ToolSpecification"}
+        "toolSpec":{"shape":"ToolSpecification"},
+        "cachePoint":{"shape":"CachePointBlock"}
       },
       "union":true
     },
     "ToolChoice":{
       "type":"structure",
       "members":{
-        "any":{"shape":"AnyToolChoice"},
         "auto":{"shape":"AutoToolChoice"},
+        "any":{"shape":"AnyToolChoice"},
         "tool":{"shape":"SpecificToolChoice"}
       },
       "sensitive":true,
@@ -7116,8 +7143,8 @@
       "type":"structure",
       "required":["tools"],
       "members":{
-        "toolChoice":{"shape":"ToolChoice"},
-        "tools":{"shape":"ToolConfigurationToolsList"}
+        "tools":{"shape":"ToolConfigurationToolsList"},
+        "toolChoice":{"shape":"ToolChoice"}
       }
     },
     "ToolConfigurationToolsList":{
@@ -7137,18 +7164,18 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^[a-zA-Z][a-zA-Z0-9_]*$"
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]*"
     },
     "ToolSpecification":{
       "type":"structure",
       "required":[
-        "inputSchema",
-        "name"
+        "name",
+        "inputSchema"
       ],
       "members":{
+        "name":{"shape":"ToolName"},
         "description":{"shape":"NonEmptyString"},
-        "inputSchema":{"shape":"ToolInputSchema"},
-        "name":{"shape":"ToolName"}
+        "inputSchema":{"shape":"ToolInputSchema"}
       }
     },
     "TopK":{
@@ -7166,12 +7193,12 @@
     "Transformation":{
       "type":"structure",
       "required":[
-        "stepToApply",
-        "transformationFunction"
+        "transformationFunction",
+        "stepToApply"
       ],
       "members":{
-        "stepToApply":{"shape":"StepType"},
-        "transformationFunction":{"shape":"TransformationFunction"}
+        "transformationFunction":{"shape":"TransformationFunction"},
+        "stepToApply":{"shape":"StepType"}
       }
     },
     "TransformationFunction":{
@@ -7207,12 +7234,12 @@
     "UnfulfilledNodeInputFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "input",
-        "node"
+        "node",
+        "input"
       ],
       "members":{
-        "input":{"shape":"FlowNodeInputName"},
-        "node":{"shape":"FlowNodeName"}
+        "node":{"shape":"FlowNodeName"},
+        "input":{"shape":"FlowNodeInputName"}
       }
     },
     "UnknownConnectionConditionFlowValidationDetails":{
@@ -7253,12 +7280,12 @@
     "UnknownNodeInputFlowValidationDetails":{
       "type":"structure",
       "required":[
-        "input",
-        "node"
+        "node",
+        "input"
       ],
       "members":{
-        "input":{"shape":"FlowNodeInputName"},
-        "node":{"shape":"FlowNodeName"}
+        "node":{"shape":"FlowNodeName"},
+        "input":{"shape":"FlowNodeInputName"}
       }
     },
     "UnknownNodeOutputFlowValidationDetails":{
@@ -7318,20 +7345,12 @@
     "UpdateAgentActionGroupRequest":{
       "type":"structure",
       "required":[
-        "actionGroupId",
-        "actionGroupName",
         "agentId",
-        "agentVersion"
+        "agentVersion",
+        "actionGroupId",
+        "actionGroupName"
       ],
       "members":{
-        "actionGroupExecutor":{"shape":"ActionGroupExecutor"},
-        "actionGroupId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"actionGroupId"
-        },
-        "actionGroupName":{"shape":"Name"},
-        "actionGroupState":{"shape":"ActionGroupState"},
         "agentId":{
           "shape":"Id",
           "location":"uri",
@@ -7342,11 +7361,19 @@
           "location":"uri",
           "locationName":"agentVersion"
         },
-        "apiSchema":{"shape":"APISchema"},
+        "actionGroupId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"actionGroupId"
+        },
+        "actionGroupName":{"shape":"Name"},
         "description":{"shape":"Description"},
-        "functionSchema":{"shape":"FunctionSchema"},
         "parentActionGroupSignature":{"shape":"ActionGroupSignature"},
-        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"}
+        "parentActionGroupSignatureParams":{"shape":"ActionGroupSignatureParams"},
+        "actionGroupExecutor":{"shape":"ActionGroupExecutor"},
+        "actionGroupState":{"shape":"ActionGroupState"},
+        "apiSchema":{"shape":"APISchema"},
+        "functionSchema":{"shape":"FunctionSchema"}
       }
     },
     "UpdateAgentActionGroupResponse":{
@@ -7359,25 +7386,25 @@
     "UpdateAgentAliasRequest":{
       "type":"structure",
       "required":[
+        "agentId",
         "agentAliasId",
-        "agentAliasName",
-        "agentId"
+        "agentAliasName"
       ],
       "members":{
+        "agentId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"agentId"
+        },
         "agentAliasId":{
           "shape":"AgentAliasId",
           "location":"uri",
           "locationName":"agentAliasId"
         },
         "agentAliasName":{"shape":"Name"},
-        "agentId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"agentId"
-        },
-        "aliasInvocationState":{"shape":"AliasInvocationState"},
         "description":{"shape":"Description"},
-        "routingConfiguration":{"shape":"AgentAliasRoutingConfiguration"}
+        "routingConfiguration":{"shape":"AgentAliasRoutingConfiguration"},
+        "aliasInvocationState":{"shape":"AliasInvocationState"}
       }
     },
     "UpdateAgentAliasResponse":{
@@ -7390,15 +7417,14 @@
     "UpdateAgentCollaboratorRequest":{
       "type":"structure",
       "required":[
-        "agentDescriptor",
         "agentId",
         "agentVersion",
-        "collaborationInstruction",
         "collaboratorId",
-        "collaboratorName"
+        "agentDescriptor",
+        "collaboratorName",
+        "collaborationInstruction"
       ],
       "members":{
-        "agentDescriptor":{"shape":"AgentDescriptor"},
         "agentId":{
           "shape":"Id",
           "location":"uri",
@@ -7409,13 +7435,14 @@
           "location":"uri",
           "locationName":"agentVersion"
         },
-        "collaborationInstruction":{"shape":"CollaborationInstruction"},
         "collaboratorId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"collaboratorId"
         },
+        "agentDescriptor":{"shape":"AgentDescriptor"},
         "collaboratorName":{"shape":"Name"},
+        "collaborationInstruction":{"shape":"CollaborationInstruction"},
         "relayConversationHistory":{"shape":"RelayConversationHistory"}
       }
     },
@@ -7444,12 +7471,12 @@
           "location":"uri",
           "locationName":"agentVersion"
         },
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"knowledgeBaseId"
         },
+        "description":{"shape":"Description"},
         "knowledgeBaseState":{"shape":"KnowledgeBaseState"}
       }
     },
@@ -7465,28 +7492,28 @@
       "required":[
         "agentId",
         "agentName",
-        "agentResourceRoleArn",
-        "foundationModel"
+        "foundationModel",
+        "agentResourceRoleArn"
       ],
       "members":{
-        "agentCollaboration":{"shape":"AgentCollaboration"},
         "agentId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"agentId"
         },
         "agentName":{"shape":"Name"},
-        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
-        "customOrchestration":{"shape":"CustomOrchestration"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "description":{"shape":"Description"},
-        "foundationModel":{"shape":"ModelIdentifier"},
-        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
-        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
         "instruction":{"shape":"Instruction"},
-        "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "foundationModel":{"shape":"ModelIdentifier"},
+        "description":{"shape":"Description"},
         "orchestrationType":{"shape":"OrchestrationType"},
-        "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"}
+        "customOrchestration":{"shape":"CustomOrchestration"},
+        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
+        "agentResourceRoleArn":{"shape":"AgentRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "promptOverrideConfiguration":{"shape":"PromptOverrideConfiguration"},
+        "guardrailConfiguration":{"shape":"GuardrailConfiguration"},
+        "memoryConfiguration":{"shape":"MemoryConfiguration"},
+        "agentCollaboration":{"shape":"AgentCollaboration"}
       }
     },
     "UpdateAgentResponse":{
@@ -7499,26 +7526,26 @@
     "UpdateDataSourceRequest":{
       "type":"structure",
       "required":[
-        "dataSourceConfiguration",
-        "dataSourceId",
         "knowledgeBaseId",
-        "name"
+        "dataSourceId",
+        "name",
+        "dataSourceConfiguration"
       ],
       "members":{
-        "dataDeletionPolicy":{"shape":"DataDeletionPolicy"},
-        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"},
-        "dataSourceId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"dataSourceId"
-        },
-        "description":{"shape":"Description"},
         "knowledgeBaseId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"knowledgeBaseId"
         },
+        "dataSourceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"dataSourceId"
+        },
         "name":{"shape":"Name"},
+        "description":{"shape":"Description"},
+        "dataSourceConfiguration":{"shape":"DataSourceConfiguration"},
+        "dataDeletionPolicy":{"shape":"DataDeletionPolicy"},
         "serverSideEncryptionConfiguration":{"shape":"ServerSideEncryptionConfiguration"},
         "vectorIngestionConfiguration":{"shape":"VectorIngestionConfiguration"}
       }
@@ -7533,115 +7560,115 @@
     "UpdateFlowAliasRequest":{
       "type":"structure",
       "required":[
-        "aliasIdentifier",
-        "flowIdentifier",
         "name",
-        "routingConfiguration"
+        "routingConfiguration",
+        "flowIdentifier",
+        "aliasIdentifier"
       ],
       "members":{
-        "aliasIdentifier":{
-          "shape":"FlowAliasIdentifier",
-          "location":"uri",
-          "locationName":"aliasIdentifier"
-        },
-        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
+        "name":{"shape":"Name"},
         "description":{"shape":"Description"},
+        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
         "flowIdentifier":{
           "shape":"FlowIdentifier",
           "location":"uri",
           "locationName":"flowIdentifier"
         },
-        "name":{"shape":"Name"},
-        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"}
+        "aliasIdentifier":{
+          "shape":"FlowAliasIdentifier",
+          "location":"uri",
+          "locationName":"aliasIdentifier"
+        }
       }
     },
     "UpdateFlowAliasResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "flowId",
-        "id",
         "name",
         "routingConfiguration",
+        "flowId",
+        "id",
+        "arn",
+        "createdAt",
         "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"FlowAliasArn"},
-        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"Name"},
         "description":{"shape":"Description"},
+        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "concurrencyConfiguration":{"shape":"FlowAliasConcurrencyConfiguration"},
         "flowId":{"shape":"FlowId"},
         "id":{"shape":"FlowAliasId"},
-        "name":{"shape":"Name"},
-        "routingConfiguration":{"shape":"FlowAliasRoutingConfiguration"},
+        "arn":{"shape":"FlowAliasArn"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "UpdateFlowRequest":{
       "type":"structure",
       "required":[
+        "name",
         "executionRoleArn",
-        "flowIdentifier",
-        "name"
+        "flowIdentifier"
       ],
       "members":{
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "definition":{"shape":"FlowDefinition"},
+        "name":{"shape":"FlowName"},
         "description":{"shape":"FlowDescription"},
         "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
+        "definition":{"shape":"FlowDefinition"},
         "flowIdentifier":{
           "shape":"FlowIdentifier",
           "location":"uri",
           "locationName":"flowIdentifier"
-        },
-        "name":{"shape":"FlowName"}
+        }
       }
     },
     "UpdateFlowResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
+        "name",
         "executionRoleArn",
         "id",
-        "name",
+        "arn",
         "status",
+        "createdAt",
         "updatedAt",
         "version"
       ],
       "members":{
-        "arn":{"shape":"FlowArn"},
-        "createdAt":{"shape":"DateTimestamp"},
-        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
-        "definition":{"shape":"FlowDefinition"},
+        "name":{"shape":"FlowName"},
         "description":{"shape":"FlowDescription"},
         "executionRoleArn":{"shape":"FlowExecutionRoleArn"},
+        "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "id":{"shape":"FlowId"},
-        "name":{"shape":"FlowName"},
+        "arn":{"shape":"FlowArn"},
         "status":{"shape":"FlowStatus"},
+        "createdAt":{"shape":"DateTimestamp"},
         "updatedAt":{"shape":"DateTimestamp"},
-        "version":{"shape":"DraftVersion"}
+        "version":{"shape":"DraftVersion"},
+        "definition":{"shape":"FlowDefinition"}
       }
     },
     "UpdateKnowledgeBaseRequest":{
       "type":"structure",
       "required":[
-        "knowledgeBaseConfiguration",
         "knowledgeBaseId",
         "name",
-        "roleArn"
+        "roleArn",
+        "knowledgeBaseConfiguration"
       ],
       "members":{
-        "description":{"shape":"Description"},
-        "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
         "knowledgeBaseId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"knowledgeBaseId"
         },
         "name":{"shape":"Name"},
+        "description":{"shape":"Description"},
         "roleArn":{"shape":"KnowledgeBaseRoleArn"},
+        "knowledgeBaseConfiguration":{"shape":"KnowledgeBaseConfiguration"},
         "storageConfiguration":{"shape":"StorageConfiguration"}
       }
     },
@@ -7659,44 +7686,44 @@
         "promptIdentifier"
       ],
       "members":{
+        "name":{"shape":"PromptName"},
+        "description":{"shape":"PromptDescription"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "defaultVariant":{"shape":"PromptVariantName"},
-        "description":{"shape":"PromptDescription"},
-        "name":{"shape":"PromptName"},
+        "variants":{"shape":"PromptVariantList"},
         "promptIdentifier":{
           "shape":"PromptIdentifier",
           "location":"uri",
           "locationName":"promptIdentifier"
-        },
-        "variants":{"shape":"PromptVariantList"}
+        }
       }
     },
     "UpdatePromptResponse":{
       "type":"structure",
       "required":[
-        "arn",
-        "createdAt",
-        "id",
         "name",
-        "updatedAt",
-        "version"
+        "id",
+        "arn",
+        "version",
+        "createdAt",
+        "updatedAt"
       ],
       "members":{
-        "arn":{"shape":"PromptArn"},
-        "createdAt":{"shape":"DateTimestamp"},
+        "name":{"shape":"PromptName"},
+        "description":{"shape":"PromptDescription"},
         "customerEncryptionKeyArn":{"shape":"KmsKeyArn"},
         "defaultVariant":{"shape":"PromptVariantName"},
-        "description":{"shape":"PromptDescription"},
-        "id":{"shape":"PromptId"},
-        "name":{"shape":"PromptName"},
-        "updatedAt":{"shape":"DateTimestamp"},
         "variants":{"shape":"PromptVariantList"},
-        "version":{"shape":"Version"}
+        "id":{"shape":"PromptId"},
+        "arn":{"shape":"PromptArn"},
+        "version":{"shape":"Version"},
+        "createdAt":{"shape":"DateTimestamp"},
+        "updatedAt":{"shape":"DateTimestamp"}
       }
     },
     "Url":{
       "type":"string",
-      "pattern":"^https?://[A-Za-z0-9][^\\s]*$"
+      "pattern":"https?://[A-Za-z0-9][^\\s]*"
     },
     "UrlConfiguration":{
       "type":"structure",
@@ -7733,8 +7760,8 @@
     "ValidationException":{
       "type":"structure",
       "members":{
-        "fieldList":{"shape":"ValidationExceptionFieldList"},
-        "message":{"shape":"NonBlankString"}
+        "message":{"shape":"NonBlankString"},
+        "fieldList":{"shape":"ValidationExceptionFieldList"}
       },
       "error":{
         "httpStatusCode":400,
@@ -7745,12 +7772,12 @@
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "message",
-        "name"
+        "name",
+        "message"
       ],
       "members":{
-        "message":{"shape":"NonBlankString"},
-        "name":{"shape":"NonBlankString"}
+        "name":{"shape":"NonBlankString"},
+        "message":{"shape":"NonBlankString"}
       }
     },
     "ValidationExceptionFieldList":{
@@ -7765,9 +7792,9 @@
       "type":"structure",
       "members":{
         "chunkingConfiguration":{"shape":"ChunkingConfiguration"},
-        "contextEnrichmentConfiguration":{"shape":"ContextEnrichmentConfiguration"},
         "customTransformationConfiguration":{"shape":"CustomTransformationConfiguration"},
-        "parsingConfiguration":{"shape":"ParsingConfiguration"}
+        "parsingConfiguration":{"shape":"ParsingConfiguration"},
+        "contextEnrichmentConfiguration":{"shape":"ContextEnrichmentConfiguration"}
       }
     },
     "VectorKnowledgeBaseConfiguration":{
@@ -7783,9 +7810,9 @@
       "type":"structure",
       "required":["modelConfiguration"],
       "members":{
-        "metadataConfiguration":{"shape":"MetadataConfigurationForReranking"},
         "modelConfiguration":{"shape":"VectorSearchBedrockRerankingModelConfiguration"},
-        "numberOfRerankedResults":{"shape":"VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger"}
+        "numberOfRerankedResults":{"shape":"VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger"},
+        "metadataConfiguration":{"shape":"MetadataConfigurationForReranking"}
       }
     },
     "VectorSearchBedrockRerankingConfigurationNumberOfRerankedResultsInteger":{
@@ -7798,16 +7825,16 @@
       "type":"structure",
       "required":["modelArn"],
       "members":{
-        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"},
-        "modelArn":{"shape":"BedrockRerankingModelArn"}
+        "modelArn":{"shape":"BedrockRerankingModelArn"},
+        "additionalModelRequestFields":{"shape":"AdditionalModelRequestFields"}
       }
     },
     "VectorSearchRerankingConfiguration":{
       "type":"structure",
       "required":["type"],
       "members":{
-        "bedrockRerankingConfiguration":{"shape":"VectorSearchBedrockRerankingConfiguration"},
-        "type":{"shape":"VectorSearchRerankingConfigurationType"}
+        "type":{"shape":"VectorSearchRerankingConfigurationType"},
+        "bedrockRerankingConfiguration":{"shape":"VectorSearchBedrockRerankingConfiguration"}
       }
     },
     "VectorSearchRerankingConfigurationType":{
@@ -7818,14 +7845,14 @@
       "type":"string",
       "max":5,
       "min":1,
-      "pattern":"^(DRAFT|[0-9]{0,4}[1-9][0-9]{0,4})$"
+      "pattern":"(DRAFT|[0-9]{0,4}[1-9][0-9]{0,4})"
     },
     "WebCrawlerConfiguration":{
       "type":"structure",
       "members":{
         "crawlerLimits":{"shape":"WebCrawlerLimits"},
-        "exclusionFilters":{"shape":"FilterList"},
         "inclusionFilters":{"shape":"FilterList"},
+        "exclusionFilters":{"shape":"FilterList"},
         "scope":{"shape":"WebScopeType"},
         "userAgent":{"shape":"UserAgent"},
         "userAgentHeader":{"shape":"UserAgentHeader"}
@@ -7834,8 +7861,8 @@
     "WebCrawlerLimits":{
       "type":"structure",
       "members":{
-        "maxPages":{"shape":"WebCrawlerLimitsMaxPagesInteger"},
-        "rateLimit":{"shape":"WebCrawlerLimitsRateLimitInteger"}
+        "rateLimit":{"shape":"WebCrawlerLimitsRateLimitInteger"},
+        "maxPages":{"shape":"WebCrawlerLimitsMaxPagesInteger"}
       }
     },
     "WebCrawlerLimitsMaxPagesInteger":{
@@ -7853,8 +7880,8 @@
       "type":"structure",
       "required":["sourceConfiguration"],
       "members":{
-        "crawlerConfiguration":{"shape":"WebCrawlerConfiguration"},
-        "sourceConfiguration":{"shape":"WebSourceConfiguration"}
+        "sourceConfiguration":{"shape":"WebSourceConfiguration"},
+        "crawlerConfiguration":{"shape":"WebCrawlerConfiguration"}
       }
     },
     "WebScopeType":{
@@ -7873,7 +7900,7 @@
     },
     "WorkgroupArn":{
       "type":"string",
-      "pattern":"^(arn:(aws(-[a-z]+)*):redshift-serverless:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$"
+      "pattern":"(arn:(aws(-[a-z]+)*):redshift-serverless:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
     }
   }
 }
