@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.354.1 - 2025-08-15
 
 * `Aws\BedrockAgent` - This release adds support for saving Bedrock Flows while node configuration is still in progress, even if the Flow is not yet able to be invoked
 * `Aws\PrometheusService` - Add Resource-based Policy APIs for Amazon Prometheus
