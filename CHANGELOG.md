@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.355.0 - 2025-08-18
 
 * `Aws\Batch` - Added default_x86_64 and default_arm64 as values to the instanceTypes field.
 * `Aws\SageMaker` - Customer managed keys now available for volume encryption of SageMaker HyperPod clusters.
