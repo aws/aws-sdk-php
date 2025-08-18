@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Added default_x86_64 and default_arm64 as values to the instanceTypes field.
+* `Aws\SageMaker` - Customer managed keys now available for volume encryption of SageMaker HyperPod clusters.
+* `Aws\ConnectParticipant` - Amazon Connect Service Feature: Add support to enable multi-user in-app, web, and video calling.
+* `Aws\BCMDashboards` - Billing and Cost Management Dashboards enables users to create dashboards that combine multiple visualizations of cost and usage data. Users can create, manage, and share dashboards. Tags are also available for dashboards.
+* `Aws\S3Control` - Adds support for Compute checksum functionality in Amazon S3 Batch Operations. You can now calculate checksums for a list of objects using supported algorithms in Amazon S3, without requiring a restore or download
+* `Aws\Connect` - Amazon Connect Service Feature: Add support to enable multi-user in-app, web, and video calling.
+
 ## 3.354.1 - 2025-08-15
 
 * `Aws\BedrockAgent` - This release adds support for saving Bedrock Flows while node configuration is still in progress, even if the Flow is not yet able to be invoked

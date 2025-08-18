@@ -238,6 +238,20 @@
       "type":"list",
       "member":{"shape":"AttachmentItem"}
     },
+    "Attendee":{
+      "type":"structure",
+      "members":{
+        "AttendeeId":{"shape":"AttendeeId"},
+        "JoinToken":{"shape":"JoinToken"}
+      }
+    },
+    "AttendeeId":{"type":"string"},
+    "AudioFeatures":{
+      "type":"structure",
+      "members":{
+        "EchoReduction":{"shape":"MeetingFeatureStatus"}
+      }
+    },
     "AuthenticationUrl":{
       "type":"string",
       "max":2083,
@@ -261,8 +275,7 @@
     },
     "CancelParticipantAuthenticationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ChatContent":{
       "type":"string",
@@ -322,8 +335,7 @@
     },
     "CompleteAttachmentUploadResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConflictException":{
       "type":"structure",
@@ -341,11 +353,19 @@
         "Expiry":{"shape":"ISO8601Datetime"}
       }
     },
+    "ConnectionData":{
+      "type":"structure",
+      "members":{
+        "Attendee":{"shape":"Attendee"},
+        "Meeting":{"shape":"Meeting"}
+      }
+    },
     "ConnectionType":{
       "type":"string",
       "enum":[
         "WEBSOCKET",
-        "CONNECTION_CREDENTIALS"
+        "CONNECTION_CREDENTIALS",
+        "WEBRTC_CONNECTION"
       ]
     },
     "ConnectionTypeList":{
@@ -380,7 +400,8 @@
       "type":"structure",
       "members":{
         "Websocket":{"shape":"Websocket"},
-        "ConnectionCredentials":{"shape":"ConnectionCredentials"}
+        "ConnectionCredentials":{"shape":"ConnectionCredentials"},
+        "WebRTCConnection":{"shape":"ConnectionData"}
       }
     },
     "DescribeViewRequest":{
@@ -425,8 +446,7 @@
     },
     "DisconnectParticipantResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisplayName":{
       "type":"string",
@@ -545,11 +565,49 @@
         "ContactId":{"shape":"ContactId"}
       }
     },
+    "JoinToken":{
+      "type":"string",
+      "sensitive":true
+    },
     "MaxResults":{
       "type":"integer",
       "max":100,
       "min":0
     },
+    "MediaPlacement":{
+      "type":"structure",
+      "members":{
+        "AudioHostUrl":{"shape":"URI"},
+        "AudioFallbackUrl":{"shape":"URI"},
+        "SignalingUrl":{"shape":"URI"},
+        "TurnControlUrl":{"shape":"URI"},
+        "EventIngestionUrl":{"shape":"URI"}
+      }
+    },
+    "MediaRegion":{"type":"string"},
+    "Meeting":{
+      "type":"structure",
+      "members":{
+        "MediaRegion":{"shape":"MediaRegion"},
+        "MediaPlacement":{"shape":"MediaPlacement"},
+        "MeetingFeatures":{"shape":"MeetingFeaturesConfiguration"},
+        "MeetingId":{"shape":"MeetingId"}
+      }
+    },
+    "MeetingFeatureStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "UNAVAILABLE"
+      ]
+    },
+    "MeetingFeaturesConfiguration":{
+      "type":"structure",
+      "members":{
+        "Audio":{"shape":"AudioFeatures"}
+      }
+    },
+    "MeetingId":{"type":"string"},
     "Message":{"type":"string"},
     "MessageMetadata":{
       "type":"structure",
@@ -783,6 +841,11 @@
     "Transcript":{
       "type":"list",
       "member":{"shape":"Item"}
+    },
+    "URI":{
+      "type":"string",
+      "max":2000,
+      "min":1
     },
     "URLExpiryInSeconds":{
       "type":"integer",

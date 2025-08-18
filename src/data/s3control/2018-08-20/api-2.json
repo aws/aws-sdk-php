@@ -1941,6 +1941,24 @@
         "IsEnabled":{"shape":"IsEnabled"}
       }
     },
+    "ComputeObjectChecksumAlgorithm":{
+      "type":"string",
+      "enum":[
+        "CRC32",
+        "CRC32C",
+        "CRC64NVME",
+        "MD5",
+        "SHA1",
+        "SHA256"
+      ]
+    },
+    "ComputeObjectChecksumType":{
+      "type":"string",
+      "enum":[
+        "FULL_OBJECT",
+        "COMPOSITE"
+      ]
+    },
     "ConfigId":{
       "type":"string",
       "max":64,
@@ -4099,6 +4117,10 @@
         "S3ReplicateObject":{
           "shape":"S3ReplicateObjectOperation",
           "box":true
+        },
+        "S3ComputeObjectChecksum":{
+          "shape":"S3ComputeObjectChecksumOperation",
+          "box":true
         }
       }
     },
@@ -4144,6 +4166,10 @@
         },
         "ReportScope":{
           "shape":"JobReportScope",
+          "box":true
+        },
+        "ExpectedBucketOwner":{
+          "shape":"AccountId",
           "box":true
         }
       }
@@ -5217,7 +5243,8 @@
         "S3InitiateRestoreObject",
         "S3PutObjectLegalHold",
         "S3PutObjectRetention",
-        "S3ReplicateObject"
+        "S3ReplicateObject",
+        "S3ComputeObjectChecksum"
       ]
     },
     "Organization":{
@@ -6019,6 +6046,13 @@
         "SHA256",
         "CRC64NVME"
       ]
+    },
+    "S3ComputeObjectChecksumOperation":{
+      "type":"structure",
+      "members":{
+        "ChecksumAlgorithm":{"shape":"ComputeObjectChecksumAlgorithm"},
+        "ChecksumType":{"shape":"ComputeObjectChecksumType"}
+      }
     },
     "S3ContentLength":{
       "type":"long",

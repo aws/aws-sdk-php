@@ -6795,7 +6795,12 @@
     "ClusterEbsVolumeConfig":{
       "type":"structure",
       "members":{
-        "VolumeSizeInGB":{"shape":"ClusterEbsVolumeSizeInGB"}
+        "VolumeSizeInGB":{"shape":"ClusterEbsVolumeSizeInGB"},
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "RootVolume":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "ClusterEbsVolumeSizeInGB":{
@@ -6984,6 +6989,7 @@
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
         "ml.p5.48xlarge",
+        "ml.p6e-gb200.36xlarge",
         "ml.trn1.32xlarge",
         "ml.trn1n.32xlarge",
         "ml.g5.xlarge",
