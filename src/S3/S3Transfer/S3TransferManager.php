@@ -476,9 +476,9 @@ class S3TransferManager
             $promises[] = $this->downloadFile(
                 new DownloadFileRequest(
                     destination: $destinationFile,
-                    failsWhenDestinationExists: ['fails_when_destination_exists'] ?? false,
+                    failsWhenDestinationExists: $config['fails_when_destination_exists'] ?? false,
                     downloadRequest: new DownloadRequest(
-                        source: $sourceBucket,
+                        source: null, // Source has been provided in the request args
                         downloadRequestArgs: $requestArgs,
                         config: [
                             'target_part_size_bytes' => $config['target_part_size_bytes'] ?? 0,

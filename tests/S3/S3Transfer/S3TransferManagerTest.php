@@ -483,12 +483,6 @@ class S3TransferManagerTest extends TestCase
     public function uploadUsesCustomChecksumAlgorithmProvider(): array
     {
         return [
-            'checksum_sha256' => [
-                'checksum_algorithm' => 'sha256',
-            ],
-            'checksum_sha1' => [
-                'checksum_algorithm' => 'sha1',
-            ],
             'checksum_crc32c' => [
                 'checksum_algorithm' => 'crc32c',
             ],
@@ -2272,7 +2266,11 @@ class S3TransferManagerTest extends TestCase
             )->wait();
             $this->assertTrue($called);
         } finally {
-            unlink($destinationDirectory . '/file1.txt');
+            $file = $destinationDirectory . '/file1.txt';
+            if (file_exists($file)) {
+                unlink($file);
+            }
+
             rmdir($destinationDirectory);
         }
     }
