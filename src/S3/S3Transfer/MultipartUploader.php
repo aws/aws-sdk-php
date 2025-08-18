@@ -42,8 +42,8 @@ class MultipartUploader extends AbstractMultipartUploader
     public function __construct(
         S3ClientInterface $s3Client,
         array $requestArgs,
-        array $config,
         string|StreamInterface $source,
+        array $config = [],
         ?string $uploadId = null,
         array $parts = [],
         ?TransferProgressSnapshot $currentSnapshot = null,

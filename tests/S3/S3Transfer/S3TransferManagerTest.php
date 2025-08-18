@@ -114,8 +114,9 @@ class S3TransferManagerTest extends TestCase
         $this->expectExceptionMessage("Please provide a valid readable file path or a valid stream as source.");
         $manager = new S3TransferManager();
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
-                "noreadablefile"
+            new UploadRequest(
+                "noreadablefile",
+                []
             ),
         )->wait();
     }
@@ -137,7 +138,7 @@ class S3TransferManagerTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The `$missingProperty` parameter must be provided as part of the request arguments.");
         $manager->upload(
-            uploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(),
                 $bucketKeyArgs
             )
@@ -175,7 +176,7 @@ class S3TransferManagerTest extends TestCase
             . "must be greater than or equal to " . MultipartUploader::PART_MIN_SIZE);
         $manager = new S3TransferManager();
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(),
                 [
                     'Bucket' => 'Bucket',
@@ -206,7 +207,7 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(
                     str_repeat("#", MultipartUploader::PART_MIN_SIZE * $expectedPartCount)
                 ),
@@ -238,7 +239,7 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->once())
             ->method('bytesTransferred');
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(
                     str_repeat("#", MultipartUploader::PART_MIN_SIZE - 1)
                 ),
@@ -270,7 +271,7 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(
                     str_repeat("#", $manager->getConfig()->toArray()['multipart_upload_threshold_bytes'])
                 ),
@@ -324,7 +325,7 @@ class S3TransferManagerTest extends TestCase
                 $expectedIncrementalPartSize += $expectedPartSize;
             });
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(
                     str_repeat("#", $expectedPartSize * $expectedPartCount)
                 ),
@@ -381,7 +382,7 @@ class S3TransferManagerTest extends TestCase
         $transferListener->expects($this->exactly($expectedPartCount))
             ->method('bytesTransferred');
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(
                     str_repeat("#", $manager->getConfig()->toArray()['target_part_size_bytes'] * $expectedPartCount)
                 ),
@@ -428,7 +429,7 @@ class S3TransferManagerTest extends TestCase
             ->method('bytesTransferred');
 
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(
                     str_repeat("#", $expectedPartSize * $expectedPartCount)
                 ),
@@ -541,7 +542,7 @@ class S3TransferManagerTest extends TestCase
             $client,
         );
         $manager->upload(
-            UploadRequest::fromLegacyArgs(
+            new UploadRequest(
                 Utils::streamFor(),
                 $putObjectRequestArgs,
             )
@@ -574,7 +575,7 @@ class S3TransferManagerTest extends TestCase
             $this->getS3ClientMock(),
         );
         $manager->uploadDirectory(
-            UploadDirectoryRequest::fromLegacyArgs(
+            new UploadDirectoryRequest(
                 $directory,
                 "Bucket",
             )
@@ -635,7 +636,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -690,7 +691,7 @@ class S3TransferManagerTest extends TestCase
             );
             $calledTimes = 0;
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -759,7 +760,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -823,7 +824,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -908,7 +909,7 @@ class S3TransferManagerTest extends TestCase
             // First lets make sure that when follows_symbolic_link is false
             // the directory in the link will not be traversed.
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -929,7 +930,7 @@ class S3TransferManagerTest extends TestCase
             // Now let's enable follow_symbolic_links and all files should have
             // been considered, included the ones in the symlink directory.
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -994,7 +995,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1059,7 +1060,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1098,7 +1099,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1148,7 +1149,7 @@ class S3TransferManagerTest extends TestCase
             );
             $called = 0;
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1209,7 +1210,7 @@ class S3TransferManagerTest extends TestCase
             );
             $called = false;
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1272,7 +1273,7 @@ class S3TransferManagerTest extends TestCase
                 $client
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1317,7 +1318,7 @@ class S3TransferManagerTest extends TestCase
                 $client
             );
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1373,7 +1374,7 @@ class S3TransferManagerTest extends TestCase
                     $objectKeys[$snapshot->getIdentifier()] = true;
                 });
             $manager->uploadDirectory(
-                UploadDirectoryRequest::fromLegacyArgs(
+                new UploadDirectoryRequest(
                     $directory,
                     "Bucket",
                     [],
@@ -1411,7 +1412,7 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            DownloadRequest::fromLegacyArgs(
+            new DownloadRequest(
                 $invalidS3Uri
             )
         );
@@ -1437,7 +1438,7 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            DownloadRequest::fromLegacyArgs($sourceAsArray)
+            new DownloadRequest($sourceAsArray)
         );
     }
 
@@ -1491,7 +1492,7 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            DownloadRequest::fromLegacyArgs($sourceAsArray)
+            new DownloadRequest($sourceAsArray)
         )->wait();
         $this->assertTrue($called);
     }
@@ -1525,7 +1526,7 @@ class S3TransferManagerTest extends TestCase
             $client
         );
         $manager->download(
-            DownloadRequest::fromLegacyArgs(
+            new DownloadRequest(
                 $sourceAsS3Uri
             ),
         )->wait();
@@ -1581,7 +1582,7 @@ class S3TransferManagerTest extends TestCase
             $transferManagerConfig,
         );
         $manager->download(
-            DownloadRequest::fromLegacyArgs(
+            new DownloadRequest(
                 "s3://bucket/key",
                 $downloadArgs,
                 $downloadConfig
@@ -1693,7 +1694,7 @@ class S3TransferManagerTest extends TestCase
             $client,
         );
         $manager->download(
-            DownloadRequest::fromLegacyArgs(
+            new DownloadRequest(
                 "s3://bucket/key",
                 [],
                 ['multipart_download_type' => $multipartDownloadType]
@@ -1763,7 +1764,7 @@ class S3TransferManagerTest extends TestCase
             $client,
         );
         $manager->download(
-            DownloadRequest::fromLegacyArgs(
+            new DownloadRequest(
                 "s3://bucket/key",
                 [],
                 [
@@ -1859,7 +1860,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory
                 )
@@ -1931,7 +1932,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [],
@@ -2046,7 +2047,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [],
@@ -2126,7 +2127,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [],
@@ -2183,7 +2184,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [],
@@ -2239,7 +2240,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [],
@@ -2345,7 +2346,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [],
@@ -2509,7 +2510,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [],
@@ -2582,7 +2583,7 @@ class S3TransferManagerTest extends TestCase
                 );
             };
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                     [
@@ -2674,7 +2675,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     "Bucket",
                     $destinationDirectory,
                 )
@@ -2821,7 +2822,7 @@ class S3TransferManagerTest extends TestCase
                 $client,
             );
             $manager->downloadDirectory(
-                DownloadDirectoryRequest::fromLegacyArgs(
+                new DownloadDirectoryRequest(
                     $bucket,
                     $fullDirectoryPath,
                     [],

@@ -20,11 +20,11 @@ final class UploadRequest extends TransferRequest
     private StreamInterface|string $source;
 
     /** @var array  */
-    private array $putObjectRequestArgs;
+    private array $uploadRequestArgs;
 
     /**
      * @param string|StreamInterface $source
-     * @param array $putObjectRequestArgs The putObject request arguments.
+     * @param array $uploadRequestArgs The putObject request arguments.
      * Required parameters would be:
      * - Bucket: (string, required)
      * - Key: (string, required)
@@ -46,40 +46,14 @@ final class UploadRequest extends TransferRequest
      */
     public function __construct(
         StreamInterface|string $source,
-        array $putObjectRequestArgs,
+        array $uploadRequestArgs,
         array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker  = null
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->source = $source;
-        $this->putObjectRequestArgs = $putObjectRequestArgs;
-    }
-
-    /**
-     * @param string|StreamInterface $source
-     * @param array $putObjectRequestArgs
-     * @param array $config
-     * @param array $listeners
-     * @param TransferListener|null $progressTracker
-     *
-     * @return self
-     */
-    public static function fromLegacyArgs(
-        string|StreamInterface $source,
-        array $putObjectRequestArgs = [],
-        array $config = [],
-        array $listeners = [],
-        ?TransferListener $progressTracker = null
-    ): self
-    {
-        return new self(
-            $source,
-            $putObjectRequestArgs,
-            $config,
-            $listeners,
-            $progressTracker
-        );
+        $this->uploadRequestArgs = $uploadRequestArgs;
     }
 
     /**
@@ -97,9 +71,9 @@ final class UploadRequest extends TransferRequest
      *
      * @return array
      */
-    public function getPutObjectRequestArgs(): array
+    public function getUploadRequestArgs(): array
     {
-        return $this->putObjectRequestArgs;
+        return $this->uploadRequestArgs;
     }
 
     /**
@@ -127,8 +101,8 @@ final class UploadRequest extends TransferRequest
     ): void
     {
         $requiredParametersWithArgs = [
-            'Bucket' => $this->putObjectRequestArgs['Bucket'] ?? null,
-            'Key' => $this->putObjectRequestArgs['Key'] ?? null,
+            'Bucket' => $this->uploadRequestArgs['Bucket'] ?? null,
+            'Key' => $this->uploadRequestArgs['Key'] ?? null,
         ];
         foreach ($requiredParametersWithArgs as $key => $value) {
             if (empty($value)) {

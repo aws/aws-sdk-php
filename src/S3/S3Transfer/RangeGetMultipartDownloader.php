@@ -21,7 +21,7 @@ class RangeGetMultipartDownloader extends MultipartDownloader
             $this->currentPartNo++;
         }
 
-        $nextRequestArgs = $this->getObjectRequestArgs;
+        $nextRequestArgs = $this->downloadRequestArgs;
         $partSize = $this->config['target_part_size_bytes'];
         $from = ($this->currentPartNo - 1) * $partSize;
         $to = ($this->currentPartNo * $partSize) - 1;

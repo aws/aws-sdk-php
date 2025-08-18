@@ -21,7 +21,7 @@ final class DownloadRequest extends TransferRequest
     private string|array|null $source;
 
     /** @var array */
-    private array $getObjectRequestArgs;
+    private array $downloadRequestArgs;
 
     /** @var DownloadHandler|null */
     private ?DownloadHandler $downloadHandler;
@@ -30,7 +30,7 @@ final class DownloadRequest extends TransferRequest
      * @param string|array|null $source The object to be downloaded from S3.
      * It can be either a string with a S3 URI or an array with a Bucket and Key
      * properties set.
-     * @param array $getObjectRequestArgs
+     * @param array $downloadRequestArgs
      * @param array $config The configuration to be used for this operation:
      *  - multipart_download_type: (string, optional)
      *    Overrides the resolved value from the transfer manager config.
@@ -51,7 +51,7 @@ final class DownloadRequest extends TransferRequest
      */
     public function __construct(
         string|array|null $source,
-        array $getObjectRequestArgs = [],
+        array $downloadRequestArgs = [],
         array $config = [],
         ?DownloadHandler $downloadHandler = null,
         array $listeners = [],
@@ -59,41 +59,12 @@ final class DownloadRequest extends TransferRequest
     ) {
         parent::__construct($listeners, $progressTracker, $config);
         $this->source = $source;
-        $this->getObjectRequestArgs = $getObjectRequestArgs;
+        $this->downloadRequestArgs = $downloadRequestArgs;
         $this->config = $config;
         if ($downloadHandler === null) {
             $downloadHandler = new StreamDownloadHandler();
         }
         $this->downloadHandler = $downloadHandler;
-    }
-
-    /**
-     * @param string|array|null $source
-     * @param array $downloadRequestArgs
-     * @param array $config
-     * @param DownloadHandler|null $downloadHandler
-     * @param array $listeners
-     * @param TransferListener|null $progressTracker
-     *
-     * @return self
-     */
-    public static function fromLegacyArgs(
-        string|array|null    $source,
-        array             $downloadRequestArgs = [],
-        array             $config = [],
-        ?DownloadHandler $downloadHandler = null,
-        array             $listeners = [],
-        ?TransferListener $progressTracker = null,
-    ): self
-    {
-        return new self(
-            $source,
-            $downloadRequestArgs,
-            $config,
-            $downloadHandler,
-            $listeners,
-            $progressTracker
-        );
     }
 
     /**
@@ -130,7 +101,7 @@ final class DownloadRequest extends TransferRequest
      */
     public function getObjectRequestArgs(): array
     {
-        return $this->getObjectRequestArgs;
+        return $this->downloadRequestArgs;
     }
 
     /**
@@ -152,8 +123,8 @@ final class DownloadRequest extends TransferRequest
     {
         // If source is null then fall back to getObjectRequest.
         $source = $this->getSource() ?? [
-            'Bucket' => $this->getObjectRequestArgs['Bucket'] ?? null,
-            'Key'    => $this->getObjectRequestArgs['Key'] ?? null,
+            'Bucket' => $this->downloadRequestArgs['Bucket'] ?? null,
+            'Key'    => $this->downloadRequestArgs['Key'] ?? null,
         ];
         if (is_string($source)) {
             $sourceAsArray = S3TransferManager::s3UriAsBucketAndKey($source);

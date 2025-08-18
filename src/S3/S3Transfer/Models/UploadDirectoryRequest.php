@@ -15,12 +15,12 @@ final class UploadDirectoryRequest extends TransferRequest
     private string $targetBucket;
 
     /** @var array */
-    private readonly array $putObjectRequestArgs;
+    private readonly array $uploadRequestArgs;
 
     /**
      * @param string $sourceDirectory The source directory to upload.
      * @param string $targetBucket The name of the bucket to upload objects to.
-     * @param array $putObjectRequestArgs The extract arguments to be passed in
+     * @param array $uploadRequestArgs The extract arguments to be passed in
      * each upload request.
      * @param array $config
      * - follow_symbolic_links: (boolean, optional) Whether to follow symbolic links when
@@ -43,7 +43,7 @@ final class UploadDirectoryRequest extends TransferRequest
     public function __construct(
         string $sourceDirectory,
         string $targetBucket,
-        array $putObjectRequestArgs = [],
+        array $uploadRequestArgs = [],
         array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker = null
@@ -55,37 +55,8 @@ final class UploadDirectoryRequest extends TransferRequest
             $targetBucket =  ArnParser::parse($targetBucket)->getResource();
         }
         $this->targetBucket = $targetBucket;
-        $this->putObjectRequestArgs = $putObjectRequestArgs;
+        $this->uploadRequestArgs = $uploadRequestArgs;
         $this->config = $config;
-    }
-
-    /**
-     * @param string $sourceDirectory
-     * @param string $targetBucket
-     * @param array $uploadDirectoryRequestArgs
-     * @param array $config
-     * @param array $listeners
-     * @param TransferListener|null $progressTracker
-     *
-     * @return self
-     */
-    public static function fromLegacyArgs(
-        string            $sourceDirectory,
-        string            $targetBucket,
-        array             $uploadDirectoryRequestArgs = [],
-        array             $config = [],
-        array             $listeners = [],
-        ?TransferListener $progressTracker = null,
-    ): self
-    {
-        return new self(
-            $sourceDirectory,
-            $targetBucket,
-            $uploadDirectoryRequestArgs,
-            $config,
-            $listeners,
-            $progressTracker
-        );
     }
 
     /**
@@ -107,9 +78,9 @@ final class UploadDirectoryRequest extends TransferRequest
     /**
      * @return array
      */
-    public function getPutObjectRequestArgs(): array
+    public function getUploadRequestArgs(): array
     {
-        return $this->putObjectRequestArgs;
+        return $this->uploadRequestArgs;
     }
 
     /**

@@ -15,14 +15,14 @@ final class DownloadDirectoryRequest extends TransferRequest
     private string $destinationDirectory;
 
     /** @var array  */
-    private readonly array $getObjectRequestArgs;
+    private readonly array $downloadRequestArgs;
 
     /**
      * @param string $sourceBucket The bucket from where the files are going to be
      * downloaded from.
      * @param string $destinationDirectory The destination path where the downloaded
      * files will be placed in.
-     * @param array $getObjectRequestArgs
+     * @param array $downloadRequestArgs
      * @param array $config The config options for this download directory operation.
      *  - s3_prefix: (string, optional) This parameter will be considered just if
      *    not provided as part of the list_object_v2_args config option.
@@ -66,7 +66,7 @@ final class DownloadDirectoryRequest extends TransferRequest
     public function __construct(
         string $sourceBucket,
         string $destinationDirectory,
-        array $getObjectRequestArgs = [],
+        array $downloadRequestArgs = [],
         array $config = [],
         array $listeners = [],
         ?TransferListener $progressTracker = null
@@ -78,36 +78,7 @@ final class DownloadDirectoryRequest extends TransferRequest
 
         $this->sourceBucket = $sourceBucket;
         $this->destinationDirectory = $destinationDirectory;
-        $this->getObjectRequestArgs = $getObjectRequestArgs;
-    }
-
-    /**
-     * @param string $sourceBucket
-     * @param string $destinationDirectory
-     * @param array $downloadDirectoryArgs
-     * @param array $config
-     * @param array $listeners
-     * @param TransferListener|null $progressTracker
-     *
-     * @return self
-     */
-    public static function fromLegacyArgs(
-        string            $sourceBucket,
-        string            $destinationDirectory,
-        array             $downloadDirectoryArgs = [],
-        array             $config = [],
-        array             $listeners = [],
-        ?TransferListener $progressTracker = null,
-    ): self
-    {
-        return new self(
-            $sourceBucket,
-            $destinationDirectory,
-            $downloadDirectoryArgs,
-            $config,
-            $listeners,
-            $progressTracker
-        );
+        $this->downloadRequestArgs = $downloadRequestArgs;
     }
 
     /**
@@ -129,9 +100,9 @@ final class DownloadDirectoryRequest extends TransferRequest
     /**
      * @return array
      */
-    public function getGetObjectRequestArgs(): array
+    public function getDownloadRequestArgs(): array
     {
-        return $this->getObjectRequestArgs;
+        return $this->downloadRequestArgs;
     }
 
     /**

@@ -14,11 +14,13 @@ use Aws\S3\S3Transfer\MultipartUploader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
 use Aws\Test\TestsUtility;
+use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 
 class MultipartUploaderTest extends TestCase
 {
@@ -73,7 +75,7 @@ class MultipartUploaderTest extends TestCase
             'Bucket' => 'FooBucket',
             ...$commandArgs
         ];
-        $cleanUpFns = [];
+        $tempDir = null;
         if ($sourceConfig['type'] === 'stream') {
             $source = Utils::streamFor(
                 str_repeat('*', $sourceConfig['size'])
@@ -89,25 +91,16 @@ class MultipartUploaderTest extends TestCase
             }
             $source = $tempDir . DIRECTORY_SEPARATOR . 'temp-file.txt';
             file_put_contents($source, str_repeat('*', $sourceConfig['size']));
-            $cleanUpFns[] = function () use ($tempDir, $source) {
-                TestsUtility::cleanUpDir($tempDir);
-            };
         } else {
             $this->fail("Unsupported Source type");
-        }
-
-        if ($sourceConfig['type'] !== 'file') {
-            $cleanUpFns[] = function () use ($source) {
-                $source->close();
-            };
         }
 
         try {
             $multipartUploader = new MultipartUploader(
                 $s3Client,
                 $requestArgs,
+                $source,
                 $config,
-                $source
             );
             /** @var UploadResult $response */
             $response = $multipartUploader->promise()->wait();
@@ -118,8 +111,12 @@ class MultipartUploaderTest extends TestCase
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTransferredBytes());
             $this->assertEquals($expected['bytesUploaded'], $snapshot->getTotalBytes());
         } finally {
-            foreach ($cleanUpFns as $fn) {
-                $fn();
+            if ($source instanceof StreamInterface) {
+                $source->close();
+            }
+
+            if (!is_null($tempDir)) {
+                TestsUtility::cleanUpDir($tempDir);
             }
         }
     }
@@ -288,12 +285,12 @@ EOF;
         new MultipartUploader(
             $this->getMultipartUploadS3Client(),
             ['Bucket' => 'test-bucket', 'Key' => 'test-key'],
+            Utils::streamFor(),
             [
                 'target_part_size_bytes' => $partSize,
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
             ],
-            Utils::streamFor('')
         );
     }
 
@@ -334,7 +331,7 @@ EOF;
         bool $expectError
     ): void
     {
-        $cleanUpFns = [];
+        $tempDir = null;
         if ($expectError) {
             $this->expectException(\InvalidArgumentException::class);
             $this->expectExceptionMessage(
@@ -349,9 +346,6 @@ EOF;
 
             $source = $tempDir . DIRECTORY_SEPARATOR . $source;
             file_put_contents($source, 'foo');
-            $cleanUpFns[] = function () use ($tempDir) {
-                TestsUtility::cleanUpDir($tempDir);
-            };
         }
 
         try {
@@ -361,16 +355,16 @@ EOF;
                     'Bucket' => 'test-bucket',
                     'Key' => 'test-key'
                 ]),
+                $source,
                 [
                     'target_part_size_bytes' => 1024 * 1024 * 5,
                     'concurrency' => 1,
                     'request_checksum_calculation' => 'when_supported'
-                ],
-                $source
+                ]
             );
         } finally {
-            foreach ($cleanUpFns as $cleanUpFn) {
-                $cleanUpFn();
+            if (!is_null($tempDir)) {
+                TestsUtility::cleanUpDir($tempDir);
             }
         }
     }
@@ -452,12 +446,12 @@ EOF;
         $multipartUploader = new MultipartUploader(
             $s3Client,
             $requestArgs,
+            $stream,
             [
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
             ],
-            $stream,
             null,
             [],
             null,
@@ -511,12 +505,12 @@ EOF;
         $multipartUploader = new MultipartUploader(
             $s3Client,
             $requestArgs,
+            $stream,
             [
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
-            ],
-            $stream
+            ]
         );
 
         $multipartUploader->promise()->wait();
@@ -574,7 +568,7 @@ EOF;
             'Bucket' => 'FooBucket',
             ...$checksumConfig,
         ];
-        $cleanUpFns = [];
+        $tempDir = null;
         if ($sourceConfig['type'] === 'stream') {
             $source = Utils::streamFor(
                 str_repeat($sourceConfig['char'], $sourceConfig['size'])
@@ -590,29 +584,20 @@ EOF;
             }
             $source = $tempDir . DIRECTORY_SEPARATOR . 'temp-file.txt';
             file_put_contents($source, str_repeat($sourceConfig['char'], $sourceConfig['size']));
-            $cleanUpFns[] = function () use ($tempDir, $source) {
-                TestsUtility::cleanUpDir($tempDir);
-            };
         } else {
             $this->fail("Unsupported Source type");
-        }
-
-        if ($sourceConfig['type'] !== 'file') {
-            $cleanUpFns[] = function () use ($source) {
-                $source->close();
-            };
         }
 
         try {
             $multipartUploader = new MultipartUploader(
                 $s3Client,
                 $requestArgs,
+                $source,
                 [
                     'target_part_size_bytes' => 5242880, // 5MB
                     'concurrency' => 3,
                     'request_checksum_calculation' => 'when_supported'
-                ],
-                $source,
+                ]
             );
             /** @var UploadResult $response */
             $response = $multipartUploader->promise()->wait();
@@ -621,8 +606,12 @@ EOF;
             }
             $this->assertInstanceOf(UploadResult::class, $response);
         } finally {
-            foreach ($cleanUpFns as $fn) {
-                $fn();
+            if ($source instanceof StreamInterface) {
+                $source->close();
+            }
+
+            if (!is_null($tempDir)) {
+                TestsUtility::cleanUpDir($tempDir);
             }
         }
     }
@@ -632,37 +621,6 @@ EOF;
      */
     public function multipartUploadWithCustomChecksumProvider(): array {
         return [
-            'custom_checksum_sha256_1' => [
-                'source_config' => [
-                    'type' => 'stream',
-                    'size' => 1024 * 1024 * 20,
-                    'char' => '*'
-                ],
-                'checksum_config' => [
-                    'ChecksumSHA256' => '0c58gNl31EVxhClRWw5+WHiAUp2B3/3g1zQDCvY4bmQ=',
-                ],
-                'expected_operation_headers' => [
-                    'CreateMultipartUpload' => [
-                        'has' => [
-                            'x-amz-checksum-algorithm' => 'SHA256',
-                            'x-amz-checksum-type' => 'FULL_OBJECT'
-                        ]
-                    ],
-                    'UploadPart' => [
-                        'has_not' => [
-                            'x-amz-checksum-algorithm',
-                            'x-amz-checksum-type',
-                            'x-amz-checksum-sha256'
-                        ]
-                    ],
-                    'CompleteMultipartUpload' => [
-                        'has' => [
-                            'x-amz-checksum-sha256' => '0c58gNl31EVxhClRWw5+WHiAUp2B3/3g1zQDCvY4bmQ=',
-                            'x-amz-checksum-type' => 'FULL_OBJECT',
-                        ],
-                    ]
-                ]
-            ],
             'custom_checksum_crc32_1' => [
                 'source_config' => [
                     'type' => 'stream',
@@ -739,12 +697,12 @@ EOF;
             $multipartUploader = new MultipartUploader(
                 $s3Client,
                 $requestArgs,
+                $source,
                 [
                     'target_part_size_bytes' => 5242880, // 5MB
                     'concurrency' => 1,
                     'request_checksum_calculation' => 'when_supported'
-                ],
-                $source,
+                ]
             );
             $multipartUploader->promise()->wait();
         } finally {
@@ -801,12 +759,12 @@ EOF;
         $multipartUploader = new MultipartUploader(
             $s3Client,
             $requestArgs,
+            $stream,
             [
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
                 'request_checksum_calculation' => 'when_supported'
             ],
-            $stream,
             null,
             [],
             null,
@@ -853,11 +811,11 @@ EOF;
         $multipartUploader = new MultipartUploader(
             $s3Client,
             $requestArgs,
+            $stream,
             [
                 'target_part_size_bytes' => 5242880, // 5MB
                 'concurrency' => 1,
             ],
-            $stream,
             null,
             [],
             null,
@@ -866,5 +824,82 @@ EOF;
 
         $response = $multipartUploader->promise()->wait();
         $this->assertInstanceOf(UploadResult::class, $response);
+    }
+
+    /**
+     * This test makes sure that when full object checksum type is resolved
+     * then, if a custom algorithm provide is not CRC family then it should fail.
+     *
+     * @param array $checksumConfig
+     * @param bool $expectsError
+     *
+     * @dataProvider fullObjectChecksumWorksJustWithCRCProvider
+     *
+     * @return void
+     */
+    public function testFullObjectChecksumWorksJustWithCRC(
+        array $checksumConfig,
+        bool $expectsError
+    ): void {
+        $s3Client = $this->getMultipartUploadS3Client();
+        $requestArgs = [
+            'Key' => 'FooKey',
+            'Bucket' => 'FooBucket',
+            ...$checksumConfig,
+        ];
+
+        try {
+            $multipartUploader = new MultipartUploader(
+                $s3Client,
+                $requestArgs,
+                Utils::streamFor(''),
+                [
+                    'target_part_size_bytes' => 5242880, // 5MB
+                    'concurrency' => 3,
+                    'request_checksum_calculation' => 'when_supported'
+                ]
+            );
+            $response = $multipartUploader->promise()->wait();
+            if ($expectsError) {
+                $this->fail("An expected exception has not been raised");
+            } else {
+                $this->assertInstanceOf(UploadResult::class, $response);
+            }
+        } catch (S3TransferException $exception) {
+            if ($expectsError) {
+                $this->assertEquals(
+                    "Full object checksum algorithm must be `CRC` family base.",
+                    $exception->getMessage()
+                );
+            } else {
+                $this->fail("An exception has been thrown when not expected");
+            }
+        }
+    }
+
+    /**
+     * @return Generator
+     */
+    public function fullObjectChecksumWorksJustWithCRCProvider(): Generator {
+        yield 'sha_256_should_fail' => [
+            'checksum_config' => [
+                'ChecksumSHA256' => '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
+            ],
+            'expects_error' => true,
+        ];
+
+        yield 'sha_1_should_fail' => [
+            'checksum_config' => [
+                'ChecksumSHA1' => '2jmj7l5rSw0yVb/vlWAYkK/YBwk='
+            ],
+            'expects_error' => true,
+        ];
+
+        yield 'crc32_should_fail' => [
+            'checksum_config' => [
+                'ChecksumCRC32' => 'AAAAAA=='
+            ],
+            'expects_error' => false,
+        ];
     }
 }

@@ -691,7 +691,7 @@ class S3TransferManagerContext implements Context, SnippetAcceptingContext
 
         try {
             $s3TransferManager->upload(
-                UploadRequest::fromLegacyArgs(
+                new UploadRequest(
                     $fullFilePath,
                     [
                         'Bucket' => self::getResourceName(),

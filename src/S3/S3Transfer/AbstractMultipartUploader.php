@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
+use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
@@ -25,6 +26,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     public const PART_MAX_SIZE = 5 * 1024 * 1024 * 1024; // 5 GiB
     public const PART_MAX_NUM = 10000;
     public const DEFAULT_CHECKSUM_CALCULATION_ALGORITHM = 'crc32';
+    private const CHECKSUM_TYPE_FULL_OBJECT = 'FULL_OBJECT';
 
     /** @var S3ClientInterface */
     protected readonly S3ClientInterface $s3Client;
@@ -80,7 +82,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     public function __construct(
         S3ClientInterface $s3Client,
         array $requestArgs,
-        array $config,
+        array $config = [],
         ?string $uploadId = null,
         array $parts = [],
         ?TransferProgressSnapshot $currentSnapshot = null,
@@ -157,9 +159,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     {
         return Coroutine::of(function () {
             try {
-                yield $this->createMultipartUpload();
+                yield $this->createMultipartOperation();
                 yield $this->processMultipartOperation();
-                $result = yield $this->completeMultipartUpload();
+                $result = yield $this->completeMultipartOperation();
                 yield Create::promiseFor($this->createResponse($result));
             } catch (Throwable $e) {
                 $this->operationFailed($e);
@@ -173,19 +175,30 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    protected function createMultipartUpload(): PromiseInterface
+    protected function createMultipartOperation(): PromiseInterface
     {
         $createMultipartUploadArgs = $this->requestArgs;
         if ($this->requestChecksum !== null) {
-            $createMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
+            $createMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
             $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
         } elseif ($this->config['request_checksum_calculation'] === 'when_supported') {
             $this->requestChecksumAlgorithm = $createMultipartUploadArgs['ChecksumAlgorithm']
                 ?? self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM;
-            $createMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
+            $createMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
             $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
         }
-
+        
+        // Make sure algorithm with full object is a supported one
+        if (($createMultipartUploadArgs['ChecksumType'] ?? '') === self::CHECKSUM_TYPE_FULL_OBJECT) {
+            if (stripos($this->requestChecksumAlgorithm, 'crc') !== 0) {
+                return Create::rejectionFor(
+                    new S3TransferException(
+                        "Full object checksum algorithm must be `CRC` family base."
+                    )
+                );
+            }
+        }
+        
         $this->operationInitiated($createMultipartUploadArgs);
         $command = $this->s3Client->getCommand(
             'CreateMultipartUpload',
@@ -202,7 +215,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    protected function completeMultipartUpload(): PromiseInterface
+    protected function completeMultipartOperation(): PromiseInterface
     {
         $this->sortParts();
         $completeMultipartUploadArgs = $this->requestArgs;
@@ -213,7 +226,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         $completeMultipartUploadArgs['MpuObjectSize'] = $this->getTotalSize();
 
         if ($this->requestChecksum !== null) {
-            $completeMultipartUploadArgs['ChecksumType'] = 'FULL_OBJECT';
+            $completeMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
             $completeMultipartUploadArgs[
                 'Checksum' . ucfirst($this->requestChecksumAlgorithm)
             ] = $this->requestChecksum;
@@ -234,7 +247,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /**
      * @return PromiseInterface
      */
-    protected function abortMultipartUpload(): PromiseInterface
+    protected function abortMultipartOperation(): PromiseInterface
     {
         $abortMultipartUploadArgs = $this->requestArgs;
         $abortMultipartUploadArgs['UploadId'] = $this->uploadId;
@@ -384,7 +397,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
                 "Multipart Upload with id: " . $this->uploadId . " failed",
                 E_USER_WARNING
             );
-            $this->abortMultipartUpload()->wait();
+            $this->abortMultipartOperation()->wait();
         }
 
         $this->listenerNotifier?->transferFail([

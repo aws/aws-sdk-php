@@ -2,6 +2,7 @@
 
 namespace Aws\S3\S3Transfer;
 
+use Aws\ResultInterface;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
@@ -27,6 +28,7 @@ use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Throwable;
 use function Aws\filter;
 use function Aws\map;
 
@@ -131,7 +133,7 @@ class S3TransferManager
 
         return $this->trySingleUpload(
             $uploadRequest->getSource(),
-            $uploadRequest->getPutObjectRequestArgs(),
+            $uploadRequest->getUploadRequestArgs(),
             $listenerNotifier
         );
     }
@@ -239,7 +241,7 @@ class S3TransferManager
                 $delimiter,
                 $objectKey
             );
-            $putObjectRequestArgs = $uploadDirectoryRequest->getPutObjectRequestArgs();
+            $putObjectRequestArgs = $uploadDirectoryRequest->getUploadRequestArgs();
             $putObjectRequestArgs['Bucket'] = $targetBucket;
             $putObjectRequestArgs['Key'] = $objectKey;
 
@@ -262,7 +264,7 @@ class S3TransferManager
                 $objectsUploaded++;
 
                 return $response;
-            })->otherwise(function ($reason) use (
+            })->otherwise(function (Throwable $reason) use (
                 $targetBucket,
                 $sourceDirectory,
                 $failurePolicyCallback,
@@ -294,7 +296,7 @@ class S3TransferManager
         }
 
         return Each::ofLimitAll($promises, $this->config->getConcurrency())
-            ->then(function ($_) use (&$objectsUploaded, &$objectsFailed) {
+            ->then(function () use (&$objectsUploaded, &$objectsFailed) {
                 return new UploadDirectoryResult($objectsUploaded, $objectsFailed);
             });
     }
@@ -463,7 +465,7 @@ class S3TransferManager
                 );
             }
 
-            $requestArgs = $downloadDirectoryRequest->getGetObjectRequestArgs();
+            $requestArgs = $downloadDirectoryRequest->getDownloadRequestArgs();
             foreach ($bucketAndKeyArray as $key => $value) {
                 $requestArgs[$key] = $value;
             }
@@ -473,27 +475,27 @@ class S3TransferManager
 
             $promises[] = $this->downloadFile(
                 new DownloadFileRequest(
-                    $destinationFile,
-                    $config['fails_when_destination_exists'] ?? false,
-                    new DownloadRequest(
-                        null,
-                        $requestArgs,
-                        [
+                    destination: $destinationFile,
+                    failsWhenDestinationExists: ['fails_when_destination_exists'] ?? false,
+                    downloadRequest: new DownloadRequest(
+                        source: $sourceBucket,
+                        downloadRequestArgs: $requestArgs,
+                        config: [
                             'target_part_size_bytes' => $config['target_part_size_bytes'] ?? 0,
                         ],
-                        null,
-                        array_map(
+                        downloadHandler: null,
+                        listeners: array_map(
                             fn($listener) => clone $listener,
                             $downloadDirectoryRequest->getListeners()
                         ),
-                        $progressTracker,
+                        progressTracker: $progressTracker,
                     )
                 ),
             )->then(function () use (
                 &$objectsDownloaded
             ) {
                 $objectsDownloaded++;
-            })->otherwise(function ($reason) use (
+            })->otherwise(function (Throwable $reason) use (
                 $sourceBucket,
                 $destinationDirectory,
                 $failurePolicyCallback,
@@ -525,7 +527,7 @@ class S3TransferManager
         }
 
         return Each::ofLimitAll($promises, $this->config->getConcurrency())
-            ->then(function ($_) use (&$objectsFailed, &$objectsDownloaded) {
+            ->then(function () use (&$objectsFailed, &$objectsDownloaded) {
                 return new DownloadDirectoryResult(
                     $objectsDownloaded,
                     $objectsFailed
@@ -603,7 +605,8 @@ class S3TransferManager
 
             $command = $this->s3Client->getCommand('PutObject', $requestArgs);
             return $this->s3Client->executeAsync($command)->then(
-                function ($result) use ($objectSize, $listenerNotifier, $requestArgs) {
+                function (ResultInterface $result)
+                use ($objectSize, $listenerNotifier, $requestArgs) {
                     $listenerNotifier->bytesTransferred(
                         [
                             TransferListener::REQUEST_ARGS_KEY => $requestArgs,
@@ -631,7 +634,8 @@ class S3TransferManager
                         $result->toArray()
                     );
                 }
-            )->otherwise(function ($reason) use ($objectSize, $requestArgs, $listenerNotifier) {
+            )->otherwise(function (Throwable $reason)
+            use ($objectSize, $requestArgs, $listenerNotifier) {
                 $listenerNotifier->transferFail(
                     [
                         TransferListener::REQUEST_ARGS_KEY => $requestArgs,
@@ -651,7 +655,7 @@ class S3TransferManager
         $command = $this->s3Client->getCommand('PutObject', $requestArgs);
 
         return $this->s3Client->executeAsync($command)
-            ->then(function ($result) {
+            ->then(function (ResultInterface $result) {
                 return new UploadResult($result->toArray());
             });
     }
@@ -669,9 +673,9 @@ class S3TransferManager
     {
         return (new MultipartUploader(
             $this->s3Client,
-            $uploadRequest->getPutObjectRequestArgs(),
-            $uploadRequest->getConfig(),
+            $uploadRequest->getUploadRequestArgs(),
             $uploadRequest->getSource(),
+            $uploadRequest->getConfig(),
             listenerNotifier: $listenerNotifier,
         ))->promise();
     }
@@ -759,12 +763,12 @@ class S3TransferManager
     }
 
     /**
-     * @param $bucket
-     * @param $key
+     * @param string $bucket
+     * @param string $key
      *
      * @return string
      */
-    private static function formatAsS3URI($bucket, $key): string
+    private static function formatAsS3URI(string $bucket, string $key): string
     {
         return "s3://$bucket/$key";
     }
