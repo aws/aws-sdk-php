@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.0 - 2025-08-19
 
 * `Aws\Token` - Adds token provider for Bedrock services to source bearer tokens from environment.
 * `Aws\Polly` - Added support for new output format - Opus.
