@@ -1817,7 +1817,8 @@
         "source":{"shape":"AnalysisSource"},
         "sourceMetadata":{"shape":"AnalysisSourceMetadata"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
-        "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"}
+        "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"},
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
       }
     },
     "AnalysisTemplateArn":{
@@ -2225,7 +2226,8 @@
         "source":{"shape":"AnalysisSource"},
         "sourceMetadata":{"shape":"AnalysisSourceMetadata"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
-        "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"}
+        "validations":{"shape":"AnalysisTemplateValidationStatusDetailList"},
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
       }
     },
     "CollaborationAnalysisTemplateList":{
@@ -3036,7 +3038,8 @@
         "source":{"shape":"AnalysisSource"},
         "tags":{"shape":"TagMap"},
         "analysisParameters":{"shape":"AnalysisParameterList"},
-        "schema":{"shape":"AnalysisSchema"}
+        "schema":{"shape":"AnalysisSchema"},
+        "errorMessageConfiguration":{"shape":"ErrorMessageConfiguration"}
       }
     },
     "CreateAnalysisTemplateOutput":{
@@ -3798,6 +3801,17 @@
       "box":true,
       "max":20,
       "min":1
+    },
+    "ErrorMessageConfiguration":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"ErrorMessageType"}
+      }
+    },
+    "ErrorMessageType":{
+      "type":"string",
+      "enum":["DETAILED"]
     },
     "FilterableMemberStatus":{
       "type":"string",

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Token` - Adds token provider for Bedrock services to source bearer tokens from environment.
+* `Aws\Polly` - Added support for new output format - Opus.
+* `Aws\CleanRooms` - Support error message configuration for analysis templates
+* `Aws\EC2` - Add support for "warning" volume status.
+
 ## 3.355.0 - 2025-08-18
 
 * `Aws\Batch` - Added default_x86_64 and default_arm64 as values to the instanceTypes field.

@@ -1610,6 +1610,20 @@
         "DifferentialPrivacyTemplateUpdateParameters$epsilon": "<p>The updated epsilon value that you want to use.</p>"
       }
     },
+    "ErrorMessageConfiguration": {
+      "base": "<p>A structure that defines the level of detail included in error messages returned by PySpark jobs. This configuration allows you to control the verbosity of error messages to help with troubleshooting PySpark jobs while maintaining appropriate security controls.</p>",
+      "refs": {
+        "AnalysisTemplate$errorMessageConfiguration": "<p>The configuration that specifies the level of detail in error messages returned by analyses using this template. When set to <code>DETAILED</code>, error messages include more information to help troubleshoot issues with PySpark jobs. Detailed error messages may expose underlying data, including sensitive information. Recommended for faster troubleshooting in development and testing environments.</p>",
+        "CollaborationAnalysisTemplate$errorMessageConfiguration": "<p>The configuration that specifies the level of detail in error messages returned by analyses using this template. When set to <code>DETAILED</code>, error messages include more information to help troubleshoot issues with PySpark jobs. Detailed error messages may expose underlying data, including sensitive information. Recommended for faster troubleshooting in development and testing environments.</p>",
+        "CreateAnalysisTemplateInput$errorMessageConfiguration": "<p>The configuration that specifies the level of detail in error messages returned by analyses using this template. When set to <code>DETAILED</code>, error messages include more information to help troubleshoot issues with PySpark jobs. Detailed error messages may expose underlying data, including sensitive information. Recommended for faster troubleshooting in development and testing environments.</p>"
+      }
+    },
+    "ErrorMessageType": {
+      "base": null,
+      "refs": {
+        "ErrorMessageConfiguration$type": "<p>The level of detail for error messages returned by the PySpark job. When set to DETAILED, error messages include more information to help troubleshoot issues with your PySpark job.</p> <p>Because this setting may expose sensitive data, it is recommended for development and testing environments.</p>"
+      }
+    },
     "FilterableMemberStatus": {
       "base": null,
       "refs": {
