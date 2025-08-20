@@ -703,7 +703,8 @@
         "ApplicationSnapshotConfiguration":{"shape":"ApplicationSnapshotConfiguration"},
         "ApplicationSystemRollbackConfiguration":{"shape":"ApplicationSystemRollbackConfiguration"},
         "VpcConfigurations":{"shape":"VpcConfigurations"},
-        "ZeppelinApplicationConfiguration":{"shape":"ZeppelinApplicationConfiguration"}
+        "ZeppelinApplicationConfiguration":{"shape":"ZeppelinApplicationConfiguration"},
+        "ApplicationEncryptionConfiguration":{"shape":"ApplicationEncryptionConfiguration"}
       }
     },
     "ApplicationConfigurationDescription":{
@@ -717,7 +718,8 @@
         "ApplicationSnapshotConfigurationDescription":{"shape":"ApplicationSnapshotConfigurationDescription"},
         "ApplicationSystemRollbackConfigurationDescription":{"shape":"ApplicationSystemRollbackConfigurationDescription"},
         "VpcConfigurationDescriptions":{"shape":"VpcConfigurationDescriptions"},
-        "ZeppelinApplicationConfigurationDescription":{"shape":"ZeppelinApplicationConfigurationDescription"}
+        "ZeppelinApplicationConfigurationDescription":{"shape":"ZeppelinApplicationConfigurationDescription"},
+        "ApplicationEncryptionConfigurationDescription":{"shape":"ApplicationEncryptionConfigurationDescription"}
       }
     },
     "ApplicationConfigurationUpdate":{
@@ -730,7 +732,8 @@
         "ApplicationSnapshotConfigurationUpdate":{"shape":"ApplicationSnapshotConfigurationUpdate"},
         "ApplicationSystemRollbackConfigurationUpdate":{"shape":"ApplicationSystemRollbackConfigurationUpdate"},
         "VpcConfigurationUpdates":{"shape":"VpcConfigurationUpdates"},
-        "ZeppelinApplicationConfigurationUpdate":{"shape":"ZeppelinApplicationConfigurationUpdate"}
+        "ZeppelinApplicationConfigurationUpdate":{"shape":"ZeppelinApplicationConfigurationUpdate"},
+        "ApplicationEncryptionConfigurationUpdate":{"shape":"ApplicationEncryptionConfigurationUpdate"}
       }
     },
     "ApplicationDescription":{
@@ -766,6 +769,30 @@
         "ConditionalToken":{"shape":"ConditionalToken"},
         "ApplicationVersionRolledBackTo":{"shape":"ApplicationVersionId"},
         "ApplicationMode":{"shape":"ApplicationMode"}
+      }
+    },
+    "ApplicationEncryptionConfiguration":{
+      "type":"structure",
+      "required":["KeyType"],
+      "members":{
+        "KeyId":{"shape":"KeyId"},
+        "KeyType":{"shape":"KeyType"}
+      }
+    },
+    "ApplicationEncryptionConfigurationDescription":{
+      "type":"structure",
+      "required":["KeyType"],
+      "members":{
+        "KeyId":{"shape":"KeyId"},
+        "KeyType":{"shape":"KeyType"}
+      }
+    },
+    "ApplicationEncryptionConfigurationUpdate":{
+      "type":"structure",
+      "required":["KeyTypeUpdate"],
+      "members":{
+        "KeyIdUpdate":{"shape":"KeyId"},
+        "KeyTypeUpdate":{"shape":"KeyType"}
       }
     },
     "ApplicationMaintenanceConfigurationDescription":{
@@ -1219,8 +1246,7 @@
     },
     "CreateApplicationSnapshotResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CustomArtifactConfiguration":{
       "type":"structure",
@@ -1350,8 +1376,7 @@
     },
     "DeleteApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteApplicationSnapshotRequest":{
       "type":"structure",
@@ -1368,8 +1393,7 @@
     },
     "DeleteApplicationSnapshotResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteApplicationVpcConfigurationRequest":{
       "type":"structure",
@@ -1781,6 +1805,18 @@
       }
     },
     "JobPlanDescription":{"type":"string"},
+    "KeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "KeyType":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED_KEY",
+        "CUSTOMER_MANAGED_KEY"
+      ]
+    },
     "KinesisAnalyticsARN":{
       "type":"string",
       "max":2048,
@@ -2601,7 +2637,8 @@
         "SnapshotStatus":{"shape":"SnapshotStatus"},
         "ApplicationVersionId":{"shape":"ApplicationVersionId"},
         "SnapshotCreationTimestamp":{"shape":"Timestamp"},
-        "RuntimeEnvironment":{"shape":"RuntimeEnvironment"}
+        "RuntimeEnvironment":{"shape":"RuntimeEnvironment"},
+        "ApplicationEncryptionConfigurationDescription":{"shape":"ApplicationEncryptionConfigurationDescription"}
       }
     },
     "SnapshotName":{
@@ -2741,8 +2778,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2797,8 +2833,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateApplicationMaintenanceConfigurationRequest":{
       "type":"structure",

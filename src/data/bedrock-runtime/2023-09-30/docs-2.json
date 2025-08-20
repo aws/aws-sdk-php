@@ -5,6 +5,7 @@
     "ApplyGuardrail": "<p>The action to apply a guardrail.</p> <p>For troubleshooting some of the common errors you might encounter when using the <code>ApplyGuardrail</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
     "Converse": "<p>Sends messages to the specified Amazon Bedrock model. <code>Converse</code> provides a consistent interface that works with all models that support messages. This allows you to write code once and use it with different models. If a model has unique inference parameters, you can also pass those unique parameters to the model.</p> <p>Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.</p> <p>You can submit a prompt by including it in the <code>messages</code> field, specifying the <code>modelId</code> of a foundation model or inference profile to run inference on it, and including any other fields that are relevant to your use case.</p> <p>You can also submit a prompt from Prompt management by specifying the ARN of the prompt version and including a map of variables to values in the <code>promptVariables</code> field. You can append more messages to the prompt by using the <code>messages</code> field. If you use a prompt from Prompt management, you can't include the following fields in the request: <code>additionalModelRequestFields</code>, <code>inferenceConfig</code>, <code>system</code>, or <code>toolConfig</code>. Instead, these fields must be defined through Prompt management. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html\">Use a prompt from Prompt management</a>.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Converse API examples</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action. </p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the base inference actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html\">InvokeModel</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html\">InvokeModelWithResponseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>Converse</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
     "ConverseStream": "<p>Sends messages to the specified Amazon Bedrock model and returns the response in a stream. <code>ConverseStream</code> provides a consistent API that works with all Amazon Bedrock models that support messages. This allows you to write code once and use it with different models. Should a model have unique inference parameters, you can also pass those unique parameters to the model. </p> <p>To find out if a model supports streaming, call <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html\">GetFoundationModel</a> and check the <code>responseStreamingSupported</code> field in the response.</p> <note> <p>The CLI doesn't support streaming operations in Amazon Bedrock, including <code>ConverseStream</code>.</p> </note> <p>Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.</p> <p>You can submit a prompt by including it in the <code>messages</code> field, specifying the <code>modelId</code> of a foundation model or inference profile to run inference on it, and including any other fields that are relevant to your use case.</p> <p>You can also submit a prompt from Prompt management by specifying the ARN of the prompt version and including a map of variables to values in the <code>promptVariables</code> field. You can append more messages to the prompt by using the <code>messages</code> field. If you use a prompt from Prompt management, you can't include the following fields in the request: <code>additionalModelRequestFields</code>, <code>inferenceConfig</code>, <code>system</code>, or <code>toolConfig</code>. Instead, these fields must be defined through Prompt management. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html\">Use a prompt from Prompt management</a>.</p> <p>For information about the Converse API, see <i>Use the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a guardrail, see <i>Use a guardrail with the Converse API</i> in the <i>Amazon Bedrock User Guide</i>. To use a tool with a model, see <i>Tool use (Function calling)</i> in the <i>Amazon Bedrock User Guide</i> </p> <p>For example code, see <i>Conversation streaming example</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModelWithResponseStream</code> action.</p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the base inference actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html\">InvokeModel</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html\">InvokeModelWithResponseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>ConverseStream</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
+    "CountTokens": "<p>Returns the token count for a given inference request. This operation helps you estimate token usage before sending requests to foundation models by returning the token count that would be used if the same input were sent to the model in an inference request.</p> <p>Token counting is model-specific because different models use different tokenization strategies. The token count returned by this operation will match the token count that would be charged if the same input were sent to the model in an <code>InvokeModel</code> or <code>Converse</code> request.</p> <p>You can use this operation to:</p> <ul> <li> <p>Estimate costs before sending inference requests.</p> </li> <li> <p>Optimize prompts to fit within token limits.</p> </li> <li> <p>Plan for token usage in your applications.</p> </li> </ul> <p>This operation accepts the same input formats as <code>InvokeModel</code> and <code>Converse</code>, allowing you to count tokens for both raw text inputs and structured conversation formats.</p> <p>The following operations are related to <code>CountTokens</code>:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/API/API_runtime_InvokeModel.html\">InvokeModel</a> - Sends inference requests to foundation models</p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/bedrock/latest/API/API_runtime_Converse.html\">Converse</a> - Sends conversation-based inference requests to foundation models</p> </li> </ul>",
     "GetAsyncInvoke": "<p>Retrieve information about an asynchronous invocation.</p>",
     "InvokeModel": "<p>Invokes the specified Amazon Bedrock model to run inference using the prompt and inference parameters provided in the request body. You use model inference to generate text, images, and embeddings.</p> <p>For example code, see <i>Invoke model code examples</i> in the <i>Amazon Bedrock User Guide</i>. </p> <p>This operation requires permission for the <code>bedrock:InvokeModel</code> action.</p> <important> <p>To deny all inference access to resources that you specify in the modelId field, you need to deny access to the <code>bedrock:InvokeModel</code> and <code>bedrock:InvokeModelWithResponseStream</code> actions. Doing this also denies access to the resource through the Converse API actions (<a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a> and <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a>). For more information see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference\">Deny access for inference on specific models</a>. </p> </important> <p>For troubleshooting some of the common errors you might encounter when using the <code>InvokeModel</code> API, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html\">Troubleshooting Amazon Bedrock API Error Codes</a> in the Amazon Bedrock User Guide</p>",
     "InvokeModelWithBidirectionalStream": "<p>Invoke the specified Amazon Bedrock model to run inference using the bidirectional stream. The response is returned in a stream that remains open for 8 minutes. A single session can contain multiple prompts and responses from the model. The prompts to the model are provided as audio files and the model's responses are spoken back to the user and transcribed.</p> <p>It is possible for users to interrupt the model's response with a new prompt, which will halt the response speech. The model will retain contextual awareness of the conversation while pivoting to respond to the new prompt.</p>",
@@ -139,6 +140,7 @@
       "refs": {
         "InvokeModelRequest$body": "<p>The prompt and inference parameters in the format specified in the <code>contentType</code> in the header. You must provide the body in JSON format. To see the format and content of the request and response bodies for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/api-methods-run.html\">Run inference</a> in the Bedrock User Guide.</p>",
         "InvokeModelResponse$body": "<p>Inference response from the model in the format specified in the <code>contentType</code> header. To see the format and content of the request and response bodies for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>.</p>",
+        "InvokeModelTokensRequest$body": "<p>The request body to count tokens for, formatted according to the model's expected input format. To learn about the input format for different models, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Model inference parameters and responses</a>.</p>",
         "InvokeModelWithResponseStreamRequest$body": "<p>The prompt and inference parameters in the format specified in the <code>contentType</code> in the header. You must provide the body in JSON format. To see the format and content of the request and response bodies for different models, refer to <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters</a>. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/api-methods-run.html\">Run inference</a> in the Bedrock User Guide.</p>"
       }
     },
@@ -383,10 +385,32 @@
         "ConverseStreamMetadataEvent$trace": "<p>The trace object in the response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html\">ConverseStream</a> that contains information about the guardrail behavior.</p>"
       }
     },
+    "ConverseTokensRequest": {
+      "base": "<p>The inputs from a <code>Converse</code> API request for token counting.</p> <p>This structure mirrors the input format for the <code>Converse</code> operation, allowing you to count tokens for conversation-based inference requests.</p>",
+      "refs": {
+        "CountTokensInput$converse": "<p>A <code>Converse</code> request for which to count tokens. Use this field when you want to count tokens for a conversation-based input that would be sent to the <code>Converse</code> operation.</p>"
+      }
+    },
     "ConverseTrace": {
       "base": "<p>The trace object in a response from <a href=\"https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html\">Converse</a>. Currently, you can only trace guardrails.</p>",
       "refs": {
         "ConverseResponse$trace": "<p>A trace object that contains information about the Guardrail behavior.</p>"
+      }
+    },
+    "CountTokensInput": {
+      "base": "<p>The input value for token counting. The value should be either an <code>InvokeModel</code> or <code>Converse</code> request body. </p>",
+      "refs": {
+        "CountTokensRequest$input": "<p>The input for which to count tokens. The structure of this parameter depends on whether you're counting tokens for an <code>InvokeModel</code> or <code>Converse</code> request:</p> <ul> <li> <p>For <code>InvokeModel</code> requests, provide the request body in the <code>invokeModel</code> field</p> </li> <li> <p>For <code>Converse</code> requests, provide the messages and system content in the <code>converse</code> field</p> </li> </ul> <p>The input format must be compatible with the model specified in the <code>modelId</code> parameter.</p>"
+      }
+    },
+    "CountTokensRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CountTokensResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "Document": {
@@ -516,6 +540,12 @@
         "DocumentSource$bytes": "<p>The raw bytes for the document. If you use an Amazon Web Services SDK, you don't need to encode the bytes in base64.</p>"
       }
     },
+    "FoundationModelVersionIdentifier": {
+      "base": "<p>ARN or ID of a Bedrock model</p>",
+      "refs": {
+        "CountTokensRequest$modelId": "<p>The unique identifier or ARN of the foundation model to use for token counting. Each model processes tokens differently, so the token count is specific to the model you specify.</p>"
+      }
+    },
     "GetAsyncInvokeRequest": {
       "base": null,
       "refs": {
@@ -579,7 +609,7 @@
     "GuardrailAutomatedReasoningImpossibleFinding": {
       "base": "<p>Indicates that no valid claims can be made due to logical contradictions in the premises or rules.</p>",
       "refs": {
-        "GuardrailAutomatedReasoningFinding$impossible": null
+        "GuardrailAutomatedReasoningFinding$impossible": "<p>Contains the result when the automated reasoning evaluation determines that no valid logical conclusions can be drawn due to contradictions in the premises or policy rules themselves.</p>"
       }
     },
     "GuardrailAutomatedReasoningInputTextReference": {
@@ -598,7 +628,7 @@
     "GuardrailAutomatedReasoningInvalidFinding": {
       "base": "<p>Indicates that the claims are logically false and contradictory to the established rules or premises.</p>",
       "refs": {
-        "GuardrailAutomatedReasoningFinding$invalid": null
+        "GuardrailAutomatedReasoningFinding$invalid": "<p>Contains the result when the automated reasoning evaluation determines that the claims in the input are logically invalid and contradict the established premises or policy rules.</p>"
       }
     },
     "GuardrailAutomatedReasoningLogicWarning": {
@@ -619,7 +649,7 @@
     "GuardrailAutomatedReasoningNoTranslationsFinding": {
       "base": "<p>Indicates that no relevant logical information could be extracted from the input for validation.</p>",
       "refs": {
-        "GuardrailAutomatedReasoningFinding$noTranslations": null
+        "GuardrailAutomatedReasoningFinding$noTranslations": "<p>Contains the result when the automated reasoning evaluation cannot extract any relevant logical information from the input that can be validated against the policy rules.</p>"
       }
     },
     "GuardrailAutomatedReasoningPoliciesProcessed": {
@@ -663,7 +693,7 @@
     "GuardrailAutomatedReasoningSatisfiableFinding": {
       "base": "<p>Indicates that the claims could be either true or false depending on additional assumptions not provided in the input.</p>",
       "refs": {
-        "GuardrailAutomatedReasoningFinding$satisfiable": null
+        "GuardrailAutomatedReasoningFinding$satisfiable": "<p>Contains the result when the automated reasoning evaluation determines that the claims in the input could be either true or false depending on additional assumptions not provided in the input context.</p>"
       }
     },
     "GuardrailAutomatedReasoningScenario": {
@@ -707,7 +737,7 @@
     "GuardrailAutomatedReasoningTooComplexFinding": {
       "base": "<p>Indicates that the input exceeds the processing capacity due to the volume or complexity of the logical information.</p>",
       "refs": {
-        "GuardrailAutomatedReasoningFinding$tooComplex": null
+        "GuardrailAutomatedReasoningFinding$tooComplex": "<p>Contains the result when the automated reasoning evaluation cannot process the input due to its complexity or volume exceeding the system's processing capacity for logical analysis.</p>"
       }
     },
     "GuardrailAutomatedReasoningTranslation": {
@@ -723,7 +753,7 @@
     "GuardrailAutomatedReasoningTranslationAmbiguousFinding": {
       "base": "<p>Indicates that the input has multiple valid logical interpretations, requiring additional context or clarification.</p>",
       "refs": {
-        "GuardrailAutomatedReasoningFinding$translationAmbiguous": null
+        "GuardrailAutomatedReasoningFinding$translationAmbiguous": "<p>Contains the result when the automated reasoning evaluation detects that the input has multiple valid logical interpretations, requiring additional context or clarification to proceed with validation.</p>"
       }
     },
     "GuardrailAutomatedReasoningTranslationConfidence": {
@@ -753,7 +783,7 @@
     "GuardrailAutomatedReasoningValidFinding": {
       "base": "<p>Indicates that the claims are definitively true and logically implied by the premises, with no possible alternative interpretations.</p>",
       "refs": {
-        "GuardrailAutomatedReasoningFinding$valid": null
+        "GuardrailAutomatedReasoningFinding$valid": "<p>Contains the result when the automated reasoning evaluation determines that the claims in the input are logically valid and definitively true based on the provided premises and policy rules.</p>"
       }
     },
     "GuardrailConfiguration": {
@@ -1290,6 +1320,12 @@
         "InferenceConfiguration$topP": "<p>The percentage of most-likely candidates that the model considers for the next token. For example, if you choose a value of 0.8 for <code>topP</code>, the model selects from the top 80% of the probability distribution of tokens that could be next in the sequence.</p> <p>The default value is the default value for the model that you are using. For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html\">Inference parameters for foundation models</a>. </p>"
       }
     },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "CountTokensResponse$inputTokens": "<p>The number of tokens in the provided input according to the specified model's tokenization rules. This count represents the number of input tokens that would be processed if the same input were sent to the model in an inference request. Use this value to estimate costs and ensure your inputs stay within model token limits.</p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>An internal server error occurred. For troubleshooting this error, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-internal-failure\">InternalFailure</a> in the Amazon Bedrock User Guide</p>",
       "refs": {
@@ -1323,6 +1359,12 @@
     "InvokeModelResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "InvokeModelTokensRequest": {
+      "base": "<p>The body of an <code>InvokeModel</code> API request for token counting. This structure mirrors the input format for the <code>InvokeModel</code> operation, allowing you to count tokens for raw text inference requests.</p>",
+      "refs": {
+        "CountTokensInput$invokeModel": "<p>An <code>InvokeModel</code> request for which to count tokens. Use this field when you want to count tokens for a raw text input that would be sent to the <code>InvokeModel</code> operation.</p>"
       }
     },
     "InvokeModelWithBidirectionalStreamInput": {
@@ -1415,7 +1457,8 @@
       "base": null,
       "refs": {
         "ConverseRequest$messages": "<p>The messages that you want to send to the model.</p>",
-        "ConverseStreamRequest$messages": "<p>The messages that you want to send to the model.</p>"
+        "ConverseStreamRequest$messages": "<p>The messages that you want to send to the model.</p>",
+        "ConverseTokensRequest$messages": "<p>An array of messages to count tokens for.</p>"
       }
     },
     "MimeType": {
@@ -1725,7 +1768,8 @@
       "base": null,
       "refs": {
         "ConverseRequest$system": "<p>A prompt that provides instructions or context to the model about the task it should perform, or the persona it should adopt during the conversation.</p>",
-        "ConverseStreamRequest$system": "<p>A prompt that provides instructions or context to the model about the task it should perform, or the persona it should adopt during the conversation.</p>"
+        "ConverseStreamRequest$system": "<p>A prompt that provides instructions or context to the model about the task it should perform, or the persona it should adopt during the conversation.</p>",
+        "ConverseTokensRequest$system": "<p>The system content blocks to count tokens for. System content provides instructions or context to the model about how it should behave or respond. The token count will include any system content provided.</p>"
       }
     },
     "Tag": {

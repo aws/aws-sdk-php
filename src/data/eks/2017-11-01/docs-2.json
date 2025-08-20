@@ -167,6 +167,18 @@
         "AddonHealth$issues": "<p>An object representing the health issues for an add-on.</p>"
       }
     },
+    "AddonNamespaceConfigRequest": {
+      "base": "<p>The namespace configuration request object for specifying a custom namespace when creating an addon.</p>",
+      "refs": {
+        "CreateAddonRequest$namespaceConfig": "<p>The namespace configuration for the addon. If specified, this will override the default namespace for the addon.</p>"
+      }
+    },
+    "AddonNamespaceConfigResponse": {
+      "base": "<p>The namespace configuration response object containing information about the namespace where an addon is installed.</p>",
+      "refs": {
+        "Addon$namespaceConfig": "<p>The namespace configuration for the addon. This specifies the Kubernetes namespace where the addon is installed.</p>"
+      }
+    },
     "AddonPodIdentityAssociations": {
       "base": "<p>A type of EKS Pod Identity association owned by an Amazon EKS add-on.</p> <p>Each association maps a role to a service account in a namespace in the cluster.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/eks/latest/userguide/add-ons-iam.html\">Attach an IAM Role to an Amazon EKS add-on using EKS Pod Identity</a> in the <i>Amazon EKS User Guide</i>.</p>",
       "refs": {
@@ -1578,6 +1590,7 @@
         "AddonInfo$type": "<p>The type of the add-on.</p>",
         "AddonInfo$publisher": "<p>The publisher of the add-on.</p>",
         "AddonInfo$owner": "<p>The owner of the add-on.</p>",
+        "AddonInfo$defaultNamespace": "<p>The default Kubernetes namespace where this addon is typically installed if no custom namespace is specified.</p>",
         "AddonIssue$message": "<p>A message that provides details about the issue and what might cause it.</p>",
         "AddonPodIdentityAssociations$serviceAccount": "<p>The name of a Kubernetes Service Account.</p>",
         "AddonPodIdentityAssociations$roleArn": "<p>The ARN of an IAM Role.</p>",
@@ -2285,6 +2298,13 @@
         "CreateNodegroupRequest$labels": "<p>The Kubernetes <code>labels</code> to apply to the nodes in the node group when they are created.</p>",
         "Nodegroup$labels": "<p>The Kubernetes <code>labels</code> applied to the nodes in the node group.</p> <note> <p>Only <code>labels</code> that are applied with the Amazon EKS API are shown here. There may be other Kubernetes <code>labels</code> applied to the nodes in this group.</p> </note>",
         "UpdateLabelsPayload$addOrUpdateLabels": "<p>The Kubernetes <code>labels</code> to add or update.</p>"
+      }
+    },
+    "namespace": {
+      "base": null,
+      "refs": {
+        "AddonNamespaceConfigRequest$namespace": "<p>The name of the Kubernetes namespace to install the addon in. Must be a valid RFC 1123 DNS label.</p>",
+        "AddonNamespaceConfigResponse$namespace": "<p>The name of the Kubernetes namespace where the addon is installed.</p>"
       }
     },
     "requiredClaimsKey": {

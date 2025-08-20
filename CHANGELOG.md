@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Allows :// within object key in S3 Streamwrapper.
+* `Aws\PinpointSMSVoiceV2` - This change added InternationalSendingEnbaled as part of describe/Update/Request phone number API response, and as part of update/Request phone number API request
+* `Aws\Budgets` - Remove incorrect endpoint tests
+* `Aws\BedrockRuntime` - Launch CountTokens API to allow token counting
+* `Aws\MarketplaceMetering` - Remove incorrect endpoint tests
+* `Aws\CostExplorer` - Remove incorrect endpoint tests
+* `Aws\MarketplaceEntitlementService` - Remove incorrect endpoint tests
+* `Aws\CognitoIdentityProvider` - This release adds support for the new Terms APIs which allow displaying Terms of Use and Privacy Policy on the Managed Login user-registration page.
+* `Aws\KinesisAnalyticsV2` - Adds Key Management Service (KMS) support allowing customer-managed key (CMK) encryption for Flink application data.
+* `Aws\EKS` - EKS Add-ons Custom Namespace Support
+* `Aws\DynamoDB` - Remove incorrect endpoint tests
+* `Aws\DataZone` - This release supports policy grant identifier for cloud formation integration
+* `Aws\Kinesis` - Remove incorrect endpoint tests
+* `Aws\SESv2` - Remove incorrect endpoint tests
+* `Aws\NetworkManager` - Remove incorrect endpoint tests
+* `Aws\Billing` - Clarify IPv4 and IPv6 endpoints
+* `Aws\Detective` - Remove incorrect endpoint tests
+* `Aws\IAM` - Remove incorrect endpoint tests
+* `Aws\SageMaker` - This release adds 1/ Launch ml.p5.4xlarge instance in Processing jobs, Training jobs and Training Plan 2/ Makes S3Uri to be required for S3FileSystem and S3FileSystemConfig.
+* `Aws\EFS` - Remove incorrect endpoint tests
+* `Aws\Route53RecoveryControlConfig` - Remove incorrect endpoint tests
+
 ## 3.356.0 - 2025-08-19
 
 * `Aws\Token` - Adds token provider for Bedrock services to source bearer tokens from environment.

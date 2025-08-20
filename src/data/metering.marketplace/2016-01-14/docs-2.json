@@ -16,13 +16,11 @@
     },
     "BatchMeterUsageRequest": {
       "base": "<p>A <code>BatchMeterUsageRequest</code> contains <code>UsageRecords</code>, which indicate quantities of usage within your application.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchMeterUsageResult": {
       "base": "<p>Contains the <code>UsageRecords</code> processed by <code>BatchMeterUsage</code> and any records that have failed due to transient error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -46,83 +44,67 @@
     },
     "CustomerNotEntitledException": {
       "base": "<p>Exception thrown when the customer does not have a valid subscription for the product.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisabledApiException": {
       "base": "<p>The API is disabled in the Region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DuplicateRequestException": {
       "base": "<p>A metering record has already been emitted by the same EC2 instance, ECS task, or EKS pod for the given {<code>usageDimension</code>, <code>timestamp</code>} with a different <code>usageQuantity</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExpiredTokenException": {
       "base": "<p>The submitted registration token has expired. This can happen if the buyer's browser takes too long to redirect to your page, the buyer has resubmitted the registration token, or your application has held on to the registration token for too long. Your SaaS registration website should redeem this token as soon as it is submitted by the buyer's browser.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServiceErrorException": {
       "base": "<p>An internal error has occurred. Retry your request. If the problem persists, post a message with details on the Amazon Web Services forums.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidCustomerIdentifierException": {
       "base": "<p>You have metered usage for a <code>CustomerIdentifier</code> that does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidEndpointRegionException": {
       "base": "<p>The endpoint being called is in a Amazon Web Services Region different from your EC2 instance, ECS task, or EKS pod. The Region of the Metering Service endpoint and the Amazon Web Services Region of the resource must match.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidProductCodeException": {
       "base": "<p>The product code passed does not match the product code used for publishing the product.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPublicKeyVersionException": {
       "base": "<p>Public Key version is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRegionException": {
       "base": "<p> <code>RegisterUsage</code> must be called in the same Amazon Web Services Region the ECS task was launched in. This prevents a container from hardcoding a Region (e.g. withRegion(“us-east-1”) when calling <code>RegisterUsage</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTagException": {
       "base": "<p>The tag is invalid, or the number of tags is greater than 5.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTokenException": {
       "base": "<p>Registration token is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidUsageAllocationsException": {
       "base": "<p>Sum of allocated usage quantities is not equal to the usage quantity.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidUsageDimensionException": {
       "base": "<p>The usage dimension does not match one of the <code>UsageDimensions</code> associated with products.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MeterUsageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MeterUsageResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "NonEmptyString": {
       "base": null,
@@ -139,8 +121,7 @@
     },
     "PlatformNotSupportedException": {
       "base": "<p>Amazon Web Services Marketplace does not support metering usage from the underlying platform. Currently, Amazon ECS, Amazon EKS, and Fargate are supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ProductCode": {
       "base": null,
@@ -153,23 +134,19 @@
     },
     "RegisterUsageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterUsageResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResolveCustomerRequest": {
       "base": "<p>Contains input to the <code>ResolveCustomer</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResolveCustomerResult": {
       "base": "<p>The result of the <code>ResolveCustomer</code> operation. Contains the <code>CustomerIdentifier</code> along with the <code>CustomerAWSAccountId</code> and <code>ProductCode</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -204,8 +181,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The calls to the API are throttled.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -217,8 +193,7 @@
     },
     "TimestampOutOfBoundsException": {
       "base": "<p>The <code>timestamp</code> value passed in the <code>UsageRecord</code> is out of allowed range.</p> <p>For <code>BatchMeterUsage</code>, if any of the records are outside of the allowed range, the entire batch is not processed. You must remove invalid records and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UsageAllocation": {
       "base": "<p>Usage allocations allow you to split usage into buckets by tags.</p> <p>Each <code>UsageAllocation</code> indicates the usage quantity for a specific set of tags.</p>",

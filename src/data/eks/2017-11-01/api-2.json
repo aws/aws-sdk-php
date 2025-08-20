@@ -1011,7 +1011,8 @@
         "owner":{"shape":"String"},
         "marketplaceInformation":{"shape":"MarketplaceInformation"},
         "configurationValues":{"shape":"String"},
-        "podIdentityAssociations":{"shape":"StringList"}
+        "podIdentityAssociations":{"shape":"StringList"},
+        "namespaceConfig":{"shape":"AddonNamespaceConfigResponse"}
       }
     },
     "AddonCompatibilityDetail":{
@@ -1039,7 +1040,8 @@
         "addonVersions":{"shape":"AddonVersionInfoList"},
         "publisher":{"shape":"String"},
         "owner":{"shape":"String"},
-        "marketplaceInformation":{"shape":"MarketplaceInformation"}
+        "marketplaceInformation":{"shape":"MarketplaceInformation"},
+        "defaultNamespace":{"shape":"String"}
       }
     },
     "AddonIssue":{
@@ -1068,6 +1070,18 @@
     "AddonIssueList":{
       "type":"list",
       "member":{"shape":"AddonIssue"}
+    },
+    "AddonNamespaceConfigRequest":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"namespace"}
+      }
+    },
+    "AddonNamespaceConfigResponse":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"namespace"}
+      }
     },
     "AddonPodIdentityAssociations":{
       "type":"structure",
@@ -1569,7 +1583,8 @@
         },
         "tags":{"shape":"TagMap"},
         "configurationValues":{"shape":"String"},
-        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"}
+        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"},
+        "namespaceConfig":{"shape":"AddonNamespaceConfigRequest"}
       }
     },
     "CreateAddonResponse":{
@@ -4196,6 +4211,11 @@
       "type":"map",
       "key":{"shape":"labelKey"},
       "value":{"shape":"labelValue"}
+    },
+    "namespace":{
+      "type":"string",
+      "max":63,
+      "min":1
     },
     "requiredClaimsKey":{
       "type":"string",

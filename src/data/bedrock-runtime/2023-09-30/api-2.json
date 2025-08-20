@@ -141,6 +141,40 @@
                 }
             ]
         },
+        "CountTokens": {
+            "name": "CountTokens",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/model\/{modelId}\/count-tokens",
+                "responseCode": 200
+            },
+            "input": {
+                "shape": "CountTokensRequest"
+            },
+            "output": {
+                "shape": "CountTokensResponse"
+            },
+            "errors": [
+                {
+                    "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ThrottlingException"
+                },
+                {
+                    "shape": "InternalServerException"
+                },
+                {
+                    "shape": "ServiceUnavailableException"
+                },
+                {
+                    "shape": "ValidationException"
+                }
+            ]
+        },
         "GetAsyncInvoke": {
             "name": "GetAsyncInvoke",
             "http": {
@@ -1087,6 +1121,17 @@
                 }
             }
         },
+        "ConverseTokensRequest": {
+            "type": "structure",
+            "members": {
+                "messages": {
+                    "shape": "Messages"
+                },
+                "system": {
+                    "shape": "SystemContentBlocks"
+                }
+            }
+        },
         "ConverseTrace": {
             "type": "structure",
             "members": {
@@ -1095,6 +1140,46 @@
                 },
                 "promptRouter": {
                     "shape": "PromptRouterTrace"
+                }
+            }
+        },
+        "CountTokensInput": {
+            "type": "structure",
+            "members": {
+                "invokeModel": {
+                    "shape": "InvokeModelTokensRequest"
+                },
+                "converse": {
+                    "shape": "ConverseTokensRequest"
+                }
+            },
+            "union": true
+        },
+        "CountTokensRequest": {
+            "type": "structure",
+            "required": [
+                "modelId",
+                "input"
+            ],
+            "members": {
+                "modelId": {
+                    "shape": "FoundationModelVersionIdentifier",
+                    "location": "uri",
+                    "locationName": "modelId"
+                },
+                "input": {
+                    "shape": "CountTokensInput"
+                }
+            }
+        },
+        "CountTokensResponse": {
+            "type": "structure",
+            "required": [
+                "inputTokens"
+            ],
+            "members": {
+                "inputTokens": {
+                    "shape": "Integer"
                 }
             }
         },
@@ -1269,6 +1354,12 @@
         "DocumentSourceBytesBlob": {
             "type": "blob",
             "min": 1
+        },
+        "FoundationModelVersionIdentifier": {
+            "type": "string",
+            "max": 256,
+            "min": 1,
+            "pattern": "[a-zA-Z_\\.\\-\/0-9:]+"
         },
         "GetAsyncInvokeRequest": {
             "type": "structure",
@@ -2533,6 +2624,10 @@
             "max": 1,
             "min": 0
         },
+        "Integer": {
+            "type": "integer",
+            "box": true
+        },
         "InternalServerException": {
             "type": "structure",
             "members": {
@@ -2627,6 +2722,17 @@
                 }
             },
             "payload": "body"
+        },
+        "InvokeModelTokensRequest": {
+            "type": "structure",
+            "required": [
+                "body"
+            ],
+            "members": {
+                "body": {
+                    "shape": "Body"
+                }
+            }
         },
         "InvokeModelWithBidirectionalStreamInput": {
             "type": "structure",

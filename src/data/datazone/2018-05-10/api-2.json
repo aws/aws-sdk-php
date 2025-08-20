@@ -5,11 +5,13 @@
     "endpointPrefix":"datazone",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon DataZone",
     "serviceId":"DataZone",
     "signatureVersion":"v4",
     "signingName":"datazone",
-    "uid":"datazone-2018-05-10"
+    "uid":"datazone-2018-05-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptPredictions":{
@@ -3385,8 +3387,7 @@
     },
     "AddEntityOwnerOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddPolicyGrantInput":{
       "type":"structure",
@@ -3426,6 +3427,7 @@
     "AddPolicyGrantOutput":{
       "type":"structure",
       "members":{
+        "grantId":{"shape":"GrantIdentifier"}
       }
     },
     "AddToProjectMemberPoolPolicyGrantDetail":{
@@ -3481,13 +3483,11 @@
     },
     "AllDomainUnitsGrantFilter":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AllUsersGrantFilter":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ApplicableAssetTypes":{
       "type":"list",
@@ -3750,8 +3750,7 @@
     },
     "AssociateEnvironmentRoleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AthenaPropertiesInput":{
       "type":"structure",
@@ -3973,8 +3972,7 @@
     },
     "CancelMetadataGenerationRunOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelSubscriptionInput":{
       "type":"structure",
@@ -5241,8 +5239,7 @@
     },
     "CreateProjectMembershipOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateProjectOutput":{
       "type":"structure",
@@ -5999,8 +5996,7 @@
     },
     "DeleteAccountPoolOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssetFilterInput":{
       "type":"structure",
@@ -6048,8 +6044,7 @@
     },
     "DeleteAssetOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAssetTypeInput":{
       "type":"structure",
@@ -6072,8 +6067,7 @@
     },
     "DeleteAssetTypeOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConnectionInput":{
       "type":"structure",
@@ -6121,8 +6115,7 @@
     },
     "DeleteDataProductOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDataSourceInput":{
       "type":"structure",
@@ -6239,8 +6232,7 @@
     },
     "DeleteDomainUnitOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEnvironmentActionInput":{
       "type":"structure",
@@ -6288,8 +6280,7 @@
     },
     "DeleteEnvironmentBlueprintConfigurationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEnvironmentInput":{
       "type":"structure",
@@ -6350,8 +6341,7 @@
     },
     "DeleteFormTypeOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGlossaryInput":{
       "type":"structure",
@@ -6374,8 +6364,7 @@
     },
     "DeleteGlossaryOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGlossaryTermInput":{
       "type":"structure",
@@ -6398,8 +6387,7 @@
     },
     "DeleteGlossaryTermOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteListingInput":{
       "type":"structure",
@@ -6422,8 +6410,7 @@
     },
     "DeleteListingOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProjectInput":{
       "type":"structure",
@@ -6472,13 +6459,11 @@
     },
     "DeleteProjectMembershipOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProjectOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProjectProfileInput":{
       "type":"structure",
@@ -6501,8 +6486,7 @@
     },
     "DeleteProjectProfileOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRuleInput":{
       "type":"structure",
@@ -6525,8 +6509,7 @@
     },
     "DeleteRuleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSubscriptionGrantInput":{
       "type":"structure",
@@ -6660,8 +6643,7 @@
     },
     "DeleteTimeSeriesDataPointsOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Deployment":{
       "type":"structure",
@@ -6772,8 +6754,7 @@
     },
     "DisassociateEnvironmentRoleOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DomainDescription":{
       "type":"string",
@@ -9398,6 +9379,10 @@
         "AWS_MANAGED",
         "USER_MANAGED"
       ]
+    },
+    "GrantIdentifier":{
+      "type":"string",
+      "pattern":"^[A-Za-z0-9+/]{10}$"
     },
     "GrantedEntity":{
       "type":"structure",
@@ -12044,6 +12029,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "createdBy":{"shape":"CreatedBy"},
         "detail":{"shape":"PolicyGrantDetail"},
+        "grantId":{"shape":"GrantIdentifier"},
         "principal":{"shape":"PolicyGrantPrincipal"}
       }
     },
@@ -12787,8 +12773,7 @@
     },
     "RemoveEntityOwnerOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemovePolicyGrantInput":{
       "type":"structure",
@@ -12819,14 +12804,14 @@
           "location":"uri",
           "locationName":"entityType"
         },
+        "grantIdentifier":{"shape":"GrantIdentifier"},
         "policyType":{"shape":"ManagedPolicyType"},
         "principal":{"shape":"PolicyGrantPrincipal"}
       }
     },
     "RemovePolicyGrantOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RequestReason":{
       "type":"string",
@@ -14168,8 +14153,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -14481,8 +14465,7 @@
     },
     "Unit":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -14505,8 +14488,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAccountPoolInput":{
       "type":"structure",

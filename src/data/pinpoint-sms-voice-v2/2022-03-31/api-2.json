@@ -2092,8 +2092,7 @@
     },
     "DeleteAccountDefaultProtectConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAccountDefaultProtectConfigurationResult":{
       "type":"structure",
@@ -2197,8 +2196,7 @@
     },
     "DeleteMediaMessageSpendLimitOverrideRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMediaMessageSpendLimitOverrideResult":{
       "type":"structure",
@@ -2417,8 +2415,7 @@
     },
     "DeleteTextMessageSpendLimitOverrideRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTextMessageSpendLimitOverrideResult":{
       "type":"structure",
@@ -2450,8 +2447,7 @@
     },
     "DeleteVoiceMessageSpendLimitOverrideRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVoiceMessageSpendLimitOverrideResult":{
       "type":"structure",
@@ -3586,6 +3582,7 @@
         "TwoWayChannelRole":{"shape":"IamRoleArn"},
         "SelfManagedOptOutsEnabled":{"shape":"PrimitiveBoolean"},
         "OptOutListName":{"shape":"OptOutListName"},
+        "InternationalSendingEnabled":{"shape":"PrimitiveBoolean"},
         "DeletionProtectionEnabled":{"shape":"PrimitiveBoolean"},
         "PoolId":{"shape":"String"},
         "RegistrationId":{"shape":"String"},
@@ -4525,6 +4522,7 @@
         "OptOutListName":{"shape":"OptOutListNameOrArn"},
         "PoolId":{"shape":"PoolIdOrArn"},
         "RegistrationId":{"shape":"RegistrationIdOrArn"},
+        "InternationalSendingEnabled":{"shape":"Boolean"},
         "DeletionProtectionEnabled":{"shape":"Boolean"},
         "Tags":{"shape":"TagList"},
         "ClientToken":{
@@ -4550,6 +4548,7 @@
         "TwoWayChannelRole":{"shape":"IamRoleArn"},
         "SelfManagedOptOutsEnabled":{"shape":"PrimitiveBoolean"},
         "OptOutListName":{"shape":"OptOutListName"},
+        "InternationalSendingEnabled":{"shape":"PrimitiveBoolean"},
         "DeletionProtectionEnabled":{"shape":"PrimitiveBoolean"},
         "PoolId":{"shape":"String"},
         "RegistrationId":{"shape":"String"},
@@ -4642,6 +4641,7 @@
         "registration-attachment",
         "verified-destination-number",
         "protect-configuration",
+        "message-template",
         "policy",
         "message"
       ]
@@ -5162,8 +5162,7 @@
     },
     "TagResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -5235,8 +5234,7 @@
     },
     "UntagResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEventDestinationRequest":{
       "type":"structure",
@@ -5272,6 +5270,7 @@
         "TwoWayChannelRole":{"shape":"IamRoleArn"},
         "SelfManagedOptOutsEnabled":{"shape":"Boolean"},
         "OptOutListName":{"shape":"OptOutListNameOrArn"},
+        "InternationalSendingEnabled":{"shape":"Boolean"},
         "DeletionProtectionEnabled":{"shape":"Boolean"}
       }
     },
@@ -5292,6 +5291,7 @@
         "TwoWayChannelRole":{"shape":"IamRoleArn"},
         "SelfManagedOptOutsEnabled":{"shape":"PrimitiveBoolean"},
         "OptOutListName":{"shape":"OptOutListName"},
+        "InternationalSendingEnabled":{"shape":"PrimitiveBoolean"},
         "DeletionProtectionEnabled":{"shape":"PrimitiveBoolean"},
         "RegistrationId":{"shape":"String"},
         "CreatedTimestamp":{"shape":"Timestamp"}
@@ -5448,6 +5448,7 @@
         "DESTINATION_COUNTRY_BLOCKED",
         "FIELD_VALIDATION_FAILED",
         "ATTACHMENT_TYPE_NOT_SUPPORTED",
+        "INTERNATIONAL_SENDING_NOT_SUPPORTED",
         "INVALID_ARN",
         "INVALID_FILTER_VALUES",
         "INVALID_IDENTITY_FOR_DESTINATION_COUNTRY",

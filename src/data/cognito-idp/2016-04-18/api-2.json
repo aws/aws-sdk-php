@@ -761,6 +761,25 @@
         {"shape":"InternalErrorException"}
       ]
     },
+    "CreateTerms":{
+      "name":"CreateTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateTermsRequest"},
+      "output":{"shape":"CreateTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TermsExistsException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
     "CreateUserImportJob":{
       "name":"CreateUserImportJob",
       "http":{
@@ -899,6 +918,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "DeleteTerms":{
+      "name":"DeleteTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTermsRequest"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -1091,6 +1126,22 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"UserPoolAddOnNotEnabledException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "DescribeTerms":{
+      "name":"DescribeTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTermsRequest"},
+      "output":{"shape":"DescribeTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -1574,6 +1625,22 @@
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "ListTerms":{
+      "name":"ListTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTermsRequest"},
+      "output":{"shape":"ListTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -2096,6 +2163,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"NotAuthorizedException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"InternalErrorException"}
+      ]
+    },
+    "UpdateTerms":{
+      "name":"UpdateTerms",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateTermsRequest"},
+      "output":{"shape":"UpdateTermsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"TermsExistsException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotAuthorizedException"},
         {"shape":"InternalErrorException"}
       ]
     },
@@ -3445,6 +3530,30 @@
         "ResourceServer":{"shape":"ResourceServerType"}
       }
     },
+    "CreateTermsRequest":{
+      "type":"structure",
+      "required":[
+        "UserPoolId",
+        "ClientId",
+        "TermsName",
+        "TermsSource",
+        "Enforcement"
+      ],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "TermsSource":{"shape":"TermsSourceType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "Links":{"shape":"LinksType"}
+      }
+    },
+    "CreateTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Terms":{"shape":"TermsType"}
+      }
+    },
     "CreateUserImportJobRequest":{
       "type":"structure",
       "required":[
@@ -3659,6 +3768,17 @@
         "Identifier":{"shape":"ResourceServerIdentifierType"}
       }
     },
+    "DeleteTermsRequest":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"}
+      }
+    },
     "DeleteUserAttributesRequest":{
       "type":"structure",
       "required":[
@@ -3832,6 +3952,23 @@
       "required":["RiskConfiguration"],
       "members":{
         "RiskConfiguration":{"shape":"RiskConfigurationType"}
+      }
+    },
+    "DescribeTermsRequest":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"}
+      }
+    },
+    "DescribeTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Terms":{"shape":"TermsType"}
       }
     },
     "DescribeUserImportJobRequest":{
@@ -4667,12 +4804,29 @@
         "KMSKeyID":{"shape":"ArnType"}
       }
     },
+    "LanguageIdType":{
+      "type":"string",
+      "pattern":"^cognito:(default|english|french|spanish|german|bahasa-indonesia|italian|japanese|korean|portuguese-brazil|chinese-(simplified|traditional))$"
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
         "message":{"shape":"MessageType"}
       },
       "exception":true
+    },
+    "LinkUrlType":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+$"
+    },
+    "LinksType":{
+      "type":"map",
+      "key":{"shape":"LanguageIdType"},
+      "value":{"shape":"LinkUrlType"},
+      "max":12,
+      "min":1
     },
     "ListDevicesRequest":{
       "type":"structure",
@@ -4765,6 +4919,28 @@
       "type":"structure",
       "members":{
         "Tags":{"shape":"UserPoolTagsType"}
+      }
+    },
+    "ListTermsRequest":{
+      "type":"structure",
+      "required":["UserPoolId"],
+      "members":{
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "MaxResults":{"shape":"ListTermsRequestMaxResultsInteger"},
+        "NextToken":{"shape":"StringType"}
+      }
+    },
+    "ListTermsRequestMaxResultsInteger":{
+      "type":"integer",
+      "max":60,
+      "min":1
+    },
+    "ListTermsResponse":{
+      "type":"structure",
+      "required":["Terms"],
+      "members":{
+        "Terms":{"shape":"TermsDescriptionListType"},
+        "NextToken":{"shape":"StringType"}
       }
     },
     "ListUserImportJobsRequest":{
@@ -5817,6 +5993,75 @@
       "max":365,
       "min":0
     },
+    "TermsDescriptionListType":{
+      "type":"list",
+      "member":{"shape":"TermsDescriptionType"}
+    },
+    "TermsDescriptionType":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "TermsName",
+        "Enforcement",
+        "CreationDate",
+        "LastModifiedDate"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "CreationDate":{"shape":"DateType"},
+        "LastModifiedDate":{"shape":"DateType"}
+      }
+    },
+    "TermsEnforcementType":{
+      "type":"string",
+      "enum":["NONE"]
+    },
+    "TermsExistsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"MessageType"}
+      },
+      "exception":true
+    },
+    "TermsIdType":{
+      "type":"string",
+      "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "TermsNameType":{
+      "type":"string",
+      "pattern":"^(terms-of-use|privacy-policy)$"
+    },
+    "TermsSourceType":{
+      "type":"string",
+      "enum":["LINK"]
+    },
+    "TermsType":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId",
+        "ClientId",
+        "TermsName",
+        "TermsSource",
+        "Enforcement",
+        "Links",
+        "CreationDate",
+        "LastModifiedDate"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "ClientId":{"shape":"ClientIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "TermsSource":{"shape":"TermsSourceType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "Links":{"shape":"LinksType"},
+        "CreationDate":{"shape":"DateType"},
+        "LastModifiedDate":{"shape":"DateType"}
+      }
+    },
     "TierChangeNotAllowedException":{
       "type":"structure",
       "members":{
@@ -6042,6 +6287,27 @@
       "required":["ResourceServer"],
       "members":{
         "ResourceServer":{"shape":"ResourceServerType"}
+      }
+    },
+    "UpdateTermsRequest":{
+      "type":"structure",
+      "required":[
+        "TermsId",
+        "UserPoolId"
+      ],
+      "members":{
+        "TermsId":{"shape":"TermsIdType"},
+        "UserPoolId":{"shape":"UserPoolIdType"},
+        "TermsName":{"shape":"TermsNameType"},
+        "TermsSource":{"shape":"TermsSourceType"},
+        "Enforcement":{"shape":"TermsEnforcementType"},
+        "Links":{"shape":"LinksType"}
+      }
+    },
+    "UpdateTermsResponse":{
+      "type":"structure",
+      "members":{
+        "Terms":{"shape":"TermsType"}
       }
     },
     "UpdateUserAttributesRequest":{

@@ -16,13 +16,12 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
       "refs": {
-        "BillingViewElement$ownerAccountId": "<p> The list of owners of the billing view. </p>",
+        "BillingViewElement$ownerAccountId": "<p>The account owner of the billing view. </p>",
         "BillingViewListElement$ownerAccountId": "<p> The list of owners of the Billing view. </p>",
         "ListBillingViewsRequest$ownerAccountId": "<p> The list of owners of the billing view. </p>"
       }
@@ -85,7 +84,7 @@
     "BillingViewName": {
       "base": null,
       "refs": {
-        "BillingViewElement$name": "<p> A list of names of the billing view. </p>",
+        "BillingViewElement$name": "<p> The account name of the billing view. </p>",
         "BillingViewListElement$name": "<p> A list of names of the Billing view. </p>",
         "CreateBillingViewRequest$name": "<p> The name of the billing view. </p>",
         "UpdateBillingViewRequest$name": "<p> The name of the billing view. </p>"
@@ -127,28 +126,23 @@
     },
     "ConflictException": {
       "base": "<p> The requested operation would cause a conflict with the current state of a service resource associated with the request. Resolve the conflict before retrying this request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBillingViewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBillingViewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBillingViewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBillingViewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Dimension": {
       "base": null,
@@ -176,11 +170,11 @@
       }
     },
     "Expression": {
-      "base": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
+      "base": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
       "refs": {
-        "BillingViewElement$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
-        "CreateBillingViewRequest$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
-        "UpdateBillingViewRequest$dataFilterExpression": "<p>See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>"
+        "BillingViewElement$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
+        "CreateBillingViewRequest$dataFilterExpression": "<p> See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>",
+        "UpdateBillingViewRequest$dataFilterExpression": "<p>See <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_billing_Expression.html\">Expression</a>. Billing view only supports <code>LINKED_ACCOUNT</code> and <code>Tags</code>. </p>"
       }
     },
     "FieldName": {
@@ -191,58 +185,47 @@
     },
     "GetBillingViewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBillingViewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InternalServerException": {
       "base": "<p>The request processing failed because of an unknown error, exception, or failure. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingViewsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBillingViewsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSourceViewsForBillingViewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSourceViewsForBillingViewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PageToken": {
       "base": null,
@@ -285,8 +268,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p> The specified ARN in the request doesn't exist. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceTag": {
       "base": "<p> The tag structure that contains a tag key and value. </p>",
@@ -337,8 +319,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p> You've reached the limit of resources you can create, or exceeded the size of an individual resource. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagKey": {
       "base": null,
@@ -348,13 +329,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValues": {
       "base": "<p> The values that are available for a tag. </p>",
@@ -364,8 +343,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -380,28 +358,23 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBillingViewRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBillingViewResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>The field's information of a request that resulted in an exception. </p>",
