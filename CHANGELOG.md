@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.1 - 2025-08-20
 
 * `Aws\S3` - Allows :// within object key in S3 Streamwrapper.
 * `Aws\PinpointSMSVoiceV2` - This change added InternationalSendingEnbaled as part of describe/Update/Request phone number API response, and as part of update/Request phone number API request
