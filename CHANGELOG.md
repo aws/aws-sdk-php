@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.2 - 2025-08-21
 
 * `Aws\AppStream` - Remove incorrect endpoint tests
 * `Aws\AccessAnalyzer` - Remove incorrect endpoint tests
