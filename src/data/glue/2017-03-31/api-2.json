@@ -7512,6 +7512,21 @@
         "CompositeRuleEvaluationMethod":{"shape":"DQCompositeRuleEvaluationMethod"}
       }
     },
+    "DataQualityGlueTable":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName"
+      ],
+      "members":{
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "CatalogId":{"shape":"NameString"},
+        "ConnectionName":{"shape":"NameString"},
+        "AdditionalOptions":{"shape":"GlueTableAdditionalOptions"},
+        "PreProcessingQuery":{"shape":"PreProcessingQueryString"}
+      }
+    },
     "DataQualityMetricValues":{
       "type":"structure",
       "members":{
@@ -7733,9 +7748,9 @@
     },
     "DataSource":{
       "type":"structure",
-      "required":["GlueTable"],
       "members":{
-        "GlueTable":{"shape":"GlueTable"}
+        "GlueTable":{"shape":"GlueTable"},
+        "DataQualityGlueTable":{"shape":"DataQualityGlueTable"}
       }
     },
     "DataSourceMap":{
@@ -13349,6 +13364,12 @@
         "Database":{"shape":"EnclosedInStringProperty"},
         "Table":{"shape":"EnclosedInStringProperty"}
       }
+    },
+    "PreProcessingQueryString":{
+      "type":"string",
+      "max":51200,
+      "min":0,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
     "Predecessor":{
       "type":"structure",

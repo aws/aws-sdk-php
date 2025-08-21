@@ -17,7 +17,7 @@
     "BatchGetTableOptimizer": "<p>Returns the configuration for the specified table optimizers.</p>",
     "BatchGetTriggers": "<p>Returns a list of resource metadata for a given list of trigger names. After calling the <code>ListTriggers</code> operation, you can call this operation to access the data to which you have been granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.</p>",
     "BatchGetWorkflows": "<p>Returns a list of resource metadata for a given list of workflow names. After calling the <code>ListWorkflows</code> operation, you can call this operation to access the data to which you have been granted permissions. This operation supports all IAM permissions, including permission conditions that uses tags.</p>",
-    "BatchPutDataQualityStatisticAnnotation": "<p>Annotate datapoints over time for a specific data quality statistic.</p>",
+    "BatchPutDataQualityStatisticAnnotation": "<p>Annotate datapoints over time for a specific data quality statistic. The API requires both profileID and statisticID as part of the InclusionAnnotation input. The API only works for a single statisticId across multiple profiles.</p>",
     "BatchStopJobRun": "<p>Stops one or more job runs for a specified job definition.</p>",
     "BatchUpdatePartition": "<p>Updates one or more partitions in a batch operation.</p>",
     "CancelDataQualityRuleRecommendationRun": "<p>Cancels the specified recommendation run that was being used to generate rules.</p>",
@@ -2791,6 +2791,12 @@
         "StartDataQualityRulesetEvaluationRunRequest$AdditionalRunOptions": "<p>Additional run options you can specify for an evaluation run.</p>"
       }
     },
+    "DataQualityGlueTable": {
+      "base": "<p>The database and table in the Glue Data Catalog that is used for input or output data for Data Quality Operations.</p>",
+      "refs": {
+        "DataSource$DataQualityGlueTable": "<p>An Glue table for Data Quality Operations.</p>"
+      }
+    },
     "DataQualityMetricValues": {
       "base": "<p>Describes the data quality metric value according to the analysis of historical data.</p>",
       "refs": {
@@ -5240,6 +5246,7 @@
     "GlueTableAdditionalOptions": {
       "base": null,
       "refs": {
+        "DataQualityGlueTable$AdditionalOptions": "<p>Additional options for the table. Currently there are two keys supported:</p> <ul> <li> <p> <code>pushDownPredicate</code>: to filter on partitions without having to list and read all the files in your dataset.</p> </li> <li> <p> <code>catalogPartitionPredicate</code>: to use server-side partition pruning using partition indexes in the Glue Data Catalog.</p> </li> </ul>",
         "GlueTable$AdditionalOptions": "<p>Additional options for the table. Currently there are two keys supported:</p> <ul> <li> <p> <code>pushDownPredicate</code>: to filter on partitions without having to list and read all the files in your dataset.</p> </li> <li> <p> <code>catalogPartitionPredicate</code>: to use server-side partition pruning using partition indexes in the Glue Data Catalog.</p> </li> </ul>"
       }
     },
@@ -5713,7 +5720,7 @@
     "InclusionAnnotationList": {
       "base": null,
       "refs": {
-        "BatchPutDataQualityStatisticAnnotationRequest$InclusionAnnotations": "<p>A list of <code>DatapointInclusionAnnotation</code>'s.</p>"
+        "BatchPutDataQualityStatisticAnnotationRequest$InclusionAnnotations": "<p>A list of <code>DatapointInclusionAnnotation</code>'s. The InclusionAnnotations must contain a profileId and statisticId. If there are multiple InclusionAnnotations, the list must refer to a single statisticId across multiple profileIds.</p>"
       }
     },
     "InclusionAnnotationValue": {
@@ -7018,6 +7025,10 @@
         "DataLakeAccessPropertiesOutput$StatusMessage": "<p>A message that gives more detailed information about the managed workgroup status.</p>",
         "DataLakeAccessPropertiesOutput$CatalogType": "<p>Specifies a federated catalog type for the native catalog resource. The currently supported type is <code>aws:redshift</code>.</p>",
         "DataQualityAnalyzerResult$Name": "<p>The name of the data quality analyzer.</p>",
+        "DataQualityGlueTable$DatabaseName": "<p>A database name in the Glue Data Catalog.</p>",
+        "DataQualityGlueTable$TableName": "<p>A table name in the Glue Data Catalog.</p>",
+        "DataQualityGlueTable$CatalogId": "<p>A unique identifier for the Glue Data Catalog.</p>",
+        "DataQualityGlueTable$ConnectionName": "<p>The name of the connection to the Glue Data Catalog.</p>",
         "DataQualityResult$RulesetName": "<p>The name of the ruleset associated with the data quality result.</p>",
         "DataQualityResult$JobName": "<p>The job name associated with the data quality result, if any.</p>",
         "DataQualityResultDescription$JobName": "<p>The job name associated with the data quality result.</p>",
@@ -8320,6 +8331,12 @@
       "base": "<p>Specifies a target that uses Postgres SQL.</p>",
       "refs": {
         "CodeGenConfigurationNode$PostgreSQLCatalogTarget": "<p>Specifies a target that uses Postgres SQL.</p>"
+      }
+    },
+    "PreProcessingQueryString": {
+      "base": "<p>SQL Query of SparkSQL format that can be used to pre-process data before running Data Quality Operations.</p>",
+      "refs": {
+        "DataQualityGlueTable$PreProcessingQuery": "<p>SQL Query of SparkSQL format that can be used to pre-process the data for the table in Glue Data Catalog, before running the Data Quality Operation.</p>"
       }
     },
     "Predecessor": {

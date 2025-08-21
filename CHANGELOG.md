@@ -1,5 +1,82 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Remove incorrect endpoint tests
+* `Aws\AccessAnalyzer` - Remove incorrect endpoint tests
+* `Aws\SSMContacts` - Doc-only updates for Incident Manager Contacts August 2025
+* `Aws\GameLiftStreams` - The default application in a stream group can now be changed at any time using UpdateStreamGroup to update the DefaultApplicationIdentifier.
+* `Aws\GreengrassV2` - Remove incorrect endpoint tests
+* `Aws\PinpointEmail` - Remove incorrect endpoint tests
+* `Aws\IoTDeviceAdvisor` - Remove incorrect endpoint tests
+* `Aws\ManagedBlockchain` - Remove incorrect endpoint tests
+* `Aws\ConfigService` - Remove incorrect endpoint tests
+* `Aws\BackupGateway` - Remove incorrect endpoint tests
+* `Aws\MediaPackageV2` - Remove incorrect endpoint tests
+* `Aws\CostOptimizationHub` - Remove incorrect endpoint tests
+* `Aws\Panorama` - Remove incorrect endpoint tests
+* `Aws\ECS` - This is a documentation only release that adds additional information for the update-service request parameters.
+* `Aws\DirectoryServiceData` - Remove incorrect endpoint tests
+* `Aws\Connect` - Remove incorrect endpoint tests
+* `Aws\ManagedGrafana` - Remove incorrect endpoint tests
+* `Aws\DatabaseMigrationService` - Remove incorrect endpoint tests
+* `Aws\ResourceGroups` - Remove incorrect endpoint tests
+* `Aws\ElasticLoadBalancingv2` - Remove incorrect endpoint tests
+* `Aws\ECRPublic` - Remove incorrect endpoint tests
+* `Aws\AuditManager` - Remove incorrect endpoint tests
+* `Aws\MediaTailor` - Remove incorrect endpoint tests
+* `Aws\MediaPackage` - Remove incorrect endpoint tests
+* `Aws\ConnectWisdomService` - Remove incorrect endpoint tests
+* `Aws\KinesisVideoWebRTCStorage` - Remove incorrect endpoint tests
+* `Aws\Route53Profiles` - Remove incorrect endpoint tests
+* `Aws\S3Outposts` - Remove incorrect endpoint tests
+* `Aws\CognitoIdentity` - Remove incorrect endpoint tests
+* `Aws\GuardDuty` - Remove Pattern trait from email field
+* `Aws\CloudHSM` - Remove incorrect endpoint tests
+* `Aws\IoTEvents` - Remove incorrect endpoint tests
+* `Aws\IVS` - Remove incorrect endpoint tests
+* `Aws\KinesisVideoSignalingChannels` - Remove incorrect endpoint tests
+* `Aws\Lightsail` - Remove incorrect endpoint tests
+* `Aws\Comprehend` - Remove incorrect endpoint tests
+* `Aws\MarketplaceAgreement` - Remove incorrect endpoint tests
+* `Aws\VerifiedPermissions` - Remove incorrect endpoint tests
+* `Aws\Backup` - Remove incorrect endpoint tests
+* `Aws\Inspector2` - Remove incorrect endpoint tests
+* `Aws\Route53Resolver` - Remove incorrect endpoint tests
+* `Aws\CloudTrail` - Remove incorrect endpoint tests
+* `Aws\MediaConnect` - Remove incorrect endpoint tests
+* `Aws\ForecastQueryService` - Remove incorrect endpoint tests
+* `Aws\Artifact` - Remove incorrect endpoint tests
+* `Aws\MediaConvert` - Remove incorrect endpoint tests
+* `Aws\SSMQuickSetup` - Remove incorrect endpoint tests
+* `Aws\ConnectCampaignsV2` - Remove incorrect endpoint tests
+* `Aws\MWAA` - Remove incorrect endpoint tests
+* `Aws\IoTThingsGraph` - Remove incorrect endpoint tests
+* `Aws\ObservabilityAdmin` - Remove incorrect endpoint tests
+* `Aws\ApiGatewayManagementApi` - Remove incorrect endpoint tests
+* `Aws\WorkSpacesWeb` - Remove incorrect endpoint tests
+* `Aws\Glue` - Added support for preprocessing queries in Data Quality operations through new DataQualityGlueTable structure.
+* `Aws\LookoutMetrics` - Remove incorrect endpoint tests
+* `Aws\CustomerProfiles` - Remove incorrect endpoint tests
+* `Aws\ElasticBeanstalk` - Remove incorrect endpoint tests
+* `Aws\EBS` - Remove incorrect endpoint tests
+* `Aws\ConnectCases` - Remove incorrect endpoint tests
+* `Aws\Deadline` - Remove incorrect endpoint tests
+* `Aws\AppIntegrationsService` - Remove incorrect endpoint tests
+* `Aws\LexRuntimeV2` - Remove incorrect endpoint tests
+* `Aws\BedrockAgentRuntime` - Remove incorrect endpoint tests
+* `Aws\DynamoDBStreams` - Remove incorrect endpoint tests
+* `Aws\CloudFront` - Remove incorrect endpoint tests
+* `Aws\AppFabric` - Remove incorrect endpoint tests
+* `Aws\ElasticsearchService` - Remove incorrect endpoint tests
+* `Aws\PrometheusService` - Remove incorrect endpoint tests
+* `Aws\SecurityLake` - Remove incorrect endpoint tests
+* `Aws\TimestreamInfluxDB` - Remove incorrect endpoint tests
+* `Aws\BillingConductor` - Remove incorrect endpoint tests
+* `Aws\DirectoryService` - Remove incorrect endpoint tests
+* `Aws\IoTEventsData` - Remove incorrect endpoint tests
+* `Aws\STS` - Remove incorrect endpoint tests
+
 ## 3.356.1 - 2025-08-20
 
 * `Aws\S3` - Allows :// within object key in S3 Streamwrapper.
