@@ -1915,6 +1915,97 @@ EOT;
         $this->assertSame(2, $called);
     }
 
+    public function testMemoizeRefreshesWhenExpiringWithinThreshold(): void
+    {
+        $called = 0;
+        // First credentials expire in 4 minutes (under 5 minute threshold)
+        $creds1 = new Credentials('foo', 'bar', null, time() + 240);
+        // Refreshed credentials expire in 1 hour
+        $creds2 = new Credentials('baz', 'qux', null, time() + 3600);
+
+        $f = function () use (&$called, $creds1, $creds2): Promise\PromiseInterface {
+            $called++;
+            return Promise\Create::promiseFor($called === 1 ? $creds1 : $creds2);
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        // First call should return creds1 but immediately refresh due to threshold
+        $result = $p()->wait();
+        $this->assertSame($creds2, $result);
+        $this->assertSame(2, $called); // Called twice: initial + refresh
+
+        // Second call should return cached creds2
+        $result = $p()->wait();
+        $this->assertSame($creds2, $result);
+        $this->assertSame(2, $called); // No additional calls
+    }
+
+    public function testMemoizeDoesNotRefreshWhenExpiringAfterThreshold(): void
+    {
+        $called = 0;
+        // Credentials expire in 6 minutes (over 5 minute threshold)
+        $creds = new Credentials('foo', 'bar', null, time() + 360);
+
+        $f = function () use (&$called, $creds): Promise\PromiseInterface {
+            $called++;
+            return Promise\Create::promiseFor($creds);
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        // Should return credentials without refreshing
+        $result = $p()->wait();
+        $this->assertSame($creds, $result);
+        $this->assertSame(1, $called);
+
+        // Second call should return cached credentials
+        $result = $p()->wait();
+        $this->assertSame($creds, $result);
+        $this->assertSame(1, $called);
+    }
+
+    public function testMemoizeRefreshesExpiredCredentials(): void
+    {
+        $called = 0;
+        // First credentials already expired
+        $creds1 = new Credentials('foo', 'bar', null, time() - 10);
+        // Refreshed credentials
+        $creds2 = new Credentials('baz', 'qux', null, time() + 3600);
+
+        $f = function () use (&$called, $creds1, $creds2): Promise\PromiseInterface {
+            $called++;
+            return Promise\Create::promiseFor($called === 1 ? $creds1 : $creds2);
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        // Should immediately refresh due to expiration
+        $result = $p()->wait();
+        $this->assertSame($creds2, $result);
+        $this->assertSame(2, $called);
+    }
+
+    public function testMemoizeRefreshesAtExactThreshold(): void
+    {
+        $called = 0;
+        // Credentials expire in exactly 4 minutes and 59 seconds
+        $creds1 = new Credentials('foo', 'bar', null, time() + 299);
+        $creds2 = new Credentials('baz', 'qux', null, time() + 3600);
+
+        $f = function () use (&$called, $creds1, $creds2): Promise\PromiseInterface {
+            $called++;
+            return Promise\Create::promiseFor($called === 1 ? $creds1 : $creds2);
+        };
+
+        $p = CredentialProvider::memoize($f);
+
+        // Should refresh at exact threshold
+        $result = $p()->wait();
+        $this->assertSame($creds2, $result);
+        $this->assertSame(2, $called);
+    }
+
     public function testCallsDefaultsCreds()
     {
         $k = getenv(CredentialProvider::ENV_KEY);

@@ -224,10 +224,14 @@ class CredentialProvider
                         return $creds;
                     }
 
-                    // Refresh expired credentials.
-                    if (!$creds->isExpired()) {
+                    // Check if credentials are expired or will expire within 5 minutes
+                    $expiresWithinThreshold = $creds->getExpiration() - time() < 300;
+
+                    // Refresh if expired or expiring soon
+                    if (!$expiresWithinThreshold && !$creds->isExpired()) {
                         return $creds;
                     }
+
                     // Refresh the result and forward the promise.
                     return $result = $provider($creds);
                 })
