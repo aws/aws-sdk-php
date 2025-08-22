@@ -212,7 +212,7 @@ class TokenProvider
                 ) {
                     $cache->set(
                         $cacheKey,
-                        $token,
+                        ['token' => $token],
                         null === $token->getExpiration() ?
                             0 : $token->getExpiration() - time()
                     );
@@ -269,4 +269,3 @@ class TokenProvider
         return new SsoTokenProvider($profileName, $filename, $ssoClient);
     }
 }
-
