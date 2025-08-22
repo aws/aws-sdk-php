@@ -1,15 +1,15 @@
 <?php
 namespace Aws\Test\Token;
 
-use Aws\Exception\TokenException;
 use Aws\LruArrayCache;
 use Aws\Result;
-use Aws\SSOOIDC\SSOOIDCClient;
 use Aws\Test\UsesServiceTrait;
 use Aws\Token\SsoToken;
 use Aws\Token\SsoTokenProvider;
 use Aws\Token\Token;
+use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
+use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 require_once __DIR__ . '/../Token/token_hack.php';
@@ -421,5 +421,36 @@ EOT;
 
         $this->assertSame($token->getToken(), $found->getToken());
         $this->assertEquals($token->getExpiration(), $found->getExpiration());
+    }
+
+    public function testCacheWritesAndReadsCorrectFormat()
+    {
+        $cache = new LruArrayCache;
+        $key = 'test_write_read';
+        $token = new Token('test-token', strtotime('+1 hour'));
+        $providerCallCount = 0;
+
+        $provider = function() use ($token, &$providerCallCount) {
+            $providerCallCount++;
+            return Promise\Create::promiseFor($token);
+        };
+
+        $cachedProvider = TokenProvider::cache($provider, $cache, $key);
+
+        // First call should invoke provider and write to cache
+        $result1 = $cachedProvider()->wait();
+        $this->assertEquals(1, $providerCallCount);
+        $this->assertEquals('test-token', $result1->getToken());
+
+        // Verify cache structure
+        $cachedValue = $cache->get($key);
+        $this->assertIsArray($cachedValue, 'Cache should store an array');
+        $this->assertArrayHasKey('token', $cachedValue, 'Cached array should have token key');
+        $this->assertInstanceOf(TokenInterface::class, $cachedValue['token']);
+
+        // Second call should use cache without invoking provider
+        $result2 = $cachedProvider()->wait();
+        $this->assertEquals(1, $providerCallCount, 'Provider should not be called again');
+        $this->assertEquals('test-token', $result2->getToken());
     }
 }
