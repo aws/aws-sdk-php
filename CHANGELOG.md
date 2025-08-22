@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.3 - 2025-08-22
 
 * `Aws\Token` - Fixes bug in `TokenProvider::cache()` where tokens are incorrectly written to the cache.
 * `Aws\RDS` - Updates Amazon RDS documentation for Db2 read-only replicas.
