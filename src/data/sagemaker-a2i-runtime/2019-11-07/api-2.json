@@ -4,11 +4,13 @@
     "apiVersion":"2019-11-07",
     "endpointPrefix":"a2i-runtime.sagemaker",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Augmented AI Runtime",
     "serviceId":"SageMaker A2I Runtime",
     "signatureVersion":"v4",
     "signingName":"sagemaker",
-    "uid":"sagemaker-a2i-runtime-2019-11-07"
+    "uid":"sagemaker-a2i-runtime-2019-11-07",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DeleteHumanLoop":{
@@ -122,8 +124,7 @@
     },
     "DeleteHumanLoopResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeHumanLoopRequest":{
       "type":"structure",
@@ -340,8 +341,7 @@
     },
     "StopHumanLoopResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "String":{"type":"string"},
     "ThrottlingException":{

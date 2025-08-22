@@ -1,5 +1,50 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Token` - Fixes bug in `TokenProvider::cache()` where tokens are incorrectly written to the cache.
+* `Aws\RDS` - Updates Amazon RDS documentation for Db2 read-only replicas.
+* `Aws\ServiceDiscovery` - Updating SDK examples after launch of shared AWS Cloud Map namespaces
+* `Aws\RolesAnywhere` - Remove incorrect endpoint tests
+* `Aws\SageMaker` - Launch SageMaker Notebook Instances support for AL2023 along with P6-B200 instance type and Rootless Docker support for SageMaker Studio.
+* `Aws\QConnect` - Releasing model ID support for UpdateAIPrompt
+* `Aws\ApiGatewayV2` - Remove incorrect endpoint tests
+* `Aws\APIGateway` - Remove incorrect endpoint tests
+* `Aws\CloudWatchRUM` - Remove incorrect endpoint tests
+* `Aws\Synthetics` - Added multi browser support for synthetics canaries, Increased ephemeral storage limit from 5GB to 10GB
+* `Aws\Firehose` - Remove incorrect endpoint tests
+* `Aws\MediaLive` - AWS Elemental MediaLive now has a field called "SubtitleRows" for controlling subtitle row count for DVB-Sub and Burn-In captions outputs
+* `Aws\SQS` - Remove incorrect endpoint tests
+* `Aws\HealthLake` - Remove incorrect endpoint tests
+* `Aws\AugmentedAIRuntime` - Remove incorrect endpoint tests
+* `Aws\PaymentCryptography` - Remove incorrect endpoint tests
+* `Aws\Pricing` - Remove incorrect endpoint tests
+* `Aws\IoTAnalytics` - Remove incorrect endpoint tests
+* `Aws\SageMakerMetrics` - Remove incorrect endpoint tests
+* `Aws\EMRServerless` - Remove incorrect endpoint tests
+* `Aws\LocationService` - Remove incorrect endpoint tests
+* `Aws\Proton` - Remove incorrect endpoint tests
+* `Aws\NetworkMonitor` - Remove incorrect endpoint tests
+* `Aws\ElasticLoadBalancing` - Remove incorrect endpoint tests
+* `Aws\B2bi` - Remove incorrect endpoint tests
+* `Aws\CodePipeline` - Remove incorrect endpoint tests
+* `Aws\RedshiftDataAPIService` - Remove incorrect endpoint tests
+* `Aws\Organizations` - Remove incorrect endpoint tests
+* `Aws\MemoryDB` - Remove incorrect endpoint tests
+* `Aws\QLDB` - Remove incorrect endpoint tests
+* `Aws\MarketplaceCommerceAnalytics` - Remove incorrect endpoint tests
+* `Aws\CognitoSync` - Remove incorrect endpoint tests
+* `Aws\CloudDirectory` - Remove incorrect endpoint tests
+* `Aws\DocDB` - Remove incorrect endpoint tests
+* `Aws\MigrationHubOrchestrator` - Remove incorrect endpoint tests
+* `Aws\SimSpaceWeaver` - Remove incorrect endpoint tests
+* `Aws\LaunchWizard` - Remove incorrect endpoint tests
+* `Aws\Route53RecoveryReadiness` - Remove incorrect endpoint tests
+* `Aws\Macie2` - Remove incorrect endpoint tests
+* `Aws\DataExchange` - Remove incorrect endpoint tests
+* `Aws\Account` - Remove incorrect endpoint tests
+* `Aws\WAFV2` - test and verified, safe to release
+
 ## 3.356.2 - 2025-08-21
 
 * `Aws\AppStream` - Remove incorrect endpoint tests

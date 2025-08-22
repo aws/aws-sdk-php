@@ -13077,7 +13077,8 @@
       "type":"structure",
       "members":{
         "EnableDockerAccess":{"shape":"FeatureStatus"},
-        "VpcOnlyTrustedAccounts":{"shape":"VpcOnlyTrustedAccounts"}
+        "VpcOnlyTrustedAccounts":{"shape":"VpcOnlyTrustedAccounts"},
+        "RootlessDocker":{"shape":"FeatureStatus"}
       }
     },
     "DocumentSchemaVersion":{
@@ -16499,6 +16500,7 @@
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
         "ml.p5.48xlarge",
+        "ml.p6-b200.48xlarge",
         "ml.m6i.large",
         "ml.m6i.xlarge",
         "ml.m6i.2xlarge",
@@ -22003,9 +22005,9 @@
     },
     "PlatformIdentifier":{
       "type":"string",
-      "max":15,
+      "max":20,
       "min":0,
-      "pattern":"(notebook-al1-v1|notebook-al2-v1|notebook-al2-v2|notebook-al2-v3)"
+      "pattern":"(notebook-al1-v1|notebook-al2-v1|notebook-al2-v2|notebook-al2-v3|notebook-al2023-v1)"
     },
     "PolicyString":{
       "type":"string",
