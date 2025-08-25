@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.4 - 2025-08-25
 
 * `Aws\OpsWorks` - Removes the OpsWorks service, which has reached end-of-life.
 * `Aws\WellArchitected` - Remove incorrect endpoint tests
