@@ -7,6 +7,7 @@
     "AddEntityOwner": "<p>Adds the owner of an entity (a domain unit).</p>",
     "AddPolicyGrant": "<p>Adds a policy grant (an authorization policy) to a specified entity, including domain units, environment blueprint configurations, or environment profiles.</p>",
     "AssociateEnvironmentRole": "<p>Associates the environment role in Amazon DataZone.</p>",
+    "AssociateGovernedTerms": "<p>Associates governed terms with an asset.</p>",
     "CancelMetadataGenerationRun": "<p>Cancels the metadata generation run.</p>",
     "CancelSubscription": "<p>Cancels the subscription to the specified asset.</p>",
     "CreateAccountPool": "<p>Creates an account pool. </p>",
@@ -62,6 +63,7 @@
     "DeleteSubscriptionTarget": "<p>Deletes a subscription target in Amazon DataZone.</p>",
     "DeleteTimeSeriesDataPoints": "<p>Deletes the specified time series form for the specified asset. </p>",
     "DisassociateEnvironmentRole": "<p>Disassociates the environment role in Amazon DataZone.</p>",
+    "DisassociateGovernedTerms": "<p>Disassociates restricted terms from an asset.</p>",
     "GetAccountPool": "<p>Gets the details of the account pool.</p>",
     "GetAsset": "<p>Gets an Amazon DataZone asset.</p>",
     "GetAssetFilter": "<p>Gets an asset filter.</p>",
@@ -508,6 +510,12 @@
         "AssetItem$additionalAttributes": "<p>The additional attributes of a Amazon DataZone inventory asset. </p>"
       }
     },
+    "AssetItemGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "AssetItem$governedGlossaryTerms": "<p>The restricted glossary terms accociated with an asset.</p>"
+      }
+    },
     "AssetListing": {
       "base": "<p>An asset published in an Amazon DataZone catalog.</p>",
       "refs": {
@@ -522,6 +530,12 @@
         "GetAssetOutput$listing": "<p>The listing of the asset.</p>"
       }
     },
+    "AssetListingGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "AssetListing$governedGlossaryTerms": "<p>The restricted glossary terms associated with an asset.</p>"
+      }
+    },
     "AssetListingItem": {
       "base": "<p>The details of an asset published in an Amazon DataZone catalog.</p>",
       "refs": {
@@ -532,6 +546,12 @@
       "base": "<p>Additional attributes of an inventory asset.</p>",
       "refs": {
         "AssetListingItem$additionalAttributes": "<p>The additional attributes of an asset published in an Amazon DataZone catalog.</p>"
+      }
+    },
+    "AssetListingItemGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "AssetListingItem$governedGlossaryTerms": "<p>The restricted glossary terms associated with an asset.</p>"
       }
     },
     "AssetName": {
@@ -614,6 +634,20 @@
       "refs": {}
     },
     "AssociateEnvironmentRoleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateGovernedTermsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateGovernedTermsInputGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "AssociateGovernedTermsInput$governedGlossaryTerms": "<p>The glossary terms in a restricted glossary.</p>"
+      }
+    },
+    "AssociateGovernedTermsOutput": {
       "base": null,
       "refs": {}
     },
@@ -1147,6 +1181,12 @@
       "base": null,
       "refs": {}
     },
+    "CreateAssetOutputGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "CreateAssetOutput$governedGlossaryTerms": "<p>The glossary terms in a restricted glossary.</p>"
+      }
+    },
     "CreateAssetRevisionInput": {
       "base": null,
       "refs": {}
@@ -1154,6 +1194,12 @@
     "CreateAssetRevisionOutput": {
       "base": null,
       "refs": {}
+    },
+    "CreateAssetRevisionOutputGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "CreateAssetRevisionOutput$governedGlossaryTerms": "<p>The glossary terms in a restricted glossary.</p>"
+      }
     },
     "CreateAssetTypeInput": {
       "base": null,
@@ -2284,6 +2330,8 @@
     "DetailedGlossaryTerm": {
       "base": "<p>Details of a glossary term attached to the inventory asset.</p>",
       "refs": {
+        "AssetListingGovernedGlossaryTermsList$member": null,
+        "AssetListingItemGovernedGlossaryTermsList$member": null,
         "DetailedGlossaryTerms$member": null
       }
     },
@@ -2305,6 +2353,20 @@
       "refs": {}
     },
     "DisassociateEnvironmentRoleOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateGovernedTermsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateGovernedTermsInputGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "DisassociateGovernedTermsInput$governedGlossaryTerms": "<p>The restricted glossary terms that you want to disassociate from an asset.</p>"
+      }
+    },
+    "DisassociateGovernedTermsOutput": {
       "base": null,
       "refs": {}
     },
@@ -2330,6 +2392,7 @@
         "AssetTypeItem$domainId": "<p>The identifier of the Amazon DataZone domain where the asset type exists.</p>",
         "AssetTypeItem$originDomainId": "<p>The identifier of the Amazon DataZone domain where the asset type was originally created.</p>",
         "AssociateEnvironmentRoleInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the environment role is associated.</p>",
+        "AssociateGovernedTermsInput$domainIdentifier": "<p>The ID of the domain where governed terms are to be associated with an asset.</p>",
         "CancelMetadataGenerationRunInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the metadata generation run is to be cancelled.</p>",
         "CancelSubscriptionInput$domainIdentifier": "<p>The unique identifier of the Amazon DataZone domain where the subscription request is being cancelled.</p>",
         "CancelSubscriptionOutput$domainId": "<p>The unique identifier of the Amazon DataZone domain where the subscription is being cancelled.</p>",
@@ -2417,6 +2480,7 @@
         "DeleteSubscriptionTargetInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the subscription target is deleted.</p>",
         "DeleteTimeSeriesDataPointsInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain that houses the asset for which you want to delete a time series form.</p>",
         "DisassociateEnvironmentRoleInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which an environment role is disassociated.</p>",
+        "DisassociateGovernedTermsInput$domainIdentifier": "<p>The ID of the domain where you want to disassociate restricted terms from an asset.</p>",
         "DomainSummary$id": "<p>The ID of the Amazon DataZone domain.</p>",
         "EnvironmentActionSummary$domainId": "<p>The Amazon DataZone domain ID of the environment action.</p>",
         "EnvironmentBlueprintConfigurationItem$domainId": "<p>The identifier of the Amazon DataZone domain in which an environment blueprint exists.</p>",
@@ -2821,9 +2885,11 @@
     "EntityIdentifier": {
       "base": null,
       "refs": {
+        "AssociateGovernedTermsInput$entityIdentifier": "<p>The ID of the asset with which you want to associate a governed term.</p>",
         "CreateListingChangeSetInput$entityIdentifier": "<p>The ID of the asset.</p>",
         "DataProductItem$identifier": "<p>The ID of the data product.</p>",
         "DeleteTimeSeriesDataPointsInput$entityIdentifier": "<p>The ID of the asset for which you want to delete a time series form.</p>",
+        "DisassociateGovernedTermsInput$entityIdentifier": "<p>The ID of an asset from which you want to disassociate restricted terms.</p>",
         "GetTimeSeriesDataPointInput$entityIdentifier": "<p>The ID of the asset for which you want to get the data point.</p>",
         "ListTimeSeriesDataPointsInput$entityIdentifier": "<p>The ID of the asset for which you want to list data points.</p>",
         "PostTimeSeriesDataPointsInput$entityIdentifier": "<p>The ID of the asset for which you want to post time series data points.</p>"
@@ -3490,6 +3556,12 @@
       "base": null,
       "refs": {}
     },
+    "GetAssetOutputGovernedGlossaryTermsList": {
+      "base": null,
+      "refs": {
+        "GetAssetOutput$governedGlossaryTerms": "<p>The restricted glossary terms attached to an asset.</p>"
+      }
+    },
     "GetAssetTypeInput": {
       "base": null,
       "refs": {}
@@ -3822,9 +3894,15 @@
     "GlossaryTermId": {
       "base": null,
       "refs": {
+        "AssetItemGovernedGlossaryTermsList$member": null,
+        "AssociateGovernedTermsInputGovernedGlossaryTermsList$member": null,
+        "CreateAssetOutputGovernedGlossaryTermsList$member": null,
+        "CreateAssetRevisionOutputGovernedGlossaryTermsList$member": null,
         "CreateGlossaryTermInput$glossaryIdentifier": "<p>The ID of the business glossary in which this term is created.</p>",
         "CreateGlossaryTermOutput$id": "<p>The ID of this business glossary term.</p>",
         "DeleteGlossaryTermInput$identifier": "<p>The ID of the business glossary term that is deleted.</p>",
+        "DisassociateGovernedTermsInputGovernedGlossaryTermsList$member": null,
+        "GetAssetOutputGovernedGlossaryTermsList$member": null,
         "GetGlossaryTermInput$identifier": "<p>The ID of the business glossary term.</p>",
         "GetGlossaryTermOutput$id": "<p>The ID of the business glossary term.</p>",
         "GlossaryTermItem$id": "<p>The identifier of the business glossary term.</p>",
@@ -3898,6 +3976,26 @@
         "UpdateEnvironmentOutput$glossaryTerms": "<p>The glossary terms to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateProjectInput$glossaryTerms": "<p>The glossary terms to be updated as part of the <code>UpdateProject</code> action.</p>",
         "UpdateProjectOutput$glossaryTerms": "<p>The glossary terms of the project that are to be updated.</p>"
+      }
+    },
+    "GlossaryUsageRestriction": {
+      "base": null,
+      "refs": {
+        "GlossaryUsageRestrictions$member": null
+      }
+    },
+    "GlossaryUsageRestrictions": {
+      "base": null,
+      "refs": {
+        "CreateGlossaryInput$usageRestrictions": "<p>The usage restriction of the restricted glossary.</p>",
+        "CreateGlossaryOutput$usageRestrictions": "<p>The usage restriction of the restricted glossary.</p>",
+        "CreateGlossaryTermOutput$usageRestrictions": "<p>The usage restriction of the restricted glossary.</p>",
+        "GetGlossaryOutput$usageRestrictions": "<p>The usage restriction of the restricted glossary.</p>",
+        "GetGlossaryTermOutput$usageRestrictions": "<p>The usage restriction of a term within a restricted glossary.</p>",
+        "GlossaryItem$usageRestrictions": "<p>The usage restrictions associated with a goverened glossary term.</p>",
+        "GlossaryTermItem$usageRestrictions": "<p>The usage restrictions associated with a goverened glossary term.</p>",
+        "UpdateGlossaryOutput$usageRestrictions": "<p>The usage restriction of the restricted glossary.</p>",
+        "UpdateGlossaryTermOutput$usageRestrictions": "<p>The usage restriction of a term within a restricted glossary.</p>"
       }
     },
     "GlueConnection": {
@@ -4060,6 +4158,13 @@
       "base": null,
       "refs": {
         "SparkEmrPropertiesOutput$governanceType": "<p>The governance type of the Spark EMR.</p>"
+      }
+    },
+    "GovernedEntityType": {
+      "base": null,
+      "refs": {
+        "AssociateGovernedTermsInput$entityType": "<p>The type of the asset with which you want to associate a governed term.</p>",
+        "DisassociateGovernedTermsInput$entityType": "<p>The type of the asset from which you want to disassociate restricted terms.</p>"
       }
     },
     "GrantIdentifier": {

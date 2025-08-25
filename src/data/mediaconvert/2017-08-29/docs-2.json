@@ -8,6 +8,7 @@
     "CreateJobTemplate": "Create a new job template. For information about job templates see the User Guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
     "CreatePreset": "Create a new preset. For information about job templates see the User Guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
     "CreateQueue": "Create a new transcoding queue. For information about queues, see Working With Queues in the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-queues.html",
+    "CreateResourceShare": "Create a new resource share request for MediaConvert resources with AWS Support.",
     "DeleteJobTemplate": "Permanently delete a job template you have created.",
     "DeletePolicy": "Permanently delete a policy that you created.",
     "DeletePreset": "Permanently delete a preset you have created.",
@@ -42,9 +43,9 @@
       }
     },
     "AacCodecProfile": {
-      "base": "Specify the AAC profile. For the widest player compatibility and where higher bitrates are acceptable: Keep the default profile, LC (AAC-LC) For improved audio performance at lower bitrates: Choose HEV1 or HEV2. HEV1 (AAC-HE v1) adds spectral band replication to improve speech audio at low bitrates. HEV2 (AAC-HE v2) adds parametric stereo, which optimizes for encoding stereo audio at very low bitrates.",
+      "base": "Specify the AAC profile. For the widest player compatibility and where higher bitrates are acceptable: Keep the default profile, LC (AAC-LC) For improved audio performance at lower bitrates: Choose HEV1 or HEV2. HEV1 (AAC-HE v1) adds spectral band replication to improve speech audio at low bitrates. HEV2 (AAC-HE v2) adds parametric stereo, which optimizes for encoding stereo audio at very low bitrates. For improved audio quality at lower bitrates, adaptive audio bitrate switching, and loudness control: Choose XHE.",
       "refs": {
-        "AacSettings$CodecProfile": "Specify the AAC profile. For the widest player compatibility and where higher bitrates are acceptable: Keep the default profile, LC (AAC-LC) For improved audio performance at lower bitrates: Choose HEV1 or HEV2. HEV1 (AAC-HE v1) adds spectral band replication to improve speech audio at low bitrates. HEV2 (AAC-HE v2) adds parametric stereo, which optimizes for encoding stereo audio at very low bitrates."
+        "AacSettings$CodecProfile": "Specify the AAC profile. For the widest player compatibility and where higher bitrates are acceptable: Keep the default profile, LC (AAC-LC) For improved audio performance at lower bitrates: Choose HEV1 or HEV2. HEV1 (AAC-HE v1) adds spectral band replication to improve speech audio at low bitrates. HEV2 (AAC-HE v2) adds parametric stereo, which optimizes for encoding stereo audio at very low bitrates. For improved audio quality at lower bitrates, adaptive audio bitrate switching, and loudness control: Choose XHE."
       }
     },
     "AacCodingMode": {
@@ -1013,6 +1014,16 @@
     },
     "CreateQueueResponse": {
       "base": "Successful create queue requests return the name of the queue that you just created and information about it.",
+      "refs": {
+      }
+    },
+    "CreateResourceShareRequest": {
+      "base": "The request to share MediaConvert resources with Support.",
+      "refs": {
+      }
+    },
+    "CreateResourceShareResponse": {
+      "base": "Successfully accepted the request to share MediaConvert resources.",
       "refs": {
       }
     },
@@ -2216,9 +2227,9 @@
       }
     },
     "HlsIFrameOnlyManifest": {
-      "base": "Choose Include to have MediaConvert generate a child manifest that lists only the I-frames for this rendition, in addition to your regular manifest for this rendition. You might use this manifest as part of a workflow that creates preview functions for your video. MediaConvert adds both the I-frame only child manifest and the regular child manifest to the parent manifest. When you don't need the I-frame only child manifest, keep the default value Exclude.",
+      "base": "Generate a variant manifest that lists only the I-frames for this rendition. You might use this manifest as part of a workflow that creates preview functions for your video. MediaConvert adds both the I-frame only variant manifest and the regular variant manifest to the multivariant manifest. To have MediaConvert write a variant manifest that references I-frames from your output content using EXT-X-BYTERANGE tags: Choose Include. To have MediaConvert output I-frames as single frame TS files and a corresponding variant manifest that references them: Choose Include as TS. When you don't need the I-frame only variant manifest: Keep the default value, Exclude.",
       "refs": {
-        "HlsSettings$IFrameOnlyManifest": "Choose Include to have MediaConvert generate a child manifest that lists only the I-frames for this rendition, in addition to your regular manifest for this rendition. You might use this manifest as part of a workflow that creates preview functions for your video. MediaConvert adds both the I-frame only child manifest and the regular child manifest to the parent manifest. When you don't need the I-frame only child manifest, keep the default value Exclude."
+        "HlsSettings$IFrameOnlyManifest": "Generate a variant manifest that lists only the I-frames for this rendition. You might use this manifest as part of a workflow that creates preview functions for your video. MediaConvert adds both the I-frame only variant manifest and the regular variant manifest to the multivariant manifest. To have MediaConvert write a variant manifest that references I-frames from your output content using EXT-X-BYTERANGE tags: Choose Include. To have MediaConvert output I-frames as single frame TS files and a corresponding variant manifest that references them: Choose Include as TS. When you don't need the I-frame only variant manifest: Keep the default value, Exclude."
       }
     },
     "HlsImageBasedTrickPlay": {
@@ -2855,6 +2866,12 @@
       "base": "These settings relate to your QuickTime MOV output container.",
       "refs": {
         "ContainerSettings$MovSettings": "These settings relate to your QuickTime MOV output container."
+      }
+    },
+    "Mp2AudioDescriptionMix": {
+      "base": "Choose BROADCASTER_MIXED_AD when the input contains pre-mixed main audio + audio description (AD) as a stereo pair. The value for AudioType will be set to 3, which signals to downstream systems that this stream contains \"broadcaster mixed AD\". Note that the input received by the encoder must contain pre-mixed audio; the encoder does not perform the mixing. When you choose BROADCASTER_MIXED_AD, the encoder ignores any values you provide in AudioType and FollowInputAudioType. Choose NONE when the input does not contain pre-mixed audio + audio description (AD). In this case, the encoder will use any values you provide for AudioType and FollowInputAudioType.",
+      "refs": {
+        "Mp2Settings$AudioDescriptionMix": "Choose BROADCASTER_MIXED_AD when the input contains pre-mixed main audio + audio description (AD) as a stereo pair. The value for AudioType will be set to 3, which signals to downstream systems that this stream contains \"broadcaster mixed AD\". Note that the input received by the encoder must contain pre-mixed audio; the encoder does not perform the mixing. When you choose BROADCASTER_MIXED_AD, the encoder ignores any values you provide in AudioType and FollowInputAudioType. Choose NONE when the input does not contain pre-mixed audio + audio description (AD). In this case, the encoder will use any values you provide for AudioType and FollowInputAudioType."
       }
     },
     "Mp2Settings": {
@@ -3639,6 +3656,12 @@
         "__listOfServiceOverride$member": null
       }
     },
+    "ShareStatus": {
+      "base": null,
+      "refs": {
+        "Job$ShareStatus": "A job's share status can be NOT_SHARED, INITIATED, or SHARED"
+      }
+    },
     "SimulateReservedQueue": {
       "base": "Enable this setting when you run a test job to estimate how many reserved transcoding slots (RTS) you need. When this is enabled, MediaConvert runs your job from an on-demand queue with similar performance to what you will see with one RTS in a reserved queue. This setting is disabled by default.",
       "refs": {
@@ -4069,6 +4092,12 @@
       "refs": {
         "Input$VideoSelector": "Input video selectors contain the video settings for the input. Each of your inputs can have up to one video selector.",
         "InputTemplate$VideoSelector": "Input video selectors contain the video settings for the input. Each of your inputs can have up to one video selector."
+      }
+    },
+    "VideoSelectorType": {
+      "base": "Choose the video selector type for your HLS input. Use to specify which video rendition MediaConvert uses from your HLS input. To have MediaConvert automatically use the highest bitrate rendition from your HLS input: Keep the default value, Auto. To manually specify a rendition: Choose Stream. Then enter the unique stream number in the Streams array, starting at 1, corresponding to the stream order in the manifest.",
+      "refs": {
+        "VideoSelector$SelectorType": "Choose the video selector type for your HLS input. Use to specify which video rendition MediaConvert uses from your HLS input. To have MediaConvert automatically use the highest bitrate rendition from your HLS input: Keep the default value, Auto. To manually specify a rendition: Choose Stream. Then enter the unique stream number in the Streams array, starting at 1, corresponding to the stream order in the manifest."
       }
     },
     "VideoTimecodeInsertion": {
@@ -5647,7 +5676,8 @@
       "base": null,
       "refs": {
         "AudioSelector$Pids": "Selects a specific PID from within an audio source (e.g. 257 selects PID 0x101).",
-        "AudioSelector$Tracks": "Identify a track from the input audio to include in this selector by entering the track index number. To include several tracks in a single audio selector, specify multiple tracks as follows. Using the console, enter a comma-separated list. For example, type \"1,2,3\" to include tracks 1 through 3."
+        "AudioSelector$Tracks": "Identify a track from the input audio to include in this selector by entering the track index number. To include several tracks in a single audio selector, specify multiple tracks as follows. Using the console, enter a comma-separated list. For example, type \"1,2,3\" to include tracks 1 through 3.",
+        "VideoSelector$Streams": "Specify a stream for MediaConvert to use from your HLS input. Enter an integer corresponding to the stream order in your HLS manifest."
       }
     },
     "__listOf__integerMin32Max8182": {
@@ -5776,6 +5806,8 @@
         "CreatePresetRequest$Name": "The name of the preset you are creating.",
         "CreateQueueRequest$Description": "Optional. A description of the queue that you are creating.",
         "CreateQueueRequest$Name": "The name of the queue that you are creating.",
+        "CreateResourceShareRequest$JobId": "Specify MediaConvert Job ID or ARN to share",
+        "CreateResourceShareRequest$SupportCaseId": "AWS Support case identifier",
         "DashIsoGroupSettings$BaseUrl": "A partial URI prefix that will be put in the manifest (.mpd) file at the top level BaseURL element. Can be used if streams are delivered from a different URL than the manifest file.",
         "DataProperties$LanguageCode": "The language code of the data track, in three character ISO 639-3 format.",
         "DeleteJobTemplateRequest$Name": "The name of the job template to be deleted.",
@@ -5798,7 +5830,7 @@
         "HlsSettings$AudioRenditionSets": "List all the audio groups that are used with the video output stream. Input all the audio GROUP-IDs that are associated to the video, separate by ','.",
         "HlsSettings$SegmentModifier": "Use this setting to add an identifying string to the filename of each segment. The service adds this string between the name modifier and segment index number. You can use format identifiers in the string. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/using-variables-in-your-job-settings.html",
         "HopDestination$Queue": "Optional unless the job is submitted on the default queue. When you set up a job to use queue hopping, you can specify a destination queue. This queue cannot be the original queue to which the job is submitted. If the original queue isn't the default queue and you don't specify the destination queue, the job will move to the default queue.",
-        "InputTamsSettings$SourceId": "Specify the unique identifier for the media source in your TAMS server. MediaConvert uses this source ID to locate the appropriate flows containing the media segments you want to process. The source ID corresponds to a specific media source registered in your TAMS server. This source must be of type urn:x-nmos:format:multi, and can can reference multiple flows for audio, video, or combined audio/video content. MediaConvert automatically selects the highest quality flows available for your job. This setting is required when include TAMS settings in your job.",
+        "InputTamsSettings$SourceId": "Specify the unique identifier for the media source in your TAMS server. MediaConvert uses this source ID to locate the appropriate flows containing the media segments you want to process. The source ID corresponds to a specific media source registered in your TAMS server. This source must be of type urn:x-nmos:format:multi, and can can reference multiple flows for audio, video, or combined audio/video content. MediaConvert automatically selects the highest quality flows available for your job. This setting is required when you include TAMS settings in your job.",
         "Job$Arn": "An identifier for this resource that is unique within all of AWS.",
         "Job$ClientRequestToken": "Prevent duplicate jobs from being created and ensure idempotency for your requests. A client request token can be any string that includes up to 64 ASCII characters. If you reuse a client request token within one minute of a successful request, the API returns the job details of the original request instead. For more information see https://docs.aws.amazon.com/mediaconvert/latest/apireference/idempotency.html.",
         "Job$ErrorMessage": "Error message of Job",
@@ -5806,6 +5838,7 @@
         "Job$JobEngineVersionRequested": "The Job engine version that you requested for your job. Valid versions are in a YYYY-MM-DD format.",
         "Job$JobEngineVersionUsed": "The Job engine version that your job used. Job engine versions are in a YYYY-MM-DD format. When you request an expired version, the response for this property will be empty. Requests to create jobs with an expired version result in a regular job, as if no specific Job engine version was requested. When you request an invalid version, the response for this property will be empty. Requests to create jobs with an invalid version result in a 400 error message, and no job is created.",
         "Job$JobTemplate": "The job template that the job is created from, if it is created from a job template.",
+        "Job$LastShareDetails": "Contains information about the most recent share attempt for the job. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/creating-resource-share.html",
         "Job$Queue": "When you create a job, you can specify a queue to send it to. If you don't specify, the job will go to the default queue. For more about queues, see the User Guide topic at https://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
         "Job$Role": "The IAM role you use for creating this job. For details about permissions, see the User Guide topic at the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/iam-role.html",
         "JobEngineVersion$Version": "Use Job engine versions to run jobs for your production workflow on one version, while you test and validate the latest version. Job engine versions are in a YYYY-MM-DD format.",
@@ -6102,7 +6135,7 @@
     "__stringPattern019090190908019090190908": {
       "base": null,
       "refs": {
-        "InputTamsSettings$Timerange": "Specify the time range of media segments to retrieve from your TAMS server. MediaConvert fetches only the segments that fall within this range. Use the format specified by your TAMS server implementation. This must be two timestamp values with the format {sign?}{seconds}:{nanoseconds}, separated by an underscore, surrounded by either parentheses or square brackets.  Example: [15:0_35:0) This setting is required when include TAMS settings in your job."
+        "InputTamsSettings$Timerange": "Specify the time range of media segments to retrieve from your TAMS server. MediaConvert fetches only the segments that fall within this range. Use the format specified by your TAMS server implementation. This must be two timestamp values with the format {sign?}{seconds}:{nanoseconds}, separated by an underscore, surrounded by either parentheses or square brackets.  Example: [15:0_35:0) This setting is required when you include TAMS settings in your job."
       }
     },
     "__stringPattern01D20305D205D": {
@@ -6158,7 +6191,7 @@
     "__stringPatternArnAwsAZ09EventsAZ090912ConnectionAZAZ09AF0936": {
       "base": null,
       "refs": {
-        "InputTamsSettings$AuthConnectionArn": "Specify the ARN (Amazon Resource Name) of an EventBridge Connection to authenticate with your TAMS server. The EventBridge Connection stores your authentication credentials securely. MediaConvert assumes your job's IAM role to access this connection, so ensure the role has the events:RetrieveConnectionCredentials, secretsmanager:DescribeSecret, and secretsmanager:GetSecretValue permissions. Format: arn:aws:events:region:account-id:connection/connection-name/unique-id"
+        "InputTamsSettings$AuthConnectionArn": "Specify the ARN (Amazon Resource Name) of an EventBridge Connection to authenticate with your TAMS server. The EventBridge Connection stores your authentication credentials securely. MediaConvert assumes your job's IAM role to access this connection, so ensure the role has the events:RetrieveConnectionCredentials, secretsmanager:DescribeSecret, and secretsmanager:GetSecretValue permissions. Format: arn:aws:events:region:account-id:connection/connection-name/unique-id This setting is required when you include TAMS settings in your job."
       }
     },
     "__stringPatternArnAwsUsGovAcm": {

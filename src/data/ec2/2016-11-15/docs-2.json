@@ -10326,6 +10326,13 @@
         "ModifyCapacityReservationRequest$EndDateType": "<p>Indicates the way in which the Capacity Reservation ends. A Capacity Reservation can have one of the following end types:</p> <ul> <li> <p> <code>unlimited</code> - The Capacity Reservation remains active until you explicitly cancel it. Do not provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>unlimited</code>.</p> </li> <li> <p> <code>limited</code> - The Capacity Reservation expires automatically at a specified date and time. You must provide an <code>EndDate</code> value if <code>EndDateType</code> is <code>limited</code>.</p> </li> </ul>"
       }
     },
+    "EndpointIpAddressType": {
+      "base": null,
+      "refs": {
+        "ClientVpnEndpoint$EndpointIpAddressType": "<p>The IP address type of the Client VPN endpoint. Possible values are <code>ipv4</code> for IPv4 addressing only, <code>ipv6</code> for IPv6 addressing only, or <code>dual-stack </code>for both IPv4 and IPv6 addressing.</p>",
+        "CreateClientVpnEndpointRequest$EndpointIpAddressType": "<p>The IP address type for the Client VPN endpoint. Valid values are <code>ipv4</code> (default) for IPv4 addressing only, <code>ipv6</code> for IPv6 addressing only, or <code>dual-stack</code> for both IPv4 and IPv6 addressing. When set to <code>dual-stack,</code> clients can connect to the endpoint using either IPv4 or IPv6 addresses..</p>"
+      }
+    },
     "EndpointSet": {
       "base": null,
       "refs": {
@@ -22081,6 +22088,7 @@
         "ClientVpnConnection$IngressPackets": "<p>The number of packets sent by the client.</p>",
         "ClientVpnConnection$EgressPackets": "<p>The number of packets received by the client.</p>",
         "ClientVpnConnection$ClientIp": "<p>The IP address of the client.</p>",
+        "ClientVpnConnection$ClientIpv6Address": "<p>The IPv6 address assigned to the client connection when using a dual-stack Client VPN endpoint. This field is only populated when the endpoint is configured for dual-stack addressing, and the client is using IPv6 for connectivity.</p>",
         "ClientVpnConnection$CommonName": "<p>The common name associated with the client. This is either the name of the client certificate, or the Active Directory user name.</p>",
         "ClientVpnConnection$ConnectionEndTime": "<p>The date and time the client connection was terminated.</p>",
         "ClientVpnConnectionStatus$Message": "<p>A message about the status of the client connection, if applicable.</p>",
@@ -24959,6 +24967,13 @@
         "CreateTrafficMirrorFilterRuleRequest$TrafficDirection": "<p>The type of traffic.</p>",
         "ModifyTrafficMirrorFilterRuleRequest$TrafficDirection": "<p>The type of traffic to assign to the rule.</p>",
         "TrafficMirrorFilterRule$TrafficDirection": "<p>The traffic direction assigned to the Traffic Mirror rule.</p>"
+      }
+    },
+    "TrafficIpAddressType": {
+      "base": null,
+      "refs": {
+        "ClientVpnEndpoint$TrafficIpAddressType": "<p>The IP address type of the Client VPN endpoint. Possible values are either <code>ipv4</code> for IPv4 addressing only, <code>ipv6</code> for IPv6 addressing only, or <code>dual-stack</code> for both IPv4 and IPv6 addressing.</p>",
+        "CreateClientVpnEndpointRequest$TrafficIpAddressType": "<p>The IP address type for traffic within the Client VPN tunnel. Valid values are <code>ipv4</code> (default) for IPv4 traffic only, <code>ipv6</code> for IPv6 addressing only, or <code>dual-stack</code> for both IPv4 and IPv6 traffic. When set to <code>dual-stack</code>, clients can access both IPv4 and IPv6 resources through the VPN .</p>"
       }
     },
     "TrafficMirrorFilter": {

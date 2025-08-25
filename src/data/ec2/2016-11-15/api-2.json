@@ -10780,6 +10780,10 @@
           "shape":"String",
           "locationName":"clientIp"
         },
+        "ClientIpv6Address":{
+          "shape":"String",
+          "locationName":"clientIpv6Address"
+        },
         "CommonName":{
           "shape":"String",
           "locationName":"commonName"
@@ -10931,6 +10935,14 @@
         "DisconnectOnSessionTimeout":{
           "shape":"Boolean",
           "locationName":"disconnectOnSessionTimeout"
+        },
+        "EndpointIpAddressType":{
+          "shape":"EndpointIpAddressType",
+          "locationName":"endpointIpAddressType"
+        },
+        "TrafficIpAddressType":{
+          "shape":"TrafficIpAddressType",
+          "locationName":"trafficIpAddressType"
         }
       }
     },
@@ -11787,7 +11799,6 @@
     "CreateClientVpnEndpointRequest":{
       "type":"structure",
       "required":[
-        "ClientCidrBlock",
         "ServerCertificateArn",
         "AuthenticationOptions",
         "ConnectionLogOptions"
@@ -11824,7 +11835,9 @@
         "SessionTimeoutHours":{"shape":"Integer"},
         "ClientLoginBannerOptions":{"shape":"ClientLoginBannerOptions"},
         "ClientRouteEnforcementOptions":{"shape":"ClientRouteEnforcementOptions"},
-        "DisconnectOnSessionTimeout":{"shape":"Boolean"}
+        "DisconnectOnSessionTimeout":{"shape":"Boolean"},
+        "EndpointIpAddressType":{"shape":"EndpointIpAddressType"},
+        "TrafficIpAddressType":{"shape":"TrafficIpAddressType"}
       }
     },
     "CreateClientVpnEndpointResult":{
@@ -24612,6 +24625,14 @@
       "enum":[
         "unlimited",
         "limited"
+      ]
+    },
+    "EndpointIpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dual-stack"
       ]
     },
     "EndpointSet":{
@@ -48532,6 +48553,14 @@
       "enum":[
         "ingress",
         "egress"
+      ]
+    },
+    "TrafficIpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dual-stack"
       ]
     },
     "TrafficMirrorFilter":{

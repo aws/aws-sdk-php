@@ -219,6 +219,40 @@
         }
       ]
     },
+    "CreateResourceShare": {
+      "name": "CreateResourceShare",
+      "http": {
+        "method": "POST",
+        "requestUri": "/2017-08-29/resourceShares",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "CreateResourceShareRequest"
+      },
+      "output": {
+        "shape": "CreateResourceShareResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
     "DeleteJobTemplate": {
       "name": "DeleteJobTemplate",
       "http": {
@@ -3609,6 +3643,27 @@
         }
       }
     },
+    "CreateResourceShareRequest": {
+      "type": "structure",
+      "members": {
+        "JobId": {
+          "shape": "__string",
+          "locationName": "jobId"
+        },
+        "SupportCaseId": {
+          "shape": "__string",
+          "locationName": "supportCaseId"
+        }
+      },
+      "required": [
+        "SupportCaseId",
+        "JobId"
+      ]
+    },
+    "CreateResourceShareResponse": {
+      "type": "structure",
+      "members": {}
+    },
     "DashAdditionalManifest": {
       "type": "structure",
       "members": {
@@ -6447,6 +6502,7 @@
       "type": "string",
       "enum": [
         "INCLUDE",
+        "INCLUDE_AS_TS",
         "EXCLUDE"
       ]
     },
@@ -7188,6 +7244,10 @@
           "shape": "__string",
           "locationName": "jobTemplate"
         },
+        "LastShareDetails": {
+          "shape": "__string",
+          "locationName": "lastShareDetails"
+        },
         "Messages": {
           "shape": "JobMessages",
           "locationName": "messages"
@@ -7219,6 +7279,10 @@
         "Settings": {
           "shape": "JobSettings",
           "locationName": "settings"
+        },
+        "ShareStatus": {
+          "shape": "ShareStatus",
+          "locationName": "shareStatus"
         },
         "SimulateReservedQueue": {
           "shape": "SimulateReservedQueue",
@@ -8593,9 +8657,20 @@
         }
       }
     },
+    "Mp2AudioDescriptionMix": {
+      "type": "string",
+      "enum": [
+        "BROADCASTER_MIXED_AD",
+        "NONE"
+      ]
+    },
     "Mp2Settings": {
       "type": "structure",
       "members": {
+        "AudioDescriptionMix": {
+          "shape": "Mp2AudioDescriptionMix",
+          "locationName": "audioDescriptionMix"
+        },
         "Bitrate": {
           "shape": "__integerMin32000Max384000",
           "locationName": "bitrate"
@@ -10402,6 +10477,14 @@
         }
       }
     },
+    "ShareStatus": {
+      "type": "string",
+      "enum": [
+        "NOT_SHARED",
+        "INITIATED",
+        "SHARED"
+      ]
+    },
     "SimulateReservedQueue": {
       "type": "string",
       "enum": [
@@ -11590,8 +11673,23 @@
         "SampleRange": {
           "shape": "InputSampleRange",
           "locationName": "sampleRange"
+        },
+        "SelectorType": {
+          "shape": "VideoSelectorType",
+          "locationName": "selectorType"
+        },
+        "Streams": {
+          "shape": "__listOf__integerMin1Max2147483647",
+          "locationName": "streams"
         }
       }
+    },
+    "VideoSelectorType": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "STREAM"
+      ]
     },
     "VideoTimecodeInsertion": {
       "type": "string",

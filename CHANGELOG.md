@@ -1,5 +1,98 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpsWorks` - Removes the OpsWorks service, which has reached end-of-life.
+* `Aws\WellArchitected` - Remove incorrect endpoint tests
+* `Aws\Chatbot` - Remove incorrect endpoint tests
+* `Aws\TimestreamInfluxDB` - Add MAINTENANCE status for DbInstance and DbCluster
+* `Aws\CloudWatchEvents` - Remove incorrect endpoint tests
+* `Aws\Odb` - Remove incorrect endpoint tests
+* `Aws\QBusiness` - The Amazon Q Business GetDocumentContent operation now supports retrieval of the extracted text content in JSON format.
+* `Aws\Outposts` - Remove incorrect endpoint tests
+* `Aws\SSOAdmin` - Remove incorrect endpoint tests
+* `Aws\kendra` - Remove incorrect endpoint tests
+* `Aws\CodeArtifact` - Remove incorrect endpoint tests
+* `Aws\MediaConvert` - This release adds support for input rendition selection for HLS input, adds new Share API to enable sharing jobs with AWS Support for support investigations, and adds INCLUDE_AS_TS to iFrameOnlyManifest setting for HLS outputs.
+* `Aws\CloudSearch` - Remove incorrect endpoint tests
+* `Aws\ControlTower` - Remove incorrect endpoint tests
+* `Aws\SFN` - Remove incorrect endpoint tests
+* `Aws\OpsWorksCM` - Remove incorrect endpoint tests
+* `Aws\DocDBElastic` - Remove incorrect endpoint tests
+* `Aws\WorkSpacesThinClient` - Remove incorrect endpoint tests
+* `Aws\PcaConnectorAd` - Remove incorrect endpoint tests
+* `Aws\B2bi` - Updated APIs to support custom validation rules.
+* `Aws\IoTFleetHub` - Remove incorrect endpoint tests
+* `Aws\SupportApp` - Remove incorrect endpoint tests
+* `Aws\SageMakerFeatureStoreRuntime` - Remove incorrect endpoint tests
+* `Aws\DAX` - Remove incorrect endpoint tests
+* `Aws\Braket` - Remove incorrect endpoint tests
+* `Aws\CloudFormation` - Remove incorrect endpoint tests
+* `Aws\IoTSiteWise` - Remove incorrect endpoint tests
+* `Aws\IoTDataPlane` - Remove incorrect endpoint tests
+* `Aws\AppSync` - Remove incorrect endpoint tests
+* `Aws\ChimeSDKMessaging` - Remove incorrect endpoint tests
+* `Aws\ServiceCatalog` - Remove incorrect endpoint tests
+* `Aws\FinSpaceData` - Remove incorrect endpoint tests
+* `Aws\CloudTrailData` - Remove incorrect endpoint tests
+* `Aws\LexModelsV2` - Remove incorrect endpoint tests
+* `Aws\ResourceGroupsTaggingAPI` - Remove incorrect endpoint tests
+* `Aws\AIOps` - Remove incorrect endpoint tests
+* `Aws\BedrockAgent` - Remove incorrect endpoint tests
+* `Aws\Repostspace` - Remove incorrect endpoint tests
+* `Aws\BedrockDataAutomation` - Remove incorrect endpoint tests
+* `Aws\CloudControlApi` - Remove incorrect endpoint tests
+* `Aws\DeviceFarm` - Remove incorrect endpoint tests
+* `Aws\MediaPackageVod` - Remove incorrect endpoint tests
+* `Aws\EKS` - Remove incorrect endpoint tests
+* `Aws\ConnectParticipant` - Remove incorrect endpoint tests
+* `Aws\ForecastService` - Remove incorrect endpoint tests
+* `Aws\BedrockDataAutomationRuntime` - Remove incorrect endpoint tests
+* `Aws\AutoScaling` - Remove incorrect endpoint tests
+* `Aws\SagemakerEdgeManager` - Remove incorrect endpoint tests
+* `Aws\LicenseManager` - Remove incorrect endpoint tests
+* `Aws\RedshiftServerless` - Remove incorrect endpoint tests
+* `Aws\Bedrock` - Remove incorrect endpoint tests
+* `Aws\CloudWatchLogs` - Remove incorrect endpoint tests
+* `Aws\ChimeSDKMediaPipelines` - Remove incorrect endpoint tests
+* `Aws\Keyspaces` - Remove incorrect endpoint tests
+* `Aws\TaxSettings` - Remove incorrect endpoint tests
+* `Aws\StorageGateway` - Remove incorrect endpoint tests
+* `Aws\DataZone` - Releasing the following features - Asset classification that lets users use restricted terms for classifying assets if they have the right permissions. Also adding a new enum value "Moving" to project status.
+* `Aws\OpenSearchServerless` - Remove incorrect endpoint tests
+* `Aws\PersonalizeRuntime` - Remove incorrect endpoint tests
+* `Aws\SQS` - Documentation update for Amazon SQS Supports Large Payload Message feature
+* `Aws\CodeGuruSecurity` - Documentation update to notify users of the discontinuation of Amazon CodeGuru Security.
+* `Aws\Support` - Remove incorrect endpoint tests
+* `Aws\Shield` - Remove incorrect endpoint tests
+* `Aws\DevOpsGuru` - Remove incorrect endpoint tests
+* `Aws\TranscribeService` - Remove incorrect endpoint tests
+* `Aws\SageMakerRuntime` - Remove incorrect endpoint tests
+* `Aws\EMRContainers` - Remove incorrect endpoint tests
+* `Aws\MigrationHubStrategyRecommendations` - Remove incorrect endpoint tests
+* `Aws\EC2` - Added IPv6 support for AWS Client VPN.
+* `Aws\MarketplaceCatalog` - Remove incorrect endpoint tests
+* `Aws\Translate` - Remove incorrect endpoint tests
+* `Aws\ACM` - Remove incorrect endpoint tests
+* `Aws\LookoutEquipment` - Remove incorrect endpoint tests
+* `Aws\CostandUsageReportService` - Remove incorrect endpoint tests
+* `Aws\DirectConnect` - Remove incorrect endpoint tests
+* `Aws\CodeStarNotifications` - Remove incorrect endpoint tests
+* `Aws\KinesisVideoArchivedMedia` - Remove incorrect endpoint tests
+* `Aws\Health` - Remove incorrect endpoint tests
+* `Aws\GroundStation` - Remove incorrect endpoint tests
+* `Aws\Appflow` - Remove incorrect endpoint tests
+* `Aws\MediaStore` - Remove incorrect endpoint tests
+* `Aws\FSx` - Remove incorrect endpoint tests
+* `Aws\KinesisAnalytics` - Remove incorrect endpoint tests
+* `Aws\LexRuntimeService` - Remove incorrect endpoint tests
+* `Aws\ServerlessApplicationRepository` - Remove incorrect endpoint tests
+* `Aws\MailManager` - Remove incorrect endpoint tests
+* `Aws\Athena` - Remove incorrect endpoint tests
+* `Aws\ResilienceHub` - Remove incorrect endpoint tests
+* `Aws\Snowball` - Remove incorrect endpoint tests
+* `Aws\Lambda` - Remove incorrect endpoint tests
+
 ## 3.356.3 - 2025-08-22
 
 * `Aws\Token` - Fixes bug in `TokenProvider::cache()` where tokens are incorrectly written to the cache.

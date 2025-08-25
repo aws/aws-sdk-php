@@ -5,11 +5,13 @@
     "endpointPrefix":"runtime.lex",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Lex Runtime Service",
     "serviceId":"Lex Runtime Service",
     "signatureVersion":"v4",
     "signingName":"lex",
-    "uid":"runtime.lex-2016-11-28"
+    "uid":"runtime.lex-2016-11-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "DeleteSession":{
@@ -64,7 +66,8 @@
         {"shape":"BadGatewayException"},
         {"shape":"LoopDetectedException"}
       ],
-      "authtype":"v4-unsigned-body"
+      "authtype":"v4-unsigned-body",
+      "unsignedPayload":true
     },
     "PostText":{
       "name":"PostText",

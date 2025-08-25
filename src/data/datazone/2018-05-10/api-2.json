@@ -114,6 +114,25 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "AssociateGovernedTerms":{
+      "name":"AssociateGovernedTerms",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/associate-governed-terms",
+        "responseCode":200
+      },
+      "input":{"shape":"AssociateGovernedTermsInput"},
+      "output":{"shape":"AssociateGovernedTermsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "CancelMetadataGenerationRun":{
       "name":"CancelMetadataGenerationRun",
       "http":{
@@ -1180,6 +1199,25 @@
       },
       "input":{"shape":"DisassociateEnvironmentRoleInput"},
       "output":{"shape":"DisassociateEnvironmentRoleOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
+    "DisassociateGovernedTerms":{
+      "name":"DisassociateGovernedTerms",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/entities/{entityType}/{entityIdentifier}/disassociate-governed-terms",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateGovernedTermsInput"},
+      "output":{"shape":"DisassociateGovernedTermsOutput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -3566,6 +3604,7 @@
         "firstRevisionCreatedAt":{"shape":"CreatedAt"},
         "firstRevisionCreatedBy":{"shape":"CreatedBy"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
+        "governedGlossaryTerms":{"shape":"AssetItemGovernedGlossaryTermsList"},
         "identifier":{"shape":"AssetIdentifier"},
         "name":{"shape":"AssetName"},
         "owningProjectId":{"shape":"ProjectId"},
@@ -3582,6 +3621,12 @@
         "readOnlyFormsOutput":{"shape":"FormOutputList"}
       }
     },
+    "AssetItemGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":20,
+      "min":0
+    },
     "AssetListing":{
       "type":"structure",
       "members":{
@@ -3591,6 +3636,7 @@
         "createdAt":{"shape":"CreatedAt"},
         "forms":{"shape":"Forms"},
         "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "governedGlossaryTerms":{"shape":"AssetListingGovernedGlossaryTermsList"},
         "latestTimeSeriesDataPointForms":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "owningProjectId":{"shape":"ProjectId"}
       }
@@ -3606,6 +3652,12 @@
         "listingStatus":{"shape":"ListingStatus"}
       }
     },
+    "AssetListingGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"DetailedGlossaryTerm"},
+      "max":20,
+      "min":0
+    },
     "AssetListingItem":{
       "type":"structure",
       "members":{
@@ -3616,6 +3668,7 @@
         "entityRevision":{"shape":"Revision"},
         "entityType":{"shape":"TypeName"},
         "glossaryTerms":{"shape":"DetailedGlossaryTerms"},
+        "governedGlossaryTerms":{"shape":"AssetListingItemGovernedGlossaryTermsList"},
         "listingCreatedBy":{"shape":"CreatedBy"},
         "listingId":{"shape":"ListingId"},
         "listingRevision":{"shape":"Revision"},
@@ -3631,6 +3684,12 @@
         "latestTimeSeriesDataPointForms":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "matchRationale":{"shape":"MatchRationale"}
       }
+    },
+    "AssetListingItemGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"DetailedGlossaryTerm"},
+      "max":20,
+      "min":0
     },
     "AssetName":{
       "type":"string",
@@ -3749,6 +3808,43 @@
       }
     },
     "AssociateEnvironmentRoleOutput":{
+      "type":"structure",
+      "members":{}
+    },
+    "AssociateGovernedTermsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "governedGlossaryTerms"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"EntityIdentifier",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"GovernedEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "governedGlossaryTerms":{"shape":"AssociateGovernedTermsInputGovernedGlossaryTermsList"}
+      }
+    },
+    "AssociateGovernedTermsInputGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":5,
+      "min":1
+    },
+    "AssociateGovernedTermsOutput":{
       "type":"structure",
       "members":{}
     },
@@ -4381,6 +4477,7 @@
         "firstRevisionCreatedBy":{"shape":"CreatedBy"},
         "formsOutput":{"shape":"FormOutputList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
+        "governedGlossaryTerms":{"shape":"CreateAssetOutputGovernedGlossaryTermsList"},
         "id":{"shape":"AssetId"},
         "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "listing":{"shape":"AssetListingDetails"},
@@ -4392,6 +4489,12 @@
         "typeIdentifier":{"shape":"AssetTypeIdentifier"},
         "typeRevision":{"shape":"Revision"}
       }
+    },
+    "CreateAssetOutputGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":20,
+      "min":0
     },
     "CreateAssetRevisionInput":{
       "type":"structure",
@@ -4445,6 +4548,7 @@
         "firstRevisionCreatedBy":{"shape":"CreatedBy"},
         "formsOutput":{"shape":"FormOutputList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
+        "governedGlossaryTerms":{"shape":"CreateAssetRevisionOutputGovernedGlossaryTermsList"},
         "id":{"shape":"AssetId"},
         "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "listing":{"shape":"AssetListingDetails"},
@@ -4456,6 +4560,12 @@
         "typeIdentifier":{"shape":"AssetTypeIdentifier"},
         "typeRevision":{"shape":"Revision"}
       }
+    },
+    "CreateAssetRevisionOutputGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":20,
+      "min":0
     },
     "CreateAssetTypeInput":{
       "type":"structure",
@@ -5051,7 +5161,8 @@
         },
         "name":{"shape":"GlossaryName"},
         "owningProjectIdentifier":{"shape":"ProjectId"},
-        "status":{"shape":"GlossaryStatus"}
+        "status":{"shape":"GlossaryStatus"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "CreateGlossaryOutput":{
@@ -5068,7 +5179,8 @@
         "id":{"shape":"GlossaryId"},
         "name":{"shape":"GlossaryName"},
         "owningProjectId":{"shape":"ProjectId"},
-        "status":{"shape":"GlossaryStatus"}
+        "status":{"shape":"GlossaryStatus"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "CreateGlossaryPolicyGrantDetail":{
@@ -5119,7 +5231,8 @@
         "name":{"shape":"GlossaryTermName"},
         "shortDescription":{"shape":"ShortDescription"},
         "status":{"shape":"GlossaryTermStatus"},
-        "termRelations":{"shape":"TermRelations"}
+        "termRelations":{"shape":"TermRelations"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "CreateGroupProfileInput":{
@@ -6756,6 +6869,43 @@
       "type":"structure",
       "members":{}
     },
+    "DisassociateGovernedTermsInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "entityIdentifier",
+        "entityType",
+        "governedGlossaryTerms"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "entityIdentifier":{
+          "shape":"EntityIdentifier",
+          "location":"uri",
+          "locationName":"entityIdentifier"
+        },
+        "entityType":{
+          "shape":"GovernedEntityType",
+          "location":"uri",
+          "locationName":"entityType"
+        },
+        "governedGlossaryTerms":{"shape":"DisassociateGovernedTermsInputGovernedGlossaryTermsList"}
+      }
+    },
+    "DisassociateGovernedTermsInputGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":5,
+      "min":1
+    },
+    "DisassociateGovernedTermsOutput":{
+      "type":"structure",
+      "members":{}
+    },
     "DomainDescription":{
       "type":"string",
       "sensitive":true
@@ -7644,6 +7794,7 @@
         "firstRevisionCreatedBy":{"shape":"CreatedBy"},
         "formsOutput":{"shape":"FormOutputList"},
         "glossaryTerms":{"shape":"GlossaryTerms"},
+        "governedGlossaryTerms":{"shape":"GetAssetOutputGovernedGlossaryTermsList"},
         "id":{"shape":"AssetId"},
         "latestTimeSeriesDataPointFormsOutput":{"shape":"TimeSeriesDataPointSummaryFormOutputList"},
         "listing":{"shape":"AssetListingDetails"},
@@ -7654,6 +7805,12 @@
         "typeIdentifier":{"shape":"AssetTypeIdentifier"},
         "typeRevision":{"shape":"Revision"}
       }
+    },
+    "GetAssetOutputGovernedGlossaryTermsList":{
+      "type":"list",
+      "member":{"shape":"GlossaryTermId"},
+      "max":20,
+      "min":0
     },
     "GetAssetTypeInput":{
       "type":"structure",
@@ -8311,7 +8468,8 @@
         "owningProjectId":{"shape":"ProjectId"},
         "status":{"shape":"GlossaryStatus"},
         "updatedAt":{"shape":"UpdatedAt"},
-        "updatedBy":{"shape":"UpdatedBy"}
+        "updatedBy":{"shape":"UpdatedBy"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "GetGlossaryTermInput":{
@@ -8354,7 +8512,8 @@
         "status":{"shape":"GlossaryTermStatus"},
         "termRelations":{"shape":"TermRelations"},
         "updatedAt":{"shape":"UpdatedAt"},
-        "updatedBy":{"shape":"UpdatedBy"}
+        "updatedBy":{"shape":"UpdatedBy"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "GetGroupProfileInput":{
@@ -9093,7 +9252,8 @@
         "owningProjectId":{"shape":"ProjectId"},
         "status":{"shape":"GlossaryStatus"},
         "updatedAt":{"shape":"UpdatedAt"},
-        "updatedBy":{"shape":"UpdatedBy"}
+        "updatedBy":{"shape":"UpdatedBy"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "GlossaryItemAdditionalAttributes":{
@@ -9141,7 +9301,8 @@
         "status":{"shape":"GlossaryTermStatus"},
         "termRelations":{"shape":"TermRelations"},
         "updatedAt":{"shape":"UpdatedAt"},
-        "updatedBy":{"shape":"UpdatedBy"}
+        "updatedBy":{"shape":"UpdatedBy"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "GlossaryTermItemAdditionalAttributes":{
@@ -9167,6 +9328,16 @@
       "type":"list",
       "member":{"shape":"GlossaryTermId"},
       "max":20,
+      "min":1
+    },
+    "GlossaryUsageRestriction":{
+      "type":"string",
+      "enum":["ASSET_GOVERNED_TERMS"]
+    },
+    "GlossaryUsageRestrictions":{
+      "type":"list",
+      "member":{"shape":"GlossaryUsageRestriction"},
+      "max":1,
       "min":1
     },
     "GlueConnection":{
@@ -9379,6 +9550,10 @@
         "AWS_MANAGED",
         "USER_MANAGED"
       ]
+    },
+    "GovernedEntityType":{
+      "type":"string",
+      "enum":["ASSET"]
     },
     "GrantIdentifier":{
       "type":"string",
@@ -12229,7 +12404,8 @@
         "DELETING",
         "DELETE_FAILED",
         "UPDATING",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "MOVING"
       ]
     },
     "ProjectSummaries":{
@@ -14967,7 +15143,8 @@
         "id":{"shape":"GlossaryId"},
         "name":{"shape":"GlossaryName"},
         "owningProjectId":{"shape":"ProjectId"},
-        "status":{"shape":"GlossaryStatus"}
+        "status":{"shape":"GlossaryStatus"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "UpdateGlossaryTermInput":{
@@ -15012,7 +15189,8 @@
         "name":{"shape":"GlossaryTermName"},
         "shortDescription":{"shape":"ShortDescription"},
         "status":{"shape":"GlossaryTermStatus"},
-        "termRelations":{"shape":"TermRelations"}
+        "termRelations":{"shape":"TermRelations"},
+        "usageRestrictions":{"shape":"GlossaryUsageRestrictions"}
       }
     },
     "UpdateGroupProfileInput":{

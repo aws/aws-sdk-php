@@ -679,7 +679,7 @@
     "BlockedPhrases": {
       "base": null,
       "refs": {
-        "BlockedPhrasesConfiguration$blockedPhrases": "<p>A list of phrases blocked from a Amazon Q Business web experience chat.</p>",
+        "BlockedPhrasesConfiguration$blockedPhrases": "<p>A list of phrases blocked from a Amazon Q Business web experience chat.</p> <note> <p>Each phrase can contain a maximum of 36 characters. The list can contain a maximum of 20 phrases.</p> </note>",
         "BlockedPhrasesConfigurationUpdate$blockedPhrasesToCreateOrUpdate": "<p>Creates or updates a blocked phrases configuration in your Amazon Q Business application.</p>",
         "BlockedPhrasesConfigurationUpdate$blockedPhrasesToDelete": "<p>Deletes a blocked phrases configuration in your Amazon Q Business application.</p>"
       }
@@ -1704,7 +1704,7 @@
     "Documents": {
       "base": null,
       "refs": {
-        "BatchPutDocumentRequest$documents": "<p>One or more documents to add to the index.</p>"
+        "BatchPutDocumentRequest$documents": "<p>One or more documents to add to the index.</p> <important> <p>Ensure that the name of your document doesn't contain any confidential information. Amazon Q Business returns document names in chat responses and citations when relevant.</p> </important>"
       }
     },
     "EligibleDataSource": {
@@ -2881,7 +2881,7 @@
     "OutputFormat": {
       "base": null,
       "refs": {
-        "GetDocumentContentRequest$outputFormat": "<p>Raw document outputFormat.</p>"
+        "GetDocumentContentRequest$outputFormat": "<p>Document outputFormat. Defaults to RAW if not selected.</p>"
       }
     },
     "Payload": {
@@ -3266,9 +3266,9 @@
         "BasicAuthConfiguration$roleArn": "<p>The ARN of an IAM role used by Amazon Q Business to access the basic authentication credentials stored in a Secrets Manager secret.</p>",
         "BatchPutDocumentRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access your S3 bucket.</p>",
         "CreateApplicationRequest$roleArn": "<p> The Amazon Resource Name (ARN) of an IAM role with permissions to access your Amazon CloudWatch logs and metrics. If this property is not specified, Amazon Q Business will create a <a href=\"https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles.html#slr-permissions\">service linked role (SLR)</a> and use it as the application's role.</p>",
-        "CreateDataSourceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources.</p>",
+        "CreateDataSourceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources. This field is required for all connector types except custom connectors, where it is optional.</p>",
         "CreateRetrieverRequest$roleArn": "<p>The ARN of an IAM role used by Amazon Q Business to access the basic authentication credentials stored in a Secrets Manager secret.</p>",
-        "CreateWebExperienceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the service role attached to your web experience.</p> <note> <p>You must provide this value if you're using IAM Identity Center to manage end user access to your application. If you're using legacy identity management to manage user access, you don't need to provide this value.</p> </note>",
+        "CreateWebExperienceRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the service role attached to your web experience.</p> <note> <p>The <code>roleArn</code> parameter is required when your Amazon Q Business application is created with IAM Identity Center. It is not required for SAML-based applications.</p> </note>",
         "GetApplicationResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM with permissions to access your CloudWatch logs and metrics.</p>",
         "GetDataSourceResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the role with permission to access the data source and required resources.</p>",
         "GetRetrieverResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the role with the permission to access the retriever and required resources.</p>",
@@ -3514,7 +3514,7 @@
         "DocumentAttributeStringListValue$member": null,
         "GetDataSourceResponse$type": "<p>The type of the data source connector. For example, <code>S3</code>.</p>",
         "GetDocumentContentResponse$presignedUrl": "<p>A pre-signed URL that provides temporary access to download the document content directly from Amazon Q Business. The URL expires after 5 minutes for security purposes. This URL is generated only after successful ACL validation.</p>",
-        "GetDocumentContentResponse$mimeType": "<p>The MIME type of the document content (e.g., application/pdf, text/plain, application/vnd.openxmlformats-officedocument.wordprocessingml.document).</p>",
+        "GetDocumentContentResponse$mimeType": "<p>The MIME type of the document content. When outputFormat is RAW, this corresponds to the original document's MIME type (e.g., application/pdf, text/plain, application/vnd.openxmlformats-officedocument.wordprocessingml.document). When outputFormat is EXTRACTED, the MIME type is always application/json.</p>",
         "GetMediaResponse$mediaMimeType": "<p>The MIME type of the media object (image/png).</p>",
         "GetPolicyResponse$policy": "<p>The JSON representation of the permission policy.</p>",
         "GetUserRequest$userId": "<p>The user email address attached to the user.</p>",

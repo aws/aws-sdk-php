@@ -169,6 +169,45 @@
           "name": "transformX12",
           "clientToken": "foo",
           "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
             "formatOptions": {
               "x12": {
                 "version": "VERSION_4010",
@@ -200,6 +239,45 @@
           "name": "transformX12",
           "createdAt": "2023-11-01T21:51:05.504Z",
           "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
             "formatOptions": {
               "x12": {
                 "version": "VERSION_4010",
@@ -373,6 +451,45 @@
           "name": "transformX12",
           "createdAt": "2023-11-01T21:51:05.504Z",
           "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
             "formatOptions": {
               "x12": {
                 "version": "VERSION_4010",
@@ -587,6 +704,42 @@
             }
           },
           "target": {
+            "advancedOptions": {
+              "x12": {
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "codesToRemove": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "elementId": "1280"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "OPTIONAL"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "0803",
+                        "maxLength": 30,
+                        "minLength": 5
+                      }
+                    }
+                  ]
+                }
+              }
+            },
             "fileFormat": "X12",
             "formatDetails": {
               "x12": {
@@ -698,6 +851,66 @@
         },
         "id": "example-3",
         "title": "Sample TestParsing call with EDI Splitting by Transaction"
+      },
+      {
+        "input": {
+          "advancedOptions": {
+            "x12": {
+              "validationOptions": {
+                "validationRules": [
+                  {
+                    "codeListValidationRule": {
+                      "codesToAdd": [
+                        "X",
+                        "Y",
+                        "Z"
+                      ],
+                      "codesToRemove": [
+                        "A",
+                        "B",
+                        "C"
+                      ],
+                      "elementId": "1280"
+                    }
+                  },
+                  {
+                    "elementRequirementValidationRule": {
+                      "elementPosition": "NM1-01",
+                      "requirement": "OPTIONAL"
+                    }
+                  },
+                  {
+                    "elementLengthValidationRule": {
+                      "elementId": "0803",
+                      "maxLength": 30,
+                      "minLength": 5
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ediType": {
+            "x12Details": {
+              "version": "VERSION_4010",
+              "transactionSet": "X12_110"
+            }
+          },
+          "fileFormat": "JSON",
+          "inputFile": {
+            "key": "sampleFile.txt",
+            "bucketName": "test-bucket"
+          }
+        },
+        "output": {
+          "parsedFileContent": "",
+          "parsedSplitFileContents": [
+            "sample split parsed file content",
+            "sample split parsed file content"
+          ]
+        },
+        "id": "example-4",
+        "title": "Sample TestParsing call with Validation Options"
       }
     ],
     "UntagResource": [
@@ -837,6 +1050,45 @@
         "input": {
           "name": "transformX12",
           "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
             "formatOptions": {
               "x12": {
                 "version": "VERSION_4010",
@@ -864,6 +1116,45 @@
           "name": "transformX12",
           "createdAt": "2023-11-01T21:51:05.504Z",
           "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
             "formatOptions": {
               "x12": {
                 "version": "VERSION_4010",

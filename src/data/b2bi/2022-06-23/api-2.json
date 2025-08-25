@@ -606,6 +606,10 @@
       "type":"string",
       "enum":["edi"]
     },
+    "CodeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -638,7 +642,8 @@
       "members":{
         "fileFormat":{"shape":"ConversionTargetFormat"},
         "formatDetails":{"shape":"ConversionTargetFormatDetails"},
-        "outputSampleFile":{"shape":"OutputSampleFileSource"}
+        "outputSampleFile":{"shape":"OutputSampleFileSource"},
+        "advancedOptions":{"shape":"AdvancedOptions"}
       }
     },
     "ConversionTargetFormat":{
@@ -927,6 +932,15 @@
         "x12Details":{"shape":"X12Details"}
       },
       "union":true
+    },
+    "ElementId":{"type":"string"},
+    "ElementPosition":{"type":"string"},
+    "ElementRequirement":{
+      "type":"string",
+      "enum":[
+        "OPTIONAL",
+        "MANDATORY"
+      ]
     },
     "Email":{
       "type":"string",
@@ -1357,7 +1371,8 @@
       "required":["toFormat"],
       "members":{
         "toFormat":{"shape":"ToFormat"},
-        "formatOptions":{"shape":"FormatOptions"}
+        "formatOptions":{"shape":"FormatOptions"},
+        "advancedOptions":{"shape":"AdvancedOptions"}
       }
     },
     "OutputSampleFileSource":{
@@ -1675,7 +1690,8 @@
       "required":["parsedFileContent"],
       "members":{
         "parsedFileContent":{"shape":"String"},
-        "parsedSplitFileContents":{"shape":"ParsedSplitFileContentsList"}
+        "parsedSplitFileContents":{"shape":"ParsedSplitFileContentsList"},
+        "validationMessages":{"shape":"ValidationMessages"}
       }
     },
     "ThrottlingException":{
@@ -2008,7 +2024,8 @@
     "X12AdvancedOptions":{
       "type":"structure",
       "members":{
-        "splitOptions":{"shape":"X12SplitOptions"}
+        "splitOptions":{"shape":"X12SplitOptions"},
+        "validationOptions":{"shape":"X12ValidationOptions"}
       }
     },
     "X12ApplicationReceiverCode":{
@@ -2022,6 +2039,15 @@
       "max":15,
       "min":2,
       "pattern":"[a-zA-Z0-9 ]*"
+    },
+    "X12CodeListValidationRule":{
+      "type":"structure",
+      "required":["elementId"],
+      "members":{
+        "elementId":{"shape":"ElementId"},
+        "codesToAdd":{"shape":"CodeList"},
+        "codesToRemove":{"shape":"CodeList"}
+      }
     },
     "X12ComponentSeparator":{
       "type":"string",
@@ -2056,6 +2082,42 @@
       "members":{
         "transactionSet":{"shape":"X12TransactionSet"},
         "version":{"shape":"X12Version"}
+      }
+    },
+    "X12ElementLengthValidationRule":{
+      "type":"structure",
+      "required":[
+        "elementId",
+        "maxLength",
+        "minLength"
+      ],
+      "members":{
+        "elementId":{"shape":"ElementId"},
+        "maxLength":{"shape":"X12ElementLengthValidationRuleMaxLengthInteger"},
+        "minLength":{"shape":"X12ElementLengthValidationRuleMinLengthInteger"}
+      }
+    },
+    "X12ElementLengthValidationRuleMaxLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "X12ElementLengthValidationRuleMinLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "X12ElementRequirementValidationRule":{
+      "type":"structure",
+      "required":[
+        "elementPosition",
+        "requirement"
+      ],
+      "members":{
+        "elementPosition":{"shape":"ElementPosition"},
+        "requirement":{"shape":"ElementRequirement"}
       }
     },
     "X12Envelope":{
@@ -2530,6 +2592,25 @@
     "X12ValidateEdi":{
       "type":"boolean",
       "box":true
+    },
+    "X12ValidationOptions":{
+      "type":"structure",
+      "members":{
+        "validationRules":{"shape":"X12ValidationRules"}
+      }
+    },
+    "X12ValidationRule":{
+      "type":"structure",
+      "members":{
+        "codeListValidationRule":{"shape":"X12CodeListValidationRule"},
+        "elementLengthValidationRule":{"shape":"X12ElementLengthValidationRule"},
+        "elementRequirementValidationRule":{"shape":"X12ElementRequirementValidationRule"}
+      },
+      "union":true
+    },
+    "X12ValidationRules":{
+      "type":"list",
+      "member":{"shape":"X12ValidationRule"}
     },
     "X12Version":{
       "type":"string",

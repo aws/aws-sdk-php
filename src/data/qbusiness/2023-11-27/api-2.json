@@ -797,6 +797,9 @@
                     "shape": "ResourceNotFoundException"
                 },
                 {
+                    "shape": "ConflictException"
+                },
+                {
                     "shape": "LicenseNotFoundException"
                 },
                 {
@@ -7917,7 +7920,9 @@
         },
         "MaxResults": {
             "type": "integer",
-            "box": true
+            "box": true,
+            "max": 100,
+            "min": 1
         },
         "MaxResultsIntegerForGetTopicConfigurations": {
             "type": "integer",
@@ -8362,7 +8367,8 @@
         "OutputFormat": {
             "type": "string",
             "enum": [
-                "RAW"
+                "RAW",
+                "EXTRACTED"
             ]
         },
         "Payload": {
@@ -9118,7 +9124,8 @@
                     "shape": "AttributeFilter"
                 },
                 "maxResults": {
-                    "shape": "MaxResults"
+                    "shape": "MaxResults",
+                    "box": true
                 },
                 "nextToken": {
                     "shape": "NextToken"
