@@ -353,13 +353,6 @@
         "Expiry":{"shape":"ISO8601Datetime"}
       }
     },
-    "ConnectionData":{
-      "type":"structure",
-      "members":{
-        "Attendee":{"shape":"Attendee"},
-        "Meeting":{"shape":"Meeting"}
-      }
-    },
     "ConnectionType":{
       "type":"string",
       "enum":[
@@ -401,7 +394,7 @@
       "members":{
         "Websocket":{"shape":"Websocket"},
         "ConnectionCredentials":{"shape":"ConnectionCredentials"},
-        "WebRTCConnection":{"shape":"ConnectionData"}
+        "WebRTCConnection":{"shape":"WebRTCConnection"}
       }
     },
     "DescribeViewRequest":{
@@ -532,6 +525,10 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "GuidString":{
+      "type":"string",
+      "pattern":"[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}"
+    },
     "ISO8601Datetime":{"type":"string"},
     "Instant":{
       "type":"string",
@@ -574,26 +571,6 @@
       "max":100,
       "min":0
     },
-    "MediaPlacement":{
-      "type":"structure",
-      "members":{
-        "AudioHostUrl":{"shape":"URI"},
-        "AudioFallbackUrl":{"shape":"URI"},
-        "SignalingUrl":{"shape":"URI"},
-        "TurnControlUrl":{"shape":"URI"},
-        "EventIngestionUrl":{"shape":"URI"}
-      }
-    },
-    "MediaRegion":{"type":"string"},
-    "Meeting":{
-      "type":"structure",
-      "members":{
-        "MediaRegion":{"shape":"MediaRegion"},
-        "MediaPlacement":{"shape":"MediaPlacement"},
-        "MeetingFeatures":{"shape":"MeetingFeaturesConfiguration"},
-        "MeetingId":{"shape":"MeetingId"}
-      }
-    },
     "MeetingFeatureStatus":{
       "type":"string",
       "enum":[
@@ -607,7 +584,6 @@
         "Audio":{"shape":"AudioFeatures"}
       }
     },
-    "MeetingId":{"type":"string"},
     "Message":{"type":"string"},
     "MessageMetadata":{
       "type":"structure",
@@ -945,6 +921,30 @@
       "min":1
     },
     "ViewVersion":{"type":"integer"},
+    "WebRTCConnection":{
+      "type":"structure",
+      "members":{
+        "Attendee":{"shape":"Attendee"},
+        "Meeting":{"shape":"WebRTCMeeting"}
+      }
+    },
+    "WebRTCMediaPlacement":{
+      "type":"structure",
+      "members":{
+        "AudioHostUrl":{"shape":"URI"},
+        "AudioFallbackUrl":{"shape":"URI"},
+        "SignalingUrl":{"shape":"URI"},
+        "EventIngestionUrl":{"shape":"URI"}
+      }
+    },
+    "WebRTCMeeting":{
+      "type":"structure",
+      "members":{
+        "MediaPlacement":{"shape":"WebRTCMediaPlacement"},
+        "MeetingFeatures":{"shape":"MeetingFeaturesConfiguration"},
+        "MeetingId":{"shape":"GuidString"}
+      }
+    },
     "Websocket":{
       "type":"structure",
       "members":{

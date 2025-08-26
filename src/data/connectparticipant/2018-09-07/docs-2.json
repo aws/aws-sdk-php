@@ -75,7 +75,7 @@
     "Attendee": {
       "base": "<p>The attendee information, including attendee ID and join token.</p>",
       "refs": {
-        "ConnectionData$Attendee": "<p>The attendee information, including attendee ID and join token.</p>"
+        "WebRTCConnection$Attendee": null
       }
     },
     "AttendeeId": {
@@ -168,12 +168,6 @@
         "CreateParticipantConnectionResponse$ConnectionCredentials": "<p>Creates the participant's connection credentials. The authentication token associated with the participant's connection.</p>"
       }
     },
-    "ConnectionData": {
-      "base": "<p>Information required to join the call.</p>",
-      "refs": {
-        "CreateParticipantConnectionResponse$WebRTCConnection": "<p>Creates the participant's WebRTC connection data required for the client application (mobile application or website) to connect to the call. </p>"
-      }
-    },
     "ConnectionType": {
       "base": null,
       "refs": {
@@ -256,6 +250,12 @@
       "base": null,
       "refs": {}
     },
+    "GuidString": {
+      "base": null,
+      "refs": {
+        "WebRTCMeeting$MeetingId": "<p>The Amazon Chime SDK meeting ID.</p>"
+      }
+    },
     "ISO8601Datetime": {
       "base": null,
       "refs": {
@@ -298,24 +298,6 @@
         "GetTranscriptRequest$MaxResults": "<p>The maximum number of results to return in the page. Default: 10. </p>"
       }
     },
-    "MediaPlacement": {
-      "base": "<p>A set of endpoints used by clients to connect to the media service group for an Amazon Chime SDK meeting.</p>",
-      "refs": {
-        "Meeting$MediaPlacement": "<p>The media placement for the meeting.</p>"
-      }
-    },
-    "MediaRegion": {
-      "base": null,
-      "refs": {
-        "Meeting$MediaRegion": "<p>The Amazon Web Services Region in which you create the meeting.</p>"
-      }
-    },
-    "Meeting": {
-      "base": "<p>A meeting created using the Amazon Chime SDK.</p>",
-      "refs": {
-        "ConnectionData$Meeting": "<p>A meeting created using the Amazon Chime SDK.</p>"
-      }
-    },
     "MeetingFeatureStatus": {
       "base": null,
       "refs": {
@@ -325,13 +307,7 @@
     "MeetingFeaturesConfiguration": {
       "base": "<p>The configuration settings of the features available to a meeting.</p>",
       "refs": {
-        "Meeting$MeetingFeatures": "<p>The configuration settings of the features available to a meeting.</p>"
-      }
-    },
-    "MeetingId": {
-      "base": null,
-      "refs": {
-        "Meeting$MeetingId": "<p>The Amazon Chime SDK meeting ID.</p>"
+        "WebRTCMeeting$MeetingFeatures": null
       }
     },
     "Message": {
@@ -519,11 +495,10 @@
     "URI": {
       "base": null,
       "refs": {
-        "MediaPlacement$AudioHostUrl": "<p>The audio host URL.</p>",
-        "MediaPlacement$AudioFallbackUrl": "<p>The audio fallback URL.</p>",
-        "MediaPlacement$SignalingUrl": "<p>The signaling URL.</p>",
-        "MediaPlacement$TurnControlUrl": "<p>The turn control URL.</p>",
-        "MediaPlacement$EventIngestionUrl": "<p>The event ingestion URL to which you send client meeting events.</p>"
+        "WebRTCMediaPlacement$AudioHostUrl": "<p>The audio host URL.</p>",
+        "WebRTCMediaPlacement$AudioFallbackUrl": "<p>The audio fallback URL.</p>",
+        "WebRTCMediaPlacement$SignalingUrl": "<p>The signaling URL.</p>",
+        "WebRTCMediaPlacement$EventIngestionUrl": "<p>The event ingestion URL to which you send client meeting events.</p>"
       }
     },
     "URLExpiryInSeconds": {
@@ -624,6 +599,24 @@
       "base": null,
       "refs": {
         "View$Version": "<p>The current version of the view.</p>"
+      }
+    },
+    "WebRTCConnection": {
+      "base": "<p>Creates the participant’s WebRTC connection data required for the client application (mobile or web) to connect to the call.</p>",
+      "refs": {
+        "CreateParticipantConnectionResponse$WebRTCConnection": "<p>Creates the participant's WebRTC connection data required for the client application (mobile application or website) to connect to the call. </p>"
+      }
+    },
+    "WebRTCMediaPlacement": {
+      "base": "<p>A set of endpoints used by clients to connect to the media service group for an Amazon Chime SDK meeting.</p>",
+      "refs": {
+        "WebRTCMeeting$MediaPlacement": "<p>The media placement for the meeting.</p>"
+      }
+    },
+    "WebRTCMeeting": {
+      "base": "<p>A meeting created using the Amazon Chime SDK.</p>",
+      "refs": {
+        "WebRTCConnection$Meeting": "<p>A meeting created using the Amazon Chime SDK.</p>"
       }
     },
     "Websocket": {

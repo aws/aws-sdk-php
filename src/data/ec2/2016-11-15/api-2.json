@@ -712,6 +712,15 @@
       "input":{"shape":"CreateImageRequest"},
       "output":{"shape":"CreateImageResult"}
     },
+    "CreateImageUsageReport":{
+      "name":"CreateImageUsageReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateImageUsageReportRequest"},
+      "output":{"shape":"CreateImageUsageReportResult"}
+    },
     "CreateInstanceConnectEndpoint":{
       "name":"CreateInstanceConnectEndpoint",
       "http":{
@@ -1471,6 +1480,15 @@
       },
       "input":{"shape":"DeleteFpgaImageRequest"},
       "output":{"shape":"DeleteFpgaImageResult"}
+    },
+    "DeleteImageUsageReport":{
+      "name":"DeleteImageUsageReport",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteImageUsageReportRequest"},
+      "output":{"shape":"DeleteImageUsageReportResult"}
     },
     "DeleteInstanceConnectEndpoint":{
       "name":"DeleteInstanceConnectEndpoint",
@@ -2589,6 +2607,33 @@
       },
       "input":{"shape":"DescribeImageAttributeRequest"},
       "output":{"shape":"ImageAttribute"}
+    },
+    "DescribeImageReferences":{
+      "name":"DescribeImageReferences",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImageReferencesRequest"},
+      "output":{"shape":"DescribeImageReferencesResult"}
+    },
+    "DescribeImageUsageReportEntries":{
+      "name":"DescribeImageUsageReportEntries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImageUsageReportEntriesRequest"},
+      "output":{"shape":"DescribeImageUsageReportEntriesResult"}
+    },
+    "DescribeImageUsageReports":{
+      "name":"DescribeImageUsageReports",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeImageUsageReportsRequest"},
+      "output":{"shape":"DescribeImageUsageReportsResult"}
     },
     "DescribeImages":{
       "name":"DescribeImages",
@@ -12300,6 +12345,42 @@
         }
       }
     },
+    "CreateImageUsageReportRequest":{
+      "type":"structure",
+      "required":[
+        "ImageId",
+        "ResourceTypes"
+      ],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "DryRun":{"shape":"Boolean"},
+        "ResourceTypes":{
+          "shape":"ImageUsageResourceTypeRequestList",
+          "locationName":"ResourceType"
+        },
+        "AccountIds":{
+          "shape":"ImageUsageReportUserIdStringList",
+          "locationName":"AccountId"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreateImageUsageReportResult":{
+      "type":"structure",
+      "members":{
+        "ReportId":{
+          "shape":"ImageUsageReportId",
+          "locationName":"reportId"
+        }
+      }
+    },
     "CreateInstanceConnectEndpointRequest":{
       "type":"structure",
       "required":["SubnetId"],
@@ -15249,6 +15330,23 @@
       }
     },
     "DeleteFpgaImageResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
+    "DeleteImageUsageReportRequest":{
+      "type":"structure",
+      "required":["ReportId"],
+      "members":{
+        "ReportId":{"shape":"ImageUsageReportId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteImageUsageReportResult":{
       "type":"structure",
       "members":{
         "Return":{
@@ -18350,6 +18448,127 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        }
+      }
+    },
+    "DescribeImageReferencesImageIdStringList":{
+      "type":"list",
+      "member":{"shape":"ImageId"},
+      "max":10,
+      "min":1
+    },
+    "DescribeImageReferencesMaxResults":{
+      "type":"integer",
+      "min":5
+    },
+    "DescribeImageReferencesRequest":{
+      "type":"structure",
+      "required":["ImageIds"],
+      "members":{
+        "ImageIds":{
+          "shape":"DescribeImageReferencesImageIdStringList",
+          "locationName":"ImageId"
+        },
+        "IncludeAllResourceTypes":{"shape":"Boolean"},
+        "ResourceTypes":{
+          "shape":"ResourceTypeRequestList",
+          "locationName":"ResourceType"
+        },
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"},
+        "MaxResults":{"shape":"DescribeImageReferencesMaxResults"}
+      }
+    },
+    "DescribeImageReferencesResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "ImageReferences":{
+          "shape":"ImageReferenceList",
+          "locationName":"imageReferenceSet"
+        }
+      }
+    },
+    "DescribeImageUsageReportEntriesMaxResults":{
+      "type":"integer",
+      "min":1
+    },
+    "DescribeImageUsageReportEntriesRequest":{
+      "type":"structure",
+      "members":{
+        "ImageIds":{
+          "shape":"DescribeImageUsageReportsImageIdStringList",
+          "locationName":"ImageId"
+        },
+        "ReportIds":{
+          "shape":"ImageUsageReportIdStringList",
+          "locationName":"ReportId"
+        },
+        "NextToken":{"shape":"String"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"},
+        "MaxResults":{"shape":"DescribeImageUsageReportEntriesMaxResults"}
+      }
+    },
+    "DescribeImageUsageReportEntriesResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "ImageUsageReportEntries":{
+          "shape":"ImageUsageReportEntryList",
+          "locationName":"imageUsageReportEntrySet"
+        }
+      }
+    },
+    "DescribeImageUsageReportsImageIdStringList":{
+      "type":"list",
+      "member":{"shape":"ImageId"},
+      "max":200,
+      "min":0
+    },
+    "DescribeImageUsageReportsMaxResults":{
+      "type":"integer",
+      "min":1
+    },
+    "DescribeImageUsageReportsRequest":{
+      "type":"structure",
+      "members":{
+        "ImageIds":{
+          "shape":"DescribeImageUsageReportsImageIdStringList",
+          "locationName":"ImageId"
+        },
+        "ReportIds":{
+          "shape":"ImageUsageReportIdStringList",
+          "locationName":"ReportId"
+        },
+        "NextToken":{"shape":"String"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"},
+        "MaxResults":{"shape":"DescribeImageUsageReportsMaxResults"}
+      }
+    },
+    "DescribeImageUsageReportsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        },
+        "ImageUsageReports":{
+          "shape":"ImageUsageReportList",
+          "locationName":"imageUsageReportSet"
         }
       }
     },
@@ -28837,6 +29056,47 @@
         "locationName":"item"
       }
     },
+    "ImageReference":{
+      "type":"structure",
+      "members":{
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "ResourceType":{
+          "shape":"ImageReferenceResourceType",
+          "locationName":"resourceType"
+        },
+        "Arn":{
+          "shape":"String",
+          "locationName":"arn"
+        }
+      }
+    },
+    "ImageReferenceList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageReference",
+        "locationName":"item"
+      }
+    },
+    "ImageReferenceOptionName":{
+      "type":"string",
+      "enum":[
+        "state-name",
+        "version-depth"
+      ]
+    },
+    "ImageReferenceResourceType":{
+      "type":"string",
+      "enum":[
+        "ec2:Instance",
+        "ec2:LaunchTemplate",
+        "ssm:Parameter",
+        "imagebuilder:ImageRecipe",
+        "imagebuilder:ContainerRecipe"
+      ]
+    },
     "ImageState":{
       "type":"string",
       "enum":[
@@ -28857,6 +29117,185 @@
         "kernel",
         "ramdisk"
       ]
+    },
+    "ImageUsageReport":{
+      "type":"structure",
+      "members":{
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "ReportId":{
+          "shape":"ImageUsageReportId",
+          "locationName":"reportId"
+        },
+        "ResourceTypes":{
+          "shape":"ImageUsageResourceTypeList",
+          "locationName":"resourceTypeSet"
+        },
+        "AccountIds":{
+          "shape":"UserIdList",
+          "locationName":"accountIdSet"
+        },
+        "State":{
+          "shape":"ImageUsageReportState",
+          "locationName":"state"
+        },
+        "StateReason":{
+          "shape":"ImageUsageReportStateReason",
+          "locationName":"stateReason"
+        },
+        "CreationTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"creationTime"
+        },
+        "ExpirationTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"expirationTime"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "ImageUsageReportEntry":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{
+          "shape":"ImageUsageResourceTypeName",
+          "locationName":"resourceType"
+        },
+        "ReportId":{
+          "shape":"ImageUsageReportId",
+          "locationName":"reportId"
+        },
+        "UsageCount":{
+          "shape":"Long",
+          "locationName":"usageCount"
+        },
+        "AccountId":{
+          "shape":"String",
+          "locationName":"accountId"
+        },
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "ReportCreationTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"reportCreationTime"
+        }
+      }
+    },
+    "ImageUsageReportEntryList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageUsageReportEntry",
+        "locationName":"item"
+      }
+    },
+    "ImageUsageReportId":{"type":"string"},
+    "ImageUsageReportIdStringList":{
+      "type":"list",
+      "member":{"shape":"ImageUsageReportId"},
+      "max":200,
+      "min":0
+    },
+    "ImageUsageReportList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageUsageReport",
+        "locationName":"item"
+      }
+    },
+    "ImageUsageReportState":{"type":"string"},
+    "ImageUsageReportStateReason":{"type":"string"},
+    "ImageUsageReportUserIdStringList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"UserId"
+      },
+      "max":200,
+      "min":0
+    },
+    "ImageUsageResourceType":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{
+          "shape":"ImageUsageResourceTypeName",
+          "locationName":"resourceType"
+        },
+        "ResourceTypeOptions":{
+          "shape":"ImageUsageResourceTypeOptionList",
+          "locationName":"resourceTypeOptionSet"
+        }
+      }
+    },
+    "ImageUsageResourceTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageUsageResourceType",
+        "locationName":"item"
+      }
+    },
+    "ImageUsageResourceTypeName":{"type":"string"},
+    "ImageUsageResourceTypeOption":{
+      "type":"structure",
+      "members":{
+        "OptionName":{
+          "shape":"String",
+          "locationName":"optionName"
+        },
+        "OptionValues":{
+          "shape":"ImageUsageResourceTypeOptionValuesList",
+          "locationName":"optionValueSet"
+        }
+      }
+    },
+    "ImageUsageResourceTypeOptionList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageUsageResourceTypeOption",
+        "locationName":"item"
+      }
+    },
+    "ImageUsageResourceTypeOptionRequest":{
+      "type":"structure",
+      "members":{
+        "OptionName":{"shape":"String"},
+        "OptionValues":{
+          "shape":"ImageUsageResourceTypeOptionValuesList",
+          "locationName":"OptionValue"
+        }
+      }
+    },
+    "ImageUsageResourceTypeOptionRequestList":{
+      "type":"list",
+      "member":{"shape":"ImageUsageResourceTypeOptionRequest"}
+    },
+    "ImageUsageResourceTypeOptionValue":{"type":"string"},
+    "ImageUsageResourceTypeOptionValuesList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageUsageResourceTypeOptionValue",
+        "locationName":"item"
+      }
+    },
+    "ImageUsageResourceTypeRequest":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"ImageUsageResourceTypeName"},
+        "ResourceTypeOptions":{
+          "shape":"ImageUsageResourceTypeOptionRequestList",
+          "locationName":"ResourceTypeOption"
+        }
+      }
+    },
+    "ImageUsageResourceTypeRequestList":{
+      "type":"list",
+      "member":{"shape":"ImageUsageResourceTypeRequest"}
     },
     "ImdsSupportValues":{
       "type":"string",
@@ -43702,6 +44141,7 @@
         "fpga-image",
         "host-reservation",
         "image",
+        "image-usage-report",
         "import-image-task",
         "import-snapshot-task",
         "instance",
@@ -43782,6 +44222,39 @@
         "capacity-block",
         "mac-modification-task"
       ]
+    },
+    "ResourceTypeOption":{
+      "type":"structure",
+      "members":{
+        "OptionName":{"shape":"ImageReferenceOptionName"},
+        "OptionValues":{
+          "shape":"ResourceTypeOptionValuesList",
+          "locationName":"OptionValue"
+        }
+      }
+    },
+    "ResourceTypeOptionList":{
+      "type":"list",
+      "member":{"shape":"ResourceTypeOption"}
+    },
+    "ResourceTypeOptionValue":{"type":"string"},
+    "ResourceTypeOptionValuesList":{
+      "type":"list",
+      "member":{"shape":"ResourceTypeOptionValue"}
+    },
+    "ResourceTypeRequest":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"ImageReferenceResourceType"},
+        "ResourceTypeOptions":{
+          "shape":"ResourceTypeOptionList",
+          "locationName":"ResourceTypeOption"
+        }
+      }
+    },
+    "ResourceTypeRequestList":{
+      "type":"list",
+      "member":{"shape":"ResourceTypeRequest"}
     },
     "ResponseError":{
       "type":"structure",
@@ -50831,6 +51304,13 @@
       "type":"list",
       "member":{
         "shape":"UserIdGroupPair",
+        "locationName":"item"
+      }
+    },
+    "UserIdList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
         "locationName":"item"
       }
     },

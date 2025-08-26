@@ -80,6 +80,7 @@
     "CreateFlowLogs": "<p>Creates one or more flow logs to capture information about IP traffic for a specific network interface, subnet, or VPC. </p> <p>Flow log data for a monitored network interface is recorded as flow log records, which are log events consisting of fields that describe the traffic flow. For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html\">Flow log records</a> in the <i>Amazon VPC User Guide</i>.</p> <p>When publishing to CloudWatch Logs, flow log records are published to a log group, and each network interface has a unique log stream in the log group. When publishing to Amazon S3, flow log records for all of the monitored network interfaces are published to a single log file object that is stored in the specified bucket.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html\">VPC Flow Logs</a> in the <i>Amazon VPC User Guide</i>.</p>",
     "CreateFpgaImage": "<p>Creates an Amazon FPGA Image (AFI) from the specified design checkpoint (DCP).</p> <p>The create operation is asynchronous. To verify that the AFI is ready for use, check the output logs.</p> <p>An AFI contains the FPGA bitstream that is ready to download to an FPGA. You can securely deploy an AFI on multiple FPGA-accelerated instances. For more information, see the <a href=\"https://github.com/aws/aws-fpga/\">Amazon Web Services FPGA Hardware Development Kit</a>.</p>",
     "CreateImage": "<p>Creates an Amazon EBS-backed AMI from an Amazon EBS-backed instance that is either running or stopped.</p> <p>If you customized your instance with instance store volumes or Amazon EBS volumes in addition to the root device volume, the new AMI contains block device mapping information for those volumes. When you launch an instance from this new AMI, the instance automatically launches with those additional volumes.</p> <p>The location of the source instance determines where you can create the snapshots of the AMI:</p> <ul> <li> <p>If the source instance is in a Region, you must create the snapshots in the same Region as the instance.</p> </li> <li> <p>If the source instance is in a Local Zone, you can create the snapshots in the same Local Zone or in its parent Region.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html\">Create an Amazon EBS-backed AMI</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+    "CreateImageUsageReport": "<p>Creates a report that shows how your image is used across other Amazon Web Services accounts. The report provides visibility into which accounts are using the specified image, and how many resources (EC2 instances or launch templates) are referencing it.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-ami-usage.html\">View your AMI usage</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateInstanceConnectEndpoint": "<p>Creates an EC2 Instance Connect Endpoint.</p> <p>An EC2 Instance Connect Endpoint allows you to connect to an instance, without requiring the instance to have a public IPv4 or public IPv6 address. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Connect-using-EC2-Instance-Connect-Endpoint.html\">Connect to your instances using EC2 Instance Connect Endpoint</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateInstanceEventWindow": "<p>Creates an event window in which scheduled events for the associated Amazon EC2 instances can run.</p> <p>You can define either a set of time ranges or a cron expression when creating the event window, but not both. All event window times are in UTC.</p> <p>You can create up to 200 event windows per Amazon Web Services Region.</p> <p>When you create the event window, targets (instance IDs, Dedicated Host IDs, or tags) are not yet associated with it. To ensure that the event window can be used, you must associate one or more targets with it by using the <a>AssociateInstanceEventWindow</a> API.</p> <important> <p>Event windows are applicable only for scheduled events that stop, reboot, or terminate instances.</p> <p>Event windows are <i>not</i> applicable for:</p> <ul> <li> <p>Expedited scheduled events and network maintenance events. </p> </li> <li> <p>Unscheduled maintenance such as AutoRecovery and unplanned reboots.</p> </li> </ul> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/event-windows.html\">Define event windows for scheduled events</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "CreateInstanceExportTask": "<p>Exports a running or stopped instance to an Amazon S3 bucket.</p> <p>For information about the prerequisites for your Amazon S3 bucket, supported operating systems, image formats, and known limitations for the types of instances you can export, see <a href=\"https://docs.aws.amazon.com/vm-import/latest/userguide/vmexport.html\">Exporting an instance as a VM Using VM Import/Export</a> in the <i>VM Import/Export User Guide</i>.</p>",
@@ -165,6 +166,7 @@
     "DeleteFleets": "<p>Deletes the specified EC2 Fleet request.</p> <p>After you delete an EC2 Fleet request, it launches no new instances.</p> <p>You must also specify whether a deleted EC2 Fleet request should terminate its instances. If you choose to terminate the instances, the EC2 Fleet request enters the <code>deleted_terminating</code> state. Otherwise, it enters the <code>deleted_running</code> state, and the instances continue to run until they are interrupted or you terminate them manually.</p> <p>A deleted <code>instant</code> fleet with running instances is not supported. When you delete an <code>instant</code> fleet, Amazon EC2 automatically terminates all its instances. For fleets with more than 1000 instances, the deletion request might fail. If your fleet has more than 1000 instances, first terminate most of the instances manually, leaving 1000 or fewer. Then delete the fleet, and the remaining instances will be terminated automatically.</p> <p class=\"title\"> <b>Restrictions</b> </p> <ul> <li> <p>You can delete up to 25 fleets of type <code>instant</code> in a single request.</p> </li> <li> <p>You can delete up to 100 fleets of type <code>maintain</code> or <code>request</code> in a single request.</p> </li> <li> <p>You can delete up to 125 fleets in a single request, provided you do not exceed the quota for each fleet type, as specified above.</p> </li> <li> <p>If you exceed the specified number of fleets to delete, no fleets are deleted.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/delete-fleet.html\">Delete an EC2 Fleet request and the instances in the fleet</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DeleteFlowLogs": "<p>Deletes one or more flow logs.</p>",
     "DeleteFpgaImage": "<p>Deletes the specified Amazon FPGA Image (AFI).</p>",
+    "DeleteImageUsageReport": "<p>Deletes the specified image usage report.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-ami-usage.html\">View your AMI usage</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DeleteInstanceConnectEndpoint": "<p>Deletes the specified EC2 Instance Connect Endpoint.</p>",
     "DeleteInstanceEventWindow": "<p>Deletes the specified event window.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/event-windows.html\">Define event windows for scheduled events</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DeleteInternetGateway": "<p>Deletes the specified internet gateway. You must detach the internet gateway from the VPC before you can delete it.</p>",
@@ -291,6 +293,9 @@
     "DescribeIdFormat": "<p>Describes the ID format settings for your resources on a per-Region basis, for example, to view which resource types are enabled for longer IDs. This request only returns information about resource types whose ID formats can be modified; it does not return information about other resource types.</p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p> <p>These settings apply to the IAM user who makes the request; they do not apply to the entire Amazon Web Services account. By default, an IAM user defaults to the same settings as the root user, unless they explicitly override the settings by running the <a>ModifyIdFormat</a> command. Resources created with longer IDs are visible to all IAM users, regardless of these settings and provided that they have permission to use the relevant <code>Describe</code> command for the resource type.</p>",
     "DescribeIdentityIdFormat": "<p>Describes the ID format settings for resources for the specified IAM user, IAM role, or root user. For example, you can view the resource types that are enabled for longer IDs. This request only returns information about resource types whose ID formats can be modified; it does not return information about other resource types. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html\">Resource IDs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>. </p> <p>The following resource types support longer IDs: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code>. </p> <p>These settings apply to the principal specified in the request. They do not apply to the principal that makes the request.</p>",
     "DescribeImageAttribute": "<p>Describes the specified attribute of the specified AMI. You can specify only one attribute at a time.</p> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
+    "DescribeImageReferences": "<p>Describes your Amazon Web Services resources that are referencing the specified images. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-ami-references.html\">Identiy your resources referencing selected AMIs</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+    "DescribeImageUsageReportEntries": "<p>Describes the entries in image usage reports, showing how your images are used across other Amazon Web Services accounts.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-ami-usage.html\">View your AMI usage</a> in the <i>Amazon EC2 User Guide</i>.</p>",
+    "DescribeImageUsageReports": "<p>Describes the configuration and status of image usage reports, filtered by report IDs or image IDs.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-ami-usage.html\">View your AMI usage</a> in the <i>Amazon EC2 User Guide</i>.</p>",
     "DescribeImages": "<p>Describes the specified images (AMIs, AKIs, and ARIs) available to you or all of the images available to you.</p> <p>The images available to you include public images, private images that you own, and private images owned by other Amazon Web Services accounts for which you have explicit launch permissions.</p> <p>Recently deregistered images appear in the returned results for a short interval and then return empty results. After all instances that reference a deregistered AMI are terminated, specifying the ID of the image will eventually return an error indicating that the AMI ID cannot be found.</p> <p>When Allowed AMIs is set to <code>enabled</code>, only allowed images are returned in the results, with the <code>imageAllowed</code> field set to <code>true</code> for each image. In <code>audit-mode</code>, the <code>imageAllowed</code> field is set to <code>true</code> for images that meet the account's Allowed AMIs criteria, and <code>false</code> for images that don't meet the criteria. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html\">Allowed AMIs</a>.</p> <p>The Amazon EC2 API follows an eventual consistency model. This means that the result of an API command you run that creates or modifies resources might not be immediately available to all subsequent commands you run. For guidance on how to manage eventual consistency, see <a href=\"https://docs.aws.amazon.com/ec2/latest/devguide/eventual-consistency.html\">Eventual consistency in the Amazon EC2 API</a> in the <i>Amazon EC2 Developer Guide</i>.</p> <important> <p>We strongly recommend using only paginated requests. Unpaginated requests are susceptible to throttling and timeouts.</p> </important> <note> <p>The order of the elements in the response, including those within nested structures, might vary. Applications should not assume the elements appear in a particular order.</p> </note>",
     "DescribeImportImageTasks": "<p>Displays details about an import virtual machine or import snapshot tasks that are already created.</p>",
     "DescribeImportSnapshotTasks": "<p>Describes your import snapshot tasks.</p>",
@@ -2318,6 +2323,7 @@
         "CreateFpgaImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateImageRequest$NoReboot": "<p>Indicates whether or not the instance should be automatically rebooted before creating the image. Specify one of the following values:</p> <ul> <li> <p> <code>true</code> - The instance is not rebooted before creating the image. This creates crash-consistent snapshots that include only the data that has been written to the volumes at the time the snapshots are created. Buffered data and data in memory that has not yet been written to the volumes is not included in the snapshots.</p> </li> <li> <p> <code>false</code> - The instance is rebooted before creating the image. This ensures that all buffered data and data in memory is written to the volumes before the snapshots are created.</p> </li> </ul> <p>Default: <code>false</code> </p>",
+        "CreateImageUsageReportRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateInstanceConnectEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateInstanceConnectEndpointRequest$PreserveClientIp": "<p>Indicates whether the client IP address is preserved as the source. The following are the possible values.</p> <ul> <li> <p> <code>true</code> - Use the client IP address as the source.</p> </li> <li> <p> <code>false</code> - Use the network interface IP address as the source.</p> </li> </ul> <note> <p> <code>PreserveClientIp</code> is only supported on IPv4 EC2 Instance Connect Endpoints. To use <code>PreserveClientIp</code>, the value for <code>IpAddressType</code> must be <code>ipv4</code>.</p> </note> <p>Default: <code>false</code> </p>",
         "CreateInstanceEventWindowRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -2422,6 +2428,8 @@
         "DeleteFlowLogsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteFpgaImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteFpgaImageResult$Return": "<p>Is <code>true</code> if the request succeeds, and an error otherwise.</p>",
+        "DeleteImageUsageReportRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DeleteImageUsageReportResult$Return": "<p>Returns <code>true</code> if the request succeeds; otherwise, it returns an error.</p>",
         "DeleteInstanceConnectEndpointRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteInstanceEventWindowRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DeleteInstanceEventWindowRequest$ForceDelete": "<p>Specify <code>true</code> to force delete the event window. Use the force delete parameter if the event window is currently associated with targets.</p>",
@@ -2555,6 +2563,10 @@
         "DescribeFpgaImageAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeFpgaImagesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeImageAttributeRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeImageReferencesRequest$IncludeAllResourceTypes": "<p>Specifies whether to check all supported Amazon Web Services resource types for image references. When specified, default values are applied for <code>ResourceTypeOptions</code>. For the default values, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/how-ami-references-works.html\">How AMI reference checks work</a> in the <i>Amazon EC2 User Guide</i>. If you also specify <code>ResourceTypes</code> with <code>ResourceTypeOptions</code>, your specified values override the default values.</p> <p>Supported resource types: <code>ec2:Instance</code> | <code>ec2:LaunchTemplate</code> | <code>ssm:Parameter</code> | <code>imagebuilder:ImageRecipe</code> | <code>imagebuilder:ContainerRecipe</code> </p> <p>Either <code>IncludeAllResourceTypes</code> or <code>ResourceTypes</code> must be specified.</p>",
+        "DescribeImageReferencesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeImageUsageReportEntriesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
+        "DescribeImageUsageReportsRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "DescribeImagesRequest$IncludeDeprecated": "<p>Specifies whether to include deprecated AMIs.</p> <p>Default: No deprecated AMIs are included in the response.</p> <note> <p>If you are the AMI owner, all deprecated AMIs appear in the response regardless of what you specify for this parameter.</p> </note>",
         "DescribeImagesRequest$IncludeDisabled": "<p>Specifies whether to include disabled AMIs.</p> <p>Default: No disabled AMIs are included in the response.</p>",
         "DescribeImagesRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
@@ -4844,6 +4856,16 @@
       "refs": {
       }
     },
+    "CreateImageUsageReportRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateImageUsageReportResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateInstanceConnectEndpointRequest": {
       "base": null,
       "refs": {
@@ -6107,6 +6129,16 @@
       }
     },
     "DeleteFpgaImageResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteImageUsageReportRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteImageUsageReportResult": {
       "base": null,
       "refs": {
       }
@@ -7553,6 +7585,67 @@
     },
     "DescribeImageAttributeRequest": {
       "base": "<p>Contains the parameters for DescribeImageAttribute.</p>",
+      "refs": {
+      }
+    },
+    "DescribeImageReferencesImageIdStringList": {
+      "base": null,
+      "refs": {
+        "DescribeImageReferencesRequest$ImageIds": "<p>The IDs of the images to check for resource references.</p>"
+      }
+    },
+    "DescribeImageReferencesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeImageReferencesRequest$MaxResults": "<p> The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>. </p>"
+      }
+    },
+    "DescribeImageReferencesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeImageReferencesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeImageUsageReportEntriesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeImageUsageReportEntriesRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeImageUsageReportEntriesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeImageUsageReportEntriesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeImageUsageReportsImageIdStringList": {
+      "base": null,
+      "refs": {
+        "DescribeImageUsageReportEntriesRequest$ImageIds": "<p>The IDs of the images for filtering the report entries. If specified, only report entries containing these images are returned.</p>",
+        "DescribeImageUsageReportsRequest$ImageIds": "<p>The IDs of the images for filtering the reports. If specified, only reports containing these images are returned.</p>"
+      }
+    },
+    "DescribeImageUsageReportsMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeImageUsageReportsRequest$MaxResults": "<p>The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination\">Pagination</a>.</p>"
+      }
+    },
+    "DescribeImageUsageReportsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeImageUsageReportsResult": {
+      "base": null,
       "refs": {
       }
     },
@@ -10690,6 +10783,8 @@
         "DescribeHostReservationsRequest$Filter": "<p>The filters.</p> <ul> <li> <p> <code>instance-family</code> - The instance family (for example, <code>m4</code>).</p> </li> <li> <p> <code>payment-option</code> - The payment option (<code>NoUpfront</code> | <code>PartialUpfront</code> | <code>AllUpfront</code>).</p> </li> <li> <p> <code>state</code> - The state of the reservation (<code>payment-pending</code> | <code>payment-failed</code> | <code>active</code> | <code>retired</code>).</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeHostsRequest$Filter": "<p>The filters.</p> <ul> <li> <p> <code>auto-placement</code> - Whether auto-placement is enabled or disabled (<code>on</code> | <code>off</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone of the host.</p> </li> <li> <p> <code>client-token</code> - The idempotency token that you provided when you allocated the host.</p> </li> <li> <p> <code>host-reservation-id</code> - The ID of the reservation assigned to this host.</p> </li> <li> <p> <code>instance-type</code> - The instance type size that the Dedicated Host is configured to support.</p> </li> <li> <p> <code>state</code> - The allocation state of the Dedicated Host (<code>available</code> | <code>under-assessment</code> | <code>permanent-failure</code> | <code>released</code> | <code>released-permanent-failure</code>).</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
         "DescribeIamInstanceProfileAssociationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>instance-id</code> - The ID of the instance.</p> </li> <li> <p> <code>state</code> - The state of the association (<code>associating</code> | <code>associated</code> | <code>disassociating</code>).</p> </li> </ul>",
+        "DescribeImageUsageReportEntriesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>account-id</code> - A 12-digit Amazon Web Services account ID.</p> </li> <li> <p> <code>creation-time</code> - The time when the report was created, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), for example, <code>2025-11-29T11:04:43.305Z</code>. You can use a wildcard (<code>*</code>), for example, <code>2025-11-29T*</code>, which matches an entire day.</p> </li> <li> <p> <code>resource-type</code> - The resource type (<code>ec2:Instance</code> | <code>ec2:LaunchTemplate</code>).</p> </li> </ul>",
+        "DescribeImageUsageReportsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>creation-time</code> - The time when the report was created, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), for example, <code>2025-11-29T11:04:43.305Z</code>. You can use a wildcard (<code>*</code>), for example, <code>2025-11-29T*</code>, which matches an entire day.</p> </li> <li> <p> <code>state</code> - The state of the report (<code>available</code> | <code>pending</code> | <code>error</code>).</p> </li> </ul>",
         "DescribeImagesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>architecture</code> - The image architecture (<code>i386</code> | <code>x86_64</code> | <code>arm64</code> | <code>x86_64_mac</code> | <code>arm64_mac</code>).</p> </li> <li> <p> <code>block-device-mapping.delete-on-termination</code> - A Boolean value that indicates whether the Amazon EBS volume is deleted on instance termination.</p> </li> <li> <p> <code>block-device-mapping.device-name</code> - The device name specified in the block device mapping (for example, <code>/dev/sdh</code> or <code>xvdh</code>).</p> </li> <li> <p> <code>block-device-mapping.snapshot-id</code> - The ID of the snapshot used for the Amazon EBS volume.</p> </li> <li> <p> <code>block-device-mapping.volume-size</code> - The volume size of the Amazon EBS volume, in GiB.</p> </li> <li> <p> <code>block-device-mapping.volume-type</code> - The volume type of the Amazon EBS volume (<code>io1</code> | <code>io2</code> | <code>gp2</code> | <code>gp3</code> | <code>sc1 </code>| <code>st1</code> | <code>standard</code>).</p> </li> <li> <p> <code>block-device-mapping.encrypted</code> - A Boolean that indicates whether the Amazon EBS volume is encrypted.</p> </li> <li> <p> <code>creation-date</code> - The time when the image was created, in the ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ), for example, <code>2021-09-29T11:04:43.305Z</code>. You can use a wildcard (<code>*</code>), for example, <code>2021-09-29T*</code>, which matches an entire day.</p> </li> <li> <p> <code>description</code> - The description of the image (provided during image creation).</p> </li> <li> <p> <code>ena-support</code> - A Boolean that indicates whether enhanced networking with ENA is enabled.</p> </li> <li> <p> <code>free-tier-eligible</code> - A Boolean that indicates whether this image can be used under the Amazon Web Services Free Tier (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>hypervisor</code> - The hypervisor type (<code>ovm</code> | <code>xen</code>).</p> </li> <li> <p> <code>image-allowed</code> - A Boolean that indicates whether the image meets the criteria specified for Allowed AMIs.</p> </li> <li> <p> <code>image-id</code> - The ID of the image.</p> </li> <li> <p> <code>image-type</code> - The image type (<code>machine</code> | <code>kernel</code> | <code>ramdisk</code>).</p> </li> <li> <p> <code>is-public</code> - A Boolean that indicates whether the image is public.</p> </li> <li> <p> <code>kernel-id</code> - The kernel ID.</p> </li> <li> <p> <code>manifest-location</code> - The location of the image manifest.</p> </li> <li> <p> <code>name</code> - The name of the AMI (provided during image creation).</p> </li> <li> <p> <code>owner-alias</code> - The owner alias (<code>amazon</code> | <code>aws-backup-vault</code> | <code>aws-marketplace</code>). The valid aliases are defined in an Amazon-maintained list. This is not the Amazon Web Services account alias that can be set using the IAM console. We recommend that you use the <b>Owner</b> request parameter instead of this filter.</p> </li> <li> <p> <code>owner-id</code> - The Amazon Web Services account ID of the owner. We recommend that you use the <b>Owner</b> request parameter instead of this filter.</p> </li> <li> <p> <code>platform</code> - The platform. The only supported value is <code>windows</code>.</p> </li> <li> <p> <code>product-code</code> - The product code.</p> </li> <li> <p> <code>product-code.type</code> - The type of the product code (<code>marketplace</code>).</p> </li> <li> <p> <code>ramdisk-id</code> - The RAM disk ID.</p> </li> <li> <p> <code>root-device-name</code> - The device name of the root device volume (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>root-device-type</code> - The type of the root device volume (<code>ebs</code> | <code>instance-store</code>).</p> </li> <li> <p> <code>source-image-id</code> - The ID of the source AMI from which the AMI was created.</p> </li> <li> <p> <code>source-image-region</code> - The Region of the source AMI.</p> </li> <li> <p> <code>source-instance-id</code> - The ID of the instance that the AMI was created from if the AMI was created using CreateImage. This filter is applicable only if the AMI was created using <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateImage.html\">CreateImage</a>.</p> </li> <li> <p> <code>state</code> - The state of the image (<code>available</code> | <code>pending</code> | <code>failed</code>).</p> </li> <li> <p> <code>state-reason-code</code> - The reason code for the state change.</p> </li> <li> <p> <code>state-reason-message</code> - The message for the state change.</p> </li> <li> <p> <code>sriov-net-support</code> - A value of <code>simple</code> indicates that enhanced networking with the Intel 82599 VF interface is enabled.</p> </li> <li> <p> <code>tag:&lt;key&gt;</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>virtualization-type</code> - The virtualization type (<code>paravirtual</code> | <code>hvm</code>).</p> </li> </ul>",
         "DescribeImportImageTasksRequest$Filters": "<p>Filter tasks using the <code>task-state</code> filter and one of the following values: <code>active</code>, <code>completed</code>, <code>deleting</code>, or <code>deleted</code>.</p>",
         "DescribeImportSnapshotTasksRequest$Filters": "<p>The filters.</p>",
@@ -10784,7 +10879,7 @@
         "DescribeVolumesRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>attachment.attach-time</code> - The time stamp when the attachment initiated.</p> </li> <li> <p> <code>attachment.delete-on-termination</code> - Whether the volume is deleted on instance termination.</p> </li> <li> <p> <code>attachment.device</code> - The device name specified in the block device mapping (for example, <code>/dev/sda1</code>).</p> </li> <li> <p> <code>attachment.instance-id</code> - The ID of the instance the volume is attached to.</p> </li> <li> <p> <code>attachment.status</code> - The attachment state (<code>attaching</code> | <code>attached</code> | <code>detaching</code>).</p> </li> <li> <p> <code>availability-zone</code> - The Availability Zone in which the volume was created.</p> </li> <li> <p> <code>availability-zone-id</code> - The ID of the Availability Zone in which the volume was created.</p> </li> <li> <p> <code>create-time</code> - The time stamp when the volume was created.</p> </li> <li> <p> <code>encrypted</code> - Indicates whether the volume is encrypted (<code>true</code> | <code>false</code>)</p> </li> <li> <p> <code>fast-restored</code> - Indicates whether the volume was created from a snapshot that is enabled for fast snapshot restore (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>multi-attach-enabled</code> - Indicates whether the volume is enabled for Multi-Attach (<code>true</code> | <code>false</code>)</p> </li> <li> <p> <code>operator.managed</code> - A Boolean that indicates whether this is a managed volume.</p> </li> <li> <p> <code>operator.principal</code> - The principal that manages the volume. Only valid for managed volumes, where <code>managed</code> is <code>true</code>.</p> </li> <li> <p> <code>size</code> - The size of the volume, in GiB.</p> </li> <li> <p> <code>snapshot-id</code> - The snapshot from which the volume was created.</p> </li> <li> <p> <code>status</code> - The state of the volume (<code>creating</code> | <code>available</code> | <code>in-use</code> | <code>deleting</code> | <code>deleted</code> | <code>error</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>volume-id</code> - The volume ID.</p> </li> <li> <p> <code>volume-type</code> - The Amazon EBS volume type (<code>gp2</code> | <code>gp3</code> | <code>io1</code> | <code>io2</code> | <code>st1</code> | <code>sc1</code>| <code>standard</code>)</p> </li> </ul>",
         "DescribeVpcBlockPublicAccessExclusionsRequest$Filters": "<p>Filters for the request:</p> <ul> <li> <p> <code>resource-arn</code> - The Amazon Resource Name (ARN) of a exclusion.</p> </li> <li> <p> <code>internet-gateway-exclusion-mode</code> - The mode of a VPC BPA exclusion. Possible values: <code>allow-bidirectional | allow-egress</code>.</p> </li> <li> <p> <code>state</code> - The state of VPC BPA. Possible values: <code>create-in-progress | create-complete | update-in-progress | update-complete | delete-in-progress | deleted-complete | disable-in-progress | disable-complete</code> </p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> <li> <p> <code>tag-value</code>: The value of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific value, regardless of the tag key.</p> </li> </ul>",
         "DescribeVpcClassicLinkRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>is-classic-link-enabled</code> - Whether the VPC is enabled for ClassicLink (<code>true</code> | <code>false</code>).</p> </li> <li> <p> <code>tag</code> - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
-        "DescribeVpcEndpointAssociationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>vpc-endpoint-id</code> - The ID of the VPC endpoint.</p> </li> <li> <p> <code>associated-resource-accessibility</code> - The association state. When the state is <code>accessible</code>, it returns <code>AVAILABLE</code>. When the state is <code>inaccessible</code>, it returns <code>PENDING</code> or <code>FAILED</code>.</p> </li> <li> <p> <code>association-id</code> - The ID of the VPC endpoint association.</p> </li> <li> <p> <code>associated-resource-id</code> - The ID of the associated resource configuration.</p> </li> <li> <p> <code>service-network-arn</code> - The Amazon Resource Name (ARN) of the associated service network. Only VPC endpoints of type service network will be returned.</p> </li> <li> <p> <code>resource-configuration-group-arn</code> - The Amazon Resource Name (ARN) of the resource configuration of type GROUP.</p> </li> </ul>",
+        "DescribeVpcEndpointAssociationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>vpc-endpoint-id</code> - The ID of the VPC endpoint.</p> </li> <li> <p> <code>associated-resource-accessibility</code> - The association state. When the state is <code>accessible</code>, it returns <code>AVAILABLE</code>. When the state is <code>inaccessible</code>, it returns <code>PENDING</code> or <code>FAILED</code>.</p> </li> <li> <p> <code>association-id</code> - The ID of the VPC endpoint association.</p> </li> <li> <p> <code>associated-resource-id</code> - The ID of the associated resource configuration.</p> </li> <li> <p> <code>service-network-arn</code> - The Amazon Resource Name (ARN) of the associated service network. Only VPC endpoints of type service network will be returned.</p> </li> <li> <p> <code>resource-configuration-group-arn</code> - The Amazon Resource Name (ARN) of the resource configuration of type GROUP.</p> </li> <li> <p> <code>service-network-resource-association-id</code> - The ID of the association.</p> </li> </ul>",
         "DescribeVpcEndpointConnectionNotificationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>connection-notification-arn</code> - The ARN of the SNS topic for the notification.</p> </li> <li> <p> <code>connection-notification-id</code> - The ID of the notification.</p> </li> <li> <p> <code>connection-notification-state</code> - The state of the notification (<code>Enabled</code> | <code>Disabled</code>).</p> </li> <li> <p> <code>connection-notification-type</code> - The type of notification (<code>Topic</code>).</p> </li> <li> <p> <code>service-id</code> - The ID of the endpoint service.</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the VPC endpoint.</p> </li> </ul>",
         "DescribeVpcEndpointConnectionsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>ip-address-type</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>service-id</code> - The ID of the service.</p> </li> <li> <p> <code>vpc-endpoint-owner</code> - The ID of the Amazon Web Services account ID that owns the endpoint.</p> </li> <li> <p> <code>vpc-endpoint-region</code> - The Region of the endpoint or <code>cross-region</code> to find endpoints for other Regions.</p> </li> <li> <p> <code>vpc-endpoint-state</code> - The state of the endpoint (<code>pendingAcceptance</code> | <code>pending</code> | <code>available</code> | <code>deleting</code> | <code>deleted</code> | <code>rejected</code> | <code>failed</code>).</p> </li> <li> <p> <code>vpc-endpoint-id</code> - The ID of the endpoint.</p> </li> </ul>",
         "DescribeVpcEndpointServiceConfigurationsRequest$Filters": "<p>The filters.</p> <ul> <li> <p> <code>service-name</code> - The name of the service.</p> </li> <li> <p> <code>service-id</code> - The ID of the service.</p> </li> <li> <p> <code>service-state</code> - The state of the service (<code>Pending</code> | <code>Available</code> | <code>Deleting</code> | <code>Deleted</code> | <code>Failed</code>). </p> </li> <li> <p> <code>supported-ip-address-types</code> - The IP address type (<code>ipv4</code> | <code>ipv6</code>).</p> </li> <li> <p> <code>tag</code>:&lt;key&gt; - The key/value combination of a tag assigned to the resource. Use the tag key in the filter name and the tag value as the filter value. For example, to find all resources that have a tag with the key <code>Owner</code> and the value <code>TeamA</code>, specify <code>tag:Owner</code> for the filter name and <code>TeamA</code> for the filter value.</p> </li> <li> <p> <code>tag-key</code> - The key of a tag assigned to the resource. Use this filter to find all resources assigned a tag with a specific key, regardless of the tag value.</p> </li> </ul>",
@@ -10848,7 +10943,7 @@
     "FleetActivityStatus": {
       "base": null,
       "refs": {
-        "FleetData$ActivityStatus": "<p>The progress of the EC2 Fleet. If there is an error, the status is <code>error</code>. After all requests are placed, the status is <code>pending_fulfillment</code>. If the size of the EC2 Fleet is equal to or greater than its target capacity, the status is <code>fulfilled</code>. If the size of the EC2 Fleet is decreased, the status is <code>pending_termination</code> while instances are terminating.</p>"
+        "FleetData$ActivityStatus": "<p>The progress of the EC2 Fleet.</p> <p>For fleets of type <code>instant</code>, the status is <code>fulfilled</code> after all requests are placed, regardless of whether target capacity is met (this is the only possible status for <code>instant</code> fleets).</p> <p>For fleets of type <code>request</code> or <code>maintain</code>, the status is <code>pending_fulfillment</code> after all requests are placed, <code>fulfilled</code> when the fleet size meets or exceeds target capacity, <code>pending_termination</code> while instances are terminating when fleet size is decreased, and <code>error</code> if there's an error.</p>"
       }
     },
     "FleetBlockDeviceMappingRequest": {
@@ -12299,11 +12394,14 @@
       "base": null,
       "refs": {
         "CancelImageLaunchPermissionRequest$ImageId": "<p>The ID of the AMI that was shared with your Amazon Web Services account.</p>",
+        "CreateImageUsageReportRequest$ImageId": "<p>The ID of the image to report on.</p>",
         "CreateReplaceRootVolumeTaskRequest$ImageId": "<p>The ID of the AMI to use to restore the root volume. The specified AMI must have the same product code, billing information, architecture type, and virtualization type as that of the instance.</p> <p>If you want to restore the replacement volume from a specific snapshot, or if you want to restore it to its launch state, omit this parameter.</p>",
         "CreateStoreImageTaskRequest$ImageId": "<p>The ID of the AMI.</p>",
         "DeregisterImageRequest$ImageId": "<p>The ID of the AMI.</p>",
         "DescribeFastLaunchImagesSuccessItem$ImageId": "<p>The image ID that identifies the Windows fast launch enabled image.</p>",
         "DescribeImageAttributeRequest$ImageId": "<p>The ID of the AMI.</p>",
+        "DescribeImageReferencesImageIdStringList$member": null,
+        "DescribeImageUsageReportsImageIdStringList$member": null,
         "DisableFastLaunchRequest$ImageId": "<p>Specify the ID of the image for which to disable Windows fast launch.</p>",
         "DisableFastLaunchResult$ImageId": "<p>The ID of the image for which Windows fast launch was disabled.</p>",
         "DisableImageDeprecationRequest$ImageId": "<p>The ID of the AMI.</p>",
@@ -12320,6 +12418,9 @@
         "ImageIdList$member": null,
         "ImageIdStringList$member": null,
         "ImageMetadata$ImageId": "<p>The ID of the AMI.</p>",
+        "ImageReference$ImageId": "<p>The ID of the referenced image.</p>",
+        "ImageUsageReport$ImageId": "<p>The ID of the image that was specified when the report was created.</p>",
+        "ImageUsageReportEntry$ImageId": "<p>The ID of the image.</p>",
         "ModifyImageAttributeRequest$ImageId": "<p>The ID of the AMI.</p>",
         "ReplaceRootVolumeTask$ImageId": "<p>The ID of the AMI used to create the replacement root volume.</p>",
         "RequestLaunchTemplateData$ImageId": "<p>The ID of the AMI in the format <code>ami-0ac394d6a3example</code>.</p> <p>Alternatively, you can specify a Systems Manager parameter, using one of the following formats. The Systems Manager parameter will resolve to an AMI ID on launch.</p> <p>To reference a public parameter:</p> <ul> <li> <p> <code>resolve:ssm:<i>public-parameter</i> </code> </p> </li> </ul> <p>To reference a parameter stored in the same account:</p> <ul> <li> <p> <code>resolve:ssm:<i>parameter-name</i> </code> </p> </li> <li> <p> <code>resolve:ssm:<i>parameter-name:version-number</i> </code> </p> </li> <li> <p> <code>resolve:ssm:<i>parameter-name:label</i> </code> </p> </li> </ul> <p>To reference a parameter shared from another Amazon Web Services account:</p> <ul> <li> <p> <code>resolve:ssm:<i>parameter-ARN</i> </code> </p> </li> <li> <p> <code>resolve:ssm:<i>parameter-ARN:version-number</i> </code> </p> </li> <li> <p> <code>resolve:ssm:<i>parameter-ARN:label</i> </code> </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-launch-template.html#use-an-ssm-parameter-instead-of-an-ami-id\">Use a Systems Manager parameter instead of an AMI ID</a> in the <i>Amazon EC2 User Guide</i>.</p> <note> <p>If the launch template will be used for an EC2 Fleet or Spot Fleet, note the following:</p> <ul> <li> <p>Only EC2 Fleets of type <code>instant</code> support specifying a Systems Manager parameter.</p> </li> <li> <p>For EC2 Fleets of type <code>maintain</code> or <code>request</code>, or for Spot Fleets, you must specify the AMI ID.</p> </li> </ul> </note>",
@@ -12392,6 +12493,31 @@
         "ListImagesInRecycleBinResult$Images": "<p>Information about the AMIs.</p>"
       }
     },
+    "ImageReference": {
+      "base": "<p>A resource that is referencing an image.</p>",
+      "refs": {
+        "ImageReferenceList$member": null
+      }
+    },
+    "ImageReferenceList": {
+      "base": null,
+      "refs": {
+        "DescribeImageReferencesResult$ImageReferences": "<p>The resources that are referencing the specified images.</p>"
+      }
+    },
+    "ImageReferenceOptionName": {
+      "base": null,
+      "refs": {
+        "ResourceTypeOption$OptionName": "<p>The name of the option.</p> <ul> <li> <p>For <code>ec2:Instance</code>:</p> <p>Specify <code>state-name</code> - The current state of the EC2 instance.</p> </li> <li> <p>For <code>ec2:LaunchTemplate</code>:</p> <p>Specify <code>version-depth</code> - The number of launch template versions to check, starting from the most recent version.</p> </li> </ul>"
+      }
+    },
+    "ImageReferenceResourceType": {
+      "base": null,
+      "refs": {
+        "ImageReference$ResourceType": "<p>The type of resource referencing the image.</p>",
+        "ResourceTypeRequest$ResourceType": "<p>The resource type.</p>"
+      }
+    },
     "ImageState": {
       "base": null,
       "refs": {
@@ -12403,6 +12529,134 @@
       "base": null,
       "refs": {
         "Image$ImageType": "<p>The type of image.</p>"
+      }
+    },
+    "ImageUsageReport": {
+      "base": "<p>The configuration and status of an image usage report.</p>",
+      "refs": {
+        "ImageUsageReportList$member": null
+      }
+    },
+    "ImageUsageReportEntry": {
+      "base": "<p>A single entry in an image usage report, detailing how an image is being used by a specific Amazon Web Services account and resource type.</p>",
+      "refs": {
+        "ImageUsageReportEntryList$member": null
+      }
+    },
+    "ImageUsageReportEntryList": {
+      "base": null,
+      "refs": {
+        "DescribeImageUsageReportEntriesResult$ImageUsageReportEntries": "<p>The content of the usage reports.</p>"
+      }
+    },
+    "ImageUsageReportId": {
+      "base": null,
+      "refs": {
+        "CreateImageUsageReportResult$ReportId": "<p>The ID of the report.</p>",
+        "DeleteImageUsageReportRequest$ReportId": "<p>The ID of the report to delete.</p>",
+        "ImageUsageReport$ReportId": "<p>The ID of the report.</p>",
+        "ImageUsageReportEntry$ReportId": "<p>The ID of the report.</p>",
+        "ImageUsageReportIdStringList$member": null
+      }
+    },
+    "ImageUsageReportIdStringList": {
+      "base": null,
+      "refs": {
+        "DescribeImageUsageReportEntriesRequest$ReportIds": "<p>The IDs of the usage reports.</p>",
+        "DescribeImageUsageReportsRequest$ReportIds": "<p>The IDs of the image usage reports.</p>"
+      }
+    },
+    "ImageUsageReportList": {
+      "base": null,
+      "refs": {
+        "DescribeImageUsageReportsResult$ImageUsageReports": "<p>The image usage reports.</p>"
+      }
+    },
+    "ImageUsageReportState": {
+      "base": null,
+      "refs": {
+        "ImageUsageReport$State": "<p>The current state of the report. Possible values:</p> <ul> <li> <p> <code>available</code> - The report is available to view.</p> </li> <li> <p> <code>pending</code> - The report is being created and not available to view.</p> </li> <li> <p> <code>error</code> - The report could not be created.</p> </li> </ul>"
+      }
+    },
+    "ImageUsageReportStateReason": {
+      "base": null,
+      "refs": {
+        "ImageUsageReport$StateReason": "<p>Provides additional details when the report is in an <code>error</code> state.</p>"
+      }
+    },
+    "ImageUsageReportUserIdStringList": {
+      "base": null,
+      "refs": {
+        "CreateImageUsageReportRequest$AccountIds": "<p>The Amazon Web Services account IDs to include in the report. To include all accounts, omit this parameter.</p>"
+      }
+    },
+    "ImageUsageResourceType": {
+      "base": "<p>A resource type to include in the report. Associated options can also be specified if the resource type is a launch template.</p>",
+      "refs": {
+        "ImageUsageResourceTypeList$member": null
+      }
+    },
+    "ImageUsageResourceTypeList": {
+      "base": null,
+      "refs": {
+        "ImageUsageReport$ResourceTypes": "<p>The resource types that were specified when the report was created.</p>"
+      }
+    },
+    "ImageUsageResourceTypeName": {
+      "base": null,
+      "refs": {
+        "ImageUsageReportEntry$ResourceType": "<p>The type of resource (<code>ec2:Instance</code> or <code>ec2:LaunchTemplate</code>).</p>",
+        "ImageUsageResourceType$ResourceType": "<p>The resource type.</p> <p>Valid values: <code>ec2:Instance</code> | <code>ec2:LaunchTemplate</code> </p>",
+        "ImageUsageResourceTypeRequest$ResourceType": "<p>The resource type.</p> <p>Valid values: <code>ec2:Instance</code> | <code>ec2:LaunchTemplate</code> </p>"
+      }
+    },
+    "ImageUsageResourceTypeOption": {
+      "base": "<p>The options that affect the scope of the report.</p>",
+      "refs": {
+        "ImageUsageResourceTypeOptionList$member": null
+      }
+    },
+    "ImageUsageResourceTypeOptionList": {
+      "base": null,
+      "refs": {
+        "ImageUsageResourceType$ResourceTypeOptions": "<p>The options that affect the scope of the report. Valid only when <code>ResourceType</code> is <code>ec2:LaunchTemplate</code>.</p>"
+      }
+    },
+    "ImageUsageResourceTypeOptionRequest": {
+      "base": "<p>The options that affect the scope of the report.</p>",
+      "refs": {
+        "ImageUsageResourceTypeOptionRequestList$member": null
+      }
+    },
+    "ImageUsageResourceTypeOptionRequestList": {
+      "base": null,
+      "refs": {
+        "ImageUsageResourceTypeRequest$ResourceTypeOptions": "<p>The options that affect the scope of the report. Valid only when <code>ResourceType</code> is <code>ec2:LaunchTemplate</code>.</p>"
+      }
+    },
+    "ImageUsageResourceTypeOptionValue": {
+      "base": null,
+      "refs": {
+        "ImageUsageResourceTypeOptionValuesList$member": null
+      }
+    },
+    "ImageUsageResourceTypeOptionValuesList": {
+      "base": null,
+      "refs": {
+        "ImageUsageResourceTypeOption$OptionValues": "<p>The number of launch template versions to check.</p>",
+        "ImageUsageResourceTypeOptionRequest$OptionValues": "<p>A value for the specified option.</p> <p>Valid values: Integers between <code>1</code> and <code>10000</code> </p> <p>Default: <code>20</code> </p>"
+      }
+    },
+    "ImageUsageResourceTypeRequest": {
+      "base": "<p>A resource type to include in the report. Associated options can also be specified if the resource type is a launch template.</p>",
+      "refs": {
+        "ImageUsageResourceTypeRequestList$member": null
+      }
+    },
+    "ImageUsageResourceTypeRequestList": {
+      "base": null,
+      "refs": {
+        "CreateImageUsageReportRequest$ResourceTypes": "<p>The resource types to include in the report.</p>"
       }
     },
     "ImdsSupportValues": {
@@ -16027,6 +16281,7 @@
         "DiskImageDetail$Bytes": "<p>The size of the disk image, in GiB.</p>",
         "DiskImageVolumeDescription$Size": "<p>The size of the volume, in GiB.</p>",
         "GetManagedPrefixListEntriesRequest$TargetVersion": "<p>The version of the prefix list for which to return the entries. The default is the current version.</p>",
+        "ImageUsageReportEntry$UsageCount": "<p>The number of times resources of this type reference this image in the account.</p>",
         "ImportInstanceVolumeDetailItem$BytesConverted": "<p>The number of bytes converted so far.</p>",
         "ImportVolumeTaskDetails$BytesConverted": "<p>The number of bytes converted so far.</p>",
         "InitializationStatusDetails$Progress": "<p>The current volume initialization progress as a percentage (0-100). Returns <code>100</code> when volume initialization has completed.</p>",
@@ -16450,6 +16705,9 @@
         "GetIpamDiscoveredPublicAddressesResult$OldestSampleTime": "<p>The oldest successful resource discovery time.</p>",
         "ImageRecycleBinInfo$RecycleBinEnterTime": "<p>The date and time when the AMI entered the Recycle Bin.</p>",
         "ImageRecycleBinInfo$RecycleBinExitTime": "<p>The date and time when the AMI is to be permanently deleted from the Recycle Bin.</p>",
+        "ImageUsageReport$CreationTime": "<p>The date and time when the report was created.</p>",
+        "ImageUsageReport$ExpirationTime": "<p>The date and time when Amazon EC2 will delete the report (30 days after the report was created).</p>",
+        "ImageUsageReportEntry$ReportCreationTime": "<p>The date and time the report creation was initiated.</p>",
         "Instance$UsageOperationUpdateTime": "<p>The time that the usage operation was last updated.</p>",
         "InstanceImageMetadata$LaunchTime": "<p>The time the instance was launched.</p>",
         "IpamAddressHistoryRecord$SampledStartTime": "<p>Sampled start time of the resource-to-CIDR association within the IPAM scope. Changes are picked up in periodic snapshots, so the start time may have occurred before this specific time.</p>",
@@ -20103,6 +20361,42 @@
         "TagSpecification$ResourceType": "<p>The type of resource to tag on creation.</p>"
       }
     },
+    "ResourceTypeOption": {
+      "base": "<p>The options that affect the scope of the response.</p>",
+      "refs": {
+        "ResourceTypeOptionList$member": null
+      }
+    },
+    "ResourceTypeOptionList": {
+      "base": null,
+      "refs": {
+        "ResourceTypeRequest$ResourceTypeOptions": "<p>The options that affect the scope of the response. Valid only when <code>ResourceType</code> is <code>ec2:Instance</code> or <code>ec2:LaunchTemplate</code>.</p>"
+      }
+    },
+    "ResourceTypeOptionValue": {
+      "base": null,
+      "refs": {
+        "ResourceTypeOptionValuesList$member": null
+      }
+    },
+    "ResourceTypeOptionValuesList": {
+      "base": null,
+      "refs": {
+        "ResourceTypeOption$OptionValues": "<p>A value for the specified option.</p> <ul> <li> <p>For <code>state-name</code>:</p> <ul> <li> <p>Valid values: <code>pending</code> | <code>running</code> | <code>shutting-down</code> | <code>terminated</code> | <code>stopping</code> | <code>stopped</code> </p> </li> <li> <p>Default: All states</p> </li> </ul> </li> <li> <p>For <code>version-depth</code>:</p> <ul> <li> <p>Valid values: Integers between <code>1</code> and <code>10000</code> </p> </li> <li> <p>Default: <code>10</code> </p> </li> </ul> </li> </ul>"
+      }
+    },
+    "ResourceTypeRequest": {
+      "base": "<p>A resource type to check for image references. Associated options can also be specified if the resource type is an EC2 instance or launch template.</p>",
+      "refs": {
+        "ResourceTypeRequestList$member": null
+      }
+    },
+    "ResourceTypeRequestList": {
+      "base": null,
+      "refs": {
+        "DescribeImageReferencesRequest$ResourceTypes": "<p>The Amazon Web Services resource types to check for image references.</p> <p>Either <code>IncludeAllResourceTypes</code> or <code>ResourceTypes</code> must be specified.</p>"
+      }
+    },
     "ResponseError": {
       "base": "<p>Describes the error that's returned when you cannot delete a launch template version.</p>",
       "refs": {
@@ -22194,6 +22488,7 @@
         "CreateImageRequest$Name": "<p>A name for the new image.</p> <p>Constraints: 3-128 alphanumeric characters, parentheses (()), square brackets ([]), spaces ( ), periods (.), slashes (/), dashes (-), single quotes ('), at-signs (@), or underscores(_)</p>",
         "CreateImageRequest$Description": "<p>A description for the new image.</p>",
         "CreateImageResult$ImageId": "<p>The ID of the new AMI.</p>",
+        "CreateImageUsageReportRequest$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure idempotency of the request.</p>",
         "CreateInstanceConnectEndpointRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "CreateInstanceConnectEndpointResult$ClientToken": "<p>Unique, case-sensitive idempotency token provided by the client in the the request.</p>",
         "CreateInstanceEventWindowRequest$Name": "<p>The name of the event window.</p>",
@@ -22459,6 +22754,12 @@
         "DescribeIdFormatRequest$Resource": "<p>The type of resource: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code> </p>",
         "DescribeIdentityIdFormatRequest$Resource": "<p>The type of resource: <code>bundle</code> | <code>conversion-task</code> | <code>customer-gateway</code> | <code>dhcp-options</code> | <code>elastic-ip-allocation</code> | <code>elastic-ip-association</code> | <code>export-task</code> | <code>flow-log</code> | <code>image</code> | <code>import-task</code> | <code>instance</code> | <code>internet-gateway</code> | <code>network-acl</code> | <code>network-acl-association</code> | <code>network-interface</code> | <code>network-interface-attachment</code> | <code>prefix-list</code> | <code>reservation</code> | <code>route-table</code> | <code>route-table-association</code> | <code>security-group</code> | <code>snapshot</code> | <code>subnet</code> | <code>subnet-cidr-block-association</code> | <code>volume</code> | <code>vpc</code> | <code>vpc-cidr-block-association</code> | <code>vpc-endpoint</code> | <code>vpc-peering-connection</code> | <code>vpn-connection</code> | <code>vpn-gateway</code> </p>",
         "DescribeIdentityIdFormatRequest$PrincipalArn": "<p>The ARN of the principal, which can be an IAM role, IAM user, or the root user.</p>",
+        "DescribeImageReferencesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
+        "DescribeImageReferencesResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "DescribeImageUsageReportEntriesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
+        "DescribeImageUsageReportEntriesResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
+        "DescribeImageUsageReportsRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
+        "DescribeImageUsageReportsResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeImagesRequest$NextToken": "<p>The token returned from a previous paginated request. Pagination continues from the end of the items returned by the previous request.</p>",
         "DescribeImagesResult$NextToken": "<p>The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return.</p>",
         "DescribeImportImageTasksRequest$NextToken": "<p>A token that indicates the next page of results.</p>",
@@ -22936,6 +23237,11 @@
         "ImageRecycleBinInfo$ImageId": "<p>The ID of the AMI.</p>",
         "ImageRecycleBinInfo$Name": "<p>The name of the AMI.</p>",
         "ImageRecycleBinInfo$Description": "<p>The description of the AMI.</p>",
+        "ImageReference$Arn": "<p>The Amazon Resource Name (ARN) of the resource referencing the image.</p>",
+        "ImageUsageReportEntry$AccountId": "<p>The ID of the account that uses the image.</p>",
+        "ImageUsageReportUserIdStringList$member": null,
+        "ImageUsageResourceTypeOption$OptionName": "<p>The name of the option.</p>",
+        "ImageUsageResourceTypeOptionRequest$OptionName": "<p>The name of the option.</p> <p>Valid value: <code>version-depth</code> - The number of launch template versions to check.</p>",
         "ImportClientVpnClientCertificateRevocationListRequest$CertificateRevocationList": "<p>The client certificate revocation list file. For more information, see <a href=\"https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-working-certificates.html#cvpn-working-certificates-generate\">Generate a Client Certificate Revocation List</a> in the <i>Client VPN Administrator Guide</i>.</p>",
         "ImportImageLicenseConfigurationRequest$LicenseConfigurationArn": "<p>The ARN of a license configuration.</p>",
         "ImportImageLicenseConfigurationResponse$LicenseConfigurationArn": "<p>The ARN of a license configuration.</p>",
@@ -24038,6 +24344,7 @@
         "UserIdGroupPair$VpcId": "<p>The ID of the VPC for the referenced security group, if applicable.</p>",
         "UserIdGroupPair$VpcPeeringConnectionId": "<p>The ID of the VPC peering connection, if applicable.</p>",
         "UserIdGroupPair$PeeringStatus": "<p>The status of a VPC peering connection, if applicable.</p>",
+        "UserIdList$member": null,
         "UserIdStringList$member": null,
         "ValidationError$Code": "<p>The error code that indicates why the parameter or parameter combination is not valid. For more information about error codes, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html\">Error codes</a>.</p>",
         "ValidationError$Message": "<p>The error message that describes why the parameter or parameter combination is not valid. For more information about error messages, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html\">Error codes</a>.</p>",
@@ -24530,6 +24837,7 @@
         "Host$Tags": "<p>Any tags assigned to the Dedicated Host.</p>",
         "HostReservation$Tags": "<p>Any tags assigned to the Dedicated Host Reservation.</p>",
         "Image$Tags": "<p>Any tags assigned to the image.</p>",
+        "ImageUsageReport$Tags": "<p>Any tags assigned to the report.</p>",
         "ImportImageResult$Tags": "<p>Any tags assigned to the import image task.</p>",
         "ImportImageTask$Tags": "<p>The tags for the import image task.</p>",
         "ImportKeyPairResult$Tags": "<p>The tags applied to the imported key pair.</p>",
@@ -24657,6 +24965,7 @@
         "CreateFlowLogsRequest$TagSpecifications": "<p>The tags to apply to the flow logs.</p>",
         "CreateFpgaImageRequest$TagSpecifications": "<p>The tags to apply to the FPGA image during creation.</p>",
         "CreateImageRequest$TagSpecifications": "<p>The tags to apply to the AMI and snapshots on creation. You can tag the AMI, the snapshots, or both.</p> <ul> <li> <p>To tag the AMI, the value for <code>ResourceType</code> must be <code>image</code>.</p> </li> <li> <p>To tag the snapshots that are created of the root volume and of other Amazon EBS volumes that are attached to the instance, the value for <code>ResourceType</code> must be <code>snapshot</code>. The same tag is applied to all of the snapshots that are created.</p> </li> </ul> <p>If you specify other values for <code>ResourceType</code>, the request fails.</p> <p>To tag an AMI or snapshot after it has been created, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html\">CreateTags</a>. </p>",
+        "CreateImageUsageReportRequest$TagSpecifications": "<p>The tags to apply to the report on creation. The <code>ResourceType</code> must be set to <code>image-usage-report</code>; any other value will cause the report creation to fail.</p> <p>To tag a report after it has been created, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateTags.html\">CreateTags</a>.</p>",
         "CreateInstanceConnectEndpointRequest$TagSpecifications": "<p>The tags to apply to the EC2 Instance Connect Endpoint during creation.</p>",
         "CreateInstanceEventWindowRequest$TagSpecifications": "<p>The tags to apply to the event window.</p>",
         "CreateInstanceExportTaskRequest$TagSpecifications": "<p>The tags to apply to the export instance task during creation.</p>",
@@ -26199,6 +26508,12 @@
       "base": null,
       "refs": {
         "StaleIpPermission$UserIdGroupPairs": "<p>The security group pairs. Returns the ID of the referenced security group and VPC, and the ID and status of the VPC peering connection.</p>"
+      }
+    },
+    "UserIdList": {
+      "base": null,
+      "refs": {
+        "ImageUsageReport$AccountIds": "<p>The IDs of the Amazon Web Services accounts that were specified when the report was created.</p>"
       }
     },
     "UserIdStringList": {

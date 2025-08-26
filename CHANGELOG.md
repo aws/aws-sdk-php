@@ -1,5 +1,71 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpsworksCM` - Removes the OpsworksCM service, which has reached end-of-life.
+* `Aws\ConnectParticipant` - Amazon Connect Participant Service: Remove unused fields from WebRTCConnection
+* `Aws\DataSync` - Remove incorrect endpoint tests
+* `Aws\GlobalAccelerator` - Remove incorrect endpoint tests
+* `Aws\Polly` - Remove incorrect endpoint tests
+* `Aws\SecretsManager` - Remove incorrect endpoint tests
+* `Aws\IoTJobsDataPlane` - Remove incorrect endpoint tests
+* `Aws\IdentityStore` - Remove incorrect endpoint tests
+* `Aws\Transfer` - Remove incorrect endpoint tests
+* `Aws\AppMesh` - Remove incorrect endpoint tests
+* `Aws\RecycleBin` - Remove incorrect endpoint tests
+* `Aws\Neptunedata` - Remove incorrect endpoint tests
+* `Aws\drs` - Remove incorrect endpoint tests
+* `Aws\CodeStarconnections` - Remove incorrect endpoint tests
+* `Aws\CloudWatch` - Remove incorrect endpoint tests
+* `Aws\finspace` - Remove incorrect endpoint tests
+* `Aws\Greengrass` - Remove incorrect endpoint tests
+* `Aws\signer` - Remove incorrect endpoint tests
+* `Aws\MigrationHub` - Remove incorrect endpoint tests
+* `Aws\Glacier` - Remove incorrect endpoint tests
+* `Aws\ConnectContactLens` - Remove incorrect endpoint tests
+* `Aws\IoTTwinMaker` - Remove incorrect endpoint tests
+* `Aws\SecurityHub` - Remove incorrect endpoint tests
+* `Aws\DLM` - Remove incorrect endpoint tests
+* `Aws\IoTSecureTunneling` - Remove incorrect endpoint tests
+* `Aws\SocialMessaging` - Remove incorrect endpoint tests
+* `Aws\Pinpoint` - Remove incorrect endpoint tests
+* `Aws\ControlCatalog` - Remove incorrect endpoint tests
+* `Aws\PcaConnectorScep` - Remove incorrect endpoint tests
+* `Aws\MainframeModernization` - Remove incorrect endpoint tests
+* `Aws\WAFRegional` - Remove incorrect endpoint tests
+* `Aws\CodeCommit` - Remove incorrect endpoint tests
+* `Aws\Route53RecoveryCluster` - Remove incorrect endpoint tests
+* `Aws\ARCZonalShift` - This release adds new API options to enable allowed windows and multiple alarms for practice runs.
+* `Aws\GameLift` - Remove incorrect endpoint tests
+* `Aws\Kafka` - Remove incorrect endpoint tests
+* `Aws\MQ` - Remove incorrect endpoint tests
+* `Aws\ResourceExplorer2` - Remove incorrect endpoint tests
+* `Aws\BedrockAgentCoreControl` - Remove incorrect endpoint tests
+* `Aws\Route53` - Remove incorrect endpoint tests
+* `Aws\Tnb` - Remove incorrect endpoint tests
+* `Aws\EC2` - Add new APIs for viewing how your shared AMIs are used by other accounts, and identify resources in your account that are dependent on particular AMIs
+* `Aws\SSM` - Remove incorrect endpoint tests
+* `Aws\SsmSap` - Remove incorrect endpoint tests
+* `Aws\LookoutforVision` - Remove incorrect endpoint tests
+* `Aws\Evs` - Remove incorrect endpoint tests
+* `Aws\LicenseManagerLinuxSubscriptions` - Remove incorrect endpoint tests
+* `Aws\CleanRooms` - Remove incorrect endpoint tests
+* `Aws\GeoRoutes` - Added RouteFerryNotice PotentialViolatedVehicleRestrictionUsage value for CalculateRoutes. This value indicates when the Route is potentially forbidden for the given vehicle profile.
+* `Aws\SageMakerGeospatial` - Remove incorrect endpoint tests
+* `Aws\AppConfig` - Remove incorrect endpoint tests
+* `Aws\WorkSpaces` - Remove incorrect endpoint tests
+* `Aws\RAM` - Remove incorrect endpoint tests
+* `Aws\SSOOIDC` - Remove incorrect endpoint tests
+* `Aws\PersonalizeEvents` - Remove incorrect endpoint tests
+* `Aws\AppRunner` - Remove incorrect endpoint tests
+* `Aws\imagebuilder` - Remove incorrect endpoint tests
+* `Aws\RDSDataService` - Remove incorrect endpoint tests
+* `Aws\ComprehendMedical` - Remove incorrect endpoint tests
+* `Aws\TrustedAdvisor` - Remove incorrect endpoint tests
+* `Aws\ElasticTranscoder` - Remove incorrect endpoint tests
+* `Aws\AppRegistry` - Remove incorrect endpoint tests
+* `Aws\MigrationHubRefactorSpaces` - Remove incorrect endpoint tests
+
 ## 3.356.4 - 2025-08-25
 
 * `Aws\OpsWorks` - Removes the OpsWorks service, which has reached end-of-life.
