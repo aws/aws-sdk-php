@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.5 - 2025-08-26
 
 * `Aws\OpsworksCM` - Removes the OpsworksCM service, which has reached end-of-life.
 * `Aws\ConnectParticipant` - Amazon Connect Participant Service: Remove unused fields from WebRTCConnection
