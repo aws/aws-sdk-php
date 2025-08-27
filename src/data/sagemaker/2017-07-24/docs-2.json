@@ -2448,6 +2448,39 @@
         "UpdateClusterSoftwareResponse$ClusterArn": "<p>The Amazon Resource Name (ARN) of the SageMaker HyperPod cluster being updated for security patching.</p>"
       }
     },
+    "ClusterAutoScalerType": {
+      "base": null,
+      "refs": {
+        "ClusterAutoScalingConfig$AutoScalerType": "<p>The type of autoscaler to use. Currently supported value is <code>Karpenter</code>.</p>",
+        "ClusterAutoScalingConfigOutput$AutoScalerType": "<p>The type of autoscaler configured for the cluster.</p>"
+      }
+    },
+    "ClusterAutoScalingConfig": {
+      "base": "<p>Specifies the autoscaling configuration for a HyperPod cluster.</p>",
+      "refs": {
+        "CreateClusterRequest$AutoScaling": "<p>The autoscaling configuration for the cluster. Enables automatic scaling of cluster nodes based on workload demand using a Karpenter-based system.</p>",
+        "UpdateClusterRequest$AutoScaling": "<p>Updates the autoscaling configuration for the cluster. Use to enable or disable automatic node scaling.</p>"
+      }
+    },
+    "ClusterAutoScalingConfigOutput": {
+      "base": "<p>The autoscaling configuration and status information for a HyperPod cluster.</p>",
+      "refs": {
+        "DescribeClusterResponse$AutoScaling": "<p>The current autoscaling configuration and status for the autoscaler.</p>"
+      }
+    },
+    "ClusterAutoScalingMode": {
+      "base": null,
+      "refs": {
+        "ClusterAutoScalingConfig$Mode": "<p>Describes whether autoscaling is enabled or disabled for the cluster. Valid values are <code>Enable</code> and <code>Disable</code>.</p>",
+        "ClusterAutoScalingConfigOutput$Mode": "<p>Describes whether autoscaling is enabled or disabled for the cluster.</p>"
+      }
+    },
+    "ClusterAutoScalingStatus": {
+      "base": null,
+      "refs": {
+        "ClusterAutoScalingConfigOutput$Status": "<p>The current status of the autoscaling configuration. Valid values are <code>InService</code>, <code>Failed</code>, <code>Creating</code>, and <code>Deleting</code>.</p>"
+      }
+    },
     "ClusterAvailabilityZone": {
       "base": null,
       "refs": {
@@ -14640,6 +14673,7 @@
         "ClusterRestrictedInstanceGroupSpecification$ExecutionRole": "<p>Specifies an IAM execution role to be assumed by the restricted instance group.</p>",
         "CreateAutoMLJobRequest$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
         "CreateAutoMLJobV2Request$RoleArn": "<p>The ARN of the role that is used to access the data.</p>",
+        "CreateClusterRequest$ClusterRole": "<p>The Amazon Resource Name (ARN) of the IAM role that HyperPod assumes to perform cluster autoscaling operations. This role must have permissions for <code>sagemaker:BatchAddClusterNodes</code> and <code>sagemaker:BatchDeleteClusterNodes</code>. This is only required when autoscaling is enabled and when HyperPod is performing autoscaling operations.</p>",
         "CreateCompilationJobRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that enables Amazon SageMaker AI to perform tasks on your behalf. </p> <p>During model compilation, Amazon SageMaker AI needs your permission to:</p> <ul> <li> <p>Read input data from an S3 bucket</p> </li> <li> <p>Write model artifacts to an S3 bucket</p> </li> <li> <p>Write logs to Amazon CloudWatch Logs</p> </li> <li> <p>Publish metrics to Amazon CloudWatch</p> </li> </ul> <p>You grant permissions for all of these tasks to an IAM role. To pass this role to Amazon SageMaker AI, the caller of this API must have the <code>iam:PassRole</code> permission. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">Amazon SageMaker AI Roles.</a> </p>",
         "CreateDataQualityJobDefinitionRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker AI can assume to perform tasks on your behalf.</p>",
         "CreateDeviceFleetRequest$RoleArn": "<p>The Amazon Resource Name (ARN) that has access to Amazon Web Services Internet of Things (IoT).</p>",
@@ -14665,6 +14699,7 @@
         "DefaultSpaceSettings$ExecutionRole": "<p>The ARN of the execution role for the space.</p>",
         "DescribeAutoMLJobResponse$RoleArn": "<p>The ARN of the IAM role that has read permission to the input data location and write permission to the output data location in Amazon S3.</p>",
         "DescribeAutoMLJobV2Response$RoleArn": "<p>The ARN of the IAM role that has read permission to the input data location and write permission to the output data location in Amazon S3.</p>",
+        "DescribeClusterResponse$ClusterRole": "<p>The Amazon Resource Name (ARN) of the IAM role that HyperPod uses for cluster autoscaling operations.</p>",
         "DescribeCompilationJobResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker AI assumes to perform the model compilation job.</p>",
         "DescribeDataQualityJobDefinitionResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker AI can assume to perform tasks on your behalf.</p>",
         "DescribeDeviceFleetResponse$RoleArn": "<p>The Amazon Resource Name (ARN) that has access to Amazon Web Services Internet of Things (IoT).</p>",
@@ -14708,6 +14743,7 @@
         "RenderUiTemplateRequest$RoleArn": "<p>The Amazon Resource Name (ARN) that has access to the S3 objects that are used by the template.</p>",
         "TimeSeriesForecastingSettings$AmazonForecastRoleArn": "<p>The IAM role that Canvas passes to Amazon Forecast for time series forecasting. By default, Canvas uses the execution role specified in the <code>UserProfile</code> that launches the Canvas application. If an execution role is not specified in the <code>UserProfile</code>, Canvas uses the execution role specified in the Domain that owns the <code>UserProfile</code>. To allow time series forecasting, this IAM role should have the <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/security-iam-awsmanpol-canvas.html#security-iam-awsmanpol-AmazonSageMakerCanvasForecastAccess\"> AmazonSageMakerCanvasForecastAccess</a> policy attached and <code>forecast.amazonaws.com</code> added in the trust relationship as a service principal.</p>",
         "TrainingJob$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job.</p>",
+        "UpdateClusterRequest$ClusterRole": "<p>The Amazon Resource Name (ARN) of the IAM role that HyperPod assumes for cluster autoscaling operations. Cannot be updated while autoscaling is enabled.</p>",
         "UpdateDeviceFleetRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the device.</p>",
         "UpdateImageRequest$RoleArn": "<p>The new ARN for the IAM role that enables Amazon SageMaker AI to perform tasks on your behalf.</p>",
         "UpdateNotebookInstanceInput$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that SageMaker AI can assume to access the notebook instance. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html\">SageMaker AI Roles</a>. </p> <note> <p>To be able to pass this role to SageMaker AI, the caller of this API must have the <code>iam:PassRole</code> permission.</p> </note>",
@@ -15903,6 +15939,7 @@
         "BatchTransformInput$InferenceAttribute": "<p>The attribute of the input data that represents the ground truth label.</p>",
         "BatchTransformInput$ProbabilityAttribute": "<p>In a classification problem, the attribute that represents the class probability.</p>",
         "CapacityReservation$Arn": "<p>The Amazon Resource Name (ARN) of the Capacity Reservation.</p>",
+        "ClusterAutoScalingConfigOutput$FailureMessage": "<p>If the autoscaling status is <code>Failed</code>, this field contains a message describing the failure.</p>",
         "ClusterEventDetail$InstanceId": "<p>The EC2 instance ID associated with the event, if applicable.</p>",
         "ClusterEventDetail$Description": "<p>A human-readable description of the event.</p>",
         "ClusterEventSummary$InstanceId": "<p>The Amazon Elastic Compute Cloud (EC2) instance ID associated with the event, if applicable.</p>",

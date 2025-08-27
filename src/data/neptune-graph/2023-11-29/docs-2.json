@@ -30,7 +30,9 @@
     "ResetGraph": "<p>Empties the data from a specified Neptune Analytics graph.</p>",
     "RestoreGraphFromSnapshot": "<p>Restores a graph from a snapshot.</p>",
     "StartExportTask": "<p>Export data from an existing Neptune Analytics graph to Amazon S3. The graph state should be <code>AVAILABLE</code>.</p>",
+    "StartGraph": "<p>Starts the specific graph.</p>",
     "StartImportTask": "<p>Import data into existing Neptune Analytics graph from Amazon Simple Storage Service (S3). The graph needs to be empty and in the AVAILABLE state.</p>",
+    "StopGraph": "<p>Stops the specific graph.</p>",
     "TagResource": "<p>Adds tags to the specified resource.</p>",
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateGraph": "<p>Updates the configuration of a specified Neptune Analytics graph</p>"
@@ -38,8 +40,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Raised in case of an authentication or authorization failure.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Arn": {
       "base": null,
@@ -82,7 +83,11 @@
         "RestoreGraphFromSnapshotInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable).</p>",
         "RestoreGraphFromSnapshotOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
         "RestoreGraphFromSnapshotOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
+        "StartGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
+        "StartGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
         "StartImportTaskInput$failOnError": "<p>If set to true, the task halts when an import error is encountered. If set to false, the task skips the data that caused the error and continues if possible.</p>",
+        "StopGraphOutput$publicConnectivity": "<p>If true, the graph has a public endpoint, otherwise not.</p>",
+        "StopGraphOutput$deletionProtection": "<p>If <code>true</code>, deletion protection is enabled for the graph.</p>",
         "UpdateGraphInput$publicConnectivity": "<p>Specifies whether or not the graph can be reachable over the internet. All access to graphs is IAM authenticated. (<code>true</code> to enable, or <code>false</code> to disable.</p>",
         "UpdateGraphInput$deletionProtection": "<p>A value that indicates whether the graph has deletion protection enabled. The graph can't be deleted when deletion protection is enabled.</p>",
         "UpdateGraphOutput$publicConnectivity": "<p>If <code>true</code>, the graph has a public endpoint, otherwise not.</p>",
@@ -91,13 +96,11 @@
     },
     "CancelExportTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelExportTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelExportTaskOutputDestinationString": {
       "base": null,
@@ -107,23 +110,19 @@
     },
     "CancelImportTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelImportTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictException": {
       "base": "<p>Raised when a conflict is encountered.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictExceptionReason": {
       "base": null,
@@ -133,73 +132,59 @@
     },
     "CreateGraphInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGraphOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGraphSnapshotInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGraphSnapshotOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGraphUsingImportTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGraphUsingImportTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrivateGraphEndpointInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrivateGraphEndpointOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGraphInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGraphOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGraphSnapshotInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGraphSnapshotOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePrivateGraphEndpointInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePrivateGraphEndpointOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Document": {
       "base": null,
@@ -239,13 +224,11 @@
     },
     "ExecuteQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExplainMode": {
       "base": null,
@@ -378,13 +361,11 @@
     },
     "GetExportTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExportTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExportTaskOutputDestinationString": {
       "base": null,
@@ -394,63 +375,51 @@
     },
     "GetGraphInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGraphOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGraphSnapshotInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGraphSnapshotOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGraphSummaryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGraphSummaryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImportTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImportTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPrivateGraphEndpointInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPrivateGraphEndpointOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQueryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GraphDataSummary": {
       "base": "<p>Summary information about the graph.</p>",
@@ -479,7 +448,9 @@
         "ResetGraphOutput$id": "<p>The unique identifier of the graph.</p>",
         "RestoreGraphFromSnapshotOutput$id": "<p>The unique identifier of the graph.</p>",
         "StartExportTaskOutput$graphId": "<p>The source graph identifier of the export task.</p>",
+        "StartGraphOutput$id": "<p>The unique identifier of the graph.</p>",
         "StartImportTaskOutput$graphId": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "StopGraphOutput$id": "<p>The unique identifier of the graph.</p>",
         "UpdateGraphOutput$id": "<p>The unique identifier of the graph.</p>"
       }
     },
@@ -502,7 +473,9 @@
         "ListQueriesInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "ResetGraphInput$graphIdentifier": "<p>ID of the graph to reset.</p>",
         "StartExportTaskInput$graphIdentifier": "<p>The source graph identifier of the export task.</p>",
+        "StartGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "StartImportTaskInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
+        "StopGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>",
         "UpdateGraphInput$graphIdentifier": "<p>The unique identifier of the Neptune Analytics graph.</p>"
       }
     },
@@ -518,6 +491,8 @@
         "ResetGraphOutput$name": "<p>The name of the graph.</p>",
         "RestoreGraphFromSnapshotInput$graphName": "<p>A name for the new Neptune Analytics graph to be created from the snapshot.</p> <p>The name must contain from 1 to 63 letters, numbers, or hyphens, and its first character must be a letter. It cannot end with a hyphen or contain two consecutive hyphens. Only lowercase letters are allowed.</p>",
         "RestoreGraphFromSnapshotOutput$name": "<p>The name of the graph.</p>",
+        "StartGraphOutput$name": "<p>The name of the graph.</p>",
+        "StopGraphOutput$name": "<p>The name of the graph.</p>",
         "UpdateGraphOutput$name": "<p>The name of the graph.</p>"
       }
     },
@@ -542,6 +517,8 @@
         "GraphSummary$status": "<p>The status of the graph.</p>",
         "ResetGraphOutput$status": "<p>The status of the graph.</p>",
         "RestoreGraphFromSnapshotOutput$status": "<p>The status of the graph.</p>",
+        "StartGraphOutput$status": "<p>The status of the graph.</p>",
+        "StopGraphOutput$status": "<p>The status of the graph.</p>",
         "UpdateGraphOutput$status": "<p>The status of the graph.</p>"
       }
     },
@@ -618,8 +595,7 @@
     },
     "InternalServerException": {
       "base": "<p>A failure occurred on the server.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyArn": {
       "base": null,
@@ -640,78 +616,66 @@
         "RestoreGraphFromSnapshotOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
         "StartExportTaskInput$kmsKeyIdentifier": "<p>The KMS key identifier of the export task.</p>",
         "StartExportTaskOutput$kmsKeyIdentifier": "<p>The KMS key identifier of the export task.</p>",
+        "StartGraphOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
+        "StopGraphOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>",
         "UpdateGraphOutput$kmsKeyIdentifier": "<p>The ID of the KMS key used to encrypt and decrypt graph data.</p>"
       }
     },
     "ListExportTasksInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportTasksOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGraphSnapshotsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGraphSnapshotsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGraphsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGraphsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportTasksInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportTasksOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrivateGraphEndpointsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrivateGraphEndpointsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueriesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueriesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -884,6 +848,8 @@
         "ResetGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "RestoreGraphFromSnapshotInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
         "RestoreGraphFromSnapshotOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
+        "StartGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
+        "StopGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>",
         "UpdateGraphInput$provisionedMemory": "<p>The provisioned memory-optimized Neptune Capacity Units (m-NCUs) to use for the graph.</p> <p>Min = 16</p>",
         "UpdateGraphOutput$provisionedMemory": "<p>The number of memory-optimized Neptune Capacity Units (m-NCUs) allocated to the graph.</p>"
       }
@@ -937,33 +903,30 @@
         "ResetGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
         "RestoreGraphFromSnapshotInput$replicaCount": "<p>The number of replicas in other AZs. Min =0, Max = 2, Default =1</p> <important> <p> Additional charges equivalent to the m-NCUs selected for the graph apply for each replica. </p> </important>",
         "RestoreGraphFromSnapshotOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
+        "StartGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
+        "StopGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>",
         "UpdateGraphOutput$replicaCount": "<p>The number of replicas for the graph.</p>"
       }
     },
     "ResetGraphInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetGraphOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>A specified resource could not be located.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreGraphFromSnapshotInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreGraphFromSnapshotOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
@@ -996,8 +959,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>A service quota was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnapshotId": {
       "base": null,
@@ -1011,6 +973,8 @@
         "GraphSnapshotSummary$id": "<p>The unique identifier of the graph snapshot.</p>",
         "ResetGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if any.</p>",
         "RestoreGraphFromSnapshotOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if any.</p>",
+        "StartGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if it was created from a snapshot.</p>",
+        "StopGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if it was created from a snapshot.</p>",
         "UpdateGraphOutput$sourceSnapshotId": "<p>The ID of the snapshot from which the graph was created, if any.</p>"
       }
     },
@@ -1043,8 +1007,7 @@
     },
     "StartExportTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExportTaskInputDestinationString": {
       "base": null,
@@ -1054,8 +1017,7 @@
     },
     "StartExportTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExportTaskOutputDestinationString": {
       "base": null,
@@ -1063,15 +1025,29 @@
         "StartExportTaskOutput$destination": "<p>The Amazon S3 URI of the export task where data will be exported to.</p>"
       }
     },
+    "StartGraphInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StartGraphOutput": {
+      "base": null,
+      "refs": {}
+    },
     "StartImportTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImportTaskOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "StopGraphInput": {
+      "base": null,
+      "refs": {}
+    },
+    "StopGraphOutput": {
+      "base": null,
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -1139,8 +1115,16 @@
         "ServiceQuotaExceededException$serviceCode": "<p>The service code that exceeded quota.</p>",
         "ServiceQuotaExceededException$quotaCode": "<p>Service quota code of the resource for which quota was exceeded.</p>",
         "StartExportTaskOutput$statusReason": "<p>The reason that the export task has this status value.</p>",
+        "StartGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
+        "StartGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
+        "StartGraphOutput$endpoint": "<p>The graph endpoint.</p>",
+        "StartGraphOutput$buildNumber": "<p>The build number of the graph.</p>",
         "StartImportTaskInput$source": "<p>A URL identifying the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot.</p>",
         "StartImportTaskOutput$source": "<p>A URL identifying the location of the data to be imported. This can be an Amazon S3 path, or can point to a Neptune database endpoint or snapshot.</p>",
+        "StopGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
+        "StopGraphOutput$statusReason": "<p>The reason that the graph has this status.</p>",
+        "StopGraphOutput$endpoint": "<p>The graph endpoint.</p>",
+        "StopGraphOutput$buildNumber": "<p>The build number of the graph.</p>",
         "ThrottlingException$message": "<p>A message describing the problem.</p>",
         "UnprocessableException$message": null,
         "UpdateGraphOutput$arn": "<p>The ARN associated with the graph.</p>",
@@ -1199,13 +1183,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1227,8 +1209,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The exception was interrupted by throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1244,13 +1225,14 @@
         "ImportTaskDetails$startTime": "<p>Time at which the import task started.</p>",
         "ResetGraphOutput$createTime": "<p>The time at which the graph was created.</p>",
         "RestoreGraphFromSnapshotOutput$createTime": "<p>The time at which the graph was created.</p>",
+        "StartGraphOutput$createTime": "<p>The time at which the graph was created.</p>",
+        "StopGraphOutput$createTime": "<p>The time at which the graph was created.</p>",
         "UpdateGraphOutput$createTime": "<p>The time at which the graph was created.</p>"
       }
     },
     "UnprocessableException": {
       "base": "<p>Request cannot be processed due to known reasons. Eg. partition full.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnprocessableExceptionReason": {
       "base": null,
@@ -1260,28 +1242,23 @@
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGraphInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGraphOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>A resource could not be validated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionReason": {
       "base": null,
@@ -1299,6 +1276,8 @@
         "GetGraphOutput$vectorSearchConfiguration": null,
         "ResetGraphOutput$vectorSearchConfiguration": null,
         "RestoreGraphFromSnapshotOutput$vectorSearchConfiguration": null,
+        "StartGraphOutput$vectorSearchConfiguration": null,
+        "StopGraphOutput$vectorSearchConfiguration": null,
         "UpdateGraphOutput$vectorSearchConfiguration": null
       }
     },

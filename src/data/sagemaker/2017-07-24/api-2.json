@@ -6784,6 +6784,47 @@
       "min":0,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:cluster/[a-z0-9]{12}"
     },
+    "ClusterAutoScalerType":{
+      "type":"string",
+      "enum":["Karpenter"]
+    },
+    "ClusterAutoScalingConfig":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"ClusterAutoScalingMode"},
+        "AutoScalerType":{"shape":"ClusterAutoScalerType"}
+      }
+    },
+    "ClusterAutoScalingConfigOutput":{
+      "type":"structure",
+      "required":[
+        "Mode",
+        "Status"
+      ],
+      "members":{
+        "Mode":{"shape":"ClusterAutoScalingMode"},
+        "AutoScalerType":{"shape":"ClusterAutoScalerType"},
+        "Status":{"shape":"ClusterAutoScalingStatus"},
+        "FailureMessage":{"shape":"String"}
+      }
+    },
+    "ClusterAutoScalingMode":{
+      "type":"string",
+      "enum":[
+        "Enable",
+        "Disable"
+      ]
+    },
+    "ClusterAutoScalingStatus":{
+      "type":"string",
+      "enum":[
+        "InService",
+        "Failed",
+        "Creating",
+        "Deleting"
+      ]
+    },
     "ClusterAvailabilityZone":{
       "type":"string",
       "pattern":"[a-z]{2}-[a-z]+-\\d[a-z]"
@@ -8119,7 +8160,9 @@
         "Tags":{"shape":"TagList"},
         "Orchestrator":{"shape":"ClusterOrchestrator"},
         "NodeRecovery":{"shape":"ClusterNodeRecovery"},
-        "NodeProvisioningMode":{"shape":"ClusterNodeProvisioningMode"}
+        "NodeProvisioningMode":{"shape":"ClusterNodeProvisioningMode"},
+        "ClusterRole":{"shape":"RoleArn"},
+        "AutoScaling":{"shape":"ClusterAutoScalingConfig"}
       }
     },
     "CreateClusterResponse":{
@@ -10879,7 +10922,9 @@
         "VpcConfig":{"shape":"VpcConfig"},
         "Orchestrator":{"shape":"ClusterOrchestrator"},
         "NodeRecovery":{"shape":"ClusterNodeRecovery"},
-        "NodeProvisioningMode":{"shape":"ClusterNodeProvisioningMode"}
+        "NodeProvisioningMode":{"shape":"ClusterNodeProvisioningMode"},
+        "ClusterRole":{"shape":"RoleArn"},
+        "AutoScaling":{"shape":"ClusterAutoScalingConfigOutput"}
       }
     },
     "DescribeClusterSchedulerConfigRequest":{
@@ -27517,7 +27562,9 @@
         "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
         "RestrictedInstanceGroups":{"shape":"ClusterRestrictedInstanceGroupSpecifications"},
         "NodeRecovery":{"shape":"ClusterNodeRecovery"},
-        "InstanceGroupsToDelete":{"shape":"ClusterInstanceGroupsToDelete"}
+        "InstanceGroupsToDelete":{"shape":"ClusterInstanceGroupsToDelete"},
+        "ClusterRole":{"shape":"RoleArn"},
+        "AutoScaling":{"shape":"ClusterAutoScalingConfig"}
       }
     },
     "UpdateClusterResponse":{

@@ -30,6 +30,7 @@
     "DescribeFargateProfile": "<p>Describes an Fargate profile.</p>",
     "DescribeIdentityProviderConfig": "<p>Describes an identity provider configuration.</p>",
     "DescribeInsight": "<p>Returns details about an insight that you specify using its ID.</p>",
+    "DescribeInsightsRefresh": "<p>Returns the status of the latest on-demand cluster insights refresh operation.</p>",
     "DescribeNodegroup": "<p>Describes a managed node group.</p>",
     "DescribePodIdentityAssociation": "<p>Returns descriptive information about an EKS Pod Identity association.</p> <p>This action requires the ID of the association. You can get the ID from the response to the <code>CreatePodIdentityAssocation</code> for newly created associations. Or, you can list the IDs for associations with <code>ListPodIdentityAssociations</code> and filter the list by namespace or service account.</p>",
     "DescribeUpdate": "<p>Describes an update to an Amazon EKS resource.</p> <p>When the status of the update is <code>Successful</code>, the update is complete. If an update fails, the status is <code>Failed</code>, and an error detail explains the reason for the failure.</p>",
@@ -49,6 +50,7 @@
     "ListTagsForResource": "<p>List the tags for an Amazon EKS resource.</p>",
     "ListUpdates": "<p>Lists the updates associated with an Amazon EKS resource in your Amazon Web Services account, in the specified Amazon Web Services Region.</p>",
     "RegisterCluster": "<p>Connects a Kubernetes cluster to the Amazon EKS control plane. </p> <p>Any Kubernetes cluster can be connected to the Amazon EKS control plane to view current information about the cluster and its nodes. </p> <p>Cluster connection requires two steps. First, send a <a href=\"https://docs.aws.amazon.com/eks/latest/APIReference/API_RegisterClusterRequest.html\"> <code>RegisterClusterRequest</code> </a> to add it to the Amazon EKS control plane.</p> <p>Second, a <a href=\"https://amazon-eks.s3.us-west-2.amazonaws.com/eks-connector/manifests/eks-connector/latest/eks-connector.yaml\">Manifest</a> containing the <code>activationID</code> and <code>activationCode</code> must be applied to the Kubernetes cluster through it's native provider to provide visibility.</p> <p>After the manifest is updated and applied, the connected cluster is visible to the Amazon EKS control plane. If the manifest isn't applied within three days, the connected cluster will no longer be visible and must be deregistered using <code>DeregisterCluster</code>.</p>",
+    "StartInsightsRefresh": "<p>Initiates an on-demand refresh operation for cluster insights, getting the latest analysis outside of the standard refresh schedule.</p>",
     "TagResource": "<p>Associates the specified tags to an Amazon EKS resource with the specified <code>resourceArn</code>. If existing tags on a resource are not specified in the request parameters, they aren't changed. When a resource is deleted, the tags associated with that resource are also deleted. Tags that you create for Amazon EKS resources don't propagate to any other resources associated with the cluster. For example, if you tag a cluster with this operation, that tag doesn't automatically propagate to the subnets and nodes associated with the cluster.</p>",
     "UntagResource": "<p>Deletes specified tags from an Amazon EKS resource.</p>",
     "UpdateAccessEntry": "<p>Updates an access entry.</p>",
@@ -752,6 +754,14 @@
       "base": null,
       "refs": {}
     },
+    "DescribeInsightsRefreshRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeInsightsRefreshResponse": {
+      "base": null,
+      "refs": {}
+    },
     "DescribeNodegroupRequest": {
       "base": null,
       "refs": {}
@@ -1041,6 +1051,13 @@
       "base": "<p>The criteria to use for the insights.</p>",
       "refs": {
         "ListInsightsRequest$filter": "<p>The criteria to filter your list of insights for your cluster. You can filter which insights are returned by category, associated Kubernetes version, and status.</p>"
+      }
+    },
+    "InsightsRefreshStatus": {
+      "base": null,
+      "refs": {
+        "DescribeInsightsRefreshResponse$status": "<p>The current status of the insights refresh operation.</p>",
+        "StartInsightsRefreshResponse$status": "<p>The current status of the insights refresh operation.</p>"
       }
     },
     "Integer": {
@@ -1552,6 +1569,14 @@
       "base": "<p>The service is unavailable. Back off and retry the operation.</p>",
       "refs": {}
     },
+    "StartInsightsRefreshRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartInsightsRefreshResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StorageConfigRequest": {
       "base": "<p>Request to update the configuration of the storage capability of your EKS Auto Mode cluster. For example, enable the capability. For more information, see EKS Auto Mode block storage capability in the <i>Amazon EKS User Guide</i>.</p>",
       "refs": {
@@ -1705,6 +1730,8 @@
         "DescribeIdentityProviderConfigRequest$clusterName": "<p>The name of your cluster.</p>",
         "DescribeInsightRequest$clusterName": "<p>The name of the cluster to describe the insight for.</p>",
         "DescribeInsightRequest$id": "<p>The identity of the insight to describe.</p>",
+        "DescribeInsightsRefreshRequest$clusterName": "<p>The name of the cluster associated with the insights refresh operation.</p>",
+        "DescribeInsightsRefreshResponse$message": "<p>The message associated with the insights refresh operation.</p>",
         "DescribeNodegroupRequest$clusterName": "<p>The name of your cluster.</p>",
         "DescribeNodegroupRequest$nodegroupName": "<p>The name of the node group to describe.</p>",
         "DescribePodIdentityAssociationRequest$clusterName": "<p>The name of the cluster that the association is in.</p>",
@@ -1876,6 +1903,8 @@
         "ServerException$subscriptionId": "<p>The Amazon EKS subscription ID with the exception.</p>",
         "ServerException$message": "<p>These errors are usually caused by a server-side issue.</p>",
         "ServiceUnavailableException$message": "<p>The request has failed due to a temporary failure of the server.</p>",
+        "StartInsightsRefreshRequest$clusterName": "<p>The name of the cluster for the refresh insights operation.</p>",
+        "StartInsightsRefreshResponse$message": "<p>The message associated with the insights refresh operation.</p>",
         "StringList$member": null,
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to add tags to.</p>",
         "ThrottlingException$clusterName": "<p>The Amazon EKS cluster associated with the exception.</p>",
@@ -2062,6 +2091,8 @@
         "ClusterVersionInformation$endOfStandardSupportDate": "<p>Date when standard support ends for this version.</p>",
         "ClusterVersionInformation$endOfExtendedSupportDate": "<p>Date when extended support ends for this version.</p>",
         "ConnectorConfigResponse$activationExpiry": "<p>The expiration time of the connected cluster. The cluster's YAML file must be applied through the native provider.</p>",
+        "DescribeInsightsRefreshResponse$startedAt": "<p>The date and time when the insights refresh operation started.</p>",
+        "DescribeInsightsRefreshResponse$endedAt": "<p>The date and time when the insights refresh operation ended.</p>",
         "EksAnywhereSubscription$createdAt": "<p>The Unix timestamp in seconds for when the subscription was created.</p>",
         "EksAnywhereSubscription$effectiveDate": "<p>The Unix timestamp in seconds for when the subscription is effective.</p>",
         "EksAnywhereSubscription$expirationDate": "<p>The Unix timestamp in seconds for when the subscription will expire or auto renew, depending on the auto renew configuration of the subscription object.</p>",

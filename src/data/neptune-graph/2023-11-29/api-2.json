@@ -229,8 +229,8 @@
       "input":{"shape":"ExecuteQueryInput"},
       "output":{"shape":"ExecuteQueryOutput"},
       "errors":[
-        {"shape":"UnprocessableException"},
         {"shape":"ThrottlingException"},
+        {"shape":"UnprocessableException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
@@ -580,6 +580,26 @@
         "ApiType":{"value":"ControlPlane"}
       }
     },
+    "StartGraph":{
+      "name":"StartGraph",
+      "http":{
+        "method":"POST",
+        "requestUri":"/graphs/{graphIdentifier}/start",
+        "responseCode":200
+      },
+      "input":{"shape":"StartGraphInput"},
+      "output":{"shape":"StartGraphOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
+      }
+    },
     "StartImportTask":{
       "name":"StartImportTask",
       "http":{
@@ -589,6 +609,26 @@
       },
       "input":{"shape":"StartImportTaskInput"},
       "output":{"shape":"StartImportTaskOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
+      }
+    },
+    "StopGraph":{
+      "name":"StopGraph",
+      "http":{
+        "method":"POST",
+        "requestUri":"/graphs/{graphIdentifier}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopGraphInput"},
+      "output":{"shape":"StopGraphOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -1044,8 +1084,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "DocumentValuedMap":{
@@ -1535,7 +1574,10 @@
         "UPDATING",
         "SNAPSHOTTING",
         "FAILED",
-        "IMPORTING"
+        "IMPORTING",
+        "STARTING",
+        "STOPPING",
+        "STOPPED"
       ]
     },
     "GraphSummary":{
@@ -2209,6 +2251,42 @@
       "max":1024,
       "min":1
     },
+    "StartGraphInput":{
+      "type":"structure",
+      "required":["graphIdentifier"],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "location":"uri",
+          "locationName":"graphIdentifier"
+        }
+      }
+    },
+    "StartGraphOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"GraphId"},
+        "name":{"shape":"GraphName"},
+        "arn":{"shape":"String"},
+        "status":{"shape":"GraphStatus"},
+        "statusReason":{"shape":"String"},
+        "createTime":{"shape":"Timestamp"},
+        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "endpoint":{"shape":"String"},
+        "publicConnectivity":{"shape":"Boolean"},
+        "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
+        "replicaCount":{"shape":"ReplicaCount"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "sourceSnapshotId":{"shape":"SnapshotId"},
+        "deletionProtection":{"shape":"Boolean"},
+        "buildNumber":{"shape":"String"}
+      }
+    },
     "StartImportTaskInput":{
       "type":"structure",
       "required":[
@@ -2248,6 +2326,42 @@
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ImportTaskStatus"},
         "importOptions":{"shape":"ImportOptions"}
+      }
+    },
+    "StopGraphInput":{
+      "type":"structure",
+      "required":["graphIdentifier"],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "location":"uri",
+          "locationName":"graphIdentifier"
+        }
+      }
+    },
+    "StopGraphOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"GraphId"},
+        "name":{"shape":"GraphName"},
+        "arn":{"shape":"String"},
+        "status":{"shape":"GraphStatus"},
+        "statusReason":{"shape":"String"},
+        "createTime":{"shape":"Timestamp"},
+        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "endpoint":{"shape":"String"},
+        "publicConnectivity":{"shape":"Boolean"},
+        "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
+        "replicaCount":{"shape":"ReplicaCount"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "sourceSnapshotId":{"shape":"SnapshotId"},
+        "deletionProtection":{"shape":"Boolean"},
+        "buildNumber":{"shape":"String"}
       }
     },
     "String":{"type":"string"},
@@ -2301,8 +2415,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2374,8 +2487,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateGraphInput":{
       "type":"structure",

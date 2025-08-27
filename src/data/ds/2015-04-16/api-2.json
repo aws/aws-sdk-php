@@ -410,6 +410,21 @@
         {"shape":"EntityDoesNotExistException"}
       ]
     },
+    "DescribeCAEnrollmentPolicy":{
+      "name":"DescribeCAEnrollmentPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCAEnrollmentPolicyRequest"},
+      "output":{"shape":"DescribeCAEnrollmentPolicyResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "DescribeCertificate":{
       "name":"DescribeCertificate",
       "http":{
@@ -661,6 +676,25 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "DisableCAEnrollmentPolicy":{
+      "name":"DisableCAEnrollmentPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableCAEnrollmentPolicyRequest"},
+      "output":{"shape":"DisableCAEnrollmentPolicyResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"DisableAlreadyInProgressException"},
+        {"shape":"EntityDoesNotExistException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "DisableClientAuthentication":{
       "name":"DisableClientAuthentication",
       "http":{
@@ -742,6 +776,26 @@
         {"shape":"AuthenticationFailedException"},
         {"shape":"ClientException"},
         {"shape":"ServiceException"}
+      ]
+    },
+    "EnableCAEnrollmentPolicy":{
+      "name":"EnableCAEnrollmentPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableCAEnrollmentPolicyRequest"},
+      "output":{"shape":"EnableCAEnrollmentPolicyResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"EntityAlreadyExistsException"},
+        {"shape":"EntityDoesNotExistException"},
+        {"shape":"EnableAlreadyInProgressException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "EnableClientAuthentication":{
@@ -1529,6 +1583,18 @@
       "type":"list",
       "member":{"shape":"AvailabilityZone"}
     },
+    "CaEnrollmentPolicyStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Success",
+        "Failed",
+        "Disabling",
+        "Disabled",
+        "Impaired"
+      ]
+    },
+    "CaEnrollmentPolicyStatusReason":{"type":"string"},
     "CancelSchemaExtensionRequest":{
       "type":"structure",
       "required":[
@@ -2072,6 +2138,23 @@
         "AssessmentReports":{"shape":"AssessmentReports"}
       }
     },
+    "DescribeCAEnrollmentPolicyRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "DescribeCAEnrollmentPolicyResult":{
+      "type":"structure",
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "PcaConnectorArn":{"shape":"PcaConnectorArn"},
+        "CaEnrollmentPolicyStatus":{"shape":"CaEnrollmentPolicyStatus"},
+        "LastUpdatedDateTime":{"shape":"LastUpdatedDateTime"},
+        "CaEnrollmentPolicyStatusReason":{"shape":"CaEnrollmentPolicyStatusReason"}
+      }
+    },
     "DescribeCertificateRequest":{
       "type":"structure",
       "required":[
@@ -2564,6 +2647,25 @@
         "AvailabilityZones":{"shape":"AvailabilityZones"}
       }
     },
+    "DisableAlreadyInProgressException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"},
+        "RequestId":{"shape":"RequestId"}
+      },
+      "exception":true
+    },
+    "DisableCAEnrollmentPolicyRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "DisableCAEnrollmentPolicyResult":{
+      "type":"structure",
+      "members":{}
+    },
     "DisableClientAuthenticationRequest":{
       "type":"structure",
       "required":[
@@ -2681,6 +2783,29 @@
     "DomainControllers":{
       "type":"list",
       "member":{"shape":"DomainController"}
+    },
+    "EnableAlreadyInProgressException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"},
+        "RequestId":{"shape":"RequestId"}
+      },
+      "exception":true
+    },
+    "EnableCAEnrollmentPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "DirectoryId",
+        "PcaConnectorArn"
+      ],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "PcaConnectorArn":{"shape":"PcaConnectorArn"}
+      }
+    },
+    "EnableCAEnrollmentPolicyResult":{
+      "type":"structure",
+      "members":{}
     },
     "EnableClientAuthenticationRequest":{
       "type":"structure",
@@ -3213,6 +3338,10 @@
       "type":"string",
       "pattern":"(?=^.{8,64}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9\\s])(?=.*[a-z])|(?=.*[^A-Za-z0-9\\s])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9\\s]))^.*",
       "sensitive":true
+    },
+    "PcaConnectorArn":{
+      "type":"string",
+      "pattern":"^arn:[\\w-]+:pca-connector-ad:[\\w-]+:[0-9]+:connector\\/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
     },
     "PortNumber":{
       "type":"integer",

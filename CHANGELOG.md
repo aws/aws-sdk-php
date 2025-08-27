@@ -1,5 +1,70 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3Tables` - Remove incorrect endpoint tests
+* `Aws\ChimeSDKIdentity` - Remove incorrect endpoint tests
+* `Aws\IoT` - Remove incorrect endpoint tests
+* `Aws\CleanRoomsML` - Remove incorrect endpoint tests
+* `Aws\Chime` - Remove incorrect endpoint tests
+* `Aws\WorkDocs` - Remove incorrect endpoint tests
+* `Aws\KafkaConnect` - Remove incorrect endpoint tests
+* `Aws\EKS` - Add support for on-demand refresh of EKS cluster insights
+* `Aws\BedrockAgentCore` - Remove incorrect endpoint tests
+* `Aws\IoTWireless` - Remove incorrect endpoint tests
+* `Aws\VPCLattice` - Remove incorrect endpoint tests
+* `Aws\AppConfigData` - Remove incorrect endpoint tests
+* `Aws\ElastiCache` - Remove incorrect endpoint tests
+* `Aws\CodeBuild` - Remove incorrect endpoint tests
+* `Aws\IVSRealTime` - Remove incorrect endpoint tests
+* `Aws\LexModelBuildingService` - Remove incorrect endpoint tests
+* `Aws\Neptune` - Remove incorrect endpoint tests
+* `Aws\CodeConnections` - Remove incorrect endpoint tests
+* `Aws\ChimeSDKMeetings` - Remove incorrect endpoint tests
+* `Aws\ApplicationInsights` - Remove incorrect endpoint tests
+* `Aws\AppTest` - Remove incorrect endpoint tests
+* `Aws\AmplifyUIBuilder` - Remove incorrect endpoint tests
+* `Aws\AmplifyBackend` - Remove incorrect endpoint tests
+* `Aws\LakeFormation` - Remove incorrect endpoint tests
+* `Aws\Personalize` - Remove incorrect endpoint tests
+* `Aws\DirectoryService` - Add APIs for CA AutoEnrollment support: DescribeCAEnrollmentPolicy, EnableCAEnrollmentPolicy and DisableCAEnrollmentPolicy.
+* `Aws\MigrationHubConfig` - Remove incorrect endpoint tests
+* `Aws\MarketplaceReporting` - Remove incorrect endpoint tests
+* `Aws\PI` - Remove incorrect endpoint tests
+* `Aws\QApps` - Remove incorrect endpoint tests
+* `Aws\TimestreamWrite` - Remove incorrect endpoint tests
+* `Aws\Schemas` - Remove incorrect endpoint tests
+* `Aws\ivschat` - Remove incorrect endpoint tests
+* `Aws\SageMaker` - This release adds support for AutoScaling on SageMaker HyperPod.
+* `Aws\Redshift` - Remove incorrect endpoint tests
+* `Aws\ApplicationDiscoveryService` - Remove incorrect endpoint tests
+* `Aws\KMS` - Remove incorrect endpoint tests
+* `Aws\SupplyChain` - Remove incorrect endpoint tests
+* `Aws\WorkMail` - Remove incorrect endpoint tests
+* `Aws\SnowDeviceManagement` - Remove incorrect endpoint tests
+* `Aws\Batch` - Added ECS_AL2023_NVIDIA as an option for Ec2Configuration.imageType.
+* `Aws\ChimeSDKVoice` - Remove incorrect endpoint tests
+* `Aws\KinesisVideoMedia` - Remove incorrect endpoint tests
+* `Aws\Inspector` - Remove incorrect endpoint tests
+* `Aws\NeptuneGraph` - Add StartGraph and StopGraph operations to Neptune Analytics
+* `Aws\ACMPCA` - Remove incorrect endpoint tests
+* `Aws\RoboMaker` - Remove incorrect endpoint tests
+* `Aws\SNS` - Remove incorrect endpoint tests
+* `Aws\ComputeOptimizer` - Remove incorrect endpoint tests
+* `Aws\mgn` - Remove incorrect endpoint tests
+* `Aws\CloudWatchEvidently` - Remove incorrect endpoint tests
+* `Aws\FraudDetector` - Remove incorrect endpoint tests
+* `Aws\MedicalImaging` - Remove incorrect endpoint tests
+* `Aws\DataPipeline` - Remove incorrect endpoint tests
+* `Aws\CodeGuruProfiler` - Remove incorrect endpoint tests
+* `Aws\QLDBSession` - Remove incorrect endpoint tests
+* `Aws\Omics` - Remove incorrect endpoint tests
+* `Aws\KinesisVideo` - Remove incorrect endpoint tests
+* `Aws\IoTFleetWise` - Remove incorrect endpoint tests
+* `Aws\Textract` - Remove incorrect endpoint tests
+* `Aws\VoiceID` - Remove incorrect endpoint tests
+* `Aws\PaymentCryptographyData` - Remove incorrect endpoint tests
+
 ## 3.356.5 - 2025-08-26
 
 * `Aws\OpsworksCM` - Removes the OpsworksCM service, which has reached end-of-life.

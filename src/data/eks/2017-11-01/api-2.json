@@ -460,6 +460,21 @@
         {"shape":"InvalidParameterException"}
       ]
     },
+    "DescribeInsightsRefresh":{
+      "name":"DescribeInsightsRefresh",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{name}/insights-refresh"
+      },
+      "input":{"shape":"DescribeInsightsRefreshRequest"},
+      "output":{"shape":"DescribeInsightsRefreshResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "DescribeNodegroup":{
       "name":"DescribeNodegroup",
       "http":{
@@ -747,6 +762,21 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourcePropagationDelayException"}
+      ]
+    },
+    "StartInsightsRefresh":{
+      "name":"StartInsightsRefresh",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/insights-refresh"
+      },
+      "input":{"shape":"StartInsightsRefreshRequest"},
+      "output":{"shape":"StartInsightsRefreshResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "TagResource":{
@@ -2250,6 +2280,26 @@
         "insight":{"shape":"Insight"}
       }
     },
+    "DescribeInsightsRefreshRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DescribeInsightsRefreshResponse":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "status":{"shape":"InsightsRefreshStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"}
+      }
+    },
     "DescribeNodegroupRequest":{
       "type":"structure",
       "required":[
@@ -2684,6 +2734,14 @@
         "kubernetesVersions":{"shape":"StringList"},
         "statuses":{"shape":"InsightStatusValueList"}
       }
+    },
+    "InsightsRefreshStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "FAILED",
+        "COMPLETED"
+      ]
     },
     "Integer":{"type":"integer"},
     "InvalidParameterException":{
@@ -3641,6 +3699,24 @@
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
+    },
+    "StartInsightsRefreshRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "StartInsightsRefreshResponse":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "status":{"shape":"InsightsRefreshStatus"}
+      }
     },
     "StorageConfigRequest":{
       "type":"structure",

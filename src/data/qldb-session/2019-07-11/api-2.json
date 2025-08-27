@@ -5,13 +5,15 @@
     "endpointPrefix":"session.qldb",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"QLDB Session",
     "serviceFullName":"Amazon QLDB Session",
     "serviceId":"QLDB Session",
     "signatureVersion":"v4",
     "signingName":"qldb",
     "targetPrefix":"QLDBSession",
-    "uid":"qldb-session-2019-07-11"
+    "uid":"qldb-session-2019-07-11",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "SendCommand":{
@@ -35,8 +37,7 @@
   "shapes":{
     "AbortTransactionRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AbortTransactionResult":{
       "type":"structure",
@@ -82,8 +83,7 @@
     },
     "EndSessionRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EndSessionResult":{
       "type":"structure",
@@ -246,8 +246,7 @@
     },
     "StartTransactionRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartTransactionResult":{
       "type":"structure",
