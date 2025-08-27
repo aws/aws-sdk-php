@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.6 - 2025-08-27
 
 * `Aws\S3Tables` - Remove incorrect endpoint tests
 * `Aws\ChimeSDKIdentity` - Remove incorrect endpoint tests
