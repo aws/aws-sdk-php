@@ -308,11 +308,13 @@ class RetryMiddlewareV2
             return true;
         }
 
-        if (!empty($errorCodes[$result->getAwsErrorCode()])) {
+        $awsCode = $result->getAwsErrorCode();
+        if (!is_null($awsCode) && isset($errorCodes[$awsCode])) {
             return true;
         }
 
-        if (!empty($statusCodes[$result->getStatusCode()])) {
+        $status = $result->getStatusCode();
+        if (!is_null($status) && isset($statusCodes[$status])) {
             return true;
         }
 

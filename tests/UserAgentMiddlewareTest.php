@@ -171,148 +171,87 @@ class UserAgentMiddlewareTest extends TestCase
      */
     public function userAgentCasesDataProvider(): \Generator
     {
-        $userAgentCases = [
-            'sdkVersion' => [[], 'aws-sdk-php/' . Sdk::VERSION],
-            'userAgentVersion' => [
-                [], 'ua/' . UserAgentMiddleware::AGENT_VERSION
-            ],
-            'hhvmVersion' => function (): array {
-                if (defined('HHVM_VERSION')) {
-                    return [[], 'HHVM/' . HHVM_VERSION];
-                }
+        yield 'sdkVersion' => [[], 'aws-sdk-php/' . Sdk::VERSION];
 
-                return [[], ""];
-            },
-            'osName' => function (): array {
-                $disabledFunctions = explode(
-                    ',',
-                    ini_get('disable_functions')
-                );
-                if (function_exists('php_uname')
-                    && !in_array(
-                        'php_uname',
-                        $disabledFunctions,
-                        true
-                    )
-                ) {
-                    $osName = "OS/" . php_uname('s') . '#' . php_uname('r');
-                    if (!empty($osName)) {
-                        return [[], $osName];
-                    }
-                }
+        yield 'userAgentVersion' => [[], 'ua/' . UserAgentMiddleware::AGENT_VERSION];
 
-                return [[], ""];
-            },
-            'langVersion' => [[], 'lang/php#' . phpversion()],
-            'execEnv' => function (): array {
-                $expectedEnv = "LambdaFooEnvironment";
-                putenv("AWS_EXECUTION_ENV={$expectedEnv}");
+        yield 'hhvmVersion' => [[], defined('HHVM_VERSION') ? 'HHVM/' . HHVM_VERSION : ""];
 
-                return [[], $expectedEnv];
-            },
-            'appId' => function (): array {
-                $expectedAppId = "FooAppId";
-                $args = [
-                    'app_id' => $expectedAppId
-                ];
+        yield 'osName' => [[], $this->getOsNameForUserAgent()];
 
-                return [$args, "app/{$expectedAppId}"];
-            },
-            'metricsWithEndpoint' => function (): array {
-                $expectedEndpoint = "https://foo-endpoint.com";
-                $args = [
-                    'endpoint' => $expectedEndpoint,
-                    'endpoint_override' => true,
-                ];
+        yield 'langVersion' => [[], 'lang/php#' . phpversion()];
 
-                return [$args, 'm/' . MetricsBuilder::ENDPOINT_OVERRIDE];
-            },
-            'metricsWithRetryConfigArrayStandardMode' => function (): array {
-                $args = [
-                    'retries' => [
-                        'mode' => 'standard'
-                    ]
-                ];
+        yield 'execEnv' => [[], $this->getExecEnvForUserAgent()];
 
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_STANDARD];
-            },
-            'metricsWithRetryConfigArrayAdaptiveMode' => function (): array {
-                $args = [
-                    'retries' => [
-                        'mode' => 'adaptive'
-                    ]
-                ];
+        yield 'appId' => [['app_id' => 'FooAppId'], 'app/FooAppId'];
 
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE];
-            },
-            'metricsWithRetryConfigArrayLegacyMode' => function (): array {
-                $args = [
-                    'retries' => [
-                        'mode' => 'legacy'
-                    ]
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_LEGACY];
-            },
-            'metricsWithRetryConfigStandardMode' => function (): array {
-                $args = [
-                    'retries' => new \Aws\Retry\Configuration(
-                        'standard',
-                        10
-                    )
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_STANDARD];
-            },
-            'metricsWithRetryConfigAdaptiveMode' => function (): array {
-                $args = [
-                    'retries' => new \Aws\Retry\Configuration(
-                    'adaptive',
-                    10
-                    )
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE];
-            },
-            'metricsWithRetryConfigLegacyMode' => function (): array {
-                $args = [
-                    'retries' => new \Aws\Retry\Configuration(
-                        'legacy',
-                        10
-                    )
-                ];
-
-                return [$args, 'm/' . MetricsBuilder::RETRY_MODE_LEGACY];
-            },
-            'cfgWithEndpointDiscoveryConfigArray' => function (): array {
-                $args = [
-                    'endpoint_discovery' => [
-                        'enabled' => true,
-                        'cache_limit' => 1000
-                    ]
-                ];
-
-                return [$args, 'cfg/endpoint-discovery'];
-            },
-            'cfgWithEndpointDiscoveryConfig' => function (): array {
-                $args = [
-                    'endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration (
-                        true,
-                        1000
-                    ),
-                ];
-
-                return [$args, 'cfg/endpoint-discovery'];
-            }
+        yield 'metricsWithEndpoint' => [
+            ['endpoint' => 'https://foo-endpoint.com', 'endpoint_override' => true],
+            'm/' . MetricsBuilder::ENDPOINT_OVERRIDE
         ];
 
-        foreach ($userAgentCases as $key => $case) {
-            if (is_callable($case)) {
-                yield $key => $case();
-            } else {
-                yield  $key => $case;
-            }
+        yield 'metricsWithRetryConfigArrayStandardMode' => [
+            ['retries' => ['mode' => 'standard']],
+            'm/' . MetricsBuilder::RETRY_MODE_STANDARD
+        ];
+
+        yield 'metricsWithRetryConfigArrayAdaptiveMode' => [
+            ['retries' => ['mode' => 'adaptive']],
+            'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE
+        ];
+
+        yield 'metricsWithRetryConfigArrayLegacyMode' => [
+            ['retries' => ['mode' => 'legacy']],
+            'm/' . MetricsBuilder::RETRY_MODE_LEGACY
+        ];
+
+        yield 'metricsWithRetryConfigStandardMode' => [
+            ['retries' => new \Aws\Retry\Configuration('standard', 10)],
+            'm/' . MetricsBuilder::RETRY_MODE_STANDARD
+        ];
+
+        yield 'metricsWithRetryConfigAdaptiveMode' => [
+            ['retries' => new \Aws\Retry\Configuration('adaptive', 10)],
+            'm/' . MetricsBuilder::RETRY_MODE_ADAPTIVE
+        ];
+
+        yield 'metricsWithRetryConfigLegacyMode' => [
+            ['retries' => new \Aws\Retry\Configuration('legacy', 10)],
+            'm/' . MetricsBuilder::RETRY_MODE_LEGACY
+        ];
+
+        yield 'cfgWithEndpointDiscoveryConfigArray' => [
+            ['endpoint_discovery' => ['enabled' => true, 'cache_limit' => 1000]],
+            'cfg/endpoint-discovery'
+        ];
+
+        yield 'cfgWithEndpointDiscoveryConfig' => [
+            ['endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration(true, 1000)],
+            'cfg/endpoint-discovery'
+        ];
+    }
+
+    private function getOsNameForUserAgent(): string
+    {
+        $disabledFunctions = explode(',', ini_get('disable_functions'));
+        if (function_exists('php_uname')
+            && !in_array('php_uname', $disabledFunctions, true)
+        ) {
+            // Match what the middleware does - replace spaces with underscores
+            $os = str_replace(' ', '_', php_uname('s'));
+            $release = php_uname('r');
+            $osName = "OS/{$os}#{$release}";
+
+            return !empty($osName) ? $osName : "";
         }
+        return "";
+    }
+
+    private function getExecEnvForUserAgent(): string
+    {
+        $expectedEnv = "LambdaFooEnvironment";
+        putenv("AWS_EXECUTION_ENV={$expectedEnv}");
+        return $expectedEnv;
     }
 
     /**
@@ -1383,10 +1322,19 @@ EOF;
     {
         $profile = 'metric-test-profile';
         $configPath = $this->awsDir . '/my-config';
-        $profileContent = <<<EOF
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $profileContent = <<<EOF
 [$profile]
-credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process= echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOF;
+        } else {
+            $profileContent = <<<EOF
+[$profile]
+credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOF;
+        }
+
         file_put_contents($configPath, $profileContent);
         $s3Client = new S3Client([
             'region' => 'us-east-2',

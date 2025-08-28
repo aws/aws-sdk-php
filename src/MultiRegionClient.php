@@ -231,6 +231,7 @@ class MultiRegionClient implements AwsClientInterface
      */
     protected function getClientFromPool($region = '')
     {
+        $region = $region ?? '';
         if (empty($this->clientPool[$region])) {
             $factory = $this->factory;
             $this->clientPool[$region] = $factory(

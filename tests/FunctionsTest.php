@@ -16,8 +16,8 @@ class FunctionsTest extends TestCase
     {
         $iter = Aws\recursive_dir_iterator(__DIR__);
         $this->assertInstanceOf('Iterator', $iter);
-        $files = iterator_to_array($iter);
-        $this->assertContains(__FILE__, $files);
+        $files = array_map('realpath', iterator_to_array($iter));
+        $this->assertContains(realpath(__FILE__), $files);
     }
 
     /**
@@ -198,7 +198,13 @@ class FunctionsTest extends TestCase
      */
     public function testDescribeDoubleToFloat()
     {
-        $double = (double)1.3;
+        if (PHP_VERSION_ID >= 80500) {
+            $this->markTestSkipped(
+                'Non-canonical casts are deprecated in version 8.5 and up'
+            );
+        }
+
+        $double = (double) 1.3;
         $this->assertSame('float(1.3)', Aws\describe_type($double));
     }
 
