@@ -29,7 +29,6 @@ use Aws\Test\TestsUtility;
 use Closure;
 use Exception;
 use Generator;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
@@ -589,19 +588,22 @@ EOF,
             $this->assertTrue(true);
         }
 
-        $manager = new S3TransferManager(
-            $this->getS3ClientMock(),
-        );
-        $manager->uploadDirectory(
-            new UploadDirectoryRequest(
-                $directory,
-                "Bucket",
-            )
-        )->wait();
-        // Clean up resources
-        if ($isDirectoryValid) {
-            rmdir($directory);
-        }
+       try {
+           $manager = new S3TransferManager(
+               $this->getS3ClientMock(),
+           );
+           $manager->uploadDirectory(
+               new UploadDirectoryRequest(
+                   $directory,
+                   "Bucket",
+               )
+           )->wait();
+       } finally {
+           // Clean up resources
+           if ($isDirectoryValid) {
+               TestsUtility::cleanUpDir($directory);
+           }
+       }
     }
 
     /**
@@ -664,7 +666,7 @@ EOF,
                 )
             )->wait();
         } finally {
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -729,10 +731,7 @@ EOF,
             )->wait();
             $this->assertEquals($validFilesCount, $calledTimes);
         } finally {
-            foreach ($filesCreated as $filePathName) {
-                unlink($filePathName);
-            }
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -791,12 +790,7 @@ EOF,
                 $this->assertTrue($validated);
             }
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-
-            rmdir($subDirectory);
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -861,12 +855,7 @@ EOF,
                 }
             }
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-
-            rmdir($subDirectory);
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1027,10 +1016,7 @@ EOF,
                 $this->assertTrue($validated, "Key {$key} should have been validated");
             }
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1093,10 +1079,7 @@ EOF,
                 $this->assertTrue($validated, "Key {$key} should have been validated");
             }
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1127,7 +1110,7 @@ EOF,
                 )
             )->wait();
         } finally {
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1183,11 +1166,7 @@ EOF,
             )->wait();
             $this->assertEquals(count($files), $called);
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1266,11 +1245,7 @@ EOF,
             )->wait();
             $this->assertTrue($called);
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1301,7 +1276,7 @@ EOF,
                 )
             )->wait();
         } finally {
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1344,10 +1319,7 @@ EOF,
                 )
             )->wait();
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1409,10 +1381,7 @@ EOF,
                 );
             }
         } finally {
-            foreach ($files as $file) {
-                unlink($file);
-            }
-            rmdir($directory);
+            TestsUtility::cleanUpDir($directory);
         }
     }
 
@@ -1502,6 +1471,7 @@ EOF,
 
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
+                    'PartsCount' => 1,
                     '@metadata' => []
                 ]));
             },
@@ -1536,6 +1506,7 @@ EOF,
 
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
+                    'PartsCount' => 1,
                     '@metadata' => []
                 ]));
             },
@@ -1588,6 +1559,7 @@ EOF,
                 if ($command->getName() === MultipartDownloader::GET_OBJECT_COMMAND) {
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
+                        'PartsCount' => 1,
                         '@metadata' => []
                     ]));
                 }
@@ -1704,6 +1676,7 @@ EOF,
 
                 return Create::promiseFor(new Result([
                     'Body' => Utils::streamFor(),
+                    'PartsCount' => 1,
                     '@metadata' => []
                 ]));
             }
@@ -1885,7 +1858,7 @@ EOF,
             )->wait();
             $this->assertFileExists($destinationDirectory);
         } finally {
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -1961,7 +1934,7 @@ EOF,
             $this->assertTrue($called);
             $this->assertTrue($listObjectsCalled);
         } finally {
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2076,7 +2049,7 @@ EOF,
             $this->assertTrue($called);
             $this->assertTrue($listObjectsCalled);
         } finally {
-            rmdir($destinationDirectory);
+           TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2154,7 +2127,7 @@ EOF,
             )->wait();
             $this->assertTrue($called);
         } finally {
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2211,7 +2184,7 @@ EOF,
             )->wait();
             $this->assertTrue($called);
         } finally {
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2250,6 +2223,7 @@ EOF,
 
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
+                        'PartsCount' => 1,
                         '@metadata' => []
                     ]));
                 }
@@ -2290,12 +2264,7 @@ EOF,
             )->wait();
             $this->assertTrue($called);
         } finally {
-            $file = $destinationDirectory . '/file1.txt';
-            if (file_exists($file)) {
-                unlink($file);
-            }
-
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2341,6 +2310,7 @@ EOF,
 
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
+                        'PartsCount' => 1,
                         '@metadata' => []
                     ]));
                 },
@@ -2384,22 +2354,7 @@ EOF,
                 );
             }
         } finally {
-            $dirs = [];
-            foreach ($objectList as $object) {
-                if (file_exists($destinationDirectory . "/" . $object['Key'])) {
-                    unlink($destinationDirectory . "/" . $object['Key']);
-                }
-
-                $dirs [dirname($destinationDirectory . "/" . $object['Key'])] = true;
-            }
-
-            foreach ($dirs as $dir => $_) {
-                if (is_dir($dir)) {
-                    rmdir($dir);
-                }
-            }
-
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2540,7 +2495,7 @@ EOF,
                 )
             )->wait();
         } finally {
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2570,6 +2525,7 @@ EOF,
 
                     return Create::promiseFor(new Result([
                         'Body' => Utils::streamFor(),
+                        'PartsCount' => 1,
                         '@metadata' => []
                     ]));
                 },
@@ -2616,22 +2572,7 @@ EOF,
             )->wait();
             $this->assertTrue($called);
         } finally {
-            $dirs = [];
-            foreach ($listObjectsContent as $object) {
-                $file = $destinationDirectory . "/" . $object['Key'];
-                if (file_exists($file)) {
-                    $dirs[dirname($file)] = true;
-                    unlink($file);
-                }
-            }
-
-            foreach (array_keys($dirs) as $dir) {
-                if (is_dir($dir)) {
-                    rmdir($dir);
-                }
-            }
-
-            rmdir($destinationDirectory);
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2670,6 +2611,7 @@ EOF,
                         'Body' => Utils::streamFor(
                             "Test file " . $command['Key']
                         ),
+                        'PartsCount' => 1,
                         '@metadata' => []
                     ]));
                 },
@@ -2712,25 +2654,7 @@ EOF,
                 );
             }
         } finally {
-            $dirs = [];
-            foreach ($expectedFileKeys as $key) {
-                $file = $destinationDirectory . "/" . $key;
-                if (file_exists($file)) {
-                    unlink($file);
-                }
-
-                $dirs [dirname($file)] = true;
-            }
-
-            foreach ($dirs as $dir => $_) {
-                if (is_dir($dir)) {
-                    rmdir($dir);
-                }
-            }
-
-            if (is_dir($destinationDirectory)) {
-                rmdir($destinationDirectory);
-            }
+            TestsUtility::cleanUpDir($destinationDirectory);
         }
     }
 
@@ -2818,6 +2742,7 @@ EOF,
                         'Body' => Utils::streamFor(
                             "Test file " . $command['Key']
                         ),
+                        'PartsCount' => 1,
                         '@metadata' => []
                     ]));
                 },
