@@ -267,7 +267,6 @@ class WaiterTest extends TestCase
     {
         $waiter = new \ReflectionClass(Waiter::class);
         $matcher = $waiter->getMethod($matcher);
-        $matcher->setAccessible(true);
         $waiter = $waiter->newInstanceWithoutConstructor();
 
         $this->assertEquals($expected, $matcher->invoke($waiter, $result, $acceptor));

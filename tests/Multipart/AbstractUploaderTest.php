@@ -215,7 +215,6 @@ class AbstractUploaderTest extends TestCase
         $actualBodies = [];
         $getUploadCommands = (new \ReflectionObject($uploader))
             ->getMethod('getUploadCommands');
-        $getUploadCommands->setAccessible(true);
         foreach ($getUploadCommands->invoke($uploader, $handler) as $cmd) {
             $actualBodies[$cmd['PartNumber']] = $cmd['Body']->getContents();
         }

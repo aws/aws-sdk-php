@@ -106,8 +106,6 @@ class MultipartCopyTest extends TestCase
         ]);
         $configProp = (new \ReflectionClass(MultipartCopy::class))
             ->getProperty('config');
-        $configProp->setAccessible(true);
-
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 

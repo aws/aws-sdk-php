@@ -393,10 +393,19 @@ EOT;
     public function testCreatesFromProcessCredentialProvider()
     {
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
 
@@ -410,10 +419,19 @@ EOT;
     {
         $testAccountId = 'foo';
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1, "AccountId": "$testAccountId"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1,"AccountId":"$testAccountId"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1,"AccountId":"$testAccountId"}'
+EOT;
+        }
+
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
 
@@ -427,10 +445,19 @@ EOT;
     public function testCreatesFromProcessCredentialWithFilename()
     {
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($dir . '/mycreds', $ini);
         putenv('HOME=' . dirname($dir));
 
@@ -443,10 +470,19 @@ EOT;
     public function testCreatesFromProcessCredentialWithFilenameParameterOverSharedFilename()
     {
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($dir . '/mycreds', $ini);
         putenv('HOME=' . dirname($dir));
         putenv("AWS_SHARED_CREDENTIALS_FILE={$dir}/badfilename");
@@ -462,10 +498,19 @@ EOT;
     public function testCreatesFromProcessCredentialWithSharedFilename()
     {
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [baz]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($dir . '/mycreds', $ini);
         putenv('HOME=' . dirname($dir));
         putenv("AWS_SHARED_CREDENTIALS_FILE={$dir}/mycreds");
@@ -528,10 +573,19 @@ EOT;
         $dir = $this->clearEnv();
         $expiration = new DateTimeResult("+1 hour");
         $expires = $expiration->getTimestamp();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [foo]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken": "baz", "Expiration":"$expiration", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Expiration":"$expiration","Version":1}
 EOT;
+        } else {
+            $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Expiration":"$expiration","Version":1}'
+EOT;
+        }
+
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
 
@@ -570,10 +624,19 @@ EOT;
         $this->expectExceptionMessage("credential_process does not return Version == 1");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":2}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":2}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":2}'
+EOT;
+        }
+
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
 
@@ -591,10 +654,19 @@ EOT;
         $this->expectExceptionMessage("credential_process returned expired credentials");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"1970-01-01T00:00:00.000Z"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"1970-01-01T00:00:00.000Z"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"1970-01-01T00:00:00.000Z"}'
+EOT;
+        }
+
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
 
@@ -612,10 +684,19 @@ EOT;
         $this->expectExceptionMessage("credential_process returned invalid expiration");
         $this->expectException(\Aws\Exception\CredentialsException::class);
         $dir = $this->clearEnv();
-        $ini = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $ini = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"invalid_date_format"}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"invalid_date_format"}
 EOT;
+        } else {
+            $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","SessionToken":"baz","Version":1,"Expiration":"invalid_date_format"}'
+EOT;
+        }
+
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
 
@@ -1883,7 +1964,6 @@ EOT;
         putenv('HOMEPATH=\\Michael\\Home');
         $ref = new \ReflectionClass(CredentialProvider::class);
         $meth = $ref->getMethod('getHomeDir');
-        $meth->setAccessible(true);
         $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
     }
 
@@ -2015,10 +2095,19 @@ EOT;
     public function testProcessCredentialDefaultChain()
     {
         $dir = $this->clearEnv();
-        $credentialsIni = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $credentialsIni = <<<EOT
 [default]
-credential_process = echo '{"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar","Version":1}
 EOT;
+        } else {
+            $credentialsIni = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar","Version":1}'
+EOT;
+        }
+
         file_put_contents($dir . '/credentials', $credentialsIni);
         putenv('HOME=' . dirname($dir));
         $provider = CredentialProvider::defaultProvider();
@@ -2030,10 +2119,20 @@ EOT;
     public function testProcessCredentialConfigDefaultChain()
     {
         $dir = $this->clearEnv();
-        $configIni = <<<EOT
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $configIni = <<<EOT
 [profile default]
-credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz", "Version":1}'
+credential_process = echo {"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}
+
 EOT;
+        } else {
+            $configIni = <<<EOT
+[profile default]
+credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz","Version":1}'
+
+EOT;
+        }
 
         file_put_contents($dir . '/config', $configIni);
         putenv('HOME=' . dirname($dir));
@@ -2507,10 +2606,21 @@ EOF
             mkdir($awsDir, 0777, true);
         }
         $profile = 'test-profile';
-        $configData = <<<EOF
+
+        if (PHP_OS_FAMILY === 'Windows') {
+            $configData = <<<EOF
 [$profile]
-credential_process= echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+credential_process = echo {"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}
+
 EOF;
+        } else {
+            $configData = <<<EOF
+[$profile]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar","Version":1}'
+
+EOF;
+        }
+
         $configPath = $awsDir . '/config';
         file_put_contents($configPath, $configData);
         try {

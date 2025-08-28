@@ -40,10 +40,8 @@ class RateLimiterTest extends TestCase
         ]);
         $ref = new \ReflectionClass($rateLimiter);
         $refLastMaxRate = $ref->getProperty('lastMaxRate');
-        $refLastMaxRate->setAccessible(true);
         $refLastMaxRate->setValue($rateLimiter, 10);
         $refLastLastThrottleTime = $ref->getProperty('lastThrottleTime');
-        $refLastLastThrottleTime->setAccessible(true);
         $refLastLastThrottleTime->setValue($rateLimiter, 5);
 
         $this->assertSame(0, $rateLimiter->updateSendingRate(false));
@@ -77,16 +75,11 @@ class RateLimiterTest extends TestCase
         $rateLimiter = new RateLimiter();
         $ref = new \ReflectionClass($rateLimiter);
         $refLastMaxRate = $ref->getProperty('lastMaxRate');
-        $refLastMaxRate->setAccessible(true);
         $refLastMaxRate->setValue($rateLimiter, 10);
         $refLastLastThrottleTime = $ref->getProperty('lastThrottleTime');
-        $refLastLastThrottleTime->setAccessible(true);
         $refLastLastThrottleTime->setValue($rateLimiter, 5);
         $refCalculateTimeWindow = $ref->getMethod('calculateTimeWindow');
-        $refCalculateTimeWindow->setAccessible(true);
         $refCubicSuccess = $ref->getMethod('cubicSuccess');
-        $refCubicSuccess->setAccessible(true);
-
         $refCalculateTimeWindow->invoke($rateLimiter);
         $this->assertLessThanOrEqual(
             0.3,
@@ -99,18 +92,12 @@ class RateLimiterTest extends TestCase
         $rateLimiter = new RateLimiter();
         $ref = new \ReflectionClass($rateLimiter);
         $refLastMaxRate = $ref->getProperty('lastMaxRate');
-        $refLastMaxRate->setAccessible(true);
         $refLastMaxRate->setValue($rateLimiter, 10);
         $refLastLastThrottleTime = $ref->getProperty('lastThrottleTime');
-        $refLastLastThrottleTime->setAccessible(true);
         $refLastLastThrottleTime->setValue($rateLimiter, 5);
         $refCalculateTimeWindow = $ref->getMethod('calculateTimeWindow');
-        $refCalculateTimeWindow->setAccessible(true);
         $refCubicSuccess = $ref->getMethod('cubicSuccess');
-        $refCubicSuccess->setAccessible(true);
         $refCubicThrottle = $ref->getMethod('cubicThrottle');
-        $refCubicThrottle->setAccessible(true);
-
         $cases = [
             ['timestamp' => 5, 'rate' => 7, 'type' => 'success'],
             ['timestamp' => 6, 'rate' => 9.6, 'type' => 'success'],
@@ -211,20 +198,12 @@ class RateLimiterTest extends TestCase
         ]);
         $ref = new \ReflectionClass($rateLimiter);
         $refLastMaxRate = $ref->getProperty('lastMaxRate');
-        $refLastMaxRate->setAccessible(true);
         $refLastLastThrottleTime = $ref->getProperty('lastThrottleTime');
-        $refLastLastThrottleTime->setAccessible(true);
         $refFillRate = $ref->getProperty('fillRate');
-        $refFillRate->setAccessible(true);
         $refTxRate = $ref->getProperty('measuredTxRate');
-        $refTxRate->setAccessible(true);
         $refCalculateTimeWindow = $ref->getMethod('calculateTimeWindow');
-        $refCalculateTimeWindow->setAccessible(true);
         $refCubicSuccess = $ref->getMethod('cubicSuccess');
-        $refCubicSuccess->setAccessible(true);
         $refCubicThrottle = $ref->getMethod('cubicThrottle');
-        $refCubicThrottle->setAccessible(true);
-
         $cases = [
             ['timestamp' => 0.2, 'measured_tx_rate' => 0, 'new_token_bucket_rate' => 0.5, 'type' => 'success'],
             ['timestamp' => 0.4, 'measured_tx_rate' => 0, 'new_token_bucket_rate' => 0.5, 'type' => 'success'],
