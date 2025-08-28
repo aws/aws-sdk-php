@@ -50,6 +50,10 @@ jobs:
             composer-options: '--prefer-lowest'
           - php-versions: '8.4'
             composer-options: ''
+          - php-versions: '8.4'
+            composer-options: '--prefer-lowest'
+          - php-versions: '8.5'
+            composer-options: ''
     # set the name for each job
     name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
     # set up environment variables used by unit tests
@@ -92,8 +96,7 @@ jobs:
       # static analysis
       - name: Static analysis
         run: |
-          composer require --dev nette/neon "^3.4.4"
-          composer require --dev phpstan/phpstan "2.1.1"
+          composer require --dev nette/neon "^3.4.4" phpstan/phpstan "2.1.1" --ignore-platform-req=php --update-with-all-dependencies
           vendor/bin/phpstan analyse src
 
       # generate package

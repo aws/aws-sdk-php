@@ -29,7 +29,6 @@ class AbstractConfigurationProviderTest extends TestCase
         putenv('HOMEPATH=\\My\\Home');
         $ref = new \ReflectionClass('\Aws\AbstractConfigurationProvider');
         $meth = $ref->getMethod('getHomeDir');
-        $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
     }
 
@@ -79,7 +78,6 @@ class AbstractConfigurationProviderTest extends TestCase
         // Set interfaceClass property that's normally set by child class
         $ref = new \ReflectionClass('\Aws\AbstractConfigurationProvider');
         $property = $ref->getProperty('interfaceClass');
-        $property->setAccessible(true);
         $property->setValue(null,'\Aws\ResultInterface');
 
         $timesCalled = 0;

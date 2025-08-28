@@ -131,8 +131,6 @@ class MultipartUploaderTest extends TestCase
         ]);
         $configProp = (new \ReflectionClass(MultipartUploader::class))
             ->getProperty('config');
-        $configProp->setAccessible(true);
-
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 

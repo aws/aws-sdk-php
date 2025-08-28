@@ -142,8 +142,6 @@ class UrlSignerTest extends TestCase
     {
         $s = new UrlSigner('a', $this->key);
         $m = new \ReflectionMethod(get_class($s), 'createResource');
-        $m->setAccessible(true);
-
         $scheme = parse_url($url)['scheme'];
         $this->assertSame($resource, $m->invoke($s, $scheme, $url));
     }
