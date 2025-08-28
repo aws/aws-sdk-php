@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Progress;
 
-use Aws\S3\S3Transfer\Exceptions\ProgressTrackerException;
+use Aws\S3\S3Transfer\Exception\ProgressTrackerException;
 
 /**
  * To track single object transfers.

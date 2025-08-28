@@ -5,7 +5,7 @@ namespace Aws\Test\S3\S3Transfer;
 use Aws\Command;
 use Aws\Result;
 use Aws\S3\S3Client;
-use Aws\S3\S3Transfer\Exceptions\S3TransferException;
+use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;

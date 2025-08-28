@@ -6,7 +6,7 @@ use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
-use Aws\S3\S3Transfer\Exceptions\S3TransferException;
+use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\S3TransferManagerConfig;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\Progress\TransferListenerNotifier;
@@ -54,7 +54,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     protected ?TransferProgressSnapshot $currentSnapshot;
 
     /**
-     * This will be used for custom or default checksum.
+     * For custom or default checksum.
      *
      * @var string|null
      */

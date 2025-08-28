@@ -8,7 +8,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3Transfer\AbstractMultipartUploader;
-use Aws\S3\S3Transfer\Exceptions\S3TransferException;
+use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\MultipartUploader;
 use Aws\S3\S3Transfer\Progress\TransferListener;

@@ -2,7 +2,7 @@
 
 namespace Aws\S3\S3Transfer\Models;
 
-use Aws\S3\S3Transfer\Exceptions\S3TransferException;
+use Aws\S3\S3Transfer\Exception\S3TransferException;
 use Aws\S3\S3Transfer\Progress\TransferListener;
 use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\S3\S3Transfer\Utils\DownloadHandler;
