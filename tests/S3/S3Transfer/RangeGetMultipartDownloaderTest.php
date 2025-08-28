@@ -9,6 +9,7 @@ use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\RangeGetMultipartDownloader;
 use Aws\S3\S3Transfer\Utils\StreamDownloadHandler;
+use Generator;
 use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Psr7\Utils;
 use PHPUnit\Framework\TestCase;
@@ -157,7 +158,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
         // Use reflection to test the protected nextCommand method
         $reflection = new \ReflectionClass($downloader);
         $nextCommandMethod = $reflection->getMethod('nextCommand');
-        $nextCommandMethod->setAccessible(true);
 
         // First call should create range 0-1023
         $command1 = $nextCommandMethod->invoke($downloader);
@@ -197,7 +197,6 @@ class RangeGetMultipartDownloaderTest extends TestCase
         // Use reflection to test the protected computeObjectDimensions method
         $reflection = new \ReflectionClass($downloader);
         $computeObjectDimensionsMethod = $reflection->getMethod('computeObjectDimensions');
-        $computeObjectDimensionsMethod->setAccessible(true);
 
         // Simulate object smaller than part size
         $result = new Result([
@@ -215,6 +214,7 @@ class RangeGetMultipartDownloaderTest extends TestCase
      * Tests nextCommand method includes IfMatch header when ETag is present.
      *
      * @return void
+     * @throws \ReflectionException
      */
     public function testNextCommandIncludesIfMatchWhenETagPresent(): void
     {
@@ -247,9 +247,113 @@ class RangeGetMultipartDownloaderTest extends TestCase
         // Use reflection to test the protected nextCommand method
         $reflection = new \ReflectionClass($downloader);
         $nextCommandMethod = $reflection->getMethod('nextCommand');
-        $nextCommandMethod->setAccessible(true);
 
         $command = $nextCommandMethod->invoke($downloader);
         $this->assertEquals($eTag, $command['IfMatch']);
+    }
+
+    /**
+     * Test IfMatch is properly called in each part get operation.
+     *
+     * @param int $objectSizeInBytes
+     * @param int $targetPartSize
+     * @param string $eTag
+     *
+     * @dataProvider ifMatchIsPresentInEachRangeRequestAfterFirstProvider
+     *
+     * @return void
+     */
+    public function testIfMatchIsPresentInEachRangeRequestAfterFirst(
+        int $objectSizeInBytes,
+        int $targetPartSize,
+        string $eTag
+    ): void
+    {
+        $firstRequestCalled = false;
+        $ifMatchCalledTimes = 0;
+        $partsCount = ceil($objectSizeInBytes / $targetPartSize);
+        $remainingToTransfer = $objectSizeInBytes;
+        $s3Client = $this->getMockBuilder(S3Client::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $s3Client->method('getCommand')
+            ->willReturnCallback(function ($commandName, $args)
+            use ($eTag, &$ifMatchCalledTimes) {
+                if (isset($args['IfMatch'])) {
+                    $ifMatchCalledTimes++;
+                    $this->assertEquals(
+                        $eTag,
+                        $args['IfMatch']
+                    );
+                }
+
+                return new Command($commandName, $args);
+            });
+        $s3Client->method('executeAsync')
+            -> willReturnCallback(function ($command)
+            use (
+                $eTag,
+                $objectSizeInBytes,
+                $partsCount,
+                $targetPartSize,
+                &$remainingToTransfer,
+                &$firstRequestCalled
+            ) {
+                $firstRequestCalled = true;
+                $currentPartLength = min(
+                    $targetPartSize,
+                    $remainingToTransfer
+                );
+                $from = $objectSizeInBytes - $remainingToTransfer;
+                $to = $from + $currentPartLength;
+                $remainingToTransfer -= $currentPartLength;
+                return Create::promiseFor(new Result([
+                    'Body' => Utils::streamFor('Foo'),
+                    'ContentRange' => "bytes $from-$to/$objectSizeInBytes",
+                    'ContentLength' =>  $currentPartLength,
+                    'ETag' => $eTag,
+                ]));
+            });
+        $requestArgs = [
+            'Bucket' => 'TestBucket',
+            'Key' => 'TestKey',
+        ];
+        $rangeGetMultipartDownloader = new RangeGetMultipartDownloader(
+            $s3Client,
+            $requestArgs,
+            [
+                'target_part_size_bytes' => $targetPartSize,
+            ]
+        );
+        $rangeGetMultipartDownloader->download();
+        $this->assertTrue($firstRequestCalled);
+        $this->assertEquals(
+            $partsCount - 1,
+            $ifMatchCalledTimes
+        );
+    }
+
+    /**
+     * @return Generator
+     */
+    public function ifMatchIsPresentInEachRangeRequestAfterFirstProvider(): Generator
+    {
+        yield 'multipart_download_with_3_parts_1' => [
+            'object_size_in_bytes' => 1024 * 1024 * 20,
+            'target_part_size_bytes' => 8 * 1024 * 1024,
+            'eTag' => 'ETag1234',
+        ];
+
+        yield 'multipart_download_with_2_parts_1' => [
+            'object_size_in_bytes' => 1024 * 1024 * 16,
+            'target_part_size_bytes' => 8 * 1024 * 1024,
+            'eTag' => 'ETag12345678',
+        ];
+
+        yield 'multipart_download_with_5_parts_1' => [
+            'object_size_in_bytes' => 1024 * 1024 * 40,
+            'target_part_size_bytes' => 8 * 1024 * 1024,
+            'eTag' => 'ETag12345678',
+        ];
     }
 }

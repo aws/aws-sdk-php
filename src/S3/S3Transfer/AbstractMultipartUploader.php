@@ -228,7 +228,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         if ($this->requestChecksum !== null) {
             $completeMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
             $completeMultipartUploadArgs[
-                'Checksum' . ucfirst($this->requestChecksumAlgorithm)
+                'Checksum' . strtoupper($this->requestChecksumAlgorithm)
             ] = $this->requestChecksum;
         }
 

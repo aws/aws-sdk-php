@@ -7,15 +7,19 @@ use Aws\Command;
 use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Result;
+use Aws\S3\ApplyChecksumMiddleware;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\S3\S3Transfer\AbstractMultipartUploader;
 use Aws\S3\S3Transfer\Exceptions\S3TransferException;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\DownloadDirectoryResult;
 use Aws\S3\S3Transfer\Models\DownloadRequest;
+use Aws\S3\S3Transfer\Models\DownloadResult;
 use Aws\S3\S3Transfer\Models\UploadDirectoryRequest;
 use Aws\S3\S3Transfer\Models\UploadDirectoryResult;
 use Aws\S3\S3Transfer\Models\UploadRequest;
+use Aws\S3\S3Transfer\Models\UploadResult;
 use Aws\S3\S3Transfer\MultipartDownloader;
 use Aws\S3\S3Transfer\MultipartUploader;
 use Aws\S3\S3Transfer\Progress\TransferListener;
@@ -24,13 +28,33 @@ use Aws\S3\S3Transfer\S3TransferManager;
 use Aws\Test\TestsUtility;
 use Closure;
 use Exception;
+use Generator;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Create;
+use GuzzleHttp\Promise\RejectedPromise;
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 class S3TransferManagerTest extends TestCase
 {
+    private const DOWNLOAD_BASE_CASES = __DIR__ . '/test-cases/download-single-object.json';
+    private const UPLOAD_BASE_CASES = __DIR__ . '/test-cases/upload-single-object.json';
+    private static array $multipartUploadBodyTemplates = [
+    'CreateMultipartUpload' => <<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<InitiateMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Bucket>{Bucket}</Bucket>
+    <Key>{Key}</Key>
+    <UploadId>{UploadId}</UploadId>
+</InitiateMultipartUploadResult>
+EOF,
+    ];
+
     /**
      * @return void
      */
@@ -2759,7 +2783,8 @@ class S3TransferManagerTest extends TestCase
         ?string $delimiter,
         array $objects,
         array $expectedOutput
-    ) {
+    ): void
+    {
         if ($expectedOutput['success'] === false) {
             $this->expectException(S3TransferException::class);
             $this->expectExceptionMessageMatches(
@@ -2847,7 +2872,8 @@ class S3TransferManagerTest extends TestCase
     /**
      * @return array
      */
-    public function resolvesOutsideTargetDirectoryProvider(): array {
+    public function resolvesOutsideTargetDirectoryProvider(): array
+    {
         return [
             'download_directory_1_linux' => [
                 'prefix' => null,
@@ -2964,6 +2990,563 @@ class S3TransferManagerTest extends TestCase
                 ]
             ],
         ];
+    }
+
+    /**
+     * @param string $testId
+     * @param array $config
+     * @param array $requestArgs
+     * @param array $expectations
+     * @param array $outcomes
+     *
+     * @return void
+     * @dataProvider modeledDownloadCasesProvider
+     *
+     */
+    public function testModeledCasesForDownload(
+        string $testId,
+        array $config,
+        array $requestArgs,
+        array $expectations,
+        array $outcomes
+    ): void
+    {
+        $testsToSkip = [
+            "Test download with part GET - validation failure when part count mismatch" => true,
+        ];
+        if ($testsToSkip[$testId] ?? false) {
+            $this->markTestSkipped(
+                "The test `" . $testId . "` is not supported yet."
+            );
+        }
+
+        // Outcomes has only one item for now
+        $outcome = $outcomes[0];
+        // Standardize config
+        $this->parseConfigFromCamelCaseToSnakeCase($config);
+        // Standardize request
+        $this->parseRequestArgsFromCamelCaseToPascalCase($requestArgs);
+
+        if (isset($config['multipart_download_type']) && $config['multipart_download_type'] === 'RANGE') {
+            $config['multipart_download_type'] = 'RANGED';
+        }
+
+        // Operational values
+        $totalBytesReceived = 0;
+        $totalPartsReceived = 0;
+        // Mock client to validate expected requests
+        $s3Client = $this->getS3ClientWithSequentialResponses(
+            array_map(function ($expectation) {
+                $operation = $expectation['request']['operation'];
+
+                return array_merge(
+                    $expectation['response'],
+                    ['operation' => $operation]
+                );
+            }, $expectations),
+            function (
+                string $operation,
+                array|string|null $body,
+                ?array &$headers
+            ): StreamInterface
+            {
+                $fixedBody = Utils::streamFor(
+                    str_repeat(
+                        '*',
+                        $headers['Content-Length']
+                    )
+                );
+
+                if (isset($headers['ChecksumAlgorithm'])) {
+                    // Checksum injection when expected to succeed at checksum validation
+                    // This is needed because the checksum in the test is wrong
+                    $algorithm = strtolower($headers['ChecksumAlgorithm']);
+                    $checksumValue = ApplyChecksumMiddleware::getEncodedValue(
+                        $algorithm,
+                        $fixedBody
+                    );
+                    $headers['Checksum'.strtoupper($algorithm)] = $checksumValue;
+                    $fixedBody->rewind();
+                }
+
+                // If body was provided then we override the fixed one
+                if ($body !== null) {
+                    $fixedBody = Utils::streamFor($body);
+                }
+
+                return $fixedBody;
+            },
+        );
+        $s3TransferManager = new S3TransferManager(
+            $s3Client,
+        );
+        try {
+            $response = $s3TransferManager->download(
+                new DownloadRequest(
+                    [
+                        'Bucket' => 'test-bucket',
+                        'Key' => 'test-key',
+                    ],
+                    downloadRequestArgs: $requestArgs,
+                    config: $config,
+                    listeners: [
+                        new class($totalBytesReceived, $totalPartsReceived)
+                            extends TransferListener {
+                            private int $totalBytesReceived;
+                            private int $totalPartsReceived;
+
+                            public function __construct(
+                                int &$totalBytesReceived,
+                                int &$totalPartsReceived
+                            )
+                            {
+                                $this->totalBytesReceived =& $totalBytesReceived;
+                                $this->totalPartsReceived =& $totalPartsReceived;
+                            }
+
+                            /**
+                             * @param array $context
+                             *
+                             * @return void
+                             */
+                            public function bytesTransferred(array $context): void {
+                                $snapshot = $context[
+                                TransferListener::PROGRESS_SNAPSHOT_KEY
+                                ];
+                                $this->totalBytesReceived = $snapshot->getTransferredBytes();
+                                $this->totalPartsReceived++;
+                            }
+                        }
+                    ]
+                )
+            )->wait();
+            $this->assertEquals(
+                "success",
+                $outcome['result'],
+                "Operation should have failed at this point"
+            );
+            $this->assertInstanceOf(
+                DownloadResult::class,
+                $response,
+            );
+            if (isset($outcome['totalBytes'])) {
+                $this->assertEquals(
+                    $outcome['totalBytes'],
+                    $totalBytesReceived
+                );
+            }
+            if (isset($outcome['totalParts'])) {
+                $this->assertEquals(
+                    $outcome['totalParts'],
+                    $totalPartsReceived
+                );
+            }
+            if (isset($outcome['checksumValidated'])) {
+                $this->assertArrayHasKey(
+                    'ChecksumValidated',
+                    $response
+                );
+                $this->assertEquals(
+                    $outcome['checksumAlgorithm'],
+                    $response['ChecksumValidated']
+                );
+            }
+        } catch (S3TransferException | S3Exception $e) {
+            $this->assertEquals(
+                "error",
+                $outcome['result'],
+                "Operation did not expect a failure"
+            );
+
+            $this->assertTrue(
+                $this->assertEachWordMatchesTheErrorMessage(
+                    $outcome['errorMessage'],
+                    $e->getMessage()
+                )
+            );
+        }
+    }
+
+    /**
+     * @param string $testId
+     * @param array $config
+     * @param array $requestArgs
+     * @param array $expectations
+     * @param array $outcomes
+     *
+     * @return void
+     * @dataProvider modeledUploadCasesProvider
+     *
+     */
+    public function testModeledCasesForUpload(
+        string $testId,
+        array $config,
+        array $requestArgs,
+        array $expectations,
+        array $outcomes
+    ): void
+    {
+        $testsToSkip = [
+            "Test upload with multipart upload - validation failure when part size mismatch" => true,
+            "Test upload with multipart upload - validation failure when part count mismatch" => true
+        ];
+        if ($testsToSkip[$testId] ?? false) {
+            $this->markTestSkipped(
+                "The test `" . $testId . "` is not supported yet."
+            );
+        }
+
+        // Outcomes has only one item for now
+        $outcome = $outcomes[0];
+        // Standardize config
+        $this->parseConfigFromCamelCaseToSnakeCase($config);
+        // Standardize request
+        $this->parseRequestArgsFromCamelCaseToPascalCase($requestArgs);
+
+        // Operational values
+        $contentLength = $requestArgs['ContentLength'];
+        $totalBytesReceived = 0;
+        $totalPartsReceived = 0;
+        // Mock client to validate expected requests
+        $s3Client = $this->getS3ClientWithSequentialResponses(
+            array_map(function ($expectation) {
+                $operation = $expectation['request']['operation'];
+
+                return array_merge(
+                    $expectation['response'],
+                    ['operation' => $operation]
+                );
+            }, $expectations),
+            function (string $operation, ?array $body): StreamInterface {
+                $template = self::$multipartUploadBodyTemplates[$operation] ?? "";
+                if ($body === null) {
+                    $body = [];
+                }
+
+                foreach ($body as $key => $value) {
+                    $template = str_replace("{{$key}}", $value, $template);
+                }
+
+                return Utils::streamFor(
+                    $template,
+                );
+            }
+        );
+
+        $s3TransferManager = new S3TransferManager(
+            $s3Client,
+        );
+        try {
+            $response = $s3TransferManager->upload(
+                new UploadRequest(
+                    Utils::streamFor(
+                        str_repeat('#', $contentLength),
+                    ),
+                    uploadRequestArgs: $requestArgs,
+                    config: array_merge(
+                        $config,
+                        ['concurrency' => 1],
+                    ),
+                    listeners: [
+                        new class($totalBytesReceived, $totalPartsReceived)
+                            extends TransferListener {
+                            private int $totalBytesReceived;
+                            private int $totalPartsReceived;
+
+                            public function __construct(
+                                int &$totalBytesReceived,
+                                int &$totalPartsReceived
+                            )
+                            {
+                                $this->totalBytesReceived =& $totalBytesReceived;
+                                $this->totalPartsReceived =& $totalPartsReceived;
+                            }
+
+                            /**
+                             * @param array $context
+                             *
+                             * @return void
+                             */
+                            public function bytesTransferred(array $context): void {
+                                $snapshot = $context[
+                                TransferListener::PROGRESS_SNAPSHOT_KEY
+                                ];
+                                $this->totalBytesReceived = $snapshot->getTransferredBytes();
+                                $this->totalPartsReceived++;
+                            }
+                        }
+                    ]
+                )
+            )->wait();
+            $this->assertEquals(
+                "success",
+                $outcome['result'],
+                "Operation should have failed at this point"
+            );
+            $this->assertInstanceOf(
+                UploadResult::class,
+                $response,
+            );
+            if (isset($outcome['totalBytes'])) {
+                $this->assertEquals(
+                    $outcome['totalBytes'],
+                    $totalBytesReceived
+                );
+            }
+            if (isset($outcome['totalParts'])) {
+                $this->assertEquals(
+                    $outcome['totalParts'],
+                    $totalPartsReceived
+                );
+            }
+        } catch (S3TransferException | S3Exception $e) {
+            $this->assertEquals(
+                "error",
+                $outcome['result'],
+                "Operation did not expect a failure"
+            );
+
+            $this->assertTrue(
+                $this->assertEachWordMatchesTheErrorMessage(
+                    $outcome['errorMessage'],
+                    $e->getMessage()
+                )
+            );
+        }
+    }
+
+    /**
+     * @param array $responses
+     * @param callable $bodyBuilder
+     *  A callable to build the body of the response. It receives as
+     *  parameter:
+     *  - The operation that the response is for.
+     *  - The body given in the expectation.
+     *  - The headers given in the expectation.
+     *
+     * @return S3Client
+     */
+    private function getS3ClientWithSequentialResponses(
+        array $responses,
+        callable $bodyBuilder
+    ): S3Client
+    {
+        $index = 0;
+        return new S3Client([
+            'region' => 'eu-west-1',
+            'http_handler' => function ()
+            use ($bodyBuilder, $responses, &$index) {
+                $response = $responses[$index++];
+                if ($response['status'] < 400) {
+                    $headers = $response['headers'] ?? [];
+                    $body = call_user_func_array(
+                        $bodyBuilder,
+                            [
+                                $response['operation'],
+                                $response['body'] ?? null,
+                                &$headers
+                            ]
+                    );
+
+                    $this->parseCaseHeadersToAmzHeaders($headers);
+
+                    return new Response(
+                        $response['status'],
+                        $headers,
+                        $body
+                    );
+                } else {
+                    return new RejectedPromise(
+                        new S3TransferException(
+                            $response['errorMessage'] ?? ""
+                        )
+                    );
+                }
+            }
+        ]);
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return void
+     */
+    private function parseConfigFromCamelCaseToSnakeCase(
+        array &$config
+    ): void
+    {
+        foreach ($config as $key => $value) {
+            // Searches for lowercaseUPPERCASE occurrences
+            // Then it is replaced by using group1_group2 found.
+            $newKey = strtolower(
+                preg_replace(
+                    "/([a-z])([A-Z])/",
+                    "$1_$2",
+                    $key
+                )
+            );
+            $config[$newKey] = $value;
+            unset($config[$key]);
+        }
+    }
+
+    /**
+     * Checks if all words from the expected message appear in the actual message
+     * in the same order (allowing for gaps between words).
+     * Example that resolves to true:
+     *  expected: "error validating config"
+     *  actual:   "error validating download config"
+     *  reason: The words "error" -> "validating" -> "config" were found in the
+     *  same error in the actual message.
+     *
+     * Example that resolves to false:
+     *  expected: "error validating config"
+     *  actual:   "error in download config validation"
+     *  reason: The words error->validating->config were not
+     *  found in order.
+     *
+     * @param string $expectedMessage The message containing words to find
+     * @param string $actualMessage   The message to search within
+     *
+     * @return bool True if all expected words are found in order, false otherwise
+     */
+    private function assertEachWordMatchesTheErrorMessage(
+        string $expectedMessage,
+        string $actualMessage
+    ): bool
+    {
+        $expectedMessage = trim($expectedMessage);
+        $actualMessage = trim($actualMessage);
+
+        // To make the validation case-insensitive
+        $expectedMessage = strtolower($expectedMessage);
+        $actualMessage = strtolower($actualMessage);
+
+        // Split into words and filter empty elements
+        $expectedWords = array_filter(preg_split('/\s+/', $expectedMessage));
+        $actualWords = array_filter(preg_split('/\s+/', $actualMessage));
+
+        if (empty($expectedWords)) {
+            return true;
+        }
+
+        if (empty($actualWords)) {
+            return false;
+        }
+
+        $actualIndex = 0;
+        $actualWordsCount = count($actualWords);
+
+        foreach ($expectedWords as $expectedWord) {
+            $wordFound = false;
+            while ($actualIndex < $actualWordsCount) {
+                if ($expectedWord === $actualWords[$actualIndex]) {
+                    $wordFound = true;
+                    $actualIndex++;
+                    break;
+                }
+                $actualIndex++;
+            }
+
+            if (!$wordFound) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return Generator
+     */
+    public function modeledDownloadCasesProvider(): Generator
+    {
+        $downloadCases = json_decode(
+            file_get_contents(
+                self::DOWNLOAD_BASE_CASES
+            ),
+            true
+        );
+        foreach ($downloadCases as $case) {
+            yield $case['summary'] => [
+                'test_id' => $case['summary'],
+                'config' => $case['config'],
+                'download_request' => $case['downloadRequest'],
+                'expectations' => $case['expectations'],
+                'outcomes' => $case['outcomes'],
+            ];
+        }
+    }
+
+    /**
+     * @return Generator
+     */
+    public function modeledUploadCasesProvider(): Generator
+    {
+        $downloadCases = json_decode(
+            file_get_contents(
+                self::UPLOAD_BASE_CASES
+            ),
+            true
+        );
+        foreach ($downloadCases as $case) {
+            yield $case['summary'] => [
+                'test_id' => $case['summary'],
+                'config' => $case['config'],
+                'upload_request' => $case['uploadRequest'],
+                'expectations' => $case['expectations'],
+                'outcomes' => $case['outcomes'],
+            ];
+        }
+    }
+
+    /**
+     * @param array $requestArgs
+     *
+     * @return void
+     */
+    private function parseRequestArgsFromCamelCaseToPascalCase(
+        array &$requestArgs
+    ): void
+    {
+        foreach ($requestArgs as $key => $value) {
+            $newKey = ucfirst($key);
+            $requestArgs[$newKey] = $value;
+            unset($requestArgs[$key]);
+        }
+    }
+
+    /**
+     * @param array $caseHeaders
+     *
+     * @return void
+     */
+    private function parseCaseHeadersToAmzHeaders(array &$caseHeaders): void
+    {
+        foreach ($caseHeaders as $key => $value) {
+            $newKey = $key;
+            switch ($key) {
+                case 'PartsCount':
+                    $newKey = 'x-amz-mp-parts-count';
+                    break;
+                case 'ChecksumAlgorithm':
+                    $newKey = 'x-amz-checksum-algorithm';
+                    break;
+                default:
+                    if (preg_match('/Checksum[A-Z]+/', $key)) {
+                        $newKey = 'x-amz-checksum-' . str_replace(
+                            'Checksum',
+                            '',
+                            $key
+                        );
+                    }
+            }
+
+            if ($newKey !== $key) {
+                $caseHeaders[$newKey] = $value;
+                unset($caseHeaders[$key]);
+            }
+        }
     }
 
     /**

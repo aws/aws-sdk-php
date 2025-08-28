@@ -553,7 +553,7 @@ class S3TransferManager
     ): PromiseInterface
     {
         $downloaderClassName = MultipartDownloader::chooseDownloaderClass(
-            $config['multipart_download_type']
+            strtolower($config['multipart_download_type'])
         );
         $multipartDownloader = new $downloaderClassName(
             $this->s3Client,

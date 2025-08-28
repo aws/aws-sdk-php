@@ -119,6 +119,9 @@ class MultipartUploader extends AbstractMultipartUploader
                 '',
                 $checksumName
             );
+            $this->requestChecksumAlgorithm = strtolower(
+                $this->requestChecksumAlgorithm
+            );
         } else {
             $this->requestChecksum = null;
             $this->requestChecksumAlgorithm = null;
@@ -139,7 +142,7 @@ class MultipartUploader extends AbstractMultipartUploader
         if ($this->requestChecksum !== null) {
             // To avoid default calculation
             $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
-            unset($uploadPartCommandArgs['Checksum'. ucfirst($this->requestChecksumAlgorithm)]);
+            unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
         } elseif ($this->requestChecksumAlgorithm !== null) {
             // Normalize algorithm name
             $algoName = strtolower($this->requestChecksumAlgorithm);
@@ -151,7 +154,7 @@ class MultipartUploader extends AbstractMultipartUploader
             $this->hashContext = hash_init($algoName);
             // To avoid default calculation
             $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
-            unset($uploadPartCommandArgs['Checksum'. ucfirst($this->requestChecksumAlgorithm)]);
+            unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
         }
 
         while (!$this->body->eof()) {
@@ -197,7 +200,12 @@ class MultipartUploader extends AbstractMultipartUploader
         }
 
         if ($hashBody) {
-            $this->requestChecksum = hash_final($this->hashContext);
+            $this->requestChecksum = base64_encode(
+                hash_final(
+                    $this->hashContext,
+                    true
+                )
+            );
         }
 
         return (new CommandPool(
@@ -207,6 +215,11 @@ class MultipartUploader extends AbstractMultipartUploader
                 'concurrency' => $this->config['concurrency'],
                 'fulfilled'   => function (ResultInterface $result, $index)
                 use ($commands) {
+                    // To make sure we don't continue when a failure occurred
+                    if ($this->currentSnapshot->getReason() !== null) {
+                        throw $this->currentSnapshot->getReason();
+                    }
+
                     $command = $commands[$index];
                     $this->collectPart(
                         $result,

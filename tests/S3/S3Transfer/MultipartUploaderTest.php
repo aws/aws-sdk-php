@@ -633,7 +633,7 @@ EOF;
                 'expected_operation_headers' => [
                     'CreateMultipartUpload' => [
                         'has' => [
-                            'x-amz-checksum-algorithm' => 'CRC32',
+                            'x-amz-checksum-algorithm' => 'crc32',
                             'x-amz-checksum-type' => 'FULL_OBJECT'
                         ]
                     ],
@@ -840,7 +840,8 @@ EOF;
     public function testFullObjectChecksumWorksJustWithCRC(
         array $checksumConfig,
         bool $expectsError
-    ): void {
+    ): void
+    {
         $s3Client = $this->getMultipartUploadS3Client();
         $requestArgs = [
             'Key' => 'FooKey',
@@ -900,6 +901,420 @@ EOF;
                 'ChecksumCRC32' => 'AAAAAA=='
             ],
             'expects_error' => false,
+        ];
+    }
+
+    /**
+     * @param array $sourceConfig
+     * @param array $requestArgs
+     * @param array $expectedInputArgs
+     * @param bool $expectsError
+     * @param int|null $errorOnPartNumber
+     * @return void
+     * @dataProvider inputArgumentsPerOperationProvider
+     */
+    public function testInputArgumentsPerOperation(
+        array $sourceConfig,
+        array $requestArgs,
+        array $expectedInputArgs,
+        bool $expectsError,
+        ?int $errorOnPartNumber = null
+    ): void
+    {
+        try {
+            $calledCommands = array_map(function () {
+                return 1;
+            }, $expectedInputArgs);
+            $this->assertNotEmpty(
+                $calledCommands,
+                "Expected input arguments should not be empty"
+            );
+            $s3Client = $this->getMockBuilder(S3Client::class)
+                ->disableOriginalConstructor()
+                ->getMock();
+            $s3Client->method(
+                'getCommand'
+            )->willReturnCallback(
+                function ($commandName, $args)
+                use (&$calledCommands, $expectedInputArgs) {
+                if (isset($expectedInputArgs[$commandName])) {
+                    $calledCommands[$commandName] = 0;
+                    $expected = $expectedInputArgs[$commandName];
+                    foreach ($expected as $key => $value) {
+                        $this->assertArrayHasKey($key, $args);
+                        $this->assertEquals(
+                            $value,
+                            $args[$key]
+                        );
+                    }
+                }
+
+                return new Command($commandName, $args);
+            });
+            $s3Client->method('executeAsync')
+                ->willReturnCallback(function ($command)
+                use ($errorOnPartNumber, $expectsError) {
+                    if ($command->getName() === 'UploadPart') {
+                        if ($expectsError && $command['PartNumber'] === $errorOnPartNumber) {
+                            return Create::rejectionFor(
+                                new S3TransferException('Upload failed')
+                            );
+                        }
+
+                        return Create::promiseFor(new Result([]));
+                    }
+
+                    return match ($command->getName()) {
+                        'CreateMultipartUpload' => Create::promiseFor(new Result([
+                            'UploadId' => 'FooUploadId',
+                        ])),
+                        'CompleteMultipartUpload',
+                        'AbortMultipartUpload',
+                        'PutObject' => Create::promiseFor(new Result([])),
+                        default => null,
+                    };
+                });
+            $source = Utils::streamFor(
+                str_repeat(
+                    $sourceConfig['char'],
+                    $sourceConfig['size']
+                )
+            );
+            $multipartUploader = new MultipartUploader(
+                $s3Client,
+                $requestArgs,
+                Utils::streamFor($source)
+            );
+            $multipartUploader->upload();
+            foreach ($calledCommands as $key => $value) {
+                $this->assertEquals(
+                    0,
+                    $value,
+                    "$key not called"
+                );
+            }
+            $this->assertFalse(
+                $expectsError,
+                "Expected error while uploading"
+            );
+        } catch (S3TransferException $exception) {
+            $this->assertTrue(
+                $expectsError,
+                "Unexpected error while uploading" . "\n" . $exception->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @return Generator
+     */
+    public function inputArgumentsPerOperationProvider(): Generator
+    {
+        yield 'test_input_fields_are_copied_without_custom_checksums' => [
+            // Source config to generate a stub body
+            'source_config' => [
+                'size' => 1024 * 1024 * 10,
+                'char' => '#'
+            ],
+            'request_args' => [
+                "ACL" => 'private',
+                "Bucket" => 'test-bucket',
+                "BucketKeyEnabled" => 'test-bucket-key-enabled',
+                "CacheControl" => 'test-cache-control',
+                "ContentDisposition" => 'test-content-disposition',
+                "ContentEncoding" => 'test-content-encoding',
+                "ContentLanguage" => 'test-content-language',
+                "ContentType" => 'test-content-type',
+                "ExpectedBucketOwner" => 'test-bucket-owner',
+                "Expires" => 'test-expires',
+                "GrantFullControl" => 'test-grant-control',
+                "GrantRead" => 'test-grant-control',
+                "GrantReadACP" => 'test-grant-control',
+                "GrantWriteACP" => 'test-grant-control',
+                "Key" => 'test-key',
+                "Metadata" => [
+                    'metadata-1' => 'test-metadata-1',
+                    'metadata-2' => 'test-metadata-2',
+                ],
+                "ObjectLockLegalHoldStatus" => 'test-object-lock-legal-hold',
+                "ObjectLockMode" => 'test-object-lock-mode',
+                "ObjectLockRetainUntilDate" => 'test-object-lock-retain-until',
+                "RequestPayer" => 'test-request-payer',
+                "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                "SSECustomerKey" => 'test-sse-customer-key',
+                "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                "SSEKMSEncryptionContext" => 'test-sse-kms-encryption-context',
+                "SSEKMSKeyId" => 'test-sse-kms-key-id',
+                "ServerSideEncryption" => 'test-server-side-encryption',
+                "StorageClass" => 'test-storage-class',
+                "Tagging" => 'test-tagging',
+                "WebsiteRedirectLocation" => 'test-website-redirect-location',
+            ],
+            'expected_input_args' => [
+                'CreateMultipartUpload' => [
+                    "ACL" => 'private',
+                    "Bucket" => 'test-bucket',
+                    "BucketKeyEnabled" => 'test-bucket-key-enabled',
+                    "CacheControl" => 'test-cache-control',
+                    "ContentDisposition" => 'test-content-disposition',
+                    "ContentEncoding" => 'test-content-encoding',
+                    "ContentLanguage" => 'test-content-language',
+                    "ContentType" => 'test-content-type',
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Expires" => 'test-expires',
+                    "GrantFullControl" => 'test-grant-control',
+                    "GrantRead" => 'test-grant-control',
+                    "GrantReadACP" => 'test-grant-control',
+                    "GrantWriteACP" => 'test-grant-control',
+                    "Key" => 'test-key',
+                    "Metadata" => [
+                        'metadata-1' => 'test-metadata-1',
+                        'metadata-2' => 'test-metadata-2',
+                    ],
+                    "ObjectLockLegalHoldStatus" => 'test-object-lock-legal-hold',
+                    "ObjectLockMode" => 'test-object-lock-mode',
+                    "ObjectLockRetainUntilDate" => 'test-object-lock-retain-until',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                    "SSEKMSEncryptionContext" => 'test-sse-kms-encryption-context',
+                    "SSEKMSKeyId" => 'test-sse-kms-key-id',
+                    "ServerSideEncryption" => 'test-server-side-encryption',
+                    "StorageClass" => 'test-storage-class',
+                    "Tagging" => 'test-tagging',
+                    "WebsiteRedirectLocation" => 'test-website-redirect-location',
+                    'ChecksumType' => 'FULL_OBJECT',
+                    'ChecksumAlgorithm' => 'crc32',
+                ],
+                'UploadPart' => [
+                    "Bucket" => 'test-bucket',
+                    "UploadId" => "FooUploadId", // Fixed from test
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Key" => 'test-key',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                ],
+                'CompleteMultipartUpload' => [
+                    "Bucket" => 'test-bucket',
+                    "UploadId" => "FooUploadId", // Fixed from test
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Key" => 'test-key',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                    'ChecksumType' => 'FULL_OBJECT',
+                    'ChecksumCRC32' => 'b71d0814', // From default algorithm used
+                ],
+            ],
+            'expects_error' => false,
+        ];
+
+        yield 'test_input_fields_are_copied_with_custom_checksum_crc32' => [
+            // Source config to generate a stub body
+            'source_config' => [
+                'size' => 1024 * 1024 * 10,
+                'char' => '#'
+            ],
+            'request_args' => [
+                'ChecksumCRC32' => 'tx0IFA==',
+                "ACL" => 'private',
+                "Bucket" => 'test-bucket',
+                "BucketKeyEnabled" => 'test-bucket-key-enabled',
+                "CacheControl" => 'test-cache-control',
+                "ContentDisposition" => 'test-content-disposition',
+                "ContentEncoding" => 'test-content-encoding',
+                "ContentLanguage" => 'test-content-language',
+                "ContentType" => 'test-content-type',
+                "ExpectedBucketOwner" => 'test-bucket-owner',
+                "Expires" => 'test-expires',
+                "GrantFullControl" => 'test-grant-control',
+                "GrantRead" => 'test-grant-control',
+                "GrantReadACP" => 'test-grant-control',
+                "GrantWriteACP" => 'test-grant-control',
+                "Key" => 'test-key',
+                "Metadata" => [
+                    'metadata-1' => 'test-metadata-1',
+                    'metadata-2' => 'test-metadata-2',
+                ],
+                "ObjectLockLegalHoldStatus" => 'test-object-lock-legal-hold',
+                "ObjectLockMode" => 'test-object-lock-mode',
+                "ObjectLockRetainUntilDate" => 'test-object-lock-retain-until',
+                "RequestPayer" => 'test-request-payer',
+                "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                "SSECustomerKey" => 'test-sse-customer-key',
+                "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                "SSEKMSEncryptionContext" => 'test-sse-kms-encryption-context',
+                "SSEKMSKeyId" => 'test-sse-kms-key-id',
+                "ServerSideEncryption" => 'test-server-side-encryption',
+                "StorageClass" => 'test-storage-class',
+                "Tagging" => 'test-tagging',
+                "WebsiteRedirectLocation" => 'test-website-redirect-location',
+            ],
+            'expected_input_args' => [
+                'CreateMultipartUpload' => [
+                    "ACL" => 'private',
+                    "Bucket" => 'test-bucket',
+                    "BucketKeyEnabled" => 'test-bucket-key-enabled',
+                    "CacheControl" => 'test-cache-control',
+                    "ContentDisposition" => 'test-content-disposition',
+                    "ContentEncoding" => 'test-content-encoding',
+                    "ContentLanguage" => 'test-content-language',
+                    "ContentType" => 'test-content-type',
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Expires" => 'test-expires',
+                    "GrantFullControl" => 'test-grant-control',
+                    "GrantRead" => 'test-grant-control',
+                    "GrantReadACP" => 'test-grant-control',
+                    "GrantWriteACP" => 'test-grant-control',
+                    "Key" => 'test-key',
+                    "Metadata" => [
+                        'metadata-1' => 'test-metadata-1',
+                        'metadata-2' => 'test-metadata-2',
+                    ],
+                    "ObjectLockLegalHoldStatus" => 'test-object-lock-legal-hold',
+                    "ObjectLockMode" => 'test-object-lock-mode',
+                    "ObjectLockRetainUntilDate" => 'test-object-lock-retain-until',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                    "SSEKMSEncryptionContext" => 'test-sse-kms-encryption-context',
+                    "SSEKMSKeyId" => 'test-sse-kms-key-id',
+                    "ServerSideEncryption" => 'test-server-side-encryption',
+                    "StorageClass" => 'test-storage-class',
+                    "Tagging" => 'test-tagging',
+                    "WebsiteRedirectLocation" => 'test-website-redirect-location',
+                    'ChecksumType' => 'FULL_OBJECT',
+                    'ChecksumAlgorithm' => 'crc32',
+                ],
+                'UploadPart' => [
+                    "Bucket" => 'test-bucket',
+                    "UploadId" => "FooUploadId", // Fixed from test
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Key" => 'test-key',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                ],
+                'CompleteMultipartUpload' => [
+                    "Bucket" => 'test-bucket',
+                    "UploadId" => "FooUploadId", // Fixed from test
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Key" => 'test-key',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                    'ChecksumType' => 'FULL_OBJECT',
+                    'ChecksumCRC32' => 'tx0IFA==', // From default algorithm used
+                ],
+            ],
+            'expects_error' => false,
+        ];
+
+        yield 'test_input_fields_are_copied_with_error' => [
+            // Source config to generate a stub body
+            'source_config' => [
+                'size' => 1024 * 1024 * 10,
+                'char' => '#'
+            ],
+            'request_args' => [
+                'ChecksumCRC32' => 'tx0IFA==',
+                "ACL" => 'private',
+                "Bucket" => 'test-bucket',
+                "BucketKeyEnabled" => 'test-bucket-key-enabled',
+                "CacheControl" => 'test-cache-control',
+                "ContentDisposition" => 'test-content-disposition',
+                "ContentEncoding" => 'test-content-encoding',
+                "ContentLanguage" => 'test-content-language',
+                "ContentType" => 'test-content-type',
+                "ExpectedBucketOwner" => 'test-bucket-owner',
+                "Expires" => 'test-expires',
+                "GrantFullControl" => 'test-grant-control',
+                "GrantRead" => 'test-grant-control',
+                "GrantReadACP" => 'test-grant-control',
+                "GrantWriteACP" => 'test-grant-control',
+                "Key" => 'test-key',
+                "Metadata" => [
+                    'metadata-1' => 'test-metadata-1',
+                    'metadata-2' => 'test-metadata-2',
+                ],
+                "ObjectLockLegalHoldStatus" => 'test-object-lock-legal-hold',
+                "ObjectLockMode" => 'test-object-lock-mode',
+                "ObjectLockRetainUntilDate" => 'test-object-lock-retain-until',
+                "RequestPayer" => 'test-request-payer',
+                "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                "SSECustomerKey" => 'test-sse-customer-key',
+                "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                "SSEKMSEncryptionContext" => 'test-sse-kms-encryption-context',
+                "SSEKMSKeyId" => 'test-sse-kms-key-id',
+                "ServerSideEncryption" => 'test-server-side-encryption',
+                "StorageClass" => 'test-storage-class',
+                "Tagging" => 'test-tagging',
+                "WebsiteRedirectLocation" => 'test-website-redirect-location',
+            ],
+            'expected_input_args' => [
+                'CreateMultipartUpload' => [
+                    "ACL" => 'private',
+                    "Bucket" => 'test-bucket',
+                    "BucketKeyEnabled" => 'test-bucket-key-enabled',
+                    "CacheControl" => 'test-cache-control',
+                    "ContentDisposition" => 'test-content-disposition',
+                    "ContentEncoding" => 'test-content-encoding',
+                    "ContentLanguage" => 'test-content-language',
+                    "ContentType" => 'test-content-type',
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Expires" => 'test-expires',
+                    "GrantFullControl" => 'test-grant-control',
+                    "GrantRead" => 'test-grant-control',
+                    "GrantReadACP" => 'test-grant-control',
+                    "GrantWriteACP" => 'test-grant-control',
+                    "Key" => 'test-key',
+                    "Metadata" => [
+                        'metadata-1' => 'test-metadata-1',
+                        'metadata-2' => 'test-metadata-2',
+                    ],
+                    "ObjectLockLegalHoldStatus" => 'test-object-lock-legal-hold',
+                    "ObjectLockMode" => 'test-object-lock-mode',
+                    "ObjectLockRetainUntilDate" => 'test-object-lock-retain-until',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                    "SSEKMSEncryptionContext" => 'test-sse-kms-encryption-context',
+                    "SSEKMSKeyId" => 'test-sse-kms-key-id',
+                    "ServerSideEncryption" => 'test-server-side-encryption',
+                    "StorageClass" => 'test-storage-class',
+                    "Tagging" => 'test-tagging',
+                    "WebsiteRedirectLocation" => 'test-website-redirect-location',
+                    'ChecksumType' => 'FULL_OBJECT',
+                    'ChecksumAlgorithm' => 'crc32',
+                ],
+                'UploadPart' => [
+                    "Bucket" => 'test-bucket',
+                    "UploadId" => "FooUploadId", // Fixed from test
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Key" => 'test-key',
+                    "RequestPayer" => 'test-request-payer',
+                    "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
+                    "SSECustomerKey" => 'test-sse-customer-key',
+                    "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
+                ],
+                'AbortMultipartUpload' => [
+                    "Bucket" => 'test-bucket',
+                    "UploadId" => "FooUploadId", // Fixed from test
+                    "ExpectedBucketOwner" => 'test-bucket-owner',
+                    "Key" => 'test-key',
+                    "RequestPayer" => 'test-request-payer',
+                ],
+            ],
+            'expects_error' => true,
+            'error_on_part_number' => 2
         ];
     }
 }

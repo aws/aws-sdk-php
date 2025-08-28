@@ -65,7 +65,7 @@ abstract class MultipartDownloader implements PromisorInterface
      */
     public function __construct(
         protected readonly S3ClientInterface $s3Client,
-        array $downloadRequestArgs = [],
+        array $downloadRequestArgs,
         array $config = [],
         ?DownloadHandler $downloadHandler = null,
         int $currentPartNo = 0,
@@ -168,7 +168,7 @@ abstract class MultipartDownloader implements PromisorInterface
                 $prevPartNo = $this->currentPartNo - 1;
                 while ($this->currentPartNo < $this->objectPartsCount) {
                     // To prevent infinite loops
-                    if ($prevPartNo === $this->currentPartNo) {
+                    if ($prevPartNo !== $this->currentPartNo - 1) {
                         throw new S3TransferException(
                             "Current part `$this->currentPartNo` MUST increment."
                         );
@@ -186,6 +186,12 @@ abstract class MultipartDownloader implements PromisorInterface
 
                             throw $reason;
                         });
+                }
+
+                if ($this->currentPartNo !== $this->objectPartsCount) {
+                    throw new S3TransferException(
+                        "Expected number of parts `$this->objectPartsCount` to have been transferred but got `$this->currentPartNo`."
+                    );
                 }
 
                 // Transfer completed
@@ -222,7 +228,7 @@ abstract class MultipartDownloader implements PromisorInterface
                 // Compute object dimensions such as parts count and object size
                 $this->computeObjectDimensions($result);
 
-                // If a multipart is likely to happen then save the ETag
+                // If there are more than one part then save the ETag
                 if ($this->objectPartsCount > 1) {
                     $this->eTag = $result['ETag'];
                 }
