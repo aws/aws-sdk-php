@@ -1107,7 +1107,7 @@ EOF;
                     "SSECustomerKey" => 'test-sse-customer-key',
                     "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
                     'ChecksumType' => 'FULL_OBJECT',
-                    'ChecksumCRC32' => 'b71d0814', // From default algorithm used
+                    'ChecksumCRC32' => 'tx0IFA==', // From default algorithm used
                 ],
             ],
             'expects_error' => false,
