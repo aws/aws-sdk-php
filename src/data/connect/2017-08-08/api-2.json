@@ -4844,6 +4844,13 @@
       "min":1
     },
     "AgentStatusId":{"type":"string"},
+    "AgentStatusIdentifier":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "Id":{"shape":"AgentStatusId"}
+      }
+    },
     "AgentStatusList":{
       "type":"list",
       "member":{"shape":"AgentStatus"}
@@ -4918,6 +4925,10 @@
       "type":"list",
       "member":{"shape":"AgentStatusType"},
       "max":3
+    },
+    "AgentStatuses":{
+      "type":"list",
+      "member":{"shape":"AgentStatusId"}
     },
     "AgentUsername":{
       "type":"string",
@@ -8984,7 +8995,8 @@
         "Queue":{"shape":"QueueReference"},
         "Channel":{"shape":"Channel"},
         "RoutingProfile":{"shape":"RoutingProfileReference"},
-        "RoutingStepExpression":{"shape":"RoutingExpression"}
+        "RoutingStepExpression":{"shape":"RoutingExpression"},
+        "AgentStatus":{"shape":"AgentStatusIdentifier"}
       }
     },
     "DimensionsV2Key":{"type":"string"},
@@ -10300,7 +10312,8 @@
         "Queues":{"shape":"Queues"},
         "Channels":{"shape":"Channels"},
         "RoutingProfiles":{"shape":"RoutingProfiles"},
-        "RoutingStepExpressions":{"shape":"RoutingExpressions"}
+        "RoutingStepExpressions":{"shape":"RoutingExpressions"},
+        "AgentStatuses":{"shape":"AgentStatuses"}
       }
     },
     "FiltersV2List":{
@@ -10772,7 +10785,8 @@
         "QUEUE",
         "CHANNEL",
         "ROUTING_PROFILE",
-        "ROUTING_STEP_EXPRESSION"
+        "ROUTING_STEP_EXPRESSION",
+        "AGENT_STATUS"
       ]
     },
     "GroupingV2":{"type":"string"},

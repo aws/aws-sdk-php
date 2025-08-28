@@ -617,7 +617,7 @@
     "IpAddressType": {
       "base": null,
       "refs": {
-        "NetworkConfiguration$IpAddressType": "<p>App Runner provides you with the option to choose between <i>Internet Protocol version 4 (IPv4)</i> and <i>dual stack</i> (IPv4 and IPv6) for your incoming public network configuration. This is an optional parameter. If you do not specify an <code>IpAddressType</code>, it defaults to select IPv4.</p> <note> <p> Currently, App Runner supports dual stack for only Public endpoint. Only IPv4 is supported for Private endpoint. If you update a service that's using dual-stack Public endpoint to a Private endpoint, your App Runner service will default to support only IPv4 for Private endpoint and fail to receive traffic originating from IPv6 endpoint. </p> </note>"
+        "NetworkConfiguration$IpAddressType": "<p>App Runner provides you with the option to choose between <i>IPv4</i> and <i>dual stack</i> (IPv4 and IPv6). This is an optional parameter. If you do not specify an <code>IpAddressType</code>, it defaults to select IPv4.</p>"
       }
     },
     "IsDefault": {
@@ -1070,7 +1070,7 @@
     "StringList": {
       "base": null,
       "refs": {
-        "CreateVpcConnectorRequest$Subnets": "<p>A list of IDs of subnets that App Runner should use when it associates your service with a custom Amazon VPC. Specify IDs of subnets of a single Amazon VPC. App Runner determines the Amazon VPC from the subnets you specify.</p> <note> <p> App Runner currently only provides support for IPv4. </p> </note>",
+        "CreateVpcConnectorRequest$Subnets": "<p>A list of IDs of subnets that App Runner should use when it associates your service with a custom Amazon VPC. Specify IDs of subnets of a single Amazon VPC. App Runner determines the Amazon VPC from the subnets you specify.</p> <note> <p> App Runner only supports subnets of IP address type <i>IPv4</i> and <i>dual stack</i> (IPv4 and IPv6).</p> </note>",
         "CreateVpcConnectorRequest$SecurityGroups": "<p>A list of IDs of security groups that App Runner should use for access to Amazon Web Services resources under the specified subnets. If not specified, App Runner uses the default security group of the Amazon VPC. The default security group allows all outbound traffic.</p>",
         "VpcConnector$Subnets": "<p>A list of IDs of subnets that App Runner uses for your service. All IDs are of subnets of a single Amazon VPC.</p>",
         "VpcConnector$SecurityGroups": "<p>A list of IDs of security groups that App Runner uses for access to Amazon Web Services resources under the specified subnets. If not specified, App Runner uses the default security group of the Amazon VPC. The default security group allows all outbound traffic.</p>"

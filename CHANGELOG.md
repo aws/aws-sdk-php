@@ -1,5 +1,72 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Updates `CredentialProvider::memoize()` to refresh credentials that within 1 minute of expiration.
+* `Aws\ManagedBlockchainQuery` - Remove incorrect endpoint tests
+* `Aws\TimestreamQuery` - Remove incorrect endpoint tests
+* `Aws\EC2InstanceConnect` - Remove incorrect endpoint tests
+* `Aws\EventBridge` - Remove incorrect endpoint tests
+* `Aws\WorkMailMessageFlow` - Remove incorrect endpoint tests
+* `Aws\XRay` - Remove incorrect endpoint tests
+* `Aws\SWF` - Remove incorrect endpoint tests
+* `Aws\Scheduler` - Remove incorrect endpoint tests
+* `Aws\ECR` - Remove incorrect endpoint tests
+* `Aws\PCS` - Remove incorrect endpoint tests
+* `Aws\ApplicationCostProfiler` - Remove incorrect endpoint tests
+* `Aws\ServiceQuotas` - Remove incorrect endpoint tests
+* `Aws\CloudSearchDomain` - Remove incorrect endpoint tests
+* `Aws\MarketplaceDeployment` - Remove incorrect endpoint tests
+* `Aws\Connect` - AgentStatusDrillDown feature in GetCurrentMetricData API. Adding AGENT_STATUS as filter and grouping in GetCurrentMetricData API
+* `Aws\OSIS` - Remove incorrect endpoint tests
+* `Aws\Omics` - Adds Amazon ECR pull through cache support to AWS HealthOmics, so you can more easily use container images from external sources.
+* `Aws\Glue` - Adding support to fetch TargetDatabase field during GetDatabases with AttributesToGet
+* `Aws\CodeDeploy` - Remove incorrect endpoint tests
+* `Aws\EntityResolution` - Remove incorrect endpoint tests
+* `Aws\OAM` - Remove incorrect endpoint tests
+* `Aws\GeoPlaces` - Remove incorrect endpoint tests
+* `Aws\AppRunner` - Doc only updates for APIs and and datatypes related to IPAddressType and Subnets for IPv6 dualstack support.
+* `Aws\Route53Domains` - Remove incorrect endpoint tests
+* `Aws\FIS` - Remove incorrect endpoint tests
+* `Aws\CodeGuruReviewer` - Remove incorrect endpoint tests
+* `Aws\Amplify` - Remove incorrect endpoint tests
+* `Aws\EC2` - This release adds support for copying Amazon EBS snapshot and AMIs to and from Local Zones.
+* `Aws\PinpointSMSVoice` - Remove incorrect endpoint tests
+* `Aws\MTurk` - Remove incorrect endpoint tests
+* `Aws\SSMGuiConnect` - Remove incorrect endpoint tests
+* `Aws\SsmSap` - Added support for Configuration Checks on SAP HANA Applications.
+* `Aws\Pipes` - Remove incorrect endpoint tests
+* `Aws\CloudHSMV2` - Remove incorrect endpoint tests
+* `Aws\InternetMonitor` - Remove incorrect endpoint tests
+* `Aws\EMR` - Remove incorrect endpoint tests
+* `Aws\ApplicationAutoScaling` - Remove incorrect endpoint tests
+* `Aws\HealthLake` - Add ValidationLevel parameter to StartFHIRImportJob API, allowing users to specify a FHIR validation level for their asynchronous import jobs.
+* `Aws\SSO` - Remove incorrect endpoint tests
+* `Aws\NetworkFirewall` - Remove incorrect endpoint tests
+* `Aws\Rekognition` - Remove incorrect endpoint tests
+* `Aws\AutoScalingPlans` - Remove incorrect endpoint tests
+* `Aws\GlueDataBrew` - Remove incorrect endpoint tests
+* `Aws\MediaStoreData` - Remove incorrect endpoint tests
+* `Aws\SES` - Remove incorrect endpoint tests
+* `Aws\DynamoDB` - Remove incorrect endpoint tests
+* `Aws\MachineLearning` - Remove incorrect endpoint tests
+* `Aws\LicenseManagerUserSubscriptions` - Remove incorrect endpoint tests
+* `Aws\InspectorScan` - Remove incorrect endpoint tests
+* `Aws\SESv2` - Remove incorrect endpoint tests
+* `Aws\ConnectCampaignService` - Remove incorrect endpoint tests
+* `Aws\WAF` - Remove incorrect endpoint tests
+* `Aws\BedrockRuntime` - Remove incorrect endpoint tests
+* `Aws\FMS` - Remove incorrect endpoint tests
+* `Aws\OpenSearchService` - Remove incorrect endpoint tests
+* `Aws\Kinesis` - Remove incorrect endpoint tests
+* `Aws\SSMIncidents` - Remove incorrect endpoint tests
+* `Aws\GeoMaps` - Remove incorrect endpoint tests
+* `Aws\QuickSight` - Remove incorrect endpoint tests
+* `Aws\SavingsPlans` - Remove incorrect endpoint tests
+* `Aws\Cloud9` - Remove incorrect endpoint tests
+* `Aws\PinpointSMSVoiceV2` - Remove incorrect endpoint tests
+* `Aws\RDS` - Added RDS HTTP Endpoint feature support flag to DescribeOrderableDBInstanceOptions API
+
 ## 3.356.6 - 2025-08-27
 
 * `Aws\S3Tables` - Remove incorrect endpoint tests

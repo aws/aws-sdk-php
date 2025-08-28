@@ -1,20 +1,20 @@
 {
   "version": "2.0",
-  "service": "<p>AWS HealthLake is a HIPAA eligibile service that allows customers to store, transform, query, and analyze their FHIR-formatted data in a consistent fashion in the cloud.</p>",
+  "service": "<p>This is the <i>AWS HealthLake API Reference</i>. For an introduction to the service, see <a href=\"https://docs.aws.amazon.com/healthlake/latest/devguide/what-is.html\">What is AWS HealthLake?</a> in the <i>AWS HealthLake Developer Guide</i>.</p>",
   "operations": {
-    "CreateFHIRDatastore": "<p>Creates a data store that can ingest and export FHIR formatted data.</p>",
-    "DeleteFHIRDatastore": "<p>Deletes a data store. </p>",
-    "DescribeFHIRDatastore": "<p>Gets the properties associated with the FHIR data store, including the data store ID, data store ARN, data store name, data store status, when the data store was created, data store type version, and the data store's endpoint.</p>",
-    "DescribeFHIRExportJob": "<p>Displays the properties of a FHIR export job, including the ID, ARN, name, and the status of the job.</p>",
-    "DescribeFHIRImportJob": "<p>Displays the properties of a FHIR import job, including the ID, ARN, name, and the status of the job. </p>",
-    "ListFHIRDatastores": "<p>Lists all FHIR data stores that are in the user’s account, regardless of data store status.</p>",
-    "ListFHIRExportJobs": "<p> Lists all FHIR export jobs associated with an account and their statuses. </p>",
-    "ListFHIRImportJobs": "<p> Lists all FHIR import jobs associated with an account and their statuses. </p>",
-    "ListTagsForResource": "<p> Returns a list of all existing tags associated with a data store. </p>",
-    "StartFHIRExportJob": "<p>Begins a FHIR export job.</p>",
-    "StartFHIRImportJob": "<p>Begins a FHIR Import job.</p>",
-    "TagResource": "<p> Adds a user specified key and value tag to a data store. </p>",
-    "UntagResource": "<p> Removes tags from a data store. </p>"
+    "CreateFHIRDatastore": "<p>Create a FHIR-enabled data store.</p>",
+    "DeleteFHIRDatastore": "<p>Delete a FHIR-enabled data store.</p>",
+    "DescribeFHIRDatastore": "<p>Get properties for a FHIR-enabled data store.</p>",
+    "DescribeFHIRExportJob": "<p>Get FHIR export job properties.</p>",
+    "DescribeFHIRImportJob": "<p>Get the import job properties to learn more about the job or job progress.</p>",
+    "ListFHIRDatastores": "<p>List all FHIR-enabled data stores in a user’s account, regardless of data store status.</p>",
+    "ListFHIRExportJobs": "<p>Lists all FHIR export jobs associated with an account and their statuses.</p>",
+    "ListFHIRImportJobs": "<p>List all FHIR import jobs associated with an account and their statuses.</p>",
+    "ListTagsForResource": "<p>Returns a list of all existing tags associated with a data store.</p>",
+    "StartFHIRExportJob": "<p>Start a FHIR export job.</p>",
+    "StartFHIRImportJob": "<p>Start importing bulk FHIR data into an ACTIVE data store. The import job imports FHIR data found in the <code>InputDataConfig</code> object and stores processing results in the <code>JobOutputDataConfig</code> object.</p>",
+    "TagResource": "<p>Add a user-specifed key and value tag to a data store.</p>",
+    "UntagResource": "<p>Remove a user-specifed key and value tag from a data store.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -24,52 +24,52 @@
     "AmazonResourceName": {
       "base": null,
       "refs": {
-        "ListTagsForResourceRequest$ResourceARN": "<p> The Amazon Resource Name(ARN) of the data store for which tags are being added. </p>",
-        "TagResourceRequest$ResourceARN": "<p> The Amazon Resource Name(ARN)that gives AWS HealthLake access to the data store which tags are being added to. </p>",
-        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name(ARN) of the data store for which tags are being removed.</p>"
+        "ListTagsForResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the data store to which tags are being added.</p>",
+        "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) that grants access to the data store tags are being added to.</p>",
+        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the data store from which tags are being removed.</p>"
       }
     },
     "AuthorizationStrategy": {
       "base": null,
       "refs": {
-        "IdentityProviderConfiguration$AuthorizationStrategy": "<p>The authorization strategy that you selected when you created the data store.</p>"
+        "IdentityProviderConfiguration$AuthorizationStrategy": "<p>The authorization strategy selected when the HealthLake data store is created.</p> <note> <p>HealthLake provides support for both SMART on FHIR V1 and V2 as described below.</p> <ul> <li> <p> <code>SMART_ON_FHIR_V1</code> – Support for only SMART on FHIR V1, which includes <code>read</code> (read/search) and <code>write</code> (create/update/delete) permissions.</p> </li> <li> <p> <code>SMART_ON_FHIR</code> – Support for both SMART on FHIR V1 and V2, which includes <code>create</code>, <code>read</code>, <code>update</code>, <code>delete</code>, and <code>search</code> permissions.</p> </li> <li> <p> <code>AWS_AUTH</code> – The default HealthLake authorization strategy; not affiliated with SMART on FHIR.</p> </li> </ul> </note>"
       }
     },
     "Boolean": {
       "base": null,
       "refs": {
-        "IdentityProviderConfiguration$FineGrainedAuthorizationEnabled": "<p>If you enabled fine-grained authorization when you created the data store.</p>"
+        "IdentityProviderConfiguration$FineGrainedAuthorizationEnabled": "<p>The parameter to enable SMART on FHIR fine-grained authorization for the data store.</p>"
       }
     },
     "BoundedLengthString": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint for the created data store.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint for the data store the user has requested to be deleted.</p>"
+        "CreateFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint created for the data store.</p>",
+        "DeleteFHIRDatastoreResponse$DatastoreEndpoint": "<p>The AWS endpoint of the data store to be deleted.</p>"
       }
     },
     "ClientTokenString": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreRequest$ClientToken": "<p>Optional user provided token used for ensuring idempotency.</p>",
-        "StartFHIRExportJobRequest$ClientToken": "<p>An optional user provided token used for ensuring idempotency.</p>",
-        "StartFHIRImportJobRequest$ClientToken": "<p>Optional user provided token used for ensuring idempotency.</p>"
+        "CreateFHIRDatastoreRequest$ClientToken": "<p>An optional user-provided token to ensure API idempotency.</p>",
+        "StartFHIRExportJobRequest$ClientToken": "<p>An optional user provided token used for ensuring API idempotency.</p>",
+        "StartFHIRImportJobRequest$ClientToken": "<p>The optional user-provided token used for ensuring API idempotency.</p>"
       }
     },
     "CmkType": {
       "base": null,
       "refs": {
-        "KmsEncryptionConfig$CmkType": "<p> The type of customer-managed-key(CMK) used for encryption. The two types of supported CMKs are customer owned CMKs and AWS owned CMKs. </p>"
+        "KmsEncryptionConfig$CmkType": "<p>The type of customer-managed-key (CMK) used for encryption.</p>"
       }
     },
     "ConfigurationMetadata": {
       "base": null,
       "refs": {
-        "IdentityProviderConfiguration$Metadata": "<p>The JSON metadata elements that you want to use in your identity provider configuration. Required elements are listed based on the launch specification of the SMART application. For more information on all possible elements, see <a href=\"https://build.fhir.org/ig/HL7/smart-app-launch/conformance.html#metadata\">Metadata</a> in SMART's App Launch specification.</p> <p> <code>authorization_endpoint</code>: The URL to the OAuth2 authorization endpoint.</p> <p> <code>grant_types_supported</code>: An array of grant types that are supported at the token endpoint. You must provide at least one grant type option. Valid options are <code>authorization_code</code> and <code>client_credentials</code>.</p> <p> <code>token_endpoint</code>: The URL to the OAuth2 token endpoint.</p> <p> <code>capabilities</code>: An array of strings of the SMART capabilities that the authorization server supports.</p> <p> <code>code_challenge_methods_supported</code>: An array of strings of supported PKCE code challenge methods. You must include the <code>S256</code> method in the array of PKCE code challenge methods.</p>"
+        "IdentityProviderConfiguration$Metadata": "<p>The JSON metadata elements to use in your identity provider configuration. Required elements are listed based on the launch specification of the SMART application. For more information on all possible elements, see <a href=\"https://build.fhir.org/ig/HL7/smart-app-launch/conformance.html#metadata\">Metadata</a> in SMART's App Launch specification.</p> <p> <code>authorization_endpoint</code>: The URL to the OAuth2 authorization endpoint.</p> <p> <code>grant_types_supported</code>: An array of grant types that are supported at the token endpoint. You must provide at least one grant type option. Valid options are <code>authorization_code</code> and <code>client_credentials</code>.</p> <p> <code>token_endpoint</code>: The URL to the OAuth2 token endpoint.</p> <p> <code>capabilities</code>: An array of strings of the SMART capabilities that the authorization server supports.</p> <p> <code>code_challenge_methods_supported</code>: An array of strings of supported PKCE code challenge methods. You must include the <code>S256</code> method in the array of PKCE code challenge methods.</p>"
       }
     },
     "ConflictException": {
-      "base": "<p>The data store is in a transition state and the user requested action can not be performed.</p>",
+      "base": "<p>The data store is in a transition state and the user requested action cannot be performed.</p>",
       "refs": {}
     },
     "CreateFHIRDatastoreRequest": {
@@ -83,65 +83,65 @@
     "DatastoreArn": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreResponse$DatastoreArn": "<p>The data store ARN is generated during the creation of the data store and can be found in the output from the initial data store creation call.</p>",
-        "DatastoreProperties$DatastoreArn": "<p>The Amazon Resource Name used in the creation of the data store.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) that gives AWS HealthLake access permission.</p>"
+        "CreateFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) for the data store.</p>",
+        "DatastoreProperties$DatastoreArn": "<p>The Amazon Resource Name (ARN) used in the creation of the data store.</p>",
+        "DeleteFHIRDatastoreResponse$DatastoreArn": "<p>The Amazon Resource Name (ARN) that grants access permission to AWS HealthLake.</p>"
       }
     },
     "DatastoreFilter": {
-      "base": "<p>The filters applied to data store query.</p>",
+      "base": "<p>The filters applied to a data store query.</p>",
       "refs": {
-        "ListFHIRDatastoresRequest$Filter": "<p>Lists all filters associated with a FHIR data store request.</p>"
+        "ListFHIRDatastoresRequest$Filter": "<p>List all filters associated with a FHIR data store request.</p>"
       }
     },
     "DatastoreId": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreResponse$DatastoreId": "<p>The AWS-generated data store id. This id is in the output from the initial data store creation call.</p>",
-        "DatastoreProperties$DatastoreId": "<p>The AWS-generated ID number for the data store.</p>",
-        "DeleteFHIRDatastoreRequest$DatastoreId": "<p> The AWS-generated ID for the data store to be deleted.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreId": "<p>The AWS-generated ID for the data store to be deleted.</p>",
-        "DescribeFHIRDatastoreRequest$DatastoreId": "<p>The AWS-generated data store ID.</p>",
-        "DescribeFHIRExportJobRequest$DatastoreId": "<p>The AWS generated ID for the data store from which files are being exported from for an export job.</p>",
-        "DescribeFHIRImportJobRequest$DatastoreId": "<p>The AWS-generated ID of the data store.</p>",
-        "ExportJobProperties$DatastoreId": "<p>The AWS generated ID for the data store from which files are being exported for an export job.</p>",
-        "ImportJobProperties$DatastoreId": "<p>The datastore id used when the Import job was created. </p>",
-        "ListFHIRExportJobsRequest$DatastoreId": "<p> This parameter limits the response to the export job with the specified data store ID. </p>",
-        "ListFHIRImportJobsRequest$DatastoreId": "<p> This parameter limits the response to the import job with the specified data store ID. </p>",
-        "StartFHIRExportJobRequest$DatastoreId": "<p>The AWS generated ID for the data store from which files are being exported for an export job.</p>",
-        "StartFHIRExportJobResponse$DatastoreId": "<p>The AWS generated ID for the data store from which files are being exported for an export job.</p>",
-        "StartFHIRImportJobRequest$DatastoreId": "<p>The AWS-generated data store ID.</p>",
-        "StartFHIRImportJobResponse$DatastoreId": "<p>The AWS-generated data store ID.</p>"
+        "CreateFHIRDatastoreResponse$DatastoreId": "<p>The data store identifier.</p>",
+        "DatastoreProperties$DatastoreId": "<p>The data store identifier.</p>",
+        "DeleteFHIRDatastoreRequest$DatastoreId": "<p> The AWS-generated identifier for the data store to be deleted.</p>",
+        "DeleteFHIRDatastoreResponse$DatastoreId": "<p>The AWS-generated ID for the deleted data store.</p>",
+        "DescribeFHIRDatastoreRequest$DatastoreId": "<p>The data store identifier.</p>",
+        "DescribeFHIRExportJobRequest$DatastoreId": "<p>The data store identifier from which FHIR data is being exported from.</p>",
+        "DescribeFHIRImportJobRequest$DatastoreId": "<p>The data store identifier.</p>",
+        "ExportJobProperties$DatastoreId": "<p>The data store identifier from which files are being exported.</p>",
+        "ImportJobProperties$DatastoreId": "<p>The data store identifier. </p>",
+        "ListFHIRExportJobsRequest$DatastoreId": "<p>Limits the response to the export job with the specified data store ID. </p>",
+        "ListFHIRImportJobsRequest$DatastoreId": "<p>Limits the response to the import job with the specified data store ID. </p>",
+        "StartFHIRExportJobRequest$DatastoreId": "<p>The data store identifier from which files are being exported.</p>",
+        "StartFHIRExportJobResponse$DatastoreId": "<p>The data store identifier from which files are being exported.</p>",
+        "StartFHIRImportJobRequest$DatastoreId": "<p>The data store identifier.</p>",
+        "StartFHIRImportJobResponse$DatastoreId": "<p>The data store identifier.</p>"
       }
     },
     "DatastoreName": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreRequest$DatastoreName": "<p>The user generated name for the data store.</p>",
-        "DatastoreFilter$DatastoreName": "<p>Allows the user to filter data store results by name.</p>",
-        "DatastoreProperties$DatastoreName": "<p>The user-generated name for the data store.</p>"
+        "CreateFHIRDatastoreRequest$DatastoreName": "<p>The data store name (user-generated).</p>",
+        "DatastoreFilter$DatastoreName": "<p>Filter data store results by name.</p>",
+        "DatastoreProperties$DatastoreName": "<p>The data store name.</p>"
       }
     },
     "DatastoreProperties": {
-      "base": "<p>Displays the properties of the data store, including the ID, ARN, name, and the status of the data store.</p>",
+      "base": "<p>The data store properties.</p>",
       "refs": {
         "DatastorePropertiesList$member": null,
-        "DescribeFHIRDatastoreResponse$DatastoreProperties": "<p>All properties associated with a data store, including the data store ID, data store ARN, data store name, data store status, when the data store was created, data store type version, and the data store's endpoint.</p>"
+        "DescribeFHIRDatastoreResponse$DatastoreProperties": "<p>The data store properties.</p>"
       }
     },
     "DatastorePropertiesList": {
       "base": null,
       "refs": {
-        "ListFHIRDatastoresResponse$DatastorePropertiesList": "<p>All properties associated with the listed data stores.</p>"
+        "ListFHIRDatastoresResponse$DatastorePropertiesList": "<p>The properties associated with all listed data stores.</p>"
       }
     },
     "DatastoreStatus": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreResponse$DatastoreStatus": "<p>The status of the FHIR data store.</p>",
-        "DatastoreFilter$DatastoreStatus": "<p>Allows the user to filter data store results by status.</p>",
-        "DatastoreProperties$DatastoreStatus": "<p>The status of the data store.</p>",
-        "DeleteFHIRDatastoreResponse$DatastoreStatus": "<p>The status of the data store that the user has requested to be deleted. </p>"
+        "CreateFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>",
+        "DatastoreFilter$DatastoreStatus": "<p>Filter data store results by status.</p>",
+        "DatastoreProperties$DatastoreStatus": "<p>The data store status.</p>",
+        "DeleteFHIRDatastoreResponse$DatastoreStatus": "<p>The data store status.</p>"
       }
     },
     "DeleteFHIRDatastoreRequest": {
@@ -179,18 +179,18 @@
     "EncryptionKeyID": {
       "base": null,
       "refs": {
-        "KmsEncryptionConfig$KmsKeyId": "<p> The KMS encryption key id/alias used to encrypt the data store contents at rest. </p>",
-        "S3Configuration$KmsKeyId": "<p> The KMS key ID used to access the S3 bucket. </p>"
+        "KmsEncryptionConfig$KmsKeyId": "<p>The Key Management Service (KMS) encryption key id/alias used to encrypt the data store contents at rest.</p>",
+        "S3Configuration$KmsKeyId": "<p>The Key Management Service (KMS) key ID used to access the S3 bucket. </p>"
       }
     },
     "ErrorCategory": {
       "base": null,
       "refs": {
-        "ErrorCause$ErrorCategory": "<p>The error category of the create/delete data store operation. Possible statuses are RETRYABLE_ERROR or NON_RETRYABLE_ERROR.</p>"
+        "ErrorCause$ErrorCategory": "<p>The error category for <code>ErrorCause</code>.</p>"
       }
     },
     "ErrorCause": {
-      "base": "<p>The error info of the create/delete data store operation.</p>",
+      "base": "<p>The error information for <code>CreateFHIRDatastore</code> and <code>DeleteFHIRDatastore</code> actions.</p>",
       "refs": {
         "DatastoreProperties$ErrorCause": "<p>The error cause for the current data store operation.</p>"
       }
@@ -198,136 +198,136 @@
     "ErrorMessage": {
       "base": null,
       "refs": {
-        "ErrorCause$ErrorMessage": "<p>The text of the error message.</p>"
+        "ErrorCause$ErrorMessage": "<p>The error message text for <code>ErrorCause</code>.</p>"
       }
     },
     "ExportJobProperties": {
-      "base": "<p>The properties of a FHIR export job, including the ID, ARN, name, and the status of the job.</p>",
+      "base": "<p>The properties of a FHIR export job.</p>",
       "refs": {
-        "DescribeFHIRExportJobResponse$ExportJobProperties": "<p>Displays the properties of the export job, including the ID, Arn, Name, and the status of the job. </p>",
+        "DescribeFHIRExportJobResponse$ExportJobProperties": "<p>The export job properties.</p>",
         "ExportJobPropertiesList$member": null
       }
     },
     "ExportJobPropertiesList": {
       "base": null,
       "refs": {
-        "ListFHIRExportJobsResponse$ExportJobPropertiesList": "<p> The properties of listed FHIR export jobs, including the ID, ARN, name, and the status of the job. </p>"
+        "ListFHIRExportJobsResponse$ExportJobPropertiesList": "<p>The properties of listed FHIR export jobs.</p>"
       }
     },
     "FHIRVersion": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreRequest$DatastoreTypeVersion": "<p>The FHIR version of the data store. The only supported version is R4.</p>",
-        "DatastoreProperties$DatastoreTypeVersion": "<p>The FHIR version. Only R4 version data is supported.</p>"
+        "CreateFHIRDatastoreRequest$DatastoreTypeVersion": "<p>The FHIR release version supported by the data store. Current support is for version <code>R4</code>.</p>",
+        "DatastoreProperties$DatastoreTypeVersion": "<p>The FHIR release version supported by the data store. Current support is for version <code>R4</code>.</p>"
       }
     },
     "GenericDouble": {
       "base": null,
       "refs": {
-        "JobProgressReport$TotalSizeOfScannedFilesInMB": "<p>The size (in MB) of the files scanned from the input S3 bucket.</p>",
-        "JobProgressReport$Throughput": "<p>The throughput (in MB/sec) of the import job.</p>"
+        "JobProgressReport$TotalSizeOfScannedFilesInMB": "<p>The size (in MB) of files scanned from the S3 input bucket.</p>",
+        "JobProgressReport$Throughput": "<p>The transaction rate the import job is processed at.</p>"
       }
     },
     "GenericLong": {
       "base": null,
       "refs": {
-        "JobProgressReport$TotalNumberOfScannedFiles": "<p>The number of files scanned from input S3 bucket.</p>",
-        "JobProgressReport$TotalNumberOfImportedFiles": "<p>The number of files imported so far.</p>",
-        "JobProgressReport$TotalNumberOfResourcesScanned": "<p>The number of resources scanned from the input S3 bucket.</p>",
-        "JobProgressReport$TotalNumberOfResourcesImported": "<p>The number of resources imported so far.</p>",
+        "JobProgressReport$TotalNumberOfScannedFiles": "<p>The number of files scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfImportedFiles": "<p>The number of files imported.</p>",
+        "JobProgressReport$TotalNumberOfResourcesScanned": "<p>The number of resources scanned from the S3 input bucket.</p>",
+        "JobProgressReport$TotalNumberOfResourcesImported": "<p>The number of resources imported.</p>",
         "JobProgressReport$TotalNumberOfResourcesWithCustomerError": "<p>The number of resources that failed due to customer error.</p>",
-        "JobProgressReport$TotalNumberOfFilesReadWithCustomerError": "<p>The number of files that failed to be read from the input S3 bucket due to customer error.</p>"
+        "JobProgressReport$TotalNumberOfFilesReadWithCustomerError": "<p>The number of files that failed to be read from the S3 input bucket due to customer error.</p>"
       }
     },
     "IamRoleArn": {
       "base": null,
       "refs": {
-        "ExportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name used during the initiation of the job.</p>",
-        "ImportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that gives AWS HealthLake access to your input data.</p>",
-        "StartFHIRExportJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name used during the initiation of the job.</p>",
-        "StartFHIRImportJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that gives AWS HealthLake access permission.</p>"
+        "ExportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) used during the initiation of the export job.</p>",
+        "ImportJobProperties$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that grants AWS HealthLake access to the input data.</p>",
+        "StartFHIRExportJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) used during initiation of the export job.</p>",
+        "StartFHIRImportJobRequest$DataAccessRoleArn": "<p>The Amazon Resource Name (ARN) that grants access permission to AWS HealthLake.</p>"
       }
     },
     "IdentityProviderConfiguration": {
-      "base": "<p>The identity provider configuration that you gave when the data store was created.</p>",
+      "base": "<p>The identity provider configuration selected when the data store was created.</p>",
       "refs": {
-        "CreateFHIRDatastoreRequest$IdentityProviderConfiguration": "<p>The configuration of the identity provider that you want to use for your data store.</p>",
-        "DatastoreProperties$IdentityProviderConfiguration": "<p>The identity provider that you selected when you created the data store.</p>"
+        "CreateFHIRDatastoreRequest$IdentityProviderConfiguration": "<p>The identity provider configuration to use for the data store.</p>",
+        "DatastoreProperties$IdentityProviderConfiguration": "<p>The identity provider selected during data store creation.</p>"
       }
     },
     "ImportJobProperties": {
-      "base": "<p>Displays the properties of the import job, including the ID, Arn, Name, the status of the job, and the progress report of the job.</p>",
+      "base": "<p>The import job properties.</p>",
       "refs": {
-        "DescribeFHIRImportJobResponse$ImportJobProperties": "<p>The properties of the Import job request, including the ID, ARN, name, status of the job, and the progress report of the job.</p>",
+        "DescribeFHIRImportJobResponse$ImportJobProperties": "<p>The import job properties.</p>",
         "ImportJobPropertiesList$member": null
       }
     },
     "ImportJobPropertiesList": {
       "base": null,
       "refs": {
-        "ListFHIRImportJobsResponse$ImportJobPropertiesList": "<p> The properties of a listed FHIR import jobs, including the ID, ARN, name, the status of the job, and the progress report of the job. </p>"
+        "ListFHIRImportJobsResponse$ImportJobPropertiesList": "<p>The properties for listed import jobs.</p>"
       }
     },
     "InputDataConfig": {
-      "base": "<p> The input properties for an import job.</p>",
+      "base": "<p> The import job input properties.</p>",
       "refs": {
-        "ImportJobProperties$InputDataConfig": "<p>The input data configuration that was supplied when the Import job was created.</p>",
-        "StartFHIRImportJobRequest$InputDataConfig": "<p>The input properties of the FHIR Import job in the StartFHIRImport job request.</p>"
+        "ImportJobProperties$InputDataConfig": "<p>The input data configuration supplied when the import job was created.</p>",
+        "StartFHIRImportJobRequest$InputDataConfig": "<p>The input properties for the import job request.</p>"
       }
     },
     "InternalServerException": {
-      "base": "<p>Unknown error occurs in the service.</p>",
+      "base": "<p>An unknown internal error occurred in the service.</p>",
       "refs": {}
     },
     "JobId": {
       "base": null,
       "refs": {
-        "DescribeFHIRExportJobRequest$JobId": "<p>The AWS generated ID for an export job.</p>",
-        "DescribeFHIRImportJobRequest$JobId": "<p>The AWS-generated job ID.</p>",
-        "ExportJobProperties$JobId": "<p>The AWS generated ID for an export job.</p>",
-        "ImportJobProperties$JobId": "<p>The AWS-generated id number for the Import job.</p>",
-        "StartFHIRExportJobResponse$JobId": "<p>The AWS generated ID for an export job.</p>",
-        "StartFHIRImportJobResponse$JobId": "<p>The AWS-generated job ID.</p>"
+        "DescribeFHIRExportJobRequest$JobId": "<p>The export job identifier.</p>",
+        "DescribeFHIRImportJobRequest$JobId": "<p>The import job identifier.</p>",
+        "ExportJobProperties$JobId": "<p>The export job identifier.</p>",
+        "ImportJobProperties$JobId": "<p>The import job identifier.</p>",
+        "StartFHIRExportJobResponse$JobId": "<p>The export job identifier.</p>",
+        "StartFHIRImportJobResponse$JobId": "<p>The import job identifier.</p>"
       }
     },
     "JobName": {
       "base": null,
       "refs": {
-        "ExportJobProperties$JobName": "<p>The user generated name for an export job.</p>",
-        "ImportJobProperties$JobName": "<p>The user-generated name for an Import job.</p>",
-        "ListFHIRExportJobsRequest$JobName": "<p> This parameter limits the response to the export job with the specified job name. </p>",
-        "ListFHIRImportJobsRequest$JobName": "<p> This parameter limits the response to the import job with the specified job name. </p>",
-        "StartFHIRExportJobRequest$JobName": "<p>The user generated name for an export job.</p>",
-        "StartFHIRImportJobRequest$JobName": "<p>The name of the FHIR Import job in the StartFHIRImport job request.</p>"
+        "ExportJobProperties$JobName": "<p>The export job name.</p>",
+        "ImportJobProperties$JobName": "<p>The import job name.</p>",
+        "ListFHIRExportJobsRequest$JobName": "<p>Limits the response to the export job with the specified job name. </p>",
+        "ListFHIRImportJobsRequest$JobName": "<p>Limits the response to the import job with the specified job name. </p>",
+        "StartFHIRExportJobRequest$JobName": "<p>The export job name.</p>",
+        "StartFHIRImportJobRequest$JobName": "<p>The import job name.</p>"
       }
     },
     "JobProgressReport": {
-      "base": "<p>The progress report of an import job.</p>",
+      "base": "<p>The progress report for the import job.</p>",
       "refs": {
-        "ImportJobProperties$JobProgressReport": "<p>Displays the progress of the import job, including total resources scanned, total resources ingested, and total size of data ingested.</p>"
+        "ImportJobProperties$JobProgressReport": "<p>Displays the progress of the import job, including total resources scanned, total resources imported, and total size of data imported.</p>"
       }
     },
     "JobStatus": {
       "base": null,
       "refs": {
-        "ExportJobProperties$JobStatus": "<p>The status of a FHIR export job. Possible statuses are SUBMITTED, IN_PROGRESS, COMPLETED, or FAILED.</p>",
-        "ImportJobProperties$JobStatus": "<p>The job status for an Import job. Possible statuses are SUBMITTED, IN_PROGRESS, COMPLETED_WITH_ERRORS, COMPLETED, FAILED.</p>",
-        "ListFHIRExportJobsRequest$JobStatus": "<p> This parameter limits the response to the export jobs with the specified job status. </p>",
-        "ListFHIRImportJobsRequest$JobStatus": "<p> This parameter limits the response to the import job with the specified job status. </p>",
-        "StartFHIRExportJobResponse$JobStatus": "<p>The status of a FHIR export job. Possible statuses are SUBMITTED, IN_PROGRESS, COMPLETED, or FAILED.</p>",
-        "StartFHIRImportJobResponse$JobStatus": "<p>The status of an import job.</p>"
+        "ExportJobProperties$JobStatus": "<p>The export job status.</p>",
+        "ImportJobProperties$JobStatus": "<p>The import job status.</p>",
+        "ListFHIRExportJobsRequest$JobStatus": "<p>Limits the response to export jobs with the specified job status. </p>",
+        "ListFHIRImportJobsRequest$JobStatus": "<p>Limits the response to the import job with the specified job status. </p>",
+        "StartFHIRExportJobResponse$JobStatus": "<p>The export job status.</p>",
+        "StartFHIRImportJobResponse$JobStatus": "<p>The import job status.</p>"
       }
     },
     "KmsEncryptionConfig": {
-      "base": "<p> The customer-managed-key(CMK) used when creating a data store. If a customer owned key is not specified, an AWS owned key will be used for encryption. </p>",
+      "base": "<p>The customer-managed-key (CMK) used when creating a data store. If a customer-owned key is not specified, an AWS-owned key is used for encryption. </p>",
       "refs": {
-        "SseConfiguration$KmsEncryptionConfig": "<p> The KMS encryption configuration used to provide details for data encryption. </p>"
+        "SseConfiguration$KmsEncryptionConfig": "<p>The Key Management Service (KMS) encryption configuration used to provide details for data encryption.</p>"
       }
     },
     "LambdaArn": {
       "base": null,
       "refs": {
-        "IdentityProviderConfiguration$IdpLambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function that you want to use to decode the access token created by the authorization server.</p>"
+        "IdentityProviderConfiguration$IdpLambdaArn": "<p>The Amazon Resource Name (ARN) of the Lambda function to use to decode the access token created by the authorization server.</p>"
       }
     },
     "ListFHIRDatastoresRequest": {
@@ -365,43 +365,43 @@
     "MaxResultsInteger": {
       "base": null,
       "refs": {
-        "ListFHIRDatastoresRequest$MaxResults": "<p>The maximum number of data stores returned in a single page of a ListFHIRDatastoresRequest call.</p>",
-        "ListFHIRExportJobsRequest$MaxResults": "<p> This parameter limits the number of results returned for a ListFHIRExportJobs to a maximum quantity specified by the user. </p>",
-        "ListFHIRImportJobsRequest$MaxResults": "<p> This parameter limits the number of results returned for a ListFHIRImportJobs to a maximum quantity specified by the user. </p>"
+        "ListFHIRDatastoresRequest$MaxResults": "<p>The maximum number of data stores returned on a page.</p>",
+        "ListFHIRExportJobsRequest$MaxResults": "<p>Limits the number of results returned for a ListFHIRExportJobs to a maximum quantity specified by the user.</p>",
+        "ListFHIRImportJobsRequest$MaxResults": "<p>Limits the number of results returned for <code>ListFHIRImportJobs</code> to a maximum quantity specified by the user.</p>"
       }
     },
     "Message": {
       "base": null,
       "refs": {
-        "ExportJobProperties$Message": "<p>An explanation of any errors that may have occurred during the export job.</p>",
-        "ImportJobProperties$Message": "<p>An explanation of any errors that may have occurred during the FHIR import job. </p>"
+        "ExportJobProperties$Message": "<p>An explanation of any errors that might have occurred during the export job.</p>",
+        "ImportJobProperties$Message": "<p>An explanation of any errors that might have occurred during the FHIR import job.</p>"
       }
     },
     "NextToken": {
       "base": null,
       "refs": {
-        "ListFHIRDatastoresRequest$NextToken": "<p>Fetches the next page of data stores when results are paginated.</p>",
-        "ListFHIRDatastoresResponse$NextToken": "<p>Pagination token that can be used to retrieve the next page of results.</p>",
-        "ListFHIRExportJobsRequest$NextToken": "<p> A pagination token used to identify the next page of results to return for a ListFHIRExportJobs query. </p>",
-        "ListFHIRExportJobsResponse$NextToken": "<p> A pagination token used to identify the next page of results to return for a ListFHIRExportJobs query. </p>",
-        "ListFHIRImportJobsRequest$NextToken": "<p> A pagination token used to identify the next page of results to return for a ListFHIRImportJobs query. </p>",
-        "ListFHIRImportJobsResponse$NextToken": "<p> A pagination token used to identify the next page of results to return for a ListFHIRImportJobs query. </p>"
+        "ListFHIRDatastoresRequest$NextToken": "<p>The token used to retrieve the next page of data stores when results are paginated.</p>",
+        "ListFHIRDatastoresResponse$NextToken": "<p>The pagination token used to retrieve the next page of results.</p>",
+        "ListFHIRExportJobsRequest$NextToken": "<p>A pagination token used to identify the next page of results to return.</p>",
+        "ListFHIRExportJobsResponse$NextToken": "<p>The pagination token used to identify the next page of results to return.</p>",
+        "ListFHIRImportJobsRequest$NextToken": "<p>The pagination token used to identify the next page of results to return.</p>",
+        "ListFHIRImportJobsResponse$NextToken": "<p>The pagination token used to identify the next page of results to return.</p>"
       }
     },
     "OutputDataConfig": {
-      "base": "<p>The output data configuration that was supplied when the export job was created.</p>",
+      "base": "<p>The output data configuration supplied when the export job was created.</p>",
       "refs": {
-        "ExportJobProperties$OutputDataConfig": "<p>The output data configuration that was supplied when the export job was created.</p>",
+        "ExportJobProperties$OutputDataConfig": "<p>The output data configuration supplied when the export job was created.</p>",
         "ImportJobProperties$JobOutputDataConfig": null,
-        "StartFHIRExportJobRequest$OutputDataConfig": "<p>The output data configuration that was supplied when the export job was created.</p>",
+        "StartFHIRExportJobRequest$OutputDataConfig": "<p>The output data configuration supplied when the export job was started.</p>",
         "StartFHIRImportJobRequest$JobOutputDataConfig": null
       }
     },
     "PreloadDataConfig": {
-      "base": "<p> The input properties for the preloaded data store. Only data preloaded from Synthea is supported.</p>",
+      "base": "<p>The input properties for the preloaded (Synthea) data store.</p>",
       "refs": {
-        "CreateFHIRDatastoreRequest$PreloadDataConfig": "<p>Optional parameter to preload data upon creation of the data store. Currently, the only supported preloaded data is synthetic data generated from Synthea.</p>",
-        "DatastoreProperties$PreloadDataConfig": "<p>The preloaded data configuration for the data store. Only data preloaded from Synthea is supported.</p>"
+        "CreateFHIRDatastoreRequest$PreloadDataConfig": "<p>An optional parameter to preload (import) open source Synthea FHIR data upon creation of the data store.</p>",
+        "DatastoreProperties$PreloadDataConfig": "<p>The preloaded Synthea data configuration for the data store.</p>"
       }
     },
     "PreloadDataType": {
@@ -411,27 +411,27 @@
       }
     },
     "ResourceNotFoundException": {
-      "base": "<p> The requested data store was not found.</p>",
+      "base": "<p>The requested data store was not found.</p>",
       "refs": {}
     },
     "S3Configuration": {
-      "base": "<p> The configuration of the S3 bucket for either an import or export job. This includes assigning permissions for access. </p>",
+      "base": "<p>The configuration of the S3 bucket for either an import or export job. This includes assigning access permissions.</p>",
       "refs": {
-        "OutputDataConfig$S3Configuration": "<p> The output data configuration that was supplied when the export job was created. </p>"
+        "OutputDataConfig$S3Configuration": "<p>The output data configuration supplied when the export job was created. </p>"
       }
     },
     "S3Uri": {
       "base": null,
       "refs": {
-        "InputDataConfig$S3Uri": "<p>The S3Uri is the user specified S3 location of the FHIR data to be imported into AWS HealthLake. </p>",
-        "S3Configuration$S3Uri": "<p> The S3Uri is the user specified S3 location of the FHIR data to be imported into AWS HealthLake. </p>"
+        "InputDataConfig$S3Uri": "<p>The <code>S3Uri</code> is the user-specified S3 location of the FHIR data to be imported into AWS HealthLake.</p>",
+        "S3Configuration$S3Uri": "<p>The <code>S3Uri</code> is the user-specified S3 location of the FHIR data to be imported into AWS HealthLake.</p>"
       }
     },
     "SseConfiguration": {
-      "base": "<p> The server-side encryption key configuration for a customer provided encryption key. </p>",
+      "base": "<p>The server-side encryption key configuration for a customer-provided encryption key.</p>",
       "refs": {
-        "CreateFHIRDatastoreRequest$SseConfiguration": "<p> The server-side encryption key configuration for a customer provided encryption key specified for creating a data store. </p>",
-        "DatastoreProperties$SseConfiguration": "<p> The server-side encryption key configuration for a customer provided encryption key (CMK). </p>"
+        "CreateFHIRDatastoreRequest$SseConfiguration": "<p>The server-side encryption key configuration for a customer-provided encryption key specified for creating a data store. </p>",
+        "DatastoreProperties$SseConfiguration": "<p> The server-side encryption key configuration for a customer provided encryption key.</p>"
       }
     },
     "StartFHIRExportJobRequest": {
@@ -455,7 +455,7 @@
       "refs": {
         "AccessDeniedException$Message": null,
         "ConflictException$Message": null,
-        "DatastoreProperties$DatastoreEndpoint": "<p>The AWS endpoint for the data store. Each data store will have it's own endpoint with data store ID in the endpoint URL.</p>",
+        "DatastoreProperties$DatastoreEndpoint": "<p>The AWS endpoint for the data store.</p>",
         "InternalServerException$Message": null,
         "ResourceNotFoundException$Message": null,
         "ThrottlingException$Message": null,
@@ -463,7 +463,7 @@
       }
     },
     "Tag": {
-      "base": "<p> A tag is a label consisting of a user-defined key and value. The form for tags is {\"Key\", \"Value\"} </p>",
+      "base": "<p>A label consisting of a user-defined key and value. The form for tags is {\"Key\", \"Value\"}</p>",
       "refs": {
         "TagList$member": null
       }
@@ -471,22 +471,22 @@
     "TagKey": {
       "base": null,
       "refs": {
-        "Tag$Key": "<p> The key portion of a tag. Tag keys are case sensitive. </p>",
+        "Tag$Key": "<p>The key portion of a tag. Tag keys are case sensitive. </p>",
         "TagKeyList$member": null
       }
     },
     "TagKeyList": {
       "base": null,
       "refs": {
-        "UntagResourceRequest$TagKeys": "<p> The keys for the tags to be removed from the HealthLake data store. </p>"
+        "UntagResourceRequest$TagKeys": "<p>The keys for the tags to be removed from the data store.</p>"
       }
     },
     "TagList": {
       "base": null,
       "refs": {
-        "CreateFHIRDatastoreRequest$Tags": "<p> Resource tags that are applied to a data store when it is created. </p>",
-        "ListTagsForResourceResponse$Tags": "<p> Returns a list of tags associated with a data store. </p>",
-        "TagResourceRequest$Tags": "<p> The user specified key and value pair tags being added to a data store. </p>"
+        "CreateFHIRDatastoreRequest$Tags": "<p>The resource tags applied to a data store when it is created.</p>",
+        "ListTagsForResourceResponse$Tags": "<p>Returns a list of tags associated with a data store. </p>",
+        "TagResourceRequest$Tags": "<p>The user-specified key and value pair tags being added to a data store.</p>"
       }
     },
     "TagResourceRequest": {
@@ -500,7 +500,7 @@
     "TagValue": {
       "base": null,
       "refs": {
-        "Tag$Value": "<p> The value portion of a tag. Tag values are case sensitive. </p>"
+        "Tag$Value": "<p> The value portion of a tag. Tag values are case-sensitive.</p>"
       }
     },
     "ThrottlingException": {
@@ -510,17 +510,17 @@
     "Timestamp": {
       "base": null,
       "refs": {
-        "DatastoreFilter$CreatedBefore": "<p>A filter that allows the user to set cutoff dates for records. All data stores created before the specified date will be included in the results. </p>",
-        "DatastoreFilter$CreatedAfter": "<p>A filter that allows the user to set cutoff dates for records. All data stores created after the specified date will be included in the results.</p>",
-        "DatastoreProperties$CreatedAt": "<p>The time that a data store was created. </p>",
-        "ExportJobProperties$SubmitTime": "<p>The time an export job was initiated.</p>",
-        "ExportJobProperties$EndTime": "<p>The time an export job completed.</p>",
-        "ImportJobProperties$SubmitTime": "<p>The time that the Import job was submitted for processing.</p>",
-        "ImportJobProperties$EndTime": "<p>The time that the Import job was completed.</p>",
-        "ListFHIRExportJobsRequest$SubmittedBefore": "<p> This parameter limits the response to FHIR export jobs submitted before a user specified date. </p>",
-        "ListFHIRExportJobsRequest$SubmittedAfter": "<p> This parameter limits the response to FHIR export jobs submitted after a user specified date. </p>",
-        "ListFHIRImportJobsRequest$SubmittedBefore": "<p> This parameter limits the response to FHIR import jobs submitted before a user specified date. </p>",
-        "ListFHIRImportJobsRequest$SubmittedAfter": "<p> This parameter limits the response to FHIR import jobs submitted after a user specified date. </p>"
+        "DatastoreFilter$CreatedBefore": "<p>Filter to set cutoff dates for records. All data stores created before the specified date are included in the results. </p>",
+        "DatastoreFilter$CreatedAfter": "<p>Filter to set cutoff dates for records. All data stores created after the specified date are included in the results.</p>",
+        "DatastoreProperties$CreatedAt": "<p>The time the data store was created. </p>",
+        "ExportJobProperties$SubmitTime": "<p>The time the export job was initiated.</p>",
+        "ExportJobProperties$EndTime": "<p>The time the export job completed.</p>",
+        "ImportJobProperties$SubmitTime": "<p>The time the import job was submitted for processing.</p>",
+        "ImportJobProperties$EndTime": "<p>The time the import job was completed.</p>",
+        "ListFHIRExportJobsRequest$SubmittedBefore": "<p>Limits the response to FHIR export jobs submitted before a user- specified date.</p>",
+        "ListFHIRExportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR export jobs submitted after a user-specified date.</p>",
+        "ListFHIRImportJobsRequest$SubmittedBefore": "<p>Limits the response to FHIR import jobs submitted before a user- specified date. </p>",
+        "ListFHIRImportJobsRequest$SubmittedAfter": "<p>Limits the response to FHIR import jobs submitted after a user-specified date.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -534,6 +534,13 @@
     "ValidationException": {
       "base": "<p>The user input parameter was invalid.</p>",
       "refs": {}
+    },
+    "ValidationLevel": {
+      "base": null,
+      "refs": {
+        "ImportJobProperties$ValidationLevel": "<p>The validation level of the import job.</p>",
+        "StartFHIRImportJobRequest$ValidationLevel": "<p>The validation level of the import job.</p>"
+      }
     }
   }
 }

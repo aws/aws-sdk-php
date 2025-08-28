@@ -2,55 +2,55 @@
   "version": "2.0",
   "service": "<p>Amazon Web Services HealthOmics is a service that helps users such as bioinformaticians, researchers, and scientists to store, query, analyze, and generate insights from genomics and other biological data. It simplifies and accelerates the process of storing and analyzing genomic information for Amazon Web Services.</p> <p>For an introduction to the service, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/what-is-healthomics.html\">What is Amazon Web Services HealthOmics?</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
   "operations": {
-    "AbortMultipartReadSetUpload": "<p>Stops a multipart upload.</p>",
+    "AbortMultipartReadSetUpload": "<p>Stops a multipart read set upload into a sequence store and returns a response with no body if the operation is successful. To confirm that a multipart read set upload has been stopped, use the <code>ListMultipartReadSetUploads</code> API operation to view all active multipart read set uploads.</p>",
     "AcceptShare": "<p>Accept a resource share request.</p>",
-    "BatchDeleteReadSet": "<p>Deletes one or more read sets.</p>",
+    "BatchDeleteReadSet": "<p>Deletes one or more read sets. If the operation is successful, it returns a response with no body. If there is an error with deleting one of the read sets, the operation returns an error list. If the operation successfully deletes only a subset of files, it will return an error list for the remaining files that fail to be deleted. There is a limit of 100 read sets that can be deleted in each <code>BatchDeleteReadSet</code> API call.</p>",
     "CancelAnnotationImportJob": "<p>Cancels an annotation import job.</p>",
     "CancelRun": "<p>Cancels a run using its ID and returns a response with no body if the operation is successful. To confirm that the run has been cancelled, use the <code>ListRuns</code> API operation to check that it is no longer listed.</p>",
     "CancelVariantImportJob": "<p>Cancels a variant import job.</p>",
-    "CompleteMultipartReadSetUpload": "<p>Concludes a multipart upload once you have uploaded all the components.</p>",
+    "CompleteMultipartReadSetUpload": "<p>Completes a multipart read set upload into a sequence store after you have initiated the upload process with <code>CreateMultipartReadSetUpload</code> and uploaded all read set parts using <code>UploadReadSetPart</code>. You must specify the parts you uploaded using the parts parameter. If the operation is successful, it returns the read set ID(s) of the uploaded read set(s).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/synchronous-uploads.html\">Direct upload to a sequence store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "CreateAnnotationStore": "<p>Creates an annotation store.</p>",
     "CreateAnnotationStoreVersion": "<p> Creates a new version of an annotation store. </p>",
-    "CreateMultipartReadSetUpload": "<p>Begins a multipart read set upload.</p>",
-    "CreateReferenceStore": "<p>Creates a reference store.</p>",
+    "CreateMultipartReadSetUpload": "<p>Initiates a multipart read set upload for uploading partitioned source files into a sequence store. You can directly import source files from an EC2 instance and other local compute, or from an S3 bucket. To separate these source files into parts, use the <code>split</code> operation. Each part cannot be larger than 100 MB. If the operation is successful, it provides an <code>uploadId</code> which is required by the <code>UploadReadSetPart</code> API operation to upload parts into a sequence store.</p> <p>To continue uploading a multipart read set into your sequence store, you must use the <code>UploadReadSetPart</code> API operation to upload each part individually following the steps below:</p> <ul> <li> <p>Specify the <code>uploadId</code> obtained from the previous call to <code>CreateMultipartReadSetUpload</code>.</p> </li> <li> <p>Upload parts for that <code>uploadId</code>.</p> </li> </ul> <p>When you have finished uploading parts, use the <code>CompleteMultipartReadSetUpload</code> API to complete the multipart read set upload and to retrieve the final read set IDs in the response.</p> <p>To learn more about creating parts and the <code>split</code> operation, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/synchronous-uploads.html\">Direct upload to a sequence store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+    "CreateReferenceStore": "<p>Creates a reference store and returns metadata in JSON format. Reference stores are used to store reference genomes in FASTA format. A reference store is created when the first reference genome is imported. To import additional reference genomes from an Amazon S3 bucket, use the <code>StartReferenceImportJob</code> API operation. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/create-reference-store.html\">Creating a HealthOmics reference store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "CreateRunCache": "<p>Creates a run cache to store and reference task outputs from completed private runs. Specify an Amazon S3 location where Amazon Web Services HealthOmics saves the cached data. This data must be immediately accessible and not in an archived state. You can save intermediate task files to a run cache if they are declared as task outputs in the workflow definition file.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-call-caching.html\">Call caching</a> and <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-cache-create.html\">Creating a run cache</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "CreateRunGroup": "<p>Creates a run group to limit the compute resources for the runs that are added to the group. Returns an ARN, ID, and tags for the run group.</p>",
-    "CreateSequenceStore": "<p>Creates a sequence store.</p>",
+    "CreateSequenceStore": "<p>Creates a sequence store and returns its metadata. Sequence stores are used to store sequence data files called read sets that are saved in FASTQ, BAM, uBAM, or CRAM formats. For aligned formats (BAM and CRAM), a sequence store can only use one reference genome. For unaligned formats (FASTQ and uBAM), a reference genome is not required. You can create multiple sequence stores per region per account. </p> <p>The following are optional parameters you can specify for your sequence store:</p> <ul> <li> <p>Use <code>s3AccessConfig</code> to configure your sequence store with S3 access logs (recommended).</p> </li> <li> <p>Use <code>sseConfig</code> to define your own KMS key for encryption.</p> </li> <li> <p>Use <code>eTagAlgorithmFamily</code> to define which algorithm to use for the HealthOmics eTag on objects.</p> </li> <li> <p>Use <code>fallbackLocation</code> to define a backup location for storing files that have failed a direct upload.</p> </li> <li> <p>Use <code>propagatedSetLevelTags</code> to configure tags that propagate to all objects in your store.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/create-sequence-store.html\">Creating a HealthOmics sequence store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "CreateShare": "<p>Creates a cross-account shared resource. The resource owner makes an offer to share the resource with the principal subscriber (an AWS user with a different account than the resource owner).</p> <p>The following resources support cross-account sharing:</p> <ul> <li> <p>HealthOmics variant stores</p> </li> <li> <p>HealthOmics annotation stores</p> </li> <li> <p>Private workflows</p> </li> </ul>",
     "CreateVariantStore": "<p>Creates a variant store.</p>",
-    "CreateWorkflow": "<p>Creates a private workflow. Before you create a private workflow, you must create and configure these required resources:</p> <ul> <li> <p> <i>Workflow definition files</i>: Define your workflow in one or more workflow definition files, written in WDL, Nextflow, or CWL. The workflow definition specifies the inputs and outputs for runs that use the workflow. It also includes specifications for the runs and run tasks for your workflow, including compute and memory requirements. The workflow definition file must be in .zip format.</p> </li> <li> <p>(Optional) <i>Parameter template</i>: You can create a parameter template file that defines the run parameters, or Amazon Web Services HealthOmics can generate the parameter template for you.</p> </li> <li> <p> <i>ECR container images</i>: Create one or more container images for the workflow. Store the images in a private ECR repository.</p> </li> <li> <p>(Optional) <i>Sentieon licenses</i>: Request a Sentieon license if using the Sentieon software in a private workflow.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/creating-private-workflows.html\">Creating or updating a private workflow in Amazon Web Services HealthOmics</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
-    "CreateWorkflowVersion": "<p>Creates a new workflow version for the workflow that you specify with the <code>workflowId</code> parameter.</p> <p>When you create a new version of a workflow, you need to specify the configuration for the new version. It doesn't inherit any configuration values from the workflow.</p> <p>Provide a version name that is unique for this workflow. You cannot change the name after HealthOmics creates the version.</p> <note> <p>Don’t include any personally identifiable information (PII) in the version name. Version names appear in the workflow version ARN.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-versions.html\">Workflow versioning in Amazon Web Services HealthOmics</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+    "CreateWorkflow": "<p>Creates a private workflow. Before you create a private workflow, you must create and configure these required resources:</p> <ul> <li> <p> <i>Workflow definition files</i>: Define your workflow in one or more workflow definition files, written in WDL, Nextflow, or CWL. The workflow definition specifies the inputs and outputs for runs that use the workflow. It also includes specifications for the runs and run tasks for your workflow, including compute and memory requirements. The workflow definition file must be in .zip format.</p> </li> <li> <p>(Optional) <i>Parameter template</i>: You can create a parameter template file that defines the run parameters, or Amazon Web Services HealthOmics can generate the parameter template for you.</p> </li> <li> <p> <i>ECR container images</i>: Create container images for the workflow in a private ECR repository, or synchronize images from a supported upstream registry with your Amazon ECR private repository.</p> </li> <li> <p>(Optional) <i>Sentieon licenses</i>: Request a Sentieon license if using the Sentieon software in a private workflow.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/creating-private-workflows.html\">Creating or updating a private workflow in Amazon Web Services HealthOmics</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+    "CreateWorkflowVersion": "<p>Creates a new workflow version for the workflow that you specify with the <code>workflowId</code> parameter.</p> <p>When you create a new version of a workflow, you need to specify the configuration for the new version. It doesn't inherit any configuration values from the workflow.</p> <p>Provide a version name that is unique for this workflow. You cannot change the name after HealthOmics creates the version.</p> <note> <p>Don't include any personally identifiable information (PII) in the version name. Version names appear in the workflow version ARN.</p> </note> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-versions.html\">Workflow versioning in Amazon Web Services HealthOmics</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "DeleteAnnotationStore": "<p>Deletes an annotation store.</p>",
     "DeleteAnnotationStoreVersions": "<p> Deletes one or multiple versions of an annotation store. </p>",
-    "DeleteReference": "<p>Deletes a genome reference.</p>",
-    "DeleteReferenceStore": "<p>Deletes a genome reference store.</p>",
+    "DeleteReference": "<p>Deletes a reference genome and returns a response with no body if the operation is successful. The read set associated with the reference genome must first be deleted before deleting the reference genome. After the reference genome is deleted, you can delete the reference store using the <code>DeleteReferenceStore</code> API operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/deleting-reference-and-sequence-stores.html\">Deleting HealthOmics reference and sequence stores</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+    "DeleteReferenceStore": "<p>Deletes a reference store and returns a response with no body if the operation is successful. You can only delete a reference store when it does not contain any reference genomes. To empty a reference store, use <code>DeleteReference</code>.</p> <p>For more information about your workflow status, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/deleting-reference-and-sequence-stores.html\">Deleting HealthOmics reference and sequence stores</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "DeleteRun": "<p>Deletes a run and returns a response with no body if the operation is successful. You can only delete a run that has reached a <code>COMPLETED</code>, <code>FAILED</code>, or <code>CANCELLED</code> stage. A completed run has delivered an output, or was cancelled and resulted in no output. When you delete a run, only the metadata associated with the run is deleted. The run outputs remain in Amazon S3 and logs remain in CloudWatch.</p> <p>To verify that the workflow is deleted:</p> <ul> <li> <p>Use <code>ListRuns</code> to confirm the workflow no longer appears in the list.</p> </li> <li> <p>Use <code>GetRun</code> to verify the workflow cannot be found.</p> </li> </ul>",
     "DeleteRunCache": "<p>Deletes a run cache and returns a response with no body if the operation is successful. This action removes the cache metadata stored in the service account, but does not delete the data in Amazon S3. You can access the cache data in Amazon S3, for inspection or to troubleshoot issues. You can remove old cache data using standard S3 <code>Delete</code> operations. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-cache-delete.html\">Deleting a run cache</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "DeleteRunGroup": "<p>Deletes a run group and returns a response with no body if the operation is successful.</p> <p>To verify that the run group is deleted:</p> <ul> <li> <p>Use <code>ListRunGroups</code> to confirm the workflow no longer appears in the list.</p> </li> <li> <p>Use <code>GetRunGroup</code> to verify the workflow cannot be found.</p> </li> </ul>",
     "DeleteS3AccessPolicy": "<p>Deletes an access policy for the specified store.</p>",
-    "DeleteSequenceStore": "<p>Deletes a sequence store.</p>",
+    "DeleteSequenceStore": "<p>Deletes a sequence store and returns a response with no body if the operation is successful. You can only delete a sequence store when it does not contain any read sets.</p> <p>Use the <code>BatchDeleteReadSet</code> API operation to ensure that all read sets in the sequence store are deleted. When a sequence store is deleted, all tags associated with the store are also deleted.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/deleting-reference-and-sequence-stores.html\">Deleting HealthOmics reference and sequence stores</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "DeleteShare": "<p>Deletes a resource share. If you are the resource owner, the subscriber will no longer have access to the shared resource. If you are the subscriber, this operation deletes your access to the share.</p>",
     "DeleteVariantStore": "<p>Deletes a variant store.</p>",
-    "DeleteWorkflow": "<p>Deletes a workflow by specifying its ID. No response is returned if the deletion is successful.</p> <p>To verify that the workflow is deleted:</p> <ul> <li> <p>Use <code>ListWorkflows</code> to confirm the workflow no longer appears in the list.</p> </li> <li> <p>Use <code>GetWorkflow</code> to verify the workflow cannot be found.</p> </li> </ul>",
+    "DeleteWorkflow": "<p>Deletes a workflow by specifying its ID. This operation returns a response with no body if the deletion is successful.</p> <p>To verify that the workflow is deleted:</p> <ul> <li> <p>Use <code>ListWorkflows</code> to confirm the workflow no longer appears in the list.</p> </li> <li> <p>Use <code>GetWorkflow</code> to verify the workflow cannot be found.</p> </li> </ul>",
     "DeleteWorkflowVersion": "<p>Deletes a workflow version. Deleting a workflow version doesn't affect any ongoing runs that are using the workflow version.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-versions.html\">Workflow versioning in Amazon Web Services HealthOmics</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "GetAnnotationImportJob": "<p>Gets information about an annotation import job.</p>",
     "GetAnnotationStore": "<p>Gets information about an annotation store.</p>",
     "GetAnnotationStoreVersion": "<p> Retrieves the metadata for an annotation store version. </p>",
-    "GetReadSet": "<p>Gets a file from a read set.</p>",
-    "GetReadSetActivationJob": "<p>Gets information about a read set activation job.</p>",
-    "GetReadSetExportJob": "<p>Gets information about a read set export job.</p>",
-    "GetReadSetImportJob": "<p>Gets information about a read set import job.</p>",
-    "GetReadSetMetadata": "<p>Gets details about a read set.</p>",
-    "GetReference": "<p>Gets a reference file.</p>",
-    "GetReferenceImportJob": "<p>Gets information about a reference import job.</p>",
-    "GetReferenceMetadata": "<p>Gets information about a genome reference's metadata.</p>",
+    "GetReadSet": "<p>Retrieves detailed information from parts of a read set and returns the read set in the same format that it was uploaded. You must have read sets uploaded to your sequence store in order to run this operation.</p>",
+    "GetReadSetActivationJob": "<p>Returns detailed information about the status of a read set activation job in JSON format.</p>",
+    "GetReadSetExportJob": "<p>Retrieves status information about a read set export job and returns the data in JSON format. Use this operation to actively monitor the progress of an export job.</p>",
+    "GetReadSetImportJob": "<p>Gets detailed and status information about a read set import job and returns the data in JSON format.</p>",
+    "GetReadSetMetadata": "<p>Retrieves the metadata for a read set from a sequence store in JSON format. This operation does not return tags. To retrieve the list of tags for a read set, use the <code>ListTagsForResource</code> API operation.</p>",
+    "GetReference": "<p>Downloads parts of data from a reference genome and returns the reference file in the same format that it was uploaded.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/create-reference-store.html\">Creating a HealthOmics reference store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+    "GetReferenceImportJob": "<p>Monitors the status of a reference import job. This operation can be called after calling the <code>StartReferenceImportJob</code> operation.</p>",
+    "GetReferenceMetadata": "<p>Retrieves metadata for a reference genome. This operation returns the number of parts, part size, and MD5 of an entire file. This operation does not return tags. To retrieve the list of tags for a read set, use the <code>ListTagsForResource</code> API operation.</p>",
     "GetReferenceStore": "<p>Gets information about a reference store.</p>",
     "GetRun": "<p>Gets detailed information about a specific run using its ID.</p> <p>Amazon Web Services HealthOmics stores a configurable number of runs, as determined by service limits, that are available to the console and API. If <code>GetRun</code> does not return the requested run, you can find all run logs in the CloudWatch logs. For more information about viewing the run logs, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/monitoring-cloudwatch-logs.html\">CloudWatch logs</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "GetRunCache": "<p>Retrieves detailed information about the specified run cache using its ID.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-call-caching.html\">Call caching for Amazon Web Services HealthOmics runs</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "GetRunGroup": "<p>Gets information about a run group and returns its metadata.</p>",
     "GetRunTask": "<p>Gets detailed information about a run task using its ID.</p>",
     "GetS3AccessPolicy": "<p>Retrieves details about an access policy on a given store.</p>",
-    "GetSequenceStore": "<p>Gets information about a sequence store.</p>",
+    "GetSequenceStore": "<p>Retrieves metadata for a sequence store using its ID and returns it in JSON format.</p>",
     "GetShare": "<p>Retrieves the metadata for the specified resource share.</p>",
     "GetVariantImportJob": "<p>Gets information about a variant import job.</p>",
     "GetVariantStore": "<p>Gets information about a variant store.</p>",
@@ -59,20 +59,20 @@
     "ListAnnotationImportJobs": "<p>Retrieves a list of annotation import jobs.</p>",
     "ListAnnotationStoreVersions": "<p> Lists the versions of an annotation store. </p>",
     "ListAnnotationStores": "<p>Retrieves a list of annotation stores.</p>",
-    "ListMultipartReadSetUploads": "<p>Lists multipart read set uploads and for in progress uploads. Once the upload is completed, a read set is created and the upload will no longer be returned in the response.</p>",
-    "ListReadSetActivationJobs": "<p>Retrieves a list of read set activation jobs.</p>",
-    "ListReadSetExportJobs": "<p>Retrieves a list of read set export jobs.</p>",
-    "ListReadSetImportJobs": "<p>Retrieves a list of read set import jobs.</p>",
-    "ListReadSetUploadParts": "<p>This operation will list all parts in a requested multipart upload for a sequence store.</p>",
-    "ListReadSets": "<p>Retrieves a list of read sets.</p>",
-    "ListReferenceImportJobs": "<p>Retrieves a list of reference import jobs.</p>",
-    "ListReferenceStores": "<p>Retrieves a list of reference stores.</p>",
-    "ListReferences": "<p>Retrieves a list of references.</p>",
+    "ListMultipartReadSetUploads": "<p>Lists in-progress multipart read set uploads for a sequence store and returns it in a JSON formatted output. Multipart read set uploads are initiated by the <code>CreateMultipartReadSetUploads</code> API operation. This operation returns a response with no body when the upload is complete. </p>",
+    "ListReadSetActivationJobs": "<p>Retrieves a list of read set activation jobs and returns the metadata in a JSON formatted output. To extract metadata from a read set activation job, use the <code>GetReadSetActivationJob</code> API operation.</p>",
+    "ListReadSetExportJobs": "<p>Retrieves a list of read set export jobs in a JSON formatted response. This API operation is used to check the status of a read set export job initiated by the <code>StartReadSetExportJob</code> API operation.</p>",
+    "ListReadSetImportJobs": "<p>Retrieves a list of read set import jobs and returns the data in JSON format.</p>",
+    "ListReadSetUploadParts": "<p>Lists all parts in a multipart read set upload for a sequence store and returns the metadata in a JSON formatted output.</p>",
+    "ListReadSets": "<p>Retrieves a list of read sets from a sequence store ID and returns the metadata in JSON format.</p>",
+    "ListReferenceImportJobs": "<p>Retrieves the metadata of one or more reference import jobs for a reference store.</p>",
+    "ListReferenceStores": "<p>Retrieves a list of reference stores linked to your account and returns their metadata in JSON format.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/create-reference-store.html\">Creating a reference store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+    "ListReferences": "<p>Retrieves the metadata of one or more reference genomes in a reference store.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/create-reference-store.html\">Creating a reference store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "ListRunCaches": "<p>Retrieves a list of your run caches and the metadata for each cache.</p>",
     "ListRunGroups": "<p>Retrieves a list of all run groups and returns the metadata for each run group.</p>",
     "ListRunTasks": "<p>Returns a list of tasks and status information within their specified run. Use this operation to monitor runs and to identify which specific tasks have failed.</p>",
     "ListRuns": "<p>Retrieves a list of runs and returns each run's metadata and status.</p> <p>Amazon Web Services HealthOmics stores a configurable number of runs, as determined by service limits, that are available to the console and API. If the <code>ListRuns</code> response doesn't include specific runs that you expected, you can find all run logs in the CloudWatch logs. For more information about viewing the run logs, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/monitoring-cloudwatch-logs.html\">CloudWatch logs</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
-    "ListSequenceStores": "<p>Retrieves a list of sequence stores.</p>",
+    "ListSequenceStores": "<p>Retrieves a list of sequence stores and returns each sequence store's metadata.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/create-sequence-store.html\">Creating a HealthOmics sequence store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "ListShares": "<p>Retrieves the resource shares associated with an account. Use the filter parameter to retrieve a specific subset of the shares.</p>",
     "ListTagsForResource": "<p>Retrieves a list of tags for a resource.</p>",
     "ListVariantImportJobs": "<p>Retrieves a list of variant import jobs.</p>",
@@ -81,10 +81,10 @@
     "ListWorkflows": "<p>Retrieves a list of existing workflows. You can filter for specific workflows by their name and type. Using the type parameter, specify <code>PRIVATE</code> to retrieve a list of private workflows or specify <code>READY2RUN</code> for a list of all Ready2Run workflows. If you do not specify the type of workflow, this operation returns a list of existing workflows.</p>",
     "PutS3AccessPolicy": "<p>Adds an access policy to the specified store.</p>",
     "StartAnnotationImportJob": "<p>Starts an annotation import job.</p>",
-    "StartReadSetActivationJob": "<p>Activates an archived read set. To reduce storage charges, Amazon Omics archives unused read sets after 30 days.</p>",
-    "StartReadSetExportJob": "<p>Exports a read set to Amazon S3.</p>",
-    "StartReadSetImportJob": "<p>Starts a read set import job.</p>",
-    "StartReferenceImportJob": "<p>Starts a reference import job.</p>",
+    "StartReadSetActivationJob": "<p>Activates an archived read set and returns its metadata in a JSON formatted output. AWS HealthOmics automatically archives unused read sets after 30 days. To monitor the status of your read set activation job, use the <code>GetReadSetActivationJob</code> operation.</p> <p>To learn more, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/activating-read-sets.html\">Activating read sets</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+    "StartReadSetExportJob": "<p>Starts a read set export job. When the export job is finished, the read set is exported to an Amazon S3 bucket which can be retrieved using the <code>GetReadSetExportJob</code> API operation.</p> <p>To monitor the status of the export job, use the <code>ListReadSetExportJobs</code> API operation. </p>",
+    "StartReadSetImportJob": "<p>Imports a read set from the sequence store. Read set import jobs support a maximum of 100 read sets of different types. Monitor the progress of your read set import job by calling the <code>GetReadSetImportJob</code> API operation.</p>",
+    "StartReferenceImportJob": "<p>Imports a reference genome from Amazon S3 into a specified reference store. You can have multiple reference genomes in a reference store. You can only import reference genomes one at a time into each reference store. Monitor the status of your reference import job by using the <code>GetReferenceImportJob</code> API operation.</p>",
     "StartRun": "<p>Starts a new run and returns details about the run, or duplicates an existing run. A run is a single invocation of a workflow. If you provide request IDs, Amazon Web Services HealthOmics identifies duplicate requests and starts the run only once. Monitor the progress of the run by calling the <code>GetRun</code> API operation.</p> <p>To start a new run, the following inputs are required:</p> <ul> <li> <p>A service role ARN (<code>roleArn</code>).</p> </li> <li> <p>The run's workflow ID (<code>workflowId</code>, not the <code>uuid</code> or <code>runId</code>).</p> </li> <li> <p>An Amazon S3 location (<code>outputUri</code>) where the run outputs will be saved.</p> </li> <li> <p>All required workflow parameters (<code>parameter</code>), which can include optional parameters from the parameter template. The run cannot include any parameters that are not defined in the parameter template. To see all possible parameters, use the <code>GetRun</code> API operation. </p> </li> <li> <p>For runs with a <code>STATIC</code> (default) storage type, specify the required storage capacity (in gibibytes). A storage capacity value is not required for runs that use <code>DYNAMIC</code> storage.</p> </li> </ul> <p> <code>StartRun</code> can also duplicate an existing run using the run's default values. You can modify these default values and/or add other optional inputs. To duplicate a run, the following inputs are required:</p> <ul> <li> <p>A service role ARN (<code>roleArn</code>).</p> </li> <li> <p>The ID of the run to duplicate (<code>runId</code>).</p> </li> <li> <p>An Amazon S3 location where the run outputs will be saved (<code>outputUri</code>).</p> </li> </ul> <p>To learn more about the optional parameters for <code>StartRun</code>, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/starting-a-run.html\">Starting a run</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p> <p>Use the <code>retentionMode</code> input to control how long the metadata for each run is stored in CloudWatch. There are two retention modes:</p> <ul> <li> <p>Specify <code>REMOVE</code> to automatically remove the oldest runs when you reach the maximum service retention limit for runs. It is recommended that you use the <code>REMOVE</code> mode to initiate major run requests so that your runs do not fail when you reach the limit.</p> </li> <li> <p>The <code>retentionMode</code> is set to the <code>RETAIN</code> mode by default, which allows you to manually remove runs after reaching the maximum service retention limit. Under this setting, you cannot create additional runs until you remove the excess runs.</p> </li> </ul> <p>To learn more about the retention modes, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/run-retention.html\">Run retention mode</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "StartVariantImportJob": "<p>Starts a variant import job.</p>",
     "TagResource": "<p>Tags a resource.</p>",
@@ -97,7 +97,7 @@
     "UpdateVariantStore": "<p>Updates a variant store.</p>",
     "UpdateWorkflow": "<p>Updates information about a workflow.</p> <p>You can update the following workflow information:</p> <ul> <li> <p>Name</p> </li> <li> <p>Description</p> </li> <li> <p>Default storage type</p> </li> <li> <p>Default storage capacity (with workflow ID)</p> </li> </ul> <p>This operation returns a response with no body if the operation is successful. You can check the workflow updates by calling the <code>GetWorkflow</code> API operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/update-private-workflow.html\">Update a private workflow</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
     "UpdateWorkflowVersion": "<p>Updates information about the workflow version. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-versions.html\">Workflow versioning in Amazon Web Services HealthOmics</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
-    "UploadReadSetPart": "<p>This operation uploads a specific part of a read set. If you upload a new part using a previously used part number, the previously uploaded part will be overwritten.</p>"
+    "UploadReadSetPart": "<p>Uploads a specific part of a read set into a sequence store. When you a upload a read set part with a part number that already exists, the new part replaces the existing one. This operation returns a JSON formatted response containing a string identifier that is used to confirm that parts are being added to the intended upload.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/synchronous-uploads.html\">Direct upload to a sequence store</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>"
   },
   "shapes": {
     "AbortMultipartReadSetUploadRequest": {
@@ -298,7 +298,8 @@
       "base": null,
       "refs": {
         "CreateRunCacheRequest$cacheBucketOwnerId": "<p>The Amazon Web Services account ID of the expected owner of the S3 bucket for the run cache. If not provided, your account ID is set as the owner of the bucket.</p>",
-        "GetRunCacheResponse$cacheBucketOwnerId": "<p>The identifier of the bucket owner.</p>"
+        "GetRunCacheResponse$cacheBucketOwnerId": "<p>The identifier of the bucket owner.</p>",
+        "RegistryMapping$ecrAccountId": "<p>Account ID of the account that owns the upstream container image.</p>"
       }
     },
     "BatchDeleteReadSetRequest": {
@@ -315,7 +316,7 @@
       "base": null,
       "refs": {
         "CreateWorkflowRequest$definitionZip": "<p>A ZIP archive containing the main workflow definition file and dependencies that it imports for the workflow. You can use a file with a ://fileb prefix instead of the Base64 string. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflow-defn-requirements.html\">Workflow definition requirements</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
-        "CreateWorkflowVersionRequest$definitionZip": "<p>A zip archive containing the workflow definition for this workflow version.</p>"
+        "CreateWorkflowVersionRequest$definitionZip": "<p>A ZIP archive containing the main workflow definition file and dependencies that it imports for this workflow version. You can use a file with a ://fileb prefix instead of the Base64 string. For more information, see Workflow definition requirements in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>"
       }
     },
     "Boolean": {
@@ -369,7 +370,7 @@
       "refs": {
         "CreateMultipartReadSetUploadRequest$clientToken": "<p>An idempotency token that can be used to avoid triggering multiple multipart uploads.</p>",
         "CreateReferenceStoreRequest$clientToken": "<p>To ensure that requests don't run multiple times, specify a unique token for each request.</p>",
-        "CreateSequenceStoreRequest$clientToken": "<p>To ensure that requests don't run multiple times, specify a unique token for each request.</p>",
+        "CreateSequenceStoreRequest$clientToken": "<p>An idempotency token used to dedupe retry requests so that duplicate runs are not created.</p>",
         "StartReadSetActivationJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>",
         "StartReadSetExportJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>",
         "StartReadSetImportJobRequest$clientToken": "<p>To ensure that jobs don't run multiple times, specify a unique token for each job.</p>",
@@ -436,6 +437,15 @@
       "refs": {
         "DefinitionRepository$connectionArn": "<p>The Amazon Resource Name (ARN) of the connection to the source code repository.</p>",
         "DefinitionRepositoryDetails$connectionArn": "<p>The Amazon Resource Name (ARN) of the connection to the source code repository.</p>"
+      }
+    },
+    "ContainerRegistryMap": {
+      "base": "<p>Use a container registry map to specify mappings between the ECR private repository and one or more upstream registries. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-ecr.html\">Container images</a> in the <i>Amazon Web Services HealthOmics User Guide</i>. </p>",
+      "refs": {
+        "CreateWorkflowRequest$containerRegistryMap": "<p>(Optional) Use a container registry map to specify mappings between the ECR private repository and one or more upstream registries. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-ecr.html\">Container images</a> in the <i>Amazon Web Services HealthOmics User Guide</i>. </p>",
+        "CreateWorkflowVersionRequest$containerRegistryMap": "<p>(Optional) Use a container registry map to specify mappings between the ECR private repository and one or more upstream registries. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-ecr.html\">Container images</a> in the <i>Amazon Web Services HealthOmics User Guide</i>. </p>",
+        "GetWorkflowResponse$containerRegistryMap": "<p>The registry map that this workflow is using.</p>",
+        "GetWorkflowVersionResponse$containerRegistryMap": "<p>The registry map that this workflow version uses.</p>"
       }
     },
     "CreateAnnotationStoreRequest": {
@@ -576,7 +586,7 @@
     "CreateWorkflowVersionRequestStorageCapacityInteger": {
       "base": null,
       "refs": {
-        "CreateWorkflowVersionRequest$storageCapacity": "<p>The default static storage capacity (in gibibytes) for runs that use this workflow or workflow version.</p>"
+        "CreateWorkflowVersionRequest$storageCapacity": "<p>The default static storage capacity (in gibibytes) for runs that use this workflow version. The <code>storageCapacity</code> can be overwritten at run time. The storage capacity is not required for runs with a <code>DYNAMIC</code> storage type.</p>"
       }
     },
     "CreateWorkflowVersionResponse": {
@@ -776,11 +786,17 @@
     "ETagAlgorithmFamily": {
       "base": null,
       "refs": {
-        "CreateSequenceStoreRequest$eTagAlgorithmFamily": "<p>The ETag algorithm family to use for ingested read sets.</p>",
+        "CreateSequenceStoreRequest$eTagAlgorithmFamily": "<p>The ETag algorithm family to use for ingested read sets. The default value is MD5up. For more information on ETags, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/etags-and-provenance.html\">ETags and data provenance</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "CreateSequenceStoreResponse$eTagAlgorithmFamily": "<p>The algorithm family of the ETag.</p>",
         "GetSequenceStoreResponse$eTagAlgorithmFamily": "<p>The algorithm family of the ETag.</p>",
         "SequenceStoreDetail$eTagAlgorithmFamily": "<p>The algorithm family of the ETag.</p>",
         "UpdateSequenceStoreResponse$eTagAlgorithmFamily": "<p>The ETag algorithm family to use on ingested read sets.</p>"
+      }
+    },
+    "EcrRepositoryPrefix": {
+      "base": null,
+      "refs": {
+        "RegistryMapping$ecrRepositoryPrefix": "<p>The repository prefix to use in the ECR private repository.</p>"
       }
     },
     "Encoding": {
@@ -873,7 +889,7 @@
     "FallbackLocation": {
       "base": null,
       "refs": {
-        "CreateSequenceStoreRequest$fallbackLocation": "<p>An S3 location that is used to store files that have failed a direct upload.</p>",
+        "CreateSequenceStoreRequest$fallbackLocation": "<p>An S3 location that is used to store files that have failed a direct upload. You can add or change the <code>fallbackLocation</code> after creating a sequence store. This is not required if you are uploading files from a different S3 bucket.</p>",
         "CreateSequenceStoreResponse$fallbackLocation": "<p>An S3 location that is used to store files that have failed a direct upload.</p>",
         "GetSequenceStoreResponse$fallbackLocation": "<p>An S3 location that is used to store files that have failed a direct upload.</p>",
         "SequenceStoreDetail$fallbackLocation": "<p> An S3 location that is used to store files that have failed a direct upload. </p>",
@@ -1284,6 +1300,24 @@
       "base": null,
       "refs": {
         "ReadOptions$header": "<p>Whether the file has a header row.</p>"
+      }
+    },
+    "ImageDetails": {
+      "base": "<p>Information about the container image used for a task.</p>",
+      "refs": {
+        "GetRunTaskResponse$imageDetails": "<p>Details about the container image that this task uses.</p>"
+      }
+    },
+    "ImageMapping": {
+      "base": "<p>Specifies image mappings that workflow tasks can use. For example, you can replace all the task references of a public image to use an equivalent image in your private ECR repository. You can use image mappings with upstream registries that don't support pull through cache. You need to manually synchronize the upstream registry with your private repository. </p>",
+      "refs": {
+        "ImageMappingsList$member": null
+      }
+    },
+    "ImageMappingsList": {
+      "base": null,
+      "refs": {
+        "ContainerRegistryMap$imageMappings": "<p>Image mappings specify path mappings between the ECR private repository and their corresponding external repositories.</p>"
       }
     },
     "ImportJobId": {
@@ -1946,7 +1980,7 @@
     "PropagatedSetLevelTags": {
       "base": null,
       "refs": {
-        "CreateSequenceStoreRequest$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
+        "CreateSequenceStoreRequest$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store. These tags can be used as input to add metadata to your read sets.</p>",
         "CreateSequenceStoreResponse$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
         "GetSequenceStoreResponse$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
         "UpdateSequenceStoreRequest$propagatedSetLevelTags": "<p>The tags keys to propagate to the S3 objects associated with read sets in the sequence store.</p>",
@@ -2428,6 +2462,18 @@
         "GetReferenceResponse$payload": "<p>The reference file payload.</p>"
       }
     },
+    "RegistryMapping": {
+      "base": "<p>If you are using the ECR pull through cache feature, the registry mapping maps between the ECR repository and the upstream registry where container images are pulled and synchronized.</p>",
+      "refs": {
+        "RegistryMappingsList$member": null
+      }
+    },
+    "RegistryMappingsList": {
+      "base": null,
+      "refs": {
+        "ContainerRegistryMap$registryMappings": "<p>Mapping that provides the ECR repository path where upstream container images are pulled and synchronized.</p>"
+      }
+    },
     "RequestTimeoutException": {
       "base": "<p>The request timed out.</p>",
       "refs": {
@@ -2843,7 +2889,7 @@
     "S3AccessConfig": {
       "base": "<p>S3 access configuration parameters.</p>",
       "refs": {
-        "CreateSequenceStoreRequest$s3AccessConfig": "<p>S3 access configuration parameters</p>",
+        "CreateSequenceStoreRequest$s3AccessConfig": "<p>S3 access configuration parameters. This specifies the parameters needed to access logs stored in S3 buckets. The S3 bucket must be in the same region and account as the sequence store. </p>",
         "UpdateSequenceStoreRequest$s3AccessConfig": "<p>S3 access configuration parameters.</p>"
       }
     },
@@ -3148,7 +3194,7 @@
         "CreateReferenceStoreRequest$sseConfig": "<p>Server-side encryption (SSE) settings for the store.</p>",
         "CreateReferenceStoreResponse$sseConfig": "<p>The store's SSE settings.</p>",
         "CreateSequenceStoreRequest$sseConfig": "<p>Server-side encryption (SSE) settings for the store.</p>",
-        "CreateSequenceStoreResponse$sseConfig": "<p>The store's SSE settings.</p>",
+        "CreateSequenceStoreResponse$sseConfig": "<p>Server-side encryption (SSE) settings for the store. This contains the KMS key ARN that is used to encrypt read set objects.</p>",
         "CreateVariantStoreRequest$sseConfig": "<p>Server-side encryption (SSE) settings for the store.</p>",
         "GetAnnotationStoreResponse$sseConfig": "<p>The store's server-side encryption (SSE) settings.</p>",
         "GetReferenceStoreResponse$sseConfig": "<p>The store's server-side encryption (SSE) settings.</p>",
@@ -3312,14 +3358,14 @@
       "base": null,
       "refs": {
         "CreateWorkflowRequest$storageType": "<p>The default storage type for runs that use this workflow. The <code>storageType</code> can be overridden at run time. <code>DYNAMIC</code> storage dynamically scales the storage up or down, based on file system utilization. <code>STATIC</code> storage allocates a fixed amount of storage. For more information about dynamic and static storage types, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-run-types.html\">Run storage types</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
-        "CreateWorkflowVersionRequest$storageType": "<p>The default storage type for runs that use this workflow. STATIC storage allocates a fixed amount of storage. DYNAMIC storage dynamically scales the storage up or down, based on file system utilization. For more information about static and dynamic storage, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html\">Running workflows</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
+        "CreateWorkflowVersionRequest$storageType": "<p>The default storage type for runs that use this workflow version. The <code>storageType</code> can be overridden at run time. <code>DYNAMIC</code> storage dynamically scales the storage up or down, based on file system utilization. STATIC storage allocates a fixed amount of storage. For more information about dynamic and static storage types, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-run-types.html\">Run storage types</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "GetRunResponse$storageType": "<p>The run's storage type.</p>",
         "GetWorkflowResponse$storageType": "<p>The default storage type for runs using this workflow.</p>",
         "GetWorkflowVersionResponse$storageType": "<p>The default storage type for the run.</p>",
         "RunListItem$storageType": "<p>The run's storage type.</p>",
         "StartRunRequest$storageType": "<p>The storage type for the run. If you set the storage type to <code>DYNAMIC</code>, Amazon Web Services HealthOmics dynamically scales the storage up or down, based on file system utilization. By default, the run uses <code>STATIC</code> storage type, which allocates a fixed amount of storage. For more information about <code>DYNAMIC</code> and <code>STATIC</code> storage, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-run-types.html\">Run storage types</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "UpdateWorkflowRequest$storageType": "<p>The default storage type for runs that use this workflow. STATIC storage allocates a fixed amount of storage. DYNAMIC storage dynamically scales the storage up or down, based on file system utilization. For more information about static and dynamic storage, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html\">Running workflows</a> in the <i>Amazon Web Services HealthOmics User Guide</i>. </p>",
-        "UpdateWorkflowVersionRequest$storageType": "<p>The default storage type for runs that use this workflow. STATIC storage allocates a fixed amount of storage. DYNAMIC storage dynamically scales the storage up or down, based on file system utilization. For more information about static and dynamic storage, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/Using-workflows.html\">Running workflows</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>"
+        "UpdateWorkflowVersionRequest$storageType": "<p>The default storage type for runs that use this workflow version. The <code>storageType</code> can be overridden at run time. <code>DYNAMIC</code> storage dynamically scales the storage up or down, based on file system utilization. STATIC storage allocates a fixed amount of storage. For more information about dynamic and static storage types, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/workflows-run-types.html\">Run storage types</a> in the <i>in the <i>Amazon Web Services HealthOmics User Guide</i> </i>.</p>"
       }
     },
     "StoreFormat": {
@@ -3573,11 +3619,11 @@
         "CreateRunCacheResponse$tags": "<p>The tags associated with this run cache.</p>",
         "CreateRunGroupRequest$tags": "<p>Tags for the group.</p>",
         "CreateRunGroupResponse$tags": "<p>Tags for the run group.</p>",
-        "CreateSequenceStoreRequest$tags": "<p>Tags for the store.</p>",
+        "CreateSequenceStoreRequest$tags": "<p>Tags for the store. You can configure up to 50 tags.</p>",
         "CreateVariantStoreRequest$tags": "<p>Tags for the store.</p>",
         "CreateWorkflowRequest$tags": "<p>Tags for the workflow. You can define up to 50 tags for the workflow. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/add-a-tag.html\">Adding a tag</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "CreateWorkflowResponse$tags": "<p>The workflow's tags.</p>",
-        "CreateWorkflowVersionRequest$tags": "<p>Optional tags to associate with this workflow version.</p>",
+        "CreateWorkflowVersionRequest$tags": "<p>Tags for this workflow version. You can define up to 50 tags for the workflow. For more information, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/add-a-tag.html\">Adding a tag</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "CreateWorkflowVersionResponse$tags": "<p>The workflow version's tags.</p>",
         "GetAnnotationStoreResponse$tags": "<p>The store's tags.</p>",
         "GetAnnotationStoreVersionResponse$tags": "<p> Any tags associated with an annotation store version. </p>",
@@ -3632,6 +3678,12 @@
         "GetRunTaskRequest$taskId": "<p>The task's ID.</p>",
         "GetRunTaskResponse$taskId": "<p>The task's ID.</p>",
         "TaskListItem$taskId": "<p>The task's ID.</p>"
+      }
+    },
+    "TaskImageDigest": {
+      "base": null,
+      "refs": {
+        "ImageDetails$imageDigest": "<p>The container image digest. If the image URI was transformed, this will be the digest of the container image referenced by the transformed URI.</p>"
       }
     },
     "TaskInstanceType": {
@@ -3879,7 +3931,7 @@
     "UpdateWorkflowVersionRequestStorageCapacityInteger": {
       "base": null,
       "refs": {
-        "UpdateWorkflowVersionRequest$storageCapacity": "<p>The default static storage capacity (in gibibytes) for runs that use this workflow or workflow version.</p>"
+        "UpdateWorkflowVersionRequest$storageCapacity": "<p>The default static storage capacity (in gibibytes) for runs that use this workflow version. The <code>storageCapacity</code> can be overwritten at run time. The storage capacity is not required for runs with a <code>DYNAMIC</code> storage type.</p>"
       }
     },
     "UploadId": {
@@ -3907,6 +3959,24 @@
     "UploadReadSetPartResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "UpstreamRepositoryPrefix": {
+      "base": null,
+      "refs": {
+        "RegistryMapping$upstreamRepositoryPrefix": "<p>The repository prefix of the corresponding repository in the upstream registry.</p>"
+      }
+    },
+    "Uri": {
+      "base": null,
+      "refs": {
+        "CreateWorkflowRequest$containerRegistryMapUri": "<p>(Optional) URI of the S3 location for the registry mapping file.</p>",
+        "CreateWorkflowVersionRequest$containerRegistryMapUri": "<p>(Optional) URI of the S3 location for the registry mapping file.</p>",
+        "ImageDetails$image": "<p>The URI of the container image.</p>",
+        "ImageDetails$sourceImage": "<p>URI of the source registry. If the URI is from a third-party registry, Amazon Web Services HealthOmics transforms the URI to the corresponding ECR path, using the pull-through cache mapping rules.</p>",
+        "ImageMapping$sourceImage": "<p>Specifies the URI of the source image in the upstream registry.</p>",
+        "ImageMapping$destinationImage": "<p>Specifies the URI of the corresponding image in the private ECR registry.</p>",
+        "RegistryMapping$upstreamRegistryUrl": "<p>The URI of the upstream registry.</p>"
       }
     },
     "UserCustomDescription": {
@@ -4058,7 +4128,7 @@
       "base": null,
       "refs": {
         "CreateWorkflowRequest$definitionUri": "<p>The S3 URI of a definition for the workflow. The S3 bucket must be in the same region as the workflow.</p>",
-        "CreateWorkflowVersionRequest$definitionUri": "<p>The URI specifies the location of the workflow definition for this workflow version.</p>",
+        "CreateWorkflowVersionRequest$definitionUri": "<p>The S3 URI of a definition for this workflow version. The S3 bucket must be in the same region as this workflow version.</p>",
         "GetRunResponse$definition": "<p>The run's definition.</p>",
         "GetWorkflowResponse$definition": "<p>The workflow's definition.</p>",
         "GetWorkflowVersionResponse$definition": "<p>Definition of the workflow version.</p>"
@@ -4086,7 +4156,7 @@
       "base": null,
       "refs": {
         "CreateWorkflowRequest$engine": "<p>The workflow engine for the workflow. This is only required if you have workflow definition files from more than one engine in your zip file. Otherwise, the service can detect the engine automatically from your workflow definition.</p>",
-        "CreateWorkflowVersionRequest$engine": "<p>The workflow engine for this workflow version.</p>",
+        "CreateWorkflowVersionRequest$engine": "<p>The workflow engine for this workflow version. This is only required if you have workflow definition files from more than one engine in your zip file. Otherwise, the service can detect the engine automatically from your workflow definition.</p>",
         "GetWorkflowResponse$engine": "<p>The workflow's engine.</p>",
         "GetWorkflowVersionResponse$engine": "<p>The workflow engine for this workflow version.</p>"
       }
@@ -4108,20 +4178,20 @@
       "base": null,
       "refs": {
         "CreateWorkflowResponse$id": "<p>The workflow's ID.</p>",
-        "CreateWorkflowVersionRequest$workflowId": "<p>The ID of the workflow where you are creating the new version.</p>",
+        "CreateWorkflowVersionRequest$workflowId": "<p>The ID of the workflow where you are creating the new version. The <code>workflowId</code> is not the UUID.</p>",
         "CreateWorkflowVersionResponse$workflowId": "<p>The workflow's ID.</p>",
         "DeleteWorkflowRequest$id": "<p>The workflow's ID.</p>",
         "DeleteWorkflowVersionRequest$workflowId": "<p>The workflow's ID.</p>",
         "GetRunResponse$workflowId": "<p>The run's workflow ID.</p>",
         "GetWorkflowRequest$id": "<p>The workflow's ID.</p>",
         "GetWorkflowResponse$id": "<p>The workflow's ID.</p>",
-        "GetWorkflowVersionRequest$workflowId": "<p>The workflow's ID.</p>",
+        "GetWorkflowVersionRequest$workflowId": "<p>The workflow's ID. The <code>workflowId</code> is not the UUID.</p>",
         "GetWorkflowVersionResponse$workflowId": "<p>The workflow's ID.</p>",
-        "ListWorkflowVersionsRequest$workflowId": "<p>The workflow's ID.</p>",
+        "ListWorkflowVersionsRequest$workflowId": "<p>The workflow's ID. The <code>workflowId</code> is not the UUID.</p>",
         "RunListItem$workflowId": "<p>The run's workflow ID.</p>",
         "StartRunRequest$workflowId": "<p>The run's workflow ID. The <code>workflowId</code> is not the UUID.</p>",
         "UpdateWorkflowRequest$id": "<p>The workflow's ID.</p>",
-        "UpdateWorkflowVersionRequest$workflowId": "<p>The workflow's ID.</p>",
+        "UpdateWorkflowVersionRequest$workflowId": "<p>The workflow's ID. The <code>workflowId</code> is not the UUID.</p>",
         "WorkflowListItem$id": "<p>The workflow's ID.</p>",
         "WorkflowVersionListItem$workflowId": "<p>The workflow's ID.</p>"
       }
@@ -4149,7 +4219,7 @@
       "base": null,
       "refs": {
         "CreateWorkflowRequest$main": "<p>The path of the main definition file for the workflow. This parameter is not required if the ZIP archive contains only one workflow definition file, or if the main definition file is named “main”. An example path is: <code>workflow-definition/main-file.wdl</code>. </p>",
-        "CreateWorkflowVersionRequest$main": "<p>The path of the main definition file for this workflow version.</p>",
+        "CreateWorkflowVersionRequest$main": "<p>The path of the main definition file for this workflow version. This parameter is not required if the ZIP archive contains only one workflow definition file, or if the main definition file is named “main”. An example path is: <code>workflow-definition/main-file.wdl</code>. </p>",
         "GetWorkflowResponse$main": "<p>The path of the main definition file for the workflow.</p>",
         "GetWorkflowVersionResponse$main": "<p>The path of the main definition file for the workflow.</p>"
       }
@@ -4190,8 +4260,8 @@
       "refs": {
         "GetRunResponse$workflowOwnerId": "<p>The ID of the workflow owner.</p>",
         "GetWorkflowRequest$workflowOwnerId": "<p>The ID of the workflow owner.</p>",
-        "GetWorkflowVersionRequest$workflowOwnerId": "<p>Amazon Web Services Id of the owner of the workflow.</p>",
-        "ListWorkflowVersionsRequest$workflowOwnerId": "<p>Amazon Web Services Id of the owner of the workflow.</p>",
+        "GetWorkflowVersionRequest$workflowOwnerId": "<p>The 12-digit account ID of the workflow owner. The workflow owner ID can be retrieved using the <code>GetShare</code> API operation. If you are the workflow owner, you do not need to include this ID.</p>",
+        "ListWorkflowVersionsRequest$workflowOwnerId": "<p>The 12-digit account ID of the workflow owner. The workflow owner ID can be retrieved using the <code>GetShare</code> API operation. If you are the workflow owner, you do not need to include this ID.</p>",
         "StartRunRequest$workflowOwnerId": "<p>The 12-digit account ID of the workflow owner that is used for running a shared workflow. The workflow owner ID can be retrieved using the <code>GetShare</code> API operation. If you are the workflow owner, you do not need to include this ID.</p>"
       }
     },
@@ -4217,7 +4287,7 @@
       "base": null,
       "refs": {
         "CreateWorkflowRequest$parameterTemplate": "<p>A parameter template for the workflow. If this field is blank, Amazon Web Services HealthOmics will automatically parse the parameter template values from your workflow definition file. To override these service generated default values, provide a parameter template. To view an example of a parameter template, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/parameter-templates.html\">Parameter template files</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
-        "CreateWorkflowVersionRequest$parameterTemplate": "<p>The parameter template defines the input parameters for runs that use this workflow version.</p>",
+        "CreateWorkflowVersionRequest$parameterTemplate": "<p>A parameter template for this workflow version. If this field is blank, Amazon Web Services HealthOmics will automatically parse the parameter template values from your workflow definition file. To override these service generated default values, provide a parameter template. To view an example of a parameter template, see <a href=\"https://docs.aws.amazon.com/omics/latest/dev/parameter-templates.html\">Parameter template files</a> in the <i>Amazon Web Services HealthOmics User Guide</i>.</p>",
         "GetWorkflowResponse$parameterTemplate": "<p>The workflow's parameter template.</p>",
         "GetWorkflowVersionResponse$parameterTemplate": "<p>The parameter template for the workflow version.</p>"
       }
@@ -4226,7 +4296,7 @@
       "base": null,
       "refs": {
         "CreateWorkflowRequest$requestId": "<p>An idempotency token to ensure that duplicate workflows are not created when Amazon Web Services HealthOmics submits retry requests.</p>",
-        "CreateWorkflowVersionRequest$requestId": "<p>To ensure that requests don't run multiple times, specify a unique ID for each request.</p>"
+        "CreateWorkflowVersionRequest$requestId": "<p>An idempotency token to ensure that duplicate workflows are not created when Amazon Web Services HealthOmics submits retry requests.</p>"
       }
     },
     "WorkflowStatus": {

@@ -2378,6 +2378,13 @@
       "min":1,
       "pattern":"arn:aws(-[\\w]+)*:.+:.+:[0-9]{12}:.+"
     },
+    "ContainerRegistryMap":{
+      "type":"structure",
+      "members":{
+        "registryMappings":{"shape":"RegistryMappingsList"},
+        "imageMappings":{"shape":"ImageMappingsList"}
+      }
+    },
     "CreateAnnotationStoreRequest":{
       "type":"structure",
       "required":["storeFormat"],
@@ -2710,6 +2717,8 @@
         },
         "accelerators":{"shape":"Accelerators"},
         "storageType":{"shape":"StorageType"},
+        "containerRegistryMap":{"shape":"ContainerRegistryMap"},
+        "containerRegistryMapUri":{"shape":"Uri"},
         "readmeMarkdown":{"shape":"ReadmeMarkdown"},
         "parameterTemplatePath":{"shape":"ParameterTemplatePath"},
         "readmePath":{"shape":"ReadmePath"},
@@ -2763,6 +2772,8 @@
         "storageCapacity":{"shape":"CreateWorkflowVersionRequestStorageCapacityInteger"},
         "tags":{"shape":"TagMap"},
         "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"},
+        "containerRegistryMap":{"shape":"ContainerRegistryMap"},
+        "containerRegistryMapUri":{"shape":"Uri"},
         "readmeMarkdown":{"shape":"ReadmeMarkdown"},
         "parameterTemplatePath":{"shape":"ParameterTemplatePath"},
         "readmePath":{"shape":"ReadmePath"},
@@ -3085,6 +3096,12 @@
         "SHA256up",
         "SHA512up"
       ]
+    },
+    "EcrRepositoryPrefix":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "Encoding":{
       "type":"string",
@@ -3948,7 +3965,8 @@
         "logStream":{"shape":"TaskLogStream"},
         "gpus":{"shape":"GetRunTaskResponseGpusInteger"},
         "instanceType":{"shape":"TaskInstanceType"},
-        "failureReason":{"shape":"TaskFailureReason"}
+        "failureReason":{"shape":"TaskFailureReason"},
+        "imageDetails":{"shape":"ImageDetails"}
       }
     },
     "GetRunTaskResponseCpusInteger":{
@@ -4170,6 +4188,7 @@
         "accelerators":{"shape":"Accelerators"},
         "storageType":{"shape":"StorageType"},
         "uuid":{"shape":"WorkflowUuid"},
+        "containerRegistryMap":{"shape":"ContainerRegistryMap"},
         "readme":{"shape":"ReadmeS3PresignedUrl"},
         "definitionRepositoryDetails":{"shape":"DefinitionRepositoryDetails"},
         "readmePath":{"shape":"ReadmePath"}
@@ -4238,6 +4257,7 @@
         "tags":{"shape":"TagMap"},
         "uuid":{"shape":"WorkflowUuid"},
         "workflowBucketOwnerId":{"shape":"WorkflowBucketOwnerId"},
+        "containerRegistryMap":{"shape":"ContainerRegistryMap"},
         "readme":{"shape":"ReadmeS3PresignedUrl"},
         "definitionRepositoryDetails":{"shape":"DefinitionRepositoryDetails"},
         "readmePath":{"shape":"ReadmePath"}
@@ -4250,6 +4270,25 @@
       "min":0
     },
     "Header":{"type":"boolean"},
+    "ImageDetails":{
+      "type":"structure",
+      "members":{
+        "image":{"shape":"Uri"},
+        "imageDigest":{"shape":"TaskImageDigest"},
+        "sourceImage":{"shape":"Uri"}
+      }
+    },
+    "ImageMapping":{
+      "type":"structure",
+      "members":{
+        "sourceImage":{"shape":"Uri"},
+        "destinationImage":{"shape":"Uri"}
+      }
+    },
+    "ImageMappingsList":{
+      "type":"list",
+      "member":{"shape":"ImageMapping"}
+    },
     "ImportJobId":{
       "type":"string",
       "max":36,
@@ -5843,6 +5882,19 @@
       "type":"blob",
       "streaming":true
     },
+    "RegistryMapping":{
+      "type":"structure",
+      "members":{
+        "upstreamRegistryUrl":{"shape":"Uri"},
+        "ecrRepositoryPrefix":{"shape":"EcrRepositoryPrefix"},
+        "upstreamRepositoryPrefix":{"shape":"UpstreamRepositoryPrefix"},
+        "ecrAccountId":{"shape":"AwsAccountId"}
+      }
+    },
+    "RegistryMappingsList":{
+      "type":"list",
+      "member":{"shape":"RegistryMapping"}
+    },
     "RequestTimeoutException":{
       "type":"structure",
       "required":["message"],
@@ -6681,6 +6733,7 @@
       "type":"structure",
       "required":[
         "roleArn",
+        "outputUri",
         "requestId"
       ],
       "members":{
@@ -6893,6 +6946,12 @@
       "max":18,
       "min":1,
       "pattern":"[0-9]+"
+    },
+    "TaskImageDigest":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"sha[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "TaskInstanceType":{
       "type":"string",
@@ -7363,6 +7422,18 @@
       "members":{
         "checksum":{"shape":"String"}
       }
+    },
+    "UpstreamRepositoryPrefix":{
+      "type":"string",
+      "max":30,
+      "min":2,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
+    },
+    "Uri":{
+      "type":"string",
+      "max":750,
+      "min":1,
+      "pattern":"[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+"
     },
     "UserCustomDescription":{
       "type":"string",
