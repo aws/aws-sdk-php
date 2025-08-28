@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.7 - 2025-08-28
 
 * `Aws\Credentials` - Updates `CredentialProvider::memoize()` to refresh credentials that within 1 minute of expiration.
 * `Aws\ManagedBlockchainQuery` - Remove incorrect endpoint tests
