@@ -196,7 +196,7 @@ class TransferTest extends TestCase
         ));
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $filename = $dir . '/large.txt';
         $f = fopen($filename, 'w+');
@@ -216,7 +216,7 @@ class TransferTest extends TestCase
         rewind($res);
         $output = stream_get_contents($res);
         $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
     }
 
     public function testDoesMultipartForLargeFilesWithFileInfoAsSource()
@@ -230,7 +230,7 @@ class TransferTest extends TestCase
         ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $filename = new SplFileInfo($dir . '/large.txt');
         $f = fopen($filename, 'w+');
@@ -250,7 +250,7 @@ class TransferTest extends TestCase
         rewind($res);
         $output = stream_get_contents($res);
         $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
     }
 
     public function testDownloadsObjects()
@@ -269,7 +269,7 @@ class TransferTest extends TestCase
         ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $res = fopen('php://temp', 'r+');
         $t = new Transfer($s3, 's3://foo/bar', $dir, ['debug' => $res]);
@@ -277,7 +277,7 @@ class TransferTest extends TestCase
         rewind($res);
         $output = stream_get_contents($res);
         $this->assertStringContainsString('s3://foo/bar/c//d -> ', $output);
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
     }
 
     public function testDebugFalse()
@@ -291,7 +291,7 @@ class TransferTest extends TestCase
         ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $filename = $dir . '/large.txt';
         $f = fopen($filename, 'w+');
@@ -334,7 +334,7 @@ class TransferTest extends TestCase
         ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $res = fopen('php://temp', 'r+');
         $t = new Transfer($s3, 's3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/test_key', $dir, ['debug' => $res]);
@@ -344,7 +344,7 @@ class TransferTest extends TestCase
         $this->assertStringContainsString('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/../bar/a/b -> ', $output);
         $this->assertStringContainsString('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/c//d -> ', $output);
         $this->assertStringContainsString('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/../bar//c/../a/b/.. -> ', $output);
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
     }
 
     /**
@@ -367,7 +367,7 @@ class TransferTest extends TestCase
         ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $res = fopen('php://temp', 'r+');
         $t = new Transfer($s3, 's3://foo/bar/', $dir, ['debug' => $res]);
@@ -375,7 +375,7 @@ class TransferTest extends TestCase
         rewind($res);
         $output = stream_get_contents($res);
         $this->assertContains('s3://foo/bar/' . $key . ' -> ', $output);
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
     }
 
     public function providedPathsOutsideTarget() {
@@ -479,7 +479,7 @@ class TransferTest extends TestCase
         ));
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $filename = $dir . '/foo.txt';
         $f = fopen($filename, 'w+');
@@ -496,7 +496,7 @@ class TransferTest extends TestCase
         rewind($res);
         $output = stream_get_contents($res);
         $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/foo.txt", $output);
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
     }
 
     /**
@@ -533,7 +533,7 @@ class TransferTest extends TestCase
         ));
 
         $dir = sys_get_temp_dir() . '/unittest';
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
         mkdir($dir);
         $filename = $dir . '/large.txt';
         $f = fopen($filename, 'w+');
@@ -559,7 +559,7 @@ class TransferTest extends TestCase
         rewind($res);
         $output = stream_get_contents($res);
         $this->assertStringContainsString("Transferring $filename -> s3://foo/bar/large.txt (UploadPart) : Part=1", $output);
-        `rm -rf $dir`;
+        shell_exec("rm -rf {$dir}");
     }
 
     public function flexibleChecksumsProvider() {

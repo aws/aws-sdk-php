@@ -146,7 +146,6 @@ class SignerTest extends TestCase
     public function testCreatesCannedPolicies($resource, $ts)
     {
         $m = new \ReflectionMethod(Signer::class, 'createCannedPolicy');
-        $m->setAccessible(true);
         $result = $m->invoke($this->instance, $resource, $ts);
         $this->assertSame(
             '{"Statement":[{"Resource":"' . $resource

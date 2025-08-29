@@ -661,7 +661,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             EndpointDiscoveryMiddleware::class,
             'discoveryCooldown'
         );
-        $reflection->setAccessible(true);
         $reflection->setValue(null, 0);
         $callOrder = [];
         $handler = function (
