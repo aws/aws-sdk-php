@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-02-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cassandra",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Keyspaces",
     "serviceId":"Keyspaces",
     "signatureVersion":"v4",
@@ -46,6 +48,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "CreateType":{
+      "name":"CreateType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateTypeRequest"},
+      "output":{"shape":"CreateTypeResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteKeyspace":{
       "name":"DeleteKeyspace",
       "http":{
@@ -71,6 +90,23 @@
       },
       "input":{"shape":"DeleteTableRequest"},
       "output":{"shape":"DeleteTableResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DeleteType":{
+      "name":"DeleteType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteTypeRequest"},
+      "output":{"shape":"DeleteTypeResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -128,6 +164,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetType":{
+      "name":"GetType",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetTypeRequest"},
+      "output":{"shape":"GetTypeResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListKeyspaces":{
       "name":"ListKeyspaces",
       "http":{
@@ -176,6 +228,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListTypes":{
+      "name":"ListTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTypesRequest"},
+      "output":{"shape":"ListTypesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "RestoreTable":{
       "name":"RestoreTable",
       "http":{
@@ -205,6 +273,7 @@
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -217,6 +286,23 @@
       },
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateKeyspace":{
+      "name":"UpdateKeyspace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateKeyspaceRequest"},
+      "output":{"shape":"UpdateKeyspaceResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"},
@@ -304,6 +390,40 @@
       "type":"long",
       "box":true,
       "min":1
+    },
+    "CdcPropagateTags":{
+      "type":"string",
+      "enum":[
+        "TABLE",
+        "NONE"
+      ]
+    },
+    "CdcSpecification":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"CdcStatus"},
+        "viewType":{"shape":"ViewType"},
+        "tags":{"shape":"TagList"},
+        "propagateTags":{"shape":"CdcPropagateTags"}
+      }
+    },
+    "CdcSpecificationSummary":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"CdcStatus"},
+        "viewType":{"shape":"ViewType"}
+      }
+    },
+    "CdcStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "ENABLING",
+        "DISABLED",
+        "DISABLING"
+      ]
     },
     "ClientSideTimestamps":{
       "type":"structure",
@@ -397,7 +517,8 @@
         "tags":{"shape":"TagList"},
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
         "autoScalingSpecification":{"shape":"AutoScalingSpecification"},
-        "replicaSpecifications":{"shape":"ReplicaSpecificationList"}
+        "replicaSpecifications":{"shape":"ReplicaSpecificationList"},
+        "cdcSpecification":{"shape":"CdcSpecification"}
       }
     },
     "CreateTableResponse":{
@@ -405,6 +526,30 @@
       "required":["resourceArn"],
       "members":{
         "resourceArn":{"shape":"ARN"}
+      }
+    },
+    "CreateTypeRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName",
+        "fieldDefinitions"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"},
+        "fieldDefinitions":{"shape":"FieldList"}
+      }
+    },
+    "CreateTypeResponse":{
+      "type":"structure",
+      "required":[
+        "keyspaceArn",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceArn":{"shape":"ARN"},
+        "typeName":{"shape":"TypeName"}
       }
     },
     "DefaultTimeToLive":{
@@ -441,6 +586,29 @@
       "members":{
       }
     },
+    "DeleteTypeRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"}
+      }
+    },
+    "DeleteTypeResponse":{
+      "type":"structure",
+      "required":[
+        "keyspaceArn",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceArn":{"shape":"ARN"},
+        "typeName":{"shape":"TypeName"}
+      }
+    },
+    "Depth":{"type":"integer"},
     "DoubleObject":{"type":"double"},
     "EncryptionSpecification":{
       "type":"structure",
@@ -456,6 +624,27 @@
         "CUSTOMER_MANAGED_KMS_KEY",
         "AWS_OWNED_KMS_KEY"
       ]
+    },
+    "FieldDefinition":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"FieldDefinitionNameString"},
+        "type":{"shape":"GenericString"}
+      }
+    },
+    "FieldDefinitionNameString":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "FieldList":{
+      "type":"list",
+      "member":{"shape":"FieldDefinition"},
+      "min":1
     },
     "GenericString":{"type":"string"},
     "GetKeyspaceRequest":{
@@ -476,7 +665,8 @@
         "keyspaceName":{"shape":"KeyspaceName"},
         "resourceArn":{"shape":"ARN"},
         "replicationStrategy":{"shape":"rs"},
-        "replicationRegions":{"shape":"RegionList"}
+        "replicationRegions":{"shape":"RegionList"},
+        "replicationGroupStatuses":{"shape":"ReplicationGroupStatusList"}
       }
     },
     "GetTableAutoScalingSettingsRequest":{
@@ -537,7 +727,39 @@
         "defaultTimeToLive":{"shape":"DefaultTimeToLive"},
         "comment":{"shape":"Comment"},
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
-        "replicaSpecifications":{"shape":"ReplicaSpecificationSummaryList"}
+        "replicaSpecifications":{"shape":"ReplicaSpecificationSummaryList"},
+        "latestStreamArn":{"shape":"StreamArn"},
+        "cdcSpecification":{"shape":"CdcSpecificationSummary"}
+      }
+    },
+    "GetTypeRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"}
+      }
+    },
+    "GetTypeResponse":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "typeName",
+        "keyspaceArn"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "typeName":{"shape":"TypeName"},
+        "fieldDefinitions":{"shape":"FieldList"},
+        "lastModifiedTimestamp":{"shape":"Timestamp"},
+        "status":{"shape":"TypeStatus"},
+        "directReferringTables":{"shape":"TableNameList"},
+        "directParentTypes":{"shape":"TypeNameList"},
+        "maxNestingDepth":{"shape":"Depth"},
+        "keyspaceArn":{"shape":"ARN"}
       }
     },
     "IntegerObject":{"type":"integer"},
@@ -554,6 +776,15 @@
       "max":48,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{0,47}"
+    },
+    "KeyspaceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "UPDATING",
+        "DELETING"
+      ]
     },
     "KeyspaceSummary":{
       "type":"structure",
@@ -620,6 +851,23 @@
         "tags":{"shape":"TagList"}
       }
     },
+    "ListTypesRequest":{
+      "type":"structure",
+      "required":["keyspaceName"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"},
+        "keyspaceName":{"shape":"KeyspaceName"}
+      }
+    },
+    "ListTypesResponse":{
+      "type":"structure",
+      "required":["types"],
+      "members":{
+        "nextToken":{"shape":"NextToken"},
+        "types":{"shape":"TypeNameList"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -668,7 +916,6 @@
     "RegionList":{
       "type":"list",
       "member":{"shape":"region"},
-      "max":6,
       "min":2
     },
     "ReplicaAutoScalingSpecification":{
@@ -709,6 +956,23 @@
       "type":"list",
       "member":{"shape":"ReplicaSpecificationSummary"},
       "min":0
+    },
+    "ReplicationGroupStatus":{
+      "type":"structure",
+      "required":[
+        "region",
+        "keyspaceStatus"
+      ],
+      "members":{
+        "region":{"shape":"region"},
+        "keyspaceStatus":{"shape":"KeyspaceStatus"},
+        "tablesReplicationProgress":{"shape":"TablesReplicationProgress"}
+      }
+    },
+    "ReplicationGroupStatusList":{
+      "type":"list",
+      "member":{"shape":"ReplicationGroupStatus"},
+      "min":2
     },
     "ReplicationSpecification":{
       "type":"structure",
@@ -793,12 +1057,22 @@
       "type":"list",
       "member":{"shape":"StaticColumn"}
     },
+    "StreamArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):cassandra:.+.*"
+    },
     "String":{"type":"string"},
     "TableName":{
       "type":"string",
       "max":48,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{0,47}"
+    },
+    "TableNameList":{
+      "type":"list",
+      "member":{"shape":"TableName"}
     },
     "TableStatus":{
       "type":"string",
@@ -828,6 +1102,12 @@
     "TableSummaryList":{
       "type":"list",
       "member":{"shape":"TableSummary"}
+    },
+    "TablesReplicationProgress":{
+      "type":"string",
+      "max":7,
+      "min":2,
+      "pattern":"[0-9]{1,3}(?:[.][0-9]{1,2})?%"
     },
     "Tag":{
       "type":"structure",
@@ -901,6 +1181,24 @@
       "enum":["ENABLED"]
     },
     "Timestamp":{"type":"timestamp"},
+    "TypeName":{
+      "type":"string",
+      "max":48,
+      "min":1
+    },
+    "TypeNameList":{
+      "type":"list",
+      "member":{"shape":"TypeName"}
+    },
+    "TypeStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "DELETING",
+        "RESTORING"
+      ]
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -915,6 +1213,25 @@
     "UntagResourceResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateKeyspaceRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "replicationSpecification"
+      ],
+      "members":{
+        "keyspaceName":{"shape":"KeyspaceName"},
+        "replicationSpecification":{"shape":"ReplicationSpecification"},
+        "clientSideTimestamps":{"shape":"ClientSideTimestamps"}
+      }
+    },
+    "UpdateKeyspaceResponse":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{"shape":"ARN"}
       }
     },
     "UpdateTableRequest":{
@@ -934,7 +1251,8 @@
         "defaultTimeToLive":{"shape":"DefaultTimeToLive"},
         "clientSideTimestamps":{"shape":"ClientSideTimestamps"},
         "autoScalingSpecification":{"shape":"AutoScalingSpecification"},
-        "replicaSpecifications":{"shape":"ReplicaSpecificationList"}
+        "replicaSpecifications":{"shape":"ReplicaSpecificationList"},
+        "cdcSpecification":{"shape":"CdcSpecification"}
       }
     },
     "UpdateTableResponse":{
@@ -950,6 +1268,15 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "ViewType":{
+      "type":"string",
+      "enum":[
+        "NEW_IMAGE",
+        "OLD_IMAGE",
+        "KEYS_ONLY",
+        "NEW_AND_OLD_IMAGES"
+      ]
     },
     "kmsKeyARN":{
       "type":"string",

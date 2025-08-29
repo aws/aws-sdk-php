@@ -192,6 +192,9 @@ class DecodingEventStreamIterator implements Iterator
         return $this->key;
     }
 
+    /**
+     * @return void
+     */
     #[\ReturnTypeWillChange]
     public function next()
     {
@@ -202,6 +205,9 @@ class DecodingEventStreamIterator implements Iterator
         }
     }
 
+    /**
+     * @return void
+     */
     #[\ReturnTypeWillChange]
     public function rewind()
     {
@@ -294,10 +300,6 @@ class DecodingEventStreamIterator implements Iterator
 
     private function unpackInt64($bytes)
     {
-        if (version_compare(PHP_VERSION, '5.6.3', '<')) {
-            $d = unpack('N2', $bytes);
-            return [1 => $d[1] << 32 | $d[2]];
-        }
         return unpack('J', $bytes);
     }
 

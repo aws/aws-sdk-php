@@ -6,6 +6,7 @@
     "GetReport": "<p>Get the content for a single report.</p>",
     "GetReportMetadata": "<p>Get the metadata for a single report.</p>",
     "GetTermForReport": "<p>Get the Term content associated with a single report.</p>",
+    "ListCustomerAgreements": "<p>List active customer-agreements applicable to calling identity.</p>",
     "ListReports": "<p>List available reports.</p>",
     "PutAccountSettings": "<p>Put the account settings for Artifact.</p>"
   },
@@ -29,9 +30,46 @@
         "PutAccountSettingsResponse$accountSettings": null
       }
     },
+    "AgreementTerms": {
+      "base": null,
+      "refs": {
+        "CustomerAgreementSummary$acceptanceTerms": "<p>Terms required to accept the agreement resource.</p>",
+        "CustomerAgreementSummary$terminateTerms": "<p>Terms required to terminate the customer-agreement resource.</p>"
+      }
+    },
+    "AgreementType": {
+      "base": null,
+      "refs": {
+        "CustomerAgreementSummary$type": "<p>Type of the customer-agreement resource.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>Request to create/modify content would result in a conflict.</p>",
       "refs": {
+      }
+    },
+    "CustomerAgreementIdAttribute": {
+      "base": null,
+      "refs": {
+        "CustomerAgreementSummary$id": "<p>Identifier of the customer-agreement resource.</p>"
+      }
+    },
+    "CustomerAgreementList": {
+      "base": null,
+      "refs": {
+        "ListCustomerAgreementsResponse$customerAgreements": "<p>List of customer-agreement resources.</p>"
+      }
+    },
+    "CustomerAgreementState": {
+      "base": null,
+      "refs": {
+        "CustomerAgreementSummary$state": "<p>State of the resource.</p>"
+      }
+    },
+    "CustomerAgreementSummary": {
+      "base": "<p>Summary for customer-agreement resource.</p>",
+      "refs": {
+        "CustomerAgreementList$member": null
       }
     },
     "GetAccountSettingsRequest": {
@@ -98,6 +136,16 @@
       "refs": {
       }
     },
+    "ListCustomerAgreementsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCustomerAgreementsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListReportsRequest": {
       "base": null,
       "refs": {
@@ -111,6 +159,12 @@
     "LongStringAttribute": {
       "base": null,
       "refs": {
+        "AgreementTerms$member": null,
+        "CustomerAgreementSummary$name": "<p>Name of the customer-agreement resource.</p>",
+        "CustomerAgreementSummary$arn": "<p>ARN of the customer-agreement resource.</p>",
+        "CustomerAgreementSummary$agreementArn": "<p>ARN of the agreement resource the customer-agreement resource represents.</p>",
+        "CustomerAgreementSummary$organizationArn": "<p>ARN of the organization that owns the resource.</p>",
+        "CustomerAgreementSummary$description": "<p>Description of the resource.</p>",
         "ReportDetail$description": "<p>Description for the report resource.</p>",
         "ReportDetail$arn": "<p>ARN for the report resource.</p>",
         "ReportDetail$termArn": "<p>Unique resource ARN for term resource.</p>",
@@ -121,12 +175,15 @@
     "MaxResultsAttribute": {
       "base": null,
       "refs": {
+        "ListCustomerAgreementsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>",
         "ListReportsRequest$maxResults": "<p>Maximum number of resources to return in the paginated response.</p>"
       }
     },
     "NextTokenAttribute": {
       "base": null,
       "refs": {
+        "ListCustomerAgreementsRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
+        "ListCustomerAgreementsResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListReportsRequest$nextToken": "<p>Pagination token to request the next page of resources.</p>",
         "ListReportsResponse$nextToken": "<p>Pagination token to request the next page of resources.</p>"
       }
@@ -202,6 +259,7 @@
     "ShortStringAttribute": {
       "base": null,
       "refs": {
+        "CustomerAgreementSummary$awsAccountId": "<p>AWS account Id that owns the resource.</p>",
         "GetReportRequest$termToken": "<p>Unique download token provided by GetTermForReport API.</p>",
         "ReportDetail$name": "<p>Name for the report resource.</p>",
         "ReportDetail$series": "<p>Series for the report resource.</p>",
@@ -255,6 +313,8 @@
     "TimestampAttribute": {
       "base": null,
       "refs": {
+        "CustomerAgreementSummary$effectiveStart": "<p>Timestamp indicating when the agreement became effective.</p>",
+        "CustomerAgreementSummary$effectiveEnd": "<p>Timestamp indicating when the agreement was terminated.</p>",
         "ReportDetail$periodStart": "<p>Timestamp indicating the report resource effective start.</p>",
         "ReportDetail$periodEnd": "<p>Timestamp indicating the report resource effective end.</p>",
         "ReportDetail$createdAt": "<p>Timestamp indicating when the report resource was created.</p>",

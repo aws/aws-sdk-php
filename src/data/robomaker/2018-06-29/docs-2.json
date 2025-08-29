@@ -2,63 +2,63 @@
   "version": "2.0",
   "service": "<p>This section provides documentation for the AWS RoboMaker API operations.</p>",
   "operations": {
-    "BatchDeleteWorlds": "<p>Deletes one or more worlds in a batch operation.</p>",
-    "BatchDescribeSimulationJob": "<p>Describes one or more simulation jobs.</p>",
-    "CancelDeploymentJob": "<p>Cancels the specified deployment job.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "CancelSimulationJob": "<p>Cancels the specified simulation job.</p>",
-    "CancelSimulationJobBatch": "<p>Cancels a simulation job batch. When you cancel a simulation job batch, you are also cancelling all of the active simulation jobs created as part of the batch. </p>",
-    "CancelWorldExportJob": "<p>Cancels the specified export job.</p>",
-    "CancelWorldGenerationJob": "<p>Cancels the specified world generator job.</p>",
-    "CreateDeploymentJob": "<p>Deploys a specific version of a robot application to robots in a fleet.</p> <important> <p>This API is no longer supported and will throw an error if used.</p> </important> <p>The robot application must have a numbered <code>applicationVersion</code> for consistency reasons. To create a new version, use <code>CreateRobotApplicationVersion</code> or see <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/create-robot-application-version.html\">Creating a Robot Application Version</a>. </p> <note> <p>After 90 days, deployment jobs expire and will be deleted. They will no longer be accessible. </p> </note>",
-    "CreateFleet": "<p>Creates a fleet, a logical group of robots running the same robot application.</p> <important> <p>This API is no longer supported and will throw an error if used.</p> </important>",
-    "CreateRobot": "<p>Creates a robot.</p> <important> <p>This API is no longer supported and will throw an error if used.</p> </important>",
-    "CreateRobotApplication": "<p>Creates a robot application. </p>",
-    "CreateRobotApplicationVersion": "<p>Creates a version of a robot application.</p>",
-    "CreateSimulationApplication": "<p>Creates a simulation application.</p>",
-    "CreateSimulationApplicationVersion": "<p>Creates a simulation application with a specific revision id.</p>",
-    "CreateSimulationJob": "<p>Creates a simulation job.</p> <note> <p>After 90 days, simulation jobs expire and will be deleted. They will no longer be accessible. </p> </note>",
-    "CreateWorldExportJob": "<p>Creates a world export job.</p>",
-    "CreateWorldGenerationJob": "<p>Creates worlds using the specified template.</p>",
-    "CreateWorldTemplate": "<p>Creates a world template.</p>",
-    "DeleteFleet": "<p>Deletes a fleet.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "DeleteRobot": "<p>Deletes a robot.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "DeleteRobotApplication": "<p>Deletes a robot application.</p>",
-    "DeleteSimulationApplication": "<p>Deletes a simulation application.</p>",
-    "DeleteWorldTemplate": "<p>Deletes a world template.</p>",
-    "DeregisterRobot": "<p>Deregisters a robot.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "DescribeDeploymentJob": "<p>Describes a deployment job.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "DescribeFleet": "<p>Describes a fleet.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "DescribeRobot": "<p>Describes a robot.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "DescribeRobotApplication": "<p>Describes a robot application.</p>",
-    "DescribeSimulationApplication": "<p>Describes a simulation application.</p>",
-    "DescribeSimulationJob": "<p>Describes a simulation job.</p>",
-    "DescribeSimulationJobBatch": "<p>Describes a simulation job batch.</p>",
-    "DescribeWorld": "<p>Describes a world.</p>",
-    "DescribeWorldExportJob": "<p>Describes a world export job.</p>",
-    "DescribeWorldGenerationJob": "<p>Describes a world generation job.</p>",
-    "DescribeWorldTemplate": "<p>Describes a world template.</p>",
-    "GetWorldTemplateBody": "<p>Gets the world template body.</p>",
-    "ListDeploymentJobs": "<p>Returns a list of deployment jobs for a fleet. You can optionally provide filters to retrieve specific deployment jobs.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "ListFleets": "<p>Returns a list of fleets. You can optionally provide filters to retrieve specific fleets.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "ListRobotApplications": "<p>Returns a list of robot application. You can optionally provide filters to retrieve specific robot applications.</p>",
-    "ListRobots": "<p>Returns a list of robots. You can optionally provide filters to retrieve specific robots.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "ListSimulationApplications": "<p>Returns a list of simulation applications. You can optionally provide filters to retrieve specific simulation applications. </p>",
-    "ListSimulationJobBatches": "<p>Returns a list simulation job batches. You can optionally provide filters to retrieve specific simulation batch jobs. </p>",
-    "ListSimulationJobs": "<p>Returns a list of simulation jobs. You can optionally provide filters to retrieve specific simulation jobs. </p>",
-    "ListTagsForResource": "<p>Lists all tags on a AWS RoboMaker resource.</p>",
-    "ListWorldExportJobs": "<p>Lists world export jobs.</p>",
-    "ListWorldGenerationJobs": "<p>Lists world generator jobs.</p>",
-    "ListWorldTemplates": "<p>Lists world templates.</p>",
-    "ListWorlds": "<p>Lists worlds.</p>",
-    "RegisterRobot": "<p>Registers a robot with a fleet.</p> <important> <p>This API is no longer supported and will throw an error if used.</p> </important>",
-    "RestartSimulationJob": "<p>Restarts a running simulation job.</p>",
-    "StartSimulationJobBatch": "<p>Starts a new simulation job batch. The batch is defined using one or more <code>SimulationJobRequest</code> objects. </p>",
-    "SyncDeploymentJob": "<p>Syncrhonizes robots in a fleet to the latest deployment. This is helpful if robots were added after a deployment.</p> <important> <p>This API will no longer be supported as of May 2, 2022. Use it to remove resources that were created for Deployment Service.</p> </important>",
-    "TagResource": "<p>Adds or edits tags for a AWS RoboMaker resource.</p> <p>Each tag consists of a tag key and a tag value. Tag keys and tag values are both required, but tag values can be empty strings. </p> <p>For information about the rules that apply to tag keys and tag values, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/allocation-tag-restrictions.html\">User-Defined Tag Restrictions</a> in the <i>AWS Billing and Cost Management User Guide</i>. </p>",
-    "UntagResource": "<p>Removes the specified tags from the specified AWS RoboMaker resource.</p> <p>To remove a tag, specify the tag key. To change the tag value of an existing tag key, use <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/API_TagResource.html\"> <code>TagResource</code> </a>. </p>",
-    "UpdateRobotApplication": "<p>Updates a robot application.</p>",
-    "UpdateSimulationApplication": "<p>Updates a simulation application.</p>",
-    "UpdateWorldTemplate": "<p>Updates a world template.</p>"
+    "BatchDeleteWorlds": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Deletes one or more worlds in a batch operation.</p>",
+    "BatchDescribeSimulationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes one or more simulation jobs.</p>",
+    "CancelDeploymentJob": "<important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p>Cancels the specified deployment job.</p>",
+    "CancelSimulationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Cancels the specified simulation job.</p>",
+    "CancelSimulationJobBatch": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Cancels a simulation job batch. When you cancel a simulation job batch, you are also cancelling all of the active simulation jobs created as part of the batch. </p>",
+    "CancelWorldExportJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Cancels the specified export job.</p>",
+    "CancelWorldGenerationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Cancels the specified world generator job.</p>",
+    "CreateDeploymentJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported and will throw an error if used. For more information, see the January 31, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-january2022\">Support policy</a> page.</p> </important> <p>Deploys a specific version of a robot application to robots in a fleet.</p> <p>The robot application must have a numbered <code>applicationVersion</code> for consistency reasons. To create a new version, use <code>CreateRobotApplicationVersion</code> or see <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/create-robot-application-version.html\">Creating a Robot Application Version</a>. </p> <note> <p>After 90 days, deployment jobs expire and will be deleted. They will no longer be accessible. </p> </note>",
+    "CreateFleet": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported and will throw an error if used. For more information, see the January 31, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-january2022\">Support policy</a> page.</p> </important> <p>Creates a fleet, a logical group of robots running the same robot application.</p>",
+    "CreateRobot": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported and will throw an error if used. For more information, see the January 31, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-january2022\">Support policy</a> page.</p> </important> <p>Creates a robot.</p>",
+    "CreateRobotApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates a robot application. </p>",
+    "CreateRobotApplicationVersion": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates a version of a robot application.</p>",
+    "CreateSimulationApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates a simulation application.</p>",
+    "CreateSimulationApplicationVersion": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates a simulation application with a specific revision id.</p>",
+    "CreateSimulationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates a simulation job.</p> <note> <p>After 90 days, simulation jobs expire and will be deleted. They will no longer be accessible. </p> </note>",
+    "CreateWorldExportJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates a world export job.</p>",
+    "CreateWorldGenerationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates worlds using the specified template.</p>",
+    "CreateWorldTemplate": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Creates a world template.</p>",
+    "DeleteFleet": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p>Deletes a fleet.</p>",
+    "DeleteRobot": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p>Deletes a robot.</p>",
+    "DeleteRobotApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Deletes a robot application.</p>",
+    "DeleteSimulationApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Deletes a simulation application.</p>",
+    "DeleteWorldTemplate": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Deletes a world template.</p>",
+    "DeregisterRobot": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p>Deregisters a robot.</p>",
+    "DescribeDeploymentJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p>Describes a deployment job.</p>",
+    "DescribeFleet": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p>Describes a fleet.</p>",
+    "DescribeRobot": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p>Describes a robot.</p>",
+    "DescribeRobotApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a robot application.</p>",
+    "DescribeSimulationApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a simulation application.</p>",
+    "DescribeSimulationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a simulation job.</p>",
+    "DescribeSimulationJobBatch": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a simulation job batch.</p>",
+    "DescribeWorld": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a world.</p>",
+    "DescribeWorldExportJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a world export job.</p>",
+    "DescribeWorldGenerationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a world generation job.</p>",
+    "DescribeWorldTemplate": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Describes a world template.</p>",
+    "GetWorldTemplateBody": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Gets the world template body.</p>",
+    "ListDeploymentJobs": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p> Returns a list of deployment jobs for a fleet. You can optionally provide filters to retrieve specific deployment jobs. </p>",
+    "ListFleets": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p> Returns a list of fleets. You can optionally provide filters to retrieve specific fleets. </p>",
+    "ListRobotApplications": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Returns a list of robot application. You can optionally provide filters to retrieve specific robot applications.</p>",
+    "ListRobots": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p> Returns a list of robots. You can optionally provide filters to retrieve specific robots. </p>",
+    "ListSimulationApplications": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Returns a list of simulation applications. You can optionally provide filters to retrieve specific simulation applications. </p>",
+    "ListSimulationJobBatches": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Returns a list simulation job batches. You can optionally provide filters to retrieve specific simulation batch jobs. </p>",
+    "ListSimulationJobs": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Returns a list of simulation jobs. You can optionally provide filters to retrieve specific simulation jobs. </p>",
+    "ListTagsForResource": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Lists all tags on a AWS RoboMaker resource.</p>",
+    "ListWorldExportJobs": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Lists world export jobs.</p>",
+    "ListWorldGenerationJobs": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Lists world generator jobs.</p>",
+    "ListWorldTemplates": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Lists world templates.</p>",
+    "ListWorlds": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Lists worlds.</p>",
+    "RegisterRobot": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Registers a robot with a fleet.</p> <important> <p>This API is no longer supported and will throw an error if used. For more information, see the January 31, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-january2022\">Support policy</a> page.</p> </important>",
+    "RestartSimulationJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Restarts a running simulation job.</p>",
+    "StartSimulationJobBatch": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Starts a new simulation job batch. The batch is defined using one or more <code>SimulationJobRequest</code> objects. </p>",
+    "SyncDeploymentJob": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <important> <p>This API is no longer supported. For more information, see the May 2, 2022 update in the <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/chapter-support-policy.html#software-support-policy-may2022\">Support policy</a> page.</p> </important> <p> Syncrhonizes robots in a fleet to the latest deployment. This is helpful if robots were added after a deployment. </p>",
+    "TagResource": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Adds or edits tags for a AWS RoboMaker resource.</p> <p>Each tag consists of a tag key and a tag value. Tag keys and tag values are both required, but tag values can be empty strings. </p> <p>For information about the rules that apply to tag keys and tag values, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/allocation-tag-restrictions.html\">User-Defined Tag Restrictions</a> in the <i>AWS Billing and Cost Management User Guide</i>. </p>",
+    "UntagResource": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Removes the specified tags from the specified AWS RoboMaker resource.</p> <p>To remove a tag, specify the tag key. To change the tag value of an existing tag key, use <a href=\"https://docs.aws.amazon.com/robomaker/latest/dg/API_TagResource.html\"> <code>TagResource</code> </a>. </p>",
+    "UpdateRobotApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Updates a robot application.</p>",
+    "UpdateSimulationApplication": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Updates a simulation application.</p>",
+    "UpdateWorldTemplate": "<important> <p>End of support notice: On September 10, 2025, Amazon Web Services will discontinue support for Amazon Web Services RoboMaker. After September 10, 2025, you will no longer be able to access the Amazon Web Services RoboMaker console or Amazon Web Services RoboMaker resources. For more information on transitioning to Batch to help run containerized simulations, visit <a href=\"https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/\">https://aws.amazon.com/blogs/hpc/run-simulations-using-multiple-containers-in-a-single-aws-batch-job/</a>. </p> </important> <p>Updates a world template.</p>"
   },
   "shapes": {
     "Architecture": {
@@ -197,23 +197,19 @@
     },
     "BatchDeleteWorldsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteWorldsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDescribeSimulationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDescribeSimulationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchPolicy": {
       "base": "<p>Information about the batch policy.</p>",
@@ -253,53 +249,43 @@
     },
     "CancelDeploymentJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelDeploymentJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelSimulationJobBatchRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelSimulationJobBatchResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelSimulationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelSimulationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelWorldExportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelWorldExportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelWorldGenerationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelWorldGenerationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientRequestToken": {
       "base": null,
@@ -364,83 +350,67 @@
     },
     "ConcurrentDeploymentException": {
       "base": "<p>The failure percentage threshold percentage was met.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeploymentJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeploymentJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRobotApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRobotApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRobotApplicationVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRobotApplicationVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRobotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRobotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSimulationApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSimulationApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSimulationApplicationVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSimulationApplicationVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSimulationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSimulationJobRequests": {
       "base": null,
@@ -452,38 +422,31 @@
     },
     "CreateSimulationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorldExportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorldExportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorldGenerationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorldGenerationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorldTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorldTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedAt": {
       "base": null,
@@ -563,53 +526,43 @@
     },
     "DeleteFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRobotApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRobotApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRobotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRobotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSimulationApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSimulationApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorldTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorldTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeploymentApplicationConfig": {
       "base": "<p>Information about a deployment application configuration.</p>",
@@ -690,123 +643,99 @@
     },
     "DeregisterRobotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterRobotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeploymentJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDeploymentJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFleetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRobotApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRobotApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRobotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRobotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSimulationApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSimulationApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSimulationJobBatchRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSimulationJobBatchResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSimulationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSimulationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldExportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldExportJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldGenerationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldGenerationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorldTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Environment": {
       "base": "<p>The object that contains the Docker image URI for either your robot or simulation applications.</p>",
@@ -976,13 +905,11 @@
     },
     "GetWorldTemplateBodyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorldTemplateBodyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IamRole": {
       "base": null,
@@ -1008,8 +935,7 @@
     },
     "IdempotentParameterMismatchException": {
       "base": "<p>The request uses the same client token as a previous, but non-identical request. Do not reuse a client token with different requests, unless the requests are identical. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImageDigest": {
       "base": null,
@@ -1041,13 +967,11 @@
     },
     "InternalServerException": {
       "base": "<p>AWS RoboMaker experienced a service issue. Try your call again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterException": {
       "base": "<p>A parameter specified in a request is not valid, is unsupported, or cannot be used. The returned message provides an explanation of the error value.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobDuration": {
       "base": null,
@@ -1092,7 +1016,7 @@
         "RobotApplicationSummary$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the robot application was last updated.</p>",
         "SimulationApplicationSummary$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the simulation application was last updated.</p>",
         "SimulationJob$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the simulation job was last updated.</p>",
-        "SimulationJobBatchSummary$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the simulation job batch was last updated.</p>",
+        "SimulationJobBatchSummary$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the simulation job batch was last updated. </p>",
         "SimulationJobSummary$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the simulation job was last updated.</p>",
         "TemplateSummary$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the template was last updated.</p>",
         "UpdateRobotApplicationResponse$lastUpdatedAt": "<p>The time, in milliseconds since the epoch, when the robot application was last updated.</p>",
@@ -1109,128 +1033,103 @@
     },
     "LimitExceededException": {
       "base": "<p>The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeploymentJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeploymentJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFleetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRobotApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRobotApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRobotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRobotsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSimulationApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSimulationApplicationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSimulationJobBatchesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSimulationJobBatchesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSimulationJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSimulationJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldExportJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldExportJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldGenerationJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldGenerationJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldTemplatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldTemplatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorldsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LoggingConfig": {
       "base": "<p>The logging configuration.</p>",
@@ -1298,7 +1197,7 @@
         "Tool$name": "<p>The name of the tool.</p>",
         "UpdateRobotApplicationResponse$name": "<p>The name of the robot application.</p>",
         "UpdateSimulationApplicationResponse$name": "<p>The name of the simulation application.</p>",
-        "UploadConfiguration$name": "<p>A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path. </p> <p> For example, if your simulation output location is <code>s3://my-bucket</code> and your upload configuration name is <code>robot-test</code>, your files will be uploaded to <code>s3://my-bucket/&lt;simid&gt;/&lt;runid&gt;/robot-test</code>. </p>"
+        "UploadConfiguration$name": "<p>A prefix that specifies where files will be uploaded in Amazon S3. It is appended to the simulation output location to determine the final path. </p> <p> For example, if your simulation output location is <code>s3://amzn-s3-demo-bucket</code> and your upload configuration name is <code>robot-test</code>, your files will be uploaded to <code>s3://amzn-s3-demo-bucket/&lt;simid&gt;/&lt;runid&gt;/robot-test</code>. </p>"
       }
     },
     "NetworkInterface": {
@@ -1418,13 +1317,11 @@
     },
     "RegisterRobotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterRobotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RenderingEngine": {
       "base": "<p>Information about a rendering engine.</p>",
@@ -1457,23 +1354,19 @@
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The specified resource already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RestartSimulationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestartSimulationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RevisionId": {
       "base": null,
@@ -1551,34 +1444,34 @@
       }
     },
     "RobotSoftwareSuite": {
-      "base": "<p>Information about a robot software suite (ROS distribution).</p>",
+      "base": "<p>Information about a robot software suite.</p>",
       "refs": {
-        "CreateRobotApplicationRequest$robotSoftwareSuite": "<p>The robot software suite (ROS distribuition) used by the robot application.</p>",
-        "CreateRobotApplicationResponse$robotSoftwareSuite": "<p>The robot software suite (ROS distribution) used by the robot application.</p>",
-        "CreateRobotApplicationVersionResponse$robotSoftwareSuite": "<p>The robot software suite (ROS distribution) used by the robot application.</p>",
-        "CreateSimulationApplicationRequest$robotSoftwareSuite": "<p>The robot software suite (ROS distribution) used by the simulation application.</p>",
-        "CreateSimulationApplicationResponse$robotSoftwareSuite": "<p>Information about the robot software suite (ROS distribution).</p>",
-        "CreateSimulationApplicationVersionResponse$robotSoftwareSuite": "<p>Information about the robot software suite (ROS distribution).</p>",
-        "DescribeRobotApplicationResponse$robotSoftwareSuite": "<p>The robot software suite (ROS distribution) used by the robot application.</p>",
-        "DescribeSimulationApplicationResponse$robotSoftwareSuite": "<p>Information about the robot software suite (ROS distribution).</p>",
-        "RobotApplicationSummary$robotSoftwareSuite": "<p>Information about a robot software suite (ROS distribution).</p>",
-        "SimulationApplicationSummary$robotSoftwareSuite": "<p>Information about a robot software suite (ROS distribution).</p>",
-        "UpdateRobotApplicationRequest$robotSoftwareSuite": "<p>The robot software suite (ROS distribution) used by the robot application.</p>",
-        "UpdateRobotApplicationResponse$robotSoftwareSuite": "<p>The robot software suite (ROS distribution) used by the robot application.</p>",
-        "UpdateSimulationApplicationRequest$robotSoftwareSuite": "<p>Information about the robot software suite (ROS distribution).</p>",
-        "UpdateSimulationApplicationResponse$robotSoftwareSuite": "<p>Information about the robot software suite (ROS distribution).</p>"
+        "CreateRobotApplicationRequest$robotSoftwareSuite": "<p>The robot software suite used by the robot application.</p>",
+        "CreateRobotApplicationResponse$robotSoftwareSuite": "<p>The robot software suite used by the robot application.</p>",
+        "CreateRobotApplicationVersionResponse$robotSoftwareSuite": "<p>The robot software suite used by the robot application.</p>",
+        "CreateSimulationApplicationRequest$robotSoftwareSuite": "<p>The robot software suite used by the simulation application.</p>",
+        "CreateSimulationApplicationResponse$robotSoftwareSuite": "<p>Information about the robot software suite.</p>",
+        "CreateSimulationApplicationVersionResponse$robotSoftwareSuite": "<p>Information about the robot software suite.</p>",
+        "DescribeRobotApplicationResponse$robotSoftwareSuite": "<p>The robot software suite used by the robot application.</p>",
+        "DescribeSimulationApplicationResponse$robotSoftwareSuite": "<p>Information about the robot software suite.</p>",
+        "RobotApplicationSummary$robotSoftwareSuite": "<p>Information about a robot software suite.</p>",
+        "SimulationApplicationSummary$robotSoftwareSuite": "<p>Information about a robot software suite.</p>",
+        "UpdateRobotApplicationRequest$robotSoftwareSuite": "<p>The robot software suite used by the robot application.</p>",
+        "UpdateRobotApplicationResponse$robotSoftwareSuite": "<p>The robot software suite used by the robot application.</p>",
+        "UpdateSimulationApplicationRequest$robotSoftwareSuite": "<p>Information about the robot software suite.</p>",
+        "UpdateSimulationApplicationResponse$robotSoftwareSuite": "<p>Information about the robot software suite.</p>"
       }
     },
     "RobotSoftwareSuiteType": {
       "base": null,
       "refs": {
-        "RobotSoftwareSuite$name": "<p>The name of the robot software suite (ROS distribution).</p>"
+        "RobotSoftwareSuite$name": "<p>The name of the robot software suite. <code>General</code> is the only supported value.</p>"
       }
     },
     "RobotSoftwareSuiteVersionType": {
       "base": null,
       "refs": {
-        "RobotSoftwareSuite$version": "<p>The version of the robot software suite (ROS distribution).</p>"
+        "RobotSoftwareSuite$version": "<p>The version of the robot software suite. Not applicable for General software suite.</p>"
       }
     },
     "RobotStatus": {
@@ -1674,8 +1567,7 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>The request has failed due to a temporary failure of the server.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SimulationApplicationConfig": {
       "base": "<p>Information about a simulation application configuration.</p>",
@@ -1804,13 +1696,13 @@
     "SimulationSoftwareSuiteType": {
       "base": null,
       "refs": {
-        "SimulationSoftwareSuite$name": "<p>The name of the simulation software suite.</p>"
+        "SimulationSoftwareSuite$name": "<p>The name of the simulation software suite. <code>SimulationRuntime</code> is the only supported value.</p>"
       }
     },
     "SimulationSoftwareSuiteVersionType": {
       "base": null,
       "refs": {
-        "SimulationSoftwareSuite$version": "<p>The version of the simulation software suite.</p>"
+        "SimulationSoftwareSuite$version": "<p>The version of the simulation software suite. Not applicable for <code>SimulationRuntime</code>.</p>"
       }
     },
     "SimulationTimeMillis": {
@@ -1864,13 +1756,11 @@
     },
     "StartSimulationJobBatchRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSimulationJobBatchResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Subnets": {
       "base": null,
@@ -1881,13 +1771,11 @@
     },
     "SyncDeploymentJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SyncDeploymentJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagKey": {
       "base": null,
@@ -1947,13 +1835,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1993,8 +1879,7 @@
     },
     "ThrottlingException": {
       "base": "<p>AWS RoboMaker is temporarily unable to process the request. Try your call again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Tool": {
       "base": "<p>Information about a tool. Tools are used in a simulation job.</p>",
@@ -2017,43 +1902,35 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRobotApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRobotApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSimulationApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSimulationApplicationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorldTemplateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorldTemplateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UploadBehavior": {
       "base": null,
@@ -2126,7 +2003,7 @@
     "WorldConfigs": {
       "base": null,
       "refs": {
-        "SimulationApplicationConfig$worldConfigs": "<p>A list of world configurations.</p>"
+        "SimulationApplicationConfig$worldConfigs": "<p>A list of world configurations.</p> <important> <p>This API is no longer supported and will throw an error if used.</p> </important>"
       }
     },
     "WorldCount": {

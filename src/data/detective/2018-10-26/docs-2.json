@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Detective uses machine learning and purpose-built visualizations to help you to analyze and investigate security issues across your Amazon Web Services (Amazon Web Services) workloads. Detective automatically extracts time-based events such as login attempts, API calls, and network traffic from CloudTrail and Amazon Virtual Private Cloud (Amazon VPC) flow logs. It also extracts findings detected by Amazon GuardDuty.</p> <p>The Detective API primarily supports the creation and management of behavior graphs. A behavior graph contains the extracted data from a set of member accounts, and is created and managed by an administrator account.</p> <p>To add a member account to the behavior graph, the administrator account sends an invitation to the account. When the account accepts the invitation, it becomes a member account in the behavior graph.</p> <p>Detective is also integrated with Organizations. The organization management account designates the Detective administrator account for the organization. That account becomes the administrator account for the organization behavior graph. The Detective administrator account is also the delegated administrator account for Detective in Organizations.</p> <p>The Detective administrator account can enable any organization account as a member account in the organization behavior graph. The organization accounts do not receive invitations. The Detective administrator account can also invite other accounts to the organization behavior graph.</p> <p>Every behavior graph is specific to a Region. You can only use the API to manage behavior graphs that belong to the Region that is associated with the currently selected endpoint.</p> <p>The administrator account for a behavior graph can use the Detective API to do the following:</p> <ul> <li> <p>Enable and disable Detective. Enabling Detective creates a new behavior graph.</p> </li> <li> <p>View the list of member accounts in a behavior graph.</p> </li> <li> <p>Add member accounts to a behavior graph.</p> </li> <li> <p>Remove member accounts from a behavior graph.</p> </li> <li> <p>Apply tags to a behavior graph.</p> </li> </ul> <p>The organization management account can use the Detective API to select the delegated administrator for Detective.</p> <p>The Detective administrator account for an organization can use the Detective API to do the following:</p> <ul> <li> <p>Perform all of the functions of an administrator account.</p> </li> <li> <p>Determine whether to automatically enable new organization accounts as member accounts in the organization behavior graph.</p> </li> </ul> <p>An invited member account can use the Detective API to do the following:</p> <ul> <li> <p>View the list of behavior graphs that they are invited to.</p> </li> <li> <p>Accept an invitation to contribute to a behavior graph.</p> </li> <li> <p>Decline an invitation to contribute to a behavior graph.</p> </li> <li> <p>Remove their account from a behavior graph.</p> </li> </ul> <p>All API actions are logged as CloudTrail events. See <a href=\"https://docs.aws.amazon.com/detective/latest/adminguide/logging-using-cloudtrail.html\">Logging Detective API Calls with CloudTrail</a>.</p> <note> <p>We replaced the term \"master account\" with the term \"administrator account\". An administrator account is used to centrally manage multiple accounts. In the case of Detective, the administrator account manages the accounts in their behavior graph.</p> </note>",
+  "service": "<p>Detective uses machine learning and purpose-built visualizations to help you to analyze and investigate security issues across your Amazon Web Services (Amazon Web Services) workloads. Detective automatically extracts time-based events such as login attempts, API calls, and network traffic from CloudTrail and Amazon Virtual Private Cloud (Amazon VPC) flow logs. It also extracts findings detected by Amazon GuardDuty.</p> <p>The Detective API primarily supports the creation and management of behavior graphs. A behavior graph contains the extracted data from a set of member accounts, and is created and managed by an administrator account.</p> <p>To add a member account to the behavior graph, the administrator account sends an invitation to the account. When the account accepts the invitation, it becomes a member account in the behavior graph.</p> <p>Detective is also integrated with Organizations. The organization management account designates the Detective administrator account for the organization. That account becomes the administrator account for the organization behavior graph. The Detective administrator account is also the delegated administrator account for Detective in Organizations.</p> <p>The Detective administrator account can enable any organization account as a member account in the organization behavior graph. The organization accounts do not receive invitations. The Detective administrator account can also invite other accounts to the organization behavior graph.</p> <p>Every behavior graph is specific to a Region. You can only use the API to manage behavior graphs that belong to the Region that is associated with the currently selected endpoint.</p> <p>The administrator account for a behavior graph can use the Detective API to do the following:</p> <ul> <li> <p>Enable and disable Detective. Enabling Detective creates a new behavior graph.</p> </li> <li> <p>View the list of member accounts in a behavior graph.</p> </li> <li> <p>Add member accounts to a behavior graph.</p> </li> <li> <p>Remove member accounts from a behavior graph.</p> </li> <li> <p>Apply tags to a behavior graph.</p> </li> </ul> <p>The organization management account can use the Detective API to select the delegated administrator for Detective.</p> <p>The Detective administrator account for an organization can use the Detective API to do the following:</p> <ul> <li> <p>Perform all of the functions of an administrator account.</p> </li> <li> <p>Determine whether to automatically enable new organization accounts as member accounts in the organization behavior graph.</p> </li> </ul> <p>An invited member account can use the Detective API to do the following:</p> <ul> <li> <p>View the list of behavior graphs that they are invited to.</p> </li> <li> <p>Accept an invitation to contribute to a behavior graph.</p> </li> <li> <p>Decline an invitation to contribute to a behavior graph.</p> </li> <li> <p>Remove their account from a behavior graph.</p> </li> </ul> <p>All API actions are logged as CloudTrail events. See <a href=\"https://docs.aws.amazon.com/detective/latest/userguide/logging-using-cloudtrail.html\">Logging Detective API Calls with CloudTrail</a>.</p> <note> <p>We replaced the term \"master account\" with the term \"administrator account\". An administrator account is used to centrally manage multiple accounts. In the case of Detective, the administrator account manages the accounts in their behavior graph.</p> </note>",
   "operations": {
     "AcceptInvitation": "<p>Accepts an invitation for the member account to contribute data to a behavior graph. This operation can only be called by an invited member account. </p> <p>The request provides the ARN of behavior graph.</p> <p>The member account status in the graph must be <code>INVITED</code>.</p>",
     "BatchGetGraphMemberDatasources": "<p>Gets data source package information for the behavior graph.</p>",
@@ -28,7 +28,7 @@
     "StartMonitoringMember": "<p>Sends a request to enable data ingest for a member account that has a status of <code>ACCEPTED_BUT_DISABLED</code>.</p> <p>For valid member accounts, the status is updated as follows.</p> <ul> <li> <p>If Detective enabled the member account, then the new status is <code>ENABLED</code>.</p> </li> <li> <p>If Detective cannot enable the member account, the status remains <code>ACCEPTED_BUT_DISABLED</code>. </p> </li> </ul>",
     "TagResource": "<p>Applies tag values to a behavior graph.</p>",
     "UntagResource": "<p>Removes tags from a behavior graph.</p>",
-    "UpdateDatasourcePackages": "<p>Starts a data source packages for the behavior graph.</p>",
+    "UpdateDatasourcePackages": "<p>Starts a data source package for the Detective behavior graph.</p>",
     "UpdateInvestigationState": "<p>Updates the state of an investigation.</p>",
     "UpdateOrganizationConfiguration": "<p>Updates the configuration for the Organizations integration in the current Region. Can only be called by the Detective administrator account for the organization.</p>"
   },
@@ -53,13 +53,11 @@
     },
     "AcceptInvitationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedException": {
       "base": "<p>The request issuer does not have permission to access this resource or perform this operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Account": {
       "base": "<p>An Amazon Web Services account that is the administrator account of or a member of a behavior graph.</p>",
@@ -132,23 +130,19 @@
     },
     "BatchGetGraphMemberDatasourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetGraphMemberDatasourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetMembershipDatasourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetMembershipDatasourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -167,28 +161,23 @@
     },
     "ConflictException": {
       "base": "<p>The request attempted an invalid action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGraphRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGraphResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DatasourcePackage": {
       "base": null,
@@ -235,7 +224,7 @@
     "DatasourcePackageList": {
       "base": null,
       "refs": {
-        "UpdateDatasourcePackagesRequest$DatasourcePackages": "<p>The data source package start for the behavior graph.</p>"
+        "UpdateDatasourcePackagesRequest$DatasourcePackages": "<p>The data source package to start for the behavior graph.</p>"
       }
     },
     "DatasourcePackageUsageInfo": {
@@ -252,33 +241,27 @@
     },
     "DeleteGraphRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOrganizationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeOrganizationConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMembershipRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EmailAddress": {
       "base": null,
@@ -295,8 +278,7 @@
     },
     "EnableOrganizationAdminAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EntityArn": {
       "base": null,
@@ -362,23 +344,19 @@
     },
     "GetInvestigationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInvestigationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Graph": {
       "base": "<p>A behavior graph in Detective.</p>",
@@ -459,7 +437,7 @@
       }
     },
     "IndicatorDetail": {
-      "base": "<p>Details about the indicators of compromise which are used to determine if a resource is involved in a security incident. An indicator of compromise (IOC) is an artifact observed in or on a network, system, or environment that can (with a high level of confidence) identify malicious activity or a security incident. For the list of indicators of compromise that are generated by Detective investigations, see <a href=\"https://docs.aws.amazon.com/detective/latest/userguide/detective-investigations.html\">Detective investigations</a>.</p>",
+      "base": "<p>Details about the indicators of compromise which are used to determine if a resource is involved in a security incident. An indicator of compromise (IOC) is an artifact observed in or on a network, system, or environment that can (with a high level of confidence) identify malicious activity or a security incident. For the list of indicators of compromise that are generated by Detective investigations, see <a href=\"https://docs.aws.amazon.com/detective/latest/userguide/detective-investigation-about.html\">Detective investigations</a>.</p>",
       "refs": {
         "Indicator$IndicatorDetail": "<p>Details about the indicators of compromise that are used to determine if a resource is involved in a security incident. An indicator of compromise (IOC) is an artifact observed in or on a network, system, or environment that can (with a high level of confidence) identify malicious activity or a security incident.</p>"
       }
@@ -468,7 +446,7 @@
       "base": null,
       "refs": {
         "Indicator$IndicatorType": "<p>The type of indicator. </p>",
-        "ListIndicatorsRequest$IndicatorType": "<p>For the list of indicators of compromise that are generated by Detective investigations, see <a href=\"https://docs.aws.amazon.com/detective/latest/userguide/detective-investigations.html\">Detective investigations</a>.</p>"
+        "ListIndicatorsRequest$IndicatorType": "<p>For the list of indicators of compromise that are generated by Detective investigations, see <a href=\"https://docs.aws.amazon.com/detective/latest/userguide/detective-investigation-about.html\">Detective investigations</a>.</p>"
       }
     },
     "Indicators": {
@@ -479,8 +457,7 @@
     },
     "InternalServerException": {
       "base": "<p>The request was valid but failed because of a problem with the service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvestigationDetail": {
       "base": "<p>Details about the investigation related to a potential security event identified by Detective.</p>",
@@ -540,83 +517,67 @@
     },
     "ListDatasourcePackagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDatasourcePackagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGraphsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGraphsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndicatorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndicatorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvestigationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvestigationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvitationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInvitationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMembersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationAdminAccountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationAdminAccountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Location": {
       "base": null,
@@ -736,8 +697,7 @@
     },
     "RejectInvitationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RelatedFindingDetail": {
       "base": "<p>Details related activities associated with a potential security event. Lists all distinct categories of evidence that are connected to the resource or the finding group.</p>",
@@ -765,13 +725,11 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The request refers to a nonexistent resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceQuotaExceededException": {
       "base": "<p>This request cannot be completed for one of the following reasons.</p> <ul> <li> <p>This request cannot be completed if it would cause the number of member accounts in the behavior graph to exceed the maximum allowed. A behavior graph cannot have more than 1,200 member accounts.</p> </li> <li> <p>This request cannot be completed if the current volume ingested is above the limit of 10 TB per day. Detective will not allow you to add additional member accounts.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Severity": {
       "base": null,
@@ -794,18 +752,15 @@
     },
     "StartInvestigationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartInvestigationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMonitoringMemberRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "State": {
       "base": null,
@@ -866,13 +821,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -915,8 +868,7 @@
     },
     "TooManyRequestsException": {
       "base": "<p>The request cannot be completed because too many other requests are occurring at the same time.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Type": {
       "base": null,
@@ -960,28 +912,23 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDatasourcePackagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInvestigationStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOrganizationConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UserAgent": {
       "base": null,
@@ -991,8 +938,7 @@
     },
     "ValidationException": {
       "base": "<p>The request parameters are invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Value": {
       "base": null,

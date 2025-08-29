@@ -1,5 +1,173 @@
 {
   "version": "1.0",
   "examples": {
+    "BatchAddChannelRoleToAccessors": [
+      {
+        "input": {
+          "accessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ],
+          "channelId": "WS1234567890abcdefghijkl",
+          "channelRole": "MODERATOR",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "addedAccessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ]
+        },
+        "id": "example-1",
+        "title": "BatchAddChannelRoleToAccessors"
+      }
+    ],
+    "BatchAddRole": [
+      {
+        "input": {
+          "accessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ],
+          "role": "EXPERT",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "addedAccessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ]
+        },
+        "id": "example-1",
+        "title": "BatchAddRole"
+      }
+    ],
+    "BatchRemoveChannelRoleFromAccessors": [
+      {
+        "input": {
+          "accessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ],
+          "channelId": "WS1234567890abcdefghijkl",
+          "channelRole": "MODERATOR",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "removedAccessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ]
+        },
+        "id": "example-1",
+        "title": "BatchRemoveChannelRoleFromAccessors"
+      }
+    ],
+    "BatchRemoveRole": [
+      {
+        "input": {
+          "accessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ],
+          "role": "EXPERT",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "output": {
+          "errors": [
+
+          ],
+          "removedAccessorIds": [
+            "12345678-1234-1234-1234-1234567890ab"
+          ]
+        },
+        "id": "example-1",
+        "title": "BatchRemoveRole"
+      }
+    ],
+    "CreateChannel": [
+      {
+        "input": {
+          "channelDescription": "Useful channel description",
+          "channelName": "My First Channel",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "output": {
+          "channelId": "WS1234567890abcdefghijkl"
+        },
+        "id": "example-1",
+        "title": "CreateChannel"
+      }
+    ],
+    "GetChannel": [
+      {
+        "input": {
+          "channelId": "WS1234567890abcdefghijkl",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "output": {
+          "channelDescription": "Useful channel description",
+          "channelId": "WS1234567890abcdefghijkl",
+          "channelName": "My First Channel",
+          "channelRoles": {
+            "12345678-1234-1234-1234-1234567890ab": [
+              "ASKER"
+            ]
+          },
+          "channelStatus": "CREATED",
+          "createDateTime": "2025-02-13T18:49:13.713Z",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "id": "example-1",
+        "title": "GetChannel"
+      }
+    ],
+    "ListChannels": [
+      {
+        "input": {
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "output": {
+          "channels": [
+            {
+              "channelDescription": "Useful channel description",
+              "channelId": "WS1234567890abcdefghijkl",
+              "channelName": "My First Channel",
+              "channelStatus": "CREATED",
+              "createDateTime": "2020-02-20T20:20:20.420Z",
+              "groupCount": 1,
+              "spaceId": "SP1234567890abcdefghijkl",
+              "userCount": 5
+            },
+            {
+              "channelDescription": "Better channel description",
+              "channelId": "WSabcdefghijkl1234567890",
+              "channelName": "Better Channel",
+              "channelStatus": "CREATED",
+              "createDateTime": "2025-06-20T14:43:34.201Z",
+              "groupCount": 0,
+              "spaceId": "SP1234567890abcdefghijkl",
+              "userCount": 1
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "ListChannels"
+      }
+    ],
+    "UpdateChannel": [
+      {
+        "input": {
+          "channelDescription": "Better channel description",
+          "channelId": "WS1234567890abcdefghijkl",
+          "channelName": "Better Channel",
+          "spaceId": "SP1234567890abcdefghijkl"
+        },
+        "id": "example-1",
+        "title": "UpdateChannel"
+      }
+    ]
   }
 }

@@ -10,7 +10,8 @@
     "serviceId":"Application Discovery Service",
     "signatureVersion":"v4",
     "targetPrefix":"AWSPoseidonService_V2015_11_01",
-    "uid":"discovery-2015-11-01"
+    "uid":"discovery-2015-11-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateConfigurationItemsToApplication":{
@@ -354,7 +355,8 @@
         {"shape":"ServerInternalErrorException"},
         {"shape":"HomeRegionNotSetException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "StartContinuousExport":{
@@ -562,6 +564,12 @@
       "max":127,
       "pattern":"[\\s\\S]*\\S[\\s\\S]*"
     },
+    "ApplicationWave":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^($|[^\\s\\x00]( *[^\\s\\x00])*$)"
+    },
     "AssociateConfigurationItemsToApplicationRequest":{
       "type":"structure",
       "required":[
@@ -575,8 +583,7 @@
     },
     "AssociateConfigurationItemsToApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AuthorizationErrorException":{
       "type":"structure",
@@ -781,7 +788,8 @@
       "required":["name"],
       "members":{
         "name":{"shape":"ApplicationName"},
-        "description":{"shape":"ApplicationDescription"}
+        "description":{"shape":"ApplicationDescription"},
+        "wave":{"shape":"ApplicationWave"}
       }
     },
     "CreateApplicationResponse":{
@@ -803,8 +811,7 @@
     },
     "CreateTagsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CustomerAgentInfo":{
       "type":"structure",
@@ -930,8 +937,7 @@
     },
     "DeleteApplicationsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTagsRequest":{
       "type":"structure",
@@ -943,8 +949,7 @@
     },
     "DeleteTagsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletionConfigurationItemType":{
       "type":"string",
@@ -1118,8 +1123,7 @@
     },
     "DisassociateConfigurationItemsFromApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EC2InstanceType":{
       "type":"string",
@@ -1233,6 +1237,15 @@
       "type":"list",
       "member":{"shape":"FailedConfiguration"}
     },
+    "FileClassification":{
+      "type":"string",
+      "enum":[
+        "MODELIZEIT_EXPORT",
+        "RVTOOLS_EXPORT",
+        "VMWARE_NSX_EXPORT",
+        "IMPORT_TEMPLATE"
+      ]
+    },
     "Filter":{
       "type":"structure",
       "required":[
@@ -1266,8 +1279,7 @@
     },
     "GetDiscoverySummaryRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetDiscoverySummaryResponse":{
       "type":"structure",
@@ -1298,6 +1310,7 @@
         "IMPORT_FAILED",
         "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED",
         "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED",
+        "IMPORT_FAILED_UNSUPPORTED_FILE_TYPE",
         "DELETE_IN_PROGRESS",
         "DELETE_COMPLETE",
         "DELETE_FAILED",
@@ -1316,6 +1329,7 @@
         "importRequestTime":{"shape":"TimeStamp"},
         "importCompletionTime":{"shape":"TimeStamp"},
         "importDeletedTime":{"shape":"TimeStamp"},
+        "fileClassification":{"shape":"FileClassification"},
         "serverImportSuccess":{"shape":"Integer"},
         "serverImportFailure":{"shape":"Integer"},
         "applicationImportSuccess":{"shape":"Integer"},
@@ -1335,7 +1349,8 @@
       "enum":[
         "IMPORT_TASK_ID",
         "STATUS",
-        "NAME"
+        "NAME",
+        "FILE_CLASSIFICATION"
       ]
     },
     "ImportTaskFilterValue":{
@@ -1552,8 +1567,7 @@
     },
     "StartContinuousExportRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartContinuousExportResponse":{
       "type":"structure",
@@ -1716,13 +1730,13 @@
       "members":{
         "configurationId":{"shape":"ApplicationId"},
         "name":{"shape":"ApplicationName"},
-        "description":{"shape":"ApplicationDescription"}
+        "description":{"shape":"ApplicationDescription"},
+        "wave":{"shape":"ApplicationWave"}
       }
     },
     "UpdateApplicationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UsageMetricBasis":{
       "type":"structure",

@@ -25,8 +25,8 @@
       "input":{"shape":"CreateCapabilityRequest"},
       "output":{"shape":"CreateCapabilityResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
@@ -44,11 +44,11 @@
       "input":{"shape":"CreatePartnershipRequest"},
       "output":{"shape":"CreatePartnershipResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
@@ -63,15 +63,30 @@
       "input":{"shape":"CreateProfileRequest"},
       "output":{"shape":"CreateProfileResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
+    },
+    "CreateStarterMappingTemplate":{
+      "name":"CreateStarterMappingTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateStarterMappingTemplateRequest"},
+      "output":{"shape":"CreateStarterMappingTemplateResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
     },
     "CreateTransformer":{
       "name":"CreateTransformer",
@@ -82,11 +97,11 @@
       "input":{"shape":"CreateTransformerRequest"},
       "output":{"shape":"CreateTransformerResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
@@ -100,8 +115,8 @@
       },
       "input":{"shape":"DeleteCapabilityRequest"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
@@ -117,11 +132,11 @@
       },
       "input":{"shape":"DeletePartnershipRequest"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -137,8 +152,8 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -151,11 +166,27 @@
       },
       "input":{"shape":"DeleteTransformerRequest"},
       "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "GenerateMapping":{
+      "name":"GenerateMapping",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GenerateMappingRequest"},
+      "output":{"shape":"GenerateMappingResponse"},
+      "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ],
       "idempotent":true
@@ -187,8 +218,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -203,8 +234,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -219,8 +250,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -266,8 +297,8 @@
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -324,8 +355,8 @@
       "input":{"shape":"StartTransformerJobRequest"},
       "output":{"shape":"StartTransformerJobResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
@@ -342,10 +373,27 @@
       "input":{"shape":"TagResourceRequest"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "TestConversion":{
+      "name":"TestConversion",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"TestConversionRequest"},
+      "output":{"shape":"TestConversionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "idempotent":true
     },
     "TestMapping":{
       "name":"TestMapping",
@@ -404,8 +452,8 @@
       "input":{"shape":"UpdateCapabilityRequest"},
       "output":{"shape":"UpdateCapabilityResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
@@ -423,11 +471,11 @@
       "input":{"shape":"UpdatePartnershipRequest"},
       "output":{"shape":"UpdatePartnershipResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
@@ -442,11 +490,11 @@
       "input":{"shape":"UpdateProfileRequest"},
       "output":{"shape":"UpdateProfileResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
@@ -461,11 +509,11 @@
       "input":{"shape":"UpdateTransformerRequest"},
       "output":{"shape":"UpdateTransformerResponse"},
       "errors":[
-        {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
-        {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"InternalServerException"}
       ],
@@ -480,6 +528,12 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "AdvancedOptions":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12AdvancedOptions"}
+      }
     },
     "AmazonResourceName":{
       "type":"string",
@@ -503,6 +557,13 @@
       },
       "union":true
     },
+    "CapabilityDirection":{
+      "type":"string",
+      "enum":[
+        "INBOUND",
+        "OUTBOUND"
+      ]
+    },
     "CapabilityId":{
       "type":"string",
       "max":64,
@@ -517,6 +578,13 @@
       "type":"string",
       "max":254,
       "min":1
+    },
+    "CapabilityOptions":{
+      "type":"structure",
+      "members":{
+        "outboundEdi":{"shape":"OutboundEdiOptions"},
+        "inboundEdi":{"shape":"InboundEdiOptions"}
+      }
     },
     "CapabilitySummary":{
       "type":"structure",
@@ -538,6 +606,10 @@
       "type":"string",
       "enum":["edi"]
     },
+    "CodeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ConflictException":{
       "type":"structure",
       "required":["message"],
@@ -545,6 +617,45 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "ConversionSource":{
+      "type":"structure",
+      "required":[
+        "fileFormat",
+        "inputFile"
+      ],
+      "members":{
+        "fileFormat":{"shape":"ConversionSourceFormat"},
+        "inputFile":{"shape":"InputFileSource"}
+      }
+    },
+    "ConversionSourceFormat":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "XML"
+      ]
+    },
+    "ConversionTarget":{
+      "type":"structure",
+      "required":["fileFormat"],
+      "members":{
+        "fileFormat":{"shape":"ConversionTargetFormat"},
+        "formatDetails":{"shape":"ConversionTargetFormatDetails"},
+        "outputSampleFile":{"shape":"OutputSampleFileSource"},
+        "advancedOptions":{"shape":"AdvancedOptions"}
+      }
+    },
+    "ConversionTargetFormat":{
+      "type":"string",
+      "enum":["X12"]
+    },
+    "ConversionTargetFormatDetails":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Details"}
+      },
+      "union":true
     },
     "CreateCapabilityRequest":{
       "type":"structure",
@@ -599,6 +710,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -622,6 +734,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"}
       }
@@ -669,25 +782,59 @@
         "createdAt":{"shape":"CreatedDate"}
       }
     },
-    "CreateTransformerRequest":{
+    "CreateStarterMappingTemplateRequest":{
       "type":"structure",
       "required":[
-        "name",
-        "fileFormat",
-        "mappingTemplate",
-        "ediType"
+        "mappingType",
+        "templateDetails"
       ],
       "members":{
+        "outputSampleLocation":{"shape":"S3Location"},
+        "mappingType":{"shape":"MappingType"},
+        "templateDetails":{"shape":"TemplateDetails"}
+      }
+    },
+    "CreateStarterMappingTemplateResponse":{
+      "type":"structure",
+      "required":["mappingTemplate"],
+      "members":{
+        "mappingTemplate":{"shape":"String"}
+      }
+    },
+    "CreateTransformerRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "clientToken":{
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "CreateTransformerResponse":{
@@ -696,22 +843,39 @@
         "transformerId",
         "transformerArn",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt"
       ],
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "transformerArn":{"shape":"ResourceArn"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
-        "createdAt":{"shape":"CreatedDate"}
+        "createdAt":{"shape":"CreatedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "CreatedDate":{
@@ -755,6 +919,7 @@
         "transformerId"
       ],
       "members":{
+        "capabilityDirection":{"shape":"CapabilityDirection"},
         "type":{"shape":"EdiType"},
         "inputLocation":{"shape":"S3Location"},
         "outputLocation":{"shape":"S3Location"},
@@ -767,6 +932,15 @@
         "x12Details":{"shape":"X12Details"}
       },
       "union":true
+    },
+    "ElementId":{"type":"string"},
+    "ElementPosition":{"type":"string"},
+    "ElementRequirement":{
+      "type":"string",
+      "enum":[
+        "OPTIONAL",
+        "MANDATORY"
+      ]
     },
     "Email":{
       "type":"string",
@@ -784,13 +958,62 @@
       "type":"string",
       "enum":[
         "XML",
-        "JSON"
+        "JSON",
+        "NOT_USED"
       ]
     },
     "FileLocation":{
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "FormatOptions":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Details"}
+      },
+      "union":true
+    },
+    "FromFormat":{
+      "type":"string",
+      "enum":["X12"]
+    },
+    "GenerateMappingInputFileContent":{
+      "type":"string",
+      "max":5000000,
+      "min":0
+    },
+    "GenerateMappingOutputFileContent":{
+      "type":"string",
+      "max":5000000,
+      "min":0
+    },
+    "GenerateMappingRequest":{
+      "type":"structure",
+      "required":[
+        "inputFileContent",
+        "outputFileContent",
+        "mappingType"
+      ],
+      "members":{
+        "inputFileContent":{"shape":"GenerateMappingInputFileContent"},
+        "outputFileContent":{"shape":"GenerateMappingOutputFileContent"},
+        "mappingType":{"shape":"MappingType"}
+      }
+    },
+    "GenerateMappingResponse":{
+      "type":"structure",
+      "required":["mappingTemplate"],
+      "members":{
+        "mappingTemplate":{"shape":"String"},
+        "mappingAccuracy":{"shape":"GenerateMappingResponseMappingAccuracyFloat"}
+      }
+    },
+    "GenerateMappingResponseMappingAccuracyFloat":{
+      "type":"float",
+      "box":true,
+      "max":1.0,
+      "min":0.0
     },
     "GetCapabilityRequest":{
       "type":"structure",
@@ -843,6 +1066,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"},
         "modifiedAt":{"shape":"ModifiedDate"}
@@ -911,24 +1135,68 @@
         "transformerId",
         "transformerArn",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt"
       ],
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "transformerArn":{"shape":"ResourceArn"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "createdAt":{"shape":"CreatedDate"},
-        "modifiedAt":{"shape":"ModifiedDate"}
+        "modifiedAt":{"shape":"ModifiedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
+    },
+    "InboundEdiOptions":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12InboundEdiOptions"}
+      }
+    },
+    "InputConversion":{
+      "type":"structure",
+      "required":["fromFormat"],
+      "members":{
+        "fromFormat":{"shape":"FromFormat"},
+        "formatOptions":{"shape":"FormatOptions"},
+        "advancedOptions":{"shape":"AdvancedOptions"}
+      }
+    },
+    "InputFileSource":{
+      "type":"structure",
+      "members":{
+        "fileContent":{"shape":"InputFileSourceFileContentString"}
+      },
+      "union":true
+    },
+    "InputFileSourceFileContentString":{
+      "type":"string",
+      "max":5000000,
+      "min":1
     },
     "InstructionsDocuments":{
       "type":"list",
@@ -950,6 +1218,23 @@
       "exception":true,
       "fault":true,
       "retryable":{"throttling":false}
+    },
+    "KeyList":{
+      "type":"list",
+      "member":{"shape":"SampleDocumentKeys"}
+    },
+    "LineLength":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "LineTerminator":{
+      "type":"string",
+      "enum":[
+        "CRLF",
+        "LF",
+        "CR"
+      ]
     },
     "ListCapabilitiesRequest":{
       "type":"structure",
@@ -1037,10 +1322,32 @@
         "DISABLED"
       ]
     },
+    "Mapping":{
+      "type":"structure",
+      "required":["templateLanguage"],
+      "members":{
+        "templateLanguage":{"shape":"MappingTemplateLanguage"},
+        "template":{"shape":"MappingTemplate"}
+      }
+    },
     "MappingTemplate":{
       "type":"string",
       "max":350000,
       "min":0
+    },
+    "MappingTemplateLanguage":{
+      "type":"string",
+      "enum":[
+        "XSLT",
+        "JSONATA"
+      ]
+    },
+    "MappingType":{
+      "type":"string",
+      "enum":[
+        "JSONATA",
+        "XSLT"
+      ]
     },
     "MaxResults":{
       "type":"integer",
@@ -1052,10 +1359,37 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "OutboundEdiOptions":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Envelope"}
+      },
+      "union":true
+    },
+    "OutputConversion":{
+      "type":"structure",
+      "required":["toFormat"],
+      "members":{
+        "toFormat":{"shape":"ToFormat"},
+        "formatOptions":{"shape":"FormatOptions"},
+        "advancedOptions":{"shape":"AdvancedOptions"}
+      }
+    },
+    "OutputSampleFileSource":{
+      "type":"structure",
+      "members":{
+        "fileLocation":{"shape":"S3Location"}
+      },
+      "union":true
+    },
     "PageToken":{
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "ParsedSplitFileContentsList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "PartnerName":{
       "type":"string",
@@ -1088,6 +1422,7 @@
         "partnershipId":{"shape":"PartnershipId"},
         "name":{"shape":"PartnerName"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"},
         "modifiedAt":{"shape":"ModifiedDate"}
@@ -1162,6 +1497,24 @@
       "type":"list",
       "member":{"shape":"S3Location"}
     },
+    "SampleDocumentKeys":{
+      "type":"structure",
+      "members":{
+        "input":{"shape":"S3Key"},
+        "output":{"shape":"S3Key"}
+      }
+    },
+    "SampleDocuments":{
+      "type":"structure",
+      "required":[
+        "bucketName",
+        "keys"
+      ],
+      "members":{
+        "bucketName":{"shape":"BucketName"},
+        "keys":{"shape":"KeyList"}
+      }
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "required":[
@@ -1203,6 +1556,24 @@
       "members":{
         "transformerJobId":{"shape":"TransformerJobId"}
       }
+    },
+    "StartingFunctionalGroupControlNumber":{
+      "type":"integer",
+      "box":true,
+      "max":999999999,
+      "min":1
+    },
+    "StartingInterchangeControlNumber":{
+      "type":"integer",
+      "box":true,
+      "max":999999999,
+      "min":1
+    },
+    "StartingTransactionSetControlNumber":{
+      "type":"integer",
+      "box":true,
+      "max":999999999,
+      "min":1
     },
     "String":{"type":"string"},
     "Tag":{
@@ -1249,6 +1620,32 @@
       "max":256,
       "min":0
     },
+    "TemplateDetails":{
+      "type":"structure",
+      "members":{
+        "x12":{"shape":"X12Details"}
+      },
+      "union":true
+    },
+    "TestConversionRequest":{
+      "type":"structure",
+      "required":[
+        "source",
+        "target"
+      ],
+      "members":{
+        "source":{"shape":"ConversionSource"},
+        "target":{"shape":"ConversionTarget"}
+      }
+    },
+    "TestConversionResponse":{
+      "type":"structure",
+      "required":["convertedFileContent"],
+      "members":{
+        "convertedFileContent":{"shape":"String"},
+        "validationMessages":{"shape":"ValidationMessages"}
+      }
+    },
     "TestMappingInputFileContent":{
       "type":"string",
       "max":5000000,
@@ -1284,14 +1681,17 @@
       "members":{
         "inputFile":{"shape":"S3Location"},
         "fileFormat":{"shape":"FileFormat"},
-        "ediType":{"shape":"EdiType"}
+        "ediType":{"shape":"EdiType"},
+        "advancedOptions":{"shape":"AdvancedOptions"}
       }
     },
     "TestParsingResponse":{
       "type":"structure",
       "required":["parsedFileContent"],
       "members":{
-        "parsedFileContent":{"shape":"String"}
+        "parsedFileContent":{"shape":"String"},
+        "parsedSplitFileContents":{"shape":"ParsedSplitFileContentsList"},
+        "validationMessages":{"shape":"ValidationMessages"}
       }
     },
     "ThrottlingException":{
@@ -1303,6 +1703,10 @@
       },
       "exception":true,
       "retryable":{"throttling":false}
+    },
+    "ToFormat":{
+      "type":"string",
+      "enum":["X12"]
     },
     "TradingPartnerId":{
       "type":"string",
@@ -1337,7 +1741,8 @@
     "TransformerName":{
       "type":"string",
       "max":254,
-      "min":1
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]{1,512}"
     },
     "TransformerStatus":{
       "type":"string",
@@ -1351,22 +1756,39 @@
       "required":[
         "transformerId",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt"
       ],
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "createdAt":{"shape":"CreatedDate"},
-        "modifiedAt":{"shape":"ModifiedDate"}
+        "modifiedAt":{"shape":"ModifiedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "UntagResourceRequest":{
@@ -1417,7 +1839,8 @@
       "members":{
         "partnershipId":{"shape":"PartnershipId"},
         "name":{"shape":"PartnerName"},
-        "capabilities":{"shape":"PartnershipCapabilities"}
+        "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"}
       }
     },
     "UpdatePartnershipResponse":{
@@ -1436,6 +1859,7 @@
         "email":{"shape":"Email"},
         "phone":{"shape":"Phone"},
         "capabilities":{"shape":"PartnershipCapabilities"},
+        "capabilityOptions":{"shape":"CapabilityOptions"},
         "tradingPartnerId":{"shape":"TradingPartnerId"},
         "createdAt":{"shape":"CreatedDate"},
         "modifiedAt":{"shape":"ModifiedDate"}
@@ -1481,11 +1905,31 @@
       "members":{
         "transformerId":{"shape":"TransformerId"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"}
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "UpdateTransformerResponse":{
@@ -1494,10 +1938,7 @@
         "transformerId",
         "transformerArn",
         "name",
-        "fileFormat",
-        "mappingTemplate",
         "status",
-        "ediType",
         "createdAt",
         "modifiedAt"
       ],
@@ -1505,13 +1946,33 @@
         "transformerId":{"shape":"TransformerId"},
         "transformerArn":{"shape":"ResourceArn"},
         "name":{"shape":"TransformerName"},
-        "fileFormat":{"shape":"FileFormat"},
-        "mappingTemplate":{"shape":"MappingTemplate"},
         "status":{"shape":"TransformerStatus"},
-        "ediType":{"shape":"EdiType"},
-        "sampleDocument":{"shape":"FileLocation"},
         "createdAt":{"shape":"CreatedDate"},
-        "modifiedAt":{"shape":"ModifiedDate"}
+        "modifiedAt":{"shape":"ModifiedDate"},
+        "fileFormat":{
+          "shape":"FileFormat",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "mappingTemplate":{
+          "shape":"MappingTemplate",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "ediType":{
+          "shape":"EdiType",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "sampleDocument":{
+          "shape":"FileLocation",
+          "deprecated":true,
+          "deprecatedMessage":"This is a legacy trait. Please use input-conversion or output-conversion."
+        },
+        "inputConversion":{"shape":"InputConversion"},
+        "mapping":{"shape":"Mapping"},
+        "outputConversion":{"shape":"OutputConversion"},
+        "sampleDocuments":{"shape":"SampleDocuments"}
       }
     },
     "ValidationException":{
@@ -1522,6 +1983,100 @@
       },
       "exception":true
     },
+    "ValidationMessages":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "WrapFormat":{
+      "type":"string",
+      "enum":[
+        "SEGMENT",
+        "ONE_LINE",
+        "LINE_LENGTH"
+      ]
+    },
+    "WrapOptions":{
+      "type":"structure",
+      "required":["wrapBy"],
+      "members":{
+        "wrapBy":{"shape":"WrapFormat"},
+        "lineTerminator":{"shape":"LineTerminator"},
+        "lineLength":{"shape":"LineLength"}
+      }
+    },
+    "X12AcknowledgmentOptions":{
+      "type":"structure",
+      "required":[
+        "functionalAcknowledgment",
+        "technicalAcknowledgment"
+      ],
+      "members":{
+        "functionalAcknowledgment":{"shape":"X12FunctionalAcknowledgment"},
+        "technicalAcknowledgment":{"shape":"X12TechnicalAcknowledgment"}
+      }
+    },
+    "X12AcknowledgmentRequestedCode":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12AdvancedOptions":{
+      "type":"structure",
+      "members":{
+        "splitOptions":{"shape":"X12SplitOptions"},
+        "validationOptions":{"shape":"X12ValidationOptions"}
+      }
+    },
+    "X12ApplicationReceiverCode":{
+      "type":"string",
+      "max":15,
+      "min":2,
+      "pattern":"[a-zA-Z0-9 ]*"
+    },
+    "X12ApplicationSenderCode":{
+      "type":"string",
+      "max":15,
+      "min":2,
+      "pattern":"[a-zA-Z0-9 ]*"
+    },
+    "X12CodeListValidationRule":{
+      "type":"structure",
+      "required":["elementId"],
+      "members":{
+        "elementId":{"shape":"ElementId"},
+        "codesToAdd":{"shape":"CodeList"},
+        "codesToRemove":{"shape":"CodeList"}
+      }
+    },
+    "X12ComponentSeparator":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[!&'()*+,\\-./:;?=%@\\[\\]_{}|<>~^`\"]"
+    },
+    "X12ControlNumbers":{
+      "type":"structure",
+      "members":{
+        "startingInterchangeControlNumber":{"shape":"StartingInterchangeControlNumber"},
+        "startingFunctionalGroupControlNumber":{"shape":"StartingFunctionalGroupControlNumber"},
+        "startingTransactionSetControlNumber":{"shape":"StartingTransactionSetControlNumber"}
+      }
+    },
+    "X12DataElementSeparator":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[!&'()*+,\\-./:;?=%@\\[\\]_{}|<>~^`\"]"
+    },
+    "X12Delimiters":{
+      "type":"structure",
+      "members":{
+        "componentSeparator":{"shape":"X12ComponentSeparator"},
+        "dataElementSeparator":{"shape":"X12DataElementSeparator"},
+        "segmentTerminator":{"shape":"X12SegmentTerminator"}
+      }
+    },
     "X12Details":{
       "type":"structure",
       "members":{
@@ -1529,60 +2084,479 @@
         "version":{"shape":"X12Version"}
       }
     },
+    "X12ElementLengthValidationRule":{
+      "type":"structure",
+      "required":[
+        "elementId",
+        "maxLength",
+        "minLength"
+      ],
+      "members":{
+        "elementId":{"shape":"ElementId"},
+        "maxLength":{"shape":"X12ElementLengthValidationRuleMaxLengthInteger"},
+        "minLength":{"shape":"X12ElementLengthValidationRuleMinLengthInteger"}
+      }
+    },
+    "X12ElementLengthValidationRuleMaxLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "X12ElementLengthValidationRuleMinLengthInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":1
+    },
+    "X12ElementRequirementValidationRule":{
+      "type":"structure",
+      "required":[
+        "elementPosition",
+        "requirement"
+      ],
+      "members":{
+        "elementPosition":{"shape":"ElementPosition"},
+        "requirement":{"shape":"ElementRequirement"}
+      }
+    },
+    "X12Envelope":{
+      "type":"structure",
+      "members":{
+        "common":{"shape":"X12OutboundEdiHeaders"},
+        "wrapOptions":{"shape":"WrapOptions"}
+      }
+    },
+    "X12FunctionalAcknowledgment":{
+      "type":"string",
+      "enum":[
+        "DO_NOT_GENERATE",
+        "GENERATE_ALL_SEGMENTS",
+        "GENERATE_WITHOUT_TRANSACTION_SET_RESPONSE_LOOP"
+      ]
+    },
+    "X12FunctionalGroupHeaders":{
+      "type":"structure",
+      "members":{
+        "applicationSenderCode":{"shape":"X12ApplicationSenderCode"},
+        "applicationReceiverCode":{"shape":"X12ApplicationReceiverCode"},
+        "responsibleAgencyCode":{"shape":"X12ResponsibleAgencyCode"}
+      }
+    },
+    "X12GS05TimeFormat":{
+      "type":"string",
+      "enum":[
+        "HHMM",
+        "HHMMSS",
+        "HHMMSSDD"
+      ]
+    },
+    "X12IdQualifier":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12InboundEdiOptions":{
+      "type":"structure",
+      "members":{
+        "acknowledgmentOptions":{"shape":"X12AcknowledgmentOptions"}
+      }
+    },
+    "X12InterchangeControlHeaders":{
+      "type":"structure",
+      "members":{
+        "senderIdQualifier":{"shape":"X12IdQualifier"},
+        "senderId":{"shape":"X12SenderId"},
+        "receiverIdQualifier":{"shape":"X12IdQualifier"},
+        "receiverId":{"shape":"X12ReceiverId"},
+        "repetitionSeparator":{"shape":"X12RepetitionSeparator"},
+        "acknowledgmentRequestedCode":{"shape":"X12AcknowledgmentRequestedCode"},
+        "usageIndicatorCode":{"shape":"X12UsageIndicatorCode"}
+      }
+    },
+    "X12OutboundEdiHeaders":{
+      "type":"structure",
+      "members":{
+        "interchangeControlHeaders":{"shape":"X12InterchangeControlHeaders"},
+        "functionalGroupHeaders":{"shape":"X12FunctionalGroupHeaders"},
+        "delimiters":{"shape":"X12Delimiters"},
+        "validateEdi":{"shape":"X12ValidateEdi"},
+        "controlNumbers":{"shape":"X12ControlNumbers"},
+        "gs05TimeFormat":{"shape":"X12GS05TimeFormat"}
+      }
+    },
+    "X12ReceiverId":{
+      "type":"string",
+      "max":15,
+      "min":15,
+      "pattern":"[a-zA-Z0-9 ]*"
+    },
+    "X12RepetitionSeparator":{
+      "type":"string",
+      "max":1,
+      "min":1
+    },
+    "X12ResponsibleAgencyCode":{
+      "type":"string",
+      "max":2,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12SegmentTerminator":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[!&'()*+,\\-./:;?=%@\\[\\]_{}|<>~^`\"]"
+    },
+    "X12SenderId":{
+      "type":"string",
+      "max":15,
+      "min":15,
+      "pattern":"[a-zA-Z0-9 ]*"
+    },
+    "X12SplitBy":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "TRANSACTION"
+      ]
+    },
+    "X12SplitOptions":{
+      "type":"structure",
+      "required":["splitBy"],
+      "members":{
+        "splitBy":{"shape":"X12SplitBy"}
+      }
+    },
+    "X12TechnicalAcknowledgment":{
+      "type":"string",
+      "enum":[
+        "DO_NOT_GENERATE",
+        "GENERATE_ALL_SEGMENTS"
+      ]
+    },
     "X12TransactionSet":{
       "type":"string",
       "enum":[
+        "X12_100",
+        "X12_101",
+        "X12_102",
+        "X12_103",
+        "X12_104",
+        "X12_105",
+        "X12_106",
+        "X12_107",
+        "X12_108",
+        "X12_109",
         "X12_110",
+        "X12_111",
+        "X12_112",
+        "X12_113",
+        "X12_120",
+        "X12_121",
+        "X12_124",
+        "X12_125",
+        "X12_126",
+        "X12_127",
+        "X12_128",
+        "X12_129",
+        "X12_130",
+        "X12_131",
+        "X12_132",
+        "X12_133",
+        "X12_135",
+        "X12_138",
+        "X12_139",
+        "X12_140",
+        "X12_141",
+        "X12_142",
+        "X12_143",
+        "X12_144",
+        "X12_146",
+        "X12_147",
+        "X12_148",
+        "X12_149",
+        "X12_150",
+        "X12_151",
+        "X12_152",
+        "X12_153",
+        "X12_154",
+        "X12_155",
+        "X12_157",
+        "X12_158",
+        "X12_159",
+        "X12_160",
+        "X12_161",
+        "X12_163",
+        "X12_170",
+        "X12_175",
+        "X12_176",
+        "X12_179",
         "X12_180",
+        "X12_185",
+        "X12_186",
+        "X12_187",
+        "X12_188",
+        "X12_189",
+        "X12_190",
+        "X12_191",
+        "X12_194",
+        "X12_195",
+        "X12_196",
+        "X12_197",
+        "X12_198",
+        "X12_199",
+        "X12_200",
+        "X12_201",
+        "X12_202",
+        "X12_203",
         "X12_204",
+        "X12_205",
+        "X12_206",
         "X12_210",
         "X12_211",
+        "X12_212",
+        "X12_213",
         "X12_214",
         "X12_215",
+        "X12_216",
+        "X12_217",
+        "X12_218",
+        "X12_219",
+        "X12_220",
+        "X12_222",
+        "X12_223",
+        "X12_224",
+        "X12_225",
+        "X12_227",
+        "X12_228",
+        "X12_240",
+        "X12_242",
+        "X12_244",
+        "X12_245",
+        "X12_248",
+        "X12_249",
+        "X12_250",
+        "X12_251",
+        "X12_252",
+        "X12_255",
+        "X12_256",
         "X12_259",
         "X12_260",
+        "X12_261",
+        "X12_262",
+        "X12_263",
+        "X12_264",
+        "X12_265",
         "X12_266",
+        "X12_267",
+        "X12_268",
         "X12_269",
         "X12_270",
         "X12_271",
+        "X12_272",
+        "X12_273",
         "X12_274",
         "X12_275",
         "X12_276",
         "X12_277",
         "X12_278",
+        "X12_280",
+        "X12_283",
+        "X12_284",
+        "X12_285",
+        "X12_286",
+        "X12_288",
+        "X12_290",
+        "X12_300",
+        "X12_301",
+        "X12_303",
+        "X12_304",
+        "X12_309",
         "X12_310",
+        "X12_311",
+        "X12_312",
+        "X12_313",
         "X12_315",
+        "X12_317",
+        "X12_319",
         "X12_322",
+        "X12_323",
+        "X12_324",
+        "X12_325",
+        "X12_326",
+        "X12_350",
+        "X12_352",
+        "X12_353",
+        "X12_354",
+        "X12_355",
+        "X12_356",
+        "X12_357",
+        "X12_358",
+        "X12_361",
+        "X12_362",
         "X12_404",
         "X12_410",
+        "X12_412",
+        "X12_414",
         "X12_417",
+        "X12_418",
+        "X12_419",
+        "X12_420",
         "X12_421",
+        "X12_422",
+        "X12_423",
+        "X12_424",
+        "X12_425",
         "X12_426",
+        "X12_429",
+        "X12_431",
+        "X12_432",
+        "X12_433",
+        "X12_434",
+        "X12_435",
+        "X12_436",
+        "X12_437",
+        "X12_440",
+        "X12_451",
+        "X12_452",
+        "X12_453",
+        "X12_455",
+        "X12_456",
+        "X12_460",
+        "X12_463",
+        "X12_466",
+        "X12_468",
+        "X12_470",
+        "X12_475",
+        "X12_485",
+        "X12_486",
+        "X12_490",
+        "X12_492",
+        "X12_494",
+        "X12_500",
+        "X12_501",
+        "X12_503",
+        "X12_504",
+        "X12_511",
+        "X12_517",
+        "X12_521",
+        "X12_527",
+        "X12_536",
+        "X12_540",
+        "X12_561",
+        "X12_567",
+        "X12_568",
+        "X12_601",
+        "X12_602",
+        "X12_620",
+        "X12_625",
+        "X12_650",
+        "X12_715",
+        "X12_753",
+        "X12_754",
+        "X12_805",
+        "X12_806",
         "X12_810",
+        "X12_811",
+        "X12_812",
+        "X12_813",
+        "X12_814",
+        "X12_815",
+        "X12_816",
+        "X12_818",
+        "X12_819",
         "X12_820",
+        "X12_821",
+        "X12_822",
+        "X12_823",
         "X12_824",
+        "X12_826",
+        "X12_827",
+        "X12_828",
+        "X12_829",
         "X12_830",
+        "X12_831",
         "X12_832",
+        "X12_833",
         "X12_834",
         "X12_835",
+        "X12_836",
         "X12_837",
+        "X12_838",
+        "X12_839",
+        "X12_840",
+        "X12_841",
+        "X12_842",
+        "X12_843",
         "X12_844",
+        "X12_845",
         "X12_846",
+        "X12_847",
+        "X12_848",
         "X12_849",
         "X12_850",
+        "X12_851",
         "X12_852",
+        "X12_853",
+        "X12_854",
         "X12_855",
         "X12_856",
+        "X12_857",
+        "X12_858",
+        "X12_859",
         "X12_860",
         "X12_861",
+        "X12_862",
+        "X12_863",
         "X12_864",
         "X12_865",
+        "X12_866",
+        "X12_867",
+        "X12_868",
         "X12_869",
         "X12_870",
+        "X12_871",
+        "X12_872",
+        "X12_873",
+        "X12_874",
+        "X12_875",
+        "X12_876",
+        "X12_877",
+        "X12_878",
+        "X12_879",
+        "X12_880",
+        "X12_881",
+        "X12_882",
+        "X12_883",
+        "X12_884",
+        "X12_885",
+        "X12_886",
+        "X12_887",
+        "X12_888",
+        "X12_889",
+        "X12_891",
+        "X12_893",
+        "X12_894",
+        "X12_895",
+        "X12_896",
+        "X12_920",
+        "X12_924",
+        "X12_925",
+        "X12_926",
+        "X12_928",
         "X12_940",
+        "X12_943",
+        "X12_944",
         "X12_945",
+        "X12_947",
+        "X12_980",
         "X12_990",
+        "X12_993",
+        "X12_996",
         "X12_997",
+        "X12_998",
         "X12_999",
         "X12_270_X279",
         "X12_271_X279",
@@ -1609,11 +2583,42 @@
         "X12_999_X231"
       ]
     },
+    "X12UsageIndicatorCode":{
+      "type":"string",
+      "max":1,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]*"
+    },
+    "X12ValidateEdi":{
+      "type":"boolean",
+      "box":true
+    },
+    "X12ValidationOptions":{
+      "type":"structure",
+      "members":{
+        "validationRules":{"shape":"X12ValidationRules"}
+      }
+    },
+    "X12ValidationRule":{
+      "type":"structure",
+      "members":{
+        "codeListValidationRule":{"shape":"X12CodeListValidationRule"},
+        "elementLengthValidationRule":{"shape":"X12ElementLengthValidationRule"},
+        "elementRequirementValidationRule":{"shape":"X12ElementRequirementValidationRule"}
+      },
+      "union":true
+    },
+    "X12ValidationRules":{
+      "type":"list",
+      "member":{"shape":"X12ValidationRule"}
+    },
     "X12Version":{
       "type":"string",
       "enum":[
         "VERSION_4010",
         "VERSION_4030",
+        "VERSION_4050",
+        "VERSION_4060",
         "VERSION_5010",
         "VERSION_5010_HIPAA"
       ]

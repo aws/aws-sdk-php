@@ -5,12 +5,14 @@
     "endpointPrefix":"codeconnections",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS CodeConnections",
     "serviceId":"CodeConnections",
     "signatureVersion":"v4",
     "signingName":"codeconnections",
     "targetPrefix":"com.amazonaws.codeconnections.CodeConnections_20231201",
-    "uid":"codeconnections-2023-12-01"
+    "uid":"codeconnections-2023-12-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateConnection":{
@@ -593,7 +595,8 @@
         "RoleArn":{"shape":"IamRoleArn"},
         "SyncType":{"shape":"SyncConfigurationType"},
         "PublishDeploymentStatus":{"shape":"PublishDeploymentStatus"},
-        "TriggerResourceUpdateOn":{"shape":"TriggerResourceUpdateOn"}
+        "TriggerResourceUpdateOn":{"shape":"TriggerResourceUpdateOn"},
+        "PullRequestComment":{"shape":"PullRequestComment"}
       }
     },
     "CreateSyncConfigurationOutput":{
@@ -613,8 +616,7 @@
     },
     "DeleteConnectionOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteHostInput":{
       "type":"structure",
@@ -625,8 +627,7 @@
     },
     "DeleteHostOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRepositoryLinkInput":{
       "type":"structure",
@@ -637,8 +638,7 @@
     },
     "DeleteRepositoryLinkOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSyncConfigurationInput":{
       "type":"structure",
@@ -653,8 +653,7 @@
     },
     "DeleteSyncConfigurationOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeploymentFilePath":{"type":"string"},
     "Directory":{"type":"string"},
@@ -984,10 +983,18 @@
         "GitHub",
         "GitHubEnterpriseServer",
         "GitLab",
-        "GitLabSelfManaged"
+        "GitLabSelfManaged",
+        "AzureDevOps"
       ]
     },
     "PublishDeploymentStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "PullRequestComment":{
       "type":"string",
       "enum":[
         "ENABLED",
@@ -1307,7 +1314,8 @@
         "RoleArn":{"shape":"IamRoleArn"},
         "SyncType":{"shape":"SyncConfigurationType"},
         "PublishDeploymentStatus":{"shape":"PublishDeploymentStatus"},
-        "TriggerResourceUpdateOn":{"shape":"TriggerResourceUpdateOn"}
+        "TriggerResourceUpdateOn":{"shape":"TriggerResourceUpdateOn"},
+        "PullRequestComment":{"shape":"PullRequestComment"}
       }
     },
     "SyncConfigurationList":{
@@ -1367,8 +1375,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1426,8 +1433,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateHostInput":{
       "type":"structure",
@@ -1440,8 +1446,7 @@
     },
     "UpdateHostOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateOutOfSyncException":{
       "type":"structure",
@@ -1507,7 +1512,8 @@
         "RoleArn":{"shape":"IamRoleArn"},
         "SyncType":{"shape":"SyncConfigurationType"},
         "PublishDeploymentStatus":{"shape":"PublishDeploymentStatus"},
-        "TriggerResourceUpdateOn":{"shape":"TriggerResourceUpdateOn"}
+        "TriggerResourceUpdateOn":{"shape":"TriggerResourceUpdateOn"},
+        "PullRequestComment":{"shape":"PullRequestComment"}
       }
     },
     "UpdateSyncConfigurationOutput":{

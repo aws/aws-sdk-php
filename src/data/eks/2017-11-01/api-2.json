@@ -44,7 +44,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "AssociateIdentityProviderConfig":{
@@ -61,7 +62,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateAccessEntry":{
@@ -227,7 +229,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ClientException"},
         {"shape":"ServerException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"}
       ]
     },
     "DeleteEksAnywhereSubscription":{
@@ -382,6 +385,20 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DescribeClusterVersions":{
+      "name":"DescribeClusterVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/cluster-versions"
+      },
+      "input":{"shape":"DescribeClusterVersionsRequest"},
+      "output":{"shape":"DescribeClusterVersionsResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "DescribeEksAnywhereSubscription":{
       "name":"DescribeEksAnywhereSubscription",
       "http":{
@@ -436,6 +453,21 @@
       },
       "input":{"shape":"DescribeInsightRequest"},
       "output":{"shape":"DescribeInsightResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
+    "DescribeInsightsRefresh":{
+      "name":"DescribeInsightsRefresh",
+      "http":{
+        "method":"GET",
+        "requestUri":"/clusters/{name}/insights-refresh"
+      },
+      "input":{"shape":"DescribeInsightsRefreshRequest"},
+      "output":{"shape":"DescribeInsightsRefreshResponse"},
       "errors":[
         {"shape":"ServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -517,7 +549,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListAccessEntries":{
@@ -731,6 +764,21 @@
         {"shape":"ResourcePropagationDelayException"}
       ]
     },
+    "StartInsightsRefresh":{
+      "name":"StartInsightsRefresh",
+      "http":{
+        "method":"POST",
+        "requestUri":"/clusters/{name}/insights-refresh"
+      },
+      "input":{"shape":"StartInsightsRefreshRequest"},
+      "output":{"shape":"StartInsightsRefreshResponse"},
+      "errors":[
+        {"shape":"ServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -803,7 +851,8 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateClusterVersion":{
@@ -820,7 +869,9 @@
         {"shape":"ServerException"},
         {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidStateException"}
       ]
     },
     "UpdateEksAnywhereSubscription":{
@@ -899,6 +950,8 @@
         "CUSTOM",
         "BOTTLEROCKET_ARM_64",
         "BOTTLEROCKET_x86_64",
+        "BOTTLEROCKET_ARM_64_FIPS",
+        "BOTTLEROCKET_x86_64_FIPS",
         "BOTTLEROCKET_ARM_64_NVIDIA",
         "BOTTLEROCKET_x86_64_NVIDIA",
         "WINDOWS_CORE_2019_x86_64",
@@ -906,7 +959,10 @@
         "WINDOWS_CORE_2022_x86_64",
         "WINDOWS_FULL_2022_x86_64",
         "AL2023_x86_64_STANDARD",
-        "AL2023_ARM_64_STANDARD"
+        "AL2023_ARM_64_STANDARD",
+        "AL2023_x86_64_NEURON",
+        "AL2023_x86_64_NVIDIA",
+        "AL2023_ARM_64_NVIDIA"
       ]
     },
     "AccessConfigResponse":{
@@ -985,8 +1041,20 @@
         "owner":{"shape":"String"},
         "marketplaceInformation":{"shape":"MarketplaceInformation"},
         "configurationValues":{"shape":"String"},
-        "podIdentityAssociations":{"shape":"StringList"}
+        "podIdentityAssociations":{"shape":"StringList"},
+        "namespaceConfig":{"shape":"AddonNamespaceConfigResponse"}
       }
+    },
+    "AddonCompatibilityDetail":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "compatibleVersions":{"shape":"StringList"}
+      }
+    },
+    "AddonCompatibilityDetails":{
+      "type":"list",
+      "member":{"shape":"AddonCompatibilityDetail"}
     },
     "AddonHealth":{
       "type":"structure",
@@ -1002,7 +1070,8 @@
         "addonVersions":{"shape":"AddonVersionInfoList"},
         "publisher":{"shape":"String"},
         "owner":{"shape":"String"},
-        "marketplaceInformation":{"shape":"MarketplaceInformation"}
+        "marketplaceInformation":{"shape":"MarketplaceInformation"},
+        "defaultNamespace":{"shape":"String"}
       }
     },
     "AddonIssue":{
@@ -1031,6 +1100,18 @@
     "AddonIssueList":{
       "type":"list",
       "member":{"shape":"AddonIssue"}
+    },
+    "AddonNamespaceConfigRequest":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"namespace"}
+      }
+    },
+    "AddonNamespaceConfigResponse":{
+      "type":"structure",
+      "members":{
+        "namespace":{"shape":"namespace"}
+      }
     },
     "AddonPodIdentityAssociations":{
       "type":"structure",
@@ -1076,6 +1157,7 @@
       "members":{
         "addonVersion":{"shape":"String"},
         "architecture":{"shape":"StringList"},
+        "computeTypes":{"shape":"StringList"},
         "compatibilities":{"shape":"Compatibilities"},
         "requiresConfiguration":{"shape":"Boolean"},
         "requiresIamPermissions":{"shape":"Boolean"}
@@ -1211,6 +1293,12 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "BlockStorage":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"}
+      }
+    },
     "Boolean":{"type":"boolean"},
     "BoxedBoolean":{
       "type":"boolean",
@@ -1229,12 +1317,16 @@
       "type":"string",
       "enum":[
         "ON_DEMAND",
-        "SPOT"
+        "SPOT",
+        "CAPACITY_BLOCK"
       ]
     },
     "Category":{
       "type":"string",
-      "enum":["UPGRADE_READINESS"]
+      "enum":[
+        "UPGRADE_READINESS",
+        "MISCONFIGURATION"
+      ]
     },
     "CategoryList":{
       "type":"list",
@@ -1293,7 +1385,13 @@
         "id":{"shape":"String"},
         "health":{"shape":"ClusterHealth"},
         "outpostConfig":{"shape":"OutpostConfigResponse"},
-        "accessConfig":{"shape":"AccessConfigResponse"}
+        "accessConfig":{"shape":"AccessConfigResponse"},
+        "upgradePolicy":{"shape":"UpgradePolicyResponse"},
+        "zonalShiftConfig":{"shape":"ZonalShiftConfigResponse"},
+        "remoteNetworkConfig":{"shape":"RemoteNetworkConfigResponse"},
+        "computeConfig":{"shape":"ComputeConfigResponse"},
+        "storageConfig":{"shape":"StorageConfigResponse"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "ClusterHealth":{
@@ -1355,6 +1453,33 @@
         "PENDING"
       ]
     },
+    "ClusterVersionInformation":{
+      "type":"structure",
+      "members":{
+        "clusterVersion":{"shape":"String"},
+        "clusterType":{"shape":"String"},
+        "defaultPlatformVersion":{"shape":"String"},
+        "defaultVersion":{"shape":"Boolean"},
+        "releaseDate":{"shape":"Timestamp"},
+        "endOfStandardSupportDate":{"shape":"Timestamp"},
+        "endOfExtendedSupportDate":{"shape":"Timestamp"},
+        "status":{"shape":"ClusterVersionStatus"},
+        "versionStatus":{"shape":"VersionStatus"},
+        "kubernetesPatchVersion":{"shape":"String"}
+      }
+    },
+    "ClusterVersionList":{
+      "type":"list",
+      "member":{"shape":"ClusterVersionInformation"}
+    },
+    "ClusterVersionStatus":{
+      "type":"string",
+      "enum":[
+        "unsupported",
+        "standard-support",
+        "extended-support"
+      ]
+    },
     "Compatibilities":{
       "type":"list",
       "member":{"shape":"Compatibility"}
@@ -1365,6 +1490,22 @@
         "clusterVersion":{"shape":"String"},
         "platformVersions":{"shape":"StringList"},
         "defaultVersion":{"shape":"Boolean"}
+      }
+    },
+    "ComputeConfigRequest":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"},
+        "nodePools":{"shape":"StringList"},
+        "nodeRoleArn":{"shape":"String"}
+      }
+    },
+    "ComputeConfigResponse":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"},
+        "nodePools":{"shape":"StringList"},
+        "nodeRoleArn":{"shape":"String"}
       }
     },
     "ConnectorConfigProvider":{
@@ -1472,7 +1613,8 @@
         },
         "tags":{"shape":"TagMap"},
         "configurationValues":{"shape":"String"},
-        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"}
+        "podIdentityAssociations":{"shape":"AddonPodIdentityAssociationsList"},
+        "namespaceConfig":{"shape":"AddonNamespaceConfigRequest"}
       }
     },
     "CreateAddonResponse":{
@@ -1503,7 +1645,13 @@
         "encryptionConfig":{"shape":"EncryptionConfigList"},
         "outpostConfig":{"shape":"OutpostConfigRequest"},
         "accessConfig":{"shape":"CreateAccessConfigRequest"},
-        "bootstrapSelfManagedAddons":{"shape":"BoxedBoolean"}
+        "bootstrapSelfManagedAddons":{"shape":"BoxedBoolean"},
+        "upgradePolicy":{"shape":"UpgradePolicyRequest"},
+        "zonalShiftConfig":{"shape":"ZonalShiftConfigRequest"},
+        "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
+        "computeConfig":{"shape":"ComputeConfigRequest"},
+        "storageConfig":{"shape":"StorageConfigRequest"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "CreateClusterResponse":{
@@ -1598,6 +1746,7 @@
         },
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
+        "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "capacityType":{"shape":"CapacityTypes"},
         "version":{"shape":"String"},
         "releaseVersion":{"shape":"String"}
@@ -1630,7 +1779,9 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"}
       }
     },
     "CreatePodIdentityAssociationResponse":{
@@ -1660,8 +1811,7 @@
     },
     "DeleteAccessEntryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAddonRequest":{
       "type":"structure",
@@ -1981,6 +2131,67 @@
         "cluster":{"shape":"Cluster"}
       }
     },
+    "DescribeClusterVersionMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "DescribeClusterVersionsRequest":{
+      "type":"structure",
+      "members":{
+        "clusterType":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"clusterType"
+        },
+        "maxResults":{
+          "shape":"DescribeClusterVersionMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "defaultOnly":{
+          "shape":"BoxedBoolean",
+          "location":"querystring",
+          "locationName":"defaultOnly"
+        },
+        "includeAll":{
+          "shape":"BoxedBoolean",
+          "location":"querystring",
+          "locationName":"includeAll"
+        },
+        "clusterVersions":{
+          "shape":"StringList",
+          "location":"querystring",
+          "locationName":"clusterVersions"
+        },
+        "status":{
+          "shape":"ClusterVersionStatus",
+          "deprecated":true,
+          "deprecatedMessage":"status has been replaced by versionStatus",
+          "deprecatedSince":"2025-02-15",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "versionStatus":{
+          "shape":"VersionStatus",
+          "location":"querystring",
+          "locationName":"versionStatus"
+        }
+      }
+    },
+    "DescribeClusterVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "nextToken":{"shape":"String"},
+        "clusterVersions":{"shape":"ClusterVersionList"}
+      }
+    },
     "DescribeEksAnywhereSubscriptionRequest":{
       "type":"structure",
       "required":["id"],
@@ -2067,6 +2278,26 @@
       "type":"structure",
       "members":{
         "insight":{"shape":"Insight"}
+      }
+    },
+    "DescribeInsightsRefreshRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DescribeInsightsRefreshResponse":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "status":{"shape":"InsightsRefreshStatus"},
+        "startedAt":{"shape":"Timestamp"},
+        "endedAt":{"shape":"Timestamp"}
       }
     },
     "DescribeNodegroupRequest":{
@@ -2181,8 +2412,7 @@
     },
     "DisassociateAccessPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateIdentityProviderConfigRequest":{
       "type":"structure",
@@ -2223,6 +2453,7 @@
         "status":{"shape":"String"},
         "autoRenew":{"shape":"Boolean"},
         "licenseArns":{"shape":"StringList"},
+        "licenses":{"shape":"LicenseList"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -2265,6 +2496,12 @@
     "EksAnywhereSubscriptionTermUnit":{
       "type":"string",
       "enum":["MONTHS"]
+    },
+    "ElasticLoadBalancing":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"}
+      }
     },
     "EncryptionConfig":{
       "type":"structure",
@@ -2437,7 +2674,8 @@
     "InsightCategorySpecificSummary":{
       "type":"structure",
       "members":{
-        "deprecationDetails":{"shape":"DeprecationDetails"}
+        "deprecationDetails":{"shape":"DeprecationDetails"},
+        "addonCompatibilityDetails":{"shape":"AddonCompatibilityDetails"}
       }
     },
     "InsightResourceDetail":{
@@ -2497,6 +2735,14 @@
         "statuses":{"shape":"InsightStatusValueList"}
       }
     },
+    "InsightsRefreshStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
     "Integer":{"type":"integer"},
     "InvalidParameterException":{
       "type":"structure",
@@ -2518,6 +2764,15 @@
         "nodegroupName":{"shape":"String"},
         "addonName":{"shape":"String"},
         "subscriptionId":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "InvalidStateException":{
+      "type":"structure",
+      "members":{
+        "clusterName":{"shape":"String"},
         "message":{"shape":"String"}
       },
       "error":{"httpStatusCode":400},
@@ -2546,7 +2801,8 @@
       "type":"structure",
       "members":{
         "serviceIpv4Cidr":{"shape":"String"},
-        "ipFamily":{"shape":"IpFamily"}
+        "ipFamily":{"shape":"IpFamily"},
+        "elasticLoadBalancing":{"shape":"ElasticLoadBalancing"}
       }
     },
     "KubernetesNetworkConfigResponse":{
@@ -2554,7 +2810,8 @@
       "members":{
         "serviceIpv4Cidr":{"shape":"String"},
         "serviceIpv6Cidr":{"shape":"String"},
-        "ipFamily":{"shape":"IpFamily"}
+        "ipFamily":{"shape":"IpFamily"},
+        "elasticLoadBalancing":{"shape":"ElasticLoadBalancing"}
       }
     },
     "LaunchTemplateSpecification":{
@@ -2564,6 +2821,17 @@
         "version":{"shape":"String"},
         "id":{"shape":"String"}
       }
+    },
+    "License":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"String"},
+        "token":{"shape":"String"}
+      }
+    },
+    "LicenseList":{
+      "type":"list",
+      "member":{"shape":"License"}
     },
     "ListAccessEntriesRequest":{
       "type":"structure",
@@ -3042,6 +3310,12 @@
         "productUrl":{"shape":"String"}
       }
     },
+    "NodeRepairConfig":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"}
+      }
+    },
     "Nodegroup":{
       "type":"structure",
       "members":{
@@ -3066,6 +3340,7 @@
         "diskSize":{"shape":"BoxedInteger"},
         "health":{"shape":"NodegroupHealth"},
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
+        "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "tags":{"shape":"TagMap"}
       }
@@ -3113,7 +3388,8 @@
         "Unknown",
         "AutoScalingGroupInstanceRefreshActive",
         "KubernetesLabelInvalid",
-        "Ec2LaunchTemplateVersionMaxLimitExceeded"
+        "Ec2LaunchTemplateVersionMaxLimitExceeded",
+        "Ec2InstanceTypeDoesNotExist"
       ]
     },
     "NodegroupResources":{
@@ -3147,8 +3423,16 @@
       "type":"structure",
       "members":{
         "maxUnavailable":{"shape":"NonZeroInteger"},
-        "maxUnavailablePercentage":{"shape":"PercentCapacity"}
+        "maxUnavailablePercentage":{"shape":"PercentCapacity"},
+        "updateStrategy":{"shape":"NodegroupUpdateStrategies"}
       }
+    },
+    "NodegroupUpdateStrategies":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "MINIMAL"
+      ]
     },
     "NonZeroInteger":{
       "type":"integer",
@@ -3246,7 +3530,10 @@
         "tags":{"shape":"TagMap"},
         "createdAt":{"shape":"Timestamp"},
         "modifiedAt":{"shape":"Timestamp"},
-        "ownerArn":{"shape":"String"}
+        "ownerArn":{"shape":"String"},
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"},
+        "externalId":{"shape":"String"}
       }
     },
     "PodIdentityAssociationSummaries":{
@@ -3298,6 +3585,42 @@
         "ec2SshKey":{"shape":"String"},
         "sourceSecurityGroups":{"shape":"StringList"}
       }
+    },
+    "RemoteNetworkConfigRequest":{
+      "type":"structure",
+      "members":{
+        "remoteNodeNetworks":{"shape":"RemoteNodeNetworkList"},
+        "remotePodNetworks":{"shape":"RemotePodNetworkList"}
+      }
+    },
+    "RemoteNetworkConfigResponse":{
+      "type":"structure",
+      "members":{
+        "remoteNodeNetworks":{"shape":"RemoteNodeNetworkList"},
+        "remotePodNetworks":{"shape":"RemotePodNetworkList"}
+      }
+    },
+    "RemoteNodeNetwork":{
+      "type":"structure",
+      "members":{
+        "cidrs":{"shape":"StringList"}
+      }
+    },
+    "RemoteNodeNetworkList":{
+      "type":"list",
+      "member":{"shape":"RemoteNodeNetwork"},
+      "max":1
+    },
+    "RemotePodNetwork":{
+      "type":"structure",
+      "members":{
+        "cidrs":{"shape":"StringList"}
+      }
+    },
+    "RemotePodNetworkList":{
+      "type":"list",
+      "member":{"shape":"RemotePodNetwork"},
+      "max":1
     },
     "ResolveConflicts":{
       "type":"string",
@@ -3377,10 +3700,47 @@
       "exception":true,
       "fault":true
     },
+    "StartInsightsRefreshRequest":{
+      "type":"structure",
+      "required":["clusterName"],
+      "members":{
+        "clusterName":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "StartInsightsRefreshResponse":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"},
+        "status":{"shape":"InsightsRefreshStatus"}
+      }
+    },
+    "StorageConfigRequest":{
+      "type":"structure",
+      "members":{
+        "blockStorage":{"shape":"BlockStorage"}
+      }
+    },
+    "StorageConfigResponse":{
+      "type":"structure",
+      "members":{
+        "blockStorage":{"shape":"BlockStorage"}
+      }
+    },
     "String":{"type":"string"},
     "StringList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "SupportType":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "EXTENDED"
+      ]
     },
     "TagKey":{
       "type":"string",
@@ -3417,8 +3777,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3439,6 +3798,15 @@
         "NO_EXECUTE",
         "PREFER_NO_SCHEDULE"
       ]
+    },
+    "ThrottlingException":{
+      "type":"structure",
+      "members":{
+        "clusterName":{"shape":"String"},
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":429},
+      "exception":true
     },
     "Timestamp":{"type":"timestamp"},
     "UnsupportedAvailabilityZoneException":{
@@ -3473,8 +3841,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Update":{
       "type":"structure",
@@ -3573,7 +3940,14 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "accessConfig":{"shape":"UpdateAccessConfigRequest"}
+        "accessConfig":{"shape":"UpdateAccessConfigRequest"},
+        "upgradePolicy":{"shape":"UpgradePolicyRequest"},
+        "zonalShiftConfig":{"shape":"ZonalShiftConfigRequest"},
+        "computeConfig":{"shape":"ComputeConfigRequest"},
+        "kubernetesNetworkConfig":{"shape":"KubernetesNetworkConfigRequest"},
+        "storageConfig":{"shape":"StorageConfigRequest"},
+        "remoteNetworkConfig":{"shape":"RemoteNetworkConfigRequest"},
+        "deletionProtection":{"shape":"BoxedBoolean"}
       }
     },
     "UpdateClusterConfigResponse":{
@@ -3598,7 +3972,8 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "force":{"shape":"Boolean"}
       }
     },
     "UpdateClusterVersionResponse":{
@@ -3660,6 +4035,7 @@
         "taints":{"shape":"UpdateTaintsPayload"},
         "scalingConfig":{"shape":"NodegroupScalingConfig"},
         "updateConfig":{"shape":"NodegroupUpdateConfig"},
+        "nodeRepairConfig":{"shape":"NodeRepairConfig"},
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -3738,11 +4114,20 @@
         "ResolveConflicts",
         "MaxUnavailable",
         "MaxUnavailablePercentage",
+        "NodeRepairEnabled",
+        "UpdateStrategy",
         "ConfigurationValues",
         "SecurityGroups",
         "Subnets",
         "AuthenticationMode",
-        "PodIdentityAssociations"
+        "PodIdentityAssociations",
+        "UpgradePolicy",
+        "ZonalShiftConfig",
+        "ComputeConfig",
+        "StorageConfig",
+        "KubernetesNetworkConfig",
+        "RemoteNetworkConfig",
+        "DeletionProtection"
       ]
     },
     "UpdateParams":{
@@ -3770,7 +4155,9 @@
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
-        }
+        },
+        "disableSessionTags":{"shape":"BoxedBoolean"},
+        "targetRoleArn":{"shape":"String"}
       }
     },
     "UpdatePodIdentityAssociationResponse":{
@@ -3807,7 +4194,32 @@
         "AssociateEncryptionConfig",
         "AddonUpdate",
         "VpcConfigUpdate",
-        "AccessConfigUpdate"
+        "AccessConfigUpdate",
+        "UpgradePolicyUpdate",
+        "ZonalShiftConfigUpdate",
+        "AutoModeUpdate",
+        "RemoteNetworkConfigUpdate",
+        "DeletionProtectionUpdate"
+      ]
+    },
+    "UpgradePolicyRequest":{
+      "type":"structure",
+      "members":{
+        "supportType":{"shape":"SupportType"}
+      }
+    },
+    "UpgradePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "supportType":{"shape":"SupportType"}
+      }
+    },
+    "VersionStatus":{
+      "type":"string",
+      "enum":[
+        "UNSUPPORTED",
+        "STANDARD_SUPPORT",
+        "EXTENDED_SUPPORT"
       ]
     },
     "VpcConfigRequest":{
@@ -3837,6 +4249,18 @@
       "box":true,
       "min":0
     },
+    "ZonalShiftConfigRequest":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"}
+      }
+    },
+    "ZonalShiftConfigResponse":{
+      "type":"structure",
+      "members":{
+        "enabled":{"shape":"BoxedBoolean"}
+      }
+    },
     "configStatus":{
       "type":"string",
       "enum":[
@@ -3863,6 +4287,11 @@
       "type":"map",
       "key":{"shape":"labelKey"},
       "value":{"shape":"labelValue"}
+    },
+    "namespace":{
+      "type":"string",
+      "max":63,
+      "min":1
     },
     "requiredClaimsKey":{
       "type":"string",

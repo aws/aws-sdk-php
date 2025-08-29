@@ -531,7 +531,7 @@
     "EndpointDetailsList": {
       "base": null,
       "refs": {
-        "CreateDataflowEndpointGroupRequest$endpointDetails": "<p>Endpoint details of each endpoint in the dataflow endpoint group.</p>",
+        "CreateDataflowEndpointGroupRequest$endpointDetails": "<p>Endpoint details of each endpoint in the dataflow endpoint group. <pre><code> All dataflow endpoints within a single dataflow endpoint group must be of the same type. You cannot mix &lt;a href=&quot;https://docs.aws.amazon.com/ground-station/latest/APIReference/API_AwsGroundStationAgentEndpoint.html&quot;&gt; AWS Ground Station Agent endpoints&lt;/a&gt; with &lt;a href=&quot;https://docs.aws.amazon.com/ground-station/latest/APIReference/API_DataflowEndpoint.html&quot;&gt;Dataflow endpoints&lt;/a&gt; in the same group. If your use case requires both types of endpoints, you must create separate dataflow endpoint groups for each type. &lt;/p&gt; </code></pre>",
         "GetDataflowEndpointGroupResponse$endpointsDetails": "<p>Details of a dataflow endpoint.</p>"
       }
     },
@@ -804,7 +804,7 @@
       }
     },
     "KmsKey": {
-      "base": "<p>AWS Key Management Service (KMS) Key.</p>",
+      "base": "<p>KMS key info.</p>",
       "refs": {
         "CreateMissionProfileRequest$streamsKmsKey": "<p>KMS key to use for encrypting streams.</p>",
         "GetMissionProfileResponse$streamsKmsKey": "<p>KMS key to use for encrypting streams.</p>",
@@ -934,7 +934,7 @@
       }
     },
     "OEMEphemeris": {
-      "base": "<p>Ephemeris data in Orbit Ephemeris Message (OEM) format.</p>",
+      "base": "<p> Ephemeris data in Orbit Ephemeris Message (OEM) format. </p> <p> AWS Ground Station processes OEM Customer Provided Ephemerides according to the <a href=\"https://public.ccsds.org/Pubs/502x0b3e1.pdf\">CCSDS standard</a> with some extra restrictions. OEM files should be in KVN format. For more detail about the OEM format that AWS Ground Station supports, see <a href=\"https://docs.aws.amazon.com/ground-station/latest/ug/providing-custom-ephemeris-data.html#oem-ephemeris-format\">OEM ephemeris format</a> in the AWS Ground Station user guide. </p>",
       "refs": {
         "EphemerisData$oem": null
       }
@@ -1249,6 +1249,7 @@
         "GetDataflowEndpointGroupResponse$tags": "<p>Tags assigned to a dataflow endpoint group.</p>",
         "GetMissionProfileResponse$tags": "<p>Tags assigned to a mission profile.</p>",
         "ListTagsForResourceResponse$tags": "<p>Tags assigned to a resource.</p>",
+        "RegisterAgentRequest$tags": "<p>Tags assigned to an <code>Agent</code>.</p>",
         "ReserveContactRequest$tags": "<p>Tags assigned to a contact.</p>",
         "TagResourceRequest$tags": "<p>Tags assigned to a resource.</p>"
       }

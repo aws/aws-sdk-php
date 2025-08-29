@@ -1,0 +1,1255 @@
+{
+  "version": "2.0",
+  "service": "<p>Provide APIs to create and manage Amazon Connect Campaigns.</p>",
+  "operations": {
+    "CreateCampaign": "<p>Creates a campaign for the specified Amazon Connect account. This API is idempotent.</p>",
+    "DeleteCampaign": "<p>Deletes a campaign from the specified Amazon Connect account.</p>",
+    "DeleteCampaignChannelSubtypeConfig": "<p>Deletes the channel subtype config of a campaign. This API is idempotent.</p>",
+    "DeleteCampaignCommunicationLimits": "<p>Deletes the communication limits config for a campaign. This API is idempotent.</p>",
+    "DeleteCampaignCommunicationTime": "<p>Deletes the communication time config for a campaign. This API is idempotent.</p>",
+    "DeleteConnectInstanceConfig": "<p>Deletes a connect instance config from the specified AWS account.</p>",
+    "DeleteConnectInstanceIntegration": "<p>Delete the integration for the specified Amazon Connect instance.</p>",
+    "DeleteInstanceOnboardingJob": "<p>Delete the Connect Campaigns onboarding job for the specified Amazon Connect instance.</p>",
+    "DescribeCampaign": "<p>Describes the specific campaign.</p>",
+    "GetCampaignState": "<p>Get state of a campaign for the specified Amazon Connect account.</p>",
+    "GetCampaignStateBatch": "<p>Get state of campaigns for the specified Amazon Connect account.</p>",
+    "GetConnectInstanceConfig": "<p>Get the specific Connect instance config.</p>",
+    "GetInstanceCommunicationLimits": "<p>Get the instance communication limits.</p>",
+    "GetInstanceOnboardingJobStatus": "<p>Get the specific instance onboarding job status.</p>",
+    "ListCampaigns": "<p>Provides summary information about the campaigns under the specified Amazon Connect account.</p>",
+    "ListConnectInstanceIntegrations": "<p>Provides summary information about the integration under the specified Connect instance.</p>",
+    "ListTagsForResource": "<p>List tags for a resource.</p>",
+    "PauseCampaign": "<p>Pauses a campaign for the specified Amazon Connect account.</p>",
+    "PutConnectInstanceIntegration": "<p>Put or update the integration for the specified Amazon Connect instance.</p>",
+    "PutInstanceCommunicationLimits": "<p>Put the instance communication limits. This API is idempotent.</p>",
+    "PutOutboundRequestBatch": "<p>Creates outbound requests for the specified campaign Amazon Connect account. This API is idempotent.</p>",
+    "PutProfileOutboundRequestBatch": "<p>Takes in a list of profile outbound requests to be placed as part of an outbound campaign. This API is idempotent.</p>",
+    "ResumeCampaign": "<p>Stops a campaign for the specified Amazon Connect account.</p>",
+    "StartCampaign": "<p>Starts a campaign for the specified Amazon Connect account.</p>",
+    "StartInstanceOnboardingJob": "<p>Onboard the specific Amazon Connect instance to Connect Campaigns.</p>",
+    "StopCampaign": "<p>Stops a campaign for the specified Amazon Connect account.</p>",
+    "TagResource": "<p>Tag a resource.</p>",
+    "UntagResource": "<p>Untag a resource.</p>",
+    "UpdateCampaignChannelSubtypeConfig": "<p>Updates the channel subtype config of a campaign. This API is idempotent.</p>",
+    "UpdateCampaignCommunicationLimits": "<p>Updates the communication limits config for a campaign. This API is idempotent.</p>",
+    "UpdateCampaignCommunicationTime": "<p>Updates the communication time config for a campaign. This API is idempotent.</p>",
+    "UpdateCampaignFlowAssociation": "<p>Updates the campaign flow associated with a campaign. This API is idempotent.</p>",
+    "UpdateCampaignName": "<p>Updates the name of a campaign. This API is idempotent.</p>",
+    "UpdateCampaignSchedule": "<p>Updates the schedule for a campaign. This API is idempotent.</p>",
+    "UpdateCampaignSource": "<p>Updates the campaign source with a campaign. This API is idempotent.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "AgentlessConfig": {
+      "base": "<p>Agentless config</p>",
+      "refs": {
+        "EmailOutboundMode$agentless": null,
+        "SmsOutboundMode$agentless": null,
+        "TelephonyOutboundMode$agentless": null
+      }
+    },
+    "AnswerMachineDetectionConfig": {
+      "base": "<p>Answering Machine Detection config</p>",
+      "refs": {
+        "TelephonyChannelSubtypeParameters$answerMachineDetectionConfig": null,
+        "TelephonyOutboundConfig$answerMachineDetectionConfig": null
+      }
+    },
+    "Arn": {
+      "base": "<p>Amazon Resource Names(ARN)</p>",
+      "refs": {
+        "Campaign$connectCampaignFlowArn": null,
+        "CampaignSummary$connectCampaignFlowArn": null,
+        "CreateCampaignRequest$connectCampaignFlowArn": null,
+        "CustomerProfilesIntegrationConfig$domainArn": null,
+        "CustomerProfilesIntegrationIdentifier$domainArn": null,
+        "CustomerProfilesIntegrationSummary$domainArn": null,
+        "EmailChannelSubtypeParameters$templateArn": null,
+        "EmailOutboundConfig$wisdomTemplateArn": null,
+        "EventTrigger$customerProfilesDomainArn": null,
+        "ListTagsForResourceRequest$arn": null,
+        "QConnectIntegrationConfig$knowledgeBaseArn": null,
+        "QConnectIntegrationIdentifier$knowledgeBaseArn": null,
+        "QConnectIntegrationSummary$knowledgeBaseArn": null,
+        "SmsChannelSubtypeParameters$connectSourcePhoneNumberArn": null,
+        "SmsChannelSubtypeParameters$templateArn": null,
+        "SmsOutboundConfig$connectSourcePhoneNumberArn": null,
+        "SmsOutboundConfig$wisdomTemplateArn": null,
+        "Source$customerProfilesSegmentArn": null,
+        "TagResourceRequest$arn": null,
+        "UntagResourceRequest$arn": null,
+        "UpdateCampaignFlowAssociationRequest$connectCampaignFlowArn": null
+      }
+    },
+    "AttributeName": {
+      "base": "<p>The key of the attribute. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>",
+      "refs": {
+        "Attributes$key": null
+      }
+    },
+    "AttributeValue": {
+      "base": "<p>The value of the attribute.</p>",
+      "refs": {
+        "Attributes$value": null
+      }
+    },
+    "Attributes": {
+      "base": "<p>A custom key-value pair using an attribute map. The attributes are standard Amazon Connect attributes, and can be accessed in contact flows just like any other contact attributes.</p>",
+      "refs": {
+        "EmailChannelSubtypeParameters$templateParameters": null,
+        "SmsChannelSubtypeParameters$templateParameters": null,
+        "TelephonyChannelSubtypeParameters$attributes": null
+      }
+    },
+    "BandwidthAllocation": {
+      "base": "<p>The bandwidth allocation of a queue resource.</p>",
+      "refs": {
+        "PredictiveConfig$bandwidthAllocation": null,
+        "ProgressiveConfig$bandwidthAllocation": null
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "AnswerMachineDetectionConfig$enableAnswerMachineDetection": "<p>Enable or disable answering machine detection</p>",
+        "AnswerMachineDetectionConfig$awaitAnswerMachinePrompt": "<p>Enable or disable await answer machine prompt</p>"
+      }
+    },
+    "Campaign": {
+      "base": "<p>An Amazon Connect campaign.</p>",
+      "refs": {
+        "DescribeCampaignResponse$campaign": null
+      }
+    },
+    "CampaignArn": {
+      "base": "<p>The resource name of an Amazon Connect campaign.</p>",
+      "refs": {
+        "Campaign$arn": null,
+        "CampaignSummary$arn": null,
+        "CreateCampaignResponse$arn": null
+      }
+    },
+    "CampaignDeletionPolicy": {
+      "base": "<p>Enumeration of the policies to enact on existing campaigns during instance config deletion</p>",
+      "refs": {
+        "DeleteConnectInstanceConfigRequest$campaignDeletionPolicy": null
+      }
+    },
+    "CampaignFilters": {
+      "base": "<p>Filter model by type</p>",
+      "refs": {
+        "ListCampaignsRequest$filters": null
+      }
+    },
+    "CampaignId": {
+      "base": "<p>Identifier representing a Campaign</p>",
+      "refs": {
+        "Campaign$id": null,
+        "CampaignSummary$id": null,
+        "CreateCampaignResponse$id": null,
+        "DeleteCampaignChannelSubtypeConfigRequest$id": null,
+        "DeleteCampaignCommunicationLimitsRequest$id": null,
+        "DeleteCampaignCommunicationTimeRequest$id": null,
+        "DeleteCampaignRequest$id": null,
+        "DescribeCampaignRequest$id": null,
+        "FailedCampaignStateResponse$campaignId": null,
+        "GetCampaignStateBatchRequestCampaignIdsList$member": null,
+        "GetCampaignStateRequest$id": null,
+        "PauseCampaignRequest$id": null,
+        "PutOutboundRequestBatchRequest$id": null,
+        "PutProfileOutboundRequestBatchRequest$id": null,
+        "ResumeCampaignRequest$id": null,
+        "StartCampaignRequest$id": null,
+        "StopCampaignRequest$id": null,
+        "SuccessfulCampaignStateResponse$campaignId": null,
+        "UpdateCampaignChannelSubtypeConfigRequest$id": null,
+        "UpdateCampaignCommunicationLimitsRequest$id": null,
+        "UpdateCampaignCommunicationTimeRequest$id": null,
+        "UpdateCampaignFlowAssociationRequest$id": null,
+        "UpdateCampaignNameRequest$id": null,
+        "UpdateCampaignScheduleRequest$id": null,
+        "UpdateCampaignSourceRequest$id": null
+      }
+    },
+    "CampaignName": {
+      "base": "<p>The name of an Amazon Connect Campaign name.</p>",
+      "refs": {
+        "Campaign$name": null,
+        "CampaignSummary$name": null,
+        "CreateCampaignRequest$name": null,
+        "UpdateCampaignNameRequest$name": null
+      }
+    },
+    "CampaignState": {
+      "base": "<p>State of a campaign</p>",
+      "refs": {
+        "GetCampaignStateResponse$state": null,
+        "InvalidCampaignStateException$state": null,
+        "SuccessfulCampaignStateResponse$state": null
+      }
+    },
+    "CampaignSummary": {
+      "base": "<p>An Amazon Connect campaign summary.</p>",
+      "refs": {
+        "CampaignSummaryList$member": null
+      }
+    },
+    "CampaignSummaryList": {
+      "base": "<p>A list of Amazon Connect campaigns.</p>",
+      "refs": {
+        "ListCampaignsResponse$campaignSummaryList": null
+      }
+    },
+    "Capacity": {
+      "base": "<p>Allocates outbound capacity for the specific channel subtype of this campaign between multiple active campaigns</p>",
+      "refs": {
+        "EmailChannelSubtypeConfig$capacity": null,
+        "SmsChannelSubtypeConfig$capacity": null,
+        "TelephonyChannelSubtypeConfig$capacity": null
+      }
+    },
+    "ChannelSubtype": {
+      "base": "<p>The type of campaign channel subtype.</p>",
+      "refs": {
+        "ChannelSubtypeList$member": null,
+        "DeleteCampaignChannelSubtypeConfigRequest$channelSubtype": null
+      }
+    },
+    "ChannelSubtypeConfig": {
+      "base": "<p>Campaign Channel Subtype config</p>",
+      "refs": {
+        "Campaign$channelSubtypeConfig": null,
+        "CreateCampaignRequest$channelSubtypeConfig": null,
+        "UpdateCampaignChannelSubtypeConfigRequest$channelSubtypeConfig": null
+      }
+    },
+    "ChannelSubtypeList": {
+      "base": "<p>Channel subtype list</p>",
+      "refs": {
+        "CampaignSummary$channelSubtypes": null
+      }
+    },
+    "ChannelSubtypeParameters": {
+      "base": "<p>ChannelSubtypeParameters for an outbound request</p>",
+      "refs": {
+        "OutboundRequest$channelSubtypeParameters": null
+      }
+    },
+    "ClientToken": {
+      "base": "<p>Client provided parameter used for idempotency. Its value must be unique for each request.</p>",
+      "refs": {
+        "FailedProfileOutboundRequest$clientToken": null,
+        "FailedRequest$clientToken": null,
+        "OutboundRequest$clientToken": null,
+        "ProfileOutboundRequest$clientToken": null,
+        "SuccessfulProfileOutboundRequest$clientToken": null,
+        "SuccessfulRequest$clientToken": null
+      }
+    },
+    "CommunicationLimit": {
+      "base": "<p>Communication Limit</p>",
+      "refs": {
+        "CommunicationLimitList$member": null
+      }
+    },
+    "CommunicationLimitFrequencyInteger": {
+      "base": null,
+      "refs": {
+        "CommunicationLimit$frequency": "<p>The number of days to consider with regards to this limit.</p>"
+      }
+    },
+    "CommunicationLimitList": {
+      "base": "<p>List of communication limit</p>",
+      "refs": {
+        "CommunicationLimits$communicationLimitsList": null
+      }
+    },
+    "CommunicationLimitMaxCountPerRecipientInteger": {
+      "base": null,
+      "refs": {
+        "CommunicationLimit$maxCountPerRecipient": "<p>Maximum number of contacts allowed for a given target within the given frequency.</p>"
+      }
+    },
+    "CommunicationLimitTimeUnit": {
+      "base": "<p>The communication limit time unit.</p>",
+      "refs": {
+        "CommunicationLimit$unit": null
+      }
+    },
+    "CommunicationLimits": {
+      "base": "<p>Communication limits</p>",
+      "refs": {
+        "CommunicationLimitsConfig$allChannelSubtypes": null,
+        "InstanceCommunicationLimitsConfig$allChannelSubtypes": null
+      }
+    },
+    "CommunicationLimitsConfig": {
+      "base": "<p>Communication limits config</p>",
+      "refs": {
+        "Campaign$communicationLimitsOverride": null,
+        "CreateCampaignRequest$communicationLimitsOverride": null,
+        "UpdateCampaignCommunicationLimitsRequest$communicationLimitsOverride": null
+      }
+    },
+    "CommunicationLimitsConfigType": {
+      "base": "<p>The type of campaign communication limits config.</p>",
+      "refs": {
+        "DeleteCampaignCommunicationLimitsRequest$config": null
+      }
+    },
+    "CommunicationTimeConfig": {
+      "base": "<p>Campaign communication time config</p>",
+      "refs": {
+        "Campaign$communicationTimeConfig": null,
+        "CreateCampaignRequest$communicationTimeConfig": null,
+        "UpdateCampaignCommunicationTimeRequest$communicationTimeConfig": null
+      }
+    },
+    "CommunicationTimeConfigType": {
+      "base": "<p>The type of campaign communication time config</p>",
+      "refs": {
+        "DeleteCampaignCommunicationTimeRequest$config": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request could not be processed because of conflict in the current state of the resource.</p>",
+      "refs": {
+      }
+    },
+    "ContactFlowId": {
+      "base": "<p>The identifier of the contact flow for the outbound call.</p>",
+      "refs": {
+        "TelephonyOutboundConfig$connectContactFlowId": null
+      }
+    },
+    "CreateCampaignRequest": {
+      "base": "<p>The request for CreateCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "CreateCampaignResponse": {
+      "base": "<p>The response for Create Campaign API</p>",
+      "refs": {
+      }
+    },
+    "CustomerProfilesIntegrationConfig": {
+      "base": "<p>Customer Profiles integration config</p>",
+      "refs": {
+        "IntegrationConfig$customerProfiles": null
+      }
+    },
+    "CustomerProfilesIntegrationIdentifier": {
+      "base": "<p>Customer Profiles integration identifier</p>",
+      "refs": {
+        "IntegrationIdentifier$customerProfiles": null
+      }
+    },
+    "CustomerProfilesIntegrationSummary": {
+      "base": "<p>Customer Profiles integration summary</p>",
+      "refs": {
+        "IntegrationSummary$customerProfiles": null
+      }
+    },
+    "DailyHours": {
+      "base": "<p>Daily Hours map</p>",
+      "refs": {
+        "OpenHours$dailyHours": null
+      }
+    },
+    "DayOfWeek": {
+      "base": "<p>Day of week enum</p>",
+      "refs": {
+        "DailyHours$key": null
+      }
+    },
+    "DeleteCampaignChannelSubtypeConfigRequest": {
+      "base": "<p>The request for DeleteCampaignChannelSubtypeConfig API.</p>",
+      "refs": {
+      }
+    },
+    "DeleteCampaignCommunicationLimitsRequest": {
+      "base": "<p>The request for DeleteCampaignCommunicationLimits API.</p>",
+      "refs": {
+      }
+    },
+    "DeleteCampaignCommunicationTimeRequest": {
+      "base": "<p>The request for DeleteCampaignCommunicationTime API.</p>",
+      "refs": {
+      }
+    },
+    "DeleteCampaignRequest": {
+      "base": "<p>The request for DeleteCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "DeleteConnectInstanceConfigRequest": {
+      "base": "<p>The request for DeleteConnectInstanceConfig API.</p>",
+      "refs": {
+      }
+    },
+    "DeleteConnectInstanceIntegrationRequest": {
+      "base": "<p>The request for DeleteConnectInstanceIntegration API.</p>",
+      "refs": {
+      }
+    },
+    "DeleteInstanceOnboardingJobRequest": {
+      "base": "<p>The request for DeleteInstanceOnboardingJob API.</p>",
+      "refs": {
+      }
+    },
+    "DescribeCampaignRequest": {
+      "base": "<p>The request for DescribeCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "DescribeCampaignResponse": {
+      "base": "<p>The response for DescribeCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "DestinationPhoneNumber": {
+      "base": "<p>The phone number of the customer, in E.164 format.</p>",
+      "refs": {
+        "SmsChannelSubtypeParameters$destinationPhoneNumber": null,
+        "TelephonyChannelSubtypeParameters$destinationPhoneNumber": null
+      }
+    },
+    "DialRequestId": {
+      "base": "<p>Identifier representing a Dial request</p>",
+      "refs": {
+        "FailedRequest$id": null,
+        "SuccessfulRequest$id": null
+      }
+    },
+    "EmailAddress": {
+      "base": "<p>Source/Destination Email address used for Email messages</p>",
+      "refs": {
+        "EmailChannelSubtypeParameters$destinationEmailAddress": null,
+        "EmailChannelSubtypeParameters$connectSourceEmailAddress": null,
+        "EmailOutboundConfig$connectSourceEmailAddress": null
+      }
+    },
+    "EmailChannelSubtypeConfig": {
+      "base": "<p>Email Channel Subtype config</p>",
+      "refs": {
+        "ChannelSubtypeConfig$email": null
+      }
+    },
+    "EmailChannelSubtypeParameters": {
+      "base": "<p>Parameters for the Email Channel Subtype</p>",
+      "refs": {
+        "ChannelSubtypeParameters$email": null
+      }
+    },
+    "EmailDisplayName": {
+      "base": "<p>Display name for Email Address</p>",
+      "refs": {
+        "EmailOutboundConfig$sourceEmailAddressDisplayName": null
+      }
+    },
+    "EmailOutboundConfig": {
+      "base": "<p>Default Email Outbound config</p>",
+      "refs": {
+        "EmailChannelSubtypeConfig$defaultOutboundConfig": null
+      }
+    },
+    "EmailOutboundMode": {
+      "base": "<p>Email Outbound Mode</p>",
+      "refs": {
+        "EmailChannelSubtypeConfig$outboundMode": null
+      }
+    },
+    "Enabled": {
+      "base": "<p>Boolean to indicate if custom encryption has been enabled.</p>",
+      "refs": {
+        "EncryptionConfig$enabled": null
+      }
+    },
+    "EncryptionConfig": {
+      "base": "<p>Encryption config for Connect Instance. Note that sensitive data will always be encrypted. If disabled, service will perform encryption with its own key. If enabled, a KMS key id needs to be provided and KMS charges will apply. KMS is only type supported</p>",
+      "refs": {
+        "InstanceConfig$encryptionConfig": null,
+        "StartInstanceOnboardingJobRequest$encryptionConfig": null
+      }
+    },
+    "EncryptionKey": {
+      "base": "<p>KMS key id/arn for encryption config.</p>",
+      "refs": {
+        "EncryptionConfig$keyArn": null
+      }
+    },
+    "EncryptionType": {
+      "base": "<p>Server-side encryption type.</p>",
+      "refs": {
+        "EncryptionConfig$encryptionType": null
+      }
+    },
+    "EventTrigger": {
+      "base": "<p>Event trigger of the campaign</p>",
+      "refs": {
+        "Source$eventTrigger": null
+      }
+    },
+    "EventType": {
+      "base": "<p>Enumeration of Customer Profiles event type</p>",
+      "refs": {
+        "ObjectTypeNamesMap$key": null
+      }
+    },
+    "FailedCampaignStateResponse": {
+      "base": "<p>Failed response of campaign state</p>",
+      "refs": {
+        "FailedCampaignStateResponseList$member": null
+      }
+    },
+    "FailedCampaignStateResponseList": {
+      "base": "<p>List of failed requests of campaign state</p>",
+      "refs": {
+        "GetCampaignStateBatchResponse$failedRequests": null
+      }
+    },
+    "FailedProfileOutboundRequest": {
+      "base": "<p>Failure details for a profile outbound request</p>",
+      "refs": {
+        "FailedProfileOutboundRequestList$member": null
+      }
+    },
+    "FailedProfileOutboundRequestList": {
+      "base": "<p>List of failed profile outbound requests</p>",
+      "refs": {
+        "PutProfileOutboundRequestBatchResponse$failedRequests": null
+      }
+    },
+    "FailedRequest": {
+      "base": "<p>A failed request identified by the unique client token.</p>",
+      "refs": {
+        "FailedRequestList$member": null
+      }
+    },
+    "FailedRequestList": {
+      "base": "<p>A list of failed requests.</p>",
+      "refs": {
+        "PutOutboundRequestBatchResponse$failedRequests": null
+      }
+    },
+    "FailureCode": {
+      "base": "<p>A predefined code indicating the error that caused the failure.</p>",
+      "refs": {
+        "FailedRequest$failureCode": null
+      }
+    },
+    "GetCampaignStateBatchFailureCode": {
+      "base": "<p>A predefined code indicating the error that caused the failure in getting state of campaigns</p>",
+      "refs": {
+        "FailedCampaignStateResponse$failureCode": null
+      }
+    },
+    "GetCampaignStateBatchRequest": {
+      "base": "<p>The request for GetCampaignStateBatch API.</p>",
+      "refs": {
+      }
+    },
+    "GetCampaignStateBatchRequestCampaignIdsList": {
+      "base": "<p>List of CampaignId</p>",
+      "refs": {
+        "GetCampaignStateBatchRequest$campaignIds": null
+      }
+    },
+    "GetCampaignStateBatchResponse": {
+      "base": "<p>The response for GetCampaignStateBatch API.</p>",
+      "refs": {
+      }
+    },
+    "GetCampaignStateRequest": {
+      "base": "<p>The request for GetCampaignState API.</p>",
+      "refs": {
+      }
+    },
+    "GetCampaignStateResponse": {
+      "base": "<p>The response for GetCampaignState API.</p>",
+      "refs": {
+      }
+    },
+    "GetConnectInstanceConfigRequest": {
+      "base": "<p>The request for GetConnectInstanceConfig API.</p>",
+      "refs": {
+      }
+    },
+    "GetConnectInstanceConfigResponse": {
+      "base": "<p>The response for GetConnectInstanceConfig API.</p>",
+      "refs": {
+      }
+    },
+    "GetInstanceCommunicationLimitsRequest": {
+      "base": "<p>The request for GetInstanceCommunicationLimits API.</p>",
+      "refs": {
+      }
+    },
+    "GetInstanceCommunicationLimitsResponse": {
+      "base": "<p>The response for GetInstanceCommunicationLimits API.</p>",
+      "refs": {
+      }
+    },
+    "GetInstanceOnboardingJobStatusRequest": {
+      "base": "<p>The request for GetInstanceOnboardingJobStatus API.</p>",
+      "refs": {
+      }
+    },
+    "GetInstanceOnboardingJobStatusResponse": {
+      "base": "<p>The response for GetInstanceOnboardingJobStatus API.</p>",
+      "refs": {
+      }
+    },
+    "InstanceCommunicationLimitsConfig": {
+      "base": "<p>Instance Communication limits config</p>",
+      "refs": {
+        "GetInstanceCommunicationLimitsResponse$communicationLimitsConfig": null,
+        "PutInstanceCommunicationLimitsRequest$communicationLimitsConfig": null
+      }
+    },
+    "InstanceConfig": {
+      "base": "<p>Instance config object</p>",
+      "refs": {
+        "GetConnectInstanceConfigResponse$connectInstanceConfig": null
+      }
+    },
+    "InstanceId": {
+      "base": "<p>Amazon Connect Instance Id</p>",
+      "refs": {
+        "Campaign$connectInstanceId": null,
+        "CampaignSummary$connectInstanceId": null,
+        "CreateCampaignRequest$connectInstanceId": null,
+        "DeleteConnectInstanceConfigRequest$connectInstanceId": null,
+        "DeleteConnectInstanceIntegrationRequest$connectInstanceId": null,
+        "DeleteInstanceOnboardingJobRequest$connectInstanceId": null,
+        "GetConnectInstanceConfigRequest$connectInstanceId": null,
+        "GetInstanceCommunicationLimitsRequest$connectInstanceId": null,
+        "GetInstanceOnboardingJobStatusRequest$connectInstanceId": null,
+        "InstanceConfig$connectInstanceId": null,
+        "InstanceIdFilter$value": null,
+        "InstanceOnboardingJobStatus$connectInstanceId": null,
+        "ListConnectInstanceIntegrationsRequest$connectInstanceId": null,
+        "PutConnectInstanceIntegrationRequest$connectInstanceId": null,
+        "PutInstanceCommunicationLimitsRequest$connectInstanceId": null,
+        "StartInstanceOnboardingJobRequest$connectInstanceId": null
+      }
+    },
+    "InstanceIdFilter": {
+      "base": "<p>Connect instance identifier filter</p>",
+      "refs": {
+        "CampaignFilters$instanceIdFilter": null
+      }
+    },
+    "InstanceIdFilterOperator": {
+      "base": "<p>Operators for Connect instance identifier filter</p>",
+      "refs": {
+        "InstanceIdFilter$operator": null
+      }
+    },
+    "InstanceLimitsHandling": {
+      "base": "<p>Instance limits handling</p>",
+      "refs": {
+        "CommunicationLimitsConfig$instanceLimitsHandling": null
+      }
+    },
+    "InstanceOnboardingJobFailureCode": {
+      "base": "<p>Enumeration of the possible failure codes for instance onboarding job</p>",
+      "refs": {
+        "InstanceOnboardingJobStatus$failureCode": null
+      }
+    },
+    "InstanceOnboardingJobStatus": {
+      "base": "<p>Instance onboarding job status object</p>",
+      "refs": {
+        "GetInstanceOnboardingJobStatusResponse$connectInstanceOnboardingJobStatus": null,
+        "StartInstanceOnboardingJobResponse$connectInstanceOnboardingJobStatus": null
+      }
+    },
+    "InstanceOnboardingJobStatusCode": {
+      "base": "<p>Enumeration of the possible states for instance onboarding job</p>",
+      "refs": {
+        "InstanceOnboardingJobStatus$status": null
+      }
+    },
+    "IntegrationConfig": {
+      "base": "<p>Integration config for Connect Instance</p>",
+      "refs": {
+        "PutConnectInstanceIntegrationRequest$integrationConfig": null
+      }
+    },
+    "IntegrationIdentifier": {
+      "base": "<p>Integration identifier for Connect instance</p>",
+      "refs": {
+        "DeleteConnectInstanceIntegrationRequest$integrationIdentifier": null
+      }
+    },
+    "IntegrationSummary": {
+      "base": "<p>Integration summary for Connect instance.</p>",
+      "refs": {
+        "IntegrationSummaryList$member": null
+      }
+    },
+    "IntegrationSummaryList": {
+      "base": "<p>A list of Amazon Connect Instance Integrations.</p>",
+      "refs": {
+        "ListConnectInstanceIntegrationsResponse$integrationSummaryList": null
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>Request processing failed because of an error or failure with the service.</p>",
+      "refs": {
+      }
+    },
+    "InvalidCampaignStateException": {
+      "base": "<p>The request could not be processed because of conflict in the current state of the campaign.</p>",
+      "refs": {
+      }
+    },
+    "InvalidStateException": {
+      "base": "<p>The request could not be processed because of conflict in the current state.</p>",
+      "refs": {
+      }
+    },
+    "Iso8601Date": {
+      "base": "<p>Date in ISO 8601 format, e.g. 2024-01-01</p>",
+      "refs": {
+        "RestrictedPeriod$startDate": null,
+        "RestrictedPeriod$endDate": null
+      }
+    },
+    "Iso8601Duration": {
+      "base": "<p>Time duration in ISO 8601 format</p>",
+      "refs": {
+        "Schedule$refreshFrequency": null
+      }
+    },
+    "Iso8601Time": {
+      "base": "<p>Time in ISO 8601 format, e.g. T23:11</p>",
+      "refs": {
+        "TimeRange$startTime": null,
+        "TimeRange$endTime": null
+      }
+    },
+    "ListCampaignsRequest": {
+      "base": "<p>The request for ListCampaigns API.</p>",
+      "refs": {
+      }
+    },
+    "ListCampaignsResponse": {
+      "base": "<p>The response for ListCampaigns API.</p>",
+      "refs": {
+      }
+    },
+    "ListConnectInstanceIntegrationsRequest": {
+      "base": "<p>The request for ListConnectInstanceIntegrations API.</p>",
+      "refs": {
+      }
+    },
+    "ListConnectInstanceIntegrationsResponse": {
+      "base": "<p>The response for ListConnectInstanceIntegrations API.</p>",
+      "refs": {
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": "<p>The request for ListTagsForResource API.</p>",
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": "<p>The request for ListTagsForResource API.</p>",
+      "refs": {
+      }
+    },
+    "LocalTimeZoneConfig": {
+      "base": "<p>Local time zone config</p>",
+      "refs": {
+        "CommunicationTimeConfig$localTimeZoneConfig": null
+      }
+    },
+    "LocalTimeZoneDetection": {
+      "base": "<p>Local TimeZone Detection method list</p>",
+      "refs": {
+        "LocalTimeZoneConfig$localTimeZoneDetection": null
+      }
+    },
+    "LocalTimeZoneDetectionType": {
+      "base": "<p>Local TimeZone Detection method.</p>",
+      "refs": {
+        "LocalTimeZoneDetection$member": null
+      }
+    },
+    "MaxResults": {
+      "base": "<p>The maximum number of results to return per page.</p>",
+      "refs": {
+        "ListCampaignsRequest$maxResults": null,
+        "ListConnectInstanceIntegrationsRequest$maxResults": null
+      }
+    },
+    "NextToken": {
+      "base": "<p>The token for the next set of results.</p>",
+      "refs": {
+        "ListCampaignsRequest$nextToken": null,
+        "ListCampaignsResponse$nextToken": null,
+        "ListConnectInstanceIntegrationsRequest$nextToken": null,
+        "ListConnectInstanceIntegrationsResponse$nextToken": null
+      }
+    },
+    "ObjectTypeName": {
+      "base": "<p>Object type name</p>",
+      "refs": {
+        "ObjectTypeNamesMap$value": null
+      }
+    },
+    "ObjectTypeNamesMap": {
+      "base": "<p>Object type names map.</p>",
+      "refs": {
+        "CustomerProfilesIntegrationConfig$objectTypeNames": null,
+        "CustomerProfilesIntegrationSummary$objectTypeNames": null
+      }
+    },
+    "OpenHours": {
+      "base": "<p>Open Hours config</p>",
+      "refs": {
+        "TimeWindow$openHours": null
+      }
+    },
+    "OutboundRequest": {
+      "base": "<p>An outbound request for a campaign.</p>",
+      "refs": {
+        "OutboundRequestList$member": null
+      }
+    },
+    "OutboundRequestList": {
+      "base": "<p>A list of outbound requests.</p>",
+      "refs": {
+        "PutOutboundRequestBatchRequest$outboundRequests": null
+      }
+    },
+    "PauseCampaignRequest": {
+      "base": "<p>The request for PauseCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "PredictiveConfig": {
+      "base": "<p>Predictive config</p>",
+      "refs": {
+        "TelephonyOutboundMode$predictive": null
+      }
+    },
+    "ProfileId": {
+      "base": "<p>Identifier of the customer profile</p>",
+      "refs": {
+        "ProfileOutboundRequest$profileId": null
+      }
+    },
+    "ProfileOutboundRequest": {
+      "base": "<p>Information about a profile outbound request</p>",
+      "refs": {
+        "ProfileOutboundRequestList$member": null
+      }
+    },
+    "ProfileOutboundRequestFailureCode": {
+      "base": "<p>Predefined code indicating the error that caused the failure</p>",
+      "refs": {
+        "FailedProfileOutboundRequest$failureCode": null
+      }
+    },
+    "ProfileOutboundRequestId": {
+      "base": "<p>Identifier of the profile outbound request</p>",
+      "refs": {
+        "FailedProfileOutboundRequest$id": null,
+        "SuccessfulProfileOutboundRequest$id": null
+      }
+    },
+    "ProfileOutboundRequestList": {
+      "base": "<p>List of profile outbound requests</p>",
+      "refs": {
+        "PutProfileOutboundRequestBatchRequest$profileOutboundRequests": null
+      }
+    },
+    "ProgressiveConfig": {
+      "base": "<p>Progressive config</p>",
+      "refs": {
+        "TelephonyOutboundMode$progressive": null
+      }
+    },
+    "PutConnectInstanceIntegrationRequest": {
+      "base": "<p>The request for PutConnectInstanceIntegration API.</p>",
+      "refs": {
+      }
+    },
+    "PutInstanceCommunicationLimitsRequest": {
+      "base": "<p>The request for PutInstanceCommunicationLimits API.</p>",
+      "refs": {
+      }
+    },
+    "PutOutboundRequestBatchRequest": {
+      "base": "<p>The request for PutOutboundRequestBatch API.</p>",
+      "refs": {
+      }
+    },
+    "PutOutboundRequestBatchResponse": {
+      "base": "<p>The response for PutOutboundRequestBatch API.</p>",
+      "refs": {
+      }
+    },
+    "PutProfileOutboundRequestBatchRequest": {
+      "base": "<p>The request for PutProfileOutboundRequestBatch API</p>",
+      "refs": {
+      }
+    },
+    "PutProfileOutboundRequestBatchResponse": {
+      "base": "<p>The response for PutProfileOutboundRequestBatch API</p>",
+      "refs": {
+      }
+    },
+    "QConnectIntegrationConfig": {
+      "base": "<p>Q Connect integration config</p>",
+      "refs": {
+        "IntegrationConfig$qConnect": null
+      }
+    },
+    "QConnectIntegrationIdentifier": {
+      "base": "<p>Q Connect integration identifier</p>",
+      "refs": {
+        "IntegrationIdentifier$qConnect": null
+      }
+    },
+    "QConnectIntegrationSummary": {
+      "base": "<p>Q Connect integration summary</p>",
+      "refs": {
+        "IntegrationSummary$qConnect": null
+      }
+    },
+    "QueueId": {
+      "base": "<p>The queue for the call. If you specify a queue, the phone displayed for caller ID is the phone number specified in the queue. If you do not specify a queue, the queue defined in the contact flow is used. If you do not specify a queue, you must specify a source phone number.</p>",
+      "refs": {
+        "TelephonyChannelSubtypeConfig$connectQueueId": null
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource was not found.</p>",
+      "refs": {
+      }
+    },
+    "RestrictedPeriod": {
+      "base": "<p>Restricted period</p>",
+      "refs": {
+        "RestrictedPeriodList$member": null
+      }
+    },
+    "RestrictedPeriodList": {
+      "base": "<p>List of restricted period</p>",
+      "refs": {
+        "RestrictedPeriods$restrictedPeriodList": null
+      }
+    },
+    "RestrictedPeriodName": {
+      "base": "<p>The name of a restricted period.</p>",
+      "refs": {
+        "RestrictedPeriod$name": null
+      }
+    },
+    "RestrictedPeriods": {
+      "base": "<p>Restricted period config</p>",
+      "refs": {
+        "TimeWindow$restrictedPeriods": null
+      }
+    },
+    "ResumeCampaignRequest": {
+      "base": "<p>The request for ResumeCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "Schedule": {
+      "base": "<p>Campaign schedule</p>",
+      "refs": {
+        "Campaign$schedule": null,
+        "CampaignSummary$schedule": null,
+        "CreateCampaignRequest$schedule": null,
+        "UpdateCampaignScheduleRequest$schedule": null
+      }
+    },
+    "ServiceLinkedRoleArn": {
+      "base": "<p>Service linked role arn</p>",
+      "refs": {
+        "InstanceConfig$serviceLinkedRoleArn": null
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>Request would cause a service quota to be exceeded.</p>",
+      "refs": {
+      }
+    },
+    "SmsChannelSubtypeConfig": {
+      "base": "<p>SMS Channel Subtype config</p>",
+      "refs": {
+        "ChannelSubtypeConfig$sms": null
+      }
+    },
+    "SmsChannelSubtypeParameters": {
+      "base": "<p>Parameters for the SMS Channel Subtype</p>",
+      "refs": {
+        "ChannelSubtypeParameters$sms": null
+      }
+    },
+    "SmsOutboundConfig": {
+      "base": "<p>Default SMS Outbound config</p>",
+      "refs": {
+        "SmsChannelSubtypeConfig$defaultOutboundConfig": null
+      }
+    },
+    "SmsOutboundMode": {
+      "base": "<p>SMS Outbound Mode</p>",
+      "refs": {
+        "SmsChannelSubtypeConfig$outboundMode": null
+      }
+    },
+    "Source": {
+      "base": "<p>Source of the campaign</p>",
+      "refs": {
+        "Campaign$source": null,
+        "CreateCampaignRequest$source": null,
+        "UpdateCampaignSourceRequest$source": null
+      }
+    },
+    "SourcePhoneNumber": {
+      "base": "<p>The phone number associated with the Amazon Connect instance, in E.164 format. If you do not specify a source phone number, you must specify a queue.</p>",
+      "refs": {
+        "TelephonyChannelSubtypeParameters$connectSourcePhoneNumber": null,
+        "TelephonyOutboundConfig$connectSourcePhoneNumber": null
+      }
+    },
+    "StartCampaignRequest": {
+      "base": "<p>The request for StartCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "StartInstanceOnboardingJobRequest": {
+      "base": "<p>The request for StartInstanceOnboardingJob API.</p>",
+      "refs": {
+      }
+    },
+    "StartInstanceOnboardingJobResponse": {
+      "base": "<p>The response for StartInstanceOnboardingJob API.</p>",
+      "refs": {
+      }
+    },
+    "StopCampaignRequest": {
+      "base": "<p>The request for StopCampaign API.</p>",
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "InternalServerException$message": null,
+        "InvalidCampaignStateException$message": null,
+        "InvalidStateException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "SuccessfulCampaignStateResponse": {
+      "base": "<p>Successful response of campaign state</p>",
+      "refs": {
+        "SuccessfulCampaignStateResponseList$member": null
+      }
+    },
+    "SuccessfulCampaignStateResponseList": {
+      "base": "<p>List of successful response of campaign state</p>",
+      "refs": {
+        "GetCampaignStateBatchResponse$successfulRequests": null
+      }
+    },
+    "SuccessfulProfileOutboundRequest": {
+      "base": "<p>Success details for a profile outbound request</p>",
+      "refs": {
+        "SuccessfulProfileOutboundRequestList$member": null
+      }
+    },
+    "SuccessfulProfileOutboundRequestList": {
+      "base": "<p>List of successful profile outbound requests</p>",
+      "refs": {
+        "PutProfileOutboundRequestBatchResponse$successfulRequests": null
+      }
+    },
+    "SuccessfulRequest": {
+      "base": "<p>A successful request identified by the unique client token.</p>",
+      "refs": {
+        "SuccessfulRequestList$member": null
+      }
+    },
+    "SuccessfulRequestList": {
+      "base": "<p>A list of successful requests identified by the unique client token.</p>",
+      "refs": {
+        "PutOutboundRequestBatchResponse$successfulRequests": null
+      }
+    },
+    "TagKey": {
+      "base": "<p>The key of tag.</p>",
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys.</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": null
+      }
+    },
+    "TagMap": {
+      "base": "<p>Tag map with key and value.</p>",
+      "refs": {
+        "Campaign$tags": null,
+        "CreateCampaignRequest$tags": null,
+        "CreateCampaignResponse$tags": null,
+        "ListTagsForResourceResponse$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "TagResourceRequest": {
+      "base": "<p>The request for TagResource API.</p>",
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": "<p>The value of tag.</p>",
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "TelephonyChannelSubtypeConfig": {
+      "base": "<p>Telephony Channel Subtype config</p>",
+      "refs": {
+        "ChannelSubtypeConfig$telephony": null
+      }
+    },
+    "TelephonyChannelSubtypeParameters": {
+      "base": "<p>Parameters for the Telephony Channel Subtype</p>",
+      "refs": {
+        "ChannelSubtypeParameters$telephony": null
+      }
+    },
+    "TelephonyOutboundConfig": {
+      "base": "<p>Default Telephony Outbound config</p>",
+      "refs": {
+        "TelephonyChannelSubtypeConfig$defaultOutboundConfig": null
+      }
+    },
+    "TelephonyOutboundMode": {
+      "base": "<p>Telephony Outbound Mode</p>",
+      "refs": {
+        "TelephonyChannelSubtypeConfig$outboundMode": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {
+      }
+    },
+    "TimeRange": {
+      "base": "<p>Time range in 24 hour format</p>",
+      "refs": {
+        "TimeRangeList$member": null
+      }
+    },
+    "TimeRangeList": {
+      "base": "<p>List of time range</p>",
+      "refs": {
+        "DailyHours$value": null
+      }
+    },
+    "TimeStamp": {
+      "base": "<p>Timestamp with no UTC offset or timezone</p>",
+      "refs": {
+        "OutboundRequest$expirationTime": null,
+        "ProfileOutboundRequest$expirationTime": null,
+        "Schedule$startTime": null,
+        "Schedule$endTime": null
+      }
+    },
+    "TimeWindow": {
+      "base": "<p>Time window config</p>",
+      "refs": {
+        "CommunicationTimeConfig$telephony": null,
+        "CommunicationTimeConfig$sms": null,
+        "CommunicationTimeConfig$email": null
+      }
+    },
+    "TimeZone": {
+      "base": "<p>Time Zone Id in the IANA format</p>",
+      "refs": {
+        "LocalTimeZoneConfig$defaultTimeZone": null
+      }
+    },
+    "UntagResourceRequest": {
+      "base": "<p>The request for UntagResource API.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCampaignChannelSubtypeConfigRequest": {
+      "base": "<p>The request for UpdateCampaignChannelSubtypeConfig API.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCampaignCommunicationLimitsRequest": {
+      "base": "<p>The request for UpdateCampaignCommunicationLimits API.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCampaignCommunicationTimeRequest": {
+      "base": "<p>The request for UpdateCampaignCommunicationTime API.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCampaignFlowAssociationRequest": {
+      "base": "<p>The request for UpdateCampaignFlowAssociation API.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCampaignNameRequest": {
+      "base": "<p>The request for UpdateCampaignName API.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCampaignScheduleRequest": {
+      "base": "<p>The request for UpdateCampaignSchedule API.</p>",
+      "refs": {
+      }
+    },
+    "UpdateCampaignSourceRequest": {
+      "base": "<p>The request for UpdateCampaignSource API.</p>",
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
+      "refs": {
+      }
+    },
+    "XAmazonErrorType": {
+      "base": "<p>A header that defines the error encountered while processing the request.</p>",
+      "refs": {
+        "AccessDeniedException$xAmzErrorType": null,
+        "ConflictException$xAmzErrorType": null,
+        "InternalServerException$xAmzErrorType": null,
+        "InvalidCampaignStateException$xAmzErrorType": null,
+        "InvalidStateException$xAmzErrorType": null,
+        "ResourceNotFoundException$xAmzErrorType": null,
+        "ServiceQuotaExceededException$xAmzErrorType": null,
+        "ThrottlingException$xAmzErrorType": null,
+        "ValidationException$xAmzErrorType": null
+      }
+    }
+  }
+}

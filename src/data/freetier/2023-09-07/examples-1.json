@@ -1,5 +1,152 @@
 {
   "version": "1.0",
   "examples": {
+    "GetAccountActivity": [
+      {
+        "input": {
+          "activityId": "d622f48bf4014286a2686ab10cacfb2e",
+          "languageCode": "en-US"
+        },
+        "output": {
+          "activityId": "d622f48bf4014286a2686ab10cacfb2e",
+          "completedAt": "1985-06-12T23:20:50.520Z",
+          "description": "Set up three notifications: one for your costs reach ...",
+          "estimatedTimeToCompleteInMinutes": 15,
+          "expiresAt": "1985-10-12T23:20:50.520Z",
+          "instructionsUrl": "https://catalog.us-east-1.prod.workshops.aws/workshops/2a5fc82d-2b5f-4105-83c2-91a1b4d7abfe/en-US/2-foundation/lab1-create",
+          "reward": {
+            "credit": {
+              "amount": 20.0,
+              "unit": "USD"
+            }
+          },
+          "startedAt": "1985-04-12T23:20:50.520Z",
+          "status": "COMPLETED",
+          "title": "Configure Your Access in the AWS Identity and Access Management (IAM) center"
+        },
+        "id": "example-1",
+        "title": "Fetching an Account activity by id"
+      }
+    ],
+    "GetAccountPlanState": [
+      {
+        "input": {
+        },
+        "output": {
+          "accountId": "111122223333",
+          "accountPlanExpirationDate": "2025-06-30T23:59:59Z",
+          "accountPlanRemainingCredits": {
+            "amount": 25.0,
+            "unit": "USD"
+          },
+          "accountPlanStatus": "ACTIVE",
+          "accountPlanType": "FREE"
+        },
+        "id": "example-1",
+        "title": "Fetching account plan state by id"
+      },
+      {
+        "input": {
+        },
+        "id": "example-2",
+        "title": "Attempt to fetch account plan state by id with insufficient permissions"
+      },
+      {
+        "input": {
+        },
+        "id": "example-3",
+        "title": "Internal service error"
+      },
+      {
+        "input": {
+        },
+        "id": "example-4",
+        "title": "Attempt to fetch plan state by id for an account without account plan"
+      },
+      {
+        "input": {
+        },
+        "id": "example-5",
+        "title": "Request rate exceeds limits"
+      }
+    ],
+    "ListAccountActivities": [
+      {
+        "input": {
+          "filterActivityStatuses": [
+            "COMPLETED"
+          ],
+          "languageCode": "en-US",
+          "maxResults": 1
+        },
+        "output": {
+          "activities": [
+            {
+              "activityId": "d622f48bf4014286a2686ab10cacfb2e",
+              "reward": {
+                "credit": {
+                  "amount": 20.0,
+                  "unit": "USD"
+                }
+              },
+              "status": "COMPLETED",
+              "title": "Configure Your Access in the AWS Identity and Access Management (IAM) center"
+            }
+          ],
+          "nextToken": "a95f3d9e7710c6ca8ba4f640b40bbc40"
+        },
+        "id": "example-1",
+        "title": "Fetching a page of completed activities"
+      }
+    ],
+    "UpgradeAccountPlan": [
+      {
+        "input": {
+          "accountPlanType": "PAID"
+        },
+        "output": {
+          "accountId": "111122223333",
+          "accountPlanStatus": "NOT_STARTED",
+          "accountPlanType": "PAID"
+        },
+        "id": "example-1",
+        "title": "Upgrading an account plan to PAID"
+      },
+      {
+        "input": {
+          "accountPlanType": "PAID"
+        },
+        "id": "example-2",
+        "title": "Attempt to upgrade an account with insufficient permissions"
+      },
+      {
+        "input": {
+          "accountPlanType": "FREE"
+        },
+        "id": "example-3",
+        "title": "Attempt to downgrade an account from PAID to FREE"
+      },
+      {
+        "input": {
+          "accountPlanType": "PAID"
+        },
+        "id": "example-4",
+        "title": "Internal service error"
+      },
+      {
+        "input": {
+          "accountPlanType": "PAID"
+        },
+        "id": "example-5",
+        "title": "Attempt to upgrade a non-existent account plan"
+      },
+      {
+        "input": {
+          "accountPlanType": "PAID"
+        },
+        "id": "example-6",
+        "title": "Request rate exceeds limits"
+      }
+    ]
   }
 }

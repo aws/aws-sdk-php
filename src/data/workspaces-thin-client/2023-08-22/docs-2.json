@@ -41,16 +41,16 @@
     "Arn": {
       "base": null,
       "refs": {
-        "CreateEnvironmentRequest$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Web, or AppStream 2.0.</p>",
+        "CreateEnvironmentRequest$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Secure Browser, or AppStream 2.0.</p>",
         "Device$arn": "<p>The Amazon Resource Name (ARN) of the device.</p>",
         "DeviceSummary$arn": "<p>The Amazon Resource Name (ARN) of the device.</p>",
-        "Environment$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Web, or AppStream 2.0.</p>",
+        "Environment$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Secure Browser, or AppStream 2.0.</p>",
         "Environment$arn": "<p>The Amazon Resource Name (ARN) of the environment.</p>",
-        "EnvironmentSummary$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Web, or AppStream 2.0.</p>",
+        "EnvironmentSummary$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Secure Browser, or AppStream 2.0.</p>",
         "EnvironmentSummary$arn": "<p>The Amazon Resource Name (ARN) of the environment.</p>",
         "SoftwareSet$arn": "<p>The Amazon Resource Name (ARN) of the software set.</p>",
         "SoftwareSetSummary$arn": "<p>The Amazon Resource Name (ARN) of the software set.</p>",
-        "UpdateEnvironmentRequest$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Web, or AppStream 2.0.</p>"
+        "UpdateEnvironmentRequest$desktopArn": "<p>The Amazon Resource Name (ARN) of the desktop to stream from Amazon WorkSpaces, WorkSpaces Secure Browser, or AppStream 2.0.</p>"
       }
     },
     "ClientToken": {
@@ -157,7 +157,7 @@
       "base": null,
       "refs": {
         "CreateEnvironmentRequest$deviceCreationTags": "<p>A map of the key-value pairs of the tag or tags to assign to the newly created devices for this environment.</p>",
-        "Environment$deviceCreationTags": "<p>\"The tag keys and optional values for the newly created devices for this environment.\"</p>",
+        "Environment$deviceCreationTags": "<p>The tag keys and optional values for the newly created devices for this environment.</p>",
         "UpdateEnvironmentRequest$deviceCreationTags": "<p>A map of the key-value pairs of the tag or tags to assign to the newly created devices for this environment.</p>"
       }
     },
@@ -590,10 +590,7 @@
       "base": null,
       "refs": {
         "CreateEnvironmentRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>",
-        "Device$tags": "<p>The tag keys and optional values for the resource.</p>",
-        "Environment$tags": "<p>The tag keys and optional values for the resource.</p>",
         "ListTagsForResourceResponse$tags": "<p>A map of the key-value pairs for the tag or tags assigned to the specified resource.</p>",
-        "SoftwareSet$tags": "<p>The tag keys and optional values for the resource.</p>",
         "TagResourceRequest$tags": "<p>A map of the key-value pairs of the tag or tags to assign to the resource.</p>"
       }
     },
@@ -667,6 +664,13 @@
     "UpdateSoftwareSetResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "UserId": {
+      "base": null,
+      "refs": {
+        "Device$lastUserId": "<p>The user ID of the most recent session on the device.</p>",
+        "DeviceSummary$lastUserId": "<p>The user ID of the most recent session on the device.</p>"
       }
     },
     "ValidationException": {

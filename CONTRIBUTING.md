@@ -62,7 +62,7 @@ Please ensure that your bug report has the following:
 
 ## Feature Requests
 
-Open an [issue][] with the following:
+Open an [issue][issues] with the following:
 
 * A short, descriptive title. Ideally, other community members should be able to get a 
    good idea of the feature just from reading the title.
@@ -117,7 +117,7 @@ we ask the same of all community contributions as well:
 ### Changelog Documents
 
 A changelog document is a small JSON blob placed in the `.changes/nextrelease`
-folder. It should be named a clearly and uniquely, akin to a branch name. It
+folder. It should be named clearly and uniquely, akin to a branch name. It
 consists of a type, category, and description as follows:
 
 ```json

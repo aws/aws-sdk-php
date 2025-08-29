@@ -88,11 +88,6 @@ class AuthSelectionMiddlewareTest extends TestCase
                 ['smithy.api#noAuth'],
                 'anonymous'
             ],
-            [
-                ['aws.auth#sigv4', 'aws.auth#sigv4a'],
-                ['aws.auth#sigv4a'],
-                'error'
-            ],
         ];
     }
 
@@ -235,43 +230,8 @@ class AuthSelectionMiddlewareTest extends TestCase
                     );
                 },
                 'bearer'
-            ],
-            [
-                ['aws.auth#sigv4', 'aws.auth#sigv4a'],
-                ['smithy.api#httpBearerAuth'],
-                function () {
-                    return Promise\Create::promiseFor(
-                        null
-                    );
-                },
-                'error'
-            ],
+            ]
         ];
-    }
-
-    public function testUnknownAuthSchemeThrows()
-    {
-        $this->expectException(UnresolvedAuthSchemeException::class);
-        $this->expectExceptionMessage(
-            'Could not resolve an authentication scheme: The service does not support `notAnAuthScheme` authentication.'
-        );
-
-        $nextHandler = function (CommandInterface $command) {
-            return null;
-        };
-        $service = $this->generateTestService(['notAnAuthScheme'], []);
-        $credentialProvider = function () {
-            return Promise\Create::promiseFor(
-               null
-            );
-        };
-        $authResolver = new AuthSchemeResolver($credentialProvider);
-        $client = $this->generateTestClient($service);
-        $command = $client->getCommand('fooOperation', ['FooParam' => 'bar']);
-
-        $middleware = new AuthSelectionMiddleware($nextHandler, $authResolver, $service);
-
-        $middleware($command);
     }
 
     public function testCommandOverrideResolver()
@@ -352,5 +312,178 @@ class AuthSelectionMiddlewareTest extends TestCase
             ],
             function () { return []; }
         );
+    }
+
+    /**
+     * Test auth select is done based on user's provided auth schemes.
+     *
+     * @dataProvider authSelectionBasedOnUserPreferenceProvider
+     *
+     * @param array $supportedAuthSchemes
+     * @param array|null $serviceAuthSchemes
+     * @param array|null $operationAuthSchemes
+     * @param array|null $userPreferredAuthSchemes
+     * @param string $expected
+     *
+     * @return void
+     */
+    public function testAuthSelectionBasedOnUserPreference(
+        array $supportedAuthSchemes,
+        ?array $serviceAuthSchemes,
+        ?array $operationAuthSchemes,
+        ?array $userPreferredAuthSchemes,
+        string $expected,
+    ): void
+    {
+        if (!extension_loaded('awscrt') && $expected === 'v4a') {
+            $this->markTestSkipped(
+                "The awscrt extension is required to run this test."
+            );
+        }
+
+        $nextHandler = function (CommandInterface $command) use ($expected) {
+            $this->assertEquals(
+                $expected,
+                $command['@context']['signature_version']
+            );
+        };
+        $credentialProvider = function () {
+            return Promise\Create::promiseFor(
+                $this->createMock(AwsCredentialIdentity::class)
+            );
+        };
+        $authResolver = new AuthSchemeResolver(
+            $credentialProvider,
+            null,
+            $supportedAuthSchemes,
+        );
+        $service = $this->generateTestService(
+            $serviceAuthSchemes,
+            $operationAuthSchemes,
+        );
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand(
+            'fooOperation',
+            ['FooParam' => 'bar']
+        );
+
+        $middleware = new AuthSelectionMiddleware(
+            $nextHandler,
+            $authResolver,
+            $service,
+            $userPreferredAuthSchemes,
+        );
+
+        $middleware($command);
+    }
+
+    /**
+     * @return \Generator
+     */
+    public function authSelectionBasedOnUserPreferenceProvider(): \Generator
+    {
+        $cases = [
+            'user_auth_scheme_preferred_none' => [
+                'supported_auth_schemes' => [
+                    'aws.auth#sigv4' => 'v4',
+                    'aws.auth#sigv4a' => 'v4a',
+                ],
+                'service_auth_schemes' => [
+                    'aws.auth#sigv4', 'aws.auth#sigv4a'
+                ],
+                'operation_auth_schemes' => null,
+                'user_preferred_auth_schemes' => null,
+                'expected' => 'v4',
+            ],
+            'user_auth_scheme_preferred_sigv4a_1' => [
+                'supported_auth_schemes' => [
+                    'aws.auth#sigv4' => 'v4',
+                    'aws.auth#sigv4a' => 'v4a',
+                ],
+                'service_auth_schemes' => [
+                    'aws.auth#sigv4', 'aws.auth#sigv4a'
+                ],
+                'operation_auth_schemes' => null,
+                'user_preferred_auth_schemes' => [
+                    'aws.auth#sigv4a'
+                ],
+                'expected' => 'v4a',
+            ],
+            'user_auth_scheme_preferred_sigv4a_2' => [
+                'supported_auth_schemes' => [
+                    'aws.auth#sigv4' => 'v4',
+                    'aws.auth#sigv4a' => 'v4a',
+                ],
+                'service_auth_schemes' => [
+                    'aws.auth#sigv4', 'aws.auth#sigv4a'
+                ],
+                'operation_auth_schemes' => null,
+                'user_preferred_auth_schemes' => [
+                    'aws.auth#sigv4a', 'aws.auth#sigv4'
+                ],
+                'expected' => 'v4a',
+            ],
+            'user_auth_scheme_preferred_sigv4_1' => [
+                'supported_auth_schemes' => [
+                    'aws.auth#sigv4' => 'v4',
+                    'aws.auth#sigv4a' => 'v4a',
+                ],
+                'service_auth_schemes' => [
+                    'aws.auth#sigv4'
+                ],
+                'operation_auth_schemes' => null,
+                'user_preferred_auth_schemes' => [
+                    'aws.auth#sigv4a'
+                ],
+                'expected' => 'v4',
+            ],
+            'user_auth_scheme_preferred_sigv4_2' => [
+                'supported_auth_schemes' => [
+                    'aws.auth#sigv4' => 'v4',
+                    'aws.auth#sigv4a' => 'v4a',
+                ],
+                'service_auth_schemes' => [
+                    'aws.auth#sigv4', 'aws.auth#sigv4a'
+                ],
+                'operation_auth_schemes' => [
+                    'aws.auth#sigv4'
+                ],
+                'user_preferred_auth_schemes' => [
+                    'aws.auth#sigv4a'
+                ],
+                'expected' => 'v4',
+            ],
+            'user_auth_scheme_preferred_sigv4_3' => [
+                'supported_auth_schemes' => [
+                    'aws.auth#sigv4' => 'v4',
+                ],
+                'service_auth_schemes' => [
+                    'aws.auth#sigv4', 'aws.auth#sigv4a'
+                ],
+                'operation_auth_schemes' => null,
+                'user_preferred_auth_schemes' => [
+                    'aws.auth#sigv4a'
+                ],
+                'expected' => 'v4',
+            ],
+            'user_auth_scheme_preferred_sigv4_4' => [
+                'supported_auth_schemes' => [
+                    'aws.auth#sigv4' => 'v4',
+                    'aws.auth#sigv4a' => 'v4a',
+                ],
+                'service_auth_schemes' => [
+                    'aws.auth#sigv4', 'aws.auth#sigv4a'
+                ],
+                'operation_auth_schemes' => null,
+                'user_preferred_auth_schemes' => [
+                    'aws.auth#sigv3'
+                ],
+                'expected' => 'v4',
+            ],
+        ];
+
+        foreach ($cases as $key => $case) {
+            yield $key => $case;
+        }
     }
 }

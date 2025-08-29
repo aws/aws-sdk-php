@@ -35,8 +35,8 @@
     "ListTranscriptionJobs": "<p>Provides a list of transcription jobs that match the specified criteria. If no criteria are specified, all transcription jobs are returned.</p> <p>To get detailed information about a specific transcription job, use the operation.</p>",
     "ListVocabularies": "<p>Provides a list of custom vocabularies that match the specified criteria. If no criteria are specified, all custom vocabularies are returned.</p> <p>To get detailed information about a specific custom vocabulary, use the operation.</p>",
     "ListVocabularyFilters": "<p>Provides a list of custom vocabulary filters that match the specified criteria. If no criteria are specified, all custom vocabularies are returned.</p> <p>To get detailed information about a specific custom vocabulary filter, use the operation.</p>",
-    "StartCallAnalyticsJob": "<p>Transcribes the audio from a customer service call and applies any additional Request Parameters you choose to include in your request.</p> <p>In addition to many standard transcription features, Call Analytics provides you with call characteristics, call summarization, speaker sentiment, and optional redaction of your text transcript and your audio file. You can also apply custom categories to flag specified conditions. To learn more about these features and insights, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/call-analytics.html\">Analyzing call center audio with Call Analytics</a>.</p> <p>If you want to apply categories to your Call Analytics job, you must create them before submitting your job request. Categories cannot be retroactively applied to a job. To create a new category, use the operation. To learn more about Call Analytics categories, see <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html\">Creating categories for post-call transcriptions</a> and <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-stream.html\">Creating categories for real-time transcriptions</a>.</p> <p>To make a <code>StartCallAnalyticsJob</code> request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the <code>Media</code> parameter.</p> <p>Note that job queuing is enabled by default for Call Analytics jobs.</p> <p>You must include the following parameters in your <code>StartCallAnalyticsJob</code> request:</p> <ul> <li> <p> <code>region</code>: The Amazon Web Services Region where you are making your request. For a list of Amazon Web Services Regions supported with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/general/latest/gr/transcribe.html\">Amazon Transcribe endpoints and quotas</a>.</p> </li> <li> <p> <code>CallAnalyticsJobName</code>: A custom name that you create for your transcription job that's unique within your Amazon Web Services account.</p> </li> <li> <p> <code>DataAccessRoleArn</code>: The Amazon Resource Name (ARN) of an IAM role that has permissions to access the Amazon S3 bucket that contains your input files.</p> </li> <li> <p> <code>Media</code> (<code>MediaFileUri</code> or <code>RedactedMediaFileUri</code>): The Amazon S3 location of your media file.</p> </li> </ul> <note> <p>With Call Analytics, you can redact the audio contained in your media file by including <code>RedactedMediaFileUri</code>, instead of <code>MediaFileUri</code>, to specify the location of your input audio. If you choose to redact your audio, you can find your redacted media at the location specified in the <code>RedactedMediaFileUri</code> field of your response.</p> </note>",
-    "StartMedicalScribeJob": "<p>Transcribes patient-clinician conversations and generates clinical notes. </p> <p>Amazon Web Services HealthScribe automatically provides rich conversation transcripts, identifies speaker roles, classifies dialogues, extracts medical terms, and generates preliminary clinical notes. To learn more about these features, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/health-scribe.html\">Amazon Web Services HealthScribe</a>.</p> <p>To make a <code>StartMedicalScribeJob</code> request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the <code>Media</code> parameter.</p> <p>You must include the following parameters in your <code>StartMedicalTranscriptionJob</code> request:</p> <ul> <li> <p> <code>DataAccessRoleArn</code>: The ARN of an IAM role with the these minimum permissions: read permission on input file Amazon S3 bucket specified in <code>Media</code>, write permission on the Amazon S3 bucket specified in <code>OutputBucketName</code>, and full permissions on the KMS key specified in <code>OutputEncryptionKMSKeyId</code> (if set). The role should also allow <code>transcribe.amazonaws.com</code> to assume it. </p> </li> <li> <p> <code>Media</code> (<code>MediaFileUri</code>): The Amazon S3 location of your media file.</p> </li> <li> <p> <code>MedicalScribeJobName</code>: A custom name you create for your MedicalScribe job that is unique within your Amazon Web Services account.</p> </li> <li> <p> <code>OutputBucketName</code>: The Amazon S3 bucket where you want your output files stored.</p> </li> <li> <p> <code>Settings</code>: A <code>MedicalScribeSettings</code> obect that must set exactly one of <code>ShowSpeakerLabels</code> or <code>ChannelIdentification</code> to true. If <code>ShowSpeakerLabels</code> is true, <code>MaxSpeakerLabels</code> must also be set. </p> </li> <li> <p> <code>ChannelDefinitions</code>: A <code>MedicalScribeChannelDefinitions</code> array should be set if and only if the <code>ChannelIdentification</code> value of <code>Settings</code> is set to true. </p> </li> </ul>",
+    "StartCallAnalyticsJob": "<p>Transcribes the audio from a customer service call and applies any additional Request Parameters you choose to include in your request.</p> <p>In addition to many standard transcription features, Call Analytics provides you with call characteristics, call summarization, speaker sentiment, and optional redaction of your text transcript and your audio file. You can also apply custom categories to flag specified conditions. To learn more about these features and insights, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/call-analytics.html\">Analyzing call center audio with Call Analytics</a>.</p> <p>If you want to apply categories to your Call Analytics job, you must create them before submitting your job request. Categories cannot be retroactively applied to a job. To create a new category, use the operation. To learn more about Call Analytics categories, see <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html\">Creating categories for post-call transcriptions</a> and <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-stream.html\">Creating categories for real-time transcriptions</a>.</p> <p>To make a <code>StartCallAnalyticsJob</code> request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the <code>Media</code> parameter.</p> <p>Job queuing is available for Call Analytics jobs. If you pass a <code>DataAccessRoleArn</code> in your request and you exceed your Concurrent Job Limit, your job will automatically be added to a queue to be processed once your concurrent job count is below the limit.</p> <p>You must include the following parameters in your <code>StartCallAnalyticsJob</code> request:</p> <ul> <li> <p> <code>region</code>: The Amazon Web Services Region where you are making your request. For a list of Amazon Web Services Regions supported with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/general/latest/gr/transcribe.html\">Amazon Transcribe endpoints and quotas</a>.</p> </li> <li> <p> <code>CallAnalyticsJobName</code>: A custom name that you create for your transcription job that's unique within your Amazon Web Services account.</p> </li> <li> <p> <code>Media</code> (<code>MediaFileUri</code> or <code>RedactedMediaFileUri</code>): The Amazon S3 location of your media file.</p> </li> </ul> <note> <p>With Call Analytics, you can redact the audio contained in your media file by including <code>RedactedMediaFileUri</code>, instead of <code>MediaFileUri</code>, to specify the location of your input audio. If you choose to redact your audio, you can find your redacted media at the location specified in the <code>RedactedMediaFileUri</code> field of your response.</p> </note>",
+    "StartMedicalScribeJob": "<p>Transcribes patient-clinician conversations and generates clinical notes. </p> <p>Amazon Web Services HealthScribe automatically provides rich conversation transcripts, identifies speaker roles, classifies dialogues, extracts medical terms, and generates preliminary clinical notes. To learn more about these features, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/health-scribe.html\">Amazon Web Services HealthScribe</a>.</p> <p>To make a <code>StartMedicalScribeJob</code> request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the <code>Media</code> parameter.</p> <p>You must include the following parameters in your <code>StartMedicalTranscriptionJob</code> request:</p> <ul> <li> <p> <code>DataAccessRoleArn</code>: The ARN of an IAM role with the these minimum permissions: read permission on input file Amazon S3 bucket specified in <code>Media</code>, write permission on the Amazon S3 bucket specified in <code>OutputBucketName</code>, and full permissions on the KMS key specified in <code>OutputEncryptionKMSKeyId</code> (if set). The role should also allow <code>transcribe.amazonaws.com</code> to assume it. </p> </li> <li> <p> <code>Media</code> (<code>MediaFileUri</code>): The Amazon S3 location of your media file.</p> </li> <li> <p> <code>MedicalScribeJobName</code>: A custom name you create for your MedicalScribe job that is unique within your Amazon Web Services account.</p> </li> <li> <p> <code>OutputBucketName</code>: The Amazon S3 bucket where you want your output files stored.</p> </li> <li> <p> <code>Settings</code>: A <code>MedicalScribeSettings</code> object that must set exactly one of <code>ShowSpeakerLabels</code> or <code>ChannelIdentification</code> to true. If <code>ShowSpeakerLabels</code> is true, <code>MaxSpeakerLabels</code> must also be set. </p> </li> <li> <p> <code>ChannelDefinitions</code>: A <code>MedicalScribeChannelDefinitions</code> array should be set if and only if the <code>ChannelIdentification</code> value of <code>Settings</code> is set to true. </p> </li> </ul>",
     "StartMedicalTranscriptionJob": "<p>Transcribes the audio from a medical dictation or conversation and applies any additional Request Parameters you choose to include in your request.</p> <p>In addition to many standard transcription features, Amazon Transcribe Medical provides you with a robust medical vocabulary and, optionally, content identification, which adds flags to personal health information (PHI). To learn more about these features, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/how-it-works-med.html\">How Amazon Transcribe Medical works</a>.</p> <p>To make a <code>StartMedicalTranscriptionJob</code> request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the <code>Media</code> parameter.</p> <p>You must include the following parameters in your <code>StartMedicalTranscriptionJob</code> request:</p> <ul> <li> <p> <code>region</code>: The Amazon Web Services Region where you are making your request. For a list of Amazon Web Services Regions supported with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/general/latest/gr/transcribe.html\">Amazon Transcribe endpoints and quotas</a>.</p> </li> <li> <p> <code>MedicalTranscriptionJobName</code>: A custom name you create for your transcription job that is unique within your Amazon Web Services account.</p> </li> <li> <p> <code>Media</code> (<code>MediaFileUri</code>): The Amazon S3 location of your media file.</p> </li> <li> <p> <code>LanguageCode</code>: This must be <code>en-US</code>.</p> </li> <li> <p> <code>OutputBucketName</code>: The Amazon S3 bucket where you want your transcript stored. If you want your output stored in a sub-folder of this bucket, you must also include <code>OutputKey</code>.</p> </li> <li> <p> <code>Specialty</code>: This must be <code>PRIMARYCARE</code>.</p> </li> <li> <p> <code>Type</code>: Choose whether your audio is a conversation or a dictation.</p> </li> </ul>",
     "StartTranscriptionJob": "<p>Transcribes the audio from a media file and applies any additional Request Parameters you choose to include in your request.</p> <p>To make a <code>StartTranscriptionJob</code> request, you must first upload your media file into an Amazon S3 bucket; you can then specify the Amazon S3 location of the file using the <code>Media</code> parameter.</p> <p>You must include the following parameters in your <code>StartTranscriptionJob</code> request:</p> <ul> <li> <p> <code>region</code>: The Amazon Web Services Region where you are making your request. For a list of Amazon Web Services Regions supported with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/general/latest/gr/transcribe.html\">Amazon Transcribe endpoints and quotas</a>.</p> </li> <li> <p> <code>TranscriptionJobName</code>: A custom name you create for your transcription job that is unique within your Amazon Web Services account.</p> </li> <li> <p> <code>Media</code> (<code>MediaFileUri</code>): The Amazon S3 location of your media file.</p> </li> <li> <p>One of <code>LanguageCode</code>, <code>IdentifyLanguage</code>, or <code>IdentifyMultipleLanguages</code>: If you know the language of your media file, specify it using the <code>LanguageCode</code> parameter; you can find all valid language codes in the <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html\">Supported languages</a> table. If you do not know the languages spoken in your media, use either <code>IdentifyLanguage</code> or <code>IdentifyMultipleLanguages</code> and let Amazon Transcribe identify the languages for you.</p> </li> </ul>",
     "TagResource": "<p>Adds one or more custom tags, each in the form of a key:value pair, to the specified resource.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
@@ -58,8 +58,7 @@
     },
     "BadRequestException": {
       "base": "<p>Your request didn't pass one or more validation tests. This can occur when the entity you're trying to delete doesn't exist or if it's in a non-terminal state (such as <code>IN PROGRESS</code>). See the exception message field for more information.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BaseModelName": {
       "base": null,
@@ -75,6 +74,7 @@
         "InterruptionFilter$Negate": "<p>Set to <code>TRUE</code> to flag speech that does not contain interruptions. Set to <code>FALSE</code> to flag speech that contains interruptions.</p>",
         "JobExecutionSettings$AllowDeferredExecution": "<p>Makes it possible to enable job queuing when your concurrent request limit is exceeded. When <code>AllowDeferredExecution</code> is set to <code>true</code>, transcription job requests are placed in a queue until the number of jobs falls below the concurrent request limit. If <code>AllowDeferredExecution</code> is set to <code>false</code> and the number of transcription job requests exceed the concurrent request limit, you get a <code>LimitExceededException</code> error.</p> <p>If you include <code>AllowDeferredExecution</code> in your request, you must also include <code>DataAccessRoleArn</code>.</p>",
         "LanguageModel$UpgradeAvailability": "<p>Shows if a more current base model is available for use with the specified custom language model.</p> <p>If <code>false</code>, your custom language model is using the most up-to-date base model.</p> <p>If <code>true</code>, there is a newer base model available than the one your language model is using.</p> <p>Note that to update a base model, you must recreate the custom language model using the new base model. Base model upgrades for existing custom language models are not supported.</p>",
+        "MedicalScribeJob$MedicalScribeContextProvided": "<p>Indicates whether the <code>MedicalScribeContext</code> object was provided when the Medical Scribe job was started.</p>",
         "MedicalScribeSettings$ShowSpeakerLabels": "<p>Enables speaker partitioning (diarization) in your Medical Scribe output. Speaker partitioning labels the speech from individual speakers in your media file.</p> <p>If you enable <code>ShowSpeakerLabels</code> in your request, you must also include <code>MaxSpeakerLabels</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/diarization.html\">Partitioning speakers (diarization)</a>.</p>",
         "MedicalScribeSettings$ChannelIdentification": "<p>Enables channel identification in multi-channel audio.</p> <p>Channel identification transcribes the audio on each channel independently, then appends the output for each channel into one transcript.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/channel-id.html\">Transcribing multi-channel audio</a>.</p>",
         "MedicalTranscriptionSetting$ShowSpeakerLabels": "<p>Enables speaker partitioning (diarization) in your transcription output. Speaker partitioning labels the speech from individual speakers in your media file.</p> <p>If you enable <code>ShowSpeakerLabels</code> in your request, you must also include <code>MaxSpeakerLabels</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/diarization.html\">Partitioning speakers (diarization)</a>.</p>",
@@ -224,10 +224,15 @@
         "ChannelDefinition$ChannelId": "<p>Specify the audio channel you want to define.</p>"
       }
     },
+    "ClinicalNoteGenerationSettings": {
+      "base": "<p>The output configuration for clinical note generation.</p>",
+      "refs": {
+        "MedicalScribeSettings$ClinicalNoteGenerationSettings": "<p>Specify settings for the clinical note generation.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>A resource already exists with this name. Resource names must be unique within an Amazon Web Services account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContentRedaction": {
       "base": "<p>Makes it possible to redact or flag specified personally identifiable information (PII) in your transcript. If you use <code>ContentRedaction</code>, you must also include the sub-parameters: <code>RedactionOutput</code> and <code>RedactionType</code>. You can optionally include <code>PiiEntityTypes</code> to choose which types of PII you want to redact.</p>",
@@ -240,53 +245,43 @@
     },
     "CreateCallAnalyticsCategoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCallAnalyticsCategoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLanguageModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLanguageModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMedicalVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMedicalVocabularyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVocabularyFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVocabularyFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVocabularyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DataAccessRoleArn": {
       "base": null,
@@ -349,68 +344,55 @@
     },
     "DeleteCallAnalyticsCategoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCallAnalyticsCategoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCallAnalyticsJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCallAnalyticsJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLanguageModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMedicalScribeJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMedicalTranscriptionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMedicalVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTranscriptionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVocabularyFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLanguageModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLanguageModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DurationInSeconds": {
       "base": null,
@@ -439,83 +421,67 @@
     },
     "GetCallAnalyticsCategoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCallAnalyticsCategoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCallAnalyticsJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCallAnalyticsJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMedicalScribeJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMedicalScribeJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMedicalTranscriptionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMedicalTranscriptionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMedicalVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMedicalVocabularyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTranscriptionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTranscriptionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVocabularyFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVocabularyFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVocabularyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IdentifiedLanguageScore": {
       "base": null,
@@ -543,8 +509,7 @@
     },
     "InternalFailureException": {
       "base": "<p>There was an internal error. Check the error message, correct the issue, and try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InterruptionFilter": {
       "base": "<p>Flag the presence or absence of interruptions in your Call Analytics transcription output.</p> <p>Rules using <code>InterruptionFilter</code> are designed to match:</p> <ul> <li> <p>Instances where an agent interrupts a customer</p> </li> <li> <p>Instances where a customer interrupts an agent</p> </li> <li> <p>Either participant interrupting the other</p> </li> <li> <p>A lack of interruptions</p> </li> </ul> <p>See <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tca-categories-batch.html#tca-rules-batch\">Rule criteria for post-call categories</a> for usage examples.</p>",
@@ -596,7 +561,7 @@
         "MedicalTranscriptionJob$LanguageCode": "<p>The language code used to create your medical transcription job. US English (<code>en-US</code>) is the only supported language for medical transcriptions.</p>",
         "MedicalTranscriptionJobSummary$LanguageCode": "<p>The language code used to create your medical transcription. US English (<code>en-US</code>) is the only supported language for medical transcriptions.</p>",
         "StartMedicalTranscriptionJobRequest$LanguageCode": "<p>The language code that represents the language spoken in the input media file. US English (<code>en-US</code>) is the only valid value for medical transcription jobs. Any other value you enter for language code results in a <code>BadRequestException</code> error.</p>",
-        "StartTranscriptionJobRequest$LanguageCode": "<p>The language code that represents the language spoken in the input media file.</p> <p>If you're unsure of the language spoken in your media file, consider using <code>IdentifyLanguage</code> or <code>IdentifyMultipleLanguages</code> to enable automatic language identification.</p> <p>Note that you must include one of <code>LanguageCode</code>, <code>IdentifyLanguage</code>, or <code>IdentifyMultipleLanguages</code> in your request. If you include more than one of these parameters, your transcription job fails.</p> <p>For a list of supported languages and their associated language codes, refer to the <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html\">Supported languages</a> table.</p> <note> <p>To transcribe speech in Modern Standard Arabic (<code>ar-SA</code>), your media file must be encoded at a sample rate of 16,000 Hz or higher.</p> </note>",
+        "StartTranscriptionJobRequest$LanguageCode": "<p>The language code that represents the language spoken in the input media file.</p> <p>If you're unsure of the language spoken in your media file, consider using <code>IdentifyLanguage</code> or <code>IdentifyMultipleLanguages</code> to enable automatic language identification.</p> <p>Note that you must include one of <code>LanguageCode</code>, <code>IdentifyLanguage</code>, or <code>IdentifyMultipleLanguages</code> in your request. If you include more than one of these parameters, your transcription job fails.</p> <p>For a list of supported languages and their associated language codes, refer to the <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html\">Supported languages</a> table.</p> <note> <p>To transcribe speech in Modern Standard Arabic (<code>ar-SA</code>) in Amazon Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services GovCloud (US) (US-East, us-gov-east-1), Canada (Calgary, ca-west-1) and Africa (Cape Town, af-south-1), your media file must be encoded at a sample rate of 16,000 Hz or higher.</p> </note>",
         "TranscriptionJob$LanguageCode": "<p>The language code used to create your transcription job. This parameter is used with single-language identification. For multi-language identification requests, refer to the plural version of this parameter, <code>LanguageCodes</code>.</p>",
         "TranscriptionJobSummary$LanguageCode": "<p>The language code used to create your transcription.</p>",
         "UpdateMedicalVocabularyRequest$LanguageCode": "<p>The language code that represents the language of the entries in the custom vocabulary you want to update. US English (<code>en-US</code>) is the only language supported with Amazon Transcribe Medical.</p>",
@@ -645,115 +610,94 @@
     "LanguageOptions": {
       "base": null,
       "refs": {
-        "CallAnalyticsJobSettings$LanguageOptions": "<p>You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.</p> <p>Including language options can improve the accuracy of language identification.</p> <p>For a list of languages supported with Call Analytics, refer to the <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html\">Supported languages</a> table.</p> <p>To transcribe speech in Modern Standard Arabic (<code>ar-SA</code>), your media file must be encoded at a sample rate of 16,000 Hz or higher.</p>",
-        "StartTranscriptionJobRequest$LanguageOptions": "<p>You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.</p> <p>If you include <code>LanguageOptions</code> in your request, you must also include <code>IdentifyLanguage</code>.</p> <p>For more information, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html\">Supported languages</a>.</p> <p>To transcribe speech in Modern Standard Arabic (<code>ar-SA</code>), your media file must be encoded at a sample rate of 16,000 Hz or higher.</p>",
+        "CallAnalyticsJobSettings$LanguageOptions": "<p>You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.</p> <p>Including language options can improve the accuracy of language identification.</p> <p>For a list of languages supported with Call Analytics, refer to the <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html\">Supported languages</a> table.</p> <p>To transcribe speech in Modern Standard Arabic (<code>ar-SA</code>) in Amazon Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services GovCloud (US) (US-East, us-gov-east-1), Canada (Calgary) ca-west-1 and Africa (Cape Town) af-south-1, your media file must be encoded at a sample rate of 16,000 Hz or higher.</p>",
+        "StartTranscriptionJobRequest$LanguageOptions": "<p>You can specify two or more language codes that represent the languages you think may be present in your media. Including more than five is not recommended. If you're unsure what languages are present, do not include this parameter.</p> <p>If you include <code>LanguageOptions</code> in your request, you must also include <code>IdentifyLanguage</code>.</p> <p>For more information, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html\">Supported languages</a>.</p> <p>To transcribe speech in Modern Standard Arabic (<code>ar-SA</code>)in Amazon Web Services GovCloud (US) (US-West, us-gov-west-1), Amazon Web Services GovCloud (US) (US-East, us-gov-east-1), in Canada (Calgary) ca-west-1 and Africa (Cape Town) af-south-1, your media file must be encoded at a sample rate of 16,000 Hz or higher.</p>",
         "TranscriptionJob$LanguageOptions": "<p>Provides the language codes you specified in your request.</p>"
       }
     },
     "LimitExceededException": {
       "base": "<p>You've either sent too many requests or your input file is too long. Wait before retrying your request, or use a smaller file and try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCallAnalyticsCategoriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCallAnalyticsCategoriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCallAnalyticsJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCallAnalyticsJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLanguageModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLanguageModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMedicalScribeJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMedicalScribeJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMedicalTranscriptionJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMedicalTranscriptionJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMedicalVocabulariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMedicalVocabulariesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTranscriptionJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTranscriptionJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVocabulariesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVocabulariesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVocabularyFiltersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVocabularyFiltersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxAlternatives": {
       "base": null,
@@ -849,6 +793,12 @@
         "MedicalScribeChannelDefinition$ChannelId": "<p>Specify the audio channel you want to define.</p>"
       }
     },
+    "MedicalScribeContext": {
+      "base": "<p>The <code>MedicalScribeContext</code> object that contains contextual information used to generate customized clinical notes.</p>",
+      "refs": {
+        "StartMedicalScribeJobRequest$MedicalScribeContext": "<p>The <code>MedicalScribeContext</code> object that contains contextual information which is used during clinical note generation to add relevant context to the note.</p>"
+      }
+    },
     "MedicalScribeJob": {
       "base": "<p>Provides detailed information about a Medical Scribe job.</p> <p>To view the status of the specified Medical Scribe job, check the <code>MedicalScribeJobStatus</code> field. If the status is <code>COMPLETED</code>, the job is finished and you can find the results at the locations specified in <code>MedicalScribeOutput</code>. If the status is <code>FAILED</code>, <code>FailureReason</code> provides details on why your Medical Scribe job failed.</p>",
       "refs": {
@@ -884,6 +834,12 @@
         "MedicalScribeJobSummary$LanguageCode": "<p>The language code used to create your Medical Scribe job. US English (<code>en-US</code>) is the only supported language for Medical Scribe jobs. </p>"
       }
     },
+    "MedicalScribeNoteTemplate": {
+      "base": null,
+      "refs": {
+        "ClinicalNoteGenerationSettings$NoteTemplate": "<p>Specify one of the following templates to use for the clinical note summary. The default is <code>HISTORY_AND_PHYSICAL</code>.</p> <ul> <li> <p>HISTORY_AND_PHYSICAL: Provides summaries for key sections of the clinical documentation. Examples of sections include Chief Complaint, History of Present Illness, Review of Systems, Past Medical History, Assessment, and Plan. </p> </li> <li> <p>GIRPP: Provides summaries based on the patients progress toward goals. Examples of sections include Goal, Intervention, Response, Progress, and Plan.</p> </li> <li> <p>BIRP: Focuses on the patient's behavioral patterns and responses. Examples of sections include Behavior, Intervention, Response, and Plan.</p> </li> <li> <p>SIRP: Emphasizes the situational context of therapy. Examples of sections include Situation, Intervention, Response, and Plan.</p> </li> <li> <p>DAP: Provides a simplified format for clinical documentation. Examples of sections include Data, Assessment, and Plan.</p> </li> <li> <p>BEHAVIORAL_SOAP: Behavioral health focused documentation format. Examples of sections include Subjective, Objective, Assessment, and Plan.</p> </li> <li> <p>PHYSICAL_SOAP: Physical health focused documentation format. Examples of sections include Subjective, Objective, Assessment, and Plan.</p> </li> </ul>"
+      }
+    },
     "MedicalScribeOutput": {
       "base": "<p>The location of the output of your Medical Scribe job. <code>ClinicalDocumentUri</code> holds the Amazon S3 URI for the Clinical Document and <code>TranscriptFileUri</code> holds the Amazon S3 URI for the Transcript.</p>",
       "refs": {
@@ -894,6 +850,12 @@
       "base": null,
       "refs": {
         "MedicalScribeChannelDefinition$ParticipantRole": "<p>Specify the participant that you want to flag. The options are <code>CLINICIAN</code> and <code>PATIENT</code> </p>"
+      }
+    },
+    "MedicalScribePatientContext": {
+      "base": "<p>Contains patient-specific information used to customize the clinical note generation.</p>",
+      "refs": {
+        "MedicalScribeContext$PatientContext": "<p>Contains patient-specific information.</p>"
       }
     },
     "MedicalScribeSettings": {
@@ -1010,8 +972,7 @@
     },
     "NotFoundException": {
       "base": "<p>We can't find the requested resource. Check that the specified name is correct and try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OutputBucketName": {
       "base": null,
@@ -1076,6 +1037,12 @@
       "base": null,
       "refs": {
         "ContentRedaction$PiiEntityTypes": "<p>Specify which types of personally identifiable information (PII) you want to redact in your transcript. You can include as many types as you'd like, or you can select <code>ALL</code>. If you do not include <code>PiiEntityTypes</code> in your request, all PII is redacted.</p>"
+      }
+    },
+    "Pronouns": {
+      "base": null,
+      "refs": {
+        "MedicalScribePatientContext$Pronouns": "<p>The patient's preferred pronouns that the user wants to provide as a context for clinical note generation.</p>"
       }
     },
     "RedactionOutput": {
@@ -1148,43 +1115,35 @@
     },
     "StartCallAnalyticsJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCallAnalyticsJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMedicalScribeJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMedicalScribeJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMedicalTranscriptionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMedicalTranscriptionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTranscriptionJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTranscriptionJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -1268,14 +1227,18 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CallAnalyticsJob$Tags": "<p>The tags, each in the form of a key:value pair, assigned to the specified call analytics job.</p>",
+        "CategoryProperties$Tags": "<p>The tags, each in the form of a key:value pair, assigned to the specified call analytics category.</p>",
+        "CreateCallAnalyticsCategoryRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new call analytics category at the time you start this new job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "CreateLanguageModelRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new custom language model at the time you create this new model.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "CreateMedicalVocabularyRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new custom medical vocabulary at the time you create this new custom vocabulary.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "CreateVocabularyFilterRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new custom vocabulary filter at the time you create this new vocabulary filter.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "CreateVocabularyRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new custom vocabulary at the time you create this new custom vocabulary.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "ListTagsForResourceResponse$Tags": "<p>Lists all tags associated with the given transcription job, vocabulary, model, or resource.</p>",
-        "MedicalScribeJob$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to the Medica Scribe job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
+        "MedicalScribeJob$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to the Medical Scribe job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "MedicalTranscriptionJob$Tags": "<p>The tags, each in the form of a key:value pair, assigned to the specified medical transcription job.</p>",
-        "StartMedicalScribeJobRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to the Medica Scribe job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
+        "StartCallAnalyticsJobRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new call analytics job at the time you start this new job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
+        "StartMedicalScribeJobRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to the Medical Scribe job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "StartMedicalTranscriptionJobRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new medical transcription job at the time you start this new job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "StartTranscriptionJobRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to a new transcription job at the time you start this new job.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
         "TagResourceRequest$Tags": "<p>Adds one or more custom tags, each in the form of a key:value pair, to the specified resource.</p> <p>To learn more about using tags with Amazon Transcribe, refer to <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html\">Tagging resources</a>.</p>",
@@ -1284,13 +1247,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1428,53 +1389,43 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCallAnalyticsCategoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCallAnalyticsCategoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMedicalVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMedicalVocabularyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVocabularyFilterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVocabularyFilterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVocabularyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Uri": {
       "base": null,

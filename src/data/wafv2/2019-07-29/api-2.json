@@ -11,7 +11,8 @@
     "serviceId":"WAFV2",
     "signatureVersion":"v4",
     "targetPrefix":"AWSWAF_20190729",
-    "uid":"wafv2-2019-07-29"
+    "uid":"wafv2-2019-07-29",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateWebACL":{
@@ -929,6 +930,11 @@
       "type":"integer",
       "min":0
     },
+    "ASN":{
+      "type":"long",
+      "max":4294967295,
+      "min":0
+    },
     "AWSManagedRulesACFPRuleSet":{
       "type":"structure",
       "required":[
@@ -952,6 +958,14 @@
         "RequestInspection":{"shape":"RequestInspection"},
         "ResponseInspection":{"shape":"ResponseInspection"},
         "EnableRegexInPath":{"shape":"Boolean"}
+      }
+    },
+    "AWSManagedRulesAntiDDoSRuleSet":{
+      "type":"structure",
+      "required":["ClientSideActionConfig"],
+      "members":{
+        "ClientSideActionConfig":{"shape":"ClientSideActionConfig"},
+        "SensitivityToBlock":{"shape":"SensitivityToAct"}
       }
     },
     "AWSManagedRulesBotControlRuleSet":{
@@ -994,13 +1008,11 @@
     },
     "All":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AllQueryArguments":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AllowAction":{
       "type":"structure",
@@ -1013,6 +1025,39 @@
       "required":["Statements"],
       "members":{
         "Statements":{"shape":"Statements"}
+      }
+    },
+    "ApplicationAttribute":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"AttributeName"},
+        "Values":{"shape":"AttributeValues"}
+      }
+    },
+    "ApplicationAttributes":{
+      "type":"list",
+      "member":{"shape":"ApplicationAttribute"},
+      "max":10,
+      "min":1
+    },
+    "ApplicationConfig":{
+      "type":"structure",
+      "members":{
+        "Attributes":{"shape":"ApplicationAttributes"}
+      }
+    },
+    "AsnList":{
+      "type":"list",
+      "member":{"shape":"ASN"},
+      "max":100,
+      "min":1
+    },
+    "AsnMatchStatement":{
+      "type":"structure",
+      "required":["AsnList"],
+      "members":{
+        "AsnList":{"shape":"AsnList"},
+        "ForwardedIPConfig":{"shape":"ForwardedIPConfig"}
       }
     },
     "AssociateWebACLRequest":{
@@ -1028,8 +1073,7 @@
     },
     "AssociateWebACLResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociatedResourceType":{
       "type":"string",
@@ -1046,6 +1090,23 @@
       "members":{
         "RequestBody":{"shape":"RequestBody"}
       }
+    },
+    "AttributeName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\w\\-]+$"
+    },
+    "AttributeValue":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "AttributeValues":{
+      "type":"list",
+      "member":{"shape":"AttributeValue"},
+      "max":50,
+      "min":1
     },
     "BlockAction":{
       "type":"structure",
@@ -1142,6 +1203,22 @@
       "type":"structure",
       "members":{
         "Capacity":{"shape":"ConsumedCapacity"}
+      }
+    },
+    "ClientSideAction":{
+      "type":"structure",
+      "required":["UsageOfAction"],
+      "members":{
+        "UsageOfAction":{"shape":"UsageOfAction"},
+        "Sensitivity":{"shape":"SensitivityToAct"},
+        "ExemptUriRegularExpressions":{"shape":"RegularExpressionList"}
+      }
+    },
+    "ClientSideActionConfig":{
+      "type":"structure",
+      "required":["Challenge"],
+      "members":{
+        "Challenge":{"shape":"ClientSideAction"}
       }
     },
     "ComparisonOperator":{
@@ -1566,12 +1643,15 @@
         "Description":{"shape":"EntityDescription"},
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
+        "DataProtectionConfig":{"shape":"DataProtectionConfig"},
         "Tags":{"shape":"TagList"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
         "CaptchaConfig":{"shape":"CaptchaConfig"},
         "ChallengeConfig":{"shape":"ChallengeConfig"},
         "TokenDomains":{"shape":"TokenDomains"},
-        "AssociationConfig":{"shape":"AssociationConfig"}
+        "AssociationConfig":{"shape":"AssociationConfig"},
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"}
       }
     },
     "CreateWebACLResponse":{
@@ -1647,6 +1727,39 @@
         "Content":{"shape":"ResponseContent"}
       }
     },
+    "DataProtection":{
+      "type":"structure",
+      "required":[
+        "Field",
+        "Action"
+      ],
+      "members":{
+        "Field":{"shape":"FieldToProtect"},
+        "Action":{"shape":"DataProtectionAction"},
+        "ExcludeRuleMatchDetails":{"shape":"Boolean"},
+        "ExcludeRateBasedDetails":{"shape":"Boolean"}
+      }
+    },
+    "DataProtectionAction":{
+      "type":"string",
+      "enum":[
+        "SUBSTITUTION",
+        "HASH"
+      ]
+    },
+    "DataProtectionConfig":{
+      "type":"structure",
+      "required":["DataProtections"],
+      "members":{
+        "DataProtections":{"shape":"DataProtections"}
+      }
+    },
+    "DataProtections":{
+      "type":"list",
+      "member":{"shape":"DataProtection"},
+      "max":26,
+      "min":1
+    },
     "DefaultAction":{
       "type":"structure",
       "members":{
@@ -1667,8 +1780,7 @@
     },
     "DeleteAPIKeyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFirewallManagerRuleGroupsRequest":{
       "type":"structure",
@@ -1704,8 +1816,7 @@
     },
     "DeleteIPSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLoggingConfigurationRequest":{
       "type":"structure",
@@ -1718,8 +1829,7 @@
     },
     "DeleteLoggingConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePermissionPolicyRequest":{
       "type":"structure",
@@ -1730,8 +1840,7 @@
     },
     "DeletePermissionPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegexPatternSetRequest":{
       "type":"structure",
@@ -1750,8 +1859,7 @@
     },
     "DeleteRegexPatternSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRuleGroupRequest":{
       "type":"structure",
@@ -1770,8 +1878,7 @@
     },
     "DeleteRuleGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteWebACLRequest":{
       "type":"structure",
@@ -1790,8 +1897,7 @@
     },
     "DeleteWebACLResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAllManagedProductsRequest":{
       "type":"structure",
@@ -1858,8 +1964,7 @@
     },
     "DisassociateWebACLResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DownloadUrl":{"type":"string"},
     "EmailField":{
@@ -1950,7 +2055,9 @@
         "Headers":{"shape":"Headers"},
         "Cookies":{"shape":"Cookies"},
         "HeaderOrder":{"shape":"HeaderOrder"},
-        "JA3Fingerprint":{"shape":"JA3Fingerprint"}
+        "JA3Fingerprint":{"shape":"JA3Fingerprint"},
+        "JA4Fingerprint":{"shape":"JA4Fingerprint"},
+        "UriFragment":{"shape":"UriFragment"}
       }
     },
     "FieldToMatchData":{
@@ -1958,6 +2065,35 @@
       "max":64,
       "min":1,
       "pattern":".*\\S.*"
+    },
+    "FieldToProtect":{
+      "type":"structure",
+      "required":["FieldType"],
+      "members":{
+        "FieldType":{"shape":"FieldToProtectType"},
+        "FieldKeys":{"shape":"FieldToProtectKeys"}
+      }
+    },
+    "FieldToProtectKeyName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
+    "FieldToProtectKeys":{
+      "type":"list",
+      "member":{"shape":"FieldToProtectKeyName"},
+      "max":100
+    },
+    "FieldToProtectType":{
+      "type":"string",
+      "enum":[
+        "SINGLE_HEADER",
+        "SINGLE_COOKIE",
+        "SINGLE_QUERY_ARGUMENT",
+        "QUERY_STRING",
+        "BODY"
+      ]
     },
     "Filter":{
       "type":"structure",
@@ -2270,15 +2406,11 @@
     },
     "GetWebACLRequest":{
       "type":"structure",
-      "required":[
-        "Name",
-        "Scope",
-        "Id"
-      ],
       "members":{
         "Name":{"shape":"EntityName"},
         "Scope":{"shape":"Scope"},
-        "Id":{"shape":"EntityId"}
+        "Id":{"shape":"EntityId"},
+        "ARN":{"shape":"ResourceArn"}
       }
     },
     "GetWebACLResponse":{
@@ -2435,6 +2567,13 @@
       ]
     },
     "JA3Fingerprint":{
+      "type":"structure",
+      "required":["FallbackBehavior"],
+      "members":{
+        "FallbackBehavior":{"shape":"FallbackBehavior"}
+      }
+    },
+    "JA4Fingerprint":{
       "type":"structure",
       "required":["FallbackBehavior"],
       "members":{
@@ -2808,6 +2947,13 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "LowReputationMode":{
+      "type":"string",
+      "enum":[
+        "ACTIVE_UNDER_DDOS",
+        "ALWAYS_ON"
+      ]
+    },
     "ManagedProductDescriptor":{
       "type":"structure",
       "members":{
@@ -2851,7 +2997,8 @@
         },
         "AWSManagedRulesBotControlRuleSet":{"shape":"AWSManagedRulesBotControlRuleSet"},
         "AWSManagedRulesATPRuleSet":{"shape":"AWSManagedRulesATPRuleSet"},
-        "AWSManagedRulesACFPRuleSet":{"shape":"AWSManagedRulesACFPRuleSet"}
+        "AWSManagedRulesACFPRuleSet":{"shape":"AWSManagedRulesACFPRuleSet"},
+        "AWSManagedRulesAntiDDoSRuleSet":{"shape":"AWSManagedRulesAntiDDoSRuleSet"}
       }
     },
     "ManagedRuleGroupConfigs":{
@@ -2951,8 +3098,7 @@
     },
     "Method":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "MetricName":{
       "type":"string",
@@ -2977,14 +3123,20 @@
     },
     "NoneAction":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "NotStatement":{
       "type":"structure",
       "required":["Statement"],
       "members":{
         "Statement":{"shape":"Statement"}
+      }
+    },
+    "OnSourceDDoSProtectionConfig":{
+      "type":"structure",
+      "required":["ALBLowReputationMode"],
+      "members":{
+        "ALBLowReputationMode":{"shape":"LowReputationMode"}
       }
     },
     "OrStatement":{
@@ -3087,7 +3239,9 @@
         "ASSOCIATED_RESOURCE_TYPE",
         "SCOPE_DOWN",
         "CUSTOM_KEYS",
-        "ACP_RULE_SET_RESPONSE_INSPECTION"
+        "ACP_RULE_SET_RESPONSE_INSPECTION",
+        "DATA_PROTECTION_CONFIG",
+        "LOW_REPUTATION_MODE"
       ]
     },
     "ParameterExceptionParameter":{
@@ -3219,13 +3373,11 @@
     },
     "PutPermissionPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QueryString":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RateBasedStatement":{
       "type":"structure",
@@ -3262,7 +3414,10 @@
         "ForwardedIP":{"shape":"RateLimitForwardedIP"},
         "IP":{"shape":"RateLimitIP"},
         "LabelNamespace":{"shape":"RateLimitLabelNamespace"},
-        "UriPath":{"shape":"RateLimitUriPath"}
+        "UriPath":{"shape":"RateLimitUriPath"},
+        "JA3Fingerprint":{"shape":"RateLimitJA3Fingerprint"},
+        "JA4Fingerprint":{"shape":"RateLimitJA4Fingerprint"},
+        "ASN":{"shape":"RateLimitAsn"}
       }
     },
     "RateBasedStatementCustomKeys":{
@@ -3280,7 +3435,11 @@
     "RateLimit":{
       "type":"long",
       "max":2000000000,
-      "min":100
+      "min":10
+    },
+    "RateLimitAsn":{
+      "type":"structure",
+      "members":{}
     },
     "RateLimitCookie":{
       "type":"structure",
@@ -3295,13 +3454,11 @@
     },
     "RateLimitForwardedIP":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RateLimitHTTPMethod":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RateLimitHeader":{
       "type":"structure",
@@ -3316,7 +3473,20 @@
     },
     "RateLimitIP":{
       "type":"structure",
+      "members":{}
+    },
+    "RateLimitJA3Fingerprint":{
+      "type":"structure",
+      "required":["FallbackBehavior"],
       "members":{
+        "FallbackBehavior":{"shape":"FallbackBehavior"}
+      }
+    },
+    "RateLimitJA4Fingerprint":{
+      "type":"structure",
+      "required":["FallbackBehavior"],
+      "members":{
+        "FallbackBehavior":{"shape":"FallbackBehavior"}
       }
     },
     "RateLimitLabelNamespace":{
@@ -3495,7 +3665,8 @@
         "APPSYNC",
         "COGNITO_USER_POOL",
         "APP_RUNNER_SERVICE",
-        "VERIFIED_ACCESS_INSTANCE"
+        "VERIFIED_ACCESS_INSTANCE",
+        "AMPLIFY"
       ]
     },
     "ResponseCode":{"type":"integer"},
@@ -3783,6 +3954,14 @@
         "HIGH"
       ]
     },
+    "SensitivityToAct":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
     "SingleCookieName":{
       "type":"string",
       "max":60,
@@ -3863,7 +4042,8 @@
         "NotStatement":{"shape":"NotStatement"},
         "ManagedRuleGroupStatement":{"shape":"ManagedRuleGroupStatement"},
         "LabelMatchStatement":{"shape":"LabelMatchStatement"},
-        "RegexMatchStatement":{"shape":"RegexMatchStatement"}
+        "RegexMatchStatement":{"shape":"RegexMatchStatement"},
+        "AsnMatchStatement":{"shape":"AsnMatchStatement"}
       }
     },
     "Statements":{
@@ -3929,8 +4109,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -4029,8 +4208,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateIPSetRequest":{
       "type":"structure",
@@ -4151,12 +4329,15 @@
         "Description":{"shape":"EntityDescription"},
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
+        "DataProtectionConfig":{"shape":"DataProtectionConfig"},
         "LockToken":{"shape":"LockToken"},
         "CustomResponseBodies":{"shape":"CustomResponseBodies"},
         "CaptchaConfig":{"shape":"CaptchaConfig"},
         "ChallengeConfig":{"shape":"ChallengeConfig"},
         "TokenDomains":{"shape":"TokenDomains"},
-        "AssociationConfig":{"shape":"AssociationConfig"}
+        "AssociationConfig":{"shape":"AssociationConfig"},
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"}
       }
     },
     "UpdateWebACLResponse":{
@@ -4165,10 +4346,22 @@
         "NextLockToken":{"shape":"LockToken"}
       }
     },
-    "UriPath":{
+    "UriFragment":{
       "type":"structure",
       "members":{
+        "FallbackBehavior":{"shape":"FallbackBehavior"}
       }
+    },
+    "UriPath":{
+      "type":"structure",
+      "members":{}
+    },
+    "UsageOfAction":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "UsernameField":{
       "type":"structure",
@@ -4370,6 +4563,7 @@
         "Description":{"shape":"EntityDescription"},
         "Rules":{"shape":"Rules"},
         "VisibilityConfig":{"shape":"VisibilityConfig"},
+        "DataProtectionConfig":{"shape":"DataProtectionConfig"},
         "Capacity":{"shape":"ConsumedCapacity"},
         "PreProcessFirewallManagerRuleGroups":{"shape":"FirewallManagerRuleGroups"},
         "PostProcessFirewallManagerRuleGroups":{"shape":"FirewallManagerRuleGroups"},
@@ -4379,7 +4573,10 @@
         "CaptchaConfig":{"shape":"CaptchaConfig"},
         "ChallengeConfig":{"shape":"ChallengeConfig"},
         "TokenDomains":{"shape":"TokenDomains"},
-        "AssociationConfig":{"shape":"AssociationConfig"}
+        "AssociationConfig":{"shape":"AssociationConfig"},
+        "RetrofittedByFirewallManager":{"shape":"Boolean"},
+        "OnSourceDDoSProtectionConfig":{"shape":"OnSourceDDoSProtectionConfig"},
+        "ApplicationConfig":{"shape":"ApplicationConfig"}
       }
     },
     "WebACLSummaries":{

@@ -5,11 +5,13 @@
     "endpointPrefix":"account",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Account",
     "serviceId":"Account",
     "signatureVersion":"v4",
     "signingName":"account",
-    "uid":"account-2021-02-01"
+    "uid":"account-2021-02-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptPrimaryEmailUpdate":{
@@ -23,9 +25,9 @@
       "output":{"shape":"AcceptPrimaryEmailUpdateResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"}
       ]
@@ -56,9 +58,9 @@
       },
       "input":{"shape":"DisableRegionRequest"},
       "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"}
       ]
@@ -72,9 +74,25 @@
       },
       "input":{"shape":"EnableRegionRequest"},
       "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetAccountInformation":{
+      "name":"GetAccountInformation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/getAccountInformation",
+        "responseCode":200
+      },
+      "input":{"shape":"GetAccountInformationRequest"},
+      "output":{"shape":"GetAccountInformationResponse"},
+      "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"}
       ]
@@ -124,8 +142,8 @@
       "output":{"shape":"GetPrimaryEmailResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"}
       ]
@@ -140,8 +158,8 @@
       "input":{"shape":"GetRegionOptStatusRequest"},
       "output":{"shape":"GetRegionOptStatusResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"}
       ]
@@ -156,11 +174,27 @@
       "input":{"shape":"ListRegionsRequest"},
       "output":{"shape":"ListRegionsResponse"},
       "errors":[
-        {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "PutAccountName":{
+      "name":"PutAccountName",
+      "http":{
+        "method":"POST",
+        "requestUri":"/putAccountName",
+        "responseCode":200
+      },
+      "input":{"shape":"PutAccountNameRequest"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "PutAlternateContact":{
       "name":"PutAlternateContact",
@@ -205,9 +239,9 @@
       "output":{"shape":"StartPrimaryEmailUpdateResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
-        {"shape":"AccessDeniedException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InternalServerException"}
       ]
@@ -237,6 +271,11 @@
       "type":"structure",
       "required":["message"],
       "members":{
+        "errorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "message":{"shape":"String"}
       },
       "error":{
@@ -245,9 +284,20 @@
       },
       "exception":true
     },
+    "AccountCreatedDate":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
     "AccountId":{
       "type":"string",
       "pattern":"^\\d{12}$"
+    },
+    "AccountName":{
+      "type":"string",
+      "max":50,
+      "min":1,
+      "pattern":"^[ -;=?-~]+$",
+      "sensitive":true
     },
     "AddressLine":{
       "type":"string",
@@ -289,6 +339,11 @@
       "type":"structure",
       "required":["message"],
       "members":{
+        "errorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "message":{"shape":"String"}
       },
       "error":{
@@ -378,6 +433,20 @@
       "min":1,
       "sensitive":true
     },
+    "GetAccountInformationRequest":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"AccountId"}
+      }
+    },
+    "GetAccountInformationResponse":{
+      "type":"structure",
+      "members":{
+        "AccountCreatedDate":{"shape":"AccountCreatedDate"},
+        "AccountId":{"shape":"AccountId"},
+        "AccountName":{"shape":"AccountName"}
+      }
+    },
     "GetAlternateContactRequest":{
       "type":"structure",
       "required":["AlternateContactType"],
@@ -436,6 +505,11 @@
       "type":"structure",
       "required":["message"],
       "members":{
+        "errorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "message":{"shape":"String"}
       },
       "error":{"httpStatusCode":500},
@@ -507,6 +581,14 @@
         "ACCEPTED"
       ]
     },
+    "PutAccountNameRequest":{
+      "type":"structure",
+      "required":["AccountName"],
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "AccountName":{"shape":"AccountName"}
+      }
+    },
     "PutAlternateContactRequest":{
       "type":"structure",
       "required":[
@@ -567,6 +649,11 @@
       "type":"structure",
       "required":["message"],
       "members":{
+        "errorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "message":{"shape":"String"}
       },
       "error":{
@@ -613,6 +700,11 @@
       "type":"structure",
       "required":["message"],
       "members":{
+        "errorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "message":{"shape":"String"}
       },
       "error":{

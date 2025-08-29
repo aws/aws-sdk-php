@@ -35,13 +35,6 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
      */
     public function setUp(BeforeScenarioScope $scope)
     {
-        $scenarioTitle = $scope->getScenario()->getTitle();
-        if (!empty($scenarioTitle) && stripos($scenarioTitle, 'gcm') !== false) {
-            if (version_compare(PHP_VERSION, '7.1', '<')) {
-                throw new PendingException('Test skipped on no GCM support');
-            }
-        }
-
         $this->plaintexts = [];
         $this->decrypted = [];
         $this->operationParams = [];

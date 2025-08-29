@@ -11,7 +11,8 @@
     "serviceId":"Budgets",
     "signatureVersion":"v4",
     "targetPrefix":"AWSBudgetServiceGateway",
-    "uid":"budgets-2016-10-20"
+    "uid":"budgets-2016-10-20",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateBudget":{
@@ -29,7 +30,8 @@
         {"shape":"DuplicateRecordException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"NotFoundException"}
       ]
     },
     "CreateBudgetAction":{
@@ -618,6 +620,12 @@
         "FORECAST"
       ]
     },
+    "BillingViewArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[a-zA-Z0-9/:_+=.\\-@]{0,75}[a-zA-Z0-9]$"
+    },
     "Budget":{
       "type":"structure",
       "required":[
@@ -629,14 +637,28 @@
         "BudgetName":{"shape":"BudgetName"},
         "BudgetLimit":{"shape":"Spend"},
         "PlannedBudgetLimits":{"shape":"PlannedBudgetLimits"},
-        "CostFilters":{"shape":"CostFilters"},
-        "CostTypes":{"shape":"CostTypes"},
+        "CostFilters":{
+          "shape":"CostFilters",
+          "deprecated":true,
+          "deprecatedMessage":"CostFilters lack support for newer dimensions and filtering options. Please consider using the new 'FilterExpression' field.",
+          "deprecatedSince":"2025-04-18"
+        },
+        "CostTypes":{
+          "shape":"CostTypes",
+          "deprecated":true,
+          "deprecatedMessage":"CostTypes lack support for newer record type dimensions and filtering options. Please consider using the new 'Metrics' field.",
+          "deprecatedSince":"2025-04-18"
+        },
         "TimeUnit":{"shape":"TimeUnit"},
         "TimePeriod":{"shape":"TimePeriod"},
         "CalculatedSpend":{"shape":"CalculatedSpend"},
         "BudgetType":{"shape":"BudgetType"},
         "LastUpdatedTime":{"shape":"GenericTimestamp"},
-        "AutoAdjustData":{"shape":"AutoAdjustData"}
+        "AutoAdjustData":{"shape":"AutoAdjustData"},
+        "FilterExpression":{"shape":"Expression"},
+        "Metrics":{"shape":"Metrics"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
+        "HealthStatus":{"shape":"HealthStatus"}
       }
     },
     "BudgetName":{
@@ -665,6 +687,7 @@
         "CostFilters":{"shape":"CostFilters"},
         "CostTypes":{"shape":"CostTypes"},
         "TimeUnit":{"shape":"TimeUnit"},
+        "BillingViewArn":{"shape":"BillingViewArn"},
         "BudgetedAndActualAmountsList":{"shape":"BudgetedAndActualAmountsList"}
       }
     },
@@ -710,6 +733,15 @@
         "LESS_THAN",
         "EQUAL_TO"
       ]
+    },
+    "CostCategoryName":{"type":"string"},
+    "CostCategoryValues":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"CostCategoryName"},
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
+      }
     },
     "CostFilters":{
       "type":"map",
@@ -786,8 +818,7 @@
     },
     "CreateBudgetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateNotificationRequest":{
       "type":"structure",
@@ -806,8 +837,7 @@
     },
     "CreateNotificationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateSubscriberRequest":{
       "type":"structure",
@@ -826,8 +856,7 @@
     },
     "CreateSubscriberResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreationLimitExceededException":{
       "type":"structure",
@@ -883,8 +912,7 @@
     },
     "DeleteBudgetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteNotificationRequest":{
       "type":"structure",
@@ -901,8 +929,7 @@
     },
     "DeleteNotificationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSubscriberRequest":{
       "type":"structure",
@@ -921,8 +948,7 @@
     },
     "DeleteSubscriberResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeBudgetActionHistoriesRequest":{
       "type":"structure",
@@ -1057,7 +1083,8 @@
       ],
       "members":{
         "AccountId":{"shape":"AccountId"},
-        "BudgetName":{"shape":"BudgetName"}
+        "BudgetName":{"shape":"BudgetName"},
+        "ShowFilterExpression":{"shape":"NullableBoolean"}
       }
     },
     "DescribeBudgetResponse":{
@@ -1072,7 +1099,8 @@
       "members":{
         "AccountId":{"shape":"AccountId"},
         "MaxResults":{"shape":"MaxResultsDescribeBudgets"},
-        "NextToken":{"shape":"GenericString"}
+        "NextToken":{"shape":"GenericString"},
+        "ShowFilterExpression":{"shape":"NullableBoolean"}
       }
     },
     "DescribeBudgetsResponse":{
@@ -1123,6 +1151,44 @@
         "Subscribers":{"shape":"Subscribers"},
         "NextToken":{"shape":"GenericString"}
       }
+    },
+    "Dimension":{
+      "type":"string",
+      "enum":[
+        "AZ",
+        "INSTANCE_TYPE",
+        "LINKED_ACCOUNT",
+        "LINKED_ACCOUNT_NAME",
+        "OPERATION",
+        "PURCHASE_TYPE",
+        "REGION",
+        "SERVICE",
+        "SERVICE_CODE",
+        "USAGE_TYPE",
+        "USAGE_TYPE_GROUP",
+        "RECORD_TYPE",
+        "OPERATING_SYSTEM",
+        "TENANCY",
+        "SCOPE",
+        "PLATFORM",
+        "SUBSCRIPTION_ID",
+        "LEGAL_ENTITY_NAME",
+        "INVOICING_ENTITY",
+        "DEPLOYMENT_OPTION",
+        "DATABASE_ENGINE",
+        "CACHE_ENGINE",
+        "INSTANCE_TYPE_FAMILY",
+        "BILLING_ENTITY",
+        "RESERVATION_ID",
+        "RESOURCE_ID",
+        "RIGHTSIZING_TYPE",
+        "SAVINGS_PLANS_TYPE",
+        "SAVINGS_PLAN_ARN",
+        "PAYMENT_OPTION",
+        "RESERVATION_MODIFIED",
+        "TAG_KEY",
+        "COST_CATEGORY_NAME"
+      ]
     },
     "DimensionValue":{
       "type":"string",
@@ -1197,6 +1263,33 @@
       },
       "exception":true
     },
+    "Expression":{
+      "type":"structure",
+      "members":{
+        "Or":{"shape":"Expressions"},
+        "And":{"shape":"Expressions"},
+        "Not":{"shape":"Expression"},
+        "Dimensions":{"shape":"ExpressionDimensionValues"},
+        "Tags":{"shape":"TagValues"},
+        "CostCategories":{"shape":"CostCategoryValues"}
+      }
+    },
+    "ExpressionDimensionValues":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"Dimension"},
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
+      }
+    },
+    "Expressions":{
+      "type":"list",
+      "member":{"shape":"Expression"}
+    },
     "GenericString":{
       "type":"string",
       "max":2147483647,
@@ -1215,6 +1308,29 @@
       "member":{"shape":"Group"},
       "max":100,
       "min":1
+    },
+    "HealthStatus":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"HealthStatusValue"},
+        "StatusReason":{"shape":"HealthStatusReason"},
+        "LastUpdatedTime":{"shape":"GenericTimestamp"}
+      }
+    },
+    "HealthStatusReason":{
+      "type":"string",
+      "enum":[
+        "BILLING_VIEW_NO_ACCESS",
+        "BILLING_VIEW_UNHEALTHY",
+        "FILTER_INVALID"
+      ]
+    },
+    "HealthStatusValue":{
+      "type":"string",
+      "enum":[
+        "HEALTHY",
+        "UNHEALTHY"
+      ]
     },
     "HistoricalOptions":{
       "type":"structure",
@@ -1280,6 +1396,23 @@
         "ResourceTags":{"shape":"ResourceTagList"}
       }
     },
+    "MatchOption":{
+      "type":"string",
+      "enum":[
+        "EQUALS",
+        "ABSENT",
+        "STARTS_WITH",
+        "ENDS_WITH",
+        "CONTAINS",
+        "GREATER_THAN_OR_EQUAL",
+        "CASE_SENSITIVE",
+        "CASE_INSENSITIVE"
+      ]
+    },
+    "MatchOptions":{
+      "type":"list",
+      "member":{"shape":"MatchOption"}
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -1297,6 +1430,24 @@
       "box":true,
       "max":1000,
       "min":1
+    },
+    "Metric":{
+      "type":"string",
+      "enum":[
+        "BlendedCost",
+        "UnblendedCost",
+        "AmortizedCost",
+        "NetUnblendedCost",
+        "NetAmortizedCost",
+        "UsageQuantity",
+        "NormalizedUsageAmount",
+        "Hours"
+      ]
+    },
+    "Metrics":{
+      "type":"list",
+      "member":{"shape":"Metric"},
+      "max":1
     },
     "NotFoundException":{
       "type":"structure",
@@ -1378,7 +1529,7 @@
       "type":"string",
       "max":684,
       "min":25,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|us-iso-east-1|us-isob-east-1):iam::(\\d{12}|aws):policy(\\u002F[\\u0021-\\u007F]+\\u002F|\\u002F)[\\w+=,.@-]+$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso|-iso-[a-z]{1})?:iam::(\\d{12}|aws):policy(\\u002F[\\u0021-\\u007F]+\\u002F|\\u002F)[\\w+=,.@-]+$"
     },
     "PolicyId":{
       "type":"string",
@@ -1442,7 +1593,7 @@
       "type":"string",
       "max":618,
       "min":32,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|us-iso-east-1|us-isob-east-1):iam::\\d{12}:role(\\u002F[\\u0021-\\u007F]+\\u002F|\\u002F)[\\w+=,.@-]+$"
+      "pattern":"^arn:aws(-cn|-us-gov|-iso|-iso-[a-z]{1})?:iam::\\d{12}:role(\\u002F[\\u0021-\\u007F]+\\u002F|\\u002F)[\\w+=,.@-]+$"
     },
     "Roles":{
       "type":"list",
@@ -1523,6 +1674,12 @@
         "EMAIL"
       ]
     },
+    "TagKey":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
     "TagResourceRequest":{
       "type":"structure",
       "required":[
@@ -1536,7 +1693,14 @@
     },
     "TagResourceResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "TagValues":{
+      "type":"structure",
       "members":{
+        "Key":{"shape":"TagKey"},
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
       }
     },
     "TargetId":{
@@ -1600,8 +1764,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateBudgetActionRequest":{
       "type":"structure",
@@ -1650,8 +1813,7 @@
     },
     "UpdateBudgetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateNotificationRequest":{
       "type":"structure",
@@ -1670,8 +1832,7 @@
     },
     "UpdateNotificationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateSubscriberRequest":{
       "type":"structure",
@@ -1692,8 +1853,7 @@
     },
     "UpdateSubscriberResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "User":{
       "type":"string",
@@ -1705,6 +1865,17 @@
       "type":"list",
       "member":{"shape":"User"},
       "max":100,
+      "min":1
+    },
+    "Value":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":"[\\S\\s]*"
+    },
+    "Values":{
+      "type":"list",
+      "member":{"shape":"Value"},
       "min":1
     },
     "errorMessage":{"type":"string"}

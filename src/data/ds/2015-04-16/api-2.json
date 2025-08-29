@@ -183,6 +183,24 @@
         {"shape":"ServiceException"}
       ]
     },
+    "CreateHybridAD":{
+      "name":"CreateHybridAD",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateHybridADRequest"},
+      "output":{"shape":"CreateHybridADResult"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryLimitExceededException"},
+        {"shape":"ADAssessmentLimitExceededException"},
+        {"shape":"EntityDoesNotExistException"}
+      ]
+    },
     "CreateLogSubscription":{
       "name":"CreateLogSubscription",
       "http":{
@@ -247,6 +265,22 @@
         {"shape":"ClientException"},
         {"shape":"ServiceException"},
         {"shape":"UnsupportedOperationException"}
+      ]
+    },
+    "DeleteADAssessment":{
+      "name":"DeleteADAssessment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteADAssessmentRequest"},
+      "output":{"shape":"DeleteADAssessmentResult"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"EntityDoesNotExistException"}
       ]
     },
     "DeleteConditionalForwarder":{
@@ -360,6 +394,37 @@
         {"shape":"ServiceException"}
       ]
     },
+    "DescribeADAssessment":{
+      "name":"DescribeADAssessment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeADAssessmentRequest"},
+      "output":{"shape":"DescribeADAssessmentResult"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"EntityDoesNotExistException"}
+      ]
+    },
+    "DescribeCAEnrollmentPolicy":{
+      "name":"DescribeCAEnrollmentPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeCAEnrollmentPolicyRequest"},
+      "output":{"shape":"DescribeCAEnrollmentPolicyResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "DescribeCertificate":{
       "name":"DescribeCertificate",
       "http":{
@@ -427,6 +492,22 @@
         {"shape":"ServiceException"}
       ]
     },
+    "DescribeDirectoryDataAccess":{
+      "name":"DescribeDirectoryDataAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDirectoryDataAccessRequest"},
+      "output":{"shape":"DescribeDirectoryDataAccessResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "DescribeDomainControllers":{
       "name":"DescribeDomainControllers",
       "http":{
@@ -457,6 +538,23 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ClientException"},
         {"shape":"ServiceException"}
+      ]
+    },
+    "DescribeHybridADUpdate":{
+      "name":"DescribeHybridADUpdate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeHybridADUpdateRequest"},
+      "output":{"shape":"DescribeHybridADUpdateResult"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidNextTokenException"}
       ]
     },
     "DescribeLDAPSSettings":{
@@ -578,6 +676,25 @@
         {"shape":"InvalidNextTokenException"}
       ]
     },
+    "DisableCAEnrollmentPolicy":{
+      "name":"DisableCAEnrollmentPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableCAEnrollmentPolicyRequest"},
+      "output":{"shape":"DisableCAEnrollmentPolicyResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"DisableAlreadyInProgressException"},
+        {"shape":"EntityDoesNotExistException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
     "DisableClientAuthentication":{
       "name":"DisableClientAuthentication",
       "http":{
@@ -590,6 +707,24 @@
         {"shape":"DirectoryDoesNotExistException"},
         {"shape":"UnsupportedOperationException"},
         {"shape":"InvalidClientAuthStatusException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
+    "DisableDirectoryDataAccess":{
+      "name":"DisableDirectoryDataAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableDirectoryDataAccessRequest"},
+      "output":{"shape":"DisableDirectoryDataAccessResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryInDesiredStateException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ClientException"},
         {"shape":"ServiceException"}
@@ -643,6 +778,26 @@
         {"shape":"ServiceException"}
       ]
     },
+    "EnableCAEnrollmentPolicy":{
+      "name":"EnableCAEnrollmentPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableCAEnrollmentPolicyRequest"},
+      "output":{"shape":"EnableCAEnrollmentPolicyResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"EntityAlreadyExistsException"},
+        {"shape":"EntityDoesNotExistException"},
+        {"shape":"EnableAlreadyInProgressException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "EnableClientAuthentication":{
       "name":"EnableClientAuthentication",
       "http":{
@@ -657,6 +812,24 @@
         {"shape":"InvalidClientAuthStatusException"},
         {"shape":"AccessDeniedException"},
         {"shape":"NoAvailableCertificateException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"}
+      ]
+    },
+    "EnableDirectoryDataAccess":{
+      "name":"EnableDirectoryDataAccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableDirectoryDataAccessRequest"},
+      "output":{"shape":"EnableDirectoryDataAccessResult"},
+      "errors":[
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"DirectoryUnavailableException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryInDesiredStateException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ClientException"},
         {"shape":"ServiceException"}
       ]
@@ -738,6 +911,22 @@
         {"shape":"EntityDoesNotExistException"},
         {"shape":"ClientException"},
         {"shape":"ServiceException"}
+      ]
+    },
+    "ListADAssessments":{
+      "name":"ListADAssessments",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListADAssessmentsRequest"},
+      "output":{"shape":"ListADAssessmentsResult"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryDoesNotExistException"}
       ]
     },
     "ListCertificates":{
@@ -972,6 +1161,23 @@
         {"shape":"ServiceException"}
       ]
     },
+    "StartADAssessment":{
+      "name":"StartADAssessment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartADAssessmentRequest"},
+      "output":{"shape":"StartADAssessmentResult"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"ADAssessmentLimitExceededException"}
+      ]
+    },
     "StartSchemaExtension":{
       "name":"StartSchemaExtension",
       "http":{
@@ -1040,6 +1246,23 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ClientException"},
         {"shape":"ServiceException"}
+      ]
+    },
+    "UpdateHybridAD":{
+      "name":"UpdateHybridAD",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateHybridADRequest"},
+      "output":{"shape":"UpdateHybridADResult"},
+      "errors":[
+        {"shape":"ClientException"},
+        {"shape":"ServiceException"},
+        {"shape":"UnsupportedOperationException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"DirectoryDoesNotExistException"},
+        {"shape":"ADAssessmentLimitExceededException"}
       ]
     },
     "UpdateNumberOfDomainControllers":{
@@ -1127,6 +1350,14 @@
     }
   },
   "shapes":{
+    "ADAssessmentLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"},
+        "RequestId":{"shape":"RequestId"}
+      },
+      "exception":true
+    },
     "AcceptSharedDirectoryRequest":{
       "type":"structure",
       "required":["SharedDirectoryId"],
@@ -1167,8 +1398,7 @@
     },
     "AddIpRoutesResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddRegionRequest":{
       "type":"structure",
@@ -1185,8 +1415,7 @@
     },
     "AddRegionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddTagsToResourceRequest":{
       "type":"structure",
@@ -1201,8 +1430,7 @@
     },
     "AddTagsToResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddedDateTime":{"type":"timestamp"},
     "AdditionalRegions":{
@@ -1214,6 +1442,117 @@
       "max":62,
       "min":1,
       "pattern":"^(?!D-|d-)([\\da-zA-Z]+)([-]*[\\da-zA-Z])*"
+    },
+    "Assessment":{
+      "type":"structure",
+      "members":{
+        "AssessmentId":{"shape":"AssessmentId"},
+        "DirectoryId":{"shape":"DirectoryId"},
+        "DnsName":{"shape":"DirectoryName"},
+        "StartTime":{"shape":"AssessmentStartTime"},
+        "LastUpdateDateTime":{"shape":"LastUpdateDateTime"},
+        "Status":{"shape":"AssessmentStatus"},
+        "StatusCode":{"shape":"AssessmentStatusCode"},
+        "StatusReason":{"shape":"AssessmentStatusReason"},
+        "CustomerDnsIps":{"shape":"CustomerDnsIps"},
+        "VpcId":{"shape":"VpcId"},
+        "SubnetIds":{"shape":"SubnetIds"},
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "SelfManagedInstanceIds":{"shape":"AssessmentInstanceIds"},
+        "ReportType":{"shape":"AssessmentReportType"},
+        "Version":{"shape":"AssessmentVersion"}
+      }
+    },
+    "AssessmentConfiguration":{
+      "type":"structure",
+      "required":[
+        "CustomerDnsIps",
+        "DnsName",
+        "VpcSettings",
+        "InstanceIds"
+      ],
+      "members":{
+        "CustomerDnsIps":{"shape":"CustomerDnsIps"},
+        "DnsName":{"shape":"DirectoryName"},
+        "VpcSettings":{"shape":"DirectoryVpcSettings"},
+        "InstanceIds":{"shape":"AssessmentInstanceIds"},
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+      }
+    },
+    "AssessmentId":{
+      "type":"string",
+      "pattern":"^da-[0-9a-f]{18}$"
+    },
+    "AssessmentInstanceId":{
+      "type":"string",
+      "pattern":"^(i-[0-9a-f]{8}|i-[0-9a-f]{17}|mi-[0-9a-f]{8}|mi-[0-9a-f]{17})$"
+    },
+    "AssessmentInstanceIds":{
+      "type":"list",
+      "member":{"shape":"AssessmentInstanceId"},
+      "max":2,
+      "min":2
+    },
+    "AssessmentLimit":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "AssessmentReport":{
+      "type":"structure",
+      "members":{
+        "DomainControllerIp":{"shape":"IpAddr"},
+        "Validations":{"shape":"AssessmentValidations"}
+      }
+    },
+    "AssessmentReportType":{"type":"string"},
+    "AssessmentReports":{
+      "type":"list",
+      "member":{"shape":"AssessmentReport"}
+    },
+    "AssessmentStartTime":{"type":"timestamp"},
+    "AssessmentStatus":{"type":"string"},
+    "AssessmentStatusCode":{"type":"string"},
+    "AssessmentStatusReason":{"type":"string"},
+    "AssessmentSummary":{
+      "type":"structure",
+      "members":{
+        "AssessmentId":{"shape":"AssessmentId"},
+        "DirectoryId":{"shape":"DirectoryId"},
+        "DnsName":{"shape":"DirectoryName"},
+        "StartTime":{"shape":"AssessmentStartTime"},
+        "LastUpdateDateTime":{"shape":"LastUpdateDateTime"},
+        "Status":{"shape":"AssessmentStatus"},
+        "CustomerDnsIps":{"shape":"CustomerDnsIps"},
+        "ReportType":{"shape":"AssessmentReportType"}
+      }
+    },
+    "AssessmentValidation":{
+      "type":"structure",
+      "members":{
+        "Category":{"shape":"AssessmentValidationCategory"},
+        "Name":{"shape":"AssessmentValidationName"},
+        "Status":{"shape":"AssessmentValidationStatus"},
+        "StatusCode":{"shape":"AssessmentValidationStatusCode"},
+        "StatusReason":{"shape":"AssessmentValidationStatusReason"},
+        "StartTime":{"shape":"AssessmentValidationTimeStamp"},
+        "LastUpdateDateTime":{"shape":"AssessmentValidationTimeStamp"}
+      }
+    },
+    "AssessmentValidationCategory":{"type":"string"},
+    "AssessmentValidationName":{"type":"string"},
+    "AssessmentValidationStatus":{"type":"string"},
+    "AssessmentValidationStatusCode":{"type":"string"},
+    "AssessmentValidationStatusReason":{"type":"string"},
+    "AssessmentValidationTimeStamp":{"type":"timestamp"},
+    "AssessmentValidations":{
+      "type":"list",
+      "member":{"shape":"AssessmentValidation"}
+    },
+    "AssessmentVersion":{"type":"string"},
+    "Assessments":{
+      "type":"list",
+      "member":{"shape":"AssessmentSummary"}
     },
     "Attribute":{
       "type":"structure",
@@ -1244,6 +1583,18 @@
       "type":"list",
       "member":{"shape":"AvailabilityZone"}
     },
+    "CaEnrollmentPolicyStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Success",
+        "Failed",
+        "Disabling",
+        "Disabled",
+        "Impaired"
+      ]
+    },
+    "CaEnrollmentPolicyStatusReason":{"type":"string"},
     "CancelSchemaExtensionRequest":{
       "type":"structure",
       "required":[
@@ -1257,8 +1608,7 @@
     },
     "CancelSchemaExtensionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Certificate":{
       "type":"structure",
@@ -1516,8 +1866,7 @@
     },
     "CreateConditionalForwarderResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateDirectoryRequest":{
       "type":"structure",
@@ -1542,6 +1891,24 @@
         "DirectoryId":{"shape":"DirectoryId"}
       }
     },
+    "CreateHybridADRequest":{
+      "type":"structure",
+      "required":[
+        "SecretArn",
+        "AssessmentId"
+      ],
+      "members":{
+        "SecretArn":{"shape":"SecretArn"},
+        "AssessmentId":{"shape":"AssessmentId"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CreateHybridADResult":{
+      "type":"structure",
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
     "CreateLogSubscriptionRequest":{
       "type":"structure",
       "required":[
@@ -1555,8 +1922,7 @@
     },
     "CreateLogSubscriptionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateMicrosoftADRequest":{
       "type":"structure",
@@ -1622,6 +1988,12 @@
       }
     },
     "CreatedDateTime":{"type":"timestamp"},
+    "CustomerDnsIps":{
+      "type":"list",
+      "member":{"shape":"IpAddr"},
+      "max":2,
+      "min":2
+    },
     "CustomerId":{
       "type":"string",
       "pattern":"^(\\d{12})$"
@@ -1631,6 +2003,29 @@
       "max":64,
       "min":1,
       "pattern":"^(?!.*\\\\|.*\"|.*\\/|.*\\[|.*\\]|.*:|.*;|.*\\||.*=|.*,|.*\\+|.*\\*|.*\\?|.*<|.*>|.*@).*$"
+    },
+    "DataAccessStatus":{
+      "type":"string",
+      "enum":[
+        "Disabled",
+        "Disabling",
+        "Enabled",
+        "Enabling",
+        "Failed"
+      ]
+    },
+    "DeleteADAssessmentRequest":{
+      "type":"structure",
+      "required":["AssessmentId"],
+      "members":{
+        "AssessmentId":{"shape":"AssessmentId"}
+      }
+    },
+    "DeleteADAssessmentResult":{
+      "type":"structure",
+      "members":{
+        "AssessmentId":{"shape":"AssessmentId"}
+      }
     },
     "DeleteAssociatedConditionalForwarder":{"type":"boolean"},
     "DeleteConditionalForwarderRequest":{
@@ -1646,8 +2041,7 @@
     },
     "DeleteConditionalForwarderResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDirectoryRequest":{
       "type":"structure",
@@ -1671,8 +2065,7 @@
     },
     "DeleteLogSubscriptionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSnapshotRequest":{
       "type":"structure",
@@ -1714,8 +2107,7 @@
     },
     "DeregisterCertificateResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterEventTopicRequest":{
       "type":"structure",
@@ -1730,7 +2122,37 @@
     },
     "DeregisterEventTopicResult":{
       "type":"structure",
+      "members":{}
+    },
+    "DescribeADAssessmentRequest":{
+      "type":"structure",
+      "required":["AssessmentId"],
       "members":{
+        "AssessmentId":{"shape":"AssessmentId"}
+      }
+    },
+    "DescribeADAssessmentResult":{
+      "type":"structure",
+      "members":{
+        "Assessment":{"shape":"Assessment"},
+        "AssessmentReports":{"shape":"AssessmentReports"}
+      }
+    },
+    "DescribeCAEnrollmentPolicyRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "DescribeCAEnrollmentPolicyResult":{
+      "type":"structure",
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "PcaConnectorArn":{"shape":"PcaConnectorArn"},
+        "CaEnrollmentPolicyStatus":{"shape":"CaEnrollmentPolicyStatus"},
+        "LastUpdatedDateTime":{"shape":"LastUpdatedDateTime"},
+        "CaEnrollmentPolicyStatusReason":{"shape":"CaEnrollmentPolicyStatusReason"}
       }
     },
     "DescribeCertificateRequest":{
@@ -1796,6 +2218,19 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "DescribeDirectoryDataAccessRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "DescribeDirectoryDataAccessResult":{
+      "type":"structure",
+      "members":{
+        "DataAccessStatus":{"shape":"DataAccessStatus"}
+      }
+    },
     "DescribeDomainControllersRequest":{
       "type":"structure",
       "required":["DirectoryId"],
@@ -1824,6 +2259,22 @@
       "type":"structure",
       "members":{
         "EventTopics":{"shape":"EventTopics"}
+      }
+    },
+    "DescribeHybridADUpdateRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "UpdateType":{"shape":"HybridUpdateType"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeHybridADUpdateResult":{
+      "type":"structure",
+      "members":{
+        "UpdateActivities":{"shape":"HybridUpdateActivities"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeLDAPSSettingsRequest":{
@@ -2058,7 +2509,8 @@
         "DesiredNumberOfDomainControllers":{"shape":"DesiredNumberOfDomainControllers"},
         "OwnerDirectoryDescription":{"shape":"OwnerDirectoryDescription"},
         "RegionsInfo":{"shape":"RegionsInfo"},
-        "OsVersion":{"shape":"OSVersion"}
+        "OsVersion":{"shape":"OSVersion"},
+        "HybridSettings":{"shape":"HybridSettingsDescription"}
       }
     },
     "DirectoryDescriptions":{
@@ -2154,7 +2606,8 @@
         "RestoreFailed",
         "Deleting",
         "Deleted",
-        "Failed"
+        "Failed",
+        "Updating"
       ]
     },
     "DirectoryType":{
@@ -2194,6 +2647,25 @@
         "AvailabilityZones":{"shape":"AvailabilityZones"}
       }
     },
+    "DisableAlreadyInProgressException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"},
+        "RequestId":{"shape":"RequestId"}
+      },
+      "exception":true
+    },
+    "DisableCAEnrollmentPolicyRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "DisableCAEnrollmentPolicyResult":{
+      "type":"structure",
+      "members":{}
+    },
     "DisableClientAuthenticationRequest":{
       "type":"structure",
       "required":[
@@ -2207,8 +2679,18 @@
     },
     "DisableClientAuthenticationResult":{
       "type":"structure",
+      "members":{}
+    },
+    "DisableDirectoryDataAccessRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
       "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
       }
+    },
+    "DisableDirectoryDataAccessResult":{
+      "type":"structure",
+      "members":{}
     },
     "DisableLDAPSRequest":{
       "type":"structure",
@@ -2223,8 +2705,7 @@
     },
     "DisableLDAPSResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisableRadiusRequest":{
       "type":"structure",
@@ -2235,8 +2716,7 @@
     },
     "DisableRadiusResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisableSsoRequest":{
       "type":"structure",
@@ -2249,8 +2729,7 @@
     },
     "DisableSsoResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DnsIpAddrs":{
       "type":"list",
@@ -2296,13 +2775,37 @@
         "Restoring",
         "Deleting",
         "Deleted",
-        "Failed"
+        "Failed",
+        "Updating"
       ]
     },
     "DomainControllerStatusReason":{"type":"string"},
     "DomainControllers":{
       "type":"list",
       "member":{"shape":"DomainController"}
+    },
+    "EnableAlreadyInProgressException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"},
+        "RequestId":{"shape":"RequestId"}
+      },
+      "exception":true
+    },
+    "EnableCAEnrollmentPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "DirectoryId",
+        "PcaConnectorArn"
+      ],
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "PcaConnectorArn":{"shape":"PcaConnectorArn"}
+      }
+    },
+    "EnableCAEnrollmentPolicyResult":{
+      "type":"structure",
+      "members":{}
     },
     "EnableClientAuthenticationRequest":{
       "type":"structure",
@@ -2317,8 +2820,18 @@
     },
     "EnableClientAuthenticationResult":{
       "type":"structure",
+      "members":{}
+    },
+    "EnableDirectoryDataAccessRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
       "members":{
+        "DirectoryId":{"shape":"DirectoryId"}
       }
+    },
+    "EnableDirectoryDataAccessResult":{
+      "type":"structure",
+      "members":{}
     },
     "EnableLDAPSRequest":{
       "type":"structure",
@@ -2333,8 +2846,7 @@
     },
     "EnableLDAPSResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EnableRadiusRequest":{
       "type":"structure",
@@ -2349,8 +2861,7 @@
     },
     "EnableRadiusResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EnableSsoRequest":{
       "type":"structure",
@@ -2363,8 +2874,7 @@
     },
     "EnableSsoResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EndDateTime":{"type":"timestamp"},
     "EntityAlreadyExistsException":{
@@ -2400,8 +2910,7 @@
     "ExceptionMessage":{"type":"string"},
     "GetDirectoryLimitsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetDirectoryLimitsResult":{
       "type":"structure",
@@ -2420,6 +2929,69 @@
       "type":"structure",
       "members":{
         "SnapshotLimits":{"shape":"SnapshotLimits"}
+      }
+    },
+    "HybridAdministratorAccountUpdate":{
+      "type":"structure",
+      "required":["SecretArn"],
+      "members":{
+        "SecretArn":{"shape":"SecretArn"}
+      }
+    },
+    "HybridCustomerInstancesSettings":{
+      "type":"structure",
+      "required":[
+        "CustomerDnsIps",
+        "InstanceIds"
+      ],
+      "members":{
+        "CustomerDnsIps":{"shape":"CustomerDnsIps"},
+        "InstanceIds":{"shape":"AssessmentInstanceIds"}
+      }
+    },
+    "HybridSettingsDescription":{
+      "type":"structure",
+      "members":{
+        "SelfManagedDnsIpAddrs":{"shape":"IpAddrs"},
+        "SelfManagedInstanceIds":{"shape":"AssessmentInstanceIds"}
+      }
+    },
+    "HybridUpdateActivities":{
+      "type":"structure",
+      "members":{
+        "SelfManagedInstances":{"shape":"HybridUpdateInfoEntries"},
+        "HybridAdministratorAccount":{"shape":"HybridUpdateInfoEntries"}
+      }
+    },
+    "HybridUpdateInfoEntries":{
+      "type":"list",
+      "member":{"shape":"HybridUpdateInfoEntry"}
+    },
+    "HybridUpdateInfoEntry":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"UpdateStatus"},
+        "StatusReason":{"shape":"UpdateStatusReason"},
+        "InitiatedBy":{"shape":"InitiatedBy"},
+        "NewValue":{"shape":"HybridUpdateValue"},
+        "PreviousValue":{"shape":"HybridUpdateValue"},
+        "StartTime":{"shape":"StartDateTime"},
+        "LastUpdatedDateTime":{"shape":"LastUpdatedDateTime"},
+        "AssessmentId":{"shape":"AssessmentId"}
+      }
+    },
+    "HybridUpdateType":{
+      "type":"string",
+      "enum":[
+        "SelfManagedInstances",
+        "HybridAdministratorAccount"
+      ]
+    },
+    "HybridUpdateValue":{
+      "type":"structure",
+      "members":{
+        "InstanceIds":{"shape":"AssessmentInstanceIds"},
+        "DnsIps":{"shape":"CustomerDnsIps"}
       }
     },
     "IncompatibleSettingsException":{
@@ -2575,6 +3147,7 @@
       "type":"string",
       "enum":["Client"]
     },
+    "LastUpdateDateTime":{"type":"timestamp"},
     "LastUpdatedDateTime":{"type":"timestamp"},
     "LaunchTime":{"type":"timestamp"},
     "LdifContent":{
@@ -2585,6 +3158,21 @@
     "Limit":{
       "type":"integer",
       "min":0
+    },
+    "ListADAssessmentsRequest":{
+      "type":"structure",
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "NextToken":{"shape":"NextToken"},
+        "Limit":{"shape":"AssessmentLimit"}
+      }
+    },
+    "ListADAssessmentsResult":{
+      "type":"structure",
+      "members":{
+        "Assessments":{"shape":"Assessments"},
+        "NextToken":{"shape":"NextToken"}
+      }
     },
     "ListCertificatesRequest":{
       "type":"structure",
@@ -2751,6 +3339,10 @@
       "pattern":"(?=^.{8,64}$)((?=.*\\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[^A-Za-z0-9\\s])(?=.*[a-z])|(?=.*[^A-Za-z0-9\\s])(?=.*[A-Z])(?=.*[a-z])|(?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9\\s]))^.*",
       "sensitive":true
     },
+    "PcaConnectorArn":{
+      "type":"string",
+      "pattern":"^arn:[\\w-]+:pca-connector-ad:[\\w-]+:[0-9]+:connector\\/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$"
+    },
     "PortNumber":{
       "type":"integer",
       "max":65535,
@@ -2805,7 +3397,7 @@
     },
     "RadiusTimeout":{
       "type":"integer",
-      "max":20,
+      "max":50,
       "min":1
     },
     "RegionDescription":{
@@ -2885,8 +3477,7 @@
     },
     "RegisterEventTopicResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RejectSharedDirectoryRequest":{
       "type":"structure",
@@ -2923,8 +3514,7 @@
     },
     "RemoveIpRoutesResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveRegionRequest":{
       "type":"structure",
@@ -2935,8 +3525,7 @@
     },
     "RemoveRegionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveTagsFromResourceRequest":{
       "type":"structure",
@@ -2951,8 +3540,7 @@
     },
     "RemoveTagsFromResourceResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ReplicationScope":{
       "type":"string",
@@ -2977,8 +3565,7 @@
     },
     "ResetUserPasswordResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ResourceId":{
       "type":"string",
@@ -2993,8 +3580,7 @@
     },
     "RestoreFromSnapshotResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "SID":{
       "type":"string",
@@ -3037,9 +3623,19 @@
       "type":"list",
       "member":{"shape":"SchemaExtensionInfo"}
     },
+    "SecretArn":{
+      "type":"string",
+      "pattern":"^arn:aws:secretsmanager:[a-z0-9-]+:\\d{12}:secret:[a-zA-Z0-9/_+=.@-]+-[a-zA-Z0-9]{6}$"
+    },
     "SecurityGroupId":{
       "type":"string",
       "pattern":"^(sg-[0-9a-f]{8}|sg-[0-9a-f]{17})$"
+    },
+    "SecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":1,
+      "min":1
     },
     "SelectiveAuth":{
       "type":"string",
@@ -3241,6 +3837,19 @@
     },
     "SsoEnabled":{"type":"boolean"},
     "StageReason":{"type":"string"},
+    "StartADAssessmentRequest":{
+      "type":"structure",
+      "members":{
+        "AssessmentConfiguration":{"shape":"AssessmentConfiguration"},
+        "DirectoryId":{"shape":"DirectoryId"}
+      }
+    },
+    "StartADAssessmentResult":{
+      "type":"structure",
+      "members":{
+        "AssessmentId":{"shape":"AssessmentId"}
+      }
+    },
     "StartDateTime":{"type":"timestamp"},
     "StartSchemaExtensionRequest":{
       "type":"structure",
@@ -3472,8 +4081,7 @@
     },
     "UpdateConditionalForwarderResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDirectorySetupRequest":{
       "type":"structure",
@@ -3493,7 +4101,22 @@
     },
     "UpdateDirectorySetupResult":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateHybridADRequest":{
+      "type":"structure",
+      "required":["DirectoryId"],
       "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "HybridAdministratorAccountUpdate":{"shape":"HybridAdministratorAccountUpdate"},
+        "SelfManagedInstancesSettings":{"shape":"HybridCustomerInstancesSettings"}
+      }
+    },
+    "UpdateHybridADResult":{
+      "type":"structure",
+      "members":{
+        "DirectoryId":{"shape":"DirectoryId"},
+        "AssessmentId":{"shape":"AssessmentId"}
       }
     },
     "UpdateInfoEntry":{
@@ -3522,8 +4145,7 @@
     },
     "UpdateNumberOfDomainControllersResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateRadiusRequest":{
       "type":"structure",
@@ -3538,8 +4160,7 @@
     },
     "UpdateRadiusResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateSecurityGroupForDirectoryControllers":{"type":"boolean"},
     "UpdateSettingsRequest":{

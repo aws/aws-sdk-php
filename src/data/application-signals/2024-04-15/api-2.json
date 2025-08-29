@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2024-04-15",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"application-signals",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -23,6 +24,21 @@
       "output":{"shape":"BatchGetServiceLevelObjectiveBudgetReportOutput"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "BatchUpdateExclusionWindows":{
+      "name":"BatchUpdateExclusionWindows",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/exclusion-windows",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchUpdateExclusionWindowsInput"},
+      "output":{"shape":"BatchUpdateExclusionWindowsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -113,6 +129,21 @@
       "output":{"shape":"ListServiceDependentsOutput"},
       "errors":[
         {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListServiceLevelObjectiveExclusionWindows":{
+      "name":"ListServiceLevelObjectiveExclusionWindows",
+      "http":{
+        "method":"GET",
+        "requestUri":"/slo/{Id}/exclusion-windows",
+        "responseCode":200
+      },
+      "input":{"shape":"ListServiceLevelObjectiveExclusionWindowsInput"},
+      "output":{"shape":"ListServiceLevelObjectiveExclusionWindowsOutput"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -275,8 +306,12 @@
       "type":"map",
       "key":{"shape":"KeyAttributeName"},
       "value":{"shape":"KeyAttributeValue"},
-      "max":3,
+      "max":4,
       "min":1
+    },
+    "AwsAccountId":{
+      "type":"string",
+      "pattern":"[0-9]{12}"
     },
     "BatchGetServiceLevelObjectiveBudgetReportInput":{
       "type":"structure",
@@ -302,9 +337,75 @@
         "Errors":{"shape":"ServiceLevelObjectiveBudgetReportErrors"}
       }
     },
+    "BatchUpdateExclusionWindowsError":{
+      "type":"structure",
+      "required":[
+        "SloId",
+        "ErrorCode",
+        "ErrorMessage"
+      ],
+      "members":{
+        "SloId":{"shape":"ServiceLevelObjectiveId"},
+        "ErrorCode":{"shape":"ExclusionWindowErrorCode"},
+        "ErrorMessage":{"shape":"ExclusionWindowErrorMessage"}
+      }
+    },
+    "BatchUpdateExclusionWindowsErrors":{
+      "type":"list",
+      "member":{"shape":"BatchUpdateExclusionWindowsError"},
+      "max":10,
+      "min":0
+    },
+    "BatchUpdateExclusionWindowsInput":{
+      "type":"structure",
+      "required":["SloIds"],
+      "members":{
+        "SloIds":{"shape":"ServiceLevelObjectiveIds"},
+        "AddExclusionWindows":{"shape":"ExclusionWindows"},
+        "RemoveExclusionWindows":{"shape":"ExclusionWindows"}
+      }
+    },
+    "BatchUpdateExclusionWindowsOutput":{
+      "type":"structure",
+      "required":[
+        "SloIds",
+        "Errors"
+      ],
+      "members":{
+        "SloIds":{"shape":"ServiceLevelObjectiveIds"},
+        "Errors":{"shape":"BatchUpdateExclusionWindowsErrors"}
+      }
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
+    },
+    "BudgetRequestsRemaining":{
+      "type":"integer",
+      "box":true
+    },
     "BudgetSecondsRemaining":{
       "type":"integer",
       "box":true
+    },
+    "BurnRateConfiguration":{
+      "type":"structure",
+      "required":["LookBackWindowMinutes"],
+      "members":{
+        "LookBackWindowMinutes":{"shape":"BurnRateLookBackWindowMinutes"}
+      }
+    },
+    "BurnRateConfigurations":{
+      "type":"list",
+      "member":{"shape":"BurnRateConfiguration"},
+      "max":10,
+      "min":0
+    },
+    "BurnRateLookBackWindowMinutes":{
+      "type":"integer",
+      "box":true,
+      "max":10080,
+      "min":1
     },
     "CalendarInterval":{
       "type":"structure",
@@ -338,16 +439,15 @@
     },
     "CreateServiceLevelObjectiveInput":{
       "type":"structure",
-      "required":[
-        "Name",
-        "SliConfig"
-      ],
+      "required":["Name"],
       "members":{
         "Name":{"shape":"ServiceLevelObjectiveName"},
         "Description":{"shape":"ServiceLevelObjectiveDescription"},
         "SliConfig":{"shape":"ServiceLevelIndicatorConfig"},
+        "RequestBasedSliConfig":{"shape":"RequestBasedServiceLevelIndicatorConfig"},
         "Goal":{"shape":"Goal"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
       }
     },
     "CreateServiceLevelObjectiveOutput":{
@@ -371,6 +471,17 @@
     "DeleteServiceLevelObjectiveOutput":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DependencyConfig":{
+      "type":"structure",
+      "required":[
+        "DependencyKeyAttributes",
+        "DependencyOperationName"
+      ],
+      "members":{
+        "DependencyKeyAttributes":{"shape":"Attributes"},
+        "DependencyOperationName":{"shape":"OperationName"}
       }
     },
     "Dimension":{
@@ -403,9 +514,51 @@
     "DurationUnit":{
       "type":"string",
       "enum":[
+        "MINUTE",
+        "HOUR",
         "DAY",
         "MONTH"
       ]
+    },
+    "EvaluationType":{
+      "type":"string",
+      "enum":[
+        "PeriodBased",
+        "RequestBased"
+      ]
+    },
+    "ExclusionDuration":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "ExclusionReason":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ExclusionWindow":{
+      "type":"structure",
+      "required":["Window"],
+      "members":{
+        "Window":{"shape":"Window"},
+        "StartTime":{"shape":"Timestamp"},
+        "RecurrenceRule":{"shape":"RecurrenceRule"},
+        "Reason":{"shape":"ExclusionReason"}
+      }
+    },
+    "ExclusionWindowErrorCode":{"type":"string"},
+    "ExclusionWindowErrorMessage":{"type":"string"},
+    "ExclusionWindows":{
+      "type":"list",
+      "member":{"shape":"ExclusionWindow"},
+      "max":10,
+      "min":0
+    },
+    "Expression":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "FaultDescription":{"type":"string"},
     "GetServiceInput":{
@@ -457,7 +610,8 @@
       "members":{
         "Service":{"shape":"Service"},
         "StartTime":{"shape":"Timestamp"},
-        "EndTime":{"shape":"Timestamp"}
+        "EndTime":{"shape":"Timestamp"},
+        "LogGroupReferences":{"shape":"LogGroupReferences"}
       }
     },
     "Goal":{
@@ -588,6 +742,41 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListServiceLevelObjectiveExclusionWindowsInput":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"ServiceLevelObjectiveId",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "MaxResults":{
+          "shape":"ListServiceLevelObjectiveExclusionWindowsMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListServiceLevelObjectiveExclusionWindowsMaxResults":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":1
+    },
+    "ListServiceLevelObjectiveExclusionWindowsOutput":{
+      "type":"structure",
+      "required":["ExclusionWindows"],
+      "members":{
+        "ExclusionWindows":{"shape":"ExclusionWindows"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListServiceLevelObjectivesInput":{
       "type":"structure",
       "members":{
@@ -597,6 +786,7 @@
           "location":"querystring",
           "locationName":"OperationName"
         },
+        "DependencyConfig":{"shape":"DependencyConfig"},
         "MaxResults":{
           "shape":"ListServiceLevelObjectivesMaxResults",
           "location":"querystring",
@@ -606,6 +796,17 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "MetricSourceTypes":{"shape":"MetricSourceTypes"},
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
+        },
+        "SloOwnerAwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"querystring",
+          "locationName":"SloOwnerAwsAccountId"
         }
       }
     },
@@ -699,6 +900,16 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"NextToken"
+        },
+        "IncludeLinkedAccounts":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"IncludeLinkedAccounts"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"querystring",
+          "locationName":"AwsAccountId"
         }
       }
     },
@@ -738,6 +949,10 @@
       "members":{
         "Tags":{"shape":"TagList"}
       }
+    },
+    "LogGroupReferences":{
+      "type":"list",
+      "member":{"shape":"Attributes"}
     },
     "Metric":{
       "type":"structure",
@@ -791,12 +1006,27 @@
         "Namespace":{"shape":"Namespace"},
         "MetricType":{"shape":"MetricType"},
         "Dimensions":{"shape":"Dimensions"},
-        "MetricName":{"shape":"MetricName"}
+        "MetricName":{"shape":"MetricName"},
+        "AccountId":{"shape":"AwsAccountId"}
       }
     },
     "MetricReferences":{
       "type":"list",
       "member":{"shape":"MetricReference"}
+    },
+    "MetricSourceType":{
+      "type":"string",
+      "enum":[
+        "ServiceOperation",
+        "CloudWatchMetric",
+        "ServiceDependency"
+      ]
+    },
+    "MetricSourceTypes":{
+      "type":"list",
+      "member":{"shape":"MetricSourceType"},
+      "max":3,
+      "min":1
     },
     "MetricStat":{
       "type":"structure",
@@ -816,6 +1046,14 @@
       "type":"string",
       "pattern":"[A-Za-z0-9 -]+"
     },
+    "MonitoredRequestCountMetricDataQueries":{
+      "type":"structure",
+      "members":{
+        "GoodCountMetric":{"shape":"MetricDataQueries"},
+        "BadCountMetric":{"shape":"MetricDataQueries"}
+      },
+      "union":true
+    },
     "Namespace":{
       "type":"string",
       "max":255,
@@ -832,6 +1070,57 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "RecurrenceRule":{
+      "type":"structure",
+      "required":["Expression"],
+      "members":{
+        "Expression":{"shape":"Expression"}
+      }
+    },
+    "RequestBasedServiceLevelIndicator":{
+      "type":"structure",
+      "required":["RequestBasedSliMetric"],
+      "members":{
+        "RequestBasedSliMetric":{"shape":"RequestBasedServiceLevelIndicatorMetric"},
+        "MetricThreshold":{"shape":"ServiceLevelIndicatorMetricThreshold"},
+        "ComparisonOperator":{"shape":"ServiceLevelIndicatorComparisonOperator"}
+      }
+    },
+    "RequestBasedServiceLevelIndicatorConfig":{
+      "type":"structure",
+      "required":["RequestBasedSliMetricConfig"],
+      "members":{
+        "RequestBasedSliMetricConfig":{"shape":"RequestBasedServiceLevelIndicatorMetricConfig"},
+        "MetricThreshold":{"shape":"ServiceLevelIndicatorMetricThreshold"},
+        "ComparisonOperator":{"shape":"ServiceLevelIndicatorComparisonOperator"}
+      }
+    },
+    "RequestBasedServiceLevelIndicatorMetric":{
+      "type":"structure",
+      "required":[
+        "TotalRequestCountMetric",
+        "MonitoredRequestCountMetric"
+      ],
+      "members":{
+        "KeyAttributes":{"shape":"Attributes"},
+        "OperationName":{"shape":"OperationName"},
+        "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
+        "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
+        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
+      }
+    },
+    "RequestBasedServiceLevelIndicatorMetricConfig":{
+      "type":"structure",
+      "members":{
+        "KeyAttributes":{"shape":"Attributes"},
+        "OperationName":{"shape":"OperationName"},
+        "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
+        "TotalRequestCountMetric":{"shape":"MetricDataQueries"},
+        "MonitoredRequestCountMetric":{"shape":"MonitoredRequestCountMetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
+      }
     },
     "ResourceId":{"type":"string"},
     "ResourceNotFoundException":{
@@ -888,7 +1177,8 @@
       "members":{
         "KeyAttributes":{"shape":"Attributes"},
         "AttributeMaps":{"shape":"AttributeMaps"},
-        "MetricReferences":{"shape":"MetricReferences"}
+        "MetricReferences":{"shape":"MetricReferences"},
+        "LogGroupReferences":{"shape":"LogGroupReferences"}
       }
     },
     "ServiceDependencies":{
@@ -974,7 +1264,8 @@
         "KeyAttributes":{"shape":"Attributes"},
         "OperationName":{"shape":"OperationName"},
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
-        "MetricDataQueries":{"shape":"MetricDataQueries"}
+        "MetricDataQueries":{"shape":"MetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ServiceLevelIndicatorMetricConfig":{
@@ -985,7 +1276,8 @@
         "MetricType":{"shape":"ServiceLevelIndicatorMetricType"},
         "Statistic":{"shape":"ServiceLevelIndicatorStatistic"},
         "PeriodSeconds":{"shape":"SLIPeriodSeconds"},
-        "MetricDataQueries":{"shape":"MetricDataQueries"}
+        "MetricDataQueries":{"shape":"MetricDataQueries"},
+        "DependencyConfig":{"shape":"DependencyConfig"}
       }
     },
     "ServiceLevelIndicatorMetricThreshold":{
@@ -1012,7 +1304,6 @@
         "Name",
         "CreatedTime",
         "LastUpdatedTime",
-        "Sli",
         "Goal"
       ],
       "members":{
@@ -1022,7 +1313,11 @@
         "CreatedTime":{"shape":"Timestamp"},
         "LastUpdatedTime":{"shape":"Timestamp"},
         "Sli":{"shape":"ServiceLevelIndicator"},
-        "Goal":{"shape":"Goal"}
+        "RequestBasedSli":{"shape":"RequestBasedServiceLevelIndicator"},
+        "EvaluationType":{"shape":"EvaluationType"},
+        "Goal":{"shape":"Goal"},
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"},
+        "MetricSourceType":{"shape":"MetricSourceType"}
       }
     },
     "ServiceLevelObjectiveArn":{
@@ -1041,11 +1336,15 @@
       "members":{
         "Arn":{"shape":"ServiceLevelObjectiveArn"},
         "Name":{"shape":"ServiceLevelObjectiveName"},
+        "EvaluationType":{"shape":"EvaluationType"},
         "BudgetStatus":{"shape":"ServiceLevelObjectiveBudgetStatus"},
         "Attainment":{"shape":"Attainment"},
         "TotalBudgetSeconds":{"shape":"TotalBudgetSeconds"},
         "BudgetSecondsRemaining":{"shape":"BudgetSecondsRemaining"},
+        "TotalBudgetRequests":{"shape":"TotalBudgetRequests"},
+        "BudgetRequestsRemaining":{"shape":"BudgetRequestsRemaining"},
         "Sli":{"shape":"ServiceLevelIndicator"},
+        "RequestBasedSli":{"shape":"RequestBasedServiceLevelIndicator"},
         "Goal":{"shape":"Goal"}
       }
     },
@@ -1121,7 +1420,10 @@
         "Name":{"shape":"ServiceLevelObjectiveName"},
         "KeyAttributes":{"shape":"Attributes"},
         "OperationName":{"shape":"OperationName"},
-        "CreatedTime":{"shape":"Timestamp"}
+        "DependencyConfig":{"shape":"DependencyConfig"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "EvaluationType":{"shape":"EvaluationType"},
+        "MetricSourceType":{"shape":"MetricSourceType"}
       }
     },
     "ServiceOperation":{
@@ -1275,6 +1577,10 @@
       "exception":true
     },
     "Timestamp":{"type":"timestamp"},
+    "TotalBudgetRequests":{
+      "type":"integer",
+      "box":true
+    },
     "TotalBudgetSeconds":{
       "type":"integer",
       "box":true
@@ -1306,7 +1612,9 @@
         },
         "Description":{"shape":"ServiceLevelObjectiveDescription"},
         "SliConfig":{"shape":"ServiceLevelIndicatorConfig"},
-        "Goal":{"shape":"Goal"}
+        "RequestBasedSliConfig":{"shape":"RequestBasedServiceLevelIndicatorConfig"},
+        "Goal":{"shape":"Goal"},
+        "BurnRateConfigurations":{"shape":"BurnRateConfigurations"}
       }
     },
     "UpdateServiceLevelObjectiveOutput":{
@@ -1331,6 +1639,17 @@
     "WarningThreshold":{
       "type":"double",
       "box":true
+    },
+    "Window":{
+      "type":"structure",
+      "required":[
+        "DurationUnit",
+        "Duration"
+      ],
+      "members":{
+        "DurationUnit":{"shape":"DurationUnit"},
+        "Duration":{"shape":"ExclusionDuration"}
+      }
     }
   }
 }

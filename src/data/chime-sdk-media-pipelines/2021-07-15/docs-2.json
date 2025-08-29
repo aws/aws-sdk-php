@@ -79,6 +79,7 @@
         "ChimeSdkMeetingLiveConnectorConfiguration$Arn": "<p>The configuration object's Chime SDK meeting ARN.</p>",
         "CreateMediaCapturePipelineRequest$SourceArn": "<p>ARN of the source from which the media artifacts are captured.</p>",
         "CreateMediaCapturePipelineRequest$SinkArn": "<p>The ARN of the sink type.</p>",
+        "CreateMediaCapturePipelineRequest$SinkIamRoleArn": "<p>The Amazon Resource Name (ARN) of the sink role to be used with <code>AwsKmsKeyId</code> in <code>SseAwsKeyManagementParams</code>. Can only interact with <code>S3Bucket</code> sink type. The role must belong to the caller’s account and be able to act on behalf of the caller during the API call. All minimum policy permissions requirements for the caller to perform sink-related actions are the same for <code>SinkIamRoleArn</code>.</p> <p>Additionally, the role must have permission to <code>kms:GenerateDataKey</code> using KMS key supplied as <code>AwsKmsKeyId</code> in <code>SseAwsKeyManagementParams</code>. If media concatenation will be required later, the role must also have permission to <code>kms:Decrypt</code> for the same KMS key.</p>",
         "CreateMediaInsightsPipelineConfigurationRequest$ResourceAccessRoleArn": "<p>The ARN of the role used by the service to access Amazon Web Services resources, including <code>Transcribe</code> and <code>Transcribe Call Analytics</code>, on the caller’s behalf.</p>",
         "CreateMediaInsightsPipelineRequest$MediaInsightsPipelineConfigurationArn": "<p>The ARN of the pipeline's configuration.</p>",
         "KinesisDataStreamSinkConfiguration$InsightsTarget": "<p>The ARN of the sink.</p>",
@@ -87,6 +88,7 @@
         "LambdaFunctionSinkConfiguration$InsightsTarget": "<p>The ARN of the sink.</p>",
         "MediaCapturePipeline$SourceArn": "<p>ARN of the source from which the media artifacts are saved.</p>",
         "MediaCapturePipeline$SinkArn": "<p>ARN of the destination to which the media artifacts are saved.</p>",
+        "MediaCapturePipeline$SinkIamRoleArn": "<p>The Amazon Resource Name (ARN) of the sink role to be used with <code>AwsKmsKeyId</code> in <code>SseAwsKeyManagementParams</code>.</p>",
         "MediaCapturePipelineSourceConfiguration$MediaPipelineArn": "<p>The media pipeline ARN in the configuration object of a media capture pipeline.</p>",
         "MediaInsightsPipeline$MediaPipelineArn": "<p>The ARN of a media insights pipeline.</p>",
         "MediaInsightsPipeline$MediaInsightsPipelineConfigurationArn": "<p>The ARN of a media insight pipeline's configuration settings.</p>",
@@ -184,8 +186,7 @@
     },
     "BadRequestException": {
       "base": "<p>The input parameters don't match the service's restrictions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -196,7 +197,7 @@
         "AmazonTranscribeProcessorConfiguration$EnablePartialResultsStabilization": "<p>Enables partial result stabilization for your transcription. Partial result stabilization can reduce latency in your output, but may impact accuracy.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/transcribe/latest/dg/streaming.html#streaming-partial-result-stabilization\">Partial-result stabilization</a> in the <i>Amazon Transcribe Developer Guide</i>.</p>",
         "AmazonTranscribeProcessorConfiguration$FilterPartialResults": "<p>If true, <code>TranscriptEvents</code> with <code>IsPartial: true</code> are filtered out of the insights target.</p>",
         "AmazonTranscribeProcessorConfiguration$IdentifyLanguage": "<p>Turns language identification on or off.</p>",
-        "AmazonTranscribeProcessorConfiguration$IdentifyMultipleLanguages": "<p>Turns language identification on or off for multiple languages.</p>",
+        "AmazonTranscribeProcessorConfiguration$IdentifyMultipleLanguages": "<p>Turns language identification on or off for multiple languages.</p> <note> <p>Calls to this API must include a <code>LanguageCode</code>, <code>IdentifyLanguage</code>, or <code>IdentifyMultipleLanguages</code> parameter. If you include more than one of those parameters, your transcription job fails.</p> </note>",
         "KeywordMatchConfiguration$Negate": "<p>Matches keywords or phrases on their presence or absence. If set to <code>TRUE</code>, the rule matches when all the specified keywords or phrases are absent. Default: <code>FALSE</code>.</p>",
         "RealTimeAlertConfiguration$Disabled": "<p>Turns off real-time alerts.</p>",
         "VoiceEnhancementSinkConfiguration$Disabled": "<p>Disables the <code>VoiceEnhancementSinkConfiguration</code> element.</p>"
@@ -345,8 +346,7 @@
     },
     "ConflictException": {
       "base": "<p>The request could not be processed because of conflict in the current state of the resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContentArtifactsConfiguration": {
       "base": "<p>The content artifact object.</p>",
@@ -395,73 +395,59 @@
     },
     "CreateMediaCapturePipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaCapturePipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaConcatenationPipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaConcatenationPipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaInsightsPipelineConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaInsightsPipelineConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaInsightsPipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaInsightsPipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaLiveConnectorPipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaLiveConnectorPipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaPipelineKinesisVideoStreamPoolRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaPipelineKinesisVideoStreamPoolResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaStreamPipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMediaStreamPipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DataChannelConcatenationConfiguration": {
       "base": "<p>The content configuration object's data channel.</p>",
@@ -483,23 +469,19 @@
     },
     "DeleteMediaCapturePipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMediaInsightsPipelineConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMediaPipelineKinesisVideoStreamPoolRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMediaPipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorCode": {
       "base": null,
@@ -529,8 +511,7 @@
     },
     "ForbiddenException": {
       "base": "<p>The client is permanently forbidden from making the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "FragmentNumberString": {
       "base": null,
@@ -553,63 +534,51 @@
     },
     "GetMediaCapturePipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMediaCapturePipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMediaInsightsPipelineConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMediaInsightsPipelineConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMediaPipelineKinesisVideoStreamPoolRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMediaPipelineKinesisVideoStreamPoolResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMediaPipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMediaPipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSpeakerSearchTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSpeakerSearchTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVoiceToneAnalysisTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVoiceToneAnalysisTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GridViewConfiguration": {
       "base": "<p>Specifies the type of grid layout.</p>",
@@ -821,53 +790,43 @@
     },
     "ListMediaCapturePipelinesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMediaCapturePipelinesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMediaInsightsPipelineConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMediaInsightsPipelineConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMediaPipelineKinesisVideoStreamPoolsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMediaPipelineKinesisVideoStreamPoolsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMediaPipelinesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMediaPipelinesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LiveConnectorMuxType": {
       "base": null,
@@ -1187,8 +1146,7 @@
     },
     "NotFoundException": {
       "base": "<p>One or more of the resources in the request does not exist in the system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NumberOfChannels": {
       "base": null,
@@ -1293,8 +1251,7 @@
     },
     "ResourceLimitExceededException": {
       "base": "<p>The request exceeds the resource limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResultMax": {
       "base": null,
@@ -1364,13 +1321,11 @@
     },
     "ServiceFailureException": {
       "base": "<p>The service encountered an unexpected error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is currently unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnsTopicSinkConfiguration": {
       "base": "<p>The configuration settings for the SNS topic sink.</p>",
@@ -1398,35 +1353,36 @@
         "MediaInsightsPipelineConfigurationElement$SqsQueueSinkConfiguration": "<p>The configuration settings for an SQS queue sink in a media insights pipeline configuration element.</p>"
       }
     },
+    "SseAwsKeyManagementParams": {
+      "base": "<p>Contains server side encryption parameters to be used by media capture pipeline. The parameters can also be used by media concatenation pipeline taking media capture pipeline as a media source.</p>",
+      "refs": {
+        "CreateMediaCapturePipelineRequest$SseAwsKeyManagementParams": "<p>An object that contains server side encryption parameters to be used by media capture pipeline. The parameters can also be used by media concatenation pipeline taking media capture pipeline as a media source.</p>",
+        "MediaCapturePipeline$SseAwsKeyManagementParams": "<p>An object that contains server side encryption parameters to be used by media capture pipeline. The parameters can also be used by media concatenation pipeline taking media capture pipeline as a media source.</p>"
+      }
+    },
     "StartSpeakerSearchTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSpeakerSearchTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartVoiceToneAnalysisTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartVoiceToneAnalysisTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopSpeakerSearchTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopVoiceToneAnalysisTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StreamChannelDefinition": {
       "base": "<p>Defines a streaming channel.</p>",
@@ -1475,6 +1431,8 @@
         "ServiceFailureException$RequestId": "<p>The request ID associated with the call responsible for the exception.</p>",
         "ServiceUnavailableException$Message": null,
         "ServiceUnavailableException$RequestId": "<p>The request ID associated with the call responsible for the exception.</p>",
+        "SseAwsKeyManagementParams$AwsKmsKeyId": "<p>The KMS key you want to use to encrypt your media pipeline output. Decryption is required for concatenation pipeline. If using a key located in the current Amazon Web Services account, you can specify your KMS key in one of four ways:</p> <ul> <li> <p>Use the KMS key ID itself. For example, <code>1234abcd-12ab-34cd-56ef-1234567890ab</code>.</p> </li> <li> <p>Use an alias for the KMS key ID. For example, <code>alias/ExampleAlias</code>.</p> </li> <li> <p>Use the Amazon Resource Name (ARN) for the KMS key ID. For example, <code>arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>.</p> </li> <li> <p>Use the ARN for the KMS key alias. For example, <code>arn:aws:kms:region:account-ID:alias/ExampleAlias</code>.</p> </li> </ul> <p>If using a key located in a different Amazon Web Services account than the current Amazon Web Services account, you can specify your KMS key in one of two ways:</p> <ul> <li> <p>Use the ARN for the KMS key ID. For example, <code>arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>.</p> </li> <li> <p>Use the ARN for the KMS key alias. For example, <code>arn:aws:kms:region:account-ID:alias/ExampleAlias</code>.</p> </li> </ul> <p>If you don't specify an encryption key, your output is encrypted with the default Amazon S3 key (SSE-S3).</p> <p>Note that the role specified in the <code>SinkIamRoleArn</code> request parameter must have permission to use the specified KMS key.</p>",
+        "SseAwsKeyManagementParams$AwsKmsEncryptionContext": "<p>Base64-encoded string of a UTF-8 encoded JSON, which contains the encryption context as non-secret key-value pair known as encryption context pairs, that provides an added layer of security for your data. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/encrypt_context.html\">KMS encryption context</a> and <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html\">Asymmetric keys in KMS</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "ThrottledClientException$Message": null,
         "ThrottledClientException$RequestId": "<p>The request ID associated with the call responsible for the exception.</p>",
         "UnauthorizedClientException$Message": null,
@@ -1516,13 +1474,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1532,8 +1488,7 @@
     },
     "ThrottledClientException": {
       "base": "<p>The client exceeded its request rate limit.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TileAspectRatio": {
       "base": null,
@@ -1577,43 +1532,35 @@
     },
     "UnauthorizedClientException": {
       "base": "<p>The client is not currently authorized to make the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMediaInsightsPipelineConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMediaInsightsPipelineConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMediaInsightsPipelineStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMediaPipelineKinesisVideoStreamPoolRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMediaPipelineKinesisVideoStreamPoolResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "VerticalLayoutConfiguration": {
       "base": "<p>Defines the configuration settings for a vertical layout.</p>",

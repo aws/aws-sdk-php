@@ -12,10 +12,12 @@
     "CreateComputer": "<p>Creates an Active Directory computer object in the specified directory.</p>",
     "CreateConditionalForwarder": "<p>Creates a conditional forwarder associated with your Amazon Web Services directory. Conditional forwarders are required in order to set up a trust relationship with another domain. The conditional forwarder points to the trusted domain.</p>",
     "CreateDirectory": "<p>Creates a Simple AD directory. For more information, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_simple_ad.html\">Simple Active Directory</a> in the <i>Directory Service Admin Guide</i>.</p> <p>Before you call <code>CreateDirectory</code>, ensure that all of the required permissions have been explicitly granted through a policy. For details about what permissions are required to run the <code>CreateDirectory</code> operation, see <a href=\"http://docs.aws.amazon.com/directoryservice/latest/admin-guide/UsingWithDS_IAM_ResourcePermissions.html\">Directory Service API Permissions: Actions, Resources, and Conditions Reference</a>.</p>",
+    "CreateHybridAD": "<p>Creates a hybrid directory that connects your self-managed Active Directory (AD) infrastructure and Amazon Web Services.</p> <p>You must have a successful directory assessment using <a>StartADAssessment</a> to validate your environment compatibility before you use this operation.</p> <p>Updates are applied asynchronously. Use <a>DescribeDirectories</a> to monitor the progress of directory creation.</p>",
     "CreateLogSubscription": "<p>Creates a subscription to forward real-time Directory Service domain controller security logs to the specified Amazon CloudWatch log group in your Amazon Web Services account.</p>",
     "CreateMicrosoftAD": "<p>Creates a Microsoft AD directory in the Amazon Web Services Cloud. For more information, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html\">Managed Microsoft AD</a> in the <i>Directory Service Admin Guide</i>.</p> <p>Before you call <i>CreateMicrosoftAD</i>, ensure that all of the required permissions have been explicitly granted through a policy. For details about what permissions are required to run the <i>CreateMicrosoftAD</i> operation, see <a href=\"http://docs.aws.amazon.com/directoryservice/latest/admin-guide/UsingWithDS_IAM_ResourcePermissions.html\">Directory Service API Permissions: Actions, Resources, and Conditions Reference</a>.</p>",
     "CreateSnapshot": "<p>Creates a snapshot of a Simple AD or Microsoft AD directory in the Amazon Web Services cloud.</p> <note> <p>You cannot take snapshots of AD Connector directories.</p> </note>",
     "CreateTrust": "<p>Directory Service for Microsoft Active Directory allows you to configure trust relationships. For example, you can establish a trust between your Managed Microsoft AD directory, and your existing self-managed Microsoft Active Directory. This would allow you to provide users and groups access to resources in either domain, with a single set of credentials.</p> <p>This action initiates the creation of the Amazon Web Services side of a trust relationship between an Managed Microsoft AD directory and an external domain. You can create either a forest trust or an external trust.</p>",
+    "DeleteADAssessment": "<p>Deletes a directory assessment and all associated data. This operation permanently removes the assessment results, validation reports, and configuration information.</p> <p>You cannot delete system-initiated assessments. You can delete customer-created assessments even if they are in progress.</p>",
     "DeleteConditionalForwarder": "<p>Deletes a conditional forwarder that has been set up for your Amazon Web Services directory.</p>",
     "DeleteDirectory": "<p>Deletes an Directory Service directory.</p> <p>Before you call <code>DeleteDirectory</code>, ensure that all of the required permissions have been explicitly granted through a policy. For details about what permissions are required to run the <code>DeleteDirectory</code> operation, see <a href=\"http://docs.aws.amazon.com/directoryservice/latest/admin-guide/UsingWithDS_IAM_ResourcePermissions.html\">Directory Service API Permissions: Actions, Resources, and Conditions Reference</a>.</p>",
     "DeleteLogSubscription": "<p>Deletes the specified log subscription.</p>",
@@ -23,12 +25,16 @@
     "DeleteTrust": "<p>Deletes an existing trust relationship between your Managed Microsoft AD directory and an external domain.</p>",
     "DeregisterCertificate": "<p>Deletes from the system the certificate that was registered for secure LDAP or client certificate authentication.</p>",
     "DeregisterEventTopic": "<p>Removes the specified directory as a publisher to the specified Amazon SNS topic.</p>",
+    "DescribeADAssessment": "<p>Retrieves detailed information about a directory assessment, including its current status, validation results, and configuration details. Use this operation to monitor assessment progress and review results.</p>",
+    "DescribeCAEnrollmentPolicy": "<p>Retrieves detailed information about the certificate authority (CA) enrollment policy for the specified directory. This policy determines how client certificates are automatically enrolled and managed through Amazon Web Services Private Certificate Authority. </p>",
     "DescribeCertificate": "<p>Displays information about the certificate registered for secure LDAP or client certificate authentication.</p>",
     "DescribeClientAuthenticationSettings": "<p>Retrieves information about the type of client authentication for the specified directory, if the type is specified. If no type is specified, information about all client authentication types that are supported for the specified directory is retrieved. Currently, only <code>SmartCard</code> is supported. </p>",
     "DescribeConditionalForwarders": "<p>Obtains information about the conditional forwarders for this account.</p> <p>If no input parameters are provided for RemoteDomainNames, this request describes all conditional forwarders for the specified directory ID.</p>",
     "DescribeDirectories": "<p>Obtains information about the directories that belong to this account.</p> <p>You can retrieve information about specific directories by passing the directory identifiers in the <code>DirectoryIds</code> parameter. Otherwise, all directories that belong to the current account are returned.</p> <p>This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>DescribeDirectoriesResult.NextToken</code> member contains a token that you pass in the next call to <a>DescribeDirectories</a> to retrieve the next set of items.</p> <p>You can also specify a maximum number of return results with the <code>Limit</code> parameter.</p>",
+    "DescribeDirectoryDataAccess": "<p>Obtains status of directory data access enablement through the Directory Service Data API for the specified directory.</p>",
     "DescribeDomainControllers": "<p>Provides information about any domain controllers in your directory.</p>",
     "DescribeEventTopics": "<p>Obtains information about which Amazon SNS topics receive status messages from the specified directory.</p> <p>If no input parameters are provided, such as DirectoryId or TopicName, this request describes all of the associations in the account.</p>",
+    "DescribeHybridADUpdate": "<p>Retrieves information about update activities for a hybrid directory. This operation provides details about configuration changes, administrator account updates, and self-managed instance settings (IDs and DNS IPs).</p>",
     "DescribeLDAPSSettings": "<p>Describes the status of LDAP security for the specified directory.</p>",
     "DescribeRegions": "<p>Provides information about the Regions that are configured for multi-Region replication.</p>",
     "DescribeSettings": "<p>Retrieves information about the configurable settings for the specified directory.</p>",
@@ -36,16 +42,21 @@
     "DescribeSnapshots": "<p>Obtains information about the directory snapshots that belong to this account.</p> <p>This operation supports pagination with the use of the <i>NextToken</i> request and response parameters. If more results are available, the <i>DescribeSnapshots.NextToken</i> member contains a token that you pass in the next call to <a>DescribeSnapshots</a> to retrieve the next set of items.</p> <p>You can also specify a maximum number of return results with the <i>Limit</i> parameter.</p>",
     "DescribeTrusts": "<p>Obtains information about the trust relationships for this account.</p> <p>If no input parameters are provided, such as DirectoryId or TrustIds, this request describes all the trust relationships belonging to the account.</p>",
     "DescribeUpdateDirectory": "<p> Describes the updates of a directory for a particular update type. </p>",
+    "DisableCAEnrollmentPolicy": "<p>Disables the certificate authority (CA) enrollment policy for the specified directory. This stops automatic certificate enrollment and management for domain-joined clients, but does not affect existing certificates.</p> <important> <p>Disabling the CA enrollment policy prevents new certificates from being automatically enrolled, but existing certificates remain valid and functional until they expire.</p> </important>",
     "DisableClientAuthentication": "<p>Disables alternative client authentication methods for the specified directory. </p>",
+    "DisableDirectoryDataAccess": "<p>Deactivates access to directory data via the Directory Service Data API for the specified directory. For more information, see <a href=\"https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html\">Directory Service Data API Reference</a>.</p>",
     "DisableLDAPS": "<p>Deactivates LDAP secure calls for the specified directory.</p>",
     "DisableRadius": "<p>Disables multi-factor authentication (MFA) with the Remote Authentication Dial In User Service (RADIUS) server for an AD Connector or Microsoft AD directory.</p>",
     "DisableSso": "<p>Disables single-sign on for a directory.</p>",
+    "EnableCAEnrollmentPolicy": "<p>Enables certificate authority (CA) enrollment policy for the specified directory. This allows domain-joined clients to automatically request and receive certificates from the specified Amazon Web Services Private Certificate Authority.</p> <note> <p>Before enabling CA enrollment, ensure that the PCA connector is properly configured and accessible from the directory. The connector must be in an active state and have the necessary permissions.</p> </note>",
     "EnableClientAuthentication": "<p>Enables alternative client authentication methods for the specified directory.</p>",
+    "EnableDirectoryDataAccess": "<p>Enables access to directory data via the Directory Service Data API for the specified directory. For more information, see <a href=\"https://docs.aws.amazon.com/directoryservicedata/latest/DirectoryServiceDataAPIReference/Welcome.html\">Directory Service Data API Reference</a>.</p>",
     "EnableLDAPS": "<p>Activates the switch for the specific directory to always use LDAP secure calls.</p>",
     "EnableRadius": "<p>Enables multi-factor authentication (MFA) with the Remote Authentication Dial In User Service (RADIUS) server for an AD Connector or Microsoft AD directory.</p>",
     "EnableSso": "<p>Enables single sign-on for a directory. Single sign-on allows users in your directory to access certain Amazon Web Services services from a computer joined to the directory without having to enter their credentials separately.</p>",
     "GetDirectoryLimits": "<p>Obtains directory limit information for the current Region.</p>",
     "GetSnapshotLimits": "<p>Obtains the manual snapshot limits for a directory.</p>",
+    "ListADAssessments": "<p>Retrieves a list of directory assessments for the specified directory or all assessments in your account. Use this operation to monitor assessment status and manage multiple assessments.</p>",
     "ListCertificates": "<p>For the specified directory, lists all the certificates registered for a secure LDAP or client certificate authentication.</p>",
     "ListIpRoutes": "<p>Lists the address blocks that you have added to a directory.</p>",
     "ListLogSubscriptions": "<p>Lists the active log subscriptions for the Amazon Web Services account.</p>",
@@ -57,13 +68,15 @@
     "RemoveIpRoutes": "<p>Removes IP address blocks from a directory.</p>",
     "RemoveRegion": "<p>Stops all replication and removes the domain controllers from the specified Region. You cannot remove the primary Region with this operation. Instead, use the <code>DeleteDirectory</code> API.</p>",
     "RemoveTagsFromResource": "<p>Removes tags from a directory.</p>",
-    "ResetUserPassword": "<p>Resets the password for any user in your Managed Microsoft AD or Simple AD directory.</p> <p>You can reset the password for any user in your directory with the following exceptions:</p> <ul> <li> <p>For Simple AD, you cannot reset the password for any user that is a member of either the <b>Domain Admins</b> or <b>Enterprise Admins</b> group except for the administrator user.</p> </li> <li> <p>For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the <b>Amazon Web Services Reserved</b> OU. For more information about the OU structure for an Managed Microsoft AD directory, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html\">What Gets Created</a> in the <i>Directory Service Administration Guide</i>.</p> </li> </ul>",
+    "ResetUserPassword": "<p>Resets the password for any user in your Managed Microsoft AD or Simple AD directory. Disabled users will become enabled and can be authenticated following the API call.</p> <p>You can reset the password for any user in your directory with the following exceptions:</p> <ul> <li> <p>For Simple AD, you cannot reset the password for any user that is a member of either the <b>Domain Admins</b> or <b>Enterprise Admins</b> group except for the administrator user.</p> </li> <li> <p>For Managed Microsoft AD, you can only reset the password for a user that is in an OU based off of the NetBIOS name that you typed when you created your directory. For example, you cannot reset the password for a user in the <b>Amazon Web Services Reserved</b> OU. For more information about the OU structure for an Managed Microsoft AD directory, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html\">What Gets Created</a> in the <i>Directory Service Administration Guide</i>.</p> </li> </ul>",
     "RestoreFromSnapshot": "<p>Restores a directory using an existing directory snapshot.</p> <p>When you restore a directory from a snapshot, any changes made to the directory after the snapshot date are overwritten.</p> <p>This action returns as soon as the restore operation is initiated. You can monitor the progress of the restore operation by calling the <a>DescribeDirectories</a> operation with the directory identifier. When the <b>DirectoryDescription.Stage</b> value changes to <code>Active</code>, the restore operation is complete.</p>",
     "ShareDirectory": "<p>Shares a specified directory (<code>DirectoryId</code>) in your Amazon Web Services account (directory owner) with another Amazon Web Services account (directory consumer). With this operation you can use your directory from any Amazon Web Services account and from any Amazon VPC within an Amazon Web Services Region.</p> <p>When you share your Managed Microsoft AD directory, Directory Service creates a shared directory in the directory consumer account. This shared directory contains the metadata to provide access to the directory within the directory owner account. The shared directory is visible in all VPCs in the directory consumer account.</p> <p>The <code>ShareMethod</code> parameter determines whether the specified directory can be shared between Amazon Web Services accounts inside the same Amazon Web Services organization (<code>ORGANIZATIONS</code>). It also determines whether you can share the directory with any other Amazon Web Services account either inside or outside of the organization (<code>HANDSHAKE</code>).</p> <p>The <code>ShareNotes</code> parameter is only used when <code>HANDSHAKE</code> is called, which sends a directory sharing request to the directory consumer. </p>",
+    "StartADAssessment": "<p>Initiates a directory assessment to validate your self-managed AD environment for hybrid domain join. The assessment checks compatibility and connectivity of the self-managed AD environment.</p> <p>A directory assessment is automatically created when you create a hybrid directory. There are two types of assessments: <code>CUSTOMER</code> and <code>SYSTEM</code>. Your Amazon Web Services account has a limit of 100 <code>CUSTOMER</code> directory assessments.</p> <p>The assessment process typically takes 30 minutes or more to complete. The assessment process is asynchronous and you can monitor it with <code>DescribeADAssessment</code>.</p> <p>The <code>InstanceIds</code> must have a one-to-one correspondence with <code>CustomerDnsIps</code>, meaning that if the IP address for instance i-10243410 is 10.24.34.100 and the IP address for instance i-10243420 is 10.24.34.200, then the input arrays must maintain the same order relationship, either [10.24.34.100, 10.24.34.200] paired with [i-10243410, i-10243420] or [10.24.34.200, 10.24.34.100] paired with [i-10243420, i-10243410].</p> <p>Note: You must provide exactly one <code>DirectoryId</code> or <code>AssessmentConfiguration</code>.</p>",
     "StartSchemaExtension": "<p>Applies a schema extension to a Microsoft AD directory.</p>",
     "UnshareDirectory": "<p>Stops the directory sharing between the directory owner and consumer accounts. </p>",
     "UpdateConditionalForwarder": "<p>Updates a conditional forwarder that has been set up for your Amazon Web Services directory.</p>",
     "UpdateDirectorySetup": "<p> Updates the directory for a particular update type. </p>",
+    "UpdateHybridAD": "<p>Updates the configuration of an existing hybrid directory. You can recover hybrid directory administrator account or modify self-managed instance settings.</p> <p>Updates are applied asynchronously. Use <a>DescribeHybridADUpdate</a> to monitor the progress of configuration changes.</p> <p>The <code>InstanceIds</code> must have a one-to-one correspondence with <code>CustomerDnsIps</code>, meaning that if the IP address for instance i-10243410 is 10.24.34.100 and the IP address for instance i-10243420 is 10.24.34.200, then the input arrays must maintain the same order relationship, either [10.24.34.100, 10.24.34.200] paired with [i-10243410, i-10243420] or [10.24.34.200, 10.24.34.100] paired with [i-10243420, i-10243410].</p> <note> <p>You must provide at least one update to <a>UpdateHybridADRequest$HybridAdministratorAccountUpdate</a> or <a>UpdateHybridADRequest$SelfManagedInstancesSettings</a>.</p> </note>",
     "UpdateNumberOfDomainControllers": "<p>Adds or removes domain controllers to or from the directory. Based on the difference between current value and new value (provided through this API call), domain controllers will be added or removed. It may take up to 45 minutes for any new domain controllers to become fully active once the requested number of domain controllers is updated. During this time, you cannot make another update request.</p>",
     "UpdateRadius": "<p>Updates the Remote Authentication Dial In User Service (RADIUS) server information for an AD Connector or Microsoft AD directory.</p>",
     "UpdateSettings": "<p>Updates the configurable settings for the specified directory.</p>",
@@ -71,20 +84,21 @@
     "VerifyTrust": "<p>Directory Service for Microsoft Active Directory allows you to configure and verify trust relationships.</p> <p>This action verifies a trust relationship between your Managed Microsoft AD directory and an external domain.</p>"
   },
   "shapes": {
+    "ADAssessmentLimitExceededException": {
+      "base": "<p>A directory assessment is automatically created when you create a hybrid directory. There are two types of assessments: <code>CUSTOMER</code> and <code>SYSTEM</code>. Your Amazon Web Services account has a limit of 100 <code>CUSTOMER</code> directory assessments.</p> <p>If you attempt to create a hybrid directory; and you already have 100 <code>CUSTOMER</code> directory assessments;, you will encounter an error. Delete assessments to free up capacity before trying again.</p> <p>You can request an increase to your <code>CUSTOMER</code> directory assessment quota by contacting customer support or delete existing CUSTOMER directory assessments; to free up capacity.</p>",
+      "refs": {}
+    },
     "AcceptSharedDirectoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AcceptSharedDirectoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedException": {
-      "base": "<p>Client authentication is not available in this region at this time.</p>",
-      "refs": {
-      }
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {}
     },
     "AccessUrl": {
       "base": null,
@@ -94,33 +108,27 @@
     },
     "AddIpRoutesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddIpRoutesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddRegionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddRegionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddTagsToResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddTagsToResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AddedDateTime": {
       "base": null,
@@ -140,6 +148,166 @@
         "CreateAliasRequest$Alias": "<p>The requested alias.</p> <p>The alias must be unique amongst all aliases in Amazon Web Services. This operation throws an <code>EntityAlreadyExistsException</code> error if the alias already exists.</p>",
         "CreateAliasResult$Alias": "<p>The alias for the directory.</p>",
         "DirectoryDescription$Alias": "<p>The alias for the directory. If no alias has been created for the directory, the alias is the directory identifier, such as <code>d-XXXXXXXXXX</code>.</p>"
+      }
+    },
+    "Assessment": {
+      "base": "<p>Contains detailed information about a directory assessment, including configuration parameters, status, and validation results.</p>",
+      "refs": {
+        "DescribeADAssessmentResult$Assessment": "<p>Detailed information about the self-managed instance settings (IDs and DNS IPs).</p>"
+      }
+    },
+    "AssessmentConfiguration": {
+      "base": "<p>Contains configuration parameters required to perform a directory assessment.</p>",
+      "refs": {
+        "StartADAssessmentRequest$AssessmentConfiguration": "<p>Configuration parameters for the directory assessment, including DNS server information, domain name, Amazon VPC subnet, and Amazon Web Services System Manager managed node details.</p>"
+      }
+    },
+    "AssessmentId": {
+      "base": null,
+      "refs": {
+        "Assessment$AssessmentId": "<p>The unique identifier of the directory assessment.</p>",
+        "AssessmentSummary$AssessmentId": "<p>The unique identifier of the directory assessment.</p>",
+        "CreateHybridADRequest$AssessmentId": "<p>The unique identifier of the successful directory assessment that validates your self-managed AD environment. You must have a successful directory assessment before you create a hybrid directory.</p>",
+        "DeleteADAssessmentRequest$AssessmentId": "<p>The unique identifier of the directory assessment to delete.</p>",
+        "DeleteADAssessmentResult$AssessmentId": "<p>The unique identifier of the deleted directory assessment.</p>",
+        "DescribeADAssessmentRequest$AssessmentId": "<p>The identifier of the directory assessment to describe.</p>",
+        "HybridUpdateInfoEntry$AssessmentId": "<p>The identifier of the assessment performed to validate this update configuration.</p>",
+        "StartADAssessmentResult$AssessmentId": "<p>The unique identifier of the newly started directory assessment. Use this identifier to monitor assessment progress and retrieve results.</p>",
+        "UpdateHybridADResult$AssessmentId": "<p>The identifier of the assessment performed to validate the update configuration. This assessment ensures the updated settings are compatible with your environment.</p>"
+      }
+    },
+    "AssessmentInstanceId": {
+      "base": null,
+      "refs": {
+        "AssessmentInstanceIds$member": null
+      }
+    },
+    "AssessmentInstanceIds": {
+      "base": null,
+      "refs": {
+        "Assessment$SelfManagedInstanceIds": "<p>The identifiers of the self-managed AD instances used to perform the assessment.</p>",
+        "AssessmentConfiguration$InstanceIds": "<p>The identifiers of the self-managed instances with SSM that are used to perform connectivity and validation tests.</p>",
+        "HybridCustomerInstancesSettings$InstanceIds": "<p>The identifiers of the self-managed instances with SSM used in hybrid directory.</p>",
+        "HybridSettingsDescription$SelfManagedInstanceIds": "<p>The identifiers of the self-managed instances with SSM used for hybrid directory operations.</p>",
+        "HybridUpdateValue$InstanceIds": "<p>The identifiers of the self-managed instances with SSM in the hybrid directory configuration.</p>"
+      }
+    },
+    "AssessmentLimit": {
+      "base": null,
+      "refs": {
+        "ListADAssessmentsRequest$Limit": "<p>The maximum number of assessment summaries to return.</p>"
+      }
+    },
+    "AssessmentReport": {
+      "base": "<p>Contains the results of validation tests performed against a specific domain controller during a directory assessment.</p>",
+      "refs": {
+        "AssessmentReports$member": null
+      }
+    },
+    "AssessmentReportType": {
+      "base": null,
+      "refs": {
+        "Assessment$ReportType": "<p>The type of assessment report generated. Valid values are <code>CUSTOMER</code> and <code>SYSTEM</code>.</p>",
+        "AssessmentSummary$ReportType": "<p>The type of assessment report generated. Valid values include <code>CUSTOMER</code> and <code>SYSTEM</code>.</p>"
+      }
+    },
+    "AssessmentReports": {
+      "base": null,
+      "refs": {
+        "DescribeADAssessmentResult$AssessmentReports": "<p>A list of assessment reports containing validation results for each domain controller and test category. Each report includes specific validation details and outcomes.</p>"
+      }
+    },
+    "AssessmentStartTime": {
+      "base": null,
+      "refs": {
+        "Assessment$StartTime": "<p>The date and time when the assessment was initiated.</p>",
+        "AssessmentSummary$StartTime": "<p>The date and time when the assessment was initiated.</p>"
+      }
+    },
+    "AssessmentStatus": {
+      "base": null,
+      "refs": {
+        "Assessment$Status": "<p>The current status of the assessment. Valid values include <code>SUCCESS</code>, <code>FAILED</code>, <code>PENDING</code>, and <code>IN_PROGRESS</code>.</p>",
+        "AssessmentSummary$Status": "<p>The current status of the assessment. Valid values include <code>SUCCESS</code>, <code>FAILED</code>, <code>PENDING</code>, and <code>IN_PROGRESS</code>.</p>"
+      }
+    },
+    "AssessmentStatusCode": {
+      "base": null,
+      "refs": {
+        "Assessment$StatusCode": "<p>A detailed status code providing additional information about the assessment state.</p>"
+      }
+    },
+    "AssessmentStatusReason": {
+      "base": null,
+      "refs": {
+        "Assessment$StatusReason": "<p>A human-readable description of the current assessment status, including any error details or progress information.</p>"
+      }
+    },
+    "AssessmentSummary": {
+      "base": "<p>Contains summary information about a directory assessment, providing a high-level overview without detailed validation results.</p>",
+      "refs": {
+        "Assessments$member": null
+      }
+    },
+    "AssessmentValidation": {
+      "base": "<p>Contains information about a specific validation test performed during a directory assessment.</p>",
+      "refs": {
+        "AssessmentValidations$member": null
+      }
+    },
+    "AssessmentValidationCategory": {
+      "base": null,
+      "refs": {
+        "AssessmentValidation$Category": "<p>The category of the validation test.</p>"
+      }
+    },
+    "AssessmentValidationName": {
+      "base": null,
+      "refs": {
+        "AssessmentValidation$Name": "<p>The name of the specific validation test performed within the category.</p>"
+      }
+    },
+    "AssessmentValidationStatus": {
+      "base": null,
+      "refs": {
+        "AssessmentValidation$Status": "<p>The result status of the validation test. Valid values include <code>SUCCESS</code>, <code>FAILED</code>, <code>PENDING</code>, and <code>IN_PROGRESS</code>.</p>"
+      }
+    },
+    "AssessmentValidationStatusCode": {
+      "base": null,
+      "refs": {
+        "AssessmentValidation$StatusCode": "<p>A detailed status code providing additional information about the validation result.</p>"
+      }
+    },
+    "AssessmentValidationStatusReason": {
+      "base": null,
+      "refs": {
+        "AssessmentValidation$StatusReason": "<p>A human-readable description of the validation result, including any error details or recommendations.</p>"
+      }
+    },
+    "AssessmentValidationTimeStamp": {
+      "base": null,
+      "refs": {
+        "AssessmentValidation$StartTime": "<p>The date and time when the validation test was started.</p>",
+        "AssessmentValidation$LastUpdateDateTime": "<p>The date and time when the validation test was completed or last updated.</p>"
+      }
+    },
+    "AssessmentValidations": {
+      "base": null,
+      "refs": {
+        "AssessmentReport$Validations": "<p>A list of validation results for different test categories performed against this domain controller.</p>"
+      }
+    },
+    "AssessmentVersion": {
+      "base": null,
+      "refs": {
+        "Assessment$Version": "<p>The version of the assessment framework used to evaluate your self-managed AD environment.</p>"
+      }
+    },
+    "Assessments": {
+      "base": null,
+      "refs": {
+        "ListADAssessmentsResult$Assessments": "<p>A list of assessment summaries containing basic information about each directory assessment.</p>"
       }
     },
     "Attribute": {
@@ -169,8 +337,7 @@
     },
     "AuthenticationFailedException": {
       "base": "<p>An authentication error occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AvailabilityZone": {
       "base": null,
@@ -186,15 +353,25 @@
         "DirectoryVpcSettingsDescription$AvailabilityZones": "<p>The list of Availability Zones that the directory is in.</p>"
       }
     },
-    "CancelSchemaExtensionRequest": {
+    "CaEnrollmentPolicyStatus": {
       "base": null,
       "refs": {
+        "DescribeCAEnrollmentPolicyResult$CaEnrollmentPolicyStatus": "<p>The current status of the CA enrollment policy. This indicates if automatic certificate enrollment is currently active, inactive, or in a transitional state.</p> <p>Valid values:</p> <ul> <li> <p> <code>IN_PROGRESS</code> - The policy is being activated T</p> </li> <li> <p> <code>SUCCESS</code> - The policy is active and automatic certificate enrollment is operational</p> </li> <li> <p> <code>FAILED</code> - The policy activation or deactivation failed</p> </li> <li> <p> <code>DISABLING</code> - The policy is being deactivated</p> </li> <li> <p> <code>DISABLED</code> - The policy is inactive and automatic certificate enrollment is not available</p> </li> <li> <p> <code>IMPAIRED</code> - Network connectivity is impaired.</p> </li> </ul>"
       }
+    },
+    "CaEnrollmentPolicyStatusReason": {
+      "base": null,
+      "refs": {
+        "DescribeCAEnrollmentPolicyResult$CaEnrollmentPolicyStatusReason": "<p>Additional information explaining the current status of the CA enrollment policy, particularly useful when the policy is in an error or transitional state.</p>"
+      }
+    },
+    "CancelSchemaExtensionRequest": {
+      "base": null,
+      "refs": {}
     },
     "CancelSchemaExtensionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Certificate": {
       "base": "<p>Information about the certificate.</p>",
@@ -204,8 +381,7 @@
     },
     "CertificateAlreadyExistsException": {
       "base": "<p>The certificate has already been registered into the system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateCN": {
       "base": null,
@@ -222,8 +398,7 @@
     },
     "CertificateDoesNotExistException": {
       "base": "<p>The certificate is not present in the system for describe or deregister activities.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateExpiryDateTime": {
       "base": null,
@@ -244,8 +419,7 @@
     },
     "CertificateInUseException": {
       "base": "<p>The certificate is being used for the LDAP security connection and cannot be removed without disabling LDAP security.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateInfo": {
       "base": "<p>Contains general information about a certificate.</p>",
@@ -255,8 +429,7 @@
     },
     "CertificateLimitExceededException": {
       "base": "<p>The certificate could not be added because the certificate limit has been reached.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CertificateRegisteredDateTime": {
       "base": null,
@@ -328,7 +501,7 @@
       "refs": {
         "ClientAuthenticationSettingInfo$Type": "<p>The type of client authentication for the specified directory. If no type is specified, a list of all client authentication types that are supported for the directory is retrieved. </p>",
         "DescribeClientAuthenticationSettingsRequest$Type": "<p>The type of client authentication for which to retrieve information. If no type is specified, a list of all client authentication types that are supported for the specified directory is retrieved.</p>",
-        "DisableClientAuthenticationRequest$Type": "<p>The type of client authentication to disable. Currently, only the parameter, <code>SmartCard</code> is supported.</p>",
+        "DisableClientAuthenticationRequest$Type": "<p>The type of client authentication to disable. Currently the only parameter <code>\"SmartCard\"</code> is supported.</p>",
         "EnableClientAuthenticationRequest$Type": "<p>The type of client authentication to enable. Currently only the value <code>SmartCard</code> is supported. Smart card authentication in AD Connector requires that you enable Kerberos Constrained Delegation for the Service User to the LDAP service in your self-managed AD. </p>"
       }
     },
@@ -341,8 +514,7 @@
     },
     "ClientException": {
       "base": "<p>A client exception has occurred.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CloudOnlyDirectoriesLimitReached": {
       "base": null,
@@ -384,13 +556,11 @@
     },
     "ConnectDirectoryRequest": {
       "base": "<p>Contains the inputs for the <a>ConnectDirectory</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectDirectoryResult": {
       "base": "<p>Contains the results of the <a>ConnectDirectory</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectPassword": {
       "base": null,
@@ -408,63 +578,59 @@
     },
     "CreateAliasRequest": {
       "base": "<p>Contains the inputs for the <a>CreateAlias</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAliasResult": {
       "base": "<p>Contains the results of the <a>CreateAlias</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateComputerRequest": {
       "base": "<p>Contains the inputs for the <a>CreateComputer</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateComputerResult": {
       "base": "<p>Contains the results for the <a>CreateComputer</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConditionalForwarderRequest": {
       "base": "<p>Initiates the creation of a conditional forwarder for your Directory Service for Microsoft Active Directory. Conditional forwarders are required in order to set up a trust relationship with another domain.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConditionalForwarderResult": {
       "base": "<p>The result of a CreateConditinalForwarder request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectoryRequest": {
       "base": "<p>Contains the inputs for the <a>CreateDirectory</a> operation. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectoryResult": {
       "base": "<p>Contains the results of the <a>CreateDirectory</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateHybridADRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateHybridADResult": {
+      "base": null,
+      "refs": {}
     },
     "CreateLogSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLogSubscriptionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMicrosoftADRequest": {
       "base": "<p>Creates an Managed Microsoft AD directory.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMicrosoftADResult": {
       "base": "<p>Result of a CreateMicrosoftAD request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotBeforeSchemaExtension": {
       "base": null,
@@ -480,23 +646,19 @@
     },
     "CreateSnapshotRequest": {
       "base": "<p>Contains the inputs for the <a>CreateSnapshot</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSnapshotResult": {
       "base": "<p>Contains the results of the <a>CreateSnapshot</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrustRequest": {
       "base": "<p>Directory Service for Microsoft Active Directory allows you to configure trust relationships. For example, you can establish a trust between your Managed Microsoft AD directory, and your existing self-managed Microsoft Active Directory. This would allow you to provide users and groups access to resources in either domain, with a single set of credentials.</p> <p>This action initiates the creation of the Amazon Web Services side of a trust relationship between an Managed Microsoft AD directory and an external domain.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrustResult": {
       "base": "<p>The result of a CreateTrust request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedDateTime": {
       "base": null,
@@ -504,6 +666,16 @@
         "EventTopic$CreatedDateTime": "<p>The date and time of when you associated your directory with the Amazon SNS topic.</p>",
         "SharedDirectory$CreatedDateTime": "<p>The date and time that the shared directory was created.</p>",
         "Trust$CreatedDateTime": "<p>The date and time that the trust relationship was created.</p>"
+      }
+    },
+    "CustomerDnsIps": {
+      "base": null,
+      "refs": {
+        "Assessment$CustomerDnsIps": "<p>The IP addresses of the DNS servers or domain controllers in your self-managed AD environment.</p>",
+        "AssessmentConfiguration$CustomerDnsIps": "<p>A list of IP addresses for the DNS servers or domain controllers in your self-managed AD that are tested during the assessment.</p>",
+        "AssessmentSummary$CustomerDnsIps": "<p>The IP addresses of the DNS servers or domain controllers in your self-managed AD environment.</p>",
+        "HybridCustomerInstancesSettings$CustomerDnsIps": "<p>The IP addresses of the DNS servers or domain controllers in your self-managed AD environment.</p>",
+        "HybridUpdateValue$DnsIps": "<p>The IP addresses of the DNS servers or domain controllers in the hybrid directory configuration.</p>"
       }
     },
     "CustomerId": {
@@ -520,6 +692,20 @@
         "ResetUserPasswordRequest$UserName": "<p>The user name of the user whose password will be reset.</p>"
       }
     },
+    "DataAccessStatus": {
+      "base": null,
+      "refs": {
+        "DescribeDirectoryDataAccessResult$DataAccessStatus": "<p>The current status of data access through the Directory Service Data API.</p>"
+      }
+    },
+    "DeleteADAssessmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteADAssessmentResult": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteAssociatedConditionalForwarder": {
       "base": null,
       "refs": {
@@ -528,203 +714,195 @@
     },
     "DeleteConditionalForwarderRequest": {
       "base": "<p>Deletes a conditional forwarder.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConditionalForwarderResult": {
       "base": "<p>The result of a DeleteConditionalForwarder request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectoryRequest": {
       "base": "<p>Contains the inputs for the <a>DeleteDirectory</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectoryResult": {
       "base": "<p>Contains the results of the <a>DeleteDirectory</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLogSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLogSubscriptionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotRequest": {
       "base": "<p>Contains the inputs for the <a>DeleteSnapshot</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSnapshotResult": {
       "base": "<p>Contains the results of the <a>DeleteSnapshot</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTrustRequest": {
       "base": "<p>Deletes the local side of an existing trust relationship between the Managed Microsoft AD directory and the external domain.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTrustResult": {
       "base": "<p>The result of a DeleteTrust request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterEventTopicRequest": {
       "base": "<p>Removes the specified directory as a publisher to the specified Amazon SNS topic.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterEventTopicResult": {
       "base": "<p>The result of a DeregisterEventTopic request.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeADAssessmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeADAssessmentResult": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeCAEnrollmentPolicyRequest": {
+      "base": "<p>Contains the inputs for the <a>DescribeCAEnrollmentPolicy</a> operation.</p>",
+      "refs": {}
+    },
+    "DescribeCAEnrollmentPolicyResult": {
+      "base": "<p>Contains the results of the <a>DescribeCAEnrollmentPolicy</a> operation.</p>",
+      "refs": {}
     },
     "DescribeCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeClientAuthenticationSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeClientAuthenticationSettingsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConditionalForwardersRequest": {
       "base": "<p>Describes a conditional forwarder.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConditionalForwardersResult": {
       "base": "<p>The result of a DescribeConditionalForwarder request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectoriesRequest": {
       "base": "<p>Contains the inputs for the <a>DescribeDirectories</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectoriesResult": {
       "base": "<p>Contains the results of the <a>DescribeDirectories</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeDirectoryDataAccessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeDirectoryDataAccessResult": {
+      "base": null,
+      "refs": {}
     },
     "DescribeDomainControllersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDomainControllersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventTopicsRequest": {
       "base": "<p>Describes event topics.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEventTopicsResult": {
       "base": "<p>The result of a DescribeEventTopic request.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeHybridADUpdateRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeHybridADUpdateResult": {
+      "base": null,
+      "refs": {}
     },
     "DescribeLDAPSSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLDAPSSettingsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRegionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRegionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSettingsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSharedDirectoriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSharedDirectoriesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSnapshotsRequest": {
       "base": "<p>Contains the inputs for the <a>DescribeSnapshots</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSnapshotsResult": {
       "base": "<p>Contains the results of the <a>DescribeSnapshots</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTrustsRequest": {
       "base": "<p>Describes the trust relationships for a particular Managed Microsoft AD directory. If no input parameters are provided, such as directory ID or trust ID, this request describes all the trust relationships.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTrustsResult": {
       "base": "<p>The result of a DescribeTrust request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUpdateDirectoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUpdateDirectoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -749,13 +927,11 @@
     },
     "DirectoryAlreadyInRegionException": {
       "base": "<p>The Region you specified is the same Region where the Managed Microsoft AD directory was created. Specify a different Region and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectoryAlreadySharedException": {
       "base": "<p>The specified directory has already been shared with this Amazon Web Services account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectoryConfigurationSettingAllowedValues": {
       "base": null,
@@ -843,13 +1019,12 @@
     "DirectoryDescriptions": {
       "base": "<p>A list of directory descriptions.</p>",
       "refs": {
-        "DescribeDirectoriesResult$DirectoryDescriptions": "<p>The list of <a>DirectoryDescription</a> objects that were retrieved.</p> <p>It is possible that this list contains less than the number of items specified in the <code>Limit</code> member of the request. This occurs if there are less than the requested number of items left to retrieve, or if the limitations of the operation have been exceeded.</p>"
+        "DescribeDirectoriesResult$DirectoryDescriptions": "<p>The list of available <a>DirectoryDescription</a> objects that were retrieved.</p> <p>It is possible that this list contains less than the number of items specified in the <code>Limit</code> member of the request. This occurs if there are less than the requested number of items left to retrieve, or if the limitations of the operation have been exceeded.</p>"
       }
     },
     "DirectoryDoesNotExistException": {
       "base": "<p>The specified directory does not exist in the system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectoryEdition": {
       "base": null,
@@ -864,6 +1039,8 @@
         "AcceptSharedDirectoryRequest$SharedDirectoryId": "<p>Identifier of the shared directory in the directory consumer account. This identifier is different for each directory owner account. </p>",
         "AddIpRoutesRequest$DirectoryId": "<p>Identifier (ID) of the directory to which to add the address block.</p>",
         "AddRegionRequest$DirectoryId": "<p>The identifier of the directory to which you want to add Region replication.</p>",
+        "Assessment$DirectoryId": "<p>The identifier of the directory associated with this assessment.</p>",
+        "AssessmentSummary$DirectoryId": "<p>The identifier of the directory associated with this assessment.</p>",
         "CancelSchemaExtensionRequest$DirectoryId": "<p>The identifier of the directory whose schema extension will be canceled.</p>",
         "ConnectDirectoryResult$DirectoryId": "<p>The identifier of the new directory.</p>",
         "CreateAliasRequest$DirectoryId": "<p>The identifier of the directory for which to create the alias.</p>",
@@ -871,6 +1048,7 @@
         "CreateComputerRequest$DirectoryId": "<p>The identifier of the directory in which to create the computer account.</p>",
         "CreateConditionalForwarderRequest$DirectoryId": "<p>The directory ID of the Amazon Web Services directory for which you are creating the conditional forwarder.</p>",
         "CreateDirectoryResult$DirectoryId": "<p>The identifier of the directory that was created.</p>",
+        "CreateHybridADResult$DirectoryId": "<p>The unique identifier of the newly created hybrid directory.</p>",
         "CreateLogSubscriptionRequest$DirectoryId": "<p>Identifier of the directory to which you want to subscribe and receive real-time logs to your specified CloudWatch log group.</p>",
         "CreateMicrosoftADResult$DirectoryId": "<p>The identifier of the directory that was created.</p>",
         "CreateSnapshotRequest$DirectoryId": "<p>The identifier of the directory of which to take a snapshot.</p>",
@@ -881,11 +1059,15 @@
         "DeleteLogSubscriptionRequest$DirectoryId": "<p>Identifier of the directory whose log subscription you want to delete.</p>",
         "DeregisterCertificateRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "DeregisterEventTopicRequest$DirectoryId": "<p>The Directory ID to remove as a publisher. This directory will no longer send messages to the specified Amazon SNS topic.</p>",
+        "DescribeCAEnrollmentPolicyRequest$DirectoryId": "<p>The identifier of the directory for which to retrieve the CA enrollment policy information.</p>",
+        "DescribeCAEnrollmentPolicyResult$DirectoryId": "<p>The identifier of the directory associated with this CA enrollment policy.</p>",
         "DescribeCertificateRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "DescribeClientAuthenticationSettingsRequest$DirectoryId": "<p>The identifier of the directory for which to retrieve information.</p>",
         "DescribeConditionalForwardersRequest$DirectoryId": "<p>The directory ID for which to get the list of associated conditional forwarders.</p>",
+        "DescribeDirectoryDataAccessRequest$DirectoryId": "<p>The directory identifier.</p>",
         "DescribeDomainControllersRequest$DirectoryId": "<p>Identifier of the directory for which to retrieve the domain controller information.</p>",
         "DescribeEventTopicsRequest$DirectoryId": "<p>The Directory ID for which to get the list of associated Amazon SNS topics. If this member is null, associations for all Directory IDs are returned.</p>",
+        "DescribeHybridADUpdateRequest$DirectoryId": "<p>The identifier of the hybrid directory for which to retrieve update information.</p>",
         "DescribeLDAPSSettingsRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "DescribeRegionsRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "DescribeSettingsRequest$DirectoryId": "<p>The identifier of the directory for which to retrieve information.</p>",
@@ -896,18 +1078,23 @@
         "DescribeUpdateDirectoryRequest$DirectoryId": "<p> The unique identifier of the directory. </p>",
         "DirectoryDescription$DirectoryId": "<p>The directory identifier.</p>",
         "DirectoryIds$member": null,
+        "DisableCAEnrollmentPolicyRequest$DirectoryId": "<p>The identifier of the directory for which to disable the CA enrollment policy.</p>",
         "DisableClientAuthenticationRequest$DirectoryId": "<p>The identifier of the directory </p>",
+        "DisableDirectoryDataAccessRequest$DirectoryId": "<p>The directory identifier.</p>",
         "DisableLDAPSRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "DisableRadiusRequest$DirectoryId": "<p>The identifier of the directory for which to disable MFA.</p>",
         "DisableSsoRequest$DirectoryId": "<p>The identifier of the directory for which to disable single-sign on.</p>",
         "DomainController$DirectoryId": "<p>Identifier of the directory where the domain controller resides.</p>",
+        "EnableCAEnrollmentPolicyRequest$DirectoryId": "<p>The identifier of the directory for which to enable the CA enrollment policy.</p>",
         "EnableClientAuthenticationRequest$DirectoryId": "<p>The identifier of the specified directory. </p>",
+        "EnableDirectoryDataAccessRequest$DirectoryId": "<p>The directory identifier.</p>",
         "EnableLDAPSRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "EnableRadiusRequest$DirectoryId": "<p>The identifier of the directory for which to enable MFA.</p>",
         "EnableSsoRequest$DirectoryId": "<p>The identifier of the directory for which to enable single-sign on.</p>",
         "EventTopic$DirectoryId": "<p>The Directory ID of an Directory Service directory that will publish status messages to an Amazon SNS topic.</p>",
         "GetSnapshotLimitsRequest$DirectoryId": "<p>Contains the identifier of the directory to obtain the limits for.</p>",
         "IpRouteInfo$DirectoryId": "<p>Identifier (ID) of the directory associated with the IP addresses.</p>",
+        "ListADAssessmentsRequest$DirectoryId": "<p>The identifier of the directory for which to list assessments. If not specified, all assessments in your account are returned.</p>",
         "ListCertificatesRequest$DirectoryId": "<p>The identifier of the directory.</p>",
         "ListIpRoutesRequest$DirectoryId": "<p>Identifier (ID) of the directory for which you want to retrieve the IP addresses.</p>",
         "ListLogSubscriptionsRequest$DirectoryId": "<p>If a <i>DirectoryID</i> is provided, lists only the log subscription associated with that directory. If no <i>DirectoryId</i> is provided, lists all log subscriptions associated with your Amazon Web Services account. If there are no log subscriptions for the Amazon Web Services account or the directory, an empty list will be returned.</p>",
@@ -928,12 +1115,15 @@
         "SharedDirectory$OwnerDirectoryId": "<p>Identifier of the directory in the directory owner account. </p>",
         "SharedDirectory$SharedDirectoryId": "<p>Identifier of the shared directory in the directory consumer account. This identifier is different for each directory owner account.</p>",
         "Snapshot$DirectoryId": "<p>The directory identifier.</p>",
+        "StartADAssessmentRequest$DirectoryId": "<p>The identifier of the directory for which to perform the assessment. This should be an existing directory. If the assessment is not for an existing directory, this parameter should be omitted.</p>",
         "StartSchemaExtensionRequest$DirectoryId": "<p>The identifier of the directory for which the schema extension will be applied to.</p>",
         "Trust$DirectoryId": "<p>The Directory ID of the Amazon Web Services directory involved in the trust relationship.</p>",
         "UnshareDirectoryRequest$DirectoryId": "<p>The identifier of the Managed Microsoft AD directory that you want to stop sharing.</p>",
         "UnshareDirectoryResult$SharedDirectoryId": "<p>Identifier of the directory stored in the directory consumer account that is to be unshared from the specified directory (<code>DirectoryId</code>).</p>",
         "UpdateConditionalForwarderRequest$DirectoryId": "<p>The directory ID of the Amazon Web Services directory for which to update the conditional forwarder.</p>",
         "UpdateDirectorySetupRequest$DirectoryId": "<p> The identifier of the directory on which you want to perform the update. </p>",
+        "UpdateHybridADRequest$DirectoryId": "<p>The identifier of the hybrid directory to update.</p>",
+        "UpdateHybridADResult$DirectoryId": "<p>The identifier of the updated hybrid directory.</p>",
         "UpdateNumberOfDomainControllersRequest$DirectoryId": "<p>Identifier of the directory to which the domain controllers will be added or removed.</p>",
         "UpdateRadiusRequest$DirectoryId": "<p>The identifier of the directory for which to update the RADIUS server information.</p>",
         "UpdateSettingsRequest$DirectoryId": "<p>The identifier of the directory for which to update settings.</p>",
@@ -949,13 +1139,11 @@
     },
     "DirectoryInDesiredStateException": {
       "base": "<p> The directory is already updated to desired update type settings. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectoryLimitExceededException": {
       "base": "<p>The maximum number of directories in the region has been reached. You can use the <a>GetDirectoryLimits</a> operation to determine your directory limits in the region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectoryLimits": {
       "base": "<p>Contains directory limit information for a Region.</p>",
@@ -966,6 +1154,9 @@
     "DirectoryName": {
       "base": null,
       "refs": {
+        "Assessment$DnsName": "<p>The fully qualified domain name (FQDN) of the Active Directory domain being assessed.</p>",
+        "AssessmentConfiguration$DnsName": "<p>The fully qualified domain name (FQDN) of the self-managed AD domain to assess.</p>",
+        "AssessmentSummary$DnsName": "<p>The fully qualified domain name (FQDN) of the Active Directory domain being assessed.</p>",
         "ConnectDirectoryRequest$Name": "<p>The fully qualified name of your self-managed directory, such as <code>corp.example.com</code>.</p>",
         "CreateDirectoryRequest$Name": "<p>The fully qualified name for the directory, such as <code>corp.example.com</code>.</p>",
         "CreateMicrosoftADRequest$Name": "<p>The fully qualified domain name for the Managed Microsoft AD directory, such as <code>corp.example.com</code>. This name will resolve inside your VPC only. It does not need to be publicly resolvable.</p>",
@@ -974,8 +1165,7 @@
     },
     "DirectoryNotSharedException": {
       "base": "<p>The specified directory has not been shared with this Amazon Web Services account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DirectoryShortName": {
       "base": null,
@@ -1004,18 +1194,18 @@
     "DirectoryType": {
       "base": null,
       "refs": {
-        "DirectoryDescription$Type": "<p>The directory size.</p>"
+        "DirectoryDescription$Type": "<p>The directory type.</p>"
       }
     },
     "DirectoryUnavailableException": {
-      "base": "<p>The specified directory is unavailable or could not be found.</p>",
-      "refs": {
-      }
+      "base": "<p>The specified directory is unavailable.</p>",
+      "refs": {}
     },
     "DirectoryVpcSettings": {
-      "base": "<p>Contains VPC information for the <a>CreateDirectory</a> or <a>CreateMicrosoftAD</a> operation.</p>",
+      "base": "<p>Contains VPC information for the <a>CreateDirectory</a>, <a>CreateMicrosoftAD</a>, or <a>CreateHybridAD</a> operation.</p>",
       "refs": {
         "AddRegionRequest$VPCSettings": null,
+        "AssessmentConfiguration$VpcSettings": null,
         "CreateDirectoryRequest$VpcSettings": "<p>A <a>DirectoryVpcSettings</a> object that contains additional information for the operation.</p>",
         "CreateMicrosoftADRequest$VpcSettings": "<p>Contains VPC information for the <a>CreateDirectory</a> or <a>CreateMicrosoftAD</a> operation.</p>",
         "RegionDescription$VpcSettings": null
@@ -1028,45 +1218,57 @@
         "OwnerDirectoryDescription$VpcSettings": "<p>Information about the VPC settings for the directory.</p>"
       }
     },
+    "DisableAlreadyInProgressException": {
+      "base": "<p>A disable operation for CA enrollment policy is already in progress for this directory.</p>",
+      "refs": {}
+    },
+    "DisableCAEnrollmentPolicyRequest": {
+      "base": "<p>Contains the inputs for the <a>DisableCAEnrollmentPolicy</a> operation.</p>",
+      "refs": {}
+    },
+    "DisableCAEnrollmentPolicyResult": {
+      "base": "<p>Contains the results of the <a>DisableCAEnrollmentPolicy</a> operation.</p>",
+      "refs": {}
+    },
     "DisableClientAuthenticationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableClientAuthenticationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DisableDirectoryDataAccessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisableDirectoryDataAccessResult": {
+      "base": null,
+      "refs": {}
     },
     "DisableLDAPSRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableLDAPSResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableRadiusRequest": {
       "base": "<p>Contains the inputs for the <a>DisableRadius</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableRadiusResult": {
       "base": "<p>Contains the results of the <a>DisableRadius</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableSsoRequest": {
       "base": "<p>Contains the inputs for the <a>DisableSso</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableSsoResult": {
       "base": "<p>Contains the results of the <a>DisableSso</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DnsIpAddrs": {
       "base": null,
@@ -1101,8 +1303,7 @@
     },
     "DomainControllerLimitExceededException": {
       "base": "<p>The maximum allowed number of domain controllers per directory was exceeded. The default limit per directory is 20 domain controllers.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DomainControllerStatus": {
       "base": null,
@@ -1122,45 +1323,57 @@
         "DescribeDomainControllersResult$DomainControllers": "<p>List of the <a>DomainController</a> objects that were retrieved.</p>"
       }
     },
+    "EnableAlreadyInProgressException": {
+      "base": "<p>An enable operation for CA enrollment policy is already in progress for this directory.</p>",
+      "refs": {}
+    },
+    "EnableCAEnrollmentPolicyRequest": {
+      "base": "<p>Contains the inputs for the <a>EnableCAEnrollmentPolicy</a> operation.</p>",
+      "refs": {}
+    },
+    "EnableCAEnrollmentPolicyResult": {
+      "base": "<p>Contains the results of the <a>EnableCAEnrollmentPolicy</a> operation.</p>",
+      "refs": {}
+    },
     "EnableClientAuthenticationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableClientAuthenticationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "EnableDirectoryDataAccessRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "EnableDirectoryDataAccessResult": {
+      "base": null,
+      "refs": {}
     },
     "EnableLDAPSRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableLDAPSResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableRadiusRequest": {
       "base": "<p>Contains the inputs for the <a>EnableRadius</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableRadiusResult": {
       "base": "<p>Contains the results of the <a>EnableRadius</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableSsoRequest": {
       "base": "<p>Contains the inputs for the <a>EnableSso</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableSsoResult": {
       "base": "<p>Contains the results of the <a>EnableSso</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EndDateTime": {
       "base": null,
@@ -1170,13 +1383,11 @@
     },
     "EntityAlreadyExistsException": {
       "base": "<p>The specified entity already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EntityDoesNotExistException": {
       "base": "<p>The specified entity could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EventTopic": {
       "base": "<p>Information about Amazon SNS topic and Directory Service directory associations.</p>",
@@ -1193,6 +1404,7 @@
     "ExceptionMessage": {
       "base": "<p>The descriptive message for the exception.</p>",
       "refs": {
+        "ADAssessmentLimitExceededException$Message": null,
         "AccessDeniedException$Message": null,
         "AuthenticationFailedException$Message": "<p>The textual message for the exception.</p>",
         "CertificateAlreadyExistsException$Message": null,
@@ -1207,7 +1419,9 @@
         "DirectoryLimitExceededException$Message": null,
         "DirectoryNotSharedException$Message": null,
         "DirectoryUnavailableException$Message": null,
+        "DisableAlreadyInProgressException$Message": null,
         "DomainControllerLimitExceededException$Message": null,
+        "EnableAlreadyInProgressException$Message": null,
         "EntityAlreadyExistsException$Message": null,
         "EntityDoesNotExistException$Message": null,
         "IncompatibleSettingsException$Message": null,
@@ -1234,78 +1448,118 @@
     },
     "GetDirectoryLimitsRequest": {
       "base": "<p>Contains the inputs for the <a>GetDirectoryLimits</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDirectoryLimitsResult": {
       "base": "<p>Contains the results of the <a>GetDirectoryLimits</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSnapshotLimitsRequest": {
       "base": "<p>Contains the inputs for the <a>GetSnapshotLimits</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSnapshotLimitsResult": {
       "base": "<p>Contains the results of the <a>GetSnapshotLimits</a> operation.</p>",
+      "refs": {}
+    },
+    "HybridAdministratorAccountUpdate": {
+      "base": "<p> Use to recover to the hybrid directory administrator account credentials.</p>",
       "refs": {
+        "UpdateHybridADRequest$HybridAdministratorAccountUpdate": "<p>We create a hybrid directory administrator account when we create a hybrid directory. Use <code>HybridAdministratorAccountUpdate</code> to recover the hybrid directory administrator account if you have deleted it.</p> <p>To recover your hybrid directory administrator account, we need temporary access to a user in your self-managed AD with administrator permissions in the form of a secret from Amazon Web Services Secrets Manager. We use these credentials once during recovery and don't store them.</p> <p>If your hybrid directory administrator account exists, then you don’t need to use <code>HybridAdministratorAccountUpdate</code>, even if you have updated your self-managed AD administrator user.</p>"
+      }
+    },
+    "HybridCustomerInstancesSettings": {
+      "base": "<p>Contains configuration settings for self-managed instances with SSM used in hybrid directory operations.</p>",
+      "refs": {
+        "UpdateHybridADRequest$SelfManagedInstancesSettings": "<p>Updates to the self-managed AD configuration, including DNS server IP addresses and Amazon Web Services System Manager managed node identifiers.</p>"
+      }
+    },
+    "HybridSettingsDescription": {
+      "base": "<p>Describes the current hybrid directory configuration settings for a directory.</p>",
+      "refs": {
+        "DirectoryDescription$HybridSettings": "<p>Contains information about the hybrid directory configuration for the directory, including Amazon Web Services System Manager managed node identifiers and DNS IPs.</p>"
+      }
+    },
+    "HybridUpdateActivities": {
+      "base": "<p>Contains information about update activities for different components of a hybrid directory.</p>",
+      "refs": {
+        "DescribeHybridADUpdateResult$UpdateActivities": "<p>Information about update activities for the hybrid directory, organized by update type.</p>"
+      }
+    },
+    "HybridUpdateInfoEntries": {
+      "base": null,
+      "refs": {
+        "HybridUpdateActivities$SelfManagedInstances": "<p>A list of update activities related to the self-managed instances with SSM in the self-managed instances with SSM hybrid directory configuration.</p>",
+        "HybridUpdateActivities$HybridAdministratorAccount": "<p>A list of update activities related to hybrid directory administrator account changes.</p>"
+      }
+    },
+    "HybridUpdateInfoEntry": {
+      "base": "<p>Contains detailed information about a specific update activity for a hybrid directory component.</p>",
+      "refs": {
+        "HybridUpdateInfoEntries$member": null
+      }
+    },
+    "HybridUpdateType": {
+      "base": null,
+      "refs": {
+        "DescribeHybridADUpdateRequest$UpdateType": "<p>The type of update activities to retrieve. Valid values include <code>SelfManagedInstances</code> and <code>HybridAdministratorAccount</code>.</p>"
+      }
+    },
+    "HybridUpdateValue": {
+      "base": "<p>Contains the configuration values for a hybrid directory update, including Amazon Web Services System Manager managed node and DNS information.</p>",
+      "refs": {
+        "HybridUpdateInfoEntry$NewValue": "<p>The new configuration values being applied in this update.</p>",
+        "HybridUpdateInfoEntry$PreviousValue": "<p>The previous configuration values before this update was applied.</p>"
       }
     },
     "IncompatibleSettingsException": {
       "base": "<p>The specified directory setting is not compatible with other settings.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InitiatedBy": {
       "base": null,
       "refs": {
+        "HybridUpdateInfoEntry$InitiatedBy": "<p>Specifies if the update was initiated by the customer or Amazon Web Services.</p>",
         "UpdateInfoEntry$InitiatedBy": "<p> This specifies if the update was initiated by the customer or by the service team. </p>"
       }
     },
     "InsufficientPermissionsException": {
       "base": "<p>The account does not have sufficient permission to perform the operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidCertificateException": {
       "base": "<p>The certificate PEM that was provided has incorrect encoding.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidClientAuthStatusException": {
       "base": "<p>Client authentication is already enabled.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidLDAPSStatusException": {
       "base": "<p>The LDAP activities could not be performed because they are limited by the LDAPS status.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNextTokenException": {
       "base": "<p>The <code>NextToken</code> value is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterException": {
       "base": "<p>One or more parameters are not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidPasswordException": {
       "base": "<p>The new password provided by the user does not meet the password complexity requirements defined in your directory.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidTargetException": {
       "base": "<p>The specified shared target is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddr": {
       "base": null,
       "refs": {
+        "AssessmentReport$DomainControllerIp": "<p>The IP address of the domain controller that was tested during the assessment.</p>",
+        "CustomerDnsIps$member": null,
         "DnsIpAddrs$member": null,
         "DomainController$DnsIpAddr": "<p>The IP address of the domain controller.</p>",
         "IpAddrs$member": null
@@ -1314,7 +1568,8 @@
     "IpAddrs": {
       "base": null,
       "refs": {
-        "DirectoryConnectSettingsDescription$ConnectIps": "<p>The IP addresses of the AD Connector servers.</p>"
+        "DirectoryConnectSettingsDescription$ConnectIps": "<p>The IP addresses of the AD Connector servers.</p>",
+        "HybridSettingsDescription$SelfManagedDnsIpAddrs": "<p>The IP addresses of the DNS servers in your self-managed AD environment.</p>"
       }
     },
     "IpRoute": {
@@ -1331,8 +1586,7 @@
     },
     "IpRouteLimitExceededException": {
       "base": "<p>The maximum allowed number of IP addresses was exceeded. The default limit is 100 IP address blocks.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpRouteStatusMsg": {
       "base": null,
@@ -1390,12 +1644,21 @@
         "EnableLDAPSRequest$Type": "<p>The type of LDAP security to enable. Currently only the value <code>Client</code> is supported.</p>"
       }
     },
+    "LastUpdateDateTime": {
+      "base": null,
+      "refs": {
+        "Assessment$LastUpdateDateTime": "<p>The date and time when the assessment status was last updated.</p>",
+        "AssessmentSummary$LastUpdateDateTime": "<p>The date and time when the assessment status was last updated.</p>"
+      }
+    },
     "LastUpdatedDateTime": {
       "base": null,
       "refs": {
         "ClientAuthenticationSettingInfo$LastUpdatedDateTime": "<p>The date and time when the status of the client authentication type was last updated.</p>",
+        "DescribeCAEnrollmentPolicyResult$LastUpdatedDateTime": "<p>The date and time when the CA enrollment policy was last modified or updated.</p>",
         "DirectoryDescription$StageLastUpdatedDateTime": "<p>The date and time that the stage was last updated.</p>",
         "DomainController$StatusLastUpdatedDateTime": "<p>The date and time that the status was last updated.</p>",
+        "HybridUpdateInfoEntry$LastUpdatedDateTime": "<p>The date and time when the update activity status was last updated.</p>",
         "LDAPSSettingInfo$LastUpdatedDateTime": "<p>The date and time when the LDAPS settings were last updated.</p>",
         "RegionDescription$LastUpdatedDateTime": "<p>The date and time that the Region description was last updated.</p>",
         "SharedDirectory$LastUpdatedDateTime": "<p>The date and time that the shared directory was last updated.</p>",
@@ -1439,55 +1702,53 @@
         "SnapshotLimits$ManualSnapshotsCurrentCount": "<p>The current number of manual snapshots of the directory.</p>"
       }
     },
+    "ListADAssessmentsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListADAssessmentsResult": {
+      "base": null,
+      "refs": {}
+    },
     "ListCertificatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificatesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIpRoutesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIpRoutesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLogSubscriptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLogSubscriptionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemaExtensionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSchemaExtensionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogGroupName": {
       "base": null,
@@ -1523,6 +1784,8 @@
         "DescribeDirectoriesResult$NextToken": "<p>If not null, more results are available. Pass this value for the <code>NextToken</code> parameter in a subsequent call to <a>DescribeDirectories</a> to retrieve the next set of items.</p>",
         "DescribeDomainControllersRequest$NextToken": "<p>The <i>DescribeDomainControllers.NextToken</i> value from a previous call to <a>DescribeDomainControllers</a>. Pass null if this is the first call. </p>",
         "DescribeDomainControllersResult$NextToken": "<p>If not null, more results are available. Pass this value for the <code>NextToken</code> parameter in a subsequent call to <a>DescribeDomainControllers</a> retrieve the next set of items.</p>",
+        "DescribeHybridADUpdateRequest$NextToken": "<p>The pagination token from a previous request to <a>DescribeHybridADUpdate</a>. Pass null if this is the first request.</p>",
+        "DescribeHybridADUpdateResult$NextToken": "<p>If not null, more results are available. Pass this value for the <code>NextToken</code> parameter in a subsequent request to retrieve the next set of items.</p>",
         "DescribeLDAPSSettingsRequest$NextToken": "<p>The type of next token used for pagination.</p>",
         "DescribeLDAPSSettingsResult$NextToken": "<p>The next token used to retrieve the LDAPS settings if the number of setting types exceeds page limit and there is another page.</p>",
         "DescribeRegionsRequest$NextToken": "<p>The <code>DescribeRegionsResult.NextToken</code> value from a previous call to <a>DescribeRegions</a>. Pass null if this is the first call.</p>",
@@ -1537,6 +1800,8 @@
         "DescribeTrustsResult$NextToken": "<p>If not null, more results are available. Pass this value for the <i>NextToken</i> parameter in a subsequent call to <a>DescribeTrusts</a> to retrieve the next set of items.</p>",
         "DescribeUpdateDirectoryRequest$NextToken": "<p> The <code>DescribeUpdateDirectoryResult</code>. NextToken value from a previous call to <a>DescribeUpdateDirectory</a>. Pass null if this is the first call. </p>",
         "DescribeUpdateDirectoryResult$NextToken": "<p> If not null, more results are available. Pass this value for the <code>NextToken</code> parameter. </p>",
+        "ListADAssessmentsRequest$NextToken": "<p>The pagination token from a previous request to <a>ListADAssessments</a>. Pass null if this is the first request.</p>",
+        "ListADAssessmentsResult$NextToken": "<p>If not null, more results are available. Pass this value for the <code>NextToken</code> parameter in a subsequent request to retrieve the next set of items.</p>",
         "ListCertificatesRequest$NextToken": "<p>A token for requesting another page of certificates if the <code>NextToken</code> response element indicates that more certificates are available. Use the value of the returned <code>NextToken</code> element in your request until the token comes back as <code>null</code>. Pass <code>null</code> if this is the first call.</p>",
         "ListCertificatesResult$NextToken": "<p>Indicates whether another page of certificates is available when the number of available certificates exceeds the page limit.</p>",
         "ListIpRoutesRequest$NextToken": "<p>The <i>ListIpRoutes.NextToken</i> value from a previous call to <a>ListIpRoutes</a>. Pass null if this is the first call.</p>",
@@ -1551,8 +1816,7 @@
     },
     "NoAvailableCertificateException": {
       "base": "<p>Client authentication setup could not be completed because at least one valid certificate must be registered in the system.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Notes": {
       "base": null,
@@ -1590,8 +1854,7 @@
     },
     "OrganizationsException": {
       "base": "<p>Exception encountered while trying to access your Amazon Web Services organization.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OwnerDirectoryDescription": {
       "base": "<p>Describes the directory owner account details that have been shared to the directory consumer account.</p>",
@@ -1612,6 +1875,13 @@
       "refs": {
         "CreateDirectoryRequest$Password": "<p>The password for the directory administrator. The directory creation process creates a directory administrator account with the user name <code>Administrator</code> and this password.</p> <p>If you need to change the password for the administrator account, you can use the <a>ResetUserPassword</a> API call.</p> <p>The regex pattern for this string is made up of the following conditions:</p> <ul> <li> <p>Length (?=^.{8,64}$) – Must be between 8 and 64 characters</p> </li> </ul> <p>AND any 3 of the following password complexity rules required by Active Directory:</p> <ul> <li> <p>Numbers and upper case and lowercase (?=.*\\d)(?=.*[A-Z])(?=.*[a-z])</p> </li> <li> <p>Numbers and special characters and lower case (?=.*\\d)(?=.*[^A-Za-z0-9\\s])(?=.*[a-z])</p> </li> <li> <p>Special characters and upper case and lower case (?=.*[^A-Za-z0-9\\s])(?=.*[A-Z])(?=.*[a-z])</p> </li> <li> <p>Numbers and upper case and special characters (?=.*\\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9\\s])</p> </li> </ul> <p>For additional information about how Active Directory passwords are enforced, see <a href=\"https://docs.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/password-must-meet-complexity-requirements\">Password must meet complexity requirements</a> on the Microsoft website.</p>",
         "CreateMicrosoftADRequest$Password": "<p>The password for the default administrative user named <code>Admin</code>.</p> <p>If you need to change the password for the administrator account, you can use the <a>ResetUserPassword</a> API call.</p>"
+      }
+    },
+    "PcaConnectorArn": {
+      "base": null,
+      "refs": {
+        "DescribeCAEnrollmentPolicyResult$PcaConnectorArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Private Certificate Authority (PCA) connector that is configured for automatic certificate enrollment in this directory.</p>",
+        "EnableCAEnrollmentPolicyRequest$PcaConnectorArn": "<p>The Amazon Resource Name (ARN) of the Private Certificate Authority (PCA) connector to use for automatic certificate enrollment. This connector must be properly configured and accessible from the directory.</p> <p>The ARN format is: <code>arn:aws:pca-connector-ad:<i>region</i>:<i>account-id</i>:connector/<i>connector-id</i> </code> </p>"
       }
     },
     "PortNumber": {
@@ -1635,7 +1905,7 @@
     "RadiusRetries": {
       "base": null,
       "refs": {
-        "RadiusSettings$RadiusRetries": "<p>The maximum number of times that communication with the RADIUS server is attempted.</p>"
+        "RadiusSettings$RadiusRetries": "<p>The maximum number of times that communication with the RADIUS server is retried after the initial attempt.</p>"
       }
     },
     "RadiusSettings": {
@@ -1674,8 +1944,7 @@
     },
     "RegionLimitExceededException": {
       "base": "<p>You have reached the limit for maximum number of simultaneous Region replications per directory.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegionName": {
       "base": null,
@@ -1710,33 +1979,27 @@
     },
     "RegisterCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterCertificateResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterEventTopicRequest": {
       "base": "<p>Registers a new event topic.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterEventTopicResult": {
       "base": "<p>The result of a RegisterEventTopic request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RejectSharedDirectoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RejectSharedDirectoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoteDomainName": {
       "base": null,
@@ -1758,33 +2021,27 @@
     },
     "RemoveIpRoutesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveIpRoutesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveRegionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveRegionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTagsFromResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RemoveTagsFromResourceResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReplicationScope": {
       "base": null,
@@ -1795,6 +2052,7 @@
     "RequestId": {
       "base": "<p>The Amazon Web Services request identifier.</p>",
       "refs": {
+        "ADAssessmentLimitExceededException$RequestId": null,
         "AccessDeniedException$RequestId": null,
         "AuthenticationFailedException$RequestId": "<p>The identifier of the request that caused the exception.</p>",
         "CertificateAlreadyExistsException$RequestId": null,
@@ -1809,7 +2067,9 @@
         "DirectoryLimitExceededException$RequestId": null,
         "DirectoryNotSharedException$RequestId": null,
         "DirectoryUnavailableException$RequestId": null,
+        "DisableAlreadyInProgressException$RequestId": null,
         "DomainControllerLimitExceededException$RequestId": null,
+        "EnableAlreadyInProgressException$RequestId": null,
         "EntityAlreadyExistsException$RequestId": null,
         "EntityDoesNotExistException$RequestId": null,
         "IncompatibleSettingsException$RequestId": null,
@@ -1837,13 +2097,11 @@
     },
     "ResetUserPasswordRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetUserPasswordResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceId": {
       "base": null,
@@ -1855,13 +2113,11 @@
     },
     "RestoreFromSnapshotRequest": {
       "base": "<p>An object representing the inputs for the <a>RestoreFromSnapshot</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreFromSnapshotResult": {
       "base": "<p>Contains the results of the <a>RestoreFromSnapshot</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SID": {
       "base": null,
@@ -1901,11 +2157,26 @@
         "ListSchemaExtensionsResult$SchemaExtensionsInfo": "<p>Information about the schema extensions applied to the directory.</p>"
       }
     },
+    "SecretArn": {
+      "base": null,
+      "refs": {
+        "CreateHybridADRequest$SecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that contains the credentials for the service account used to join hybrid domain controllers to your self-managed AD domain. This secret is used once and not stored.</p> <p>The secret must contain key-value pairs with keys matching <code>customerAdAdminDomainUsername</code> and <code>customerAdAdminDomainPassword</code>. For example: <code>{\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}</code>.</p>",
+        "HybridAdministratorAccountUpdate$SecretArn": "<p>The Amazon Resource Name (ARN) of the Amazon Web Services Secrets Manager secret that contains the credentials for the AD administrator user, and enables hybrid domain controllers to join the managed AD domain. For example:</p> <p> <code> {\"customerAdAdminDomainUsername\":\"carlos_salazar\",\"customerAdAdminDomainPassword\":\"ExamplePassword123!\"}. </code> </p>"
+      }
+    },
     "SecurityGroupId": {
       "base": null,
       "refs": {
         "DirectoryConnectSettingsDescription$SecurityGroupId": "<p>The security group identifier for the AD Connector directory.</p>",
-        "DirectoryVpcSettingsDescription$SecurityGroupId": "<p>The domain controller security group identifier for the directory.</p>"
+        "DirectoryVpcSettingsDescription$SecurityGroupId": "<p>The domain controller security group identifier for the directory.</p>",
+        "SecurityGroupIds$member": null
+      }
+    },
+    "SecurityGroupIds": {
+      "base": null,
+      "refs": {
+        "Assessment$SecurityGroupIds": "<p>The security groups identifiers attached to the network interfaces.</p>",
+        "AssessmentConfiguration$SecurityGroupIds": "<p>By default, the service attaches a security group to allow network access to the self-managed nodes in your Amazon VPC. You can optionally supply your own security group that allows network traffic to and from your self-managed domain controllers outside of your Amazon VPC. </p>"
       }
     },
     "SelectiveAuth": {
@@ -1930,8 +2201,7 @@
     },
     "ServiceException": {
       "base": "<p>An exception has occurred in Directory Service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Setting": {
       "base": "<p>Contains information about the configurable settings for a directory.</p>",
@@ -1959,18 +2229,15 @@
     },
     "ShareDirectoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ShareDirectoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ShareLimitExceededException": {
       "base": "<p>The maximum number of Amazon Web Services accounts that you can share with this directory has been reached.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ShareMethod": {
       "base": null,
@@ -2031,8 +2298,7 @@
     },
     "SnapshotLimitExceededException": {
       "base": "<p>The maximum number of manual snapshots for the directory has been reached. You can use the <a>GetSnapshotLimits</a> operation to determine the snapshot limits for a directory.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnapshotLimits": {
       "base": "<p>Contains manual snapshot limit information for a directory.</p>",
@@ -2077,22 +2343,29 @@
         "DirectoryDescription$StageReason": "<p>Additional information about the directory stage.</p>"
       }
     },
+    "StartADAssessmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartADAssessmentResult": {
+      "base": null,
+      "refs": {}
+    },
     "StartDateTime": {
       "base": null,
       "refs": {
+        "HybridUpdateInfoEntry$StartTime": "<p>The date and time when the update activity was initiated.</p>",
         "SchemaExtensionInfo$StartDateTime": "<p>The date and time that the schema extension started being applied to the directory.</p>",
         "UpdateInfoEntry$StartTime": "<p> The start time of the <code>UpdateDirectorySetup</code> for the particular type. </p>"
       }
     },
     "StartSchemaExtensionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSchemaExtensionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTime": {
       "base": null,
@@ -2117,6 +2390,7 @@
     "SubnetIds": {
       "base": null,
       "refs": {
+        "Assessment$SubnetIds": "<p>A list of subnet identifiers in the Amazon VPC in which the hybrid directory is created.</p>",
         "DirectoryConnectSettings$SubnetIds": "<p>A list of subnet identifiers in the VPC in which the AD Connector is created.</p>",
         "DirectoryConnectSettingsDescription$SubnetIds": "<p>A list of subnet identifiers in the VPC that the AD Connector is in.</p>",
         "DirectoryVpcSettings$SubnetIds": "<p>The identifiers of the subnets for the directory servers. The two subnets must be in different Availability Zones. Directory Service creates a directory server and a DNS server in each of these subnets.</p>",
@@ -2138,7 +2412,7 @@
     "TagKey": {
       "base": null,
       "refs": {
-        "Tag$Key": "<p>Required name of the tag. The string value can be Unicode characters and cannot be prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>",
+        "Tag$Key": "<p>Required name of the tag. The string value can be Unicode characters and cannot be prefixed with \"aws:\". The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-', ':', '@'(Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>",
         "TagKeys$member": null
       }
     },
@@ -2150,13 +2424,12 @@
     },
     "TagLimitExceededException": {
       "base": "<p>The maximum allowed number of tags was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
       "refs": {
-        "Tag$Value": "<p>The optional value of the tag. The string value can be Unicode characters. The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>"
+        "Tag$Value": "<p>The optional value of the tag. The string value can be Unicode characters. The string can contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-', ':', '@' (Java regex: \"^([\\\\p{L}\\\\p{Z}\\\\p{N}_.:/=+\\\\-]*)$\").</p>"
       }
     },
     "Tags": {
@@ -2165,6 +2438,7 @@
         "AddTagsToResourceRequest$Tags": "<p>The tags to be assigned to the directory.</p>",
         "ConnectDirectoryRequest$Tags": "<p>The tags to be assigned to AD Connector.</p>",
         "CreateDirectoryRequest$Tags": "<p>The tags to be assigned to the Simple AD directory.</p>",
+        "CreateHybridADRequest$Tags": "<p>The tags to be assigned to the directory. Each tag consists of a key and value pair. You can specify multiple tags as a list.</p>",
         "CreateMicrosoftADRequest$Tags": "<p>The tags to be assigned to the Managed Microsoft AD directory.</p>",
         "ListTagsForResourceResult$Tags": "<p>List of tags returned by the ListTagsForResource operation.</p>"
       }
@@ -2246,7 +2520,7 @@
     "TrustPassword": {
       "base": null,
       "refs": {
-        "CreateTrustRequest$TrustPassword": "<p>The trust password. The must be the same password that was used when creating the trust relationship on the external domain.</p>"
+        "CreateTrustRequest$TrustPassword": "<p>The trust password. The trust password must be the same password that was used when creating the trust relationship on the external domain.</p>"
       }
     },
     "TrustState": {
@@ -2276,13 +2550,11 @@
     },
     "UnshareDirectoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnshareDirectoryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnshareTarget": {
       "base": "<p>Identifier that contains details about the directory consumer account with whom the directory is being unshared.</p>",
@@ -2292,13 +2564,11 @@
     },
     "UnsupportedOperationException": {
       "base": "<p>The operation is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnsupportedSettingsException": {
       "base": "<p>The specified directory setting is not supported.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateActivities": {
       "base": null,
@@ -2308,23 +2578,27 @@
     },
     "UpdateConditionalForwarderRequest": {
       "base": "<p>Updates a conditional forwarder.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConditionalForwarderResult": {
       "base": "<p>The result of an UpdateConditionalForwarder request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectorySetupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectorySetupResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateHybridADRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateHybridADResult": {
+      "base": null,
+      "refs": {}
     },
     "UpdateInfoEntry": {
       "base": "<p> An entry of update information related to a requested update type. </p>",
@@ -2334,61 +2608,55 @@
     },
     "UpdateNumberOfDomainControllersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNumberOfDomainControllersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRadiusRequest": {
       "base": "<p>Contains the inputs for the <a>UpdateRadius</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRadiusResult": {
       "base": "<p>Contains the results of the <a>UpdateRadius</a> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSecurityGroupForDirectoryControllers": {
       "base": null,
       "refs": {
-        "AddIpRoutesRequest$UpdateSecurityGroupForDirectoryControllers": "<p>If set to true, updates the inbound and outbound rules of the security group that has the description: \"Amazon Web Services created security group for <i>directory ID</i> directory controllers.\" Following are the new rules: </p> <p>Inbound:</p> <ul> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 88, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 123, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 138, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 389, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 464, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 445, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 88, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 135, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 445, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 464, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 636, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 1024-65535, Source: 0.0.0.0/0</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 3268-33269, Source: 0.0.0.0/0</p> </li> <li> <p>Type: DNS (UDP), Protocol: UDP, Range: 53, Source: 0.0.0.0/0</p> </li> <li> <p>Type: DNS (TCP), Protocol: TCP, Range: 53, Source: 0.0.0.0/0</p> </li> <li> <p>Type: LDAP, Protocol: TCP, Range: 389, Source: 0.0.0.0/0</p> </li> <li> <p>Type: All ICMP, Protocol: All, Range: N/A, Source: 0.0.0.0/0</p> </li> </ul> <p/> <p>Outbound:</p> <ul> <li> <p>Type: All traffic, Protocol: All, Range: All, Destination: 0.0.0.0/0</p> </li> </ul> <p>These security rules impact an internal network interface that is not exposed publicly.</p>"
+        "AddIpRoutesRequest$UpdateSecurityGroupForDirectoryControllers": "<p>If set to true, updates the inbound and outbound rules of the security group that has the description: \"Amazon Web Services created security group for <i>directory ID</i> directory controllers.\" Following are the new rules: </p> <p>Inbound:</p> <ul> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 88, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 123, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 138, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 389, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 464, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom UDP Rule, Protocol: UDP, Range: 445, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 88, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 135, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 445, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 464, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 636, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 1024-65535, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: Custom TCP Rule, Protocol: TCP, Range: 3268-33269, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: DNS (UDP), Protocol: UDP, Range: 53, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: DNS (TCP), Protocol: TCP, Range: 53, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: LDAP, Protocol: TCP, Range: 389, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> <li> <p>Type: All ICMP, Protocol: All, Range: N/A, Source: Managed Microsoft AD VPC IPv4 CIDR</p> </li> </ul> <p/> <p>Outbound:</p> <ul> <li> <p>Type: All traffic, Protocol: All, Range: All, Destination: 0.0.0.0/0</p> </li> </ul> <p>These security rules impact an internal network interface that is not exposed publicly.</p>"
       }
     },
     "UpdateSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSettingsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStatus": {
       "base": null,
       "refs": {
+        "HybridUpdateInfoEntry$Status": "<p>The current status of the update activity. Valid values include <code>UPDATED</code>, <code>UPDATING</code>, and <code>UPDATE_FAILED</code>.</p>",
         "UpdateInfoEntry$Status": "<p> The status of the update performed on the directory. </p>"
       }
     },
     "UpdateStatusReason": {
       "base": null,
       "refs": {
+        "HybridUpdateInfoEntry$StatusReason": "<p>A human-readable description of the update status, including any error details or progress information.</p>",
         "UpdateInfoEntry$StatusReason": "<p> The reason for the current status of the update type activity. </p>"
       }
     },
     "UpdateTrustRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTrustResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateType": {
       "base": null,
@@ -2412,8 +2680,7 @@
     },
     "UserDoesNotExistException": {
       "base": "<p>The user provided a username that does not exist in your directory.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UserName": {
       "base": null,
@@ -2432,17 +2699,16 @@
     },
     "VerifyTrustRequest": {
       "base": "<p>Initiates the verification of an existing trust relationship between an Managed Microsoft AD directory and an external domain.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VerifyTrustResult": {
       "base": "<p>Result of a VerifyTrust request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VpcId": {
       "base": null,
       "refs": {
+        "Assessment$VpcId": "<p>Contains Amazon VPC information for the <code>StartADAssessment</code> operation. </p>",
         "DirectoryConnectSettings$VpcId": "<p>The identifier of the VPC in which the AD Connector is created.</p>",
         "DirectoryConnectSettingsDescription$VpcId": "<p>The identifier of the VPC that the AD Connector is in.</p>",
         "DirectoryVpcSettings$VpcId": "<p>The identifier of the VPC in which to create the directory.</p>",

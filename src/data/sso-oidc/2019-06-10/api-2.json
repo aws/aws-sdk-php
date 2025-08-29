@@ -11,7 +11,8 @@
     "serviceId":"SSO OIDC",
     "signatureVersion":"v4",
     "signingName":"sso-oauth",
-    "uid":"sso-oidc-2019-06-10"
+    "uid":"sso-oidc-2019-06-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateToken":{
@@ -35,7 +36,8 @@
         {"shape":"ExpiredTokenException"},
         {"shape":"InternalServerException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "CreateTokenWithIAM":{
       "name":"CreateTokenWithIAM",
@@ -76,7 +78,8 @@
         {"shape":"InvalidRedirectUriException"},
         {"shape":"UnsupportedGrantTypeException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     },
     "StartDeviceAuthorization":{
       "name":"StartDeviceAuthorization",
@@ -93,7 +96,8 @@
         {"shape":"SlowDownException"},
         {"shape":"InternalServerException"}
       ],
-      "authtype":"none"
+      "authtype":"none",
+      "auth":["smithy.api#noAuth"]
     }
   },
   "shapes":{
@@ -124,6 +128,12 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "AwsAdditionalDetails":{
+      "type":"structure",
+      "members":{
+        "identityContext":{"shape":"IdentityContext"}
+      }
     },
     "ClientId":{"type":"string"},
     "ClientName":{"type":"string"},
@@ -194,7 +204,8 @@
         "refreshToken":{"shape":"RefreshToken"},
         "idToken":{"shape":"IdToken"},
         "issuedTokenType":{"shape":"TokenTypeURI"},
-        "scope":{"shape":"Scopes"}
+        "scope":{"shape":"Scopes"},
+        "awsAdditionalDetails":{"shape":"AwsAdditionalDetails"}
       }
     },
     "DeviceCode":{"type":"string"},
@@ -219,6 +230,7 @@
       "type":"string",
       "sensitive":true
     },
+    "IdentityContext":{"type":"string"},
     "InternalServerException":{
       "type":"structure",
       "members":{

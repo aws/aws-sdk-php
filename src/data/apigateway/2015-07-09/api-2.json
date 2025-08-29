@@ -4,10 +4,12 @@
     "apiVersion":"2015-07-09",
     "endpointPrefix":"apigateway",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon API Gateway",
     "serviceId":"API Gateway",
     "signatureVersion":"v4",
-    "uid":"apigateway-2015-07-09"
+    "uid":"apigateway-2015-07-09",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateApiKey":{
@@ -128,6 +130,23 @@
       },
       "input":{"shape":"CreateDomainNameRequest"},
       "output":{"shape":"DomainName"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "CreateDomainNameAccessAssociation":{
+      "name":"CreateDomainNameAccessAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domainnameaccessassociations",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateDomainNameAccessAssociationRequest"},
+      "output":{"shape":"DomainNameAccessAssociation"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ConflictException"},
@@ -399,6 +418,22 @@
         "responseCode":202
       },
       "input":{"shape":"DeleteDomainNameRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "DeleteDomainNameAccessAssociation":{
+      "name":"DeleteDomainNameAccessAssociation",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domainnameaccessassociations/{domain_name_access_association_arn}",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteDomainNameAccessAssociationRequest"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ConflictException"},
@@ -900,6 +935,21 @@
       },
       "input":{"shape":"GetDomainNameRequest"},
       "output":{"shape":"DomainName"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "GetDomainNameAccessAssociations":{
+      "name":"GetDomainNameAccessAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domainnameaccessassociations"
+      },
+      "input":{"shape":"GetDomainNameAccessAssociationsRequest"},
+      "output":{"shape":"DomainNameAccessAssociations"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
@@ -1525,6 +1575,22 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "RejectDomainNameAccessAssociation":{
+      "name":"RejectDomainNameAccessAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/rejectdomainnameaccessassociations",
+        "responseCode":202
+      },
+      "input":{"shape":"RejectDomainNameAccessAssociationRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -1965,6 +2031,10 @@
     }
   },
   "shapes":{
+    "AccessAssociationSourceType":{
+      "type":"string",
+      "enum":["VPCE"]
+    },
     "AccessLogSettings":{
       "type":"structure",
       "members":{
@@ -2218,6 +2288,11 @@
           "location":"uri",
           "locationName":"domain_name"
         },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
+        },
         "basePath":{"shape":"String"},
         "restApiId":{"shape":"String"},
         "stage":{"shape":"String"}
@@ -2276,6 +2351,20 @@
         "description":{"shape":"String"}
       }
     },
+    "CreateDomainNameAccessAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "domainNameArn",
+        "accessAssociationSourceType",
+        "accessAssociationSource"
+      ],
+      "members":{
+        "domainNameArn":{"shape":"String"},
+        "accessAssociationSourceType":{"shape":"AccessAssociationSourceType"},
+        "accessAssociationSource":{"shape":"String"},
+        "tags":{"shape":"MapOfStringToString"}
+      }
+    },
     "CreateDomainNameRequest":{
       "type":"structure",
       "required":["domainName"],
@@ -2292,7 +2381,9 @@
         "tags":{"shape":"MapOfStringToString"},
         "securityPolicy":{"shape":"SecurityPolicy"},
         "mutualTlsAuthentication":{"shape":"MutualTlsAuthenticationInput"},
-        "ownershipVerificationCertificateArn":{"shape":"String"}
+        "ownershipVerificationCertificateArn":{"shape":"String"},
+        "policy":{"shape":"String"},
+        "routingMode":{"shape":"RoutingMode"}
       }
     },
     "CreateModelRequest":{
@@ -2475,6 +2566,11 @@
           "location":"uri",
           "locationName":"domain_name"
         },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
+        },
         "basePath":{
           "shape":"String",
           "location":"uri",
@@ -2550,6 +2646,17 @@
         }
       }
     },
+    "DeleteDomainNameAccessAssociationRequest":{
+      "type":"structure",
+      "required":["domainNameAccessAssociationArn"],
+      "members":{
+        "domainNameAccessAssociationArn":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"domain_name_access_association_arn"
+        }
+      }
+    },
     "DeleteDomainNameRequest":{
       "type":"structure",
       "required":["domainName"],
@@ -2558,6 +2665,11 @@
           "shape":"String",
           "location":"uri",
           "locationName":"domain_name"
+        },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
         }
       }
     },
@@ -2926,6 +3038,8 @@
       "type":"structure",
       "members":{
         "domainName":{"shape":"String"},
+        "domainNameId":{"shape":"String"},
+        "domainNameArn":{"shape":"String"},
         "certificateName":{"shape":"String"},
         "certificateArn":{"shape":"String"},
         "certificateUploadDate":{"shape":"Timestamp"},
@@ -2941,7 +3055,30 @@
         "securityPolicy":{"shape":"SecurityPolicy"},
         "tags":{"shape":"MapOfStringToString"},
         "mutualTlsAuthentication":{"shape":"MutualTlsAuthentication"},
-        "ownershipVerificationCertificateArn":{"shape":"String"}
+        "ownershipVerificationCertificateArn":{"shape":"String"},
+        "managementPolicy":{"shape":"String"},
+        "policy":{"shape":"String"},
+        "routingMode":{"shape":"RoutingMode"}
+      }
+    },
+    "DomainNameAccessAssociation":{
+      "type":"structure",
+      "members":{
+        "domainNameAccessAssociationArn":{"shape":"String"},
+        "domainNameArn":{"shape":"String"},
+        "accessAssociationSourceType":{"shape":"AccessAssociationSourceType"},
+        "accessAssociationSource":{"shape":"String"},
+        "tags":{"shape":"MapOfStringToString"}
+      }
+    },
+    "DomainNameAccessAssociations":{
+      "type":"structure",
+      "members":{
+        "position":{"shape":"String"},
+        "items":{
+          "shape":"ListOfDomainNameAccessAssociation",
+          "locationName":"item"
+        }
       }
     },
     "DomainNameStatus":{
@@ -2969,6 +3106,7 @@
       "type":"structure",
       "members":{
         "types":{"shape":"ListOfEndpointType"},
+        "ipAddressType":{"shape":"IpAddressType"},
         "vpcEndpointIds":{"shape":"ListOfString"}
       }
     },
@@ -3090,8 +3228,7 @@
     },
     "GetAccountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetApiKeyRequest":{
       "type":"structure",
@@ -3191,6 +3328,11 @@
           "location":"uri",
           "locationName":"domain_name"
         },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
+        },
         "basePath":{
           "shape":"String",
           "location":"uri",
@@ -3206,6 +3348,11 @@
           "shape":"String",
           "location":"uri",
           "locationName":"domain_name"
+        },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
         },
         "position":{
           "shape":"String",
@@ -3390,6 +3537,26 @@
         }
       }
     },
+    "GetDomainNameAccessAssociationsRequest":{
+      "type":"structure",
+      "members":{
+        "position":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"position"
+        },
+        "limit":{
+          "shape":"NullableInteger",
+          "location":"querystring",
+          "locationName":"limit"
+        },
+        "resourceOwner":{
+          "shape":"ResourceOwner",
+          "location":"querystring",
+          "locationName":"resourceOwner"
+        }
+      }
+    },
     "GetDomainNameRequest":{
       "type":"structure",
       "required":["domainName"],
@@ -3398,6 +3565,11 @@
           "shape":"String",
           "location":"uri",
           "locationName":"domain_name"
+        },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
         }
       }
     },
@@ -3413,6 +3585,11 @@
           "shape":"NullableInteger",
           "location":"querystring",
           "locationName":"limit"
+        },
+        "resourceOwner":{
+          "shape":"ResourceOwner",
+          "location":"querystring",
+          "locationName":"resourceOwner"
         }
       }
     },
@@ -4140,6 +4317,13 @@
         "AWS_PROXY"
       ]
     },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dualstack"
+      ]
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -4192,6 +4376,10 @@
     "ListOfDomainName":{
       "type":"list",
       "member":{"shape":"DomainName"}
+    },
+    "ListOfDomainNameAccessAssociation":{
+      "type":"list",
+      "member":{"shape":"DomainNameAccessAssociation"}
     },
     "ListOfEndpointType":{
       "type":"list",
@@ -4656,6 +4844,25 @@
         "period":{"shape":"QuotaPeriodType"}
       }
     },
+    "RejectDomainNameAccessAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "domainNameAccessAssociationArn",
+        "domainNameArn"
+      ],
+      "members":{
+        "domainNameAccessAssociationArn":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameAccessAssociationArn"
+        },
+        "domainNameArn":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameArn"
+        }
+      }
+    },
     "RequestValidator":{
       "type":"structure",
       "members":{
@@ -4684,6 +4891,13 @@
         "path":{"shape":"String"},
         "resourceMethods":{"shape":"MapOfMethod"}
       }
+    },
+    "ResourceOwner":{
+      "type":"string",
+      "enum":[
+        "SELF",
+        "OTHER_ACCOUNTS"
+      ]
     },
     "Resources":{
       "type":"structure",
@@ -4723,6 +4937,14 @@
           "locationName":"item"
         }
       }
+    },
+    "RoutingMode":{
+      "type":"string",
+      "enum":[
+        "BASE_PATH_MAPPING_ONLY",
+        "ROUTING_RULE_ONLY",
+        "ROUTING_RULE_THEN_BASE_PATH_MAPPING"
+      ]
     },
     "SdkConfigurationProperty":{
       "type":"structure",
@@ -5049,6 +5271,11 @@
           "location":"uri",
           "locationName":"domain_name"
         },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
+        },
         "basePath":{
           "shape":"String",
           "location":"uri",
@@ -5137,6 +5364,11 @@
           "shape":"String",
           "location":"uri",
           "locationName":"domain_name"
+        },
+        "domainNameId":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"domainNameId"
         },
         "patchOperations":{"shape":"ListOfPatchOperation"}
       }

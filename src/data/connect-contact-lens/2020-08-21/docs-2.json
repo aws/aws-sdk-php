@@ -1,14 +1,13 @@
 {
   "version": "2.0",
-  "service": "<p>Contact Lens for Amazon Connect enables you to analyze conversations between customer and agents, by using speech transcription, natural language processing, and intelligent search capabilities. It performs sentiment analysis, detects issues, and enables you to automatically categorize contacts.</p> <p>Contact Lens for Amazon Connect provides both real-time and post-call analytics of customer-agent conversations. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/analyze-conversations.html\">Analyze conversations using Contact Lens</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
+  "service": "<ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Operations_Amazon_Connect_Contact_Lens.html\">Contact Lens actions</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Types_Amazon_Connect_Contact_Lens.html\">Contact Lens data types</a> </p> </li> </ul> <p>Amazon Connect Contact Lens enables you to analyze conversations between customer and agents, by using speech transcription, natural language processing, and intelligent search capabilities. It performs sentiment analysis, detects issues, and enables you to automatically categorize contacts.</p> <p>Amazon Connect Contact Lens provides both real-time and post-call analytics of customer-agent conversations. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/analyze-conversations.html\">Analyze conversations using speech analytics</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
   "operations": {
     "ListRealtimeContactAnalysisSegments": "<p>Provides a list of analysis segments for a real-time analysis session.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Categories": {
       "base": "<p>Provides the category rules that are used to automatically categorize contacts based on uttered keywords and phrases.</p>",
@@ -56,13 +55,11 @@
     },
     "InternalServiceException": {
       "base": "<p>Request processing failed due to an error or failure with the service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>The request is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IssueDetected": {
       "base": "<p>Potential issues that are detected based on an artificial intelligence analysis of each turn in the conversation.</p>",
@@ -78,13 +75,11 @@
     },
     "ListRealtimeContactAnalysisSegmentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRealtimeContactAnalysisSegmentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MatchedCategories": {
       "base": null,
@@ -101,7 +96,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListRealtimeContactAnalysisSegmentsRequest$MaxResults": "<p>The maximimum number of results to return per page.</p>"
+        "ListRealtimeContactAnalysisSegmentsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>"
       }
     },
     "Message": {
@@ -133,7 +128,7 @@
     "ParticipantId": {
       "base": null,
       "refs": {
-        "Transcript$ParticipantId": "<p>The identifier of the participant.</p>"
+        "Transcript$ParticipantId": "<p>The identifier of the participant. Valid values are CUSTOMER or AGENT.</p>"
       }
     },
     "ParticipantRole": {
@@ -154,6 +149,30 @@
         "CategoryDetails$PointsOfInterest": "<p>The section of audio where the category rule was detected.</p>"
       }
     },
+    "PostContactSummary": {
+      "base": "<p>Information about the post-contact summary.</p>",
+      "refs": {
+        "RealtimeContactAnalysisSegment$PostContactSummary": "<p>Information about the post-contact summary.</p>"
+      }
+    },
+    "PostContactSummaryContent": {
+      "base": null,
+      "refs": {
+        "PostContactSummary$Content": "<p>The content of the summary.</p>"
+      }
+    },
+    "PostContactSummaryFailureCode": {
+      "base": null,
+      "refs": {
+        "PostContactSummary$FailureCode": "<p>If the summary failed to be generated, one of the following failure codes occurs:</p> <ul> <li> <p> <code>QUOTA_EXCEEDED</code>: The number of concurrent analytics jobs reached your service quota.</p> </li> <li> <p> <code>INSUFFICIENT_CONVERSATION_CONTENT</code>: The conversation needs to have at least one turn from both the participants in order to generate the summary.</p> </li> <li> <p> <code>FAILED_SAFETY_GUIDELINES</code>: The generated summary cannot be provided because it failed to meet system safety guidelines.</p> </li> <li> <p> <code>INVALID_ANALYSIS_CONFIGURATION</code>: This code occurs when, for example, you're using a <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/supported-languages.html#supported-languages-contact-lens\">language</a> that isn't supported by generative AI-powered post-contact summaries. </p> </li> <li> <p> <code>INTERNAL_ERROR</code>: Internal system error.</p> </li> </ul>"
+      }
+    },
+    "PostContactSummaryStatus": {
+      "base": null,
+      "refs": {
+        "PostContactSummary$Status": "<p>Whether the summary was successfully COMPLETED or FAILED to be generated.</p>"
+      }
+    },
     "RealtimeContactAnalysisSegment": {
       "base": "<p>An analyzed segment for a real-time analysis session.</p>",
       "refs": {
@@ -168,19 +187,17 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SentimentValue": {
       "base": null,
       "refs": {
-        "Transcript$Sentiment": "<p>The sentiment of the detected for this piece of transcript.</p>"
+        "Transcript$Sentiment": "<p>The sentiment detected for this piece of transcript.</p>"
       }
     },
     "ThrottlingException": {
       "base": "<p>The throttling limit has been exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Transcript": {
       "base": "<p>A list of messages in the session.</p>",

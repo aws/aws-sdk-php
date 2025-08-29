@@ -1,10 +1,82 @@
 {
   "version": "2.0",
-  "service": "<p>You can use the Amazon Web Services Free Tier API to query programmatically your Free Tier usage data.</p> <p>Free Tier tracks your monthly usage data for all free tier offers that are associated with your Amazon Web Services account. You can use the Free Tier API to filter and show only the data that you want.</p> <p>Service endpoint</p> <p>The Free Tier API provides the following endpoint:</p> <ul> <li> <p>https://freetier.us-east-1.api.aws</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-free-tier.html\">Using the Amazon Web Services Free Tier</a> in the <i>Billing User Guide</i>.</p>",
+  "service": "<p>You can use the Amazon Web Services Free Tier API to query programmatically your Free Tier usage data.</p> <p>Free Tier tracks your monthly usage data for all free tier offers that are associated with your Amazon Web Services account. You can use the Free Tier API to filter and show only the data that you want.</p> <p>Service endpoint</p> <p>The Free Tier API provides the following endpoint:</p> <ul/> <p>For more information, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-free-tier.html\">Using the Amazon Web Services Free Tier</a> in the <i>Billing User Guide</i>.</p>",
   "operations": {
-    "GetFreeTierUsage": "<p>Returns a list of all Free Tier usage objects that match your filters.</p>"
+    "GetAccountActivity": "<p> Returns a specific activity record that is available to the customer. </p>",
+    "GetAccountPlanState": "<p> This returns all of the information related to the state of the account plan related to Free Tier. </p>",
+    "GetFreeTierUsage": "<p>Returns a list of all Free Tier usage objects that match your filters.</p>",
+    "ListAccountActivities": "<p> Returns a list of activities that are available. This operation supports pagination and filtering by status. </p>",
+    "UpgradeAccountPlan": "<p> The account plan type for the Amazon Web Services account. </p>"
   },
   "shapes": {
+    "AccessDeniedException": {
+      "base": "<p> You don't have sufficient access to perform this action. </p>",
+      "refs": {
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "GetAccountPlanStateResponse$accountId": "<p> A unique identifier that identifies the account. </p>",
+        "UpgradeAccountPlanResponse$accountId": "<p> A unique identifier that identifies the account. </p>"
+      }
+    },
+    "AccountPlanStatus": {
+      "base": null,
+      "refs": {
+        "GetAccountPlanStateResponse$accountPlanStatus": "<p> The current status for the account plan. </p>",
+        "UpgradeAccountPlanResponse$accountPlanStatus": "<p> This indicates the latest state of the account plan within its lifecycle. </p>"
+      }
+    },
+    "AccountPlanType": {
+      "base": null,
+      "refs": {
+        "GetAccountPlanStateResponse$accountPlanType": "<p> The plan type for the account. </p>",
+        "UpgradeAccountPlanRequest$accountPlanType": "<p> The target account plan type. This makes it explicit about the change and latest value of the <code>accountPlanType</code>. </p>",
+        "UpgradeAccountPlanResponse$accountPlanType": "<p> The type of plan for the account. </p>"
+      }
+    },
+    "Activities": {
+      "base": null,
+      "refs": {
+        "ListAccountActivitiesResponse$activities": "<p> A brief information about the activities. </p>"
+      }
+    },
+    "ActivityId": {
+      "base": null,
+      "refs": {
+        "ActivitySummary$activityId": "<p> A unique identifier that identifies the activity. </p>",
+        "GetAccountActivityRequest$activityId": "<p> A unique identifier that identifies the activity. </p>",
+        "GetAccountActivityResponse$activityId": "<p> A unique identifier that identifies the activity. </p>"
+      }
+    },
+    "ActivityReward": {
+      "base": "<p> The summary of the rewards granted as a result of activities completed. </p>",
+      "refs": {
+        "ActivitySummary$reward": "<p> The reward for the activity. </p>",
+        "GetAccountActivityResponse$reward": "<p> A reward granted upon activity completion. </p>"
+      }
+    },
+    "ActivityStatus": {
+      "base": null,
+      "refs": {
+        "ActivitySummary$status": "<p> The current status of the activity. </p>",
+        "FilterActivityStatuses$member": null,
+        "GetAccountActivityResponse$status": "<p> The current activity status. </p>"
+      }
+    },
+    "ActivitySummary": {
+      "base": "<p> The summary of activities. </p>",
+      "refs": {
+        "Activities$member": null
+      }
+    },
+    "CurrencyCode": {
+      "base": null,
+      "refs": {
+        "MonetaryAmount$unit": "<p> The unit that the monetary amount is given in. </p>"
+      }
+    },
     "Dimension": {
       "base": null,
       "refs": {
@@ -28,8 +100,14 @@
     "Expressions": {
       "base": null,
       "refs": {
-        "Expression$And": "<p>Return results that match all <code>Expressions</code> that you specified in the array.</p>",
-        "Expression$Or": "<p>Return results that match any of the <code>Expressions</code> that you specified. in the array.</p>"
+        "Expression$Or": "<p>Return results that match any of the <code>Expressions</code> that you specified. in the array.</p>",
+        "Expression$And": "<p>Return results that match all <code>Expressions</code> that you specified in the array.</p>"
+      }
+    },
+    "FilterActivityStatuses": {
+      "base": null,
+      "refs": {
+        "ListAccountActivitiesRequest$filterActivityStatuses": "<p> The activity status filter. This field can be used to filter the response by activities status. </p>"
       }
     },
     "FreeTierUsage": {
@@ -49,22 +127,49 @@
       "refs": {
         "FreeTierUsage$actualUsageAmount": "<p>Describes the actual usage accrued month-to-day (MTD) that you've used so far.</p>",
         "FreeTierUsage$forecastedUsageAmount": "<p>Describes the forecasted usage by the month that you're expected to use.</p>",
-        "FreeTierUsage$limit": "<p>Describes the maximum usage allowed in Free Tier.</p>"
+        "FreeTierUsage$limit": "<p>Describes the maximum usage allowed in Free Tier.</p>",
+        "MonetaryAmount$amount": "<p> The aggregated monetary amount of credits earned. </p>"
       }
     },
     "GenericString": {
       "base": null,
       "refs": {
+        "AccessDeniedException$message": null,
+        "ActivitySummary$title": "<p> The title of the activity. </p>",
+        "FreeTierUsage$service": "<p>The name of the Amazon Web Services service providing the Free Tier offer. For example, this can be Amazon Elastic Compute Cloud.</p>",
+        "FreeTierUsage$operation": "<p>Describes <code>usageType</code> more granularly with the specific Amazon Web Services service API operation. For example, this can be the <code>RunInstances</code> API operation for Amazon Elastic Compute Cloud.</p>",
+        "FreeTierUsage$usageType": "<p>Describes the usage details of the offer. For example, this might be <code>Global-BoxUsage:freetrial</code>.</p>",
+        "FreeTierUsage$region": "<p>Describes the Amazon Web Services Region for which this offer is applicable</p>",
+        "FreeTierUsage$unit": "<p>Describes the unit of the <code>usageType</code>, such as <code>Hrs</code>.</p>",
         "FreeTierUsage$description": "<p>The description of the Free Tier offer.</p>",
         "FreeTierUsage$freeTierType": "<p>Describes the type of the Free Tier offer. For example, the offer can be <code>\"12 Months Free\"</code>, <code>\"Always Free\"</code>, and <code>\"Free Trial\"</code>.</p>",
-        "FreeTierUsage$operation": "<p>Describes <code>usageType</code> more granularly with the specific Amazon Web Service API operation. For example, this can be the <code>RunInstances</code> API operation for Amazon Elastic Compute Cloud.</p>",
-        "FreeTierUsage$region": "<p>Describes the Amazon Web Services Region for which this offer is applicable</p>",
-        "FreeTierUsage$service": "<p>The name of the Amazon Web Service providing the Free Tier offer. For example, this can be Amazon Elastic Compute Cloud.</p>",
-        "FreeTierUsage$unit": "<p>Describes the unit of the <code>usageType</code>, such as <code>Hrs</code>.</p>",
-        "FreeTierUsage$usageType": "<p>Describes the usage details of the offer. For example, this might be <code>Global-BoxUsage:freetrial</code>.</p>",
+        "GetAccountActivityResponse$title": "<p> A short activity title. </p>",
+        "GetAccountActivityResponse$description": "<p> Provides detailed information about the activity and its expected outcomes. </p>",
+        "GetAccountActivityResponse$instructionsUrl": "<p> The URL resource that provides guidance on activity requirements and completion. </p>",
         "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
         "ThrottlingException$message": null,
         "ValidationException$message": null
+      }
+    },
+    "GetAccountActivityRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAccountActivityResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAccountPlanStateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAccountPlanStateResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetFreeTierUsageRequest": {
@@ -77,8 +182,31 @@
       "refs": {
       }
     },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "GetAccountActivityResponse$estimatedTimeToCompleteInMinutes": "<p> The estimated time to complete the activity. This is the duration in minutes. </p>"
+      }
+    },
     "InternalServerException": {
       "base": "<p>An unexpected error occurred during the processing of your request.</p>",
+      "refs": {
+      }
+    },
+    "LanguageCode": {
+      "base": null,
+      "refs": {
+        "GetAccountActivityRequest$languageCode": "<p> The language code used to return translated title and description fields. </p>",
+        "ListAccountActivitiesRequest$languageCode": "<p> The language code used to return translated titles. </p>"
+      }
+    },
+    "ListAccountActivitiesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAccountActivitiesResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -97,14 +225,38 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "GetFreeTierUsageRequest$maxResults": "<p>The maximum number of results to return in the response. <code>MaxResults</code> means that there can be up to the specified number of values, but there might be fewer results based on your filters.</p>"
+        "GetFreeTierUsageRequest$maxResults": "<p>The maximum number of results to return in the response. <code>MaxResults</code> means that there can be up to the specified number of values, but there might be fewer results based on your filters.</p>",
+        "ListAccountActivitiesRequest$maxResults": "<p> The maximum number of items to return for this request. To get the next page of items, make another request with the token returned in the output. </p>"
+      }
+    },
+    "MonetaryAmount": {
+      "base": "<p> The monetary amount of the credit. </p>",
+      "refs": {
+        "ActivityReward$credit": "<p> The credits gained by activity rewards. </p>",
+        "GetAccountPlanStateResponse$accountPlanRemainingCredits": "<p> The amount of credits remaining for the account. </p>"
       }
     },
     "NextPageToken": {
       "base": null,
       "refs": {
         "GetFreeTierUsageRequest$nextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
-        "GetFreeTierUsageResponse$nextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>"
+        "GetFreeTierUsageResponse$nextToken": "<p>The pagination token that indicates the next set of results to retrieve.</p>",
+        "ListAccountActivitiesRequest$nextToken": "<p> A token from a previous paginated response. If this is specified, the response includes records beginning from this token (inclusive), up to the number specified by <code>maxResults</code>. </p>",
+        "ListAccountActivitiesResponse$nextToken": "<p> The token to include in another request to get the next page of items. This value is <code>null</code> when there are no more items to return. </p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p> This exception is thrown when the requested resource cannot be found. </p>",
+      "refs": {
+      }
+    },
+    "SyntheticTimestamp_date_time": {
+      "base": null,
+      "refs": {
+        "GetAccountActivityResponse$expiresAt": "<p> The time by which the activity must be completed to receive a reward. </p>",
+        "GetAccountActivityResponse$startedAt": "<p> The timestamp when the activity started. This field appears only for activities in the <code>IN_PROGRESS</code> or <code>COMPLETED</code> states. </p>",
+        "GetAccountActivityResponse$completedAt": "<p> The timestamp when the activity is completed. This field appears only for activities in the <code>COMPLETED</code> state. </p>",
+        "GetAccountPlanStateResponse$accountPlanExpirationDate": "<p> The timestamp for when the current account plan expires. </p>"
       }
     },
     "ThrottlingException": {
@@ -112,8 +264,18 @@
       "refs": {
       }
     },
+    "UpgradeAccountPlanRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpgradeAccountPlanResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ValidationException": {
-      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Service.</p>",
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
       "refs": {
       }
     },

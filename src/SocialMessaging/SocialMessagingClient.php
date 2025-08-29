@@ -1,0 +1,51 @@
+<?php
+namespace Aws\SocialMessaging;
+
+use Aws\AwsClient;
+
+/**
+ * This client is used to interact with the **AWS End User Messaging Social** service.
+ * @method \Aws\Result associateWhatsAppBusinessAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateWhatsAppBusinessAccountAsync(array $args = [])
+ * @method \Aws\Result createWhatsAppMessageTemplate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createWhatsAppMessageTemplateAsync(array $args = [])
+ * @method \Aws\Result createWhatsAppMessageTemplateFromLibrary(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createWhatsAppMessageTemplateFromLibraryAsync(array $args = [])
+ * @method \Aws\Result createWhatsAppMessageTemplateMedia(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createWhatsAppMessageTemplateMediaAsync(array $args = [])
+ * @method \Aws\Result deleteWhatsAppMessageMedia(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteWhatsAppMessageMediaAsync(array $args = [])
+ * @method \Aws\Result deleteWhatsAppMessageTemplate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteWhatsAppMessageTemplateAsync(array $args = [])
+ * @method \Aws\Result disassociateWhatsAppBusinessAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateWhatsAppBusinessAccountAsync(array $args = [])
+ * @method \Aws\Result getLinkedWhatsAppBusinessAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLinkedWhatsAppBusinessAccountAsync(array $args = [])
+ * @method \Aws\Result getLinkedWhatsAppBusinessAccountPhoneNumber(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLinkedWhatsAppBusinessAccountPhoneNumberAsync(array $args = [])
+ * @method \Aws\Result getWhatsAppMessageMedia(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getWhatsAppMessageMediaAsync(array $args = [])
+ * @method \Aws\Result getWhatsAppMessageTemplate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getWhatsAppMessageTemplateAsync(array $args = [])
+ * @method \Aws\Result listLinkedWhatsAppBusinessAccounts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listLinkedWhatsAppBusinessAccountsAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result listWhatsAppMessageTemplates(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listWhatsAppMessageTemplatesAsync(array $args = [])
+ * @method \Aws\Result listWhatsAppTemplateLibrary(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listWhatsAppTemplateLibraryAsync(array $args = [])
+ * @method \Aws\Result postWhatsAppMessageMedia(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise postWhatsAppMessageMediaAsync(array $args = [])
+ * @method \Aws\Result putWhatsAppBusinessAccountEventDestinations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putWhatsAppBusinessAccountEventDestinationsAsync(array $args = [])
+ * @method \Aws\Result sendWhatsAppMessage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendWhatsAppMessageAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateWhatsAppMessageTemplate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateWhatsAppMessageTemplateAsync(array $args = [])
+ */
+class SocialMessagingClient extends AwsClient {}

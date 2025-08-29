@@ -11,7 +11,8 @@
     "serviceId":"imagebuilder",
     "signatureVersion":"v4",
     "signingName":"imagebuilder",
-    "uid":"imagebuilder-2019-12-02"
+    "uid":"imagebuilder-2019-12-02",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelImageCreation":{
@@ -628,6 +629,23 @@
         {"shape":"CallRateLimitExceededException"}
       ]
     },
+    "GetMarketplaceResource":{
+      "name":"GetMarketplaceResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetMarketplaceResource"
+      },
+      "input":{"shape":"GetMarketplaceResourceRequest"},
+      "output":{"shape":"GetMarketplaceResourceResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
     "GetWorkflow":{
       "name":"GetWorkflow",
       "http":{
@@ -698,6 +716,20 @@
         {"shape":"InvalidVersionNumberException"},
         {"shape":"ResourceInUseException"},
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "ImportDiskImage":{
+      "name":"ImportDiskImage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/ImportDiskImage"
+      },
+      "input":{"shape":"ImportDiskImageRequest"},
+      "output":{"shape":"ImportDiskImageResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"}
       ]
     },
     "ImportVmImage":{
@@ -1416,7 +1448,8 @@
       "enum":[
         "USER_INITIATED",
         "SCHEDULED",
-        "IMPORT"
+        "IMPORT",
+        "IMPORT_ISO"
       ]
     },
     "CallRateLimitExceededException":{
@@ -1502,7 +1535,8 @@
         "dateCreated":{"shape":"DateTime"},
         "tags":{"shape":"TagMap"},
         "publisher":{"shape":"NonEmptyString"},
-        "obfuscate":{"shape":"Boolean"}
+        "obfuscate":{"shape":"Boolean"},
+        "productCodes":{"shape":"ProductCodeList"}
       }
     },
     "ComponentBuildVersionArn":{
@@ -1596,7 +1630,11 @@
     },
     "ComponentStatus":{
       "type":"string",
-      "enum":["DEPRECATED"]
+      "enum":[
+        "DEPRECATED",
+        "DISABLED",
+        "ACTIVE"
+      ]
     },
     "ComponentSummary":{
       "type":"structure",
@@ -1639,7 +1677,9 @@
         "supportedOsVersions":{"shape":"OsVersionList"},
         "type":{"shape":"ComponentType"},
         "owner":{"shape":"NonEmptyString"},
-        "dateCreated":{"shape":"DateTime"}
+        "dateCreated":{"shape":"DateTime"},
+        "status":{"shape":"ComponentStatus"},
+        "productCodes":{"shape":"ProductCodeList"}
       }
     },
     "ComponentVersionArn":{
@@ -1946,6 +1986,7 @@
         "resourceTags":{"shape":"ResourceTagMap"},
         "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
         "tags":{"shape":"TagMap"},
+        "placement":{"shape":"Placement"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -2238,7 +2279,8 @@
         "licenseConfigurationArns":{"shape":"LicenseConfigurationArnList"},
         "launchTemplateConfigurations":{"shape":"LaunchTemplateConfigurationList"},
         "s3ExportConfiguration":{"shape":"S3ExportConfiguration"},
-        "fastLaunchConfigurations":{"shape":"FastLaunchConfigurationList"}
+        "fastLaunchConfigurations":{"shape":"FastLaunchConfigurationList"},
+        "ssmParameterConfigurations":{"shape":"SsmParameterConfigurationList"}
       }
     },
     "DistributionConfiguration":{
@@ -2388,7 +2430,7 @@
     },
     "FilterValue":{
       "type":"string",
-      "pattern":"^[0-9a-zA-Z./_ :-]{1,1024}$"
+      "pattern":"^[0-9a-zA-Z./_ :,{}\"-]{1,1024}$"
     },
     "FilterValues":{
       "type":"list",
@@ -2634,6 +2676,26 @@
       "type":"structure",
       "members":{
         "lifecyclePolicy":{"shape":"LifecyclePolicy"}
+      }
+    },
+    "GetMarketplaceResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "resourceArn"
+      ],
+      "members":{
+        "resourceType":{"shape":"MarketplaceResourceType"},
+        "resourceArn":{"shape":"ImageBuilderArn"},
+        "resourceLocation":{"shape":"MarketplaceResourceLocation"}
+      }
+    },
+    "GetMarketplaceResourceResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"ImageBuilderArn"},
+        "url":{"shape":"NonEmptyString"},
+        "data":{"shape":"NonEmptyString"}
       }
     },
     "GetWorkflowExecutionRequest":{
@@ -3095,6 +3157,40 @@
         "componentBuildVersionArn":{"shape":"ComponentBuildVersionArn"}
       }
     },
+    "ImportDiskImageRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "semanticVersion",
+        "platform",
+        "osVersion",
+        "infrastructureConfigurationArn",
+        "uri",
+        "clientToken"
+      ],
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "semanticVersion":{"shape":"VersionNumber"},
+        "description":{"shape":"NonEmptyString"},
+        "platform":{"shape":"NonEmptyString"},
+        "osVersion":{"shape":"OsVersion"},
+        "executionRole":{"shape":"RoleNameOrArn"},
+        "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
+        "uri":{"shape":"Uri"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ImportDiskImageResponse":{
+      "type":"structure",
+      "members":{
+        "clientToken":{"shape":"ClientToken"},
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"}
+      }
+    },
     "ImportVmImageRequest":{
       "type":"structure",
       "required":[
@@ -3144,7 +3240,8 @@
         "dateUpdated":{"shape":"DateTime"},
         "resourceTags":{"shape":"ResourceTagMap"},
         "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "placement":{"shape":"Placement"}
       }
     },
     "InfrastructureConfigurationArn":{
@@ -3162,7 +3259,8 @@
         "resourceTags":{"shape":"ResourceTagMap"},
         "tags":{"shape":"TagMap"},
         "instanceTypes":{"shape":"InstanceTypeList"},
-        "instanceProfileName":{"shape":"InstanceProfileNameType"}
+        "instanceProfileName":{"shape":"InstanceProfileNameType"},
+        "placement":{"shape":"Placement"}
       }
     },
     "InfrastructureConfigurationSummaryList":{
@@ -4055,6 +4153,18 @@
         "s3Logs":{"shape":"S3Logs"}
       }
     },
+    "MarketplaceResourceLocation":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^s3://[^/]+/.+[^/]$"
+    },
+    "MarketplaceResourceType":{
+      "type":"string",
+      "enum":[
+        "COMPONENT_DATA",
+        "COMPONENT_ARTIFACT"
+      ]
+    },
     "MaxParallelLaunches":{
       "type":"integer",
       "min":1
@@ -4124,7 +4234,8 @@
         "Self",
         "Shared",
         "Amazon",
-        "ThirdParty"
+        "ThirdParty",
+        "AWSMarketplace"
       ]
     },
     "PackageArchitecture":{"type":"string"},
@@ -4170,12 +4281,45 @@
         "ENABLED"
       ]
     },
+    "Placement":{
+      "type":"structure",
+      "members":{
+        "availabilityZone":{"shape":"NonEmptyString"},
+        "tenancy":{"shape":"TenancyType"},
+        "hostId":{"shape":"NonEmptyString"},
+        "hostResourceGroupArn":{"shape":"NonEmptyString"}
+      }
+    },
     "Platform":{
       "type":"string",
       "enum":[
         "Windows",
-        "Linux"
+        "Linux",
+        "macOS"
       ]
+    },
+    "ProductCodeId":{
+      "type":"string",
+      "pattern":"^[A-Za-z0-9]{1,25}$"
+    },
+    "ProductCodeList":{
+      "type":"list",
+      "member":{"shape":"ProductCodeListItem"}
+    },
+    "ProductCodeListItem":{
+      "type":"structure",
+      "required":[
+        "productCodeId",
+        "productCodeType"
+      ],
+      "members":{
+        "productCodeId":{"shape":"ProductCodeId"},
+        "productCodeType":{"shape":"ProductCodeType"}
+      }
+    },
+    "ProductCodeType":{
+      "type":"string",
+      "enum":["marketplace"]
     },
     "PutComponentPolicyRequest":{
       "type":"structure",
@@ -4453,6 +4597,32 @@
       "pattern":"^arn:aws[^:]*:sns:[^:]+:[0-9]{12}:[a-zA-Z0-9-_]{1,256}$"
     },
     "SourceLayerHash":{"type":"string"},
+    "SsmParameterConfiguration":{
+      "type":"structure",
+      "required":["parameterName"],
+      "members":{
+        "amiAccountId":{"shape":"AccountId"},
+        "parameterName":{"shape":"SsmParameterName"},
+        "dataType":{"shape":"SsmParameterDataType"}
+      }
+    },
+    "SsmParameterConfigurationList":{
+      "type":"list",
+      "member":{"shape":"SsmParameterConfiguration"}
+    },
+    "SsmParameterDataType":{
+      "type":"string",
+      "enum":[
+        "text",
+        "aws:ec2:image"
+      ]
+    },
+    "SsmParameterName":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_.\\-\\/]+$"
+    },
     "StartImagePipelineExecutionRequest":{
       "type":"structure",
       "required":[
@@ -4548,8 +4718,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -4571,11 +4740,19 @@
       "max":10000,
       "min":1
     },
+    "TenancyType":{
+      "type":"string",
+      "enum":[
+        "default",
+        "dedicated",
+        "host"
+      ]
+    },
     "Timezone":{
       "type":"string",
       "max":100,
       "min":3,
-      "pattern":"[a-zA-Z0-9]{2,}(?:\\/[a-zA-z0-9-_+]+)*"
+      "pattern":"[a-zA-Z0-9]{2,}(?:\\/[a-zA-Z0-9-_+]+)*"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -4598,8 +4775,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDistributionConfigurationRequest":{
       "type":"structure",
@@ -4679,12 +4855,13 @@
         "keyPair":{"shape":"NonEmptyString"},
         "terminateInstanceOnFailure":{"shape":"NullableBoolean"},
         "snsTopicArn":{"shape":"SnsTopicArn"},
+        "resourceTags":{"shape":"ResourceTagMap"},
+        "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
+        "placement":{"shape":"Placement"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        },
-        "resourceTags":{"shape":"ResourceTagMap"},
-        "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"}
+        }
       }
     },
     "UpdateInfrastructureConfigurationResponse":{

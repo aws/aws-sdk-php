@@ -103,6 +103,12 @@
         "UpdateApplicationRequest$architecture": "<p>The CPU architecture of an application.</p>"
       }
     },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "PolicyArnList$member": null
+      }
+    },
     "AttemptNumber": {
       "base": null,
       "refs": {
@@ -142,6 +148,7 @@
         "AutoStartConfig$enabled": "<p>Enables the application to automatically start on job submission. Defaults to true.</p>",
         "AutoStopConfig$enabled": "<p>Enables the application to automatically stop after a certain amount of time being idle. Defaults to true.</p>",
         "CloudWatchLoggingConfiguration$enabled": "<p>Enables CloudWatch logging.</p>",
+        "GetDashboardForJobRunRequest$accessSystemProfileLogs": "<p>Allows access to system profile logs for Lake Formation-enabled jobs. Default is false.</p>",
         "InteractiveConfiguration$studioEnabled": "<p>Enables you to connect an application to Amazon EMR Studio to run interactive workloads in a notebook.</p>",
         "InteractiveConfiguration$livyEndpointEnabled": "<p>Enables an Apache Livy endpoint that you can connect to and run interactive jobs.</p>",
         "ManagedPersistenceMonitoringConfiguration$enabled": "<p>Enables managed logging and defaults to true. If set to false, managed logging will be turned off.</p>"
@@ -239,6 +246,8 @@
         "JobRun$updatedAt": "<p>The date and time when the job run was updated.</p>",
         "JobRun$attemptCreatedAt": "<p>The date and time of when the job run attempt was created.</p>",
         "JobRun$attemptUpdatedAt": "<p>The date and time of when the job run attempt was last updated.</p>",
+        "JobRun$startedAt": "<p>The date and time when the job moved to the RUNNING state.</p>",
+        "JobRun$endedAt": "<p>The date and time when the job was terminated.</p>",
         "JobRunAttemptSummary$jobCreatedAt": "<p>The date and time of when the job run was created.</p>",
         "JobRunAttemptSummary$createdAt": "<p>The date and time when the job run attempt was created.</p>",
         "JobRunAttemptSummary$updatedAt": "<p>The date and time of when the job run attempt was last updated.</p>",
@@ -376,6 +385,32 @@
         "StartJobRunRequest$executionRoleArn": "<p>The execution role ARN for the job run.</p>"
       }
     },
+    "IdentityCenterApplicationArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$identityCenterApplicationArn": "<p>The ARN of the EMR Serverless created IAM Identity Center Application that provides trusted-identity propagation.</p>"
+      }
+    },
+    "IdentityCenterConfiguration": {
+      "base": "<p>The IAM Identity Center Configuration that includes the Identify Center instance and application ARNs that provide trusted-identity propagation.</p>",
+      "refs": {
+        "Application$identityCenterConfiguration": "<p>The IAM Identity Center configuration applied to enable trusted identity propagation. </p>"
+      }
+    },
+    "IdentityCenterConfigurationInput": {
+      "base": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>",
+      "refs": {
+        "CreateApplicationRequest$identityCenterConfiguration": "<p>The IAM Identity Center Configuration accepts the Identity Center instance parameter required to enable trusted identity propagation. This configuration allows identity propagation between integrated services and the Identity Center instance.</p>",
+        "UpdateApplicationRequest$identityCenterConfiguration": "<p>Specifies the IAM Identity Center configuration used to enable or disable trusted identity propagation. When provided, this configuration determines how the application interacts with IAM Identity Center for user authentication and access control.</p>"
+      }
+    },
+    "IdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "IdentityCenterConfiguration$identityCenterInstanceArn": "<p>The ARN of the IAM Identity Center instance.</p>",
+        "IdentityCenterConfigurationInput$identityCenterInstanceArn": "<p>The ARN of the IAM Identity Center instance.</p>"
+      }
+    },
     "ImageConfiguration": {
       "base": "<p>The applied image configuration.</p>",
       "refs": {
@@ -427,7 +462,9 @@
     "Integer": {
       "base": null,
       "refs": {
-        "JobRun$totalExecutionDurationSeconds": "<p>The job run total execution duration in seconds. This field is only available for job runs in a <code>COMPLETED</code>, <code>FAILED</code>, or <code>CANCELLED</code> state.</p>"
+        "JobRun$totalExecutionDurationSeconds": "<p>The job run total execution duration in seconds. This field is only available for job runs in a <code>COMPLETED</code>, <code>FAILED</code>, or <code>CANCELLED</code> state.</p>",
+        "SchedulerConfiguration$queueTimeoutMinutes": "<p>The maximum duration in minutes for the job in QUEUED state. If scheduler configuration is enabled on your application, the default value is 360 minutes (6 hours). The valid range is from 15 to 720.</p>",
+        "SchedulerConfiguration$maxConcurrentRuns": "<p>The maximum concurrent job runs on this application. If scheduler configuration is enabled on your application, the default value is 15. The valid range is 1 to 1000.</p>"
       }
     },
     "InteractiveConfiguration": {
@@ -475,6 +512,13 @@
       "base": null,
       "refs": {
         "ListJobRunAttemptsResponse$jobRunAttempts": "<p>The array of the listed job run attempt objects.</p>"
+      }
+    },
+    "JobRunExecutionIamPolicy": {
+      "base": "<p>Optional IAM policy. The resulting job IAM role permissions will be an intersection of the policies passed and the policy associated with your job execution role.</p>",
+      "refs": {
+        "JobRun$executionIamPolicy": null,
+        "StartJobRunRequest$executionIamPolicy": "<p>You can pass an optional IAM policy. The resulting job IAM role permissions will be an intersection of this policy and the policy associated with your job execution role.</p>"
       }
     },
     "JobRunId": {
@@ -623,6 +667,12 @@
         "LogTypeList$member": null
       }
     },
+    "Long": {
+      "base": null,
+      "refs": {
+        "JobRun$queuedDurationMilliseconds": "<p>The total time for a job in the QUEUED state in milliseconds.</p>"
+      }
+    },
     "ManagedPersistenceMonitoringConfiguration": {
       "base": "<p>The managed log persistence configuration for a job run.</p>",
       "refs": {
@@ -671,6 +721,18 @@
         "ListJobRunAttemptsResponse$nextToken": "<p>The output displays the token for the next set of application results. This is required for pagination and is available as a response of the previous request.</p>",
         "ListJobRunsRequest$nextToken": "<p>The token for the next set of job run results.</p>",
         "ListJobRunsResponse$nextToken": "<p>The output displays the token for the next set of job run results. This is required for pagination and is available as a response of the previous request.</p>"
+      }
+    },
+    "PolicyArnList": {
+      "base": null,
+      "refs": {
+        "JobRunExecutionIamPolicy$policyArns": "<p>A list of Amazon Resource Names (ARNs) to use as an execution IAM policy.</p>"
+      }
+    },
+    "PolicyDocument": {
+      "base": null,
+      "refs": {
+        "JobRunExecutionIamPolicy$policy": "<p>An IAM inline policy to use as an execution IAM policy.</p>"
       }
     },
     "PrometheusMonitoringConfiguration": {
@@ -749,6 +811,14 @@
         "MonitoringConfiguration$s3MonitoringConfiguration": "<p>The Amazon S3 configuration for monitoring log publishing.</p>"
       }
     },
+    "SchedulerConfiguration": {
+      "base": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>",
+      "refs": {
+        "Application$schedulerConfiguration": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>",
+        "CreateApplicationRequest$schedulerConfiguration": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>",
+        "UpdateApplicationRequest$schedulerConfiguration": "<p>The scheduler configuration for batch and streaming jobs running on this application. Supported with release labels emr-7.0.0 and above.</p>"
+      }
+    },
     "SecurityGroupIds": {
       "base": null,
       "refs": {
@@ -770,6 +840,12 @@
     "ServiceQuotaExceededException": {
       "base": "<p>The maximum number of resources per account has been reached.</p>",
       "refs": {
+      }
+    },
+    "ShutdownGracePeriodInSeconds": {
+      "base": null,
+      "refs": {
+        "CancelJobRunRequest$shutdownGracePeriodInSeconds": "<p>The duration in seconds to wait before forcefully terminating the job after cancellation is requested.</p>"
       }
     },
     "SparkSubmit": {

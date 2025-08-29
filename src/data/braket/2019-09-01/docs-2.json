@@ -1,32 +1,37 @@
 {
   "version": "2.0",
-  "service": "<p>The Amazon Braket API Reference provides information about the operations and structures supported in Amazon Braket.</p> <p>Additional Resources:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/braket/latest/developerguide/what-is-braket.html\">Amazon Braket Developer Guide</a> </p> </li> </ul>",
+  "service": "<p>The Amazon Braket API Reference provides information about the operations and structures supported by Amazon Braket.</p> <p>To learn about the permissions required to call an Amazon Braket API action, see <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonbraket.html\">Actions, resources, and condition keys for Amazon Braket</a>. <a href=\"https://amazon-braket-sdk-python.readthedocs.io/en/latest/#\">Amazon Braket Python SDK</a> and the <a href=\"https://docs.aws.amazon.com/cli/latest/reference/braket/\">AWS Command Line Interface</a> can be used to make discovery and creation of API calls easier. For more information about Amazon Braket features, see <a href=\"https://docs.aws.amazon.com/braket/latest/developerguide/what-is-braket.html\">What is Amazon Braket?</a> and important <a href=\"https://docs.aws.amazon.com/braket/latest/developerguide/braket-terms.html\">terms and concepts</a> in the <i>Amazon Braket Developer Guide</i>.</p> <p> <b>In this guide:</b> </p> <ul> <li> <p/> </li> <li> <p/> </li> <li> <p> <a>CommonParameters</a> </p> </li> <li> <p> <a>CommonErrors</a> </p> </li> </ul> <p> <b>Available languages for AWS SDK:</b> </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/Braket/NBraket.html\">.NET</a> </p> </li> <li> <p> <a href=\"https://sdk.amazonaws.com/cpp/api/LATEST/root/html/index.html\">C++</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sdk-for-go/api/service/braket/\">Go API reference</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/braket/package-summary.html\">Java</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Braket.html\">JavaScript</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Braket.BraketClient.html\">PHP</a> </p> </li> <li> <p> <a href=\"https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/braket.html\">Python (Boto)</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Braket.html\">Ruby</a> </p> </li> </ul> <p> <b>Code examples from the Amazon Braket Tutorials GitHub repository:</b> </p> <ul> <li> <p> <a href=\"https://github.com/amazon-braket/amazon-braket-examples\">Amazon Braket Examples</a> </p> </li> </ul>",
   "operations": {
-    "CancelJob": "<p>Cancels an Amazon Braket job.</p>",
+    "CancelJob": "<p>Cancels an Amazon Braket hybrid job.</p>",
     "CancelQuantumTask": "<p>Cancels the specified task.</p>",
-    "CreateJob": "<p>Creates an Amazon Braket job.</p>",
+    "CreateJob": "<p>Creates an Amazon Braket hybrid job.</p>",
     "CreateQuantumTask": "<p>Creates a quantum task.</p>",
     "GetDevice": "<p>Retrieves the devices available in Amazon Braket.</p> <note> <p>For backwards compatibility with older versions of BraketSchemas, OpenQASM information is omitted from GetDevice API calls. To get this information the user-agent needs to present a recent version of the BraketSchemas (1.8.0 or later). The Braket SDK automatically reports this for you. If you do not see OpenQASM results in the GetDevice response when using a Braket SDK, you may need to set AWS_EXECUTION_ENV environment variable to configure user-agent. See the code examples provided below for how to do this for the AWS CLI, Boto3, and the Go, Java, and JavaScript/TypeScript SDKs.</p> </note>",
-    "GetJob": "<p>Retrieves the specified Amazon Braket job.</p>",
+    "GetJob": "<p>Retrieves the specified Amazon Braket hybrid job.</p>",
     "GetQuantumTask": "<p>Retrieves the specified quantum task.</p>",
     "ListTagsForResource": "<p>Shows the tags associated with this resource.</p>",
     "SearchDevices": "<p>Searches for devices using the specified filters.</p>",
-    "SearchJobs": "<p>Searches for Amazon Braket jobs that match the specified filter values.</p>",
+    "SearchJobs": "<p>Searches for Amazon Braket hybrid jobs that match the specified filter values.</p>",
     "SearchQuantumTasks": "<p>Searches for tasks that match the specified filter values.</p>",
     "TagResource": "<p>Add a tag to the specified resource.</p>",
     "UntagResource": "<p>Remove tags from a resource.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "base": "<p>You do not have sufficient permissions to perform this action.</p>",
+      "refs": {}
+    },
+    "ActionMetadata": {
+      "base": "<p>Contains metadata about the quantum task action, including the action type and program statistics.</p>",
       "refs": {
+        "GetQuantumTaskResponse$actionMetadata": "<p>Metadata about the action performed by the quantum task, including information about the type of action and program counts.</p>"
       }
     },
     "AlgorithmSpecification": {
-      "base": "<p>Defines the Amazon Braket job to be created. Specifies the container image the job uses and the paths to the Python scripts used for entry and training.</p>",
+      "base": "<p>Defines the Amazon Braket hybrid job to be created. Specifies the container image the job uses and the paths to the Python scripts used for entry and training.</p>",
       "refs": {
         "CreateJobRequest$algorithmSpecification": "<p>Definition of the Amazon Braket job to be created. Specifies the container image the job uses and information about the Python scripts used for entry and training.</p>",
-        "GetJobResponse$algorithmSpecification": "<p>Definition of the Amazon Braket job created. Specifies the container image the job uses, information about the Python scripts used for entry and training, and the user-defined metrics used to evaluation the job.</p>"
+        "GetJobResponse$algorithmSpecification": "<p>Definition of the Amazon Braket hybrid job created. Provides information about the container image used, and the Python scripts used for training.</p>"
       }
     },
     "Association": {
@@ -58,52 +63,46 @@
     },
     "CancelJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelQuantumTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelQuantumTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancellationStatus": {
       "base": null,
       "refs": {
-        "CancelJobResponse$cancellationStatus": "<p>The status of the job cancellation request.</p>",
-        "CancelQuantumTaskResponse$cancellationStatus": "<p>The status of the cancellation request.</p>"
+        "CancelJobResponse$cancellationStatus": "<p>The status of the hybrid job.</p>",
+        "CancelQuantumTaskResponse$cancellationStatus": "<p>The status of the quantum task.</p>"
       }
     },
     "CompressionType": {
       "base": null,
       "refs": {
-        "ScriptModeConfig$compressionType": "<p>The type of compression used by the Python scripts for an Amazon Braket job.</p>"
+        "ScriptModeConfig$compressionType": "<p>The type of compression used to store the algorithm scripts in Amazon S3 storage.</p>"
       }
     },
     "ConflictException": {
       "base": "<p>An error occurred due to a conflict.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContainerImage": {
-      "base": "<p>The container image used to create an Amazon Braket job.</p>",
+      "base": "<p>The container image used to create an Amazon Braket hybrid job.</p>",
       "refs": {
-        "AlgorithmSpecification$containerImage": "<p>The container image used to create an Amazon Braket job.</p>"
+        "AlgorithmSpecification$containerImage": "<p>The container image used to create an Amazon Braket hybrid job.</p>"
       }
     },
     "CreateJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateJobRequestAssociationsList": {
       "base": null,
@@ -120,18 +119,16 @@
     "CreateJobRequestJobNameString": {
       "base": null,
       "refs": {
-        "CreateJobRequest$jobName": "<p>The name of the Amazon Braket job.</p>"
+        "CreateJobRequest$jobName": "<p>The name of the Amazon Braket hybrid job.</p>"
       }
     },
     "CreateJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQuantumTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQuantumTaskRequestAssociationsList": {
       "base": null,
@@ -142,63 +139,61 @@
     "CreateQuantumTaskRequestDeviceParametersString": {
       "base": null,
       "refs": {
-        "CreateQuantumTaskRequest$deviceParameters": "<p>The parameters for the device to run the task on.</p>"
+        "CreateQuantumTaskRequest$deviceParameters": "<p>The parameters for the device to run the quantum task on.</p>"
       }
     },
     "CreateQuantumTaskRequestOutputS3BucketString": {
       "base": null,
       "refs": {
-        "CreateQuantumTaskRequest$outputS3Bucket": "<p>The S3 bucket to store task result files in.</p>"
+        "CreateQuantumTaskRequest$outputS3Bucket": "<p>The S3 bucket to store quantum task result files in.</p>"
       }
     },
     "CreateQuantumTaskRequestOutputS3KeyPrefixString": {
       "base": null,
       "refs": {
-        "CreateQuantumTaskRequest$outputS3KeyPrefix": "<p>The key prefix for the location in the S3 bucket to store task results in.</p>"
+        "CreateQuantumTaskRequest$outputS3KeyPrefix": "<p>The key prefix for the location in the S3 bucket to store quantum task results in.</p>"
       }
     },
     "CreateQuantumTaskRequestShotsLong": {
       "base": null,
       "refs": {
-        "CreateQuantumTaskRequest$shots": "<p>The number of shots to use for the task.</p>"
+        "CreateQuantumTaskRequest$shots": "<p>The number of shots to use for the quantum task.</p>"
       }
     },
     "CreateQuantumTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DataSource": {
-      "base": "<p>Information about the source of the data used by the Amazon Braket job.</p>",
+      "base": "<p>Information about the source of the input data used by the Amazon Braket hybrid job.</p>",
       "refs": {
-        "InputFileConfig$dataSource": "<p>The location of the channel data.</p>"
+        "InputFileConfig$dataSource": "<p>The location of the input data.</p>"
       }
     },
     "DeviceArn": {
       "base": null,
       "refs": {
-        "CreateQuantumTaskRequest$deviceArn": "<p>The ARN of the device to run the task on.</p>",
+        "CreateQuantumTaskRequest$deviceArn": "<p>The ARN of the device to run the quantum task on.</p>",
         "DeviceSummary$deviceArn": "<p>The ARN of the device.</p>",
         "GetDeviceRequest$deviceArn": "<p>The ARN of the device to retrieve.</p>",
         "GetDeviceResponse$deviceArn": "<p>The ARN of the device.</p>",
-        "GetQuantumTaskResponse$deviceArn": "<p>The ARN of the device the task was run on.</p>",
-        "QuantumTaskSummary$deviceArn": "<p>The ARN of the device the task ran on.</p>"
+        "GetQuantumTaskResponse$deviceArn": "<p>The ARN of the device the quantum task was run on.</p>",
+        "QuantumTaskSummary$deviceArn": "<p>The ARN of the device the quantum task ran on.</p>"
       }
     },
     "DeviceConfig": {
-      "base": "<p>Configures the quantum processing units (QPUs) or simulator used to create and run an Amazon Braket job.</p>",
+      "base": "<p>Configures the primary device used to create and run an Amazon Braket hybrid job.</p>",
       "refs": {
-        "CreateJobRequest$deviceConfig": "<p>The quantum processing unit (QPU) or simulator used to create an Amazon Braket job.</p>",
-        "GetJobResponse$deviceConfig": "<p>The quantum processing unit (QPU) or simulator used to run the Amazon Braket job.</p>"
+        "CreateJobRequest$deviceConfig": "<p>The quantum processing unit (QPU) or simulator used to create an Amazon Braket hybrid job.</p>",
+        "GetJobResponse$deviceConfig": "<p>The primary device used by the Amazon Braket hybrid job.</p>"
       }
     },
     "DeviceOfflineException": {
       "base": "<p>The specified device is currently offline.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeviceQueueInfo": {
-      "base": "<p>Information about tasks and jobs queued on a device.</p>",
+      "base": "<p>Information about quantum tasks and hybrid jobs queued on a device.</p>",
       "refs": {
         "DeviceQueueInfoList$member": null
       }
@@ -206,13 +201,12 @@
     "DeviceQueueInfoList": {
       "base": null,
       "refs": {
-        "GetDeviceResponse$deviceQueueInfo": "<p>List of information about tasks and jobs queued on a device.</p>"
+        "GetDeviceResponse$deviceQueueInfo": "<p>The number of quantum tasks and hybrid jobs currently queued on the device.</p>"
       }
     },
     "DeviceRetiredException": {
       "base": "<p>The specified device has been retired.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeviceStatus": {
       "base": null,
@@ -242,39 +236,33 @@
     },
     "GetDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetJobResponseJobNameString": {
       "base": null,
       "refs": {
-        "GetJobResponse$jobName": "<p>The name of the Amazon Braket job.</p>"
+        "GetJobResponse$jobName": "<p>The name of the Amazon Braket hybrid job.</p>"
       }
     },
     "GetQuantumTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQuantumTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HybridJobAdditionalAttributeName": {
       "base": null,
@@ -285,20 +273,20 @@
     "HybridJobAdditionalAttributeNamesList": {
       "base": null,
       "refs": {
-        "GetJobRequest$additionalAttributeNames": "<p>A list of attributes to return information for.</p>"
+        "GetJobRequest$additionalAttributeNames": "<p>A list of attributes to return additional information for. Only the QueueInfo additional attribute name is currently supported. </p>"
       }
     },
     "HybridJobQueueInfo": {
-      "base": "<p>Information about the queue for a specified job.</p>",
+      "base": "<p>Information about the queue for a specified hybrid job.</p>",
       "refs": {
-        "GetJobResponse$queueInfo": "<p>Queue information for the requested job. Only returned if <code>QueueInfo</code> is specified in the <code>additionalAttributeNames\"</code> field in the <code>GetJob</code> API request.</p>"
+        "GetJobResponse$queueInfo": "<p>Queue information for the requested hybrid job. Only returned if <code>QueueInfo</code> is specified in the <code>additionalAttributeNames\"</code> field in the <code>GetJob</code> API request.</p>"
       }
     },
     "HyperParameters": {
       "base": null,
       "refs": {
-        "CreateJobRequest$hyperParameters": "<p>Algorithm-specific parameters used by an Amazon Braket job that influence the quality of the training job. The values are set with a string of JSON key:value pairs, where the key is the name of the hyperparameter and the value is the value of th hyperparameter.</p>",
-        "GetJobResponse$hyperParameters": "<p>Algorithm-specific parameters used by an Amazon Braket job that influence the quality of the traiing job. The values are set with a string of JSON key:value pairs, where the key is the name of the hyperparameter and the value is the value of th hyperparameter.</p>"
+        "CreateJobRequest$hyperParameters": "<p>Algorithm-specific parameters used by an Amazon Braket hybrid job that influence the quality of the training job. The values are set with a map of JSON key:value pairs, where the key is the name of the hyperparameter and the value is the value of the hyperparameter.</p> <important> <p>Do not include any security-sensitive information including account access IDs, secrets, or tokens in any hyperparameter fields. As part of the shared responsibility model, you are responsible for any potential exposure, unauthorized access, or compromise of your sensitive data if caused by security-sensitive information included in the request hyperparameter variable or plain text fields.</p> </important>",
+        "GetJobResponse$hyperParameters": "<p>Algorithm-specific parameters used by an Amazon Braket hybrid job that influence the quality of the traiing job. The values are set with a map of JSON key:value pairs, where the key is the name of the hyperparameter and the value is the value of th hyperparameter.</p>"
       }
     },
     "HyperParametersValueString": {
@@ -323,7 +311,7 @@
     "InputFileConfigChannelNameString": {
       "base": null,
       "refs": {
-        "InputFileConfig$channelName": "<p>A named input source that an Amazon Braket job can consume.</p>"
+        "InputFileConfig$channelName": "<p>A named input source that an Amazon Braket hybrid job can consume.</p>"
       }
     },
     "InstanceConfig": {
@@ -336,53 +324,52 @@
     "InstanceConfigInstanceCountInteger": {
       "base": null,
       "refs": {
-        "InstanceConfig$instanceCount": "<p>Configures the number of resource instances to use while running an Amazon Braket job on Amazon Braket. The default value is 1.</p>"
+        "InstanceConfig$instanceCount": "<p>Configures the number of resource instances to use while running an Amazon Braket hybrid job on Amazon Braket. The default value is 1.</p>"
       }
     },
     "InstanceConfigVolumeSizeInGbInteger": {
       "base": null,
       "refs": {
-        "InstanceConfig$volumeSizeInGb": "<p>The size of the storage volume, in GB, that user wants to provision.</p>"
+        "InstanceConfig$volumeSizeInGb": "<p>The size of the storage volume, in GB, to provision.</p>"
       }
     },
     "InstanceType": {
       "base": null,
       "refs": {
-        "InstanceConfig$instanceType": "<p>Configures the type resource instances to use while running an Amazon Braket hybrid job.</p>"
+        "InstanceConfig$instanceType": "<p>Configures the type of resource instances to use while running an Amazon Braket hybrid job.</p>"
       }
     },
     "Integer": {
       "base": null,
       "refs": {
-        "GetJobResponse$billableDuration": "<p>The billable time the Amazon Braket job used to complete.</p>"
+        "GetJobResponse$billableDuration": "<p>The billable time for which the Amazon Braket hybrid job used to complete.</p>"
       }
     },
     "InternalServiceException": {
-      "base": "<p>The request processing has failed because of an unknown error, exception, or failure.</p>",
-      "refs": {
-      }
+      "base": "<p>The request failed because of an unknown error.</p>",
+      "refs": {}
     },
     "JobArn": {
       "base": null,
       "refs": {
-        "CancelJobRequest$jobArn": "<p>The ARN of the Amazon Braket job to cancel.</p>",
+        "CancelJobRequest$jobArn": "<p>The ARN of the Amazon Braket hybrid job to cancel.</p>",
         "CancelJobResponse$jobArn": "<p>The ARN of the Amazon Braket job.</p>",
-        "CreateJobResponse$jobArn": "<p>The ARN of the Amazon Braket job created.</p>",
-        "GetJobRequest$jobArn": "<p>The ARN of the job to retrieve.</p>",
-        "GetJobResponse$jobArn": "<p>The ARN of the Amazon Braket job.</p>",
+        "CreateJobResponse$jobArn": "<p>The ARN of the Amazon Braket hybrid job created.</p>",
+        "GetJobRequest$jobArn": "<p>The ARN of the hybrid job to retrieve.</p>",
+        "GetJobResponse$jobArn": "<p>The ARN of the Amazon Braket hybrid job.</p>",
         "GetQuantumTaskResponse$jobArn": "<p>The ARN of the Amazon Braket job associated with the quantum task.</p>",
-        "JobSummary$jobArn": "<p>The ARN of the Amazon Braket job.</p>"
+        "JobSummary$jobArn": "<p>The ARN of the Amazon Braket hybrid job.</p>"
       }
     },
     "JobCheckpointConfig": {
-      "base": "<p>Contains information about the output locations for job checkpoint data.</p>",
+      "base": "<p>Contains information about the output locations for hybrid job checkpoint data.</p>",
       "refs": {
-        "CreateJobRequest$checkpointConfig": "<p>Information about the output locations for job checkpoint data.</p>",
-        "GetJobResponse$checkpointConfig": "<p>Information about the output locations for job checkpoint data.</p>"
+        "CreateJobRequest$checkpointConfig": "<p>Information about the output locations for hybrid job checkpoint data.</p>",
+        "GetJobResponse$checkpointConfig": "<p>Information about the output locations for hybrid job checkpoint data.</p>"
       }
     },
     "JobEventDetails": {
-      "base": "<p>Details about the type and time events occurred related to the Amazon Braket job.</p>",
+      "base": "<p>Details about the type and time events that occurred related to the Amazon Braket hybrid job.</p>",
       "refs": {
         "JobEvents$member": null
       }
@@ -390,50 +377,50 @@
     "JobEventDetailsMessageString": {
       "base": null,
       "refs": {
-        "JobEventDetails$message": "<p>A message describing the event that occurred related to the Amazon Braket job.</p>"
+        "JobEventDetails$message": "<p>A message describing the event that occurred related to the Amazon Braket hybrid job.</p>"
       }
     },
     "JobEventType": {
       "base": null,
       "refs": {
-        "JobEventDetails$eventType": "<p>The type of event that occurred related to the Amazon Braket job.</p>"
+        "JobEventDetails$eventType": "<p>The type of event that occurred related to the Amazon Braket hybrid job.</p>"
       }
     },
     "JobEvents": {
       "base": null,
       "refs": {
-        "GetJobResponse$events": "<p>Details about the type and time events occurred related to the Amazon Braket job.</p>"
+        "GetJobResponse$events": "<p>Details about the time and type of events occurred related to the Amazon Braket hybrid job.</p>"
       }
     },
     "JobOutputDataConfig": {
-      "base": "<p>Specifies the path to the S3 location where you want to store job artifacts and the encryption key used to store them.</p>",
+      "base": "<p>Specifies the path to the S3 location where you want to store hybrid job artifacts and the encryption key used to store them.</p>",
       "refs": {
-        "CreateJobRequest$outputDataConfig": "<p>The path to the S3 location where you want to store job artifacts and the encryption key used to store them.</p>",
-        "GetJobResponse$outputDataConfig": "<p>The path to the S3 location where job artifacts are stored and the encryption key used to store them there.</p>"
+        "CreateJobRequest$outputDataConfig": "<p>The path to the S3 location where you want to store hybrid job artifacts and the encryption key used to store them.</p>",
+        "GetJobResponse$outputDataConfig": "<p>The path to the S3 location where hybrid job artifacts are stored and the encryption key used to store them there.</p>"
       }
     },
     "JobPrimaryStatus": {
       "base": null,
       "refs": {
-        "GetJobResponse$status": "<p>The status of the Amazon Braket job.</p>",
-        "JobSummary$status": "<p>The status of the Amazon Braket job.</p>"
+        "GetJobResponse$status": "<p>The status of the Amazon Braket hybrid job.</p>",
+        "JobSummary$status": "<p>The status of the Amazon Braket hybrid job.</p>"
       }
     },
     "JobStoppingCondition": {
-      "base": "<p>Specifies limits for how long an Amazon Braket job can run. </p>",
+      "base": "<p>Specifies limits for how long an Amazon Braket hybrid job can run. </p>",
       "refs": {
-        "CreateJobRequest$stoppingCondition": "<p> The user-defined criteria that specifies when a job stops running.</p>",
-        "GetJobResponse$stoppingCondition": "<p>The user-defined criteria that specifies when to stop a job running.</p>"
+        "CreateJobRequest$stoppingCondition": "<p> The user-defined criteria that specifies when a hybrid job stops running.</p>",
+        "GetJobResponse$stoppingCondition": "<p>The user-defined criteria that specifies when to stop a running hybrid job.</p>"
       }
     },
     "JobStoppingConditionMaxRuntimeInSecondsInteger": {
       "base": null,
       "refs": {
-        "JobStoppingCondition$maxRuntimeInSeconds": "<p>The maximum length of time, in seconds, that an Amazon Braket job can run.</p>"
+        "JobStoppingCondition$maxRuntimeInSeconds": "<p>The maximum length of time, in seconds, that an Amazon Braket hybrid job can run.</p>"
       }
     },
     "JobSummary": {
-      "base": "<p>Provides summary information about an Amazon Braket job.</p>",
+      "base": "<p>Provides summary information about an Amazon Braket hybrid job.</p>",
       "refs": {
         "JobSummaryList$member": null
       }
@@ -447,32 +434,53 @@
     "JobToken": {
       "base": null,
       "refs": {
-        "CreateQuantumTaskRequest$jobToken": "<p>The token for an Amazon Braket job that associates it with the quantum task.</p>"
+        "CreateQuantumTaskRequest$jobToken": "<p>The token for an Amazon Braket hybrid job that associates it with the quantum task.</p>"
       }
     },
     "JsonValue": {
       "base": null,
       "refs": {
-        "CreateQuantumTaskRequest$action": "<p>The action associated with the task.</p>",
+        "CreateQuantumTaskRequest$action": "<p>The action associated with the quantum task.</p>",
         "GetDeviceResponse$deviceCapabilities": "<p>Details about the capabilities of the device.</p>",
-        "GetQuantumTaskResponse$deviceParameters": "<p>The parameters for the device on which the task ran.</p>"
+        "GetQuantumTaskResponse$deviceParameters": "<p>The parameters for the device on which the quantum task ran.</p>"
       }
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
       "refs": {
-        "GetQuantumTaskResponse$shots": "<p>The number of shots used in the task.</p>",
-        "QuantumTaskSummary$shots": "<p>The shots used for the task.</p>"
+        "ActionMetadata$programCount": "<p>The number of programs in a program set. This is only available for a Program Set.</p>",
+        "ActionMetadata$executableCount": "<p>The number of executables in a program set. This is only available for a Program Set.</p>",
+        "GetQuantumTaskResponse$shots": "<p>The number of shots used in the quantum task.</p>",
+        "GetQuantumTaskResponse$numSuccessfulShots": "<p>The number of successful shots for the quantum task. This is available after a successfully completed quantum task.</p>",
+        "ProgramSetValidationFailure$programIndex": "<p>The index of the program within the program set that failed validation.</p>",
+        "ProgramSetValidationFailure$inputsIndex": "<p>The index of the input within the program set that failed validation.</p>",
+        "QuantumTaskSummary$shots": "<p>The shots used for the quantum task.</p>"
+      }
+    },
+    "ProgramSetValidationFailure": {
+      "base": "<p>Contains information about validation failures that occurred during the processing of a program set in a quantum task.</p>",
+      "refs": {
+        "ProgramSetValidationFailuresList$member": null
+      }
+    },
+    "ProgramSetValidationFailuresList": {
+      "base": null,
+      "refs": {
+        "ValidationException$programSetValidationFailures": "<p>The validation failures in the program set submitted in the request.</p>"
+      }
+    },
+    "ProgramValidationFailuresList": {
+      "base": null,
+      "refs": {
+        "ProgramSetValidationFailure$errors": "<p>A list of error messages describing the validation failures that occurred.</p>"
       }
     },
     "QuantumTaskAdditionalAttributeName": {
@@ -484,22 +492,22 @@
     "QuantumTaskAdditionalAttributeNamesList": {
       "base": null,
       "refs": {
-        "GetQuantumTaskRequest$additionalAttributeNames": "<p>A list of attributes to return information for.</p>"
+        "GetQuantumTaskRequest$additionalAttributeNames": "<p>A list of attributes to return additional information for. Only the QueueInfo additional attribute name is currently supported.</p>"
       }
     },
     "QuantumTaskArn": {
       "base": null,
       "refs": {
-        "CancelQuantumTaskRequest$quantumTaskArn": "<p>The ARN of the task to cancel.</p>",
-        "CancelQuantumTaskResponse$quantumTaskArn": "<p>The ARN of the task.</p>",
-        "CreateQuantumTaskResponse$quantumTaskArn": "<p>The ARN of the task created by the request.</p>",
-        "GetQuantumTaskRequest$quantumTaskArn": "<p>The ARN of the task to retrieve.</p>",
-        "GetQuantumTaskResponse$quantumTaskArn": "<p>The ARN of the task.</p>",
-        "QuantumTaskSummary$quantumTaskArn": "<p>The ARN of the task.</p>"
+        "CancelQuantumTaskRequest$quantumTaskArn": "<p>The ARN of the quantum task to cancel.</p>",
+        "CancelQuantumTaskResponse$quantumTaskArn": "<p>The ARN of the quantum task.</p>",
+        "CreateQuantumTaskResponse$quantumTaskArn": "<p>The ARN of the quantum task created by the request.</p>",
+        "GetQuantumTaskRequest$quantumTaskArn": "<p>The ARN of the quantum task to retrieve.</p>",
+        "GetQuantumTaskResponse$quantumTaskArn": "<p>The ARN of the quantum task.</p>",
+        "QuantumTaskSummary$quantumTaskArn": "<p>The ARN of the quantum task.</p>"
       }
     },
     "QuantumTaskQueueInfo": {
-      "base": "<p>Information about the queue for the specified quantum task.</p>",
+      "base": "<p>The queue information for the specified quantum task.</p>",
       "refs": {
         "GetQuantumTaskResponse$queueInfo": "<p>Queue information for the requested quantum task. Only returned if <code>QueueInfo</code> is specified in the <code>additionalAttributeNames\"</code> field in the <code>GetQuantumTask</code> API request.</p>"
       }
@@ -507,8 +515,8 @@
     "QuantumTaskStatus": {
       "base": null,
       "refs": {
-        "GetQuantumTaskResponse$status": "<p>The status of the task.</p>",
-        "QuantumTaskSummary$status": "<p>The status of the task.</p>"
+        "GetQuantumTaskResponse$status": "<p>The status of the quantum task.</p>",
+        "QuantumTaskSummary$status": "<p>The status of the quantum task.</p>"
       }
     },
     "QuantumTaskSummary": {
@@ -520,7 +528,7 @@
     "QuantumTaskSummaryList": {
       "base": null,
       "refs": {
-        "SearchQuantumTasksResponse$quantumTasks": "<p>An array of <code>QuantumTaskSummary</code> objects for tasks that match the specified filters.</p>"
+        "SearchQuantumTasksResponse$quantumTasks": "<p>An array of <code>QuantumTaskSummary</code> objects for quantum tasks that match the specified filters.</p>"
       }
     },
     "QueueName": {
@@ -534,45 +542,44 @@
     "QueuePriority": {
       "base": null,
       "refs": {
-        "DeviceQueueInfo$queuePriority": "<p>Optional. Specifies the priority of the queue. Tasks in a priority queue are processed before the tasks in a normal queue.</p>",
-        "QuantumTaskQueueInfo$queuePriority": "<p>Optional. Specifies the priority of the queue. Quantum tasks in a priority queue are processed before the tasks in a normal queue.</p>"
+        "DeviceQueueInfo$queuePriority": "<p>Optional. Specifies the priority of the queue. Quantum tasks in a priority queue are processed before the quantum tasks in a normal queue.</p>",
+        "QuantumTaskQueueInfo$queuePriority": "<p>Optional. Specifies the priority of the queue. Quantum tasks in a priority queue are processed before the quantum tasks in a normal queue.</p>"
       }
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
       "refs": {
-        "CreateJobRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon Braket can assume to perform tasks on behalf of a user. It can access user resources, run an Amazon Braket job container on behalf of user, and output resources to the users' s3 buckets.</p>",
-        "GetJobResponse$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon Braket can assume to perform tasks on behalf of a user. It can access user resources, run an Amazon Braket job container on behalf of user, and output resources to the s3 buckets of a user.</p>"
+        "CreateJobRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon Braket can assume to perform tasks on behalf of a user. It can access user resources, run an Amazon Braket job container on behalf of user, and output results and hybrid job details to the users' s3 buckets.</p>",
+        "GetJobResponse$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that Amazon Braket can assume to perform tasks on behalf of a user. It can access user resources, run an Amazon Braket job container on behalf of user, and output results and other hybrid job details to the s3 buckets of a user.</p>"
       }
     },
     "S3DataSource": {
-      "base": "<p>Information about the data stored in Amazon S3 used by the Amazon Braket job.</p>",
+      "base": "<p>Information about the Amazon S3 storage used by the Amazon Braket hybrid job.</p>",
       "refs": {
-        "DataSource$s3DataSource": "<p>Information about the data stored in Amazon S3 used by the Amazon Braket job.</p>"
+        "DataSource$s3DataSource": "<p>Amazon S3 path of the input data used by the hybrid job.</p>"
       }
     },
     "S3Path": {
       "base": null,
       "refs": {
-        "JobCheckpointConfig$s3Uri": "<p>Identifies the S3 path where you want Amazon Braket to store checkpoints. For example, <code>s3://bucket-name/key-name-prefix</code>.</p>",
-        "JobOutputDataConfig$s3Path": "<p>Identifies the S3 path where you want Amazon Braket to store the job training artifacts. For example, <code>s3://bucket-name/key-name-prefix</code>.</p>",
+        "JobCheckpointConfig$s3Uri": "<p>Identifies the S3 path where you want Amazon Braket to store checkpoint data. For example, <code>s3://bucket-name/key-name-prefix</code>.</p>",
+        "JobOutputDataConfig$s3Path": "<p>Identifies the S3 path where you want Amazon Braket to store the hybrid job training artifacts. For example, <code>s3://bucket-name/key-name-prefix</code>.</p>",
         "S3DataSource$s3Uri": "<p>Depending on the value specified for the <code>S3DataType</code>, identifies either a key name prefix or a manifest that locates the S3 data source.</p>",
-        "ScriptModeConfig$s3Uri": "<p>The URI that specifies the S3 path to the Python script module that contains the training script used by an Amazon Braket job.</p>"
+        "ScriptModeConfig$s3Uri": "<p>The URI that specifies the S3 path to the algorithm scripts used by an Amazon Braket hybrid job.</p>"
       }
     },
     "ScriptModeConfig": {
-      "base": "<p>Contains information about the Python scripts used for entry and by an Amazon Braket job.</p>",
+      "base": "<p>Contains information about algorithm scripts used for the Amazon Braket hybrid job.</p>",
       "refs": {
         "AlgorithmSpecification$scriptModeConfig": "<p>Configures the paths to the Python scripts used for entry and training.</p>"
       }
     },
     "SearchDevicesFilter": {
-      "base": "<p>The filter to use for searching devices.</p>",
+      "base": "<p>The filter used to search for devices.</p>",
       "refs": {
         "SearchDevicesRequestFiltersList$member": null
       }
@@ -580,24 +587,23 @@
     "SearchDevicesFilterNameString": {
       "base": null,
       "refs": {
-        "SearchDevicesFilter$name": "<p>The name to use to filter results.</p>"
+        "SearchDevicesFilter$name": "<p>The name of the device parameter to filter based on. Only <code>deviceArn</code> filter name is currently supported.</p>"
       }
     },
     "SearchDevicesFilterValuesList": {
       "base": null,
       "refs": {
-        "SearchDevicesFilter$values": "<p>The values to use to filter results.</p>"
+        "SearchDevicesFilter$values": "<p>The values used to filter devices based on the filter name.</p>"
       }
     },
     "SearchDevicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchDevicesRequestFiltersList": {
       "base": null,
       "refs": {
-        "SearchDevicesRequest$filters": "<p>The filter values to use to search for a device.</p>"
+        "SearchDevicesRequest$filters": "<p>Array of SearchDevicesFilter objects to use when searching for devices.</p>"
       }
     },
     "SearchDevicesRequestMaxResultsInteger": {
@@ -608,11 +614,10 @@
     },
     "SearchDevicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchJobsFilter": {
-      "base": "<p>A filter used to search for Amazon Braket jobs.</p>",
+      "base": "<p>A filter used to search for Amazon Braket hybrid jobs.</p>",
       "refs": {
         "SearchJobsRequestFiltersList$member": null
       }
@@ -620,24 +625,23 @@
     "SearchJobsFilterOperator": {
       "base": null,
       "refs": {
-        "SearchJobsFilter$operator": "<p>An operator to use for the jobs filter.</p>"
+        "SearchJobsFilter$operator": "<p>An operator to use for the filter.</p>"
       }
     },
     "SearchJobsFilterValuesList": {
       "base": null,
       "refs": {
-        "SearchJobsFilter$values": "<p>The values to use for the jobs filter.</p>"
+        "SearchJobsFilter$values": "<p>The values used to filter hybrid jobs based on the filter name and operator.</p>"
       }
     },
     "SearchJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchJobsRequestFiltersList": {
       "base": null,
       "refs": {
-        "SearchJobsRequest$filters": "<p>The filter values to use when searching for a job.</p>"
+        "SearchJobsRequest$filters": "<p>Array of SearchJobsFilter objects to use when searching for hybrid jobs.</p>"
       }
     },
     "SearchJobsRequestMaxResultsInteger": {
@@ -648,11 +652,10 @@
     },
     "SearchJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchQuantumTasksFilter": {
-      "base": "<p>A filter to use to search for tasks.</p>",
+      "base": "<p>A filter used to search for quantum tasks.</p>",
       "refs": {
         "SearchQuantumTasksRequestFiltersList$member": null
       }
@@ -660,24 +663,23 @@
     "SearchQuantumTasksFilterOperator": {
       "base": null,
       "refs": {
-        "SearchQuantumTasksFilter$operator": "<p>An operator to use in the filter.</p>"
+        "SearchQuantumTasksFilter$operator": "<p>An operator to use for the filter.</p>"
       }
     },
     "SearchQuantumTasksFilterValuesList": {
       "base": null,
       "refs": {
-        "SearchQuantumTasksFilter$values": "<p>The values to use for the filter.</p>"
+        "SearchQuantumTasksFilter$values": "<p>The values used to filter quantum tasks based on the filter name and operator.</p>"
       }
     },
     "SearchQuantumTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchQuantumTasksRequestFiltersList": {
       "base": null,
       "refs": {
-        "SearchQuantumTasksRequest$filters": "<p>Array of <code>SearchQuantumTasksFilter</code> objects.</p>"
+        "SearchQuantumTasksRequest$filters": "<p>Array of <code>SearchQuantumTasksFilter</code> objects to use when searching for quantum tasks.</p>"
       }
     },
     "SearchQuantumTasksRequestMaxResultsInteger": {
@@ -688,46 +690,46 @@
     },
     "SearchQuantumTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request failed because a service quota is exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "ActionMetadata$actionType": "<p>The type of action associated with the quantum task.</p>",
         "ConflictException$message": null,
         "DeviceOfflineException$message": null,
-        "DeviceQueueInfo$queueSize": "<p>The number of jobs or tasks in the queue for a given device. </p>",
+        "DeviceQueueInfo$queueSize": "<p>The number of hybrid jobs or quantum tasks in the queue for a given device. </p>",
         "DeviceRetiredException$message": null,
         "DeviceSummary$deviceName": "<p>The name of the device.</p>",
         "DeviceSummary$providerName": "<p>The provider of the device.</p>",
         "GetDeviceResponse$deviceName": "<p>The name of the device.</p>",
         "GetDeviceResponse$providerName": "<p>The name of the partner company for the device.</p>",
-        "GetQuantumTaskResponse$failureReason": "<p>The reason that a task failed.</p>",
-        "GetQuantumTaskResponse$outputS3Bucket": "<p>The S3 bucket where task results are stored.</p>",
-        "GetQuantumTaskResponse$outputS3Directory": "<p>The folder in the S3 bucket where task results are stored.</p>",
-        "HybridJobQueueInfo$message": "<p>Optional. Provides more information about the queue position. For example, if the job is complete and no longer in the queue, the message field contains that information.</p>",
-        "HybridJobQueueInfo$position": "<p>Current position of the job in the jobs queue.</p>",
+        "GetQuantumTaskResponse$failureReason": "<p>The reason that a quantum task failed.</p>",
+        "GetQuantumTaskResponse$outputS3Bucket": "<p>The S3 bucket where quantum task results are stored.</p>",
+        "GetQuantumTaskResponse$outputS3Directory": "<p>The folder in the S3 bucket where quantum task results are stored.</p>",
+        "HybridJobQueueInfo$position": "<p>Current position of the hybrid job in the jobs queue.</p>",
+        "HybridJobQueueInfo$message": "<p>Optional. Provides more information about the queue position. For example, if the hybrid job is complete and no longer in the queue, the message field contains that information.</p>",
         "InternalServiceException$message": null,
-        "JobSummary$jobName": "<p>The name of the Amazon Braket job.</p>",
+        "JobSummary$jobName": "<p>The name of the Amazon Braket hybrid job.</p>",
         "ListTagsForResourceRequest$resourceArn": "<p>Specify the <code>resourceArn</code> for the resource whose tags to display.</p>",
-        "QuantumTaskQueueInfo$message": "<p>Optional. Provides more information about the queue position. For example, if the task is complete and no longer in the queue, the message field contains that information.</p>",
-        "QuantumTaskQueueInfo$position": "<p>Current position of the task in the quantum tasks queue.</p>",
-        "QuantumTaskSummary$outputS3Bucket": "<p>The S3 bucket where the task result file is stored..</p>",
-        "QuantumTaskSummary$outputS3Directory": "<p>The folder in the S3 bucket where the task result file is stored.</p>",
+        "ProgramValidationFailuresList$member": null,
+        "QuantumTaskQueueInfo$position": "<p>Current position of the quantum task in the quantum tasks queue.</p>",
+        "QuantumTaskQueueInfo$message": "<p>Optional. Provides more information about the queue position. For example, if the quantum task is complete and no longer in the queue, the message field contains that information.</p>",
+        "QuantumTaskSummary$outputS3Bucket": "<p>The S3 bucket where the quantum task result file is stored.</p>",
+        "QuantumTaskSummary$outputS3Directory": "<p>The folder in the S3 bucket where the quantum task result file is stored.</p>",
         "ResourceNotFoundException$message": null,
-        "ScriptModeConfig$entryPoint": "<p>The path to the Python script that serves as the entry point for an Amazon Braket job.</p>",
-        "SearchDevicesRequest$nextToken": "<p>A token used for pagination of results returned in the response. Use the token returned from the previous request continue results where the previous request ended.</p>",
-        "SearchDevicesResponse$nextToken": "<p>A token used for pagination of results, or null if there are no additional results. Use the token value in a subsequent request to continue results where the previous request ended.</p>",
-        "SearchJobsRequest$nextToken": "<p>A token used for pagination of results returned in the response. Use the token returned from the previous request to continue results where the previous request ended.</p>",
-        "SearchJobsResponse$nextToken": "<p>A token used for pagination of results, or <code>null</code> if there are no additional results. Use the token value in a subsequent request to continue results where the previous request ended.</p>",
-        "SearchQuantumTasksRequest$nextToken": "<p>A token used for pagination of results returned in the response. Use the token returned from the previous request continue results where the previous request ended.</p>",
-        "SearchQuantumTasksResponse$nextToken": "<p>A token used for pagination of results, or null if there are no additional results. Use the token value in a subsequent request to continue results where the previous request ended.</p>",
+        "ScriptModeConfig$entryPoint": "<p>The entry point in the algorithm scripts from where the execution begins in the hybrid job.</p>",
+        "SearchDevicesRequest$nextToken": "<p>A token used for pagination of results returned in the response. Use the token returned from the previous request to continue search where the previous request ended.</p>",
+        "SearchDevicesResponse$nextToken": "<p>A token used for pagination of results, or null if there are no additional results. Use the token value in a subsequent request to continue search where the previous request ended.</p>",
+        "SearchJobsRequest$nextToken": "<p>A token used for pagination of results returned in the response. Use the token returned from the previous request to continue search where the previous request ended.</p>",
+        "SearchJobsResponse$nextToken": "<p>A token used for pagination of results, or <code>null</code> if there are no additional results. Use the token value in a subsequent request to continue search where the previous request ended.</p>",
+        "SearchQuantumTasksRequest$nextToken": "<p>A token used for pagination of results returned in the response. Use the token returned from the previous request to continue search where the previous request ended.</p>",
+        "SearchQuantumTasksResponse$nextToken": "<p>A token used for pagination of results, or null if there are no additional results. Use the token value in a subsequent request to continue search where the previous request ended.</p>",
         "ServiceQuotaExceededException$message": null,
         "TagKeys$member": null,
         "TagResourceRequest$resourceArn": "<p>Specify the <code>resourceArn</code> of the resource to which a tag will be added.</p>",
@@ -741,22 +743,22 @@
     "String1024": {
       "base": null,
       "refs": {
-        "GetJobResponse$failureReason": "<p>A description of the reason why an Amazon Braket job failed, if it failed.</p>"
+        "GetJobResponse$failureReason": "<p>A description of the reason why an Amazon Braket hybrid job failed, if it failed.</p>"
       }
     },
     "String2048": {
       "base": null,
       "refs": {
-        "JobOutputDataConfig$kmsKeyId": "<p>The AWS Key Management Service (AWS KMS) key that Amazon Braket uses to encrypt the job training artifacts at rest using Amazon S3 server-side encryption.</p>"
+        "JobOutputDataConfig$kmsKeyId": "<p>The AWS Key Management Service (AWS KMS) key that Amazon Braket uses to encrypt the hybrid job training artifacts at rest using Amazon S3 server-side encryption.</p>"
       }
     },
     "String256": {
       "base": null,
       "refs": {
-        "DeviceConfig$device": "<p>The primary quantum processing unit (QPU) or simulator used to create and run an Amazon Braket job.</p>",
+        "DeviceConfig$device": "<p>The primary device ARN used to create and run an Amazon Braket hybrid job.</p>",
         "HyperParameters$key": null,
         "InputFileConfig$contentType": "<p>The MIME type of the data.</p>",
-        "JobSummary$device": "<p>Provides summary information about the primary device used by an Amazon Braket job.</p>",
+        "JobSummary$device": "<p>The primary device used by an Amazon Braket hybrid job.</p>",
         "SearchDevicesFilterValuesList$member": null,
         "SearchJobsFilterValuesList$member": null,
         "SearchQuantumTasksFilterValuesList$member": null
@@ -765,33 +767,33 @@
     "String4096": {
       "base": null,
       "refs": {
-        "JobCheckpointConfig$localPath": "<p>(Optional) The local directory where checkpoints are written. The default directory is <code>/opt/braket/checkpoints/</code>.</p>"
+        "JobCheckpointConfig$localPath": "<p>(Optional) The local directory where checkpoint data is stored. The default directory is <code>/opt/braket/checkpoints/</code>.</p>"
       }
     },
     "String64": {
       "base": null,
       "refs": {
-        "CancelQuantumTaskRequest$clientToken": "<p>The client token associated with the request.</p>",
-        "CreateJobRequest$clientToken": "<p>A unique token that guarantees that the call to this API is idempotent.</p>",
+        "CancelQuantumTaskRequest$clientToken": "<p>The client token associated with the cancellation request.</p>",
+        "CreateJobRequest$clientToken": "<p>The client token associated with this request that guarantees that the request is idempotent.</p>",
         "CreateQuantumTaskRequest$clientToken": "<p>The client token associated with the request.</p>",
-        "SearchJobsFilter$name": "<p>The name to use for the jobs filter.</p>",
-        "SearchQuantumTasksFilter$name": "<p>The name of the device used for the task.</p>"
+        "SearchJobsFilter$name": "<p>The name of the hybrid job parameter to filter based on. Filter name can be either <code>jobArn</code> or <code>createdAt</code>. </p>",
+        "SearchQuantumTasksFilter$name": "<p>The name of the quantum task parameter to filter based on. Filter name can be either <code>quantumTaskArn</code>, <code>deviceArn</code>, <code>jobArn</code>, <code>status</code> or <code>createdAt</code>.</p>"
       }
     },
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
-        "GetJobResponse$createdAt": "<p>The date and time that the Amazon Braket job was created.</p>",
-        "GetJobResponse$endedAt": "<p>The date and time that the Amazon Braket job ended.</p>",
-        "GetJobResponse$startedAt": "<p>The date and time that the Amazon Braket job was started.</p>",
-        "GetQuantumTaskResponse$createdAt": "<p>The time at which the task was created.</p>",
-        "GetQuantumTaskResponse$endedAt": "<p>The time at which the task ended.</p>",
-        "JobEventDetails$timeOfEvent": "<p>The type of event that occurred related to the Amazon Braket job.</p>",
-        "JobSummary$createdAt": "<p>The date and time that the Amazon Braket job was created.</p>",
-        "JobSummary$endedAt": "<p>The date and time that the Amazon Braket job ended.</p>",
-        "JobSummary$startedAt": "<p>The date and time that the Amazon Braket job was started.</p>",
-        "QuantumTaskSummary$createdAt": "<p>The time at which the task was created.</p>",
-        "QuantumTaskSummary$endedAt": "<p>The time at which the task finished.</p>"
+        "GetJobResponse$createdAt": "<p>The time at which the Amazon Braket hybrid job was created.</p>",
+        "GetJobResponse$startedAt": "<p>The time at which the Amazon Braket hybrid job was started.</p>",
+        "GetJobResponse$endedAt": "<p>The time at which the Amazon Braket hybrid job ended.</p>",
+        "GetQuantumTaskResponse$createdAt": "<p>The time at which the quantum task was created.</p>",
+        "GetQuantumTaskResponse$endedAt": "<p>The time at which the quantum task ended.</p>",
+        "JobEventDetails$timeOfEvent": "<p>The time of the event that occurred related to the Amazon Braket hybrid job.</p>",
+        "JobSummary$createdAt": "<p>The time at which the Amazon Braket hybrid job was created.</p>",
+        "JobSummary$startedAt": "<p>The time at which the Amazon Braket hybrid job was started.</p>",
+        "JobSummary$endedAt": "<p>The time at which the Amazon Braket hybrid job ended.</p>",
+        "QuantumTaskSummary$createdAt": "<p>The time at which the quantum task was created.</p>",
+        "QuantumTaskSummary$endedAt": "<p>The time at which the quantum task finished.</p>"
       }
     },
     "TagKeys": {
@@ -802,41 +804,36 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagsMap": {
       "base": null,
       "refs": {
-        "CreateJobRequest$tags": "<p>A tag object that consists of a key and an optional value, used to manage metadata for Amazon Braket resources.</p>",
+        "CreateJobRequest$tags": "<p>Tags to be added to the hybrid job you're creating.</p>",
         "CreateQuantumTaskRequest$tags": "<p>Tags to be added to the quantum task you're creating.</p>",
-        "GetJobResponse$tags": "<p>A tag object that consists of a key and an optional value, used to manage metadata for Amazon Braket resources.</p>",
-        "GetQuantumTaskResponse$tags": "<p>The tags that belong to this task.</p>",
-        "JobSummary$tags": "<p>A tag object that consists of a key and an optional value, used to manage metadata for Amazon Braket resources.</p>",
+        "GetJobResponse$tags": "<p>The tags associated with this hybrid job.</p>",
+        "GetQuantumTaskResponse$tags": "<p>The tags that belong to this quantum task.</p>",
+        "JobSummary$tags": "<p>Displays the key, value pairs of tags associated with this hybrid job.</p>",
         "ListTagsForResourceResponse$tags": "<p>Displays the key, value pairs of tags associated with this resource.</p>",
         "QuantumTaskSummary$tags": "<p>Displays the key, value pairs of tags associated with this quantum task.</p>",
-        "TagResourceRequest$tags": "<p>Specify the tags to add to the resource.</p>"
+        "TagResourceRequest$tags": "<p>Specify the tags to add to the resource. Tags can be specified as a key-value map.</p>"
       }
     },
     "ThrottlingException": {
-      "base": "<p>The throttling rate limit is met.</p>",
-      "refs": {
-      }
+      "base": "<p>The API throttling rate limit is exceeded.</p>",
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Uri": {
       "base": null,
@@ -845,8 +842,13 @@
       }
     },
     "ValidationException": {
-      "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
+      "base": "<p>The input request failed to satisfy constraints expected by Amazon Braket.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionReason": {
+      "base": null,
       "refs": {
+        "ValidationException$reason": "<p>The reason for validation failure.</p>"
       }
     }
   }

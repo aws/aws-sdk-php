@@ -14,7 +14,7 @@
     "CreateExport": "<p>Creates a zip archive containing the contents of a bot or a bot locale. The archive contains a directory structure that contains JSON files that define the bot.</p> <p>You can create an archive that contains the complete definition of a bot, or you can specify that the archive contain only the definition of a single bot locale.</p> <p>For more information about exporting bots, and about the structure of the export archive, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/importing-exporting.html\"> Importing and exporting bots </a> </p>",
     "CreateIntent": "<p>Creates an intent.</p> <p>To define the interaction between the user and your bot, you define one or more intents. For example, for a pizza ordering bot you would create an <code>OrderPizza</code> intent.</p> <p>When you create an intent, you must provide a name. You can optionally provide the following:</p> <ul> <li> <p>Sample utterances. For example, \"I want to order a pizza\" and \"Can I order a pizza.\" You can't provide utterances for built-in intents.</p> </li> <li> <p>Information to be gathered. You specify slots for the information that you bot requests from the user. You can specify standard slot types, such as date and time, or custom slot types for your application.</p> </li> <li> <p>How the intent is fulfilled. You can provide a Lambda function or configure the intent to return the intent information to your client application. If you use a Lambda function, Amazon Lex invokes the function when all of the intent information is available.</p> </li> <li> <p>A confirmation prompt to send to the user to confirm an intent. For example, \"Shall I order your pizza?\"</p> </li> <li> <p>A conclusion statement to send to the user after the intent is fulfilled. For example, \"I ordered your pizza.\"</p> </li> <li> <p>A follow-up prompt that asks the user for additional activity. For example, \"Do you want a drink with your pizza?\"</p> </li> </ul>",
     "CreateResourcePolicy": "<p>Creates a new resource policy with the specified policy statements.</p>",
-    "CreateResourcePolicyStatement": "<p>Adds a new resource policy statement to a bot or bot alias. If a resource policy exists, the statement is added to the current resource policy. If a policy doesn't exist, a new policy is created.</p> <p>You can't create a resource policy statement that allows cross-account access.</p>",
+    "CreateResourcePolicyStatement": "<p>Adds a new resource policy statement to a bot or bot alias. If a resource policy exists, the statement is added to the current resource policy. If a policy doesn't exist, a new policy is created.</p> <p>You can't create a resource policy statement that allows cross-account access.</p> <p>You need to add the <code>CreateResourcePolicy</code> or <code>UpdateResourcePolicy</code> action to the bot role in order to call the API.</p>",
     "CreateSlot": "<p>Creates a slot in an intent. A slot is a variable needed to fulfill an intent. For example, an <code>OrderPizza</code> intent might need slots for size, crust, and number of pizzas. For each slot, you define one or more utterances that Amazon Lex uses to elicit a response from the user. </p>",
     "CreateSlotType": "<p>Creates a custom slot type</p> <p> To create a custom slot type, specify a name for the slot type and a set of enumeration values, the values that a slot of this type can assume. </p>",
     "CreateTestSetDiscrepancyReport": "<p>Create a report that describes the differences between the bot and the test set.</p>",
@@ -29,7 +29,7 @@
     "DeleteImport": "<p>Removes a previous import and the associated file stored in an S3 bucket.</p>",
     "DeleteIntent": "<p>Removes the specified intent.</p> <p>Deleting an intent also deletes the slots associated with the intent.</p>",
     "DeleteResourcePolicy": "<p>Removes an existing policy from a bot or bot alias. If the resource doesn't have a policy attached, Amazon Lex returns an exception.</p>",
-    "DeleteResourcePolicyStatement": "<p>Deletes a policy statement from a resource policy. If you delete the last statement from a policy, the policy is deleted. If you specify a statement ID that doesn't exist in the policy, or if the bot or bot alias doesn't have a policy attached, Amazon Lex returns an exception.</p>",
+    "DeleteResourcePolicyStatement": "<p>Deletes a policy statement from a resource policy. If you delete the last statement from a policy, the policy is deleted. If you specify a statement ID that doesn't exist in the policy, or if the bot or bot alias doesn't have a policy attached, Amazon Lex returns an exception.</p> <p>You need to add the <code>DeleteResourcePolicy</code> or <code>UpdateResourcePolicy</code> action to the bot role in order to call the API.</p>",
     "DeleteSlot": "<p>Deletes the specified slot from an intent.</p>",
     "DeleteSlotType": "<p>Deletes a slot type from a bot locale.</p> <p>If a slot is using the slot type, Amazon Lex throws a <code>ResourceInUseException</code> exception. To avoid the exception, set the <code>skipResourceInUseCheck</code> parameter to <code>true</code>.</p>",
     "DeleteTestSet": "<p>The action to delete the selected test set.</p>",
@@ -840,6 +840,7 @@
     "AnswerField": {
       "base": null,
       "refs": {
+        "BedrockKnowledgeStoreExactResponseFields$answerField": "<p>The answer field used for an exact response from Bedrock Knowledge Store.</p>",
         "ExactResponseFields$answerField": "<p>The name of the field that contains the answer to the query made to the OpenSearch Service database.</p>"
       }
     },
@@ -930,38 +931,50 @@
     },
     "BatchCreateCustomVocabularyItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchCreateCustomVocabularyItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteCustomVocabularyItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteCustomVocabularyItemResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateCustomVocabularyItemRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateCustomVocabularyItemResponse": {
       "base": null,
+      "refs": {}
+    },
+    "BedrockGuardrailConfiguration": {
+      "base": "<p>The details on the Bedrock guardrail configuration.</p>",
       "refs": {
+        "BedrockModelSpecification$guardrail": "<p>The guardrail configuration in the Bedrock model specification details.</p>"
+      }
+    },
+    "BedrockGuardrailIdentifier": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailConfiguration$identifier": "<p>The unique guardrail id for the Bedrock guardrail configuration.</p>"
+      }
+    },
+    "BedrockGuardrailVersion": {
+      "base": null,
+      "refs": {
+        "BedrockGuardrailConfiguration$version": "<p>The guardrail version for the Bedrock guardrail configuration.</p>"
       }
     },
     "BedrockKnowledgeBaseArn": {
       "base": null,
       "refs": {
-        "BedrockKnowledgeStoreConfiguration$bedrockKnowledgeBaseArn": "<p>The ARN of the knowledge base used.</p>"
+        "BedrockKnowledgeStoreConfiguration$bedrockKnowledgeBaseArn": "<p>The base ARN of the knowledge base used.</p>"
       }
     },
     "BedrockKnowledgeStoreConfiguration": {
@@ -970,11 +983,23 @@
         "DataSourceConfiguration$bedrockKnowledgeStoreConfiguration": "<p>Contains details about the configuration of the Amazon Bedrock knowledge base used for the <code>AMAZON.QnAIntent</code>. To set up a knowledge base, follow the steps at <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html\">Building a knowledge base</a>.</p>"
       }
     },
+    "BedrockKnowledgeStoreExactResponseFields": {
+      "base": "<p>The exact response fields given by the Bedrock knowledge store.</p>",
+      "refs": {
+        "BedrockKnowledgeStoreConfiguration$exactResponseFields": "<p>Contains the names of the fields used for an exact response to the user.</p>"
+      }
+    },
     "BedrockModelArn": {
       "base": null,
       "refs": {
         "BedrockModelSpecification$modelArn": "<p>The ARN of the foundation model used in descriptive bot building.</p>",
         "DescribeBotResourceGenerationResponse$modelArn": "<p>The ARN of the model used to generate the bot resources.</p>"
+      }
+    },
+    "BedrockModelCustomPrompt": {
+      "base": null,
+      "refs": {
+        "BedrockModelSpecification$customPrompt": "<p>The custom prompt used in the Bedrock model specification details.</p>"
       }
     },
     "BedrockModelSpecification": {
@@ -986,10 +1011,17 @@
         "SlotResolutionImprovementSpecification$bedrockModelSpecification": "<p>An object containing information about the Amazon Bedrock model used to assist slot resolution.</p>"
       }
     },
+    "BedrockTraceStatus": {
+      "base": null,
+      "refs": {
+        "BedrockModelSpecification$traceStatus": "<p>The Bedrock trace status in the Bedrock model specification details.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "AudioLogSetting$enabled": "<p>Determines whether audio logging in enabled for the bot.</p>",
+        "BedrockKnowledgeStoreConfiguration$exactResponse": "<p>Specifies whether to return an exact response, or to return an answer generated by the model, using the fields you specify from the database.</p>",
         "BotAliasLocaleSettings$enabled": "<p>Determines whether the locale is enabled for the bot. If the value is <code>false</code>, the locale isn't available for use.</p>",
         "DescriptiveBotBuilderSpecification$enabled": "<p>Specifies whether the descriptive bot building feature is activated or not.</p>",
         "DialogCodeHookSettings$enabled": "<p>Enables the dialog code hook so that it processes user requests.</p>",
@@ -1492,6 +1524,7 @@
         "DialogCodeHookInvocationSetting$enableCodeHookInvocation": "<p>Indicates whether a Lambda function should be invoked for the dialog.</p>",
         "DialogCodeHookInvocationSetting$active": "<p>Determines whether a dialog code hook is used when the intent is activated.</p>",
         "ElicitationCodeHookInvocationSetting$enableCodeHookInvocation": "<p>Indicates whether a Lambda function should be invoked for the dialog.</p>",
+        "ErrorLogSettings$enabled": "<p>Settings parameters for the error logs, when it is enabled.</p>",
         "FulfillmentCodeHookSettings$active": "<p>Determines whether the fulfillment code hook is used. When <code>active</code> is false, the code hook doesn't run.</p>",
         "FulfillmentStartResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt the start message while it is playing.</p>",
         "FulfillmentUpdateResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt an update message while it is playing.</p>",
@@ -1508,13 +1541,11 @@
     },
     "BuildBotLocaleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BuildBotLocaleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BuildtimeSettings": {
       "base": "<p>Contains specifications about the Amazon Lex build time generative AI capabilities from Amazon Bedrock that you can turn on for your bot.</p>",
@@ -1739,8 +1770,7 @@
     },
     "ConflictException": {
       "base": "<p>The action that you tried to perform couldn't be completed because the resource is in a conflicting state. For example, deleting a bot that is in the CREATING state. Try your request again. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContextTimeToLiveInSeconds": {
       "base": null,
@@ -1858,53 +1888,43 @@
     },
     "CreateBotAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotLocaleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotLocaleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotReplicaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotReplicaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBotVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCustomVocabularyItemsList": {
       "base": null,
@@ -1914,83 +1934,67 @@
     },
     "CreateExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIntentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIntentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourcePolicyStatementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourcePolicyStatementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSlotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSlotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSlotTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSlotTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTestSetDiscrepancyReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTestSetDiscrepancyReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUploadUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUploadUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomPayload": {
       "base": "<p>A custom response string that Amazon Lex sends to your application. You define the content and structure the string.</p>",
@@ -2090,53 +2094,43 @@
     },
     "DeleteBotAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotLocaleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotLocaleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotReplicaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotReplicaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBotVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomVocabularyItemsList": {
       "base": null,
@@ -2146,263 +2140,211 @@
     },
     "DeleteCustomVocabularyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCustomVocabularyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIntentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyStatementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyStatementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSlotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSlotTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTestSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUtterancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUtterancesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotLocaleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotLocaleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotReplicaRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotReplicaResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotResourceGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotResourceGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBotVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCustomVocabularyMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCustomVocabularyMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIntentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIntentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSlotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSlotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSlotTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSlotTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestSetDiscrepancyReportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestSetDiscrepancyReportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestSetGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestSetGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTestSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -2585,6 +2527,7 @@
     "Enabled": {
       "base": null,
       "refs": {
+        "NluImprovementSpecification$enabled": "<p>Specifies whether the assisted nlu feature is enabled.</p>",
         "SlotResolutionImprovementSpecification$enabled": "<p>Specifies whether assisted slot resolution is turned on or off.</p>"
       }
     },
@@ -2602,6 +2545,17 @@
       "base": null,
       "refs": {
         "FailedCustomVocabularyItem$errorCode": "<p>The unique error code for the failed custom vocabulary item from the custom vocabulary list.</p>"
+      }
+    },
+    "ErrorLogSettings": {
+      "base": "<p>Settings parameters for the error logs, whether it is enabled or disabled.</p>",
+      "refs": {
+        "BotImportSpecification$errorLogSettings": "<p>Allows you to configure destinations where error logs will be published during the bot import process.</p>",
+        "CreateBotRequest$errorLogSettings": "<p>Specifies the configuration for error logging during bot creation.</p>",
+        "CreateBotResponse$errorLogSettings": "<p>Specifies configuration settings for delivering error logs to Cloudwatch Logs in an Amazon Lex bot response.</p>",
+        "DescribeBotResponse$errorLogSettings": "<p>Contains the configuration for error logging that specifies where and how bot errors are recorded, including destinations like CloudWatch Logs.</p>",
+        "UpdateBotRequest$errorLogSettings": "<p>Allows you to modify how Amazon Lex logs errors during bot interactions, including destinations for error logs and the types of errors to be captured.</p>",
+        "UpdateBotResponse$errorLogSettings": "<p>Settings for managing error logs within the response of an update bot operation.</p>"
       }
     },
     "ErrorMessage": {
@@ -2828,13 +2782,11 @@
     },
     "GenerateBotElementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GenerateBotElementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GenerationInput": {
       "base": null,
@@ -2888,13 +2840,11 @@
     },
     "GetTestExecutionArtifactsUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTestExecutionArtifactsUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GrammarSlotTypeSetting": {
       "base": "<p>Settings requried for a slot type based on a grammar that you provide.</p>",
@@ -3440,8 +3390,7 @@
     },
     "InternalServerException": {
       "base": "<p>The service encountered an unexpected condition. Try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvokedIntentSample": {
       "base": "<p>An object containing the name of an intent that was invoked.</p>",
@@ -3510,313 +3459,251 @@
     },
     "ListAggregatedUtterancesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAggregatedUtterancesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotAliasReplicasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotAliasReplicasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotAliasesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotAliasesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotLocalesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotLocalesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotRecommendationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotRecommendationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotReplicasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotReplicasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotResourceGenerationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotResourceGenerationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotVersionReplicasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotVersionReplicasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBotsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBuiltInIntentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBuiltInIntentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBuiltInSlotTypesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBuiltInSlotTypesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomVocabularyItemsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCustomVocabularyItemsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentPathsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentPathsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentStageMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentStageMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIntentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendedIntentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRecommendedIntentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionAnalyticsDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionAnalyticsDataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSessionMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSlotTypesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSlotTypesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSlotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSlotsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestExecutionResultItemsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestExecutionResultItemsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestSetRecordsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestSetRecordsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTestSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUtteranceAnalyticsDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUtteranceAnalyticsDataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUtteranceMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUtteranceMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LocaleId": {
       "base": null,
@@ -4187,6 +4074,12 @@
         "ListUtteranceMetricsResponse$nextToken": "<p>If the response from the ListUtteranceMetrics operation contains more results than specified in the maxResults parameter, a token is returned in the response.</p> <p>Use the returned token in the nextToken parameter of a ListUtteranceMetrics request to return the next page of results. For a complete set of results, call the ListUtteranceMetrics operation until the nextToken returned in the response is null.</p>"
       }
     },
+    "NluImprovementSpecification": {
+      "base": "<p>Specifies whether the assisted nlu feature is turned on or off.</p>",
+      "refs": {
+        "RuntimeSettings$nluImprovement": "<p>An object containing specifications for the assisted nlu feature.</p>"
+      }
+    },
     "NonEmptyString": {
       "base": null,
       "refs": {
@@ -4367,8 +4260,7 @@
     },
     "PreconditionFailedException": {
       "base": "<p>Your request couldn't be completed because one or more request fields aren't valid. Check the fields in your request and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PresignedS3Url": {
       "base": null,
@@ -4437,6 +4329,28 @@
         "SlotSummary$valueElicitationPromptSpecification": "<p>Prompts that are sent to the user to elicit a value for the slot.</p>",
         "SlotValueElicitationSetting$promptSpecification": "<p>The prompt that Amazon Lex uses to elicit the slot value from the user.</p>",
         "SubSlotValueElicitationSetting$promptSpecification": null
+      }
+    },
+    "QInConnectAssistantARN": {
+      "base": null,
+      "refs": {
+        "QInConnectAssistantConfiguration$assistantArn": "<p>The assistant Arn details of the Qinconnect assistant configuration.</p>"
+      }
+    },
+    "QInConnectAssistantConfiguration": {
+      "base": "<p>The configuration details of the Qinconnect assistant.</p>",
+      "refs": {
+        "QInConnectIntentConfiguration$qInConnectAssistantConfiguration": "<p>The Qinconnect assistant configuration details of the Qinconnect intent.</p>"
+      }
+    },
+    "QInConnectIntentConfiguration": {
+      "base": "<p>The configuration details of the Qinconnect intent.</p>",
+      "refs": {
+        "CreateIntentRequest$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the create intent request.</p>",
+        "CreateIntentResponse$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the create intent response.</p>",
+        "DescribeIntentResponse$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the describe intent response.</p>",
+        "UpdateIntentRequest$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the update intent request.</p>",
+        "UpdateIntentResponse$qInConnectIntentConfiguration": "<p>Qinconnect intent configuration details for the update intent response.</p>"
       }
     },
     "QnAIntentConfiguration": {
@@ -4542,8 +4456,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>You asked to describe a resource that doesn't exist. Check the resource that you are requesting and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResponseSpecification": {
       "base": "<p>Specifies a list of message groups that Amazon Lex uses to respond the user input.</p>",
@@ -4730,13 +4643,11 @@
     },
     "SearchAssociatedTranscriptsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchAssociatedTranscriptsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SearchOrder": {
       "base": null,
@@ -4762,8 +4673,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You have reached a quota for your bot. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionDataSortBy": {
       "base": "<p>An object specifying the measure and method by which to sort the session analytics data.</p>",
@@ -5138,53 +5048,43 @@
     },
     "StartBotRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBotRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBotResourceGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBotResourceGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTestExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTestExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTestSetGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTestSetGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StillWaitingResponseFrequency": {
       "base": null,
@@ -5206,13 +5106,11 @@
     },
     "StopBotRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopBotRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -5316,13 +5214,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -5645,8 +5541,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Your request rate is too high. Reduce the frequency of requests.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeDimension": {
       "base": null,
@@ -5839,53 +5734,43 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotAliasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotAliasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotLocaleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotLocaleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCustomVocabularyItemsList": {
       "base": null,
@@ -5895,63 +5780,51 @@
     },
     "UpdateExportRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateExportResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIntentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIntentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSlotRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSlotResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSlotTypeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSlotTypeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTestSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTestSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UserTurnInputSpecification": {
       "base": "<p>Contains information about the user messages in the turn in the input.</p>",
@@ -6094,8 +5967,7 @@
     },
     "ValidationException": {
       "base": "<p>One of the input parameters in your request isn't valid. Check the parameters and try your request again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Value": {
       "base": null,
@@ -6116,7 +5988,7 @@
       }
     },
     "VoiceSettings": {
-      "base": "<p>Defines settings for using an Amazon Polly voice to communicate with a user.</p>",
+      "base": "<p>Defines settings for using an Amazon Polly voice to communicate with a user.</p> <p>Valid values include:</p> <ul> <li> <p> <code>standard</code> </p> </li> <li> <p> <code>neural</code> </p> </li> <li> <p> <code>long-form</code> </p> </li> <li> <p> <code>generative</code> </p> </li> </ul>",
       "refs": {
         "BotLocaleImportSpecification$voiceSettings": null,
         "CreateBotLocaleRequest$voiceSettings": "<p>The Amazon Polly voice ID that Amazon Lex uses for voice interaction with the user.</p>",

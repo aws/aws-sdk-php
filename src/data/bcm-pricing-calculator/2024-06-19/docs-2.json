@@ -1,0 +1,1715 @@
+{
+  "version": "2.0",
+  "service": "<p> You can use the Pricing Calculator API to programmatically create estimates for your planned cloud use. You can model usage and commitments such as Savings Plans and Reserved Instances, and generate estimated costs using your discounts and benefit sharing preferences. </p> <p>The Pricing Calculator API provides the following endpoint:</p> <ul> <li> <p> <code>https://bcm-pricing-calculator.us-east-1.api.aws</code> </p> </li> </ul>",
+  "operations": {
+    "BatchCreateBillScenarioCommitmentModification": "<p> Create Compute Savings Plans, EC2 Instance Savings Plans, or EC2 Reserved Instances commitments that you want to model in a Bill Scenario. </p> <note> <p>The <code>BatchCreateBillScenarioCommitmentModification</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:CreateBillScenarioCommitmentModification</code> in your policies.</p> </note>",
+    "BatchCreateBillScenarioUsageModification": "<p> Create Amazon Web Services service usage that you want to model in a Bill Scenario. </p> <note> <p>The <code>BatchCreateBillScenarioUsageModification</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:CreateBillScenarioUsageModification</code> in your policies.</p> </note>",
+    "BatchCreateWorkloadEstimateUsage": "<p> Create Amazon Web Services service usage that you want to model in a Workload Estimate. </p> <note> <p>The <code>BatchCreateWorkloadEstimateUsage</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:CreateWorkloadEstimateUsage</code> in your policies.</p> </note>",
+    "BatchDeleteBillScenarioCommitmentModification": "<p> Delete commitment that you have created in a Bill Scenario. You can only delete a commitment that you had added and cannot model deletion (or removal) of a existing commitment. If you want model deletion of an existing commitment, see the negate <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AWSBCMPricingCalculator_BillScenarioCommitmentModificationAction.html\"> BillScenarioCommitmentModificationAction</a> of <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AWSBCMPricingCalculator_BatchCreateBillScenarioUsageModification.html\"> BatchCreateBillScenarioCommitmentModification</a> operation. </p> <note> <p>The <code>BatchDeleteBillScenarioCommitmentModification</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:DeleteBillScenarioCommitmentModification</code> in your policies.</p> </note>",
+    "BatchDeleteBillScenarioUsageModification": "<p> Delete usage that you have created in a Bill Scenario. You can only delete usage that you had added and cannot model deletion (or removal) of a existing usage. If you want model removal of an existing usage, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AWSBCMPricingCalculator_BatchUpdateBillScenarioUsageModification.html\"> BatchUpdateBillScenarioUsageModification</a>. </p> <note> <p>The <code>BatchDeleteBillScenarioUsageModification</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:DeleteBillScenarioUsageModification</code> in your policies.</p> </note>",
+    "BatchDeleteWorkloadEstimateUsage": "<p> Delete usage that you have created in a Workload estimate. You can only delete usage that you had added and cannot model deletion (or removal) of a existing usage. If you want model removal of an existing usage, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AWSBCMPricingCalculator_BatchUpdateWorkloadEstimateUsage.html\"> BatchUpdateWorkloadEstimateUsage</a>. </p> <note> <p>The <code>BatchDeleteWorkloadEstimateUsage</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:DeleteWorkloadEstimateUsage</code> in your policies.</p> </note>",
+    "BatchUpdateBillScenarioCommitmentModification": "<p> Update a newly added or existing commitment. You can update the commitment group based on a commitment ID and a Bill scenario ID. </p> <note> <p>The <code>BatchUpdateBillScenarioCommitmentModification</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:UpdateBillScenarioCommitmentModification</code> in your policies.</p> </note>",
+    "BatchUpdateBillScenarioUsageModification": "<p> Update a newly added or existing usage lines. You can update the usage amounts, usage hour, and usage group based on a usage ID and a Bill scenario ID. </p> <note> <p>The <code>BatchUpdateBillScenarioUsageModification</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:UpdateBillScenarioUsageModification</code> in your policies.</p> </note>",
+    "BatchUpdateWorkloadEstimateUsage": "<p> Update a newly added or existing usage lines. You can update the usage amounts and usage group based on a usage ID and a Workload estimate ID. </p> <note> <p>The <code>BatchUpdateWorkloadEstimateUsage</code> operation doesn't have its own IAM permission. To authorize this operation for Amazon Web Services principals, include the permission <code>bcm-pricing-calculator:UpdateWorkloadEstimateUsage</code> in your policies.</p> </note>",
+    "CreateBillEstimate": "<p> Create a Bill estimate from a Bill scenario. In the Bill scenario you can model usage addition, usage changes, and usage removal. You can also model commitment addition and commitment removal. After all changes in a Bill scenario is made satisfactorily, you can call this API with a Bill scenario ID to generate the Bill estimate. Bill estimate calculates the pre-tax cost for your consolidated billing family, incorporating all modeled usage and commitments alongside existing usage and commitments from your most recent completed anniversary bill, with any applicable discounts applied. </p>",
+    "CreateBillScenario": "<p> Creates a new bill scenario to model potential changes to Amazon Web Services usage and costs. </p>",
+    "CreateWorkloadEstimate": "<p> Creates a new workload estimate to model costs for a specific workload. </p>",
+    "DeleteBillEstimate": "<p> Deletes an existing bill estimate. </p>",
+    "DeleteBillScenario": "<p> Deletes an existing bill scenario. </p>",
+    "DeleteWorkloadEstimate": "<p> Deletes an existing workload estimate. </p>",
+    "GetBillEstimate": "<p> Retrieves details of a specific bill estimate. </p>",
+    "GetBillScenario": "<p> Retrieves details of a specific bill scenario. </p>",
+    "GetPreferences": "<p> Retrieves the current preferences for Pricing Calculator. </p>",
+    "GetWorkloadEstimate": "<p> Retrieves details of a specific workload estimate. </p>",
+    "ListBillEstimateCommitments": "<p> Lists the commitments associated with a bill estimate. </p>",
+    "ListBillEstimateInputCommitmentModifications": "<p> Lists the input commitment modifications associated with a bill estimate. </p>",
+    "ListBillEstimateInputUsageModifications": "<p> Lists the input usage modifications associated with a bill estimate. </p>",
+    "ListBillEstimateLineItems": "<p> Lists the line items associated with a bill estimate. </p>",
+    "ListBillEstimates": "<p> Lists all bill estimates for the account. </p>",
+    "ListBillScenarioCommitmentModifications": "<p> Lists the commitment modifications associated with a bill scenario. </p>",
+    "ListBillScenarioUsageModifications": "<p> Lists the usage modifications associated with a bill scenario. </p>",
+    "ListBillScenarios": "<p> Lists all bill scenarios for the account. </p>",
+    "ListTagsForResource": "<p> Lists all tags associated with a specified resource. </p>",
+    "ListWorkloadEstimateUsage": "<p> Lists the usage associated with a workload estimate. </p>",
+    "ListWorkloadEstimates": "<p> Lists all workload estimates for the account. </p>",
+    "TagResource": "<p> Adds one or more tags to a specified resource. </p>",
+    "UntagResource": "<p> Removes one or more tags from a specified resource. </p>",
+    "UpdateBillEstimate": "<p> Updates an existing bill estimate. </p>",
+    "UpdateBillScenario": "<p> Updates an existing bill scenario. </p>",
+    "UpdatePreferences": "<p> Updates the preferences for Pricing Calculator. </p>",
+    "UpdateWorkloadEstimate": "<p> Updates an existing workload estimate. </p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p> You do not have sufficient access to perform this action. </p>",
+      "refs": {
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationEntry$usageAccountId": "<p> The Amazon Web Services account ID to which this commitment will be applied to. </p>",
+        "BatchCreateBillScenarioCommitmentModificationItem$usageAccountId": "<p> The Amazon Web Services account ID associated with the created commitment modification. </p>",
+        "BatchCreateBillScenarioUsageModificationEntry$usageAccountId": "<p> The Amazon Web Services account ID to which this usage will be applied to. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$usageAccountId": "<p> The Amazon Web Services account ID associated with the created usage modification. </p>",
+        "BatchCreateWorkloadEstimateUsageEntry$usageAccountId": "<p> The Amazon Web Services account ID associated with this usage estimate. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$usageAccountId": "<p> The Amazon Web Services account ID associated with the created usage estimate. </p>",
+        "BillEstimateCommitmentSummary$usageAccountId": "<p> The Amazon Web Services account ID associated with this commitment. </p>",
+        "BillEstimateInputCommitmentModificationSummary$usageAccountId": "<p> The Amazon Web Services account ID associated with this commitment modification. </p>",
+        "BillEstimateInputUsageModificationSummary$usageAccountId": "<p> The Amazon Web Services account ID associated with this usage modification. </p>",
+        "BillEstimateLineItemSummary$payerAccountId": "<p> The Amazon Web Services account ID of the payer for this line item. </p>",
+        "BillEstimateLineItemSummary$usageAccountId": "<p> The Amazon Web Services account ID associated with the usage for this line item. </p>",
+        "BillScenarioCommitmentModificationItem$usageAccountId": "<p> The Amazon Web Services account ID associated with this commitment modification. </p>",
+        "BillScenarioUsageModificationItem$usageAccountId": "<p> The Amazon Web Services account ID associated with this usage modification. </p>",
+        "HistoricalUsageEntity$usageAccountId": "<p> The Amazon Web Services account ID associated with the usage. </p>",
+        "WorkloadEstimateUsageItem$usageAccountId": "<p> The Amazon Web Services account ID associated with this usage item. </p>"
+      }
+    },
+    "AddReservedInstanceAction": {
+      "base": "<p> Represents an action to add a Reserved Instance to a bill scenario. </p>",
+      "refs": {
+        "BillScenarioCommitmentModificationAction$addReservedInstanceAction": "<p> Action to add a Reserved Instance to the scenario. </p>"
+      }
+    },
+    "AddSavingsPlanAction": {
+      "base": "<p> Represents an action to add a Savings Plan to a bill scenario. </p>",
+      "refs": {
+        "BillScenarioCommitmentModificationAction$addSavingsPlanAction": "<p> Action to add a Savings Plan to the scenario. </p>"
+      }
+    },
+    "Arn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$arn": "<p> The Amazon Resource Name (ARN) of the resource to list tags for. </p>",
+        "TagResourceRequest$arn": "<p> The Amazon Resource Name (ARN) of the resource to add tags to. </p>",
+        "UntagResourceRequest$arn": "<p> The Amazon Resource Name (ARN) of the resource to remove tags from. </p>"
+      }
+    },
+    "AvailabilityZone": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationEntry$availabilityZone": "<p> The Availability Zone that this usage line uses. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$availabilityZone": "<p> The availability zone associated with this usage modification, if applicable. </p>",
+        "BillEstimateInputUsageModificationSummary$availabilityZone": "<p> The availability zone associated with this usage modification, if applicable. </p>",
+        "BillEstimateLineItemSummary$availabilityZone": "<p> The availability zone associated with this line item, if applicable. </p>",
+        "BillScenarioUsageModificationItem$availabilityZone": "<p> The availability zone associated with this usage modification, if applicable. </p>"
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationEntries": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationRequest$commitmentModifications": "<p> List of commitments that you want to model in the Bill Scenario. </p>"
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationEntry": {
+      "base": "<p> Represents an entry object in the batch operation to create bill scenario commitment modifications. </p>",
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationEntries$member": null
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationError": {
+      "base": "<p> Represents an error that occurred during a batch create operation for bill scenario commitment modifications. </p>",
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationErrors$member": null
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationError$errorCode": "<p> The error code associated with the failed operation. </p>"
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationErrors": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationResponse$errors": "<p> Returns the list of errors reason and the commitment item keys that cannot be created in the Bill Scenario. </p>"
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationItem": {
+      "base": "<p> Represents a successfully created item in a batch operation for bill scenario commitment modifications. </p>",
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationItems$member": null
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationItems": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationResponse$items": "<p> Returns the list of successful commitment line items that were created for the Bill Scenario. </p>"
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchCreateBillScenarioCommitmentModificationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationEntries": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationRequest$usageModifications": "<p> List of usage that you want to model in the Bill Scenario. </p>"
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationEntry": {
+      "base": "<p> Represents an entry in a batch operation to create bill scenario usage modifications. </p>",
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationEntries$member": null
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationError": {
+      "base": "<p> Represents an error that occurred during a batch create operation for bill scenario usage modifications. </p>",
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationErrors$member": null
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationError$errorCode": "<p> The error code associated with the failed operation. </p>"
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationErrors": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationResponse$errors": "<p> Returns the list of errors reason and the usage item keys that cannot be created in the Bill Scenario. </p>"
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationItem": {
+      "base": "<p> Represents a successfully created item in a batch operation for bill scenario usage modifications. </p>",
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationItems$member": null
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationItems": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationResponse$items": "<p> Returns the list of successful usage line items that were created for the Bill Scenario. </p>"
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchCreateBillScenarioUsageModificationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageCode": {
+      "base": null,
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageError$errorCode": "<p> The error code associated with the failed operation. </p>"
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageEntries": {
+      "base": null,
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageRequest$usage": "<p> List of usage that you want to model in the Workload estimate. </p>"
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageEntry": {
+      "base": "<p> Represents an entry in a batch operation to create workload estimate usage. </p>",
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageEntries$member": null
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageError": {
+      "base": "<p> Represents an error that occurred during a batch create operation for workload estimate usage. </p>",
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageErrors$member": null
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageErrors": {
+      "base": null,
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageResponse$errors": "<p> Returns the list of errors reason and the usage item keys that cannot be created in the Workload estimate. </p>"
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageItem": {
+      "base": "<p> Represents a successfully created item in a batch operation for workload estimate usage. </p>",
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageItems$member": null
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageItems": {
+      "base": null,
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageResponse$items": "<p> Returns the list of successful usage line items that were created for the Workload estimate. </p>"
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchCreateWorkloadEstimateUsageResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDeleteBillScenarioCommitmentModificationEntries": {
+      "base": null,
+      "refs": {
+        "BatchDeleteBillScenarioCommitmentModificationRequest$ids": "<p> List of commitments that you want to delete from the Bill Scenario. </p>"
+      }
+    },
+    "BatchDeleteBillScenarioCommitmentModificationError": {
+      "base": "<p> Represents an error that occurred when deleting a commitment in a Bill Scenario. </p>",
+      "refs": {
+        "BatchDeleteBillScenarioCommitmentModificationErrors$member": null
+      }
+    },
+    "BatchDeleteBillScenarioCommitmentModificationErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchDeleteBillScenarioCommitmentModificationError$errorCode": "<p> The code associated with the error. </p>"
+      }
+    },
+    "BatchDeleteBillScenarioCommitmentModificationErrors": {
+      "base": null,
+      "refs": {
+        "BatchDeleteBillScenarioCommitmentModificationResponse$errors": "<p> Returns the list of errors reason and the commitment item keys that cannot be deleted from the Bill Scenario. </p>"
+      }
+    },
+    "BatchDeleteBillScenarioCommitmentModificationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDeleteBillScenarioCommitmentModificationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDeleteBillScenarioUsageModificationEntries": {
+      "base": null,
+      "refs": {
+        "BatchDeleteBillScenarioUsageModificationRequest$ids": "<p> List of usage that you want to delete from the Bill Scenario. </p>"
+      }
+    },
+    "BatchDeleteBillScenarioUsageModificationError": {
+      "base": "<p> Represents an error that occurred when deleting usage in a Bill Scenario. </p>",
+      "refs": {
+        "BatchDeleteBillScenarioUsageModificationErrors$member": null
+      }
+    },
+    "BatchDeleteBillScenarioUsageModificationErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchDeleteBillScenarioUsageModificationError$errorCode": "<p> The code associated with the error. </p>"
+      }
+    },
+    "BatchDeleteBillScenarioUsageModificationErrors": {
+      "base": null,
+      "refs": {
+        "BatchDeleteBillScenarioUsageModificationResponse$errors": "<p> Returns the list of errors reason and the usage item keys that cannot be deleted from the Bill Scenario. </p>"
+      }
+    },
+    "BatchDeleteBillScenarioUsageModificationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDeleteBillScenarioUsageModificationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDeleteWorkloadEstimateUsageEntries": {
+      "base": null,
+      "refs": {
+        "BatchDeleteWorkloadEstimateUsageRequest$ids": "<p> List of usage that you want to delete from the Workload estimate. </p>"
+      }
+    },
+    "BatchDeleteWorkloadEstimateUsageError": {
+      "base": "<p> Represents an error that occurred when deleting usage in a workload estimate. </p>",
+      "refs": {
+        "BatchDeleteWorkloadEstimateUsageErrors$member": null
+      }
+    },
+    "BatchDeleteWorkloadEstimateUsageErrors": {
+      "base": null,
+      "refs": {
+        "BatchDeleteWorkloadEstimateUsageResponse$errors": "<p> Returns the list of errors reason and the usage item keys that cannot be deleted from the Workload estimate. </p>"
+      }
+    },
+    "BatchDeleteWorkloadEstimateUsageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDeleteWorkloadEstimateUsageResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateBillScenarioCommitmentModificationEntries": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioCommitmentModificationRequest$commitmentModifications": "<p> List of commitments that you want to update in a Bill Scenario. </p>"
+      }
+    },
+    "BatchUpdateBillScenarioCommitmentModificationEntry": {
+      "base": "<p> Represents an entry in a batch operation to update bill scenario commitment modifications. </p>",
+      "refs": {
+        "BatchUpdateBillScenarioCommitmentModificationEntries$member": null
+      }
+    },
+    "BatchUpdateBillScenarioCommitmentModificationError": {
+      "base": "<p> Represents an error that occurred when updating a commitment in a Bill Scenario. </p>",
+      "refs": {
+        "BatchUpdateBillScenarioCommitmentModificationErrors$member": null
+      }
+    },
+    "BatchUpdateBillScenarioCommitmentModificationErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioCommitmentModificationError$errorCode": "<p> The code associated with the error. </p>"
+      }
+    },
+    "BatchUpdateBillScenarioCommitmentModificationErrors": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioCommitmentModificationResponse$errors": "<p> Returns the list of error reasons and commitment line item IDs that could not be updated for the Bill Scenario. </p>"
+      }
+    },
+    "BatchUpdateBillScenarioCommitmentModificationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateBillScenarioCommitmentModificationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateBillScenarioUsageModificationEntries": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioUsageModificationRequest$usageModifications": "<p> List of usage lines that you want to update in a Bill Scenario identified by the usage ID. </p>"
+      }
+    },
+    "BatchUpdateBillScenarioUsageModificationEntry": {
+      "base": "<p> Represents an entry in a batch operation to update bill scenario usage modifications. </p>",
+      "refs": {
+        "BatchUpdateBillScenarioUsageModificationEntries$member": null
+      }
+    },
+    "BatchUpdateBillScenarioUsageModificationError": {
+      "base": "<p> Represents an error that occurred when updating usage in a Bill Scenario. </p>",
+      "refs": {
+        "BatchUpdateBillScenarioUsageModificationErrors$member": null
+      }
+    },
+    "BatchUpdateBillScenarioUsageModificationErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioUsageModificationError$errorCode": "<p> The code associated with the error. </p>"
+      }
+    },
+    "BatchUpdateBillScenarioUsageModificationErrors": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioUsageModificationResponse$errors": "<p> Returns the list of error reasons and usage line item IDs that could not be updated for the Bill Scenario. </p>"
+      }
+    },
+    "BatchUpdateBillScenarioUsageModificationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateBillScenarioUsageModificationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateWorkloadEstimateUsageEntries": {
+      "base": null,
+      "refs": {
+        "BatchUpdateWorkloadEstimateUsageRequest$usage": "<p> List of usage line amounts and usage group that you want to update in a Workload estimate identified by the usage ID. </p>"
+      }
+    },
+    "BatchUpdateWorkloadEstimateUsageEntry": {
+      "base": "<p> Represents an entry in a batch operation to update workload estimate usage. </p>",
+      "refs": {
+        "BatchUpdateWorkloadEstimateUsageEntries$member": null
+      }
+    },
+    "BatchUpdateWorkloadEstimateUsageError": {
+      "base": "<p> Represents an error that occurred when updating usage in a workload estimate. </p>",
+      "refs": {
+        "BatchUpdateWorkloadEstimateUsageErrors$member": null
+      }
+    },
+    "BatchUpdateWorkloadEstimateUsageErrors": {
+      "base": null,
+      "refs": {
+        "BatchUpdateWorkloadEstimateUsageResponse$errors": "<p> Returns the list of error reasons and usage line item IDs that could not be updated for the Workload estimate. </p>"
+      }
+    },
+    "BatchUpdateWorkloadEstimateUsageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchUpdateWorkloadEstimateUsageResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BillEstimateCommitmentSummaries": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateCommitmentsResponse$items": "<p> The list of commitments associated with the bill estimate. </p>"
+      }
+    },
+    "BillEstimateCommitmentSummary": {
+      "base": "<p> Provides a summary of commitment-related information for a bill estimate. </p>",
+      "refs": {
+        "BillEstimateCommitmentSummaries$member": null
+      }
+    },
+    "BillEstimateCostSummary": {
+      "base": "<p> Provides a summary of cost-related information for a bill estimate. </p>",
+      "refs": {
+        "CreateBillEstimateResponse$costSummary": "<p> Returns summary-level cost information once a Bill estimate is successfully generated. This summary includes: 1) the total cost difference, showing the pre-tax cost change for the consolidated billing family between the completed anniversary bill and the estimated bill, and 2) total cost differences per service, detailing the pre-tax cost of each service, comparing the completed anniversary bill to the estimated bill on a per-service basis. </p>",
+        "GetBillEstimateResponse$costSummary": "<p> A summary of the estimated costs. </p>",
+        "UpdateBillEstimateResponse$costSummary": "<p> A summary of the updated estimated costs. </p>"
+      }
+    },
+    "BillEstimateInputCommitmentModificationSummaries": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateInputCommitmentModificationsResponse$items": "<p> The list of input commitment modifications associated with the bill estimate. </p>"
+      }
+    },
+    "BillEstimateInputCommitmentModificationSummary": {
+      "base": "<p> Summarizes an input commitment modification for a bill estimate. </p>",
+      "refs": {
+        "BillEstimateInputCommitmentModificationSummaries$member": null
+      }
+    },
+    "BillEstimateInputUsageModificationSummaries": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateInputUsageModificationsResponse$items": "<p> The list of input usage modifications associated with the bill estimate. </p>"
+      }
+    },
+    "BillEstimateInputUsageModificationSummary": {
+      "base": "<p> Summarizes an input usage modification for a bill estimate. </p>",
+      "refs": {
+        "BillEstimateInputUsageModificationSummaries$member": null
+      }
+    },
+    "BillEstimateLineItemSummaries": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateLineItemsResponse$items": "<p> The list of line items associated with the bill estimate. </p>"
+      }
+    },
+    "BillEstimateLineItemSummary": {
+      "base": "<p> Provides a summary of a line item in a bill estimate. </p>",
+      "refs": {
+        "BillEstimateLineItemSummaries$member": null
+      }
+    },
+    "BillEstimateName": {
+      "base": null,
+      "refs": {
+        "BillEstimateSummary$name": "<p> The name of the bill estimate. </p>",
+        "CreateBillEstimateRequest$name": "<p> The name of the Bill estimate that will be created. Names must be unique for an account. </p>",
+        "CreateBillEstimateResponse$name": "<p> The name of your newly created Bill estimate. </p>",
+        "GetBillEstimateResponse$name": "<p> The name of the retrieved bill estimate. </p>",
+        "UpdateBillEstimateRequest$name": "<p> The new name for the bill estimate. </p>",
+        "UpdateBillEstimateResponse$name": "<p> The updated name of the bill estimate. </p>"
+      }
+    },
+    "BillEstimateStatus": {
+      "base": null,
+      "refs": {
+        "BillEstimateSummary$status": "<p> The current status of the bill estimate. </p>",
+        "CreateBillEstimateResponse$status": "<p> The status of your newly created Bill estimate. Bill estimate creation can take anywhere between 8 to 12 hours. The status will allow you to identify when the Bill estimate is complete or has failed. </p>",
+        "GetBillEstimateResponse$status": "<p> The current status of the bill estimate. </p>",
+        "UpdateBillEstimateResponse$status": "<p> The current status of the updated bill estimate. </p>"
+      }
+    },
+    "BillEstimateSummaries": {
+      "base": null,
+      "refs": {
+        "ListBillEstimatesResponse$items": "<p> The list of bill estimates for the account. </p>"
+      }
+    },
+    "BillEstimateSummary": {
+      "base": "<p> Provides a summary of a bill estimate. </p>",
+      "refs": {
+        "BillEstimateSummaries$member": null
+      }
+    },
+    "BillInterval": {
+      "base": "<p> Represents a time interval for a bill or estimate. </p>",
+      "refs": {
+        "BillEstimateSummary$billInterval": "<p> The time period covered by the bill estimate. </p>",
+        "BillScenarioSummary$billInterval": "<p> The time period covered by the bill scenario. </p>",
+        "CreateBillEstimateResponse$billInterval": "<p> The bill month start and end timestamp that was used to create the Bill estimate. This is set to the last complete anniversary bill month start and end timestamp. </p>",
+        "CreateBillScenarioResponse$billInterval": "<p> The time period covered by the bill scenario. </p>",
+        "GetBillEstimateResponse$billInterval": "<p> The time period covered by the bill estimate. </p>",
+        "GetBillScenarioResponse$billInterval": "<p> The time period covered by the bill scenario. </p>",
+        "HistoricalUsageEntity$billInterval": "<p> The time interval for the historical usage data. </p>",
+        "UpdateBillEstimateResponse$billInterval": "<p> The time period covered by the updated bill estimate. </p>",
+        "UpdateBillScenarioResponse$billInterval": "<p> The time period covered by the updated bill scenario. </p>"
+      }
+    },
+    "BillScenarioCommitmentModificationAction": {
+      "base": "<p> Represents an action to modify commitments in a bill scenario. </p>",
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationEntry$commitmentAction": "<p> The specific commitment action to be taken (e.g., adding a Reserved Instance or Savings Plan). </p>",
+        "BatchCreateBillScenarioCommitmentModificationItem$commitmentAction": "<p> The specific commitment action that was taken. </p>",
+        "BillEstimateInputCommitmentModificationSummary$commitmentAction": "<p> The specific commitment action taken in this modification. </p>",
+        "BillScenarioCommitmentModificationItem$commitmentAction": "<p> The specific commitment action taken in this modification. </p>"
+      }
+    },
+    "BillScenarioCommitmentModificationItem": {
+      "base": "<p> Represents a commitment modification item in a bill scenario. </p>",
+      "refs": {
+        "BillScenarioCommitmentModificationItems$member": null
+      }
+    },
+    "BillScenarioCommitmentModificationItems": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioCommitmentModificationResponse$items": "<p> Returns the list of successful commitment line items that were updated for a Bill Scenario. </p>",
+        "ListBillScenarioCommitmentModificationsResponse$items": "<p> The list of commitment modifications associated with the bill scenario. </p>"
+      }
+    },
+    "BillScenarioName": {
+      "base": null,
+      "refs": {
+        "BillScenarioSummary$name": "<p> The name of the bill scenario. </p>",
+        "CreateBillScenarioRequest$name": "<p> A descriptive name for the bill scenario. </p>",
+        "CreateBillScenarioResponse$name": "<p> The name of the created bill scenario. </p>",
+        "GetBillScenarioResponse$name": "<p> The name of the retrieved bill scenario. </p>",
+        "UpdateBillScenarioRequest$name": "<p> The new name for the bill scenario. </p>",
+        "UpdateBillScenarioResponse$name": "<p> The updated name of the bill scenario. </p>"
+      }
+    },
+    "BillScenarioStatus": {
+      "base": null,
+      "refs": {
+        "BillScenarioSummary$status": "<p> The current status of the bill scenario. </p>",
+        "CreateBillScenarioResponse$status": "<p> The current status of the bill scenario. </p>",
+        "GetBillScenarioResponse$status": "<p> The current status of the bill scenario. </p>",
+        "UpdateBillScenarioResponse$status": "<p> The current status of the updated bill scenario. </p>"
+      }
+    },
+    "BillScenarioSummaries": {
+      "base": null,
+      "refs": {
+        "ListBillScenariosResponse$items": "<p> The list of bill scenarios for the account. </p>"
+      }
+    },
+    "BillScenarioSummary": {
+      "base": "<p> Provides a summary of a bill scenario. </p>",
+      "refs": {
+        "BillScenarioSummaries$member": null
+      }
+    },
+    "BillScenarioUsageModificationItem": {
+      "base": "<p> Represents a usage modification item in a bill scenario. </p>",
+      "refs": {
+        "BillScenarioUsageModificationItems$member": null
+      }
+    },
+    "BillScenarioUsageModificationItems": {
+      "base": null,
+      "refs": {
+        "BatchUpdateBillScenarioUsageModificationResponse$items": "<p> Returns the list of successful usage line items that were updated for a Bill Scenario. </p>",
+        "ListBillScenarioUsageModificationsResponse$items": "<p> The list of usage modifications associated with the bill scenario. </p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationRequest$clientToken": "<p> A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
+        "BatchCreateBillScenarioUsageModificationRequest$clientToken": "<p> A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
+        "BatchCreateWorkloadEstimateUsageRequest$clientToken": "<p> A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
+        "CreateBillEstimateRequest$clientToken": "<p> A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. </p>",
+        "CreateBillScenarioRequest$clientToken": "<p> A unique, case-sensitive identifier to ensure idempotency of the request. </p>",
+        "CreateWorkloadEstimateRequest$clientToken": "<p> A unique, case-sensitive identifier to ensure idempotency of the request. </p>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p> The request could not be processed because of conflict in the current state of the resource. </p>",
+      "refs": {
+      }
+    },
+    "CostAmount": {
+      "base": "<p> Represents a monetary amount with associated currency. </p>",
+      "refs": {
+        "BillEstimateCommitmentSummary$upfrontPayment": "<p> The upfront payment amount for this commitment, if applicable. </p>",
+        "BillEstimateCommitmentSummary$monthlyPayment": "<p> The monthly payment amount for this commitment, if applicable. </p>",
+        "BillEstimateLineItemSummary$estimatedCost": "<p> The estimated cost for this line item. </p>",
+        "BillEstimateLineItemSummary$historicalCost": "<p> The historical cost for this line item. </p>",
+        "CostDifference$historicalCost": "<p> The historical cost amount. </p>",
+        "CostDifference$estimatedCost": "<p> The estimated cost amount. </p>"
+      }
+    },
+    "CostDifference": {
+      "base": "<p> Represents the difference between historical and estimated costs. </p>",
+      "refs": {
+        "BillEstimateCostSummary$totalCostDifference": "<p> The total difference in cost between the estimated and historical costs. </p>",
+        "ServiceCostDifferenceMap$value": null
+      }
+    },
+    "CreateBillEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateBillEstimateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateBillScenarioRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateBillScenarioResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWorkloadEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWorkloadEstimateResponse": {
+      "base": "<p>Mixin for common fields returned by CRUD APIs</p>",
+      "refs": {
+      }
+    },
+    "CurrencyCode": {
+      "base": null,
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageItem$currency": "<p> The currency of the estimated cost. </p>",
+        "CostAmount$currency": "<p> The currency code for the cost amount. </p>",
+        "CreateWorkloadEstimateResponse$costCurrency": "<p> The currency of the estimated cost. </p>",
+        "GetWorkloadEstimateResponse$costCurrency": "<p> The currency of the estimated cost. </p>",
+        "UpdateWorkloadEstimateResponse$costCurrency": "<p> The currency of the updated estimated cost. </p>",
+        "WorkloadEstimateSummary$costCurrency": "<p> The currency of the estimated cost. </p>",
+        "WorkloadEstimateUsageItem$currency": "<p> The currency of the estimated cost. </p>"
+      }
+    },
+    "DataUnavailableException": {
+      "base": "<p> The requested data is currently unavailable. </p>",
+      "refs": {
+      }
+    },
+    "DeleteBillEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBillEstimateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBillScenarioRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteBillScenarioResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteWorkloadEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteWorkloadEstimateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageEntry$amount": "<p> The estimated usage amount. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$cost": "<p> The estimated cost associated with this usage. </p>",
+        "BatchUpdateWorkloadEstimateUsageEntry$amount": "<p> The updated estimated usage amount. </p>",
+        "CostAmount$amount": "<p> The numeric value of the cost. </p>",
+        "CreateWorkloadEstimateResponse$totalCost": "<p> The total estimated cost for the workload. </p>",
+        "GetWorkloadEstimateResponse$totalCost": "<p> The total estimated cost for the workload. </p>",
+        "UpdateWorkloadEstimateResponse$totalCost": "<p> The updated total estimated cost for the workload. </p>",
+        "UsageAmount$amount": "<p> The usage amount for the period. </p>",
+        "UsageQuantity$amount": "<p> The numeric value of the usage quantity. </p>",
+        "UsageQuantityResult$amount": "<p> The numeric value of the usage quantity result. </p>",
+        "WorkloadEstimateSummary$totalCost": "<p> The total estimated cost for the workload. </p>",
+        "WorkloadEstimateUsageItem$cost": "<p> The estimated cost for this usage item. </p>",
+        "WorkloadEstimateUsageQuantity$amount": "<p> The numeric value of the usage quantity. </p>"
+      }
+    },
+    "Expression": {
+      "base": "<p> Represents a complex filtering expression for cost and usage data. </p>",
+      "refs": {
+        "Expression$not": "<p> An expression to be negated. </p>",
+        "ExpressionList$member": null,
+        "HistoricalUsageEntity$filterExpression": "<p> An optional filter expression to apply to the historical usage data. </p>"
+      }
+    },
+    "ExpressionFilter": {
+      "base": "<p> Represents a filter used within an expression. </p>",
+      "refs": {
+        "Expression$costCategories": "<p> Filters based on cost categories. </p>",
+        "Expression$dimensions": "<p> Filters based on dimensions (e.g., service, operation). </p>",
+        "Expression$tags": "<p> Filters based on resource tags. </p>"
+      }
+    },
+    "ExpressionList": {
+      "base": null,
+      "refs": {
+        "Expression$and": "<p> A list of expressions to be combined with AND logic. </p>",
+        "Expression$or": "<p> A list of expressions to be combined with OR logic. </p>"
+      }
+    },
+    "FilterTimestamp": {
+      "base": "<p> Represents a time-based filter. </p>",
+      "refs": {
+        "ListBillEstimatesRequest$createdAtFilter": "<p> Filter bill estimates based on the creation date. </p>",
+        "ListBillEstimatesRequest$expiresAtFilter": "<p> Filter bill estimates based on the expiration date. </p>",
+        "ListBillScenariosRequest$createdAtFilter": "<p> Filter bill scenarios based on the creation date. </p>",
+        "ListBillScenariosRequest$expiresAtFilter": "<p> Filter bill scenarios based on the expiration date. </p>",
+        "ListWorkloadEstimatesRequest$createdAtFilter": "<p> Filter workload estimates based on the creation date. </p>",
+        "ListWorkloadEstimatesRequest$expiresAtFilter": "<p> Filter workload estimates based on the expiration date. </p>"
+      }
+    },
+    "GetBillEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetBillEstimateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetBillScenarioRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetBillScenarioResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPreferencesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPreferencesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetWorkloadEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetWorkloadEstimateResponse": {
+      "base": "<p>Mixin for common fields returned by CRUD APIs</p>",
+      "refs": {
+      }
+    },
+    "HistoricalUsageEntity": {
+      "base": "<p> Represents historical usage data for a specific entity. </p>",
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationEntry$historicalUsage": "<p> Historical usage data associated with this modification, if available. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$historicalUsage": "<p> Historical usage data associated with this modification, if available. </p>",
+        "BatchCreateWorkloadEstimateUsageEntry$historicalUsage": "<p> Historical usage data associated with this estimate, if available. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$historicalUsage": "<p> Historical usage data associated with this estimate, if available. </p>",
+        "BillEstimateInputUsageModificationSummary$historicalUsage": "<p> Historical usage data associated with this modification, if available. </p>",
+        "BillScenarioUsageModificationItem$historicalUsage": "<p> Historical usage data associated with this modification, if available. </p>",
+        "WorkloadEstimateUsageItem$historicalUsage": "<p> Historical usage data associated with this item, if available. </p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "InternalServerException$retryAfterSeconds": "<p> An internal error has occurred. Retry your request, but if the problem persists, contact Amazon Web Services support. </p>",
+        "ThrottlingException$retryAfterSeconds": "<p>The service code that exceeded the throttling limit. Retry your request, but if the problem persists, contact Amazon Web Services support.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p> An internal error has occurred. Retry your request, but if the problem persists, contact Amazon Web Services support. </p>",
+      "refs": {
+      }
+    },
+    "Key": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationEntry$key": "<p> A unique identifier for this entry in the batch operation. This can be any valid string. This key is useful to identify errors associated with any commitment entry as any error is returned with this key. </p>",
+        "BatchCreateBillScenarioCommitmentModificationError$key": "<p> The key of the entry that caused the error. </p>",
+        "BatchCreateBillScenarioCommitmentModificationItem$key": "<p> The key of the successfully created entry. This can be any valid string. This key is useful to identify errors associated with any commitment entry as any error is returned with this key. </p>",
+        "BatchCreateBillScenarioUsageModificationEntry$key": "<p> A unique identifier for this entry in the batch operation. This can be any valid string. This key is useful to identify errors associated with any usage entry as any error is returned with this key. </p>",
+        "BatchCreateBillScenarioUsageModificationError$key": "<p> The key of the entry that caused the error. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$key": "<p> The key of the successfully created entry. </p>",
+        "BatchCreateWorkloadEstimateUsageEntry$key": "<p> A unique identifier for this entry in the batch operation. </p>",
+        "BatchCreateWorkloadEstimateUsageError$key": "<p> The key of the entry that caused the error. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$key": "<p> The key of the successfully created entry. </p>"
+      }
+    },
+    "ListBillEstimateCommitmentsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimateCommitmentsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimateInputCommitmentModificationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimateInputCommitmentModificationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimateInputUsageModificationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimateInputUsageModificationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimateLineItemsFilter": {
+      "base": "<p> Represents a filter for listing bill estimate line items. </p>",
+      "refs": {
+        "ListBillEstimateLineItemsFilters$member": null
+      }
+    },
+    "ListBillEstimateLineItemsFilterName": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateLineItemsFilter$name": "<p> The name of the filter attribute. </p>"
+      }
+    },
+    "ListBillEstimateLineItemsFilterValues": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateLineItemsFilter$values": "<p> The values to filter by. </p>"
+      }
+    },
+    "ListBillEstimateLineItemsFilters": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateLineItemsRequest$filters": "<p> Filters to apply to the list of line items. </p>"
+      }
+    },
+    "ListBillEstimateLineItemsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimateLineItemsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimatesFilter": {
+      "base": "<p> Represents a filter for listing bill estimates. </p>",
+      "refs": {
+        "ListBillEstimatesFilters$member": null
+      }
+    },
+    "ListBillEstimatesFilterName": {
+      "base": null,
+      "refs": {
+        "ListBillEstimatesFilter$name": "<p> The name of the filter attribute. </p>"
+      }
+    },
+    "ListBillEstimatesFilterValues": {
+      "base": null,
+      "refs": {
+        "ListBillEstimatesFilter$values": "<p> The values to filter by. </p>"
+      }
+    },
+    "ListBillEstimatesFilters": {
+      "base": null,
+      "refs": {
+        "ListBillEstimatesRequest$filters": "<p> Filters to apply to the list of bill estimates. </p>"
+      }
+    },
+    "ListBillEstimatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillEstimatesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillScenarioCommitmentModificationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillScenarioCommitmentModificationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillScenarioUsageModificationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillScenarioUsageModificationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillScenariosFilter": {
+      "base": "<p> Represents a filter for listing bill scenarios. </p>",
+      "refs": {
+        "ListBillScenariosFilters$member": null
+      }
+    },
+    "ListBillScenariosFilterName": {
+      "base": null,
+      "refs": {
+        "ListBillScenariosFilter$name": "<p> The name of the filter attribute. </p>"
+      }
+    },
+    "ListBillScenariosFilterValues": {
+      "base": null,
+      "refs": {
+        "ListBillScenariosFilter$values": "<p> The values to filter by. </p>"
+      }
+    },
+    "ListBillScenariosFilters": {
+      "base": null,
+      "refs": {
+        "ListBillScenariosRequest$filters": "<p> Filters to apply to the list of bill scenarios. </p>"
+      }
+    },
+    "ListBillScenariosRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListBillScenariosResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListUsageFilter": {
+      "base": "<p> Represents a filter for listing usage data. </p>",
+      "refs": {
+        "ListUsageFilters$member": null
+      }
+    },
+    "ListUsageFilterName": {
+      "base": null,
+      "refs": {
+        "ListUsageFilter$name": "<p> The name of the filter attribute. </p>"
+      }
+    },
+    "ListUsageFilterValues": {
+      "base": null,
+      "refs": {
+        "ListUsageFilter$values": "<p> The values to filter by. </p>"
+      }
+    },
+    "ListUsageFilters": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateInputUsageModificationsRequest$filters": "<p> Filters to apply to the list of input usage modifications. </p>",
+        "ListBillScenarioUsageModificationsRequest$filters": "<p> Filters to apply to the list of usage modifications. </p>",
+        "ListWorkloadEstimateUsageRequest$filters": "<p> Filters to apply to the list of usage items. </p>"
+      }
+    },
+    "ListWorkloadEstimateUsageRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWorkloadEstimateUsageResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWorkloadEstimatesFilter": {
+      "base": "<p> Represents a filter for listing workload estimates. </p>",
+      "refs": {
+        "ListWorkloadEstimatesFilters$member": null
+      }
+    },
+    "ListWorkloadEstimatesFilterName": {
+      "base": null,
+      "refs": {
+        "ListWorkloadEstimatesFilter$name": "<p> The name of the filter attribute. </p>"
+      }
+    },
+    "ListWorkloadEstimatesFilterValues": {
+      "base": null,
+      "refs": {
+        "ListWorkloadEstimatesFilter$values": "<p> The values to filter by. </p>"
+      }
+    },
+    "ListWorkloadEstimatesFilters": {
+      "base": null,
+      "refs": {
+        "ListWorkloadEstimatesRequest$filters": "<p> Filters to apply to the list of workload estimates. </p>"
+      }
+    },
+    "ListWorkloadEstimatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWorkloadEstimatesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "MatchOption": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateLineItemsFilter$matchOption": "<p> The match option for the filter (e.g., equals, contains). </p>",
+        "ListBillEstimatesFilter$matchOption": "<p> The match option for the filter (e.g., equals, contains). </p>",
+        "ListBillScenariosFilter$matchOption": "<p> The match option for the filter (e.g., equals, contains). </p>",
+        "ListUsageFilter$matchOption": "<p> The match option for the filter (e.g., equals, contains). </p>",
+        "ListWorkloadEstimatesFilter$matchOption": "<p> The match option for the filter (e.g., equals, contains). </p>"
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateCommitmentsRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListBillEstimateInputCommitmentModificationsRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListBillEstimateInputUsageModificationsRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListBillEstimateLineItemsRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListBillEstimatesRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListBillScenarioCommitmentModificationsRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListBillScenarioUsageModificationsRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListBillScenariosRequest$maxResults": "<p> The maximum number of results to return per page. </p>",
+        "ListWorkloadEstimatesRequest$maxResults": "<p> The maximum number of results to return per page. </p>"
+      }
+    },
+    "NegateReservedInstanceAction": {
+      "base": "<p> Represents an action to remove a Reserved Instance from a bill scenario. </p> <p> This is the ID of an existing Reserved Instance in your account. </p>",
+      "refs": {
+        "BillScenarioCommitmentModificationAction$negateReservedInstanceAction": "<p> Action to remove a Reserved Instance from the scenario. </p>"
+      }
+    },
+    "NegateSavingsPlanAction": {
+      "base": "<p> Represents an action to remove a Savings Plan from a bill scenario. </p> <p> This is the ID of an existing Savings Plan in your account. </p>",
+      "refs": {
+        "BillScenarioCommitmentModificationAction$negateSavingsPlanAction": "<p> Action to remove a Savings Plan from the scenario. </p>"
+      }
+    },
+    "NextPageToken": {
+      "base": null,
+      "refs": {
+        "ListBillEstimateCommitmentsRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillEstimateCommitmentsResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListBillEstimateInputCommitmentModificationsRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillEstimateInputCommitmentModificationsResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListBillEstimateInputUsageModificationsRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillEstimateInputUsageModificationsResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListBillEstimateLineItemsRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillEstimateLineItemsResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListBillEstimatesRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillEstimatesResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListBillScenarioCommitmentModificationsRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillScenarioCommitmentModificationsResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListBillScenarioUsageModificationsRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillScenarioUsageModificationsResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListBillScenariosRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListBillScenariosResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListWorkloadEstimateUsageRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListWorkloadEstimateUsageResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>",
+        "ListWorkloadEstimatesRequest$nextToken": "<p> A token to retrieve the next page of results. </p>",
+        "ListWorkloadEstimatesResponse$nextToken": "<p> A token to retrieve the next page of results, if any. </p>"
+      }
+    },
+    "Operation": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationEntry$operation": "<p> The specific operation associated with this usage modification. Describes the specific Amazon Web Services operation that this usage line models. For example, <code>RunInstances</code> indicates the operation of an Amazon EC2 instance. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$operation": "<p> The specific operation associated with this usage modification. </p>",
+        "BatchCreateWorkloadEstimateUsageEntry$operation": "<p> The specific operation associated with this usage estimate. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$operation": "<p> The specific operation associated with this usage estimate. </p>",
+        "BillEstimateInputUsageModificationSummary$operation": "<p> The specific operation associated with this usage modification. </p>",
+        "BillEstimateLineItemSummary$operation": "<p> The specific operation associated with this line item. </p>",
+        "BillScenarioUsageModificationItem$operation": "<p> The specific operation associated with this usage modification. </p>",
+        "HistoricalUsageEntity$operation": "<p> The specific operation associated with the usage. </p>",
+        "WorkloadEstimateUsageItem$operation": "<p> The specific operation associated with this usage item. </p>"
+      }
+    },
+    "PurchaseAgreementType": {
+      "base": null,
+      "refs": {
+        "BillEstimateCommitmentSummary$purchaseAgreementType": "<p> The type of purchase agreement (e.g., Reserved Instance, Savings Plan). </p>"
+      }
+    },
+    "RateType": {
+      "base": null,
+      "refs": {
+        "RateTypes$member": null
+      }
+    },
+    "RateTypes": {
+      "base": null,
+      "refs": {
+        "GetPreferencesResponse$managementAccountRateTypeSelections": "<p> The preferred rate types for the management account. </p>",
+        "GetPreferencesResponse$memberAccountRateTypeSelections": "<p> The preferred rate types for member accounts. </p>",
+        "GetPreferencesResponse$standaloneAccountRateTypeSelections": "<p> The preferred rate types for a standalone account. </p>",
+        "UpdatePreferencesRequest$managementAccountRateTypeSelections": "<p> The updated preferred rate types for the management account. </p>",
+        "UpdatePreferencesRequest$memberAccountRateTypeSelections": "<p> The updated preferred rate types for member accounts. </p>",
+        "UpdatePreferencesRequest$standaloneAccountRateTypeSelections": "<p> The updated preferred rate types for a standalone account. </p>",
+        "UpdatePreferencesResponse$managementAccountRateTypeSelections": "<p> The updated preferred rate types for the management account. </p>",
+        "UpdatePreferencesResponse$memberAccountRateTypeSelections": "<p> The updated preferred rate types for member accounts. </p>",
+        "UpdatePreferencesResponse$standaloneAccountRateTypeSelections": "<p> The updated preferred rate types for a standalone account. </p>"
+      }
+    },
+    "ReservedInstanceInstanceCount": {
+      "base": null,
+      "refs": {
+        "AddReservedInstanceAction$instanceCount": "<p> The number of instances to add for this Reserved Instance offering. </p>"
+      }
+    },
+    "ResourceId": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationItem$id": "<p> The unique identifier assigned to the created commitment modification. </p>",
+        "BatchCreateBillScenarioCommitmentModificationRequest$billScenarioId": "<p> The ID of the Bill Scenario for which you want to create the modeled commitment. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$id": "<p> The unique identifier assigned to the created usage modification. </p>",
+        "BatchCreateBillScenarioUsageModificationRequest$billScenarioId": "<p> The ID of the Bill Scenario for which you want to create the modeled usage. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$id": "<p> The unique identifier assigned to the created usage estimate. </p>",
+        "BatchCreateWorkloadEstimateUsageRequest$workloadEstimateId": "<p> The ID of the Workload estimate for which you want to create the modeled usage. </p>",
+        "BatchDeleteBillScenarioCommitmentModificationEntries$member": null,
+        "BatchDeleteBillScenarioCommitmentModificationError$id": "<p> The ID of the error. </p>",
+        "BatchDeleteBillScenarioCommitmentModificationRequest$billScenarioId": "<p> The ID of the Bill Scenario for which you want to delete the modeled commitment. </p>",
+        "BatchDeleteBillScenarioUsageModificationEntries$member": null,
+        "BatchDeleteBillScenarioUsageModificationError$id": "<p> The ID of the error. </p>",
+        "BatchDeleteBillScenarioUsageModificationRequest$billScenarioId": "<p> The ID of the Bill Scenario for which you want to delete the modeled usage. </p>",
+        "BatchDeleteWorkloadEstimateUsageEntries$member": null,
+        "BatchDeleteWorkloadEstimateUsageError$id": "<p> The ID of the error. </p>",
+        "BatchDeleteWorkloadEstimateUsageRequest$workloadEstimateId": "<p> The ID of the Workload estimate for which you want to delete the modeled usage. </p>",
+        "BatchUpdateBillScenarioCommitmentModificationEntry$id": "<p> The unique identifier of the commitment modification to update. </p>",
+        "BatchUpdateBillScenarioCommitmentModificationError$id": "<p> The ID of the error. </p>",
+        "BatchUpdateBillScenarioCommitmentModificationRequest$billScenarioId": "<p> The ID of the Bill Scenario for which you want to modify the commitment group of a modeled commitment. </p>",
+        "BatchUpdateBillScenarioUsageModificationEntry$id": "<p> The unique identifier of the usage modification to update. </p>",
+        "BatchUpdateBillScenarioUsageModificationError$id": "<p> The ID of the error. </p>",
+        "BatchUpdateBillScenarioUsageModificationRequest$billScenarioId": "<p> The ID of the Bill Scenario for which you want to modify the usage lines. </p>",
+        "BatchUpdateWorkloadEstimateUsageEntry$id": "<p> The unique identifier of the usage estimate to update. </p>",
+        "BatchUpdateWorkloadEstimateUsageError$id": "<p> The ID of the error. </p>",
+        "BatchUpdateWorkloadEstimateUsageRequest$workloadEstimateId": "<p> The ID of the Workload estimate for which you want to modify the usage lines. </p>",
+        "BillEstimateCommitmentSummary$id": "<p> The unique identifier of the commitment. </p>",
+        "BillEstimateInputCommitmentModificationSummary$id": "<p> The unique identifier of the commitment modification. </p>",
+        "BillEstimateInputUsageModificationSummary$id": "<p> The unique identifier of the usage modification. </p>",
+        "BillEstimateLineItemSummary$id": "<p> The unique identifier of this line item. </p>",
+        "BillEstimateSummary$id": "<p> The unique identifier of the bill estimate. </p>",
+        "BillScenarioCommitmentModificationItem$id": "<p> The unique identifier of the commitment modification. </p>",
+        "BillScenarioSummary$id": "<p> The unique identifier of the bill scenario. </p>",
+        "BillScenarioUsageModificationItem$id": "<p> The unique identifier of the usage modification. </p>",
+        "CreateBillEstimateRequest$billScenarioId": "<p> The ID of the Bill Scenario for which you want to create a Bill estimate. </p>",
+        "CreateBillEstimateResponse$id": "<p> The unique identifier of your newly created Bill estimate. </p>",
+        "CreateBillScenarioResponse$id": "<p> The unique identifier for the created bill scenario. </p>",
+        "CreateWorkloadEstimateResponse$id": "<p> The unique identifier for the created workload estimate. </p>",
+        "DeleteBillEstimateRequest$identifier": "<p> The unique identifier of the bill estimate to delete. </p>",
+        "DeleteBillScenarioRequest$identifier": "<p> The unique identifier of the bill scenario to delete. </p>",
+        "DeleteWorkloadEstimateRequest$identifier": "<p> The unique identifier of the workload estimate to delete. </p>",
+        "GetBillEstimateRequest$identifier": "<p> The unique identifier of the bill estimate to retrieve. </p>",
+        "GetBillEstimateResponse$id": "<p> The unique identifier of the retrieved bill estimate. </p>",
+        "GetBillScenarioRequest$identifier": "<p> The unique identifier of the bill scenario to retrieve. </p>",
+        "GetBillScenarioResponse$id": "<p> The unique identifier of the retrieved bill scenario. </p>",
+        "GetWorkloadEstimateRequest$identifier": "<p> The unique identifier of the workload estimate to retrieve. </p>",
+        "GetWorkloadEstimateResponse$id": "<p> The unique identifier of the retrieved workload estimate. </p>",
+        "ListBillEstimateCommitmentsRequest$billEstimateId": "<p> The unique identifier of the bill estimate to list commitments for. </p>",
+        "ListBillEstimateInputCommitmentModificationsRequest$billEstimateId": "<p> The unique identifier of the bill estimate to list input commitment modifications for. </p>",
+        "ListBillEstimateInputUsageModificationsRequest$billEstimateId": "<p> The unique identifier of the bill estimate to list input usage modifications for. </p>",
+        "ListBillEstimateLineItemsRequest$billEstimateId": "<p> The unique identifier of the bill estimate to list line items for. </p>",
+        "ListBillScenarioCommitmentModificationsRequest$billScenarioId": "<p> The unique identifier of the bill scenario to list commitment modifications for. </p>",
+        "ListBillScenarioUsageModificationsRequest$billScenarioId": "<p> The unique identifier of the bill scenario to list usage modifications for. </p>",
+        "ListWorkloadEstimateUsageRequest$workloadEstimateId": "<p> The unique identifier of the workload estimate to list usage for. </p>",
+        "UpdateBillEstimateRequest$identifier": "<p> The unique identifier of the bill estimate to update. </p>",
+        "UpdateBillEstimateResponse$id": "<p> The unique identifier of the updated bill estimate. </p>",
+        "UpdateBillScenarioRequest$identifier": "<p> The unique identifier of the bill scenario to update. </p>",
+        "UpdateBillScenarioResponse$id": "<p> The unique identifier of the updated bill scenario. </p>",
+        "UpdateWorkloadEstimateRequest$identifier": "<p> The unique identifier of the workload estimate to update. </p>",
+        "UpdateWorkloadEstimateResponse$id": "<p> The unique identifier of the updated workload estimate. </p>",
+        "WorkloadEstimateSummary$id": "<p> The unique identifier of the workload estimate. </p>",
+        "WorkloadEstimateUsageItem$id": "<p> The unique identifier of this usage item. </p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p> The specified resource was not found. </p>",
+      "refs": {
+      }
+    },
+    "ResourceTagKey": {
+      "base": null,
+      "refs": {
+        "ResourceTagKeys$member": null,
+        "Tags$key": null
+      }
+    },
+    "ResourceTagKeys": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p> The keys of the tags to remove from the resource. </p>"
+      }
+    },
+    "ResourceTagValue": {
+      "base": null,
+      "refs": {
+        "Tags$value": null
+      }
+    },
+    "SavingsPlanArns": {
+      "base": null,
+      "refs": {
+        "BillEstimateLineItemSummary$savingsPlanArns": "<p> The Amazon Resource Names (ARNs) of any Savings Plans applied to this line item. </p>"
+      }
+    },
+    "SavingsPlanCommitment": {
+      "base": null,
+      "refs": {
+        "AddSavingsPlanAction$commitment": "<p> The hourly commitment, in the same currency of the <code>savingsPlanOfferingId</code>. This is a value between 0.001 and 1 million. You cannot specify more than five digits after the decimal point. </p>"
+      }
+    },
+    "ServiceCode": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationEntry$serviceCode": "<p> The Amazon Web Services service code for this usage modification. This identifies the specific Amazon Web Services service to the customer as a unique short abbreviation. For example, <code>AmazonEC2</code> and <code>AWSKMS</code>. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$serviceCode": "<p> The Amazon Web Services service code for this usage modification. </p>",
+        "BatchCreateWorkloadEstimateUsageEntry$serviceCode": "<p> The Amazon Web Services service code for this usage estimate. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$serviceCode": "<p> The Amazon Web Services service code for this usage estimate. </p>",
+        "BillEstimateInputUsageModificationSummary$serviceCode": "<p> The Amazon Web Services service code for this usage modification. </p>",
+        "BillEstimateLineItemSummary$serviceCode": "<p> The Amazon Web Services service code associated with this line item. </p>",
+        "BillScenarioUsageModificationItem$serviceCode": "<p> The Amazon Web Services service code for this usage modification. </p>",
+        "HistoricalUsageEntity$serviceCode": "<p> The Amazon Web Services service code associated with the usage. </p>",
+        "WorkloadEstimateUsageItem$serviceCode": "<p> The Amazon Web Services service code associated with this usage item. </p>"
+      }
+    },
+    "ServiceCostDifferenceMap": {
+      "base": null,
+      "refs": {
+        "BillEstimateCostSummary$serviceCostDifferences": "<p> A breakdown of cost differences by Amazon Web Services service. </p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p> The request would cause you to exceed your service quota. </p>",
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "BatchCreateBillScenarioCommitmentModificationError$errorMessage": "<p> A descriptive message for the error that occurred. </p>",
+        "BatchCreateBillScenarioUsageModificationError$errorMessage": "<p> A descriptive message for the error that occurred. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$location": "<p> The location associated with this usage modification. </p>",
+        "BatchCreateWorkloadEstimateUsageError$errorMessage": "<p> A descriptive message for the error that occurred. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$location": "<p> The location associated with this usage estimate. </p>",
+        "BatchDeleteBillScenarioCommitmentModificationError$errorMessage": "<p> The message that describes the error. </p>",
+        "BatchDeleteBillScenarioUsageModificationError$errorMessage": "<p> The message that describes the error. </p>",
+        "BatchDeleteWorkloadEstimateUsageError$errorMessage": "<p> The message that describes the error. </p>",
+        "BatchUpdateBillScenarioCommitmentModificationError$errorMessage": "<p> The message that describes the error. </p>",
+        "BatchUpdateBillScenarioUsageModificationError$errorMessage": "<p> The message that describes the error. </p>",
+        "BatchUpdateWorkloadEstimateUsageError$errorMessage": "<p> The message that describes the error. </p>",
+        "BillEstimateCommitmentSummary$region": "<p> The Amazon Web Services region associated with this commitment. </p>",
+        "BillEstimateCommitmentSummary$termLength": "<p> The length of the commitment term. </p>",
+        "BillEstimateCommitmentSummary$paymentOption": "<p> The payment option chosen for this commitment (e.g., All Upfront, Partial Upfront, No Upfront). </p>",
+        "BillEstimateInputUsageModificationSummary$location": "<p> The location associated with this usage modification. </p>",
+        "BillEstimateLineItemSummary$location": "<p> The location associated with this line item. </p>",
+        "BillEstimateLineItemSummary$lineItemId": "<p> The line item identifier from the original bill. </p>",
+        "BillEstimateLineItemSummary$lineItemType": "<p> The type of this line item (e.g., Usage, Tax, Credit). </p>",
+        "BillScenarioSummary$failureMessage": "<p> An error message if the bill scenario creation or processing failed. </p>",
+        "BillScenarioUsageModificationItem$location": "<p> The location associated with this usage modification. </p>",
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p> The identifier of the resource that was not found. </p>",
+        "ConflictException$resourceType": "<p> The type of the resource that was not found. </p>",
+        "CreateBillEstimateResponse$failureMessage": "<p> This attribute provides the reason if a Bill estimate result generation fails. </p>",
+        "CreateBillScenarioResponse$failureMessage": "<p> An error message if the bill scenario creation failed. </p>",
+        "CreateWorkloadEstimateResponse$failureMessage": "<p> An error message if the workload estimate creation failed. </p>",
+        "DataUnavailableException$message": null,
+        "ExpressionFilter$key": "<p> The key or attribute to filter on. </p>",
+        "GetBillEstimateResponse$failureMessage": "<p> An error message if the bill estimate retrieval failed. </p>",
+        "GetBillScenarioResponse$failureMessage": "<p> An error message if the bill scenario retrieval failed. </p>",
+        "GetWorkloadEstimateResponse$failureMessage": "<p> An error message if the workload estimate retrieval failed. </p>",
+        "HistoricalUsageEntity$location": "<p> The location associated with the usage. </p>",
+        "InternalServerException$message": null,
+        "ListBillEstimateLineItemsFilterValues$member": null,
+        "ListBillEstimatesFilterValues$member": null,
+        "ListBillScenariosFilterValues$member": null,
+        "ListUsageFilterValues$member": null,
+        "ListWorkloadEstimatesFilterValues$member": null,
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceId": "<p> The identifier of the resource that was not found. </p>",
+        "ResourceNotFoundException$resourceType": "<p> The type of the resource that was not found. </p>",
+        "SavingsPlanArns$member": null,
+        "ServiceCostDifferenceMap$key": null,
+        "ServiceQuotaExceededException$message": null,
+        "ServiceQuotaExceededException$resourceId": "<p> The identifier of the resource that exceeded quota. </p>",
+        "ServiceQuotaExceededException$resourceType": "<p> The type of the resource that exceeded quota. </p>",
+        "ServiceQuotaExceededException$serviceCode": "<p> The service code that exceeded quota. </p>",
+        "ServiceQuotaExceededException$quotaCode": "<p> The quota code that was exceeded. </p>",
+        "StringList$member": null,
+        "ThrottlingException$message": null,
+        "ThrottlingException$serviceCode": "<p>The service code that exceeded the throttling limit.</p>",
+        "ThrottlingException$quotaCode": "<p>The quota code that exceeded the throttling limit.</p>",
+        "UpdateBillEstimateResponse$failureMessage": "<p> An error message if the bill estimate update failed. </p>",
+        "UpdateBillScenarioResponse$failureMessage": "<p> An error message if the bill scenario update failed. </p>",
+        "UpdateWorkloadEstimateResponse$failureMessage": "<p> An error message if the workload estimate update failed. </p>",
+        "UsageQuantity$unit": "<p> The unit of measurement for the usage quantity. </p>",
+        "UsageQuantityResult$unit": "<p> The unit of measurement for the usage quantity result. </p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p> The name of the field that failed validation. </p>",
+        "ValidationExceptionField$message": "<p> The error message describing why the field failed validation. </p>",
+        "WorkloadEstimateSummary$failureMessage": "<p> An error message if the workload estimate creation or processing failed. </p>",
+        "WorkloadEstimateUsageItem$location": "<p> The location associated with this usage item. </p>",
+        "WorkloadEstimateUsageQuantity$unit": "<p> The unit of measurement for the usage quantity. </p>"
+      }
+    },
+    "StringList": {
+      "base": null,
+      "refs": {
+        "ExpressionFilter$matchOptions": "<p> The match options for the filter (e.g., equals, contains). </p>",
+        "ExpressionFilter$values": "<p> The values to match against. </p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Tags": {
+      "base": null,
+      "refs": {
+        "CreateBillEstimateRequest$tags": "<p> An optional list of tags to associate with the specified BillEstimate. You can use resource tags to control access to your BillEstimate using IAM policies. Each tag consists of a key and a value, and each key must be unique for the resource. The following restrictions apply to resource tags: </p> <ul> <li> <p>Although the maximum number of array members is 200, you can assign a maximum of 50 user-tags to one resource. The remaining are reserved for Amazon Web Services. </p> </li> <li> <p>The maximum length of a key is 128 characters.</p> </li> <li> <p>The maximum length of a value is 256 characters.</p> </li> <li> <p>Keys and values can only contain alphanumeric characters, spaces, and any of the following: <code>_.:/=+@-</code>.</p> </li> <li> <p>Keys and values are case sensitive.</p> </li> <li> <p>Keys and values are trimmed for any leading or trailing whitespaces.</p> </li> <li> <p>Don't use <code>aws:</code> as a prefix for your keys. This prefix is reserved for Amazon Web Services.</p> </li> </ul>",
+        "CreateBillScenarioRequest$tags": "<p> The tags to apply to the bill scenario. </p>",
+        "CreateWorkloadEstimateRequest$tags": "<p> The tags to apply to the workload estimate. </p>",
+        "ListTagsForResourceResponse$tags": "<p> The list of tags associated with the specified resource. </p>",
+        "TagResourceRequest$tags": "<p> The tags to add to the resource. </p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p> The request was denied due to request throttling. </p>",
+      "refs": {
+      }
+    },
+    "Timestamp": {
+      "base": null,
+      "refs": {
+        "BillEstimateSummary$createdAt": "<p> The timestamp when the bill estimate was created. </p>",
+        "BillEstimateSummary$expiresAt": "<p> The timestamp when the bill estimate will expire. </p>",
+        "BillInterval$start": "<p> The start date and time of the interval. </p>",
+        "BillInterval$end": "<p> The end date and time of the interval. </p>",
+        "BillScenarioSummary$createdAt": "<p> The timestamp when the bill scenario was created. </p>",
+        "BillScenarioSummary$expiresAt": "<p> The timestamp when the bill scenario will expire. </p>",
+        "CreateBillEstimateResponse$createdAt": "<p> The timestamp of when the Bill estimate create process was started (not when it successfully completed or failed). </p>",
+        "CreateBillEstimateResponse$expiresAt": "<p> The timestamp of when the Bill estimate will expire. A Bill estimate becomes inaccessible after expiration. </p>",
+        "CreateBillScenarioResponse$createdAt": "<p> The timestamp when the bill scenario was created. </p>",
+        "CreateBillScenarioResponse$expiresAt": "<p> The timestamp when the bill scenario will expire. </p>",
+        "CreateWorkloadEstimateResponse$createdAt": "<p> The timestamp when the workload estimate was created. </p>",
+        "CreateWorkloadEstimateResponse$expiresAt": "<p> The timestamp when the workload estimate will expire. </p>",
+        "CreateWorkloadEstimateResponse$rateTimestamp": "<p> The timestamp of the pricing rates used for the estimate. </p>",
+        "FilterTimestamp$afterTimestamp": "<p> Include results after this timestamp. </p>",
+        "FilterTimestamp$beforeTimestamp": "<p> Include results before this timestamp. </p>",
+        "GetBillEstimateResponse$createdAt": "<p> The timestamp when the bill estimate was created. </p>",
+        "GetBillEstimateResponse$expiresAt": "<p> The timestamp when the bill estimate will expire. </p>",
+        "GetBillScenarioResponse$createdAt": "<p> The timestamp when the bill scenario was created. </p>",
+        "GetBillScenarioResponse$expiresAt": "<p> The timestamp when the bill scenario will expire. </p>",
+        "GetWorkloadEstimateResponse$createdAt": "<p> The timestamp when the workload estimate was created. </p>",
+        "GetWorkloadEstimateResponse$expiresAt": "<p> The timestamp when the workload estimate will expire. </p>",
+        "GetWorkloadEstimateResponse$rateTimestamp": "<p> The timestamp of the pricing rates used for the estimate. </p>",
+        "UpdateBillEstimateRequest$expiresAt": "<p> The new expiration date for the bill estimate. </p>",
+        "UpdateBillEstimateResponse$createdAt": "<p> The timestamp when the bill estimate was originally created. </p>",
+        "UpdateBillEstimateResponse$expiresAt": "<p> The updated expiration timestamp for the bill estimate. </p>",
+        "UpdateBillScenarioRequest$expiresAt": "<p> The new expiration date for the bill scenario. </p>",
+        "UpdateBillScenarioResponse$createdAt": "<p> The timestamp when the bill scenario was originally created. </p>",
+        "UpdateBillScenarioResponse$expiresAt": "<p> The updated expiration timestamp for the bill scenario. </p>",
+        "UpdateWorkloadEstimateRequest$expiresAt": "<p> The new expiration date for the workload estimate. </p>",
+        "UpdateWorkloadEstimateResponse$createdAt": "<p> The timestamp when the workload estimate was originally created. </p>",
+        "UpdateWorkloadEstimateResponse$expiresAt": "<p> The updated expiration timestamp for the workload estimate. </p>",
+        "UpdateWorkloadEstimateResponse$rateTimestamp": "<p> The timestamp of the pricing rates used for the updated estimate. </p>",
+        "UsageAmount$startHour": "<p> The start hour of the usage period. </p>",
+        "UsageQuantity$startHour": "<p> The start hour of the usage period. </p>",
+        "WorkloadEstimateSummary$createdAt": "<p> The timestamp when the workload estimate was created. </p>",
+        "WorkloadEstimateSummary$expiresAt": "<p> The timestamp when the workload estimate will expire. </p>",
+        "WorkloadEstimateSummary$rateTimestamp": "<p> The timestamp of the pricing rates used for the estimate. </p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBillEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBillEstimateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBillScenarioRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateBillScenarioResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdatePreferencesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdatePreferencesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateWorkloadEstimateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateWorkloadEstimateResponse": {
+      "base": "<p>Mixin for common fields returned by CRUD APIs</p>",
+      "refs": {
+      }
+    },
+    "UsageAmount": {
+      "base": "<p> Represents a usage amount for a specific time period. </p>",
+      "refs": {
+        "UsageAmounts$member": null
+      }
+    },
+    "UsageAmounts": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationEntry$amounts": "<p> The amount of usage you want to create for the service use you are modeling. </p>",
+        "BatchUpdateBillScenarioUsageModificationEntry$amounts": "<p> The updated usage amounts for the modification. </p>"
+      }
+    },
+    "UsageGroup": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioCommitmentModificationEntry$group": "<p> An optional group identifier for the commitment modification. </p>",
+        "BatchCreateBillScenarioCommitmentModificationItem$group": "<p> The group identifier for the created commitment modification. </p>",
+        "BatchCreateBillScenarioUsageModificationEntry$group": "<p> An optional group identifier for the usage modification. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$group": "<p> The group identifier for the created usage modification. </p>",
+        "BatchCreateWorkloadEstimateUsageEntry$group": "<p> An optional group identifier for the usage estimate. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$group": "<p> The group identifier for the created usage estimate. </p>",
+        "BatchUpdateBillScenarioCommitmentModificationEntry$group": "<p> The updated group identifier for the commitment modification. </p>",
+        "BatchUpdateBillScenarioUsageModificationEntry$group": "<p> The updated group identifier for the usage modification. </p>",
+        "BatchUpdateWorkloadEstimateUsageEntry$group": "<p> The updated group identifier for the usage estimate. </p>",
+        "BillEstimateInputCommitmentModificationSummary$group": "<p> The group identifier for the commitment modification. </p>",
+        "BillEstimateInputUsageModificationSummary$group": "<p> The group identifier for the usage modification. </p>",
+        "BillScenarioCommitmentModificationItem$group": "<p> The group identifier for the commitment modification. </p>",
+        "BillScenarioUsageModificationItem$group": "<p> The group identifier for the usage modification. </p>",
+        "WorkloadEstimateUsageItem$group": "<p> The group identifier for this usage item. </p>"
+      }
+    },
+    "UsageQuantities": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationItem$quantities": "<p> The modified usage quantities. </p>",
+        "BillEstimateInputUsageModificationSummary$quantities": "<p> The modified usage quantities. </p>",
+        "BillScenarioUsageModificationItem$quantities": "<p> The modified usage quantities. </p>"
+      }
+    },
+    "UsageQuantity": {
+      "base": "<p> Represents a usage quantity with associated unit and time period. </p>",
+      "refs": {
+        "UsageQuantities$member": null
+      }
+    },
+    "UsageQuantityResult": {
+      "base": "<p> Represents the result of a usage quantity calculation. </p>",
+      "refs": {
+        "BillEstimateLineItemSummary$estimatedUsageQuantity": "<p> The estimated usage quantity for this line item. </p>",
+        "BillEstimateLineItemSummary$historicalUsageQuantity": "<p> The historical usage quantity for this line item. </p>"
+      }
+    },
+    "UsageType": {
+      "base": null,
+      "refs": {
+        "BatchCreateBillScenarioUsageModificationEntry$usageType": "<p> Describes the usage details of the usage line item. </p>",
+        "BatchCreateBillScenarioUsageModificationItem$usageType": "<p> The type of usage that was modified. </p>",
+        "BatchCreateWorkloadEstimateUsageEntry$usageType": "<p> The type of usage being estimated. </p>",
+        "BatchCreateWorkloadEstimateUsageItem$usageType": "<p> The type of usage that was estimated. </p>",
+        "BillEstimateInputUsageModificationSummary$usageType": "<p> The type of usage being modified. </p>",
+        "BillEstimateLineItemSummary$usageType": "<p> The type of usage for this line item. </p>",
+        "BillScenarioUsageModificationItem$usageType": "<p> The type of usage being modified. </p>",
+        "HistoricalUsageEntity$usageType": "<p> The type of usage. </p>",
+        "WorkloadEstimateUsageItem$usageType": "<p> The type of usage for this item. </p>"
+      }
+    },
+    "Uuid": {
+      "base": null,
+      "refs": {
+        "AddReservedInstanceAction$reservedInstancesOfferingId": "<p> The ID of the Reserved Instance offering to add. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeReservedInstancesOfferings.html\"> DescribeReservedInstancesOfferings</a>. </p>",
+        "AddSavingsPlanAction$savingsPlanOfferingId": "<p> The ID of the Savings Plan offering to add. For more information, see <a href=\"https://docs.aws.amazon.com/savingsplans/latest/APIReference/API_DescribeSavingsPlansOfferings.html\"> DescribeSavingsPlansOfferings</a>. </p>",
+        "BillEstimateCommitmentSummary$offeringId": "<p> The identifier of the specific offering associated with this commitment. </p>",
+        "NegateReservedInstanceAction$reservedInstancesId": "<p> The ID of the Reserved Instance to remove. </p>",
+        "NegateSavingsPlanAction$savingsPlanId": "<p> The ID of the Savings Plan to remove. </p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p> The input provided fails to satisfy the constraints specified by an Amazon Web Services service. </p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p> Represents a field that failed validation in a request. </p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$fieldList": "<p> The list of fields that are invalid. </p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$reason": "<p> The reason for the validation exception. </p>"
+      }
+    },
+    "WorkloadEstimateCostStatus": {
+      "base": null,
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageItem$status": "<p> The current status of the created usage estimate. </p>",
+        "WorkloadEstimateUsageItem$status": "<p> The current status of this usage item. </p>"
+      }
+    },
+    "WorkloadEstimateName": {
+      "base": null,
+      "refs": {
+        "CreateWorkloadEstimateRequest$name": "<p> A descriptive name for the workload estimate. </p>",
+        "CreateWorkloadEstimateResponse$name": "<p> The name of the created workload estimate. </p>",
+        "GetWorkloadEstimateResponse$name": "<p> The name of the retrieved workload estimate. </p>",
+        "UpdateWorkloadEstimateRequest$name": "<p> The new name for the workload estimate. </p>",
+        "UpdateWorkloadEstimateResponse$name": "<p> The updated name of the workload estimate. </p>",
+        "WorkloadEstimateSummary$name": "<p> The name of the workload estimate. </p>"
+      }
+    },
+    "WorkloadEstimateRateType": {
+      "base": null,
+      "refs": {
+        "CreateWorkloadEstimateRequest$rateType": "<p> The type of pricing rates to use for the estimate. </p>",
+        "CreateWorkloadEstimateResponse$rateType": "<p> The type of pricing rates used for the estimate. </p>",
+        "GetWorkloadEstimateResponse$rateType": "<p> The type of pricing rates used for the estimate. </p>",
+        "UpdateWorkloadEstimateResponse$rateType": "<p> The type of pricing rates used for the updated estimate. </p>",
+        "WorkloadEstimateSummary$rateType": "<p> The type of pricing rates used for the estimate. </p>"
+      }
+    },
+    "WorkloadEstimateStatus": {
+      "base": null,
+      "refs": {
+        "CreateWorkloadEstimateResponse$status": "<p> The current status of the workload estimate. </p>",
+        "GetWorkloadEstimateResponse$status": "<p> The current status of the workload estimate. </p>",
+        "UpdateWorkloadEstimateResponse$status": "<p> The current status of the updated workload estimate. </p>",
+        "WorkloadEstimateSummary$status": "<p> The current status of the workload estimate. </p>"
+      }
+    },
+    "WorkloadEstimateSummaries": {
+      "base": null,
+      "refs": {
+        "ListWorkloadEstimatesResponse$items": "<p> The list of workload estimates for the account. </p>"
+      }
+    },
+    "WorkloadEstimateSummary": {
+      "base": "<p> Provides a summary of a workload estimate. </p>",
+      "refs": {
+        "WorkloadEstimateSummaries$member": null
+      }
+    },
+    "WorkloadEstimateUpdateUsageErrorCode": {
+      "base": null,
+      "refs": {
+        "BatchDeleteWorkloadEstimateUsageError$errorCode": "<p> The code associated with the error. </p>",
+        "BatchUpdateWorkloadEstimateUsageError$errorCode": "<p> The code associated with the error. </p>"
+      }
+    },
+    "WorkloadEstimateUsageItem": {
+      "base": "<p> Represents a usage item in a workload estimate. </p>",
+      "refs": {
+        "WorkloadEstimateUsageItems$member": null
+      }
+    },
+    "WorkloadEstimateUsageItems": {
+      "base": null,
+      "refs": {
+        "BatchUpdateWorkloadEstimateUsageResponse$items": "<p> Returns the list of successful usage line items that were updated for a Workload estimate. </p>",
+        "ListWorkloadEstimateUsageResponse$items": "<p> The list of usage items associated with the workload estimate. </p>"
+      }
+    },
+    "WorkloadEstimateUsageMaxResults": {
+      "base": null,
+      "refs": {
+        "ListWorkloadEstimateUsageRequest$maxResults": "<p> The maximum number of results to return per page. </p>"
+      }
+    },
+    "WorkloadEstimateUsageQuantity": {
+      "base": "<p> Represents a usage quantity for a workload estimate. </p>",
+      "refs": {
+        "BatchCreateWorkloadEstimateUsageItem$quantity": "<p> The estimated usage quantity. </p>",
+        "WorkloadEstimateUsageItem$quantity": "<p> The estimated usage quantity for this item. </p>"
+      }
+    }
+  }
+}

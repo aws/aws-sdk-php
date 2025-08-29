@@ -50,30 +50,45 @@ class EventParsingIterator implements Iterator
         }
     }
 
+    /**
+     * @return mixed
+     */
     #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->parseEvent($this->decodingIterator->current());
     }
 
+    /**
+     * @return mixed
+     */
     #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->decodingIterator->key();
     }
 
+    /**
+     * @return void
+     */
     #[\ReturnTypeWillChange]
     public function next()
     {
         $this->decodingIterator->next();
     }
 
+    /**
+     * @return void
+     */
     #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->decodingIterator->rewind();
     }
 
+    /**
+     * @return bool
+     */
     #[\ReturnTypeWillChange]
     public function valid()
     {
@@ -85,6 +100,10 @@ class EventParsingIterator implements Iterator
         if (!empty($event['headers'][':message-type'])) {
             if ($event['headers'][':message-type'] === 'error') {
                 return $this->parseError($event);
+            }
+
+            if ($event['headers'][':message-type'] === 'exception') {
+                return $this->parseException($event);
             }
 
             if ($event['headers'][':message-type'] !== 'event') {
@@ -172,6 +191,16 @@ class EventParsingIterator implements Iterator
         throw new EventStreamDataException(
             $event['headers'][':error-code'],
             $event['headers'][':error-message']
+        );
+    }
+
+    private function parseException(array $event) {
+        $payload = $event['payload']?->getContents();
+        $parsedPayload = json_decode($payload, true);
+
+        throw new EventStreamDataException(
+            $event['headers'][':exception-type'] ?? 'Unknown',
+            $parsedPayload['message'] ?? $payload,
         );
     }
 

@@ -7,12 +7,15 @@
     "BatchGetRumMetricDefinitions": "<p>Retrieves the list of metrics and dimensions that a RUM app monitor is sending to a single destination.</p>",
     "CreateAppMonitor": "<p>Creates a Amazon CloudWatch RUM app monitor, which collects telemetry data from your application and sends that data to RUM. The data includes performance and reliability information such as page load time, client-side errors, and user behavior.</p> <p>You use this operation only to create a new app monitor. To update an existing app monitor, use <a href=\"https://docs.aws.amazon.com/cloudwatchrum/latest/APIReference/API_UpdateAppMonitor.html\">UpdateAppMonitor</a> instead.</p> <p>After you create an app monitor, sign in to the CloudWatch RUM console to get the JavaScript code snippet to add to your web application. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-RUM-find-code-snippet.html\">How do I find a code snippet that I've already generated?</a> </p>",
     "DeleteAppMonitor": "<p>Deletes an existing app monitor. This immediately stops the collection of data.</p>",
+    "DeleteResourcePolicy": "<p>Removes the association of a resource-based policy from an app monitor.</p>",
     "DeleteRumMetricsDestination": "<p>Deletes a destination for CloudWatch RUM extended metrics, so that the specified app monitor stops sending extended metrics to that destination.</p>",
     "GetAppMonitor": "<p>Retrieves the complete configuration information for one app monitor.</p>",
     "GetAppMonitorData": "<p>Retrieves the raw performance events that RUM has collected from your web application, so that you can do your own processing or analysis of this data.</p>",
+    "GetResourcePolicy": "<p>Use this operation to retrieve information about a resource-based policy that is attached to an app monitor.</p>",
     "ListAppMonitors": "<p>Returns a list of the Amazon CloudWatch RUM app monitors in the account.</p>",
     "ListRumMetricsDestinations": "<p>Returns a list of destinations that you have created to receive RUM extended metrics, for the specified app monitor.</p> <p>For more information about extended metrics, see <a href=\"https://docs.aws.amazon.com/cloudwatchrum/latest/APIReference/API_AddRumMetrcs.html\">AddRumMetrics</a>.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with a CloudWatch RUM resource.</p>",
+    "PutResourcePolicy": "<p>Use this operation to assign a resource-based policy to a CloudWatch RUM app monitor to control access to it. Each app monitor can have one resource-based policy. The maximum size of the policy is 4 KB. To learn more about using resource policies with RUM, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-RUM-resource-policies.html\">Using resource-based policies with CloudWatch RUM</a>.</p>",
     "PutRumEvents": "<p>Sends telemetry events about your application performance and user behavior to CloudWatch RUM. The code snippet that RUM generates for you to add to your application includes <code>PutRumEvents</code> operations to send this data to RUM.</p> <p>Each <code>PutRumEvents</code> operation can send a batch of events from one user session.</p>",
     "PutRumMetricsDestination": "<p>Creates or updates a destination to receive extended metrics from CloudWatch RUM. You can send extended metrics to CloudWatch or to a CloudWatch Evidently experiment.</p> <p>For more information about extended metrics, see <a href=\"https://docs.aws.amazon.com/cloudwatchrum/latest/APIReference/API_BatchCreateRumMetricDefinitions.html\">BatchCreateRumMetricDefinitions</a>.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified CloudWatch RUM resource. Currently, the only resources that can be tagged app monitors.</p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values.</p> <p>Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters.</p> <p>You can use the <code>TagResource</code> action with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the alarm. If you specify a tag key that is already associated with the resource, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a resource.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a>.</p>",
@@ -24,6 +27,12 @@
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient permissions to perform this action.</p>",
       "refs": {
+      }
+    },
+    "Alias": {
+      "base": null,
+      "refs": {
+        "PutRumEventsRequest$Alias": "<p>If the app monitor uses a resource-based policy that requires <code>PutRumEvents</code> requests to specify a certain alias, specify that alias here. This alias will be compared to the <code>rum:alias</code> context key in the resource-based policy. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-RUM-resource-policies.html\">Using resource-based policies with CloudWatch RUM</a>.</p>"
       }
     },
     "AppMonitor": {
@@ -50,8 +59,17 @@
       "base": null,
       "refs": {
         "AppMonitor$Domain": "<p>The top-level internet domain name for which your application has administrative authority.</p>",
+        "AppMonitorDomainList$member": null,
         "CreateAppMonitorRequest$Domain": "<p>The top-level internet domain name for which your application has administrative authority.</p>",
         "UpdateAppMonitorRequest$Domain": "<p>The top-level internet domain name for which your application has administrative authority.</p>"
+      }
+    },
+    "AppMonitorDomainList": {
+      "base": null,
+      "refs": {
+        "AppMonitor$DomainList": "<p> List the domain names for which your application has administrative authority. </p>",
+        "CreateAppMonitorRequest$DomainList": "<p> List the domain names for which your application has administrative authority. The <code>CreateAppMonitor</code> requires either the domain or the domain list. </p>",
+        "UpdateAppMonitorRequest$DomainList": "<p> List the domain names for which your application has administrative authority. The <code>UpdateAppMonitor</code> allows either the domain or the domain list. </p>"
       }
     },
     "AppMonitorId": {
@@ -72,10 +90,13 @@
         "BatchGetRumMetricDefinitionsRequest$AppMonitorName": "<p>The name of the CloudWatch RUM app monitor that is sending the metrics.</p>",
         "CreateAppMonitorRequest$Name": "<p>A name for the app monitor.</p>",
         "DeleteAppMonitorRequest$Name": "<p>The name of the app monitor to delete.</p>",
+        "DeleteResourcePolicyRequest$Name": "<p>The app monitor that you want to remove the resource policy from.</p>",
         "DeleteRumMetricsDestinationRequest$AppMonitorName": "<p>The name of the app monitor that is sending metrics to the destination that you want to delete.</p>",
         "GetAppMonitorDataRequest$Name": "<p>The name of the app monitor that collected the data that you want to retrieve.</p>",
         "GetAppMonitorRequest$Name": "<p>The app monitor to retrieve information for.</p>",
+        "GetResourcePolicyRequest$Name": "<p>The name of the app monitor that is associated with the resource-based policy that you want to view.</p>",
         "ListRumMetricsDestinationsRequest$AppMonitorName": "<p>The name of the app monitor associated with the destinations that you want to retrieve.</p>",
+        "PutResourcePolicyRequest$Name": "<p>The name of the app monitor that you want to apply this resource-based policy to. To find the names of your app monitors, you can use the <a href=\"https://docs.aws.amazon.com/cloudwatchrum/latest/APIReference/API_ListAppMonitors.html\">ListAppMonitors</a> operation.</p>",
         "PutRumMetricsDestinationRequest$AppMonitorName": "<p>The name of the CloudWatch RUM app monitor that will send the metrics.</p>",
         "UpdateAppMonitorRequest$Name": "<p>The name of the app monitor to update.</p>",
         "UpdateRumMetricDefinitionRequest$AppMonitorName": "<p>The name of the CloudWatch RUM app monitor that sends these metrics.</p>"
@@ -218,6 +239,16 @@
       "refs": {
       }
     },
+    "DeleteResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourcePolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteRumMetricsDestinationRequest": {
       "base": null,
       "refs": {
@@ -226,6 +257,26 @@
     "DeleteRumMetricsDestinationResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "DeobfuscationConfiguration": {
+      "base": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>",
+      "refs": {
+        "AppMonitor$DeobfuscationConfiguration": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>",
+        "CreateAppMonitorRequest$DeobfuscationConfiguration": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>",
+        "UpdateAppMonitorRequest$DeobfuscationConfiguration": "<p> A structure that contains the configuration for how an app monitor can deobfuscate stack traces. </p>"
+      }
+    },
+    "DeobfuscationS3Uri": {
+      "base": null,
+      "refs": {
+        "JavaScriptSourceMaps$S3Uri": "<p> The S3Uri of the bucket or folder that stores the source map files. It is required if status is ENABLED. </p>"
+      }
+    },
+    "DeobfuscationStatus": {
+      "base": null,
+      "refs": {
+        "JavaScriptSourceMaps$Status": "<p> Specifies whether JavaScript error stack traces should be unminified for this app monitor. The default is for JavaScript error stack trace unminification to be <code>DISABLED</code>. </p>"
       }
     },
     "DestinationArn": {
@@ -304,6 +355,16 @@
       "refs": {
       }
     },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourcePolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ISOTimestampString": {
       "base": null,
       "refs": {
@@ -336,6 +397,17 @@
     "InternalServerException": {
       "base": "<p>Internal service exception.</p>",
       "refs": {
+      }
+    },
+    "InvalidPolicyRevisionIdException": {
+      "base": "<p>The policy revision ID that you provided doeesn't match the latest policy revision ID.</p>",
+      "refs": {
+      }
+    },
+    "JavaScriptSourceMaps": {
+      "base": "<p> A structure that contains the configuration for how an app monitor can unminify JavaScript error stack traces using source maps. </p>",
+      "refs": {
+        "DeobfuscationConfiguration$JavaScriptSourceMaps": "<p> A structure that contains the configuration for how an app monitor can unminify JavaScript error stack traces using source maps. </p>"
       }
     },
     "JsonValue": {
@@ -372,6 +444,11 @@
     },
     "ListTagsForResourceResponse": {
       "base": null,
+      "refs": {
+      }
+    },
+    "MalformedPolicyDocumentException": {
+      "base": "<p>The policy document that you specified is not formatted correctly.</p>",
       "refs": {
       }
     },
@@ -475,6 +552,36 @@
       "refs": {
         "AppMonitorConfiguration$ExcludedPages": "<p>A list of URLs in your website or application to exclude from RUM data collection.</p> <p>You can't include both <code>ExcludedPages</code> and <code>IncludedPages</code> in the same operation.</p>",
         "AppMonitorConfiguration$IncludedPages": "<p>If this app monitor is to collect data from only certain pages in your application, this structure lists those pages. </p> <p>You can't include both <code>ExcludedPages</code> and <code>IncludedPages</code> in the same operation.</p>"
+      }
+    },
+    "PolicyNotFoundException": {
+      "base": "<p>The resource-based policy doesn't exist on this app monitor.</p>",
+      "refs": {
+      }
+    },
+    "PolicyRevisionId": {
+      "base": null,
+      "refs": {
+        "DeleteResourcePolicyRequest$PolicyRevisionId": "<p>Specifies a specific policy revision to delete. Provide a <code>PolicyRevisionId</code> to ensure an atomic delete operation. If the revision ID that you provide doesn't match the latest policy revision ID, the request will be rejected with an <code>InvalidPolicyRevisionIdException</code> error.</p>",
+        "DeleteResourcePolicyResponse$PolicyRevisionId": "<p>The revision ID of the policy that was removed, if it had one.</p>",
+        "GetResourcePolicyResponse$PolicyRevisionId": "<p>The revision ID information for this version of the policy document that you requested.</p>",
+        "PutResourcePolicyRequest$PolicyRevisionId": "<p>A string value that you can use to conditionally update your policy. You can provide the revision ID of your existing policy to make mutating requests against that policy.</p> <p>When you assign a policy revision ID, then later requests about that policy will be rejected with an <code>InvalidPolicyRevisionIdException</code> error if they don't provide the correct current revision ID.</p>",
+        "PutResourcePolicyResponse$PolicyRevisionId": "<p>The policy revision ID information that you specified.</p>"
+      }
+    },
+    "PolicySizeLimitExceededException": {
+      "base": "<p>The policy document is too large. The limit is 4 KB.</p>",
+      "refs": {
+      }
+    },
+    "PutResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "PutResourcePolicyResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "PutRumEventsRequest": {
@@ -605,11 +712,18 @@
         "ConflictException$resourceType": "<p>The type of the resource that is associated with the error.</p>",
         "CwLog$CwLogGroup": "<p>The name of the log group where the copies are stored.</p>",
         "FavoritePages$member": null,
+        "GetResourcePolicyResponse$PolicyDocument": "<p>The JSON policy document that you requested.</p>",
         "InternalServerException$message": null,
+        "InvalidPolicyRevisionIdException$message": null,
         "ListAppMonitorsRequest$NextToken": "<p>Use the token returned by the previous operation to request the next page of results.</p>",
         "ListAppMonitorsResponse$NextToken": "<p>A token that you can use in a subsequent operation to retrieve the next set of results.</p>",
         "ListRumMetricsDestinationsRequest$NextToken": "<p>Use the token returned by the previous operation to request the next page of results.</p>",
         "ListRumMetricsDestinationsResponse$NextToken": "<p>A token that you can use in a subsequent operation to retrieve the next set of results.</p>",
+        "MalformedPolicyDocumentException$message": null,
+        "PolicyNotFoundException$message": null,
+        "PolicySizeLimitExceededException$message": null,
+        "PutResourcePolicyRequest$PolicyDocument": "<p>The JSON to use as the resource policy. The document can be up to 4 KB in size. For more information about the contents and syntax for this policy, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-RUM-resource-policies.html\">Using resource-based policies with CloudWatch RUM</a>.</p>",
+        "PutResourcePolicyResponse$PolicyDocument": "<p>The JSON policy document that you specified.</p>",
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceName": "<p>The name of the resource that is associated with the error.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of the resource that is associated with the error.</p>",

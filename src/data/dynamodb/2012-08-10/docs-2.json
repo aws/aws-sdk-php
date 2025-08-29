@@ -2,18 +2,18 @@
   "version": "2.0",
   "service": "<fullname>Amazon DynamoDB</fullname> <p>Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. DynamoDB lets you offload the administrative burdens of operating and scaling a distributed database, so that you don't have to worry about hardware provisioning, setup and configuration, replication, software patching, or cluster scaling.</p> <p>With DynamoDB, you can create database tables that can store and retrieve any amount of data, and serve any level of request traffic. You can scale up or scale down your tables' throughput capacity without downtime or performance degradation, and use the Amazon Web Services Management Console to monitor resource utilization and performance metrics.</p> <p>DynamoDB automatically spreads the data and traffic for your tables over a sufficient number of servers to handle your throughput and storage requirements, while maintaining consistent and fast performance. All of your data is stored on solid state disks (SSDs) and automatically replicated across multiple Availability Zones in an Amazon Web Services Region, providing built-in high availability and data durability.</p>",
   "operations": {
-    "BatchExecuteStatement": "<p>This operation allows you to perform batch reads or writes on data stored in DynamoDB, using PartiQL. Each read statement in a <code>BatchExecuteStatement</code> must specify an equality condition on all key attributes. This enforces that each <code>SELECT</code> statement in a batch returns at most a single item.</p> <note> <p>The entire batch must consist of either read statements or write statements, you cannot mix both in one batch.</p> </note> <important> <p>A HTTP 200 response does not mean that all statements in the BatchExecuteStatement succeeded. Error details for individual statements can be found under the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error\">Error</a> field of the <code>BatchStatementResponse</code> for each statement.</p> </important>",
-    "BatchGetItem": "<p>The <code>BatchGetItem</code> operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.</p> <p>A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. <code>BatchGetItem</code> returns a partial result if the response size limit is exceeded, the table's provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal processing failure occurs. If a partial result is returned, the operation returns a value for <code>UnprocessedKeys</code>. You can use this value to retry the operation starting with the next item to get.</p> <important> <p>If you request more than 100 items, <code>BatchGetItem</code> returns a <code>ValidationException</code> with the message \"Too many items requested for the BatchGetItem call.\"</p> </important> <p>For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an appropriate <code>UnprocessedKeys</code> value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one dataset.</p> <p>If <i>none</i> of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then <code>BatchGetItem</code> returns a <code>ProvisionedThroughputExceededException</code>. If <i>at least one</i> of the items is successfully processed, then <code>BatchGetItem</code> completes successfully, while returning the keys of the unread items in <code>UnprocessedKeys</code>.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>By default, <code>BatchGetItem</code> performs eventually consistent reads on every table in the request. If you want strongly consistent reads instead, you can set <code>ConsistentRead</code> to <code>true</code> for any or all tables.</p> <p>In order to minimize response latency, <code>BatchGetItem</code> may retrieve items in parallel.</p> <p>When designing your application, keep in mind that DynamoDB does not return items in any particular order. To help parse the response by item, include the primary key values for the items in your request in the <code>ProjectionExpression</code> parameter.</p> <p>If a requested item does not exist, it is not returned in the result. Requests for nonexistent items consume the minimum read capacity units according to the type of read. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations\">Working with Tables</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
-    "BatchWriteItem": "<p>The <code>BatchWriteItem</code> operation puts or deletes multiple items in one or more tables. A single call to <code>BatchWriteItem</code> can transmit up to 16MB of data over the network, consisting of up to 25 item put or delete operations. While individual items can be up to 400 KB once stored, it's important to note that an item's representation might be greater than 400KB while being sent in DynamoDB's JSON format for the API call. For more details on this distinction, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html\">Naming Rules and Data Types</a>.</p> <note> <p> <code>BatchWriteItem</code> cannot update items. If you perform a <code>BatchWriteItem</code> operation on an existing item, that item's values will be overwritten by the operation and it will appear like it was updated. To update items, we recommend you use the <code>UpdateItem</code> action.</p> </note> <p>The individual <code>PutItem</code> and <code>DeleteItem</code> operations specified in <code>BatchWriteItem</code> are atomic; however <code>BatchWriteItem</code> as a whole is not. If any requested operations fail because the table's provisioned throughput is exceeded or an internal processing failure occurs, the failed operations are returned in the <code>UnprocessedItems</code> response parameter. You can investigate and optionally resend the requests. Typically, you would call <code>BatchWriteItem</code> in a loop. Each iteration would check for unprocessed items and submit a new <code>BatchWriteItem</code> request with those unprocessed items until all items have been processed.</p> <p>If <i>none</i> of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then <code>BatchWriteItem</code> returns a <code>ProvisionedThroughputExceededException</code>.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>With <code>BatchWriteItem</code>, you can efficiently write or delete large amounts of data, such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve performance with these large-scale operations, <code>BatchWriteItem</code> does not behave in the same way as individual <code>PutItem</code> and <code>DeleteItem</code> calls would. For example, you cannot specify conditions on individual put and delete requests, and <code>BatchWriteItem</code> does not return deleted items in the response.</p> <p>If you use a programming language that supports concurrency, you can use threads to write items in parallel. Your application must include the necessary logic to manage the threads. With languages that don't support threading, you must update or delete the specified items one at a time. In both situations, <code>BatchWriteItem</code> performs the specified put and delete operations in parallel, giving you the power of the thread pool approach without having to introduce complexity into your application.</p> <p>Parallel processing reduces latency, but each specified put and delete request consumes the same number of write capacity units whether it is processed in parallel or not. Delete operations on nonexistent items consume one write capacity unit.</p> <p>If one or more of the following is true, DynamoDB rejects the entire batch write operation:</p> <ul> <li> <p>One or more tables specified in the <code>BatchWriteItem</code> request does not exist.</p> </li> <li> <p>Primary key attributes specified on an item in the request do not match those in the corresponding table's primary key schema.</p> </li> <li> <p>You try to perform multiple operations on the same item in the same <code>BatchWriteItem</code> request. For example, you cannot put and delete the same item in the same <code>BatchWriteItem</code> request. </p> </li> <li> <p> Your request contains at least two items with identical hash and range keys (which essentially is two put operations). </p> </li> <li> <p>There are more than 25 requests in the batch.</p> </li> <li> <p>Any individual item in a batch exceeds 400 KB.</p> </li> <li> <p>The total request size exceeds 16 MB.</p> </li> <li> <p>Any individual items with keys exceeding the key length limits. For a partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.</p> </li> </ul>",
+    "BatchExecuteStatement": "<p>This operation allows you to perform batch reads or writes on data stored in DynamoDB, using PartiQL. Each read statement in a <code>BatchExecuteStatement</code> must specify an equality condition on all key attributes. This enforces that each <code>SELECT</code> statement in a batch returns at most a single item. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ql-reference.multiplestatements.batching.html\">Running batch operations with PartiQL for DynamoDB </a>.</p> <note> <p>The entire batch must consist of either read statements or write statements, you cannot mix both in one batch.</p> </note> <important> <p>A HTTP 200 response does not mean that all statements in the BatchExecuteStatement succeeded. Error details for individual statements can be found under the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchStatementResponse.html#DDB-Type-BatchStatementResponse-Error\">Error</a> field of the <code>BatchStatementResponse</code> for each statement.</p> </important>",
+    "BatchGetItem": "<p>The <code>BatchGetItem</code> operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.</p> <p>A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. <code>BatchGetItem</code> returns a partial result if the response size limit is exceeded, the table's provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal processing failure occurs. If a partial result is returned, the operation returns a value for <code>UnprocessedKeys</code>. You can use this value to retry the operation starting with the next item to get.</p> <important> <p>If you request more than 100 items, <code>BatchGetItem</code> returns a <code>ValidationException</code> with the message \"Too many items requested for the BatchGetItem call.\"</p> </important> <p>For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an appropriate <code>UnprocessedKeys</code> value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one dataset.</p> <p>If <i>none</i> of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then <code>BatchGetItem</code> returns a <code>ProvisionedThroughputExceededException</code>. If <i>at least one</i> of the items is successfully processed, then <code>BatchGetItem</code> completes successfully, while returning the keys of the unread items in <code>UnprocessedKeys</code>.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>By default, <code>BatchGetItem</code> performs eventually consistent reads on every table in the request. If you want strongly consistent reads instead, you can set <code>ConsistentRead</code> to <code>true</code> for any or all tables.</p> <p>In order to minimize response latency, <code>BatchGetItem</code> may retrieve items in parallel.</p> <p>When designing your application, keep in mind that DynamoDB does not return items in any particular order. To help parse the response by item, include the primary key values for the items in your request in the <code>ProjectionExpression</code> parameter.</p> <p>If a requested item does not exist, it is not returned in the result. Requests for nonexistent items consume the minimum read capacity units according to the type of read. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations\">Working with Tables</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <note> <p> <code>BatchGetItem</code> will result in a <code>ValidationException</code> if the same key is specified multiple times.</p> </note>",
+    "BatchWriteItem": "<p>The <code>BatchWriteItem</code> operation puts or deletes multiple items in one or more tables. A single call to <code>BatchWriteItem</code> can transmit up to 16MB of data over the network, consisting of up to 25 item put or delete operations. While individual items can be up to 400 KB once stored, it's important to note that an item's representation might be greater than 400KB while being sent in DynamoDB's JSON format for the API call. For more details on this distinction, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.NamingRulesDataTypes.html\">Naming Rules and Data Types</a>.</p> <note> <p> <code>BatchWriteItem</code> cannot update items. If you perform a <code>BatchWriteItem</code> operation on an existing item, that item's values will be overwritten by the operation and it will appear like it was updated. To update items, we recommend you use the <code>UpdateItem</code> action.</p> </note> <p>The individual <code>PutItem</code> and <code>DeleteItem</code> operations specified in <code>BatchWriteItem</code> are atomic; however <code>BatchWriteItem</code> as a whole is not. If any requested operations fail because the table's provisioned throughput is exceeded or an internal processing failure occurs, the failed operations are returned in the <code>UnprocessedItems</code> response parameter. You can investigate and optionally resend the requests. Typically, you would call <code>BatchWriteItem</code> in a loop. Each iteration would check for unprocessed items and submit a new <code>BatchWriteItem</code> request with those unprocessed items until all items have been processed.</p> <p>For tables and indexes with provisioned capacity, if none of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then <code>BatchWriteItem</code> returns a <code>ProvisionedThroughputExceededException</code>. For all tables and indexes, if none of the items can be processed due to other throttling scenarios (such as exceeding partition level limits), then <code>BatchWriteItem</code> returns a <code>ThrottlingException</code>.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#Programming.Errors.BatchOperations\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>With <code>BatchWriteItem</code>, you can efficiently write or delete large amounts of data, such as from Amazon EMR, or copy data from another database into DynamoDB. In order to improve performance with these large-scale operations, <code>BatchWriteItem</code> does not behave in the same way as individual <code>PutItem</code> and <code>DeleteItem</code> calls would. For example, you cannot specify conditions on individual put and delete requests, and <code>BatchWriteItem</code> does not return deleted items in the response.</p> <p>If you use a programming language that supports concurrency, you can use threads to write items in parallel. Your application must include the necessary logic to manage the threads. With languages that don't support threading, you must update or delete the specified items one at a time. In both situations, <code>BatchWriteItem</code> performs the specified put and delete operations in parallel, giving you the power of the thread pool approach without having to introduce complexity into your application.</p> <p>Parallel processing reduces latency, but each specified put and delete request consumes the same number of write capacity units whether it is processed in parallel or not. Delete operations on nonexistent items consume one write capacity unit.</p> <p>If one or more of the following is true, DynamoDB rejects the entire batch write operation:</p> <ul> <li> <p>One or more tables specified in the <code>BatchWriteItem</code> request does not exist.</p> </li> <li> <p>Primary key attributes specified on an item in the request do not match those in the corresponding table's primary key schema.</p> </li> <li> <p>You try to perform multiple operations on the same item in the same <code>BatchWriteItem</code> request. For example, you cannot put and delete the same item in the same <code>BatchWriteItem</code> request. </p> </li> <li> <p> Your request contains at least two items with identical hash and range keys (which essentially is two put operations). </p> </li> <li> <p>There are more than 25 requests in the batch.</p> </li> <li> <p>Any individual item in a batch exceeds 400 KB.</p> </li> <li> <p>The total request size exceeds 16 MB.</p> </li> <li> <p>Any individual items with keys exceeding the key length limits. For a partition key, the limit is 2048 bytes and for a sort key, the limit is 1024 bytes.</p> </li> </ul>",
     "CreateBackup": "<p>Creates a backup for an existing table.</p> <p> Each time you create an on-demand backup, the entire table data is backed up. There is no limit to the number of on-demand backups that can be taken. </p> <p> When you create an on-demand backup, a time marker of the request is cataloged, and the backup is created asynchronously, by applying all changes until the time of the request to the last full table snapshot. Backup requests are processed instantaneously and become available for restore within minutes. </p> <p>You can call <code>CreateBackup</code> at a maximum rate of 50 times per second.</p> <p>All backups in DynamoDB work without consuming any provisioned throughput on the table.</p> <p> If you submit a backup request on 2018-12-14 at 14:25:00, the backup is guaranteed to contain all data committed to the table up to 14:24:00, and data committed after 14:26:00 will not be. The backup might contain data modifications made between 14:24:00 and 14:26:00. On-demand backup does not support causal consistency. </p> <p> Along with data, the following are also included on the backups: </p> <ul> <li> <p>Global secondary indexes (GSIs)</p> </li> <li> <p>Local secondary indexes (LSIs)</p> </li> <li> <p>Streams</p> </li> <li> <p>Provisioned read and write capacity</p> </li> </ul>",
     "CreateGlobalTable": "<p>Creates a global table from an existing table. A global table creates a replication relationship between two or more DynamoDB tables with the same table name in the provided Regions. </p> <important> <p>This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Global Tables version 2019.11.21 (Current)</a> when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).</p> <p>To determine which version you're using, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\">Determining the global table version you are using</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\">Upgrading global tables</a>.</p> </important> <p>If you want to add a new replica table to a global table, each of the following conditions must be true:</p> <ul> <li> <p>The table must have the same primary key as all of the other replicas.</p> </li> <li> <p>The table must have the same name as all of the other replicas.</p> </li> <li> <p>The table must have DynamoDB Streams enabled, with the stream containing both the new and the old images of the item.</p> </li> <li> <p>None of the replica tables in the global table can contain any data.</p> </li> </ul> <p> If global secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The global secondary indexes must have the same name. </p> </li> <li> <p> The global secondary indexes must have the same hash key and sort key (if present). </p> </li> </ul> <p> If local secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The local secondary indexes must have the same name. </p> </li> <li> <p> The local secondary indexes must have the same hash key and sort key (if present). </p> </li> </ul> <important> <p> Write capacity settings should be set consistently across your replica tables and secondary indexes. DynamoDB strongly recommends enabling auto scaling to manage the write capacity settings for all of your global tables replicas and indexes. </p> <p> If you prefer to manage write capacity settings manually, you should provision equal replicated write capacity units to your replica tables. You should also provision equal replicated write capacity units to matching secondary indexes across your global table. </p> </important>",
     "CreateTable": "<p>The <code>CreateTable</code> operation adds a new table to your account. In an Amazon Web Services account, table names must be unique within each Region. That is, you can have two tables with same name if you create the tables in different Regions.</p> <p> <code>CreateTable</code> is an asynchronous operation. Upon receiving a <code>CreateTable</code> request, DynamoDB immediately returns a response with a <code>TableStatus</code> of <code>CREATING</code>. After the table is created, DynamoDB sets the <code>TableStatus</code> to <code>ACTIVE</code>. You can perform read and write operations only on an <code>ACTIVE</code> table. </p> <p>You can optionally define secondary indexes on the new table, as part of the <code>CreateTable</code> operation. If you want to create multiple tables with secondary indexes on them, you must create the tables sequentially. Only one table with secondary indexes can be in the <code>CREATING</code> state at any given time.</p> <p>You can use the <code>DescribeTable</code> action to check the table status.</p>",
     "DeleteBackup": "<p>Deletes an existing backup of a table.</p> <p>You can call <code>DeleteBackup</code> at a maximum rate of 10 times per second.</p>",
     "DeleteItem": "<p>Deletes a single item in a table by primary key. You can perform a conditional delete operation that deletes the item if it exists, or if it has an expected attribute value.</p> <p>In addition to deleting an item, you can also return the item's attribute values in the same operation, using the <code>ReturnValues</code> parameter.</p> <p>Unless you specify conditions, the <code>DeleteItem</code> is an idempotent operation; running it multiple times on the same item or attribute does <i>not</i> result in an error response.</p> <p>Conditional deletes are useful for deleting items only if specific conditions are met. If those conditions are met, DynamoDB performs the delete. Otherwise, the item is not deleted.</p>",
     "DeleteResourcePolicy": "<p>Deletes the resource-based policy attached to the resource, which can be a table or stream.</p> <p> <code>DeleteResourcePolicy</code> is an idempotent operation; running it multiple times on the same resource <i>doesn't</i> result in an error response, unless you specify an <code>ExpectedRevisionId</code>, which will then return a <code>PolicyNotFoundException</code>.</p> <important> <p>To make sure that you don't inadvertently lock yourself out of your own resources, the root principal in your Amazon Web Services account can perform <code>DeleteResourcePolicy</code> requests, even if your resource-based policy explicitly denies the root principal's access. </p> </important> <note> <p> <code>DeleteResourcePolicy</code> is an asynchronous operation. If you issue a <code>GetResourcePolicy</code> request immediately after running the <code>DeleteResourcePolicy</code> request, DynamoDB might still return the deleted policy. This is because the policy for your resource might not have been deleted yet. Wait for a few seconds, and then try the <code>GetResourcePolicy</code> request again.</p> </note>",
-    "DeleteTable": "<p>The <code>DeleteTable</code> operation deletes a table and all of its items. After a <code>DeleteTable</code> request, the specified table is in the <code>DELETING</code> state until DynamoDB completes the deletion. If the table is in the <code>ACTIVE</code> state, you can delete it. If a table is in <code>CREATING</code> or <code>UPDATING</code> states, then DynamoDB returns a <code>ResourceInUseException</code>. If the specified table does not exist, DynamoDB returns a <code>ResourceNotFoundException</code>. If table is already in the <code>DELETING</code> state, no error is returned. </p> <important> <p>For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). </p> </important> <note> <p>DynamoDB might continue to accept data read and write operations, such as <code>GetItem</code> and <code>PutItem</code>, on a table in the <code>DELETING</code> state until the table deletion is complete.</p> </note> <p>When you delete a table, any indexes on that table are also deleted.</p> <p>If you have DynamoDB Streams enabled on the table, then the corresponding stream on that table goes into the <code>DISABLED</code> state, and the stream is automatically deleted after 24 hours.</p> <p>Use the <code>DescribeTable</code> action to check the status of the table. </p>",
+    "DeleteTable": "<p>The <code>DeleteTable</code> operation deletes a table and all of its items. After a <code>DeleteTable</code> request, the specified table is in the <code>DELETING</code> state until DynamoDB completes the deletion. If the table is in the <code>ACTIVE</code> state, you can delete it. If a table is in <code>CREATING</code> or <code>UPDATING</code> states, then DynamoDB returns a <code>ResourceInUseException</code>. If the specified table does not exist, DynamoDB returns a <code>ResourceNotFoundException</code>. If table is already in the <code>DELETING</code> state, no error is returned. </p> <note> <p>DynamoDB might continue to accept data read and write operations, such as <code>GetItem</code> and <code>PutItem</code>, on a table in the <code>DELETING</code> state until the table deletion is complete. For the full list of table states, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_TableDescription.html#DDB-Type-TableDescription-TableStatus\">TableStatus</a>.</p> </note> <p>When you delete a table, any indexes on that table are also deleted.</p> <p>If you have DynamoDB Streams enabled on the table, then the corresponding stream on that table goes into the <code>DISABLED</code> state, and the stream is automatically deleted after 24 hours.</p> <p>Use the <code>DescribeTable</code> action to check the status of the table. </p>",
     "DescribeBackup": "<p>Describes an existing backup of a table.</p> <p>You can call <code>DescribeBackup</code> at a maximum rate of 10 times per second.</p>",
-    "DescribeContinuousBackups": "<p>Checks the status of continuous backups and point in time recovery on the specified table. Continuous backups are <code>ENABLED</code> on all tables at table creation. If point in time recovery is enabled, <code>PointInTimeRecoveryStatus</code> will be set to ENABLED.</p> <p> After continuous backups and point in time recovery are enabled, you can restore to any point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. </p> <p> <code>LatestRestorableDateTime</code> is typically 5 minutes before the current time. You can restore your table to any point in time during the last 35 days. </p> <p>You can call <code>DescribeContinuousBackups</code> at a maximum rate of 10 times per second.</p>",
+    "DescribeContinuousBackups": "<p>Checks the status of continuous backups and point in time recovery on the specified table. Continuous backups are <code>ENABLED</code> on all tables at table creation. If point in time recovery is enabled, <code>PointInTimeRecoveryStatus</code> will be set to ENABLED.</p> <p> After continuous backups and point in time recovery are enabled, you can restore to any point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. </p> <p> <code>LatestRestorableDateTime</code> is typically 5 minutes before the current time. You can restore your table to any point in time in the last 35 days. You can set the recovery period to any value between 1 and 35 days. </p> <p>You can call <code>DescribeContinuousBackups</code> at a maximum rate of 10 times per second.</p>",
     "DescribeContributorInsights": "<p>Returns information about contributor insights for a given table or global secondary index.</p>",
     "DescribeEndpoints": "<p>Returns the regional endpoint information. For more information on policy permissions, please see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints\">Internetwork traffic privacy</a>.</p>",
     "DescribeExport": "<p>Describes an existing table export.</p>",
@@ -22,8 +22,8 @@
     "DescribeImport": "<p> Represents the properties of the import. </p>",
     "DescribeKinesisStreamingDestination": "<p>Returns information about the status of Kinesis streaming.</p>",
     "DescribeLimits": "<p>Returns the current provisioned-capacity quotas for your Amazon Web Services account in a Region, both for the Region as a whole and for any one DynamoDB table that you create there.</p> <p>When you establish an Amazon Web Services account, the account has initial quotas on the maximum read capacity units and write capacity units that you can provision across all of your DynamoDB tables in a given Region. Also, there are per-table quotas that apply when you create a table there. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Service, Account, and Table Quotas</a> page in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>Although you can increase these quotas by filing a case at <a href=\"https://console.aws.amazon.com/support/home#/\">Amazon Web Services Support Center</a>, obtaining the increase is not instantaneous. The <code>DescribeLimits</code> action lets you write code to compare the capacity you are currently using to those quotas imposed by your account so that you have enough time to apply for an increase before you hit a quota.</p> <p>For example, you could use one of the Amazon Web Services SDKs to do the following:</p> <ol> <li> <p>Call <code>DescribeLimits</code> for a particular Region to obtain your current account quotas on provisioned capacity there.</p> </li> <li> <p>Create a variable to hold the aggregate read capacity units provisioned for all your tables in that Region, and one to hold the aggregate write capacity units. Zero them both.</p> </li> <li> <p>Call <code>ListTables</code> to obtain a list of all your DynamoDB tables.</p> </li> <li> <p>For each table name listed by <code>ListTables</code>, do the following:</p> <ul> <li> <p>Call <code>DescribeTable</code> with the table name.</p> </li> <li> <p>Use the data returned by <code>DescribeTable</code> to add the read capacity units and write capacity units provisioned for the table itself to your variables.</p> </li> <li> <p>If the table has one or more global secondary indexes (GSIs), loop over these GSIs and add their provisioned capacity values to your variables as well.</p> </li> </ul> </li> <li> <p>Report the account quotas for that Region returned by <code>DescribeLimits</code>, along with the total current provisioned capacity levels you have calculated.</p> </li> </ol> <p>This will let you see whether you are getting close to your account-level quotas.</p> <p>The per-table quotas apply only when you are creating a new table. They restrict the sum of the provisioned capacity of the new table itself and all its global secondary indexes.</p> <p>For existing tables and their GSIs, DynamoDB doesn't let you increase provisioned capacity extremely rapidly, but the only quota that applies is that the aggregate provisioned capacity over all your tables and GSIs cannot exceed either of the per-account quotas.</p> <note> <p> <code>DescribeLimits</code> should only be called periodically. You can expect throttling errors if you call it more than once in a minute.</p> </note> <p>The <code>DescribeLimits</code> Request element has no content.</p>",
-    "DescribeTable": "<p>Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.</p> <important> <p>For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). </p> </important> <note> <p>If you issue a <code>DescribeTable</code> request immediately after a <code>CreateTable</code> request, DynamoDB might return a <code>ResourceNotFoundException</code>. This is because <code>DescribeTable</code> uses an eventually consistent query, and the metadata for your table might not be available at that moment. Wait for a few seconds, and then try the <code>DescribeTable</code> request again.</p> </note>",
-    "DescribeTableReplicaAutoScaling": "<p>Describes auto scaling settings across replicas of the global table at once.</p> <important> <p>For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version).</p> </important>",
+    "DescribeTable": "<p>Returns information about the table, including the current status of the table, when it was created, the primary key schema, and any indexes on the table.</p> <note> <p>If you issue a <code>DescribeTable</code> request immediately after a <code>CreateTable</code> request, DynamoDB might return a <code>ResourceNotFoundException</code>. This is because <code>DescribeTable</code> uses an eventually consistent query, and the metadata for your table might not be available at that moment. Wait for a few seconds, and then try the <code>DescribeTable</code> request again.</p> </note>",
+    "DescribeTableReplicaAutoScaling": "<p>Describes auto scaling settings across replicas of the global table at once.</p>",
     "DescribeTimeToLive": "<p>Gives a description of the Time to Live (TTL) status on the specified table. </p>",
     "DisableKinesisStreamingDestination": "<p>Stops replication from the DynamoDB table to the Kinesis data stream. This is done without deleting either of the resources.</p>",
     "EnableKinesisStreamingDestination": "<p>Starts table data replication to the specified Kinesis data stream at a timestamp chosen during the enable workflow. If this operation doesn't return results immediately, use DescribeKinesisStreamingDestination to check if streaming to the Kinesis data stream is ACTIVE.</p>",
@@ -44,20 +44,20 @@
     "PutResourcePolicy": "<p>Attaches a resource-based policy document to the resource, which can be a table or stream. When you attach a resource-based policy using this API, the policy application is <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <i>eventually consistent</i> </a>.</p> <p> <code>PutResourcePolicy</code> is an idempotent operation; running it multiple times on the same resource using the same policy document will return the same revision ID. If you specify an <code>ExpectedRevisionId</code> that doesn't match the current policy's <code>RevisionId</code>, the <code>PolicyNotFoundException</code> will be returned.</p> <note> <p> <code>PutResourcePolicy</code> is an asynchronous operation. If you issue a <code>GetResourcePolicy</code> request immediately after a <code>PutResourcePolicy</code> request, DynamoDB might return your previous policy, if there was one, or return the <code>PolicyNotFoundException</code>. This is because <code>GetResourcePolicy</code> uses an eventually consistent query, and the metadata for your policy or table might not be available at that moment. Wait for a few seconds, and then try the <code>GetResourcePolicy</code> request again.</p> </note>",
     "Query": "<p>You must provide the name of the partition key attribute and a single value for that attribute. <code>Query</code> returns all items with that partition key value. Optionally, you can provide a sort key attribute and use a comparison operator to refine the search results.</p> <p>Use the <code>KeyConditionExpression</code> parameter to provide a specific value for the partition key. The <code>Query</code> operation will return all of the items from the table or index with that partition key value. You can optionally narrow the scope of the <code>Query</code> operation by specifying a sort key value and a comparison operator in <code>KeyConditionExpression</code>. To further refine the <code>Query</code> results, you can optionally provide a <code>FilterExpression</code>. A <code>FilterExpression</code> determines which items within the results should be returned to you. All of the other results are discarded. </p> <p> A <code>Query</code> operation always returns a result set. If no matching items are found, the result set will be empty. Queries that do not return results consume the minimum number of read capacity units for that type of read operation. </p> <note> <p> DynamoDB calculates the number of read capacity units consumed based on item size, not on the amount of data that is returned to an application. The number of capacity units consumed will be the same whether you request all of the attributes (the default behavior) or just some of them (using a projection expression). The number will also be the same whether or not you use a <code>FilterExpression</code>. </p> </note> <p> <code>Query</code> results are always sorted by the sort key value. If the data type of the sort key is Number, the results are returned in numeric order; otherwise, the results are returned in order of UTF-8 bytes. By default, the sort order is ascending. To reverse the order, set the <code>ScanIndexForward</code> parameter to false. </p> <p> A single <code>Query</code> operation will read up to the maximum number of items set (if using the <code>Limit</code> parameter) or a maximum of 1 MB of data and then apply any filtering to the results using <code>FilterExpression</code>. If <code>LastEvaluatedKey</code> is present in the response, you will need to paginate the result set. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html#Query.Pagination\">Paginating the Results</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p> <p> <code>FilterExpression</code> is applied after a <code>Query</code> finishes, but before the results are returned. A <code>FilterExpression</code> cannot contain partition key or sort key attributes. You need to specify those attributes in the <code>KeyConditionExpression</code>. </p> <note> <p> A <code>Query</code> operation can return an empty result set and a <code>LastEvaluatedKey</code> if all the items read for the page of results are filtered out. </p> </note> <p>You can query a table, a local secondary index, or a global secondary index. For a query on a table or on a local secondary index, you can set the <code>ConsistentRead</code> parameter to <code>true</code> and obtain a strongly consistent result. Global secondary indexes support eventually consistent reads only, so do not specify <code>ConsistentRead</code> when querying a global secondary index.</p>",
     "RestoreTableFromBackup": "<p>Creates a new table from an existing backup. Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account. </p> <p>You can call <code>RestoreTableFromBackup</code> at a maximum rate of 10 times per second.</p> <p>You must manually set up the following on the restored table:</p> <ul> <li> <p>Auto scaling policies</p> </li> <li> <p>IAM policies</p> </li> <li> <p>Amazon CloudWatch metrics and alarms</p> </li> <li> <p>Tags</p> </li> <li> <p>Stream settings</p> </li> <li> <p>Time to Live (TTL) settings</p> </li> </ul>",
-    "RestoreTableToPointInTime": "<p>Restores the specified table to the specified point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. You can restore your table to any point in time during the last 35 days. Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account. </p> <p>When you restore using point in time recovery, DynamoDB restores your table data to the state based on the selected date and time (day:hour:minute:second) to a new table. </p> <p>Along with data, the following are also included on the new restored table using point in time recovery: </p> <ul> <li> <p>Global secondary indexes (GSIs)</p> </li> <li> <p>Local secondary indexes (LSIs)</p> </li> <li> <p>Provisioned read and write capacity</p> </li> <li> <p>Encryption settings</p> <important> <p> All these settings come from the current settings of the source table at the time of restore. </p> </important> </li> </ul> <p>You must manually set up the following on the restored table:</p> <ul> <li> <p>Auto scaling policies</p> </li> <li> <p>IAM policies</p> </li> <li> <p>Amazon CloudWatch metrics and alarms</p> </li> <li> <p>Tags</p> </li> <li> <p>Stream settings</p> </li> <li> <p>Time to Live (TTL) settings</p> </li> <li> <p>Point in time recovery settings</p> </li> </ul>",
+    "RestoreTableToPointInTime": "<p>Restores the specified table to the specified point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. You can restore your table to any point in time in the last 35 days. You can set the recovery period to any value between 1 and 35 days. Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account. </p> <p>When you restore using point in time recovery, DynamoDB restores your table data to the state based on the selected date and time (day:hour:minute:second) to a new table. </p> <p>Along with data, the following are also included on the new restored table using point in time recovery: </p> <ul> <li> <p>Global secondary indexes (GSIs)</p> </li> <li> <p>Local secondary indexes (LSIs)</p> </li> <li> <p>Provisioned read and write capacity</p> </li> <li> <p>Encryption settings</p> <important> <p> All these settings come from the current settings of the source table at the time of restore. </p> </important> </li> </ul> <p>You must manually set up the following on the restored table:</p> <ul> <li> <p>Auto scaling policies</p> </li> <li> <p>IAM policies</p> </li> <li> <p>Amazon CloudWatch metrics and alarms</p> </li> <li> <p>Tags</p> </li> <li> <p>Stream settings</p> </li> <li> <p>Time to Live (TTL) settings</p> </li> <li> <p>Point in time recovery settings</p> </li> </ul>",
     "Scan": "<p>The <code>Scan</code> operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a <code>FilterExpression</code> operation.</p> <p>If the total size of scanned items exceeds the maximum dataset size limit of 1 MB, the scan completes and results are returned to the user. The <code>LastEvaluatedKey</code> value is also returned and the requestor can use the <code>LastEvaluatedKey</code> to continue the scan in a subsequent operation. Each scan response also includes number of items that were scanned (ScannedCount) as part of the request. If using a <code>FilterExpression</code>, a scan result can result in no items meeting the criteria and the <code>Count</code> will result in zero. If you did not use a <code>FilterExpression</code> in the scan request, then <code>Count</code> is the same as <code>ScannedCount</code>.</p> <note> <p> <code>Count</code> and <code>ScannedCount</code> only return the count of items specific to a single scan request and, unless the table is less than 1MB, do not represent the total number of items in the table. </p> </note> <p>A single <code>Scan</code> operation first reads up to the maximum number of items set (if using the <code>Limit</code> parameter) or a maximum of 1 MB of data and then applies any filtering to the results if a <code>FilterExpression</code> is provided. If <code>LastEvaluatedKey</code> is present in the response, pagination is required to complete the full table scan. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination\">Paginating the Results</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p> <code>Scan</code> operations proceed sequentially; however, for faster performance on a large table or secondary index, applications can request a parallel <code>Scan</code> operation by providing the <code>Segment</code> and <code>TotalSegments</code> parameters. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.ParallelScan\">Parallel Scan</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>By default, a <code>Scan</code> uses eventually consistent reads when accessing the items in a table. Therefore, the results from an eventually consistent <code>Scan</code> may not include the latest item changes at the time the scan iterates through each item in the table. If you require a strongly consistent read of each item as the scan iterates through the items in the table, you can set the <code>ConsistentRead</code> parameter to true. Strong consistency only relates to the consistency of the read at the item level.</p> <note> <p> DynamoDB does not provide snapshot isolation for a scan operation when the <code>ConsistentRead</code> parameter is set to true. Thus, a DynamoDB scan operation does not guarantee that all reads in a scan see a consistent snapshot of the table when the scan operation was requested. </p> </note>",
-    "TagResource": "<p>Associate a set of tags with an Amazon DynamoDB resource. You can then activate these user-defined tags so that they appear on the Billing and Cost Management console for cost allocation tracking. You can call TagResource up to five times per second, per account. </p> <p>For an overview on tagging DynamoDB resources, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html\">Tagging for DynamoDB</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
+    "TagResource": "<p>Associate a set of tags with an Amazon DynamoDB resource. You can then activate these user-defined tags so that they appear on the Billing and Cost Management console for cost allocation tracking. You can call TagResource up to five times per second, per account. </p> <ul> <li> <p> <code>TagResource</code> is an asynchronous operation. If you issue a <a>ListTagsOfResource</a> request immediately after a <code>TagResource</code> request, DynamoDB might return your previous tag set, if there was one, or an empty tag set. This is because <code>ListTagsOfResource</code> uses an eventually consistent query, and the metadata for your tags or table might not be available at that moment. Wait for a few seconds, and then try the <code>ListTagsOfResource</code> request again.</p> </li> <li> <p>The application or removal of tags using <code>TagResource</code> and <code>UntagResource</code> APIs is eventually consistent. <code>ListTagsOfResource</code> API will only reflect the changes after a few seconds.</p> </li> </ul> <p>For an overview on tagging DynamoDB resources, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html\">Tagging for DynamoDB</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
     "TransactGetItems": "<p> <code>TransactGetItems</code> is a synchronous operation that atomically retrieves multiple items from one or more tables (but not from indexes) in a single account and Region. A <code>TransactGetItems</code> call can contain up to 100 <code>TransactGetItem</code> objects, each of which contains a <code>Get</code> structure that specifies an item to retrieve from a table in the account and Region. A call to <code>TransactGetItems</code> cannot retrieve items from tables in more than one Amazon Web Services account or Region. The aggregate size of the items in the transaction cannot exceed 4 MB.</p> <p>DynamoDB rejects the entire <code>TransactGetItems</code> request if any of the following is true:</p> <ul> <li> <p>A conflicting operation is in the process of updating an item to be read.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> <li> <p>The aggregate size of the items in the transaction exceeded 4 MB.</p> </li> </ul>",
     "TransactWriteItems": "<p> <code>TransactWriteItems</code> is a synchronous write operation that groups up to 100 action requests. These actions can target items in different tables, but not in different Amazon Web Services accounts or Regions, and no two actions can target the same item. For example, you cannot both <code>ConditionCheck</code> and <code>Update</code> the same item. The aggregate size of the items in the transaction cannot exceed 4 MB.</p> <p>The actions are completed atomically so that either all of them succeed, or all of them fail. They are defined by the following objects:</p> <ul> <li> <p> <code>Put</code>  —   Initiates a <code>PutItem</code> operation to write a new item. This structure specifies the primary key of the item to be written, the name of the table to write it in, an optional condition expression that must be satisfied for the write to succeed, a list of the item's attributes, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> <li> <p> <code>Update</code>  —   Initiates an <code>UpdateItem</code> operation to update an existing item. This structure specifies the primary key of the item to be updated, the name of the table where it resides, an optional condition expression that must be satisfied for the update to succeed, an expression that defines one or more attributes to be updated, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> <li> <p> <code>Delete</code>  —   Initiates a <code>DeleteItem</code> operation to delete an existing item. This structure specifies the primary key of the item to be deleted, the name of the table where it resides, an optional condition expression that must be satisfied for the deletion to succeed, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> <li> <p> <code>ConditionCheck</code>  —   Applies a condition to an item that is not being modified by the transaction. This structure specifies the primary key of the item to be checked, the name of the table where it resides, a condition expression that must be satisfied for the transaction to succeed, and a field indicating whether to retrieve the item's attributes if the condition is not met.</p> </li> </ul> <p>DynamoDB rejects the entire <code>TransactWriteItems</code> request if any of the following is true:</p> <ul> <li> <p>A condition in one of the condition expressions is not met.</p> </li> <li> <p>An ongoing operation is in the process of updating the same item.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>An item size becomes too large (bigger than 400 KB), a local secondary index (LSI) becomes too large, or a similar validation error occurs because of changes made by the transaction.</p> </li> <li> <p>The aggregate size of the items in the transaction exceeds 4 MB.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> </ul>",
-    "UntagResource": "<p>Removes the association of tags from an Amazon DynamoDB resource. You can call <code>UntagResource</code> up to five times per second, per account. </p> <p>For an overview on tagging DynamoDB resources, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html\">Tagging for DynamoDB</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
-    "UpdateContinuousBackups": "<p> <code>UpdateContinuousBackups</code> enables or disables point in time recovery for the specified table. A successful <code>UpdateContinuousBackups</code> call returns the current <code>ContinuousBackupsDescription</code>. Continuous backups are <code>ENABLED</code> on all tables at table creation. If point in time recovery is enabled, <code>PointInTimeRecoveryStatus</code> will be set to ENABLED.</p> <p> Once continuous backups and point in time recovery are enabled, you can restore to any point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. </p> <p> <code>LatestRestorableDateTime</code> is typically 5 minutes before the current time. You can restore your table to any point in time during the last 35 days. </p>",
+    "UntagResource": "<p>Removes the association of tags from an Amazon DynamoDB resource. You can call <code>UntagResource</code> up to five times per second, per account. </p> <ul> <li> <p> <code>UntagResource</code> is an asynchronous operation. If you issue a <a>ListTagsOfResource</a> request immediately after an <code>UntagResource</code> request, DynamoDB might return your previous tag set, if there was one, or an empty tag set. This is because <code>ListTagsOfResource</code> uses an eventually consistent query, and the metadata for your tags or table might not be available at that moment. Wait for a few seconds, and then try the <code>ListTagsOfResource</code> request again.</p> </li> <li> <p>The application or removal of tags using <code>TagResource</code> and <code>UntagResource</code> APIs is eventually consistent. <code>ListTagsOfResource</code> API will only reflect the changes after a few seconds.</p> </li> </ul> <p>For an overview on tagging DynamoDB resources, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Tagging.html\">Tagging for DynamoDB</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
+    "UpdateContinuousBackups": "<p> <code>UpdateContinuousBackups</code> enables or disables point in time recovery for the specified table. A successful <code>UpdateContinuousBackups</code> call returns the current <code>ContinuousBackupsDescription</code>. Continuous backups are <code>ENABLED</code> on all tables at table creation. If point in time recovery is enabled, <code>PointInTimeRecoveryStatus</code> will be set to ENABLED.</p> <p> Once continuous backups and point in time recovery are enabled, you can restore to any point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. </p> <p> <code>LatestRestorableDateTime</code> is typically 5 minutes before the current time. You can restore your table to any point in time in the last 35 days. You can set the <code>RecoveryPeriodInDays</code> to any value between 1 and 35 days.</p>",
     "UpdateContributorInsights": "<p>Updates the status for contributor insights for a specific table or index. CloudWatch Contributor Insights for DynamoDB graphs display the partition key and (if applicable) sort key of frequently accessed items and frequently throttled items in plaintext. If you require the use of Amazon Web Services Key Management Service (KMS) to encrypt this table’s partition key and sort key data with an Amazon Web Services managed key or customer managed key, you should not enable CloudWatch Contributor Insights for DynamoDB for this table.</p>",
-    "UpdateGlobalTable": "<p>Adds or removes replicas in the specified global table. The global table must already exist to be able to use this operation. Any replica to be added must be empty, have the same name as the global table, have the same key schema, have DynamoDB Streams enabled, and have the same provisioned and maximum write capacity units.</p> <important> <p>This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Global Tables version 2019.11.21 (Current)</a> when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).</p> <p>To determine which version you're using, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\">Determining the global table version you are using</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\">Upgrading global tables</a>.</p> </important> <note> <p> For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). If you are using global tables <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Version 2019.11.21</a> you can use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html\">UpdateTable</a> instead. </p> <p> Although you can use <code>UpdateGlobalTable</code> to add replicas and remove replicas in a single request, for simplicity we recommend that you issue separate requests for adding or removing replicas. </p> </note> <p> If global secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The global secondary indexes must have the same name. </p> </li> <li> <p> The global secondary indexes must have the same hash key and sort key (if present). </p> </li> <li> <p> The global secondary indexes must have the same provisioned and maximum write capacity units. </p> </li> </ul>",
+    "UpdateGlobalTable": "<p>Adds or removes replicas in the specified global table. The global table must already exist to be able to use this operation. Any replica to be added must be empty, have the same name as the global table, have the same key schema, have DynamoDB Streams enabled, and have the same provisioned and maximum write capacity units.</p> <important> <p>This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Global Tables version 2019.11.21 (Current)</a> when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).</p> <p>To determine which version you're using, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\">Determining the global table version you are using</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\">Upgrading global tables</a>.</p> </important> <note> <p> If you are using global tables <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Version 2019.11.21</a> (Current) you can use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html\">UpdateTable</a> instead. </p> <p> Although you can use <code>UpdateGlobalTable</code> to add replicas and remove replicas in a single request, for simplicity we recommend that you issue separate requests for adding or removing replicas. </p> </note> <p> If global secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The global secondary indexes must have the same name. </p> </li> <li> <p> The global secondary indexes must have the same hash key and sort key (if present). </p> </li> <li> <p> The global secondary indexes must have the same provisioned and maximum write capacity units. </p> </li> </ul>",
     "UpdateGlobalTableSettings": "<p>Updates settings for a global table.</p> <important> <p>This documentation is for version 2017.11.29 (Legacy) of global tables, which should be avoided for new global tables. Customers should use <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html\">Global Tables version 2019.11.21 (Current)</a> when possible, because it provides greater flexibility, higher efficiency, and consumes less write capacity than 2017.11.29 (Legacy).</p> <p>To determine which version you're using, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\">Determining the global table version you are using</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\">Upgrading global tables</a>.</p> </important>",
     "UpdateItem": "<p>Edits an existing item's attributes, or adds a new item to the table if it does not already exist. You can put, delete, or add attribute values. You can also perform a conditional update on an existing item (insert a new attribute name-value pair if it doesn't exist, or replace an existing name-value pair if it has certain expected attribute values).</p> <p>You can also return the item's attribute values in the same <code>UpdateItem</code> operation using the <code>ReturnValues</code> parameter.</p>",
     "UpdateKinesisStreamingDestination": "<p>The command to update the Kinesis stream destination.</p>",
-    "UpdateTable": "<p>Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.</p> <important> <p>For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). </p> </important> <p>You can only perform one of the following operations at once:</p> <ul> <li> <p>Modify the provisioned throughput settings of the table.</p> </li> <li> <p>Remove a global secondary index from the table.</p> </li> <li> <p>Create a new global secondary index on the table. After the index begins backfilling, you can use <code>UpdateTable</code> to perform other operations.</p> </li> </ul> <p> <code>UpdateTable</code> is an asynchronous operation; while it's executing, the table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While it's <code>UPDATING</code>, you can't issue another <code>UpdateTable</code> request. When the table returns to the <code>ACTIVE</code> state, the <code>UpdateTable</code> operation is complete.</p>",
-    "UpdateTableReplicaAutoScaling": "<p>Updates auto scaling settings on your global tables at once.</p> <important> <p>For global tables, this operation only applies to global tables using Version 2019.11.21 (Current version). </p> </important>",
+    "UpdateTable": "<p>Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.</p> <p>You can only perform one of the following operations at once:</p> <ul> <li> <p>Modify the provisioned throughput settings of the table.</p> </li> <li> <p>Remove a global secondary index from the table.</p> </li> <li> <p>Create a new global secondary index on the table. After the index begins backfilling, you can use <code>UpdateTable</code> to perform other operations.</p> </li> </ul> <p> <code>UpdateTable</code> is an asynchronous operation; while it's executing, the table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While it's <code>UPDATING</code>, you can't issue another <code>UpdateTable</code> request. When the table returns to the <code>ACTIVE</code> state, the <code>UpdateTable</code> operation is complete.</p>",
+    "UpdateTableReplicaAutoScaling": "<p>Updates auto scaling settings on your global tables at once.</p>",
     "UpdateTimeToLive": "<p>The <code>UpdateTimeToLive</code> method enables or disables Time to Live (TTL) for the specified table. A successful <code>UpdateTimeToLive</code> call returns the current <code>TimeToLiveSpecification</code>. It can take up to one hour for the change to fully process. Any additional <code>UpdateTimeToLive</code> calls for the same table during this one hour duration result in a <code>ValidationException</code>. </p> <p>TTL compares the current time in epoch time format to the time stored in the TTL attribute of an item. If the epoch time value stored in the attribute is less than the current time, the item is marked as expired and subsequently deleted.</p> <note> <p> The epoch time format is the number of seconds elapsed since 12:00:00 AM January 1, 1970 UTC. </p> </note> <p>DynamoDB deletes expired items on a best-effort basis to ensure availability of throughput for other data operations. </p> <important> <p>DynamoDB typically deletes expired items within two days of expiration. The exact duration within which an item gets deleted after expiration is specific to the nature of the workload. Items that have expired and not been deleted will still show up in reads, queries, and scans.</p> </important> <p>As items are deleted, they are removed from any local secondary index and global secondary index immediately in the same eventually consistent way as a standard delete operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/TTL.html\">Time To Live</a> in the Amazon DynamoDB Developer Guide. </p>"
   },
   "shapes": {
@@ -246,6 +246,12 @@
         "AutoScalingPolicyUpdate$TargetTrackingScalingPolicyConfiguration": "<p>Represents a target tracking scaling policy configuration.</p>"
       }
     },
+    "AvailabilityErrorMessage": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$message": null
+      }
+    },
     "Backfilling": {
       "base": null,
       "refs": {
@@ -289,8 +295,7 @@
     },
     "BackupInUseException": {
       "base": "<p>There is another ongoing conflicting backup control plane operation on the table. The backup is either being created, deleted or restored to a table.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BackupName": {
       "base": null,
@@ -302,8 +307,7 @@
     },
     "BackupNotFoundException": {
       "base": "<p>Backup not found for the given BackupARN. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BackupSizeBytes": {
       "base": null,
@@ -352,23 +356,19 @@
     },
     "BatchExecuteStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchExecuteStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetItemInput": {
       "base": "<p>Represents the input of a <code>BatchGetItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetItemOutput": {
       "base": "<p>Represents the output of a <code>BatchGetItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetRequestMap": {
       "base": null,
@@ -409,13 +409,11 @@
     },
     "BatchWriteItemInput": {
       "base": "<p>Represents the input of a <code>BatchWriteItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchWriteItemOutput": {
       "base": "<p>Represents the output of a <code>BatchWriteItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchWriteItemRequestMap": {
       "base": null,
@@ -434,13 +432,13 @@
       "base": null,
       "refs": {
         "BillingModeSummary$BillingMode": "<p>Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.</p> <ul> <li> <p> <code>PROVISIONED</code> - Sets the read/write capacity mode to <code>PROVISIONED</code>. We recommend using <code>PROVISIONED</code> for predictable workloads.</p> </li> <li> <p> <code>PAY_PER_REQUEST</code> - Sets the read/write capacity mode to <code>PAY_PER_REQUEST</code>. We recommend using <code>PAY_PER_REQUEST</code> for unpredictable workloads. </p> </li> </ul>",
-        "CreateTableInput$BillingMode": "<p>Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.</p> <ul> <li> <p> <code>PROVISIONED</code> - We recommend using <code>PROVISIONED</code> for predictable workloads. <code>PROVISIONED</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html\">Provisioned capacity mode</a>.</p> </li> <li> <p> <code>PAY_PER_REQUEST</code> - We recommend using <code>PAY_PER_REQUEST</code> for unpredictable workloads. <code>PAY_PER_REQUEST</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html\">On-demand capacity mode</a>. </p> </li> </ul>",
+        "CreateTableInput$BillingMode": "<p>Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.</p> <ul> <li> <p> <code>PAY_PER_REQUEST</code> - We recommend using <code>PAY_PER_REQUEST</code> for most DynamoDB workloads. <code>PAY_PER_REQUEST</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html\">On-demand capacity mode</a>. </p> </li> <li> <p> <code>PROVISIONED</code> - We recommend using <code>PROVISIONED</code> for steady workloads with predictable growth where capacity requirements can be reliably forecasted. <code>PROVISIONED</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html\">Provisioned capacity mode</a>.</p> </li> </ul>",
         "RestoreTableFromBackupInput$BillingModeOverride": "<p>The billing mode of the restored table.</p>",
         "RestoreTableToPointInTimeInput$BillingModeOverride": "<p>The billing mode of the restored table.</p>",
         "SourceTableDetails$BillingMode": "<p>Controls how you are charged for read and write throughput and how you manage capacity. This setting can be changed later.</p> <ul> <li> <p> <code>PROVISIONED</code> - Sets the read/write capacity mode to <code>PROVISIONED</code>. We recommend using <code>PROVISIONED</code> for predictable workloads.</p> </li> <li> <p> <code>PAY_PER_REQUEST</code> - Sets the read/write capacity mode to <code>PAY_PER_REQUEST</code>. We recommend using <code>PAY_PER_REQUEST</code> for unpredictable workloads. </p> </li> </ul>",
         "TableCreationParameters$BillingMode": "<p> The billing mode for provisioning the table created as part of the import operation. </p>",
         "UpdateGlobalTableSettingsInput$GlobalTableBillingMode": "<p>The billing mode of the global table. If <code>GlobalTableBillingMode</code> is not specified, the global table defaults to <code>PROVISIONED</code> capacity billing mode.</p> <ul> <li> <p> <code>PROVISIONED</code> - We recommend using <code>PROVISIONED</code> for predictable workloads. <code>PROVISIONED</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html\">Provisioned capacity mode</a>.</p> </li> <li> <p> <code>PAY_PER_REQUEST</code> - We recommend using <code>PAY_PER_REQUEST</code> for unpredictable workloads. <code>PAY_PER_REQUEST</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html\">On-demand capacity mode</a>. </p> </li> </ul>",
-        "UpdateTableInput$BillingMode": "<p>Controls how you are charged for read and write throughput and how you manage capacity. When switching from pay-per-request to provisioned capacity, initial provisioned capacity values must be set. The initial provisioned capacity values are estimated based on the consumed read and write capacity of your table and global secondary indexes over the past 30 minutes.</p> <ul> <li> <p> <code>PROVISIONED</code> - We recommend using <code>PROVISIONED</code> for predictable workloads. <code>PROVISIONED</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html\">Provisioned capacity mode</a>.</p> </li> <li> <p> <code>PAY_PER_REQUEST</code> - We recommend using <code>PAY_PER_REQUEST</code> for unpredictable workloads. <code>PAY_PER_REQUEST</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html\">On-demand capacity mode</a>. </p> </li> </ul>"
+        "UpdateTableInput$BillingMode": "<p>Controls how you are charged for read and write throughput and how you manage capacity. When switching from pay-per-request to provisioned capacity, initial provisioned capacity values must be set. The initial provisioned capacity values are estimated based on the consumed read and write capacity of your table and global secondary indexes over the past 30 minutes.</p> <ul> <li> <p> <code>PAY_PER_REQUEST</code> - We recommend using <code>PAY_PER_REQUEST</code> for most DynamoDB workloads. <code>PAY_PER_REQUEST</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html\">On-demand capacity mode</a>. </p> </li> <li> <p> <code>PROVISIONED</code> - We recommend using <code>PROVISIONED</code> for steady workloads with predictable growth where capacity requirements can be reliably forecasted. <code>PROVISIONED</code> sets the billing mode to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html\">Provisioned capacity mode</a>.</p> </li> </ul>"
       }
     },
     "BillingModeSummary": {
@@ -565,9 +563,8 @@
       }
     },
     "ConditionalCheckFailedException": {
-      "base": "<p>A condition specified in the operation could not be evaluated.</p>",
-      "refs": {
-      }
+      "base": "<p>A condition specified in the operation failed to be evaluated.</p>",
+      "refs": {}
     },
     "ConditionalOperator": {
       "base": null,
@@ -646,13 +643,21 @@
     },
     "ContinuousBackupsUnavailableException": {
       "base": "<p>Backups have not yet been enabled for this table.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContributorInsightsAction": {
       "base": null,
       "refs": {
         "UpdateContributorInsightsInput$ContributorInsightsAction": "<p>Represents the contributor insights action.</p>"
+      }
+    },
+    "ContributorInsightsMode": {
+      "base": null,
+      "refs": {
+        "ContributorInsightsSummary$ContributorInsightsMode": "<p>Indicates the current mode of CloudWatch Contributor Insights, specifying whether it tracks all access and throttled events or throttled events only for the DynamoDB table or index.</p>",
+        "DescribeContributorInsightsOutput$ContributorInsightsMode": "<p>The mode of CloudWatch Contributor Insights for DynamoDB that determines which events are emitted. Can be set to track all access and throttled events or throttled events only.</p>",
+        "UpdateContributorInsightsInput$ContributorInsightsMode": "<p>Specifies whether to track all access and throttled events or throttled events only for the DynamoDB table or index.</p>",
+        "UpdateContributorInsightsOutput$ContributorInsightsMode": "<p>The updated mode of CloudWatch Contributor Insights that determines whether to monitor all access and throttled events or to track throttled events exclusively.</p>"
       }
     },
     "ContributorInsightsRule": {
@@ -689,13 +694,11 @@
     },
     "CreateBackupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBackupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGlobalSecondaryIndexAction": {
       "base": "<p>Represents a new global secondary index to be added to an existing table.</p>",
@@ -705,12 +708,16 @@
     },
     "CreateGlobalTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGlobalTableOutput": {
       "base": null,
+      "refs": {}
+    },
+    "CreateGlobalTableWitnessGroupMemberAction": {
+      "base": "<p>Specifies the action to add a new witness Region to a MRSC global table. A MRSC global table can be configured with either three replicas, or with two replicas and one witness.</p>",
       "refs": {
+        "GlobalTableWitnessGroupUpdate$Create": "<p>Specifies a witness Region to be added to a new MRSC global table. The witness must be added when creating the MRSC global table.</p>"
       }
     },
     "CreateReplicaAction": {
@@ -727,13 +734,11 @@
     },
     "CreateTableInput": {
       "base": "<p>Represents the input of a <code>CreateTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTableOutput": {
       "base": "<p>Represents the output of a <code>CreateTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CsvDelimiter": {
       "base": null,
@@ -787,13 +792,11 @@
     },
     "DeleteBackupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBackupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGlobalSecondaryIndexAction": {
       "base": "<p>Represents a global secondary index to be deleted from an existing table.</p>",
@@ -801,15 +804,19 @@
         "GlobalSecondaryIndexUpdate$Delete": "<p>The name of an existing global secondary index to be removed.</p>"
       }
     },
+    "DeleteGlobalTableWitnessGroupMemberAction": {
+      "base": "<p>Specifies the action to remove a witness Region from a MRSC global table. You cannot delete a single witness from a MRSC global table - you must delete both a replica and the witness together. The deletion of both a witness and replica converts the remaining replica to a single-Region DynamoDB table. </p>",
+      "refs": {
+        "GlobalTableWitnessGroupUpdate$Delete": "<p>Specifies a witness Region to be removed from an existing global table. Must be done in conjunction with removing a replica. The deletion of both a witness and replica converts the remaining replica to a single-Region DynamoDB table.</p>"
+      }
+    },
     "DeleteItemInput": {
       "base": "<p>Represents the input of a <code>DeleteItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteItemOutput": {
       "base": "<p>Represents the output of a <code>DeleteItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteReplicaAction": {
       "base": "<p>Represents a replica to be removed.</p>",
@@ -831,23 +838,19 @@
     },
     "DeleteResourcePolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTableInput": {
       "base": "<p>Represents the input of a <code>DeleteTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTableOutput": {
       "base": "<p>Represents the output of a <code>DeleteTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletionProtectionEnabled": {
       "base": null,
@@ -859,133 +862,107 @@
     },
     "DescribeBackupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeBackupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeContinuousBackupsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeContinuousBackupsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeContributorInsightsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeContributorInsightsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalTableSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalTableSettingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeKinesisStreamingDestinationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeKinesisStreamingDestinationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLimitsInput": {
       "base": "<p>Represents the input of a <code>DescribeLimits</code> operation. Has no content.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLimitsOutput": {
       "base": "<p>Represents the output of a <code>DescribeLimits</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTableInput": {
       "base": "<p>Represents the input of a <code>DescribeTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTableOutput": {
       "base": "<p>Represents the output of a <code>DescribeTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTableReplicaAutoScalingInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTableReplicaAutoScalingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTimeToLiveInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeTimeToLiveOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DestinationStatus": {
       "base": null,
@@ -1004,8 +981,7 @@
     },
     "DuplicateItemException": {
       "base": "<p> There was an attempt to insert an item with the same primary key as an item that already exists in the DynamoDB table.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableKinesisStreamingConfiguration": {
       "base": "<p>Enables setting the configuration for Kinesis Streaming.</p>",
@@ -1059,6 +1035,7 @@
         "ProvisionedThroughputExceededException$message": "<p>You exceeded your maximum allowed provisioned throughput.</p>",
         "ReplicaAlreadyExistsException$message": null,
         "ReplicaNotFoundException$message": null,
+        "ReplicatedWriteConflictException$message": null,
         "RequestLimitExceeded$message": null,
         "ResourceInUseException$message": "<p>The resource which is being attempted to be changed is in use.</p>",
         "ResourceNotFoundException$message": "<p>The resource which is being requested does not exist.</p>",
@@ -1084,23 +1061,19 @@
     },
     "ExecuteStatementInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteStatementOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteTransactionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteTransactionOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExpectedAttributeMap": {
       "base": null,
@@ -1126,8 +1099,7 @@
     },
     "ExportConflictException": {
       "base": "<p>There was a conflict when writing to the specified S3 bucket.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportDescription": {
       "base": "<p>Represents the properties of the exported table.</p>",
@@ -1170,8 +1142,7 @@
     },
     "ExportNotFoundException": {
       "base": "<p>The specified export was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportStartTime": {
       "base": null,
@@ -1200,13 +1171,11 @@
     },
     "ExportTableToPointInTimeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportTableToPointInTimeOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExportTime": {
       "base": null,
@@ -1313,23 +1282,19 @@
     },
     "GetItemInput": {
       "base": "<p>Represents the input of a <code>GetItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetItemOutput": {
       "base": "<p>Represents the output of a <code>GetItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlobalSecondaryIndex": {
       "base": "<p>Represents the properties of a global secondary index.</p>",
@@ -1358,7 +1323,7 @@
     "GlobalSecondaryIndexDescriptionList": {
       "base": null,
       "refs": {
-        "TableDescription$GlobalSecondaryIndexes": "<p>The global secondary indexes, if any, on the table. Each index is scoped to a given partition key value. Each element is composed of:</p> <ul> <li> <p> <code>Backfilling</code> - If true, then the index is currently in the backfilling phase. Backfilling occurs only when a new global secondary index is added to the table. It is the process by which DynamoDB populates the new index with data from the table. (This attribute does not appear for indexes that were created during a <code>CreateTable</code> operation.) </p> <p> You can delete an index that is being created during the <code>Backfilling</code> phase when <code>IndexStatus</code> is set to CREATING and <code>Backfilling</code> is true. You can't delete the index that is being created when <code>IndexStatus</code> is set to CREATING and <code>Backfilling</code> is false. (This attribute does not appear for indexes that were created during a <code>CreateTable</code> operation.)</p> </li> <li> <p> <code>IndexName</code> - The name of the global secondary index.</p> </li> <li> <p> <code>IndexSizeBytes</code> - The total size of the global secondary index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. </p> </li> <li> <p> <code>IndexStatus</code> - The current status of the global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The index is being updated.</p> </li> <li> <p> <code>DELETING</code> - The index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The index is ready for use.</p> </li> </ul> </li> <li> <p> <code>ItemCount</code> - The number of items in the global secondary index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. </p> </li> <li> <p> <code>KeySchema</code> - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - In addition to the attributes described in <code>KEYS_ONLY</code>, the secondary index will include other non-key attributes that you specify.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.</p> </li> </ul> </li> <li> <p> <code>ProvisionedThroughput</code> - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units, along with data about increases and decreases. </p> </li> </ul> <p>If the table is in the <code>DELETING</code> state, no information about indexes will be returned.</p>"
+        "TableDescription$GlobalSecondaryIndexes": "<p>The global secondary indexes, if any, on the table. Each index is scoped to a given partition key value. Each element is composed of:</p> <ul> <li> <p> <code>Backfilling</code> - If true, then the index is currently in the backfilling phase. Backfilling occurs only when a new global secondary index is added to the table. It is the process by which DynamoDB populates the new index with data from the table. (This attribute does not appear for indexes that were created during a <code>CreateTable</code> operation.) </p> <p> You can delete an index that is being created during the <code>Backfilling</code> phase when <code>IndexStatus</code> is set to CREATING and <code>Backfilling</code> is true. You can't delete the index that is being created when <code>IndexStatus</code> is set to CREATING and <code>Backfilling</code> is false. (This attribute does not appear for indexes that were created during a <code>CreateTable</code> operation.)</p> </li> <li> <p> <code>IndexName</code> - The name of the global secondary index.</p> </li> <li> <p> <code>IndexSizeBytes</code> - The total size of the global secondary index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. </p> </li> <li> <p> <code>IndexStatus</code> - The current status of the global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The index is being updated.</p> </li> <li> <p> <code>DELETING</code> - The index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The index is ready for use.</p> </li> </ul> </li> <li> <p> <code>ItemCount</code> - The number of items in the global secondary index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value. </p> </li> <li> <p> <code>KeySchema</code> - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - In addition to the attributes described in <code>KEYS_ONLY</code>, the secondary index will include other non-key attributes that you specify.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of <code>INCLUDE</code>. You still can specify the ProjectionType of <code>ALL</code> to project all attributes from the source table, even if the table has more than 100 attributes.</p> </li> </ul> </li> <li> <p> <code>ProvisionedThroughput</code> - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units, along with data about increases and decreases. </p> </li> </ul> <p>If the table is in the <code>DELETING</code> state, no information about indexes will be returned.</p>"
       }
     },
     "GlobalSecondaryIndexInfo": {
@@ -1370,7 +1335,7 @@
     "GlobalSecondaryIndexList": {
       "base": null,
       "refs": {
-        "CreateTableInput$GlobalSecondaryIndexes": "<p>One or more global secondary indexes (the maximum is 20) to be created on the table. Each global secondary index in the array includes the following:</p> <ul> <li> <p> <code>IndexName</code> - The name of the global secondary index. Must be unique only for this table.</p> <p/> </li> <li> <p> <code>KeySchema</code> - Specifies the key schema for the global secondary index.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - Only the specified table attributes are projected into the index. The list of projected attributes is in <code>NonKeyAttributes</code>.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.</p> </li> </ul> </li> <li> <p> <code>ProvisionedThroughput</code> - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units.</p> </li> </ul>",
+        "CreateTableInput$GlobalSecondaryIndexes": "<p>One or more global secondary indexes (the maximum is 20) to be created on the table. Each global secondary index in the array includes the following:</p> <ul> <li> <p> <code>IndexName</code> - The name of the global secondary index. Must be unique only for this table.</p> <p/> </li> <li> <p> <code>KeySchema</code> - Specifies the key schema for the global secondary index.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - Only the specified table attributes are projected into the index. The list of projected attributes is in <code>NonKeyAttributes</code>.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of <code>INCLUDE</code>. You still can specify the ProjectionType of <code>ALL</code> to project all attributes from the source table, even if the table has more than 100 attributes.</p> </li> </ul> </li> <li> <p> <code>ProvisionedThroughput</code> - The provisioned throughput settings for the global secondary index, consisting of read and write capacity units.</p> </li> </ul>",
         "RestoreTableFromBackupInput$GlobalSecondaryIndexOverride": "<p>List of global secondary indexes for the restored table. The indexes provided should match existing secondary indexes. You can choose to exclude some or all of the indexes at the time of restore.</p>",
         "RestoreTableToPointInTimeInput$GlobalSecondaryIndexOverride": "<p>List of global secondary indexes for the restored table. The indexes provided should match existing secondary indexes. You can choose to exclude some or all of the indexes at the time of restore.</p>",
         "TableCreationParameters$GlobalSecondaryIndexes": "<p> The Global Secondary Indexes (GSI) of the table to be created as part of the import operation. </p>"
@@ -1388,6 +1353,13 @@
         "UpdateTableInput$GlobalSecondaryIndexUpdates": "<p>An array of one or more global secondary indexes for the table. For each index in the array, you can request one action:</p> <ul> <li> <p> <code>Create</code> - add a new global secondary index to the table.</p> </li> <li> <p> <code>Update</code> - modify the provisioned throughput settings of an existing global secondary index.</p> </li> <li> <p> <code>Delete</code> - remove a global secondary index from the table.</p> </li> </ul> <p>You can create or delete only one global secondary index per <code>UpdateTable</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.OnlineOps.html\">Managing Global Secondary Indexes</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p>"
       }
     },
+    "GlobalSecondaryIndexWarmThroughputDescription": {
+      "base": "<p>The description of the warm throughput value on a global secondary index.</p>",
+      "refs": {
+        "GlobalSecondaryIndexDescription$WarmThroughput": "<p>Represents the warm throughput value (in read units per second and write units per second) for the specified secondary index.</p>",
+        "ReplicaGlobalSecondaryIndexDescription$WarmThroughput": "<p>Represents the warm throughput of the global secondary index for this replica.</p>"
+      }
+    },
     "GlobalSecondaryIndexes": {
       "base": null,
       "refs": {
@@ -1402,8 +1374,7 @@
     },
     "GlobalTableAlreadyExistsException": {
       "base": "<p>The specified global table already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GlobalTableArnString": {
       "base": null,
@@ -1439,8 +1410,7 @@
     },
     "GlobalTableNotFoundException": {
       "base": "<p>The specified global table does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GlobalTableStatus": {
       "base": null,
@@ -1448,10 +1418,33 @@
         "GlobalTableDescription$GlobalTableStatus": "<p>The current state of the global table:</p> <ul> <li> <p> <code>CREATING</code> - The global table is being created.</p> </li> <li> <p> <code>UPDATING</code> - The global table is being updated.</p> </li> <li> <p> <code>DELETING</code> - The global table is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The global table is ready for use.</p> </li> </ul>"
       }
     },
+    "GlobalTableWitnessDescription": {
+      "base": "<p>Represents the properties of a witness Region in a MRSC global table. </p>",
+      "refs": {
+        "GlobalTableWitnessDescriptionList$member": null
+      }
+    },
+    "GlobalTableWitnessDescriptionList": {
+      "base": null,
+      "refs": {
+        "TableDescription$GlobalTableWitnesses": "<p>The witness Region and its current status in the MRSC global table. Only one witness Region can be configured per MRSC global table.</p>"
+      }
+    },
+    "GlobalTableWitnessGroupUpdate": {
+      "base": "<p>Represents one of the following:</p> <ul> <li> <p>A new witness to be added to a new global table.</p> </li> <li> <p>An existing witness to be removed from an existing global table.</p> </li> </ul> <p>You can configure one witness per MRSC global table.</p>",
+      "refs": {
+        "GlobalTableWitnessGroupUpdateList$member": null
+      }
+    },
+    "GlobalTableWitnessGroupUpdateList": {
+      "base": null,
+      "refs": {
+        "UpdateTableInput$GlobalTableWitnessUpdates": "<p>A list of witness updates for a MRSC global table. A witness provides a cost-effective alternative to a full replica in a MRSC global table by maintaining replicated change data written to global table replicas. You cannot perform read or write operations on a witness. For each witness, you can request one action:</p> <ul> <li> <p> <code>Create</code> - add a new witness to the global table.</p> </li> <li> <p> <code>Delete</code> - remove a witness from the global table.</p> </li> </ul> <p>You can create or delete only one witness per <code>UpdateTable</code> operation.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_HowItWorks.html#V2globaltables_HowItWorks.consistency-modes\">Multi-Region strong consistency (MRSC)</a> in the Amazon DynamoDB Developer Guide</p>"
+      }
+    },
     "IdempotentParameterMismatchException": {
       "base": "<p>DynamoDB rejected the request because you retried a request with a different payload but with an idempotent token that was already used.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportArn": {
       "base": null,
@@ -1463,8 +1456,7 @@
     },
     "ImportConflictException": {
       "base": "<p> There was a conflict when importing from the specified S3 source. This can occur when the current import conflicts with a previous import request that had the same client token. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportEndTime": {
       "base": null,
@@ -1482,8 +1474,7 @@
     },
     "ImportNotFoundException": {
       "base": "<p> The specified import was not found. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportStartTime": {
       "base": null,
@@ -1520,13 +1511,11 @@
     },
     "ImportTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportedItemCount": {
       "base": null,
@@ -1573,13 +1562,13 @@
     },
     "IndexNotFoundException": {
       "base": "<p>The operation tried to access a nonexistent index.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IndexStatus": {
       "base": null,
       "refs": {
         "GlobalSecondaryIndexDescription$IndexStatus": "<p>The current state of the global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The index is being updated.</p> </li> <li> <p> <code>DELETING</code> - The index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The index is ready for use.</p> </li> </ul>",
+        "GlobalSecondaryIndexWarmThroughputDescription$Status": "<p>Represents the warm throughput status being created or updated on a global secondary index. The status can only be <code>UPDATING</code> or <code>ACTIVE</code>.</p>",
         "ReplicaGlobalSecondaryIndexAutoScalingDescription$IndexStatus": "<p>The current state of the replica global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table/index configuration is being updated. The table/index remains available for data operations when <code>UPDATING</code> </p> </li> <li> <p> <code>DELETING</code> - The index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The index is ready for use.</p> </li> </ul>",
         "ReplicaGlobalSecondaryIndexSettingsDescription$IndexStatus": "<p> The current status of the global secondary index:</p> <ul> <li> <p> <code>CREATING</code> - The global secondary index is being created.</p> </li> <li> <p> <code>UPDATING</code> - The global secondary index is being updated.</p> </li> <li> <p> <code>DELETING</code> - The global secondary index is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The global secondary index is ready for use.</p> </li> </ul>"
       }
@@ -1610,7 +1599,7 @@
       "base": null,
       "refs": {
         "QueryOutput$Count": "<p>The number of items in the response.</p> <p>If you used a <code>QueryFilter</code> in the request, then <code>Count</code> is the number of items returned after the filter was applied, and <code>ScannedCount</code> is the number of matching items before the filter was applied.</p> <p>If you did not use a filter in the request, then <code>Count</code> and <code>ScannedCount</code> are the same.</p>",
-        "QueryOutput$ScannedCount": "<p>The number of items evaluated, before any <code>QueryFilter</code> is applied. A high <code>ScannedCount</code> value with few, or no, <code>Count</code> results indicates an inefficient <code>Query</code> operation. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html#Count\">Count and ScannedCount</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If you did not use a filter in the request, then <code>ScannedCount</code> is the same as <code>Count</code>.</p>",
+        "QueryOutput$ScannedCount": "<p>The number of items evaluated, before any <code>QueryFilter</code> is applied. A high <code>ScannedCount</code> value with few, or no, <code>Count</code> results indicates an inefficient <code>Query</code> operation. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Count\">Count and ScannedCount</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If you did not use a filter in the request, then <code>ScannedCount</code> is the same as <code>Count</code>.</p>",
         "ScanOutput$Count": "<p>The number of items in the response.</p> <p>If you set <code>ScanFilter</code> in the request, then <code>Count</code> is the number of items returned after the filter was applied, and <code>ScannedCount</code> is the number of matching items before the filter was applied.</p> <p>If you did not use a filter in the request, then <code>Count</code> is the same as <code>ScannedCount</code>.</p>",
         "ScanOutput$ScannedCount": "<p>The number of items evaluated, before any <code>ScanFilter</code> is applied. A high <code>ScannedCount</code> value with few, or no, <code>Count</code> results indicates an inefficient <code>Scan</code> operation. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html#Count\">Count and ScannedCount</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If you did not use a filter in the request, then <code>ScannedCount</code> is the same as <code>Count</code>.</p>"
       }
@@ -1626,18 +1615,15 @@
     },
     "InternalServerError": {
       "base": "<p>An error occurred on the server side.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidExportTimeException": {
       "base": "<p>The specified <code>ExportTime</code> is outside of the point in time recovery window.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRestoreTimeException": {
       "base": "<p>An invalid restore time was specified. RestoreDateTime must be between EarliestRestorableDateTime and LatestRestorableDateTime.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ItemCollectionKeyAttributeMap": {
       "base": null,
@@ -1681,8 +1667,7 @@
     },
     "ItemCollectionSizeLimitExceededException": {
       "base": "<p>An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ItemCount": {
       "base": null,
@@ -1820,13 +1805,11 @@
     },
     "KinesisStreamingDestinationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "KinesisStreamingDestinationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LastUpdateDateTime": {
       "base": null,
@@ -1836,8 +1819,7 @@
     },
     "LimitExceededException": {
       "base": "<p>There is no limit to the number of daily on-demand backups that can be taken. </p> <p>For most purposes, up to 500 simultaneous table operations are allowed per account. These operations include <code>CreateTable</code>, <code>UpdateTable</code>, <code>DeleteTable</code>,<code>UpdateTimeToLive</code>, <code>RestoreTableFromBackup</code>, and <code>RestoreTableToPointInTime</code>. </p> <p>When you are creating a table with one or more secondary indexes, you can have up to 250 such requests running at a time. However, if the table or index specifications are complex, then DynamoDB might temporarily reduce the number of concurrent operations.</p> <p>When importing into DynamoDB, up to 50 simultaneous import table operations are allowed per account.</p> <p>There is a soft account quota of 2,500 tables.</p> <p>GetRecords was called with a value of more than 1000 for the limit request parameter.</p> <p>More than 2 processes are reading from the same streams shard at the same time. Exceeding this limit may result in request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAttributeValue": {
       "base": null,
@@ -1847,18 +1829,15 @@
     },
     "ListBackupsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBackupsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContributorInsightsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContributorInsightsLimit": {
       "base": null,
@@ -1868,13 +1847,11 @@
     },
     "ListContributorInsightsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExportsMaxLimit": {
       "base": null,
@@ -1884,23 +1861,19 @@
     },
     "ListExportsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGlobalTablesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGlobalTablesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImportsMaxLimit": {
       "base": null,
@@ -1910,13 +1883,11 @@
     },
     "ListImportsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTablesInput": {
       "base": "<p>Represents the input of a <code>ListTables</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTablesInputLimit": {
       "base": null,
@@ -1926,18 +1897,15 @@
     },
     "ListTablesOutput": {
       "base": "<p>Represents the output of a <code>ListTables</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsOfResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsOfResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LocalSecondaryIndex": {
       "base": "<p>Represents the properties of a local secondary index.</p>",
@@ -1954,7 +1922,7 @@
     "LocalSecondaryIndexDescriptionList": {
       "base": null,
       "refs": {
-        "TableDescription$LocalSecondaryIndexes": "<p>Represents one or more local secondary indexes on the table. Each index is scoped to a given partition key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:</p> <ul> <li> <p> <code>IndexName</code> - The name of the local secondary index.</p> </li> <li> <p> <code>KeySchema</code> - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - Only the specified table attributes are projected into the index. The list of projected attributes is in <code>NonKeyAttributes</code>.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.</p> </li> </ul> </li> <li> <p> <code>IndexSizeBytes</code> - Represents the total size of the index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p> </li> <li> <p> <code>ItemCount</code> - Represents the number of items in the index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p> </li> </ul> <p>If the table is in the <code>DELETING</code> state, no information about indexes will be returned.</p>"
+        "TableDescription$LocalSecondaryIndexes": "<p>Represents one or more local secondary indexes on the table. Each index is scoped to a given partition key value. Tables with one or more local secondary indexes are subject to an item collection size limit, where the amount of data within a given item collection cannot exceed 10 GB. Each element is composed of:</p> <ul> <li> <p> <code>IndexName</code> - The name of the local secondary index.</p> </li> <li> <p> <code>KeySchema</code> - Specifies the complete index key schema. The attribute names in the key schema must be between 1 and 255 characters (inclusive). The key schema must begin with the same partition key as the table.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - Only the specified table attributes are projected into the index. The list of projected attributes is in <code>NonKeyAttributes</code>.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of <code>INCLUDE</code>. You still can specify the ProjectionType of <code>ALL</code> to project all attributes from the source table, even if the table has more than 100 attributes.</p> </li> </ul> </li> <li> <p> <code>IndexSizeBytes</code> - Represents the total size of the index, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p> </li> <li> <p> <code>ItemCount</code> - Represents the number of items in the index. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p> </li> </ul> <p>If the table is in the <code>DELETING</code> state, no information about indexes will be returned.</p>"
       }
     },
     "LocalSecondaryIndexInfo": {
@@ -1966,7 +1934,7 @@
     "LocalSecondaryIndexList": {
       "base": null,
       "refs": {
-        "CreateTableInput$LocalSecondaryIndexes": "<p>One or more local secondary indexes (the maximum is 5) to be created on the table. Each index is scoped to a given partition key value. There is a 10 GB size limit per partition key value; otherwise, the size of a local secondary index is unconstrained.</p> <p>Each local secondary index in the array includes the following:</p> <ul> <li> <p> <code>IndexName</code> - The name of the local secondary index. Must be unique only for this table.</p> <p/> </li> <li> <p> <code>KeySchema</code> - Specifies the key schema for the local secondary index. The key schema must begin with the same partition key as the table.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - Only the specified table attributes are projected into the index. The list of projected attributes is in <code>NonKeyAttributes</code>.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.</p> </li> </ul> </li> </ul>",
+        "CreateTableInput$LocalSecondaryIndexes": "<p>One or more local secondary indexes (the maximum is 5) to be created on the table. Each index is scoped to a given partition key value. There is a 10 GB size limit per partition key value; otherwise, the size of a local secondary index is unconstrained.</p> <p>Each local secondary index in the array includes the following:</p> <ul> <li> <p> <code>IndexName</code> - The name of the local secondary index. Must be unique only for this table.</p> <p/> </li> <li> <p> <code>KeySchema</code> - Specifies the key schema for the local secondary index. The key schema must begin with the same partition key as the table.</p> </li> <li> <p> <code>Projection</code> - Specifies attributes that are copied (projected) from the table into the index. These are in addition to the primary key attributes and index key attributes, which are automatically projected. Each attribute specification is composed of:</p> <ul> <li> <p> <code>ProjectionType</code> - One of the following:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - Only the specified table attributes are projected into the index. The list of projected attributes is in <code>NonKeyAttributes</code>.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> </li> <li> <p> <code>NonKeyAttributes</code> - A list of one or more non-key attribute names that are projected into the secondary index. The total count of attributes provided in <code>NonKeyAttributes</code>, summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of <code>INCLUDE</code>. You still can specify the ProjectionType of <code>ALL</code> to project all attributes from the source table, even if the table has more than 100 attributes.</p> </li> </ul> </li> </ul>",
         "RestoreTableFromBackupInput$LocalSecondaryIndexOverride": "<p>List of local secondary indexes for the restored table. The indexes provided should match existing secondary indexes. You can choose to exclude some or all of the indexes at the time of restore.</p>",
         "RestoreTableToPointInTimeInput$LocalSecondaryIndexOverride": "<p>List of local secondary indexes for the restored table. The indexes provided should match existing secondary indexes. You can choose to exclude some or all of the indexes at the time of restore.</p>"
       }
@@ -1996,13 +1964,22 @@
         "OnDemandThroughputOverride$MaxReadRequestUnits": "<p>Maximum number of read request units for the specified replica table.</p>",
         "SourceTableDetails$TableSizeBytes": "<p>Size of the table in bytes. Note that this is an approximate value.</p>",
         "TableDescription$TableSizeBytes": "<p>The total size of the specified table, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p>",
-        "TableDescription$ItemCount": "<p>The number of items in the specified table. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p>"
+        "TableDescription$ItemCount": "<p>The number of items in the specified table. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.</p>",
+        "WarmThroughput$ReadUnitsPerSecond": "<p>Represents the number of read operations your base table can instantaneously support.</p>",
+        "WarmThroughput$WriteUnitsPerSecond": "<p>Represents the number of write operations your base table can instantaneously support.</p>"
       }
     },
     "MapAttributeValue": {
       "base": null,
       "refs": {
         "AttributeValue$M": "<p>An attribute of type Map. For example:</p> <p> <code>\"M\": {\"Name\": {\"S\": \"Joe\"}, \"Age\": {\"N\": \"35\"}}</code> </p>"
+      }
+    },
+    "MultiRegionConsistency": {
+      "base": null,
+      "refs": {
+        "TableDescription$MultiRegionConsistency": "<p>Indicates one of the following consistency modes for a global table:</p> <ul> <li> <p> <code>EVENTUAL</code>: Indicates that the global table is configured for multi-Region eventual consistency (MREC).</p> </li> <li> <p> <code>STRONG</code>: Indicates that the global table is configured for multi-Region strong consistency (MRSC).</p> </li> </ul> <p>If you don't specify this field, the global table consistency mode defaults to <code>EVENTUAL</code>. For more information about global tables consistency modes, see <a href=\"https://docs.aws.amazon.com/V2globaltables_HowItWorks.html#V2globaltables_HowItWorks.consistency-modes\"> Consistency modes</a> in DynamoDB developer guide. </p>",
+        "UpdateTableInput$MultiRegionConsistency": "<p>Specifies the consistency mode for a new global table. This parameter is only valid when you create a global table by specifying one or more <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ReplicationGroupUpdate.html#DDB-Type-ReplicationGroupUpdate-Create\">Create</a> actions in the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html#DDB-UpdateTable-request-ReplicaUpdates\">ReplicaUpdates</a> action list.</p> <p>You can specify one of the following consistency modes:</p> <ul> <li> <p> <code>EVENTUAL</code>: Configures a new global table for multi-Region eventual consistency (MREC). This is the default consistency mode for global tables.</p> </li> <li> <p> <code>STRONG</code>: Configures a new global table for multi-Region strong consistency (MRSC).</p> </li> </ul> <p>If you don't specify this field, the global table consistency mode defaults to <code>EVENTUAL</code>. For more information about global tables consistency modes, see <a href=\"https://docs.aws.amazon.com/V2globaltables_HowItWorks.html#V2globaltables_HowItWorks.consistency-modes\"> Consistency modes</a> in DynamoDB developer guide. </p>"
       }
     },
     "NextTokenString": {
@@ -2023,7 +2000,7 @@
     "NonKeyAttributeNameList": {
       "base": null,
       "refs": {
-        "Projection$NonKeyAttributes": "<p>Represents the non-key attribute names which will be projected into the index.</p> <p>For local secondary indexes, the total count of <code>NonKeyAttributes</code> summed across all of the local secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total.</p>"
+        "Projection$NonKeyAttributes": "<p>Represents the non-key attribute names which will be projected into the index.</p> <p>For global and local secondary indexes, the total count of <code>NonKeyAttributes</code> summed across all of the secondary indexes, must not exceed 100. If you project the same attribute into two different indexes, this counts as two distinct attributes when determining the total. This limit only applies when you specify the ProjectionType of <code>INCLUDE</code>. You still can specify the ProjectionType of <code>ALL</code> to project all attributes from the source table, even if the table has more than 100 attributes.</p>"
       }
     },
     "NonNegativeLongObject": {
@@ -2057,9 +2034,9 @@
     "OnDemandThroughput": {
       "base": "<p>Sets the maximum number of read and write units for the specified on-demand table. If you use this parameter, you must specify <code>MaxReadRequestUnits</code>, <code>MaxWriteRequestUnits</code>, or both.</p>",
       "refs": {
-        "CreateGlobalSecondaryIndexAction$OnDemandThroughput": "<p>The maximum number of read and write units for the global secondary index being created. If you use this parameter, you must specify <code>MaxReadRequestUnits</code>, <code>MaxWriteRequestUnits</code>, or both.</p>",
+        "CreateGlobalSecondaryIndexAction$OnDemandThroughput": "<p>The maximum number of read and write units for the global secondary index being created. If you use this parameter, you must specify <code>MaxReadRequestUnits</code>, <code>MaxWriteRequestUnits</code>, or both. You must use either <code>OnDemand Throughput</code> or <code>ProvisionedThroughput</code> based on your table's capacity mode.</p>",
         "CreateTableInput$OnDemandThroughput": "<p>Sets the maximum number of read and write units for the specified table in on-demand capacity mode. If you use this parameter, you must specify <code>MaxReadRequestUnits</code>, <code>MaxWriteRequestUnits</code>, or both.</p>",
-        "GlobalSecondaryIndex$OnDemandThroughput": "<p>The maximum number of read and write units for the specified global secondary index. If you use this parameter, you must specify <code>MaxReadRequestUnits</code>, <code>MaxWriteRequestUnits</code>, or both.</p>",
+        "GlobalSecondaryIndex$OnDemandThroughput": "<p>The maximum number of read and write units for the specified global secondary index. If you use this parameter, you must specify <code>MaxReadRequestUnits</code>, <code>MaxWriteRequestUnits</code>, or both. You must use either <code>OnDemandThroughput</code> or <code>ProvisionedThroughput</code> based on your table's capacity mode.</p>",
         "GlobalSecondaryIndexDescription$OnDemandThroughput": "<p>The maximum number of read and write units for the specified global secondary index. If you use this parameter, you must specify <code>MaxReadRequestUnits</code>, <code>MaxWriteRequestUnits</code>, or both.</p>",
         "GlobalSecondaryIndexInfo$OnDemandThroughput": null,
         "RestoreTableFromBackupInput$OnDemandThroughputOverride": null,
@@ -2140,13 +2117,11 @@
     },
     "PointInTimeRecoveryUnavailableException": {
       "base": "<p>Point in time recovery has not yet been enabled for this source table.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PolicyNotFoundException": {
       "base": "<p>The operation tried to access a nonexistent resource-based policy.</p> <p>If you specified an <code>ExpectedRevisionId</code>, it's possible that a policy is present for the resource but its revision ID didn't match the expected value.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PolicyRevisionId": {
       "base": null,
@@ -2178,6 +2153,8 @@
         "DescribeLimitsOutput$AccountMaxWriteCapacityUnits": "<p>The maximum total write capacity units that your account allows you to provision across all of your tables in this Region.</p>",
         "DescribeLimitsOutput$TableMaxReadCapacityUnits": "<p>The maximum read capacity units that your account allows you to provision for a new table that you are creating in this Region, including the read capacity units provisioned for its global secondary indexes (GSIs).</p>",
         "DescribeLimitsOutput$TableMaxWriteCapacityUnits": "<p>The maximum write capacity units that your account allows you to provision for a new table that you are creating in this Region, including the write capacity units provisioned for its global secondary indexes (GSIs).</p>",
+        "GlobalSecondaryIndexWarmThroughputDescription$ReadUnitsPerSecond": "<p>Represents warm throughput read units per second value for a global secondary index.</p>",
+        "GlobalSecondaryIndexWarmThroughputDescription$WriteUnitsPerSecond": "<p>Represents warm throughput write units per second value for a global secondary index.</p>",
         "GlobalTableGlobalSecondaryIndexSettingsUpdate$ProvisionedWriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException.</code> </p>",
         "ProvisionedThroughput$ReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>",
         "ProvisionedThroughput$WriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>",
@@ -2187,6 +2164,8 @@
         "ReplicaGlobalSecondaryIndexSettingsDescription$ProvisionedWriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>.</p>",
         "ReplicaGlobalSecondaryIndexSettingsUpdate$ProvisionedReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>.</p>",
         "ReplicaSettingsUpdate$ReplicaProvisionedReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#ProvisionedThroughput\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p>",
+        "TableWarmThroughputDescription$ReadUnitsPerSecond": "<p>Represents the base table's warm throughput value in read units per second.</p>",
+        "TableWarmThroughputDescription$WriteUnitsPerSecond": "<p>Represents the base table's warm throughput value in write units per second.</p>",
         "UpdateGlobalTableSettingsInput$GlobalTableProvisionedWriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException.</code> </p>"
       }
     },
@@ -2233,11 +2212,11 @@
       }
     },
     "ProvisionedThroughput": {
-      "base": "<p>Represents the provisioned throughput settings for a specified table or index. The settings can be modified using the <code>UpdateTable</code> operation.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Service, Account, and Table Quotas</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
+      "base": "<p>Represents the provisioned throughput settings for the specified global secondary index. You must use <code>ProvisionedThroughput</code> or <code>OnDemandThroughput</code> based on your table’s capacity mode.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Service, Account, and Table Quotas</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
       "refs": {
         "CreateGlobalSecondaryIndexAction$ProvisionedThroughput": "<p>Represents the provisioned throughput settings for the specified global secondary index.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Service, Account, and Table Quotas</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
         "CreateTableInput$ProvisionedThroughput": "<p>Represents the provisioned throughput settings for a specified table or index. The settings can be modified using the <code>UpdateTable</code> operation.</p> <p> If you set BillingMode as <code>PROVISIONED</code>, you must specify this property. If you set BillingMode as <code>PAY_PER_REQUEST</code>, you cannot specify this property.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Service, Account, and Table Quotas</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
-        "GlobalSecondaryIndex$ProvisionedThroughput": "<p>Represents the provisioned throughput settings for the specified global secondary index.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Service, Account, and Table Quotas</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
+        "GlobalSecondaryIndex$ProvisionedThroughput": "<p>Represents the provisioned throughput settings for the specified global secondary index. You must use either <code>OnDemandThroughput</code> or <code>ProvisionedThroughput</code> based on your table's capacity mode.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\">Service, Account, and Table Quotas</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
         "GlobalSecondaryIndexInfo$ProvisionedThroughput": "<p>Represents the provisioned throughput settings for the specified global secondary index. </p>",
         "RestoreTableFromBackupInput$ProvisionedThroughputOverride": "<p>Provisioned throughput settings for the restored table.</p>",
         "RestoreTableToPointInTimeInput$ProvisionedThroughputOverride": "<p>Provisioned throughput settings for the restored table.</p>",
@@ -2255,9 +2234,8 @@
       }
     },
     "ProvisionedThroughputExceededException": {
-      "base": "<p>Your request rate is too high. The Amazon Web Services SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Programming.Errors.html#Programming.Errors.RetryAndBackoff\">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
-      "refs": {
-      }
+      "base": "<p>The request was denied due to request throttling. For detailed information about why the request was throttled and the ARN of the impacted resource, find the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> field in the returned exception. The Amazon Web Services SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Programming.Errors.html#Programming.Errors.RetryAndBackoff\">Error Retries and Exponential Backoff</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>",
+      "refs": {}
     },
     "ProvisionedThroughputOverride": {
       "base": "<p>Replica-specific provisioned throughput settings. If not specified, uses the source table's provisioned throughput settings.</p>",
@@ -2277,8 +2255,7 @@
     },
     "PutItemInput": {
       "base": "<p>Represents the input of a <code>PutItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutItemInputAttributeMap": {
       "base": null,
@@ -2290,8 +2267,7 @@
     },
     "PutItemOutput": {
       "base": "<p>Represents the output of a <code>PutItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRequest": {
       "base": "<p>Represents a request to perform a <code>PutItem</code> operation on an item.</p>",
@@ -2301,31 +2277,43 @@
     },
     "PutResourcePolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryInput": {
       "base": "<p>Represents the input of a <code>Query</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryOutput": {
       "base": "<p>Represents the output of a <code>Query</code> operation.</p>",
+      "refs": {}
+    },
+    "Reason": {
+      "base": null,
       "refs": {
+        "ThrottlingReason$reason": "<p>The reason for throttling. The throttling reason follows a specific format: <code>ResourceType+OperationType+LimitType</code>:</p> <ul> <li> <p>Resource Type (What is being throttled): Table or Index</p> </li> <li> <p>Operation Type (What kind of operation): Read or Write</p> </li> <li> <p>Limit Type (Why the throttling occurred):</p> <ul> <li> <p> <code>ProvisionedThroughputExceeded</code>: The request rate is exceeding the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/provisioned-capacity-mode.html\">provisioned throughput capacity</a> (read or write capacity units) configured for a table or a global secondary index (GSI) in provisioned capacity mode.</p> </li> <li> <p> <code>AccountLimitExceeded</code>: The request rate has caused a table or global secondary index (GSI) in on-demand mode to exceed the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ServiceQuotas.html#default-limits-throughput\">per-table account-level service quotas</a> for read/write throughput in the current Amazon Web Services Region. </p> </li> <li> <p> <code>KeyRangeThroughputExceeded</code>: The request rate directed at a specific partition key value has exceeded the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html\">internal partition-level throughput limits</a>, indicating uneven access patterns across the table's or GSI's key space.</p> </li> <li> <p> <code>MaxOnDemandThroughputExceeded</code>: The request rate has exceeded the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode-max-throughput.html\">configured maximum throughput limits</a> set for a table or index in on-demand capacity mode.</p> </li> </ul> </li> </ul> <p>Examples of complete throttling reasons:</p> <ul> <li> <p>TableReadProvisionedThroughputExceeded</p> </li> <li> <p>IndexWriteAccountLimitExceeded</p> </li> </ul> <p>This helps identify exactly what resource is being throttled, what type of operation caused it, and why the throttling occurred.</p>"
+      }
+    },
+    "RecoveryPeriodInDays": {
+      "base": null,
+      "refs": {
+        "PointInTimeRecoveryDescription$RecoveryPeriodInDays": "<p>The number of preceding days for which continuous backups are taken and maintained. Your table data is only recoverable to any point-in-time from within the configured recovery period. This parameter is optional.</p>",
+        "PointInTimeRecoverySpecification$RecoveryPeriodInDays": "<p>The number of preceding days for which continuous backups are taken and maintained. Your table data is only recoverable to any point-in-time from within the configured recovery period. This parameter is optional. If no value is provided, the value will default to 35.</p>"
       }
     },
     "RegionName": {
       "base": null,
       "refs": {
+        "CreateGlobalTableWitnessGroupMemberAction$RegionName": "<p>The Amazon Web Services Region name to be added as a witness Region for the MRSC global table. The witness must be in a different Region than the replicas and within the same Region set:</p> <ul> <li> <p>US Region set: US East (N. Virginia), US East (Ohio), US West (Oregon)</p> </li> <li> <p>EU Region set: Europe (Ireland), Europe (London), Europe (Paris), Europe (Frankfurt)</p> </li> <li> <p>AP Region set: Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Osaka)</p> </li> </ul>",
         "CreateReplicaAction$RegionName": "<p>The Region of the replica to be added.</p>",
         "CreateReplicationGroupMemberAction$RegionName": "<p>The Region where the new replica will be created.</p>",
+        "DeleteGlobalTableWitnessGroupMemberAction$RegionName": "<p>The witness Region name to be removed from the MRSC global table.</p>",
         "DeleteReplicaAction$RegionName": "<p>The Region of the replica to be removed.</p>",
         "DeleteReplicationGroupMemberAction$RegionName": "<p>The Region where the replica exists.</p>",
+        "GlobalTableWitnessDescription$RegionName": "<p>The name of the Amazon Web Services Region that serves as a witness for the MRSC global table.</p>",
         "ListGlobalTablesInput$RegionName": "<p>Lists the global tables in a specific Region.</p>",
         "Replica$RegionName": "<p>The Region where the replica needs to be created.</p>",
         "ReplicaAutoScalingDescription$RegionName": "<p>The Region where the replica exists.</p>",
@@ -2344,8 +2332,7 @@
     },
     "ReplicaAlreadyExistsException": {
       "base": "<p>The specified replica is already part of the global table.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReplicaAutoScalingDescription": {
       "base": "<p>Represents the auto scaling settings of the replica.</p>",
@@ -2466,8 +2453,7 @@
     },
     "ReplicaNotFoundException": {
       "base": "<p>The specified replica is no longer part of the global table.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReplicaSettingsDescription": {
       "base": "<p>Represents the properties of a replica.</p>",
@@ -2526,6 +2512,10 @@
         "UpdateGlobalTableInput$ReplicaUpdates": "<p>A list of Regions that should be added or removed from the global table.</p>"
       }
     },
+    "ReplicatedWriteConflictException": {
+      "base": "<p>The request was rejected because one or more items in the request are being modified by a request in another Region. </p>",
+      "refs": {}
+    },
     "ReplicationGroupUpdate": {
       "base": "<p>Represents one of the following:</p> <ul> <li> <p>A new replica to be added to an existing regional table or global table. This request invokes the <code>CreateTableReplica</code> action in the destination Region.</p> </li> <li> <p>New parameters for an existing replica. This request invokes the <code>UpdateTable</code> action in the destination Region.</p> </li> <li> <p>An existing replica to be deleted. The request invokes the <code>DeleteTableReplica</code> action in the destination Region, deleting the replica and all if its items in the destination Region.</p> </li> </ul> <note> <p>When you manually remove a table or global table replica, you do not automatically remove any associated scalable targets, scaling policies, or CloudWatch alarms.</p> </note>",
       "refs": {
@@ -2535,12 +2525,17 @@
     "ReplicationGroupUpdateList": {
       "base": null,
       "refs": {
-        "UpdateTableInput$ReplicaUpdates": "<p>A list of replica update actions (create, delete, or update) for the table.</p> <note> <p>For global tables, this property only applies to global tables using Version 2019.11.21 (Current version). </p> </note>"
+        "UpdateTableInput$ReplicaUpdates": "<p>A list of replica update actions (create, delete, or update) for the table.</p>"
       }
     },
     "RequestLimitExceeded": {
-      "base": "<p>Throughput exceeds the current throughput quota for your account. Please contact <a href=\"https://aws.amazon.com/support\">Amazon Web Services Support</a> to request a quota increase.</p>",
+      "base": "<p>Throughput exceeds the current throughput quota for your account. For detailed information about why the request was throttled and the ARN of the impacted resource, find the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> field in the returned exception. Contact <a href=\"https://aws.amazon.com/support\">Amazon Web Services Support</a> to request a quota increase.</p>",
+      "refs": {}
+    },
+    "Resource": {
+      "base": null,
       "refs": {
+        "ThrottlingReason$resource": "<p>The Amazon Resource Name (ARN) of the DynamoDB table or index that experienced the throttling event.</p>"
       }
     },
     "ResourceArnString": {
@@ -2555,14 +2550,12 @@
       }
     },
     "ResourceInUseException": {
-      "base": "<p>The operation conflicts with the resource's availability. For example, you attempted to recreate an existing table, or tried to delete a table currently in the <code>CREATING</code> state.</p>",
-      "refs": {
-      }
+      "base": "<p>The operation conflicts with the resource's availability. For example:</p> <ul> <li> <p>You attempted to recreate an existing table.</p> </li> <li> <p>You tried to delete a table currently in the <code>CREATING</code> state.</p> </li> <li> <p>You tried to update a resource that was already being updated.</p> </li> </ul> <p>When appropriate, wait for the ongoing update to complete and attempt the request again.</p>",
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicy": {
       "base": null,
@@ -2586,23 +2579,19 @@
     },
     "RestoreTableFromBackupInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreTableFromBackupOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreTableToPointInTimeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreTableToPointInTimeOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReturnConsumedCapacity": {
       "base": "<p>Determines the level of detail about either provisioned or on-demand throughput consumption that is returned in the response:</p> <ul> <li> <p> <code>INDEXES</code> - The response includes the aggregate <code>ConsumedCapacity</code> for the operation, together with <code>ConsumedCapacity</code> for each table and secondary index that was accessed.</p> <p>Note that some operations, such as <code>GetItem</code> and <code>BatchGetItem</code>, do not access any indexes at all. In these cases, specifying <code>INDEXES</code> will only return <code>ConsumedCapacity</code> information for table(s).</p> </li> <li> <p> <code>TOTAL</code> - The response includes only the aggregate <code>ConsumedCapacity</code> for the operation.</p> </li> <li> <p> <code>NONE</code> - No <code>ConsumedCapacity</code> details are included in the response.</p> </li> </ul>",
@@ -2745,13 +2734,11 @@
     },
     "ScanInput": {
       "base": "<p>Represents the input of a <code>Scan</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ScanOutput": {
       "base": "<p>Represents the output of a <code>Scan</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ScanSegment": {
       "base": null,
@@ -2852,8 +2839,7 @@
     },
     "TableAlreadyExistsException": {
       "base": "<p>A target table with the specified name already exists. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TableArn": {
       "base": null,
@@ -2966,8 +2952,7 @@
     },
     "TableInUseException": {
       "base": "<p>A target table with the specified name is either being created or deleted. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TableName": {
       "base": null,
@@ -3011,14 +2996,21 @@
     },
     "TableNotFoundException": {
       "base": "<p>A source table with the name <code>TableName</code> does not currently exist within the subscriber's account or the subscriber is operating in the wrong Amazon Web Services Region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TableStatus": {
       "base": null,
       "refs": {
         "TableAutoScalingDescription$TableStatus": "<p>The current state of the table:</p> <ul> <li> <p> <code>CREATING</code> - The table is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table is being updated.</p> </li> <li> <p> <code>DELETING</code> - The table is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The table is ready for use.</p> </li> </ul>",
-        "TableDescription$TableStatus": "<p>The current state of the table:</p> <ul> <li> <p> <code>CREATING</code> - The table is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table/index configuration is being updated. The table/index remains available for data operations when <code>UPDATING</code>.</p> </li> <li> <p> <code>DELETING</code> - The table is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The table is ready for use.</p> </li> <li> <p> <code>INACCESSIBLE_ENCRYPTION_CREDENTIALS</code> - The KMS key used to encrypt the table in inaccessible. Table operations may fail due to failure to use the KMS key. DynamoDB will initiate the table archival process when a table's KMS key remains inaccessible for more than seven days. </p> </li> <li> <p> <code>ARCHIVING</code> - The table is being archived. Operations are not allowed until archival is complete. </p> </li> <li> <p> <code>ARCHIVED</code> - The table has been archived. See the ArchivalReason for more information. </p> </li> </ul>"
+        "TableDescription$TableStatus": "<p>The current state of the table:</p> <ul> <li> <p> <code>CREATING</code> - The table is being created.</p> </li> <li> <p> <code>UPDATING</code> - The table/index configuration is being updated. The table/index remains available for data operations when <code>UPDATING</code>.</p> </li> <li> <p> <code>DELETING</code> - The table is being deleted.</p> </li> <li> <p> <code>ACTIVE</code> - The table is ready for use.</p> </li> <li> <p> <code>INACCESSIBLE_ENCRYPTION_CREDENTIALS</code> - The KMS key used to encrypt the table in inaccessible. Table operations may fail due to failure to use the KMS key. DynamoDB will initiate the table archival process when a table's KMS key remains inaccessible for more than seven days. </p> </li> <li> <p> <code>ARCHIVING</code> - The table is being archived. Operations are not allowed until archival is complete. </p> </li> <li> <p> <code>ARCHIVED</code> - The table has been archived. See the ArchivalReason for more information. </p> </li> </ul>",
+        "TableWarmThroughputDescription$Status": "<p>Represents warm throughput value of the base table.</p>"
+      }
+    },
+    "TableWarmThroughputDescription": {
+      "base": "<p>Represents the warm throughput value (in read units per second and write units per second) of the table. Warm throughput is applicable for DynamoDB Standard-IA tables and specifies the minimum provisioned capacity maintained for immediate data access.</p>",
+      "refs": {
+        "ReplicaDescription$WarmThroughput": "<p>Represents the warm throughput value for this replica.</p>",
+        "TableDescription$WarmThroughput": "<p>Describes the warm throughput value of the base table.</p>"
       }
     },
     "Tag": {
@@ -3050,13 +3042,30 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValueString": {
       "base": null,
       "refs": {
         "Tag$Value": "<p>The value of the tag. Tag values are case-sensitive and can be null.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling. For detailed information about why the request was throttled and the ARN of the impacted resource, find the <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> field in the returned exception.</p>",
+      "refs": {}
+    },
+    "ThrottlingReason": {
+      "base": "<p>Represents the specific reason why a DynamoDB request was throttled and the ARN of the impacted resource. This helps identify exactly what resource is being throttled, what type of operation caused it, and why the throttling occurred.</p>",
+      "refs": {
+        "ThrottlingReasonList$member": null
+      }
+    },
+    "ThrottlingReasonList": {
+      "base": null,
+      "refs": {
+        "ProvisionedThroughputExceededException$ThrottlingReasons": "<p>A list of <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> that provide detailed diagnostic information about why the request was throttled. </p>",
+        "RequestLimitExceeded$ThrottlingReasons": "<p>A list of <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> that provide detailed diagnostic information about why the request was throttled. </p>",
+        "ThrottlingException$throttlingReasons": "<p>A list of <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ThrottlingReason.html\">ThrottlingReason</a> that provide detailed diagnostic information about why the request was throttled. </p>"
       }
     },
     "TimeRangeLowerBound": {
@@ -3118,13 +3127,11 @@
     },
     "TransactGetItemsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactGetItemsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactWriteItem": {
       "base": "<p>A list of requests that can perform update, put, delete, or check operations on multiple items in one or more tables atomically.</p>",
@@ -3140,33 +3147,27 @@
     },
     "TransactWriteItemsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactWriteItemsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactionCanceledException": {
       "base": "<p>The entire transaction request was canceled.</p> <p>DynamoDB cancels a <code>TransactWriteItems</code> request under the following circumstances:</p> <ul> <li> <p>A condition in one of the condition expressions is not met.</p> </li> <li> <p>A table in the <code>TransactWriteItems</code> request is in a different account or region.</p> </li> <li> <p>More than one action in the <code>TransactWriteItems</code> operation targets the same item.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>An item size becomes too large (larger than 400 KB), or a local secondary index (LSI) becomes too large, or a similar validation error occurs because of changes made by the transaction.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> <li> <p> There is an ongoing <code>TransactWriteItems</code> operation that conflicts with a concurrent <code>TransactWriteItems</code> request. In this case the <code>TransactWriteItems</code> operation fails with a <code>TransactionCanceledException</code>. </p> </li> </ul> <p>DynamoDB cancels a <code>TransactGetItems</code> request under the following circumstances:</p> <ul> <li> <p>There is an ongoing <code>TransactGetItems</code> operation that conflicts with a concurrent <code>PutItem</code>, <code>UpdateItem</code>, <code>DeleteItem</code> or <code>TransactWriteItems</code> request. In this case the <code>TransactGetItems</code> operation fails with a <code>TransactionCanceledException</code>.</p> </li> <li> <p>A table in the <code>TransactGetItems</code> request is in a different account or region.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> </ul> <note> <p>If using Java, DynamoDB lists the cancellation reasons on the <code>CancellationReasons</code> property. This property is not set for other languages. Transaction cancellation reasons are ordered in the order of requested items, if an item has no error it will have <code>None</code> code and <code>Null</code> message.</p> </note> <p>Cancellation reason codes and possible error messages:</p> <ul> <li> <p>No Errors:</p> <ul> <li> <p>Code: <code>None</code> </p> </li> <li> <p>Message: <code>null</code> </p> </li> </ul> </li> <li> <p>Conditional Check Failed:</p> <ul> <li> <p>Code: <code>ConditionalCheckFailed</code> </p> </li> <li> <p>Message: The conditional request failed. </p> </li> </ul> </li> <li> <p>Item Collection Size Limit Exceeded:</p> <ul> <li> <p>Code: <code>ItemCollectionSizeLimitExceeded</code> </p> </li> <li> <p>Message: Collection size exceeded.</p> </li> </ul> </li> <li> <p>Transaction Conflict:</p> <ul> <li> <p>Code: <code>TransactionConflict</code> </p> </li> <li> <p>Message: Transaction is ongoing for the item.</p> </li> </ul> </li> <li> <p>Provisioned Throughput Exceeded:</p> <ul> <li> <p>Code: <code>ProvisionedThroughputExceeded</code> </p> </li> <li> <p>Messages:</p> <ul> <li> <p>The level of configured provisioned throughput for the table was exceeded. Consider increasing your provisioning level with the UpdateTable API.</p> <note> <p>This Message is received when provisioned throughput is exceeded is on a provisioned DynamoDB table.</p> </note> </li> <li> <p>The level of configured provisioned throughput for one or more global secondary indexes of the table was exceeded. Consider increasing your provisioning level for the under-provisioned global secondary indexes with the UpdateTable API.</p> <note> <p>This message is returned when provisioned throughput is exceeded is on a provisioned GSI.</p> </note> </li> </ul> </li> </ul> </li> <li> <p>Throttling Error:</p> <ul> <li> <p>Code: <code>ThrottlingError</code> </p> </li> <li> <p>Messages: </p> <ul> <li> <p>Throughput exceeds the current capacity of your table or index. DynamoDB is automatically scaling your table or index so please try again shortly. If exceptions persist, check if you have a hot key: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html.</p> <note> <p>This message is returned when writes get throttled on an On-Demand table as DynamoDB is automatically scaling the table.</p> </note> </li> <li> <p>Throughput exceeds the current capacity for one or more global secondary indexes. DynamoDB is automatically scaling your index so please try again shortly.</p> <note> <p>This message is returned when writes get throttled on an On-Demand GSI as DynamoDB is automatically scaling the GSI.</p> </note> </li> </ul> </li> </ul> </li> <li> <p>Validation Error:</p> <ul> <li> <p>Code: <code>ValidationError</code> </p> </li> <li> <p>Messages: </p> <ul> <li> <p>One or more parameter values were invalid.</p> </li> <li> <p>The update expression attempted to update the secondary index key beyond allowed size limits.</p> </li> <li> <p>The update expression attempted to update the secondary index key to unsupported type.</p> </li> <li> <p>An operand in the update expression has an incorrect data type.</p> </li> <li> <p>Item size to update has exceeded the maximum allowed size.</p> </li> <li> <p>Number overflow. Attempting to store a number with magnitude larger than supported range.</p> </li> <li> <p>Type mismatch for attribute to update.</p> </li> <li> <p>Nesting Levels have exceeded supported limits.</p> </li> <li> <p>The document path provided in the update expression is invalid for update.</p> </li> <li> <p>The provided expression refers to an attribute that does not exist in the item.</p> </li> </ul> </li> </ul> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactionConflictException": {
       "base": "<p>Operation was rejected because there is an ongoing transaction for the item.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransactionInProgressException": {
       "base": "<p>The transaction with the given request token is already in progress.</p> <p> Recommended Settings </p> <note> <p> This is a general recommendation for handling the <code>TransactionInProgressException</code>. These settings help ensure that the client retries will trigger completion of the ongoing <code>TransactWriteItems</code> request. </p> </note> <ul> <li> <p> Set <code>clientExecutionTimeout</code> to a value that allows at least one retry to be processed after 5 seconds have elapsed since the first attempt for the <code>TransactWriteItems</code> operation. </p> </li> <li> <p> Set <code>socketTimeout</code> to a value a little lower than the <code>requestTimeout</code> setting. </p> </li> <li> <p> <code>requestTimeout</code> should be set based on the time taken for the individual retries of a single HTTP request for your use case, but setting it to 1 second or higher should work well to reduce chances of retries and <code>TransactionInProgressException</code> errors. </p> </li> <li> <p> Use exponential backoff when retrying and tune backoff if needed. </p> </li> </ul> <p> Assuming <a href=\"https://github.com/aws/aws-sdk-java/blob/fd409dee8ae23fb8953e0bb4dbde65536a7e0514/aws-java-sdk-core/src/main/java/com/amazonaws/retry/PredefinedRetryPolicies.java#L97\">default retry policy</a>, example timeout settings based on the guidelines above are as follows: </p> <p>Example timeline:</p> <ul> <li> <p>0-1000 first attempt</p> </li> <li> <p>1000-1500 first sleep/delay (default retry policy uses 500 ms as base delay for 4xx errors)</p> </li> <li> <p>1500-2500 second attempt</p> </li> <li> <p>2500-3500 second sleep/delay (500 * 2, exponential backoff)</p> </li> <li> <p>3500-4500 third attempt</p> </li> <li> <p>4500-6500 third sleep/delay (500 * 2^2)</p> </li> <li> <p>6500-7500 fourth attempt (this can trigger inline recovery since 5 seconds have elapsed since the first attempt reached TC)</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Update": {
       "base": "<p>Represents a request to perform an <code>UpdateItem</code> operation.</p>",
@@ -3176,23 +3177,19 @@
     },
     "UpdateContinuousBackupsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateContinuousBackupsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateContributorInsightsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateContributorInsightsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateExpression": {
       "base": null,
@@ -3209,33 +3206,27 @@
     },
     "UpdateGlobalTableInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGlobalTableOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGlobalTableSettingsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGlobalTableSettingsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateItemInput": {
       "base": "<p>Represents the input of an <code>UpdateItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateItemOutput": {
       "base": "<p>Represents the output of an <code>UpdateItem</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateKinesisStreamingConfiguration": {
       "base": "<p>Enables updating the configuration for Kinesis Streaming.</p>",
@@ -3246,13 +3237,11 @@
     },
     "UpdateKinesisStreamingDestinationInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateKinesisStreamingDestinationOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateReplicationGroupMemberAction": {
       "base": "<p>Represents a replica to be modified.</p>",
@@ -3262,32 +3251,42 @@
     },
     "UpdateTableInput": {
       "base": "<p>Represents the input of an <code>UpdateTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTableOutput": {
       "base": "<p>Represents the output of an <code>UpdateTable</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTableReplicaAutoScalingInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTableReplicaAutoScalingOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTimeToLiveInput": {
       "base": "<p>Represents the input of an <code>UpdateTimeToLive</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTimeToLiveOutput": {
       "base": null,
+      "refs": {}
+    },
+    "WarmThroughput": {
+      "base": "<p>Provides visibility into the number of read and write operations your table or secondary index can instantaneously support. The settings can be modified using the <code>UpdateTable</code> operation to meet the throughput requirements of an upcoming peak event.</p>",
       "refs": {
+        "CreateGlobalSecondaryIndexAction$WarmThroughput": "<p>Represents the warm throughput value (in read units per second and write units per second) when creating a secondary index.</p>",
+        "CreateTableInput$WarmThroughput": "<p>Represents the warm throughput (in read units per second and write units per second) for creating a table.</p>",
+        "GlobalSecondaryIndex$WarmThroughput": "<p>Represents the warm throughput value (in read units per second and write units per second) for the specified secondary index. If you use this parameter, you must specify <code>ReadUnitsPerSecond</code>, <code>WriteUnitsPerSecond</code>, or both.</p>",
+        "UpdateGlobalSecondaryIndexAction$WarmThroughput": "<p>Represents the warm throughput value of the new provisioned throughput settings to be applied to a global secondary index.</p>",
+        "UpdateTableInput$WarmThroughput": "<p>Represents the warm throughput (in read units per second and write units per second) for updating a table.</p>"
+      }
+    },
+    "WitnessStatus": {
+      "base": null,
+      "refs": {
+        "GlobalTableWitnessDescription$WitnessStatus": "<p>The current status of the witness Region in the MRSC global table.</p>"
       }
     },
     "WriteRequest": {

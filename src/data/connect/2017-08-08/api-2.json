@@ -396,6 +396,26 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateContact":{
+      "name":"CreateContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/create-contact"
+      },
+      "input":{"shape":"CreateContactRequest"},
+      "output":{"shape":"CreateContactResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"IdempotencyException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateContactFlow":{
       "name":"CreateContactFlow",
       "http":{
@@ -436,6 +456,45 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateContactFlowVersion":{
+      "name":"CreateContactFlowVersion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/version"
+      },
+      "input":{"shape":"CreateContactFlowVersionRequest"},
+      "output":{"shape":"CreateContactFlowVersionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "CreateEmailAddress":{
+      "name":"CreateEmailAddress",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/email-addresses/{InstanceId}"
+      },
+      "input":{"shape":"CreateEmailAddressRequest"},
+      "output":{"shape":"CreateEmailAddressResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"IdempotencyException"},
+        {"shape":"DuplicateResourceException"},
+        {"shape":"ResourceConflictException"}
+      ]
+    },
     "CreateEvaluationForm":{
       "name":"CreateEvaluationForm",
       "http":{
@@ -462,6 +521,24 @@
       },
       "input":{"shape":"CreateHoursOfOperationRequest"},
       "output":{"shape":"CreateHoursOfOperationResponse"},
+      "errors":[
+        {"shape":"DuplicateResourceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "CreateHoursOfOperationOverride":{
+      "name":"CreateHoursOfOperationOverride",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides"
+      },
+      "input":{"shape":"CreateHoursOfOperationOverrideRequest"},
+      "output":{"shape":"CreateHoursOfOperationOverrideResponse"},
       "errors":[
         {"shape":"DuplicateResourceException"},
         {"shape":"InvalidRequestException"},
@@ -517,7 +594,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"}
       ]
     },
     "CreatePersistentContactAssociation":{
@@ -569,6 +647,23 @@
         {"shape":"LimitExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "CreatePushNotificationRegistration":{
+      "name":"CreatePushNotificationRegistration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/push-notification/{InstanceId}/registrations"
+      },
+      "input":{"shape":"CreatePushNotificationRegistrationRequest"},
+      "output":{"shape":"CreatePushNotificationRegistrationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "CreateQueue":{
@@ -890,6 +985,41 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DeleteContactFlowVersion":{
+      "name":"DeleteContactFlowVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/version/{ContactFlowVersion}"
+      },
+      "input":{"shape":"DeleteContactFlowVersionRequest"},
+      "output":{"shape":"DeleteContactFlowVersionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteEmailAddress":{
+      "name":"DeleteEmailAddress",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/email-addresses/{InstanceId}/{EmailAddressId}"
+      },
+      "input":{"shape":"DeleteEmailAddressRequest"},
+      "output":{"shape":"DeleteEmailAddressResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceConflictException"}
+      ]
+    },
     "DeleteEvaluationForm":{
       "name":"DeleteEvaluationForm",
       "http":{
@@ -913,6 +1043,21 @@
         "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}"
       },
       "input":{"shape":"DeleteHoursOfOperationRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "DeleteHoursOfOperationOverride":{
+      "name":"DeleteHoursOfOperationOverride",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+      },
+      "input":{"shape":"DeleteHoursOfOperationOverrideRequest"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
@@ -978,6 +1123,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "DeletePushNotificationRegistration":{
+      "name":"DeletePushNotificationRegistration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/push-notification/{InstanceId}/registrations/{RegistrationId}"
+      },
+      "input":{"shape":"DeletePushNotificationRegistrationRequest"},
+      "output":{"shape":"DeletePushNotificationRegistrationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteQueue":{
@@ -1205,6 +1366,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DescribeAuthenticationProfile":{
+      "name":"DescribeAuthenticationProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/authentication-profiles/{InstanceId}/{AuthenticationProfileId}"
+      },
+      "input":{"shape":"DescribeAuthenticationProfileRequest"},
+      "output":{"shape":"DescribeAuthenticationProfileResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DescribeContact":{
       "name":"DescribeContact",
       "http":{
@@ -1270,6 +1447,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "DescribeEmailAddress":{
+      "name":"DescribeEmailAddress",
+      "http":{
+        "method":"GET",
+        "requestUri":"/email-addresses/{InstanceId}/{EmailAddressId}"
+      },
+      "input":{"shape":"DescribeEmailAddressRequest"},
+      "output":{"shape":"DescribeEmailAddressResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "DescribeEvaluationForm":{
       "name":"DescribeEvaluationForm",
       "http":{
@@ -1293,6 +1487,22 @@
       },
       "input":{"shape":"DescribeHoursOfOperationRequest"},
       "output":{"shape":"DescribeHoursOfOperationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "DescribeHoursOfOperationOverride":{
+      "name":"DescribeHoursOfOperationOverride",
+      "http":{
+        "method":"GET",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+      },
+      "input":{"shape":"DescribeHoursOfOperationOverrideRequest"},
+      "output":{"shape":"DescribeHoursOfOperationOverrideResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
@@ -1818,6 +2028,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "GetContactMetrics":{
+      "name":"GetContactMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metrics/contact"
+      },
+      "input":{"shape":"GetContactMetricsRequest"},
+      "output":{"shape":"GetContactMetricsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "GetCurrentMetricData":{
       "name":"GetCurrentMetricData",
       "http":{
@@ -1848,6 +2075,22 @@
         {"shape":"InternalServiceException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetEffectiveHoursOfOperations":{
+      "name":"GetEffectiveHoursOfOperations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/effective-hours-of-operations/{InstanceId}/{HoursOfOperationId}"
+      },
+      "input":{"shape":"GetEffectiveHoursOfOperationsRequest"},
+      "output":{"shape":"GetEffectiveHoursOfOperationsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "GetFederationToken":{
@@ -2013,6 +2256,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListAnalyticsDataLakeDataSets":{
+      "name":"ListAnalyticsDataLakeDataSets",
+      "http":{
+        "method":"GET",
+        "requestUri":"/analytics-data/instance/{InstanceId}/datasets"
+      },
+      "input":{"shape":"ListAnalyticsDataLakeDataSetsRequest"},
+      "output":{"shape":"ListAnalyticsDataLakeDataSetsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListApprovedOrigins":{
       "name":"ListApprovedOrigins",
       "http":{
@@ -2027,6 +2286,38 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAssociatedContacts":{
+      "name":"ListAssociatedContacts",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact/associated/{InstanceId}"
+      },
+      "input":{"shape":"ListAssociatedContactsRequest"},
+      "output":{"shape":"ListAssociatedContactsResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListAuthenticationProfiles":{
+      "name":"ListAuthenticationProfiles",
+      "http":{
+        "method":"GET",
+        "requestUri":"/authentication-profiles-summary/{InstanceId}"
+      },
+      "input":{"shape":"ListAuthenticationProfilesRequest"},
+      "output":{"shape":"ListAuthenticationProfilesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "ListBots":{
@@ -2074,6 +2365,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "ListContactFlowVersions":{
+      "name":"ListContactFlowVersions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/contact-flows/{InstanceId}/{ContactFlowId}/versions"
+      },
+      "input":{"shape":"ListContactFlowVersionsRequest"},
+      "output":{"shape":"ListContactFlowVersionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "ListContactFlows":{
@@ -2168,6 +2476,22 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListHoursOfOperationOverrides":{
+      "name":"ListHoursOfOperationOverrides",
+      "http":{
+        "method":"GET",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides"
+      },
+      "input":{"shape":"ListHoursOfOperationOverridesRequest"},
+      "output":{"shape":"ListHoursOfOperationOverridesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "ListHoursOfOperations":{
@@ -2801,6 +3125,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "SearchAgentStatuses":{
+      "name":"SearchAgentStatuses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-agent-statuses"
+      },
+      "input":{"shape":"SearchAgentStatusesRequest"},
+      "output":{"shape":"SearchAgentStatusesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "SearchAvailablePhoneNumbers":{
       "name":"SearchAvailablePhoneNumbers",
       "http":{
@@ -2862,6 +3202,39 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "SearchEmailAddresses":{
+      "name":"SearchEmailAddresses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-email-addresses"
+      },
+      "input":{"shape":"SearchEmailAddressesRequest"},
+      "output":{"shape":"SearchEmailAddressesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchHoursOfOperationOverrides":{
+      "name":"SearchHoursOfOperationOverrides",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-hours-of-operation-overrides"
+      },
+      "input":{"shape":"SearchHoursOfOperationOverridesRequest"},
+      "output":{"shape":"SearchHoursOfOperationOverridesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "SearchHoursOfOperations":{
@@ -2993,6 +3366,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "SearchUserHierarchyGroups":{
+      "name":"SearchUserHierarchyGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-user-hierarchy-groups"
+      },
+      "input":{"shape":"SearchUserHierarchyGroupsRequest"},
+      "output":{"shape":"SearchUserHierarchyGroupsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "SearchUsers":{
       "name":"SearchUsers",
       "http":{
@@ -3038,6 +3427,24 @@
         {"shape":"InternalServiceException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
+      ]
+    },
+    "SendOutboundEmail":{
+      "name":"SendOutboundEmail",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/instance/{InstanceId}/outbound-email"
+      },
+      "input":{"shape":"SendOutboundEmailRequest"},
+      "output":{"shape":"SendOutboundEmailResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"IdempotencyException"}
       ]
     },
     "StartAttachedFileUpload":{
@@ -3122,6 +3529,60 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "StartEmailContact":{
+      "name":"StartEmailContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/email"
+      },
+      "input":{"shape":"StartEmailContactRequest"},
+      "output":{"shape":"StartEmailContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"IdempotencyException"}
+      ]
+    },
+    "StartOutboundChatContact":{
+      "name":"StartOutboundChatContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/outbound-chat"
+      },
+      "input":{"shape":"StartOutboundChatContactRequest"},
+      "output":{"shape":"StartOutboundChatContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartOutboundEmailContact":{
+      "name":"StartOutboundEmailContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/outbound-email"
+      },
+      "input":{"shape":"StartOutboundEmailContactRequest"},
+      "output":{"shape":"StartOutboundEmailContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"IdempotencyException"}
+      ]
+    },
     "StartOutboundVoiceContact":{
       "name":"StartOutboundVoiceContact",
       "http":{
@@ -3138,6 +3599,23 @@
         {"shape":"LimitExceededException"},
         {"shape":"DestinationNotAllowedException"},
         {"shape":"OutboundContactNotPermittedException"}
+      ]
+    },
+    "StartScreenSharing":{
+      "name":"StartScreenSharing",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/screen-sharing"
+      },
+      "input":{"shape":"StartScreenSharingRequest"},
+      "output":{"shape":"StartScreenSharingResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "StartTaskContact":{
@@ -3347,6 +3825,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateAuthenticationProfile":{
+      "name":"UpdateAuthenticationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/authentication-profiles/{InstanceId}/{AuthenticationProfileId}"
+      },
+      "input":{"shape":"UpdateAuthenticationProfileRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UpdateContact":{
       "name":"UpdateContact",
       "http":{
@@ -3360,7 +3853,9 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "UpdateContactAttributes":{
@@ -3514,6 +4009,24 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateEmailAddressMetadata":{
+      "name":"UpdateEmailAddressMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/email-addresses/{InstanceId}/{EmailAddressId}"
+      },
+      "input":{"shape":"UpdateEmailAddressMetadataRequest"},
+      "output":{"shape":"UpdateEmailAddressMetadataResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"IdempotencyException"}
+      ]
+    },
     "UpdateEvaluationForm":{
       "name":"UpdateEvaluationForm",
       "http":{
@@ -3548,6 +4061,23 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateHoursOfOperationOverride":{
+      "name":"UpdateHoursOfOperationOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+      },
+      "input":{"shape":"UpdateHoursOfOperationOverrideRequest"},
+      "errors":[
+        {"shape":"DuplicateResourceException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ConditionalOperationFailedException"}
+      ]
+    },
     "UpdateInstanceAttribute":{
       "name":"UpdateInstanceAttribute",
       "http":{
@@ -3576,6 +4106,23 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdateParticipantAuthentication":{
+      "name":"UpdateParticipantAuthentication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/update-participant-authentication"
+      },
+      "input":{"shape":"UpdateParticipantAuthenticationRequest"},
+      "output":{"shape":"UpdateParticipantAuthenticationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateParticipantRoleConfig":{
@@ -3721,6 +4268,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "UpdateQueueOutboundEmailConfig":{
+      "name":"UpdateQueueOutboundEmailConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/queues/{InstanceId}/{QueueId}/outbound-email-config"
+      },
+      "input":{"shape":"UpdateQueueOutboundEmailConfigRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConditionalOperationFailedException"}
       ]
     },
     "UpdateQueueStatus":{
@@ -4080,6 +4644,12 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AccessTokenDuration":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":10
+    },
     "ActionSummaries":{
       "type":"list",
       "member":{"shape":"ActionSummary"}
@@ -4100,6 +4670,7 @@
         "SEND_NOTIFICATION",
         "CREATE_CASE",
         "UPDATE_CASE",
+        "ASSIGN_SLA",
         "END_ASSOCIATED_TASKS",
         "SUBMIT_AUTO_EVALUATION"
       ]
@@ -4138,6 +4709,13 @@
         "EvaluationFormVersion":{"shape":"VersionNumber"}
       }
     },
+    "AdditionalEmailRecipients":{
+      "type":"structure",
+      "members":{
+        "ToList":{"shape":"EmailRecipientsList"},
+        "CcList":{"shape":"EmailRecipientsList"}
+      }
+    },
     "AfterContactWorkTimeLimit":{
       "type":"integer",
       "min":0
@@ -4174,8 +4752,8 @@
     },
     "AgentFirstName":{
       "type":"string",
-      "max":100,
-      "min":1,
+      "max":255,
+      "min":0,
       "sensitive":true
     },
     "AgentHierarchyGroup":{
@@ -4210,13 +4788,18 @@
         "AgentPauseDurationInSeconds":{"shape":"AgentPauseDurationInSeconds"},
         "HierarchyGroups":{"shape":"HierarchyGroups"},
         "DeviceInfo":{"shape":"DeviceInfo"},
-        "Capabilities":{"shape":"ParticipantCapabilities"}
+        "Capabilities":{"shape":"ParticipantCapabilities"},
+        "AfterContactWorkDuration":{"shape":"Duration"},
+        "AfterContactWorkStartTimestamp":{"shape":"timestamp"},
+        "AfterContactWorkEndTimestamp":{"shape":"timestamp"},
+        "AgentInitiatedHoldDuration":{"shape":"Duration"},
+        "StateTransitions":{"shape":"StateTransitions"}
       }
     },
     "AgentLastName":{
       "type":"string",
-      "max":100,
-      "min":1,
+      "max":300,
+      "min":0,
       "sensitive":true
     },
     "AgentPauseDurationInSeconds":{
@@ -4261,6 +4844,17 @@
       "min":1
     },
     "AgentStatusId":{"type":"string"},
+    "AgentStatusIdentifier":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "Id":{"shape":"AgentStatusId"}
+      }
+    },
+    "AgentStatusList":{
+      "type":"list",
+      "member":{"shape":"AgentStatus"}
+    },
     "AgentStatusName":{
       "type":"string",
       "max":127,
@@ -4277,6 +4871,24 @@
         "StatusStartTimestamp":{"shape":"Timestamp"},
         "StatusArn":{"shape":"ARN"},
         "StatusName":{"shape":"AgentStatusName"}
+      }
+    },
+    "AgentStatusSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"AgentStatusSearchCriteria"}
+    },
+    "AgentStatusSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"AgentStatusSearchConditionList"},
+        "AndConditions":{"shape":"AgentStatusSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "AgentStatusSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
       }
     },
     "AgentStatusState":{
@@ -4314,6 +4926,10 @@
       "member":{"shape":"AgentStatusType"},
       "max":3
     },
+    "AgentStatuses":{
+      "type":"list",
+      "member":{"shape":"AgentStatusId"}
+    },
     "AgentUsername":{
       "type":"string",
       "max":100,
@@ -4340,7 +4956,7 @@
       "type":"map",
       "key":{"shape":"SecurityProfilePolicyKey"},
       "value":{"shape":"SecurityProfilePolicyValue"},
-      "max":2
+      "max":4
     },
     "AllowedCapabilities":{
       "type":"structure",
@@ -4360,12 +4976,24 @@
         "DataSetId":{"shape":"DataSetId"},
         "TargetAccountId":{"shape":"AWSAccountId"},
         "ResourceShareId":{"shape":"String"},
-        "ResourceShareArn":{"shape":"ARN"}
+        "ResourceShareArn":{"shape":"ARN"},
+        "ResourceShareStatus":{"shape":"String"}
       }
     },
     "AnalyticsDataAssociationResults":{
       "type":"list",
       "member":{"shape":"AnalyticsDataAssociationResult"}
+    },
+    "AnalyticsDataSetsResult":{
+      "type":"structure",
+      "members":{
+        "DataSetId":{"shape":"DataSetId"},
+        "DataSetName":{"shape":"String"}
+      }
+    },
+    "AnalyticsDataSetsResults":{
+      "type":"list",
+      "member":{"shape":"AnalyticsDataSetsResult"}
     },
     "AnswerMachineDetectionConfig":{
       "type":"structure",
@@ -4427,7 +5055,14 @@
     },
     "AssignContactCategoryActionDefinition":{
       "type":"structure",
+      "members":{}
+    },
+    "AssignSlaActionDefinition":{
+      "type":"structure",
+      "required":["SlaAssignmentType"],
       "members":{
+        "SlaAssignmentType":{"shape":"SlaAssignmentType"},
+        "CaseSlaConfiguration":{"shape":"CaseSlaConfiguration"}
       }
     },
     "AssociateAnalyticsDataSetRequest":{
@@ -4467,7 +5102,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "Origin":{"shape":"Origin"}
+        "Origin":{"shape":"Origin"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateBotRequest":{
@@ -4480,7 +5119,11 @@
           "locationName":"InstanceId"
         },
         "LexBot":{"shape":"LexBot"},
-        "LexV2Bot":{"shape":"LexV2Bot"}
+        "LexV2Bot":{"shape":"LexV2Bot"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateDefaultVocabularyRequest":{
@@ -4505,8 +5148,7 @@
     },
     "AssociateDefaultVocabularyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateFlowRequest":{
       "type":"structure",
@@ -4529,8 +5171,7 @@
     },
     "AssociateFlowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateInstanceStorageConfigRequest":{
       "type":"structure",
@@ -4546,7 +5187,11 @@
           "locationName":"InstanceId"
         },
         "ResourceType":{"shape":"InstanceStorageResourceType"},
-        "StorageConfig":{"shape":"InstanceStorageConfig"}
+        "StorageConfig":{"shape":"InstanceStorageConfig"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateInstanceStorageConfigResponse":{
@@ -4567,7 +5212,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "FunctionArn":{"shape":"FunctionArn"}
+        "FunctionArn":{"shape":"FunctionArn"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateLexBotRequest":{
@@ -4582,7 +5231,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "LexBot":{"shape":"LexBot"}
+        "LexBot":{"shape":"LexBot"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociatePhoneNumberContactFlowRequest":{
@@ -4656,7 +5309,11 @@
           "location":"uri",
           "locationName":"InstanceId"
         },
-        "Key":{"shape":"PEM"}
+        "Key":{"shape":"PEM"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "AssociateSecurityKeyResponse":{
@@ -4684,8 +5341,7 @@
     },
     "AssociateTrafficDistributionGroupUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateUserProficienciesRequest":{
       "type":"structure",
@@ -4707,6 +5363,24 @@
         },
         "UserProficiencies":{"shape":"UserProficiencyList"}
       }
+    },
+    "AssociatedContactSummary":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"},
+        "ContactArn":{"shape":"ARN"},
+        "InitiationTimestamp":{"shape":"Timestamp"},
+        "DisconnectTimestamp":{"shape":"Timestamp"},
+        "InitialContactId":{"shape":"ContactId"},
+        "PreviousContactId":{"shape":"ContactId"},
+        "RelatedContactId":{"shape":"ContactId"},
+        "InitiationMethod":{"shape":"ContactInitiationMethod"},
+        "Channel":{"shape":"Channel"}
+      }
+    },
+    "AssociatedContactSummaryList":{
+      "type":"list",
+      "member":{"shape":"AssociatedContactSummary"}
     },
     "AssociatedQueueIdList":{
       "type":"list",
@@ -4763,6 +5437,13 @@
         "INVALID_FILE_NAME"
       ]
     },
+    "AttachedFileServiceQuotaExceededExceptionReason":{
+      "type":"string",
+      "enum":[
+        "TOTAL_FILE_SIZE_EXCEEDED",
+        "TOTAL_FILE_COUNT_EXCEEDED"
+      ]
+    },
     "AttachedFilesList":{
       "type":"list",
       "member":{"shape":"AttachedFile"}
@@ -4777,7 +5458,8 @@
       "members":{
         "Name":{"shape":"ReferenceKey"},
         "Value":{"shape":"ReferenceValue"},
-        "Status":{"shape":"ReferenceStatus"}
+        "Status":{"shape":"ReferenceStatus"},
+        "Arn":{"shape":"ReferenceArn"}
       }
     },
     "Attendee":{
@@ -4808,6 +5490,7 @@
         "Name":{"shape":"PredefinedAttributeName"},
         "Value":{"shape":"ProficiencyValue"},
         "ProficiencyLevel":{"shape":"NullableProficiencyLevel"},
+        "Range":{"shape":"Range"},
         "MatchCriteria":{"shape":"MatchCriteria"},
         "ComparisonOperator":{"shape":"ComparisonOperator"}
       }
@@ -4849,6 +5532,73 @@
       }
     },
     "AudioQualityScore":{"type":"float"},
+    "AuthenticationError":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^[\\x20-\\x21\\x23-\\x5B\\x5D-\\x7E]*$",
+      "sensitive":true
+    },
+    "AuthenticationErrorDescription":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^[\\x20-\\x21\\x23-\\x5B\\x5D-\\x7E]*$",
+      "sensitive":true
+    },
+    "AuthenticationProfile":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AuthenticationProfileId"},
+        "Arn":{"shape":"ARN"},
+        "Name":{"shape":"AuthenticationProfileName"},
+        "Description":{"shape":"AuthenticationProfileDescription"},
+        "AllowedIps":{"shape":"IpCidrList"},
+        "BlockedIps":{"shape":"IpCidrList"},
+        "IsDefault":{"shape":"Boolean"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "PeriodicSessionDuration":{"shape":"AccessTokenDuration"},
+        "MaxSessionDuration":{"shape":"RefreshTokenDuration"}
+      }
+    },
+    "AuthenticationProfileDescription":{
+      "type":"string",
+      "max":250,
+      "min":1
+    },
+    "AuthenticationProfileId":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "AuthenticationProfileName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "AuthenticationProfileSummary":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"AuthenticationProfileId"},
+        "Arn":{"shape":"ARN"},
+        "Name":{"shape":"AuthenticationProfileName"},
+        "IsDefault":{"shape":"Boolean"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "AuthenticationProfileSummaryList":{
+      "type":"list",
+      "member":{"shape":"AuthenticationProfileSummary"}
+    },
+    "AuthorizationCode":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "sensitive":true
+    },
     "AutoAccept":{"type":"boolean"},
     "AvailableNumberSummary":{
       "type":"structure",
@@ -4997,6 +5747,12 @@
         "ROUTE_ANY_CHANNEL"
       ]
     },
+    "Body":{
+      "type":"string",
+      "max":5242880,
+      "min":1,
+      "sensitive":true
+    },
     "Boolean":{"type":"boolean"},
     "BotName":{
       "type":"string",
@@ -5019,12 +5775,28 @@
       "max":100,
       "min":1
     },
+    "CaseSlaConfiguration":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Type",
+        "TargetSlaMinutes"
+      ],
+      "members":{
+        "Name":{"shape":"SlaName"},
+        "Type":{"shape":"SlaType"},
+        "FieldId":{"shape":"FieldValueId"},
+        "TargetFieldValues":{"shape":"SlaFieldValueUnionList"},
+        "TargetSlaMinutes":{"shape":"TargetSlaMinutes"}
+      }
+    },
     "Channel":{
       "type":"string",
       "enum":[
         "VOICE",
         "CHAT",
-        "TASK"
+        "TASK",
+        "EMAIL"
       ]
     },
     "ChannelList":{
@@ -5039,7 +5811,20 @@
     "Channels":{
       "type":"list",
       "member":{"shape":"Channel"},
-      "max":3
+      "max":4
+    },
+    "ChatContactMetrics":{
+      "type":"structure",
+      "members":{
+        "MultiParty":{"shape":"NullableBoolean"},
+        "TotalMessages":{"shape":"Count"},
+        "TotalBotMessages":{"shape":"Count"},
+        "TotalBotMessageLengthInChars":{"shape":"Count"},
+        "ConversationCloseTimeInMillis":{"shape":"DurationMillis"},
+        "ConversationTurnCount":{"shape":"Count"},
+        "AgentFirstResponseTimestamp":{"shape":"timestamp"},
+        "AgentFirstResponseTimeInMillis":{"shape":"DurationMillis"}
+      }
     },
     "ChatContent":{
       "type":"string",
@@ -5082,6 +5867,14 @@
       "members":{
         "ContentType":{"shape":"ChatContentType"},
         "Content":{"shape":"ChatContent"}
+      }
+    },
+    "ChatMetrics":{
+      "type":"structure",
+      "members":{
+        "ChatContactMetrics":{"shape":"ChatContactMetrics"},
+        "AgentMetrics":{"shape":"ParticipantMetrics"},
+        "CustomerMetrics":{"shape":"ParticipantMetrics"}
       }
     },
     "ChatParticipantRoleConfig":{
@@ -5145,6 +5938,24 @@
       "type":"string",
       "max":500
     },
+    "CommonAttributeAndCondition":{
+      "type":"structure",
+      "members":{
+        "TagConditions":{"shape":"TagAndConditionList"}
+      }
+    },
+    "CommonAttributeOrConditionList":{
+      "type":"list",
+      "member":{"shape":"CommonAttributeAndCondition"}
+    },
+    "CommonHumanReadableDescription":{
+      "type":"string",
+      "pattern":"^[\\P{C}\\r\\n\\t]{1,250}$"
+    },
+    "CommonHumanReadableName":{
+      "type":"string",
+      "pattern":"^[\\P{C}\\r\\n\\t]{1,127}$"
+    },
     "CommonNameLength127":{
       "type":"string",
       "max":127,
@@ -5186,13 +5997,31 @@
     },
     "CompleteAttachedFileUploadResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Concurrency":{
       "type":"integer",
       "max":10,
       "min":1
+    },
+    "Condition":{
+      "type":"structure",
+      "members":{
+        "StringCondition":{"shape":"StringCondition"},
+        "NumberCondition":{"shape":"NumberCondition"}
+      }
+    },
+    "ConditionalOperationFailedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"Message"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
+    },
+    "Conditions":{
+      "type":"list",
+      "member":{"shape":"Condition"}
     },
     "ConflictException":{
       "type":"structure",
@@ -5216,6 +6045,7 @@
         "Id":{"shape":"ContactId"},
         "InitialContactId":{"shape":"ContactId"},
         "PreviousContactId":{"shape":"ContactId"},
+        "ContactAssociationId":{"shape":"ContactId"},
         "InitiationMethod":{"shape":"ContactInitiationMethod"},
         "Name":{"shape":"Name"},
         "Description":{"shape":"Description"},
@@ -5232,6 +6062,9 @@
         "ScheduledTimestamp":{"shape":"timestamp"},
         "RelatedContactId":{"shape":"ContactId"},
         "WisdomInfo":{"shape":"WisdomInfo"},
+        "CustomerId":{"shape":"CustomerId"},
+        "CustomerEndpoint":{"shape":"EndpointInfo"},
+        "SystemEndpoint":{"shape":"EndpointInfo"},
         "QueueTimeAdjustmentSeconds":{"shape":"QueueTimeAdjustmentSeconds"},
         "QueuePriority":{"shape":"QueuePriority"},
         "Tags":{"shape":"ContactTagMap"},
@@ -5242,14 +6075,30 @@
         "AnsweringMachineDetectionStatus":{"shape":"AnsweringMachineDetectionStatus"},
         "CustomerVoiceActivity":{"shape":"CustomerVoiceActivity"},
         "QualityMetrics":{"shape":"QualityMetrics"},
+        "ChatMetrics":{"shape":"ChatMetrics"},
         "DisconnectDetails":{"shape":"DisconnectDetails"},
-        "SegmentAttributes":{"shape":"SegmentAttributes"}
+        "AdditionalEmailRecipients":{"shape":"AdditionalEmailRecipients"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "Recordings":{"shape":"Recordings"},
+        "DisconnectReason":{"shape":"String"},
+        "ContactEvaluations":{"shape":"ContactEvaluations"},
+        "ContactDetails":{"shape":"ContactDetails"},
+        "Attributes":{"shape":"Attributes"}
       }
     },
     "ContactAnalysis":{
       "type":"structure",
       "members":{
         "Transcript":{"shape":"Transcript"}
+      }
+    },
+    "ContactConfiguration":{
+      "type":"structure",
+      "required":["ContactId"],
+      "members":{
+        "ContactId":{"shape":"ContactId"},
+        "ParticipantRole":{"shape":"ParticipantRole"},
+        "IncludeRawMessage":{"shape":"IncludeRawMessage"}
       }
     },
     "ContactDataRequest":{
@@ -5269,6 +6118,40 @@
       "max":25,
       "min":1
     },
+    "ContactDetailDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ContactDetailName":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ContactDetails":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ContactDetailName"},
+        "Description":{"shape":"ContactDetailDescription"}
+      }
+    },
+    "ContactEvaluation":{
+      "type":"structure",
+      "members":{
+        "FormId":{"shape":"FormId"},
+        "EvaluationArn":{"shape":"EvaluationArn"},
+        "Status":{"shape":"Status"},
+        "StartTimestamp":{"shape":"timestamp"},
+        "EndTimestamp":{"shape":"timestamp"},
+        "DeleteTimestamp":{"shape":"timestamp"},
+        "ExportLocation":{"shape":"ExportLocation"}
+      }
+    },
+    "ContactEvaluations":{
+      "type":"map",
+      "key":{"shape":"EvaluationId"},
+      "value":{"shape":"ContactEvaluation"}
+    },
     "ContactFilter":{
       "type":"structure",
       "members":{
@@ -5286,7 +6169,12 @@
         "Status":{"shape":"ContactFlowStatus"},
         "Description":{"shape":"ContactFlowDescription"},
         "Content":{"shape":"ContactFlowContent"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "FlowContentSha256":{"shape":"FlowContentSha256"},
+        "Version":{"shape":"ResourceVersion"},
+        "VersionDescription":{"shape":"ContactFlowDescription"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
       }
     },
     "ContactFlowContent":{"type":"string"},
@@ -5339,7 +6227,9 @@
       "members":{
         "OrConditions":{"shape":"ContactFlowModuleSearchConditionList"},
         "AndConditions":{"shape":"ContactFlowModuleSearchConditionList"},
-        "StringCondition":{"shape":"StringCondition"}
+        "StringCondition":{"shape":"StringCondition"},
+        "StateCondition":{"shape":"ContactFlowModuleState"},
+        "StatusCondition":{"shape":"ContactFlowModuleStatus"}
       }
     },
     "ContactFlowModuleSearchFilter":{
@@ -5456,13 +6346,26 @@
         "AGENT_WHISPER",
         "OUTBOUND_WHISPER",
         "AGENT_TRANSFER",
-        "QUEUE_TRANSFER"
+        "QUEUE_TRANSFER",
+        "CAMPAIGN"
       ]
     },
     "ContactFlowTypes":{
       "type":"list",
       "member":{"shape":"ContactFlowType"},
       "max":10
+    },
+    "ContactFlowVersionSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "VersionDescription":{"shape":"ContactFlowDescription"},
+        "Version":{"shape":"ResourceVersion"}
+      }
+    },
+    "ContactFlowVersionSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContactFlowVersionSummary"}
     },
     "ContactId":{
       "type":"string",
@@ -5480,8 +6383,49 @@
         "API",
         "DISCONNECT",
         "MONITOR",
-        "EXTERNAL_OUTBOUND"
+        "EXTERNAL_OUTBOUND",
+        "WEBRTC_API",
+        "AGENT_REPLY",
+        "FLOW"
       ]
+    },
+    "ContactMetricInfo":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"ContactMetricName"}
+      }
+    },
+    "ContactMetricName":{
+      "type":"string",
+      "enum":["POSITION_IN_QUEUE"]
+    },
+    "ContactMetricResult":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"ContactMetricName"},
+        "Value":{"shape":"ContactMetricValue"}
+      }
+    },
+    "ContactMetricResults":{
+      "type":"list",
+      "member":{"shape":"ContactMetricResult"}
+    },
+    "ContactMetricValue":{
+      "type":"structure",
+      "members":{
+        "Number":{"shape":"Double"}
+      },
+      "union":true
+    },
+    "ContactMetrics":{
+      "type":"list",
+      "member":{"shape":"ContactMetricInfo"},
+      "min":1
     },
     "ContactNotFoundException":{
       "type":"structure",
@@ -5490,6 +6434,14 @@
       },
       "error":{"httpStatusCode":410},
       "exception":true
+    },
+    "ContactRecordingType":{
+      "type":"string",
+      "enum":[
+        "AGENT",
+        "IVR",
+        "SCREEN"
+      ]
     },
     "ContactReferences":{
       "type":"map",
@@ -5509,7 +6461,8 @@
         "AgentInfo":{"shape":"ContactSearchSummaryAgentInfo"},
         "InitiationTimestamp":{"shape":"timestamp"},
         "DisconnectTimestamp":{"shape":"timestamp"},
-        "ScheduledTimestamp":{"shape":"timestamp"}
+        "ScheduledTimestamp":{"shape":"timestamp"},
+        "SegmentAttributes":{"shape":"ContactSearchSummarySegmentAttributes"}
       }
     },
     "ContactSearchSummaryAgentInfo":{
@@ -5525,6 +6478,17 @@
         "Id":{"shape":"QueueId"},
         "EnqueueTimestamp":{"shape":"timestamp"}
       }
+    },
+    "ContactSearchSummarySegmentAttributeValue":{
+      "type":"structure",
+      "members":{
+        "ValueString":{"shape":"SegmentAttributeValueString"}
+      }
+    },
+    "ContactSearchSummarySegmentAttributes":{
+      "type":"map",
+      "key":{"shape":"SegmentAttributeName"},
+      "value":{"shape":"ContactSearchSummarySegmentAttributeValue"}
     },
     "ContactState":{
       "type":"string",
@@ -5582,6 +6546,14 @@
       "max":255,
       "min":1
     },
+    "ControlPlaneAttributeFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"CommonAttributeOrConditionList"},
+        "AndCondition":{"shape":"CommonAttributeAndCondition"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
+    },
     "ControlPlaneTagFilter":{
       "type":"structure",
       "members":{
@@ -5599,6 +6571,7 @@
         "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },
+    "Count":{"type":"integer"},
     "CreateAgentStatusRequest":{
       "type":"structure",
       "required":[
@@ -5696,7 +6669,99 @@
       "type":"structure",
       "members":{
         "ContactFlowId":{"shape":"ContactFlowId"},
-        "ContactFlowArn":{"shape":"ARN"}
+        "ContactFlowArn":{"shape":"ARN"},
+        "FlowContentSha256":{"shape":"FlowContentSha256"}
+      }
+    },
+    "CreateContactFlowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Description":{"shape":"ContactFlowDescription"},
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "FlowContentSha256":{"shape":"FlowContentSha256"},
+        "ContactFlowVersion":{"shape":"ResourceVersion"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
+    "CreateContactFlowVersionResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowArn":{"shape":"ARN"},
+        "Version":{"shape":"ResourceVersion"}
+      }
+    },
+    "CreateContactRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "Channel",
+        "InitiationMethod"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "RelatedContactId":{"shape":"ContactId"},
+        "Attributes":{"shape":"Attributes"},
+        "References":{"shape":"ContactReferences"},
+        "Channel":{"shape":"Channel"},
+        "InitiationMethod":{"shape":"ContactInitiationMethod"},
+        "ExpiryDurationInMinutes":{"shape":"ExpiryDurationInMinutes"},
+        "UserInfo":{"shape":"UserInfo"},
+        "InitiateAs":{"shape":"InitiateAs"},
+        "Name":{"shape":"Name"},
+        "Description":{"shape":"Description"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "PreviousContactId":{"shape":"ContactId"}
+      }
+    },
+    "CreateContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"},
+        "ContactArn":{"shape":"ARN"}
+      }
+    },
+    "CreateEmailAddressRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EmailAddress"
+      ],
+      "members":{
+        "Description":{"shape":"Description"},
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EmailAddress":{"shape":"EmailAddress"},
+        "DisplayName":{"shape":"EmailAddressDisplayName"},
+        "Tags":{"shape":"TagMap"},
+        "ClientToken":{"shape":"ClientToken"}
+      }
+    },
+    "CreateEmailAddressResponse":{
+      "type":"structure",
+      "members":{
+        "EmailAddressId":{"shape":"EmailAddressId"},
+        "EmailAddressArn":{"shape":"EmailAddressArn"}
       }
     },
     "CreateEvaluationFormRequest":{
@@ -5731,6 +6796,40 @@
       "members":{
         "EvaluationFormId":{"shape":"ResourceId"},
         "EvaluationFormArn":{"shape":"ARN"}
+      }
+    },
+    "CreateHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "Name",
+        "Config",
+        "EffectiveFrom",
+        "EffectiveTill"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "Name":{"shape":"CommonHumanReadableName"},
+        "Description":{"shape":"CommonHumanReadableDescription"},
+        "Config":{"shape":"HoursOfOperationOverrideConfigList"},
+        "EffectiveFrom":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "EffectiveTill":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"}
+      }
+    },
+    "CreateHoursOfOperationOverrideResponse":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverrideId":{"shape":"HoursOfOperationOverrideId"}
       }
     },
     "CreateHoursOfOperationRequest":{
@@ -5769,7 +6868,10 @@
         "OutboundCallsEnabled"
       ],
       "members":{
-        "ClientToken":{"shape":"ClientToken"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "IdentityManagementType":{"shape":"DirectoryType"},
         "InstanceAlias":{"shape":"DirectoryAlias"},
         "DirectoryId":{"shape":"DirectoryId"},
@@ -5910,6 +7012,38 @@
         "PromptId":{"shape":"PromptId"}
       }
     },
+    "CreatePushNotificationRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "PinpointAppArn",
+        "DeviceToken",
+        "DeviceType",
+        "ContactConfiguration"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "PinpointAppArn":{"shape":"ARN"},
+        "DeviceToken":{"shape":"DeviceToken"},
+        "DeviceType":{"shape":"DeviceType"},
+        "ContactConfiguration":{"shape":"ContactConfiguration"}
+      }
+    },
+    "CreatePushNotificationRegistrationResponse":{
+      "type":"structure",
+      "required":["RegistrationId"],
+      "members":{
+        "RegistrationId":{"shape":"RegistrationId"}
+      }
+    },
     "CreateQueueRequest":{
       "type":"structure",
       "required":[
@@ -5926,6 +7060,7 @@
         "Name":{"shape":"CommonNameLength127"},
         "Description":{"shape":"QueueDescription"},
         "OutboundCallerConfig":{"shape":"OutboundCallerConfig"},
+        "OutboundEmailConfig":{"shape":"OutboundEmailConfig"},
         "HoursOfOperationId":{"shape":"HoursOfOperationId"},
         "MaxContacts":{
           "shape":"QueueMaxContacts",
@@ -6089,6 +7224,7 @@
         "Name":{"shape":"TaskTemplateName"},
         "Description":{"shape":"TaskTemplateDescription"},
         "ContactFlowId":{"shape":"ContactFlowId"},
+        "SelfAssignFlowId":{"shape":"ContactFlowId"},
         "Constraints":{"shape":"TaskTemplateConstraints"},
         "Defaults":{"shape":"TaskTemplateDefaults"},
         "Status":{"shape":"TaskTemplateStatus"},
@@ -6411,6 +7547,18 @@
         "Capabilities":{"shape":"ParticipantCapabilities"}
       }
     },
+    "CustomerId":{
+      "type":"string",
+      "max":128,
+      "min":0
+    },
+    "CustomerIdNonEmpty":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "sensitive":true
+    },
+    "CustomerProfileAttributesSerialized":{"type":"string"},
     "CustomerQualityMetrics":{
       "type":"structure",
       "members":{
@@ -6433,12 +7581,34 @@
       "type":"list",
       "member":{"shape":"DataSetId"}
     },
+    "DateComparisonType":{
+      "type":"string",
+      "enum":[
+        "GREATER_THAN",
+        "LESS_THAN",
+        "GREATER_THAN_OR_EQUAL_TO",
+        "LESS_THAN_OR_EQUAL_TO",
+        "EQUAL_TO"
+      ]
+    },
+    "DateCondition":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "Value":{"shape":"DateYearMonthDayFormat"},
+        "ComparisonType":{"shape":"DateComparisonType"}
+      }
+    },
     "DateReference":{
       "type":"structure",
       "members":{
         "Name":{"shape":"ReferenceKey"},
         "Value":{"shape":"ReferenceValue"}
       }
+    },
+    "DateYearMonthDayFormat":{
+      "type":"string",
+      "pattern":"^\\d{4}-\\d{2}-\\d{2}$"
     },
     "DeactivateEvaluationFormRequest":{
       "type":"structure",
@@ -6525,8 +7695,7 @@
     },
     "DeleteAttachedFileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContactEvaluationRequest":{
       "type":"structure",
@@ -6568,8 +7737,7 @@
     },
     "DeleteContactFlowModuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContactFlowRequest":{
       "type":"structure",
@@ -6592,8 +7760,59 @@
     },
     "DeleteContactFlowResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteContactFlowVersionRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId",
+        "ContactFlowVersion"
+      ],
       "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "ContactFlowVersion":{
+          "shape":"ResourceVersion",
+          "location":"uri",
+          "locationName":"ContactFlowVersion"
+        }
       }
+    },
+    "DeleteContactFlowVersionResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteEmailAddressRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EmailAddressId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EmailAddressId":{
+          "shape":"EmailAddressId",
+          "location":"uri",
+          "locationName":"EmailAddressId"
+        }
+      }
+    },
+    "DeleteEmailAddressResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteEvaluationFormRequest":{
       "type":"structure",
@@ -6617,6 +7836,31 @@
           "box":true,
           "location":"querystring",
           "locationName":"version"
+        }
+      }
+    },
+    "DeleteHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "HoursOfOperationOverrideId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "HoursOfOperationOverrideId":{
+          "shape":"HoursOfOperationOverrideId",
+          "location":"uri",
+          "locationName":"HoursOfOperationOverrideId"
         }
       }
     },
@@ -6647,6 +7891,12 @@
           "shape":"InstanceId",
           "location":"uri",
           "locationName":"InstanceId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -6706,6 +7956,35 @@
           "locationName":"PromptId"
         }
       }
+    },
+    "DeletePushNotificationRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "RegistrationId",
+        "ContactId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "RegistrationId":{
+          "shape":"RegistrationId",
+          "location":"uri",
+          "locationName":"RegistrationId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"querystring",
+          "locationName":"contactId"
+        }
+      }
+    },
+    "DeletePushNotificationRegistrationResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteQueueRequest":{
       "type":"structure",
@@ -6823,8 +8102,7 @@
     },
     "DeleteTaskTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTrafficDistributionGroupRequest":{
       "type":"structure",
@@ -6839,8 +8117,7 @@
     },
     "DeleteTrafficDistributionGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUseCaseRequest":{
       "type":"structure",
@@ -6926,8 +8203,7 @@
     },
     "DeleteViewResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteViewVersionRequest":{
       "type":"structure",
@@ -6956,8 +8232,7 @@
     },
     "DeleteViewVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVocabularyRequest":{
       "type":"structure",
@@ -7014,6 +8289,31 @@
       "type":"structure",
       "members":{
         "AgentStatus":{"shape":"AgentStatus"}
+      }
+    },
+    "DescribeAuthenticationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "AuthenticationProfileId":{
+          "shape":"AuthenticationProfileId",
+          "location":"uri",
+          "locationName":"AuthenticationProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        }
+      }
+    },
+    "DescribeAuthenticationProfileResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfile":{"shape":"AuthenticationProfile"}
       }
     },
     "DescribeContactEvaluationRequest":{
@@ -7121,6 +8421,38 @@
         "Contact":{"shape":"Contact"}
       }
     },
+    "DescribeEmailAddressRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EmailAddressId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EmailAddressId":{
+          "shape":"EmailAddressId",
+          "location":"uri",
+          "locationName":"EmailAddressId"
+        }
+      }
+    },
+    "DescribeEmailAddressResponse":{
+      "type":"structure",
+      "members":{
+        "EmailAddressId":{"shape":"EmailAddressId"},
+        "EmailAddressArn":{"shape":"EmailAddressArn"},
+        "EmailAddress":{"shape":"EmailAddress"},
+        "DisplayName":{"shape":"EmailAddressDisplayName"},
+        "Description":{"shape":"Description"},
+        "CreateTimestamp":{"shape":"ISO8601Datetime"},
+        "ModifiedTimestamp":{"shape":"ISO8601Datetime"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "DescribeEvaluationFormRequest":{
       "type":"structure",
       "required":[
@@ -7151,6 +8483,37 @@
       "required":["EvaluationForm"],
       "members":{
         "EvaluationForm":{"shape":"EvaluationForm"}
+      }
+    },
+    "DescribeHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "HoursOfOperationOverrideId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "HoursOfOperationOverrideId":{
+          "shape":"HoursOfOperationOverrideId",
+          "location":"uri",
+          "locationName":"HoursOfOperationOverrideId"
+        }
+      }
+    },
+    "DescribeHoursOfOperationOverrideResponse":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverride":{"shape":"HoursOfOperationOverride"}
       }
     },
     "DescribeHoursOfOperationRequest":{
@@ -7217,7 +8580,8 @@
     "DescribeInstanceResponse":{
       "type":"structure",
       "members":{
-        "Instance":{"shape":"Instance"}
+        "Instance":{"shape":"Instance"},
+        "ReplicationConfiguration":{"shape":"ReplicationConfiguration"}
       }
     },
     "DescribeInstanceStorageConfigRequest":{
@@ -7612,13 +8976,27 @@
         "OperatingSystem":{"shape":"OperatingSystem"}
       }
     },
+    "DeviceToken":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "DeviceType":{
+      "type":"string",
+      "enum":[
+        "GCM",
+        "APNS",
+        "APNS_SANDBOX"
+      ]
+    },
     "Dimensions":{
       "type":"structure",
       "members":{
         "Queue":{"shape":"QueueReference"},
         "Channel":{"shape":"Channel"},
         "RoutingProfile":{"shape":"RoutingProfileReference"},
-        "RoutingStepExpression":{"shape":"RoutingExpression"}
+        "RoutingStepExpression":{"shape":"RoutingExpression"},
+        "AgentStatus":{"shape":"AgentStatusIdentifier"}
       }
     },
     "DimensionsV2Key":{"type":"string"},
@@ -7682,6 +9060,12 @@
           "shape":"Origin",
           "location":"querystring",
           "locationName":"origin"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -7695,7 +9079,11 @@
           "locationName":"InstanceId"
         },
         "LexBot":{"shape":"LexBot"},
-        "LexV2Bot":{"shape":"LexV2Bot"}
+        "LexV2Bot":{"shape":"LexV2Bot"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "DisassociateFlowRequest":{
@@ -7725,8 +9113,7 @@
     },
     "DisassociateFlowResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateInstanceStorageConfigRequest":{
       "type":"structure",
@@ -7750,6 +9137,12 @@
           "shape":"InstanceStorageResourceType",
           "location":"querystring",
           "locationName":"resourceType"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -7769,6 +9162,12 @@
           "shape":"FunctionArn",
           "location":"querystring",
           "locationName":"functionArn"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -7794,6 +9193,12 @@
           "shape":"LexRegion",
           "location":"querystring",
           "locationName":"lexRegion"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -7874,6 +9279,12 @@
           "shape":"AssociationId",
           "location":"uri",
           "locationName":"AssociationId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
         }
       }
     },
@@ -7904,8 +9315,7 @@
     },
     "DisassociateTrafficDistributionGroupUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateUserProficienciesRequest":{
       "type":"structure",
@@ -7964,8 +9374,7 @@
     },
     "DismissUserContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisplayName":{
       "type":"string",
@@ -8003,10 +9412,159 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "Duration":{
+      "type":"integer",
+      "min":0
+    },
     "DurationInSeconds":{"type":"integer"},
+    "DurationMillis":{
+      "type":"long",
+      "min":0
+    },
+    "EffectiveHoursOfOperationList":{
+      "type":"list",
+      "member":{"shape":"EffectiveHoursOfOperations"}
+    },
+    "EffectiveHoursOfOperations":{
+      "type":"structure",
+      "members":{
+        "Date":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "OperationalHours":{"shape":"OperationalHours"}
+      }
+    },
     "Email":{
       "type":"string",
       "sensitive":true
+    },
+    "EmailAddress":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[^\\s@]+@[^\\s@]+\\.[^\\s@]+",
+      "sensitive":true
+    },
+    "EmailAddressArn":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "EmailAddressDisplayName":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "sensitive":true
+    },
+    "EmailAddressId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "EmailAddressInfo":{
+      "type":"structure",
+      "required":["EmailAddress"],
+      "members":{
+        "EmailAddress":{"shape":"EmailAddress"},
+        "DisplayName":{"shape":"EmailAddressDisplayName"}
+      }
+    },
+    "EmailAddressList":{
+      "type":"list",
+      "member":{"shape":"EmailAddressMetadata"}
+    },
+    "EmailAddressMetadata":{
+      "type":"structure",
+      "members":{
+        "EmailAddressId":{"shape":"EmailAddressId"},
+        "EmailAddressArn":{"shape":"EmailAddressArn"},
+        "EmailAddress":{"shape":"EmailAddress"},
+        "Description":{"shape":"Description"},
+        "DisplayName":{"shape":"EmailAddressDisplayName"}
+      }
+    },
+    "EmailAddressRecipientList":{
+      "type":"list",
+      "member":{"shape":"EmailAddressInfo"},
+      "max":50,
+      "min":1
+    },
+    "EmailAddressSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"EmailAddressSearchCriteria"}
+    },
+    "EmailAddressSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"EmailAddressSearchConditionList"},
+        "AndConditions":{"shape":"EmailAddressSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "EmailAddressSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "EmailAttachment":{
+      "type":"structure",
+      "required":[
+        "FileName",
+        "S3Url"
+      ],
+      "members":{
+        "FileName":{"shape":"FileName"},
+        "S3Url":{"shape":"PreSignedAttachmentUrl"}
+      }
+    },
+    "EmailAttachments":{
+      "type":"list",
+      "member":{"shape":"EmailAttachment"},
+      "max":10,
+      "min":1,
+      "sensitive":true
+    },
+    "EmailHeaderType":{
+      "type":"string",
+      "enum":[
+        "REFERENCES",
+        "MESSAGE_ID",
+        "IN_REPLY_TO",
+        "X_SES_SPAM_VERDICT",
+        "X_SES_VIRUS_VERDICT"
+      ]
+    },
+    "EmailHeaderValue":{
+      "type":"string",
+      "max":20000,
+      "min":1
+    },
+    "EmailHeaders":{
+      "type":"map",
+      "key":{"shape":"EmailHeaderType"},
+      "value":{"shape":"EmailHeaderValue"}
+    },
+    "EmailMessageContentType":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "EmailMessageReference":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ReferenceKey"},
+        "Arn":{"shape":"ReferenceArn"}
+      }
+    },
+    "EmailRecipient":{
+      "type":"structure",
+      "members":{
+        "Address":{"shape":"EndpointAddress"},
+        "DisplayName":{"shape":"EndpointDisplayName"}
+      }
+    },
+    "EmailRecipientsList":{
+      "type":"list",
+      "member":{"shape":"EmailRecipient"}
     },
     "EmailReference":{
       "type":"structure",
@@ -8017,8 +9575,7 @@
     },
     "EmptyFieldValue":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EncryptionConfig":{
       "type":"structure",
@@ -8037,8 +9594,7 @@
     },
     "EndAssociatedTasksActionDefinition":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Endpoint":{
       "type":"structure",
@@ -8052,12 +9608,27 @@
       "max":256,
       "min":0
     },
+    "EndpointDisplayName":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
+    "EndpointInfo":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"EndpointType"},
+        "Address":{"shape":"EndpointAddress"},
+        "DisplayName":{"shape":"EndpointDisplayName"}
+      }
+    },
     "EndpointType":{
       "type":"string",
       "enum":[
         "TELEPHONE_NUMBER",
         "VOIP",
-        "CONTACT_FLOW"
+        "CONTACT_FLOW",
+        "CONNECT_PHONENUMBER_ARN",
+        "EMAIL_ADDRESS"
       ]
     },
     "ErrorCode":{"type":"string"},
@@ -8138,6 +9709,7 @@
       "value":{"shape":"EvaluationAnswerOutput"},
       "max":100
     },
+    "EvaluationArn":{"type":"string"},
     "EvaluationForm":{
       "type":"structure",
       "required":[
@@ -8486,6 +10058,7 @@
       "type":"list",
       "member":{"shape":"EvaluationFormVersionSummary"}
     },
+    "EvaluationId":{"type":"string"},
     "EvaluationMetadata":{
       "type":"structure",
       "required":[
@@ -8595,7 +10168,8 @@
         "OnContactEvaluationSubmit",
         "OnMetricDataUpdate",
         "OnCaseCreate",
-        "OnCaseUpdate"
+        "OnCaseUpdate",
+        "OnSlaBreach"
       ]
     },
     "Expiry":{
@@ -8605,12 +10179,15 @@
         "ExpiryTimestamp":{"shape":"timestamp"}
       }
     },
+    "ExpiryDurationInMinutes":{"type":"integer"},
+    "ExportLocation":{"type":"string"},
     "Expression":{
       "type":"structure",
       "members":{
         "AttributeCondition":{"shape":"AttributeCondition"},
         "AndExpression":{"shape":"Expressions"},
-        "OrExpression":{"shape":"Expressions"}
+        "OrExpression":{"shape":"Expressions"},
+        "NotAttributeCondition":{"shape":"AttributeCondition"}
       }
     },
     "Expressions":{
@@ -8686,6 +10263,7 @@
     "FileIdList":{
       "type":"list",
       "member":{"shape":"FileId"},
+      "max":100,
       "min":1
     },
     "FileName":{
@@ -8710,7 +10288,10 @@
     },
     "FileUseCaseType":{
       "type":"string",
-      "enum":["ATTACHMENT"]
+      "enum":[
+        "EMAIL_MESSAGE",
+        "ATTACHMENT"
+      ]
     },
     "FilterV2":{
       "type":"structure",
@@ -8731,7 +10312,8 @@
         "Queues":{"shape":"Queues"},
         "Channels":{"shape":"Channels"},
         "RoutingProfiles":{"shape":"RoutingProfiles"},
-        "RoutingStepExpressions":{"shape":"RoutingExpressions"}
+        "RoutingStepExpressions":{"shape":"RoutingExpressions"},
+        "AgentStatuses":{"shape":"AgentStatuses"}
       }
     },
     "FiltersV2List":{
@@ -8742,7 +10324,13 @@
     },
     "FlowAssociationResourceType":{
       "type":"string",
-      "enum":["SMS_PHONE_NUMBER"]
+      "enum":[
+        "SMS_PHONE_NUMBER",
+        "INBOUND_EMAIL",
+        "OUTBOUND_EMAIL",
+        "ANALYTICS_CONNECTOR",
+        "WHATSAPP_MESSAGING_PHONE_NUMBER"
+      ]
     },
     "FlowAssociationSummary":{
       "type":"structure",
@@ -8755,6 +10343,18 @@
     "FlowAssociationSummaryList":{
       "type":"list",
       "member":{"shape":"FlowAssociationSummary"}
+    },
+    "FlowContentSha256":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9]{64}$"
+    },
+    "FormId":{"type":"string"},
+    "FragmentNumber":{
+      "type":"string",
+      "max":128,
+      "min":0
     },
     "FunctionArn":{
       "type":"string",
@@ -8840,6 +10440,27 @@
         "Attributes":{"shape":"Attributes"}
       }
     },
+    "GetContactMetricsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "Metrics"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceIdOrArn"},
+        "ContactId":{"shape":"InstanceIdOrArn"},
+        "Metrics":{"shape":"ContactMetrics"}
+      }
+    },
+    "GetContactMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "MetricResults":{"shape":"ContactMetricResults"},
+        "Id":{"shape":"ContactId"},
+        "Arn":{"shape":"ARN"}
+      }
+    },
     "GetCurrentMetricDataRequest":{
       "type":"structure",
       "required":[
@@ -8899,6 +10520,44 @@
         "NextToken":{"shape":"NextToken"},
         "UserDataList":{"shape":"UserDataList"},
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "GetEffectiveHoursOfOperationsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "FromDate",
+        "ToDate"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "FromDate":{
+          "shape":"HoursOfOperationOverrideYearMonthDayDateFormat",
+          "location":"querystring",
+          "locationName":"fromDate"
+        },
+        "ToDate":{
+          "shape":"HoursOfOperationOverrideYearMonthDayDateFormat",
+          "location":"querystring",
+          "locationName":"toDate"
+        }
+      }
+    },
+    "GetEffectiveHoursOfOperationsResponse":{
+      "type":"structure",
+      "members":{
+        "EffectiveHoursOfOperationList":{"shape":"EffectiveHoursOfOperationList"},
+        "TimeZone":{"shape":"TimeZone"}
       }
     },
     "GetFederationTokenRequest":{
@@ -9084,6 +10743,7 @@
         "Name":{"shape":"TaskTemplateName"},
         "Description":{"shape":"TaskTemplateDescription"},
         "ContactFlowId":{"shape":"ContactFlowId"},
+        "SelfAssignFlowId":{"shape":"ContactFlowId"},
         "Constraints":{"shape":"TaskTemplateConstraints"},
         "Defaults":{"shape":"TaskTemplateDefaults"},
         "Fields":{"shape":"TaskTemplateFields"},
@@ -9114,13 +10774,19 @@
         "AgentConfig":{"shape":"AgentConfig"}
       }
     },
+    "GlobalSignInEndpoint":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "Grouping":{
       "type":"string",
       "enum":[
         "QUEUE",
         "CHANNEL",
         "ROUTING_PROFILE",
-        "ROUTING_STEP_EXPRESSION"
+        "ROUTING_STEP_EXPRESSION",
+        "AGENT_STATUS"
       ]
     },
     "GroupingV2":{"type":"string"},
@@ -9132,7 +10798,7 @@
     "GroupingsV2":{
       "type":"list",
       "member":{"shape":"GroupingV2"},
-      "max":3
+      "max":4
     },
     "HierarchyGroup":{
       "type":"structure",
@@ -9405,6 +11071,59 @@
       "member":{"shape":"HoursOfOperation"}
     },
     "HoursOfOperationName":{"type":"string"},
+    "HoursOfOperationOverride":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverrideId":{"shape":"HoursOfOperationOverrideId"},
+        "HoursOfOperationId":{"shape":"HoursOfOperationId"},
+        "HoursOfOperationArn":{"shape":"ARN"},
+        "Name":{"shape":"CommonHumanReadableName"},
+        "Description":{"shape":"CommonHumanReadableDescription"},
+        "Config":{"shape":"HoursOfOperationOverrideConfigList"},
+        "EffectiveFrom":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "EffectiveTill":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"}
+      }
+    },
+    "HoursOfOperationOverrideConfig":{
+      "type":"structure",
+      "members":{
+        "Day":{"shape":"OverrideDays"},
+        "StartTime":{"shape":"OverrideTimeSlice"},
+        "EndTime":{"shape":"OverrideTimeSlice"}
+      }
+    },
+    "HoursOfOperationOverrideConfigList":{
+      "type":"list",
+      "member":{"shape":"HoursOfOperationOverrideConfig"},
+      "max":100,
+      "min":0
+    },
+    "HoursOfOperationOverrideId":{
+      "type":"string",
+      "max":36,
+      "min":1
+    },
+    "HoursOfOperationOverrideList":{
+      "type":"list",
+      "member":{"shape":"HoursOfOperationOverride"}
+    },
+    "HoursOfOperationOverrideSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"HoursOfOperationOverrideSearchCriteria"}
+    },
+    "HoursOfOperationOverrideSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"HoursOfOperationOverrideSearchConditionList"},
+        "AndConditions":{"shape":"HoursOfOperationOverrideSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"},
+        "DateCondition":{"shape":"DateCondition"}
+      }
+    },
+    "HoursOfOperationOverrideYearMonthDayDateFormat":{
+      "type":"string",
+      "pattern":"^\\d{4}-\\d{2}-\\d{2}$"
+    },
     "HoursOfOperationSearchConditionList":{
       "type":"list",
       "member":{"shape":"HoursOfOperationSearchCriteria"}
@@ -9487,8 +11206,55 @@
         "PhoneNumberArn":{"shape":"ARN"}
       }
     },
+    "InboundAdditionalRecipients":{
+      "type":"structure",
+      "members":{
+        "ToAddresses":{"shape":"EmailAddressRecipientList"},
+        "CcAddresses":{"shape":"EmailAddressRecipientList"}
+      }
+    },
     "InboundCallsEnabled":{"type":"boolean"},
+    "InboundEmailContent":{
+      "type":"structure",
+      "required":["MessageSourceType"],
+      "members":{
+        "MessageSourceType":{"shape":"InboundMessageSourceType"},
+        "RawMessage":{"shape":"InboundRawMessage"}
+      }
+    },
+    "InboundMessageSourceType":{
+      "type":"string",
+      "enum":["RAW"]
+    },
+    "InboundRawMessage":{
+      "type":"structure",
+      "required":[
+        "Subject",
+        "Body",
+        "ContentType"
+      ],
+      "members":{
+        "Subject":{"shape":"InboundSubject"},
+        "Body":{"shape":"Body"},
+        "ContentType":{"shape":"EmailMessageContentType"},
+        "Headers":{"shape":"EmailHeaders"}
+      }
+    },
+    "InboundSubject":{
+      "type":"string",
+      "max":998,
+      "min":0,
+      "sensitive":true
+    },
+    "IncludeRawMessage":{"type":"boolean"},
     "Index":{"type":"integer"},
+    "InitiateAs":{
+      "type":"string",
+      "enum":[
+        "CONNECTED_TO_USER",
+        "COMPLETED"
+      ]
+    },
     "InitiationMethodList":{
       "type":"list",
       "member":{"shape":"ContactInitiationMethod"}
@@ -9527,7 +11293,8 @@
         "MULTI_PARTY_CONFERENCE",
         "HIGH_VOLUME_OUTBOUND",
         "ENHANCED_CONTACT_MONITORING",
-        "ENHANCED_CHAT_MONITORING"
+        "ENHANCED_CHAT_MONITORING",
+        "MULTI_PARTY_CHAT_CONFERENCE"
       ]
     },
     "InstanceAttributeValue":{
@@ -9545,6 +11312,17 @@
       "max":250,
       "min":1,
       "pattern":"^(arn:(aws|aws-us-gov):connect:[a-z]{2}-[a-z]+-[0-9]{1}:[0-9]{1,20}:instance/)?[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "InstanceReplicationStatus":{
+      "type":"string",
+      "enum":[
+        "INSTANCE_REPLICATION_COMPLETE",
+        "INSTANCE_REPLICATION_IN_PROGRESS",
+        "INSTANCE_REPLICATION_FAILED",
+        "INSTANCE_REPLICA_DELETING",
+        "INSTANCE_REPLICATION_DELETION_FAILED",
+        "RESOURCE_REPLICATION_NOT_STARTED"
+      ]
     },
     "InstanceStatus":{
       "type":"string",
@@ -9590,7 +11368,8 @@
         "CONTACT_EVALUATIONS",
         "SCREEN_RECORDINGS",
         "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS",
-        "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS"
+        "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS",
+        "EMAIL_MESSAGES"
       ]
     },
     "InstanceSummary":{
@@ -9648,9 +11427,14 @@
         "WISDOM_ASSISTANT",
         "WISDOM_KNOWLEDGE_BASE",
         "WISDOM_QUICK_RESPONSES",
+        "Q_MESSAGE_TEMPLATES",
         "CASES_DOMAIN",
         "APPLICATION",
-        "FILE_SCANNER"
+        "FILE_SCANNER",
+        "SES_IDENTITY",
+        "ANALYTICS_CONNECTOR",
+        "CALL_TRANSFER_CONNECTOR",
+        "COGNITO_USER_POOL"
       ]
     },
     "InternalServiceException":{
@@ -9728,6 +11512,20 @@
     "InvisibleTaskTemplateFields":{
       "type":"list",
       "member":{"shape":"InvisibleFieldInfo"}
+    },
+    "IpCidr":{
+      "type":"string",
+      "max":50,
+      "min":2,
+      "pattern":"^[A-Za-z0-9:/]*$"
+    },
+    "IpCidrList":{
+      "type":"list",
+      "member":{"shape":"IpCidr"}
+    },
+    "IvrRecordingTrack":{
+      "type":"string",
+      "enum":["ALL"]
     },
     "JoinToken":{
       "type":"string",
@@ -9888,6 +11686,34 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListAnalyticsDataLakeDataSetsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAnalyticsDataLakeDataSetsResponse":{
+      "type":"structure",
+      "members":{
+        "Results":{"shape":"AnalyticsDataSetsResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListApprovedOriginsRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -9914,6 +11740,76 @@
       "type":"structure",
       "members":{
         "Origins":{"shape":"OriginsList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAssociatedContactsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"querystring",
+          "locationName":"contactId"
+        },
+        "MaxResults":{
+          "shape":"ListAssociatedContactsRequestMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAssociatedContactsRequestMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListAssociatedContactsResponse":{
+      "type":"structure",
+      "members":{
+        "ContactSummaryList":{"shape":"AssociatedContactSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAuthenticationProfilesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListAuthenticationProfilesResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileSummaryList":{"shape":"AuthenticationProfileSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -9952,6 +11848,13 @@
       "members":{
         "LexBots":{"shape":"LexBotConfigList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCondition":{
+      "type":"structure",
+      "members":{
+        "TargetListType":{"shape":"TargetListType"},
+        "Conditions":{"shape":"Conditions"}
       }
     },
     "ListContactEvaluationsRequest":{
@@ -10017,6 +11920,43 @@
       "type":"structure",
       "members":{
         "ContactFlowModulesSummaryList":{"shape":"ContactFlowModulesSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListContactFlowVersionsRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactFlowId":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"ContactFlowId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListContactFlowVersionsResponse":{
+      "type":"structure",
+      "members":{
+        "ContactFlowVersionSummaryList":{"shape":"ContactFlowVersionSummaryList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -10182,7 +12122,13 @@
     },
     "ListFlowAssociationResourceType":{
       "type":"string",
-      "enum":["VOICE_PHONE_NUMBER"]
+      "enum":[
+        "WHATSAPP_MESSAGING_PHONE_NUMBER",
+        "VOICE_PHONE_NUMBER",
+        "INBOUND_EMAIL",
+        "OUTBOUND_EMAIL",
+        "ANALYTICS_CONNECTOR"
+      ]
     },
     "ListFlowAssociationsRequest":{
       "type":"structure",
@@ -10216,6 +12162,45 @@
       "members":{
         "FlowAssociationSummaryList":{"shape":"FlowAssociationSummaryList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListHoursOfOperationOverridesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListHoursOfOperationOverridesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "HoursOfOperationOverrideList":{"shape":"HoursOfOperationOverrideList"},
+        "LastModifiedRegion":{"shape":"RegionName"},
+        "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
     "ListHoursOfOperationsRequest":{
@@ -11361,6 +13346,13 @@
       }
     },
     "MediaRegion":{"type":"string"},
+    "MediaStreamType":{
+      "type":"string",
+      "enum":[
+        "AUDIO",
+        "VIDEO"
+      ]
+    },
     "Meeting":{
       "type":"structure",
       "members":{
@@ -11385,6 +13377,16 @@
     },
     "MeetingId":{"type":"string"},
     "Message":{"type":"string"},
+    "MessageTemplateId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "MessageTemplateKnowledgeBaseId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
     "MetadataUrl":{
       "type":"string",
       "max":2000,
@@ -11495,7 +13497,7 @@
     },
     "Name":{
       "type":"string",
-      "max":512,
+      "max":1024,
       "min":0,
       "sensitive":true
     },
@@ -11541,10 +13543,33 @@
         "UserIds":{"shape":"UserIdList"}
       }
     },
+    "NullableBoolean":{"type":"boolean"},
     "NullableProficiencyLevel":{
       "type":"float",
       "max":5.0,
       "min":1.0
+    },
+    "NullableProficiencyLimitValue":{"type":"integer"},
+    "NumberComparisonType":{
+      "type":"string",
+      "enum":[
+        "GREATER_OR_EQUAL",
+        "GREATER",
+        "LESSER_OR_EQUAL",
+        "LESSER",
+        "EQUAL",
+        "NOT_EQUAL",
+        "RANGE"
+      ]
+    },
+    "NumberCondition":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "MinValue":{"shape":"NullableProficiencyLimitValue"},
+        "MaxValue":{"shape":"NullableProficiencyLimitValue"},
+        "ComparisonType":{"shape":"NumberComparisonType"}
+      }
     },
     "NumberReference":{
       "type":"structure",
@@ -11578,6 +13603,17 @@
       "max":128,
       "min":0
     },
+    "OperationalHour":{
+      "type":"structure",
+      "members":{
+        "Start":{"shape":"OverrideTimeSlice"},
+        "End":{"shape":"OverrideTimeSlice"}
+      }
+    },
+    "OperationalHours":{
+      "type":"list",
+      "member":{"shape":"OperationalHour"}
+    },
     "Origin":{
       "type":"string",
       "max":267
@@ -11585,6 +13621,12 @@
     "OriginsList":{
       "type":"list",
       "member":{"shape":"Origin"}
+    },
+    "OutboundAdditionalRecipients":{
+      "type":"structure",
+      "members":{
+        "CcEmailAddresses":{"shape":"EmailAddressRecipientList"}
+      }
     },
     "OutboundCallerConfig":{
       "type":"structure",
@@ -11608,6 +13650,52 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "OutboundEmailConfig":{
+      "type":"structure",
+      "members":{
+        "OutboundEmailAddressId":{"shape":"EmailAddressId"}
+      }
+    },
+    "OutboundEmailContent":{
+      "type":"structure",
+      "required":["MessageSourceType"],
+      "members":{
+        "MessageSourceType":{"shape":"OutboundMessageSourceType"},
+        "TemplatedMessageConfig":{"shape":"TemplatedMessageConfig"},
+        "RawMessage":{"shape":"OutboundRawMessage"}
+      }
+    },
+    "OutboundMessageSourceType":{
+      "type":"string",
+      "enum":[
+        "TEMPLATE",
+        "RAW"
+      ]
+    },
+    "OutboundRawMessage":{
+      "type":"structure",
+      "required":[
+        "Subject",
+        "Body",
+        "ContentType"
+      ],
+      "members":{
+        "Subject":{"shape":"OutboundSubject"},
+        "Body":{"shape":"Body"},
+        "ContentType":{"shape":"EmailMessageContentType"}
+      }
+    },
+    "OutboundRequestId":{
+      "type":"string",
+      "max":36,
+      "min":36
+    },
+    "OutboundSubject":{
+      "type":"string",
+      "max":998,
+      "min":1,
+      "sensitive":true
+    },
     "OutputTypeNotFoundException":{
       "type":"structure",
       "members":{
@@ -11615,6 +13703,35 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "OverrideDays":{
+      "type":"string",
+      "enum":[
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY"
+      ]
+    },
+    "OverrideTimeSlice":{
+      "type":"structure",
+      "required":[
+        "Hours",
+        "Minutes"
+      ],
+      "members":{
+        "Hours":{
+          "shape":"Hours24Format",
+          "box":true
+        },
+        "Minutes":{
+          "shape":"MinutesLimit60",
+          "box":true
+        }
+      }
     },
     "PEM":{
       "type":"string",
@@ -11624,7 +13741,8 @@
     "ParticipantCapabilities":{
       "type":"structure",
       "members":{
-        "Video":{"shape":"VideoCapability"}
+        "Video":{"shape":"VideoCapability"},
+        "ScreenShare":{"shape":"ScreenShareCapability"}
       }
     },
     "ParticipantDetails":{
@@ -11638,13 +13756,28 @@
       "type":"structure",
       "members":{
         "ParticipantRole":{"shape":"ParticipantRole"},
-        "DisplayName":{"shape":"DisplayName"}
+        "DisplayName":{"shape":"DisplayName"},
+        "ParticipantCapabilities":{"shape":"ParticipantCapabilities"}
       }
     },
     "ParticipantId":{
       "type":"string",
       "max":256,
       "min":1
+    },
+    "ParticipantMetrics":{
+      "type":"structure",
+      "members":{
+        "ParticipantId":{"shape":"ParticipantId"},
+        "ParticipantType":{"shape":"ParticipantType"},
+        "ConversationAbandon":{"shape":"NullableBoolean"},
+        "MessagesSent":{"shape":"Count"},
+        "NumResponses":{"shape":"Count"},
+        "MessageLengthInChars":{"shape":"Count"},
+        "TotalResponseTimeInMillis":{"shape":"DurationMillis"},
+        "MaxResponseTimeInMillis":{"shape":"DurationMillis"},
+        "LastMessageTimestamp":{"shape":"timestamp"}
+      }
     },
     "ParticipantRole":{
       "type":"string",
@@ -11654,6 +13787,15 @@
         "SYSTEM",
         "CUSTOM_BOT",
         "SUPERVISOR"
+      ]
+    },
+    "ParticipantState":{
+      "type":"string",
+      "enum":[
+        "INITIAL",
+        "CONNECTED",
+        "DISCONNECTED",
+        "MISSED"
       ]
     },
     "ParticipantTimerAction":{
@@ -11711,6 +13853,16 @@
         "Expiry":{"shape":"ISO8601Datetime"}
       }
     },
+    "ParticipantType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "MANAGER",
+        "AGENT",
+        "CUSTOMER",
+        "THIRDPARTY"
+      ]
+    },
     "Password":{
       "type":"string",
       "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\S]{8,64}$/",
@@ -11730,8 +13882,7 @@
     },
     "PauseContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Percentage":{
       "type":"integer",
@@ -12109,6 +14260,11 @@
       "max":128,
       "min":0
     },
+    "PreSignedAttachmentUrl":{
+      "type":"string",
+      "max":2000,
+      "min":1
+    },
     "PredefinedAttribute":{
       "type":"structure",
       "members":{
@@ -12336,8 +14492,7 @@
     },
     "PutUserStatusResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QualityMetrics":{
       "type":"structure",
@@ -12354,6 +14509,7 @@
         "QueueId":{"shape":"QueueId"},
         "Description":{"shape":"QueueDescription"},
         "OutboundCallerConfig":{"shape":"OutboundCallerConfig"},
+        "OutboundEmailConfig":{"shape":"OutboundEmailConfig"},
         "HoursOfOperationId":{"shape":"HoursOfOperationId"},
         "MaxContacts":{
           "shape":"QueueMaxContacts",
@@ -12382,6 +14538,12 @@
       "members":{
         "Id":{"shape":"QueueId"},
         "EnqueueTimestamp":{"shape":"timestamp"}
+      }
+    },
+    "QueueInfoInput":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"QueueId"}
       }
     },
     "QueueMaxContacts":{
@@ -12570,6 +14732,13 @@
       "max":50,
       "min":1
     },
+    "Range":{
+      "type":"structure",
+      "members":{
+        "MinProficiencyLevel":{"shape":"NullableProficiencyLevel"},
+        "MaxProficiencyLevel":{"shape":"NullableProficiencyLevel"}
+      }
+    },
     "ReadOnlyFieldInfo":{
       "type":"structure",
       "members":{
@@ -12681,6 +14850,28 @@
       "max":5,
       "min":0
     },
+    "RealTimeContactAnalysisPostContactSummaryContent":{
+      "type":"string",
+      "max":1270,
+      "min":1
+    },
+    "RealTimeContactAnalysisPostContactSummaryFailureCode":{
+      "type":"string",
+      "enum":[
+        "QUOTA_EXCEEDED",
+        "INSUFFICIENT_CONVERSATION_CONTENT",
+        "FAILED_SAFETY_GUIDELINES",
+        "INVALID_ANALYSIS_CONFIGURATION",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "RealTimeContactAnalysisPostContactSummaryStatus":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "COMPLETED"
+      ]
+    },
     "RealTimeContactAnalysisSegmentAttachments":{
       "type":"structure",
       "required":[
@@ -12729,6 +14920,15 @@
         "IssuesDetected":{"shape":"RealTimeContactAnalysisIssuesDetected"}
       }
     },
+    "RealTimeContactAnalysisSegmentPostContactSummary":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Content":{"shape":"RealTimeContactAnalysisPostContactSummaryContent"},
+        "Status":{"shape":"RealTimeContactAnalysisPostContactSummaryStatus"},
+        "FailureCode":{"shape":"RealTimeContactAnalysisPostContactSummaryFailureCode"}
+      }
+    },
     "RealTimeContactAnalysisSegmentTranscript":{
       "type":"structure",
       "required":[
@@ -12757,13 +14957,14 @@
         "Categories",
         "Issues",
         "Event",
-        "Attachments"
+        "Attachments",
+        "PostContactSummary"
       ]
     },
     "RealTimeContactAnalysisSegmentTypes":{
       "type":"list",
       "member":{"shape":"RealTimeContactAnalysisSegmentType"},
-      "max":5
+      "max":6
     },
     "RealTimeContactAnalysisSentimentLabel":{
       "type":"string",
@@ -12844,7 +15045,8 @@
         "Categories":{"shape":"RealTimeContactAnalysisSegmentCategories"},
         "Issues":{"shape":"RealTimeContactAnalysisSegmentIssues"},
         "Event":{"shape":"RealTimeContactAnalysisSegmentEvent"},
-        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"}
+        "Attachments":{"shape":"RealTimeContactAnalysisSegmentAttachments"},
+        "PostContactSummary":{"shape":"RealTimeContactAnalysisSegmentPostContactSummary"}
       },
       "union":true
     },
@@ -12852,16 +15054,54 @@
       "type":"list",
       "member":{"shape":"RealtimeContactAnalysisSegment"}
     },
+    "RecordingDeletionReason":{"type":"string"},
+    "RecordingInfo":{
+      "type":"structure",
+      "members":{
+        "StorageType":{"shape":"StorageType"},
+        "Location":{"shape":"RecordingLocation"},
+        "MediaStreamType":{"shape":"MediaStreamType"},
+        "ParticipantType":{"shape":"ParticipantType"},
+        "FragmentStartNumber":{"shape":"FragmentNumber"},
+        "FragmentStopNumber":{"shape":"FragmentNumber"},
+        "StartTimestamp":{"shape":"timestamp"},
+        "StopTimestamp":{"shape":"timestamp"},
+        "Status":{"shape":"RecordingStatus"},
+        "DeletionReason":{"shape":"RecordingDeletionReason"}
+      }
+    },
+    "RecordingLocation":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "RecordingStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "DELETED"
+      ]
+    },
+    "Recordings":{
+      "type":"list",
+      "member":{"shape":"RecordingInfo"}
+    },
     "Reference":{
       "type":"structure",
-      "required":[
-        "Value",
-        "Type"
-      ],
+      "required":["Type"],
       "members":{
         "Value":{"shape":"ReferenceValue"},
-        "Type":{"shape":"ReferenceType"}
+        "Type":{"shape":"ReferenceType"},
+        "Status":{"shape":"ReferenceStatus"},
+        "Arn":{"shape":"ReferenceArn"},
+        "StatusReason":{"shape":"ReferenceStatusReason"}
       }
+    },
+    "ReferenceArn":{
+      "type":"string",
+      "max":256,
+      "min":20,
+      "pattern":"^[-:/A-Za-z0-9]+"
     },
     "ReferenceId":{
       "type":"string",
@@ -12876,15 +15116,25 @@
     "ReferenceStatus":{
       "type":"string",
       "enum":[
+        "AVAILABLE",
+        "DELETED",
         "APPROVED",
-        "REJECTED"
+        "REJECTED",
+        "PROCESSING",
+        "FAILED"
       ]
+    },
+    "ReferenceStatusReason":{
+      "type":"string",
+      "max":100,
+      "min":0
     },
     "ReferenceSummary":{
       "type":"structure",
       "members":{
         "Url":{"shape":"UrlReference"},
         "Attachment":{"shape":"AttachmentReference"},
+        "EmailMessage":{"shape":"EmailMessageReference"},
         "String":{"shape":"StringReference"},
         "Number":{"shape":"NumberReference"},
         "Date":{"shape":"DateReference"},
@@ -12901,10 +15151,12 @@
       "enum":[
         "URL",
         "ATTACHMENT",
+        "CONTACT_ANALYSIS",
         "NUMBER",
         "STRING",
         "DATE",
-        "EMAIL"
+        "EMAIL",
+        "EMAIL_MESSAGE"
       ]
     },
     "ReferenceTypes":{
@@ -12917,9 +15169,20 @@
       "max":4096,
       "min":0
     },
+    "RefreshTokenDuration":{
+      "type":"integer",
+      "box":true,
+      "max":720,
+      "min":360
+    },
     "RegionName":{
       "type":"string",
       "pattern":"[a-z]{2}(-[a-z]+){1,2}(-[0-9])?"
+    },
+    "RegistrationId":{
+      "type":"string",
+      "max":256,
+      "min":1
     },
     "RehydrationType":{
       "type":"string",
@@ -12972,6 +15235,33 @@
         "Id":{"shape":"InstanceId"},
         "Arn":{"shape":"ARN"}
       }
+    },
+    "ReplicationConfiguration":{
+      "type":"structure",
+      "members":{
+        "ReplicationStatusSummaryList":{"shape":"ReplicationStatusSummaryList"},
+        "SourceRegion":{"shape":"AwsRegion"},
+        "GlobalSignInEndpoint":{"shape":"GlobalSignInEndpoint"}
+      }
+    },
+    "ReplicationStatusReason":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
+    "ReplicationStatusSummary":{
+      "type":"structure",
+      "members":{
+        "Region":{"shape":"AwsRegion"},
+        "ReplicationStatus":{"shape":"InstanceReplicationStatus"},
+        "ReplicationStatusReason":{"shape":"ReplicationStatusReason"}
+      }
+    },
+    "ReplicationStatusSummaryList":{
+      "type":"list",
+      "member":{"shape":"ReplicationStatusSummary"},
+      "max":11,
+      "min":0
     },
     "RequestIdentifier":{
       "type":"string",
@@ -13054,6 +15344,10 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "ResourceVersion":{
+      "type":"long",
+      "min":1
+    },
     "ResumeContactRecordingRequest":{
       "type":"structure",
       "required":[
@@ -13064,13 +15358,13 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "ContactId":{"shape":"ContactId"},
-        "InitialContactId":{"shape":"ContactId"}
+        "InitialContactId":{"shape":"ContactId"},
+        "ContactRecordingType":{"shape":"ContactRecordingType"}
       }
     },
     "ResumeContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ResumeContactRequest":{
       "type":"structure",
@@ -13086,8 +15380,7 @@
     },
     "ResumeContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RoutingCriteria":{
       "type":"structure",
@@ -13096,6 +15389,29 @@
         "ActivationTimestamp":{"shape":"timestamp"},
         "Index":{"shape":"Index"}
       }
+    },
+    "RoutingCriteriaInput":{
+      "type":"structure",
+      "members":{
+        "Steps":{"shape":"RoutingCriteriaInputSteps"}
+      }
+    },
+    "RoutingCriteriaInputStep":{
+      "type":"structure",
+      "members":{
+        "Expiry":{"shape":"RoutingCriteriaInputStepExpiry"},
+        "Expression":{"shape":"Expression"}
+      }
+    },
+    "RoutingCriteriaInputStepExpiry":{
+      "type":"structure",
+      "members":{
+        "DurationInSeconds":{"shape":"DurationInSeconds"}
+      }
+    },
+    "RoutingCriteriaInputSteps":{
+      "type":"list",
+      "member":{"shape":"RoutingCriteriaInputStep"}
     },
     "RoutingCriteriaStepStatus":{
       "type":"string",
@@ -13298,6 +15614,7 @@
         "SendNotificationAction":{"shape":"SendNotificationActionDefinition"},
         "CreateCaseAction":{"shape":"CreateCaseActionDefinition"},
         "UpdateCaseAction":{"shape":"UpdateCaseActionDefinition"},
+        "AssignSlaAction":{"shape":"AssignSlaActionDefinition"},
         "EndAssociatedTasksAction":{"shape":"EndAssociatedTasksActionDefinition"},
         "SubmitAutoEvaluationAction":{"shape":"SubmitAutoEvaluationActionDefinition"}
       }
@@ -13377,6 +15694,32 @@
       "max":2000,
       "min":1,
       "pattern":"s3://\\S+/.+|https://\\\\S+\\\\.s3\\\\.\\\\S+\\\\.amazonaws\\\\.com/\\\\S+"
+    },
+    "ScreenShareCapability":{
+      "type":"string",
+      "enum":["SEND"]
+    },
+    "SearchAgentStatusesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"AgentStatusSearchFilter"},
+        "SearchCriteria":{"shape":"AgentStatusSearchCriteria"}
+      }
+    },
+    "SearchAgentStatusesResponse":{
+      "type":"structure",
+      "members":{
+        "AgentStatuses":{"shape":"AgentStatusList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
     },
     "SearchAvailablePhoneNumbersRequest":{
       "type":"structure",
@@ -13513,7 +15856,49 @@
         "ContactAnalysis":{"shape":"ContactAnalysis"},
         "InitiationMethods":{"shape":"InitiationMethodList"},
         "QueueIds":{"shape":"QueueIdList"},
-        "SearchableContactAttributes":{"shape":"SearchableContactAttributes"}
+        "SearchableContactAttributes":{"shape":"SearchableContactAttributes"},
+        "SearchableSegmentAttributes":{"shape":"SearchableSegmentAttributes"}
+      }
+    },
+    "SearchEmailAddressesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "MaxResults":{"shape":"MaxResult100"},
+        "NextToken":{"shape":"NextToken2500"},
+        "SearchCriteria":{"shape":"EmailAddressSearchCriteria"},
+        "SearchFilter":{"shape":"EmailAddressSearchFilter"}
+      }
+    },
+    "SearchEmailAddressesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "EmailAddresses":{"shape":"EmailAddressList"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
+    "SearchHoursOfOperationOverridesRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"HoursOfOperationSearchFilter"},
+        "SearchCriteria":{"shape":"HoursOfOperationOverrideSearchCriteria"}
+      }
+    },
+    "SearchHoursOfOperationOverridesResponse":{
+      "type":"structure",
+      "members":{
+        "HoursOfOperationOverrides":{"shape":"HoursOfOperationOverrideList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
     "SearchHoursOfOperationsRequest":{
@@ -13701,6 +16086,28 @@
       "max":100,
       "min":0
     },
+    "SearchUserHierarchyGroupsRequest":{
+      "type":"structure",
+      "required":["InstanceId"],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"UserHierarchyGroupSearchFilter"},
+        "SearchCriteria":{"shape":"UserHierarchyGroupSearchCriteria"}
+      }
+    },
+    "SearchUserHierarchyGroupsResponse":{
+      "type":"structure",
+      "members":{
+        "UserHierarchyGroups":{"shape":"UserHierarchyGroupList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
+      }
+    },
     "SearchUsersRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -13749,7 +16156,7 @@
     "SearchableContactAttributeKey":{
       "type":"string",
       "max":100,
-      "min":0,
+      "min":1,
       "sensitive":true
     },
     "SearchableContactAttributeValue":{
@@ -13792,6 +16199,50 @@
     "SearchableQueueType":{
       "type":"string",
       "enum":["STANDARD"]
+    },
+    "SearchableSegmentAttributeKey":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "sensitive":true
+    },
+    "SearchableSegmentAttributeValue":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "sensitive":true
+    },
+    "SearchableSegmentAttributeValueList":{
+      "type":"list",
+      "member":{"shape":"SearchableSegmentAttributeValue"},
+      "max":20,
+      "min":1,
+      "sensitive":true
+    },
+    "SearchableSegmentAttributes":{
+      "type":"structure",
+      "required":["Criteria"],
+      "members":{
+        "Criteria":{"shape":"SearchableSegmentAttributesCriteriaList"},
+        "MatchType":{"shape":"SearchContactsMatchType"}
+      }
+    },
+    "SearchableSegmentAttributesCriteria":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"SearchableSegmentAttributeKey"},
+        "Values":{"shape":"SearchableSegmentAttributeValueList"}
+      }
+    },
+    "SearchableSegmentAttributesCriteriaList":{
+      "type":"list",
+      "member":{"shape":"SearchableSegmentAttributesCriteria"},
+      "max":15,
+      "min":1
     },
     "SecurityKey":{
       "type":"structure",
@@ -13907,13 +16358,21 @@
     "SegmentAttributeValue":{
       "type":"structure",
       "members":{
-        "ValueString":{"shape":"SegmentAttributeValueString"}
+        "ValueString":{"shape":"SegmentAttributeValueString"},
+        "ValueMap":{"shape":"SegmentAttributeValueMap"},
+        "ValueInteger":{"shape":"SegmentAttributeValueInteger"}
       }
+    },
+    "SegmentAttributeValueInteger":{"type":"integer"},
+    "SegmentAttributeValueMap":{
+      "type":"map",
+      "key":{"shape":"SegmentAttributeName"},
+      "value":{"shape":"SegmentAttributeValue"}
     },
     "SegmentAttributeValueString":{
       "type":"string",
       "max":1024,
-      "min":1
+      "min":0
     },
     "SegmentAttributes":{
       "type":"map",
@@ -13958,13 +16417,52 @@
         "Recipient":{"shape":"NotificationRecipientType"}
       }
     },
+    "SendOutboundEmailRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FromEmailAddress",
+        "DestinationEmailAddress",
+        "EmailMessage",
+        "TrafficType"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "FromEmailAddress":{"shape":"EmailAddressInfo"},
+        "DestinationEmailAddress":{"shape":"EmailAddressInfo"},
+        "AdditionalRecipients":{"shape":"OutboundAdditionalRecipients"},
+        "EmailMessage":{"shape":"OutboundEmailContent"},
+        "TrafficType":{"shape":"TrafficType"},
+        "SourceCampaign":{"shape":"SourceCampaign"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "SendOutboundEmailResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"Message"}
+        "Message":{"shape":"Message"},
+        "Reason":{"shape":"ServiceQuotaExceededExceptionReason"}
       },
       "error":{"httpStatusCode":402},
       "exception":true
+    },
+    "ServiceQuotaExceededExceptionReason":{
+      "type":"structure",
+      "members":{
+        "AttachedFileServiceQuotaExceededExceptionReason":{"shape":"AttachedFileServiceQuotaExceededExceptionReason"}
+      },
+      "union":true
     },
     "SignInConfig":{
       "type":"structure",
@@ -14017,6 +16515,25 @@
       "max":50,
       "min":1
     },
+    "SlaAssignmentType":{
+      "type":"string",
+      "enum":["CASES"]
+    },
+    "SlaFieldValueUnionList":{
+      "type":"list",
+      "member":{"shape":"FieldValueUnion"},
+      "max":1
+    },
+    "SlaName":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"^.*[\\S]$"
+    },
+    "SlaType":{
+      "type":"string",
+      "enum":["CaseField"]
+    },
     "SnapshotVersion":{"type":"string"},
     "Sort":{
       "type":"structure",
@@ -14052,6 +16569,13 @@
       "max":100,
       "min":1,
       "pattern":"^[a-zA-Z0-9_ -]+$"
+    },
+    "SourceCampaign":{
+      "type":"structure",
+      "members":{
+        "CampaignId":{"shape":"CampaignId"},
+        "OutboundRequestId":{"shape":"OutboundRequestId"}
+      }
     },
     "SourceId":{
       "type":"string",
@@ -14133,7 +16657,8 @@
         "SupportedMessagingContentTypes":{"shape":"SupportedMessagingContentTypes"},
         "PersistentChat":{"shape":"PersistentChat"},
         "RelatedContactId":{"shape":"ContactId"},
-        "SegmentAttributes":{"shape":"SegmentAttributes"}
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "CustomerId":{"shape":"CustomerIdNonEmpty"}
       }
     },
     "StartChatContactResponse":{
@@ -14194,8 +16719,7 @@
     },
     "StartContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StartContactStreamingRequest":{
       "type":"structure",
@@ -14220,6 +16744,100 @@
       "required":["StreamingId"],
       "members":{
         "StreamingId":{"shape":"StreamingId"}
+      }
+    },
+    "StartEmailContactRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "FromEmailAddress",
+        "DestinationEmailAddress",
+        "EmailMessage"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "FromEmailAddress":{"shape":"EmailAddressInfo"},
+        "DestinationEmailAddress":{"shape":"EmailAddress"},
+        "Description":{"shape":"Description"},
+        "References":{"shape":"ContactReferences"},
+        "Name":{"shape":"Name"},
+        "EmailMessage":{"shape":"InboundEmailContent"},
+        "AdditionalRecipients":{"shape":"InboundAdditionalRecipients"},
+        "Attachments":{"shape":"EmailAttachments"},
+        "ContactFlowId":{"shape":"ContactFlowId"},
+        "RelatedContactId":{"shape":"ContactId"},
+        "Attributes":{"shape":"Attributes"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartEmailContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartOutboundChatContactRequest":{
+      "type":"structure",
+      "required":[
+        "SourceEndpoint",
+        "DestinationEndpoint",
+        "InstanceId",
+        "SegmentAttributes",
+        "ContactFlowId"
+      ],
+      "members":{
+        "SourceEndpoint":{"shape":"Endpoint"},
+        "DestinationEndpoint":{"shape":"Endpoint"},
+        "InstanceId":{"shape":"InstanceId"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "Attributes":{"shape":"Attributes"},
+        "ContactFlowId":{"shape":"ContactFlowId"},
+        "ChatDurationInMinutes":{"shape":"ChatDurationInMinutes"},
+        "ParticipantDetails":{"shape":"ParticipantDetails"},
+        "InitialSystemMessage":{"shape":"ChatMessage"},
+        "RelatedContactId":{"shape":"ContactId"},
+        "SupportedMessagingContentTypes":{"shape":"SupportedMessagingContentTypes"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartOutboundChatContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartOutboundEmailContactRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "DestinationEmailAddress",
+        "EmailMessage"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"},
+        "FromEmailAddress":{"shape":"EmailAddressInfo"},
+        "DestinationEmailAddress":{"shape":"EmailAddressInfo"},
+        "AdditionalRecipients":{"shape":"OutboundAdditionalRecipients"},
+        "EmailMessage":{"shape":"OutboundEmailContent"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartOutboundEmailContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"}
       }
     },
     "StartOutboundVoiceContactRequest":{
@@ -14255,6 +16873,25 @@
         "ContactId":{"shape":"ContactId"}
       }
     },
+    "StartScreenSharingRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"}
+      }
+    },
+    "StartScreenSharingResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "StartTaskContactRequest":{
       "type":"structure",
       "required":[
@@ -14276,7 +16913,8 @@
         "ScheduledTime":{"shape":"Timestamp"},
         "TaskTemplateId":{"shape":"TaskTemplateId"},
         "QuickConnectId":{"shape":"QuickConnectId"},
-        "RelatedContactId":{"shape":"ContactId"}
+        "RelatedContactId":{"shape":"ContactId"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"}
       }
     },
     "StartTaskContactResponse":{
@@ -14316,12 +16954,32 @@
         "ParticipantToken":{"shape":"ParticipantToken"}
       }
     },
+    "StateTransition":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"ParticipantState"},
+        "StateStartTimestamp":{"shape":"timestamp"},
+        "StateEndTimestamp":{"shape":"timestamp"}
+      }
+    },
+    "StateTransitions":{
+      "type":"list",
+      "member":{"shape":"StateTransition"}
+    },
     "Statistic":{
       "type":"string",
       "enum":[
         "SUM",
         "MAX",
         "AVG"
+      ]
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "IN_PROGRESS",
+        "DELETED"
       ]
     },
     "Step":{
@@ -14346,13 +17004,13 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "ContactId":{"shape":"ContactId"},
-        "InitialContactId":{"shape":"ContactId"}
+        "InitialContactId":{"shape":"ContactId"},
+        "ContactRecordingType":{"shape":"ContactRecordingType"}
       }
     },
     "StopContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopContactRequest":{
       "type":"structure",
@@ -14368,8 +17026,7 @@
     },
     "StopContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StopContactStreamingRequest":{
       "type":"structure",
@@ -14386,8 +17043,7 @@
     },
     "StopContactStreamingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "StorageType":{
       "type":"string",
@@ -14506,13 +17162,13 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "ContactId":{"shape":"ContactId"},
-        "InitialContactId":{"shape":"ContactId"}
+        "InitialContactId":{"shape":"ContactId"},
+        "ContactRecordingType":{"shape":"ContactRecordingType"}
       }
     },
     "SuspendContactRecordingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagAndConditionList":{
       "type":"list",
@@ -14540,14 +17196,13 @@
     },
     "TagContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagKey":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"^(?!aws:)[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*$"
     },
     "TagKeyList":{
       "type":"list",
@@ -14622,6 +17277,15 @@
     "TagsList":{
       "type":"list",
       "member":{"shape":"TagSet"}
+    },
+    "TargetListType":{
+      "type":"string",
+      "enum":["PROFICIENCIES"]
+    },
+    "TargetSlaMinutes":{
+      "type":"long",
+      "max":129600,
+      "min":1
     },
     "TaskActionDefinition":{
       "type":"structure",
@@ -14721,7 +17385,9 @@
         "DATE_TIME",
         "BOOLEAN",
         "SINGLE_SELECT",
-        "EMAIL"
+        "EMAIL",
+        "SELF_ASSIGN",
+        "EXPIRY_DURATION"
       ]
     },
     "TaskTemplateFieldValue":{
@@ -14778,10 +17444,30 @@
         "Distributions":{"shape":"DistributionList"}
       }
     },
+    "TemplateAttributes":{
+      "type":"structure",
+      "members":{
+        "CustomAttributes":{"shape":"Attributes"},
+        "CustomerProfileAttributes":{"shape":"CustomerProfileAttributesSerialized"}
+      }
+    },
     "TemplateId":{
       "type":"string",
       "max":500,
       "min":1
+    },
+    "TemplatedMessageConfig":{
+      "type":"structure",
+      "required":[
+        "KnowledgeBaseId",
+        "MessageTemplateId",
+        "TemplateAttributes"
+      ],
+      "members":{
+        "KnowledgeBaseId":{"shape":"MessageTemplateKnowledgeBaseId"},
+        "MessageTemplateId":{"shape":"MessageTemplateId"},
+        "TemplateAttributes":{"shape":"TemplateAttributes"}
+      }
     },
     "Threshold":{
       "type":"structure",
@@ -15014,8 +17700,7 @@
     },
     "UntagContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -15068,6 +17753,33 @@
         "ResetOrderNumber":{"shape":"Boolean"}
       }
     },
+    "UpdateAuthenticationProfileRequest":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "AuthenticationProfileId":{
+          "shape":"AuthenticationProfileId",
+          "location":"uri",
+          "locationName":"AuthenticationProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Name":{"shape":"AuthenticationProfileName"},
+        "Description":{"shape":"AuthenticationProfileDescription"},
+        "AllowedIps":{"shape":"IpCidrList"},
+        "BlockedIps":{"shape":"IpCidrList"},
+        "PeriodicSessionDuration":{
+          "shape":"AccessTokenDuration",
+          "box":true
+        }
+      }
+    },
     "UpdateCaseActionDefinition":{
       "type":"structure",
       "required":["Fields"],
@@ -15090,8 +17802,7 @@
     },
     "UpdateContactAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactEvaluationRequest":{
       "type":"structure",
@@ -15148,8 +17859,7 @@
     },
     "UpdateContactFlowContentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowMetadataRequest":{
       "type":"structure",
@@ -15175,8 +17885,7 @@
     },
     "UpdateContactFlowMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowModuleContentRequest":{
       "type":"structure",
@@ -15201,8 +17910,7 @@
     },
     "UpdateContactFlowModuleContentResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowModuleMetadataRequest":{
       "type":"structure",
@@ -15228,8 +17936,7 @@
     },
     "UpdateContactFlowModuleMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactFlowNameRequest":{
       "type":"structure",
@@ -15254,8 +17961,7 @@
     },
     "UpdateContactFlowNameResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactRequest":{
       "type":"structure",
@@ -15276,13 +17982,17 @@
         },
         "Name":{"shape":"Name"},
         "Description":{"shape":"Description"},
-        "References":{"shape":"ContactReferences"}
+        "References":{"shape":"ContactReferences"},
+        "SegmentAttributes":{"shape":"SegmentAttributes"},
+        "QueueInfo":{"shape":"QueueInfoInput"},
+        "UserInfo":{"shape":"UserInfo"},
+        "CustomerEndpoint":{"shape":"Endpoint"},
+        "SystemEndpoint":{"shape":"Endpoint"}
       }
     },
     "UpdateContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactRoutingDataRequest":{
       "type":"structure",
@@ -15302,13 +18012,13 @@
           "locationName":"ContactId"
         },
         "QueueTimeAdjustmentSeconds":{"shape":"QueueTimeAdjustmentSeconds"},
-        "QueuePriority":{"shape":"QueuePriority"}
+        "QueuePriority":{"shape":"QueuePriority"},
+        "RoutingCriteria":{"shape":"RoutingCriteriaInput"}
       }
     },
     "UpdateContactRoutingDataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactScheduleRequest":{
       "type":"structure",
@@ -15325,7 +18035,35 @@
     },
     "UpdateContactScheduleResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateEmailAddressMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "EmailAddressId"
+      ],
       "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "EmailAddressId":{
+          "shape":"EmailAddressId",
+          "location":"uri",
+          "locationName":"EmailAddressId"
+        },
+        "Description":{"shape":"Description"},
+        "DisplayName":{"shape":"EmailAddressDisplayName"},
+        "ClientToken":{"shape":"ClientToken"}
+      }
+    },
+    "UpdateEmailAddressMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "EmailAddressId":{"shape":"EmailAddressId"},
+        "EmailAddressArn":{"shape":"EmailAddressArn"}
       }
     },
     "UpdateEvaluationFormRequest":{
@@ -15381,6 +18119,36 @@
       "max":250,
       "min":0
     },
+    "UpdateHoursOfOperationOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "HoursOfOperationId",
+        "HoursOfOperationOverrideId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "HoursOfOperationId":{
+          "shape":"HoursOfOperationId",
+          "location":"uri",
+          "locationName":"HoursOfOperationId"
+        },
+        "HoursOfOperationOverrideId":{
+          "shape":"HoursOfOperationOverrideId",
+          "location":"uri",
+          "locationName":"HoursOfOperationOverrideId"
+        },
+        "Name":{"shape":"CommonHumanReadableName"},
+        "Description":{"shape":"CommonHumanReadableDescription"},
+        "Config":{"shape":"HoursOfOperationOverrideConfigList"},
+        "EffectiveFrom":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"},
+        "EffectiveTill":{"shape":"HoursOfOperationOverrideYearMonthDayDateFormat"}
+      }
+    },
     "UpdateHoursOfOperationRequest":{
       "type":"structure",
       "required":[
@@ -15422,7 +18190,11 @@
           "location":"uri",
           "locationName":"AttributeType"
         },
-        "Value":{"shape":"InstanceAttributeValue"}
+        "Value":{"shape":"InstanceAttributeValue"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
     },
     "UpdateInstanceStorageConfigRequest":{
@@ -15449,8 +18221,30 @@
           "location":"querystring",
           "locationName":"resourceType"
         },
-        "StorageConfig":{"shape":"InstanceStorageConfig"}
+        "StorageConfig":{"shape":"InstanceStorageConfig"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
       }
+    },
+    "UpdateParticipantAuthenticationRequest":{
+      "type":"structure",
+      "required":[
+        "State",
+        "InstanceId"
+      ],
+      "members":{
+        "State":{"shape":"ParticipantToken"},
+        "InstanceId":{"shape":"InstanceId"},
+        "Code":{"shape":"AuthorizationCode"},
+        "Error":{"shape":"AuthenticationError"},
+        "ErrorDescription":{"shape":"AuthenticationErrorDescription"}
+      }
+    },
+    "UpdateParticipantAuthenticationResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateParticipantRoleConfigChannelInfo":{
       "type":"structure",
@@ -15482,8 +18276,7 @@
     },
     "UpdateParticipantRoleConfigResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePhoneNumberMetadataRequest":{
       "type":"structure",
@@ -15658,6 +18451,27 @@
           "locationName":"QueueId"
         },
         "OutboundCallerConfig":{"shape":"OutboundCallerConfig"}
+      }
+    },
+    "UpdateQueueOutboundEmailConfigRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "QueueId",
+        "OutboundEmailConfig"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "QueueId":{
+          "shape":"QueueId",
+          "location":"uri",
+          "locationName":"QueueId"
+        },
+        "OutboundEmailConfig":{"shape":"OutboundEmailConfig"}
       }
     },
     "UpdateQueueStatusRequest":{
@@ -15906,6 +18720,7 @@
         "Name":{"shape":"TaskTemplateName"},
         "Description":{"shape":"TaskTemplateDescription"},
         "ContactFlowId":{"shape":"ContactFlowId"},
+        "SelfAssignFlowId":{"shape":"ContactFlowId"},
         "Constraints":{"shape":"TaskTemplateConstraints"},
         "Defaults":{"shape":"TaskTemplateDefaults"},
         "Status":{"shape":"TaskTemplateStatus"},
@@ -15921,6 +18736,7 @@
         "Name":{"shape":"TaskTemplateName"},
         "Description":{"shape":"TaskTemplateDescription"},
         "ContactFlowId":{"shape":"ContactFlowId"},
+        "SelfAssignFlowId":{"shape":"ContactFlowId"},
         "Constraints":{"shape":"TaskTemplateConstraints"},
         "Defaults":{"shape":"TaskTemplateDefaults"},
         "Fields":{"shape":"TaskTemplateFields"},
@@ -15945,8 +18761,7 @@
     },
     "UpdateTrafficDistributionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateUserHierarchyGroupNameRequest":{
       "type":"structure",
@@ -16161,8 +18976,7 @@
     },
     "UpdateViewMetadataResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UploadUrlMetadata":{
       "type":"structure",
@@ -16270,6 +19084,28 @@
       "type":"list",
       "member":{"shape":"UserData"}
     },
+    "UserHierarchyGroupList":{
+      "type":"list",
+      "member":{"shape":"HierarchyGroup"}
+    },
+    "UserHierarchyGroupSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"UserHierarchyGroupSearchCriteria"}
+    },
+    "UserHierarchyGroupSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "AndConditions":{"shape":"UserHierarchyGroupSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"}
+      }
+    },
+    "UserHierarchyGroupSearchFilter":{
+      "type":"structure",
+      "members":{
+        "AttributeFilter":{"shape":"ControlPlaneAttributeFilter"}
+      }
+    },
     "UserId":{"type":"string"},
     "UserIdList":{
       "type":"list",
@@ -16290,6 +19126,12 @@
       "members":{
         "FirstName":{"shape":"AgentFirstName"},
         "LastName":{"shape":"AgentLastName"}
+      }
+    },
+    "UserInfo":{
+      "type":"structure",
+      "members":{
+        "UserId":{"shape":"AgentResourceId"}
       }
     },
     "UserNotFoundException":{
@@ -16370,6 +19212,7 @@
         "OrConditions":{"shape":"UserSearchConditionList"},
         "AndConditions":{"shape":"UserSearchConditionList"},
         "StringCondition":{"shape":"StringCondition"},
+        "ListCondition":{"shape":"ListCondition"},
         "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
       }
     },
@@ -16622,7 +19465,17 @@
         "pt-PT",
         "zh-CN",
         "en-NZ",
-        "en-ZA"
+        "en-ZA",
+        "ca-ES",
+        "da-DK",
+        "fi-FI",
+        "id-ID",
+        "ms-MY",
+        "nl-NL",
+        "no-NO",
+        "pl-PL",
+        "sv-SE",
+        "tl-PH"
       ]
     },
     "VocabularyLastModifiedTime":{"type":"timestamp"},
@@ -16674,7 +19527,8 @@
     "VoiceRecordingConfiguration":{
       "type":"structure",
       "members":{
-        "VoiceRecordingTrack":{"shape":"VoiceRecordingTrack"}
+        "VoiceRecordingTrack":{"shape":"VoiceRecordingTrack"},
+        "IvrRecordingTrack":{"shape":"IvrRecordingTrack"}
       }
     },
     "VoiceRecordingTrack":{

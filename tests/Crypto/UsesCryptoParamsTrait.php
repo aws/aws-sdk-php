@@ -103,9 +103,6 @@ trait UsesCryptoParamsTrait
             [
                 'gcm',
                 null,
-                function () {
-                    return version_compare(PHP_VERSION, '7.1', '<');
-                }
             ],
             [
                 'unsupported',

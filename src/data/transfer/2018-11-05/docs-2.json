@@ -1,13 +1,14 @@
 {
   "version": "2.0",
-  "service": "<p>Transfer Family is a fully managed service that enables the transfer of files over the File Transfer Protocol (FTP), File Transfer Protocol over SSL (FTPS), or Secure Shell (SSH) File Transfer Protocol (SFTP) directly into and out of Amazon Simple Storage Service (Amazon S3) or Amazon EFS. Additionally, you can use Applicability Statement 2 (AS2) to transfer files into and out of Amazon S3. Amazon Web Services helps you seamlessly migrate your file transfer workflows to Transfer Family by integrating with existing authentication systems, and providing DNS routing with Amazon Route 53 so nothing changes for your customers and partners, or their applications. With your data in Amazon S3, you can use it with Amazon Web Services for processing, analytics, machine learning, and archiving. Getting started with Transfer Family is easy since there is no infrastructure to buy and set up.</p>",
+  "service": "<p>Transfer Family is a fully managed service that enables the transfer of files over the File Transfer Protocol (FTP), File Transfer Protocol over SSL (FTPS), or Secure Shell (SSH) File Transfer Protocol (SFTP) directly into and out of Amazon Simple Storage Service (Amazon S3) or Amazon EFS. Additionally, you can use Applicability Statement 2 (AS2) to transfer files into and out of Amazon S3. Amazon Web Services helps you seamlessly migrate your file transfer workflows to Transfer Family by integrating with existing authentication systems, and providing DNS routing with Amazon Route 53 so nothing changes for your customers and partners, or their applications. With your data in Amazon S3, you can use it with Amazon Web Services services for processing, analytics, machine learning, and archiving. Getting started with Transfer Family is easy since there is no infrastructure to buy and set up.</p>",
   "operations": {
     "CreateAccess": "<p>Used by administrators to choose which groups in the directory should have access to upload and download files over the enabled protocols using Transfer Family. For example, a Microsoft Active Directory might contain 50,000 users, but only a small fraction might need the ability to transfer files to the server. An administrator can use <code>CreateAccess</code> to limit the access to the correct set of users who need this ability.</p>",
-    "CreateAgreement": "<p>Creates an agreement. An agreement is a bilateral trading partner agreement, or partnership, between an Transfer Family server and an AS2 process. The agreement defines the file and message transfer relationship between the server and the AS2 process. To define an agreement, Transfer Family combines a server, local profile, partner profile, certificate, and other attributes.</p> <p>The partner is identified with the <code>PartnerProfileId</code>, and the AS2 process is identified with the <code>LocalProfileId</code>.</p>",
+    "CreateAgreement": "<p>Creates an agreement. An agreement is a bilateral trading partner agreement, or partnership, between an Transfer Family server and an AS2 process. The agreement defines the file and message transfer relationship between the server and the AS2 process. To define an agreement, Transfer Family combines a server, local profile, partner profile, certificate, and other attributes.</p> <p>The partner is identified with the <code>PartnerProfileId</code>, and the AS2 process is identified with the <code>LocalProfileId</code>.</p> <note> <p>Specify <i>either</i> <code>BaseDirectory</code> or <code>CustomDirectories</code>, but not both. Specifying both causes the command to fail.</p> </note>",
     "CreateConnector": "<p>Creates the connector, which captures the parameters for a connection for the AS2 or SFTP protocol. For AS2, the connector is required for sending files to an externally hosted AS2 server. For SFTP, the connector is required when sending files to an SFTP server or receiving files from an SFTP server. For more details about connectors, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/configure-as2-connector.html\">Configure AS2 connectors</a> and <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/configure-sftp-connector.html\">Create SFTP connectors</a>.</p> <note> <p>You must specify exactly one configuration object: either for AS2 (<code>As2Config</code>) or SFTP (<code>SftpConfig</code>).</p> </note>",
     "CreateProfile": "<p>Creates the local or partner profile to use for AS2 transfers.</p>",
     "CreateServer": "<p>Instantiates an auto-scaling virtual server based on the selected file transfer protocol in Amazon Web Services. When you make updates to your file transfer protocol-enabled server or when you work with users, use the service-generated <code>ServerId</code> property that is assigned to the newly created server.</p>",
     "CreateUser": "<p>Creates a user and associates them with an existing file transfer protocol-enabled server. You can only create and associate users with servers that have the <code>IdentityProviderType</code> set to <code>SERVICE_MANAGED</code>. Using parameters for <code>CreateUser</code>, you can specify the user name, set the home directory, store the user's public key, and assign the user's Identity and Access Management (IAM) role. You can also optionally add a session policy, and assign metadata with tags that can be used to group and search for users.</p>",
+    "CreateWebApp": "<p>Creates a web app based on specified parameters, and returns the ID for the new web app.</p>",
     "CreateWorkflow": "<p> Allows you to create a workflow with specified steps and step details the workflow invokes after file transfer completes. After creating a workflow, you can associate the workflow created with any transfer servers by specifying the <code>workflow-details</code> field in <code>CreateServer</code> and <code>UpdateServer</code> operations. </p>",
     "DeleteAccess": "<p>Allows you to delete the access specified in the <code>ServerID</code> and <code>ExternalID</code> parameters.</p>",
     "DeleteAgreement": "<p>Delete the agreement that's specified in the provided <code>AgreementId</code>.</p>",
@@ -18,6 +19,8 @@
     "DeleteServer": "<p>Deletes the file transfer protocol-enabled server that you specify.</p> <p>No response returns from this operation.</p>",
     "DeleteSshPublicKey": "<p>Deletes a user's Secure Shell (SSH) public key.</p>",
     "DeleteUser": "<p>Deletes the user belonging to a file transfer protocol-enabled server you specify.</p> <p>No response returns from this operation.</p> <note> <p>When you delete a user from a server, the user's information is lost.</p> </note>",
+    "DeleteWebApp": "<p>Deletes the specified web app.</p>",
+    "DeleteWebAppCustomization": "<p>Deletes the <code>WebAppCustomization</code> object that corresponds to the web app ID specified.</p>",
     "DeleteWorkflow": "<p>Deletes the specified workflow.</p>",
     "DescribeAccess": "<p>Describes the access that is assigned to the specific file transfer protocol-enabled server, as identified by its <code>ServerId</code> property and its <code>ExternalId</code>.</p> <p>The response from this call returns the properties of the access that is associated with the <code>ServerId</code> value that was specified.</p>",
     "DescribeAgreement": "<p>Describes the agreement that's identified by the <code>AgreementId</code>.</p>",
@@ -29,8 +32,10 @@
     "DescribeSecurityPolicy": "<p>Describes the security policy that is attached to your server or SFTP connector. The response contains a description of the security policy's properties. For more information about security policies, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html\">Working with security policies for servers</a> or <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies-connectors.html\">Working with security policies for SFTP connectors</a>.</p>",
     "DescribeServer": "<p>Describes a file transfer protocol-enabled server that you specify by passing the <code>ServerId</code> parameter.</p> <p>The response contains a description of a server's properties. When you set <code>EndpointType</code> to VPC, the response will contain the <code>EndpointDetails</code>.</p>",
     "DescribeUser": "<p>Describes the user assigned to the specific file transfer protocol-enabled server, as identified by its <code>ServerId</code> property.</p> <p>The response from this call returns the properties of the user associated with the <code>ServerId</code> value that was specified.</p>",
+    "DescribeWebApp": "<p>Describes the web app that's identified by <code>WebAppId</code>.</p>",
+    "DescribeWebAppCustomization": "<p>Describes the web app customization object that's identified by <code>WebAppId</code>.</p>",
     "DescribeWorkflow": "<p>Describes the specified workflow.</p>",
-    "ImportCertificate": "<p>Imports the signing and encryption certificates that you need to create local (AS2) profiles and partner profiles.</p>",
+    "ImportCertificate": "<p>Imports the signing and encryption certificates that you need to create local (AS2) profiles and partner profiles.</p> <p>You can import both the certificate and its chain in the <code>Certificate</code> parameter.</p> <note> <p>If you use the <code>Certificate</code> parameter to upload both the certificate and its chain, don't use the <code>CertificateChain</code> parameter.</p> </note>",
     "ImportHostKey": "<p>Adds a host key to the server that's specified by the <code>ServerId</code> parameter.</p>",
     "ImportSshPublicKey": "<p>Adds a Secure Shell (SSH) public key to a Transfer Family user identified by a <code>UserName</code> value assigned to the specific file transfer protocol-enabled server, identified by <code>ServerId</code>.</p> <p>The response returns the <code>UserName</code> value, the <code>ServerId</code> value, and the name of the <code>SshPublicKeyId</code>.</p>",
     "ListAccesses": "<p>Lists the details for all the accesses you have on your server.</p>",
@@ -38,16 +43,20 @@
     "ListCertificates": "<p>Returns a list of the current certificates that have been imported into Transfer Family. If you want to limit the results to a certain number, supply a value for the <code>MaxResults</code> parameter. If you ran the command previously and received a value for the <code>NextToken</code> parameter, you can supply that value to continue listing certificates from where you left off.</p>",
     "ListConnectors": "<p>Lists the connectors for the specified Region.</p>",
     "ListExecutions": "<p>Lists all in-progress executions for the specified workflow.</p> <note> <p>If the specified workflow ID cannot be found, <code>ListExecutions</code> returns a <code>ResourceNotFound</code> exception.</p> </note>",
+    "ListFileTransferResults": "<p> Returns real-time updates and detailed information on the status of each individual file being transferred in a specific file transfer operation. You specify the file transfer by providing its <code>ConnectorId</code> and its <code>TransferId</code>.</p> <note> <p>File transfer results are available up to 7 days after an operation has been requested.</p> </note>",
     "ListHostKeys": "<p>Returns a list of host keys for the server that's specified by the <code>ServerId</code> parameter.</p>",
     "ListProfiles": "<p>Returns a list of the profiles for your system. If you want to limit the results to a certain number, supply a value for the <code>MaxResults</code> parameter. If you ran the command previously and received a value for <code>NextToken</code>, you can supply that value to continue listing profiles from where you left off.</p>",
     "ListSecurityPolicies": "<p>Lists the security policies that are attached to your servers and SFTP connectors. For more information about security policies, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html\">Working with security policies for servers</a> or <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/security-policies-connectors.html\">Working with security policies for SFTP connectors</a>.</p>",
     "ListServers": "<p>Lists the file transfer protocol-enabled servers that are associated with your Amazon Web Services account.</p>",
     "ListTagsForResource": "<p>Lists all of the tags associated with the Amazon Resource Name (ARN) that you specify. The resource can be a user, server, or role.</p>",
     "ListUsers": "<p>Lists the users for a file transfer protocol-enabled server that you specify by passing the <code>ServerId</code> parameter.</p>",
+    "ListWebApps": "<p>Lists all web apps associated with your Amazon Web Services account for your current region.</p>",
     "ListWorkflows": "<p>Lists all workflows associated with your Amazon Web Services account for your current region.</p>",
     "SendWorkflowStepState": "<p>Sends a callback for asynchronous custom steps.</p> <p> The <code>ExecutionId</code>, <code>WorkflowId</code>, and <code>Token</code> are passed to the target resource during execution of a custom step of a workflow. You must include those with their callback as well as providing a status. </p>",
     "StartDirectoryListing": "<p>Retrieves a list of the contents of a directory from a remote SFTP server. You specify the connector ID, the output path, and the remote directory path. You can also specify the optional <code>MaxItems</code> value to control the maximum number of items that are listed from the remote directory. This API returns a list of all files and directories in the remote directory (up to the maximum value), but does not return files or folders in sub-directories. That is, it only returns a list of files and directories one-level deep.</p> <p>After you receive the listing file, you can provide the files that you want to transfer to the <code>RetrieveFilePaths</code> parameter of the <code>StartFileTransfer</code> API call.</p> <p>The naming convention for the output file is <code> <i>connector-ID</i>-<i>listing-ID</i>.json</code>. The output file contains the following information:</p> <ul> <li> <p> <code>filePath</code>: the complete path of a remote file, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>modifiedTimestamp</code>: the last time the file was modified, in UTC time format. This field is optional. If the remote file attributes don't contain a timestamp, it is omitted from the file listing.</p> </li> <li> <p> <code>size</code>: the size of the file, in bytes. This field is optional. If the remote file attributes don't contain a file size, it is omitted from the file listing.</p> </li> <li> <p> <code>path</code>: the complete path of a remote directory, relative to the directory of the listing request for your SFTP connector on the remote server.</p> </li> <li> <p> <code>truncated</code>: a flag indicating whether the list output contains all of the items contained in the remote directory or not. If your <code>Truncated</code> output value is true, you can increase the value provided in the optional <code>max-items</code> input attribute to be able to list more items (up to the maximum allowed list size of 10,000 items).</p> </li> </ul>",
     "StartFileTransfer": "<p>Begins a file transfer between local Amazon Web Services storage and a remote AS2 or SFTP server.</p> <ul> <li> <p>For an AS2 connector, you specify the <code>ConnectorId</code> and one or more <code>SendFilePaths</code> to identify the files you want to transfer.</p> </li> <li> <p>For an SFTP connector, the file transfer can be either outbound or inbound. In both cases, you specify the <code>ConnectorId</code>. Depending on the direction of the transfer, you also specify the following items:</p> <ul> <li> <p>If you are transferring file from a partner's SFTP server to Amazon Web Services storage, you specify one or more <code>RetrieveFilePaths</code> to identify the files you want to transfer, and a <code>LocalDirectoryPath</code> to specify the destination folder.</p> </li> <li> <p>If you are transferring file to a partner's SFTP server from Amazon Web Services storage, you specify one or more <code>SendFilePaths</code> to identify the files you want to transfer, and a <code>RemoteDirectoryPath</code> to specify the destination folder.</p> </li> </ul> </li> </ul>",
+    "StartRemoteDelete": "<p>Deletes a file or directory on the remote SFTP server.</p>",
+    "StartRemoteMove": "<p>Moves or renames a file or directory on the remote SFTP server.</p>",
     "StartServer": "<p>Changes the state of a file transfer protocol-enabled server from <code>OFFLINE</code> to <code>ONLINE</code>. It has no impact on a server that is already <code>ONLINE</code>. An <code>ONLINE</code> server can accept and process file transfer jobs.</p> <p>The state of <code>STARTING</code> indicates that the server is in an intermediate state, either not fully able to respond, or not fully online. The values of <code>START_FAILED</code> can indicate an error condition.</p> <p>No response is returned from this call.</p>",
     "StopServer": "<p>Changes the state of a file transfer protocol-enabled server from <code>ONLINE</code> to <code>OFFLINE</code>. An <code>OFFLINE</code> server cannot accept and process file transfer jobs. Information tied to your server, such as server and user properties, are not affected by stopping your server.</p> <note> <p>Stopping the server does not reduce or impact your file transfer protocol endpoint billing; you must delete the server to stop being billed.</p> </note> <p>The state of <code>STOPPING</code> indicates that the server is in an intermediate state, either not fully able to respond, or not fully offline. The values of <code>STOP_FAILED</code> can indicate an error condition.</p> <p>No response is returned from this call.</p>",
     "TagResource": "<p>Attaches a key-value pair to a resource, as identified by its Amazon Resource Name (ARN). Resources are users, servers, roles, and other entities.</p> <p>There is no response returned from this call.</p>",
@@ -55,13 +64,15 @@
     "TestIdentityProvider": "<p>If the <code>IdentityProviderType</code> of a file transfer protocol-enabled server is <code>AWS_DIRECTORY_SERVICE</code> or <code>API_Gateway</code>, tests whether your identity provider is set up successfully. We highly recommend that you call this operation to test your authentication method as soon as you create your server. By doing so, you can troubleshoot issues with the identity provider integration to ensure that your users can successfully use the service.</p> <p> The <code>ServerId</code> and <code>UserName</code> parameters are required. The <code>ServerProtocol</code>, <code>SourceIp</code>, and <code>UserPassword</code> are all optional. </p> <p>Note the following:</p> <ul> <li> <p> You cannot use <code>TestIdentityProvider</code> if the <code>IdentityProviderType</code> of your server is <code>SERVICE_MANAGED</code>.</p> </li> <li> <p> <code>TestIdentityProvider</code> does not work with keys: it only accepts passwords.</p> </li> <li> <p> <code>TestIdentityProvider</code> can test the password operation for a custom Identity Provider that handles keys and passwords.</p> </li> <li> <p> If you provide any incorrect values for any parameters, the <code>Response</code> field is empty. </p> </li> <li> <p> If you provide a server ID for a server that uses service-managed users, you get an error: </p> <p> <code> An error occurred (InvalidRequestException) when calling the TestIdentityProvider operation: s-<i>server-ID</i> not configured for external auth </code> </p> </li> <li> <p> If you enter a Server ID for the <code>--server-id</code> parameter that does not identify an actual Transfer server, you receive the following error: </p> <p> <code>An error occurred (ResourceNotFoundException) when calling the TestIdentityProvider operation: Unknown server</code>. </p> <p>It is possible your sever is in a different region. You can specify a region by adding the following: <code>--region region-code</code>, such as <code>--region us-east-2</code> to specify a server in <b>US East (Ohio)</b>.</p> </li> </ul>",
     "UntagResource": "<p>Detaches a key-value pair from a resource, as identified by its Amazon Resource Name (ARN). Resources are users, servers, roles, and other entities.</p> <p>No response is returned from this call.</p>",
     "UpdateAccess": "<p>Allows you to update parameters for the access specified in the <code>ServerID</code> and <code>ExternalID</code> parameters.</p>",
-    "UpdateAgreement": "<p>Updates some of the parameters for an existing agreement. Provide the <code>AgreementId</code> and the <code>ServerId</code> for the agreement that you want to update, along with the new values for the parameters to update.</p>",
+    "UpdateAgreement": "<p>Updates some of the parameters for an existing agreement. Provide the <code>AgreementId</code> and the <code>ServerId</code> for the agreement that you want to update, along with the new values for the parameters to update.</p> <note> <p>Specify <i>either</i> <code>BaseDirectory</code> or <code>CustomDirectories</code>, but not both. Specifying both causes the command to fail.</p> <p>If you update an agreement from using base directory to custom directories, the base directory is no longer used. Similarly, if you change from custom directories to a base directory, the custom directories are no longer used.</p> </note>",
     "UpdateCertificate": "<p>Updates the active and inactive dates for a certificate.</p>",
     "UpdateConnector": "<p>Updates some of the parameters for an existing connector. Provide the <code>ConnectorId</code> for the connector that you want to update, along with the new values for the parameters to update.</p>",
     "UpdateHostKey": "<p>Updates the description for the host key that's specified by the <code>ServerId</code> and <code>HostKeyId</code> parameters.</p>",
     "UpdateProfile": "<p>Updates some of the parameters for an existing profile. Provide the <code>ProfileId</code> for the profile that you want to update, along with the new values for the parameters to update.</p>",
     "UpdateServer": "<p>Updates the file transfer protocol-enabled server's properties after that server has been created.</p> <p>The <code>UpdateServer</code> call returns the <code>ServerId</code> of the server you updated.</p>",
-    "UpdateUser": "<p>Assigns new properties to a user. Parameters you pass modify any or all of the following: the home directory, role, and policy for the <code>UserName</code> and <code>ServerId</code> you specify.</p> <p>The response returns the <code>ServerId</code> and the <code>UserName</code> for the updated user.</p> <p>In the console, you can select <i>Restricted</i> when you create or update a user. This ensures that the user can't access anything outside of their home directory. The programmatic way to configure this behavior is to update the user. Set their <code>HomeDirectoryType</code> to <code>LOGICAL</code>, and specify <code>HomeDirectoryMappings</code> with <code>Entry</code> as root (<code>/</code>) and <code>Target</code> as their home directory.</p> <p>For example, if the user's home directory is <code>/test/admin-user</code>, the following command updates the user so that their configuration in the console shows the <i>Restricted</i> flag as selected.</p> <p> <code> aws transfer update-user --server-id &lt;server-id&gt; --user-name admin-user --home-directory-type LOGICAL --home-directory-mappings \"[{\\\"Entry\\\":\\\"/\\\", \\\"Target\\\":\\\"/test/admin-user\\\"}]\"</code> </p>"
+    "UpdateUser": "<p>Assigns new properties to a user. Parameters you pass modify any or all of the following: the home directory, role, and policy for the <code>UserName</code> and <code>ServerId</code> you specify.</p> <p>The response returns the <code>ServerId</code> and the <code>UserName</code> for the updated user.</p> <p>In the console, you can select <i>Restricted</i> when you create or update a user. This ensures that the user can't access anything outside of their home directory. The programmatic way to configure this behavior is to update the user. Set their <code>HomeDirectoryType</code> to <code>LOGICAL</code>, and specify <code>HomeDirectoryMappings</code> with <code>Entry</code> as root (<code>/</code>) and <code>Target</code> as their home directory.</p> <p>For example, if the user's home directory is <code>/test/admin-user</code>, the following command updates the user so that their configuration in the console shows the <i>Restricted</i> flag as selected.</p> <p> <code> aws transfer update-user --server-id &lt;server-id&gt; --user-name admin-user --home-directory-type LOGICAL --home-directory-mappings \"[{\\\"Entry\\\":\\\"/\\\", \\\"Target\\\":\\\"/test/admin-user\\\"}]\"</code> </p>",
+    "UpdateWebApp": "<p>Assigns new properties to a web app. You can modify the access point, identity provider details, and the web app units.</p>",
+    "UpdateWebAppCustomization": "<p>Assigns new customization properties to a web app. You can modify the icon file, logo file, and title.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -78,7 +89,7 @@
     "AddressAllocationIds": {
       "base": null,
       "refs": {
-        "EndpointDetails$AddressAllocationIds": "<p>A list of address allocation IDs that are required to attach an Elastic IP address to your server's endpoint.</p> <p>An address allocation ID corresponds to the allocation ID of an Elastic IP address. This value can be retrieved from the <code>allocationId</code> field from the Amazon EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Address.html\">Address</a> data type. One way to retrieve this value is by calling the EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeAddresses.html\">DescribeAddresses</a> API.</p> <p>This parameter is optional. Set this parameter if you want to make your VPC endpoint public-facing. For details, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#create-internet-facing-endpoint\">Create an internet-facing endpoint for your server</a>.</p> <note> <p>This property can only be set as follows:</p> <ul> <li> <p> <code>EndpointType</code> must be set to <code>VPC</code> </p> </li> <li> <p>The Transfer Family server must be offline.</p> </li> <li> <p>You cannot set this parameter for Transfer Family servers that use the FTP protocol.</p> </li> <li> <p>The server must already have <code>SubnetIds</code> populated (<code>SubnetIds</code> and <code>AddressAllocationIds</code> cannot be updated simultaneously).</p> </li> <li> <p> <code>AddressAllocationIds</code> can't contain duplicates, and must be equal in length to <code>SubnetIds</code>. For example, if you have three subnet IDs, you must also specify three address allocation IDs.</p> </li> <li> <p>Call the <code>UpdateServer</code> API to set or change this parameter.</p> </li> </ul> </note>"
+        "EndpointDetails$AddressAllocationIds": "<p>A list of address allocation IDs that are required to attach an Elastic IP address to your server's endpoint.</p> <p>An address allocation ID corresponds to the allocation ID of an Elastic IP address. This value can be retrieved from the <code>allocationId</code> field from the Amazon EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Address.html\">Address</a> data type. One way to retrieve this value is by calling the EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeAddresses.html\">DescribeAddresses</a> API.</p> <p>This parameter is optional. Set this parameter if you want to make your VPC endpoint public-facing. For details, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#create-internet-facing-endpoint\">Create an internet-facing endpoint for your server</a>.</p> <note> <p>This property can only be set as follows:</p> <ul> <li> <p> <code>EndpointType</code> must be set to <code>VPC</code> </p> </li> <li> <p>The Transfer Family server must be offline.</p> </li> <li> <p>You cannot set this parameter for Transfer Family servers that use the FTP protocol.</p> </li> <li> <p>The server must already have <code>SubnetIds</code> populated (<code>SubnetIds</code> and <code>AddressAllocationIds</code> cannot be updated simultaneously).</p> </li> <li> <p> <code>AddressAllocationIds</code> can't contain duplicates, and must be equal in length to <code>SubnetIds</code>. For example, if you have three subnet IDs, you must also specify three address allocation IDs.</p> </li> <li> <p>Call the <code>UpdateServer</code> API to set or change this parameter.</p> </li> <li> <p>You can't set address allocation IDs for servers that have an <code>IpAddressType</code> set to <code>DUALSTACK</code> You can only set this property if <code>IpAddressType</code> is set to <code>IPV4</code>.</p> </li> </ul> </note>"
       }
     },
     "AgreementId": {
@@ -112,6 +123,8 @@
         "DescribedProfile$Arn": "<p>The unique Amazon Resource Name (ARN) for the profile.</p>",
         "DescribedServer$Arn": "<p>Specifies the unique Amazon Resource Name (ARN) of the server.</p>",
         "DescribedUser$Arn": "<p>Specifies the unique Amazon Resource Name (ARN) for the user that was requested to be described.</p>",
+        "DescribedWebApp$Arn": "<p>The Amazon Resource Name (ARN) of the web app.</p>",
+        "DescribedWebAppCustomization$Arn": "<p>Returns the Amazon Resource Name (ARN) for the web app.</p>",
         "DescribedWorkflow$Arn": "<p>Specifies the unique Amazon Resource Name (ARN) for the workflow.</p>",
         "ListTagsForResourceRequest$Arn": "<p>Requests the tags associated with a particular Amazon Resource Name (ARN). An ARN is an identifier for a specific Amazon Web Services resource, such as a server, user, or role.</p>",
         "ListTagsForResourceResponse$Arn": "<p>The ARN you specified to list the tags of.</p>",
@@ -122,6 +135,7 @@
         "ListedProfile$Arn": "<p>The Amazon Resource Name (ARN) of the specified profile.</p>",
         "ListedServer$Arn": "<p>Specifies the unique Amazon Resource Name (ARN) for a server to be listed.</p>",
         "ListedUser$Arn": "<p>Provides the unique Amazon Resource Name (ARN) for the user that you want to learn about.</p>",
+        "ListedWebApp$Arn": "<p>The Amazon Resource Name (ARN) for the web app.</p>",
         "ListedWorkflow$Arn": "<p>Specifies the unique Amazon Resource Name (ARN) for the workflow.</p>",
         "StructuredLogDestinations$member": null,
         "TagResourceRequest$Arn": "<p>An Amazon Resource Name (ARN) for a specific Amazon Web Services resource, such as a server, user, or role.</p>",
@@ -171,16 +185,16 @@
     "CertDate": {
       "base": null,
       "refs": {
-        "DescribedCertificate$ActiveDate": "<p>An optional date that specifies when the certificate becomes active.</p>",
-        "DescribedCertificate$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive.</p>",
+        "DescribedCertificate$ActiveDate": "<p>An optional date that specifies when the certificate becomes active. If you do not specify a value, <code>ActiveDate</code> takes the same value as <code>NotBeforeDate</code>, which is specified by the CA. </p>",
+        "DescribedCertificate$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive. If you do not specify a value, <code>InactiveDate</code> takes the same value as <code>NotAfterDate</code>, which is specified by the CA.</p>",
         "DescribedCertificate$NotBeforeDate": "<p>The earliest date that the certificate is valid.</p>",
         "DescribedCertificate$NotAfterDate": "<p>The final date that the certificate is valid.</p>",
-        "ImportCertificateRequest$ActiveDate": "<p>An optional date that specifies when the certificate becomes active.</p>",
-        "ImportCertificateRequest$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive.</p>",
-        "ListedCertificate$ActiveDate": "<p>An optional date that specifies when the certificate becomes active.</p>",
-        "ListedCertificate$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive.</p>",
-        "UpdateCertificateRequest$ActiveDate": "<p>An optional date that specifies when the certificate becomes active.</p>",
-        "UpdateCertificateRequest$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive.</p>"
+        "ImportCertificateRequest$ActiveDate": "<p>An optional date that specifies when the certificate becomes active. If you do not specify a value, <code>ActiveDate</code> takes the same value as <code>NotBeforeDate</code>, which is specified by the CA. </p>",
+        "ImportCertificateRequest$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive. If you do not specify a value, <code>InactiveDate</code> takes the same value as <code>NotAfterDate</code>, which is specified by the CA.</p>",
+        "ListedCertificate$ActiveDate": "<p>An optional date that specifies when the certificate becomes active. If you do not specify a value, <code>ActiveDate</code> takes the same value as <code>NotBeforeDate</code>, which is specified by the CA. </p>",
+        "ListedCertificate$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive. If you do not specify a value, <code>InactiveDate</code> takes the same value as <code>NotAfterDate</code>, which is specified by the CA.</p>",
+        "UpdateCertificateRequest$ActiveDate": "<p>An optional date that specifies when the certificate becomes active. If you do not specify a value, <code>ActiveDate</code> takes the same value as <code>NotBeforeDate</code>, which is specified by the CA. </p>",
+        "UpdateCertificateRequest$InactiveDate": "<p>An optional date that specifies when the certificate becomes inactive. If you do not specify a value, <code>InactiveDate</code> takes the same value as <code>NotAfterDate</code>, which is specified by the CA.</p>"
       }
     },
     "CertSerial": {
@@ -201,7 +215,7 @@
       "base": null,
       "refs": {
         "DescribedCertificate$Certificate": "<p>The file name for the certificate.</p>",
-        "ImportCertificateRequest$Certificate": "<ul> <li> <p>For the CLI, provide a file path for a certificate in URI format. For example, <code>--certificate file://encryption-cert.pem</code>. Alternatively, you can provide the raw content.</p> </li> <li> <p>For the SDK, specify the raw content of a certificate file. For example, <code>--certificate \"`cat encryption-cert.pem`\"</code>.</p> </li> </ul>"
+        "ImportCertificateRequest$Certificate": "<ul> <li> <p>For the CLI, provide a file path for a certificate in URI format. For example, <code>--certificate file://encryption-cert.pem</code>. Alternatively, you can provide the raw content.</p> </li> <li> <p>For the SDK, specify the raw content of a certificate file. For example, <code>--certificate \"`cat encryption-cert.pem`\"</code>.</p> </li> </ul> <note> <p>You can provide both the certificate and its chain in this parameter, without needing to use the <code>CertificateChain</code> parameter. If you use this parameter for both the certificate and its chain, do not use the <code>CertificateChain</code> parameter.</p> </note>"
       }
     },
     "CertificateChainType": {
@@ -235,7 +249,7 @@
     "CertificateStatusType": {
       "base": null,
       "refs": {
-        "DescribedCertificate$Status": "<p>The certificate can be either <code>ACTIVE</code>, <code>PENDING_ROTATION</code>, or <code>INACTIVE</code>. <code>PENDING_ROTATION</code> means that this certificate will replace the current certificate when it expires.</p>",
+        "DescribedCertificate$Status": "<p>A certificate's status can be either <code>ACTIVE</code> or <code>INACTIVE</code>.</p> <p>You can set <code>ActiveDate</code> and <code>InactiveDate</code> in the <code>UpdateCertificate</code> call. If you set values for these parameters, those values are used to determine whether the certificate has a status of <code>ACTIVE</code> or <code>INACTIVE</code>.</p> <p>If you don't set values for <code>ActiveDate</code> and <code>InactiveDate</code>, we use the <code>NotBefore</code> and <code>NotAfter</code> date as specified on the X509 certificate to determine when a certificate is active and when it is inactive.</p>",
         "ListedCertificate$Status": "<p>The certificate can be either <code>ACTIVE</code>, <code>PENDING_ROTATION</code>, or <code>INACTIVE</code>. <code>PENDING_ROTATION</code> means that this certificate will replace the current certificate when it expires.</p>"
       }
     },
@@ -265,6 +279,18 @@
       "refs": {
       }
     },
+    "ConnectorFileTransferResult": {
+      "base": "<p>A structure that contains the details for files transferred using an SFTP connector, during a single transfer.</p>",
+      "refs": {
+        "ConnectorFileTransferResults$member": null
+      }
+    },
+    "ConnectorFileTransferResults": {
+      "base": null,
+      "refs": {
+        "ListFileTransferResultsResponse$FileTransferResults": "<p>Returns the details for the files transferred in the transfer identified by the <code>TransferId</code> and <code>ConnectorId</code> specified.</p> <ul> <li> <p> <code>FilePath</code>: the filename and path to where the file was sent to or retrieved from.</p> </li> <li> <p> <code>StatusCode</code>: current status for the transfer. The status returned is one of the following values:<code>QUEUED</code>, <code>IN_PROGRESS</code>, <code>COMPLETED</code>, or <code>FAILED</code> </p> </li> <li> <p> <code>FailureCode</code>: for transfers that fail, this parameter contains a code indicating the reason. For example, <code>RETRIEVE_FILE_NOT_FOUND</code> </p> </li> <li> <p> <code>FailureMessage</code>: for transfers that fail, this parameter describes the reason for the failure.</p> </li> </ul>"
+      }
+    },
     "ConnectorId": {
       "base": null,
       "refs": {
@@ -272,9 +298,12 @@
         "DeleteConnectorRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "DescribeConnectorRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "DescribedConnector$ConnectorId": "<p>The unique identifier for the connector.</p>",
+        "ListFileTransferResultsRequest$ConnectorId": "<p>A unique identifier for a connector. This value should match the value supplied to the corresponding <code>StartFileTransfer</code> call.</p>",
         "ListedConnector$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "StartDirectoryListingRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "StartFileTransferRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
+        "StartRemoteDeleteRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
+        "StartRemoteMoveRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "TestConnectionRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
         "TestConnectionResponse$ConnectorId": "<p>Returns the identifier of the connector object that you are testing.</p>",
         "UpdateConnectorRequest$ConnectorId": "<p>The unique identifier for the connector.</p>",
@@ -355,6 +384,16 @@
       "refs": {
       }
     },
+    "CreateWebAppRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateWebAppResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateWorkflowRequest": {
       "base": null,
       "refs": {
@@ -363,6 +402,14 @@
     "CreateWorkflowResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "CustomDirectoriesType": {
+      "base": "<p>Contains Amazon S3 locations for storing specific types of AS2 message files.</p>",
+      "refs": {
+        "CreateAgreementRequest$CustomDirectories": "<p>A <code>CustomDirectoriesType</code> structure. This structure specifies custom directories for storing various AS2 message files. You can specify directories for the following types of files.</p> <ul> <li> <p>Failed files</p> </li> <li> <p>MDN files</p> </li> <li> <p>Payload files</p> </li> <li> <p>Status files</p> </li> <li> <p>Temporary files</p> </li> </ul>",
+        "DescribedAgreement$CustomDirectories": "<p>A <code>CustomDirectoriesType</code> structure. This structure specifies custom directories for storing various AS2 message files. You can specify directories for the following types of files.</p> <ul> <li> <p>Failed files</p> </li> <li> <p>MDN files</p> </li> <li> <p>Payload files</p> </li> <li> <p>Status files</p> </li> <li> <p>Temporary files</p> </li> </ul>",
+        "UpdateAgreementRequest$CustomDirectories": "<p>A <code>CustomDirectoriesType</code> structure. This structure specifies custom directories for storing various AS2 message files. You can specify directories for the following types of files.</p> <ul> <li> <p>Failed files</p> </li> <li> <p>MDN files</p> </li> <li> <p>Payload files</p> </li> <li> <p>Status files</p> </li> <li> <p>Temporary files</p> </li> </ul>"
       }
     },
     "CustomStepDetails": {
@@ -428,6 +475,12 @@
       "refs": {
       }
     },
+    "DeleteId": {
+      "base": null,
+      "refs": {
+        "StartRemoteDeleteResponse$DeleteId": "<p>Returns a unique identifier for the delete operation.</p>"
+      }
+    },
     "DeleteProfileRequest": {
       "base": null,
       "refs": {
@@ -450,6 +503,16 @@
       }
     },
     "DeleteUserRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteWebAppCustomizationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteWebAppRequest": {
       "base": null,
       "refs": {
       }
@@ -559,6 +622,26 @@
       "refs": {
       }
     },
+    "DescribeWebAppCustomizationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeWebAppCustomizationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeWebAppRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeWebAppResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeWorkflowRequest": {
       "base": null,
       "refs": {
@@ -605,6 +688,12 @@
         "DescribeHostKeyResponse$HostKey": "<p>Returns the details for the specified host key.</p>"
       }
     },
+    "DescribedIdentityCenterConfig": {
+      "base": "<p>A structure that contains the details of the IAM Identity Center used for your web app. Returned during a call to <code>DescribeWebApp</code>.</p>",
+      "refs": {
+        "DescribedWebAppIdentityProviderDetails$IdentityCenterConfig": "<p>Returns a structure for your identity provider details. This structure contains the instance ARN and role being used for the web app.</p>"
+      }
+    },
     "DescribedProfile": {
       "base": "<p>The details for a local or partner AS2 profile. </p>",
       "refs": {
@@ -627,6 +716,24 @@
       "base": "<p>Describes the properties of a user that was specified.</p>",
       "refs": {
         "DescribeUserResponse$User": "<p>An array containing the properties of the Transfer Family user for the <code>ServerID</code> value that you specified.</p>"
+      }
+    },
+    "DescribedWebApp": {
+      "base": "<p>A structure that describes the parameters for the web app, as identified by the <code>WebAppId</code>.</p>",
+      "refs": {
+        "DescribeWebAppResponse$WebApp": "<p>Returns a structure that contains the details of the web app.</p>"
+      }
+    },
+    "DescribedWebAppCustomization": {
+      "base": "<p>A structure that contains the customization fields for the web app. You can provide a title, logo, and icon to customize the appearance of your web app.</p>",
+      "refs": {
+        "DescribeWebAppCustomizationResponse$WebAppCustomization": "<p>Returns a structure that contains the details of the web app customizations.</p>"
+      }
+    },
+    "DescribedWebAppIdentityProviderDetails": {
+      "base": "<p>Returns a structure that contains the identity provider details for your web app.</p>",
+      "refs": {
+        "DescribedWebApp$DescribedIdentityProviderDetails": "<p>A structure that contains the details for the identity provider used by the web app.</p>"
       }
     },
     "DescribedWorkflow": {
@@ -700,7 +807,7 @@
       }
     },
     "EndpointDetails": {
-      "base": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your file transfer protocol-enabled server. With a VPC endpoint, you can restrict access to your server and resources only within your VPC. To control incoming internet traffic, invoke the <code>UpdateServer</code> API and attach an Elastic IP address to your server's endpoint.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> </note>",
+      "base": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your file transfer protocol-enabled server. With a VPC endpoint, you can restrict access to your server and resources only within your VPC. To control incoming internet traffic, invoke the <code>UpdateServer</code> API and attach an Elastic IP address to your server's endpoint.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>",
       "refs": {
         "CreateServerRequest$EndpointDetails": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your server. When you host your endpoint within your VPC, you can make your endpoint accessible only to resources within your VPC, or you can attach Elastic IP addresses and make your endpoint accessible to clients over the internet. Your VPC's default security groups are automatically assigned to your endpoint.</p>",
         "DescribedServer$EndpointDetails": "<p>The virtual private cloud (VPC) endpoint settings that are configured for your server. When you host your endpoint within your VPC, you can make your endpoint accessible only to resources within your VPC, or you can attach Elastic IP addresses and make your endpoint accessible to clients over the internet. Your VPC's default security groups are automatically assigned to your endpoint.</p>",
@@ -713,7 +820,15 @@
         "CreateServerRequest$EndpointType": "<p>The type of endpoint that you want your server to use. You can choose to make your server's endpoint publicly accessible (PUBLIC) or host it inside your VPC. With an endpoint that is hosted in a VPC, you can restrict access to your server and resources only within your VPC or choose to make it internet facing by attaching Elastic IP addresses directly to it.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>",
         "DescribedServer$EndpointType": "<p>Defines the type of endpoint that your server is connected to. If your server is connected to a VPC endpoint, your server isn't accessible over the public internet.</p>",
         "ListedServer$EndpointType": "<p>Specifies the type of VPC endpoint that your server is connected to. If your server is connected to a VPC endpoint, your server isn't accessible over the public internet.</p>",
-        "UpdateServerRequest$EndpointType": "<p>The type of endpoint that you want your server to use. You can choose to make your server's endpoint publicly accessible (PUBLIC) or host it inside your VPC. With an endpoint that is hosted in a VPC, you can restrict access to your server and resources only within your VPC or choose to make it internet facing by attaching Elastic IP addresses directly to it.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Servicesaccount on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>"
+        "UpdateServerRequest$EndpointType": "<p>The type of endpoint that you want your server to use. You can choose to make your server's endpoint publicly accessible (PUBLIC) or host it inside your VPC. With an endpoint that is hosted in a VPC, you can restrict access to your server and resources only within your VPC or choose to make it internet facing by attaching Elastic IP addresses directly to it.</p> <note> <p> After May 19, 2021, you won't be able to create a server using <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account if your account hasn't already done so before May 19, 2021. If you have already created servers with <code>EndpointType=VPC_ENDPOINT</code> in your Amazon Web Services account on or before May 19, 2021, you will not be affected. After this date, use <code>EndpointType</code>=<code>VPC</code>.</p> <p>For more information, see https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#deprecate-vpc-endpoint.</p> <p>It is recommended that you use <code>VPC</code> as the <code>EndpointType</code>. With this endpoint type, you have the option to directly associate up to three Elastic IPv4 addresses (BYO IP included) with your server's endpoint and use VPC security groups to restrict traffic by the client's public IP address. This is not possible with <code>EndpointType</code> set to <code>VPC_ENDPOINT</code>.</p> </note>"
+      }
+    },
+    "EnforceMessageSigningType": {
+      "base": null,
+      "refs": {
+        "CreateAgreementRequest$EnforceMessageSigning": "<p> Determines whether or not unsigned messages from your trading partners will be accepted. </p> <ul> <li> <p> <code>ENABLED</code>: Transfer Family rejects unsigned messages from your trading partner.</p> </li> <li> <p> <code>DISABLED</code> (default value): Transfer Family accepts unsigned messages from your trading partner.</p> </li> </ul>",
+        "DescribedAgreement$EnforceMessageSigning": "<p> Determines whether or not unsigned messages from your trading partners will be accepted. </p> <ul> <li> <p> <code>ENABLED</code>: Transfer Family rejects unsigned messages from your trading partner.</p> </li> <li> <p> <code>DISABLED</code> (default value): Transfer Family accepts unsigned messages from your trading partner.</p> </li> </ul>",
+        "UpdateAgreementRequest$EnforceMessageSigning": "<p> Determines whether or not unsigned messages from your trading partners will be accepted. </p> <ul> <li> <p> <code>ENABLED</code>: Transfer Family rejects unsigned messages from your trading partner.</p> </li> <li> <p> <code>DISABLED</code> (default value): Transfer Family accepts unsigned messages from your trading partner.</p> </li> </ul>"
       }
     },
     "ExecutionError": {
@@ -782,6 +897,12 @@
         "UpdateAccessResponse$ExternalId": "<p>The external identifier of the group whose users have access to your Amazon S3 or Amazon EFS resources over the enabled protocols using Amazon Web ServicesTransfer Family.</p>"
       }
     },
+    "FailureCode": {
+      "base": null,
+      "refs": {
+        "ConnectorFileTransferResult$FailureCode": "<p>For transfers that fail, this parameter contains a code indicating the reason. For example, <code>RETRIEVE_FILE_NOT_FOUND</code> </p>"
+      }
+    },
     "FileLocation": {
       "base": "<p>Specifies the Amazon S3 or EFS file details to be used in the step.</p>",
       "refs": {
@@ -792,17 +913,21 @@
     "FilePath": {
       "base": null,
       "refs": {
+        "ConnectorFileTransferResult$FilePath": "<p>The filename and path to where the file was sent to or retrieved from.</p>",
         "FilePaths$member": null,
         "StartDirectoryListingRequest$RemoteDirectoryPath": "<p>Specifies the directory on the remote SFTP server for which you want to list its contents.</p>",
         "StartDirectoryListingRequest$OutputDirectoryPath": "<p>Specifies the path (bucket and prefix) in Amazon S3 storage to store the results of the directory listing.</p>",
         "StartFileTransferRequest$LocalDirectoryPath": "<p>For an inbound transfer, the <code>LocaDirectoryPath</code> specifies the destination for one or more files that are transferred from the partner's SFTP server.</p>",
-        "StartFileTransferRequest$RemoteDirectoryPath": "<p>For an outbound transfer, the <code>RemoteDirectoryPath</code> specifies the destination for one or more files that are transferred to the partner's SFTP server. If you don't specify a <code>RemoteDirectoryPath</code>, the destination for transferred files is the SFTP user's home directory.</p>"
+        "StartFileTransferRequest$RemoteDirectoryPath": "<p>For an outbound transfer, the <code>RemoteDirectoryPath</code> specifies the destination for one or more files that are transferred to the partner's SFTP server. If you don't specify a <code>RemoteDirectoryPath</code>, the destination for transferred files is the SFTP user's home directory.</p>",
+        "StartRemoteDeleteRequest$DeletePath": "<p>The absolute path of the file or directory to delete. You can only specify one path per call to this operation.</p>",
+        "StartRemoteMoveRequest$SourcePath": "<p>The absolute path of the file or directory to move or rename. You can only specify one path per call to this operation.</p>",
+        "StartRemoteMoveRequest$TargetPath": "<p>The absolute path for the target of the move/rename operation.</p>"
       }
     },
     "FilePaths": {
       "base": null,
       "refs": {
-        "StartFileTransferRequest$SendFilePaths": "<p>One or more source paths for the Amazon S3 storage. Each string represents a source file path for one outbound file transfer. For example, <code> <i>DOC-EXAMPLE-BUCKET</i>/<i>myfile.txt</i> </code>.</p> <note> <p>Replace <code> <i>DOC-EXAMPLE-BUCKET</i> </code> with one of your actual buckets.</p> </note>",
+        "StartFileTransferRequest$SendFilePaths": "<p>One or more source paths for the Amazon S3 storage. Each string represents a source file path for one outbound file transfer. For example, <code> <i>amzn-s3-demo-bucket</i>/<i>myfile.txt</i> </code>.</p> <note> <p>Replace <code> <i>amzn-s3-demo-bucket</i> </code> with one of your actual buckets.</p> </note>",
         "StartFileTransferRequest$RetrieveFilePaths": "<p>One or more source paths for the partner's SFTP server. Each string represents a source file path for one inbound file transfer.</p>"
       }
     },
@@ -821,17 +946,22 @@
     "HomeDirectory": {
       "base": null,
       "refs": {
-        "CreateAccessRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "CreateAgreementRequest$BaseDirectory": "<p>The landing directory (folder) for files transferred by using the AS2 protocol.</p> <p>A <code>BaseDirectory</code> example is <code>/DOC-EXAMPLE-BUCKET/home/mydirectory</code>.</p>",
-        "CreateUserRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "DescribedAccess$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
+        "CreateAccessRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>",
+        "CreateAgreementRequest$BaseDirectory": "<p>The landing directory (folder) for files transferred by using the AS2 protocol.</p> <p>A <code>BaseDirectory</code> example is <code>/<i>amzn-s3-demo-bucket</i>/home/mydirectory</code>.</p>",
+        "CreateUserRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>",
+        "CustomDirectoriesType$FailedFilesDirectory": "<p>Specifies a location to store failed AS2 message files.</p>",
+        "CustomDirectoriesType$MdnFilesDirectory": "<p>Specifies a location to store MDN files.</p>",
+        "CustomDirectoriesType$PayloadFilesDirectory": "<p>Specifies a location to store the payload for AS2 message files.</p>",
+        "CustomDirectoriesType$StatusFilesDirectory": "<p>Specifies a location to store AS2 status messages.</p>",
+        "CustomDirectoriesType$TemporaryFilesDirectory": "<p>Specifies a location to store temporary AS2 message files.</p>",
+        "DescribedAccess$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>",
         "DescribedAgreement$BaseDirectory": "<p>The landing directory (folder) for files that are transferred by using the AS2 protocol.</p>",
-        "DescribedUser$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "ListedAccess$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "ListedUser$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "UpdateAccessRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>",
-        "UpdateAgreementRequest$BaseDirectory": "<p>To change the landing directory (folder) for files that are transferred, provide the bucket folder that you want to use; for example, <code>/<i>DOC-EXAMPLE-BUCKET</i>/<i>home</i>/<i>mydirectory</i> </code>.</p>",
-        "UpdateUserRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>The <code>HomeDirectory</code> parameter is only used if <code>HomeDirectoryType</code> is set to <code>PATH</code>.</p> </note>"
+        "DescribedUser$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>",
+        "ListedAccess$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>",
+        "ListedUser$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>",
+        "UpdateAccessRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>",
+        "UpdateAgreementRequest$BaseDirectory": "<p>To change the landing directory (folder) for files that are transferred, provide the bucket folder that you want to use; for example, <code>/<i>amzn-s3-demo-bucket</i>/<i>home</i>/<i>mydirectory</i> </code>.</p>",
+        "UpdateUserRequest$HomeDirectory": "<p>The landing directory (folder) for a user when they log in to the server using the client.</p> <p>A <code>HomeDirectory</code> example is <code>/bucket_name/home/mydirectory</code>.</p> <note> <p>You can use the <code>HomeDirectory</code> parameter for <code>HomeDirectoryType</code> when it is set to either <code>PATH</code> or <code>LOGICAL</code>.</p> </note>"
       }
     },
     "HomeDirectoryMapEntry": {
@@ -908,10 +1038,29 @@
         "ListedHostKey$Type": "<p>The encryption algorithm that is used for the host key. The <code>Type</code> parameter is specified by using one of the following values:</p> <ul> <li> <p> <code>ssh-rsa</code> </p> </li> <li> <p> <code>ssh-ed25519</code> </p> </li> <li> <p> <code>ecdsa-sha2-nistp256</code> </p> </li> <li> <p> <code>ecdsa-sha2-nistp384</code> </p> </li> <li> <p> <code>ecdsa-sha2-nistp521</code> </p> </li> </ul>"
       }
     },
+    "IdentityCenterApplicationArn": {
+      "base": null,
+      "refs": {
+        "DescribedIdentityCenterConfig$ApplicationArn": "<p>The Amazon Resource Name (ARN) for the IAM Identity Center application: this value is set automatically when you create your web app.</p>"
+      }
+    },
+    "IdentityCenterConfig": {
+      "base": "<p>A structure that describes the values to use for the IAM Identity Center settings when you create or update a web app.</p>",
+      "refs": {
+        "WebAppIdentityProviderDetails$IdentityCenterConfig": "<p>A structure that describes the values to use for the IAM Identity Center settings when you create a web app.</p>"
+      }
+    },
+    "IdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "DescribedIdentityCenterConfig$InstanceArn": "<p>The Amazon Resource Name (ARN) for the IAM Identity Center used for the web app.</p>",
+        "IdentityCenterConfig$InstanceArn": "<p>The Amazon Resource Name (ARN) for the IAM Identity Center used for the web app.</p>"
+      }
+    },
     "IdentityProviderDetails": {
       "base": "<p>Returns information related to the type of user authentication that is in use for a file transfer protocol-enabled server's users. A server can have only one method of authentication.</p>",
       "refs": {
-        "CreateServerRequest$IdentityProviderDetails": "<p>Required when <code>IdentityProviderType</code> is set to <code>AWS_DIRECTORY_SERVICE</code>, <code>Amazon Web Services_LAMBDA</code> or <code>API_GATEWAY</code>. Accepts an array containing all of the information required to use a directory in <code>AWS_DIRECTORY_SERVICE</code> or invoke a customer-supplied authentication API, including the API Gateway URL. Not required when <code>IdentityProviderType</code> is set to <code>SERVICE_MANAGED</code>.</p>",
+        "CreateServerRequest$IdentityProviderDetails": "<p>Required when <code>IdentityProviderType</code> is set to <code>AWS_DIRECTORY_SERVICE</code>, <code>Amazon Web Services_LAMBDA</code> or <code>API_GATEWAY</code>. Accepts an array containing all of the information required to use a directory in <code>AWS_DIRECTORY_SERVICE</code> or invoke a customer-supplied authentication API, including the API Gateway URL. Cannot be specified when <code>IdentityProviderType</code> is set to <code>SERVICE_MANAGED</code>.</p>",
         "DescribedServer$IdentityProviderDetails": "<p>Specifies information to call a customer-supplied authentication API. This field is not populated when the <code>IdentityProviderType</code> of a server is <code>AWS_DIRECTORY_SERVICE</code> or <code>SERVICE_MANAGED</code>.</p>",
         "UpdateServerRequest$IdentityProviderDetails": "<p>An array containing all of the information required to call a customer's authentication API method.</p>"
       }
@@ -976,6 +1125,14 @@
       "refs": {
       }
     },
+    "IpAddressType": {
+      "base": null,
+      "refs": {
+        "CreateServerRequest$IpAddressType": "<p>Specifies whether to use IPv4 only, or to use dual-stack (IPv4 and IPv6) for your Transfer Family endpoint. The default value is <code>IPV4</code>.</p> <important> <p>The <code>IpAddressType</code> parameter has the following limitations:</p> <ul> <li> <p>It cannot be changed while the server is online. You must stop the server before modifying this parameter.</p> </li> <li> <p>It cannot be updated to <code>DUALSTACK</code> if the server has <code>AddressAllocationIds</code> specified.</p> </li> </ul> </important> <note> <p>When using <code>DUALSTACK</code> as the <code>IpAddressType</code>, you cannot set the <code>AddressAllocationIds</code> parameter for the <a href=\"https://docs.aws.amazon.com/transfer/latest/APIReference/API_EndpointDetails.html\">EndpointDetails</a> for the server.</p> </note>",
+        "DescribedServer$IpAddressType": "<p>Specifies whether to use IPv4 only, or to use dual-stack (IPv4 and IPv6) for your Transfer Family endpoint. The default value is <code>IPV4</code>.</p> <important> <p>The <code>IpAddressType</code> parameter has the following limitations:</p> <ul> <li> <p>It cannot be changed while the server is online. You must stop the server before modifying this parameter.</p> </li> <li> <p>It cannot be updated to <code>DUALSTACK</code> if the server has <code>AddressAllocationIds</code> specified.</p> </li> </ul> </important> <note> <p>When using <code>DUALSTACK</code> as the <code>IpAddressType</code>, you cannot set the <code>AddressAllocationIds</code> parameter for the <a href=\"https://docs.aws.amazon.com/transfer/latest/APIReference/API_EndpointDetails.html\">EndpointDetails</a> for the server.</p> </note>",
+        "UpdateServerRequest$IpAddressType": "<p>Specifies whether to use IPv4 only, or to use dual-stack (IPv4 and IPv6) for your Transfer Family endpoint. The default value is <code>IPV4</code>.</p> <important> <p>The <code>IpAddressType</code> parameter has the following limitations:</p> <ul> <li> <p>It cannot be changed while the server is online. You must stop the server before modifying this parameter.</p> </li> <li> <p>It cannot be updated to <code>DUALSTACK</code> if the server has <code>AddressAllocationIds</code> specified.</p> </li> </ul> </important> <note> <p>When using <code>DUALSTACK</code> as the <code>IpAddressType</code>, you cannot set the <code>AddressAllocationIds</code> parameter for the <a href=\"https://docs.aws.amazon.com/transfer/latest/APIReference/API_EndpointDetails.html\">EndpointDetails</a> for the server.</p> </note>"
+      }
+    },
     "ListAccessesRequest": {
       "base": null,
       "refs": {
@@ -1022,6 +1179,16 @@
       }
     },
     "ListExecutionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFileTransferResultsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListFileTransferResultsResponse": {
       "base": null,
       "refs": {
       }
@@ -1082,6 +1249,16 @@
       }
     },
     "ListUsersResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWebAppsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListWebAppsResponse": {
       "base": null,
       "refs": {
       }
@@ -1204,6 +1381,18 @@
         "ListUsersResponse$Users": "<p>Returns the Transfer Family users and their properties for the <code>ServerId</code> value that you specify.</p>"
       }
     },
+    "ListedWebApp": {
+      "base": "<p> a structure that contains details for the web app.</p>",
+      "refs": {
+        "ListedWebApps$member": null
+      }
+    },
+    "ListedWebApps": {
+      "base": null,
+      "refs": {
+        "ListWebAppsResponse$WebApps": "<p>Returns, for each listed web app, a structure that contains details for the web app.</p>"
+      }
+    },
     "ListedWorkflow": {
       "base": "<p>Contains the identifier, text description, and Amazon Resource Name (ARN) for the workflow.</p>",
       "refs": {
@@ -1252,6 +1441,12 @@
         "HomeDirectoryMapEntry$Type": "<p>Specifies the type of mapping. Set the type to <code>FILE</code> if you want the mapping to point to a file, or <code>DIRECTORY</code> for the directory to point to a directory.</p> <note> <p>By default, home directory mappings have a <code>Type</code> of <code>DIRECTORY</code> when you create a Transfer Family server. You would need to explicitly set <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p> </note>"
       }
     },
+    "MaxConcurrentConnections": {
+      "base": "<p>The number of concurrent connections that the connector will create to the remote server.</p>",
+      "refs": {
+        "SftpConnectorConfig$MaxConcurrentConnections": "<p>Specify the number of concurrent connections that your connector creates to the remote server. The default value is <code>5</code> (this is also the maximum value allowed).</p> <p>This parameter specifies the number of active connections that your connector can establish with the remote server at the same time. Increasing this value can enhance connector performance when transferring large file batches by enabling parallel operations.</p>"
+      }
+    },
     "MaxItems": {
       "base": null,
       "refs": {
@@ -1261,24 +1456,26 @@
     "MaxResults": {
       "base": null,
       "refs": {
-        "ListAccessesRequest$MaxResults": "<p>Specifies the maximum number of access SIDs to return.</p>",
-        "ListAgreementsRequest$MaxResults": "<p>The maximum number of agreements to return.</p>",
-        "ListCertificatesRequest$MaxResults": "<p>The maximum number of certificates to return.</p>",
-        "ListConnectorsRequest$MaxResults": "<p>The maximum number of connectors to return.</p>",
-        "ListExecutionsRequest$MaxResults": "<p>Specifies the maximum number of executions to return.</p>",
-        "ListHostKeysRequest$MaxResults": "<p>The maximum number of host keys to return.</p>",
-        "ListProfilesRequest$MaxResults": "<p>The maximum number of profiles to return.</p>",
+        "ListAccessesRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListAgreementsRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListCertificatesRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListConnectorsRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListExecutionsRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListFileTransferResultsRequest$MaxResults": "<p>The maximum number of files to return in a single page. Note that currently you can specify a maximum of 10 file paths in a single <a href=\"https://docs.aws.amazon.com/transfer/latest/APIReference/API_StartFileTransfer.html\">StartFileTransfer</a> operation. Thus, the maximum number of file transfer results that can be returned in a single page is 10. </p>",
+        "ListHostKeysRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListProfilesRequest$MaxResults": "<p>The maximum number of items to return.</p>",
         "ListSecurityPoliciesRequest$MaxResults": "<p>Specifies the number of security policies to return as a response to the <code>ListSecurityPolicies</code> query.</p>",
         "ListServersRequest$MaxResults": "<p>Specifies the number of servers to return as a response to the <code>ListServers</code> query.</p>",
         "ListTagsForResourceRequest$MaxResults": "<p>Specifies the number of tags to return as a response to the <code>ListTagsForResource</code> request.</p>",
         "ListUsersRequest$MaxResults": "<p>Specifies the number of users to return as a response to the <code>ListUsers</code> request.</p>",
-        "ListWorkflowsRequest$MaxResults": "<p>Specifies the maximum number of workflows to return.</p>"
+        "ListWebAppsRequest$MaxResults": "<p>The maximum number of items to return.</p>",
+        "ListWorkflowsRequest$MaxResults": "<p>The maximum number of items to return.</p>"
       }
     },
     "MdnResponse": {
       "base": null,
       "refs": {
-        "As2ConnectorConfig$MdnResponse": "<p>Used for outbound requests (from an Transfer Family server to a partner AS2 server) to determine whether the partner response for transfers is synchronous or asynchronous. Specify either of the following values:</p> <ul> <li> <p> <code>SYNC</code>: The system expects a synchronous MDN response, confirming that the file was transferred successfully (or not).</p> </li> <li> <p> <code>NONE</code>: Specifies that no MDN response is required.</p> </li> </ul>"
+        "As2ConnectorConfig$MdnResponse": "<p>Used for outbound requests (from an Transfer Family connector to a partner AS2 server) to determine whether the partner response for transfers is synchronous or asynchronous. Specify either of the following values:</p> <ul> <li> <p> <code>SYNC</code>: The system expects a synchronous MDN response, confirming that the file was transferred successfully (or not).</p> </li> <li> <p> <code>NONE</code>: Specifies that no MDN response is required.</p> </li> </ul>"
       }
     },
     "MdnSigningAlg": {
@@ -1291,6 +1488,7 @@
       "base": null,
       "refs": {
         "ConflictException$Message": null,
+        "ConnectorFileTransferResult$FailureMessage": "<p>For transfers that fail, this parameter describes the reason for the failure.</p>",
         "InternalServiceError$Message": null,
         "InvalidNextTokenException$Message": null,
         "InvalidRequestException$Message": null,
@@ -1306,6 +1504,12 @@
         "As2ConnectorConfig$MessageSubject": "<p>Used as the <code>Subject</code> HTTP header attribute in AS2 messages that are being sent with the connector.</p>"
       }
     },
+    "MoveId": {
+      "base": null,
+      "refs": {
+        "StartRemoteMoveResponse$MoveId": "<p>Returns a unique identifier for the move/rename operation.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -1319,6 +1523,8 @@
         "ListConnectorsResponse$NextToken": "<p>Returns a token that you can use to call <code>ListConnectors</code> again and receive additional results, if there are any.</p>",
         "ListExecutionsRequest$NextToken": "<p> <code>ListExecutions</code> returns the <code>NextToken</code> parameter in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional executions.</p> <p> This is useful for pagination, for instance. If you have 100 executions for a workflow, you might only want to list first 10. If so, call the API by specifying the <code>max-results</code>: </p> <p> <code>aws transfer list-executions --max-results 10</code> </p> <p> This returns details for the first 10 executions, as well as the pointer (<code>NextToken</code>) to the eleventh execution. You can now call the API again, supplying the <code>NextToken</code> value you received: </p> <p> <code>aws transfer list-executions --max-results 10 --next-token $somePointerReturnedFromPreviousListResult</code> </p> <p> This call returns the next 10 executions, the 11th through the 20th. You can then repeat the call until the details for all 100 executions have been returned. </p>",
         "ListExecutionsResponse$NextToken": "<p> <code>ListExecutions</code> returns the <code>NextToken</code> parameter in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional executions.</p>",
+        "ListFileTransferResultsRequest$NextToken": "<p>If there are more file details than returned in this call, use this value for a subsequent call to <code>ListFileTransferResults</code> to retrieve them.</p>",
+        "ListFileTransferResultsResponse$NextToken": "<p>Returns a token that you can use to call <code>ListFileTransferResults</code> again and receive additional results, if there are any (against the same <code>TransferId</code>.</p>",
         "ListHostKeysRequest$NextToken": "<p>When there are additional results that were not returned, a <code>NextToken</code> parameter is returned. You can use that value for a subsequent call to <code>ListHostKeys</code> to continue listing results.</p>",
         "ListHostKeysResponse$NextToken": "<p>Returns a token that you can use to call <code>ListHostKeys</code> again and receive additional results, if there are any.</p>",
         "ListProfilesRequest$NextToken": "<p>When there are additional results that were not returned, a <code>NextToken</code> parameter is returned. You can use that value for a subsequent call to <code>ListProfiles</code> to continue listing results.</p>",
@@ -1331,6 +1537,8 @@
         "ListTagsForResourceResponse$NextToken": "<p>When you can get additional results from the <code>ListTagsForResource</code> call, a <code>NextToken</code> parameter is returned in the output. You can then pass in a subsequent command to the <code>NextToken</code> parameter to continue listing additional tags.</p>",
         "ListUsersRequest$NextToken": "<p>If there are additional results from the <code>ListUsers</code> call, a <code>NextToken</code> parameter is returned in the output. You can then pass the <code>NextToken</code> to a subsequent <code>ListUsers</code> command, to continue listing additional users.</p>",
         "ListUsersResponse$NextToken": "<p>When you can get additional results from the <code>ListUsers</code> call, a <code>NextToken</code> parameter is returned in the output. You can then pass in a subsequent command to the <code>NextToken</code> parameter to continue listing additional users.</p>",
+        "ListWebAppsRequest$NextToken": "<p>Returns the <code>NextToken</code> parameter in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional web apps.</p>",
+        "ListWebAppsResponse$NextToken": "<p>Provide this value for the <code>NextToken</code> parameter in a subsequent command to continue listing additional web apps.</p>",
         "ListWorkflowsRequest$NextToken": "<p> <code>ListWorkflows</code> returns the <code>NextToken</code> parameter in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional workflows.</p>",
         "ListWorkflowsResponse$NextToken": "<p> <code>ListWorkflows</code> returns the <code>NextToken</code> parameter in the output. You can then pass the <code>NextToken</code> parameter in a subsequent command to continue listing additional workflows.</p>"
       }
@@ -1338,21 +1546,21 @@
     "NullableRole": {
       "base": null,
       "refs": {
-        "CreateServerRequest$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFSevents. When set, you can view user activity in your CloudWatch logs.</p>",
-        "DescribedServer$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFSevents. When set, you can view user activity in your CloudWatch logs.</p>",
-        "UpdateServerRequest$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFSevents. When set, you can view user activity in your CloudWatch logs.</p>"
+        "CreateServerRequest$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFS events. When set, you can view user activity in your CloudWatch logs.</p>",
+        "DescribedServer$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFS events. When set, you can view user activity in your CloudWatch logs.</p>",
+        "UpdateServerRequest$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFS events. When set, you can view user activity in your CloudWatch logs.</p>"
       }
     },
     "OnPartialUploadWorkflowDetails": {
       "base": null,
       "refs": {
-        "WorkflowDetails$OnPartialUpload": "<p>A trigger that starts a workflow if a file is only partially uploaded. You can attach a workflow to a server that executes whenever there is a partial upload.</p> <p>A <i>partial upload</i> occurs when a file is open when the session disconnects.</p>"
+        "WorkflowDetails$OnPartialUpload": "<p>A trigger that starts a workflow if a file is only partially uploaded. You can attach a workflow to a server that executes whenever there is a partial upload.</p> <p>A <i>partial upload</i> occurs when a file is open when the session disconnects.</p> <note> <p> <code>OnPartialUpload</code> can contain a maximum of one <code>WorkflowDetail</code> object.</p> </note>"
       }
     },
     "OnUploadWorkflowDetails": {
       "base": null,
       "refs": {
-        "WorkflowDetails$OnUpload": "<p>A trigger that starts a workflow: the workflow begins to execute after a file is uploaded.</p> <p>To remove an associated workflow from a server, you can provide an empty <code>OnUpload</code> object, as in the following example.</p> <p> <code>aws transfer update-server --server-id s-01234567890abcdef --workflow-details '{\"OnUpload\":[]}'</code> </p>"
+        "WorkflowDetails$OnUpload": "<p>A trigger that starts a workflow: the workflow begins to execute after a file is uploaded.</p> <p>To remove an associated workflow from a server, you can provide an empty <code>OnUpload</code> object, as in the following example.</p> <p> <code>aws transfer update-server --server-id s-01234567890abcdef --workflow-details '{\"OnUpload\":[]}'</code> </p> <note> <p> <code>OnUpload</code> can contain a maximum of one <code>WorkflowDetail</code> object.</p> </note>"
       }
     },
     "OutputFileName": {
@@ -1421,10 +1629,24 @@
         "UpdateServerRequest$PreAuthenticationLoginBanner": "<p>Specifies a string to display when users connect to a server. This string is displayed before the user authenticates. For example, the following banner displays details about using the system:</p> <p> <code>This system is for the use of authorized users only. Individuals using this computer system without authority, or in excess of their authority, are subject to having all of their activities on this system monitored and recorded by system personnel.</code> </p>"
       }
     },
+    "PreserveContentType": {
+      "base": null,
+      "refs": {
+        "As2ConnectorConfig$PreserveContentType": "<p>Allows you to use the Amazon S3 <code>Content-Type</code> that is associated with objects in S3 instead of having the content type mapped based on the file extension. This parameter is enabled by default when you create an AS2 connector from the console, but disabled by default when you create an AS2 connector by calling the API directly.</p>"
+      }
+    },
+    "PreserveFilenameType": {
+      "base": null,
+      "refs": {
+        "CreateAgreementRequest$PreserveFilename": "<p> Determines whether or not Transfer Family appends a unique string of characters to the end of the AS2 message payload filename when saving it. </p> <ul> <li> <p> <code>ENABLED</code>: the filename provided by your trading parter is preserved when the file is saved.</p> </li> <li> <p> <code>DISABLED</code> (default value): when Transfer Family saves the file, the filename is adjusted, as described in <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2\">File names and locations</a>.</p> </li> </ul>",
+        "DescribedAgreement$PreserveFilename": "<p> Determines whether or not Transfer Family appends a unique string of characters to the end of the AS2 message payload filename when saving it. </p> <ul> <li> <p> <code>ENABLED</code>: the filename provided by your trading parter is preserved when the file is saved.</p> </li> <li> <p> <code>DISABLED</code> (default value): when Transfer Family saves the file, the filename is adjusted, as described in <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2\">File names and locations</a>.</p> </li> </ul>",
+        "UpdateAgreementRequest$PreserveFilename": "<p> Determines whether or not Transfer Family appends a unique string of characters to the end of the AS2 message payload filename when saving it. </p> <ul> <li> <p> <code>ENABLED</code>: the filename provided by your trading parter is preserved when the file is saved.</p> </li> <li> <p> <code>DISABLED</code> (default value): when Transfer Family saves the file, the filename is adjusted, as described in <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/send-as2-messages.html#file-names-as2\">File names and locations</a>.</p> </li> </ul>"
+      }
+    },
     "PrivateKeyType": {
       "base": null,
       "refs": {
-        "ImportCertificateRequest$PrivateKey": "<ul> <li> <p>For the CLI, provide a file path for a private key in URI format.For example, <code>--private-key file://encryption-key.pem</code>. Alternatively, you can provide the raw content of the private key file.</p> </li> <li> <p>For the SDK, specify the raw content of a private key file. For example, <code>--private-key \"`cat encryption-key.pem`\"</code> </p> </li> </ul>"
+        "ImportCertificateRequest$PrivateKey": "<ul> <li> <p>For the CLI, provide a file path for a private key in URI format. For example, <code>--private-key file://encryption-key.pem</code>. Alternatively, you can provide the raw content of the private key file.</p> </li> <li> <p>For the SDK, specify the raw content of a private key file. For example, <code>--private-key \"`cat encryption-key.pem`\"</code> </p> </li> </ul>"
       }
     },
     "ProfileId": {
@@ -1530,17 +1752,20 @@
         "DescribedConnector$AccessRole": "<p>Connectors are used to send files using either the AS2 or SFTP protocol. For the access role, provide the Amazon Resource Name (ARN) of the Identity and Access Management role to use.</p> <p> <b>For AS2 connectors</b> </p> <p>With AS2, you can send files by calling <code>StartFileTransfer</code> and specifying the file paths in the request parameter, <code>SendFilePaths</code>. We use the file’s parent directory (for example, for <code>--send-file-paths /bucket/dir/file.txt</code>, parent directory is <code>/bucket/dir/</code>) to temporarily store a processed AS2 message file, store the MDN when we receive them from the partner, and write a final JSON file containing relevant metadata of the transmission. So, the <code>AccessRole</code> needs to provide read and write access to the parent directory of the file location used in the <code>StartFileTransfer</code> request. Additionally, you need to provide read and write access to the parent directory of the files that you intend to send with <code>StartFileTransfer</code>.</p> <p>If you are using Basic authentication for your AS2 connector, the access role requires the <code>secretsmanager:GetSecretValue</code> permission for the secret. If the secret is encrypted using a customer-managed key instead of the Amazon Web Services managed key in Secrets Manager, then the role also needs the <code>kms:Decrypt</code> permission for that key.</p> <p> <b>For SFTP connectors</b> </p> <p>Make sure that the access role provides read and write access to the parent directory of the file location that's used in the <code>StartFileTransfer</code> request. Additionally, make sure that the role provides <code>secretsmanager:GetSecretValue</code> permission to Secrets Manager.</p>",
         "DescribedConnector$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a connector to turn on CloudWatch logging for Amazon S3 events. When set, you can view connector activity in your CloudWatch logs.</p>",
         "DescribedExecution$ExecutionRole": "<p>The IAM role associated with the execution.</p>",
+        "DescribedIdentityCenterConfig$Role": "<p>The IAM role in IAM Identity Center used for the web app.</p>",
         "DescribedUser$Role": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that controls your users' access to your Amazon S3 bucket or Amazon EFS file system. The policies attached to this role determine the level of access that you want to provide your users when transferring files into and out of your Amazon S3 bucket or Amazon EFS file system. The IAM role should also contain a trust relationship that allows the server to access your resources when servicing your users' transfer requests.</p>",
+        "IdentityCenterConfig$Role": "<p>The IAM role in IAM Identity Center used for the web app.</p>",
         "IdentityProviderDetails$InvocationRole": "<p>This parameter is only applicable if your <code>IdentityProviderType</code> is <code>API_GATEWAY</code>. Provides the type of <code>InvocationRole</code> used to authenticate the user account.</p>",
         "ListedAccess$Role": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that controls your users' access to your Amazon S3 bucket or Amazon EFS file system. The policies attached to this role determine the level of access that you want to provide your users when transferring files into and out of your Amazon S3 bucket or Amazon EFS file system. The IAM role should also contain a trust relationship that allows the server to access your resources when servicing your users' transfer requests.</p>",
-        "ListedServer$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFSevents. When set, you can view user activity in your CloudWatch logs.</p>",
+        "ListedServer$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFS events. When set, you can view user activity in your CloudWatch logs.</p>",
         "ListedUser$Role": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that controls your users' access to your Amazon S3 bucket or Amazon EFS file system. The policies attached to this role determine the level of access that you want to provide your users when transferring files into and out of your Amazon S3 bucket or Amazon EFS file system. The IAM role should also contain a trust relationship that allows the server to access your resources when servicing your users' transfer requests.</p> <note> <p>The IAM role that controls your users' access to your Amazon S3 bucket for servers with <code>Domain=S3</code>, or your EFS file system for servers with <code>Domain=EFS</code>. </p> <p>The policies attached to this role determine the level of access you want to provide your users when transferring files into and out of your S3 buckets or EFS file systems.</p> </note>",
-        "LoggingConfiguration$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFSevents. When set, you can view user activity in your CloudWatch logs.</p>",
+        "LoggingConfiguration$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a server to turn on Amazon CloudWatch logging for Amazon S3 or Amazon EFS events. When set, you can view user activity in your CloudWatch logs.</p>",
         "UpdateAccessRequest$Role": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that controls your users' access to your Amazon S3 bucket or Amazon EFS file system. The policies attached to this role determine the level of access that you want to provide your users when transferring files into and out of your Amazon S3 bucket or Amazon EFS file system. The IAM role should also contain a trust relationship that allows the server to access your resources when servicing your users' transfer requests.</p>",
         "UpdateAgreementRequest$AccessRole": "<p>Connectors are used to send files using either the AS2 or SFTP protocol. For the access role, provide the Amazon Resource Name (ARN) of the Identity and Access Management role to use.</p> <p> <b>For AS2 connectors</b> </p> <p>With AS2, you can send files by calling <code>StartFileTransfer</code> and specifying the file paths in the request parameter, <code>SendFilePaths</code>. We use the file’s parent directory (for example, for <code>--send-file-paths /bucket/dir/file.txt</code>, parent directory is <code>/bucket/dir/</code>) to temporarily store a processed AS2 message file, store the MDN when we receive them from the partner, and write a final JSON file containing relevant metadata of the transmission. So, the <code>AccessRole</code> needs to provide read and write access to the parent directory of the file location used in the <code>StartFileTransfer</code> request. Additionally, you need to provide read and write access to the parent directory of the files that you intend to send with <code>StartFileTransfer</code>.</p> <p>If you are using Basic authentication for your AS2 connector, the access role requires the <code>secretsmanager:GetSecretValue</code> permission for the secret. If the secret is encrypted using a customer-managed key instead of the Amazon Web Services managed key in Secrets Manager, then the role also needs the <code>kms:Decrypt</code> permission for that key.</p> <p> <b>For SFTP connectors</b> </p> <p>Make sure that the access role provides read and write access to the parent directory of the file location that's used in the <code>StartFileTransfer</code> request. Additionally, make sure that the role provides <code>secretsmanager:GetSecretValue</code> permission to Secrets Manager.</p>",
         "UpdateConnectorRequest$AccessRole": "<p>Connectors are used to send files using either the AS2 or SFTP protocol. For the access role, provide the Amazon Resource Name (ARN) of the Identity and Access Management role to use.</p> <p> <b>For AS2 connectors</b> </p> <p>With AS2, you can send files by calling <code>StartFileTransfer</code> and specifying the file paths in the request parameter, <code>SendFilePaths</code>. We use the file’s parent directory (for example, for <code>--send-file-paths /bucket/dir/file.txt</code>, parent directory is <code>/bucket/dir/</code>) to temporarily store a processed AS2 message file, store the MDN when we receive them from the partner, and write a final JSON file containing relevant metadata of the transmission. So, the <code>AccessRole</code> needs to provide read and write access to the parent directory of the file location used in the <code>StartFileTransfer</code> request. Additionally, you need to provide read and write access to the parent directory of the files that you intend to send with <code>StartFileTransfer</code>.</p> <p>If you are using Basic authentication for your AS2 connector, the access role requires the <code>secretsmanager:GetSecretValue</code> permission for the secret. If the secret is encrypted using a customer-managed key instead of the Amazon Web Services managed key in Secrets Manager, then the role also needs the <code>kms:Decrypt</code> permission for that key.</p> <p> <b>For SFTP connectors</b> </p> <p>Make sure that the access role provides read and write access to the parent directory of the file location that's used in the <code>StartFileTransfer</code> request. Additionally, make sure that the role provides <code>secretsmanager:GetSecretValue</code> permission to Secrets Manager.</p>",
         "UpdateConnectorRequest$LoggingRole": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that allows a connector to turn on CloudWatch logging for Amazon S3 events. When set, you can view connector activity in your CloudWatch logs.</p>",
         "UpdateUserRequest$Role": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that controls your users' access to your Amazon S3 bucket or Amazon EFS file system. The policies attached to this role determine the level of access that you want to provide your users when transferring files into and out of your Amazon S3 bucket or Amazon EFS file system. The IAM role should also contain a trust relationship that allows the server to access your resources when servicing your users' transfer requests.</p>",
+        "UpdateWebAppIdentityCenterConfig$Role": "<p>The IAM role used to access IAM Identity Center.</p>",
         "WorkflowDetail$ExecutionRole": "<p>Includes the necessary permissions for S3, EFS, and Lambda operations that Transfer can assume, so that all workflow steps can operate on the required resources</p>"
       }
     },
@@ -1623,7 +1848,7 @@
     "SecretId": {
       "base": null,
       "refs": {
-        "SftpConnectorConfig$UserSecretId": "<p>The identifier for the secret (in Amazon Web Services Secrets Manager) that contains the SFTP user's private key, password, or both. The identifier must be the Amazon Resource Name (ARN) of the secret.</p>"
+        "SftpConnectorConfig$UserSecretId": "<p>The identifier for the secret (in Amazon Web Services Secrets Manager) that contains the SFTP user's private key, password, or both. The identifier must be the Amazon Resource Name (ARN) of the secret.</p> <note> <ul> <li> <p>Required when creating an SFTP connector</p> </li> <li> <p>Optional when updating an existing SFTP connector</p> </li> </ul> </note>"
       }
     },
     "SecurityGroupId": {
@@ -1802,11 +2027,23 @@
       }
     },
     "SftpConnectorConfig": {
-      "base": "<p>Contains the details for an SFTP connector object. The connector object is used for transferring files to and from a partner's SFTP server.</p> <note> <p>Because the <code>SftpConnectorConfig</code> data type is used for both creating and updating SFTP connectors, its parameters, <code>TrustedHostKeys</code> and <code>UserSecretId</code> are marked as not required. This is a bit misleading, as they are not required when you are updating an existing SFTP connector, but <i>are required</i> when you are creating a new SFTP connector.</p> </note>",
+      "base": "<p>Contains the details for an SFTP connector object. The connector object is used for transferring files to and from a partner's SFTP server.</p>",
       "refs": {
         "CreateConnectorRequest$SftpConfig": "<p>A structure that contains the parameters for an SFTP connector object.</p>",
         "DescribedConnector$SftpConfig": "<p>A structure that contains the parameters for an SFTP connector object.</p>",
         "UpdateConnectorRequest$SftpConfig": "<p>A structure that contains the parameters for an SFTP connector object.</p>"
+      }
+    },
+    "SftpConnectorConnectionDetails": {
+      "base": "<p>Contains the details for an SFTP connector connection.</p>",
+      "refs": {
+        "TestConnectionResponse$SftpConnectionDetails": "<p>Structure that contains the SFTP connector host key.</p>"
+      }
+    },
+    "SftpConnectorHostKey": {
+      "base": null,
+      "refs": {
+        "SftpConnectorConnectionDetails$HostKey": "<p>The SSH public key of the remote SFTP server. This is returned during the initial connection attempt when you call <code>TestConnection</code>. It allows you to retrieve the valid server host key to update the connector when you are unable to obtain it in advance.</p>"
       }
     },
     "SftpConnectorTrustedHostKey": {
@@ -1818,7 +2055,7 @@
     "SftpConnectorTrustedHostKeyList": {
       "base": null,
       "refs": {
-        "SftpConnectorConfig$TrustedHostKeys": "<p>The public portion of the host key, or keys, that are used to identify the external server to which you are connecting. You can use the <code>ssh-keyscan</code> command against the SFTP server to retrieve the necessary key.</p> <p>The three standard SSH public key format elements are <code>&lt;key type&gt;</code>, <code>&lt;body base64&gt;</code>, and an optional <code>&lt;comment&gt;</code>, with spaces between each element. Specify only the <code>&lt;key type&gt;</code> and <code>&lt;body base64&gt;</code>: do not enter the <code>&lt;comment&gt;</code> portion of the key.</p> <p>For the trusted host key, Transfer Family accepts RSA and ECDSA keys.</p> <ul> <li> <p>For RSA keys, the <code>&lt;key type&gt;</code> string is <code>ssh-rsa</code>.</p> </li> <li> <p>For ECDSA keys, the <code>&lt;key type&gt;</code> string is either <code>ecdsa-sha2-nistp256</code>, <code>ecdsa-sha2-nistp384</code>, or <code>ecdsa-sha2-nistp521</code>, depending on the size of the key you generated.</p> </li> </ul> <p>Run this command to retrieve the SFTP server host key, where your SFTP server name is <code>ftp.host.com</code>.</p> <p> <code>ssh-keyscan ftp.host.com</code> </p> <p>This prints the public host key to standard output.</p> <p> <code>ftp.host.com ssh-rsa AAAAB3Nza...&lt;long-string-for-public-key</code> </p> <p>Copy and paste this string into the <code>TrustedHostKeys</code> field for the <code>create-connector</code> command or into the <b>Trusted host keys</b> field in the console.</p>"
+        "SftpConnectorConfig$TrustedHostKeys": "<p>The public portion of the host key, or keys, that are used to identify the external server to which you are connecting. You can use the <code>ssh-keyscan</code> command against the SFTP server to retrieve the necessary key.</p> <note> <p> <code>TrustedHostKeys</code> is optional for <code>CreateConnector</code>. If not provided, you can use <code>TestConnection</code> to retrieve the server host key during the initial connection attempt, and subsequently update the connector with the observed host key.</p> </note> <p>The three standard SSH public key format elements are <code>&lt;key type&gt;</code>, <code>&lt;body base64&gt;</code>, and an optional <code>&lt;comment&gt;</code>, with spaces between each element. Specify only the <code>&lt;key type&gt;</code> and <code>&lt;body base64&gt;</code>: do not enter the <code>&lt;comment&gt;</code> portion of the key.</p> <p>For the trusted host key, Transfer Family accepts RSA and ECDSA keys.</p> <ul> <li> <p>For RSA keys, the <code>&lt;key type&gt;</code> string is <code>ssh-rsa</code>.</p> </li> <li> <p>For ECDSA keys, the <code>&lt;key type&gt;</code> string is either <code>ecdsa-sha2-nistp256</code>, <code>ecdsa-sha2-nistp384</code>, or <code>ecdsa-sha2-nistp521</code>, depending on the size of the key you generated.</p> </li> </ul> <p>Run this command to retrieve the SFTP server host key, where your SFTP server name is <code>ftp.host.com</code>.</p> <p> <code>ssh-keyscan ftp.host.com</code> </p> <p>This prints the public host key to standard output.</p> <p> <code>ftp.host.com ssh-rsa AAAAB3Nza...&lt;long-string-for-public-key</code> </p> <p>Copy and paste this string into the <code>TrustedHostKeys</code> field for the <code>create-connector</code> command or into the <b>Trusted host keys</b> field in the console.</p>"
       }
     },
     "SigningAlg": {
@@ -1874,7 +2111,7 @@
     "SshPublicKeys": {
       "base": null,
       "refs": {
-        "DescribedUser$SshPublicKeys": "<p>Specifies the public key portion of the Secure Shell (SSH) keys stored for the described user.</p>"
+        "DescribedUser$SshPublicKeys": "<p>Specifies the public key portion of the Secure Shell (SSH) keys stored for the described user.</p> <note> <p>To delete the public key body, set its value to zero keys, as shown here:</p> <p> <code>SshPublicKeys: []</code> </p> </note>"
       }
     },
     "StartDirectoryListingRequest": {
@@ -1893,6 +2130,26 @@
       }
     },
     "StartFileTransferResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartRemoteDeleteRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartRemoteDeleteResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartRemoteMoveRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartRemoteMoveResponse": {
       "base": null,
       "refs": {
       }
@@ -1996,6 +2253,7 @@
         "CreateProfileRequest$Tags": "<p>Key-value pairs that can be used to group and search for AS2 profiles.</p>",
         "CreateServerRequest$Tags": "<p>Key-value pairs that can be used to group and search for servers.</p>",
         "CreateUserRequest$Tags": "<p>Key-value pairs that can be used to group and search for users. Tags are metadata attached to users for any purpose.</p>",
+        "CreateWebAppRequest$Tags": "<p>Key-value pairs that can be used to group and search for web apps.</p>",
         "CreateWorkflowRequest$Tags": "<p>Key-value pairs that can be used to group and search for workflows. Tags are metadata attached to workflows for any purpose.</p>",
         "DescribedAgreement$Tags": "<p>Key-value pairs that can be used to group and search for agreements.</p>",
         "DescribedCertificate$Tags": "<p>Key-value pairs that can be used to group and search for certificates.</p>",
@@ -2004,6 +2262,7 @@
         "DescribedProfile$Tags": "<p>Key-value pairs that can be used to group and search for profiles.</p>",
         "DescribedServer$Tags": "<p>Specifies the key-value pairs that you can use to search for and group servers that were assigned to the server that was described.</p>",
         "DescribedUser$Tags": "<p>Specifies the key-value pairs for the user requested. Tag can be used to search for and group users for a variety of purposes.</p>",
+        "DescribedWebApp$Tags": "<p>Key-value pairs that can be used to group and search for web apps. Tags are metadata attached to web apps for any purpose.</p>",
         "DescribedWorkflow$Tags": "<p>Key-value pairs that can be used to group and search for workflows. Tags are metadata attached to workflows for any purpose.</p>",
         "ImportCertificateRequest$Tags": "<p>Key-value pairs that can be used to group and search for certificates.</p>",
         "ImportHostKeyRequest$Tags": "<p>Key-value pairs that can be used to group and search for host keys.</p>",
@@ -2045,7 +2304,14 @@
     "TransferId": {
       "base": null,
       "refs": {
+        "ListFileTransferResultsRequest$TransferId": "<p>A unique identifier for a file transfer. This value should match the value supplied to the corresponding <code>StartFileTransfer</code> call.</p>",
         "StartFileTransferResponse$TransferId": "<p>Returns the unique identifier for the file transfer.</p>"
+      }
+    },
+    "TransferTableStatus": {
+      "base": null,
+      "refs": {
+        "ConnectorFileTransferResult$StatusCode": "<p>The current status for the transfer.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -2133,6 +2399,38 @@
       "refs": {
       }
     },
+    "UpdateWebAppCustomizationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateWebAppCustomizationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateWebAppIdentityCenterConfig": {
+      "base": "<p>A structure that describes the values to use for the IAM Identity Center settings when you update a web app.</p>",
+      "refs": {
+        "UpdateWebAppIdentityProviderDetails$IdentityCenterConfig": "<p>A structure that describes the values to use for the IAM Identity Center settings when you update a web app.</p>"
+      }
+    },
+    "UpdateWebAppIdentityProviderDetails": {
+      "base": "<p>A union that contains the <code>UpdateWebAppIdentityCenterConfig</code> object.</p>",
+      "refs": {
+        "UpdateWebAppRequest$IdentityProviderDetails": "<p>Provide updated identity provider values in a <code>WebAppIdentityProviderDetails</code> object.</p>"
+      }
+    },
+    "UpdateWebAppRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateWebAppResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Url": {
       "base": null,
       "refs": {
@@ -2191,6 +2489,87 @@
       "base": null,
       "refs": {
         "EndpointDetails$VpcId": "<p>The VPC identifier of the VPC in which a server's endpoint will be hosted.</p> <note> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> </note>"
+      }
+    },
+    "WebAppAccessEndpoint": {
+      "base": null,
+      "refs": {
+        "CreateWebAppRequest$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p> <p>Before you enter a custom URL for this parameter, follow the steps described in <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/webapp-customize.html\">Update your access endpoint with a custom URL</a>.</p>",
+        "DescribedWebApp$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p>",
+        "ListedWebApp$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p>",
+        "UpdateWebAppRequest$AccessEndpoint": "<p>The <code>AccessEndpoint</code> is the URL that you provide to your users for them to interact with the Transfer Family web app. You can specify a custom URL or use the default value.</p>"
+      }
+    },
+    "WebAppEndpoint": {
+      "base": null,
+      "refs": {
+        "DescribedWebApp$WebAppEndpoint": "<p>The <code>WebAppEndpoint</code> is the unique URL for your Transfer Family web app. This is the value that you use when you configure <b>Origins</b> on CloudFront.</p>",
+        "ListedWebApp$WebAppEndpoint": "<p>The <code>WebAppEndpoint</code> is the unique URL for your Transfer Family web app. This is the value that you use when you configure <b>Origins</b> on CloudFront.</p>"
+      }
+    },
+    "WebAppEndpointPolicy": {
+      "base": null,
+      "refs": {
+        "CreateWebAppRequest$WebAppEndpointPolicy": "<p> Setting for the type of endpoint policy for the web app. The default value is <code>STANDARD</code>. </p> <p>If you are creating the web app in an Amazon Web Services GovCloud (US) Region, you can set this parameter to <code>FIPS</code>.</p>",
+        "DescribedWebApp$WebAppEndpointPolicy": "<p> Setting for the type of endpoint policy for the web app. The default value is <code>STANDARD</code>. </p> <p>If your web app was created in an Amazon Web Services GovCloud (US) Region, the value of this parameter can be <code>FIPS</code>, which indicates the web app endpoint is FIPS-compliant.</p>"
+      }
+    },
+    "WebAppFaviconFile": {
+      "base": null,
+      "refs": {
+        "DescribedWebAppCustomization$FaviconFile": "<p>Returns an icon file data string (in base64 encoding).</p>",
+        "UpdateWebAppCustomizationRequest$FaviconFile": "<p>Specify an icon file data string (in base64 encoding).</p>"
+      }
+    },
+    "WebAppId": {
+      "base": null,
+      "refs": {
+        "CreateWebAppResponse$WebAppId": "<p>Returns a unique identifier for the web app.</p>",
+        "DeleteWebAppCustomizationRequest$WebAppId": "<p>Provide the unique identifier for the web app that contains the customizations that you are deleting.</p>",
+        "DeleteWebAppRequest$WebAppId": "<p>Provide the unique identifier for the web app that you are deleting.</p>",
+        "DescribeWebAppCustomizationRequest$WebAppId": "<p>Provide the unique identifier for the web app.</p>",
+        "DescribeWebAppRequest$WebAppId": "<p>Provide the unique identifier for the web app.</p>",
+        "DescribedWebApp$WebAppId": "<p>The unique identifier for the web app.</p>",
+        "DescribedWebAppCustomization$WebAppId": "<p>Returns the unique identifier for your web app.</p>",
+        "ListedWebApp$WebAppId": "<p>The unique identifier for the web app.</p>",
+        "UpdateWebAppCustomizationRequest$WebAppId": "<p>Provide the identifier of the web app that you are updating.</p>",
+        "UpdateWebAppCustomizationResponse$WebAppId": "<p>Returns the unique identifier for the web app being updated.</p>",
+        "UpdateWebAppRequest$WebAppId": "<p>Provide the identifier of the web app that you are updating.</p>",
+        "UpdateWebAppResponse$WebAppId": "<p>Returns the unique identifier for the web app being updated.</p>"
+      }
+    },
+    "WebAppIdentityProviderDetails": {
+      "base": "<p>A union that contains the <code>IdentityCenterConfig</code> object.</p>",
+      "refs": {
+        "CreateWebAppRequest$IdentityProviderDetails": "<p>You can provide a structure that contains the details for the identity provider to use with your web app.</p> <p>For more details about this parameter, see <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/webapp-identity-center.html\">Configure your identity provider for Transfer Family web apps</a>.</p>"
+      }
+    },
+    "WebAppLogoFile": {
+      "base": null,
+      "refs": {
+        "DescribedWebAppCustomization$LogoFile": "<p>Returns a logo file data string (in base64 encoding).</p>",
+        "UpdateWebAppCustomizationRequest$LogoFile": "<p>Specify logo file data string (in base64 encoding).</p>"
+      }
+    },
+    "WebAppTitle": {
+      "base": null,
+      "refs": {
+        "DescribedWebAppCustomization$Title": "<p>Returns the page title that you defined for your web app.</p>",
+        "UpdateWebAppCustomizationRequest$Title": "<p>Provide an updated title.</p>"
+      }
+    },
+    "WebAppUnitCount": {
+      "base": null,
+      "refs": {
+        "WebAppUnits$Provisioned": "<p>An integer that represents the number of units for your desired number of concurrent connections, or the number of user sessions on your web app at the same time.</p> <p>Each increment allows an additional 250 concurrent sessions: a value of <code>1</code> sets the number of concurrent sessions to 250; <code>2</code> sets a value of 500, and so on. </p>"
+      }
+    },
+    "WebAppUnits": {
+      "base": "<p>Contains an integer value that represents the value for number of concurrent connections or the user sessions on your web app.</p>",
+      "refs": {
+        "CreateWebAppRequest$WebAppUnits": "<p>A union that contains the value for number of concurrent connections or the user sessions on your web app.</p>",
+        "DescribedWebApp$WebAppUnits": "<p>A union that contains the value for number of concurrent connections or the user sessions on your web app.</p>",
+        "UpdateWebAppRequest$WebAppUnits": "<p>A union that contains the value for number of concurrent connections or the user sessions on your web app.</p>"
       }
     },
     "WorkflowDescription": {

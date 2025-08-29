@@ -10,7 +10,8 @@
     "serviceId":"OAM",
     "signatureVersion":"v4",
     "signingName":"oam",
-    "uid":"oam-2022-06-10"
+    "uid":"oam-2022-06-10",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateLink":{
@@ -344,7 +345,8 @@
       "type":"structure",
       "required":["Identifier"],
       "members":{
-        "Identifier":{"shape":"ResourceIdentifier"}
+        "Identifier":{"shape":"ResourceIdentifier"},
+        "IncludeTags":{"shape":"IncludeTags"}
       }
     },
     "GetLinkOutput":{
@@ -364,7 +366,8 @@
       "type":"structure",
       "required":["Identifier"],
       "members":{
-        "Identifier":{"shape":"ResourceIdentifier"}
+        "Identifier":{"shape":"ResourceIdentifier"},
+        "IncludeTags":{"shape":"IncludeTags"}
       }
     },
     "GetSinkOutput":{
@@ -390,6 +393,10 @@
         "SinkArn":{"shape":"String"},
         "SinkId":{"shape":"String"}
       }
+    },
+    "IncludeTags":{
+      "type":"boolean",
+      "box":true
     },
     "InternalServiceFault":{
       "type":"structure",
@@ -640,7 +647,9 @@
         "AWS::Logs::LogGroup",
         "AWS::XRay::Trace",
         "AWS::ApplicationInsights::Application",
-        "AWS::InternetMonitor::Monitor"
+        "AWS::InternetMonitor::Monitor",
+        "AWS::ApplicationSignals::Service",
+        "AWS::ApplicationSignals::ServiceLevelObjective"
       ]
     },
     "ResourceTypesInput":{
@@ -764,6 +773,7 @@
       ],
       "members":{
         "Identifier":{"shape":"ResourceIdentifier"},
+        "IncludeTags":{"shape":"IncludeTags"},
         "LinkConfiguration":{"shape":"LinkConfiguration"},
         "ResourceTypes":{"shape":"ResourceTypesInput"}
       }

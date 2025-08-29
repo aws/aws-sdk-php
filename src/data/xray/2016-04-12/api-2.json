@@ -4,10 +4,12 @@
     "apiVersion":"2016-04-12",
     "endpointPrefix":"xray",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS X-Ray",
     "serviceId":"XRay",
     "signatureVersion":"v4",
-    "uid":"xray-2016-04-12"
+    "uid":"xray-2016-04-12",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchGetTraces":{
@@ -21,6 +23,20 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottledException"}
+      ]
+    },
+    "CancelTraceRetrieval":{
+      "name":"CancelTraceRetrieval",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CancelTraceRetrieval"
+      },
+      "input":{"shape":"CancelTraceRetrievalRequest"},
+      "output":{"shape":"CancelTraceRetrievalResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "CreateGroup":{
@@ -129,6 +145,19 @@
         {"shape":"ThrottledException"}
       ]
     },
+    "GetIndexingRules":{
+      "name":"GetIndexingRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetIndexingRules"
+      },
+      "input":{"shape":"GetIndexingRulesRequest"},
+      "output":{"shape":"GetIndexingRulesResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"}
+      ]
+    },
     "GetInsight":{
       "name":"GetInsight",
       "http":{
@@ -179,6 +208,20 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottledException"}
+      ]
+    },
+    "GetRetrievedTracesGraph":{
+      "name":"GetRetrievedTracesGraph",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetRetrievedTracesGraph"
+      },
+      "input":{"shape":"GetRetrievedTracesGraphRequest"},
+      "output":{"shape":"GetRetrievedTracesGraphResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetSamplingRules":{
@@ -259,6 +302,19 @@
         {"shape":"ThrottledException"}
       ]
     },
+    "GetTraceSegmentDestination":{
+      "name":"GetTraceSegmentDestination",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetTraceSegmentDestination"
+      },
+      "input":{"shape":"GetTraceSegmentDestinationRequest"},
+      "output":{"shape":"GetTraceSegmentDestinationResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"}
+      ]
+    },
     "GetTraceSummaries":{
       "name":"GetTraceSummaries",
       "http":{
@@ -283,6 +339,20 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottledException"}
+      ]
+    },
+    "ListRetrievedTraces":{
+      "name":"ListRetrievedTraces",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListRetrievedTraces"
+      },
+      "input":{"shape":"ListRetrievedTracesRequest"},
+      "output":{"shape":"ListRetrievedTracesResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListTagsForResource":{
@@ -355,6 +425,20 @@
         {"shape":"ThrottledException"}
       ]
     },
+    "StartTraceRetrieval":{
+      "name":"StartTraceRetrieval",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartTraceRetrieval"
+      },
+      "input":{"shape":"StartTraceRetrievalRequest"},
+      "output":{"shape":"StartTraceRetrievalResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -397,6 +481,20 @@
         {"shape":"ThrottledException"}
       ]
     },
+    "UpdateIndexingRule":{
+      "name":"UpdateIndexingRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateIndexingRule"
+      },
+      "input":{"shape":"UpdateIndexingRuleRequest"},
+      "output":{"shape":"UpdateIndexingRuleResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateSamplingRule":{
       "name":"UpdateSamplingRule",
       "http":{
@@ -405,6 +503,19 @@
       },
       "input":{"shape":"UpdateSamplingRuleRequest"},
       "output":{"shape":"UpdateSamplingRuleResult"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottledException"}
+      ]
+    },
+    "UpdateTraceSegmentDestination":{
+      "name":"UpdateTraceSegmentDestination",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateTraceSegmentDestination"
+      },
+      "input":{"shape":"UpdateTraceSegmentDestinationRequest"},
+      "output":{"shape":"UpdateTraceSegmentDestinationResult"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottledException"}
@@ -456,6 +567,10 @@
     "AnomalousServiceList":{
       "type":"list",
       "member":{"shape":"AnomalousService"}
+    },
+    "AnomalyCount":{
+      "type":"integer",
+      "min":0
     },
     "AttributeKey":{
       "type":"string",
@@ -511,10 +626,25 @@
       "type":"integer",
       "min":0
     },
+    "CancelTraceRetrievalRequest":{
+      "type":"structure",
+      "required":["RetrievalToken"],
+      "members":{
+        "RetrievalToken":{"shape":"RetrievalToken"}
+      }
+    },
+    "CancelTraceRetrievalResult":{
+      "type":"structure",
+      "members":{}
+    },
     "ClientID":{
       "type":"string",
       "max":24,
       "min":24
+    },
+    "CooldownWindowMinutes":{
+      "type":"integer",
+      "min":0
     },
     "CreateGroupRequest":{
       "type":"structure",
@@ -555,8 +685,7 @@
     },
     "DeleteGroupResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteResourcePolicyRequest":{
       "type":"structure",
@@ -568,8 +697,7 @@
     },
     "DeleteResourcePolicyResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSamplingRuleRequest":{
       "type":"structure",
@@ -756,8 +884,7 @@
     },
     "GetEncryptionConfigRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetEncryptionConfigResult":{
       "type":"structure",
@@ -793,6 +920,19 @@
       "type":"structure",
       "members":{
         "Groups":{"shape":"GroupSummaryList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "GetIndexingRulesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "GetIndexingRulesResult":{
+      "type":"structure",
+      "members":{
+        "IndexingRules":{"shape":"IndexingRuleList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -884,6 +1024,22 @@
         "NextToken":{"shape":"Token"}
       }
     },
+    "GetRetrievedTracesGraphRequest":{
+      "type":"structure",
+      "required":["RetrievalToken"],
+      "members":{
+        "RetrievalToken":{"shape":"RetrievalToken"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "GetRetrievedTracesGraphResult":{
+      "type":"structure",
+      "members":{
+        "RetrievalStatus":{"shape":"RetrievalStatus"},
+        "Services":{"shape":"RetrievedServicesList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "GetSamplingRulesRequest":{
       "type":"structure",
       "members":{
@@ -914,7 +1070,8 @@
       "type":"structure",
       "required":["SamplingStatisticsDocuments"],
       "members":{
-        "SamplingStatisticsDocuments":{"shape":"SamplingStatisticsDocumentList"}
+        "SamplingStatisticsDocuments":{"shape":"SamplingStatisticsDocumentList"},
+        "SamplingBoostStatisticsDocuments":{"shape":"SamplingBoostStatisticsDocumentList"}
       }
     },
     "GetSamplingTargetsResult":{
@@ -922,7 +1079,8 @@
       "members":{
         "SamplingTargetDocuments":{"shape":"SamplingTargetDocumentList"},
         "LastRuleModification":{"shape":"Timestamp"},
-        "UnprocessedStatistics":{"shape":"UnprocessedStatisticsList"}
+        "UnprocessedStatistics":{"shape":"UnprocessedStatisticsList"},
+        "UnprocessedBoostStatistics":{"shape":"UnprocessedStatisticsList"}
       }
     },
     "GetServiceGraphRequest":{
@@ -989,6 +1147,17 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "GetTraceSegmentDestinationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "GetTraceSegmentDestinationResult":{
+      "type":"structure",
+      "members":{
+        "Destination":{"shape":"TraceSegmentDestination"},
+        "Status":{"shape":"TraceSegmentDestinationStatus"}
+      }
+    },
     "GetTraceSummariesRequest":{
       "type":"structure",
       "required":[
@@ -1012,6 +1181,14 @@
         "ApproximateTime":{"shape":"Timestamp"},
         "TracesProcessedCount":{"shape":"NullableLong"},
         "NextToken":{"shape":"String"}
+      }
+    },
+    "GraphLink":{
+      "type":"structure",
+      "members":{
+        "ReferenceType":{"shape":"String"},
+        "SourceTraceId":{"shape":"String"},
+        "DestinationTraceIds":{"shape":"TraceIdList"}
       }
     },
     "Group":{
@@ -1078,6 +1255,34 @@
         "UserAgent":{"shape":"String"},
         "ClientIp":{"shape":"String"}
       }
+    },
+    "IndexingRule":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"RuleName"},
+        "ModifiedAt":{"shape":"Timestamp"},
+        "Rule":{"shape":"IndexingRuleValue"}
+      }
+    },
+    "IndexingRuleList":{
+      "type":"list",
+      "member":{"shape":"IndexingRule"},
+      "max":10,
+      "min":1
+    },
+    "IndexingRuleValue":{
+      "type":"structure",
+      "members":{
+        "Probabilistic":{"shape":"ProbabilisticRuleValue"}
+      },
+      "union":true
+    },
+    "IndexingRuleValueUpdate":{
+      "type":"structure",
+      "members":{
+        "Probabilistic":{"shape":"ProbabilisticRuleValueUpdate"}
+      },
+      "union":true
     },
     "Insight":{
       "type":"structure",
@@ -1212,6 +1417,12 @@
       },
       "exception":true
     },
+    "LinksList":{
+      "type":"list",
+      "member":{"shape":"GraphLink"},
+      "max":100,
+      "min":0
+    },
     "ListResourcePoliciesRequest":{
       "type":"structure",
       "members":{
@@ -1223,6 +1434,24 @@
       "members":{
         "ResourcePolicies":{"shape":"ResourcePolicyList"},
         "NextToken":{"shape":"ResourcePolicyNextToken"}
+      }
+    },
+    "ListRetrievedTracesRequest":{
+      "type":"structure",
+      "required":["RetrievalToken"],
+      "members":{
+        "RetrievalToken":{"shape":"RetrievalToken"},
+        "TraceFormat":{"shape":"TraceFormatType"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListRetrievedTracesResult":{
+      "type":"structure",
+      "members":{
+        "RetrievalStatus":{"shape":"RetrievalStatus"},
+        "TraceFormat":{"shape":"TraceFormatType"},
+        "Traces":{"shape":"TraceSpanList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -1256,6 +1485,11 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "MaxRate":{
+      "type":"double",
+      "max":1,
+      "min":0
+    },
     "NullableBoolean":{"type":"boolean"},
     "NullableDouble":{"type":"double"},
     "NullableInteger":{"type":"integer"},
@@ -1288,6 +1522,21 @@
       "type":"integer",
       "max":9999,
       "min":1
+    },
+    "ProbabilisticRuleValue":{
+      "type":"structure",
+      "required":["DesiredSamplingPercentage"],
+      "members":{
+        "DesiredSamplingPercentage":{"shape":"NullableDouble"},
+        "ActualSamplingPercentage":{"shape":"NullableDouble"}
+      }
+    },
+    "ProbabilisticRuleValueUpdate":{
+      "type":"structure",
+      "required":["DesiredSamplingPercentage"],
+      "members":{
+        "DesiredSamplingPercentage":{"shape":"NullableDouble"}
+      }
     },
     "PutEncryptionConfigRequest":{
       "type":"structure",
@@ -1334,8 +1583,7 @@
     },
     "PutTelemetryRecordsResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutTraceSegmentsRequest":{
       "type":"structure",
@@ -1441,6 +1689,43 @@
       "type":"list",
       "member":{"shape":"ResponseTimeRootCause"}
     },
+    "RetrievalStatus":{
+      "type":"string",
+      "enum":[
+        "SCHEDULED",
+        "RUNNING",
+        "COMPLETE",
+        "FAILED",
+        "CANCELLED",
+        "TIMEOUT"
+      ]
+    },
+    "RetrievalToken":{
+      "type":"string",
+      "max":1020,
+      "min":0
+    },
+    "RetrievedService":{
+      "type":"structure",
+      "members":{
+        "Service":{"shape":"Service"},
+        "Links":{"shape":"LinksList"}
+      }
+    },
+    "RetrievedServicesList":{
+      "type":"list",
+      "member":{"shape":"RetrievedService"},
+      "max":1000,
+      "min":0
+    },
+    "RetrievedTrace":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"TraceId"},
+        "Duration":{"shape":"NullableDouble"},
+        "Spans":{"shape":"SpanList"}
+      }
+    },
     "RootCauseException":{
       "type":"structure",
       "members":{
@@ -1464,9 +1749,59 @@
       "max":32,
       "min":1
     },
+    "SampledAnomalyCount":{
+      "type":"integer",
+      "min":0
+    },
     "SampledCount":{
       "type":"integer",
       "min":0
+    },
+    "SamplingBoost":{
+      "type":"structure",
+      "required":[
+        "BoostRate",
+        "BoostRateTTL"
+      ],
+      "members":{
+        "BoostRate":{"shape":"Double"},
+        "BoostRateTTL":{"shape":"Timestamp"}
+      }
+    },
+    "SamplingBoostStatisticsDocument":{
+      "type":"structure",
+      "required":[
+        "RuleName",
+        "ServiceName",
+        "Timestamp",
+        "AnomalyCount",
+        "TotalCount",
+        "SampledAnomalyCount"
+      ],
+      "members":{
+        "RuleName":{"shape":"RuleName"},
+        "ServiceName":{"shape":"ServiceName"},
+        "Timestamp":{"shape":"Timestamp"},
+        "AnomalyCount":{"shape":"AnomalyCount"},
+        "TotalCount":{"shape":"TotalCount"},
+        "SampledAnomalyCount":{"shape":"SampledAnomalyCount"}
+      }
+    },
+    "SamplingBoostStatisticsDocumentList":{
+      "type":"list",
+      "member":{"shape":"SamplingBoostStatisticsDocument"},
+      "max":25
+    },
+    "SamplingRateBoost":{
+      "type":"structure",
+      "required":[
+        "MaxRate",
+        "CooldownWindowMinutes"
+      ],
+      "members":{
+        "MaxRate":{"shape":"MaxRate"},
+        "CooldownWindowMinutes":{"shape":"CooldownWindowMinutes"}
+      }
     },
     "SamplingRule":{
       "type":"structure",
@@ -1495,7 +1830,8 @@
         "HTTPMethod":{"shape":"HTTPMethod"},
         "URLPath":{"shape":"URLPath"},
         "Version":{"shape":"Version"},
-        "Attributes":{"shape":"AttributeMap"}
+        "Attributes":{"shape":"AttributeMap"},
+        "SamplingRateBoost":{"shape":"SamplingRateBoost"}
       }
     },
     "SamplingRuleRecord":{
@@ -1524,7 +1860,8 @@
         "ServiceType":{"shape":"ServiceType"},
         "HTTPMethod":{"shape":"HTTPMethod"},
         "URLPath":{"shape":"URLPath"},
-        "Attributes":{"shape":"AttributeMap"}
+        "Attributes":{"shape":"AttributeMap"},
+        "SamplingRateBoost":{"shape":"SamplingRateBoost"}
       }
     },
     "SamplingStatisticSummary":{
@@ -1585,7 +1922,8 @@
         "FixedRate":{"shape":"Double"},
         "ReservoirQuota":{"shape":"NullableInteger"},
         "ReservoirQuotaTTL":{"shape":"Timestamp"},
-        "Interval":{"shape":"NullableInteger"}
+        "Interval":{"shape":"NullableInteger"},
+        "SamplingBoost":{"shape":"SamplingBoost"}
       }
     },
     "SamplingTargetDocumentList":{
@@ -1665,6 +2003,47 @@
       "type":"string",
       "max":64
     },
+    "Span":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"SpanId"},
+        "Document":{"shape":"SpanDocument"}
+      }
+    },
+    "SpanDocument":{
+      "type":"string",
+      "max":204800
+    },
+    "SpanId":{
+      "type":"string",
+      "max":16,
+      "min":1
+    },
+    "SpanList":{
+      "type":"list",
+      "member":{"shape":"Span"},
+      "max":100,
+      "min":0
+    },
+    "StartTraceRetrievalRequest":{
+      "type":"structure",
+      "required":[
+        "TraceIds",
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "TraceIds":{"shape":"TraceIdListForRetrieval"},
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
+      }
+    },
+    "StartTraceRetrievalResult":{
+      "type":"structure",
+      "members":{
+        "RetrievalToken":{"shape":"RetrievalToken"}
+      }
+    },
     "String":{"type":"string"},
     "Tag":{
       "type":"structure",
@@ -1707,8 +2086,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1776,6 +2154,10 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "TotalCount":{
+      "type":"integer",
+      "min":0
+    },
     "Trace":{
       "type":"structure",
       "members":{
@@ -1789,6 +2171,13 @@
       "type":"list",
       "member":{"shape":"AvailabilityZoneDetail"}
     },
+    "TraceFormatType":{
+      "type":"string",
+      "enum":[
+        "XRAY",
+        "OTEL"
+      ]
+    },
     "TraceId":{
       "type":"string",
       "max":35,
@@ -1797,6 +2186,12 @@
     "TraceIdList":{
       "type":"list",
       "member":{"shape":"TraceId"}
+    },
+    "TraceIdListForRetrieval":{
+      "type":"list",
+      "member":{"shape":"TraceId"},
+      "max":100,
+      "min":0
     },
     "TraceInstanceIds":{
       "type":"list",
@@ -1810,10 +2205,30 @@
       "type":"list",
       "member":{"shape":"ResourceARNDetail"}
     },
+    "TraceSegmentDestination":{
+      "type":"string",
+      "enum":[
+        "XRay",
+        "CloudWatchLogs"
+      ]
+    },
+    "TraceSegmentDestinationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "ACTIVE"
+      ]
+    },
     "TraceSegmentDocument":{"type":"string"},
     "TraceSegmentDocumentList":{
       "type":"list",
       "member":{"shape":"TraceSegmentDocument"}
+    },
+    "TraceSpanList":{
+      "type":"list",
+      "member":{"shape":"RetrievedTrace"},
+      "max":5,
+      "min":0
     },
     "TraceSummary":{
       "type":"structure",
@@ -1901,8 +2316,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateGroupRequest":{
       "type":"structure",
@@ -1919,6 +2333,23 @@
         "Group":{"shape":"Group"}
       }
     },
+    "UpdateIndexingRuleRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Rule"
+      ],
+      "members":{
+        "Name":{"shape":"String"},
+        "Rule":{"shape":"IndexingRuleValueUpdate"}
+      }
+    },
+    "UpdateIndexingRuleResult":{
+      "type":"structure",
+      "members":{
+        "IndexingRule":{"shape":"IndexingRule"}
+      }
+    },
     "UpdateSamplingRuleRequest":{
       "type":"structure",
       "required":["SamplingRuleUpdate"],
@@ -1930,6 +2361,19 @@
       "type":"structure",
       "members":{
         "SamplingRuleRecord":{"shape":"SamplingRuleRecord"}
+      }
+    },
+    "UpdateTraceSegmentDestinationRequest":{
+      "type":"structure",
+      "members":{
+        "Destination":{"shape":"TraceSegmentDestination"}
+      }
+    },
+    "UpdateTraceSegmentDestinationResult":{
+      "type":"structure",
+      "members":{
+        "Destination":{"shape":"TraceSegmentDestination"},
+        "Status":{"shape":"TraceSegmentDestinationStatus"}
       }
     },
     "ValueWithServiceIds":{

@@ -57,8 +57,7 @@
     },
     "ActivityTask": {
       "base": "<p>Unit of work sent to an activity worker.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivityTaskCancelRequestedEventAttributes": {
       "base": "<p>Provides the details of the <code>ActivityTaskCancelRequested</code> event.</p>",
@@ -98,8 +97,7 @@
     },
     "ActivityTaskStatus": {
       "base": "<p>Status information about an activity task.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivityTaskTimedOutEventAttributes": {
       "base": "<p>Provides the details of the <code>ActivityTaskTimedOut</code> event.</p>",
@@ -135,8 +133,7 @@
     },
     "ActivityTypeDetail": {
       "base": "<p>Detailed information about an activity type.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActivityTypeInfo": {
       "base": "<p>Detailed information about an activity type.</p>",
@@ -153,8 +150,7 @@
     },
     "ActivityTypeInfos": {
       "base": "<p>Contains a paginated list of activity type information structures.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Arn": {
       "base": null,
@@ -339,23 +335,19 @@
     },
     "CountClosedWorkflowExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CountOpenWorkflowExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CountPendingActivityTasksInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CountPendingDecisionTasksInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Data": {
       "base": null,
@@ -428,8 +420,7 @@
     },
     "DecisionTask": {
       "base": "<p>A structure that represents a decision task. Decision tasks are sent to deciders in order for them to make decisions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DecisionTaskCompletedEventAttributes": {
       "base": "<p>Provides the details of the <code>DecisionTaskCompleted</code> event.</p>",
@@ -469,53 +460,43 @@
     },
     "DefaultUndefinedFault": {
       "base": "<p>The <code>StartWorkflowExecution</code> API action was called without the required parameters set.</p> <p>Some workflow execution parameters, such as the decision <code>taskList</code>, must be set to start the execution. However, these parameters might have been set as defaults when the workflow type was registered. In this case, you can omit these parameters from the <code>StartWorkflowExecution</code> call and Amazon SWF uses the values defined in the workflow type.</p> <note> <p>If these parameters aren't set and no default parameters were defined in the workflow type, this error is displayed.</p> </note>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteActivityTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkflowTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeprecateActivityTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeprecateDomainInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeprecateWorkflowTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeActivityTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDomainInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkflowExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkflowTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -530,8 +511,7 @@
     },
     "DomainAlreadyExistsFault": {
       "base": "<p>Returned if the domain already exists. You may get this fault if you are registering a domain that is either already registered or deprecated, or if you undeprecate a domain that is currently registered.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DomainConfiguration": {
       "base": "<p>Contains the configuration settings of a domain.</p>",
@@ -541,13 +521,11 @@
     },
     "DomainDeprecatedFault": {
       "base": "<p>Returned when the specified domain has been deprecated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DomainDetail": {
       "base": "<p>Contains details of a domain.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DomainInfo": {
       "base": "<p>Contains general information about a domain.</p>",
@@ -564,8 +542,7 @@
     },
     "DomainInfos": {
       "base": "<p>Contains a paginated collection of DomainInfo structures.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DomainName": {
       "base": null,
@@ -846,13 +823,11 @@
     },
     "GetWorkflowExecutionHistoryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "History": {
       "base": "<p>Paginated representation of a workflow history for a workflow execution. This is the up to date, complete and authoritative record of the events related to all tasks and events in the life of the workflow execution.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "HistoryEvent": {
       "base": "<p>Event within a workflow execution. A history event can be one of these types:</p> <ul> <li> <p> <code>ActivityTaskCancelRequested</code> – A <code>RequestCancelActivityTask</code> decision was received by the system.</p> </li> <li> <p> <code>ActivityTaskCanceled</code> – The activity task was successfully canceled.</p> </li> <li> <p> <code>ActivityTaskCompleted</code> – An activity worker successfully completed an activity task by calling <a>RespondActivityTaskCompleted</a>.</p> </li> <li> <p> <code>ActivityTaskFailed</code> – An activity worker failed an activity task by calling <a>RespondActivityTaskFailed</a>.</p> </li> <li> <p> <code>ActivityTaskScheduled</code> – An activity task was scheduled for execution.</p> </li> <li> <p> <code>ActivityTaskStarted</code> – The scheduled activity task was dispatched to a worker.</p> </li> <li> <p> <code>ActivityTaskTimedOut</code> – The activity task timed out.</p> </li> <li> <p> <code>CancelTimerFailed</code> – Failed to process CancelTimer decision. This happens when the decision isn't configured properly, for example no timer exists with the specified timer Id.</p> </li> <li> <p> <code>CancelWorkflowExecutionFailed</code> – A request to cancel a workflow execution failed.</p> </li> <li> <p> <code>ChildWorkflowExecutionCanceled</code> – A child workflow execution, started by this workflow execution, was canceled and closed.</p> </li> <li> <p> <code>ChildWorkflowExecutionCompleted</code> – A child workflow execution, started by this workflow execution, completed successfully and was closed.</p> </li> <li> <p> <code>ChildWorkflowExecutionFailed</code> – A child workflow execution, started by this workflow execution, failed to complete successfully and was closed.</p> </li> <li> <p> <code>ChildWorkflowExecutionStarted</code> – A child workflow execution was successfully started.</p> </li> <li> <p> <code>ChildWorkflowExecutionTerminated</code> – A child workflow execution, started by this workflow execution, was terminated.</p> </li> <li> <p> <code>ChildWorkflowExecutionTimedOut</code> – A child workflow execution, started by this workflow execution, timed out and was closed.</p> </li> <li> <p> <code>CompleteWorkflowExecutionFailed</code> – The workflow execution failed to complete.</p> </li> <li> <p> <code>ContinueAsNewWorkflowExecutionFailed</code> – The workflow execution failed to complete after being continued as a new workflow execution.</p> </li> <li> <p> <code>DecisionTaskCompleted</code> – The decider successfully completed a decision task by calling <a>RespondDecisionTaskCompleted</a>.</p> </li> <li> <p> <code>DecisionTaskScheduled</code> – A decision task was scheduled for the workflow execution.</p> </li> <li> <p> <code>DecisionTaskStarted</code> – The decision task was dispatched to a decider.</p> </li> <li> <p> <code>DecisionTaskTimedOut</code> – The decision task timed out.</p> </li> <li> <p> <code>ExternalWorkflowExecutionCancelRequested</code> – Request to cancel an external workflow execution was successfully delivered to the target execution.</p> </li> <li> <p> <code>ExternalWorkflowExecutionSignaled</code> – A signal, requested by this workflow execution, was successfully delivered to the target external workflow execution.</p> </li> <li> <p> <code>FailWorkflowExecutionFailed</code> – A request to mark a workflow execution as failed, itself failed.</p> </li> <li> <p> <code>MarkerRecorded</code> – A marker was recorded in the workflow history as the result of a <code>RecordMarker</code> decision.</p> </li> <li> <p> <code>RecordMarkerFailed</code> – A <code>RecordMarker</code> decision was returned as failed.</p> </li> <li> <p> <code>RequestCancelActivityTaskFailed</code> – Failed to process RequestCancelActivityTask decision. This happens when the decision isn't configured properly.</p> </li> <li> <p> <code>RequestCancelExternalWorkflowExecutionFailed</code> – Request to cancel an external workflow execution failed.</p> </li> <li> <p> <code>RequestCancelExternalWorkflowExecutionInitiated</code> – A request was made to request the cancellation of an external workflow execution.</p> </li> <li> <p> <code>ScheduleActivityTaskFailed</code> – Failed to process ScheduleActivityTask decision. This happens when the decision isn't configured properly, for example the activity type specified isn't registered.</p> </li> <li> <p> <code>SignalExternalWorkflowExecutionFailed</code> – The request to signal an external workflow execution failed.</p> </li> <li> <p> <code>SignalExternalWorkflowExecutionInitiated</code> – A request to signal an external workflow was made.</p> </li> <li> <p> <code>StartActivityTaskFailed</code> – A scheduled activity task failed to start.</p> </li> <li> <p> <code>StartChildWorkflowExecutionFailed</code> – Failed to process StartChildWorkflowExecution decision. This happens when the decision isn't configured properly, for example the workflow type specified isn't registered.</p> </li> <li> <p> <code>StartChildWorkflowExecutionInitiated</code> – A request was made to start a child workflow execution.</p> </li> <li> <p> <code>StartTimerFailed</code> – Failed to process StartTimer decision. This happens when the decision isn't configured properly, for example a timer already exists with the specified timer Id.</p> </li> <li> <p> <code>TimerCanceled</code> – A timer, previously started for this workflow execution, was successfully canceled.</p> </li> <li> <p> <code>TimerFired</code> – A timer, previously started for this workflow execution, fired.</p> </li> <li> <p> <code>TimerStarted</code> – A timer was started for the workflow execution due to a <code>StartTimer</code> decision.</p> </li> <li> <p> <code>WorkflowExecutionCancelRequested</code> – A request to cancel this workflow execution was made.</p> </li> <li> <p> <code>WorkflowExecutionCanceled</code> – The workflow execution was successfully canceled and closed.</p> </li> <li> <p> <code>WorkflowExecutionCompleted</code> – The workflow execution was closed due to successful completion.</p> </li> <li> <p> <code>WorkflowExecutionContinuedAsNew</code> – The workflow execution was closed and a new execution of the same type was created with the same workflowId.</p> </li> <li> <p> <code>WorkflowExecutionFailed</code> – The workflow execution closed due to a failure.</p> </li> <li> <p> <code>WorkflowExecutionSignaled</code> – An external signal was received for the workflow execution.</p> </li> <li> <p> <code>WorkflowExecutionStarted</code> – The workflow execution was started.</p> </li> <li> <p> <code>WorkflowExecutionTerminated</code> – The workflow execution was terminated.</p> </li> <li> <p> <code>WorkflowExecutionTimedOut</code> – The workflow execution was closed because a time out was exceeded.</p> </li> </ul>",
@@ -914,8 +889,7 @@
     },
     "LimitExceededFault": {
       "base": "<p>Returned by any operation if a system imposed limitation has been reached. To address this fault you should either clean up unused resources or increase the limit by contacting AWS.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LimitedData": {
       "base": null,
@@ -926,38 +900,31 @@
     },
     "ListActivityTypesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListClosedWorkflowExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDomainsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOpenWorkflowExecutionsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowTypesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MarkerName": {
       "base": null,
@@ -994,8 +961,7 @@
     },
     "OperationNotPermittedFault": {
       "base": "<p>Returned when the caller doesn't have sufficient permissions to invoke the action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PageSize": {
       "base": null,
@@ -1029,23 +995,19 @@
     },
     "PendingTaskCount": {
       "base": "<p>Contains the count of tasks in a task list.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PollForActivityTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PollForDecisionTaskInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RecordActivityTaskHeartbeatInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RecordMarkerDecisionAttributes": {
       "base": "<p>Provides the details of the <code>RecordMarker</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>You cannot use an IAM policy to constrain this action's parameters.</p> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"https://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>",
@@ -1067,18 +1029,15 @@
     },
     "RegisterActivityTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterDomainInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterWorkflowTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegistrationStatus": {
       "base": null,
@@ -1135,8 +1094,7 @@
     },
     "RequestCancelWorkflowExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceTag": {
       "base": "<p>Tags are key-value pairs that can be associated with Amazon SWF state machines and activities.</p> <p>Tags may only contain unicode letters, digits, whitespace, or these symbols: <code>_ . : / = + - @</code>.</p>",
@@ -1173,23 +1131,19 @@
     },
     "RespondActivityTaskCanceledInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RespondActivityTaskCompletedInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RespondActivityTaskFailedInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RespondDecisionTaskCompletedInput": {
       "base": "<p>Input data for a TaskCompleted response to a decision task.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReverseOrder": {
       "base": null,
@@ -1205,8 +1159,7 @@
     },
     "Run": {
       "base": "<p>Specifies the <code>runId</code> of a workflow execution.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ScheduleActivityTaskDecisionAttributes": {
       "base": "<p>Provides the details of the <code>ScheduleActivityTask</code> decision.</p> <p> <b>Access Control</b> </p> <p>You can use IAM policies to control this decision's access to Amazon SWF resources as follows:</p> <ul> <li> <p>Use a <code>Resource</code> element with the domain name to limit the action to only specified domains.</p> </li> <li> <p>Use an <code>Action</code> element to allow or deny permission to call this action.</p> </li> <li> <p>Constrain the following parameters by using a <code>Condition</code> element with the appropriate keys.</p> <ul> <li> <p> <code>activityType.name</code> – String constraint. The key is <code>swf:activityType.name</code>.</p> </li> <li> <p> <code>activityType.version</code> – String constraint. The key is <code>swf:activityType.version</code>.</p> </li> <li> <p> <code>taskList</code> – String constraint. The key is <code>swf:taskList.name</code>.</p> </li> </ul> </li> </ul> <p>If the caller doesn't have sufficient permissions to invoke the action, or the parameter values fall outside the specified constraints, the action fails. The associated event attribute's <code>cause</code> parameter is set to <code>OPERATION_NOT_PERMITTED</code>. For details and example IAM policies, see <a href=\"https://docs.aws.amazon.com/amazonswf/latest/developerguide/swf-dev-iam.html\">Using IAM to Manage Access to Amazon SWF Workflows</a> in the <i>Amazon SWF Developer Guide</i>.</p>",
@@ -1279,8 +1232,7 @@
     },
     "SignalWorkflowExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAtPreviousStartedEvent": {
       "base": null,
@@ -1344,8 +1296,7 @@
     },
     "StartWorkflowExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Tag": {
       "base": null,
@@ -1377,8 +1328,7 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TaskList": {
       "base": "<p>Represents a task list.</p>",
@@ -1445,8 +1395,7 @@
     },
     "TerminateWorkflowExecutionInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TimerCanceledEventAttributes": {
       "base": "<p> Provides the details of the <code>TimerCanceled</code> event. </p>",
@@ -1495,8 +1444,7 @@
     },
     "TooManyTagsFault": {
       "base": "<p>You've exceeded the number of tags allowed for a domain.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Truncated": {
       "base": null,
@@ -1507,43 +1455,35 @@
     },
     "TypeAlreadyExistsFault": {
       "base": "<p>Returned if the type already exists in the specified domain. You may get this fault if you are registering a type that is either already registered or deprecated, or if you undeprecate a type that is currently registered.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TypeDeprecatedFault": {
       "base": "<p>Returned when the specified activity or workflow type was already deprecated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TypeNotDeprecatedFault": {
       "base": "<p>Returned when the resource type has not been deprecated.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UndeprecateActivityTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UndeprecateDomainInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UndeprecateWorkflowTypeInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnknownResourceFault": {
       "base": "<p>Returned when the named resource cannot be found with in the scope of this operation (region or domain). This could happen if the named resource was never created or is no longer available for this operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Version": {
       "base": null,
@@ -1585,8 +1525,7 @@
     },
     "WorkflowExecutionAlreadyStartedFault": {
       "base": "<p>Returned by <a>StartWorkflowExecution</a> when an open execution with the same workflowId is already running in the specified domain.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkflowExecutionCancelRequestedCause": {
       "base": null,
@@ -1626,13 +1565,11 @@
     },
     "WorkflowExecutionCount": {
       "base": "<p>Contains the count of workflow executions returned from <a>CountOpenWorkflowExecutions</a> or <a>CountClosedWorkflowExecutions</a> </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkflowExecutionDetail": {
       "base": "<p>Contains details about a workflow execution.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkflowExecutionFailedEventAttributes": {
       "base": "<p>Provides the details of the <code>WorkflowExecutionFailed</code> event.</p>",
@@ -1664,8 +1601,7 @@
     },
     "WorkflowExecutionInfos": {
       "base": "<p>Contains a paginated list of information about workflow executions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkflowExecutionOpenCounts": {
       "base": "<p>Contains the counts of open tasks, child workflow executions and timers for a workflow execution.</p>",
@@ -1785,8 +1721,7 @@
     },
     "WorkflowTypeDetail": {
       "base": "<p>Contains details about a workflow type.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkflowTypeFilter": {
       "base": "<p>Used to filter workflow execution query results by type. Each parameter, if specified, defines a rule that must be satisfied by each returned result.</p>",
@@ -1812,8 +1747,7 @@
     },
     "WorkflowTypeInfos": {
       "base": "<p>Contains a paginated list of information structures about workflow types.</p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

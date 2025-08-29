@@ -4,11 +4,13 @@
     "apiVersion":"2013-01-01",
     "endpointPrefix":"cloudsearch",
     "protocol":"query",
+    "protocols":["query"],
     "serviceFullName":"Amazon CloudSearch",
     "serviceId":"CloudSearch",
     "signatureVersion":"v4",
     "uid":"cloudsearch-2013-01-01",
-    "xmlNamespace":"http://cloudsearch.amazonaws.com/doc/2013-01-01/"
+    "xmlNamespace":"http://cloudsearch.amazonaws.com/doc/2013-01-01/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BuildSuggesters":{
@@ -952,8 +954,7 @@
     },
     "DisabledOperationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"DisabledAction",
         "httpStatusCode":409,
@@ -1212,8 +1213,7 @@
     },
     "InternalException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"InternalException",
         "httpStatusCode":500
@@ -1222,8 +1222,7 @@
     },
     "InvalidTypeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"InvalidType",
         "httpStatusCode":409,
@@ -1244,8 +1243,7 @@
     },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"LimitExceeded",
         "httpStatusCode":409,
@@ -1354,8 +1352,7 @@
     "PolicyDocument":{"type":"string"},
     "ResourceAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"ResourceAlreadyExists",
         "httpStatusCode":409,
@@ -1365,8 +1362,7 @@
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{
         "code":"ResourceNotFound",
         "httpStatusCode":409,
@@ -1551,8 +1547,7 @@
     "UpdateTimestamp":{"type":"timestamp"},
     "ValidationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Word":{

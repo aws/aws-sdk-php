@@ -5,14 +5,33 @@
     "endpointPrefix":"cases",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"ConnectCases",
     "serviceFullName":"Amazon Connect Cases",
     "serviceId":"ConnectCases",
     "signatureVersion":"v4",
     "signingName":"cases",
-    "uid":"connectcases-2022-10-03"
+    "uid":"connectcases-2022-10-03",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "BatchGetCaseRule":{
+      "name":"BatchGetCaseRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/rules-batch",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchGetCaseRuleRequest"},
+      "output":{"shape":"BatchGetCaseRuleResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "BatchGetField":{
       "name":"BatchGetField",
       "http":{
@@ -65,6 +84,26 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "CreateCaseRule":{
+      "name":"CreateCaseRule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/case-rules",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateCaseRuleRequest"},
+      "output":{"shape":"CreateCaseRuleResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"}
       ],
       "idempotent":true
     },
@@ -165,6 +204,42 @@
       ],
       "idempotent":true
     },
+    "DeleteCase":{
+      "name":"DeleteCase",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{domainId}/cases/{caseId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteCaseRequest"},
+      "output":{"shape":"DeleteCaseResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteCaseRule":{
+      "name":"DeleteCaseRule",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{domainId}/case-rules/{caseRuleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteCaseRuleRequest"},
+      "output":{"shape":"DeleteCaseRuleResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
     "DeleteDomain":{
       "name":"DeleteDomain",
       "http":{
@@ -220,6 +295,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteRelatedItem":{
+      "name":"DeleteRelatedItem",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{domainId}/cases/{caseId}/related-items/{relatedItemId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteRelatedItemRequest"},
+      "output":{"shape":"DeleteRelatedItemResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
     },
@@ -336,6 +429,23 @@
       },
       "input":{"shape":"GetTemplateRequest"},
       "output":{"shape":"GetTemplateResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListCaseRules":{
+      "name":"ListCaseRules",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{domainId}/rules-list/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCaseRulesRequest"},
+      "output":{"shape":"ListCaseRulesResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -477,7 +587,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
       ]
     },
     "SearchCases":{
@@ -564,6 +675,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
+    },
+    "UpdateCaseRule":{
+      "name":"UpdateCaseRule",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/domains/{domainId}/case-rules/{caseRuleId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateCaseRuleRequest"},
+      "output":{"shape":"UpdateCaseRuleResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     },
     "UpdateField":{
       "name":"UpdateField",
@@ -732,6 +862,44 @@
         "topPanel":{"shape":"LayoutSections"}
       }
     },
+    "BatchGetCaseRuleRequest":{
+      "type":"structure",
+      "required":[
+        "caseRules",
+        "domainId"
+      ],
+      "members":{
+        "caseRules":{"shape":"CaseRuleIdentifierList"},
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        }
+      }
+    },
+    "BatchGetCaseRuleResponse":{
+      "type":"structure",
+      "required":[
+        "caseRules",
+        "errors"
+      ],
+      "members":{
+        "caseRules":{"shape":"BatchGetCaseRuleResponseCaseRulesList"},
+        "errors":{"shape":"BatchGetCaseRuleResponseErrorsList"}
+      }
+    },
+    "BatchGetCaseRuleResponseCaseRulesList":{
+      "type":"list",
+      "member":{"shape":"GetCaseRuleResponse"},
+      "max":50,
+      "min":0
+    },
+    "BatchGetCaseRuleResponseErrorsList":{
+      "type":"list",
+      "member":{"shape":"CaseRuleError"},
+      "max":50,
+      "min":0
+    },
     "BatchGetFieldIdentifierList":{
       "type":"list",
       "member":{"shape":"FieldIdentifier"},
@@ -819,6 +987,33 @@
       "type":"boolean",
       "box":true
     },
+    "BooleanCondition":{
+      "type":"structure",
+      "members":{
+        "equalTo":{"shape":"BooleanOperands"},
+        "notEqualTo":{"shape":"BooleanOperands"}
+      },
+      "union":true
+    },
+    "BooleanConditionList":{
+      "type":"list",
+      "member":{"shape":"BooleanCondition"},
+      "max":100,
+      "min":0
+    },
+    "BooleanOperands":{
+      "type":"structure",
+      "required":[
+        "operandOne",
+        "operandTwo",
+        "result"
+      ],
+      "members":{
+        "operandOne":{"shape":"OperandOne"},
+        "operandTwo":{"shape":"OperandTwo"},
+        "result":{"shape":"Boolean"}
+      }
+    },
     "CaseArn":{
       "type":"string",
       "max":500,
@@ -864,6 +1059,75 @@
       "max":500,
       "min":1
     },
+    "CaseRuleArn":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "CaseRuleDescription":{
+      "type":"string",
+      "max":255,
+      "min":0
+    },
+    "CaseRuleDetails":{
+      "type":"structure",
+      "members":{
+        "required":{"shape":"RequiredCaseRule"}
+      },
+      "union":true
+    },
+    "CaseRuleError":{
+      "type":"structure",
+      "required":[
+        "errorCode",
+        "id"
+      ],
+      "members":{
+        "errorCode":{"shape":"String"},
+        "id":{"shape":"CaseRuleId"},
+        "message":{"shape":"String"}
+      }
+    },
+    "CaseRuleId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "CaseRuleIdentifier":{
+      "type":"structure",
+      "required":["id"],
+      "members":{
+        "id":{"shape":"CaseRuleId"}
+      }
+    },
+    "CaseRuleIdentifierList":{
+      "type":"list",
+      "member":{"shape":"CaseRuleIdentifier"},
+      "max":50,
+      "min":1
+    },
+    "CaseRuleName":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^.*[\\S]$"
+    },
+    "CaseRuleSummary":{
+      "type":"structure",
+      "required":[
+        "caseRuleArn",
+        "caseRuleId",
+        "name",
+        "ruleType"
+      ],
+      "members":{
+        "caseRuleArn":{"shape":"CaseRuleArn"},
+        "caseRuleId":{"shape":"CaseRuleId"},
+        "description":{"shape":"CaseRuleDescription"},
+        "name":{"shape":"CaseRuleName"},
+        "ruleType":{"shape":"RuleType"}
+      }
+    },
     "CaseSummary":{
       "type":"structure",
       "required":[
@@ -882,7 +1146,7 @@
     },
     "CommentBody":{
       "type":"string",
-      "max":3000,
+      "max":15000,
       "min":1
     },
     "CommentBodyTextType":{
@@ -1001,6 +1265,35 @@
       "members":{
         "caseArn":{"shape":"CaseArn"},
         "caseId":{"shape":"CaseId"}
+      }
+    },
+    "CreateCaseRuleRequest":{
+      "type":"structure",
+      "required":[
+        "domainId",
+        "name",
+        "rule"
+      ],
+      "members":{
+        "description":{"shape":"CaseRuleDescription"},
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "name":{"shape":"CaseRuleName"},
+        "rule":{"shape":"CaseRuleDetails"}
+      }
+    },
+    "CreateCaseRuleResponse":{
+      "type":"structure",
+      "required":[
+        "caseRuleArn",
+        "caseRuleId"
+      ],
+      "members":{
+        "caseRuleArn":{"shape":"CaseRuleArn"},
+        "caseRuleId":{"shape":"CaseRuleId"}
       }
     },
     "CreateDomainRequest":{
@@ -1131,6 +1424,7 @@
         "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "name":{"shape":"TemplateName"},
         "requiredFields":{"shape":"RequiredFieldList"},
+        "rules":{"shape":"TemplateCaseRuleList"},
         "status":{"shape":"TemplateStatus"}
       }
     },
@@ -1148,6 +1442,61 @@
     "CreatedTime":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "CustomEntity":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_\\-\\.@:/ ]*[a-zA-Z0-9_\\-\\.@:/]$",
+      "sensitive":true
+    },
+    "DeleteCaseRequest":{
+      "type":"structure",
+      "required":[
+        "caseId",
+        "domainId"
+      ],
+      "members":{
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        },
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        }
+      }
+    },
+    "DeleteCaseResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteCaseRuleRequest":{
+      "type":"structure",
+      "required":[
+        "caseRuleId",
+        "domainId"
+      ],
+      "members":{
+        "caseRuleId":{
+          "shape":"CaseRuleId",
+          "location":"uri",
+          "locationName":"caseRuleId"
+        },
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        }
+      }
+    },
+    "DeleteCaseRuleResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "DeleteDomainRequest":{
       "type":"structure",
@@ -1209,6 +1558,36 @@
       }
     },
     "DeleteLayoutResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteRelatedItemRequest":{
+      "type":"structure",
+      "required":[
+        "caseId",
+        "domainId",
+        "relatedItemId"
+      ],
+      "members":{
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        },
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "relatedItemId":{
+          "shape":"RelatedItemId",
+          "location":"uri",
+          "locationName":"relatedItemId"
+        }
+      }
+    },
+    "DeleteRelatedItemResponse":{
       "type":"structure",
       "members":{
       }
@@ -1284,6 +1663,11 @@
       "box":true
     },
     "EmptyFieldValue":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "EmptyOperandValue":{
       "type":"structure",
       "members":{
       }
@@ -1483,7 +1867,7 @@
     },
     "FieldValueUnionStringValueString":{
       "type":"string",
-      "max":1500,
+      "max":3000,
       "min":0
     },
     "FileArn":{
@@ -1610,6 +1994,26 @@
       "max":100,
       "min":0
     },
+    "GetCaseRuleResponse":{
+      "type":"structure",
+      "required":[
+        "caseRuleArn",
+        "caseRuleId",
+        "name",
+        "rule"
+      ],
+      "members":{
+        "caseRuleArn":{"shape":"CaseRuleArn"},
+        "caseRuleId":{"shape":"CaseRuleId"},
+        "createdTime":{"shape":"CreatedTime"},
+        "deleted":{"shape":"Deleted"},
+        "description":{"shape":"CaseRuleDescription"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
+        "name":{"shape":"CaseRuleName"},
+        "rule":{"shape":"CaseRuleDetails"},
+        "tags":{"shape":"Tags"}
+      }
+    },
     "GetDomainRequest":{
       "type":"structure",
       "required":["domainId"],
@@ -1734,6 +2138,7 @@
         "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "name":{"shape":"TemplateName"},
         "requiredFields":{"shape":"RequiredFieldList"},
+        "rules":{"shape":"TemplateCaseRuleList"},
         "status":{"shape":"TemplateStatus"},
         "tags":{"shape":"Tags"},
         "templateArn":{"shape":"TemplateArn"},
@@ -1820,6 +2225,41 @@
     "LayoutSummaryList":{
       "type":"list",
       "member":{"shape":"LayoutSummary"}
+    },
+    "ListCaseRulesRequest":{
+      "type":"structure",
+      "required":["domainId"],
+      "members":{
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListCaseRulesResponse":{
+      "type":"structure",
+      "required":["caseRules"],
+      "members":{
+        "caseRules":{"shape":"ListCaseRulesResponseCaseRulesList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCaseRulesResponseCaseRulesList":{
+      "type":"list",
+      "member":{"shape":"CaseRuleSummary"},
+      "max":100,
+      "min":0
     },
     "ListCasesForContactRequest":{
       "type":"structure",
@@ -2061,6 +2501,28 @@
       "max":9000,
       "min":0
     },
+    "OperandOne":{
+      "type":"structure",
+      "members":{
+        "fieldId":{"shape":"FieldId"}
+      },
+      "union":true
+    },
+    "OperandTwo":{
+      "type":"structure",
+      "members":{
+        "booleanValue":{"shape":"Boolean"},
+        "doubleValue":{"shape":"Double"},
+        "emptyValue":{"shape":"EmptyOperandValue"},
+        "stringValue":{"shape":"OperandTwoStringValueString"}
+      },
+      "union":true
+    },
+    "OperandTwoStringValueString":{
+      "type":"string",
+      "max":1500,
+      "min":1
+    },
     "Order":{
       "type":"string",
       "enum":[
@@ -2098,7 +2560,8 @@
       "members":{
         "comment":{"shape":"CommentContent"},
         "contact":{"shape":"ContactContent"},
-        "file":{"shape":"FileContent"}
+        "file":{"shape":"FileContent"},
+        "sla":{"shape":"SlaContent"}
       },
       "union":true
     },
@@ -2119,7 +2582,8 @@
       "members":{
         "comment":{"shape":"CommentContent"},
         "contact":{"shape":"Contact"},
-        "file":{"shape":"FileContent"}
+        "file":{"shape":"FileContent"},
+        "sla":{"shape":"SlaInputContent"}
       },
       "union":true
     },
@@ -2128,7 +2592,8 @@
       "enum":[
         "Contact",
         "Comment",
-        "File"
+        "File",
+        "Sla"
       ]
     },
     "RelatedItemTypeFilter":{
@@ -2136,9 +2601,21 @@
       "members":{
         "comment":{"shape":"CommentFilter"},
         "contact":{"shape":"ContactFilter"},
-        "file":{"shape":"FileFilter"}
+        "file":{"shape":"FileFilter"},
+        "sla":{"shape":"SlaFilter"}
       },
       "union":true
+    },
+    "RequiredCaseRule":{
+      "type":"structure",
+      "required":[
+        "conditions",
+        "defaultValue"
+      ],
+      "members":{
+        "conditions":{"shape":"BooleanConditionList"},
+        "defaultValue":{"shape":"Boolean"}
+      }
     },
     "RequiredField":{
       "type":"structure",
@@ -2171,6 +2648,10 @@
       },
       "exception":true
     },
+    "RuleType":{
+      "type":"string",
+      "enum":["Required"]
+    },
     "SearchCasesRequest":{
       "type":"structure",
       "required":["domainId"],
@@ -2197,7 +2678,7 @@
     "SearchCasesRequestMaxResultsInteger":{
       "type":"integer",
       "box":true,
-      "max":25,
+      "max":100,
       "min":1
     },
     "SearchCasesRequestSearchTermString":{
@@ -2222,7 +2703,7 @@
     "SearchCasesResponseCasesList":{
       "type":"list",
       "member":{"shape":"SearchCasesResponseItem"},
-      "max":25,
+      "max":100,
       "min":0
     },
     "SearchCasesResponseItem":{
@@ -2335,6 +2816,94 @@
       },
       "exception":true
     },
+    "SlaCompletionTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "SlaConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "status",
+        "targetTime",
+        "type"
+      ],
+      "members":{
+        "completionTime":{"shape":"SlaCompletionTime"},
+        "fieldId":{"shape":"FieldId"},
+        "name":{"shape":"SlaName"},
+        "status":{"shape":"SlaStatus"},
+        "targetFieldValues":{"shape":"SlaFieldValueUnionList"},
+        "targetTime":{"shape":"SlaTargetTime"},
+        "type":{"shape":"SlaType"}
+      }
+    },
+    "SlaContent":{
+      "type":"structure",
+      "required":["slaConfiguration"],
+      "members":{
+        "slaConfiguration":{"shape":"SlaConfiguration"}
+      }
+    },
+    "SlaFieldValueUnionList":{
+      "type":"list",
+      "member":{"shape":"FieldValueUnion"},
+      "max":1,
+      "min":1
+    },
+    "SlaFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"SlaName"},
+        "status":{"shape":"SlaStatus"}
+      }
+    },
+    "SlaInputConfiguration":{
+      "type":"structure",
+      "required":[
+        "name",
+        "targetSlaMinutes",
+        "type"
+      ],
+      "members":{
+        "fieldId":{"shape":"FieldId"},
+        "name":{"shape":"SlaName"},
+        "targetFieldValues":{"shape":"SlaFieldValueUnionList"},
+        "targetSlaMinutes":{"shape":"TargetSlaMinutes"},
+        "type":{"shape":"SlaType"}
+      }
+    },
+    "SlaInputContent":{
+      "type":"structure",
+      "members":{
+        "slaInputConfiguration":{"shape":"SlaInputConfiguration"}
+      },
+      "union":true
+    },
+    "SlaName":{
+      "type":"string",
+      "max":500,
+      "min":1,
+      "pattern":"^.*[\\S]$",
+      "sensitive":true
+    },
+    "SlaStatus":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Overdue",
+        "Met",
+        "NotMet"
+      ]
+    },
+    "SlaTargetTime":{
+      "type":"timestamp",
+      "timestampFormat":"iso8601"
+    },
+    "SlaType":{
+      "type":"string",
+      "enum":["CaseField"]
+    },
     "Sort":{
       "type":"structure",
       "required":[
@@ -2379,10 +2948,22 @@
       "key":{"shape":"String"},
       "value":{"shape":"String"}
     },
+    "TargetSlaMinutes":{
+      "type":"long",
+      "box":true,
+      "max":129600,
+      "min":1
+    },
     "TemplateArn":{
       "type":"string",
       "max":500,
       "min":1
+    },
+    "TemplateCaseRuleList":{
+      "type":"list",
+      "member":{"shape":"TemplateRule"},
+      "max":50,
+      "min":0
     },
     "TemplateDescription":{
       "type":"string",
@@ -2399,6 +2980,17 @@
       "max":100,
       "min":1,
       "pattern":"^.*[\\S]$"
+    },
+    "TemplateRule":{
+      "type":"structure",
+      "required":[
+        "caseRuleId",
+        "fieldId"
+      ],
+      "members":{
+        "caseRuleId":{"shape":"CaseRuleId"},
+        "fieldId":{"shape":"FieldId"}
+      }
     },
     "TemplateStatus":{
       "type":"string",
@@ -2493,6 +3085,33 @@
       "members":{
       }
     },
+    "UpdateCaseRuleRequest":{
+      "type":"structure",
+      "required":[
+        "caseRuleId",
+        "domainId"
+      ],
+      "members":{
+        "caseRuleId":{
+          "shape":"CaseRuleId",
+          "location":"uri",
+          "locationName":"caseRuleId"
+        },
+        "description":{"shape":"CaseRuleDescription"},
+        "domainId":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainId"
+        },
+        "name":{"shape":"CaseRuleName"},
+        "rule":{"shape":"CaseRuleDetails"}
+      }
+    },
+    "UpdateCaseRuleResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateFieldRequest":{
       "type":"structure",
       "required":[
@@ -2561,6 +3180,7 @@
         "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "name":{"shape":"TemplateName"},
         "requiredFields":{"shape":"RequiredFieldList"},
+        "rules":{"shape":"TemplateCaseRuleList"},
         "status":{"shape":"TemplateStatus"},
         "templateId":{
           "shape":"TemplateId",
@@ -2582,6 +3202,7 @@
     "UserUnion":{
       "type":"structure",
       "members":{
+        "customEntity":{"shape":"CustomEntity"},
         "userArn":{"shape":"UserArn"}
       },
       "union":true

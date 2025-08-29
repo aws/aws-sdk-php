@@ -5,11 +5,13 @@
     "endpointPrefix":"workmail",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon WorkMail",
     "serviceId":"WorkMail",
     "signatureVersion":"v4",
     "targetPrefix":"WorkMailService",
-    "uid":"workmail-2017-10-01"
+    "uid":"workmail-2017-10-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateDelegateToResource":{
@@ -136,6 +138,19 @@
         {"shape":"OrganizationStateException"},
         {"shape":"ReservedNameException"},
         {"shape":"UnsupportedOperationException"}
+      ],
+      "idempotent":true
+    },
+    "CreateIdentityCenterApplication":{
+      "name":"CreateIdentityCenterApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIdentityCenterApplicationRequest"},
+      "output":{"shape":"CreateIdentityCenterApplicationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"}
       ],
       "idempotent":true
     },
@@ -307,6 +322,35 @@
       ],
       "idempotent":true
     },
+    "DeleteIdentityCenterApplication":{
+      "name":"DeleteIdentityCenterApplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIdentityCenterApplicationRequest"},
+      "output":{"shape":"DeleteIdentityCenterApplicationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteIdentityProviderConfiguration":{
+      "name":"DeleteIdentityProviderConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIdentityProviderConfigurationRequest"},
+      "output":{"shape":"DeleteIdentityProviderConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
     "DeleteImpersonationRole":{
       "name":"DeleteImpersonationRole",
       "http":{
@@ -375,6 +419,21 @@
       },
       "input":{"shape":"DeleteOrganizationRequest"},
       "output":{"shape":"DeleteOrganizationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
+    "DeletePersonalAccessToken":{
+      "name":"DeletePersonalAccessToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeletePersonalAccessTokenRequest"},
+      "output":{"shape":"DeletePersonalAccessTokenResponse"},
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"OrganizationNotFoundException"},
@@ -515,6 +574,22 @@
       ],
       "idempotent":true
     },
+    "DescribeIdentityProviderConfiguration":{
+      "name":"DescribeIdentityProviderConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIdentityProviderConfigurationRequest"},
+      "output":{"shape":"DescribeIdentityProviderConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "DescribeInboundDmarcSettings":{
       "name":"DescribeInboundDmarcSettings",
       "http":{
@@ -585,6 +660,8 @@
       "input":{"shape":"DescribeUserRequest"},
       "output":{"shape":"DescribeUserResponse"},
       "errors":[
+        {"shape":"DirectoryServiceAuthenticationFailedException"},
+        {"shape":"DirectoryUnavailableException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidParameterException"},
         {"shape":"OrganizationNotFoundException"},
@@ -756,6 +833,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetPersonalAccessTokenMetadata":{
+      "name":"GetPersonalAccessTokenMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetPersonalAccessTokenMetadataRequest"},
+      "output":{"shape":"GetPersonalAccessTokenMetadataResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
     "ListAccessControlRules":{
       "name":"ListAccessControlRules",
       "http":{
@@ -796,7 +889,8 @@
       "output":{"shape":"ListAvailabilityConfigurationsResponse"},
       "errors":[
         {"shape":"OrganizationNotFoundException"},
-        {"shape":"OrganizationStateException"}
+        {"shape":"OrganizationStateException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "ListGroupMembers":{
@@ -951,6 +1045,23 @@
       ],
       "idempotent":true
     },
+    "ListPersonalAccessTokens":{
+      "name":"ListPersonalAccessTokens",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListPersonalAccessTokensRequest"},
+      "output":{"shape":"ListPersonalAccessTokensResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"EntityStateException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
     "ListResourceDelegates":{
       "name":"ListResourceDelegates",
       "http":{
@@ -1042,6 +1153,22 @@
         {"shape":"InvalidParameterException"},
         {"shape":"OrganizationNotFoundException"},
         {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
+    "PutIdentityProviderConfiguration":{
+      "name":"PutIdentityProviderConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutIdentityProviderConfigurationRequest"},
+      "output":{"shape":"PutIdentityProviderConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -1477,6 +1604,12 @@
       "min":1,
       "pattern":"arn:aws:workmail:[a-z0-9-]*:[a-z0-9-]+:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}"
     },
+    "ApplicationArn":{
+      "type":"string",
+      "max":1224,
+      "min":10,
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso::\\d{12}:application/(sso)?ins-[a-zA-Z0-9-.]{16}/apl-[a-zA-Z0-9]{16}$"
+    },
     "AssociateDelegateToResourceRequest":{
       "type":"structure",
       "required":[
@@ -1492,8 +1625,7 @@
     },
     "AssociateDelegateToResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssociateMemberToGroupRequest":{
       "type":"structure",
@@ -1510,8 +1642,7 @@
     },
     "AssociateMemberToGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AssumeImpersonationRoleRequest":{
       "type":"structure",
@@ -1581,8 +1712,7 @@
     },
     "CancelMailboxExportJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateAliasRequest":{
       "type":"structure",
@@ -1599,8 +1729,7 @@
     },
     "CreateAliasResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateAvailabilityConfigurationRequest":{
       "type":"structure",
@@ -1621,8 +1750,7 @@
     },
     "CreateAvailabilityConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateGroupRequest":{
       "type":"structure",
@@ -1640,6 +1768,27 @@
       "type":"structure",
       "members":{
         "GroupId":{"shape":"WorkMailIdentifier"}
+      }
+    },
+    "CreateIdentityCenterApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "InstanceArn"
+      ],
+      "members":{
+        "Name":{"shape":"IdentityCenterApplicationName"},
+        "InstanceArn":{"shape":"InstanceArn"},
+        "ClientToken":{
+          "shape":"IdempotencyClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIdentityCenterApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "ApplicationArn":{"shape":"ApplicationArn"}
       }
     },
     "CreateImpersonationRoleRequest":{
@@ -1757,7 +1906,8 @@
         "Role":{"shape":"UserRole"},
         "FirstName":{"shape":"UserAttribute"},
         "LastName":{"shape":"UserAttribute"},
-        "HiddenFromGlobalAddressList":{"shape":"Boolean"}
+        "HiddenFromGlobalAddressList":{"shape":"Boolean"},
+        "IdentityProviderUserId":{"shape":"IdentityProviderUserId"}
       }
     },
     "CreateUserResponse":{
@@ -1790,8 +1940,7 @@
     },
     "DeleteAccessControlRuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAliasRequest":{
       "type":"structure",
@@ -1808,8 +1957,7 @@
     },
     "DeleteAliasResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAvailabilityConfigurationRequest":{
       "type":"structure",
@@ -1824,8 +1972,7 @@
     },
     "DeleteAvailabilityConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEmailMonitoringConfigurationRequest":{
       "type":"structure",
@@ -1836,8 +1983,7 @@
     },
     "DeleteEmailMonitoringConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteGroupRequest":{
       "type":"structure",
@@ -1852,8 +1998,29 @@
     },
     "DeleteGroupResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteIdentityCenterApplicationRequest":{
+      "type":"structure",
+      "required":["ApplicationArn"],
       "members":{
+        "ApplicationArn":{"shape":"ApplicationArn"}
       }
+    },
+    "DeleteIdentityCenterApplicationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteIdentityProviderConfigurationRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"}
+      }
+    },
+    "DeleteIdentityProviderConfigurationResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteImpersonationRoleRequest":{
       "type":"structure",
@@ -1868,8 +2035,7 @@
     },
     "DeleteImpersonationRoleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMailboxPermissionsRequest":{
       "type":"structure",
@@ -1886,8 +2052,7 @@
     },
     "DeleteMailboxPermissionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMobileDeviceAccessOverrideRequest":{
       "type":"structure",
@@ -1904,8 +2069,7 @@
     },
     "DeleteMobileDeviceAccessOverrideResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteMobileDeviceAccessRuleRequest":{
       "type":"structure",
@@ -1920,8 +2084,7 @@
     },
     "DeleteMobileDeviceAccessRuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteOrganizationRequest":{
       "type":"structure",
@@ -1936,7 +2099,8 @@
         },
         "OrganizationId":{"shape":"OrganizationId"},
         "DeleteDirectory":{"shape":"Boolean"},
-        "ForceDelete":{"shape":"Boolean"}
+        "ForceDelete":{"shape":"Boolean"},
+        "DeleteIdentityCenterApplication":{"shape":"Boolean"}
       }
     },
     "DeleteOrganizationResponse":{
@@ -1945,6 +2109,21 @@
         "OrganizationId":{"shape":"OrganizationId"},
         "State":{"shape":"String"}
       }
+    },
+    "DeletePersonalAccessTokenRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "PersonalAccessTokenId"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "PersonalAccessTokenId":{"shape":"PersonalAccessTokenId"}
+      }
+    },
+    "DeletePersonalAccessTokenResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeleteResourceRequest":{
       "type":"structure",
@@ -1959,8 +2138,7 @@
     },
     "DeleteResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRetentionPolicyRequest":{
       "type":"structure",
@@ -1975,8 +2153,7 @@
     },
     "DeleteRetentionPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUserRequest":{
       "type":"structure",
@@ -1991,8 +2168,7 @@
     },
     "DeleteUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterFromWorkMailRequest":{
       "type":"structure",
@@ -2007,8 +2183,7 @@
     },
     "DeregisterFromWorkMailResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterMailDomainRequest":{
       "type":"structure",
@@ -2023,8 +2198,7 @@
     },
     "DeregisterMailDomainResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeEmailMonitoringConfigurationRequest":{
       "type":"structure",
@@ -2080,6 +2254,21 @@
         "EnabledDate":{"shape":"Timestamp"},
         "DisabledDate":{"shape":"Timestamp"},
         "HiddenFromGlobalAddressList":{"shape":"Boolean"}
+      }
+    },
+    "DescribeIdentityProviderConfigurationRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"}
+      }
+    },
+    "DescribeIdentityProviderConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "AuthenticationMode":{"shape":"IdentityProviderAuthenticationMode"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "PersonalAccessTokenConfiguration":{"shape":"PersonalAccessTokenConfiguration"}
       }
     },
     "DescribeInboundDmarcSettingsRequest":{
@@ -2208,7 +2397,9 @@
         "ZipCode":{"shape":"UserAttribute"},
         "Department":{"shape":"UserAttribute"},
         "Country":{"shape":"UserAttribute"},
-        "Office":{"shape":"UserAttribute"}
+        "Office":{"shape":"UserAttribute"},
+        "IdentityProviderUserId":{"shape":"IdentityProviderUserId"},
+        "IdentityProviderIdentityStoreId":{"shape":"IdentityProviderIdentityStoreId"}
       }
     },
     "Description":{
@@ -2313,8 +2504,7 @@
     },
     "DisassociateDelegateFromResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisassociateMemberFromGroupRequest":{
       "type":"structure",
@@ -2331,8 +2521,7 @@
     },
     "DisassociateMemberFromGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DnsRecord":{
       "type":"structure",
@@ -2641,6 +2830,29 @@
         "DateModified":{"shape":"Timestamp"}
       }
     },
+    "GetPersonalAccessTokenMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "PersonalAccessTokenId"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "PersonalAccessTokenId":{"shape":"PersonalAccessTokenId"}
+      }
+    },
+    "GetPersonalAccessTokenMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "PersonalAccessTokenId":{"shape":"PersonalAccessTokenId"},
+        "UserId":{"shape":"WorkMailIdentifier"},
+        "Name":{"shape":"PersonalAccessTokenName"},
+        "DateCreated":{"shape":"Timestamp"},
+        "DateLastUsed":{"shape":"Timestamp"},
+        "ExpiresTime":{"shape":"Timestamp"},
+        "Scopes":{"shape":"PersonalAccessTokenScopeList"}
+      }
+    },
     "Group":{
       "type":"structure",
       "members":{
@@ -2684,6 +2896,54 @@
       "max":128,
       "min":1,
       "pattern":"[\\x21-\\x7e]+"
+    },
+    "IdentityCenterApplicationName":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"^[\\w+=,.@-]+$"
+    },
+    "IdentityCenterConfiguration":{
+      "type":"structure",
+      "required":[
+        "InstanceArn",
+        "ApplicationArn"
+      ],
+      "members":{
+        "InstanceArn":{"shape":"InstanceArn"},
+        "ApplicationArn":{"shape":"ApplicationArn"}
+      }
+    },
+    "IdentityProviderAuthenticationMode":{
+      "type":"string",
+      "enum":[
+        "IDENTITY_PROVIDER_ONLY",
+        "IDENTITY_PROVIDER_AND_DIRECTORY"
+      ]
+    },
+    "IdentityProviderIdentityStoreId":{
+      "type":"string",
+      "max":36,
+      "min":1,
+      "pattern":"^d-[0-9a-f]{10}$|^[0-9a-f]{8}\\\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\\\b[0-9a-f]{12}$"
+    },
+    "IdentityProviderUserId":{
+      "type":"string",
+      "max":47,
+      "min":1,
+      "pattern":"^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$"
+    },
+    "IdentityProviderUserIdForUpdate":{
+      "type":"string",
+      "max":47,
+      "min":0,
+      "pattern":"^$|^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$"
+    },
+    "IdentityProviderUserIdPrefix":{
+      "type":"string",
+      "max":47,
+      "min":1,
+      "pattern":"^[A-Fa-f0-9-]+$"
     },
     "ImpersonationMatchedRule":{
       "type":"structure",
@@ -2789,6 +3049,12 @@
       "max":256,
       "min":1,
       "pattern":"[\\x21-\\x7e]+"
+    },
+    "InstanceArn":{
+      "type":"string",
+      "max":1124,
+      "min":10,
+      "pattern":"^arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-b):sso:::instance/(sso)?ins-[a-zA-Z0-9-.]{16}$"
     },
     "InvalidConfigurationException":{
       "type":"structure",
@@ -3100,6 +3366,23 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListPersonalAccessTokensRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListPersonalAccessTokensResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "PersonalAccessTokenSummaries":{"shape":"PersonalAccessTokenSummaryList"}
+      }
+    },
     "ListResourceDelegatesRequest":{
       "type":"structure",
       "required":[
@@ -3164,7 +3447,8 @@
         "UsernamePrefix":{"shape":"String"},
         "DisplayNamePrefix":{"shape":"UserAttribute"},
         "PrimaryEmailPrefix":{"shape":"String"},
-        "State":{"shape":"EntityState"}
+        "State":{"shape":"EntityState"},
+        "IdentityProviderUserIdPrefix":{"shape":"IdentityProviderUserIdPrefix"}
       }
     },
     "ListUsersRequest":{
@@ -3382,7 +3666,8 @@
     "NewResourceDescription":{
       "type":"string",
       "max":64,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "NextToken":{
       "type":"string",
@@ -3470,6 +3755,67 @@
       "type":"list",
       "member":{"shape":"Permission"}
     },
+    "PersonalAccessTokenConfiguration":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"PersonalAccessTokenConfigurationStatus"},
+        "LifetimeInDays":{"shape":"PersonalAccessTokenLifetimeInDays"}
+      }
+    },
+    "PersonalAccessTokenConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "PersonalAccessTokenId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "PersonalAccessTokenLifetimeInDays":{
+      "type":"integer",
+      "box":true,
+      "max":3653,
+      "min":1
+    },
+    "PersonalAccessTokenName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[^\\x00-\\x1F\\x7F\\x3C\\x3E\\x5C]+"
+    },
+    "PersonalAccessTokenScope":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\x00-\\x1F\\x7F\\x3C\\x3E\\x5C]+"
+    },
+    "PersonalAccessTokenScopeList":{
+      "type":"list",
+      "member":{"shape":"PersonalAccessTokenScope"},
+      "max":10,
+      "min":1
+    },
+    "PersonalAccessTokenSummary":{
+      "type":"structure",
+      "members":{
+        "PersonalAccessTokenId":{"shape":"PersonalAccessTokenId"},
+        "UserId":{"shape":"WorkMailIdentifier"},
+        "Name":{"shape":"PersonalAccessTokenName"},
+        "DateCreated":{"shape":"Timestamp"},
+        "DateLastUsed":{"shape":"Timestamp"},
+        "ExpiresTime":{"shape":"Timestamp"},
+        "Scopes":{"shape":"PersonalAccessTokenScopeList"}
+      }
+    },
+    "PersonalAccessTokenSummaryList":{
+      "type":"list",
+      "member":{"shape":"PersonalAccessTokenSummary"}
+    },
     "PolicyDescription":{
       "type":"string",
       "max":256,
@@ -3501,8 +3847,7 @@
     },
     "PutAccessControlRuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailMonitoringConfigurationRequest":{
       "type":"structure",
@@ -3519,8 +3864,26 @@
     },
     "PutEmailMonitoringConfigurationResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "PutIdentityProviderConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "AuthenticationMode",
+        "IdentityCenterConfiguration",
+        "PersonalAccessTokenConfiguration"
+      ],
       "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "AuthenticationMode":{"shape":"IdentityProviderAuthenticationMode"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"},
+        "PersonalAccessTokenConfiguration":{"shape":"PersonalAccessTokenConfiguration"}
       }
+    },
+    "PutIdentityProviderConfigurationResponse":{
+      "type":"structure",
+      "members":{}
     },
     "PutInboundDmarcSettingsRequest":{
       "type":"structure",
@@ -3535,8 +3898,7 @@
     },
     "PutInboundDmarcSettingsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutMailboxPermissionsRequest":{
       "type":"structure",
@@ -3555,8 +3917,7 @@
     },
     "PutMailboxPermissionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutMobileDeviceAccessOverrideRequest":{
       "type":"structure",
@@ -3576,8 +3937,7 @@
     },
     "PutMobileDeviceAccessOverrideResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutRetentionPolicyRequest":{
       "type":"structure",
@@ -3596,8 +3956,7 @@
     },
     "PutRetentionPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RedactedEwsAvailabilityProvider":{
       "type":"structure",
@@ -3623,8 +3982,7 @@
     },
     "RegisterMailDomainResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RegisterToWorkMailRequest":{
       "type":"structure",
@@ -3641,8 +3999,7 @@
     },
     "RegisterToWorkMailResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ReservedNameException":{
       "type":"structure",
@@ -3666,8 +4023,7 @@
     },
     "ResetPasswordResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Resource":{
       "type":"structure",
@@ -3689,7 +4045,8 @@
     "ResourceDescription":{
       "type":"string",
       "max":64,
-      "min":1
+      "min":1,
+      "sensitive":true
     },
     "ResourceId":{
       "type":"string",
@@ -3835,8 +4192,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3894,8 +4250,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAvailabilityConfigurationRequest":{
       "type":"structure",
@@ -3912,8 +4267,7 @@
     },
     "UpdateAvailabilityConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDefaultMailDomainRequest":{
       "type":"structure",
@@ -3928,8 +4282,7 @@
     },
     "UpdateDefaultMailDomainResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateGroupRequest":{
       "type":"structure",
@@ -3945,8 +4298,7 @@
     },
     "UpdateGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateImpersonationRoleRequest":{
       "type":"structure",
@@ -3968,8 +4320,7 @@
     },
     "UpdateImpersonationRoleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateMailboxQuotaRequest":{
       "type":"structure",
@@ -3986,8 +4337,7 @@
     },
     "UpdateMailboxQuotaResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateMobileDeviceAccessRuleRequest":{
       "type":"structure",
@@ -4015,8 +4365,7 @@
     },
     "UpdateMobileDeviceAccessRuleResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePrimaryEmailAddressRequest":{
       "type":"structure",
@@ -4033,8 +4382,7 @@
     },
     "UpdatePrimaryEmailAddressResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateResourceRequest":{
       "type":"structure",
@@ -4054,8 +4402,7 @@
     },
     "UpdateResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateUserRequest":{
       "type":"structure",
@@ -4080,13 +4427,13 @@
         "ZipCode":{"shape":"UserAttribute"},
         "Department":{"shape":"UserAttribute"},
         "Country":{"shape":"UserAttribute"},
-        "Office":{"shape":"UserAttribute"}
+        "Office":{"shape":"UserAttribute"},
+        "IdentityProviderUserId":{"shape":"IdentityProviderUserIdForUpdate"}
       }
     },
     "UpdateUserResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{
       "type":"string",
@@ -4103,7 +4450,9 @@
         "State":{"shape":"EntityState"},
         "UserRole":{"shape":"UserRole"},
         "EnabledDate":{"shape":"Timestamp"},
-        "DisabledDate":{"shape":"Timestamp"}
+        "DisabledDate":{"shape":"Timestamp"},
+        "IdentityProviderUserId":{"shape":"IdentityProviderUserId"},
+        "IdentityProviderIdentityStoreId":{"shape":"IdentityProviderIdentityStoreId"}
       }
     },
     "UserAttribute":{

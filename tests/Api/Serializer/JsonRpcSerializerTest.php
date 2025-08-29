@@ -44,7 +44,7 @@ class JsonRpcSerializerTest extends TestCase
         $cmd = new Command('foo', ['baz' => 'bam']);
         $request = $j($cmd);
         $this->assertSame('POST', $request->getMethod());
-        $this->assertSame('http://foo.com', (string) $request->getUri());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
         $this->assertSame(
             'application/x-amz-json-1.1',
             $request->getHeaderLine('Content-Type')
@@ -85,6 +85,6 @@ class JsonRpcSerializerTest extends TestCase
         $cmd = new Command('foo', ['baz' => []]);
         $endpoint = new RulesetEndpoint('https://foo.com');
         $request = $q($cmd, $endpoint);
-        $this->assertSame('http://foo.com', (string) $request->getUri());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
     }
 }

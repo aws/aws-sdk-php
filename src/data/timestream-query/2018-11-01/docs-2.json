@@ -8,11 +8,11 @@
     "DescribeAccountSettings": "<p>Describes the settings for your account that include the query pricing model and the configured maximum TCUs the service can use for your query workload.</p> <p>You're charged only for the duration of compute units used for your workloads.</p>",
     "DescribeEndpoints": "<p>DescribeEndpoints returns a list of available endpoints to make Timestream API calls against. This API is available through both Write and Query.</p> <p>Because the Timestream SDKs are designed to transparently work with the service’s architecture, including the management and mapping of the service endpoints, <i>it is not recommended that you use this API unless</i>:</p> <ul> <li> <p>You are using <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/VPCEndpoints\">VPC endpoints (Amazon Web Services PrivateLink) with Timestream </a> </p> </li> <li> <p>Your application uses a programming language that does not yet have SDK support</p> </li> <li> <p>You require better control over the client-side implementation</p> </li> </ul> <p>For detailed information on how and when to use and implement DescribeEndpoints, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/Using.API.html#Using-API.endpoint-discovery\">The Endpoint Discovery Pattern</a>.</p>",
     "DescribeScheduledQuery": "<p>Provides detailed information about a scheduled query.</p>",
-    "ExecuteScheduledQuery": "<p> You can use this API to run a scheduled query manually. </p>",
+    "ExecuteScheduledQuery": "<p> You can use this API to run a scheduled query manually. </p> <p>If you enabled <code>QueryInsights</code>, this API also returns insights and metrics related to the query that you executed as part of an Amazon SNS notification. <code>QueryInsights</code> helps with performance tuning of your query. For more information about <code>QueryInsights</code>, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/using-query-insights.html\">Using query insights to optimize queries in Amazon Timestream</a>.</p>",
     "ListScheduledQueries": "<p>Gets a list of all scheduled queries in the caller's Amazon account and Region. <code>ListScheduledQueries</code> is eventually consistent. </p>",
     "ListTagsForResource": "<p>List all tags on a Timestream query resource.</p>",
     "PrepareQuery": "<p>A synchronous operation that allows you to submit a query with parameters to be stored by Timestream for later running. Timestream only supports using this operation with <code>ValidateOnly</code> set to <code>true</code>. </p>",
-    "Query": "<p> <code>Query</code> is a synchronous operation that enables you to run a query against your Amazon Timestream data. <code>Query</code> will time out after 60 seconds. You must update the default timeout in the SDK to support a timeout of 60 seconds. See the <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.run-query.html\">code sample</a> for details. </p> <p>Your query request will fail in the following cases:</p> <ul> <li> <p> If you submit a <code>Query</code> request with the same client token outside of the 5-minute idempotency window. </p> </li> <li> <p> If you submit a <code>Query</code> request with the same client token, but change other parameters, within the 5-minute idempotency window. </p> </li> <li> <p> If the size of the row (including the query metadata) exceeds 1 MB, then the query will fail with the following error message: </p> <p> <code>Query aborted as max page response size has been exceeded by the output result row</code> </p> </li> <li> <p> If the IAM principal of the query initiator and the result reader are not the same and/or the query initiator and the result reader do not have the same query string in the query requests, the query will fail with an <code>Invalid pagination token</code> error. </p> </li> </ul>",
+    "Query": "<p> <code>Query</code> is a synchronous operation that enables you to run a query against your Amazon Timestream data.</p> <p>If you enabled <code>QueryInsights</code>, this API also returns insights and metrics related to the query that you executed. <code>QueryInsights</code> helps with performance tuning of your query. For more information about <code>QueryInsights</code>, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/using-query-insights.html\">Using query insights to optimize queries in Amazon Timestream</a>.</p> <note> <p>The maximum number of <code>Query</code> API requests you're allowed to make with <code>QueryInsights</code> enabled is 1 query per second (QPS). If you exceed this query rate, it might result in throttling.</p> </note> <p> <code>Query</code> will time out after 60 seconds. You must update the default timeout in the SDK to support a timeout of 60 seconds. See the <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.run-query.html\">code sample</a> for details. </p> <p>Your query request will fail in the following cases:</p> <ul> <li> <p> If you submit a <code>Query</code> request with the same client token outside of the 5-minute idempotency window. </p> </li> <li> <p> If you submit a <code>Query</code> request with the same client token, but change other parameters, within the 5-minute idempotency window. </p> </li> <li> <p> If the size of the row (including the query metadata) exceeds 1 MB, then the query will fail with the following error message: </p> <p> <code>Query aborted as max page response size has been exceeded by the output result row</code> </p> </li> <li> <p> If the IAM principal of the query initiator and the result reader are not the same and/or the query initiator and the result reader do not have the same query string in the query requests, the query will fail with an <code>Invalid pagination token</code> error. </p> </li> </ul>",
     "TagResource": "<p>Associate a set of tags with a Timestream resource. You can then activate these user-defined tags so that they appear on the Billing and Cost Management console for cost allocation tracking. </p>",
     "UntagResource": "<p>Removes the association of tags from a Timestream query resource.</p>",
     "UpdateAccountSettings": "<p>Transitions your account to use TCUs for query pricing and modifies the maximum query compute units that you've configured. If you reduce the value of <code>MaxQueryTCU</code> to a desired configuration, the new value can take up to 24 hours to be effective.</p> <note> <p>After you've transitioned your account to use TCUs for query pricing, you can't transition to using bytes scanned for query pricing.</p> </note>",
@@ -20,19 +20,28 @@
   },
   "shapes": {
     "AccessDeniedException": {
-      "base": "<p> You are not authorized to perform this action. </p>",
+      "base": "<p>You do not have the necessary permissions to access the account settings.</p>",
+      "refs": {}
+    },
+    "AccountSettingsNotificationConfiguration": {
+      "base": "<p>Configuration settings for notifications related to account settings.</p>",
       "refs": {
+        "ProvisionedCapacityRequest$NotificationConfiguration": "<p>Configuration settings for notifications related to the provisioned capacity update.</p>",
+        "ProvisionedCapacityResponse$NotificationConfiguration": "<p>An object that contains settings for notifications that are sent whenever the provisioned capacity settings are modified. This field is only visible when the compute mode is <code>PROVISIONED</code>.</p>"
       }
     },
     "AmazonResourceName": {
       "base": null,
       "refs": {
+        "AccountSettingsNotificationConfiguration$RoleArn": "<p>An Amazon Resource Name (ARN) that grants Timestream permission to publish notifications. This field is only visible if SNS Topic is provided when updating the account settings.</p>",
         "CreateScheduledQueryRequest$ScheduledQueryExecutionRoleArn": "<p>The ARN for the IAM role that Timestream will assume when running the scheduled query. </p>",
         "CreateScheduledQueryResponse$Arn": "<p>ARN for the created scheduled query.</p>",
         "DeleteScheduledQueryRequest$ScheduledQueryArn": "<p>The ARN of the scheduled query. </p>",
         "DescribeScheduledQueryRequest$ScheduledQueryArn": "<p>The ARN of the scheduled query.</p>",
         "ExecuteScheduledQueryRequest$ScheduledQueryArn": "<p>ARN of the scheduled query.</p>",
         "ListTagsForResourceRequest$ResourceARN": "<p>The Timestream resource with tags to be listed. This value is an Amazon Resource Name (ARN).</p>",
+        "QuerySpatialCoverageMax$TableArn": "<p>The Amazon Resource Name (ARN) of the table with the most sub-optimal spatial pruning.</p>",
+        "QueryTemporalRangeMax$TableArn": "<p>The Amazon Resource Name (ARN) of the table which is queried with the largest time range.</p>",
         "ResourceNotFoundException$ScheduledQueryArn": "<p>The ARN of the scheduled query.</p>",
         "ScheduledQuery$Arn": "<p>The Amazon Resource Name.</p>",
         "ScheduledQueryDescription$Arn": "<p>Scheduled query ARN.</p>",
@@ -45,13 +54,11 @@
     },
     "CancelQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelQueryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientRequestToken": {
       "base": null,
@@ -81,20 +88,24 @@
         "Type$RowColumnInfo": "<p>Indicates if the column is a row.</p>"
       }
     },
+    "ComputeMode": {
+      "base": null,
+      "refs": {
+        "QueryComputeRequest$ComputeMode": "<p>The mode in which Timestream Compute Units (TCUs) are allocated and utilized within an account. Note that in the Asia Pacific (Mumbai) region, the API operation only recognizes the value <code>PROVISIONED</code>.</p>",
+        "QueryComputeResponse$ComputeMode": "<p>The mode in which Timestream Compute Units (TCUs) are allocated and utilized within an account. Note that in the Asia Pacific (Mumbai) region, the API operation only recognizes the value <code>PROVISIONED</code>.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p> Unable to poll results for a cancelled query. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScheduledQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScheduledQueryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Datum": {
       "base": "<p> Datum represents a single data point in a query result. </p>",
@@ -112,38 +123,31 @@
     },
     "DeleteScheduledQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccountSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEndpointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeScheduledQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeScheduledQueryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DimensionMapping": {
       "base": "<p>This type is used to map column(s) from the query result to a dimension in the destination table.</p>",
@@ -166,6 +170,7 @@
     "Double": {
       "base": null,
       "refs": {
+        "QuerySpatialCoverageMax$Value": "<p>The maximum ratio of spatial coverage.</p>",
         "QueryStatus$ProgressPercentage": "<p>The progress of the query, expressed as a percentage.</p>"
       }
     },
@@ -211,8 +216,7 @@
     },
     "ExecuteScheduledQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecutionStats": {
       "base": "<p>Statistics for a single scheduled query run.</p>",
@@ -221,34 +225,40 @@
       }
     },
     "InternalServerException": {
-      "base": "<p> The service was unable to fully process this request because of an internal server error. </p>",
-      "refs": {
-      }
+      "base": "<p>An internal server error occurred while processing the request.</p>",
+      "refs": {}
     },
     "InvalidEndpointException": {
-      "base": "<p>The requested endpoint was not valid.</p>",
+      "base": "<p>The requested endpoint is invalid.</p>",
+      "refs": {}
+    },
+    "LastUpdate": {
+      "base": "<p>Configuration object that contains the most recent account settings update, visible only if settings have been updated previously.</p>",
       "refs": {
+        "ProvisionedCapacityResponse$LastUpdate": "<p>Information about the last update to the provisioned capacity settings.</p>"
+      }
+    },
+    "LastUpdateStatus": {
+      "base": null,
+      "refs": {
+        "LastUpdate$Status": "<p>The status of the last update. Can be either <code>PENDING</code>, <code>FAILED</code>, or <code>SUCCEEDED</code>.</p>"
       }
     },
     "ListScheduledQueriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScheduledQueriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -260,15 +270,25 @@
         "ExecutionStats$CumulativeBytesScanned": "<p>Bytes scanned for a single scheduled query run.</p>",
         "ExecutionStats$RecordsIngested": "<p>The number of records ingested for a single scheduled query run. </p>",
         "ExecutionStats$QueryResultRows": "<p>Number of rows present in the output from running a query before ingestion to destination data source.</p>",
+        "QueryInsightsResponse$QueryTableCount": "<p>Indicates the number of tables in the query.</p>",
+        "QueryInsightsResponse$OutputRows": "<p>Indicates the total number of rows returned as part of the query result set. You can use this data to validate if the number of rows in the result set have changed as part of the query tuning exercise.</p>",
+        "QueryInsightsResponse$OutputBytes": "<p>Indicates the size of query result set in bytes. You can use this data to validate if the result set has changed as part of the query tuning exercise.</p>",
+        "QueryInsightsResponse$UnloadPartitionCount": "<p>Indicates the partitions created by the <code>Unload</code> operation.</p>",
+        "QueryInsightsResponse$UnloadWrittenRows": "<p>Indicates the rows written by the <code>Unload</code> query.</p>",
+        "QueryInsightsResponse$UnloadWrittenBytes": "<p>Indicates the size, in bytes, written by the <code>Unload</code> operation.</p>",
         "QueryStatus$CumulativeBytesScanned": "<p>The amount of data scanned by the query in bytes. This is a cumulative sum and represents the total amount of bytes scanned since the query was started. </p>",
-        "QueryStatus$CumulativeBytesMetered": "<p>The amount of data scanned by the query in bytes that you will be charged for. This is a cumulative sum and represents the total amount of data that you will be charged for since the query was started. The charge is applied only once and is either applied when the query completes running or when the query is cancelled. </p>"
+        "QueryStatus$CumulativeBytesMetered": "<p>The amount of data scanned by the query in bytes that you will be charged for. This is a cumulative sum and represents the total amount of data that you will be charged for since the query was started. The charge is applied only once and is either applied when the query completes running or when the query is cancelled. </p>",
+        "QueryTemporalRangeMax$Value": "<p>The maximum duration in nanoseconds between the start and end of the query.</p>",
+        "ScheduledQueryInsightsResponse$QueryTableCount": "<p>Indicates the number of tables in the query.</p>",
+        "ScheduledQueryInsightsResponse$OutputRows": "<p>Indicates the total number of rows returned as part of the query result set. You can use this data to validate if the number of rows in the result set have changed as part of the query tuning exercise.</p>",
+        "ScheduledQueryInsightsResponse$OutputBytes": "<p>Indicates the size of query result set in bytes. You can use this data to validate if the result set has changed as part of the query tuning exercise.</p>"
       }
     },
     "MaxQueryCapacity": {
       "base": null,
       "refs": {
-        "DescribeAccountSettingsResponse$MaxQueryTCU": "<p>The maximum number of <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/tcu.html\">Timestream compute units</a> (TCUs) the service will use at any point in time to serve your queries.</p>",
-        "UpdateAccountSettingsRequest$MaxQueryTCU": "<p>The maximum number of compute units the service will use at any point in time to serve your queries. To run queries, you must set a minimum capacity of 4 TCU. You can set the maximum number of TCU in multiples of 4, for example, 4, 8, 16, 32, and so on.</p> <p>The maximum value supported for <code>MaxQueryTCU</code> is 1000. To request an increase to this soft limit, contact Amazon Web Services Support. For information about the default quota for maxQueryTCU, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html#limits.default\">Default quotas</a>.</p>",
+        "DescribeAccountSettingsResponse$MaxQueryTCU": "<p>The maximum number of <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/tcu.html\">Timestream compute units</a> (TCUs) the service will use at any point in time to serve your queries. To run queries, you must set a minimum capacity of 4 TCU. You can set the maximum number of TCU in multiples of 4, for example, 4, 8, 16, 32, and so on. This configuration is applicable only for on-demand usage of (TCUs). </p>",
+        "UpdateAccountSettingsRequest$MaxQueryTCU": "<p>The maximum number of compute units the service will use at any point in time to serve your queries. To run queries, you must set a minimum capacity of 4 TCU. You can set the maximum number of TCU in multiples of 4, for example, 4, 8, 16, 32, and so on. The maximum value supported for <code>MaxQueryTCU</code> is 1000. To request an increase to this soft limit, contact Amazon Web Services Support. For information about the default quota for maxQueryTCU, see Default quotas. This configuration is applicable only for on-demand usage of Timestream Compute Units (TCUs).</p> <p>The maximum value supported for <code>MaxQueryTCU</code> is 1000. To request an increase to this soft limit, contact Amazon Web Services Support. For information about the default quota for <code>maxQueryTCU</code>, see <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/ts-limits.html#limits.default\">Default quotas</a>.</p>",
         "UpdateAccountSettingsResponse$MaxQueryTCU": "<p>The configured maximum number of compute units the service will use at any point in time to serve your queries.</p>"
       }
     },
@@ -375,20 +395,54 @@
         "PrepareQueryResponse$Parameters": "<p>A list of parameters used in the submitted query string. </p>"
       }
     },
-    "PrepareQueryRequest": {
+    "PartitionKey": {
       "base": null,
       "refs": {
+        "PartitionKeyList$member": null
       }
+    },
+    "PartitionKeyList": {
+      "base": null,
+      "refs": {
+        "QuerySpatialCoverageMax$PartitionKey": "<p>The partition key used for partitioning, which can be a default <code>measure_name</code> or a <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/customer-defined-partition-keys.html\">customer defined partition key</a>.</p>"
+      }
+    },
+    "PrepareQueryRequest": {
+      "base": null,
+      "refs": {}
     },
     "PrepareQueryResponse": {
       "base": null,
+      "refs": {}
+    },
+    "ProvisionedCapacityRequest": {
+      "base": "<p>A request to update the provisioned capacity settings for querying data.</p>",
       "refs": {
+        "QueryComputeRequest$ProvisionedCapacity": "<p>Configuration object that contains settings for provisioned Timestream Compute Units (TCUs) in your account.</p>"
+      }
+    },
+    "ProvisionedCapacityResponse": {
+      "base": "<p>The response to a request to update the provisioned capacity settings for querying data.</p>",
+      "refs": {
+        "QueryComputeResponse$ProvisionedCapacity": "<p>Configuration object that contains settings for provisioned Timestream Compute Units (TCUs) in your account.</p>"
+      }
+    },
+    "QueryComputeRequest": {
+      "base": "<p>A request to retrieve or update the compute capacity settings for querying data.</p>",
+      "refs": {
+        "UpdateAccountSettingsRequest$QueryCompute": "<p>Modifies the query compute settings configured in your account, including the query pricing model and provisioned Timestream Compute Units (TCUs) in your account.</p> <note> <p>This API is idempotent, meaning that making the same request multiple times will have the same effect as making the request once.</p> </note>"
+      }
+    },
+    "QueryComputeResponse": {
+      "base": "<p>The response to a request to retrieve or update the compute capacity settings for querying data.</p>",
+      "refs": {
+        "DescribeAccountSettingsResponse$QueryCompute": "<p>An object that contains the usage settings for Timestream Compute Units (TCUs) in your account for the query workload. </p>",
+        "UpdateAccountSettingsResponse$QueryCompute": "<p>Confirms the updated account settings for querying data in your account.</p>"
       }
     },
     "QueryExecutionException": {
       "base": "<p> Timestream was unable to run the query successfully. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryId": {
       "base": null,
@@ -397,22 +451,51 @@
         "QueryResponse$QueryId": "<p> A unique ID for the given query. </p>"
       }
     },
+    "QueryInsights": {
+      "base": "<p> <code>QueryInsights</code> is a performance tuning feature that helps you optimize your queries, reducing costs and improving performance. With <code>QueryInsights</code>, you can assess the pruning efficiency of your queries and identify areas for improvement to enhance query performance. With <code>QueryInsights</code>, you can also analyze the effectiveness of your queries in terms of temporal and spatial pruning, and identify opportunities to improve performance. Specifically, you can evaluate how well your queries use time-based and partition key-based indexing strategies to optimize data retrieval. To optimize query performance, it's essential that you fine-tune both the temporal and spatial parameters that govern query execution.</p> <p>The key metrics provided by <code>QueryInsights</code> are <code>QuerySpatialCoverage</code> and <code>QueryTemporalRange</code>. <code>QuerySpatialCoverage</code> indicates how much of the spatial axis the query scans, with lower values being more efficient. <code>QueryTemporalRange</code> shows the time range scanned, with narrower ranges being more performant.</p> <p> <b>Benefits of QueryInsights</b> </p> <p>The following are the key benefits of using <code>QueryInsights</code>:</p> <ul> <li> <p> <b>Identifying inefficient queries</b> – <code>QueryInsights</code> provides information on the time-based and attribute-based pruning of the tables accessed by the query. This information helps you identify the tables that are sub-optimally accessed.</p> </li> <li> <p> <b>Optimizing your data model and partitioning</b> – You can use the <code>QueryInsights</code> information to access and fine-tune your data model and partitioning strategy.</p> </li> <li> <p> <b>Tuning queries</b> – <code>QueryInsights</code> highlights opportunities to use indexes more effectively.</p> </li> </ul> <note> <p>The maximum number of <code>Query</code> API requests you're allowed to make with <code>QueryInsights</code> enabled is 1 query per second (QPS). If you exceed this query rate, it might result in throttling.</p> </note>",
+      "refs": {
+        "QueryRequest$QueryInsights": "<p>Encapsulates settings for enabling <code>QueryInsights</code>.</p> <p>Enabling <code>QueryInsights</code> returns insights and metrics in addition to query results for the query that you executed. You can use <code>QueryInsights</code> to tune your query performance.</p>"
+      }
+    },
+    "QueryInsightsMode": {
+      "base": null,
+      "refs": {
+        "QueryInsights$Mode": "<p>Provides the following modes to enable <code>QueryInsights</code>:</p> <ul> <li> <p> <code>ENABLED_WITH_RATE_CONTROL</code> – Enables <code>QueryInsights</code> for the queries being processed. This mode also includes a rate control mechanism, which limits the <code>QueryInsights</code> feature to 1 query per second (QPS).</p> </li> <li> <p> <code>DISABLED</code> – Disables <code>QueryInsights</code>.</p> </li> </ul>"
+      }
+    },
+    "QueryInsightsResponse": {
+      "base": "<p>Provides various insights and metrics related to the query that you executed.</p>",
+      "refs": {
+        "QueryResponse$QueryInsightsResponse": "<p>Encapsulates <code>QueryInsights</code> containing insights and metrics related to the query that you executed.</p>"
+      }
+    },
     "QueryPricingModel": {
       "base": null,
       "refs": {
-        "DescribeAccountSettingsResponse$QueryPricingModel": "<p>The pricing model for queries in your account.</p>",
-        "UpdateAccountSettingsRequest$QueryPricingModel": "<p>The pricing model for queries in an account.</p>",
+        "DescribeAccountSettingsResponse$QueryPricingModel": "<p>The pricing model for queries in your account.</p> <note> <p>The <code>QueryPricingModel</code> parameter is used by several Timestream operations; however, the <code>UpdateAccountSettings</code> API operation doesn't recognize any values other than <code>COMPUTE_UNITS</code>.</p> </note>",
+        "UpdateAccountSettingsRequest$QueryPricingModel": "<p>The pricing model for queries in an account.</p> <note> <p>The <code>QueryPricingModel</code> parameter is used by several Timestream operations; however, the <code>UpdateAccountSettings</code> API operation doesn't recognize any values other than <code>COMPUTE_UNITS</code>.</p> </note>",
         "UpdateAccountSettingsResponse$QueryPricingModel": "<p>The pricing model for an account.</p>"
       }
     },
     "QueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryResponse": {
       "base": null,
+      "refs": {}
+    },
+    "QuerySpatialCoverage": {
+      "base": "<p>Provides insights into the spatial coverage of the query, including the table with sub-optimal (max) spatial pruning. This information can help you identify areas for improvement in your partitioning strategy to enhance spatial pruning</p> <p>For example, you can do the following with the <code>QuerySpatialCoverage</code> information:</p> <ul> <li> <p>Add measure_name or use <a href=\"https://docs.aws.amazon.com/timestream/latest/developerguide/customer-defined-partition-keys.html\">customer-defined partition key</a> (CDPK) predicates.</p> </li> <li> <p>If you've already done the preceding action, remove functions around them or clauses, such as <code>LIKE</code>.</p> </li> </ul>",
       "refs": {
+        "QueryInsightsResponse$QuerySpatialCoverage": "<p>Provides insights into the spatial coverage of the query, including the table with sub-optimal (max) spatial pruning. This information can help you identify areas for improvement in your partitioning strategy to enhance spatial pruning. </p>",
+        "ScheduledQueryInsightsResponse$QuerySpatialCoverage": "<p>Provides insights into the spatial coverage of the query, including the table with sub-optimal (max) spatial pruning. This information can help you identify areas for improvement in your partitioning strategy to enhance spatial pruning.</p>"
+      }
+    },
+    "QuerySpatialCoverageMax": {
+      "base": "<p>Provides insights into the table with the most sub-optimal spatial range scanned by your query.</p>",
+      "refs": {
+        "QuerySpatialCoverage$Max": "<p>Provides insights into the spatial coverage of the executed query and the table with the most inefficient spatial pruning.</p> <ul> <li> <p> <code>Value</code> – The maximum ratio of spatial coverage.</p> </li> <li> <p> <code>TableArn</code> – The Amazon Resource Name (ARN) of the table with sub-optimal spatial pruning.</p> </li> <li> <p> <code>PartitionKey</code> – The partition key used for partitioning, which can be a default <code>measure_name</code> or a CDPK.</p> </li> </ul>"
       }
     },
     "QueryStatus": {
@@ -431,6 +514,27 @@
         "ScheduledQueryDescription$QueryString": "<p>The query to be run.</p>"
       }
     },
+    "QueryTCU": {
+      "base": null,
+      "refs": {
+        "LastUpdate$TargetQueryTCU": "<p>The number of TimeStream Compute Units (TCUs) requested in the last account settings update.</p>",
+        "ProvisionedCapacityRequest$TargetQueryTCU": "<p>The target compute capacity for querying data, specified in Timestream Compute Units (TCUs).</p>",
+        "ProvisionedCapacityResponse$ActiveQueryTCU": "<p>The number of Timestream Compute Units (TCUs) provisioned in the account. This field is only visible when the compute mode is <code>PROVISIONED</code>.</p>"
+      }
+    },
+    "QueryTemporalRange": {
+      "base": "<p>Provides insights into the temporal range of the query, including the table with the largest (max) time range.</p>",
+      "refs": {
+        "QueryInsightsResponse$QueryTemporalRange": "<p>Provides insights into the temporal range of the query, including the table with the largest (max) time range. Following are some of the potential options for optimizing time-based pruning:</p> <ul> <li> <p>Add missing time-predicates.</p> </li> <li> <p>Remove functions around the time predicates.</p> </li> <li> <p>Add time predicates to all the sub-queries.</p> </li> </ul>",
+        "ScheduledQueryInsightsResponse$QueryTemporalRange": "<p>Provides insights into the temporal range of the query, including the table with the largest (max) time range. Following are some of the potential options for optimizing time-based pruning:</p> <ul> <li> <p>Add missing time-predicates.</p> </li> <li> <p>Remove functions around the time predicates.</p> </li> <li> <p>Add time predicates to all the sub-queries.</p> </li> </ul>"
+      }
+    },
+    "QueryTemporalRangeMax": {
+      "base": "<p>Provides insights into the table with the most sub-optimal temporal pruning scanned by your query.</p>",
+      "refs": {
+        "QueryTemporalRange$Max": "<p>Encapsulates the following properties that provide insights into the most sub-optimal performing table on the temporal axis:</p> <ul> <li> <p> <code>Value</code> – The maximum duration in nanoseconds between the start and end of the query.</p> </li> <li> <p> <code>TableArn</code> – The Amazon Resource Name (ARN) of the table which is queried with the largest time range.</p> </li> </ul>"
+      }
+    },
     "ResourceName": {
       "base": null,
       "refs": {
@@ -444,8 +548,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Row": {
       "base": "<p>Represents a single row in the query results.</p>",
@@ -540,6 +643,24 @@
         "DescribeScheduledQueryResponse$ScheduledQuery": "<p>The scheduled query.</p>"
       }
     },
+    "ScheduledQueryInsights": {
+      "base": "<p>Encapsulates settings for enabling <code>QueryInsights</code> on an <code>ExecuteScheduledQueryRequest</code>.</p>",
+      "refs": {
+        "ExecuteScheduledQueryRequest$QueryInsights": "<p>Encapsulates settings for enabling <code>QueryInsights</code>.</p> <p>Enabling <code>QueryInsights</code> returns insights and metrics as a part of the Amazon SNS notification for the query that you executed. You can use <code>QueryInsights</code> to tune your query performance and cost.</p>"
+      }
+    },
+    "ScheduledQueryInsightsMode": {
+      "base": null,
+      "refs": {
+        "ScheduledQueryInsights$Mode": "<p>Provides the following modes to enable <code>ScheduledQueryInsights</code>:</p> <ul> <li> <p> <code>ENABLED_WITH_RATE_CONTROL</code> – Enables <code>ScheduledQueryInsights</code> for the queries being processed. This mode also includes a rate control mechanism, which limits the <code>QueryInsights</code> feature to 1 query per second (QPS).</p> </li> <li> <p> <code>DISABLED</code> – Disables <code>ScheduledQueryInsights</code>.</p> </li> </ul>"
+      }
+    },
+    "ScheduledQueryInsightsResponse": {
+      "base": "<p>Provides various insights and metrics related to the <code>ExecuteScheduledQueryRequest</code> that was executed.</p>",
+      "refs": {
+        "ScheduledQueryRunSummary$QueryInsightsResponse": "<p>Provides various insights and metrics related to the run summary of the scheduled query.</p>"
+      }
+    },
     "ScheduledQueryList": {
       "base": null,
       "refs": {
@@ -616,13 +737,13 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You have exceeded the service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SnsConfiguration": {
       "base": "<p>Details on SNS that are required to send the notification.</p>",
       "refs": {
-        "NotificationConfiguration$SnsConfiguration": "<p>Details on SNS configuration. </p>"
+        "AccountSettingsNotificationConfiguration$SnsConfiguration": null,
+        "NotificationConfiguration$SnsConfiguration": "<p>Details about the Amazon Simple Notification Service (SNS) configuration. This field is visible only when SNS Topic is provided when updating the account settings. </p>"
       }
     },
     "String": {
@@ -631,6 +752,7 @@
         "CancelQueryResponse$CancellationMessage": "<p> A <code>CancellationMessage</code> is returned when a <code>CancelQuery</code> request for the query specified by <code>QueryId</code> has already been issued. </p>",
         "ColumnInfo$Name": "<p> The name of the result set column. The name of the result set is available for columns of all data types except for arrays. </p>",
         "Endpoint$Address": "<p>An endpoint address.</p>",
+        "LastUpdate$StatusMessage": "<p>Error message describing the last account settings update status, visible only if an error occurred.</p>",
         "ParameterMapping$Name": "<p>Parameter name.</p>",
         "SelectColumn$Name": "<p>Name of the column.</p>"
       }
@@ -671,13 +793,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -699,9 +819,8 @@
       }
     },
     "ThrottlingException": {
-      "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "base": "<p>The request was throttled due to excessive requests.</p>",
+      "refs": {}
     },
     "Time": {
       "base": null,
@@ -757,33 +876,27 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateScheduledQueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p> Invalid or malformed request. </p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

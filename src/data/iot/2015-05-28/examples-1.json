@@ -1,5 +1,35 @@
 {
   "version": "1.0",
   "examples": {
+    "DescribeEncryptionConfiguration": [
+      {
+        "input": {},
+        "output": {
+          "configurationDetails": {
+            "configurationStatus": "HEALTHY"
+          },
+          "encryptionType": "CUSTOMER_MANAGED_KMS_KEY",
+          "kmsAccessRoleArn": "arn:aws:iam:us-west-2:111122223333:role/myrole",
+          "kmsKeyArn": "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+          "lastModifiedDate": "2024-09-26T22:01:02.365000-07:00"
+        },
+        "comments": {},
+        "description": "DescribeEncryptionConfiguration API operation example",
+        "id": "describeencryptionconfiguration-1752775629029",
+        "title": "DescribeEncryptionConfiguration"
+      }
+    ],
+    "UpdateEncryptionConfiguration": [
+      {
+        "input": {
+          "encryptionType": "CUSTOMER_MANAGED_KMS_KEY",
+          "kmsAccessRoleArn": "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+          "kmsKeyArn": "arn:aws:iam:us-west-2:111122223333:role/myrole"
+        },
+        "description": "This operation updates the encryption configuration. ",
+        "id": "updateencryptionconfiguration-example-1749856813098",
+        "title": "UpdateEncryptionConfiguration example"
+      }
+    ]
   }
 }

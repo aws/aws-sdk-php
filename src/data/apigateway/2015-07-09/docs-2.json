@@ -9,6 +9,7 @@
     "CreateDocumentationPart": "<p>Creates a documentation part.</p>",
     "CreateDocumentationVersion": "<p>Creates a documentation version</p>",
     "CreateDomainName": "<p>Creates a new domain name.</p>",
+    "CreateDomainNameAccessAssociation": "<p> Creates a domain name access association resource between an access association source and a private custom domain name.</p>",
     "CreateModel": "<p>Adds a new Model resource to an existing RestApi resource.</p>",
     "CreateRequestValidator": "<p>Creates a RequestValidator of a given RestApi.</p>",
     "CreateResource": "<p>Creates a Resource resource.</p>",
@@ -25,6 +26,7 @@
     "DeleteDocumentationPart": "<p>Deletes a documentation part</p>",
     "DeleteDocumentationVersion": "<p>Deletes a documentation version.</p>",
     "DeleteDomainName": "<p>Deletes the DomainName resource.</p>",
+    "DeleteDomainNameAccessAssociation": "<p> Deletes the DomainNameAccessAssociation resource.</p> <p>Only the AWS account that created the DomainNameAccessAssociation resource can delete it. To stop an access association source in another AWS account from accessing your private custom domain name, use the RejectDomainNameAccessAssociation operation.</p>",
     "DeleteGatewayResponse": "<p>Clears any customization of a GatewayResponse of a specified response type on the given RestApi and resets it with the default settings.</p>",
     "DeleteIntegration": "<p>Represents a delete integration.</p>",
     "DeleteIntegrationResponse": "<p>Represents a delete integration response.</p>",
@@ -57,6 +59,7 @@
     "GetDocumentationVersion": "<p>Gets a documentation version.</p>",
     "GetDocumentationVersions": "<p>Gets documentation versions.</p>",
     "GetDomainName": "<p>Represents a domain name that is contained in a simpler, more intuitive URL that can be called.</p>",
+    "GetDomainNameAccessAssociations": "<p>Represents a collection on DomainNameAccessAssociations resources.</p>",
     "GetDomainNames": "<p>Represents a collection of DomainName resources.</p>",
     "GetExport": "<p>Exports a deployed version of a RestApi in a specified format.</p>",
     "GetGatewayResponse": "<p>Gets a GatewayResponse of a specified response type on the given RestApi.</p>",
@@ -96,6 +99,7 @@
     "PutMethod": "<p>Add a method to an existing Resource resource.</p>",
     "PutMethodResponse": "<p>Adds a MethodResponse to an existing Method resource.</p>",
     "PutRestApi": "<p>A feature of the API Gateway control service for updating an existing API with an input of external API definitions. The update can take the form of merging the supplied definition into the existing API or overwriting the existing API.</p>",
+    "RejectDomainNameAccessAssociation": "<p>Rejects a domain name access association with a private custom domain name.</p> <p>To reject a domain name access association with an access association source in another AWS account, use this operation. To remove a domain name access association with an access association source in your own account, use the DeleteDomainNameAccessAssociation operation.</p>",
     "TagResource": "<p>Adds or updates a tag on a given resource.</p>",
     "TestInvokeAuthorizer": "<p>Simulate the execution of an Authorizer in your RestApi with headers, parameters, and an incoming request body.</p>",
     "TestInvokeMethod": "<p>Simulate the invocation of a Method in your RestApi with headers, parameters, and an incoming request body.</p>",
@@ -124,6 +128,13 @@
     "UpdateVpcLink": "<p>Updates an existing VpcLink of a specified identifier.</p>"
   },
   "shapes": {
+    "AccessAssociationSourceType": {
+      "base": null,
+      "refs": {
+        "CreateDomainNameAccessAssociationRequest$accessAssociationSourceType": "<p> The type of the domain name access association source. </p>",
+        "DomainNameAccessAssociation$accessAssociationSourceType": "<p> The type of the domain name access association source. </p>"
+      }
+    },
     "AccessLogSettings": {
       "base": "<p>Access log settings, including the access log format and access log destination ARN.</p>",
       "refs": {
@@ -132,8 +143,7 @@
     },
     "Account": {
       "base": "<p>Represents an AWS account that is associated with API Gateway.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApiKey": {
       "base": "<p>A resource that can be distributed to callers for executing Method resources that require an API key. API keys can be mapped to any Stage on any RestApi, which indicates that the callers with the API key can make requests to that stage.</p>",
@@ -143,8 +153,7 @@
     },
     "ApiKeyIds": {
       "base": "<p>The identifier of an ApiKey used in a UsagePlan.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApiKeySourceType": {
       "base": null,
@@ -155,8 +164,7 @@
     },
     "ApiKeys": {
       "base": "<p>Represents a collection of API keys as represented by an ApiKeys resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ApiKeysFormat": {
       "base": null,
@@ -185,13 +193,11 @@
     },
     "Authorizers": {
       "base": "<p>Represents a collection of Authorizer resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BadRequestException": {
       "base": "<p>The submitted request is not valid, for example, the input is incomplete or incorrect. See the accompanying error message for details.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BasePathMapping": {
       "base": "<p>Represents the base path that callers of the API must provide as part of the URL after the domain name.</p>",
@@ -201,8 +207,7 @@
     },
     "BasePathMappings": {
       "base": "<p>Represents a collection of BasePathMapping resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Blob": {
       "base": null,
@@ -279,13 +284,11 @@
     },
     "ClientCertificates": {
       "base": "<p>Represents a collection of ClientCertificate resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictException": {
       "base": "<p>The request configuration has conflicts. For details, see the accompanying error message.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectionType": {
       "base": null,
@@ -305,183 +308,155 @@
     },
     "CreateApiKeyRequest": {
       "base": "<p>Request to create an ApiKey resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAuthorizerRequest": {
       "base": "<p>Request to add a new Authorizer to an existing RestApi resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBasePathMappingRequest": {
       "base": "<p>Requests API Gateway to create a new BasePathMapping resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeploymentRequest": {
       "base": "<p>Requests API Gateway to create a Deployment resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDocumentationPartRequest": {
       "base": "<p>Creates a new documentation part of a given API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDocumentationVersionRequest": {
       "base": "<p>Creates a new documentation version of a given API.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateDomainNameAccessAssociationRequest": {
+      "base": null,
+      "refs": {}
     },
     "CreateDomainNameRequest": {
       "base": "<p>A request to create a new domain name.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateModelRequest": {
       "base": "<p>Request to add a new Model to an existing RestApi resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRequestValidatorRequest": {
       "base": "<p>Creates a RequestValidator of a given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceRequest": {
       "base": "<p>Requests API Gateway to create a Resource resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRestApiRequest": {
       "base": "<p>The POST Request to add a new RestApi resource to your collection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStageRequest": {
       "base": "<p>Requests API Gateway to create a Stage resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUsagePlanKeyRequest": {
       "base": "<p>The POST request to create a usage plan key for adding an existing API key to a usage plan.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUsagePlanRequest": {
       "base": "<p>The POST request to create a usage plan with the name, description, throttle limits and quota limits, as well as the associated API stages, specified in the payload.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVpcLinkRequest": {
       "base": "<p>Creates a VPC link, under the caller's account in a selected region, in an asynchronous operation that typically takes 2-4 minutes to complete and become operational. The caller must have permissions to create and update VPC Endpoint services.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApiKeyRequest": {
       "base": "<p>A request to delete the ApiKey resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAuthorizerRequest": {
       "base": "<p>Request to delete an existing Authorizer resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBasePathMappingRequest": {
       "base": "<p>A request to delete the BasePathMapping resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteClientCertificateRequest": {
       "base": "<p>A request to delete the ClientCertificate resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeploymentRequest": {
       "base": "<p>Requests API Gateway to delete a Deployment resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDocumentationPartRequest": {
       "base": "<p>Deletes an existing documentation part of an API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDocumentationVersionRequest": {
       "base": "<p>Deletes an existing documentation version of an API.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteDomainNameAccessAssociationRequest": {
+      "base": null,
+      "refs": {}
     },
     "DeleteDomainNameRequest": {
       "base": "<p>A request to delete the DomainName resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGatewayResponseRequest": {
       "base": "<p>Clears any customization of a GatewayResponse of a specified response type on the given RestApi and resets it with the default settings.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIntegrationRequest": {
       "base": "<p>Represents a delete integration request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIntegrationResponseRequest": {
       "base": "<p>Represents a delete integration response request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMethodRequest": {
       "base": "<p>Request to delete an existing Method resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMethodResponseRequest": {
       "base": "<p>A request to delete an existing MethodResponse resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteModelRequest": {
       "base": "<p>Request to delete an existing model in an existing RestApi resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRequestValidatorRequest": {
       "base": "<p>Deletes a specified RequestValidator of a given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceRequest": {
       "base": "<p>Request to delete a Resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRestApiRequest": {
       "base": "<p>Request to delete the specified API from your collection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStageRequest": {
       "base": "<p>Requests API Gateway to delete a Stage resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUsagePlanKeyRequest": {
       "base": "<p>The DELETE request to delete a usage plan key and remove the underlying API key from the associated usage plan.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUsagePlanRequest": {
       "base": "<p>The DELETE request to delete a usage plan of a given plan Id.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVpcLinkRequest": {
       "base": "<p>Deletes an existing VpcLink of a specified identifier.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Deployment": {
       "base": "<p>An immutable representation of a RestApi resource that can be called by users using Stages. A deployment must be associated with a Stage for it to be callable over the Internet.</p>",
@@ -497,8 +472,7 @@
     },
     "Deployments": {
       "base": "<p>Represents a collection resource that contains zero or more references to your existing deployments, and links that guide you on how to interact with your collection. The collection offers a paginated view of the contained deployments.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentationPart": {
       "base": "<p>A documentation part for a targeted API entity.</p>",
@@ -508,8 +482,7 @@
     },
     "DocumentationPartIds": {
       "base": "<p>A collection of the imported DocumentationPart identifiers.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentationPartLocation": {
       "base": "<p>Specifies the target API entity to which the documentation applies.</p>",
@@ -533,8 +506,7 @@
     },
     "DocumentationParts": {
       "base": "<p>The collection of documentation parts of an API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DocumentationVersion": {
       "base": "<p>A snapshot of the documentation of an API.</p>",
@@ -544,14 +516,23 @@
     },
     "DocumentationVersions": {
       "base": "<p>The collection of documentation snapshots of an API. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DomainName": {
       "base": "<p>Represents a custom domain name as a user-friendly host name of an API (RestApi).</p>",
       "refs": {
         "ListOfDomainName$member": null
       }
+    },
+    "DomainNameAccessAssociation": {
+      "base": "<p>Represents a domain name access association between an access association source and a private custom domain name. With a domain name access association, an access association source can invoke a private custom domain name while isolated from the public internet.</p>",
+      "refs": {
+        "ListOfDomainNameAccessAssociation$member": null
+      }
+    },
+    "DomainNameAccessAssociations": {
+      "base": null,
+      "refs": {}
     },
     "DomainNameStatus": {
       "base": null,
@@ -561,8 +542,7 @@
     },
     "DomainNames": {
       "base": "<p>Represents a collection of DomainName resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Double": {
       "base": null,
@@ -574,12 +554,12 @@
       }
     },
     "EndpointConfiguration": {
-      "base": "<p>The endpoint configuration to indicate the types of endpoints an API (RestApi) or its custom domain name (DomainName) has. </p>",
+      "base": "<p>The endpoint configuration to indicate the types of endpoints an API (RestApi) or its custom domain name (DomainName) has and the IP address types that can invoke it. </p>",
       "refs": {
-        "CreateDomainNameRequest$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types of the domain name. </p>",
-        "CreateRestApiRequest$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types of the API. </p>",
-        "DomainName$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types of the domain name. </p>",
-        "RestApi$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types of the API. </p>"
+        "CreateDomainNameRequest$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types and IP address types of the domain name. </p>",
+        "CreateRestApiRequest$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types and IP address types of the API. </p>",
+        "DomainName$endpointConfiguration": "<p>The endpoint configuration of this DomainName showing the endpoint types and IP address types of the domain name. </p>",
+        "RestApi$endpointConfiguration": "<p>The endpoint configuration of this RestApi showing the endpoint types and IP address types of the API. </p>"
       }
     },
     "EndpointType": {
@@ -590,18 +570,15 @@
     },
     "ExportResponse": {
       "base": "<p>The binary blob response to GetExport, which contains the generated SDK.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "FlushStageAuthorizersCacheRequest": {
       "base": "<p>Request to flush authorizer cache entries on a specified stage.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "FlushStageCacheRequest": {
       "base": "<p>Requests API Gateway to flush a stage's cache.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GatewayResponse": {
       "base": "<p>A gateway response of a given response type and status code, with optional response parameters and mapping templates.</p>",
@@ -621,263 +598,216 @@
     },
     "GatewayResponses": {
       "base": "<p>The collection of the GatewayResponse instances of a RestApi as a <code>responseType</code>-to-GatewayResponse object map of key-value pairs. As such, pagination is not supported for querying this collection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GenerateClientCertificateRequest": {
       "base": "<p>A request to generate a ClientCertificate resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountRequest": {
       "base": "<p>Requests API Gateway to get information about the current Account resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApiKeyRequest": {
       "base": "<p>A request to get information about the current ApiKey resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApiKeysRequest": {
       "base": "<p>A request to get information about the current ApiKeys resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAuthorizerRequest": {
       "base": "<p>Request to describe an existing Authorizer resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAuthorizersRequest": {
       "base": "<p>Request to describe an existing Authorizers resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBasePathMappingRequest": {
       "base": "<p>Request to describe a BasePathMapping resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBasePathMappingsRequest": {
       "base": "<p>A request to get information about a collection of BasePathMapping resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetClientCertificateRequest": {
       "base": "<p>A request to get information about the current ClientCertificate resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetClientCertificatesRequest": {
       "base": "<p>A request to get information about a collection of ClientCertificate resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeploymentRequest": {
       "base": "<p>Requests API Gateway to get information about a Deployment resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeploymentsRequest": {
       "base": "<p>Requests API Gateway to get information about a Deployments collection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentationPartRequest": {
       "base": "<p>Gets a specified documentation part of a given API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentationPartsRequest": {
       "base": "<p>Gets the documentation parts of an API. The result may be filtered by the type, name, or path of API entities (targets).</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentationVersionRequest": {
       "base": "<p>Gets a documentation snapshot of an API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentationVersionsRequest": {
       "base": "<p>Gets the documentation versions of an API.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetDomainNameAccessAssociationsRequest": {
+      "base": null,
+      "refs": {}
     },
     "GetDomainNameRequest": {
       "base": "<p>Request to get the name of a DomainName resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDomainNamesRequest": {
       "base": "<p>Request to describe a collection of DomainName resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExportRequest": {
       "base": "<p>Request a new export of a RestApi for a particular Stage.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGatewayResponseRequest": {
       "base": "<p>Gets a GatewayResponse of a specified response type on the given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetGatewayResponsesRequest": {
       "base": "<p>Gets the GatewayResponses collection on the given RestApi. If an API developer has not added any definitions for gateway responses, the result will be the API Gateway-generated default GatewayResponses collection for the supported response types.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIntegrationRequest": {
       "base": "<p>Represents a request to get the integration configuration.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIntegrationResponseRequest": {
       "base": "<p>Represents a get integration response request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMethodRequest": {
       "base": "<p>Request to describe an existing Method resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMethodResponseRequest": {
       "base": "<p>Request to describe a MethodResponse resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelRequest": {
       "base": "<p>Request to list information about a model in an existing RestApi resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelTemplateRequest": {
       "base": "<p>Request to generate a sample mapping template used to transform the payload.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetModelsRequest": {
       "base": "<p>Request to list existing Models defined for a RestApi resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRequestValidatorRequest": {
       "base": "<p>Gets a RequestValidator of a given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRequestValidatorsRequest": {
       "base": "<p>Gets the RequestValidators collection of a given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceRequest": {
       "base": "<p>Request to list information about a resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcesRequest": {
       "base": "<p>Request to list information about a collection of resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestApiRequest": {
       "base": "<p>The GET request to list an existing RestApi defined for your collection. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRestApisRequest": {
       "base": "<p>The GET request to list existing RestApis defined for your collection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSdkRequest": {
       "base": "<p>Request a new generated client SDK for a RestApi and Stage.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSdkTypeRequest": {
       "base": "<p>Get an SdkType instance.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSdkTypesRequest": {
       "base": "<p>Get the SdkTypes collection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStageRequest": {
       "base": "<p>Requests API Gateway to get information about a Stage resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetStagesRequest": {
       "base": "<p>Requests API Gateway to get information about one or more Stage resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTagsRequest": {
       "base": "<p>Gets the Tags collection for a given resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsagePlanKeyRequest": {
       "base": "<p>The GET request to get a usage plan key of a given key identifier.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsagePlanKeysRequest": {
       "base": "<p>The GET request to get all the usage plan keys representing the API keys added to a specified usage plan.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsagePlanRequest": {
       "base": "<p>The GET request to get a usage plan of a given plan identifier.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsagePlansRequest": {
       "base": "<p>The GET request to get all the usage plans of the caller's account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsageRequest": {
       "base": "<p>The GET request to get the usage data of a usage plan in a specified time interval.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVpcLinkRequest": {
       "base": "<p>Gets a specified VPC link under the caller's account in a region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVpcLinksRequest": {
       "base": "<p>Gets the VpcLinks collection under the caller's account in a selected region.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportApiKeysRequest": {
       "base": "<p>The POST request to import API keys from an external source, such as a CSV-formatted file.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportDocumentationPartsRequest": {
       "base": "<p>Import documentation parts from an external (e.g., OpenAPI) definition file. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportRestApiRequest": {
       "base": "<p>A POST request to import an API to API Gateway using an input of an API definition file.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
       "refs": {
-        "Integration$timeoutInMillis": "<p>Custom timeout between 50 and 29,000 milliseconds. The default value is 29,000 milliseconds or 29 seconds.</p>",
+        "Integration$timeoutInMillis": "<p>Custom timeout between 50 and 29,000 milliseconds. The default value is 29,000 milliseconds or 29 seconds. You can increase the default value to longer than 29 seconds for Regional or private APIs only.</p>",
         "MethodSetting$throttlingBurstLimit": "<p>Specifies the throttling burst limit.</p>",
         "MethodSetting$cacheTtlInSeconds": "<p>Specifies the time to live (TTL), in seconds, for cached responses. The higher the TTL, the longer the response will be cached.</p>",
         "QuotaSettings$limit": "<p>The target maximum number of requests that can be made in a given time period.</p>",
@@ -906,10 +836,15 @@
         "PutIntegrationRequest$type": "<p>Specifies a put integration input's type.</p>"
       }
     },
+    "IpAddressType": {
+      "base": null,
+      "refs": {
+        "EndpointConfiguration$ipAddressType": "<p>The IP address types that can invoke an API (RestApi) or a DomainName. Use <code>ipv4</code> to allow only IPv4 addresses to invoke an API or DomainName, or use <code>dualstack</code> to allow both IPv4 and IPv6 addresses to invoke an API or a DomainName. For the <code>PRIVATE</code> endpoint type, only <code>dualstack</code> is supported.</p>"
+      }
+    },
     "LimitExceededException": {
       "base": "<p>The request exceeded the rate limit. Retry after the specified time period.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOfARNs": {
       "base": null,
@@ -971,6 +906,12 @@
       "base": null,
       "refs": {
         "DomainNames$items": "<p>The current page of elements from this collection.</p>"
+      }
+    },
+    "ListOfDomainNameAccessAssociation": {
+      "base": null,
+      "refs": {
+        "DomainNameAccessAssociations$items": "<p> The current page of elements from this collection. </p>"
       }
     },
     "ListOfEndpointType": {
@@ -1200,6 +1141,7 @@
         "ClientCertificate$tags": "<p>The collection of tags. Each tag element is associated with a given resource.</p>",
         "CreateApiKeyRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateDeploymentRequest$variables": "<p>A map that defines the stage variables for the Stage resource that is associated with the new deployment. Variable names can have alphanumeric and underscore characters, and the values must match <code>[A-Za-z0-9-._~:/?#&amp;=,]+</code>.</p>",
+        "CreateDomainNameAccessAssociationRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateDomainNameRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateRestApiRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "CreateStageRequest$variables": "<p>A map that defines the stage variables for the new Stage resource. Variable names can have alphanumeric and underscore characters, and the values must match <code>[A-Za-z0-9-._~:/?#&amp;=,]+</code>.</p>",
@@ -1208,6 +1150,7 @@
         "CreateVpcLinkRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
         "DeploymentCanarySettings$stageVariableOverrides": "<p>A stage variable overrides used for the canary release deployment. They can override existing stage variables or add new stage variables for the canary release deployment. These stage variables are represented as a string-to-string map between stage variable names and their values.</p>",
         "DomainName$tags": "<p>The collection of tags. Each tag element is associated with a given resource.</p>",
+        "DomainNameAccessAssociation$tags": "<p> The collection of tags. Each tag element is associated with a given resource. </p>",
         "GatewayResponse$responseParameters": "<p>Response parameters (paths, query strings and headers) of the GatewayResponse as a string-to-string map of key-value pairs.</p>",
         "GatewayResponse$responseTemplates": "<p>Response templates of the GatewayResponse as a string-to-string map of key-value pairs.</p>",
         "GenerateClientCertificateRequest$tags": "<p>The key-value map of strings. The valid character set is [a-zA-Z+-=._:/]. The tag key can be up to 128 characters and must not start with <code>aws:</code>. The tag value can be up to 256 characters.</p>",
@@ -1277,8 +1220,7 @@
     },
     "Models": {
       "base": "<p>Represents a collection of Model resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "MutualTlsAuthentication": {
       "base": "<p>The mutual TLS authentication configuration for a custom domain name. If specified, API Gateway performs two-way authentication between the client and the server. Clients must present a trusted certificate to access your API.</p>",
@@ -1294,8 +1236,7 @@
     },
     "NotFoundException": {
       "base": "<p>The requested resource is not found. Make sure that the request URI is correct.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "NullableBoolean": {
       "base": null,
@@ -1321,6 +1262,7 @@
         "GetDeploymentsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetDocumentationPartsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetDocumentationVersionsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
+        "GetDomainNameAccessAssociationsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500. </p>",
         "GetDomainNamesRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetGatewayResponsesRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500. The GatewayResponses collection does not support pagination and the limit does not apply here.</p>",
         "GetModelsRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
@@ -1333,7 +1275,7 @@
         "GetUsagePlansRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetUsageRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
         "GetVpcLinksRequest$limit": "<p>The maximum number of returned results per page. The default value is 25 and the maximum value is 500.</p>",
-        "PutIntegrationRequest$timeoutInMillis": "<p>Custom timeout between 50 and 29,000 milliseconds. The default value is 29,000 milliseconds or 29 seconds.</p>",
+        "PutIntegrationRequest$timeoutInMillis": "<p>Custom timeout between 50 and 29,000 milliseconds. The default value is 29,000 milliseconds or 29 seconds. You can increase the default value to longer than 29 seconds for Regional or private APIs only.</p>",
         "RestApi$minimumCompressionSize": "<p>A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M) bytes, inclusive) or disable compression (with a null value) on an API. When compression is enabled, compression or decompression is not applied on the payload if the payload size is smaller than this value. Setting it to zero allows compression for any payload size.</p>"
       }
     },
@@ -1363,28 +1305,23 @@
     },
     "PutGatewayResponseRequest": {
       "base": "<p>Creates a customization of a GatewayResponse of a specified response type and status code on the given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutIntegrationRequest": {
       "base": "<p>Sets up a method's integration.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutIntegrationResponseRequest": {
       "base": "<p>Represents a put integration response request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutMethodRequest": {
       "base": "<p>Request to add a method to an existing Resource resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutMethodResponseRequest": {
       "base": "<p>Request to add a MethodResponse to an existing Method resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutMode": {
       "base": null,
@@ -1395,8 +1332,7 @@
     },
     "PutRestApiRequest": {
       "base": "<p>A PUT request to update an existing API, with external API definitions specified as the request body.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "QuotaPeriodType": {
       "base": null,
@@ -1411,6 +1347,10 @@
         "UsagePlan$quota": "<p>The target maximum number of permitted requests per a given unit time interval.</p>"
       }
     },
+    "RejectDomainNameAccessAssociationRequest": {
+      "base": null,
+      "refs": {}
+    },
     "RequestValidator": {
       "base": "<p>A set of validation rules for incoming Method requests.</p>",
       "refs": {
@@ -1419,8 +1359,7 @@
     },
     "RequestValidators": {
       "base": "<p>A collection of RequestValidator resources of a given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Resource": {
       "base": "<p>Represents an API resource.</p>",
@@ -1428,10 +1367,16 @@
         "ListOfResource$member": null
       }
     },
+    "ResourceOwner": {
+      "base": null,
+      "refs": {
+        "GetDomainNameAccessAssociationsRequest$resourceOwner": "<p> The owner of the domain name access association. Use <code>SELF</code> to only list the domain name access associations owned by your own account. Use <code>OTHER_ACCOUNTS</code> to list the domain name access associations with your private custom domain names that are owned by other AWS accounts.</p>",
+        "GetDomainNamesRequest$resourceOwner": "<p>The owner of the domain name access association. </p>"
+      }
+    },
     "Resources": {
       "base": "<p>Represents a collection of Resource resources.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RestApi": {
       "base": "<p>Represents a REST API.</p>",
@@ -1441,7 +1386,13 @@
     },
     "RestApis": {
       "base": "<p>Contains references to your APIs and links that guide you in how to interact with your collection. A collection offers a paginated view of your APIs.</p>",
+      "refs": {}
+    },
+    "RoutingMode": {
+      "base": null,
       "refs": {
+        "CreateDomainNameRequest$routingMode": "<p> The routing mode for this domain name. The routing mode determines how API Gateway sends traffic from your custom domain name to your private APIs. </p>",
+        "DomainName$routingMode": "<p>The routing mode for this domain name. The routing mode determines how API Gateway sends traffic from your custom domain name to your private APIs.</p>"
       }
     },
     "SdkConfigurationProperty": {
@@ -1452,8 +1403,7 @@
     },
     "SdkResponse": {
       "base": "<p>The binary blob response to GetSdk, which contains the generated SDK.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SdkType": {
       "base": "<p>A type of SDK that API Gateway can generate.</p>",
@@ -1463,8 +1413,7 @@
     },
     "SdkTypes": {
       "base": "<p>The collection of SdkType instances.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SecurityPolicy": {
       "base": null,
@@ -1475,8 +1424,7 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>The requested service is not available. For details see the accompanying error message. Retry after the specified time period.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Stage": {
       "base": "<p>Represents a unique identifier for a version of a deployed RestApi that is callable by users.</p>",
@@ -1492,8 +1440,7 @@
     },
     "Stages": {
       "base": "<p>A list of Stage resources that are associated with the ApiKey resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StatusCode": {
       "base": "<p>The status code.</p>",
@@ -1558,6 +1505,7 @@
         "CreateAuthorizerRequest$identitySource": "<p>The identity source for which authorization is requested. For a <code>TOKEN</code> or <code>COGNITO_USER_POOLS</code> authorizer, this is required and specifies the request header mapping expression for the custom header holding the authorization token submitted by the client. For example, if the token header name is <code>Auth</code>, the header mapping expression is <code>method.request.header.Auth</code>. For the <code>REQUEST</code> authorizer, this is required when authorization caching is enabled. The value is a comma-separated string of one or more mapping expressions of the specified request parameters. For example, if an <code>Auth</code> header, a <code>Name</code> query string parameter are defined as identity sources, this value is <code>method.request.header.Auth, method.request.querystring.Name</code>. These parameters will be used to derive the authorization caching key and to perform runtime validation of the <code>REQUEST</code> authorizer by verifying all of the identity-related request parameters are present, not null and non-empty. Only when this is true does the authorizer invoke the authorizer Lambda function, otherwise, it returns a 401 Unauthorized response without calling the Lambda function. The valid value is a string of comma-separated mapping expressions of the specified request parameters. When the authorization caching is not enabled, this property is optional.</p>",
         "CreateAuthorizerRequest$identityValidationExpression": "<p>A validation expression for the incoming identity token. For <code>TOKEN</code> authorizers, this value is a regular expression. For <code>COGNITO_USER_POOLS</code> authorizers, API Gateway will match the <code>aud</code> field of the incoming token from the client against the specified regular expression. It will invoke the authorizer's Lambda function when there is a match. Otherwise, it will return a 401 Unauthorized response without calling the Lambda function. The validation expression does not apply to the <code>REQUEST</code> authorizer.</p>",
         "CreateBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to create.</p>",
+        "CreateBasePathMappingRequest$domainNameId": "<p>The identifier for the domain name resource. Required for private custom domain names.</p>",
         "CreateBasePathMappingRequest$basePath": "<p>The base path name that callers of the API must provide as part of the URL after the domain name. This value must be unique for all of the mappings across a single API. Specify '(none)' if you do not want callers to specify a base path name after the domain name.</p>",
         "CreateBasePathMappingRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "CreateBasePathMappingRequest$stage": "<p>The name of the API's stage that you want to use for this mapping. Specify '(none)' if you want callers to explicitly specify the stage name after any base path name.</p>",
@@ -1571,15 +1519,18 @@
         "CreateDocumentationVersionRequest$documentationVersion": "<p>The version identifier of the new snapshot.</p>",
         "CreateDocumentationVersionRequest$stageName": "<p>The stage name to be associated with the new documentation snapshot.</p>",
         "CreateDocumentationVersionRequest$description": "<p>A description about the new documentation snapshot.</p>",
+        "CreateDomainNameAccessAssociationRequest$domainNameArn": "<p> The ARN of the domain name. </p>",
+        "CreateDomainNameAccessAssociationRequest$accessAssociationSource": "<p> The identifier of the domain name access association source. For a VPCE, the value is the VPC endpoint ID. </p>",
         "CreateDomainNameRequest$domainName": "<p>The name of the DomainName resource.</p>",
-        "CreateDomainNameRequest$certificateName": "<p>The user-friendly name of the certificate that will be used by edge-optimized endpoint for this domain name.</p>",
-        "CreateDomainNameRequest$certificateBody": "<p>[Deprecated] The body of the server certificate that will be used by edge-optimized endpoint for this domain name provided by your certificate authority.</p>",
+        "CreateDomainNameRequest$certificateName": "<p>The user-friendly name of the certificate that will be used by edge-optimized endpoint or private endpoint for this domain name.</p>",
+        "CreateDomainNameRequest$certificateBody": "<p>[Deprecated] The body of the server certificate that will be used by edge-optimized endpoint or private endpoint for this domain name provided by your certificate authority.</p>",
         "CreateDomainNameRequest$certificatePrivateKey": "<p>[Deprecated] Your edge-optimized endpoint's domain name certificate's private key.</p>",
         "CreateDomainNameRequest$certificateChain": "<p>[Deprecated] The intermediate certificates and optionally the root certificate, one after the other without any blank lines, used by an edge-optimized endpoint for this domain name. If you include the root certificate, your certificate chain must start with intermediate certificates and end with the root certificate. Use the intermediate certificates that were provided by your certificate authority. Do not include any intermediaries that are not in the chain of trust path.</p>",
-        "CreateDomainNameRequest$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint for this domain name. Certificate Manager is the only supported source.</p>",
+        "CreateDomainNameRequest$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint or private endpoint for this domain name. Certificate Manager is the only supported source.</p>",
         "CreateDomainNameRequest$regionalCertificateName": "<p>The user-friendly name of the certificate that will be used by regional endpoint for this domain name.</p>",
         "CreateDomainNameRequest$regionalCertificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by regional endpoint for this domain name. Certificate Manager is the only supported source.</p>",
         "CreateDomainNameRequest$ownershipVerificationCertificateArn": "<p>The ARN of the public certificate issued by ACM to validate ownership of your custom domain. Only required when configuring mutual TLS and using an ACM imported or private CA certificate ARN as the regionalCertificateArn.</p>",
+        "CreateDomainNameRequest$policy": "<p>A stringified JSON policy document that applies to the <code>execute-api</code> service for this DomainName regardless of the caller and Method configuration. Supported only for private custom domain names.</p>",
         "CreateModelRequest$restApiId": "<p>The RestApi identifier under which the Model will be created.</p>",
         "CreateModelRequest$name": "<p>The name of the model. Must be alphanumeric.</p>",
         "CreateModelRequest$description": "<p>The description of the model.</p>",
@@ -1611,6 +1562,7 @@
         "DeleteAuthorizerRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteAuthorizerRequest$authorizerId": "<p>The identifier of the Authorizer resource.</p>",
         "DeleteBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to delete.</p>",
+        "DeleteBasePathMappingRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "DeleteBasePathMappingRequest$basePath": "<p>The base path name of the BasePathMapping resource to delete.</p> <p>To specify an empty base path, set this parameter to <code>'(none)'</code>.</p>",
         "DeleteClientCertificateRequest$clientCertificateId": "<p>The identifier of the ClientCertificate resource to be deleted.</p>",
         "DeleteDeploymentRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
@@ -1619,7 +1571,9 @@
         "DeleteDocumentationPartRequest$documentationPartId": "<p>The identifier of the to-be-deleted documentation part.</p>",
         "DeleteDocumentationVersionRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteDocumentationVersionRequest$documentationVersion": "<p>The version identifier of a to-be-deleted documentation snapshot.</p>",
+        "DeleteDomainNameAccessAssociationRequest$domainNameAccessAssociationArn": "<p> The ARN of the domain name access association resource.</p>",
         "DeleteDomainNameRequest$domainName": "<p>The name of the DomainName resource to be deleted.</p>",
+        "DeleteDomainNameRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "DeleteGatewayResponseRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteIntegrationRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "DeleteIntegrationRequest$resourceId": "<p>Specifies a delete integration request's resource identifier.</p>",
@@ -1659,8 +1613,10 @@
         "DocumentationVersion$description": "<p>The description of the API documentation snapshot.</p>",
         "DocumentationVersions$position": null,
         "DomainName$domainName": "<p>The custom domain name as an API host name, for example, <code>my-api.example.com</code>.</p>",
-        "DomainName$certificateName": "<p>The name of the certificate that will be used by edge-optimized endpoint for this domain name.</p>",
-        "DomainName$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint for this domain name. Certificate Manager is the only supported source.</p>",
+        "DomainName$domainNameId": "<p>The identifier for the domain name resource. Supported only for private custom domain names.</p>",
+        "DomainName$domainNameArn": "<p>The ARN of the domain name. </p>",
+        "DomainName$certificateName": "<p>The name of the certificate that will be used by edge-optimized endpoint or private endpoint for this domain name.</p>",
+        "DomainName$certificateArn": "<p>The reference to an Amazon Web Services-managed certificate that will be used by edge-optimized endpoint or private endpoint for this domain name. Certificate Manager is the only supported source.</p>",
         "DomainName$regionalDomainName": "<p>The domain name associated with the regional endpoint for this custom domain name. You set up this association by adding a DNS record that points the custom domain name to this regional domain name. The regional domain name is returned by API Gateway when you create a regional endpoint.</p>",
         "DomainName$regionalHostedZoneId": "<p>The region-specific Amazon Route 53 Hosted Zone ID of the regional endpoint. For more information, see Set up a Regional Custom Domain Name and AWS Regions and Endpoints for API Gateway. </p>",
         "DomainName$regionalCertificateName": "<p>The name of the certificate that will be used for validating the regional domain name.</p>",
@@ -1669,6 +1625,12 @@
         "DomainName$distributionHostedZoneId": "<p>The region-agnostic Amazon Route 53 Hosted Zone ID of the edge-optimized endpoint. The valid value is <code>Z2FDTNDATAQYW2</code> for all the regions. For more information, see Set up a Regional Custom Domain Name and AWS Regions and Endpoints for API Gateway. </p>",
         "DomainName$domainNameStatusMessage": "<p>An optional text message containing detailed information about status of the DomainName migration.</p>",
         "DomainName$ownershipVerificationCertificateArn": "<p>The ARN of the public certificate issued by ACM to validate ownership of your custom domain. Only required when configuring mutual TLS and using an ACM imported or private CA certificate ARN as the regionalCertificateArn.</p>",
+        "DomainName$managementPolicy": "<p>A stringified JSON policy document that applies to the API Gateway Management service for this DomainName. This policy document controls access for access association sources to create domain name access associations with this DomainName. Supported only for private custom domain names.</p>",
+        "DomainName$policy": "<p>A stringified JSON policy document that applies to the <code>execute-api</code> service for this DomainName regardless of the caller and Method configuration. Supported only for private custom domain names.</p>",
+        "DomainNameAccessAssociation$domainNameAccessAssociationArn": "<p>The ARN of the domain name access association resource. </p>",
+        "DomainNameAccessAssociation$domainNameArn": "<p>The ARN of the domain name. </p>",
+        "DomainNameAccessAssociation$accessAssociationSource": "<p> The ARN of the domain name access association source. For a VPCE, the ARN must be a VPC endpoint. </p>",
+        "DomainNameAccessAssociations$position": null,
         "DomainNames$position": null,
         "ExportResponse$contentType": "<p>The content-type header value in the HTTP response. This will correspond to a valid 'accept' type in the request.</p>",
         "ExportResponse$contentDisposition": "<p>The content-disposition header value in the HTTP response.</p>",
@@ -1687,8 +1649,10 @@
         "GetAuthorizersRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "GetAuthorizersRequest$position": "<p>The current pagination position in the paged result set.</p>",
         "GetBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to be described.</p>",
+        "GetBasePathMappingRequest$domainNameId": "<p>The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "GetBasePathMappingRequest$basePath": "<p>The base path name that callers of the API must provide as part of the URL after the domain name. This value must be unique for all of the mappings across a single API. Specify '(none)' if you do not want callers to specify any base path name after the domain name.</p>",
         "GetBasePathMappingsRequest$domainName": "<p>The domain name of a BasePathMapping resource.</p>",
+        "GetBasePathMappingsRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "GetBasePathMappingsRequest$position": "<p>The current pagination position in the paged result set.</p>",
         "GetClientCertificateRequest$clientCertificateId": "<p>The identifier of the ClientCertificate resource to be described.</p>",
         "GetClientCertificatesRequest$position": "<p>The current pagination position in the paged result set.</p>",
@@ -1706,7 +1670,9 @@
         "GetDocumentationVersionRequest$documentationVersion": "<p>The version identifier of the to-be-retrieved documentation snapshot.</p>",
         "GetDocumentationVersionsRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "GetDocumentationVersionsRequest$position": "<p>The current pagination position in the paged result set.</p>",
+        "GetDomainNameAccessAssociationsRequest$position": "<p>The current pagination position in the paged result set. </p>",
         "GetDomainNameRequest$domainName": "<p>The name of the DomainName resource.</p>",
+        "GetDomainNameRequest$domainNameId": "<p> The identifier for the domain name resource. Required for private custom domain names. </p>",
         "GetDomainNamesRequest$position": "<p>The current pagination position in the paged result set.</p>",
         "GetExportRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "GetExportRequest$stageName": "<p>The name of the Stage that will be exported.</p>",
@@ -1838,6 +1804,8 @@
         "PutMethodResponseRequest$resourceId": "<p>The Resource identifier for the Method resource.</p>",
         "PutMethodResponseRequest$httpMethod": "<p>The HTTP verb of the Method resource.</p>",
         "PutRestApiRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
+        "RejectDomainNameAccessAssociationRequest$domainNameAccessAssociationArn": "<p>The ARN of the domain name access association resource. </p>",
+        "RejectDomainNameAccessAssociationRequest$domainNameArn": "<p> The ARN of the domain name. </p>",
         "RequestValidator$id": "<p>The identifier of this RequestValidator.</p>",
         "RequestValidator$name": "<p>The name of this RequestValidator</p>",
         "RequestValidators$position": null,
@@ -1898,6 +1866,7 @@
         "UpdateAuthorizerRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateAuthorizerRequest$authorizerId": "<p>The identifier of the Authorizer resource.</p>",
         "UpdateBasePathMappingRequest$domainName": "<p>The domain name of the BasePathMapping resource to change.</p>",
+        "UpdateBasePathMappingRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "UpdateBasePathMappingRequest$basePath": "<p>The base path of the BasePathMapping resource to change.</p> <p>To specify an empty base path, set this parameter to <code>'(none)'</code>.</p>",
         "UpdateClientCertificateRequest$clientCertificateId": "<p>The identifier of the ClientCertificate resource to be updated.</p>",
         "UpdateDeploymentRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
@@ -1907,6 +1876,7 @@
         "UpdateDocumentationVersionRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateDocumentationVersionRequest$documentationVersion": "<p>The version identifier of the to-be-updated documentation version.</p>",
         "UpdateDomainNameRequest$domainName": "<p>The name of the DomainName resource to be changed.</p>",
+        "UpdateDomainNameRequest$domainNameId": "<p> The identifier for the domain name resource. Supported only for private custom domain names. </p>",
         "UpdateGatewayResponseRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateIntegrationRequest$restApiId": "<p>The string identifier of the associated RestApi.</p>",
         "UpdateIntegrationRequest$resourceId": "<p>Represents an update integration request's resource identifier.</p>",
@@ -1956,38 +1926,31 @@
     },
     "TagResourceRequest": {
       "base": "<p>Adds or updates a tag on a given resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Tags": {
       "base": "<p>The collection of tags. Each tag element is associated with a given resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Template": {
       "base": "<p>Represents a mapping template used to transform a payload.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TestInvokeAuthorizerRequest": {
       "base": "<p>Make a request to simulate the invocation of an Authorizer.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TestInvokeAuthorizerResponse": {
       "base": "<p>Represents the response of the test invoke request for a custom Authorizer</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TestInvokeMethodRequest": {
       "base": "<p>Make a request to simulate the invocation of a Method.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TestInvokeMethodResponse": {
       "base": "<p>Represents the response of the test invoke request in the HTTP method.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottleSettings": {
       "base": "<p> The API request rate limits.</p>",
@@ -2007,7 +1970,7 @@
         "ClientCertificate$expirationDate": "<p>The timestamp when the client certificate will expire.</p>",
         "Deployment$createdDate": "<p>The date and time that the deployment resource was created.</p>",
         "DocumentationVersion$createdDate": "<p>The date when the API documentation snapshot is created.</p>",
-        "DomainName$certificateUploadDate": "<p>The timestamp when the certificate that was used by edge-optimized endpoint for this domain name was uploaded.</p>",
+        "DomainName$certificateUploadDate": "<p>The timestamp when the certificate that was used by edge-optimized endpoint or private endpoint for this domain name was uploaded.</p>",
         "RestApi$createdDate": "<p>The timestamp when the API was created.</p>",
         "Stage$createdDate": "<p>The timestamp when the stage was created.</p>",
         "Stage$lastUpdatedDate": "<p>The timestamp when the stage last updated.</p>"
@@ -2022,8 +1985,7 @@
     },
     "TooManyRequestsException": {
       "base": "<p>The request has reached its throttling limit. Retry after the specified time period.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnauthorizedCacheControlHeaderStrategy": {
       "base": null,
@@ -2033,128 +1995,103 @@
     },
     "UnauthorizedException": {
       "base": "<p>The request is denied because the caller has insufficient permissions.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": "<p>Removes a tag from a given resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountRequest": {
       "base": "<p>Requests API Gateway to change information about the current Account resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApiKeyRequest": {
       "base": "<p>A request to change information about an ApiKey resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAuthorizerRequest": {
       "base": "<p>Request to update an existing Authorizer resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBasePathMappingRequest": {
       "base": "<p>A request to change information about the BasePathMapping resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateClientCertificateRequest": {
       "base": "<p>A request to change information about an ClientCertificate resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDeploymentRequest": {
       "base": "<p>Requests API Gateway to change information about a Deployment resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentationPartRequest": {
       "base": "<p>Updates an existing documentation part of a given API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDocumentationVersionRequest": {
       "base": "<p>Updates an existing documentation version of an API.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDomainNameRequest": {
       "base": "<p>A request to change information about the DomainName resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGatewayResponseRequest": {
       "base": "<p>Updates a GatewayResponse of a specified response type on the given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIntegrationRequest": {
       "base": "<p>Represents an update integration request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIntegrationResponseRequest": {
       "base": "<p>Represents an update integration response request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMethodRequest": {
       "base": "<p>Request to update an existing Method resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMethodResponseRequest": {
       "base": "<p>A request to update an existing MethodResponse resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateModelRequest": {
       "base": "<p>Request to update an existing model in an existing RestApi resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRequestValidatorRequest": {
       "base": "<p>Updates a RequestValidator of a given RestApi.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceRequest": {
       "base": "<p>Request to change information about a Resource resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRestApiRequest": {
       "base": "<p>Request to update an existing RestApi resource in your collection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStageRequest": {
       "base": "<p>Requests API Gateway to change information about a Stage resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateUsagePlanRequest": {
       "base": "<p>The PATCH request to update a usage plan of a given plan Id.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateUsageRequest": {
       "base": "<p>The PATCH request to grant a temporary extension to the remaining quota of a usage plan associated with a specified API key.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVpcLinkRequest": {
       "base": "<p>Updates an existing VpcLink of a specified identifier.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Usage": {
       "base": "<p>Represents the usage data of a usage plan.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UsagePlan": {
       "base": "<p>Represents a usage plan used to specify who can assess associated API stages. Optionally, target request rate and quota limits can be set. In some cases clients can exceed the targets that you set. Don’t rely on usage plans to control costs. Consider using <a href=\"https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html\">Amazon Web Services Budgets</a> to monitor costs and <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF</a> to manage API requests.</p>",
@@ -2170,13 +2107,11 @@
     },
     "UsagePlanKeys": {
       "base": "<p>Represents the collection of usage plan keys added to usage plans for the associated API keys and, possibly, other types of keys.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UsagePlans": {
       "base": "<p>Represents a collection of usage plans for an AWS account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VpcLink": {
       "base": "<p>An API Gateway VPC link for a RestApi to access resources in an Amazon Virtual Private Cloud (VPC).</p>",
@@ -2192,8 +2127,7 @@
     },
     "VpcLinks": {
       "base": "<p>The collection of VPC links under the caller's account in a region.</p>",
-      "refs": {
-      }
+      "refs": {}
     }
   }
 }

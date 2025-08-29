@@ -5,12 +5,14 @@
     "endpointPrefix":"cloudhsm",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"CloudHSM",
     "serviceFullName":"Amazon CloudHSM",
     "serviceId":"CloudHSM",
     "signatureVersion":"v4",
     "targetPrefix":"CloudHsmFrontendService",
-    "uid":"cloudhsm-2014-05-30"
+    "uid":"cloudhsm-2014-05-30",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AddTagsToResource":{
@@ -395,8 +397,7 @@
     },
     "CloudHsmInternalException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true,
       "fault":true
     },
@@ -648,8 +649,7 @@
     },
     "InvalidRequestException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "IpAddress":{
@@ -662,8 +662,7 @@
     },
     "ListAvailableZonesRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ListAvailableZonesResponse":{
       "type":"structure",

@@ -11,7 +11,8 @@
     "signatureVersion":"v4",
     "signingName":"transcribe",
     "targetPrefix":"Transcribe",
-    "uid":"transcribe-2017-10-26"
+    "uid":"transcribe-2017-10-26",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateCallAnalyticsCategory":{
@@ -703,7 +704,8 @@
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"},
         "Settings":{"shape":"CallAnalyticsJobSettings"},
-        "ChannelDefinitions":{"shape":"ChannelDefinitions"}
+        "ChannelDefinitions":{"shape":"ChannelDefinitions"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CallAnalyticsJobDetails":{
@@ -789,6 +791,7 @@
         "Rules":{"shape":"RuleList"},
         "CreateTime":{"shape":"DateTime"},
         "LastUpdateTime":{"shape":"DateTime"},
+        "Tags":{"shape":"TagList"},
         "InputType":{"shape":"InputType"}
       }
     },
@@ -813,6 +816,12 @@
       "type":"integer",
       "max":1,
       "min":0
+    },
+    "ClinicalNoteGenerationSettings":{
+      "type":"structure",
+      "members":{
+        "NoteTemplate":{"shape":"MedicalScribeNoteTemplate"}
+      }
     },
     "ConflictException":{
       "type":"structure",
@@ -842,6 +851,7 @@
       "members":{
         "CategoryName":{"shape":"CategoryName"},
         "Rules":{"shape":"RuleList"},
+        "Tags":{"shape":"TagList"},
         "InputType":{"shape":"InputType"}
       }
     },
@@ -965,8 +975,7 @@
     },
     "DeleteCallAnalyticsCategoryResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCallAnalyticsJobRequest":{
       "type":"structure",
@@ -977,8 +986,7 @@
     },
     "DeleteCallAnalyticsJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLanguageModelRequest":{
       "type":"structure",
@@ -1275,6 +1283,7 @@
         "cs-CZ",
         "cy-WL",
         "el-GR",
+        "et-EE",
         "et-ET",
         "eu-ES",
         "fi-FI",
@@ -1324,6 +1333,7 @@
         "uk-UA",
         "uz-UZ",
         "wo-SN",
+        "zh-HK",
         "zu-ZA"
       ]
     },
@@ -1611,6 +1621,12 @@
       "max":1,
       "min":0
     },
+    "MedicalScribeContext":{
+      "type":"structure",
+      "members":{
+        "PatientContext":{"shape":"MedicalScribePatientContext"}
+      }
+    },
     "MedicalScribeJob":{
       "type":"structure",
       "members":{
@@ -1626,6 +1642,7 @@
         "Settings":{"shape":"MedicalScribeSettings"},
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "ChannelDefinitions":{"shape":"MedicalScribeChannelDefinitions"},
+        "MedicalScribeContextProvided":{"shape":"Boolean"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1658,6 +1675,18 @@
       "type":"string",
       "enum":["en-US"]
     },
+    "MedicalScribeNoteTemplate":{
+      "type":"string",
+      "enum":[
+        "HISTORY_AND_PHYSICAL",
+        "GIRPP",
+        "BIRP",
+        "SIRP",
+        "DAP",
+        "BEHAVIORAL_SOAP",
+        "PHYSICAL_SOAP"
+      ]
+    },
     "MedicalScribeOutput":{
       "type":"structure",
       "required":[
@@ -1676,6 +1705,12 @@
         "CLINICIAN"
       ]
     },
+    "MedicalScribePatientContext":{
+      "type":"structure",
+      "members":{
+        "Pronouns":{"shape":"Pronouns"}
+      }
+    },
     "MedicalScribeSettings":{
       "type":"structure",
       "members":{
@@ -1684,7 +1719,8 @@
         "ChannelIdentification":{"shape":"Boolean"},
         "VocabularyName":{"shape":"VocabularyName"},
         "VocabularyFilterName":{"shape":"VocabularyFilterName"},
-        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"}
+        "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"},
+        "ClinicalNoteGenerationSettings":{"shape":"ClinicalNoteGenerationSettings"}
       }
     },
     "MedicalTranscript":{
@@ -1859,6 +1895,15 @@
       "max":11,
       "min":0
     },
+    "Pronouns":{
+      "type":"string",
+      "enum":[
+        "HE_HIM",
+        "SHE_HER",
+        "THEY_THEM"
+      ],
+      "sensitive":true
+    },
     "RedactionOutput":{
       "type":"string",
       "enum":[
@@ -1951,6 +1996,7 @@
         "OutputEncryptionKMSKeyId":{"shape":"KMSKeyId"},
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "Settings":{"shape":"CallAnalyticsJobSettings"},
+        "Tags":{"shape":"TagList"},
         "ChannelDefinitions":{"shape":"ChannelDefinitions"}
       }
     },
@@ -1978,7 +2024,8 @@
         "DataAccessRoleArn":{"shape":"DataAccessRoleArn"},
         "Settings":{"shape":"MedicalScribeSettings"},
         "ChannelDefinitions":{"shape":"MedicalScribeChannelDefinitions"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "MedicalScribeContext":{"shape":"MedicalScribeContext"}
       }
     },
     "StartMedicalScribeJobResponse":{
@@ -2144,8 +2191,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2300,8 +2346,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCallAnalyticsCategoryRequest":{
       "type":"structure",

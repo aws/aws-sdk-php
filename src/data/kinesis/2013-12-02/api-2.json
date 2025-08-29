@@ -8,12 +8,18 @@
         "protocolSettings": {
             "h2": "eventstream"
         },
+        "protocols": [
+            "json"
+        ],
         "serviceAbbreviation": "Kinesis",
         "serviceFullName": "Amazon Kinesis",
         "serviceId": "Kinesis",
         "signatureVersion": "v4",
         "targetPrefix": "Kinesis_20131202",
-        "uid": "kinesis-2013-12-02"
+        "uid": "kinesis-2013-12-02",
+        "auth": [
+            "aws.auth#sigv4"
+        ]
     },
     "operations": {
         "AddTagsToStream": {
@@ -417,6 +423,9 @@
                 },
                 {
                     "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "InternalFailureException"
                 }
             ],
             "staticContextParams": {
@@ -449,6 +458,9 @@
                 },
                 {
                     "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "ResourceInUseException"
                 }
             ],
             "staticContextParams": {
@@ -481,6 +493,9 @@
                 },
                 {
                     "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "InternalFailureException"
                 }
             ],
             "staticContextParams": {
@@ -618,6 +633,41 @@
                 }
             ]
         },
+        "ListTagsForResource": {
+            "name": "ListTagsForResource",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "ListTagsForResourceInput"
+            },
+            "output": {
+                "shape": "ListTagsForResourceOutput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
         "ListTagsForStream": {
             "name": "ListTagsForStream",
             "http": {
@@ -727,6 +777,9 @@
                 },
                 {
                     "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "InternalFailureException"
                 }
             ],
             "staticContextParams": {
@@ -777,6 +830,9 @@
                 },
                 {
                     "shape": "AccessDeniedException"
+                },
+                {
+                    "shape": "InternalFailureException"
                 }
             ],
             "staticContextParams": {
@@ -987,6 +1043,70 @@
                 },
                 {
                     "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
+        "TagResource": {
+            "name": "TagResource",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "TagResourceInput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "AccessDeniedException"
+                }
+            ],
+            "staticContextParams": {
+                "OperationType": {
+                    "value": "control"
+                }
+            }
+        },
+        "UntagResource": {
+            "name": "UntagResource",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "UntagResourceInput"
+            },
+            "errors": [
+                {
+                    "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "LimitExceededException"
                 },
                 {
                     "shape": "AccessDeniedException"
@@ -1219,6 +1339,9 @@
                 },
                 "StreamModeDetails": {
                     "shape": "StreamModeDetails"
+                },
+                "Tags": {
+                    "shape": "TagMap"
                 }
             }
         },
@@ -1877,6 +2000,28 @@
                 }
             }
         },
+        "ListTagsForResourceInput": {
+            "type": "structure",
+            "required": [
+                "ResourceARN"
+            ],
+            "members": {
+                "ResourceARN": {
+                    "shape": "ResourceARN",
+                    "contextParam": {
+                        "name": "ResourceARN"
+                    }
+                }
+            }
+        },
+        "ListTagsForResourceOutput": {
+            "type": "structure",
+            "members": {
+                "Tags": {
+                    "shape": "TagList"
+                }
+            }
+        },
         "ListTagsForStreamInput": {
             "type": "structure",
             "members": {
@@ -2202,6 +2347,9 @@
                 },
                 "ConsumerName": {
                     "shape": "ConsumerName"
+                },
+                "Tags": {
+                    "shape": "TagMap"
                 }
             }
         },
@@ -2779,6 +2927,24 @@
             "max": 200,
             "min": 1
         },
+        "TagResourceInput": {
+            "type": "structure",
+            "required": [
+                "Tags",
+                "ResourceARN"
+            ],
+            "members": {
+                "Tags": {
+                    "shape": "TagMap"
+                },
+                "ResourceARN": {
+                    "shape": "ResourceARN",
+                    "contextParam": {
+                        "name": "ResourceARN"
+                    }
+                }
+            }
+        },
         "TagValue": {
             "type": "string",
             "max": 256,
@@ -2786,6 +2952,24 @@
         },
         "Timestamp": {
             "type": "timestamp"
+        },
+        "UntagResourceInput": {
+            "type": "structure",
+            "required": [
+                "TagKeys",
+                "ResourceARN"
+            ],
+            "members": {
+                "TagKeys": {
+                    "shape": "TagKeyList"
+                },
+                "ResourceARN": {
+                    "shape": "ResourceARN",
+                    "contextParam": {
+                        "name": "ResourceARN"
+                    }
+                }
+            }
         },
         "UpdateShardCountInput": {
             "type": "structure",

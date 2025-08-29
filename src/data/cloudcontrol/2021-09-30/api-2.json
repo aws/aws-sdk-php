@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-09-30",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cloudcontrolapi",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"CloudControlApi",
     "serviceFullName":"AWS Cloud Control API",
     "serviceId":"CloudControl",
@@ -293,7 +295,7 @@
     },
     "ErrorMessage":{
       "type":"string",
-      "max":1024,
+      "max":2048,
       "min":1,
       "pattern":".+"
     },
@@ -334,7 +336,8 @@
     "GetResourceRequestStatusOutput":{
       "type":"structure",
       "members":{
-        "ProgressEvent":{"shape":"ProgressEvent"}
+        "ProgressEvent":{"shape":"ProgressEvent"},
+        "HooksProgressEvent":{"shape":"HooksProgressEvent"}
       }
     },
     "HandlerErrorCode":{
@@ -343,6 +346,7 @@
         "NotUpdatable",
         "InvalidRequest",
         "AccessDenied",
+        "UnauthorizedTaggingOperation",
         "InvalidCredentials",
         "AlreadyExists",
         "NotFound",
@@ -375,9 +379,50 @@
     },
     "HandlerNextToken":{
       "type":"string",
-      "max":2048,
+      "max":4096,
       "min":1,
       "pattern":".+"
+    },
+    "HookFailureMode":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[-A-Za-z_]+"
+    },
+    "HookInvocationPoint":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[-A-Za-z_]+"
+    },
+    "HookProgressEvent":{
+      "type":"structure",
+      "members":{
+        "HookTypeName":{"shape":"TypeName"},
+        "HookTypeVersionId":{"shape":"TypeVersionId"},
+        "HookTypeArn":{"shape":"HookTypeArn"},
+        "InvocationPoint":{"shape":"HookInvocationPoint"},
+        "HookStatus":{"shape":"HookStatus"},
+        "HookEventTime":{"shape":"Timestamp"},
+        "HookStatusMessage":{"shape":"StatusMessage"},
+        "FailureMode":{"shape":"HookFailureMode"}
+      }
+    },
+    "HookStatus":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[-A-Za-z_]+"
+    },
+    "HookTypeArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:aws.*:.+:.*:.*:.+"
+    },
+    "HooksProgressEvent":{
+      "type":"list",
+      "member":{"shape":"HookProgressEvent"}
     },
     "Identifier":{
       "type":"string",
@@ -497,7 +542,7 @@
     },
     "PatchDocument":{
       "type":"string",
-      "max":65536,
+      "max":262144,
       "min":1,
       "pattern":"[\\s\\S]*",
       "sensitive":true
@@ -515,6 +560,7 @@
         "TypeName":{"shape":"TypeName"},
         "Identifier":{"shape":"Identifier"},
         "RequestToken":{"shape":"RequestToken"},
+        "HooksRequestToken":{"shape":"RequestToken"},
         "Operation":{"shape":"Operation"},
         "OperationStatus":{"shape":"OperationStatus"},
         "EventTime":{"shape":"Timestamp"},
@@ -526,7 +572,7 @@
     },
     "Properties":{
       "type":"string",
-      "max":65536,
+      "max":262144,
       "min":1,
       "pattern":"[\\s\\S]*",
       "sensitive":true
@@ -603,7 +649,7 @@
     },
     "StatusMessage":{
       "type":"string",
-      "max":1024,
+      "max":2048,
       "min":0,
       "pattern":"[\\s\\S]*"
     },

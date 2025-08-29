@@ -5,11 +5,13 @@
     "endpointPrefix":"textract",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Amazon Textract",
     "serviceId":"Textract",
     "signatureVersion":"v4",
     "targetPrefix":"Textract",
-    "uid":"textract-2018-06-27"
+    "uid":"textract-2018-06-27",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AnalyzeDocument":{
@@ -516,8 +518,7 @@
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Adapter":{
@@ -706,6 +707,7 @@
         "AnalyzeIDModelVersion":{"shape":"String"}
       }
     },
+    "Angle":{"type":"float"},
     "AutoUpdate":{
       "type":"string",
       "enum":[
@@ -715,8 +717,7 @@
     },
     "BadDocumentException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Block":{
@@ -789,8 +790,7 @@
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ContentClassifier":{
@@ -865,8 +865,7 @@
     },
     "DeleteAdapterResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAdapterVersionRequest":{
       "type":"structure",
@@ -881,8 +880,7 @@
     },
     "DeleteAdapterVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DetectDocumentTextRequest":{
       "type":"structure",
@@ -949,8 +947,7 @@
     },
     "DocumentTooLargeException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "EntityType":{
@@ -1076,7 +1073,8 @@
       "type":"structure",
       "members":{
         "BoundingBox":{"shape":"BoundingBox"},
-        "Polygon":{"shape":"Polygon"}
+        "Polygon":{"shape":"Polygon"},
+        "RotationAngle":{"shape":"Angle"}
       }
     },
     "GetAdapterRequest":{
@@ -1291,8 +1289,7 @@
     },
     "IdempotentParameterMismatchException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "IdentityDocument":{
@@ -1325,33 +1322,28 @@
     },
     "InternalServerError":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true,
       "fault":true
     },
     "InvalidJobIdException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidKMSKeyException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidS3ObjectException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "JobId":{
@@ -1434,8 +1426,7 @@
     },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "LineItemFields":{
@@ -1593,8 +1584,7 @@
     },
     "ProvisionedThroughputExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Queries":{
@@ -1662,8 +1652,7 @@
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "RoleArn":{
@@ -1713,8 +1702,7 @@
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SignatureDetection":{
@@ -1855,8 +1843,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1873,8 +1860,7 @@
     },
     "ThrottlingException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true,
       "fault":true
     },
@@ -1898,8 +1884,7 @@
     },
     "UnsupportedDocumentException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "UntagResourceRequest":{
@@ -1915,8 +1900,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAdapterRequest":{
       "type":"structure",
@@ -1941,8 +1925,7 @@
     },
     "ValidationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ValueType":{

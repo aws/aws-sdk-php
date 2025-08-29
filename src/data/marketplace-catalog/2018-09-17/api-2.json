@@ -5,12 +5,14 @@
     "endpointPrefix":"catalog.marketplace",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"AWS Marketplace Catalog",
     "serviceFullName":"AWS Marketplace Catalog Service",
     "serviceId":"Marketplace Catalog",
     "signatureVersion":"v4",
     "signingName":"aws-marketplace",
-    "uid":"marketplace-catalog-2018-09-17"
+    "uid":"marketplace-catalog-2018-09-17",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchDescribeEntities":{
@@ -715,8 +717,7 @@
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeChangeSetRequest":{
       "type":"structure",
@@ -848,7 +849,8 @@
         "DataProductSummary":{"shape":"DataProductSummary"},
         "SaaSProductSummary":{"shape":"SaaSProductSummary"},
         "OfferSummary":{"shape":"OfferSummary"},
-        "ResaleAuthorizationSummary":{"shape":"ResaleAuthorizationSummary"}
+        "ResaleAuthorizationSummary":{"shape":"ResaleAuthorizationSummary"},
+        "MachineLearningProductSummary":{"shape":"MachineLearningProductSummary"}
       }
     },
     "EntitySummaryList":{
@@ -869,7 +871,8 @@
         "AmiProductFilters":{"shape":"AmiProductFilters"},
         "OfferFilters":{"shape":"OfferFilters"},
         "ContainerProductFilters":{"shape":"ContainerProductFilters"},
-        "ResaleAuthorizationFilters":{"shape":"ResaleAuthorizationFilters"}
+        "ResaleAuthorizationFilters":{"shape":"ResaleAuthorizationFilters"},
+        "MachineLearningProductFilters":{"shape":"MachineLearningProductFilters"}
       },
       "union":true
     },
@@ -881,7 +884,8 @@
         "AmiProductSort":{"shape":"AmiProductSort"},
         "OfferSort":{"shape":"OfferSort"},
         "ContainerProductSort":{"shape":"ContainerProductSort"},
-        "ResaleAuthorizationSort":{"shape":"ResaleAuthorizationSort"}
+        "ResaleAuthorizationSort":{"shape":"ResaleAuthorizationSort"},
+        "MachineLearningProductSort":{"shape":"MachineLearningProductSort"}
       },
       "union":true
     },
@@ -992,8 +996,7 @@
     },
     "JsonDocumentType":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "ListChangeSetsMaxResultInteger":{
@@ -1064,6 +1067,109 @@
         "ResourceArn":{"shape":"ResourceARN"},
         "Tags":{"shape":"TagList"}
       }
+    },
+    "MachineLearningProductEntityIdFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"MachineLearningProductEntityIdFilterValueList"}
+      }
+    },
+    "MachineLearningProductEntityIdFilterValueList":{
+      "type":"list",
+      "member":{"shape":"MachineLearningProductEntityIdString"},
+      "max":10,
+      "min":1
+    },
+    "MachineLearningProductEntityIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9][.a-zA-Z0-9/-]+[a-zA-Z0-9]$"
+    },
+    "MachineLearningProductFilters":{
+      "type":"structure",
+      "members":{
+        "EntityId":{"shape":"MachineLearningProductEntityIdFilter"},
+        "LastModifiedDate":{"shape":"MachineLearningProductLastModifiedDateFilter"},
+        "ProductTitle":{"shape":"MachineLearningProductTitleFilter"},
+        "Visibility":{"shape":"MachineLearningProductVisibilityFilter"}
+      }
+    },
+    "MachineLearningProductLastModifiedDateFilter":{
+      "type":"structure",
+      "members":{
+        "DateRange":{"shape":"MachineLearningProductLastModifiedDateFilterDateRange"}
+      }
+    },
+    "MachineLearningProductLastModifiedDateFilterDateRange":{
+      "type":"structure",
+      "members":{
+        "AfterValue":{"shape":"DateTimeISO8601"},
+        "BeforeValue":{"shape":"DateTimeISO8601"}
+      }
+    },
+    "MachineLearningProductSort":{
+      "type":"structure",
+      "members":{
+        "SortBy":{"shape":"MachineLearningProductSortBy"},
+        "SortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "MachineLearningProductSortBy":{
+      "type":"string",
+      "enum":[
+        "EntityId",
+        "LastModifiedDate",
+        "ProductTitle",
+        "Visibility"
+      ]
+    },
+    "MachineLearningProductSummary":{
+      "type":"structure",
+      "members":{
+        "ProductTitle":{"shape":"MachineLearningProductTitleString"},
+        "Visibility":{"shape":"MachineLearningProductVisibilityString"}
+      }
+    },
+    "MachineLearningProductTitleFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"MachineLearningProductTitleFilterValueList"},
+        "WildCardValue":{"shape":"MachineLearningProductTitleString"}
+      }
+    },
+    "MachineLearningProductTitleFilterValueList":{
+      "type":"list",
+      "member":{"shape":"MachineLearningProductTitleString"},
+      "max":10,
+      "min":1
+    },
+    "MachineLearningProductTitleString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^(.)+$"
+    },
+    "MachineLearningProductVisibilityFilter":{
+      "type":"structure",
+      "members":{
+        "ValueList":{"shape":"MachineLearningProductVisibilityFilterValueList"}
+      }
+    },
+    "MachineLearningProductVisibilityFilterValueList":{
+      "type":"list",
+      "member":{"shape":"MachineLearningProductVisibilityString"},
+      "max":10,
+      "min":1
+    },
+    "MachineLearningProductVisibilityString":{
+      "type":"string",
+      "enum":[
+        "Limited",
+        "Public",
+        "Restricted",
+        "Draft"
+      ]
     },
     "NextToken":{
       "type":"string",
@@ -1323,8 +1429,7 @@
     },
     "PutResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RequestedChangeList":{
       "type":"list",
@@ -1923,8 +2028,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1954,8 +2058,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationException":{
       "type":"structure",

@@ -11,7 +11,8 @@
     "signatureVersion":"v4",
     "signingName":"aws-marketplace",
     "targetPrefix":"AWSMPEntitlementService",
-    "uid":"entitlement.marketplace-2017-01-11"
+    "uid":"entitlement.marketplace-2017-01-11",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "GetEntitlements":{
@@ -38,6 +39,7 @@
         "ProductCode":{"shape":"ProductCode"},
         "Dimension":{"shape":"NonEmptyString"},
         "CustomerIdentifier":{"shape":"NonEmptyString"},
+        "CustomerAWSAccountId":{"shape":"NonEmptyString"},
         "Value":{"shape":"EntitlementValue"},
         "ExpirationDate":{"shape":"Timestamp"}
       }
@@ -67,7 +69,8 @@
       "type":"string",
       "enum":[
         "CUSTOMER_IDENTIFIER",
-        "DIMENSION"
+        "DIMENSION",
+        "CUSTOMER_AWS_ACCOUNT_ID"
       ]
     },
     "GetEntitlementFilters":{

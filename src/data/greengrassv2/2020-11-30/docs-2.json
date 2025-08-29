@@ -22,7 +22,7 @@
     "ListClientDevicesAssociatedWithCoreDevice": "<p>Retrieves a paginated list of client devices that are associated with a core device.</p>",
     "ListComponentVersions": "<p>Retrieves a paginated list of all versions for a component. Greater versions are listed first.</p>",
     "ListComponents": "<p>Retrieves a paginated list of component summaries. This list includes components that you have permission to view.</p>",
-    "ListCoreDevices": "<p>Retrieves a paginated list of Greengrass core devices.</p> <note> <p>IoT Greengrass relies on individual devices to send status updates to the Amazon Web Services Cloud. If the IoT Greengrass Core software isn't running on the device, or if device isn't connected to the Amazon Web Services Cloud, then the reported status of that device might not reflect its current status. The status timestamp indicates when the device status was last updated.</p> <p>Core devices send status updates at the following times:</p> <ul> <li> <p>When the IoT Greengrass Core software starts</p> </li> <li> <p>When the core device receives a deployment from the Amazon Web Services Cloud</p> </li> <li> <p>When the status of any component on the core device becomes <code>BROKEN</code> </p> </li> <li> <p>At a <a href=\"https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-fss\">regular interval that you can configure</a>, which defaults to 24 hours</p> </li> <li> <p>For IoT Greengrass Core v2.7.0, the core device sends status updates upon local deployment and cloud deployment</p> </li> </ul> </note>",
+    "ListCoreDevices": "<p>Retrieves a paginated list of Greengrass core devices.</p> <note> <p>IoT Greengrass relies on individual devices to send status updates to the Amazon Web Services Cloud. If the IoT Greengrass Core software isn't running on the device, or if device isn't connected to the Amazon Web Services Cloud, then the reported status of that device might not reflect its current status. The status timestamp indicates when the device status was last updated.</p> <p>Core devices send status updates at the following times:</p> <ul> <li> <p>When the IoT Greengrass Core software starts</p> </li> <li> <p>When the core device receives a deployment from the Amazon Web Services Cloud</p> </li> <li> <p>For Greengrass nucleus 2.12.2 and earlier, the core device sends status updates when the status of any component on the core device becomes <code>ERRORED</code> or <code>BROKEN</code>.</p> </li> <li> <p>For Greengrass nucleus 2.12.3 and later, the core device sends status updates when the status of any component on the core device becomes <code>ERRORED</code>, <code>BROKEN</code>, <code>RUNNING</code>, or <code>FINISHED</code>.</p> </li> <li> <p>At a <a href=\"https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-fss\">regular interval that you can configure</a>, which defaults to 24 hours</p> </li> <li> <p>For IoT Greengrass Core v2.7.0, the core device sends status updates upon local deployment and cloud deployment</p> </li> </ul> </note>",
     "ListDeployments": "<p>Retrieves a paginated list of deployments.</p>",
     "ListEffectiveDeployments": "<p>Retrieves a paginated list of deployment jobs that IoT Greengrass sends to Greengrass core devices.</p>",
     "ListInstalledComponents": "<p>Retrieves a paginated list of the components that a Greengrass core device runs. By default, this list doesn't include components that are deployed as dependencies of other components. To include dependencies in the response, set the <code>topologyFilter</code> parameter to <code>ALL</code>.</p> <note> <p>IoT Greengrass relies on individual devices to send status updates to the Amazon Web Services Cloud. If the IoT Greengrass Core software isn't running on the device, or if device isn't connected to the Amazon Web Services Cloud, then the reported status of that device might not reflect its current status. The status timestamp indicates when the device status was last updated.</p> <p>Core devices send status updates at the following times:</p> <ul> <li> <p>When the IoT Greengrass Core software starts</p> </li> <li> <p>When the core device receives a deployment from the Amazon Web Services Cloud</p> </li> <li> <p>When the status of any component on the core device becomes <code>BROKEN</code> </p> </li> <li> <p>At a <a href=\"https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-fss\">regular interval that you can configure</a>, which defaults to 24 hours</p> </li> <li> <p>For IoT Greengrass Core v2.7.0, the core device sends status updates upon local deployment and cloud deployment</p> </li> </ul> </note>",
@@ -35,8 +35,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have permission to perform the action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateClientDeviceWithCoreDeviceEntry": {
       "base": "<p>Contains a request to associate a client device with a core device. The <a href=\"https://docs.aws.amazon.com/greengrass/v2/APIReference/API_BatchAssociateClientDeviceWithCoreDevice.html\">BatchAssociateClientDeviceWithCoreDevice</a> operation consumes a list of these requests.</p>",
@@ -64,13 +63,11 @@
     },
     "AssociateServiceRoleToAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateServiceRoleToAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatedClientDevice": {
       "base": "<p>Contains information about a client device that is associated to a core device for cloud discovery.</p>",
@@ -86,23 +83,19 @@
     },
     "BatchAssociateClientDeviceWithCoreDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchAssociateClientDeviceWithCoreDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateClientDeviceFromCoreDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateClientDeviceFromCoreDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CPU": {
       "base": null,
@@ -112,13 +105,11 @@
     },
     "CancelDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelDeploymentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientTokenString": {
       "base": null,
@@ -319,8 +310,7 @@
     },
     "ConflictException": {
       "base": "<p>Your request has conflicting operations. This can occur if you're trying to perform more than one operation on the same resource at the same time.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectivityInfo": {
       "base": "<p>Contains information about an endpoint and port where client devices can connect to an MQTT broker on a Greengrass core device.</p>",
@@ -337,13 +327,23 @@
     "CoreDeviceArchitectureString": {
       "base": null,
       "refs": {
+        "CoreDevice$architecture": "<p>The computer architecture of the core device.</p>",
         "GetCoreDeviceResponse$architecture": "<p>The computer architecture of the core device.</p>"
       }
     },
     "CoreDevicePlatformString": {
       "base": null,
       "refs": {
+        "CoreDevice$platform": "<p>The operating system platform that the core device runs.</p>",
         "GetCoreDeviceResponse$platform": "<p>The operating system platform that the core device runs.</p>"
+      }
+    },
+    "CoreDeviceRuntimeString": {
+      "base": null,
+      "refs": {
+        "CoreDevice$runtime": "<p>The runtime for the core device. The runtime can be:</p> <ul> <li> <p> <code>aws_nucleus_classic</code> </p> </li> <li> <p> <code>aws_nucleus_lite</code> </p> </li> </ul>",
+        "GetCoreDeviceResponse$runtime": "<p>The runtime for the core device. The runtime can be:</p> <ul> <li> <p> <code>aws_nucleus_classic</code> </p> </li> <li> <p> <code>aws_nucleus_lite</code> </p> </li> </ul>",
+        "ListCoreDevicesRequest$runtime": "<p>The runtime to be used by the core device. The runtime can be:</p> <ul> <li> <p> <code>aws_nucleus_classic</code> </p> </li> <li> <p> <code>aws_nucleus_lite</code> </p> </li> </ul>"
       }
     },
     "CoreDeviceStatus": {
@@ -375,23 +375,19 @@
     },
     "CreateComponentVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateComponentVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeploymentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DefaultMaxResults": {
       "base": null,
@@ -407,18 +403,15 @@
     },
     "DeleteComponentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCoreDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Deployment": {
       "base": "<p>Contains information about a deployment.</p>",
@@ -503,13 +496,11 @@
     },
     "DescribeComponentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeComponentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -549,13 +540,11 @@
     },
     "DisassociateServiceRoleFromAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateServiceRoleFromAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EffectiveDeployment": {
       "base": "<p>Contains information about a deployment job that IoT Greengrass sends to a Greengrass core device.</p>",
@@ -629,63 +618,51 @@
     },
     "GetComponentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentVersionArtifactRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentVersionArtifactResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectivityInfoRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectivityInfoResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeploymentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeploymentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceRoleForAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceRoleForAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InstalledComponent": {
       "base": "<p>Contains information about a component on a Greengrass core device.</p>",
@@ -725,8 +702,7 @@
     },
     "InternalServerException": {
       "base": "<p>IoT Greengrass can't process your request right now. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IoTJobARN": {
       "base": null,
@@ -982,83 +958,67 @@
     },
     "ListClientDevicesAssociatedWithCoreDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListClientDevicesAssociatedWithCoreDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoreDevicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoreDevicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeploymentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeploymentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEffectiveDeploymentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEffectiveDeploymentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInstalledComponentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInstalledComponentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Memory": {
       "base": null,
@@ -1198,18 +1158,15 @@
     },
     "RequestAlreadyInProgressException": {
       "base": "<p>The request is already in progress. This exception occurs when you use a client token for multiple requests while IoT Greengrass is still processing an earlier request that uses the same client token.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResolveComponentCandidatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResolveComponentCandidatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResolvedComponentVersion": {
       "base": "<p>Contains information about a component version that is compatible to run on a Greengrass core device.</p>",
@@ -1225,8 +1182,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The requested resource can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryAfterSeconds": {
       "base": null,
@@ -1243,8 +1199,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Your request exceeds a service quota. For example, you might have the maximum number of components that you can create.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "String": {
       "base": null,
@@ -1323,13 +1278,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1359,8 +1312,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Your request exceeded a request rate quota. For example, you might have exceeded the amount of times that you can retrieve device or deployment status per second.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1387,28 +1339,23 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectivityInfoRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectivityInfoResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The request isn't valid. This can occur if your request contains malformed JSON or unsupported characters.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Contains information about a validation exception field.</p>",

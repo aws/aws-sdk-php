@@ -5,11 +5,13 @@
     "endpointPrefix":"devicefarm",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Device Farm",
     "serviceId":"Device Farm",
     "signatureVersion":"v4",
     "targetPrefix":"DeviceFarm_20150623",
-    "uid":"devicefarm-2015-06-23"
+    "uid":"devicefarm-2015-06-23",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CreateDevicePool":{
@@ -1186,7 +1188,7 @@
       "type":"string",
       "max":1011,
       "min":32,
-      "pattern":"^arn:.+"
+      "pattern":"^arn:aws:devicefarm:.+"
     },
     "AmazonResourceNames":{
       "type":"list",
@@ -1388,7 +1390,8 @@
       "type":"structure",
       "members":{
         "billingMethod":{"shape":"BillingMethod"},
-        "vpceConfigurationArns":{"shape":"AmazonResourceNames"}
+        "vpceConfigurationArns":{"shape":"AmazonResourceNames"},
+        "deviceProxy":{"shape":"DeviceProxy"}
       }
     },
     "CreateRemoteAccessSessionRequest":{
@@ -1513,8 +1516,7 @@
     },
     "DeleteDevicePoolResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteInstanceProfileRequest":{
       "type":"structure",
@@ -1525,8 +1527,7 @@
     },
     "DeleteInstanceProfileResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteNetworkProfileRequest":{
       "type":"structure",
@@ -1537,8 +1538,7 @@
     },
     "DeleteNetworkProfileResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProjectRequest":{
       "type":"structure",
@@ -1549,8 +1549,7 @@
     },
     "DeleteProjectResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRemoteAccessSessionRequest":{
       "type":"structure",
@@ -1561,8 +1560,7 @@
     },
     "DeleteRemoteAccessSessionResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRunRequest":{
       "type":"structure",
@@ -1573,8 +1571,7 @@
     },
     "DeleteRunResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTestGridProjectRequest":{
       "type":"structure",
@@ -1585,8 +1582,7 @@
     },
     "DeleteTestGridProjectResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteUploadRequest":{
       "type":"structure",
@@ -1597,8 +1593,7 @@
     },
     "DeleteUploadResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVPCEConfigurationRequest":{
       "type":"structure",
@@ -1609,8 +1604,7 @@
     },
     "DeleteVPCEConfigurationResult":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Device":{
       "type":"structure",
@@ -1784,6 +1778,29 @@
       "type":"list",
       "member":{"shape":"DevicePool"}
     },
+    "DeviceProxy":{
+      "type":"structure",
+      "required":[
+        "host",
+        "port"
+      ],
+      "members":{
+        "host":{"shape":"DeviceProxyHost"},
+        "port":{"shape":"DeviceProxyPort"}
+      }
+    },
+    "DeviceProxyHost":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^([a-zA-Z0-9])([a-zA-Z0-9-.]+)([a-zA-Z0-9])$"
+    },
+    "DeviceProxyPort":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":1
+    },
     "DeviceSelectionConfiguration":{
       "type":"structure",
       "required":[
@@ -1859,8 +1876,7 @@
     },
     "GetAccountSettingsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountSettingsResult":{
       "type":"structure",
@@ -1889,7 +1905,8 @@
         "appArn":{"shape":"AmazonResourceName"},
         "testType":{"shape":"TestType"},
         "test":{"shape":"ScheduleRunTest"},
-        "configuration":{"shape":"ScheduleRunConfiguration"}
+        "configuration":{"shape":"ScheduleRunConfiguration"},
+        "projectArn":{"shape":"AmazonResourceName"}
       }
     },
     "GetDevicePoolCompatibilityResult":{
@@ -2875,7 +2892,8 @@
         "deviceUdid":{"shape":"String"},
         "interactionMode":{"shape":"InteractionMode"},
         "skipAppResign":{"shape":"SkipAppResign"},
-        "vpcConfig":{"shape":"VpcConfig"}
+        "vpcConfig":{"shape":"VpcConfig"},
+        "deviceProxy":{"shape":"DeviceProxy"}
       }
     },
     "RemoteAccessSessions":{
@@ -2968,6 +2986,7 @@
         "billingMethod":{"shape":"BillingMethod"},
         "deviceMinutes":{"shape":"DeviceMinutes"},
         "networkProfile":{"shape":"NetworkProfile"},
+        "deviceProxy":{"shape":"DeviceProxy"},
         "parsingResultUrl":{"shape":"String"},
         "resultCode":{"shape":"ExecutionResultCode"},
         "seed":{"shape":"Integer"},
@@ -3032,6 +3051,7 @@
         "locale":{"shape":"String"},
         "location":{"shape":"Location"},
         "vpceConfigurationArns":{"shape":"AmazonResourceNames"},
+        "deviceProxy":{"shape":"DeviceProxy"},
         "customerArtifactPaths":{"shape":"CustomerArtifactPaths"},
         "radios":{"shape":"Radios"},
         "auxiliaryApps":{"shape":"AmazonResourceNames"},
@@ -3239,8 +3259,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3368,8 +3387,6 @@
       "type":"string",
       "enum":[
         "BUILTIN_FUZZ",
-        "BUILTIN_EXPLORER",
-        "WEB_PERFORMANCE_PROFILE",
         "APPIUM_JAVA_JUNIT",
         "APPIUM_JAVA_TESTNG",
         "APPIUM_PYTHON",
@@ -3380,14 +3397,9 @@
         "APPIUM_WEB_PYTHON",
         "APPIUM_WEB_NODE",
         "APPIUM_WEB_RUBY",
-        "CALABASH",
         "INSTRUMENTATION",
-        "UIAUTOMATION",
-        "UIAUTOMATOR",
         "XCTEST",
-        "XCTEST_UI",
-        "REMOTE_ACCESS_RECORD",
-        "REMOTE_ACCESS_REPLAY"
+        "XCTEST_UI"
       ]
     },
     "Tests":{
@@ -3447,8 +3459,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDeviceInstanceRequest":{
       "type":"structure",

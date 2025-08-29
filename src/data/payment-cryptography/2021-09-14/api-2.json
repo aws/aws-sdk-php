@@ -2,9 +2,11 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2021-09-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"controlplane.payment-cryptography",
     "jsonVersion":"1.0",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"Payment Cryptography Control Plane",
     "serviceId":"Payment Cryptography",
     "signatureVersion":"v4",
@@ -450,7 +452,8 @@
         "KeyCheckValueAlgorithm":{"shape":"KeyCheckValueAlgorithm"},
         "Exportable":{"shape":"Boolean"},
         "Enabled":{"shape":"Boolean"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "DeriveKeyUsage":{"shape":"DeriveKeyUsage"}
       }
     },
     "CreateKeyOutput":{
@@ -493,11 +496,70 @@
         "Key":{"shape":"Key"}
       }
     },
+    "DeriveKeyUsage":{
+      "type":"string",
+      "enum":[
+        "TR31_B0_BASE_DERIVATION_KEY",
+        "TR31_C0_CARD_VERIFICATION_KEY",
+        "TR31_D0_SYMMETRIC_DATA_ENCRYPTION_KEY",
+        "TR31_E0_EMV_MKEY_APP_CRYPTOGRAMS",
+        "TR31_E1_EMV_MKEY_CONFIDENTIALITY",
+        "TR31_E2_EMV_MKEY_INTEGRITY",
+        "TR31_E4_EMV_MKEY_DYNAMIC_NUMBERS",
+        "TR31_E5_EMV_MKEY_CARD_PERSONALIZATION",
+        "TR31_E6_EMV_MKEY_OTHER",
+        "TR31_K0_KEY_ENCRYPTION_KEY",
+        "TR31_K1_KEY_BLOCK_PROTECTION_KEY",
+        "TR31_M3_ISO_9797_3_MAC_KEY",
+        "TR31_M1_ISO_9797_1_MAC_KEY",
+        "TR31_M6_ISO_9797_5_CMAC_KEY",
+        "TR31_M7_HMAC_KEY",
+        "TR31_P0_PIN_ENCRYPTION_KEY",
+        "TR31_P1_PIN_GENERATION_KEY",
+        "TR31_V1_IBM3624_PIN_VERIFICATION_KEY",
+        "TR31_V2_VISA_PIN_VERIFICATION_KEY"
+      ]
+    },
+    "DiffieHellmanDerivationData":{
+      "type":"structure",
+      "members":{
+        "SharedInformation":{"shape":"SharedInformation"}
+      },
+      "union":true
+    },
+    "EvenHexLengthBetween16And32":{
+      "type":"string",
+      "max":32,
+      "min":16,
+      "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+"
+    },
     "ExportAttributes":{
       "type":"structure",
       "members":{
         "ExportDukptInitialKey":{"shape":"ExportDukptInitialKey"},
         "KeyCheckValueAlgorithm":{"shape":"KeyCheckValueAlgorithm"}
+      }
+    },
+    "ExportDiffieHellmanTr31KeyBlock":{
+      "type":"structure",
+      "required":[
+        "PrivateKeyIdentifier",
+        "CertificateAuthorityPublicKeyIdentifier",
+        "PublicKeyCertificate",
+        "DeriveKeyAlgorithm",
+        "KeyDerivationFunction",
+        "KeyDerivationHashAlgorithm",
+        "DerivationData"
+      ],
+      "members":{
+        "PrivateKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "CertificateAuthorityPublicKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "PublicKeyCertificate":{"shape":"CertificateType"},
+        "DeriveKeyAlgorithm":{"shape":"SymmetricKeyAlgorithm"},
+        "KeyDerivationFunction":{"shape":"KeyDerivationFunction"},
+        "KeyDerivationHashAlgorithm":{"shape":"KeyDerivationHashAlgorithm"},
+        "DerivationData":{"shape":"DiffieHellmanDerivationData"},
+        "KeyBlockHeaders":{"shape":"KeyBlockHeaders"}
       }
     },
     "ExportDukptInitialKey":{
@@ -536,7 +598,8 @@
       "members":{
         "Tr31KeyBlock":{"shape":"ExportTr31KeyBlock"},
         "Tr34KeyBlock":{"shape":"ExportTr34KeyBlock"},
-        "KeyCryptogram":{"shape":"ExportKeyCryptogram"}
+        "KeyCryptogram":{"shape":"ExportKeyCryptogram"},
+        "DiffieHellmanTr31KeyBlock":{"shape":"ExportDiffieHellmanTr31KeyBlock"}
       },
       "union":true
     },
@@ -571,7 +634,7 @@
         "WrappingKeyCertificate":{"shape":"CertificateType"},
         "ExportToken":{"shape":"ExportTokenId"},
         "KeyBlockFormat":{"shape":"Tr34KeyBlockFormat"},
-        "RandomNonce":{"shape":"HexLength16"},
+        "RandomNonce":{"shape":"EvenHexLengthBetween16And32"},
         "KeyBlockHeaders":{"shape":"KeyBlockHeaders"}
       }
     },
@@ -677,17 +740,34 @@
         "KeyCertificateChain":{"shape":"CertificateType"}
       }
     },
-    "HexLength16":{
-      "type":"string",
-      "max":16,
-      "min":16,
-      "pattern":"[0-9A-F]+"
-    },
     "HexLength20Or24":{
       "type":"string",
       "max":24,
       "min":20,
       "pattern":"[0-9A-F]{20}$|^[0-9A-F]{24}"
+    },
+    "ImportDiffieHellmanTr31KeyBlock":{
+      "type":"structure",
+      "required":[
+        "PrivateKeyIdentifier",
+        "CertificateAuthorityPublicKeyIdentifier",
+        "PublicKeyCertificate",
+        "DeriveKeyAlgorithm",
+        "KeyDerivationFunction",
+        "KeyDerivationHashAlgorithm",
+        "DerivationData",
+        "WrappedKeyBlock"
+      ],
+      "members":{
+        "PrivateKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "CertificateAuthorityPublicKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "PublicKeyCertificate":{"shape":"CertificateType"},
+        "DeriveKeyAlgorithm":{"shape":"SymmetricKeyAlgorithm"},
+        "KeyDerivationFunction":{"shape":"KeyDerivationFunction"},
+        "KeyDerivationHashAlgorithm":{"shape":"KeyDerivationHashAlgorithm"},
+        "DerivationData":{"shape":"DiffieHellmanDerivationData"},
+        "WrappedKeyBlock":{"shape":"Tr31WrappedKeyBlock"}
+      }
     },
     "ImportKeyCryptogram":{
       "type":"structure",
@@ -722,7 +802,8 @@
         "TrustedCertificatePublicKey":{"shape":"TrustedCertificatePublicKey"},
         "Tr31KeyBlock":{"shape":"ImportTr31KeyBlock"},
         "Tr34KeyBlock":{"shape":"ImportTr34KeyBlock"},
-        "KeyCryptogram":{"shape":"ImportKeyCryptogram"}
+        "KeyCryptogram":{"shape":"ImportKeyCryptogram"},
+        "DiffieHellmanTr31KeyBlock":{"shape":"ImportDiffieHellmanTr31KeyBlock"}
       },
       "union":true
     },
@@ -763,7 +844,7 @@
         "ImportToken":{"shape":"ImportTokenId"},
         "WrappedKeyBlock":{"shape":"Tr34WrappedKeyBlock"},
         "KeyBlockFormat":{"shape":"Tr34KeyBlockFormat"},
-        "RandomNonce":{"shape":"HexLength16"}
+        "RandomNonce":{"shape":"EvenHexLengthBetween16And32"}
       }
     },
     "InternalServerException":{
@@ -800,7 +881,8 @@
         "UsageStartTimestamp":{"shape":"Timestamp"},
         "UsageStopTimestamp":{"shape":"Timestamp"},
         "DeletePendingTimestamp":{"shape":"Timestamp"},
-        "DeleteTimestamp":{"shape":"Timestamp"}
+        "DeleteTimestamp":{"shape":"Timestamp"},
+        "DeriveKeyUsage":{"shape":"DeriveKeyUsage"}
       }
     },
     "KeyAlgorithm":{
@@ -811,9 +893,16 @@
         "AES_128",
         "AES_192",
         "AES_256",
+        "HMAC_SHA256",
+        "HMAC_SHA384",
+        "HMAC_SHA512",
+        "HMAC_SHA224",
         "RSA_2048",
         "RSA_3072",
-        "RSA_4096"
+        "RSA_4096",
+        "ECC_NIST_P256",
+        "ECC_NIST_P384",
+        "ECC_NIST_P521"
       ]
     },
     "KeyArn":{
@@ -862,7 +951,8 @@
       "type":"string",
       "enum":[
         "CMAC",
-        "ANSI_X9_24"
+        "ANSI_X9_24",
+        "HMAC"
       ]
     },
     "KeyClass":{
@@ -872,6 +962,21 @@
         "ASYMMETRIC_KEY_PAIR",
         "PRIVATE_KEY",
         "PUBLIC_KEY"
+      ]
+    },
+    "KeyDerivationFunction":{
+      "type":"string",
+      "enum":[
+        "NIST_SP800",
+        "ANSI_X963"
+      ]
+    },
+    "KeyDerivationHashAlgorithm":{
+      "type":"string",
+      "enum":[
+        "SHA_256",
+        "SHA_384",
+        "SHA_512"
       ]
     },
     "KeyExportability":{
@@ -988,6 +1093,7 @@
     "ListAliasesInput":{
       "type":"structure",
       "members":{
+        "KeyArn":{"shape":"KeyArn"},
         "NextToken":{"shape":"NextToken"},
         "MaxResults":{"shape":"MaxResults"}
       }
@@ -1117,6 +1223,12 @@
       "exception":true,
       "fault":true
     },
+    "SharedInformation":{
+      "type":"string",
+      "max":2048,
+      "min":2,
+      "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+"
+    },
     "StartKeyUsageInput":{
       "type":"structure",
       "required":["KeyIdentifier"],
@@ -1146,9 +1258,26 @@
       }
     },
     "String":{"type":"string"},
+    "SymmetricKeyAlgorithm":{
+      "type":"string",
+      "enum":[
+        "TDES_2KEY",
+        "TDES_3KEY",
+        "AES_128",
+        "AES_192",
+        "AES_256",
+        "HMAC_SHA256",
+        "HMAC_SHA384",
+        "HMAC_SHA512",
+        "HMAC_SHA224"
+      ]
+    },
     "Tag":{
       "type":"structure",
-      "required":["Key"],
+      "required":[
+        "Key",
+        "Value"
+      ],
       "members":{
         "Key":{"shape":"TagKey"},
         "Value":{"shape":"TagValue"}
@@ -1184,7 +1313,7 @@
     "TagValue":{
       "type":"string",
       "max":256,
-      "min":0
+      "min":1
     },
     "Tags":{
       "type":"list",
@@ -1204,7 +1333,8 @@
       "type":"string",
       "max":9984,
       "min":56,
-      "pattern":"[0-9A-Z]+"
+      "pattern":"[0-9A-Z]+",
+      "sensitive":true
     },
     "Tr34KeyBlockFormat":{
       "type":"string",
@@ -1214,7 +1344,8 @@
       "type":"string",
       "max":4096,
       "min":2,
-      "pattern":"[0-9A-F]+"
+      "pattern":"[0-9A-F]+",
+      "sensitive":true
     },
     "TrustedCertificatePublicKey":{
       "type":"structure",
@@ -1286,7 +1417,8 @@
       "type":"string",
       "max":4096,
       "min":16,
-      "pattern":"[0-9A-F]+"
+      "pattern":"[0-9A-F]+",
+      "sensitive":true
     },
     "WrappedKeyMaterialFormat":{
       "type":"string",

@@ -141,20 +141,93 @@
         "title": "Sample CreateProfile call"
       }
     ],
-    "CreateTransformer": [
+    "CreateStarterMappingTemplate": [
       {
         "input": {
-          "name": "transformJSON",
-          "clientToken": "foo",
-          "ediType": {
-            "x12Details": {
+          "mappingType": "JSONATA",
+          "outputSampleLocation": {
+            "key": "output-sample-key",
+            "bucketName": "output-sample-bucket"
+          },
+          "templateDetails": {
+            "x12": {
               "version": "VERSION_4010",
               "transactionSet": "X12_110"
             }
+          }
+        },
+        "output": {
+          "mappingTemplate": "Example Mapping Template"
+        },
+        "id": "example-1",
+        "title": "Sample CreateStarterMappingTemplate call"
+      }
+    ],
+    "CreateTransformer": [
+      {
+        "input": {
+          "name": "transformX12",
+          "clientToken": "foo",
+          "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "formatOptions": {
+              "x12": {
+                "version": "VERSION_4010",
+                "transactionSet": "X12_110"
+              }
+            },
+            "fromFormat": "X12"
           },
-          "fileFormat": "JSON",
-          "mappingTemplate": "{}",
-          "sampleDocument": "s3://test-bucket/sampleDoc.txt",
+          "mapping": {
+            "template": "{}",
+            "templateLanguage": "JSONATA"
+          },
+          "sampleDocuments": {
+            "bucketName": "test-bucket",
+            "keys": [
+              {
+                "input": "sampleDoc.txt"
+              }
+            ]
+          },
           "tags": [
             {
               "Key": "sampleKey",
@@ -163,17 +236,68 @@
           ]
         },
         "output": {
-          "name": "transformJSON",
+          "name": "transformX12",
           "createdAt": "2023-11-01T21:51:05.504Z",
-          "ediType": {
-            "x12Details": {
-              "version": "VERSION_4010",
-              "transactionSet": "X12_110"
-            }
+          "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "formatOptions": {
+              "x12": {
+                "version": "VERSION_4010",
+                "transactionSet": "X12_110"
+              }
+            },
+            "fromFormat": "X12"
           },
-          "fileFormat": "JSON",
-          "mappingTemplate": "$",
-          "sampleDocument": "s3://test-bucket/sampleDoc.txt",
+          "mapping": {
+            "template": "{}",
+            "templateLanguage": "JSONATA"
+          },
+          "sampleDocuments": {
+            "bucketName": "test-bucket",
+            "keys": [
+              {
+                "input": "sampleDoc.txt"
+              }
+            ]
+          },
           "status": "inactive",
           "transformerArn": "arn:aws:b2bi:us-west-2:123456789012:transformer/tr-974c129999f84d8c9",
           "transformerId": "tr-974c129999f84d8c9"
@@ -216,6 +340,21 @@
         },
         "id": "example-1",
         "title": "Sample DeleteTransformer call"
+      }
+    ],
+    "GenerateMapping": [
+      {
+        "input": {
+          "inputFileContent": "Sample input file content",
+          "mappingType": "JSONATA",
+          "outputFileContent": "Sample output file content"
+        },
+        "output": {
+          "mappingAccuracy": 0.95,
+          "mappingTemplate": "Sample mapping content"
+        },
+        "id": "example-1",
+        "title": "Sample GenerateMapping call"
       }
     ],
     "GetCapability": [
@@ -309,18 +448,68 @@
           "transformerId": "tr-974c129999f84d8c9"
         },
         "output": {
-          "name": "transformJSON",
+          "name": "transformX12",
           "createdAt": "2023-11-01T21:51:05.504Z",
-          "ediType": {
-            "x12Details": {
-              "version": "VERSION_4010",
-              "transactionSet": "X12_110"
-            }
+          "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "formatOptions": {
+              "x12": {
+                "version": "VERSION_4010",
+                "transactionSet": "X12_110"
+              }
+            },
+            "fromFormat": "X12"
           },
-          "fileFormat": "JSON",
-          "mappingTemplate": "$",
-          "modifiedAt": "2023-11-01T21:51:05.504Z",
-          "sampleDocument": "s3://test-bucket/sampleDoc.txt",
+          "mapping": {
+            "template": "{}",
+            "templateLanguage": "JSONATA"
+          },
+          "sampleDocuments": {
+            "bucketName": "test-bucket",
+            "keys": [
+              {
+                "input": "sampleDoc.txt"
+              }
+            ]
+          },
           "status": "inactive",
           "transformerArn": "arn:aws:b2bi:us-west-2:123456789012:transformer/tr-974c129999f84d8c9",
           "transformerId": "tr-974c129999f84d8c9"
@@ -505,6 +694,71 @@
         "title": "Sample TagResource call"
       }
     ],
+    "TestConversion": [
+      {
+        "input": {
+          "source": {
+            "fileFormat": "JSON",
+            "inputFile": {
+              "fileContent": "Sample file content"
+            }
+          },
+          "target": {
+            "advancedOptions": {
+              "x12": {
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "codesToRemove": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "elementId": "1280"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "OPTIONAL"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "0803",
+                        "maxLength": 30,
+                        "minLength": 5
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "fileFormat": "X12",
+            "formatDetails": {
+              "x12": {
+                "version": "VERSION_4010",
+                "transactionSet": "X12_110"
+              }
+            }
+          }
+        },
+        "output": {
+          "convertedFileContent": "Sample converted file content",
+          "validationMessages": [
+
+          ]
+        },
+        "id": "example-1",
+        "title": "Sample TestConversion call"
+      }
+    ],
     "TestMapping": [
       {
         "input": {
@@ -539,6 +793,124 @@
         },
         "id": "example-1",
         "title": "Sample TestParsing call"
+      },
+      {
+        "input": {
+          "advancedOptions": {
+            "x12": {
+              "splitOptions": {
+                "splitBy": "NONE"
+              }
+            }
+          },
+          "ediType": {
+            "x12Details": {
+              "version": "VERSION_4010",
+              "transactionSet": "X12_110"
+            }
+          },
+          "fileFormat": "JSON",
+          "inputFile": {
+            "key": "sampleFile.txt",
+            "bucketName": "test-bucket"
+          }
+        },
+        "output": {
+          "parsedFileContent": "Sample parsed file content"
+        },
+        "id": "example-2",
+        "title": "Sample TestParsing call without EDI Splitting"
+      },
+      {
+        "input": {
+          "advancedOptions": {
+            "x12": {
+              "splitOptions": {
+                "splitBy": "TRANSACTION"
+              }
+            }
+          },
+          "ediType": {
+            "x12Details": {
+              "version": "VERSION_4010",
+              "transactionSet": "X12_110"
+            }
+          },
+          "fileFormat": "JSON",
+          "inputFile": {
+            "key": "sampleFile.txt",
+            "bucketName": "test-bucket"
+          }
+        },
+        "output": {
+          "parsedFileContent": "",
+          "parsedSplitFileContents": [
+            "sample split parsed file content",
+            "sample split parsed file content"
+          ]
+        },
+        "id": "example-3",
+        "title": "Sample TestParsing call with EDI Splitting by Transaction"
+      },
+      {
+        "input": {
+          "advancedOptions": {
+            "x12": {
+              "validationOptions": {
+                "validationRules": [
+                  {
+                    "codeListValidationRule": {
+                      "codesToAdd": [
+                        "X",
+                        "Y",
+                        "Z"
+                      ],
+                      "codesToRemove": [
+                        "A",
+                        "B",
+                        "C"
+                      ],
+                      "elementId": "1280"
+                    }
+                  },
+                  {
+                    "elementRequirementValidationRule": {
+                      "elementPosition": "NM1-01",
+                      "requirement": "OPTIONAL"
+                    }
+                  },
+                  {
+                    "elementLengthValidationRule": {
+                      "elementId": "0803",
+                      "maxLength": 30,
+                      "minLength": 5
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ediType": {
+            "x12Details": {
+              "version": "VERSION_4010",
+              "transactionSet": "X12_110"
+            }
+          },
+          "fileFormat": "JSON",
+          "inputFile": {
+            "key": "sampleFile.txt",
+            "bucketName": "test-bucket"
+          }
+        },
+        "output": {
+          "parsedFileContent": "",
+          "parsedSplitFileContents": [
+            "sample split parsed file content",
+            "sample split parsed file content"
+          ]
+        },
+        "id": "example-4",
+        "title": "Sample TestParsing call with Validation Options"
       }
     ],
     "UntagResource": [
@@ -676,34 +1048,136 @@
     "UpdateTransformer": [
       {
         "input": {
-          "name": "transformJSON",
-          "ediType": {
-            "x12Details": {
-              "version": "VERSION_4010",
-              "transactionSet": "X12_110"
-            }
+          "name": "transformX12",
+          "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "formatOptions": {
+              "x12": {
+                "version": "VERSION_4010",
+                "transactionSet": "X12_110"
+              }
+            },
+            "fromFormat": "X12"
           },
-          "fileFormat": "JSON",
-          "mappingTemplate": "{}",
-          "sampleDocument": "s3://test-bucket/sampleDoc.txt",
+          "mapping": {
+            "template": "{}",
+            "templateLanguage": "JSONATA"
+          },
+          "sampleDocuments": {
+            "bucketName": "test-bucket",
+            "keys": [
+              {
+                "input": "sampleDoc.txt"
+              }
+            ]
+          },
           "status": "inactive",
           "transformerId": "tr-974c129999f84d8c9"
         },
         "output": {
-          "name": "transformJSON",
+          "name": "transformX12",
           "createdAt": "2023-11-01T21:51:05.504Z",
-          "ediType": {
-            "x12Details": {
-              "version": "VERSION_4010",
-              "transactionSet": "X12_110"
-            }
+          "inputConversion": {
+            "advancedOptions": {
+              "x12": {
+                "splitOptions": {
+                  "splitBy": "NONE"
+                },
+                "validationOptions": {
+                  "validationRules": [
+                    {
+                      "codeListValidationRule": {
+                        "codesToAdd": [
+                          "A",
+                          "B",
+                          "C"
+                        ],
+                        "codesToRemove": [
+                          "X",
+                          "Y",
+                          "Z"
+                        ],
+                        "elementId": "1234"
+                      }
+                    },
+                    {
+                      "elementRequirementValidationRule": {
+                        "elementPosition": "NM1-01",
+                        "requirement": "MANDATORY"
+                      }
+                    },
+                    {
+                      "elementLengthValidationRule": {
+                        "elementId": "5678",
+                        "maxLength": 10,
+                        "minLength": 2
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "formatOptions": {
+              "x12": {
+                "version": "VERSION_4010",
+                "transactionSet": "X12_110"
+              }
+            },
+            "fromFormat": "X12"
           },
-          "fileFormat": "JSON",
-          "mappingTemplate": "$",
-          "modifiedAt": "2023-11-01T21:51:05.504Z",
-          "sampleDocument": "s3://test-bucket/sampleDoc.txt",
+          "mapping": {
+            "template": "{}",
+            "templateLanguage": "JSONATA"
+          },
+          "modifiedAt": "2023-11-02T22:31:05.504Z",
+          "sampleDocuments": {
+            "bucketName": "test-bucket",
+            "keys": [
+              {
+                "input": "sampleDoc.txt"
+              }
+            ]
+          },
           "status": "inactive",
-          "transformerArn": "arn:aws:b2bi:us-west-2:607686414464:transformer/tr-974c129999f84d8c9",
+          "transformerArn": "arn:aws:b2bi:us-west-2:123456789012:transformer/tr-974c129999f84d8c9",
           "transformerId": "tr-974c129999f84d8c9"
         },
         "id": "example-1",

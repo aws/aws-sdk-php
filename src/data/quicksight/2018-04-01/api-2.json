@@ -13,6 +13,39 @@
     "auth":["aws.auth#sigv4"]
   },
   "operations":{
+    "BatchCreateTopicReviewedAnswer":{
+      "name":"BatchCreateTopicReviewedAnswer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/topics/{TopicId}/batch-create-reviewed-answers"
+      },
+      "input":{"shape":"BatchCreateTopicReviewedAnswerRequest"},
+      "output":{"shape":"BatchCreateTopicReviewedAnswerResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "BatchDeleteTopicReviewedAnswer":{
+      "name":"BatchDeleteTopicReviewedAnswer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/topics/{TopicId}/batch-delete-reviewed-answers"
+      },
+      "input":{"shape":"BatchDeleteTopicReviewedAnswerRequest"},
+      "output":{"shape":"BatchDeleteTopicReviewedAnswerResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "CancelIngestion":{
       "name":"CancelIngestion",
       "http":{
@@ -88,6 +121,45 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateBrand":{
+      "name":"CreateBrand",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/brands/{BrandId}",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateBrandRequest"},
+      "output":{"shape":"CreateBrandResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "CreateCustomPermissions":{
+      "name":"CreateCustomPermissions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permissions"
+      },
+      "input":{"shape":"CreateCustomPermissionsRequest"},
+      "output":{"shape":"CreateCustomPermissionsResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "CreateDashboard":{
       "name":"CreateDashboard",
       "http":{
@@ -143,6 +215,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceExistsException"},
         {"shape":"ThrottlingException"},
+        {"shape":"CustomerManagedKeyUnavailableException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -506,6 +579,64 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteBrand":{
+      "name":"DeleteBrand",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/brands/{BrandId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteBrandRequest"},
+      "output":{"shape":"DeleteBrandResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteBrandAssignment":{
+      "name":"DeleteBrandAssignment",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/brandassignments",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteBrandAssignmentRequest"},
+      "output":{"shape":"DeleteBrandAssignmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteCustomPermissions":{
+      "name":"DeleteCustomPermissions",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permissions/{CustomPermissionsName}"
+      },
+      "input":{"shape":"DeleteCustomPermissionsRequest"},
+      "output":{"shape":"DeleteCustomPermissionsResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "DeleteDashboard":{
       "name":"DeleteDashboard",
       "http":{
@@ -570,6 +701,22 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteDefaultQBusinessApplication":{
+      "name":"DeleteDefaultQBusinessApplication",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/default-qbusiness-application"
+      },
+      "input":{"shape":"DeleteDefaultQBusinessApplicationRequest"},
+      "output":{"shape":"DeleteDefaultQBusinessApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -891,6 +1038,25 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "DeleteUserCustomPermission":{
+      "name":"DeleteUserCustomPermission",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/custom-permission"
+      },
+      "input":{"shape":"DeleteUserCustomPermissionRequest"},
+      "output":{"shape":"DeleteUserCustomPermissionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "DeleteVPCConnection":{
       "name":"DeleteVPCConnection",
       "http":{
@@ -1040,6 +1206,78 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "DescribeBrand":{
+      "name":"DescribeBrand",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/brands/{BrandId}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeBrandRequest"},
+      "output":{"shape":"DescribeBrandResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeBrandAssignment":{
+      "name":"DescribeBrandAssignment",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/brandassignments",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeBrandAssignmentRequest"},
+      "output":{"shape":"DescribeBrandAssignmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeBrandPublishedVersion":{
+      "name":"DescribeBrandPublishedVersion",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/brands/{BrandId}/publishedversion",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeBrandPublishedVersionRequest"},
+      "output":{"shape":"DescribeBrandPublishedVersionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeCustomPermissions":{
+      "name":"DescribeCustomPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permissions/{CustomPermissionsName}"
+      },
+      "input":{"shape":"DescribeCustomPermissionsRequest"},
+      "output":{"shape":"DescribeCustomPermissionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "DescribeDashboard":{
       "name":"DescribeDashboard",
       "http":{
@@ -1126,6 +1364,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeDashboardsQAConfiguration":{
+      "name":"DescribeDashboardsQAConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/dashboards-qa-configuration"
+      },
+      "input":{"shape":"DescribeDashboardsQAConfigurationRequest"},
+      "output":{"shape":"DescribeDashboardsQAConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeDataSet":{
       "name":"DescribeDataSet",
       "http":{
@@ -1205,6 +1460,22 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeDefaultQBusinessApplication":{
+      "name":"DescribeDefaultQBusinessApplication",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/default-qbusiness-application"
+      },
+      "input":{"shape":"DescribeDefaultQBusinessApplicationRequest"},
+      "output":{"shape":"DescribeDefaultQBusinessApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidParameterValueException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -1377,6 +1648,40 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "DescribeQPersonalizationConfiguration":{
+      "name":"DescribeQPersonalizationConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/q-personalization-configuration"
+      },
+      "input":{"shape":"DescribeQPersonalizationConfigurationRequest"},
+      "output":{"shape":"DescribeQPersonalizationConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeQuickSightQSearchConfiguration":{
+      "name":"DescribeQuickSightQSearchConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/quicksight-q-search-configuration"
+      },
+      "input":{"shape":"DescribeQuickSightQSearchConfigurationRequest"},
+      "output":{"shape":"DescribeQuickSightQSearchConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DescribeRefreshSchedule":{
@@ -1677,6 +1982,26 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "GenerateEmbedUrlForRegisteredUserWithIdentity":{
+      "name":"GenerateEmbedUrlForRegisteredUserWithIdentity",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/embed-url/registered-user-with-identity"
+      },
+      "input":{"shape":"GenerateEmbedUrlForRegisteredUserWithIdentityRequest"},
+      "output":{"shape":"GenerateEmbedUrlForRegisteredUserWithIdentityResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"QuickSightUserNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"SessionLifetimeInMinutesInvalidException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "GetDashboardEmbedUrl":{
       "name":"GetDashboardEmbedUrl",
       "http":{
@@ -1765,6 +2090,40 @@
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListBrands":{
+      "name":"ListBrands",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/brands",
+        "responseCode":200
+      },
+      "input":{"shape":"ListBrandsRequest"},
+      "output":{"shape":"ListBrandsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListCustomPermissions":{
+      "name":"ListCustomPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permissions"
+      },
+      "input":{"shape":"ListCustomPermissionsRequest"},
+      "output":{"shape":"ListCustomPermissionsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
       ]
     },
     "ListDashboardVersions":{
@@ -1857,6 +2216,24 @@
       },
       "input":{"shape":"ListFoldersRequest"},
       "output":{"shape":"ListFoldersResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListFoldersForResource":{
+      "name":"ListFoldersForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/resource/{ResourceArn}/folders"
+      },
+      "input":{"shape":"ListFoldersForResourceRequest"},
+      "output":{"shape":"ListFoldersForResourceResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"AccessDeniedException"},
@@ -2169,6 +2546,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListTopicReviewedAnswers":{
+      "name":"ListTopicReviewedAnswers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/topics/{TopicId}/reviewed-answers"
+      },
+      "input":{"shape":"ListTopicReviewedAnswersRequest"},
+      "output":{"shape":"ListTopicReviewedAnswersResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "ListTopics":{
       "name":"ListTopics",
       "http":{
@@ -2239,6 +2632,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "PredictQAResults":{
+      "name":"PredictQAResults",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/qa/predict"
+      },
+      "input":{"shape":"PredictQAResultsRequest"},
+      "output":{"shape":"PredictQAResultsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "PutDataSetRefreshProperties":{
       "name":"PutDataSetRefreshProperties",
       "http":{
@@ -2292,6 +2700,8 @@
         {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2401,6 +2811,23 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "SearchTopics":{
+      "name":"SearchTopics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/search/topics"
+      },
+      "input":{"shape":"SearchTopicsRequest"},
+      "output":{"shape":"SearchTopicsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "StartAssetBundleExportJob":{
       "name":"StartAssetBundleExportJob",
       "http":{
@@ -2454,6 +2881,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"UnsupportedUserEditionException"},
         {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "StartDashboardSnapshotJobSchedule":{
+      "name":"StartDashboardSnapshotJobSchedule",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/dashboards/{DashboardId}/schedules/{ScheduleId}"
+      },
+      "input":{"shape":"StartDashboardSnapshotJobScheduleRequest"},
+      "output":{"shape":"StartDashboardSnapshotJobScheduleResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2561,6 +3006,100 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateApplicationWithTokenExchangeGrant":{
+      "name":"UpdateApplicationWithTokenExchangeGrant",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/application-with-token-exchange-grant"
+      },
+      "input":{"shape":"UpdateApplicationWithTokenExchangeGrantRequest"},
+      "output":{"shape":"UpdateApplicationWithTokenExchangeGrantResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateBrand":{
+      "name":"UpdateBrand",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/brands/{BrandId}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateBrandRequest"},
+      "output":{"shape":"UpdateBrandResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateBrandAssignment":{
+      "name":"UpdateBrandAssignment",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/brandassignments",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateBrandAssignmentRequest"},
+      "output":{"shape":"UpdateBrandAssignmentResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateBrandPublishedVersion":{
+      "name":"UpdateBrandPublishedVersion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/brands/{BrandId}/publishedversion",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateBrandPublishedVersionRequest"},
+      "output":{"shape":"UpdateBrandPublishedVersionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateCustomPermissions":{
+      "name":"UpdateCustomPermissions",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permissions/{CustomPermissionsName}"
+      },
+      "input":{"shape":"UpdateCustomPermissionsRequest"},
+      "output":{"shape":"UpdateCustomPermissionsResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "UpdateDashboard":{
       "name":"UpdateDashboard",
       "http":{
@@ -2632,6 +3171,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateDashboardsQAConfiguration":{
+      "name":"UpdateDashboardsQAConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/dashboards-qa-configuration"
+      },
+      "input":{"shape":"UpdateDashboardsQAConfigurationRequest"},
+      "output":{"shape":"UpdateDashboardsQAConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateDataSet":{
       "name":"UpdateDataSet",
       "http":{
@@ -2682,6 +3238,7 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"CustomerManagedKeyUnavailableException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2699,6 +3256,23 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateDefaultQBusinessApplication":{
+      "name":"UpdateDefaultQBusinessApplication",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/default-qbusiness-application"
+      },
+      "input":{"shape":"UpdateDefaultQBusinessApplicationRequest"},
+      "output":{"shape":"UpdateDefaultQBusinessApplicationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2837,6 +3411,41 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateQPersonalizationConfiguration":{
+      "name":"UpdateQPersonalizationConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/q-personalization-configuration"
+      },
+      "input":{"shape":"UpdateQPersonalizationConfigurationRequest"},
+      "output":{"shape":"UpdateQPersonalizationConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "UpdateQuickSightQSearchConfiguration":{
+      "name":"UpdateQuickSightQSearchConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/quicksight-q-search-configuration"
+      },
+      "input":{"shape":"UpdateQuickSightQSearchConfigurationRequest"},
+      "output":{"shape":"UpdateQuickSightQSearchConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -3076,6 +3685,25 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "UpdateUserCustomPermission":{
+      "name":"UpdateUserCustomPermission",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/custom-permission"
+      },
+      "input":{"shape":"UpdateUserCustomPermissionRequest"},
+      "output":{"shape":"UpdateUserCustomPermissionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceUnavailableException"}
+      ]
+    },
     "UpdateVPCConnection":{
       "name":"UpdateVPCConnection",
       "http":{
@@ -3170,6 +3798,54 @@
       "max":20,
       "min":1
     },
+    "AggFunction":{
+      "type":"structure",
+      "members":{
+        "Aggregation":{"shape":"AggType"},
+        "AggregationFunctionParameters":{"shape":"AggFunctionParamMap"},
+        "Period":{"shape":"TopicTimeGranularity"},
+        "PeriodField":{"shape":"LimitedString"}
+      }
+    },
+    "AggFunctionParamKey":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AggFunctionParamMap":{
+      "type":"map",
+      "key":{"shape":"AggFunctionParamKey"},
+      "value":{"shape":"AggFunctionParamValue"}
+    },
+    "AggFunctionParamValue":{
+      "type":"string",
+      "max":1024
+    },
+    "AggType":{
+      "type":"string",
+      "enum":[
+        "SUM",
+        "MIN",
+        "MAX",
+        "COUNT",
+        "AVERAGE",
+        "DISTINCT_COUNT",
+        "STDEV",
+        "STDEVP",
+        "VAR",
+        "VARP",
+        "PERCENTILE",
+        "MEDIAN",
+        "PTD_SUM",
+        "PTD_MIN",
+        "PTD_MAX",
+        "PTD_COUNT",
+        "PTD_DISTINCT_COUNT",
+        "PTD_AVERAGE",
+        "COLUMN",
+        "CUSTOM"
+      ]
+    },
     "AggregationFunction":{
       "type":"structure",
       "members":{
@@ -3183,6 +3859,18 @@
       "type":"map",
       "key":{"shape":"LimitedString"},
       "value":{"shape":"LimitedString"}
+    },
+    "AggregationPartitionBy":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"LimitedString"},
+        "TimeGranularity":{"shape":"TimeGranularity"}
+      }
+    },
+    "AggregationPartitionByList":{
+      "type":"list",
+      "member":{"shape":"AggregationPartitionBy"},
+      "max":50
     },
     "AggregationSortConfiguration":{
       "type":"structure",
@@ -3209,8 +3897,13 @@
     },
     "AllSheetsFilterScopeConfiguration":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
+    },
+    "AltText":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[ -ÿ]+"
     },
     "AmazonElasticsearchParameters":{
       "type":"structure",
@@ -3224,6 +3917,21 @@
       "required":["Domain"],
       "members":{
         "Domain":{"shape":"Domain"}
+      }
+    },
+    "AmazonQInQuickSightConsoleConfigurations":{
+      "type":"structure",
+      "members":{
+        "DataQnA":{"shape":"DataQnAConfigurations"},
+        "GenerativeAuthoring":{"shape":"GenerativeAuthoringConfigurations"},
+        "ExecutiveSummary":{"shape":"ExecutiveSummaryConfigurations"},
+        "DataStories":{"shape":"DataStoriesConfigurations"}
+      }
+    },
+    "AmazonQInQuickSightDashboardConfigurations":{
+      "type":"structure",
+      "members":{
+        "ExecutiveSummary":{"shape":"ExecutiveSummaryConfigurations"}
       }
     },
     "Analysis":{
@@ -3259,7 +3967,9 @@
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
-        "Options":{"shape":"AssetOptions"}
+        "Options":{"shape":"AssetOptions"},
+        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"},
+        "StaticFiles":{"shape":"StaticFileList"}
       }
     },
     "AnalysisError":{
@@ -3354,6 +4064,14 @@
       "member":{"shape":"AnalysisSummary"},
       "max":100
     },
+    "Anchor":{
+      "type":"structure",
+      "members":{
+        "AnchorType":{"shape":"AnchorType"},
+        "TimeGranularity":{"shape":"TimeGranularity"},
+        "Offset":{"shape":"Integer"}
+      }
+    },
     "AnchorDateConfiguration":{
       "type":"structure",
       "members":{
@@ -3365,11 +4083,40 @@
       "type":"string",
       "enum":["NOW"]
     },
+    "AnchorType":{
+      "type":"string",
+      "enum":["TODAY"]
+    },
     "AnonymousUserDashboardEmbeddingConfiguration":{
       "type":"structure",
       "required":["InitialDashboardId"],
       "members":{
-        "InitialDashboardId":{"shape":"ShortRestrictiveResourceId"}
+        "InitialDashboardId":{"shape":"ShortRestrictiveResourceId"},
+        "EnabledFeatures":{"shape":"AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures"},
+        "DisabledFeatures":{"shape":"AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures"},
+        "FeatureConfigurations":{"shape":"AnonymousUserDashboardFeatureConfigurations"}
+      }
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeature":{
+      "type":"string",
+      "enum":["SHARED_VIEW"]
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationDisabledFeatures":{
+      "type":"list",
+      "member":{"shape":"AnonymousUserDashboardEmbeddingConfigurationDisabledFeature"}
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeature":{
+      "type":"string",
+      "enum":["SHARED_VIEW"]
+    },
+    "AnonymousUserDashboardEmbeddingConfigurationEnabledFeatures":{
+      "type":"list",
+      "member":{"shape":"AnonymousUserDashboardEmbeddingConfigurationEnabledFeature"}
+    },
+    "AnonymousUserDashboardFeatureConfigurations":{
+      "type":"structure",
+      "members":{
+        "SharedView":{"shape":"SharedViewConfigurations"}
       }
     },
     "AnonymousUserDashboardVisualEmbeddingConfiguration":{
@@ -3411,6 +4158,22 @@
     "AnonymousUserSnapshotJobResultList":{
       "type":"list",
       "member":{"shape":"AnonymousUserSnapshotJobResult"}
+    },
+    "AnswerId":{
+      "type":"string",
+      "max":256,
+      "pattern":"^[A-Za-z0-9-_.\\\\+]*$"
+    },
+    "AnswerIds":{
+      "type":"list",
+      "member":{"shape":"AnswerId"}
+    },
+    "ApplicationTheme":{
+      "type":"structure",
+      "members":{
+        "BrandColorPalette":{"shape":"BrandColorPalette"},
+        "BrandElementStyle":{"shape":"BrandElementStyle"}
+      }
     },
     "ArcAxisConfiguration":{
       "type":"structure",
@@ -3480,7 +4243,8 @@
         "DataSets":{"shape":"AssetBundleExportJobDataSetOverridePropertiesList"},
         "Themes":{"shape":"AssetBundleExportJobThemeOverridePropertiesList"},
         "Analyses":{"shape":"AssetBundleExportJobAnalysisOverridePropertiesList"},
-        "Dashboards":{"shape":"AssetBundleExportJobDashboardOverridePropertiesList"}
+        "Dashboards":{"shape":"AssetBundleExportJobDashboardOverridePropertiesList"},
+        "Folders":{"shape":"AssetBundleExportJobFolderOverridePropertiesList"}
       }
     },
     "AssetBundleExportFormat":{
@@ -3563,7 +4327,10 @@
     },
     "AssetBundleExportJobDataSetPropertyToOverride":{
       "type":"string",
-      "enum":["Name"]
+      "enum":[
+        "Name",
+        "RefreshFailureEmailAlertStatus"
+      ]
     },
     "AssetBundleExportJobDataSetPropertyToOverrideList":{
       "type":"list",
@@ -3628,6 +4395,36 @@
     "AssetBundleExportJobErrorList":{
       "type":"list",
       "member":{"shape":"AssetBundleExportJobError"}
+    },
+    "AssetBundleExportJobFolderOverrideProperties":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Properties"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "Properties":{"shape":"AssetBundleExportJobFolderPropertyToOverrideList"}
+      }
+    },
+    "AssetBundleExportJobFolderOverridePropertiesList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobFolderOverrideProperties"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleExportJobFolderPropertyToOverride":{
+      "type":"string",
+      "enum":[
+        "Name",
+        "ParentFolderArn"
+      ]
+    },
+    "AssetBundleExportJobFolderPropertyToOverrideList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleExportJobFolderPropertyToOverride"},
+      "max":10,
+      "min":1
     },
     "AssetBundleExportJobRefreshScheduleOverrideProperties":{
       "type":"structure",
@@ -3875,7 +4672,8 @@
       "required":["DataSetId"],
       "members":{
         "DataSetId":{"shape":"ResourceId"},
-        "Name":{"shape":"ResourceName"}
+        "Name":{"shape":"ResourceName"},
+        "DataSetRefreshProperties":{"shape":"DataSetRefreshProperties"}
       }
     },
     "AssetBundleImportJobDataSetOverrideParametersList":{
@@ -4001,6 +4799,52 @@
       "type":"list",
       "member":{"shape":"AssetBundleImportJobError"}
     },
+    "AssetBundleImportJobFolderOverrideParameters":{
+      "type":"structure",
+      "required":["FolderId"],
+      "members":{
+        "FolderId":{"shape":"ResourceId"},
+        "Name":{"shape":"ResourceName"},
+        "ParentFolderArn":{"shape":"Arn"}
+      }
+    },
+    "AssetBundleImportJobFolderOverrideParametersList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverrideParameters"},
+      "max":50,
+      "min":1
+    },
+    "AssetBundleImportJobFolderOverridePermissions":{
+      "type":"structure",
+      "required":["FolderIds"],
+      "members":{
+        "FolderIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Permissions":{"shape":"AssetBundleResourcePermissions"}
+      }
+    },
+    "AssetBundleImportJobFolderOverridePermissionsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverridePermissions"},
+      "max":2,
+      "min":1
+    },
+    "AssetBundleImportJobFolderOverrideTags":{
+      "type":"structure",
+      "required":[
+        "FolderIds",
+        "Tags"
+      ],
+      "members":{
+        "FolderIds":{"shape":"AssetBundleRestrictiveResourceIdList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "AssetBundleImportJobFolderOverrideTagsList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobFolderOverrideTags"},
+      "max":5,
+      "min":1
+    },
     "AssetBundleImportJobOverrideParameters":{
       "type":"structure",
       "members":{
@@ -4011,7 +4855,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverrideParametersList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideParametersList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideParametersList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideParametersList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideParametersList"}
       }
     },
     "AssetBundleImportJobOverridePermissions":{
@@ -4021,7 +4866,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverridePermissionsList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverridePermissionsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverridePermissionsList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverridePermissionsList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverridePermissionsList"}
       }
     },
     "AssetBundleImportJobOverrideTags":{
@@ -4032,7 +4878,8 @@
         "DataSets":{"shape":"AssetBundleImportJobDataSetOverrideTagsList"},
         "Themes":{"shape":"AssetBundleImportJobThemeOverrideTagsList"},
         "Analyses":{"shape":"AssetBundleImportJobAnalysisOverrideTagsList"},
-        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"}
+        "Dashboards":{"shape":"AssetBundleImportJobDashboardOverrideTagsList"},
+        "Folders":{"shape":"AssetBundleImportJobFolderOverrideTagsList"}
       }
     },
     "AssetBundleImportJobOverrideValidationStrategy":{
@@ -4242,7 +5089,10 @@
       "type":"structure",
       "members":{
         "Timezone":{"shape":"String"},
-        "WeekStart":{"shape":"DayOfTheWeek"}
+        "WeekStart":{"shape":"DayOfTheWeek"},
+        "QBusinessInsightsStatus":{"shape":"QBusinessInsightsStatus"},
+        "ExcludedDataSetArns":{"shape":"DataSetArnsList"},
+        "CustomActionDefaults":{"shape":"VisualCustomActionDefaults"}
       }
     },
     "AssignmentStatus":{
@@ -4257,7 +5107,8 @@
       "type":"structure",
       "members":{
         "WorkGroup":{"shape":"WorkGroup"},
-        "RoleArn":{"shape":"RoleArn"}
+        "RoleArn":{"shape":"RoleArn"},
+        "IdentityCenterConfiguration":{"shape":"IdentityCenterConfiguration"}
       }
     },
     "AttributeAggregationFunction":{
@@ -4300,6 +5151,14 @@
         "IAM_ONLY",
         "ACTIVE_DIRECTORY",
         "IAM_IDENTITY_CENTER"
+      ]
+    },
+    "AuthenticationType":{
+      "type":"string",
+      "enum":[
+        "PASSWORD",
+        "TOKEN",
+        "X509"
       ]
     },
     "AuthorSpecifiedAggregation":{
@@ -4371,8 +5230,7 @@
     },
     "AxisDisplayDataDrivenRange":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AxisDisplayMinMaxRange":{
       "type":"structure",
@@ -4532,7 +5390,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"BarChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "BarsArrangement":{
@@ -4551,6 +5410,75 @@
         "STREET",
         "IMAGERY"
       ]
+    },
+    "BatchCreateTopicReviewedAnswerRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId",
+        "Answers"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        },
+        "Answers":{"shape":"CreateTopicReviewedAnswers"}
+      }
+    },
+    "BatchCreateTopicReviewedAnswerResponse":{
+      "type":"structure",
+      "members":{
+        "TopicId":{"shape":"TopicId"},
+        "TopicArn":{"shape":"Arn"},
+        "SucceededAnswers":{"shape":"SucceededTopicReviewedAnswers"},
+        "InvalidAnswers":{"shape":"InvalidTopicReviewedAnswers"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "BatchDeleteTopicReviewedAnswerRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        },
+        "AnswerIds":{"shape":"AnswerIds"}
+      }
+    },
+    "BatchDeleteTopicReviewedAnswerResponse":{
+      "type":"structure",
+      "members":{
+        "TopicId":{"shape":"TopicId"},
+        "TopicArn":{"shape":"Arn"},
+        "SucceededAnswers":{"shape":"SucceededTopicReviewedAnswers"},
+        "InvalidAnswers":{"shape":"InvalidTopicReviewedAnswers"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
     },
     "BigQueryParameters":{
       "type":"structure",
@@ -4766,8 +5694,88 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"BoxPlotChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
+    },
+    "BrandColorPalette":{
+      "type":"structure",
+      "members":{
+        "Primary":{"shape":"Palette"},
+        "Secondary":{"shape":"Palette"},
+        "Accent":{"shape":"Palette"},
+        "Measure":{"shape":"Palette"},
+        "Dimension":{"shape":"Palette"},
+        "Success":{"shape":"Palette"},
+        "Info":{"shape":"Palette"},
+        "Warning":{"shape":"Palette"},
+        "Danger":{"shape":"Palette"}
+      }
+    },
+    "BrandDefinition":{
+      "type":"structure",
+      "required":["BrandName"],
+      "members":{
+        "BrandName":{"shape":"Name"},
+        "Description":{"shape":"Description"},
+        "ApplicationTheme":{"shape":"ApplicationTheme"},
+        "LogoConfiguration":{"shape":"LogoConfiguration"}
+      }
+    },
+    "BrandDetail":{
+      "type":"structure",
+      "required":["BrandId"],
+      "members":{
+        "BrandId":{"shape":"ShortRestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "BrandStatus":{"shape":"BrandStatus"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"},
+        "VersionId":{"shape":"ShortRestrictiveResourceId"},
+        "VersionStatus":{"shape":"BrandVersionStatus"},
+        "Errors":{"shape":"ErrorList"},
+        "Logo":{"shape":"Logo"}
+      }
+    },
+    "BrandElementStyle":{
+      "type":"structure",
+      "members":{
+        "NavbarStyle":{"shape":"NavbarStyle"}
+      }
+    },
+    "BrandStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_IN_PROGRESS",
+        "CREATE_SUCCEEDED",
+        "CREATE_FAILED",
+        "DELETE_IN_PROGRESS",
+        "DELETE_FAILED"
+      ]
+    },
+    "BrandSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "BrandId":{"shape":"ShortRestrictiveResourceId"},
+        "BrandName":{"shape":"Name"},
+        "Description":{"shape":"Description"},
+        "BrandStatus":{"shape":"BrandStatus"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "BrandSummaryList":{
+      "type":"list",
+      "member":{"shape":"BrandSummary"}
+    },
+    "BrandVersionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_IN_PROGRESS",
+        "CREATE_SUCCEEDED",
+        "CREATE_FAILED"
+      ]
     },
     "CIDR":{
       "type":"string",
@@ -4783,7 +5791,7 @@
       "members":{
         "ColumnName":{"shape":"ColumnName"},
         "ColumnId":{"shape":"ColumnId"},
-        "Expression":{"shape":"Expression"}
+        "Expression":{"shape":"DataSetCalculatedFieldExpression"}
       }
     },
     "CalculatedColumnList":{
@@ -4811,10 +5819,15 @@
       "min":1,
       "sensitive":true
     },
+    "CalculatedFieldReferenceList":{
+      "type":"list",
+      "member":{"shape":"Identifier"},
+      "max":250
+    },
     "CalculatedFields":{
       "type":"list",
       "member":{"shape":"CalculatedField"},
-      "max":500
+      "max":2000
     },
     "CalculatedMeasureField":{
       "type":"structure",
@@ -4863,6 +5876,38 @@
           "location":"statusCode"
         }
       }
+    },
+    "Capabilities":{
+      "type":"structure",
+      "members":{
+        "ExportToCsv":{"shape":"CapabilityState"},
+        "ExportToExcel":{"shape":"CapabilityState"},
+        "ExportToPdf":{"shape":"CapabilityState"},
+        "PrintReports":{"shape":"CapabilityState"},
+        "CreateAndUpdateThemes":{"shape":"CapabilityState"},
+        "AddOrRunAnomalyDetectionForAnalyses":{"shape":"CapabilityState"},
+        "ShareAnalyses":{"shape":"CapabilityState"},
+        "CreateAndUpdateDatasets":{"shape":"CapabilityState"},
+        "ShareDatasets":{"shape":"CapabilityState"},
+        "SubscribeDashboardEmailReports":{"shape":"CapabilityState"},
+        "CreateAndUpdateDashboardEmailReports":{"shape":"CapabilityState"},
+        "ShareDashboards":{"shape":"CapabilityState"},
+        "CreateAndUpdateThresholdAlerts":{"shape":"CapabilityState"},
+        "RenameSharedFolders":{"shape":"CapabilityState"},
+        "CreateSharedFolders":{"shape":"CapabilityState"},
+        "CreateAndUpdateDataSources":{"shape":"CapabilityState"},
+        "ShareDataSources":{"shape":"CapabilityState"},
+        "ViewAccountSPICECapacity":{"shape":"CapabilityState"},
+        "CreateSPICEDataset":{"shape":"CapabilityState"},
+        "ExportToPdfInScheduledReports":{"shape":"CapabilityState"},
+        "ExportToCsvInScheduledReports":{"shape":"CapabilityState"},
+        "ExportToExcelInScheduledReports":{"shape":"CapabilityState"},
+        "IncludeContentInScheduledReportsEmail":{"shape":"CapabilityState"}
+      }
+    },
+    "CapabilityState":{
+      "type":"string",
+      "enum":["DENY"]
     },
     "CascadingControlConfiguration":{
       "type":"structure",
@@ -5058,6 +6103,18 @@
         "ValueList":{"shape":"StringList"}
       }
     },
+    "CollectiveConstantEntry":{
+      "type":"structure",
+      "members":{
+        "ConstantType":{"shape":"ConstantType"},
+        "Value":{"shape":"ConstantValueString"}
+      }
+    },
+    "CollectiveConstantEntryList":{
+      "type":"list",
+      "member":{"shape":"CollectiveConstantEntry"},
+      "max":2000
+    },
     "ColorFillType":{
       "type":"string",
       "enum":[
@@ -5141,7 +6198,8 @@
     "ColumnDescriptiveText":{
       "type":"string",
       "max":500,
-      "min":0
+      "min":0,
+      "sensitive":true
     },
     "ColumnGroup":{
       "type":"structure",
@@ -5371,8 +6429,16 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"ComboChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
+    },
+    "CommitMode":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
     },
     "ComparativeOrder":{
       "type":"structure",
@@ -5402,6 +6468,21 @@
         "DIFFERENCE",
         "PERCENT_DIFFERENCE",
         "PERCENT"
+      ]
+    },
+    "ComparisonMethodType":{
+      "type":"string",
+      "enum":[
+        "DIFF",
+        "PERC_DIFF",
+        "DIFF_AS_PERC",
+        "POP_CURRENT_DIFF_AS_PERC",
+        "POP_CURRENT_DIFF",
+        "POP_OVERTIME_DIFF_AS_PERC",
+        "POP_OVERTIME_DIFF",
+        "PERCENT_OF_TOTAL",
+        "RUNNING_SUM",
+        "MOVING_AVERAGE"
       ]
     },
     "Computation":{
@@ -5537,6 +6618,10 @@
         "COLLECTIVE"
       ]
     },
+    "ConstantValueString":{
+      "type":"string",
+      "max":1024
+    },
     "ContextMenuOption":{
       "type":"structure",
       "members":{
@@ -5559,6 +6644,41 @@
       "member":{"shape":"ContributionAnalysisDefault"},
       "max":200,
       "min":1
+    },
+    "ContributionAnalysisDirection":{
+      "type":"string",
+      "enum":[
+        "INCREASE",
+        "DECREASE",
+        "NEUTRAL"
+      ]
+    },
+    "ContributionAnalysisFactor":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"LimitedString"}
+      }
+    },
+    "ContributionAnalysisFactorsList":{
+      "type":"list",
+      "member":{"shape":"ContributionAnalysisFactor"},
+      "max":50
+    },
+    "ContributionAnalysisSortType":{
+      "type":"string",
+      "enum":[
+        "ABSOLUTE_DIFFERENCE",
+        "CONTRIBUTION_PERCENTAGE",
+        "DEVIATION_FROM_EXPECTED",
+        "PERCENTAGE_DIFFERENCE"
+      ]
+    },
+    "ContributionAnalysisTimeRanges":{
+      "type":"structure",
+      "members":{
+        "StartRange":{"shape":"TopicIRFilterOption"},
+        "EndRange":{"shape":"TopicIRFilterOption"}
+      }
     },
     "ContributorDimensionList":{
       "type":"list",
@@ -5692,11 +6812,65 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "CreateBrandRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "BrandId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "BrandId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"BrandId"
+        },
+        "BrandDefinition":{"shape":"BrandDefinition"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateBrandResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "BrandDetail":{"shape":"BrandDetail"},
+        "BrandDefinition":{"shape":"BrandDefinition"}
+      }
+    },
     "CreateColumnsOperation":{
       "type":"structure",
       "required":["Columns"],
       "members":{
         "Columns":{"shape":"CalculatedColumnList"}
+      }
+    },
+    "CreateCustomPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "CustomPermissionsName"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "CustomPermissionsName":{"shape":"CustomPermissionsName"},
+        "Capabilities":{"shape":"Capabilities"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateCustomPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StatusCode"},
+        "Arn":{"shape":"Arn"},
+        "RequestId":{"shape":"String"}
       }
     },
     "CreateDashboardRequest":{
@@ -5775,7 +6949,9 @@
         "Tags":{"shape":"TagList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
         "DatasetParameters":{"shape":"DatasetParameterList"},
-        "FolderArns":{"shape":"FolderArnList"}
+        "FolderArns":{"shape":"FolderArnList"},
+        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
+        "UseAs":{"shape":"DataSetUseAs"}
       }
     },
     "CreateDataSetResponse":{
@@ -6378,7 +7554,9 @@
         },
         "TopicId":{"shape":"TopicId"},
         "Topic":{"shape":"TopicDetails"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "FolderArns":{"shape":"FolderArnList"},
+        "CustomInstructions":{"shape":"CustomInstructions"}
       }
     },
     "CreateTopicResponse":{
@@ -6393,6 +7571,28 @@
           "location":"statusCode"
         }
       }
+    },
+    "CreateTopicReviewedAnswer":{
+      "type":"structure",
+      "required":[
+        "AnswerId",
+        "DatasetArn",
+        "Question"
+      ],
+      "members":{
+        "AnswerId":{"shape":"AnswerId"},
+        "DatasetArn":{"shape":"Arn"},
+        "Question":{"shape":"LimitedString"},
+        "Mir":{"shape":"TopicIR"},
+        "PrimaryVisual":{"shape":"TopicVisual"},
+        "Template":{"shape":"TopicTemplate"}
+      }
+    },
+    "CreateTopicReviewedAnswers":{
+      "type":"list",
+      "member":{"shape":"CreateTopicReviewedAnswer"},
+      "max":100,
+      "min":0
     },
     "CreateVPCConnectionRequest":{
       "type":"structure",
@@ -6560,7 +7760,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"CustomContentConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "DataSetIdentifier":{"shape":"DataSetIdentifier"}
+        "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "CustomFilterConfiguration":{
@@ -6590,6 +7791,18 @@
         "NullOption":{"shape":"FilterNullOption"}
       }
     },
+    "CustomInstructions":{
+      "type":"structure",
+      "required":["CustomInstructionsString"],
+      "members":{
+        "CustomInstructionsString":{"shape":"CustomInstructionsString"}
+      }
+    },
+    "CustomInstructionsString":{
+      "type":"string",
+      "max":5000,
+      "sensitive":true
+    },
     "CustomLabel":{
       "type":"string",
       "max":2048,
@@ -6610,6 +7823,24 @@
         "DecimalValues":{"shape":"DecimalDefaultValueList"},
         "DateTimeValues":{"shape":"DateTimeDefaultValueList"}
       }
+    },
+    "CustomPermissions":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "CustomPermissionsName":{"shape":"CustomPermissionsName"},
+        "Capabilities":{"shape":"Capabilities"}
+      }
+    },
+    "CustomPermissionsList":{
+      "type":"list",
+      "member":{"shape":"CustomPermissions"}
+    },
+    "CustomPermissionsName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9+=,.@_-]+$"
     },
     "CustomSql":{
       "type":"structure",
@@ -6637,6 +7868,15 @@
         "IncludeNullValue":{"shape":"BooleanObject"},
         "CustomValues":{"shape":"CustomParameterValues"}
       }
+    },
+    "CustomerManagedKeyUnavailableException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
     },
     "Dashboard":{
       "type":"structure",
@@ -6720,7 +7960,8 @@
         "ExportWithHiddenFieldsOption":{"shape":"ExportWithHiddenFieldsOption"},
         "DataPointDrillUpDownOption":{"shape":"DataPointDrillUpDownOption"},
         "DataPointMenuLabelOption":{"shape":"DataPointMenuLabelOption"},
-        "DataPointTooltipOption":{"shape":"DataPointTooltipOption"}
+        "DataPointTooltipOption":{"shape":"DataPointTooltipOption"},
+        "DataQAEnabledOption":{"shape":"DataQAEnabledOption"}
       }
     },
     "DashboardSearchFilter":{
@@ -6805,7 +8046,8 @@
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
-        "Options":{"shape":"AssetOptions"}
+        "Options":{"shape":"AssetOptions"},
+        "StaticFiles":{"shape":"StaticFileList"}
       }
     },
     "DashboardVersionSummary":{
@@ -6842,6 +8084,26 @@
       "members":{
         "ExportHiddenFieldsOption":{"shape":"ExportHiddenFieldsOption"}
       }
+    },
+    "DashboardVisualResult":{
+      "type":"structure",
+      "members":{
+        "DashboardId":{"shape":"ShortRestrictiveResourceId"},
+        "DashboardName":{"shape":"DashboardName"},
+        "SheetId":{"shape":"ShortRestrictiveResourceId"},
+        "SheetName":{"shape":"SheetName"},
+        "VisualId":{"shape":"ShortRestrictiveResourceId"},
+        "VisualTitle":{"shape":"VisualTitle"},
+        "VisualSubtitle":{"shape":"VisualSubtitle"},
+        "DashboardUrl":{"shape":"QAUrl"}
+      }
+    },
+    "DashboardsQAStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DataAggregation":{
       "type":"structure",
@@ -7019,6 +8281,19 @@
         "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
+    "DataQAEnabledOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
+      }
+    },
+    "DataQnAConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "DataSet":{
       "type":"structure",
       "members":{
@@ -7038,13 +8313,21 @@
         "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
-        "DatasetParameters":{"shape":"DatasetParameterList"}
+        "DatasetParameters":{"shape":"DatasetParameterList"},
+        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"},
+        "UseAs":{"shape":"DataSetUseAs"}
       }
     },
     "DataSetArnsList":{
       "type":"list",
       "member":{"shape":"Arn"},
       "max":100
+    },
+    "DataSetCalculatedFieldExpression":{
+      "type":"string",
+      "max":250000,
+      "min":1,
+      "sensitive":true
     },
     "DataSetConfiguration":{
       "type":"structure",
@@ -7122,9 +8405,9 @@
     },
     "DataSetRefreshProperties":{
       "type":"structure",
-      "required":["RefreshConfiguration"],
       "members":{
-        "RefreshConfiguration":{"shape":"RefreshConfiguration"}
+        "RefreshConfiguration":{"shape":"RefreshConfiguration"},
+        "FailureConfiguration":{"shape":"RefreshFailureConfiguration"}
       }
     },
     "DataSetRegion":{
@@ -7168,7 +8451,8 @@
         "ImportMode":{"shape":"DataSetImportMode"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
         "RowLevelPermissionTagConfigurationApplied":{"shape":"Boolean"},
-        "ColumnLevelPermissionRulesApplied":{"shape":"Boolean"}
+        "ColumnLevelPermissionRulesApplied":{"shape":"Boolean"},
+        "UseAs":{"shape":"DataSetUseAs"}
       }
     },
     "DataSetSummaryList":{
@@ -7181,6 +8465,10 @@
         "DisableUseAsDirectQuerySource":{"shape":"Boolean"},
         "DisableUseAsImportedSource":{"shape":"Boolean"}
       }
+    },
+    "DataSetUseAs":{
+      "type":"string",
+      "enum":["RLS_RULES"]
     },
     "DataSource":{
       "type":"structure",
@@ -7270,7 +8558,8 @@
         "DatabricksParameters":{"shape":"DatabricksParameters"},
         "StarburstParameters":{"shape":"StarburstParameters"},
         "TrinoParameters":{"shape":"TrinoParameters"},
-        "BigQueryParameters":{"shape":"BigQueryParameters"}
+        "BigQueryParameters":{"shape":"BigQueryParameters"},
+        "ImpalaParameters":{"shape":"ImpalaParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -7347,10 +8636,21 @@
         "BIGQUERY"
       ]
     },
+    "DataStoriesConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "Database":{
       "type":"string",
       "max":128,
       "min":1
+    },
+    "DatabaseAccessControlRole":{
+      "type":"string",
+      "max":128
     },
     "DatabaseGroup":{
       "type":"string",
@@ -7569,7 +8869,9 @@
       "members":{
         "TitleOptions":{"shape":"LabelOptions"},
         "DateTimeFormat":{"shape":"DateTimeFormat"},
-        "InfoIconLabelOptions":{"shape":"SheetControlInfoIconLabelOptions"}
+        "InfoIconLabelOptions":{"shape":"SheetControlInfoIconLabelOptions"},
+        "HelperTextVisibility":{"shape":"Visibility"},
+        "DateIconVisibility":{"shape":"Visibility"}
       }
     },
     "DateTimeValueWhenUnsetConfiguration":{
@@ -7725,7 +9027,8 @@
       "type":"structure",
       "members":{
         "Type":{"shape":"SheetControlDateTimePickerType"},
-        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"}
+        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultFilterControlConfiguration":{
@@ -7756,7 +9059,8 @@
       "members":{
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
-        "SelectableValues":{"shape":"FilterSelectableValues"}
+        "SelectableValues":{"shape":"FilterSelectableValues"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultFilterListControlOptions":{
@@ -7812,7 +9116,8 @@
     "DefaultRelativeDateTimeControlOptions":{
       "type":"structure",
       "members":{
-        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "DefaultSectionBasedLayoutConfiguration":{
@@ -7939,6 +9244,75 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "DeleteBrandAssignmentRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DeleteBrandAssignmentResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "DeleteBrandRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "BrandId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "BrandId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"BrandId"
+        }
+      }
+    },
+    "DeleteBrandResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "DeleteCustomPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "CustomPermissionsName"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "CustomPermissionsName":{
+          "shape":"CustomPermissionsName",
+          "location":"uri",
+          "locationName":"CustomPermissionsName"
+        }
+      }
+    },
+    "DeleteCustomPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StatusCode"},
+        "Arn":{"shape":"Arn"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "DeleteDashboardRequest":{
       "type":"structure",
       "required":[
@@ -8059,6 +9433,32 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "DataSourceId":{"shape":"ResourceId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DeleteDefaultQBusinessApplicationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        }
+      }
+    },
+    "DeleteDefaultQBusinessApplicationResponse":{
+      "type":"structure",
+      "members":{
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -8667,6 +10067,41 @@
         }
       }
     },
+    "DeleteUserCustomPermissionRequest":{
+      "type":"structure",
+      "required":[
+        "UserName",
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "UserName":{
+          "shape":"UserName",
+          "location":"uri",
+          "locationName":"UserName"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        }
+      }
+    },
+    "DeleteUserCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "DeleteUserRequest":{
       "type":"structure",
       "required":[
@@ -8878,7 +10313,7 @@
       "members":{
         "AnalysisId":{"shape":"ShortRestrictiveResourceId"},
         "AnalysisArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -8957,7 +10392,9 @@
         "IncludePermissions":{"shape":"Boolean"},
         "IncludeTags":{"shape":"Boolean"},
         "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"},
-        "Warnings":{"shape":"AssetBundleExportJobWarningList"}
+        "Warnings":{"shape":"AssetBundleExportJobWarningList"},
+        "IncludeFolderMemberships":{"shape":"Boolean"},
+        "IncludeFolderMembers":{"shape":"IncludeFolderMembers"}
       }
     },
     "DescribeAssetBundleImportJobRequest":{
@@ -9001,6 +10438,110 @@
         "OverrideTags":{"shape":"AssetBundleImportJobOverrideTags"},
         "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"},
         "Warnings":{"shape":"AssetBundleImportJobWarningList"}
+      }
+    },
+    "DescribeBrandAssignmentRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeBrandAssignmentResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "BrandArn":{"shape":"Arn"}
+      }
+    },
+    "DescribeBrandPublishedVersionRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "BrandId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "BrandId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"BrandId"
+        }
+      }
+    },
+    "DescribeBrandPublishedVersionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "BrandDetail":{"shape":"BrandDetail"},
+        "BrandDefinition":{"shape":"BrandDefinition"}
+      }
+    },
+    "DescribeBrandRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "BrandId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "BrandId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"BrandId"
+        },
+        "VersionId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"querystring",
+          "locationName":"versionId"
+        }
+      }
+    },
+    "DescribeBrandResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "BrandDetail":{"shape":"BrandDetail"},
+        "BrandDefinition":{"shape":"BrandDefinition"}
+      }
+    },
+    "DescribeCustomPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "CustomPermissionsName"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "CustomPermissionsName":{
+          "shape":"CustomPermissionsName",
+          "location":"uri",
+          "locationName":"CustomPermissionsName"
+        }
+      }
+    },
+    "DescribeCustomPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StatusCode"},
+        "CustomPermissions":{"shape":"CustomPermissions"},
+        "RequestId":{"shape":"String"}
       }
     },
     "DescribeDashboardDefinitionRequest":{
@@ -9073,7 +10614,7 @@
       "members":{
         "DashboardId":{"shape":"ShortRestrictiveResourceId"},
         "DashboardArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -9198,6 +10739,28 @@
         "Result":{"shape":"SnapshotJobResult"},
         "ErrorInfo":{"shape":"SnapshotJobErrorInfo"},
         "RequestId":{"shape":"NonEmptyString"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeDashboardsQAConfigurationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeDashboardsQAConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "DashboardsQAStatus":{"shape":"DashboardsQAStatus"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -9356,6 +10919,33 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "DescribeDefaultQBusinessApplicationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        }
+      }
+    },
+    "DescribeDefaultQBusinessApplicationResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "ApplicationId":{"shape":"String"}
       }
     },
     "DescribeFolderPermissionsRequest":{
@@ -9717,6 +11307,50 @@
         }
       }
     },
+    "DescribeQPersonalizationConfigurationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeQPersonalizationConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "PersonalizationMode":{"shape":"PersonalizationMode"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeQuickSightQSearchConfigurationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeQuickSightQSearchConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "QSearchStatus":{"shape":"QSearchStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "DescribeRefreshScheduleRequest":{
       "type":"structure",
       "required":[
@@ -9892,7 +11526,7 @@
       "members":{
         "TemplateId":{"shape":"ShortRestrictiveResourceId"},
         "TemplateArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -10000,7 +11634,7 @@
       "members":{
         "ThemeId":{"shape":"ShortRestrictiveResourceId"},
         "ThemeArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -10184,7 +11818,8 @@
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
-        }
+        },
+        "CustomInstructions":{"shape":"CustomInstructions"}
       }
     },
     "DescribeUserRequest":{
@@ -10250,6 +11885,12 @@
         "Status":{"shape":"StatusCode"}
       }
     },
+    "Description":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"[ -ÿ]+"
+    },
     "DestinationParameterValueConfiguration":{
       "type":"structure",
       "members":{
@@ -10259,6 +11900,13 @@
         "SourceField":{"shape":"FieldId"},
         "SourceColumn":{"shape":"ColumnIdentifier"}
       }
+    },
+    "DigitGroupingStyle":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "LAKHS"
+      ]
     },
     "DimensionField":{
       "type":"structure",
@@ -10424,6 +12072,11 @@
         "Message":{"shape":"String"}
       }
     },
+    "ErrorList":{
+      "type":"list",
+      "member":{"shape":"ErrorMessage"}
+    },
+    "ErrorMessage":{"type":"string"},
     "ExasolParameters":{
       "type":"structure",
       "required":[
@@ -10462,6 +12115,13 @@
         },
         "Granularity":{"shape":"TimeGranularity"},
         "Status":{"shape":"WidgetStatus"}
+      }
+    },
+    "ExecutiveSummaryConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
       }
     },
     "ExplicitHierarchy":{
@@ -10709,7 +12369,8 @@
         "ChartConfiguration":{"shape":"FilledMapConfiguration"},
         "ConditionalFormatting":{"shape":"FilledMapConditionalFormatting"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "Filter":{
@@ -10724,6 +12385,19 @@
         "TopBottomFilter":{"shape":"TopBottomFilter"},
         "NestedFilter":{"shape":"NestedFilter"}
       }
+    },
+    "FilterAggMetrics":{
+      "type":"structure",
+      "members":{
+        "MetricOperand":{"shape":"Identifier"},
+        "Function":{"shape":"AggType"},
+        "SortDirection":{"shape":"TopicSortDirection"}
+      }
+    },
+    "FilterAggMetricsList":{
+      "type":"list",
+      "member":{"shape":"FilterAggMetrics"},
+      "max":100
     },
     "FilterClass":{
       "type":"string",
@@ -10775,7 +12449,8 @@
         "Title":{"shape":"SheetControlTitle"},
         "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
         "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"},
-        "Type":{"shape":"SheetControlDateTimePickerType"}
+        "Type":{"shape":"SheetControlDateTimePickerType"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterDropDownControl":{
@@ -10792,7 +12467,8 @@
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"FilterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterGroup":{
@@ -10895,7 +12571,8 @@
         "FilterControlId":{"shape":"ShortRestrictiveResourceId"},
         "Title":{"shape":"SheetControlTitle"},
         "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
-        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "FilterScopeConfiguration":{
@@ -11062,6 +12739,11 @@
         "RESTRICTED"
       ]
     },
+    "FoldersForResourceArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":20
+    },
     "Font":{
       "type":"structure",
       "members":{
@@ -11075,7 +12757,8 @@
         "FontDecoration":{"shape":"FontDecoration"},
         "FontColor":{"shape":"HexColor"},
         "FontWeight":{"shape":"FontWeight"},
-        "FontStyle":{"shape":"FontStyle"}
+        "FontStyle":{"shape":"FontStyle"},
+        "FontFamily":{"shape":"String"}
       }
     },
     "FontDecoration":{
@@ -11093,7 +12776,8 @@
     "FontSize":{
       "type":"structure",
       "members":{
-        "Relative":{"shape":"RelativeFontSize"}
+        "Relative":{"shape":"RelativeFontSize"},
+        "Absolute":{"shape":"PixelLength"}
       }
     },
     "FontStyle":{
@@ -11330,7 +13014,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"FunnelChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "GaugeChartArcConditionalFormatting":{
@@ -11409,7 +13094,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"GaugeChartConfiguration"},
         "ConditionalFormatting":{"shape":"GaugeChartConditionalFormatting"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "GenerateEmbedUrlForAnonymousUserRequest":{
@@ -11487,6 +13173,67 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "GenerateEmbedUrlForRegisteredUserWithIdentityRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ExperienceConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "SessionLifetimeInMinutes":{"shape":"SessionLifetimeInMinutes"},
+        "ExperienceConfiguration":{"shape":"RegisteredUserEmbeddingExperienceConfiguration"},
+        "AllowedDomains":{"shape":"StringList"}
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserWithIdentityResponse":{
+      "type":"structure",
+      "required":[
+        "EmbedUrl",
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "EmbedUrl":{"shape":"EmbeddingUrl"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "GeneratedAnswerResult":{
+      "type":"structure",
+      "members":{
+        "QuestionText":{"shape":"QAQueryText"},
+        "AnswerStatus":{"shape":"GeneratedAnswerStatus"},
+        "TopicId":{"shape":"TopicId"},
+        "TopicName":{"shape":"ResourceName"},
+        "Restatement":{"shape":"QAQueryText"},
+        "QuestionId":{"shape":"QuestionId"},
+        "AnswerId":{"shape":"AnswerId"},
+        "QuestionUrl":{"shape":"QAUrl"}
+      }
+    },
+    "GeneratedAnswerStatus":{
+      "type":"string",
+      "enum":[
+        "ANSWER_GENERATED",
+        "ANSWER_RETRIEVED",
+        "ANSWER_DOWNGRADE"
+      ]
+    },
+    "GenerativeAuthoringConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "GeoSpatialColumnGroup":{
       "type":"structure",
       "required":[
@@ -11515,6 +13262,61 @@
         "LATITUDE"
       ]
     },
+    "GeospatialCategoricalColor":{
+      "type":"structure",
+      "required":["CategoryDataColors"],
+      "members":{
+        "CategoryDataColors":{"shape":"GeospatialCategoricalDataColorList"},
+        "NullDataVisibility":{"shape":"Visibility"},
+        "NullDataSettings":{"shape":"GeospatialNullDataSettings"},
+        "DefaultOpacity":{"shape":"Opacity"}
+      }
+    },
+    "GeospatialCategoricalDataColor":{
+      "type":"structure",
+      "required":[
+        "Color",
+        "DataValue"
+      ],
+      "members":{
+        "Color":{"shape":"HexColorWithTransparency"},
+        "DataValue":{"shape":"String"}
+      }
+    },
+    "GeospatialCategoricalDataColorList":{
+      "type":"list",
+      "member":{"shape":"GeospatialCategoricalDataColor"}
+    },
+    "GeospatialCircleRadius":{
+      "type":"structure",
+      "members":{
+        "Radius":{"shape":"GeospatialRadius"}
+      }
+    },
+    "GeospatialCircleSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"GeospatialColor"},
+        "StrokeColor":{"shape":"GeospatialColor"},
+        "StrokeWidth":{"shape":"GeospatialLineWidth"},
+        "CircleRadius":{"shape":"GeospatialCircleRadius"}
+      }
+    },
+    "GeospatialColor":{
+      "type":"structure",
+      "members":{
+        "Solid":{"shape":"GeospatialSolidColor"},
+        "Gradient":{"shape":"GeospatialGradientColor"},
+        "Categorical":{"shape":"GeospatialCategoricalColor"}
+      }
+    },
+    "GeospatialColorState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "GeospatialCoordinateBounds":{
       "type":"structure",
       "required":[
@@ -11529,6 +13331,39 @@
         "West":{"shape":"Longitude"},
         "East":{"shape":"Longitude"}
       }
+    },
+    "GeospatialDataSourceItem":{
+      "type":"structure",
+      "members":{
+        "StaticFileDataSource":{"shape":"GeospatialStaticFileSource"}
+      }
+    },
+    "GeospatialGradientColor":{
+      "type":"structure",
+      "required":["StepColors"],
+      "members":{
+        "StepColors":{"shape":"GeospatialGradientStepColorList"},
+        "NullDataVisibility":{"shape":"Visibility"},
+        "NullDataSettings":{"shape":"GeospatialNullDataSettings"},
+        "DefaultOpacity":{"shape":"Opacity"}
+      }
+    },
+    "GeospatialGradientStepColor":{
+      "type":"structure",
+      "required":[
+        "Color",
+        "DataValue"
+      ],
+      "members":{
+        "Color":{"shape":"HexColorWithTransparency"},
+        "DataValue":{"shape":"Double"}
+      }
+    },
+    "GeospatialGradientStepColorList":{
+      "type":"list",
+      "member":{"shape":"GeospatialGradientStepColor"},
+      "max":3,
+      "min":2
     },
     "GeospatialHeatmapColorScale":{
       "type":"structure",
@@ -11554,6 +13389,98 @@
       "member":{"shape":"GeospatialHeatmapDataColor"},
       "max":2,
       "min":2
+    },
+    "GeospatialLayerColorField":{
+      "type":"structure",
+      "members":{
+        "ColorDimensionsFields":{"shape":"GeospatialLayerDimensionFieldList"},
+        "ColorValuesFields":{"shape":"GeospatialLayerMeasureFieldList"}
+      }
+    },
+    "GeospatialLayerDefinition":{
+      "type":"structure",
+      "members":{
+        "PointLayer":{"shape":"GeospatialPointLayer"},
+        "LineLayer":{"shape":"GeospatialLineLayer"},
+        "PolygonLayer":{"shape":"GeospatialPolygonLayer"}
+      }
+    },
+    "GeospatialLayerDimensionFieldList":{
+      "type":"list",
+      "member":{"shape":"DimensionField"},
+      "max":1
+    },
+    "GeospatialLayerItem":{
+      "type":"structure",
+      "required":["LayerId"],
+      "members":{
+        "LayerId":{"shape":"String"},
+        "LayerType":{"shape":"GeospatialLayerType"},
+        "DataSource":{"shape":"GeospatialDataSourceItem"},
+        "Label":{"shape":"String"},
+        "Visibility":{"shape":"Visibility"},
+        "LayerDefinition":{"shape":"GeospatialLayerDefinition"},
+        "Tooltip":{"shape":"TooltipOptions"},
+        "JoinDefinition":{"shape":"GeospatialLayerJoinDefinition"},
+        "Actions":{"shape":"LayerCustomActionList"}
+      }
+    },
+    "GeospatialLayerJoinDefinition":{
+      "type":"structure",
+      "members":{
+        "ShapeKeyField":{"shape":"String"},
+        "DatasetKeyField":{"shape":"UnaggregatedField"},
+        "ColorField":{"shape":"GeospatialLayerColorField"}
+      }
+    },
+    "GeospatialLayerMapConfiguration":{
+      "type":"structure",
+      "members":{
+        "Legend":{"shape":"LegendOptions"},
+        "MapLayers":{"shape":"GeospatialMapLayerList"},
+        "MapState":{"shape":"GeospatialMapState"},
+        "MapStyle":{"shape":"GeospatialMapStyle"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
+      }
+    },
+    "GeospatialLayerMeasureFieldList":{
+      "type":"list",
+      "member":{"shape":"MeasureField"},
+      "max":1
+    },
+    "GeospatialLayerType":{
+      "type":"string",
+      "enum":[
+        "POINT",
+        "LINE",
+        "POLYGON"
+      ]
+    },
+    "GeospatialLineLayer":{
+      "type":"structure",
+      "required":["Style"],
+      "members":{
+        "Style":{"shape":"GeospatialLineStyle"}
+      }
+    },
+    "GeospatialLineStyle":{
+      "type":"structure",
+      "members":{
+        "LineSymbolStyle":{"shape":"GeospatialLineSymbolStyle"}
+      }
+    },
+    "GeospatialLineSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"GeospatialColor"},
+        "LineWidth":{"shape":"GeospatialLineWidth"}
+      }
+    },
+    "GeospatialLineWidth":{
+      "type":"structure",
+      "members":{
+        "LineWidth":{"shape":"GeospatialWidth"}
+      }
     },
     "GeospatialMapAggregatedFieldWells":{
       "type":"structure",
@@ -11582,6 +13509,32 @@
         "GeospatialMapAggregatedFieldWells":{"shape":"GeospatialMapAggregatedFieldWells"}
       }
     },
+    "GeospatialMapLayerList":{
+      "type":"list",
+      "member":{"shape":"GeospatialLayerItem"}
+    },
+    "GeospatialMapNavigation":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "GeospatialMapState":{
+      "type":"structure",
+      "members":{
+        "Bounds":{"shape":"GeospatialCoordinateBounds"},
+        "MapNavigation":{"shape":"GeospatialMapNavigation"}
+      }
+    },
+    "GeospatialMapStyle":{
+      "type":"structure",
+      "members":{
+        "BaseMapStyle":{"shape":"BaseMapStyleType"},
+        "BackgroundColor":{"shape":"HexColorWithTransparency"},
+        "BaseMapVisibility":{"shape":"Visibility"}
+      }
+    },
     "GeospatialMapStyleOptions":{
       "type":"structure",
       "members":{
@@ -11597,7 +13550,36 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"GeospatialMapConfiguration"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
+      }
+    },
+    "GeospatialNullDataSettings":{
+      "type":"structure",
+      "required":["SymbolStyle"],
+      "members":{
+        "SymbolStyle":{"shape":"GeospatialNullSymbolStyle"}
+      }
+    },
+    "GeospatialNullSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"HexColorWithTransparency"},
+        "StrokeColor":{"shape":"HexColorWithTransparency"},
+        "StrokeWidth":{"shape":"GeospatialWidth"}
+      }
+    },
+    "GeospatialPointLayer":{
+      "type":"structure",
+      "required":["Style"],
+      "members":{
+        "Style":{"shape":"GeospatialPointStyle"}
+      }
+    },
+    "GeospatialPointStyle":{
+      "type":"structure",
+      "members":{
+        "CircleSymbolStyle":{"shape":"GeospatialCircleSymbolStyle"}
       }
     },
     "GeospatialPointStyleOptions":{
@@ -11608,6 +13590,31 @@
         "HeatmapConfiguration":{"shape":"GeospatialHeatmapConfiguration"}
       }
     },
+    "GeospatialPolygonLayer":{
+      "type":"structure",
+      "required":["Style"],
+      "members":{
+        "Style":{"shape":"GeospatialPolygonStyle"}
+      }
+    },
+    "GeospatialPolygonStyle":{
+      "type":"structure",
+      "members":{
+        "PolygonSymbolStyle":{"shape":"GeospatialPolygonSymbolStyle"}
+      }
+    },
+    "GeospatialPolygonSymbolStyle":{
+      "type":"structure",
+      "members":{
+        "FillColor":{"shape":"GeospatialColor"},
+        "StrokeColor":{"shape":"GeospatialColor"},
+        "StrokeWidth":{"shape":"GeospatialLineWidth"}
+      }
+    },
+    "GeospatialRadius":{
+      "type":"double",
+      "min":0
+    },
     "GeospatialSelectedPointStyle":{
       "type":"string",
       "enum":[
@@ -11615,6 +13622,25 @@
         "CLUSTER",
         "HEATMAP"
       ]
+    },
+    "GeospatialSolidColor":{
+      "type":"structure",
+      "required":["Color"],
+      "members":{
+        "Color":{"shape":"HexColorWithTransparency"},
+        "State":{"shape":"GeospatialColorState"}
+      }
+    },
+    "GeospatialStaticFileSource":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"}
+      }
+    },
+    "GeospatialWidth":{
+      "type":"double",
+      "min":0
     },
     "GeospatialWindowOptions":{
       "type":"structure",
@@ -11954,7 +13980,9 @@
       "members":{
         "FieldWells":{"shape":"HeatMapFieldWells"},
         "SortConfiguration":{"shape":"HeatMapSortConfiguration"},
+        "RowAxisDisplayOptions":{"shape":"AxisDisplayOptions"},
         "RowLabelOptions":{"shape":"ChartAxisLabelOptions"},
+        "ColumnAxisDisplayOptions":{"shape":"AxisDisplayOptions"},
         "ColumnLabelOptions":{"shape":"ChartAxisLabelOptions"},
         "ColorScale":{"shape":"ColorScale"},
         "Legend":{"shape":"LegendOptions"},
@@ -11997,7 +14025,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"HeatMapConfiguration"},
         "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "HexColor":{
@@ -12071,7 +14100,8 @@
         "Title":{"shape":"VisualTitleLabelOptions"},
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"HistogramConfiguration"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "HorizontalTextAlignment":{
@@ -12151,6 +14181,13 @@
         "X"
       ]
     },
+    "Identifier":{
+      "type":"structure",
+      "required":["Identity"],
+      "members":{
+        "Identity":{"shape":"LimitedString"}
+      }
+    },
     "IdentityCenterConfiguration":{
       "type":"structure",
       "members":{
@@ -12174,6 +14211,11 @@
       "type":"list",
       "member":{"shape":"IdentityName"}
     },
+    "IdentityProviderResourceUri":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "IdentityStore":{
       "type":"string",
       "enum":["QUICKSIGHT"]
@@ -12194,6 +14236,147 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "Image":{
+      "type":"structure",
+      "members":{
+        "Source":{"shape":"ImageSource"},
+        "GeneratedImageUrl":{"shape":"String"}
+      }
+    },
+    "ImageConfiguration":{
+      "type":"structure",
+      "members":{
+        "Source":{"shape":"ImageSource"}
+      }
+    },
+    "ImageCustomAction":{
+      "type":"structure",
+      "required":[
+        "CustomActionId",
+        "Name",
+        "Trigger",
+        "ActionOperations"
+      ],
+      "members":{
+        "CustomActionId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"ImageCustomActionName"},
+        "Status":{"shape":"WidgetStatus"},
+        "Trigger":{"shape":"ImageCustomActionTrigger"},
+        "ActionOperations":{"shape":"ImageCustomActionOperationList"}
+      }
+    },
+    "ImageCustomActionList":{
+      "type":"list",
+      "member":{"shape":"ImageCustomAction"},
+      "max":10,
+      "min":0
+    },
+    "ImageCustomActionName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ImageCustomActionOperation":{
+      "type":"structure",
+      "members":{
+        "NavigationOperation":{"shape":"CustomActionNavigationOperation"},
+        "URLOperation":{"shape":"CustomActionURLOperation"},
+        "SetParametersOperation":{"shape":"CustomActionSetParametersOperation"}
+      }
+    },
+    "ImageCustomActionOperationList":{
+      "type":"list",
+      "member":{"shape":"ImageCustomActionOperation"},
+      "max":2,
+      "min":1
+    },
+    "ImageCustomActionTrigger":{
+      "type":"string",
+      "enum":[
+        "CLICK",
+        "MENU"
+      ]
+    },
+    "ImageInteractionOptions":{
+      "type":"structure",
+      "members":{
+        "ImageMenuOption":{"shape":"ImageMenuOption"}
+      }
+    },
+    "ImageMenuOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
+      }
+    },
+    "ImageSet":{
+      "type":"structure",
+      "required":["Original"],
+      "members":{
+        "Original":{"shape":"Image"},
+        "Height64":{"shape":"Image"},
+        "Height32":{"shape":"Image"}
+      }
+    },
+    "ImageSetConfiguration":{
+      "type":"structure",
+      "required":["Original"],
+      "members":{
+        "Original":{"shape":"ImageConfiguration"}
+      }
+    },
+    "ImageSource":{
+      "type":"structure",
+      "members":{
+        "PublicUrl":{"shape":"String"},
+        "S3Uri":{"shape":"String"}
+      },
+      "union":true
+    },
+    "ImageStaticFile":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"},
+        "Source":{"shape":"StaticFileSource"}
+      }
+    },
+    "ImpalaParameters":{
+      "type":"structure",
+      "required":[
+        "Host",
+        "Port",
+        "SqlEndpointPath"
+      ],
+      "members":{
+        "Host":{"shape":"Host"},
+        "Port":{"shape":"Port"},
+        "Database":{"shape":"Database"},
+        "SqlEndpointPath":{"shape":"SqlEndpointPath"}
+      }
+    },
+    "IncludeFolderMembers":{
+      "type":"string",
+      "enum":[
+        "RECURSE",
+        "ONE_LEVEL",
+        "NONE"
+      ]
+    },
+    "IncludeGeneratedAnswer":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
+      ]
+    },
+    "IncludeQuickSightQIndex":{
+      "type":"string",
+      "enum":[
+        "INCLUDE",
+        "EXCLUDE"
+      ]
     },
     "IncrementalRefresh":{
       "type":"structure",
@@ -12384,7 +14567,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "InsightConfiguration":{"shape":"InsightConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "DataSetIdentifier":{"shape":"DataSetIdentifier"}
+        "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "InstanceId":{
@@ -12482,6 +14666,16 @@
       "exception":true,
       "fault":true
     },
+    "InternalServerException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":500},
+      "exception":true,
+      "fault":true
+    },
     "InvalidNextTokenException":{
       "type":"structure",
       "members":{
@@ -12508,6 +14702,17 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "InvalidTopicReviewedAnswer":{
+      "type":"structure",
+      "members":{
+        "AnswerId":{"shape":"AnswerId"},
+        "Error":{"shape":"ReviewedAnswerErrorCode"}
+      }
+    },
+    "InvalidTopicReviewedAnswers":{
+      "type":"list",
+      "member":{"shape":"InvalidTopicReviewedAnswer"}
     },
     "IpRestrictionRuleDescription":{
       "type":"string",
@@ -12682,7 +14887,8 @@
         "ChartConfiguration":{"shape":"KPIConfiguration"},
         "ConditionalFormatting":{"shape":"KPIConditionalFormatting"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "KPIVisualLayoutOptions":{
@@ -12722,6 +14928,69 @@
       "max":90,
       "min":-90
     },
+    "LayerCustomAction":{
+      "type":"structure",
+      "required":[
+        "CustomActionId",
+        "Name",
+        "Trigger",
+        "ActionOperations"
+      ],
+      "members":{
+        "CustomActionId":{"shape":"ShortRestrictiveResourceId"},
+        "Name":{"shape":"LayerCustomActionName"},
+        "Status":{"shape":"WidgetStatus"},
+        "Trigger":{"shape":"LayerCustomActionTrigger"},
+        "ActionOperations":{"shape":"LayerCustomActionOperationList"}
+      }
+    },
+    "LayerCustomActionList":{
+      "type":"list",
+      "member":{"shape":"LayerCustomAction"},
+      "max":10
+    },
+    "LayerCustomActionName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "LayerCustomActionOperation":{
+      "type":"structure",
+      "members":{
+        "FilterOperation":{"shape":"CustomActionFilterOperation"},
+        "NavigationOperation":{"shape":"CustomActionNavigationOperation"},
+        "URLOperation":{"shape":"CustomActionURLOperation"},
+        "SetParametersOperation":{"shape":"CustomActionSetParametersOperation"}
+      }
+    },
+    "LayerCustomActionOperationList":{
+      "type":"list",
+      "member":{"shape":"LayerCustomActionOperation"},
+      "max":2,
+      "min":1
+    },
+    "LayerCustomActionTrigger":{
+      "type":"string",
+      "enum":[
+        "DATA_POINT_CLICK",
+        "DATA_POINT_MENU"
+      ]
+    },
+    "LayerMapVisual":{
+      "type":"structure",
+      "required":[
+        "VisualId",
+        "DataSetIdentifier"
+      ],
+      "members":{
+        "VisualId":{"shape":"ShortRestrictiveResourceId"},
+        "Title":{"shape":"VisualTitleLabelOptions"},
+        "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
+        "ChartConfiguration":{"shape":"GeospatialLayerMapConfiguration"},
+        "DataSetIdentifier":{"shape":"DataSetIdentifier"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
+      }
+    },
     "Layout":{
       "type":"structure",
       "required":["Configuration"],
@@ -12743,7 +15012,8 @@
         "VISUAL",
         "FILTER_CONTROL",
         "PARAMETER_CONTROL",
-        "TEXT_BOX"
+        "TEXT_BOX",
+        "IMAGE"
       ]
     },
     "LayoutList":{
@@ -12759,7 +15029,8 @@
         "Title":{"shape":"LabelOptions"},
         "Position":{"shape":"LegendPosition"},
         "Width":{"shape":"PixelLength"},
-        "Height":{"shape":"PixelLength"}
+        "Height":{"shape":"PixelLength"},
+        "ValueFontConfiguration":{"shape":"FontConfiguration"}
       }
     },
     "LegendPosition":{
@@ -12905,7 +15176,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"LineChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "LineInterpolation":{
@@ -13042,6 +15314,35 @@
         }
       }
     },
+    "ListBrandsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListBrandsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "Brands":{"shape":"BrandSummaryList"}
+      }
+    },
     "ListControlDisplayOptions":{
       "type":"structure",
       "members":{
@@ -13061,6 +15362,40 @@
       "type":"structure",
       "members":{
         "Visibility":{"shape":"Visibility"}
+      }
+    },
+    "ListCustomPermissionsRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        }
+      }
+    },
+    "ListCustomPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "CustomPermissionsList":{"shape":"CustomPermissionsList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"}
       }
     },
     "ListDashboardVersionsRequest":{
@@ -13245,6 +15580,48 @@
           "location":"statusCode"
         },
         "FolderMemberList":{"shape":"FolderMemberList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "ListFoldersForResourceRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ResourceArn"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "ResourceArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListFoldersForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Folders":{"shape":"FoldersForResourceArnList"},
         "NextToken":{"shape":"String"},
         "RequestId":{"shape":"String"}
       }
@@ -13956,6 +16333,38 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "ListTopicReviewedAnswersRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "TopicId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "TopicId":{
+          "shape":"TopicId",
+          "location":"uri",
+          "locationName":"TopicId"
+        }
+      }
+    },
+    "ListTopicReviewedAnswersResponse":{
+      "type":"structure",
+      "members":{
+        "TopicId":{"shape":"TopicId"},
+        "TopicArn":{"shape":"Arn"},
+        "Answers":{"shape":"TopicReviewedAnswers"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
     "ListTopicsRequest":{
       "type":"structure",
       "required":["AwsAccountId"],
@@ -14165,6 +16574,44 @@
         "DataSetArn":{"shape":"Arn"}
       }
     },
+    "Logo":{
+      "type":"structure",
+      "required":[
+        "AltText",
+        "LogoSet"
+      ],
+      "members":{
+        "AltText":{"shape":"AltText"},
+        "LogoSet":{"shape":"LogoSet"}
+      }
+    },
+    "LogoConfiguration":{
+      "type":"structure",
+      "required":[
+        "AltText",
+        "LogoSet"
+      ],
+      "members":{
+        "AltText":{"shape":"String"},
+        "LogoSet":{"shape":"LogoSetConfiguration"}
+      }
+    },
+    "LogoSet":{
+      "type":"structure",
+      "required":["Primary"],
+      "members":{
+        "Primary":{"shape":"ImageSet"},
+        "Favicon":{"shape":"ImageSet"}
+      }
+    },
+    "LogoSetConfiguration":{
+      "type":"structure",
+      "required":["Primary"],
+      "members":{
+        "Primary":{"shape":"ImageSetConfiguration"},
+        "Favicon":{"shape":"ImageSetConfiguration"}
+      }
+    },
     "Long":{"type":"long"},
     "LongFormatText":{
       "type":"structure",
@@ -14269,6 +16716,11 @@
     "MaxResults":{
       "type":"integer",
       "max":100,
+      "min":1
+    },
+    "MaxTopicsToConsider":{
+      "type":"integer",
+      "max":4,
       "min":1
     },
     "MaximumLabelType":{
@@ -14378,6 +16830,12 @@
         "Database":{"shape":"Database"}
       }
     },
+    "Name":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[ -ÿ]+"
+    },
     "NamedEntityAggType":{
       "type":"string",
       "enum":[
@@ -14416,6 +16874,12 @@
     "NamedEntityDefinitions":{
       "type":"list",
       "member":{"shape":"NamedEntityDefinition"}
+    },
+    "NamedEntityRef":{
+      "type":"structure",
+      "members":{
+        "NamedEntityName":{"shape":"LimitedString"}
+      }
     },
     "NamedFilterAggType":{
       "type":"string",
@@ -14471,7 +16935,9 @@
         "CapacityRegion":{"shape":"String"},
         "CreationStatus":{"shape":"NamespaceStatus"},
         "IdentityStore":{"shape":"IdentityStore"},
-        "NamespaceError":{"shape":"NamespaceError"}
+        "NamespaceError":{"shape":"NamespaceError"},
+        "IamIdentityCenterApplicationArn":{"shape":"String"},
+        "IamIdentityCenterInstanceArn":{"shape":"String"}
       }
     },
     "NamespaceStatus":{
@@ -14491,6 +16957,13 @@
     "NarrativeString":{
       "type":"string",
       "max":150000
+    },
+    "NavbarStyle":{
+      "type":"structure",
+      "members":{
+        "GlobalNavbar":{"shape":"Palette"},
+        "ContextualNavbar":{"shape":"Palette"}
+      }
     },
     "NegativeFormat":{
       "type":"structure",
@@ -14580,6 +17053,14 @@
       "member":{"shape":"ShortRestrictiveResourceId"},
       "max":20
     },
+    "NullFilterOption":{
+      "type":"string",
+      "enum":[
+        "ALL_VALUES",
+        "NON_NULLS_ONLY",
+        "NULLS_ONLY"
+      ]
+    },
     "NullString":{
       "type":"string",
       "max":128,
@@ -14620,7 +17101,9 @@
         "THOUSANDS",
         "MILLIONS",
         "BILLIONS",
-        "TRILLIONS"
+        "TRILLIONS",
+        "LAKHS",
+        "CRORES"
       ]
     },
     "NumericAxisOptions":{
@@ -14773,10 +17256,35 @@
         "FormatConfiguration":{"shape":"NumberFormatConfiguration"}
       }
     },
+    "OAuthParameters":{
+      "type":"structure",
+      "required":["TokenProviderUrl"],
+      "members":{
+        "TokenProviderUrl":{"shape":"TokenProviderUrl"},
+        "OAuthScope":{"shape":"OAuthScope"},
+        "IdentityProviderVpcConnectionProperties":{"shape":"VpcConnectionProperties"},
+        "IdentityProviderResourceUri":{"shape":"IdentityProviderResourceUri"}
+      }
+    },
+    "OAuthScope":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "OnClause":{
       "type":"string",
       "max":512,
       "min":1
+    },
+    "Opacity":{
+      "type":"double",
+      "max":1,
+      "min":0
+    },
+    "OperandList":{
+      "type":"list",
+      "member":{"shape":"Identifier"},
+      "max":25
     },
     "OptionalPort":{
       "type":"integer",
@@ -14793,7 +17301,8 @@
       "members":{
         "Host":{"shape":"Host"},
         "Port":{"shape":"Port"},
-        "Database":{"shape":"Database"}
+        "Database":{"shape":"Database"},
+        "UseServiceName":{"shape":"Boolean"}
       }
     },
     "OtherCategories":{
@@ -14841,6 +17350,13 @@
           "box":true
         },
         "PageNumber":{"shape":"PageNumber"}
+      }
+    },
+    "Palette":{
+      "type":"structure",
+      "members":{
+        "Foreground":{"shape":"HexColor"},
+        "Background":{"shape":"HexColor"}
       }
     },
     "PanelBorderStyle":{
@@ -14954,7 +17470,8 @@
         "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
         "Type":{"shape":"SheetControlListType"},
         "SelectableValues":{"shape":"ParameterSelectableValues"},
-        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"},
+        "CommitMode":{"shape":"CommitMode"}
       }
     },
     "ParameterListControl":{
@@ -15108,6 +17625,12 @@
       "max":100,
       "min":0
     },
+    "PerformanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "UniqueKeys":{"shape":"UniqueKeyList"}
+      }
+    },
     "PeriodOverPeriodComputation":{
       "type":"structure",
       "required":["ComputationId"],
@@ -15138,6 +17661,13 @@
       "type":"integer",
       "max":1000,
       "min":1
+    },
+    "PersonalizationMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "PhysicalTable":{
       "type":"structure",
@@ -15209,7 +17739,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"PieChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "PivotFieldSortOptions":{
@@ -15482,7 +18013,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"PivotTableConfiguration"},
         "ConditionalFormatting":{"shape":"PivotTableConditionalFormatting"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "PivotTotalOptions":{
@@ -15499,6 +18031,90 @@
       }
     },
     "PixelLength":{"type":"string"},
+    "PluginVisual":{
+      "type":"structure",
+      "required":[
+        "VisualId",
+        "PluginArn"
+      ],
+      "members":{
+        "VisualId":{"shape":"ShortRestrictiveResourceId"},
+        "PluginArn":{"shape":"Arn"},
+        "Title":{"shape":"VisualTitleLabelOptions"},
+        "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
+        "ChartConfiguration":{"shape":"PluginVisualConfiguration"},
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
+      }
+    },
+    "PluginVisualAxisName":{
+      "type":"string",
+      "enum":[
+        "GROUP_BY",
+        "VALUE"
+      ]
+    },
+    "PluginVisualConfiguration":{
+      "type":"structure",
+      "members":{
+        "FieldWells":{"shape":"PluginVisualFieldWells"},
+        "VisualOptions":{"shape":"PluginVisualOptions"},
+        "SortConfiguration":{"shape":"PluginVisualSortConfiguration"}
+      }
+    },
+    "PluginVisualFieldWell":{
+      "type":"structure",
+      "members":{
+        "AxisName":{"shape":"PluginVisualAxisName"},
+        "Dimensions":{"shape":"DimensionFieldList"},
+        "Measures":{"shape":"MeasureFieldList"},
+        "Unaggregated":{"shape":"UnaggregatedFieldList"}
+      }
+    },
+    "PluginVisualFieldWells":{
+      "type":"list",
+      "member":{"shape":"PluginVisualFieldWell"},
+      "max":10
+    },
+    "PluginVisualItemsLimitConfiguration":{
+      "type":"structure",
+      "members":{
+        "ItemsLimit":{
+          "shape":"Long",
+          "box":true
+        }
+      }
+    },
+    "PluginVisualOptions":{
+      "type":"structure",
+      "members":{
+        "VisualProperties":{"shape":"PluginVisualPropertiesList"}
+      }
+    },
+    "PluginVisualPropertiesList":{
+      "type":"list",
+      "member":{"shape":"PluginVisualProperty"}
+    },
+    "PluginVisualProperty":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "PluginVisualSortConfiguration":{
+      "type":"structure",
+      "members":{
+        "PluginVisualTableQuerySort":{"shape":"PluginVisualTableQuerySort"}
+      }
+    },
+    "PluginVisualTableQuerySort":{
+      "type":"structure",
+      "members":{
+        "RowSort":{"shape":"RowSortList"},
+        "ItemsLimitConfiguration":{"shape":"PluginVisualItemsLimitConfiguration"}
+      }
+    },
     "Port":{
       "type":"integer",
       "max":65535,
@@ -15551,6 +18167,36 @@
       "member":{"shape":"ColumnIdentifier"},
       "max":10,
       "min":1
+    },
+    "PredictQAResultsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "QueryText"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "QueryText":{"shape":"QAQueryText"},
+        "IncludeQuickSightQIndex":{"shape":"IncludeQuickSightQIndex"},
+        "IncludeGeneratedAnswer":{"shape":"IncludeGeneratedAnswer"},
+        "MaxTopicsToConsider":{"shape":"MaxTopicsToConsider"}
+      }
+    },
+    "PredictQAResultsResponse":{
+      "type":"structure",
+      "members":{
+        "PrimaryResult":{"shape":"QAResult"},
+        "AdditionalResults":{"shape":"QAResults"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
     },
     "PredictionInterval":{
       "type":"integer",
@@ -15672,10 +18318,69 @@
         }
       }
     },
+    "QAQueryText":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
+    "QAResult":{
+      "type":"structure",
+      "members":{
+        "ResultType":{"shape":"QAResultType"},
+        "DashboardVisual":{"shape":"DashboardVisualResult"},
+        "GeneratedAnswer":{"shape":"GeneratedAnswerResult"}
+      }
+    },
+    "QAResultType":{
+      "type":"string",
+      "enum":[
+        "DASHBOARD_VISUAL",
+        "GENERATED_ANSWER",
+        "NO_ANSWER"
+      ]
+    },
+    "QAResults":{
+      "type":"list",
+      "member":{"shape":"QAResult"}
+    },
+    "QAUrl":{"type":"string"},
+    "QBusinessInsightsStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "QSearchStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "Query":{
       "type":"string",
       "max":256,
       "min":1
+    },
+    "QueryExecutionMode":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
+    },
+    "QueryExecutionOptions":{
+      "type":"structure",
+      "members":{
+        "QueryExecutionMode":{"shape":"QueryExecutionMode"}
+      }
+    },
+    "QuestionId":{
+      "type":"string",
+      "max":64,
+      "pattern":"^[a-zA-Z0-9-]+$"
     },
     "QueueInfo":{
       "type":"structure",
@@ -15797,7 +18502,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"RadarChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "RangeConstant":{
@@ -15822,6 +18528,13 @@
       "members":{
         "InstanceId":{"shape":"InstanceId"},
         "Database":{"shape":"Database"}
+      }
+    },
+    "RecentSnapshotsConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
       }
     },
     "RecoveryWindowInDays":{
@@ -15970,6 +18683,25 @@
         "IncrementalRefresh":{"shape":"IncrementalRefresh"}
       }
     },
+    "RefreshFailureAlertStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "RefreshFailureConfiguration":{
+      "type":"structure",
+      "members":{
+        "EmailAlert":{"shape":"RefreshFailureEmailAlert"}
+      }
+    },
+    "RefreshFailureEmailAlert":{
+      "type":"structure",
+      "members":{
+        "AlertStatus":{"shape":"RefreshFailureAlertStatus"}
+      }
+    },
     "RefreshFrequency":{
       "type":"structure",
       "required":["Interval"],
@@ -16065,7 +18797,12 @@
     "RegisteredUserConsoleFeatureConfigurations":{
       "type":"structure",
       "members":{
-        "StatePersistence":{"shape":"StatePersistenceConfigurations"}
+        "StatePersistence":{"shape":"StatePersistenceConfigurations"},
+        "SharedView":{"shape":"SharedViewConfigurations"},
+        "AmazonQInQuickSight":{"shape":"AmazonQInQuickSightConsoleConfigurations"},
+        "Schedules":{"shape":"SchedulesConfigurations"},
+        "RecentSnapshots":{"shape":"RecentSnapshotsConfigurations"},
+        "ThresholdAlerts":{"shape":"ThresholdAlertsConfigurations"}
       }
     },
     "RegisteredUserDashboardEmbeddingConfiguration":{
@@ -16080,7 +18817,12 @@
       "type":"structure",
       "members":{
         "StatePersistence":{"shape":"StatePersistenceConfigurations"},
-        "Bookmarks":{"shape":"BookmarksConfigurations"}
+        "SharedView":{"shape":"SharedViewConfigurations"},
+        "Bookmarks":{"shape":"BookmarksConfigurations"},
+        "AmazonQInQuickSight":{"shape":"AmazonQInQuickSightDashboardConfigurations"},
+        "Schedules":{"shape":"SchedulesConfigurations"},
+        "RecentSnapshots":{"shape":"RecentSnapshotsConfigurations"},
+        "ThresholdAlerts":{"shape":"ThresholdAlertsConfigurations"}
       }
     },
     "RegisteredUserDashboardVisualEmbeddingConfiguration":{
@@ -16301,6 +19043,11 @@
           "shape":"ShortRestrictiveResourceId",
           "location":"uri",
           "locationName":"AnalysisId"
+        },
+        "RestoreToFolders":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"restore-to-folders"
         }
       }
     },
@@ -16313,7 +19060,8 @@
         },
         "Arn":{"shape":"Arn"},
         "AnalysisId":{"shape":"ShortRestrictiveResourceId"},
-        "RequestId":{"shape":"String"}
+        "RequestId":{"shape":"String"},
+        "RestorationFailedFolderArns":{"shape":"FolderArnList"}
       }
     },
     "RestrictiveResourceId":{
@@ -16321,6 +19069,18 @@
       "max":2048,
       "min":1,
       "pattern":"[\\w\\-]+"
+    },
+    "ReviewedAnswerErrorCode":{
+      "type":"string",
+      "enum":[
+        "INTERNAL_ERROR",
+        "MISSING_ANSWER",
+        "DATASET_DOES_NOT_EXIST",
+        "INVALID_DATASET_ARN",
+        "DUPLICATED_ANSWER",
+        "INVALID_DATA",
+        "MISSING_REQUIRED_FIELDS"
+      ]
     },
     "Role":{
       "type":"string",
@@ -16558,7 +19318,8 @@
         "Title":{"shape":"VisualTitleLabelOptions"},
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"SankeyDiagramChartConfiguration"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "ScatterPlotCategoricallyAggregatedFieldWells":{
@@ -16619,7 +19380,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"ScatterPlotConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "ScheduleRefreshOnEntity":{
@@ -16627,6 +19389,13 @@
       "members":{
         "DayOfWeek":{"shape":"DayOfWeek"},
         "DayOfMonth":{"shape":"DayOfMonth"}
+      }
+    },
+    "SchedulesConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
       }
     },
     "ScrollBarOptions":{
@@ -16840,6 +19609,38 @@
         }
       }
     },
+    "SearchTopicsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Filters"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Filters":{"shape":"TopicSearchFilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        }
+      }
+    },
+    "SearchTopicsResponse":{
+      "type":"structure",
+      "members":{
+        "TopicSummaryList":{"shape":"TopicSummaries"},
+        "NextToken":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
     "Seasonality":{
       "type":"integer",
       "max":180,
@@ -17048,7 +19849,11 @@
     },
     "ServiceType":{
       "type":"string",
-      "enum":["REDSHIFT"]
+      "enum":[
+        "REDSHIFT",
+        "QBUSINESS",
+        "ATHENA"
+      ]
     },
     "SessionLifetimeInMinutes":{
       "type":"long",
@@ -17122,6 +19927,13 @@
         "BackgroundColor":{"shape":"ConditionalFormattingColor"}
       }
     },
+    "SharedViewConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "SharingModel":{
       "type":"string",
       "enum":[
@@ -17133,7 +19945,8 @@
       "type":"structure",
       "members":{
         "SheetId":{"shape":"ShortRestrictiveResourceId"},
-        "Name":{"shape":"SheetName"}
+        "Name":{"shape":"SheetName"},
+        "Images":{"shape":"SheetImageList"}
       }
     },
     "SheetContentType":{
@@ -17218,9 +20031,11 @@
         "FilterControls":{"shape":"FilterControlList"},
         "Visuals":{"shape":"VisualList"},
         "TextBoxes":{"shape":"SheetTextBoxList"},
+        "Images":{"shape":"SheetImageList"},
         "Layouts":{"shape":"LayoutList"},
         "SheetControlLayouts":{"shape":"SheetControlLayoutList"},
-        "ContentType":{"shape":"SheetContentType"}
+        "ContentType":{"shape":"SheetContentType"},
+        "CustomActionDefaults":{"shape":"VisualCustomActionDefaults"}
       }
     },
     "SheetDefinitionList":{
@@ -17255,6 +20070,69 @@
       "member":{"shape":"SheetElementRenderingRule"},
       "max":10000
     },
+    "SheetImage":{
+      "type":"structure",
+      "required":[
+        "SheetImageId",
+        "Source"
+      ],
+      "members":{
+        "SheetImageId":{"shape":"ShortRestrictiveResourceId"},
+        "Source":{"shape":"SheetImageSource"},
+        "Scaling":{"shape":"SheetImageScalingConfiguration"},
+        "Tooltip":{"shape":"SheetImageTooltipConfiguration"},
+        "ImageContentAltText":{"shape":"LongPlainText"},
+        "Interactions":{"shape":"ImageInteractionOptions"},
+        "Actions":{"shape":"ImageCustomActionList"}
+      }
+    },
+    "SheetImageList":{
+      "type":"list",
+      "member":{"shape":"SheetImage"},
+      "max":10,
+      "min":0
+    },
+    "SheetImageScalingConfiguration":{
+      "type":"structure",
+      "members":{
+        "ScalingType":{"shape":"SheetImageScalingType"}
+      }
+    },
+    "SheetImageScalingType":{
+      "type":"string",
+      "enum":[
+        "SCALE_TO_WIDTH",
+        "SCALE_TO_HEIGHT",
+        "SCALE_TO_CONTAINER",
+        "SCALE_NONE"
+      ]
+    },
+    "SheetImageSource":{
+      "type":"structure",
+      "members":{
+        "SheetImageStaticFileSource":{"shape":"SheetImageStaticFileSource"}
+      }
+    },
+    "SheetImageStaticFileSource":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"}
+      }
+    },
+    "SheetImageTooltipConfiguration":{
+      "type":"structure",
+      "members":{
+        "TooltipText":{"shape":"SheetImageTooltipText"},
+        "Visibility":{"shape":"Visibility"}
+      }
+    },
+    "SheetImageTooltipText":{
+      "type":"structure",
+      "members":{
+        "PlainText":{"shape":"LongPlainText"}
+      }
+    },
     "SheetLayoutElementMaximizationOption":{
       "type":"structure",
       "members":{
@@ -17283,7 +20161,8 @@
       "required":["SheetTextBoxId"],
       "members":{
         "SheetTextBoxId":{"shape":"ShortRestrictiveResourceId"},
-        "Content":{"shape":"SheetTextBoxContent"}
+        "Content":{"shape":"SheetTextBoxContent"},
+        "Interactions":{"shape":"TextBoxInteractionOptions"}
       }
     },
     "SheetTextBoxContent":{
@@ -17408,6 +20287,17 @@
         "TitleOptions":{"shape":"LabelOptions"},
         "InfoIconLabelOptions":{"shape":"SheetControlInfoIconLabelOptions"}
       }
+    },
+    "Slot":{
+      "type":"structure",
+      "members":{
+        "SlotId":{"shape":"LimitedString"},
+        "VisualId":{"shape":"LimitedString"}
+      }
+    },
+    "Slots":{
+      "type":"list",
+      "member":{"shape":"Slot"}
     },
     "SmallMultiplesAxisPlacement":{
       "type":"string",
@@ -17643,7 +20533,10 @@
       "members":{
         "Host":{"shape":"Host"},
         "Database":{"shape":"Database"},
-        "Warehouse":{"shape":"Warehouse"}
+        "Warehouse":{"shape":"Warehouse"},
+        "AuthenticationType":{"shape":"AuthenticationType"},
+        "DatabaseAccessControlRole":{"shape":"DatabaseAccessControlRole"},
+        "OAuthParameters":{"shape":"OAuthParameters"}
       }
     },
     "SortDirection":{
@@ -17671,6 +20564,14 @@
       "members":{
         "Host":{"shape":"Host"},
         "Port":{"shape":"Port"}
+      }
+    },
+    "SpatialStaticFile":{
+      "type":"structure",
+      "required":["StaticFileId"],
+      "members":{
+        "StaticFileId":{"shape":"ShortRestrictiveResourceId"},
+        "Source":{"shape":"StaticFileSource"}
       }
     },
     "SpecialValue":{
@@ -17721,7 +20622,10 @@
         "Host":{"shape":"Host"},
         "Port":{"shape":"Port"},
         "Catalog":{"shape":"Catalog"},
-        "ProductType":{"shape":"StarburstProductType"}
+        "ProductType":{"shape":"StarburstProductType"},
+        "DatabaseAccessControlRole":{"shape":"DatabaseAccessControlRole"},
+        "AuthenticationType":{"shape":"AuthenticationType"},
+        "OAuthParameters":{"shape":"OAuthParameters"}
       }
     },
     "StarburstProductType":{
@@ -17752,7 +20656,9 @@
         "CloudFormationOverridePropertyConfiguration":{"shape":"AssetBundleCloudFormationOverridePropertyConfiguration"},
         "IncludePermissions":{"shape":"Boolean"},
         "IncludeTags":{"shape":"Boolean"},
-        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"}
+        "ValidationStrategy":{"shape":"AssetBundleExportJobValidationStrategy"},
+        "IncludeFolderMemberships":{"shape":"Boolean"},
+        "IncludeFolderMembers":{"shape":"IncludeFolderMembers"}
       }
     },
     "StartAssetBundleExportJobResponse":{
@@ -17838,11 +20744,86 @@
         }
       }
     },
+    "StartDashboardSnapshotJobScheduleRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DashboardId",
+        "ScheduleId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DashboardId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"DashboardId"
+        },
+        "ScheduleId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"ScheduleId"
+        }
+      }
+    },
+    "StartDashboardSnapshotJobScheduleResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"NonEmptyString"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "StatePersistenceConfigurations":{
       "type":"structure",
       "required":["Enabled"],
       "members":{
         "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "StaticFile":{
+      "type":"structure",
+      "members":{
+        "ImageStaticFile":{"shape":"ImageStaticFile"},
+        "SpatialStaticFile":{"shape":"SpatialStaticFile"}
+      }
+    },
+    "StaticFileList":{
+      "type":"list",
+      "member":{"shape":"StaticFile"},
+      "max":200,
+      "min":0
+    },
+    "StaticFileS3SourceOptions":{
+      "type":"structure",
+      "required":[
+        "BucketName",
+        "ObjectKey",
+        "Region"
+      ],
+      "members":{
+        "BucketName":{"shape":"String"},
+        "ObjectKey":{"shape":"String"},
+        "Region":{"shape":"String"}
+      }
+    },
+    "StaticFileSource":{
+      "type":"structure",
+      "members":{
+        "UrlOptions":{"shape":"StaticFileUrlSourceOptions"},
+        "S3Options":{"shape":"StaticFileS3SourceOptions"}
+      }
+    },
+    "StaticFileUrlSourceOptions":{
+      "type":"structure",
+      "required":["Url"],
+      "members":{
+        "Url":{"shape":"String"}
       }
     },
     "Status":{
@@ -17977,6 +20958,16 @@
         "MetricHeaderCellStyle":{"shape":"TableCellStyle"},
         "StyleTargets":{"shape":"TableStyleTargetList"}
       }
+    },
+    "SucceededTopicReviewedAnswer":{
+      "type":"structure",
+      "members":{
+        "AnswerId":{"shape":"AnswerId"}
+      }
+    },
+    "SucceededTopicReviewedAnswers":{
+      "type":"list",
+      "member":{"shape":"SucceededTopicReviewedAnswer"}
     },
     "SuccessfulKeyRegistrationEntries":{
       "type":"list",
@@ -18157,14 +21148,15 @@
     "TableFieldOptionList":{
       "type":"list",
       "member":{"shape":"TableFieldOption"},
-      "max":100
+      "max":201
     },
     "TableFieldOptions":{
       "type":"structure",
       "members":{
         "SelectedFieldOptions":{"shape":"TableFieldOptionList"},
         "Order":{"shape":"FieldOrderList"},
-        "PinnedFieldOptions":{"shape":"TablePinnedFieldOptions"}
+        "PinnedFieldOptions":{"shape":"TablePinnedFieldOptions"},
+        "TransposedTableOptions":{"shape":"TransposedTableOptionList"}
       }
     },
     "TableFieldOrderList":{
@@ -18278,10 +21270,15 @@
         "SCROLLED"
       ]
     },
+    "TableUnaggregatedFieldList":{
+      "type":"list",
+      "member":{"shape":"UnaggregatedField"},
+      "max":201
+    },
     "TableUnaggregatedFieldWells":{
       "type":"structure",
       "members":{
-        "Values":{"shape":"UnaggregatedFieldList"}
+        "Values":{"shape":"TableUnaggregatedFieldList"}
       }
     },
     "TableVisual":{
@@ -18293,7 +21290,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"TableConfiguration"},
         "ConditionalFormatting":{"shape":"TableConditionalFormatting"},
-        "Actions":{"shape":"VisualCustomActionList"}
+        "Actions":{"shape":"VisualCustomActionList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "Tag":{
@@ -18492,7 +21490,9 @@
         "FilterGroups":{"shape":"FilterGroupList"},
         "ColumnConfigurations":{"shape":"ColumnConfigurationList"},
         "AnalysisDefaults":{"shape":"AnalysisDefaults"},
-        "Options":{"shape":"AssetOptions"}
+        "Options":{"shape":"AssetOptions"},
+        "QueryExecutionOptions":{"shape":"QueryExecutionOptions"},
+        "StaticFiles":{"shape":"StaticFileList"}
       }
     },
     "TemplateVersionSummary":{
@@ -18534,6 +21534,18 @@
         "TitleOptions":{"shape":"LabelOptions"},
         "PlaceholderOptions":{"shape":"TextControlPlaceholderOptions"},
         "InfoIconLabelOptions":{"shape":"SheetControlInfoIconLabelOptions"}
+      }
+    },
+    "TextBoxInteractionOptions":{
+      "type":"structure",
+      "members":{
+        "TextBoxMenuOption":{"shape":"TextBoxMenuOption"}
+      }
+    },
+    "TextBoxMenuOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
     "TextConditionalFormat":{
@@ -18683,7 +21695,15 @@
       "type":"structure",
       "members":{
         "Symbol":{"shape":"NumericSeparatorSymbol"},
-        "Visibility":{"shape":"Visibility"}
+        "Visibility":{"shape":"Visibility"},
+        "GroupingStyle":{"shape":"DigitGroupingStyle"}
+      }
+    },
+    "ThresholdAlertsConfigurations":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"Boolean"}
       }
     },
     "ThrottlingException":{
@@ -18817,6 +21837,11 @@
       }
     },
     "Timestamp":{"type":"timestamp"},
+    "TokenProviderUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "TooltipItem":{
       "type":"structure",
       "members":{
@@ -19003,6 +22028,22 @@
       "type":"list",
       "member":{"shape":"TopicColumn"}
     },
+    "TopicConfigOptions":{
+      "type":"structure",
+      "members":{
+        "QBusinessInsightsEnabled":{"shape":"NullableBoolean"}
+      }
+    },
+    "TopicConstantValue":{
+      "type":"structure",
+      "members":{
+        "ConstantType":{"shape":"ConstantType"},
+        "Value":{"shape":"ConstantValueString"},
+        "Minimum":{"shape":"ConstantValueString"},
+        "Maximum":{"shape":"ConstantValueString"},
+        "ValueList":{"shape":"CollectiveConstantEntryList"}
+      }
+    },
     "TopicDateRangeFilter":{
       "type":"structure",
       "members":{
@@ -19016,7 +22057,8 @@
         "Name":{"shape":"ResourceName"},
         "Description":{"shape":"LimitedString"},
         "UserExperienceVersion":{"shape":"TopicUserExperienceVersion"},
-        "DataSets":{"shape":"Datasets"}
+        "DataSets":{"shape":"Datasets"},
+        "ConfigOptions":{"shape":"TopicConfigOptions"}
       }
     },
     "TopicFilter":{
@@ -19039,9 +22081,153 @@
         "RelativeDateFilter":{"shape":"TopicRelativeDateFilter"}
       }
     },
+    "TopicFilterAttribute":{
+      "type":"string",
+      "enum":[
+        "QUICKSIGHT_USER",
+        "QUICKSIGHT_VIEWER_OR_OWNER",
+        "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER",
+        "QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_OWNER",
+        "DIRECT_QUICKSIGHT_SOLE_OWNER",
+        "TOPIC_NAME"
+      ]
+    },
+    "TopicFilterOperator":{
+      "type":"string",
+      "enum":[
+        "StringEquals",
+        "StringLike"
+      ]
+    },
     "TopicFilters":{
       "type":"list",
       "member":{"shape":"TopicFilter"}
+    },
+    "TopicIR":{
+      "type":"structure",
+      "members":{
+        "Metrics":{"shape":"TopicIRMetricList"},
+        "GroupByList":{"shape":"TopicIRGroupByList"},
+        "Filters":{"shape":"TopicIRFilterList"},
+        "Sort":{"shape":"TopicSortClause"},
+        "ContributionAnalysis":{"shape":"TopicIRContributionAnalysis"},
+        "Visual":{"shape":"VisualOptions"}
+      }
+    },
+    "TopicIRComparisonMethod":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"ComparisonMethodType"},
+        "Period":{"shape":"TopicTimeGranularity"},
+        "WindowSize":{"shape":"Integer"}
+      }
+    },
+    "TopicIRContributionAnalysis":{
+      "type":"structure",
+      "members":{
+        "Factors":{"shape":"ContributionAnalysisFactorsList"},
+        "TimeRanges":{"shape":"ContributionAnalysisTimeRanges"},
+        "Direction":{"shape":"ContributionAnalysisDirection"},
+        "SortType":{"shape":"ContributionAnalysisSortType"}
+      }
+    },
+    "TopicIRFilterEntry":{
+      "type":"list",
+      "member":{"shape":"TopicIRFilterOption"},
+      "max":2000
+    },
+    "TopicIRFilterFunction":{
+      "type":"string",
+      "enum":[
+        "CONTAINS",
+        "EXACT",
+        "STARTS_WITH",
+        "ENDS_WITH",
+        "CONTAINS_STRING",
+        "PREVIOUS",
+        "THIS",
+        "LAST",
+        "NEXT",
+        "NOW"
+      ]
+    },
+    "TopicIRFilterList":{
+      "type":"list",
+      "member":{"shape":"TopicIRFilterEntry"},
+      "max":2000
+    },
+    "TopicIRFilterOption":{
+      "type":"structure",
+      "members":{
+        "FilterType":{"shape":"TopicIRFilterType"},
+        "FilterClass":{"shape":"FilterClass"},
+        "OperandField":{"shape":"Identifier"},
+        "Function":{"shape":"TopicIRFilterFunction"},
+        "Constant":{"shape":"TopicConstantValue"},
+        "Inverse":{"shape":"Boolean"},
+        "NullFilter":{"shape":"NullFilterOption"},
+        "Aggregation":{"shape":"AggType"},
+        "AggregationFunctionParameters":{"shape":"AggFunctionParamMap"},
+        "AggregationPartitionBy":{"shape":"AggregationPartitionByList"},
+        "Range":{"shape":"TopicConstantValue"},
+        "Inclusive":{"shape":"Boolean"},
+        "TimeGranularity":{"shape":"TimeGranularity"},
+        "LastNextOffset":{"shape":"TopicConstantValue"},
+        "AggMetrics":{"shape":"FilterAggMetricsList"},
+        "TopBottomLimit":{"shape":"TopicConstantValue"},
+        "SortDirection":{"shape":"TopicSortDirection"},
+        "Anchor":{"shape":"Anchor"}
+      }
+    },
+    "TopicIRFilterType":{
+      "type":"string",
+      "enum":[
+        "CATEGORY_FILTER",
+        "NUMERIC_EQUALITY_FILTER",
+        "NUMERIC_RANGE_FILTER",
+        "DATE_RANGE_FILTER",
+        "RELATIVE_DATE_FILTER",
+        "TOP_BOTTOM_FILTER",
+        "EQUALS",
+        "RANK_LIMIT_FILTER",
+        "ACCEPT_ALL_FILTER"
+      ]
+    },
+    "TopicIRGroupBy":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"Identifier"},
+        "TimeGranularity":{"shape":"TopicTimeGranularity"},
+        "Sort":{"shape":"TopicSortClause"},
+        "DisplayFormat":{"shape":"DisplayFormat"},
+        "DisplayFormatOptions":{"shape":"DisplayFormatOptions"},
+        "NamedEntity":{"shape":"NamedEntityRef"}
+      }
+    },
+    "TopicIRGroupByList":{
+      "type":"list",
+      "member":{"shape":"TopicIRGroupBy"},
+      "max":2000
+    },
+    "TopicIRMetric":{
+      "type":"structure",
+      "members":{
+        "MetricId":{"shape":"Identifier"},
+        "Function":{"shape":"AggFunction"},
+        "Operands":{"shape":"OperandList"},
+        "ComparisonMethod":{"shape":"TopicIRComparisonMethod"},
+        "Expression":{"shape":"Expression"},
+        "CalculatedFieldReferences":{"shape":"CalculatedFieldReferenceList"},
+        "DisplayFormat":{"shape":"DisplayFormat"},
+        "DisplayFormatOptions":{"shape":"DisplayFormatOptions"},
+        "NamedEntity":{"shape":"NamedEntityRef"}
+      }
+    },
+    "TopicIRMetricList":{
+      "type":"list",
+      "member":{"shape":"TopicIRMetric"},
+      "max":2000
     },
     "TopicId":{
       "type":"string",
@@ -19157,6 +22343,27 @@
         "NOW"
       ]
     },
+    "TopicReviewedAnswer":{
+      "type":"structure",
+      "required":[
+        "AnswerId",
+        "DatasetArn",
+        "Question"
+      ],
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "AnswerId":{"shape":"AnswerId"},
+        "DatasetArn":{"shape":"Arn"},
+        "Question":{"shape":"LimitedString"},
+        "Mir":{"shape":"TopicIR"},
+        "PrimaryVisual":{"shape":"TopicVisual"},
+        "Template":{"shape":"TopicTemplate"}
+      }
+    },
+    "TopicReviewedAnswers":{
+      "type":"list",
+      "member":{"shape":"TopicReviewedAnswer"}
+    },
     "TopicScheduleType":{
       "type":"string",
       "enum":[
@@ -19166,6 +22373,25 @@
         "MONTHLY"
       ]
     },
+    "TopicSearchFilter":{
+      "type":"structure",
+      "required":[
+        "Operator",
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Operator":{"shape":"TopicFilterOperator"},
+        "Name":{"shape":"TopicFilterAttribute"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "TopicSearchFilterList":{
+      "type":"list",
+      "member":{"shape":"TopicSearchFilter"},
+      "max":1,
+      "min":1
+    },
     "TopicSingularFilterConstant":{
       "type":"structure",
       "members":{
@@ -19173,6 +22399,20 @@
         "SingularConstant":{"shape":"LimitedString"}
       },
       "sensitive":true
+    },
+    "TopicSortClause":{
+      "type":"structure",
+      "members":{
+        "Operand":{"shape":"Identifier"},
+        "SortDirection":{"shape":"TopicSortDirection"}
+      }
+    },
+    "TopicSortDirection":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
     },
     "TopicSummaries":{
       "type":"list",
@@ -19185,6 +22425,13 @@
         "TopicId":{"shape":"TopicId"},
         "Name":{"shape":"ResourceName"},
         "UserExperienceVersion":{"shape":"TopicUserExperienceVersion"}
+      }
+    },
+    "TopicTemplate":{
+      "type":"structure",
+      "members":{
+        "TemplateType":{"shape":"LimitedString"},
+        "Slots":{"shape":"Slots"}
       }
     },
     "TopicTimeGranularity":{
@@ -19206,6 +22453,19 @@
         "LEGACY",
         "NEW_READER_EXPERIENCE"
       ]
+    },
+    "TopicVisual":{
+      "type":"structure",
+      "members":{
+        "VisualId":{"shape":"LimitedString"},
+        "Role":{"shape":"VisualRole"},
+        "Ir":{"shape":"TopicIR"},
+        "SupportingVisuals":{"shape":"TopicVisuals"}
+      }
+    },
+    "TopicVisuals":{
+      "type":"list",
+      "member":{"shape":"TopicVisual"}
     },
     "TotalAggregationComputation":{
       "type":"structure",
@@ -19268,6 +22528,32 @@
       "max":2048,
       "min":1
     },
+    "TransposedColumnIndex":{
+      "type":"integer",
+      "max":9999,
+      "min":0
+    },
+    "TransposedColumnType":{
+      "type":"string",
+      "enum":[
+        "ROW_HEADER_COLUMN",
+        "VALUE_COLUMN"
+      ]
+    },
+    "TransposedTableOption":{
+      "type":"structure",
+      "required":["ColumnType"],
+      "members":{
+        "ColumnIndex":{"shape":"TransposedColumnIndex"},
+        "ColumnWidth":{"shape":"PixelLength"},
+        "ColumnType":{"shape":"TransposedColumnType"}
+      }
+    },
+    "TransposedTableOptionList":{
+      "type":"list",
+      "member":{"shape":"TransposedTableOption"},
+      "max":10001
+    },
     "TreeMapAggregatedFieldWells":{
       "type":"structure",
       "members":{
@@ -19323,7 +22609,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"TreeMapConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "TrendArrowOptions":{
@@ -19432,6 +22719,25 @@
     "UnicodeIcon":{
       "type":"string",
       "pattern":"^[^\\u0000-\\u00FF]$"
+    },
+    "UniqueKey":{
+      "type":"structure",
+      "required":["ColumnNames"],
+      "members":{
+        "ColumnNames":{"shape":"UniqueKeyColumnNameList"}
+      }
+    },
+    "UniqueKeyColumnNameList":{
+      "type":"list",
+      "member":{"shape":"ColumnName"},
+      "max":1,
+      "min":1
+    },
+    "UniqueKeyList":{
+      "type":"list",
+      "member":{"shape":"UniqueKey"},
+      "max":1,
+      "min":1
     },
     "UniqueValuesComputation":{
       "type":"structure",
@@ -19588,7 +22894,7 @@
       "members":{
         "AnalysisArn":{"shape":"Arn"},
         "AnalysisId":{"shape":"ShortRestrictiveResourceId"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -19632,6 +22938,141 @@
           "shape":"StatusCode",
           "location":"statusCode"
         },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "UpdateApplicationWithTokenExchangeGrantRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Namespace"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        }
+      }
+    },
+    "UpdateApplicationWithTokenExchangeGrantResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "UpdateBrandAssignmentRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "BrandArn"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "BrandArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateBrandAssignmentResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "BrandArn":{"shape":"Arn"}
+      }
+    },
+    "UpdateBrandPublishedVersionRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "BrandId",
+        "VersionId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "BrandId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"BrandId"
+        },
+        "VersionId":{"shape":"ShortRestrictiveResourceId"}
+      }
+    },
+    "UpdateBrandPublishedVersionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "VersionId":{"shape":"ShortRestrictiveResourceId"}
+      }
+    },
+    "UpdateBrandRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "BrandId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "BrandId":{
+          "shape":"ShortRestrictiveResourceId",
+          "location":"uri",
+          "locationName":"BrandId"
+        },
+        "BrandDefinition":{"shape":"BrandDefinition"}
+      }
+    },
+    "UpdateBrandResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "BrandDetail":{"shape":"BrandDetail"},
+        "BrandDefinition":{"shape":"BrandDefinition"}
+      }
+    },
+    "UpdateCustomPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "CustomPermissionsName"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "CustomPermissionsName":{
+          "shape":"CustomPermissionsName",
+          "location":"uri",
+          "locationName":"CustomPermissionsName"
+        },
+        "Capabilities":{"shape":"Capabilities"}
+      }
+    },
+    "UpdateCustomPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StatusCode"},
+        "Arn":{"shape":"Arn"},
         "RequestId":{"shape":"String"}
       }
     },
@@ -19696,7 +23137,7 @@
       "members":{
         "DashboardArn":{"shape":"Arn"},
         "DashboardId":{"shape":"ShortRestrictiveResourceId"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -19781,6 +23222,32 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "UpdateDashboardsQAConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "DashboardsQAStatus"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DashboardsQAStatus":{"shape":"DashboardsQAStatus"}
+      }
+    },
+    "UpdateDashboardsQAConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "DashboardsQAStatus":{"shape":"DashboardsQAStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "UpdateDataSetPermissionsRequest":{
       "type":"structure",
       "required":[
@@ -19844,7 +23311,8 @@
         "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"},
-        "DatasetParameters":{"shape":"DatasetParameterList"}
+        "DatasetParameters":{"shape":"DatasetParameterList"},
+        "PerformanceConfiguration":{"shape":"PerformanceConfiguration"}
       }
     },
     "UpdateDataSetResponse":{
@@ -19925,6 +23393,36 @@
         "Arn":{"shape":"Arn"},
         "DataSourceId":{"shape":"ResourceId"},
         "UpdateStatus":{"shape":"ResourceStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateDefaultQBusinessApplicationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "ApplicationId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "ApplicationId":{"shape":"LimitedString"}
+      }
+    },
+    "UpdateDefaultQBusinessApplicationResponse":{
+      "type":"structure",
+      "members":{
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -20182,6 +23680,58 @@
         }
       }
     },
+    "UpdateQPersonalizationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "PersonalizationMode"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "PersonalizationMode":{"shape":"PersonalizationMode"}
+      }
+    },
+    "UpdateQPersonalizationConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "PersonalizationMode":{"shape":"PersonalizationMode"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateQuickSightQSearchConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "QSearchStatus"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "QSearchStatus":{"shape":"QSearchStatus"}
+      }
+    },
+    "UpdateQuickSightQSearchConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "QSearchStatus":{"shape":"QSearchStatus"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
     "UpdateRefreshScheduleRequest":{
       "type":"structure",
       "required":[
@@ -20343,7 +23893,7 @@
       "members":{
         "TemplateId":{"shape":"ShortRestrictiveResourceId"},
         "TemplateArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -20453,7 +24003,7 @@
       "members":{
         "ThemeId":{"shape":"ShortRestrictiveResourceId"},
         "ThemeArn":{"shape":"Arn"},
-        "Permissions":{"shape":"ResourcePermissionList"},
+        "Permissions":{"shape":"UpdateResourcePermissionList"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -20591,7 +24141,8 @@
           "location":"uri",
           "locationName":"TopicId"
         },
-        "Topic":{"shape":"TopicDetails"}
+        "Topic":{"shape":"TopicDetails"},
+        "CustomInstructions":{"shape":"CustomInstructions"}
       }
     },
     "UpdateTopicResponse":{
@@ -20600,6 +24151,43 @@
         "TopicId":{"shape":"TopicId"},
         "Arn":{"shape":"Arn"},
         "RefreshArn":{"shape":"Arn"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateUserCustomPermissionRequest":{
+      "type":"structure",
+      "required":[
+        "UserName",
+        "AwsAccountId",
+        "Namespace",
+        "CustomPermissionsName"
+      ],
+      "members":{
+        "UserName":{
+          "shape":"UserName",
+          "location":"uri",
+          "locationName":"UserName"
+        },
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"uri",
+          "locationName":"Namespace"
+        },
+        "CustomPermissionsName":{"shape":"CustomPermissionsName"}
+      }
+    },
+    "UpdateUserCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
@@ -20895,6 +24483,7 @@
         "TreeMapVisual":{"shape":"TreeMapVisual"},
         "GeospatialMapVisual":{"shape":"GeospatialMapVisual"},
         "FilledMapVisual":{"shape":"FilledMapVisual"},
+        "LayerMapVisual":{"shape":"LayerMapVisual"},
         "FunnelChartVisual":{"shape":"FunnelChartVisual"},
         "ScatterPlotVisual":{"shape":"ScatterPlotVisual"},
         "ComboChartVisual":{"shape":"ComboChartVisual"},
@@ -20906,7 +24495,8 @@
         "SankeyDiagramVisual":{"shape":"SankeyDiagramVisual"},
         "CustomContentVisual":{"shape":"CustomContentVisual"},
         "EmptyVisual":{"shape":"EmptyVisual"},
-        "RadarChartVisual":{"shape":"RadarChartVisual"}
+        "RadarChartVisual":{"shape":"RadarChartVisual"},
+        "PluginVisual":{"shape":"PluginVisual"}
       }
     },
     "VisualAxisSortOption":{
@@ -20929,6 +24519,12 @@
         "Status":{"shape":"WidgetStatus"},
         "Trigger":{"shape":"VisualCustomActionTrigger"},
         "ActionOperations":{"shape":"VisualCustomActionOperationList"}
+      }
+    },
+    "VisualCustomActionDefaults":{
+      "type":"structure",
+      "members":{
+        "highlightOperation":{"shape":"VisualHighlightOperation"}
       }
     },
     "VisualCustomActionList":{
@@ -20963,6 +24559,21 @@
         "DATA_POINT_MENU"
       ]
     },
+    "VisualHighlightOperation":{
+      "type":"structure",
+      "required":["Trigger"],
+      "members":{
+        "Trigger":{"shape":"VisualHighlightTrigger"}
+      }
+    },
+    "VisualHighlightTrigger":{
+      "type":"string",
+      "enum":[
+        "DATA_POINT_CLICK",
+        "DATA_POINT_HOVER",
+        "NONE"
+      ]
+    },
     "VisualInteractionOptions":{
       "type":"structure",
       "members":{
@@ -20981,6 +24592,12 @@
         "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
+    "VisualOptions":{
+      "type":"structure",
+      "members":{
+        "type":{"shape":"LimitedString"}
+      }
+    },
     "VisualPalette":{
       "type":"structure",
       "members":{
@@ -20988,12 +24605,32 @@
         "ColorMap":{"shape":"DataPathColorList"}
       }
     },
+    "VisualRole":{
+      "type":"string",
+      "enum":[
+        "PRIMARY",
+        "COMPLIMENTARY",
+        "MULTI_INTENT",
+        "FALLBACK",
+        "FRAGMENT"
+      ]
+    },
+    "VisualSubtitle":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "VisualSubtitleLabelOptions":{
       "type":"structure",
       "members":{
         "Visibility":{"shape":"Visibility"},
         "FormatText":{"shape":"LongFormatText"}
       }
+    },
+    "VisualTitle":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "VisualTitleLabelOptions":{
       "type":"structure",
@@ -21112,7 +24749,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"WaterfallChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "WhatIfPointScenario":{
@@ -21218,7 +24856,8 @@
         "Subtitle":{"shape":"VisualSubtitleLabelOptions"},
         "ChartConfiguration":{"shape":"WordCloudChartConfiguration"},
         "Actions":{"shape":"VisualCustomActionList"},
-        "ColumnHierarchies":{"shape":"ColumnHierarchyList"}
+        "ColumnHierarchies":{"shape":"ColumnHierarchyList"},
+        "VisualContentAltText":{"shape":"LongPlainText"}
       }
     },
     "WordCloudWordCasing":{

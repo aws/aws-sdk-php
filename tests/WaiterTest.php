@@ -2,12 +2,16 @@
 namespace Aws\Test;
 
 use Aws\Api\ApiProvider;
+use Aws\AwsClientInterface;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
+use Aws\MetricsBuilder;
 use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\Waiter;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -23,6 +27,7 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
+    use MetricsBuilderTestTrait;
 
     public function testErrorOnBadConfig()
     {
@@ -268,120 +273,165 @@ class WaiterTest extends TestCase
         $this->assertEquals($expected, $matcher->invoke($waiter, $result, $acceptor));
     }
 
-    public function getMatchersTestCases()
+    /**
+     * @return array
+     */
+    public function getMatchersTestCases(): array
     {
         return [
-            [
-                'matchesPath',
-                null,
-                [],
-                false
+            'matches_path_1' => [
+                'matcher' => 'matchesPath',
+                'result' => null,
+                'acceptor' => [],
+                'expected' => false
             ],
-            [
-                'matchesPath',
-                $this->getMockResult(['a' => ['b' => 'c']]),
-                ['argument' => 'a.b', 'expected' => 'c'],
-                true
+            'matches_path_2' => [
+                'matcher' => 'matchesPath',
+                'result' => $this->getMockResult(['a' => ['b' => 'c']]),
+                'acceptor' => ['argument' => 'a.b', 'expected' => 'c'],
+                'expected' => true
             ],
-            [
-                'matchesPath',
-                $this->getMockResult(['a' => ['b' => 'c']]),
-                ['argument' => 'a', 'expected' => 'z'],
-                false
+            'matches_path_3' => [
+                'matcher' => 'matchesPath',
+                'result' => $this->getMockResult(['a' => ['b' => 'c']]),
+                'acceptor' => ['argument' => 'a', 'expected' => 'z'],
+                'expected' => false
             ],
-            [
-                'matchesPathAll',
-                null,
-                [],
-                false
+            'matches_path_4_same_value_different_type' => [
+                'matcher' => 'matchesPath',
+                'result' => $this->getMockResult(['a' => ['b' => 'false']]),
+                'acceptor' => ['argument' => 'a.b', 'expected' => false],
+                'expected' => false
             ],
-            [
-                'matchesPathAll',
-                $this->getMockResult([
+            'matches_path_5_same_value_same_type' => [
+                'matcher' => 'matchesPath',
+                'result' => $this->getMockResult(['a' => ['b' => false]]),
+                'acceptor' => ['argument' => 'a.b', 'expected' => false],
+                'expected' => true
+            ],
+            'matches_path_6_same_value_same_type' => [
+                'matcher' => 'matchesPath',
+                'result' => $this->getMockResult(['a' => ['b' => 'false']]),
+                'acceptor' => ['argument' => 'a.b', 'expected' => 'false'],
+                'expected' => true
+            ],
+            'matches_path_all_1' => [
+                'matcher' => 'matchesPathAll',
+                'result' => null,
+                'acceptor' => [],
+                'expected' => false,
+            ],
+            'matches_path_all_2' => [
+                'matcher' => 'matchesPathAll',
+                'result' =>  $this->getMockResult([
                     'a' => [
                         ['b' => 'c'],
                         ['b' => 'c'],
                         ['b' => 'c']
                     ]
                 ]),
-                ['argument' => 'a[].b', 'expected' => 'c'],
-                true
+                'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
+                'expected' => true,
             ],
-            [
-                'matchesPathAll',
-                $this->getMockResult(['a' => [
+            'matches_path_all_3' => [
+                'matcher' => 'matchesPathAll',
+                'result' =>  $this->getMockResult(['a' => [
                     ['b' => 'c'],
                     ['b' => 'z'],
                     ['b' => 'c']
                 ]]),
-                ['argument' => 'a[].b', 'expected' => 'c'],
-                false
+                'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
+                'expected' => false,
             ],
-            [
-                'matchesPathAny',
-                null,
-                [],
-                false
+            'matches_path_all_4_empty_array_as_result' => [
+                'matcher' => 'matchesPathAll',
+                'result' =>  $this->getMockResult(),
+                'acceptor' => ['argument' => 'a', 'expected' => 'c'],
+                'expected' => false,
             ],
-            [
-                'matchesPathAny',
-                $this->getMockResult([
+            'matches_path_all_4_non_array_value_as_result' => [
+                'matcher' => 'matchesPathAll',
+                'result' =>  $this->getMockResult(['a' => 'FooValue']),
+                'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
+                'expected' => false,
+            ],
+            'matches_path_any_1' => [
+                'matcher' => 'matchesPathAny',
+                'result' =>  null,
+                'acceptor' => [],
+                'expected' => false,
+            ],
+            'matches_path_any_2' => [
+                'matcher' => 'matchesPathAny',
+                'result' =>  $this->getMockResult([
                     'a' => [
                         ['b' => 'c'],
                         ['b' => 'd'],
                         ['b' => 'e']
                     ]
                 ]),
-                ['argument' => 'a[].b', 'expected' => 'c'],
-                true
+                'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
+                'expected' => true,
             ],
-            [
-                'matchesPathAny',
-                $this->getMockResult([
+            'matches_path_any_3' => [
+                'matcher' => 'matchesPathAny',
+                'result' =>  $this->getMockResult([
                     'a' => [
                         ['b' => 'x'],
                         ['b' => 'y'],
                         ['b' => 'z']
                     ]
                 ]),
-                ['argument' => 'a[].b', 'expected' => 'c'],
-                false
+                'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
+                'expected' => false,
             ],
-            [
-                'matchesStatus',
-                null,
-                [],
-                false
+            'matches_path_any_4_empty_array_as_result' => [
+                'matcher' => 'matchesPathAny',
+                'result' =>  $this->getMockResult(),
+                'acceptor' => ['argument' => 'a', 'expected' => 'c'],
+                'expected' => false,
             ],
-            [
-                'matchesStatus',
-                $this->getMockResult(),
-                ['expected' => 200],
-                true
+            'matches_path_any_5_non_array_value_as_result' => [
+                'matcher' => 'matchesPathAll',
+                'result' =>  $this->getMockResult(['a' => 'FooValue']),
+                'acceptor' => ['argument' => 'a[].b', 'expected' => 'c'],
+                'expected' => false,
             ],
-            [
-                'matchesStatus',
-                $this->getMockResult(),
-                ['expected' => 400],
-                false
+            'matches_status_1' => [
+                'matcher' => 'matchesStatus',
+                'result' =>  null,
+                'acceptor' => [],
+                'expected' => false,
             ],
-            [
-                'matchesError',
-                null,
-                [],
-                false
+            'matches_status_2' => [
+                'matcher' => 'matchesStatus',
+                'result' =>  $this->getMockResult(),
+                'acceptor' => ['expected' => 200],
+                'expected' => true,
             ],
-            [
-                'matchesError',
-                $this->getMockResult('InvalidData'),
-                ['expected' => 'InvalidData'],
-                true
+            'matches_status_3' => [
+                'matcher' => 'matchesStatus',
+                'result' =>  $this->getMockResult(),
+                'acceptor' => ['expected' => 400],
+                'expected' => false,
             ],
-            [
-                'matchesError',
-                $this->getMockResult('InvalidData'),
-                ['expected' => 'Foo'],
-                false
+            'matches_error_1' => [
+                'matcher' => 'matchesError',
+                'result' =>  null,
+                'acceptor' => [],
+                'expected' => false,
+            ],
+            'matches_error_2' => [
+                'matcher' => 'matchesError',
+                'result' =>  $this->getMockResult('InvalidData'),
+                'acceptor' => ['expected' => 'InvalidData'],
+                'expected' => true,
+            ],
+            'matches_error_3' => [
+                'matcher' => 'matchesError',
+                'result' =>  $this->getMockResult('InvalidData'),
+                'acceptor' => ['expected' => 'Foo'],
+                'expected' => false,
             ],
         ];
     }
@@ -399,5 +449,160 @@ class WaiterTest extends TestCase
         }
 
         return new Result($data + ['@metadata' => ['statusCode' => 200]]);
+    }
+
+
+    /**
+     * Tests the waiter expects not error.
+     * This means the operation should succeed.
+     *
+     * @return void
+     */
+    public function testWaiterMatcherExpectNoError(): void
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $_) {
+                $responseBody = <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?><Operation></Operation>
+EOXML;
+                return new Response(200, [], $responseBody);
+            }
+        ]);
+        $commandArgs = [
+            'Bucket' => 'fuzz',
+            'Key' => 'bazz'
+        ];
+        $acceptors = [
+            [
+                'expected' => false,
+                'matcher' => 'error',
+                'state' => 'success'
+            ]
+        ];
+        $waiter = $this->getTestWaiter(
+            $acceptors,
+            'headObject',
+            $commandArgs,
+            $client
+        );
+        $waiter->promise()
+            ->then(function (CommandInterface $_) {
+                $this->assertTrue(true); // Waiter succeeded
+            })->wait();
+    }
+
+    /**
+     * Tests the waiter should receive an error.
+     * This means the operation should fail.
+     *
+     * @return void
+     */
+    public function testWaiterMatcherExpectsAnyError(): void
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $request) {
+                $responseBody = <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?><Operation></Operation>
+EOXML;
+                $response = new Response(200, [], $responseBody);
+                return new RejectedPromise([
+                    'connection_error' => true,
+                    'exception' => new RequestException(
+                        'Error',
+                        $request,
+                        $response
+                    ),
+                ]);
+            }
+        ]);
+        $commandArgs = [
+            'Bucket' => 'fuzz',
+            'Key' => 'bazz'
+        ];
+        $acceptors = [
+            [
+                'expected' => true,
+                'matcher' => 'error',
+                'state' => 'success'
+            ]
+        ];
+        $waiter = $this->getTestWaiter(
+            $acceptors,
+            'headObject',
+            $commandArgs,
+            $client
+        );
+        $waiter->promise()
+            ->then(function (CommandInterface $_) {
+                $this->assertTrue(true); // Waiter succeeded
+            })->wait();
+    }
+
+    public function testAppendsMetricsCaptureMiddleware()
+    {
+        $client = new S3Client([
+            'region' => 'us-east-2',
+            'http_handler' => function (RequestInterface $request) {
+                $this->assertTrue(
+                    in_array(
+                        MetricsBuilder::WAITER,
+                        $this->getMetricsAsArray($request)
+                    )
+                );
+
+                return new Response();
+            }
+        ]);
+        $commandArgs = [
+            'Bucket' => 'foo'
+        ];
+        $acceptors = [
+            [
+                'expected' => 200,
+                'matcher' => 'status',
+                'state' => 'success'
+            ]
+        ];
+        $waiter = $this->getTestWaiter(
+            $acceptors,
+            'headBucket',
+            $commandArgs,
+            $client
+        );
+        $waiter->promise()->wait();
+    }
+
+    /**
+     * Creates a test waiter.
+     *
+     * @param array $acceptors
+     * @param string $operation
+     * @param array $commandArgs
+     * @param AwsClientInterface $client
+     *
+     * @return Waiter
+     */
+    private function getTestWaiter(
+        array $acceptors,
+        string $operation,
+        array $commandArgs,
+        AwsClientInterface $client
+    ): Waiter
+    {
+        $waiterConfig = [
+            'delay' => 5,
+            'operation' => $operation,
+            'maxAttempts' => 20,
+            'acceptors' => $acceptors
+        ];
+
+        return new Waiter(
+            $client,
+            'waiter-' . $operation,
+            $commandArgs,
+            $waiterConfig
+        );
     }
 }

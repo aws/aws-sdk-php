@@ -20,6 +20,7 @@
     "CreateImageBuilderStreamingURL": "<p>Creates a URL to start an image builder streaming session.</p>",
     "CreateStack": "<p>Creates a stack to start streaming applications to users. A stack consists of an associated fleet, user access policies, and storage configurations. </p>",
     "CreateStreamingURL": "<p>Creates a temporary URL to start an AppStream 2.0 streaming session for the specified user. A streaming URL enables application streaming to be tested without user setup. </p>",
+    "CreateThemeForStack": "<p>Creates custom branding that customizes the appearance of the streaming application catalog page.</p>",
     "CreateUpdatedImage": "<p>Creates a new image with the latest Windows operating system updates, driver updates, and AppStream 2.0 agent software.</p> <p>For more information, see the \"Update an Image by Using Managed AppStream 2.0 Image Updates\" section in <a href=\"https://docs.aws.amazon.com/appstream2/latest/developerguide/administer-images.html\">Administer Your AppStream 2.0 Images</a>, in the <i>Amazon AppStream 2.0 Administration Guide</i>.</p>",
     "CreateUsageReportSubscription": "<p>Creates a usage report subscription. Usage reports are generated daily.</p>",
     "CreateUser": "<p>Creates a new user in the user pool.</p>",
@@ -33,6 +34,7 @@
     "DeleteImageBuilder": "<p>Deletes the specified image builder and releases the capacity.</p>",
     "DeleteImagePermissions": "<p>Deletes permissions for the specified private image. After you delete permissions for an image, AWS accounts to which you previously granted these permissions can no longer use the image.</p>",
     "DeleteStack": "<p>Deletes the specified stack. After the stack is deleted, the application streaming environment provided by the stack is no longer available to users. Also, any reservations made for application streaming sessions for the stack are released.</p>",
+    "DeleteThemeForStack": "<p>Deletes custom branding that customizes the appearance of the streaming application catalog page.</p>",
     "DeleteUsageReportSubscription": "<p>Disables usage report generation.</p>",
     "DeleteUser": "<p>Deletes a user from the user pool.</p>",
     "DescribeAppBlockBuilderAppBlockAssociations": "<p>Retrieves a list that describes one or more app block builder associations.</p>",
@@ -48,6 +50,7 @@
     "DescribeImages": "<p>Retrieves a list that describes one or more specified images, if the image names or image ARNs are provided. Otherwise, all images in the account are described.</p>",
     "DescribeSessions": "<p>Retrieves a list that describes the streaming sessions for a specified stack and fleet. If a UserId is provided for the stack and fleet, only streaming sessions for that user are described. If an authentication type is not provided, the default is to authenticate users using a streaming URL.</p>",
     "DescribeStacks": "<p>Retrieves a list that describes one or more specified stacks, if the stack names are provided. Otherwise, all stacks in the account are described.</p>",
+    "DescribeThemeForStack": "<p>Retrieves a list that describes the theme for a specified stack. A theme is custom branding that customizes the appearance of the streaming application catalog page.</p>",
     "DescribeUsageReportSubscriptions": "<p>Retrieves a list that describes one or more usage report subscriptions.</p>",
     "DescribeUserStackAssociations": "<p>Retrieves a list that describes the UserStackAssociation objects. You must specify either or both of the following:</p> <ul> <li> <p>The stack name</p> </li> <li> <p>The user name (email address of the user associated with the stack) and the authentication type for the user</p> </li> </ul>",
     "DescribeUsers": "<p>Retrieves a list that describes one or more specified users in the user pool.</p>",
@@ -76,7 +79,8 @@
     "UpdateEntitlement": "<p>Updates the specified entitlement.</p>",
     "UpdateFleet": "<p>Updates the specified fleet.</p> <p>If the fleet is in the <code>STOPPED</code> state, you can update any attribute except the fleet name.</p> <p>If the fleet is in the <code>RUNNING</code> state, you can update the following based on the fleet type:</p> <ul> <li> <p>Always-On and On-Demand fleet types</p> <p>You can update the <code>DisplayName</code>, <code>ComputeCapacity</code>, <code>ImageARN</code>, <code>ImageName</code>, <code>IdleDisconnectTimeoutInSeconds</code>, and <code>DisconnectTimeoutInSeconds</code> attributes.</p> </li> <li> <p>Elastic fleet type</p> <p>You can update the <code>DisplayName</code>, <code>IdleDisconnectTimeoutInSeconds</code>, <code>DisconnectTimeoutInSeconds</code>, <code>MaxConcurrentSessions</code>, <code>SessionScriptS3Location</code> and <code>UsbDeviceFilterStrings</code> attributes.</p> </li> </ul> <p>If the fleet is in the <code>STARTING</code> or <code>STOPPED</code> state, you can't update it.</p>",
     "UpdateImagePermissions": "<p>Adds or updates permissions for the specified private image. </p>",
-    "UpdateStack": "<p>Updates the specified fields for the specified stack.</p>"
+    "UpdateStack": "<p>Updates the specified fields for the specified stack.</p>",
+    "UpdateThemeForStack": "<p>Updates custom branding that customizes the appearance of the streaming application catalog page.</p>"
   },
   "shapes": {
     "AccessEndpoint": {
@@ -330,43 +334,35 @@
     },
     "AssociateAppBlockBuilderAppBlockRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAppBlockBuilderAppBlockResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateApplicationFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateApplicationFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateApplicationToEntitlementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateApplicationToEntitlementResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AuthenticationType": {
       "base": null,
@@ -400,23 +396,19 @@
     },
     "BatchAssociateUserStackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchAssociateUserStackResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateUserStackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDisassociateUserStackResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -477,378 +469,319 @@
     },
     "ConcurrentModificationException": {
       "base": "<p>An API error occurred. Wait a few minutes and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CopyImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CopyImageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppBlockBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppBlockBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppBlockBuilderStreamingURLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppBlockBuilderStreamingURLResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppBlockRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAppBlockResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateApplicationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectoryConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDirectoryConfigResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEntitlementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateEntitlementResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageBuilderStreamingURLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageBuilderStreamingURLResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStackResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStreamingURLRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateStreamingURLResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateThemeForStackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateThemeForStackResult": {
+      "base": null,
+      "refs": {}
     },
     "CreateUpdatedImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUpdatedImageResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUsageReportSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUsageReportSubscriptionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUserResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAppBlockBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAppBlockBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAppBlockRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAppBlockResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteApplicationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectoryConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDirectoryConfigResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEntitlementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteEntitlementResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImagePermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImagePermissionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStackResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteThemeForStackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DeleteThemeForStackResult": {
+      "base": null,
+      "refs": {}
     },
     "DeleteUsageReportSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUsageReportSubscriptionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteUserResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAppBlockBuilderAppBlockAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAppBlockBuilderAppBlockAssociationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAppBlockBuildersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAppBlockBuildersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAppBlocksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAppBlocksResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationFleetAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationFleetAssociationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeApplicationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectoryConfigsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDirectoryConfigsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEntitlementsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeEntitlementsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFleetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFleetsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImageBuildersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImageBuildersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImagePermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImagePermissionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImagesMaxResults": {
       "base": null,
@@ -858,63 +791,59 @@
     },
     "DescribeImagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeImagesResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSessionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSessionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStacksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeStacksResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeThemeForStackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeThemeForStackResult": {
+      "base": null,
+      "refs": {}
     },
     "DescribeUsageReportSubscriptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUsageReportSubscriptionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUserStackAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUserStackAssociationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUsersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUsersResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -969,53 +898,43 @@
     },
     "DisableUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisableUserResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAppBlockBuilderAppBlockRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAppBlockBuilderAppBlockResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateApplicationFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateApplicationFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateApplicationFromEntitlementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateApplicationFromEntitlementResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisplayName": {
       "base": null,
@@ -1052,7 +971,14 @@
     "DomainList": {
       "base": null,
       "refs": {
-        "StorageConnector$Domains": "<p>The names of the domains for the account.</p>"
+        "StorageConnector$Domains": "<p>The names of the domains for the account.</p>",
+        "StorageConnector$DomainsRequireAdminConsent": "<p>The OneDrive for Business domains where you require admin consent when users try to link their OneDrive account to AppStream 2.0. The attribute can only be specified when ConnectorType=ONE_DRIVE.</p>"
+      }
+    },
+    "DynamicAppProvidersEnabled": {
+      "base": null,
+      "refs": {
+        "Image$DynamicAppProvidersEnabled": "<p>Indicates whether dynamic app providers are enabled within an AppStream 2.0 image or not.</p>"
       }
     },
     "EmbedHostDomain": {
@@ -1071,13 +997,11 @@
     },
     "EnableUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EnableUserResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EntitledApplication": {
       "base": "<p>The application associated to an entitlement. Access is controlled based on user attributes.</p>",
@@ -1101,8 +1025,7 @@
     },
     "EntitlementAlreadyExistsException": {
       "base": "<p>The entitlement already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EntitlementAttribute": {
       "base": "<p>An attribute associated with an entitlement. Application entitlements work by matching a supported SAML 2.0 attribute name to a value when a user identity federates to an Amazon AppStream 2.0 SAML application.</p>",
@@ -1126,8 +1049,7 @@
     },
     "EntitlementNotFoundException": {
       "base": "<p>The entitlement can't be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ErrorDetails": {
       "base": "<p>The error details.</p>",
@@ -1162,13 +1084,11 @@
     },
     "ExpireSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExpireSessionResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FeedbackURL": {
       "base": null,
@@ -1292,6 +1212,12 @@
         "UpdateImagePermissionsRequest$ImagePermissions": "<p>The permissions for the image.</p>"
       }
     },
+    "ImageSharedWithOthers": {
+      "base": null,
+      "refs": {
+        "Image$ImageSharedWithOthers": "<p>Indicates whether the image is shared with another account ID.</p>"
+      }
+    },
     "ImageState": {
       "base": null,
       "refs": {
@@ -1312,8 +1238,7 @@
     },
     "IncompatibleImageException": {
       "base": "<p>The image can't be updated because it's not compatible for updates.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Integer": {
       "base": null,
@@ -1329,8 +1254,8 @@
         "ComputeCapacityStatus$ActiveUserSessions": "<p>The number of user sessions currently being used for streaming sessions. This only applies to multi-session fleets.</p>",
         "ComputeCapacityStatus$ActualUserSessions": "<p>The total number of session slots that are available for streaming or are currently streaming.</p> <p>ActualUserSessionCapacity = AvailableUserSessionCapacity + ActiveUserSessions</p> <p>This only applies to multi-session fleets.</p>",
         "CreateFleetRequest$MaxUserDurationInSeconds": "<p>The maximum amount of time that a streaming session can remain active, in seconds. If users are still connected to a streaming instance five minutes before this limit is reached, they are prompted to save any open documents before being disconnected. After this time elapses, the instance is terminated and replaced by a new instance.</p> <p>Specify a value between 600 and 432000.</p>",
-        "CreateFleetRequest$DisconnectTimeoutInSeconds": "<p>The amount of time that a streaming session remains active after users disconnect. If users try to reconnect to the streaming session after a disconnection or network interruption within this time interval, they are connected to their previous session. Otherwise, they are connected to a new session with a new streaming instance. </p> <p>Specify a value between 60 and 360000.</p>",
-        "CreateFleetRequest$IdleDisconnectTimeoutInSeconds": "<p>The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the <code>DisconnectTimeoutInSeconds</code> time interval begins. Users are notified before they are disconnected due to inactivity. If they try to reconnect to the streaming session before the time interval specified in <code>DisconnectTimeoutInSeconds</code> elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in <code>IdleDisconnectTimeoutInSeconds</code> elapses, they are disconnected.</p> <p>To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 3600. The default value is 0.</p> <note> <p>If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity. </p> </note>",
+        "CreateFleetRequest$DisconnectTimeoutInSeconds": "<p>The amount of time that a streaming session remains active after users disconnect. If users try to reconnect to the streaming session after a disconnection or network interruption within this time interval, they are connected to their previous session. Otherwise, they are connected to a new session with a new streaming instance. </p> <p>Specify a value between 60 and 36000.</p>",
+        "CreateFleetRequest$IdleDisconnectTimeoutInSeconds": "<p>The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the <code>DisconnectTimeoutInSeconds</code> time interval begins. Users are notified before they are disconnected due to inactivity. If they try to reconnect to the streaming session before the time interval specified in <code>DisconnectTimeoutInSeconds</code> elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in <code>IdleDisconnectTimeoutInSeconds</code> elapses, they are disconnected.</p> <p>To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 36000. The default value is 0.</p> <note> <p>If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity. </p> </note>",
         "CreateFleetRequest$MaxConcurrentSessions": "<p>The maximum concurrent sessions of the Elastic fleet. This is required for Elastic fleets, and not allowed for other fleet types.</p>",
         "CreateFleetRequest$MaxSessionsPerInstance": "<p>The maximum number of user sessions on an instance. This only applies to multi-session fleets.</p>",
         "DescribeAppBlockBuilderAppBlockAssociationsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
@@ -1345,34 +1270,31 @@
         "DescribeUsageReportSubscriptionsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "DescribeUsersRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "Fleet$MaxUserDurationInSeconds": "<p>The maximum amount of time that a streaming session can remain active, in seconds. If users are still connected to a streaming instance five minutes before this limit is reached, they are prompted to save any open documents before being disconnected. After this time elapses, the instance is terminated and replaced by a new instance. </p> <p>Specify a value between 600 and 360000.</p>",
-        "Fleet$DisconnectTimeoutInSeconds": "<p>The amount of time that a streaming session remains active after users disconnect. If they try to reconnect to the streaming session after a disconnection or network interruption within this time interval, they are connected to their previous session. Otherwise, they are connected to a new session with a new streaming instance.</p> <p>Specify a value between 60 and 360000.</p>",
-        "Fleet$IdleDisconnectTimeoutInSeconds": "<p>The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the <code>DisconnectTimeoutInSeconds</code> time interval begins. Users are notified before they are disconnected due to inactivity. If users try to reconnect to the streaming session before the time interval specified in <code>DisconnectTimeoutInSeconds</code> elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in <code>IdleDisconnectTimeoutInSeconds</code> elapses, they are disconnected.</p> <p>To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 3600. The default value is 0.</p> <note> <p>If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity. </p> </note>",
+        "Fleet$DisconnectTimeoutInSeconds": "<p>The amount of time that a streaming session remains active after users disconnect. If they try to reconnect to the streaming session after a disconnection or network interruption within this time interval, they are connected to their previous session. Otherwise, they are connected to a new session with a new streaming instance.</p> <p>Specify a value between 60 and 36000.</p>",
+        "Fleet$IdleDisconnectTimeoutInSeconds": "<p>The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the <code>DisconnectTimeoutInSeconds</code> time interval begins. Users are notified before they are disconnected due to inactivity. If users try to reconnect to the streaming session before the time interval specified in <code>DisconnectTimeoutInSeconds</code> elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in <code>IdleDisconnectTimeoutInSeconds</code> elapses, they are disconnected.</p> <p>To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 36000. The default value is 0.</p> <note> <p>If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity. </p> </note>",
         "Fleet$MaxConcurrentSessions": "<p>The maximum number of concurrent sessions for the fleet.</p>",
         "Fleet$MaxSessionsPerInstance": "<p>The maximum number of user sessions on an instance. This only applies to multi-session fleets.</p>",
         "ListEntitledApplicationsRequest$MaxResults": "<p>The maximum size of each page of results.</p>",
         "ScriptDetails$TimeoutInSeconds": "<p>The run timeout, in seconds, for the script.</p>",
         "UpdateFleetRequest$MaxUserDurationInSeconds": "<p>The maximum amount of time that a streaming session can remain active, in seconds. If users are still connected to a streaming instance five minutes before this limit is reached, they are prompted to save any open documents before being disconnected. After this time elapses, the instance is terminated and replaced by a new instance.</p> <p>Specify a value between 600 and 432000.</p>",
-        "UpdateFleetRequest$DisconnectTimeoutInSeconds": "<p>The amount of time that a streaming session remains active after users disconnect. If users try to reconnect to the streaming session after a disconnection or network interruption within this time interval, they are connected to their previous session. Otherwise, they are connected to a new session with a new streaming instance. </p> <p>Specify a value between 60 and 360000.</p>",
-        "UpdateFleetRequest$IdleDisconnectTimeoutInSeconds": "<p>The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the <code>DisconnectTimeoutInSeconds</code> time interval begins. Users are notified before they are disconnected due to inactivity. If users try to reconnect to the streaming session before the time interval specified in <code>DisconnectTimeoutInSeconds</code> elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in <code>IdleDisconnectTimeoutInSeconds</code> elapses, they are disconnected. </p> <p>To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 3600. The default value is 0.</p> <note> <p>If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity. </p> </note>",
+        "UpdateFleetRequest$DisconnectTimeoutInSeconds": "<p>The amount of time that a streaming session remains active after users disconnect. If users try to reconnect to the streaming session after a disconnection or network interruption within this time interval, they are connected to their previous session. Otherwise, they are connected to a new session with a new streaming instance. </p> <p>Specify a value between 60 and 36000.</p>",
+        "UpdateFleetRequest$IdleDisconnectTimeoutInSeconds": "<p>The amount of time that users can be idle (inactive) before they are disconnected from their streaming session and the <code>DisconnectTimeoutInSeconds</code> time interval begins. Users are notified before they are disconnected due to inactivity. If users try to reconnect to the streaming session before the time interval specified in <code>DisconnectTimeoutInSeconds</code> elapses, they are connected to their previous session. Users are considered idle when they stop providing keyboard or mouse input during their streaming session. File uploads and downloads, audio in, audio out, and pixels changing do not qualify as user activity. If users continue to be idle after the time interval in <code>IdleDisconnectTimeoutInSeconds</code> elapses, they are disconnected. </p> <p>To prevent users from being disconnected due to inactivity, specify a value of 0. Otherwise, specify a value between 60 and 36000. The default value is 0.</p> <note> <p>If you enable this feature, we recommend that you specify a value that corresponds exactly to a whole number of minutes (for example, 60, 120, and 180). If you don't do this, the value is rounded to the nearest minute. For example, if you specify a value of 70, users are disconnected after 1 minute of inactivity. If you specify a value that is at the midpoint between two different minutes, the value is rounded up. For example, if you specify a value of 90, users are disconnected after 2 minutes of inactivity. </p> </note>",
         "UpdateFleetRequest$MaxConcurrentSessions": "<p>The maximum number of concurrent sessions for a fleet.</p>",
         "UpdateFleetRequest$MaxSessionsPerInstance": "<p>The maximum number of user sessions on an instance. This only applies to multi-session fleets.</p>",
-        "UserSetting$MaximumLength": "<p>Specifies the number of characters that can be copied by end users from the local device to the remote session, and to the local device from the remote session.</p> <p>This can be specified only for the <code>CLIPBOARD_COPY_FROM_LOCAL_DEVICE</code> and <code>CLIPBOARD_COPY_TO_LOCAL_DEVICE</code> actions.</p> <p>This defaults to 20,971,520 (20 MB) when unspecified and the permission is <code>ENABLED</code>. This can't be specified when the permission is <code>DISABLED</code>. </p> <p>This can only be specified for AlwaysOn and OnDemand fleets. The attribute is not supported on Elastic fleets.</p> <p>The value can be between 1 and 20,971,520 (20 MB).</p>"
+        "UserSetting$MaximumLength": "<p>Specifies the number of characters that can be copied by end users from the local device to the remote session, and to the local device from the remote session.</p> <p>This can be specified only for the <code>CLIPBOARD_COPY_FROM_LOCAL_DEVICE</code> and <code>CLIPBOARD_COPY_TO_LOCAL_DEVICE</code> actions.</p> <p>This defaults to 20,971,520 (20 MB) when unspecified and the permission is <code>ENABLED</code>. This can't be specified when the permission is <code>DISABLED</code>. </p> <p>The value can be between 1 and 20,971,520 (20 MB).</p>"
       }
     },
     "InvalidAccountStatusException": {
       "base": "<p>The resource cannot be created because your AWS account is suspended. For assistance, contact AWS Support. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterCombinationException": {
       "base": "<p>Indicates an incorrect combination of parameters, or a missing parameter.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRoleException": {
       "base": "<p>The specified role is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LastReportGenerationExecutionError": {
       "base": "<p>Describes the error that is returned when a usage report can't be generated.</p>",
@@ -1386,50 +1308,48 @@
         "UsageReportSubscription$SubscriptionErrors": "<p>The errors that were returned if usage reports couldn't be generated.</p>"
       }
     },
+    "LatestAppstreamAgentVersion": {
+      "base": null,
+      "refs": {
+        "Image$LatestAppstreamAgentVersion": "<p>Indicates whether the image is using the latest AppStream 2.0 agent version or not.</p>",
+        "ImageBuilder$LatestAppstreamAgentVersion": "<p>Indicates whether the image builder is using the latest AppStream 2.0 agent version or not.</p>"
+      }
+    },
     "LimitExceededException": {
       "base": "<p>The requested limit exceeds the permitted limit for an account.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedFleetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedFleetsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedStacksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAssociatedStacksResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEntitledApplicationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEntitledApplicationsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -1479,6 +1399,7 @@
         "CreateFleetRequest$ImageName": "<p>The name of the image used to create the fleet.</p>",
         "CreateImageBuilderRequest$Name": "<p>A unique name for the image builder.</p>",
         "CreateStackRequest$Name": "<p>The name of the stack.</p>",
+        "CreateThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>",
         "CreateUpdatedImageRequest$existingImageName": "<p>The name of the image to update.</p>",
         "CreateUpdatedImageRequest$newImageName": "<p>The name of the new image. The name must be unique within the AWS account and Region.</p>",
         "DeleteAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
@@ -1489,6 +1410,7 @@
         "DeleteImageBuilderRequest$Name": "<p>The name of the image builder.</p>",
         "DeleteImagePermissionsRequest$Name": "<p>The name of the private image.</p>",
         "DeleteImageRequest$Name": "<p>The name of the image.</p>",
+        "DeleteThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>",
         "DescribeAppBlockBuilderAppBlockAssociationsRequest$AppBlockBuilderName": "<p>The name of the app block builder.</p>",
         "DescribeApplicationFleetAssociationsRequest$FleetName": "<p>The name of the fleet.</p>",
         "DescribeEntitlementsRequest$Name": "<p>The name of the entitlement.</p>",
@@ -1497,6 +1419,7 @@
         "DescribeImagePermissionsResult$Name": "<p>The name of the private image.</p>",
         "DescribeSessionsRequest$StackName": "<p>The name of the stack. This value is case-sensitive.</p>",
         "DescribeSessionsRequest$FleetName": "<p>The name of the fleet. This value is case-sensitive.</p>",
+        "DescribeThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>",
         "DisassociateAppBlockBuilderAppBlockRequest$AppBlockBuilderName": "<p>The name of the app block builder.</p>",
         "DisassociateApplicationFleetRequest$FleetName": "<p>The name of the fleet.</p>",
         "DisassociateApplicationFromEntitlementRequest$StackName": "<p>The name of the stack with which the entitlement is associated.</p>",
@@ -1507,12 +1430,14 @@
         "ListEntitledApplicationsRequest$EntitlementName": "<p>The name of the entitlement.</p>",
         "StartAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
         "StopAppBlockBuilderRequest$Name": "<p>The name of the app block builder.</p>",
+        "Theme$StackName": "<p>The stack that has the custom branding theme.</p>",
         "UpdateAppBlockBuilderRequest$Name": "<p>The unique name for the app block builder.</p>",
         "UpdateApplicationRequest$Name": "<p>The name of the application. This name is visible to users when display name is not specified.</p>",
         "UpdateEntitlementRequest$Name": "<p>The name of the entitlement.</p>",
         "UpdateEntitlementRequest$StackName": "<p>The name of the stack with which the entitlement is associated.</p>",
         "UpdateFleetRequest$Name": "<p>A unique name for the fleet.</p>",
-        "UpdateImagePermissionsRequest$Name": "<p>The name of the private image.</p>"
+        "UpdateImagePermissionsRequest$Name": "<p>The name of the private image.</p>",
+        "UpdateThemeForStackRequest$StackName": "<p>The name of the stack for the theme.</p>"
       }
     },
     "NetworkAccessConfiguration": {
@@ -1524,8 +1449,7 @@
     },
     "OperationNotPermittedException": {
       "base": "<p>The attempted operation is not permitted.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "OrganizationalUnitDistinguishedName": {
       "base": null,
@@ -1596,13 +1520,11 @@
     },
     "RequestLimitExceededException": {
       "base": "<p>AppStream 2.0 can’t process the request right now because the Describe calls from your AWS account are being throttled by Amazon EC2. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The specified resource already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceError": {
       "base": "<p>Describes a resource error.</p>",
@@ -1626,18 +1548,15 @@
     },
     "ResourceInUseException": {
       "base": "<p>The specified resource is in use.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotAvailableException": {
       "base": "<p>The specified resource exists and is not in use, but isn't available.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "S3Bucket": {
       "base": null,
@@ -1659,10 +1578,14 @@
         "CreateAppBlockRequest$SourceS3Location": "<p>The source S3 location of the app block.</p>",
         "CreateApplicationRequest$IconS3Location": "<p>The location in S3 of the application icon.</p>",
         "CreateFleetRequest$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets.</p>",
+        "CreateThemeForStackRequest$OrganizationLogoS3Location": "<p>The organization logo that appears on the streaming application catalog page.</p>",
+        "CreateThemeForStackRequest$FaviconS3Location": "<p>The S3 location of the favicon. The favicon enables users to recognize their application streaming site in a browser full of tabs or bookmarks. It is displayed at the top of the browser tab for the application streaming site during users' streaming sessions.</p>",
         "Fleet$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets.</p>",
         "ScriptDetails$ScriptS3Location": "<p>The S3 object location for the script.</p>",
         "UpdateApplicationRequest$IconS3Location": "<p>The icon S3 location of the application.</p>",
-        "UpdateFleetRequest$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets. </p>"
+        "UpdateFleetRequest$SessionScriptS3Location": "<p>The S3 location of the session scripts configuration zip file. This only applies to Elastic fleets. </p>",
+        "UpdateThemeForStackRequest$OrganizationLogoS3Location": "<p>The organization logo that appears on the streaming application catalog page.</p>",
+        "UpdateThemeForStackRequest$FaviconS3Location": "<p>The S3 location of the favicon. The favicon enables users to recognize their application streaming site in a browser full of tabs or bookmarks. It is displayed at the top of the browser tab for the application streaming site during users' streaming sessions.</p>"
       }
     },
     "ScriptDetails": {
@@ -1777,63 +1700,51 @@
     },
     "StartAppBlockBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAppBlockBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImageBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartImageBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopAppBlockBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopAppBlockBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopImageBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopImageBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StorageConnector": {
       "base": "<p>Describes a connector that enables persistent storage for users.</p>",
@@ -1906,9 +1817,9 @@
         "CreateApplicationRequest$LaunchPath": "<p>The launch path of the application.</p>",
         "CreateApplicationRequest$WorkingDirectory": "<p>The working directory of the application.</p>",
         "CreateApplicationRequest$LaunchParameters": "<p>The launch parameters of the application.</p>",
-        "CreateFleetRequest$InstanceType": "<p>The instance type to use when launching fleet instances. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> </ul> <p>The following instance types are available for Elastic fleets:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> </ul>",
+        "CreateFleetRequest$InstanceType": "<p>The instance type to use when launching fleet instances. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics.g5.xlarge</p> </li> <li> <p>stream.graphics.g5.2xlarge</p> </li> <li> <p>stream.graphics.g5.4xlarge</p> </li> <li> <p>stream.graphics.g5.8xlarge</p> </li> <li> <p>stream.graphics.g5.12xlarge</p> </li> <li> <p>stream.graphics.g5.16xlarge</p> </li> <li> <p>stream.graphics.g5.24xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> <li> <p>stream.graphics.g6.xlarge</p> </li> <li> <p>stream.graphics.g6.2xlarge</p> </li> <li> <p>stream.graphics.g6.4xlarge</p> </li> <li> <p>stream.graphics.g6.8xlarge</p> </li> <li> <p>stream.graphics.g6.16xlarge</p> </li> <li> <p>stream.graphics.g6.12xlarge</p> </li> <li> <p>stream.graphics.g6.24xlarge</p> </li> <li> <p>stream.graphics.gr6.4xlarge</p> </li> <li> <p>stream.graphics.gr6.8xlarge</p> </li> </ul> <p>The following instance types are available for Elastic fleets:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> </ul>",
         "CreateImageBuilderRequest$ImageName": "<p>The name of the image used to create the image builder.</p>",
-        "CreateImageBuilderRequest$InstanceType": "<p>The instance type to use when launching the image builder. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> </ul>",
+        "CreateImageBuilderRequest$InstanceType": "<p>The instance type to use when launching the image builder. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> <li> <p>stream.graphics.g5.xlarge</p> </li> <li> <p>stream.graphics.g5.2xlarge</p> </li> <li> <p>stream.graphics.g5.4xlarge</p> </li> <li> <p>stream.graphics.g5.8xlarge</p> </li> <li> <p>stream.graphics.g5.16xlarge</p> </li> <li> <p>stream.graphics.g5.12xlarge</p> </li> <li> <p>stream.graphics.g5.24xlarge</p> </li> <li> <p>stream.graphics.g6.xlarge</p> </li> <li> <p>stream.graphics.g6.2xlarge</p> </li> <li> <p>stream.graphics.g6.4xlarge</p> </li> <li> <p>stream.graphics.g6.8xlarge</p> </li> <li> <p>stream.graphics.g6.16xlarge</p> </li> <li> <p>stream.graphics.g6.12xlarge</p> </li> <li> <p>stream.graphics.g6.24xlarge</p> </li> <li> <p>stream.graphics.gr6.4xlarge</p> </li> <li> <p>stream.graphics.gr6.8xlarge</p> </li> </ul>",
         "CreateImageBuilderStreamingURLRequest$Name": "<p>The name of the image builder.</p>",
         "CreateImageBuilderStreamingURLResult$StreamingURL": "<p>The URL to start the AppStream 2.0 streaming session.</p>",
         "CreateStreamingURLRequest$StackName": "<p>The name of the stack.</p>",
@@ -1966,16 +1877,16 @@
         "Fleet$DisplayName": "<p>The fleet name to display.</p>",
         "Fleet$Description": "<p>The description to display.</p>",
         "Fleet$ImageName": "<p>The name of the image used to create the fleet.</p>",
-        "Fleet$InstanceType": "<p>The instance type to use when launching fleet instances. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> </ul>",
+        "Fleet$InstanceType": "<p>The instance type to use when launching fleet instances. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> <li> <p>stream.graphics.g5.xlarge</p> </li> <li> <p>stream.graphics.g5.2xlarge</p> </li> <li> <p>stream.graphics.g5.4xlarge</p> </li> <li> <p>stream.graphics.g5.8xlarge</p> </li> <li> <p>stream.graphics.g5.16xlarge</p> </li> <li> <p>stream.graphics.g5.12xlarge</p> </li> <li> <p>stream.graphics.g5.24xlarge</p> </li> <li> <p>stream.graphics.g6.xlarge</p> </li> <li> <p>stream.graphics.g6.2xlarge</p> </li> <li> <p>stream.graphics.g6.4xlarge</p> </li> <li> <p>stream.graphics.g6.8xlarge</p> </li> <li> <p>stream.graphics.g6.16xlarge</p> </li> <li> <p>stream.graphics.g6.12xlarge</p> </li> <li> <p>stream.graphics.g6.24xlarge</p> </li> <li> <p>stream.graphics.gr6.4xlarge</p> </li> <li> <p>stream.graphics.gr6.8xlarge</p> </li> </ul>",
         "FleetError$ErrorMessage": "<p>The error message.</p>",
         "Image$Name": "<p>The name of the image.</p>",
         "Image$DisplayName": "<p>The image name to display.</p>",
-        "Image$ImageBuilderName": "<p>The name of the image builder that was used to create the private image. If the image is shared, this value is null.</p>",
+        "Image$ImageBuilderName": "<p>The name of the image builder that was used to create the private image. If the image is shared, copied, or updated by using Managed Image Updates, this value is null.</p>",
         "Image$Description": "<p>The description to display.</p>",
         "ImageBuilder$Name": "<p>The name of the image builder.</p>",
         "ImageBuilder$Description": "<p>The description to display.</p>",
         "ImageBuilder$DisplayName": "<p>The image builder name to display.</p>",
-        "ImageBuilder$InstanceType": "<p>The instance type for the image builder. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> </ul>",
+        "ImageBuilder$InstanceType": "<p>The instance type for the image builder. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.compute.large</p> </li> <li> <p>stream.compute.xlarge</p> </li> <li> <p>stream.compute.2xlarge</p> </li> <li> <p>stream.compute.4xlarge</p> </li> <li> <p>stream.compute.8xlarge</p> </li> <li> <p>stream.memory.large</p> </li> <li> <p>stream.memory.xlarge</p> </li> <li> <p>stream.memory.2xlarge</p> </li> <li> <p>stream.memory.4xlarge</p> </li> <li> <p>stream.memory.8xlarge</p> </li> <li> <p>stream.memory.z1d.large</p> </li> <li> <p>stream.memory.z1d.xlarge</p> </li> <li> <p>stream.memory.z1d.2xlarge</p> </li> <li> <p>stream.memory.z1d.3xlarge</p> </li> <li> <p>stream.memory.z1d.6xlarge</p> </li> <li> <p>stream.memory.z1d.12xlarge</p> </li> <li> <p>stream.graphics-design.large</p> </li> <li> <p>stream.graphics-design.xlarge</p> </li> <li> <p>stream.graphics-design.2xlarge</p> </li> <li> <p>stream.graphics-design.4xlarge</p> </li> <li> <p>stream.graphics-desktop.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.xlarge</p> </li> <li> <p>stream.graphics.g4dn.2xlarge</p> </li> <li> <p>stream.graphics.g4dn.4xlarge</p> </li> <li> <p>stream.graphics.g4dn.8xlarge</p> </li> <li> <p>stream.graphics.g4dn.12xlarge</p> </li> <li> <p>stream.graphics.g4dn.16xlarge</p> </li> <li> <p>stream.graphics-pro.4xlarge</p> </li> <li> <p>stream.graphics-pro.8xlarge</p> </li> <li> <p>stream.graphics-pro.16xlarge</p> </li> <li> <p>stream.graphics.g5.xlarge</p> </li> <li> <p>stream.graphics.g5.2xlarge</p> </li> <li> <p>stream.graphics.g5.4xlarge</p> </li> <li> <p>stream.graphics.g5.8xlarge</p> </li> <li> <p>stream.graphics.g5.16xlarge</p> </li> <li> <p>stream.graphics.g5.12xlarge</p> </li> <li> <p>stream.graphics.g5.24xlarge</p> </li> <li> <p>stream.graphics.g6.xlarge</p> </li> <li> <p>stream.graphics.g6.2xlarge</p> </li> <li> <p>stream.graphics.g6.4xlarge</p> </li> <li> <p>stream.graphics.g6.8xlarge</p> </li> <li> <p>stream.graphics.g6.16xlarge</p> </li> <li> <p>stream.graphics.g6.12xlarge</p> </li> <li> <p>stream.graphics.g6.24xlarge</p> </li> <li> <p>stream.graphics.gr6.4xlarge</p> </li> <li> <p>stream.graphics.gr6.8xlarge</p> </li> </ul>",
         "ImageBuilderStateChangeReason$Message": "<p>The state change reason message.</p>",
         "ImageStateChangeReason$Message": "<p>The state change reason message.</p>",
         "LastReportGenerationExecutionError$ErrorMessage": "<p>The error message for the error that is returned when a usage report can't be generated.</p>",
@@ -2009,6 +1920,8 @@
         "StopImageBuilderRequest$Name": "<p>The name of the image builder.</p>",
         "StringList$member": null,
         "SubnetIdList$member": null,
+        "Theme$ThemeOrganizationLogoURL": "<p>The URL of the logo that displays in the catalog page header.</p>",
+        "Theme$ThemeFaviconURL": "<p>The URL of the icon that displays at the top of a user's browser tab during streaming sessions.</p>",
         "UpdateAppBlockBuilderRequest$InstanceType": "<p>The instance type to use when launching the app block builder. The following instance types are available:</p> <ul> <li> <p>stream.standard.small</p> </li> <li> <p>stream.standard.medium</p> </li> <li> <p>stream.standard.large</p> </li> <li> <p>stream.standard.xlarge</p> </li> <li> <p>stream.standard.2xlarge</p> </li> </ul>",
         "UpdateApplicationRequest$LaunchPath": "<p>The launch path of the application.</p>",
         "UpdateApplicationRequest$WorkingDirectory": "<p>The working directory of the application.</p>",
@@ -2032,6 +1945,7 @@
         "DescribeImageBuildersRequest$Names": "<p>The names of the image builders to describe.</p>",
         "DescribeImagesRequest$Names": "<p>The names of the public or private images to describe.</p>",
         "DescribeStacksRequest$Names": "<p>The names of the stacks to describe.</p>",
+        "Image$SupportedInstanceFamilies": "<p>The supported instances families that determine which image a customer can use when the customer launches a fleet or image builder. The following instances families are supported:</p> <ul> <li> <p>General Purpose</p> </li> <li> <p>Compute Optimized</p> </li> <li> <p>Memory Optimized</p> </li> <li> <p>Graphics</p> </li> <li> <p>Graphics Design</p> </li> <li> <p>Graphics Pro</p> </li> <li> <p>Graphics G4</p> </li> <li> <p>Graphics G5</p> </li> </ul>",
         "ListAssociatedFleetsResult$Names": "<p>The name of the fleet.</p>",
         "ListAssociatedStacksResult$Names": "<p>The name of the stack.</p>"
       }
@@ -2057,13 +1971,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2083,6 +1995,75 @@
         "CreateUpdatedImageRequest$newImageTags": "<p>The tags to associate with the new image. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=. </p> <p>Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters: </p> <p>_ . : / = + \\ - @</p> <p>If you do not specify a value, the value is set to an empty string.</p> <p>For more information about tags, see <a href=\"https://docs.aws.amazon.com/appstream2/latest/developerguide/tagging-basic.html\">Tagging Your Resources</a> in the <i>Amazon AppStream 2.0 Administration Guide</i>.</p>",
         "ListTagsForResourceResponse$Tags": "<p>The information about the tags.</p>",
         "TagResourceRequest$Tags": "<p>The tags to associate. A tag is a key-value pair, and the value is optional. For example, Environment=Test. If you do not specify a value, Environment=. </p> <p>If you do not specify a value, the value is set to an empty string.</p> <p>Generally allowed characters are: letters, numbers, and spaces representable in UTF-8, and the following special characters: </p> <p>_ . : / = + \\ - @</p>"
+      }
+    },
+    "Theme": {
+      "base": "<p>The custom branding theme, which might include a custom logo, website links, and other branding to display to users.</p>",
+      "refs": {
+        "CreateThemeForStackResult$Theme": "<p> The theme object that contains the metadata of the custom branding.</p>",
+        "DescribeThemeForStackResult$Theme": "<p> The theme object that contains the metadata of the custom branding.</p>",
+        "UpdateThemeForStackResult$Theme": "<p> The theme object that contains the metadata of the custom branding.</p>"
+      }
+    },
+    "ThemeAttribute": {
+      "base": null,
+      "refs": {
+        "ThemeAttributes$member": null
+      }
+    },
+    "ThemeAttributes": {
+      "base": null,
+      "refs": {
+        "UpdateThemeForStackRequest$AttributesToDelete": "<p>The attributes to delete.</p>"
+      }
+    },
+    "ThemeFooterLink": {
+      "base": "<p>The website links that display in the catalog page footer.</p>",
+      "refs": {
+        "ThemeFooterLinks$member": null
+      }
+    },
+    "ThemeFooterLinkDisplayName": {
+      "base": null,
+      "refs": {
+        "ThemeFooterLink$DisplayName": "<p>The name of the websites that display in the catalog page footer.</p>"
+      }
+    },
+    "ThemeFooterLinkURL": {
+      "base": null,
+      "refs": {
+        "ThemeFooterLink$FooterLinkURL": "<p>The URL of the websites that display in the catalog page footer.</p>"
+      }
+    },
+    "ThemeFooterLinks": {
+      "base": null,
+      "refs": {
+        "CreateThemeForStackRequest$FooterLinks": "<p>The links that are displayed in the footer of the streaming application catalog page. These links are helpful resources for users, such as the organization's IT support and product marketing sites.</p>",
+        "Theme$ThemeFooterLinks": "<p>The website links that display in the catalog page footer.</p>",
+        "UpdateThemeForStackRequest$FooterLinks": "<p>The links that are displayed in the footer of the streaming application catalog page. These links are helpful resources for users, such as the organization's IT support and product marketing sites.</p>"
+      }
+    },
+    "ThemeState": {
+      "base": null,
+      "refs": {
+        "Theme$State": "<p>The state of the theme.</p>",
+        "UpdateThemeForStackRequest$State": "<p>Specifies whether custom branding should be applied to catalog page or not.</p>"
+      }
+    },
+    "ThemeStyling": {
+      "base": null,
+      "refs": {
+        "CreateThemeForStackRequest$ThemeStyling": "<p>The color theme that is applied to website links, text, and buttons. These colors are also applied as accents in the background for the streaming application catalog page.</p>",
+        "Theme$ThemeStyling": "<p>The color that is used for the website links, text, buttons, and catalog page background.</p>",
+        "UpdateThemeForStackRequest$ThemeStyling": "<p>The color theme that is applied to website links, text, and buttons. These colors are also applied as accents in the background for the streaming application catalog page.</p>"
+      }
+    },
+    "ThemeTitleText": {
+      "base": null,
+      "refs": {
+        "CreateThemeForStackRequest$TitleText": "<p>The title that is displayed at the top of the browser tab during users' application streaming sessions.</p>",
+        "Theme$ThemeTitleText": "<p>The browser tab page title.</p>",
+        "UpdateThemeForStackRequest$TitleText": "<p>The title that is displayed at the top of the browser tab during users' application streaming sessions.</p>"
       }
     },
     "Timestamp": {
@@ -2105,89 +2086,82 @@
         "Session$StartTime": "<p>The time when a streaming instance is dedicated for the user.</p>",
         "Session$MaxExpirationTime": "<p>The time when the streaming session is set to expire. This time is based on the <code>MaxUserDurationinSeconds</code> value, which determines the maximum length of time that a streaming session can run. A streaming session might end earlier than the time specified in <code>SessionMaxExpirationTime</code>, when the <code>DisconnectTimeOutInSeconds</code> elapses or the user chooses to end his or her session. If the <code>DisconnectTimeOutInSeconds</code> elapses, or the user chooses to end his or her session, the streaming instance is terminated and the streaming session ends.</p>",
         "Stack$CreatedTime": "<p>The time the stack was created.</p>",
+        "Theme$CreatedTime": "<p>The time the theme was created.</p>",
         "UsageReportSubscription$LastGeneratedReportDate": "<p>The time when the last usage report was generated.</p>",
         "User$CreatedTime": "<p>The date and time the user was created in the user pool.</p>"
       }
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAppBlockBuilderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAppBlockBuilderResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateApplicationResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectoryConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDirectoryConfigResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEntitlementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEntitlementResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFleetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFleetResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateImagePermissionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateImagePermissionsResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStackResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateThemeForStackRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateThemeForStackResult": {
+      "base": null,
+      "refs": {}
     },
     "UsageReportExecutionErrorCode": {
       "base": null,

@@ -4,11 +4,13 @@
     "apiVersion":"2022-08-03",
     "endpointPrefix":"voice-chime",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Chime SDK Voice",
     "serviceId":"Chime SDK Voice",
     "signatureVersion":"v4",
     "signingName":"chime",
-    "uid":"chime-sdk-voice-2022-08-03"
+    "uid":"chime-sdk-voice-2022-08-03",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociatePhoneNumbersWithVoiceConnector":{
@@ -384,6 +386,25 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
+    },
+    "DeleteVoiceConnectorExternalSystemsConfiguration":{
+      "name":"DeleteVoiceConnectorExternalSystemsConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/external-systems-configuration",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteVoiceConnectorExternalSystemsConfigurationRequest"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ],
+      "idempotent":true
     },
     "DeleteVoiceConnectorGroup":{
       "name":"DeleteVoiceConnectorGroup",
@@ -789,6 +810,25 @@
       },
       "input":{"shape":"GetVoiceConnectorEmergencyCallingConfigurationRequest"},
       "output":{"shape":"GetVoiceConnectorEmergencyCallingConfigurationResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "GetVoiceConnectorExternalSystemsConfiguration":{
+      "name":"GetVoiceConnectorExternalSystemsConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/external-systems-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetVoiceConnectorExternalSystemsConfigurationRequest"},
+      "output":{"shape":"GetVoiceConnectorExternalSystemsConfigurationResponse"},
       "errors":[
         {"shape":"UnauthorizedClientException"},
         {"shape":"NotFoundException"},
@@ -1288,6 +1328,27 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
+    },
+    "PutVoiceConnectorExternalSystemsConfiguration":{
+      "name":"PutVoiceConnectorExternalSystemsConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/external-systems-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"PutVoiceConnectorExternalSystemsConfigurationRequest"},
+      "output":{"shape":"PutVoiceConnectorExternalSystemsConfigurationResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ],
+      "idempotent":true
     },
     "PutVoiceConnectorLoggingConfiguration":{
       "name":"PutVoiceConnectorLoggingConfiguration",
@@ -1796,6 +1857,7 @@
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -1804,8 +1866,7 @@
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -1904,8 +1965,7 @@
     },
     "BadRequestException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -2008,10 +2068,22 @@
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ContactCenterSystemType":{
+      "type":"string",
+      "enum":[
+        "GENESYS_ENGAGE_ON_PREMISES",
+        "AVAYA_AURA_CALL_CENTER_ELITE",
+        "AVAYA_AURA_CONTACT_CENTER",
+        "CISCO_UNIFIED_CONTACT_CENTER_ENTERPRISE"
+      ]
+    },
+    "ContactCenterSystemTypeList":{
+      "type":"list",
+      "member":{"shape":"ContactCenterSystemType"}
     },
     "Country":{
       "type":"string",
@@ -2163,7 +2235,8 @@
         "Name":{"shape":"VoiceConnectorName"},
         "AwsRegion":{"shape":"VoiceConnectorAwsRegion"},
         "RequireEncryption":{"shape":"Boolean"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"}
       }
     },
     "CreateVoiceConnectorResponse":{
@@ -2289,6 +2362,17 @@
       }
     },
     "DeleteVoiceConnectorEmergencyCallingConfigurationRequest":{
+      "type":"structure",
+      "required":["VoiceConnectorId"],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        }
+      }
+    },
+    "DeleteVoiceConnectorExternalSystemsConfigurationRequest":{
       "type":"structure",
       "required":["VoiceConnectorId"],
       "members":{
@@ -2480,10 +2564,16 @@
         "Gone"
       ]
     },
-    "ForbiddenException":{
+    "ExternalSystemsConfiguration":{
       "type":"structure",
       "members":{
-      },
+        "SessionBorderControllerTypes":{"shape":"SessionBorderControllerTypeList"},
+        "ContactCenterSystemTypes":{"shape":"ContactCenterSystemTypeList"}
+      }
+    },
+    "ForbiddenException":{
+      "type":"structure",
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -2693,6 +2783,23 @@
         "EmergencyCallingConfiguration":{"shape":"EmergencyCallingConfiguration"}
       }
     },
+    "GetVoiceConnectorExternalSystemsConfigurationRequest":{
+      "type":"structure",
+      "required":["VoiceConnectorId"],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        }
+      }
+    },
+    "GetVoiceConnectorExternalSystemsConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ExternalSystemsConfiguration":{"shape":"ExternalSystemsConfiguration"}
+      }
+    },
     "GetVoiceConnectorGroupRequest":{
       "type":"structure",
       "required":["VoiceConnectorGroupId"],
@@ -2896,8 +3003,7 @@
     },
     "GoneException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":410},
       "exception":true
     },
@@ -3252,8 +3358,7 @@
     },
     "NotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
@@ -3446,7 +3551,8 @@
         "OrderType":{"shape":"PhoneNumberOrderType"},
         "OrderedPhoneNumbers":{"shape":"OrderedPhoneNumberList"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"}
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "FocDate":{"shape":"Iso8601Timestamp"}
       }
     },
     "PhoneNumberOrderList":{
@@ -3620,6 +3726,25 @@
         "EmergencyCallingConfiguration":{"shape":"EmergencyCallingConfiguration"}
       }
     },
+    "PutVoiceConnectorExternalSystemsConfigurationRequest":{
+      "type":"structure",
+      "required":["VoiceConnectorId"],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        },
+        "SessionBorderControllerTypes":{"shape":"SessionBorderControllerTypeList"},
+        "ContactCenterSystemTypes":{"shape":"ContactCenterSystemTypeList"}
+      }
+    },
+    "PutVoiceConnectorExternalSystemsConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ExternalSystemsConfiguration":{"shape":"ExternalSystemsConfiguration"}
+      }
+    },
     "PutVoiceConnectorLoggingConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -3743,8 +3868,7 @@
     },
     "ResourceLimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -3858,19 +3982,31 @@
     },
     "ServiceFailureException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
     "ServiceUnavailableException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
+    },
+    "SessionBorderControllerType":{
+      "type":"string",
+      "enum":[
+        "RIBBON_SBC",
+        "ORACLE_ACME_PACKET_SBC",
+        "AVAYA_SBCE",
+        "CISCO_UNIFIED_BORDER_ELEMENT",
+        "AUDIOCODES_MEDIANT_SBC"
+      ]
+    },
+    "SessionBorderControllerTypeList":{
+      "type":"list",
+      "member":{"shape":"SessionBorderControllerType"}
     },
     "SipApplicationPriority":{
       "type":"integer",
@@ -4201,8 +4337,7 @@
     },
     "ThrottledClientException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":429},
       "exception":true
     },
@@ -4214,15 +4349,13 @@
     },
     "UnauthorizedClientException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":401},
       "exception":true
     },
     "UnprocessableEntityException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":422},
       "exception":true
     },
@@ -4512,7 +4645,8 @@
         "RequireEncryption":{"shape":"Boolean"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
         "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "VoiceConnectorArn":{"shape":"NonEmptyString"}
+        "VoiceConnectorArn":{"shape":"NonEmptyString"},
+        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"}
       }
     },
     "VoiceConnectorAwsRegion":{
@@ -4554,6 +4688,13 @@
       "max":256,
       "min":1,
       "pattern":"[a-zA-Z0-9 _.-]+"
+    },
+    "VoiceConnectorIntegrationType":{
+      "type":"string",
+      "enum":[
+        "CONNECT_CALL_TRANSFER_CONNECTOR",
+        "CONNECT_ANALYTICS_CONNECTOR"
+      ]
     },
     "VoiceConnectorItem":{
       "type":"structure",

@@ -14,6 +14,25 @@
     "uid":"mediapackagev2-2022-12-25"
   },
   "operations":{
+    "CancelHarvestJob":{
+      "name":"CancelHarvestJob",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/channelGroup/{ChannelGroupName}/channel/{ChannelName}/originEndpoint/{OriginEndpointName}/harvestJob/{HarvestJobName}",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelHarvestJobRequest"},
+      "output":{"shape":"CancelHarvestJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "CreateChannel":{
       "name":"CreateChannel",
       "http":{
@@ -43,6 +62,26 @@
       },
       "input":{"shape":"CreateChannelGroupRequest"},
       "output":{"shape":"CreateChannelGroupResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ],
+      "idempotent":true
+    },
+    "CreateHarvestJob":{
+      "name":"CreateHarvestJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/channelGroup/{ChannelGroupName}/channel/{ChannelName}/originEndpoint/{OriginEndpointName}/harvestJob",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateHarvestJobRequest"},
+      "output":{"shape":"CreateHarvestJobResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -214,6 +253,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetHarvestJob":{
+      "name":"GetHarvestJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/channelGroup/{ChannelGroupName}/channel/{ChannelName}/originEndpoint/{OriginEndpointName}/harvestJob/{HarvestJobName}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetHarvestJobRequest"},
+      "output":{"shape":"GetHarvestJobResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetOriginEndpoint":{
       "name":"GetOriginEndpoint",
       "http":{
@@ -281,6 +337,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListHarvestJobs":{
+      "name":"ListHarvestJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/channelGroup/{ChannelGroupName}/harvestJob",
+        "responseCode":200
+      },
+      "input":{"shape":"ListHarvestJobsRequest"},
+      "output":{"shape":"ListHarvestJobsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListOriginEndpoints":{
       "name":"ListOriginEndpoints",
       "http":{
@@ -339,6 +412,44 @@
       },
       "input":{"shape":"PutOriginEndpointPolicyRequest"},
       "output":{"shape":"PutOriginEndpointPolicyResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "ResetChannelState":{
+      "name":"ResetChannelState",
+      "http":{
+        "method":"POST",
+        "requestUri":"/channelGroup/{ChannelGroupName}/channel/{ChannelName}/reset",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetChannelStateRequest"},
+      "output":{"shape":"ResetChannelStateResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "ResetOriginEndpointState":{
+      "name":"ResetOriginEndpointState",
+      "http":{
+        "method":"POST",
+        "requestUri":"/channelGroup/{ChannelGroupName}/channel/{ChannelName}/originEndpoint/{OriginEndpointName}/reset",
+        "responseCode":200
+      },
+      "input":{"shape":"ResetOriginEndpointStateRequest"},
+      "output":{"shape":"ResetOriginEndpointStateResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ConflictException"},
@@ -460,6 +571,73 @@
       "type":"boolean",
       "box":true
     },
+    "CancelHarvestJobRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "HarvestJobName"
+      ],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelName"
+        },
+        "OriginEndpointName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"OriginEndpointName"
+        },
+        "HarvestJobName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"HarvestJobName"
+        },
+        "ETag":{
+          "shape":"EntityTag",
+          "location":"header",
+          "locationName":"x-amzn-update-if-match"
+        }
+      }
+    },
+    "CancelHarvestJobResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "CdnAuthConfiguration":{
+      "type":"structure",
+      "required":[
+        "CdnIdentifierSecretArns",
+        "SecretsRoleArn"
+      ],
+      "members":{
+        "CdnIdentifierSecretArns":{"shape":"CdnAuthConfigurationCdnIdentifierSecretArnsList"},
+        "SecretsRoleArn":{"shape":"CdnAuthConfigurationSecretsRoleArnString"}
+      }
+    },
+    "CdnAuthConfigurationCdnIdentifierSecretArnsList":{
+      "type":"list",
+      "member":{"shape":"CdnIdentifierSecretArn"},
+      "min":1
+    },
+    "CdnAuthConfigurationSecretsRoleArnString":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
+    "CdnIdentifierSecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
     "ChannelGroupListConfiguration":{
       "type":"structure",
       "required":[
@@ -535,7 +713,8 @@
       "type":"string",
       "enum":[
         "TS",
-        "CMAF"
+        "CMAF",
+        "ISM"
       ]
     },
     "CreateChannelGroupRequest":{
@@ -597,6 +776,8 @@
         },
         "InputType":{"shape":"InputType"},
         "Description":{"shape":"ResourceDescription"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"},
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
@@ -622,7 +803,9 @@
         "IngestEndpoints":{"shape":"IngestEndpointList"},
         "InputType":{"shape":"InputType"},
         "ETag":{"shape":"EntityTag"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "CreateDashManifestConfiguration":{
@@ -639,7 +822,13 @@
         "PeriodTriggers":{"shape":"DashPeriodTriggers"},
         "ScteDash":{"shape":"ScteDash"},
         "DrmSignaling":{"shape":"DashDrmSignaling"},
-        "UtcTiming":{"shape":"DashUtcTiming"}
+        "UtcTiming":{"shape":"DashUtcTiming"},
+        "Profiles":{"shape":"DashProfiles"},
+        "BaseUrls":{"shape":"DashBaseUrls"},
+        "ProgramInformation":{"shape":"DashProgramInformation"},
+        "DvbSettings":{"shape":"DashDvbSettings"},
+        "Compactness":{"shape":"DashCompactness"},
+        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"}
       }
     },
     "CreateDashManifestConfigurationManifestWindowSecondsInteger":{
@@ -669,6 +858,79 @@
       "type":"list",
       "member":{"shape":"CreateDashManifestConfiguration"}
     },
+    "CreateHarvestJobRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "HarvestedManifests",
+        "ScheduleConfiguration",
+        "Destination"
+      ],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelName"
+        },
+        "OriginEndpointName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"OriginEndpointName"
+        },
+        "Description":{"shape":"ResourceDescription"},
+        "HarvestedManifests":{"shape":"HarvestedManifests"},
+        "ScheduleConfiguration":{"shape":"HarvesterScheduleConfiguration"},
+        "Destination":{"shape":"Destination"},
+        "ClientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true,
+          "location":"header",
+          "locationName":"x-amzn-client-token"
+        },
+        "HarvestJobName":{"shape":"ResourceName"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateHarvestJobResponse":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "Destination",
+        "HarvestJobName",
+        "HarvestedManifests",
+        "ScheduleConfiguration",
+        "Arn",
+        "CreatedAt",
+        "ModifiedAt",
+        "Status"
+      ],
+      "members":{
+        "ChannelGroupName":{"shape":"ResourceName"},
+        "ChannelName":{"shape":"ResourceName"},
+        "OriginEndpointName":{"shape":"ResourceName"},
+        "Destination":{"shape":"Destination"},
+        "HarvestJobName":{"shape":"ResourceName"},
+        "HarvestedManifests":{"shape":"HarvestedManifests"},
+        "Description":{"shape":"ResourceDescription"},
+        "ScheduleConfiguration":{"shape":"HarvesterScheduleConfiguration"},
+        "Arn":{"shape":"String"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ModifiedAt":{"shape":"Timestamp"},
+        "Status":{"shape":"HarvestJobStatus"},
+        "ErrorMessage":{"shape":"String"},
+        "ETag":{"shape":"EntityTag"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
     "CreateHlsManifestConfiguration":{
       "type":"structure",
       "required":["ManifestName"],
@@ -676,9 +938,11 @@
         "ManifestName":{"shape":"ManifestName"},
         "ChildManifestName":{"shape":"ManifestName"},
         "ScteHls":{"shape":"ScteHls"},
+        "StartTag":{"shape":"StartTag"},
         "ManifestWindowSeconds":{"shape":"CreateHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "CreateHlsManifestConfigurationManifestWindowSecondsInteger":{
@@ -703,9 +967,11 @@
         "ManifestName":{"shape":"ManifestName"},
         "ChildManifestName":{"shape":"ManifestName"},
         "ScteHls":{"shape":"ScteHls"},
+        "StartTag":{"shape":"StartTag"},
         "ManifestWindowSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger"},
         "ProgramDateTimeIntervalSeconds":{"shape":"CreateLowLatencyHlsManifestConfigurationProgramDateTimeIntervalSecondsInteger"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "CreateLowLatencyHlsManifestConfigurationManifestWindowSecondsInteger":{
@@ -722,6 +988,25 @@
     "CreateLowLatencyHlsManifests":{
       "type":"list",
       "member":{"shape":"CreateLowLatencyHlsManifestConfiguration"}
+    },
+    "CreateMssManifestConfiguration":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ManifestName"},
+        "ManifestWindowSeconds":{"shape":"CreateMssManifestConfigurationManifestWindowSecondsInteger"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "ManifestLayout":{"shape":"MssManifestLayout"}
+      }
+    },
+    "CreateMssManifestConfigurationManifestWindowSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":30
+    },
+    "CreateMssManifests":{
+      "type":"list",
+      "member":{"shape":"CreateMssManifestConfiguration"}
     },
     "CreateOriginEndpointRequest":{
       "type":"structure",
@@ -756,6 +1041,7 @@
         "HlsManifests":{"shape":"CreateHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"CreateLowLatencyHlsManifests"},
         "DashManifests":{"shape":"CreateDashManifests"},
+        "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "Tags":{"shape":"TagMap"}
       }
@@ -792,10 +1078,56 @@
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
         "DashManifests":{"shape":"GetDashManifests"},
+        "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "DashBaseUrl":{
+      "type":"structure",
+      "required":["Url"],
+      "members":{
+        "Url":{"shape":"DashBaseUrlUrlString"},
+        "ServiceLocation":{"shape":"DashBaseUrlServiceLocationString"},
+        "DvbPriority":{"shape":"DashBaseUrlDvbPriorityInteger"},
+        "DvbWeight":{"shape":"DashBaseUrlDvbWeightInteger"}
+      }
+    },
+    "DashBaseUrlDvbPriorityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":15000,
+      "min":1
+    },
+    "DashBaseUrlDvbWeightInteger":{
+      "type":"integer",
+      "box":true,
+      "max":15000,
+      "min":1
+    },
+    "DashBaseUrlServiceLocationString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashBaseUrlUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashBaseUrls":{
+      "type":"list",
+      "member":{"shape":"DashBaseUrl"},
+      "max":20,
+      "min":0
+    },
+    "DashCompactness":{
+      "type":"string",
+      "enum":[
+        "STANDARD",
+        "NONE"
+      ]
     },
     "DashDrmSignaling":{
       "type":"string",
@@ -803,6 +1135,62 @@
         "INDIVIDUAL",
         "REFERENCED"
       ]
+    },
+    "DashDvbErrorMetrics":{
+      "type":"list",
+      "member":{"shape":"DashDvbMetricsReporting"},
+      "max":20,
+      "min":0
+    },
+    "DashDvbFontDownload":{
+      "type":"structure",
+      "members":{
+        "Url":{"shape":"DashDvbFontDownloadUrlString"},
+        "MimeType":{"shape":"DashDvbFontDownloadMimeTypeString"},
+        "FontFamily":{"shape":"DashDvbFontDownloadFontFamilyString"}
+      }
+    },
+    "DashDvbFontDownloadFontFamilyString":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "DashDvbFontDownloadMimeTypeString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_/-]*[a-zA-Z0-9]"
+    },
+    "DashDvbFontDownloadUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashDvbMetricsReporting":{
+      "type":"structure",
+      "required":["ReportingUrl"],
+      "members":{
+        "ReportingUrl":{"shape":"DashDvbMetricsReportingReportingUrlString"},
+        "Probability":{"shape":"DashDvbMetricsReportingProbabilityInteger"}
+      }
+    },
+    "DashDvbMetricsReportingProbabilityInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "DashDvbMetricsReportingReportingUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashDvbSettings":{
+      "type":"structure",
+      "members":{
+        "FontDownload":{"shape":"DashDvbFontDownload"},
+        "ErrorMetrics":{"shape":"DashDvbErrorMetrics"}
+      }
     },
     "DashPeriodTrigger":{
       "type":"string",
@@ -820,9 +1208,75 @@
       "max":100,
       "min":0
     },
+    "DashProfile":{
+      "type":"string",
+      "enum":["DVB_DASH"]
+    },
+    "DashProfiles":{
+      "type":"list",
+      "member":{"shape":"DashProfile"},
+      "max":5,
+      "min":0
+    },
+    "DashProgramInformation":{
+      "type":"structure",
+      "members":{
+        "Title":{"shape":"DashProgramInformationTitleString"},
+        "Source":{"shape":"DashProgramInformationSourceString"},
+        "Copyright":{"shape":"DashProgramInformationCopyrightString"},
+        "LanguageCode":{"shape":"DashProgramInformationLanguageCodeString"},
+        "MoreInformationUrl":{"shape":"DashProgramInformationMoreInformationUrlString"}
+      }
+    },
+    "DashProgramInformationCopyrightString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashProgramInformationLanguageCodeString":{
+      "type":"string",
+      "max":5,
+      "min":2,
+      "pattern":"[a-zA-Z0-9][a-zA-Z0-9_-]*[a-zA-Z0-9]"
+    },
+    "DashProgramInformationMoreInformationUrlString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashProgramInformationSourceString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
+    "DashProgramInformationTitleString":{
+      "type":"string",
+      "max":2048,
+      "min":1
+    },
     "DashSegmentTemplateFormat":{
       "type":"string",
       "enum":["NUMBER_WITH_TIMELINE"]
+    },
+    "DashSubtitleConfiguration":{
+      "type":"structure",
+      "members":{
+        "TtmlConfiguration":{"shape":"DashTtmlConfiguration"}
+      }
+    },
+    "DashTtmlConfiguration":{
+      "type":"structure",
+      "required":["TtmlProfile"],
+      "members":{
+        "TtmlProfile":{"shape":"DashTtmlProfile"}
+      }
+    },
+    "DashTtmlProfile":{
+      "type":"string",
+      "enum":[
+        "IMSC_1",
+        "EBU_TT_D_101"
+      ]
     },
     "DashUtcTiming":{
       "type":"structure",
@@ -969,13 +1423,21 @@
       "members":{
       }
     },
+    "Destination":{
+      "type":"structure",
+      "required":["S3Destination"],
+      "members":{
+        "S3Destination":{"shape":"S3DestinationConfig"}
+      }
+    },
     "DrmSystem":{
       "type":"string",
       "enum":[
         "CLEAR_KEY_AES_128",
         "FAIRPLAY",
         "PLAYREADY",
-        "WIDEVINE"
+        "WIDEVINE",
+        "IRDETO"
       ]
     },
     "Encryption":{
@@ -988,6 +1450,7 @@
         "ConstantInitializationVector":{"shape":"EncryptionConstantInitializationVectorString"},
         "EncryptionMethod":{"shape":"EncryptionMethod"},
         "KeyRotationIntervalSeconds":{"shape":"EncryptionKeyRotationIntervalSecondsInteger"},
+        "CmafExcludeSegmentDrmMetadata":{"shape":"Boolean"},
         "SpekeKeyProvider":{"shape":"SpekeKeyProvider"}
       }
     },
@@ -1018,7 +1481,8 @@
       "type":"structure",
       "members":{
         "TsEncryptionMethod":{"shape":"TsEncryptionMethod"},
-        "CmafEncryptionMethod":{"shape":"CmafEncryptionMethod"}
+        "CmafEncryptionMethod":{"shape":"CmafEncryptionMethod"},
+        "IsmEncryptionMethod":{"shape":"IsmEncryptionMethod"}
       }
     },
     "EndpointErrorCondition":{
@@ -1046,7 +1510,8 @@
         "ManifestFilter":{"shape":"FilterConfigurationManifestFilterString"},
         "Start":{"shape":"Timestamp"},
         "End":{"shape":"Timestamp"},
-        "TimeDelaySeconds":{"shape":"FilterConfigurationTimeDelaySecondsInteger"}
+        "TimeDelaySeconds":{"shape":"FilterConfigurationTimeDelaySecondsInteger"},
+        "ClipStartTime":{"shape":"Timestamp"}
       }
     },
     "FilterConfigurationManifestFilterString":{
@@ -1059,6 +1524,10 @@
       "box":true,
       "max":1209600,
       "min":0
+    },
+    "Float":{
+      "type":"float",
+      "box":true
     },
     "ForceEndpointErrorConfiguration":{
       "type":"structure",
@@ -1166,11 +1635,14 @@
         "ChannelGroupName":{"shape":"String"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
+        "ResetAt":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
         "IngestEndpoints":{"shape":"IngestEndpointList"},
         "InputType":{"shape":"InputType"},
         "ETag":{"shape":"EntityTag"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "GetDashManifestConfiguration":{
@@ -1191,12 +1663,82 @@
         "PeriodTriggers":{"shape":"DashPeriodTriggers"},
         "ScteDash":{"shape":"ScteDash"},
         "DrmSignaling":{"shape":"DashDrmSignaling"},
-        "UtcTiming":{"shape":"DashUtcTiming"}
+        "UtcTiming":{"shape":"DashUtcTiming"},
+        "Profiles":{"shape":"DashProfiles"},
+        "BaseUrls":{"shape":"DashBaseUrls"},
+        "ProgramInformation":{"shape":"DashProgramInformation"},
+        "DvbSettings":{"shape":"DashDvbSettings"},
+        "Compactness":{"shape":"DashCompactness"},
+        "SubtitleConfiguration":{"shape":"DashSubtitleConfiguration"}
       }
     },
     "GetDashManifests":{
       "type":"list",
       "member":{"shape":"GetDashManifestConfiguration"}
+    },
+    "GetHarvestJobRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "HarvestJobName"
+      ],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelName"
+        },
+        "OriginEndpointName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"OriginEndpointName"
+        },
+        "HarvestJobName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"HarvestJobName"
+        }
+      }
+    },
+    "GetHarvestJobResponse":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "Destination",
+        "HarvestJobName",
+        "HarvestedManifests",
+        "ScheduleConfiguration",
+        "Arn",
+        "CreatedAt",
+        "ModifiedAt",
+        "Status"
+      ],
+      "members":{
+        "ChannelGroupName":{"shape":"ResourceName"},
+        "ChannelName":{"shape":"ResourceName"},
+        "OriginEndpointName":{"shape":"ResourceName"},
+        "Destination":{"shape":"Destination"},
+        "HarvestJobName":{"shape":"ResourceName"},
+        "HarvestedManifests":{"shape":"HarvestedManifests"},
+        "Description":{"shape":"ResourceDescription"},
+        "ScheduleConfiguration":{"shape":"HarvesterScheduleConfiguration"},
+        "Arn":{"shape":"String"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ModifiedAt":{"shape":"Timestamp"},
+        "Status":{"shape":"HarvestJobStatus"},
+        "ErrorMessage":{"shape":"String"},
+        "ETag":{"shape":"EntityTag"},
+        "Tags":{"shape":"TagMap"}
+      }
     },
     "GetHlsManifestConfiguration":{
       "type":"structure",
@@ -1211,7 +1753,9 @@
         "ManifestWindowSeconds":{"shape":"Integer"},
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
         "ScteHls":{"shape":"ScteHls"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "StartTag":{"shape":"StartTag"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "GetHlsManifests":{
@@ -1231,12 +1775,32 @@
         "ManifestWindowSeconds":{"shape":"Integer"},
         "ProgramDateTimeIntervalSeconds":{"shape":"Integer"},
         "ScteHls":{"shape":"ScteHls"},
-        "FilterConfiguration":{"shape":"FilterConfiguration"}
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "StartTag":{"shape":"StartTag"},
+        "UrlEncodeChildManifest":{"shape":"Boolean"}
       }
     },
     "GetLowLatencyHlsManifests":{
       "type":"list",
       "member":{"shape":"GetLowLatencyHlsManifestConfiguration"}
+    },
+    "GetMssManifestConfiguration":{
+      "type":"structure",
+      "required":[
+        "ManifestName",
+        "Url"
+      ],
+      "members":{
+        "ManifestName":{"shape":"ManifestName"},
+        "Url":{"shape":"String"},
+        "FilterConfiguration":{"shape":"FilterConfiguration"},
+        "ManifestWindowSeconds":{"shape":"Integer"},
+        "ManifestLayout":{"shape":"MssManifestLayout"}
+      }
+    },
+    "GetMssManifests":{
+      "type":"list",
+      "member":{"shape":"GetMssManifestConfiguration"}
     },
     "GetOriginEndpointPolicyRequest":{
       "type":"structure",
@@ -1275,7 +1839,8 @@
         "ChannelGroupName":{"shape":"ResourceName"},
         "ChannelName":{"shape":"ResourceName"},
         "OriginEndpointName":{"shape":"ResourceName"},
-        "Policy":{"shape":"PolicyText"}
+        "Policy":{"shape":"PolicyText"},
+        "CdnAuthConfiguration":{"shape":"CdnAuthConfiguration"}
       }
     },
     "GetOriginEndpointRequest":{
@@ -1324,14 +1889,114 @@
         "Segment":{"shape":"Segment"},
         "CreatedAt":{"shape":"Timestamp"},
         "ModifiedAt":{"shape":"Timestamp"},
+        "ResetAt":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
         "StartoverWindowSeconds":{"shape":"Integer"},
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
         "DashManifests":{"shape":"GetDashManifests"},
+        "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{"shape":"TagMap"}
+      }
+    },
+    "HarvestJob":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "Destination",
+        "HarvestJobName",
+        "HarvestedManifests",
+        "ScheduleConfiguration",
+        "Arn",
+        "CreatedAt",
+        "ModifiedAt",
+        "Status"
+      ],
+      "members":{
+        "ChannelGroupName":{"shape":"ResourceName"},
+        "ChannelName":{"shape":"ResourceName"},
+        "OriginEndpointName":{"shape":"ResourceName"},
+        "Destination":{"shape":"Destination"},
+        "HarvestJobName":{"shape":"ResourceName"},
+        "HarvestedManifests":{"shape":"HarvestedManifests"},
+        "Description":{"shape":"ResourceDescription"},
+        "ScheduleConfiguration":{"shape":"HarvesterScheduleConfiguration"},
+        "Arn":{"shape":"String"},
+        "CreatedAt":{"shape":"Timestamp"},
+        "ModifiedAt":{"shape":"Timestamp"},
+        "Status":{"shape":"HarvestJobStatus"},
+        "ErrorMessage":{"shape":"String"},
+        "ETag":{"shape":"EntityTag"}
+      }
+    },
+    "HarvestJobStatus":{
+      "type":"string",
+      "enum":[
+        "QUEUED",
+        "IN_PROGRESS",
+        "CANCELLED",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "HarvestJobsList":{
+      "type":"list",
+      "member":{"shape":"HarvestJob"}
+    },
+    "HarvestedDashManifest":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ResourceName"}
+      }
+    },
+    "HarvestedDashManifestsList":{
+      "type":"list",
+      "member":{"shape":"HarvestedDashManifest"}
+    },
+    "HarvestedHlsManifest":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ResourceName"}
+      }
+    },
+    "HarvestedHlsManifestsList":{
+      "type":"list",
+      "member":{"shape":"HarvestedHlsManifest"}
+    },
+    "HarvestedLowLatencyHlsManifest":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ResourceName"}
+      }
+    },
+    "HarvestedLowLatencyHlsManifestsList":{
+      "type":"list",
+      "member":{"shape":"HarvestedLowLatencyHlsManifest"}
+    },
+    "HarvestedManifests":{
+      "type":"structure",
+      "members":{
+        "HlsManifests":{"shape":"HarvestedHlsManifestsList"},
+        "DashManifests":{"shape":"HarvestedDashManifestsList"},
+        "LowLatencyHlsManifests":{"shape":"HarvestedLowLatencyHlsManifestsList"}
+      }
+    },
+    "HarvesterScheduleConfiguration":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "StartTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"}
       }
     },
     "IdempotencyToken":{
@@ -1350,6 +2015,19 @@
     "IngestEndpointList":{
       "type":"list",
       "member":{"shape":"IngestEndpoint"}
+    },
+    "InputSwitchConfiguration":{
+      "type":"structure",
+      "members":{
+        "MQCSInputSwitching":{"shape":"Boolean"},
+        "PreferredInput":{"shape":"InputSwitchConfigurationPreferredInputInteger"}
+      }
+    },
+    "InputSwitchConfigurationPreferredInputInteger":{
+      "type":"integer",
+      "box":true,
+      "max":2,
+      "min":1
     },
     "InputType":{
       "type":"string",
@@ -1370,6 +2048,10 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "IsmEncryptionMethod":{
+      "type":"string",
+      "enum":["CENC"]
     },
     "ListChannelGroupsRequest":{
       "type":"structure",
@@ -1433,6 +2115,67 @@
       "type":"list",
       "member":{"shape":"ListDashManifestConfiguration"}
     },
+    "ListHarvestJobsRequest":{
+      "type":"structure",
+      "required":["ChannelGroupName"],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ListHarvestJobsRequestChannelNameString",
+          "location":"querystring",
+          "locationName":"channelName"
+        },
+        "OriginEndpointName":{
+          "shape":"ListHarvestJobsRequestOriginEndpointNameString",
+          "location":"querystring",
+          "locationName":"originEndpointName"
+        },
+        "Status":{
+          "shape":"HarvestJobStatus",
+          "location":"querystring",
+          "locationName":"includeStatus"
+        },
+        "MaxResults":{
+          "shape":"ListHarvestJobsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListHarvestJobsRequestChannelNameString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ListHarvestJobsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListHarvestJobsRequestOriginEndpointNameString":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ListHarvestJobsResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"HarvestJobsList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListHlsManifestConfiguration":{
       "type":"structure",
       "required":["ManifestName"],
@@ -1458,6 +2201,18 @@
     "ListLowLatencyHlsManifests":{
       "type":"list",
       "member":{"shape":"ListLowLatencyHlsManifestConfiguration"}
+    },
+    "ListMssManifestConfiguration":{
+      "type":"structure",
+      "required":["ManifestName"],
+      "members":{
+        "ManifestName":{"shape":"ResourceName"},
+        "Url":{"shape":"String"}
+      }
+    },
+    "ListMssManifests":{
+      "type":"list",
+      "member":{"shape":"ListMssManifestConfiguration"}
     },
     "ListOriginEndpointsRequest":{
       "type":"structure",
@@ -1527,6 +2282,13 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-]+"
     },
+    "MssManifestLayout":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "COMPACT"
+      ]
+    },
     "OriginEndpointListConfiguration":{
       "type":"structure",
       "required":[
@@ -1548,12 +2310,19 @@
         "HlsManifests":{"shape":"ListHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"ListLowLatencyHlsManifests"},
         "DashManifests":{"shape":"ListDashManifests"},
+        "MssManifests":{"shape":"ListMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"}
       }
     },
     "OriginEndpointsList":{
       "type":"list",
       "member":{"shape":"OriginEndpointListConfiguration"}
+    },
+    "OutputHeaderConfiguration":{
+      "type":"structure",
+      "members":{
+        "PublishMQCS":{"shape":"Boolean"}
+      }
     },
     "PolicyText":{
       "type":"string",
@@ -1635,12 +2404,89 @@
           "location":"uri",
           "locationName":"OriginEndpointName"
         },
-        "Policy":{"shape":"PolicyText"}
+        "Policy":{"shape":"PolicyText"},
+        "CdnAuthConfiguration":{"shape":"CdnAuthConfiguration"}
       }
     },
     "PutOriginEndpointPolicyResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "ResetChannelStateRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName"
+      ],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelName"
+        }
+      }
+    },
+    "ResetChannelStateResponse":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "Arn",
+        "ResetAt"
+      ],
+      "members":{
+        "ChannelGroupName":{"shape":"String"},
+        "ChannelName":{"shape":"String"},
+        "Arn":{"shape":"String"},
+        "ResetAt":{"shape":"Timestamp"}
+      }
+    },
+    "ResetOriginEndpointStateRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName"
+      ],
+      "members":{
+        "ChannelGroupName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelGroupName"
+        },
+        "ChannelName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"ChannelName"
+        },
+        "OriginEndpointName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"OriginEndpointName"
+        }
+      }
+    },
+    "ResetOriginEndpointStateResponse":{
+      "type":"structure",
+      "required":[
+        "ChannelGroupName",
+        "ChannelName",
+        "OriginEndpointName",
+        "Arn",
+        "ResetAt"
+      ],
+      "members":{
+        "ChannelGroupName":{"shape":"ResourceName"},
+        "ChannelName":{"shape":"ResourceName"},
+        "OriginEndpointName":{"shape":"ResourceName"},
+        "Arn":{"shape":"String"},
+        "ResetAt":{"shape":"Timestamp"}
       }
     },
     "ResourceDescription":{
@@ -1671,8 +2517,31 @@
       "enum":[
         "CHANNEL_GROUP",
         "CHANNEL",
-        "ORIGIN_ENDPOINT"
+        "ORIGIN_ENDPOINT",
+        "HARVEST_JOB"
       ]
+    },
+    "S3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":3
+    },
+    "S3DestinationConfig":{
+      "type":"structure",
+      "required":[
+        "BucketName",
+        "DestinationPath"
+      ],
+      "members":{
+        "BucketName":{"shape":"S3BucketName"},
+        "DestinationPath":{"shape":"S3DestinationPath"}
+      }
+    },
+    "S3DestinationPath":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\S]+"
     },
     "Scte":{
       "type":"structure",
@@ -1785,6 +2654,14 @@
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "StartTag":{
+      "type":"structure",
+      "required":["TimeOffset"],
+      "members":{
+        "TimeOffset":{"shape":"Float"},
+        "Precise":{"shape":"Boolean"}
+      }
     },
     "String":{"type":"string"},
     "TagArn":{"type":"string"},
@@ -1917,7 +2794,9 @@
           "location":"header",
           "locationName":"x-amzn-update-if-match"
         },
-        "Description":{"shape":"ResourceDescription"}
+        "Description":{"shape":"ResourceDescription"},
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "UpdateChannelResponse":{
@@ -1942,7 +2821,9 @@
         "Tags":{
           "shape":"TagMap",
           "locationName":"tags"
-        }
+        },
+        "InputSwitchConfiguration":{"shape":"InputSwitchConfiguration"},
+        "OutputHeaderConfiguration":{"shape":"OutputHeaderConfiguration"}
       }
     },
     "UpdateOriginEndpointRequest":{
@@ -1976,6 +2857,7 @@
         "HlsManifests":{"shape":"CreateHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"CreateLowLatencyHlsManifests"},
         "DashManifests":{"shape":"CreateDashManifests"},
+        "MssManifests":{"shape":"CreateMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{
           "shape":"EntityTag",
@@ -2015,6 +2897,7 @@
         "StartoverWindowSeconds":{"shape":"Integer"},
         "HlsManifests":{"shape":"GetHlsManifests"},
         "LowLatencyHlsManifests":{"shape":"GetLowLatencyHlsManifests"},
+        "MssManifests":{"shape":"GetMssManifests"},
         "ForceEndpointErrorConfiguration":{"shape":"ForceEndpointErrorConfiguration"},
         "ETag":{"shape":"EntityTag"},
         "Tags":{
@@ -2044,6 +2927,7 @@
         "ENCRYPTION_METHOD_CONTAINER_TYPE_MISMATCH",
         "CENC_IV_INCOMPATIBLE",
         "ENCRYPTION_CONTRACT_WITHOUT_AUDIO_RENDITION_INCOMPATIBLE",
+        "ENCRYPTION_CONTRACT_WITH_ISM_CONTAINER_INCOMPATIBLE",
         "ENCRYPTION_CONTRACT_UNENCRYPTED",
         "ENCRYPTION_CONTRACT_SHARED",
         "NUM_MANIFESTS_LOW",
@@ -2081,7 +2965,47 @@
         "PERIOD_TRIGGERS_NONE_SPECIFIED_WITH_ADDITIONAL_VALUES",
         "DRM_SIGNALING_MISMATCH_SEGMENT_ENCRYPTION_STATUS",
         "ONLY_CMAF_INPUT_TYPE_ALLOW_FORCE_ENDPOINT_ERROR_CONFIGURATION",
-        "SOURCE_DISRUPTIONS_ENABLED_INCORRECTLY"
+        "SOURCE_DISRUPTIONS_ENABLED_INCORRECTLY",
+        "HARVESTED_MANIFEST_HAS_START_END_FILTER_CONFIGURATION",
+        "HARVESTED_MANIFEST_NOT_FOUND_ON_ENDPOINT",
+        "TOO_MANY_IN_PROGRESS_HARVEST_JOBS",
+        "HARVEST_JOB_INELIGIBLE_FOR_CANCELLATION",
+        "INVALID_HARVEST_JOB_DURATION",
+        "HARVEST_JOB_S3_DESTINATION_MISSING_OR_INCOMPLETE",
+        "HARVEST_JOB_UNABLE_TO_WRITE_TO_S3_DESTINATION",
+        "HARVEST_JOB_CUSTOMER_ENDPOINT_READ_ACCESS_DENIED",
+        "CLIP_START_TIME_WITH_START_OR_END",
+        "START_TAG_TIME_OFFSET_INVALID",
+        "INCOMPATIBLE_DASH_PROFILE_DVB_DASH_CONFIGURATION",
+        "DASH_DVB_ATTRIBUTES_WITHOUT_DVB_DASH_PROFILE",
+        "INCOMPATIBLE_DASH_COMPACTNESS_CONFIGURATION",
+        "INCOMPATIBLE_XML_ENCODING",
+        "CMAF_EXCLUDE_SEGMENT_DRM_METADATA_INCOMPATIBLE_CONTAINER_TYPE",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_INPUT_SWITCHING",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION",
+        "ONLY_CMAF_INPUT_TYPE_ALLOW_PREFERRED_INPUT_CONFIGURATION",
+        "TS_CONTAINER_TYPE_WITH_MSS_MANIFEST",
+        "CMAF_CONTAINER_TYPE_WITH_MSS_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_HLS_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_LL_HLS_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_DASH_MANIFEST",
+        "ISM_CONTAINER_TYPE_WITH_SCTE",
+        "ISM_CONTAINER_WITH_KEY_ROTATION",
+        "BATCH_GET_SECRET_VALUE_DENIED",
+        "GET_SECRET_VALUE_DENIED",
+        "DESCRIBE_SECRET_DENIED",
+        "INVALID_SECRET_FORMAT",
+        "SECRET_IS_NOT_ONE_KEY_VALUE_PAIR",
+        "INVALID_SECRET_KEY",
+        "INVALID_SECRET_VALUE",
+        "SECRET_ARN_RESOURCE_NOT_FOUND",
+        "DECRYPT_SECRET_FAILED",
+        "TOO_MANY_SECRETS",
+        "DUPLICATED_SECRET",
+        "MALFORMED_SECRET_ARN",
+        "SECRET_FROM_DIFFERENT_ACCOUNT",
+        "SECRET_FROM_DIFFERENT_REGION",
+        "INVALID_SECRET"
       ]
     }
   }

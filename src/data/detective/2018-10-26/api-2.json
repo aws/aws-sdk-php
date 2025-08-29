@@ -5,11 +5,13 @@
     "endpointPrefix":"api.detective",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Detective",
     "serviceId":"Detective",
     "signatureVersion":"v4",
     "signingName":"detective",
-    "uid":"detective-2018-10-26"
+    "uid":"detective-2018-10-26",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptInvitation":{
@@ -1363,8 +1365,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1434,8 +1435,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateDatasourcePackagesRequest":{
       "type":"structure",

@@ -2,10 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2023-11-29",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"neptune-graph",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
-    "ripServiceName":"neptune-graph",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"Neptune Graph",
     "serviceFullName":"Amazon Neptune Graph",
     "serviceId":"Neptune Graph",
@@ -14,6 +14,26 @@
     "uid":"neptune-graph-2023-11-29"
   },
   "operations":{
+    "CancelExportTask":{
+      "name":"CancelExportTask",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/exporttasks/{taskIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelExportTaskInput"},
+      "output":{"shape":"CancelExportTaskOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
+      }
+    },
     "CancelImportTask":{
       "name":"CancelImportTask",
       "http":{
@@ -209,8 +229,8 @@
       "input":{"shape":"ExecuteQueryInput"},
       "output":{"shape":"ExecuteQueryOutput"},
       "errors":[
-        {"shape":"UnprocessableException"},
         {"shape":"ThrottlingException"},
+        {"shape":"UnprocessableException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
@@ -221,6 +241,25 @@
       },
       "staticContextParams":{
         "ApiType":{"value":"DataPlane"}
+      }
+    },
+    "GetExportTask":{
+      "name":"GetExportTask",
+      "http":{
+        "method":"GET",
+        "requestUri":"/exporttasks/{taskIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetExportTaskInput"},
+      "output":{"shape":"GetExportTaskOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
       }
     },
     "GetGraph":{
@@ -343,6 +382,25 @@
       },
       "staticContextParams":{
         "ApiType":{"value":"DataPlane"}
+      }
+    },
+    "ListExportTasks":{
+      "name":"ListExportTasks",
+      "http":{
+        "method":"GET",
+        "requestUri":"/exporttasks",
+        "responseCode":200
+      },
+      "input":{"shape":"ListExportTasksInput"},
+      "output":{"shape":"ListExportTasksOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
       }
     },
     "ListGraphSnapshots":{
@@ -502,6 +560,46 @@
         "ApiType":{"value":"ControlPlane"}
       }
     },
+    "StartExportTask":{
+      "name":"StartExportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/exporttasks",
+        "responseCode":201
+      },
+      "input":{"shape":"StartExportTaskInput"},
+      "output":{"shape":"StartExportTaskOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
+      }
+    },
+    "StartGraph":{
+      "name":"StartGraph",
+      "http":{
+        "method":"POST",
+        "requestUri":"/graphs/{graphIdentifier}/start",
+        "responseCode":200
+      },
+      "input":{"shape":"StartGraphInput"},
+      "output":{"shape":"StartGraphOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
+      }
+    },
     "StartImportTask":{
       "name":"StartImportTask",
       "http":{
@@ -511,6 +609,26 @@
       },
       "input":{"shape":"StartImportTaskInput"},
       "output":{"shape":"StartImportTaskOutput"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "staticContextParams":{
+        "ApiType":{"value":"ControlPlane"}
+      }
+    },
+    "StopGraph":{
+      "name":"StopGraph",
+      "http":{
+        "method":"POST",
+        "requestUri":"/graphs/{graphIdentifier}/stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopGraphInput"},
+      "output":{"shape":"StopGraphOutput"},
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
@@ -602,9 +720,52 @@
       "min":1,
       "pattern":"arn:.+"
     },
+    "BlankNodeHandling":{
+      "type":"string",
+      "enum":["convertToIri"]
+    },
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "CancelExportTaskInput":{
+      "type":"structure",
+      "required":["taskIdentifier"],
+      "members":{
+        "taskIdentifier":{
+          "shape":"ExportTaskId",
+          "location":"uri",
+          "locationName":"taskIdentifier"
+        }
+      }
+    },
+    "CancelExportTaskOutput":{
+      "type":"structure",
+      "required":[
+        "graphId",
+        "roleArn",
+        "taskId",
+        "status",
+        "format",
+        "destination",
+        "kmsKeyIdentifier"
+      ],
+      "members":{
+        "graphId":{"shape":"GraphId"},
+        "roleArn":{"shape":"RoleArn"},
+        "taskId":{"shape":"ExportTaskId"},
+        "status":{"shape":"ExportTaskStatus"},
+        "format":{"shape":"ExportFormat"},
+        "destination":{"shape":"CancelExportTaskOutputDestinationString"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "parquetType":{"shape":"ParquetType"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "CancelExportTaskOutputDestinationString":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "CancelImportTaskInput":{
       "type":"structure",
@@ -630,6 +791,7 @@
         "taskId":{"shape":"TaskId"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "parquetType":{"shape":"ParquetType"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ImportTaskStatus"}
       }
@@ -763,6 +925,8 @@
         "failOnError":{"shape":"Boolean"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "parquetType":{"shape":"ParquetType"},
+        "blankNodeHandling":{"shape":"BlankNodeHandling"},
         "roleArn":{"shape":"RoleArn"}
       }
     },
@@ -779,6 +943,7 @@
         "taskId":{"shape":"TaskId"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "parquetType":{"shape":"ParquetType"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ImportTaskStatus"},
         "importOptions":{"shape":"ImportOptions"}
@@ -919,8 +1084,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "DocumentValuedMap":{
@@ -990,12 +1154,176 @@
         "DETAILS"
       ]
     },
+    "ExportFilter":{
+      "type":"structure",
+      "members":{
+        "vertexFilter":{"shape":"ExportFilterPerLabelMap"},
+        "edgeFilter":{"shape":"ExportFilterPerLabelMap"}
+      }
+    },
+    "ExportFilterElement":{
+      "type":"structure",
+      "members":{
+        "properties":{"shape":"ExportFilterPropertyMap"}
+      }
+    },
+    "ExportFilterLabel":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ExportFilterOutputDataType":{
+      "type":"string",
+      "pattern":"(Any|Byte|Short|Int|Long|Float|Double|String|Bool|Boolean|Float\\[\\]|Double\\[\\])"
+    },
+    "ExportFilterOutputPropertyName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_]+"
+    },
+    "ExportFilterPerLabelMap":{
+      "type":"map",
+      "key":{"shape":"ExportFilterLabel"},
+      "value":{"shape":"ExportFilterElement"}
+    },
+    "ExportFilterPropertyAttributes":{
+      "type":"structure",
+      "members":{
+        "outputType":{"shape":"ExportFilterOutputDataType"},
+        "sourcePropertyName":{"shape":"ExportFilterSourcePropertyName"},
+        "multiValueHandling":{"shape":"MultiValueHandlingType"}
+      }
+    },
+    "ExportFilterPropertyMap":{
+      "type":"map",
+      "key":{"shape":"ExportFilterOutputPropertyName"},
+      "value":{"shape":"ExportFilterPropertyAttributes"}
+    },
+    "ExportFilterSourcePropertyName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "ExportFormat":{
+      "type":"string",
+      "enum":[
+        "PARQUET",
+        "CSV"
+      ]
+    },
+    "ExportTaskDetails":{
+      "type":"structure",
+      "required":[
+        "startTime",
+        "timeElapsedSeconds",
+        "progressPercentage"
+      ],
+      "members":{
+        "startTime":{"shape":"Timestamp"},
+        "timeElapsedSeconds":{"shape":"Long"},
+        "progressPercentage":{"shape":"Integer"},
+        "numVerticesWritten":{"shape":"Long"},
+        "numEdgesWritten":{"shape":"Long"}
+      }
+    },
+    "ExportTaskId":{
+      "type":"string",
+      "pattern":"t-[a-z0-9]{10}"
+    },
+    "ExportTaskStatus":{
+      "type":"string",
+      "enum":[
+        "INITIALIZING",
+        "EXPORTING",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELLING",
+        "CANCELLED",
+        "DELETED"
+      ]
+    },
+    "ExportTaskSummary":{
+      "type":"structure",
+      "required":[
+        "graphId",
+        "roleArn",
+        "taskId",
+        "status",
+        "format",
+        "destination",
+        "kmsKeyIdentifier"
+      ],
+      "members":{
+        "graphId":{"shape":"GraphId"},
+        "roleArn":{"shape":"RoleArn"},
+        "taskId":{"shape":"ExportTaskId"},
+        "status":{"shape":"ExportTaskStatus"},
+        "format":{"shape":"ExportFormat"},
+        "destination":{"shape":"ExportTaskSummaryDestinationString"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "parquetType":{"shape":"ParquetType"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "ExportTaskSummaryDestinationString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ExportTaskSummaryList":{
+      "type":"list",
+      "member":{"shape":"ExportTaskSummary"}
+    },
     "Format":{
       "type":"string",
       "enum":[
         "CSV",
-        "OPEN_CYPHER"
+        "OPEN_CYPHER",
+        "PARQUET",
+        "NTRIPLES"
       ]
+    },
+    "GetExportTaskInput":{
+      "type":"structure",
+      "required":["taskIdentifier"],
+      "members":{
+        "taskIdentifier":{
+          "shape":"ExportTaskId",
+          "location":"uri",
+          "locationName":"taskIdentifier"
+        }
+      }
+    },
+    "GetExportTaskOutput":{
+      "type":"structure",
+      "required":[
+        "graphId",
+        "roleArn",
+        "taskId",
+        "status",
+        "format",
+        "destination",
+        "kmsKeyIdentifier"
+      ],
+      "members":{
+        "graphId":{"shape":"GraphId"},
+        "roleArn":{"shape":"RoleArn"},
+        "taskId":{"shape":"ExportTaskId"},
+        "status":{"shape":"ExportTaskStatus"},
+        "format":{"shape":"ExportFormat"},
+        "destination":{"shape":"GetExportTaskOutputDestinationString"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "parquetType":{"shape":"ParquetType"},
+        "statusReason":{"shape":"String"},
+        "exportTaskDetails":{"shape":"ExportTaskDetails"},
+        "exportFilter":{"shape":"ExportFilter"}
+      }
+    },
+    "GetExportTaskOutputDestinationString":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "GetGraphInput":{
       "type":"structure",
@@ -1110,6 +1438,7 @@
         "taskId":{"shape":"TaskId"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "parquetType":{"shape":"ParquetType"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ImportTaskStatus"},
         "importOptions":{"shape":"ImportOptions"},
@@ -1245,7 +1574,10 @@
         "UPDATING",
         "SNAPSHOTTING",
         "FAILED",
-        "IMPORTING"
+        "IMPORTING",
+        "STARTING",
+        "STOPPING",
+        "STOPPED"
       ]
     },
     "GraphSummary":{
@@ -1320,7 +1652,8 @@
         "SUCCEEDED",
         "FAILED",
         "CANCELLING",
-        "CANCELLED"
+        "CANCELLED",
+        "DELETED"
       ]
     },
     "ImportTaskSummary":{
@@ -1336,6 +1669,7 @@
         "taskId":{"shape":"TaskId"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "parquetType":{"shape":"ParquetType"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ImportTaskStatus"}
       }
@@ -1364,6 +1698,34 @@
       "max":1024,
       "min":1,
       "pattern":"arn:aws(|-cn|-us-gov):kms:[a-zA-Z0-9-]*:[0-9]{12}:key/[a-zA-Z0-9-]{36}"
+    },
+    "ListExportTasksInput":{
+      "type":"structure",
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "location":"querystring",
+          "locationName":"graphIdentifier"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListExportTasksOutput":{
+      "type":"structure",
+      "required":["tasks"],
+      "members":{
+        "tasks":{"shape":"ExportTaskSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
     },
     "ListGraphSnapshotsInput":{
       "type":"structure",
@@ -1536,6 +1898,13 @@
       "max":100,
       "min":1
     },
+    "MultiValueHandlingType":{
+      "type":"string",
+      "enum":[
+        "TO_LIST",
+        "PICK_FIRST"
+      ]
+    },
     "NeptuneImportOptions":{
       "type":"structure",
       "required":[
@@ -1588,6 +1957,10 @@
       "max":8192,
       "min":1
     },
+    "ParquetType":{
+      "type":"string",
+      "enum":["COLUMNAR"]
+    },
     "PlanCacheType":{
       "type":"string",
       "enum":[
@@ -1627,7 +2000,7 @@
       "type":"integer",
       "box":true,
       "max":24576,
-      "min":128
+      "min":16
     },
     "QueryLanguage":{
       "type":"string",
@@ -1773,7 +2146,7 @@
     },
     "RoleArn":{
       "type":"string",
-      "pattern":"arn:aws[^:]*:iam::\\d{12}:(role|role/service-role)/[\\w+=,.@-]*"
+      "pattern":"arn:aws[^:]*:iam::\\d{12}:(role|role/service-role)(/[\\w+=,.@-]+)+"
     },
     "SecurityGroupId":{
       "type":"string",
@@ -1824,6 +2197,96 @@
         "FAILED"
       ]
     },
+    "StartExportTaskInput":{
+      "type":"structure",
+      "required":[
+        "graphIdentifier",
+        "roleArn",
+        "format",
+        "destination",
+        "kmsKeyIdentifier"
+      ],
+      "members":{
+        "graphIdentifier":{"shape":"GraphIdentifier"},
+        "roleArn":{"shape":"RoleArn"},
+        "format":{"shape":"ExportFormat"},
+        "destination":{"shape":"StartExportTaskInputDestinationString"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "parquetType":{"shape":"ParquetType"},
+        "exportFilter":{"shape":"ExportFilter"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "StartExportTaskInputDestinationString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "StartExportTaskOutput":{
+      "type":"structure",
+      "required":[
+        "graphId",
+        "roleArn",
+        "taskId",
+        "status",
+        "format",
+        "destination",
+        "kmsKeyIdentifier"
+      ],
+      "members":{
+        "graphId":{"shape":"GraphId"},
+        "roleArn":{"shape":"RoleArn"},
+        "taskId":{"shape":"ExportTaskId"},
+        "status":{"shape":"ExportTaskStatus"},
+        "format":{"shape":"ExportFormat"},
+        "destination":{"shape":"StartExportTaskOutputDestinationString"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "parquetType":{"shape":"ParquetType"},
+        "statusReason":{"shape":"String"},
+        "exportFilter":{"shape":"ExportFilter"}
+      }
+    },
+    "StartExportTaskOutputDestinationString":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "StartGraphInput":{
+      "type":"structure",
+      "required":["graphIdentifier"],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "location":"uri",
+          "locationName":"graphIdentifier"
+        }
+      }
+    },
+    "StartGraphOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"GraphId"},
+        "name":{"shape":"GraphName"},
+        "arn":{"shape":"String"},
+        "status":{"shape":"GraphStatus"},
+        "statusReason":{"shape":"String"},
+        "createTime":{"shape":"Timestamp"},
+        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "endpoint":{"shape":"String"},
+        "publicConnectivity":{"shape":"Boolean"},
+        "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
+        "replicaCount":{"shape":"ReplicaCount"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "sourceSnapshotId":{"shape":"SnapshotId"},
+        "deletionProtection":{"shape":"Boolean"},
+        "buildNumber":{"shape":"String"}
+      }
+    },
     "StartImportTaskInput":{
       "type":"structure",
       "required":[
@@ -1836,6 +2299,8 @@
         "failOnError":{"shape":"Boolean"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "parquetType":{"shape":"ParquetType"},
+        "blankNodeHandling":{"shape":"BlankNodeHandling"},
         "graphIdentifier":{
           "shape":"GraphIdentifier",
           "location":"uri",
@@ -1857,9 +2322,46 @@
         "taskId":{"shape":"TaskId"},
         "source":{"shape":"String"},
         "format":{"shape":"Format"},
+        "parquetType":{"shape":"ParquetType"},
         "roleArn":{"shape":"RoleArn"},
         "status":{"shape":"ImportTaskStatus"},
         "importOptions":{"shape":"ImportOptions"}
+      }
+    },
+    "StopGraphInput":{
+      "type":"structure",
+      "required":["graphIdentifier"],
+      "members":{
+        "graphIdentifier":{
+          "shape":"GraphIdentifier",
+          "location":"uri",
+          "locationName":"graphIdentifier"
+        }
+      }
+    },
+    "StopGraphOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "arn"
+      ],
+      "members":{
+        "id":{"shape":"GraphId"},
+        "name":{"shape":"GraphName"},
+        "arn":{"shape":"String"},
+        "status":{"shape":"GraphStatus"},
+        "statusReason":{"shape":"String"},
+        "createTime":{"shape":"Timestamp"},
+        "provisionedMemory":{"shape":"ProvisionedMemory"},
+        "endpoint":{"shape":"String"},
+        "publicConnectivity":{"shape":"Boolean"},
+        "vectorSearchConfiguration":{"shape":"VectorSearchConfiguration"},
+        "replicaCount":{"shape":"ReplicaCount"},
+        "kmsKeyIdentifier":{"shape":"KmsKeyArn"},
+        "sourceSnapshotId":{"shape":"SnapshotId"},
+        "deletionProtection":{"shape":"Boolean"},
+        "buildNumber":{"shape":"String"}
       }
     },
     "String":{"type":"string"},
@@ -1913,8 +2415,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1986,8 +2487,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateGraphInput":{
       "type":"structure",

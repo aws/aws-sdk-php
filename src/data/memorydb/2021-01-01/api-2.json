@@ -5,13 +5,15 @@
     "endpointPrefix":"memory-db",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Amazon MemoryDB",
     "serviceFullName":"Amazon MemoryDB",
     "serviceId":"MemoryDB",
     "signatureVersion":"v4",
     "signingName":"memorydb",
     "targetPrefix":"AmazonMemoryDB",
-    "uid":"memorydb-2021-01-01"
+    "uid":"memorydb-2021-01-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "BatchUpdateCluster":{
@@ -88,7 +90,26 @@
         {"shape":"InvalidCredentialsException"},
         {"shape":"TagQuotaPerResourceExceeded"},
         {"shape":"ACLNotFoundFault"},
-        {"shape":"InvalidACLStateFault"}
+        {"shape":"InvalidACLStateFault"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"InvalidMultiRegionClusterStateFault"}
+      ]
+    },
+    "CreateMultiRegionCluster":{
+      "name":"CreateMultiRegionCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateMultiRegionClusterRequest"},
+      "output":{"shape":"CreateMultiRegionClusterResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterAlreadyExistsFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
+        {"shape":"ClusterQuotaForCustomerExceededFault"},
+        {"shape":"TagQuotaPerResourceExceeded"}
       ]
     },
     "CreateParameterGroup":{
@@ -192,6 +213,20 @@
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "DeleteMultiRegionCluster":{
+      "name":"DeleteMultiRegionCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMultiRegionClusterRequest"},
+      "output":{"shape":"DeleteMultiRegionClusterResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"InvalidMultiRegionClusterStateFault"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "DeleteParameterGroup":{
@@ -308,6 +343,21 @@
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "DescribeMultiRegionClusters":{
+      "name":"DescribeMultiRegionClusters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeMultiRegionClustersRequest"},
+      "output":{"shape":"DescribeMultiRegionClustersResponse"},
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MultiRegionClusterNotFoundFault"}
       ]
     },
     "DescribeParameterGroups":{
@@ -443,6 +493,20 @@
         {"shape":"InvalidParameterCombinationException"}
       ]
     },
+    "ListAllowedMultiRegionClusterUpdates":{
+      "name":"ListAllowedMultiRegionClusterUpdates",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAllowedMultiRegionClusterUpdatesRequest"},
+      "output":{"shape":"ListAllowedMultiRegionClusterUpdatesResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"}
+      ]
+    },
     "ListAllowedNodeTypeUpdates":{
       "name":"ListAllowedNodeTypeUpdates",
       "http":{
@@ -475,7 +539,9 @@
         {"shape":"InvalidARNFault"},
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"UserNotFoundFault"},
-        {"shape":"ACLNotFoundFault"}
+        {"shape":"ACLNotFoundFault"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"}
       ]
     },
     "PurchaseReservedNodesOffering":{
@@ -528,9 +594,12 @@
         {"shape":"SnapshotNotFoundFault"},
         {"shape":"UserNotFoundFault"},
         {"shape":"ACLNotFoundFault"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
         {"shape":"TagQuotaPerResourceExceeded"},
         {"shape":"InvalidARNFault"},
-        {"shape":"ServiceLinkedRoleNotFoundFault"}
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "UntagResource":{
@@ -551,7 +620,10 @@
         {"shape":"TagNotFoundFault"},
         {"shape":"ServiceLinkedRoleNotFoundFault"},
         {"shape":"UserNotFoundFault"},
-        {"shape":"ACLNotFoundFault"}
+        {"shape":"ACLNotFoundFault"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"}
       ]
     },
     "UpdateACL":{
@@ -597,6 +669,22 @@
         {"shape":"ACLNotFoundFault"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"InvalidParameterCombinationException"}
+      ]
+    },
+    "UpdateMultiRegionCluster":{
+      "name":"UpdateMultiRegionCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateMultiRegionClusterRequest"},
+      "output":{"shape":"UpdateMultiRegionClusterResponse"},
+      "errors":[
+        {"shape":"MultiRegionClusterNotFoundFault"},
+        {"shape":"MultiRegionParameterGroupNotFoundFault"},
+        {"shape":"InvalidMultiRegionClusterStateFault"},
+        {"shape":"InvalidParameterCombinationException"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "UpdateParameterGroup":{
@@ -663,8 +751,7 @@
     },
     "ACLAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ACLClusterNameList":{
@@ -686,8 +773,7 @@
     },
     "ACLNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ACLPendingChanges":{
@@ -699,8 +785,7 @@
     },
     "ACLQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ACLsUpdateStatus":{
@@ -711,8 +796,7 @@
     },
     "APICallRateForCustomerExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "AZStatus":{
@@ -779,11 +863,13 @@
         "Description":{"shape":"String"},
         "Status":{"shape":"String"},
         "PendingUpdates":{"shape":"ClusterPendingUpdates"},
+        "MultiRegionClusterName":{"shape":"String"},
         "NumberOfShards":{"shape":"IntegerOptional"},
         "Shards":{"shape":"ShardList"},
         "AvailabilityMode":{"shape":"AZStatus"},
         "ClusterEndpoint":{"shape":"Endpoint"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "EnginePatchVersion":{"shape":"String"},
         "ParameterGroupName":{"shape":"String"},
@@ -800,13 +886,14 @@
         "SnapshotWindow":{"shape":"String"},
         "ACLName":{"shape":"ACLName"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
-        "DataTiering":{"shape":"DataTieringStatus"}
+        "DataTiering":{"shape":"DataTieringStatus"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "ClusterAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ClusterConfiguration":{
@@ -815,6 +902,7 @@
         "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "MaintenanceWindow":{"shape":"String"},
         "TopicArn":{"shape":"String"},
@@ -825,7 +913,9 @@
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "SnapshotWindow":{"shape":"String"},
         "NumShards":{"shape":"IntegerOptional"},
-        "Shards":{"shape":"ShardDetails"}
+        "Shards":{"shape":"ShardDetails"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "MultiRegionClusterName":{"shape":"String"}
       }
     },
     "ClusterList":{
@@ -839,8 +929,7 @@
     },
     "ClusterNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ClusterPendingUpdates":{
@@ -853,8 +942,7 @@
     },
     "ClusterQuotaForCustomerExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "CopySnapshotRequest":{
@@ -902,6 +990,7 @@
       "members":{
         "ClusterName":{"shape":"String"},
         "NodeType":{"shape":"String"},
+        "MultiRegionClusterName":{"shape":"String"},
         "ParameterGroupName":{"shape":"String"},
         "Description":{"shape":"String"},
         "NumShards":{"shape":"IntegerOptional"},
@@ -919,15 +1008,42 @@
         "Tags":{"shape":"TagList"},
         "SnapshotWindow":{"shape":"String"},
         "ACLName":{"shape":"ACLName"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
-        "DataTiering":{"shape":"BooleanOptional"}
+        "DataTiering":{"shape":"BooleanOptional"},
+        "NetworkType":{"shape":"NetworkType"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "CreateClusterResponse":{
       "type":"structure",
       "members":{
         "Cluster":{"shape":"Cluster"}
+      }
+    },
+    "CreateMultiRegionClusterRequest":{
+      "type":"structure",
+      "required":[
+        "MultiRegionClusterNameSuffix",
+        "NodeType"
+      ],
+      "members":{
+        "MultiRegionClusterNameSuffix":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "NodeType":{"shape":"String"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "NumShards":{"shape":"IntegerOptional"},
+        "TLSEnabled":{"shape":"BooleanOptional"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateMultiRegionClusterResponse":{
+      "type":"structure",
+      "members":{
+        "MultiRegionCluster":{"shape":"MultiRegionCluster"}
       }
     },
     "CreateParameterGroupRequest":{
@@ -1016,8 +1132,7 @@
     },
     "DefaultUserRequired":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "DeleteACLRequest":{
@@ -1038,6 +1153,7 @@
       "required":["ClusterName"],
       "members":{
         "ClusterName":{"shape":"String"},
+        "MultiRegionClusterName":{"shape":"String"},
         "FinalSnapshotName":{"shape":"String"}
       }
     },
@@ -1045,6 +1161,19 @@
       "type":"structure",
       "members":{
         "Cluster":{"shape":"Cluster"}
+      }
+    },
+    "DeleteMultiRegionClusterRequest":{
+      "type":"structure",
+      "required":["MultiRegionClusterName"],
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"}
+      }
+    },
+    "DeleteMultiRegionClusterResponse":{
+      "type":"structure",
+      "members":{
+        "MultiRegionCluster":{"shape":"MultiRegionCluster"}
       }
     },
     "DeleteParameterGroupRequest":{
@@ -1133,6 +1262,7 @@
     "DescribeEngineVersionsRequest":{
       "type":"structure",
       "members":{
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "ParameterGroupFamily":{"shape":"String"},
         "MaxResults":{"shape":"IntegerOptional"},
@@ -1164,6 +1294,22 @@
       "members":{
         "NextToken":{"shape":"String"},
         "Events":{"shape":"EventList"}
+      }
+    },
+    "DescribeMultiRegionClustersRequest":{
+      "type":"structure",
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"},
+        "MaxResults":{"shape":"IntegerOptional"},
+        "NextToken":{"shape":"String"},
+        "ShowClusterDetails":{"shape":"BooleanOptional"}
+      }
+    },
+    "DescribeMultiRegionClustersResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "MultiRegionClusters":{"shape":"MultiRegionClusterList"}
       }
     },
     "DescribeParameterGroupsRequest":{
@@ -1303,8 +1449,7 @@
     "Double":{"type":"double"},
     "DuplicateUserNameFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Endpoint":{
@@ -1317,6 +1462,7 @@
     "EngineVersionInfo":{
       "type":"structure",
       "members":{
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "EnginePatchVersion":{"shape":"String"},
         "ParameterGroupFamily":{"shape":"String"}
@@ -1393,46 +1539,44 @@
     },
     "InsufficientClusterCapacityFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "Integer":{"type":"integer"},
     "IntegerOptional":{"type":"integer"},
     "InvalidACLStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidARNFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidClusterStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidCredentialsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidKMSKeyFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
+      "exception":true
+    },
+    "InvalidMultiRegionClusterStateFault":{
+      "type":"structure",
+      "members":{},
       "exception":true
     },
     "InvalidNodeStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterCombinationException":{
@@ -1445,8 +1589,7 @@
     },
     "InvalidParameterGroupStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidParameterValueException":{
@@ -1459,27 +1602,30 @@
     },
     "InvalidSnapshotStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidSubnet":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidUserStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "InvalidVPCNetworkStateFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
+    },
+    "IpDiscovery":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6"
+      ]
     },
     "KeyList":{
       "type":"list",
@@ -1488,6 +1634,20 @@
     "KmsKeyId":{
       "type":"string",
       "max":2048
+    },
+    "ListAllowedMultiRegionClusterUpdatesRequest":{
+      "type":"structure",
+      "required":["MultiRegionClusterName"],
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"}
+      }
+    },
+    "ListAllowedMultiRegionClusterUpdatesResponse":{
+      "type":"structure",
+      "members":{
+        "ScaleUpNodeTypes":{"shape":"NodeTypeList"},
+        "ScaleDownNodeTypes":{"shape":"NodeTypeList"}
+      }
     },
     "ListAllowedNodeTypeUpdatesRequest":{
       "type":"structure",
@@ -1516,10 +1676,56 @@
         "TagList":{"shape":"TagList"}
       }
     },
-    "NoOperationFault":{
+    "MultiRegionCluster":{
       "type":"structure",
       "members":{
-      },
+        "MultiRegionClusterName":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "NumberOfShards":{"shape":"IntegerOptional"},
+        "Clusters":{"shape":"RegionalClusterList"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "TLSEnabled":{"shape":"BooleanOptional"},
+        "ARN":{"shape":"String"}
+      }
+    },
+    "MultiRegionClusterAlreadyExistsFault":{
+      "type":"structure",
+      "members":{},
+      "exception":true
+    },
+    "MultiRegionClusterList":{
+      "type":"list",
+      "member":{"shape":"MultiRegionCluster"}
+    },
+    "MultiRegionClusterNotFoundFault":{
+      "type":"structure",
+      "members":{},
+      "exception":true
+    },
+    "MultiRegionParameterGroupNotFoundFault":{
+      "type":"structure",
+      "members":{},
+      "exception":true
+    },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dual_stack"
+      ]
+    },
+    "NetworkTypeList":{
+      "type":"list",
+      "member":{"shape":"NetworkType"}
+    },
+    "NoOperationFault":{
+      "type":"structure",
+      "members":{},
       "exception":true
     },
     "Node":{
@@ -1538,14 +1744,12 @@
     },
     "NodeQuotaForClusterExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NodeQuotaForCustomerExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "NodeTypeList":{
@@ -1574,8 +1778,7 @@
     },
     "ParameterGroupAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ParameterGroupList":{
@@ -1584,14 +1787,12 @@
     },
     "ParameterGroupNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ParameterGroupQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ParameterNameList":{
@@ -1656,6 +1857,20 @@
       "type":"list",
       "member":{"shape":"RecurringCharge"}
     },
+    "RegionalCluster":{
+      "type":"structure",
+      "members":{
+        "ClusterName":{"shape":"String"},
+        "Region":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "ARN":{"shape":"String"}
+      },
+      "wrapper":true
+    },
+    "RegionalClusterList":{
+      "type":"list",
+      "member":{"shape":"RegionalCluster"}
+    },
     "ReplicaConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -1680,8 +1895,7 @@
     },
     "ReservedNodeAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ReservedNodeList":{
@@ -1690,14 +1904,12 @@
     },
     "ReservedNodeNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ReservedNodeQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ReservedNodesOffering":{
@@ -1717,8 +1929,7 @@
     },
     "ReservedNodesOfferingNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ResetParameterGroupRequest":{
@@ -1759,8 +1970,7 @@
     },
     "ServiceLinkedRoleNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ServiceUpdate":{
@@ -1772,6 +1982,7 @@
         "Description":{"shape":"String"},
         "Status":{"shape":"ServiceUpdateStatus"},
         "Type":{"shape":"ServiceUpdateType"},
+        "Engine":{"shape":"String"},
         "NodesUpdated":{"shape":"String"},
         "AutoUpdateStartDate":{"shape":"TStamp"}
       }
@@ -1782,8 +1993,7 @@
     },
     "ServiceUpdateNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ServiceUpdateRequest":{
@@ -1852,14 +2062,12 @@
     },
     "ShardNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "ShardsPerClusterQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SlotMigration":{
@@ -1882,8 +2090,7 @@
     },
     "SnapshotAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SnapshotArnsList":{
@@ -1896,14 +2103,12 @@
     },
     "SnapshotNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SnapshotQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SourceType":{
@@ -1922,7 +2127,8 @@
       "type":"structure",
       "members":{
         "Identifier":{"shape":"String"},
-        "AvailabilityZone":{"shape":"AvailabilityZone"}
+        "AvailabilityZone":{"shape":"AvailabilityZone"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroup":{
@@ -1932,19 +2138,18 @@
         "Description":{"shape":"String"},
         "VpcId":{"shape":"String"},
         "Subnets":{"shape":"SubnetList"},
-        "ARN":{"shape":"String"}
+        "ARN":{"shape":"String"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroupAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetGroupInUseFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetGroupList":{
@@ -1953,14 +2158,12 @@
     },
     "SubnetGroupNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetGroupQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetIdentifierList":{
@@ -1969,8 +2172,7 @@
     },
     "SubnetInUse":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetList":{
@@ -1979,14 +2181,12 @@
     },
     "SubnetNotAllowedFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "SubnetQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TStamp":{"type":"timestamp"},
@@ -2004,14 +2204,12 @@
     },
     "TagNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TagQuotaPerResourceExceeded":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "TagResourceRequest":{
@@ -2038,8 +2236,7 @@
     },
     "TestFailoverNotAvailableFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "UnprocessedCluster":{
@@ -2100,16 +2297,37 @@
         "SnapshotWindow":{"shape":"String"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "NodeType":{"shape":"String"},
+        "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "ReplicaConfiguration":{"shape":"ReplicaConfigurationRequest"},
         "ShardConfiguration":{"shape":"ShardConfigurationRequest"},
-        "ACLName":{"shape":"ACLName"}
+        "ACLName":{"shape":"ACLName"},
+        "IpDiscovery":{"shape":"IpDiscovery"}
       }
     },
     "UpdateClusterResponse":{
       "type":"structure",
       "members":{
         "Cluster":{"shape":"Cluster"}
+      }
+    },
+    "UpdateMultiRegionClusterRequest":{
+      "type":"structure",
+      "required":["MultiRegionClusterName"],
+      "members":{
+        "MultiRegionClusterName":{"shape":"String"},
+        "NodeType":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "ShardConfiguration":{"shape":"ShardConfigurationRequest"},
+        "MultiRegionParameterGroupName":{"shape":"String"},
+        "UpdateStrategy":{"shape":"UpdateStrategy"}
+      }
+    },
+    "UpdateMultiRegionClusterResponse":{
+      "type":"structure",
+      "members":{
+        "MultiRegionCluster":{"shape":"MultiRegionCluster"}
       }
     },
     "UpdateParameterGroupRequest":{
@@ -2128,6 +2346,13 @@
       "members":{
         "ParameterGroup":{"shape":"ParameterGroup"}
       }
+    },
+    "UpdateStrategy":{
+      "type":"string",
+      "enum":[
+        "coordinated",
+        "uncoordinated"
+      ]
     },
     "UpdateSubnetGroupRequest":{
       "type":"structure",
@@ -2173,8 +2398,7 @@
     },
     "UserAlreadyExistsFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "UserList":{
@@ -2197,14 +2421,12 @@
     },
     "UserNotFoundFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     },
     "UserQuotaExceededFault":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "exception":true
     }
   }

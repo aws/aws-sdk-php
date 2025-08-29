@@ -7,13 +7,10 @@
           "jobId": "1d828f65-7a4d-42e8-996d-3b900ed59dc4",
           "reason": "Cancelling job."
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example cancels a job with the specified job ID.",
         "id": "to-cancel-a-job-1481152314733",
@@ -59,10 +56,8 @@
           "computeEnvironmentName": "C4OnDemand"
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example creates a managed compute environment with specific C4 instance types that are launched on demand. The compute environment is called C4OnDemand.",
         "id": "to-create-a-managed-ec2-compute-environment-1481152600017",
@@ -104,14 +99,36 @@
           "computeEnvironmentName": "M4Spot"
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example creates a managed compute environment with the M4 instance type that is launched when the Spot bid price is at or below 20% of the On-Demand price for the instance type. The compute environment is called M4Spot.",
         "id": "to-create-a-managed-ec2-spot-compute-environment-1481152844190",
         "title": "To create a managed EC2 Spot compute environment"
+      }
+    ],
+    "CreateConsumableResource": [
+      {
+        "input": {
+          "consumableResourceName": "myConsumableResource",
+          "resourceType": "REPLENISHABLE",
+          "tags": {
+            "Department": "Engineering",
+            "User": "JaneDoe"
+          },
+          "totalQuantity": 123
+        },
+        "output": {
+          "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+          "consumableResourceName": "myConsumableResource"
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Creates a Batch consumable resource.",
+        "id": "to-create-a-consumable-resource-1739494856623",
+        "title": "To create a consumable resource"
       }
     ],
     "CreateJobQueue": [
@@ -132,10 +149,8 @@
           "jobQueueName": "LowPriority"
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example creates a job queue called LowPriority that uses the M4Spot compute environment.",
         "id": "to-create-a-job-queue-with-a-single-compute-environment-1481152967946",
@@ -162,10 +177,8 @@
           "jobQueueName": "HighPriority"
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example creates a job queue called HighPriority that uses the C4OnDemand compute environment with an order of 1 and the M4Spot compute environment with an order of 2.",
         "id": "to-create-a-job-queue-with-multiple-compute-environments-1481153027051",
@@ -177,17 +190,29 @@
         "input": {
           "computeEnvironment": "P2OnDemand"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example deletes the P2OnDemand compute environment.",
         "id": "to-delete-a-compute-environment-1481153105644",
         "title": "To delete a compute environment"
+      }
+    ],
+    "DeleteConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource"
+        },
+        "output": {},
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Deletes the specified consumable resource.",
+        "id": "to-delete-a-consumable-resource-1739495667751",
+        "title": "To delete a consumable resource"
       }
     ],
     "DeleteJobQueue": [
@@ -195,13 +220,10 @@
         "input": {
           "jobQueue": "GPGPU"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example deletes the GPGPU job queue.",
         "id": "to-delete-a-job-queue-1481153508134",
@@ -213,13 +235,10 @@
         "input": {
           "jobDefinition": "sleep10"
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example deregisters a job definition called sleep10.",
         "id": "to-deregister-a-job-definition-1481153579565",
@@ -270,14 +289,39 @@
           ]
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example describes the P2OnDemand compute environment.",
         "id": "to-describe-a-compute-environment-1481153713334",
         "title": "To describe a compute environment"
+      }
+    ],
+    "DescribeConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource"
+        },
+        "output": {
+          "availableQuantity": 123,
+          "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+          "consumableResourceName": "myConsumableResource",
+          "createdAt": 123,
+          "inUseQuantity": 123,
+          "resourceType": "REPLENISHABLE",
+          "tags": {
+            "Department": "Engineering",
+            "User": "JaneDoe"
+          },
+          "totalQuantity": 123
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Returns a description of the specified consumable resource.",
+        "id": "to-get-a-description-of-a-consumable-resource-1739495864808",
+        "title": "To get a description of a consumable resource"
       }
     ],
     "DescribeJobDefinitions": [
@@ -294,13 +338,9 @@
                   "sleep",
                   "60"
                 ],
-                "environment": [
-
-                ],
+                "environment": [],
                 "image": "busybox",
-                "mountPoints": [
-
-                ],
+                "mountPoints": [],
                 "resourceRequirements": [
                   {
                     "type": "MEMORY",
@@ -311,12 +351,8 @@
                     "value": "1"
                   }
                 ],
-                "ulimits": [
-
-                ],
-                "volumes": [
-
-                ]
+                "ulimits": [],
+                "volumes": []
               },
               "jobDefinitionArn": "arn:aws:batch:us-east-1:012345678910:job-definition/sleep60:1",
               "jobDefinitionName": "sleep60",
@@ -326,10 +362,8 @@
           ]
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example describes all of your active job definitions.",
         "id": "to-describe-active-job-definitions-1481153895831",
@@ -362,10 +396,8 @@
           ]
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example describes the HighPriority job queue.",
         "id": "to-describe-a-job-queue-1481153995804",
@@ -388,33 +420,22 @@
                   "60"
                 ],
                 "containerInstanceArn": "arn:aws:ecs:us-east-1:012345678910:container-instance/5406d7cd-58bd-4b8f-9936-48d7c6b1526c",
-                "environment": [
-
-                ],
+                "environment": [],
                 "exitCode": 0,
                 "image": "busybox",
                 "memory": 128,
-                "mountPoints": [
-
-                ],
-                "ulimits": [
-
-                ],
+                "mountPoints": [],
+                "ulimits": [],
                 "vcpus": 1,
-                "volumes": [
-
-                ]
+                "volumes": []
               },
               "createdAt": 1480460782010,
-              "dependsOn": [
-
-              ],
+              "dependsOn": [],
               "jobDefinition": "sleep60",
               "jobId": "24fa2d7a-64c4-49d2-8b47-f8da4fbde8e9",
               "jobName": "example",
               "jobQueue": "arn:aws:batch:us-east-1:012345678910:job-queue/HighPriority",
-              "parameters": {
-              },
+              "parameters": {},
               "startedAt": 1480460816500,
               "status": "SUCCEEDED",
               "stoppedAt": 1480460880699
@@ -422,14 +443,45 @@
           ]
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example describes a job with the specified job ID.",
         "id": "to-describe-a-specific-job-1481154090490",
         "title": "To describe a specific job"
+      }
+    ],
+    "ListConsumableResources": [
+      {
+        "input": {
+          "filters": [
+            {
+              "name": "CONSUMABLE_RESOURCE_NAME",
+              "values": [
+                "my*"
+              ]
+            }
+          ],
+          "maxResults": 123
+        },
+        "output": {
+          "consumableResources": [
+            {
+              "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+              "consumableResourceName": "myConsumableResource",
+              "inUseQuantity": 12,
+              "resourceType": "REPLENISHABLE",
+              "totalQuantity": 123
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Returns a list of the consumable resources for your account.",
+        "id": "to-get-a-list-of-a-consumable-resources-1739496071960",
+        "title": "To get a list of a consumable resources"
       }
     ],
     "ListJobs": [
@@ -446,10 +498,8 @@
           ]
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example lists the running jobs in the HighPriority job queue.",
         "id": "to-list-running-jobs-1481154202164",
@@ -469,14 +519,56 @@
           ]
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example lists jobs in the HighPriority job queue that are in the SUBMITTED job status.",
         "id": "to-list-submitted-jobs-1481154251623",
         "title": "To list submitted jobs"
+      }
+    ],
+    "ListJobsByConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource",
+          "filters": [
+            {
+              "name": "CONSUMABLE_RESOURCE_NAME",
+              "values": [
+                "my*"
+              ]
+            }
+          ],
+          "maxResults": 123
+        },
+        "output": {
+          "jobs": [
+            {
+              "consumableResourceProperties": {
+                "consumableResourceList": [
+                  {
+                    "consumableResource": "myConsumableResource",
+                    "quantity": 123
+                  }
+                ]
+              },
+              "createdAt": 1480460782010,
+              "jobArn": "arn:aws:batch:us-east-1:012345678910:job/myJob",
+              "jobDefinitionArn": "arn:aws:batch:us-east-1:012345678910:job-definition/myJobDef",
+              "jobName": "myJob",
+              "jobQueueArn": "arn:aws:batch:us-east-1:012345678910:job-queue/myJobQueue",
+              "jobStatus": "PENDING",
+              "quantity": 123
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Returns a list of Batch jobs that require a specific consumable resource.",
+        "id": "to-get-a-list-of-batch-jobs-by-consumable-resource-1739496640347",
+        "title": "To get a list of Batch jobs by consumable resource"
       }
     ],
     "ListTagsForResource": [
@@ -492,10 +584,8 @@
           }
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This demonstrates calling the ListTagsForResource action.",
         "id": "listtagsforresource-example-1591293003710",
@@ -531,10 +621,8 @@
           "revision": 1
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example registers a job definition for a simple container job.",
         "id": "to-register-a-job-definition-1481154325325",
@@ -572,10 +660,8 @@
           "revision": 1
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This demonstrates calling the RegisterJobDefinition action, including tags.",
         "id": "registerjobdefinition-with-tags-1591290509028",
@@ -594,10 +680,8 @@
           "jobName": "example"
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example submits a simple container job called example to the HighPriority job queue.",
         "id": "to-submit-a-job-to-a-queue-1481154481673",
@@ -612,13 +696,10 @@
             "Stage": "Alpha"
           }
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This demonstrates calling the TagResource action.",
         "id": "tagresource-example-1591291959952",
@@ -631,13 +712,10 @@
           "jobId": "61e743ed-35e4-48da-b2de-5c8333821c84",
           "reason": "Terminating job."
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example terminates a job with the specified job ID.",
         "id": "to-terminate-a-job-1481154558276",
@@ -652,13 +730,10 @@
             "Stage"
           ]
         },
-        "output": {
-        },
+        "output": {},
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This demonstrates calling the UntagResource action.",
         "id": "untagresource-example-1591292811042",
@@ -676,14 +751,33 @@
           "computeEnvironmentName": "P2OnDemand"
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example disables the P2OnDemand compute environment so it can be deleted.",
         "id": "to-update-a-compute-environment-1481154702731",
         "title": "To update a compute environment"
+      }
+    ],
+    "UpdateConsumableResource": [
+      {
+        "input": {
+          "consumableResource": "myConsumableResource",
+          "operation": "ADD",
+          "quantity": 12
+        },
+        "output": {
+          "consumableResourceArn": "arn:aws:batch:us-east-1:012345678910:consumable-resource/myConsumableResource",
+          "consumableResourceName": "myConsumableResource",
+          "totalQuantity": 135
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "Updates a consumable resource.",
+        "id": "to-update-a-consumable-resource-1739497761692",
+        "title": "To update a consumable resource"
       }
     ],
     "UpdateJobQueue": [
@@ -697,10 +791,8 @@
           "jobQueueName": "GPGPU"
         },
         "comments": {
-          "input": {
-          },
-          "output": {
-          }
+          "input": {},
+          "output": {}
         },
         "description": "This example disables a job queue so that it can be deleted.",
         "id": "to-update-a-job-queue-1481154806981",

@@ -2,9 +2,10 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"controlcatalog",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Control Catalog",
     "serviceId":"ControlCatalog",
     "signatureVersion":"v4",
@@ -12,6 +13,23 @@
     "uid":"controlcatalog-2018-05-10"
   },
   "operations":{
+    "GetControl":{
+      "name":"GetControl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/get-control",
+        "responseCode":200
+      },
+      "input":{"shape":"GetControlRequest"},
+      "output":{"shape":"GetControlResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListCommonControls":{
       "name":"ListCommonControls",
       "http":{
@@ -21,6 +39,38 @@
       },
       "input":{"shape":"ListCommonControlsRequest"},
       "output":{"shape":"ListCommonControlsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListControlMappings":{
+      "name":"ListControlMappings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-control-mappings",
+        "responseCode":200
+      },
+      "input":{"shape":"ListControlMappingsRequest"},
+      "output":{"shape":"ListControlMappingsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "ListControls":{
+      "name":"ListControls",
+      "http":{
+        "method":"POST",
+        "requestUri":"/list-controls",
+        "responseCode":200
+      },
+      "input":{"shape":"ListControlsRequest"},
+      "output":{"shape":"ListControlsResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServerException"},
@@ -91,7 +141,13 @@
       "type":"string",
       "max":2048,
       "min":41,
-      "pattern":"^arn:(aws(?:[-a-z]*)?):controlcatalog:::common-control/[0-9a-z]+$"
+      "pattern":"arn:(aws(?:[-a-z]*)?):controlcatalog:::common-control/[0-9a-z]+"
+    },
+    "CommonControlArnFilterList":{
+      "type":"list",
+      "member":{"shape":"CommonControlArn"},
+      "max":1,
+      "min":1
     },
     "CommonControlFilter":{
       "type":"structure",
@@ -99,36 +155,156 @@
         "Objectives":{"shape":"ObjectiveResourceFilterList"}
       }
     },
+    "CommonControlMappingDetails":{
+      "type":"structure",
+      "required":["CommonControlArn"],
+      "members":{
+        "CommonControlArn":{"shape":"CommonControlArn"}
+      }
+    },
     "CommonControlSummary":{
       "type":"structure",
       "required":[
         "Arn",
-        "CreateTime",
+        "Name",
         "Description",
         "Domain",
-        "LastUpdateTime",
-        "Name",
-        "Objective"
+        "Objective",
+        "CreateTime",
+        "LastUpdateTime"
       ],
       "members":{
         "Arn":{"shape":"CommonControlArn"},
-        "CreateTime":{"shape":"Timestamp"},
+        "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "Domain":{"shape":"AssociatedDomainSummary"},
-        "LastUpdateTime":{"shape":"Timestamp"},
-        "Name":{"shape":"String"},
-        "Objective":{"shape":"AssociatedObjectiveSummary"}
+        "Objective":{"shape":"AssociatedObjectiveSummary"},
+        "CreateTime":{"shape":"Timestamp"},
+        "LastUpdateTime":{"shape":"Timestamp"}
       }
     },
     "CommonControlSummaryList":{
       "type":"list",
       "member":{"shape":"CommonControlSummary"}
     },
+    "ControlAlias":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9](?:[a-zA-Z0-9_.-]{0,254}[a-zA-Z0-9])"
+    },
+    "ControlAliases":{
+      "type":"list",
+      "member":{"shape":"ControlAlias"}
+    },
+    "ControlArn":{
+      "type":"string",
+      "max":2048,
+      "min":34,
+      "pattern":"arn:(aws(?:[-a-z]*)?):(controlcatalog|controltower):[a-zA-Z0-9-]*::control/[0-9a-zA-Z_\\-]+"
+    },
+    "ControlArnFilterList":{
+      "type":"list",
+      "member":{"shape":"ControlArn"},
+      "max":1,
+      "min":1
+    },
+    "ControlBehavior":{
+      "type":"string",
+      "enum":[
+        "PREVENTIVE",
+        "PROACTIVE",
+        "DETECTIVE"
+      ]
+    },
+    "ControlFilter":{
+      "type":"structure",
+      "members":{
+        "Implementations":{"shape":"ImplementationFilter"}
+      }
+    },
+    "ControlMapping":{
+      "type":"structure",
+      "required":[
+        "ControlArn",
+        "MappingType",
+        "Mapping"
+      ],
+      "members":{
+        "ControlArn":{"shape":"ControlArn"},
+        "MappingType":{"shape":"MappingType"},
+        "Mapping":{"shape":"Mapping"}
+      }
+    },
+    "ControlMappingFilter":{
+      "type":"structure",
+      "members":{
+        "ControlArns":{"shape":"ControlArnFilterList"},
+        "CommonControlArns":{"shape":"CommonControlArnFilterList"},
+        "MappingTypes":{"shape":"MappingTypeFilterList"}
+      }
+    },
+    "ControlMappings":{
+      "type":"list",
+      "member":{"shape":"ControlMapping"}
+    },
+    "ControlParameter":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"String"}
+      }
+    },
+    "ControlParameters":{
+      "type":"list",
+      "member":{"shape":"ControlParameter"}
+    },
+    "ControlScope":{
+      "type":"string",
+      "enum":[
+        "GLOBAL",
+        "REGIONAL"
+      ]
+    },
+    "ControlSeverity":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "CRITICAL"
+      ]
+    },
+    "ControlSummary":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name",
+        "Description"
+      ],
+      "members":{
+        "Arn":{"shape":"ControlArn"},
+        "Aliases":{"shape":"ControlAliases"},
+        "Name":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Behavior":{"shape":"ControlBehavior"},
+        "Severity":{"shape":"ControlSeverity"},
+        "Implementation":{"shape":"ImplementationSummary"},
+        "CreateTime":{"shape":"Timestamp"},
+        "GovernedResources":{"shape":"GovernedResources"}
+      }
+    },
+    "Controls":{
+      "type":"list",
+      "member":{"shape":"ControlSummary"}
+    },
+    "DeployableRegions":{
+      "type":"list",
+      "member":{"shape":"RegionCode"}
+    },
     "DomainArn":{
       "type":"string",
       "max":2048,
       "min":33,
-      "pattern":"^arn:(aws(?:[-a-z]*)?):controlcatalog:::domain/[0-9a-z]+$"
+      "pattern":"arn:(aws(?:[-a-z]*)?):controlcatalog:::domain/[0-9a-z]+"
     },
     "DomainResourceFilter":{
       "type":"structure",
@@ -144,22 +320,128 @@
       "type":"structure",
       "required":[
         "Arn",
-        "CreateTime",
+        "Name",
         "Description",
-        "LastUpdateTime",
-        "Name"
+        "CreateTime",
+        "LastUpdateTime"
       ],
       "members":{
         "Arn":{"shape":"DomainArn"},
-        "CreateTime":{"shape":"Timestamp"},
+        "Name":{"shape":"String"},
         "Description":{"shape":"String"},
-        "LastUpdateTime":{"shape":"Timestamp"},
-        "Name":{"shape":"String"}
+        "CreateTime":{"shape":"Timestamp"},
+        "LastUpdateTime":{"shape":"Timestamp"}
       }
     },
     "DomainSummaryList":{
       "type":"list",
       "member":{"shape":"DomainSummary"}
+    },
+    "FrameworkItem":{
+      "type":"string",
+      "max":250,
+      "min":3
+    },
+    "FrameworkMappingDetails":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Item"
+      ],
+      "members":{
+        "Name":{"shape":"FrameworkName"},
+        "Item":{"shape":"FrameworkItem"}
+      }
+    },
+    "FrameworkName":{
+      "type":"string",
+      "max":250,
+      "min":3
+    },
+    "GetControlRequest":{
+      "type":"structure",
+      "required":["ControlArn"],
+      "members":{
+        "ControlArn":{"shape":"ControlArn"}
+      }
+    },
+    "GetControlResponse":{
+      "type":"structure",
+      "required":[
+        "Arn",
+        "Name",
+        "Description",
+        "Behavior",
+        "RegionConfiguration"
+      ],
+      "members":{
+        "Arn":{"shape":"ControlArn"},
+        "Aliases":{"shape":"ControlAliases"},
+        "Name":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Behavior":{"shape":"ControlBehavior"},
+        "Severity":{"shape":"ControlSeverity"},
+        "RegionConfiguration":{"shape":"RegionConfiguration"},
+        "Implementation":{"shape":"ImplementationDetails"},
+        "Parameters":{"shape":"ControlParameters"},
+        "CreateTime":{"shape":"Timestamp"},
+        "GovernedResources":{"shape":"GovernedResources"}
+      }
+    },
+    "GovernedResource":{
+      "type":"string",
+      "pattern":"[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}::[A-Za-z0-9]{2,64}"
+    },
+    "GovernedResources":{
+      "type":"list",
+      "member":{"shape":"GovernedResource"}
+    },
+    "ImplementationDetails":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ImplementationType"},
+        "Identifier":{"shape":"ImplementationIdentifier"}
+      }
+    },
+    "ImplementationFilter":{
+      "type":"structure",
+      "members":{
+        "Types":{"shape":"ImplementationTypeFilterList"},
+        "Identifiers":{"shape":"ImplementationIdentifierFilterList"}
+      }
+    },
+    "ImplementationIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_\\.-]+"
+    },
+    "ImplementationIdentifierFilterList":{
+      "type":"list",
+      "member":{"shape":"ImplementationIdentifier"},
+      "max":1,
+      "min":1
+    },
+    "ImplementationSummary":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"ImplementationType"},
+        "Identifier":{"shape":"ImplementationIdentifier"}
+      }
+    },
+    "ImplementationType":{
+      "type":"string",
+      "max":2048,
+      "min":7,
+      "pattern":"[A-Za-z0-9]+(::[A-Za-z0-9_]+){2,3}"
+    },
+    "ImplementationTypeFilterList":{
+      "type":"list",
+      "member":{"shape":"ImplementationType"},
+      "max":1,
+      "min":1
     },
     "InternalServerException":{
       "type":"structure",
@@ -174,7 +456,6 @@
     "ListCommonControlsRequest":{
       "type":"structure",
       "members":{
-        "CommonControlFilter":{"shape":"CommonControlFilter"},
         "MaxResults":{
           "shape":"MaxListCommonControlsResults",
           "location":"querystring",
@@ -184,7 +465,8 @@
           "shape":"PaginationToken",
           "location":"querystring",
           "locationName":"nextToken"
-        }
+        },
+        "CommonControlFilter":{"shape":"CommonControlFilter"}
       }
     },
     "ListCommonControlsResponse":{
@@ -192,6 +474,54 @@
       "required":["CommonControls"],
       "members":{
         "CommonControls":{"shape":"CommonControlSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListControlMappingsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxListControlMappingsResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "Filter":{"shape":"ControlMappingFilter"}
+      }
+    },
+    "ListControlMappingsResponse":{
+      "type":"structure",
+      "required":["ControlMappings"],
+      "members":{
+        "ControlMappings":{"shape":"ControlMappings"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListControlsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxListControlsResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "Filter":{"shape":"ControlFilter"}
+      }
+    },
+    "ListControlsResponse":{
+      "type":"structure",
+      "required":["Controls"],
+      "members":{
+        "Controls":{"shape":"Controls"},
         "NextToken":{"shape":"PaginationToken"}
       }
     },
@@ -238,11 +568,44 @@
       "type":"structure",
       "required":["Objectives"],
       "members":{
-        "NextToken":{"shape":"PaginationToken"},
-        "Objectives":{"shape":"ObjectiveSummaryList"}
+        "Objectives":{"shape":"ObjectiveSummaryList"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "Mapping":{
+      "type":"structure",
+      "members":{
+        "Framework":{"shape":"FrameworkMappingDetails"},
+        "CommonControl":{"shape":"CommonControlMappingDetails"}
+      },
+      "union":true
+    },
+    "MappingType":{
+      "type":"string",
+      "enum":[
+        "FRAMEWORK",
+        "COMMON_CONTROL"
+      ]
+    },
+    "MappingTypeFilterList":{
+      "type":"list",
+      "member":{"shape":"MappingType"},
+      "max":1,
+      "min":1
+    },
     "MaxListCommonControlsResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "MaxListControlMappingsResults":{
+      "type":"integer",
+      "box":true,
+      "max":1000,
+      "min":1
+    },
+    "MaxListControlsResults":{
       "type":"integer",
       "box":true,
       "max":100,
@@ -264,7 +627,7 @@
       "type":"string",
       "max":2048,
       "min":36,
-      "pattern":"^arn:(aws(?:[-a-z]*)?):controlcatalog:::objective/[0-9a-z]+$"
+      "pattern":"arn:(aws(?:[-a-z]*)?):controlcatalog:::objective/[0-9a-z]+"
     },
     "ObjectiveFilter":{
       "type":"structure",
@@ -286,19 +649,19 @@
       "type":"structure",
       "required":[
         "Arn",
-        "CreateTime",
+        "Name",
         "Description",
         "Domain",
-        "LastUpdateTime",
-        "Name"
+        "CreateTime",
+        "LastUpdateTime"
       ],
       "members":{
         "Arn":{"shape":"ObjectiveArn"},
-        "CreateTime":{"shape":"Timestamp"},
+        "Name":{"shape":"String"},
         "Description":{"shape":"String"},
         "Domain":{"shape":"AssociatedDomainSummary"},
-        "LastUpdateTime":{"shape":"Timestamp"},
-        "Name":{"shape":"String"}
+        "CreateTime":{"shape":"Timestamp"},
+        "LastUpdateTime":{"shape":"Timestamp"}
       }
     },
     "ObjectiveSummaryList":{
@@ -309,6 +672,29 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "RegionCode":{
+      "type":"string",
+      "pattern":"[a-zA-Z0-9-]{1,128}"
+    },
+    "RegionConfiguration":{
+      "type":"structure",
+      "required":["Scope"],
+      "members":{
+        "Scope":{"shape":"ControlScope"},
+        "DeployableRegions":{"shape":"DeployableRegions"}
+      }
+    },
+    "ResourceNotFoundException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
     },
     "String":{"type":"string"},
     "ThrottlingException":{

@@ -121,6 +121,19 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "GetPredictiveScalingForecast":{
+      "name":"GetPredictiveScalingForecast",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetPredictiveScalingForecastRequest"},
+      "output":{"shape":"GetPredictiveScalingForecastResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -239,6 +252,17 @@
       "min":1,
       "pattern":"^arn:.+:application-autoscaling:.+:[0-9]+:scalable-target\\/[a-zA-Z0-9-]+$"
     },
+    "CapacityForecast":{
+      "type":"structure",
+      "required":[
+        "Timestamps",
+        "Values"
+      ],
+      "members":{
+        "Timestamps":{"shape":"PredictiveScalingForecastTimestamps"},
+        "Values":{"shape":"PredictiveScalingForecastValues"}
+      }
+    },
     "ConcurrentUpdateException":{
       "type":"structure",
       "members":{
@@ -275,8 +299,7 @@
     },
     "DeleteScalingPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteScheduledActionRequest":{
       "type":"structure",
@@ -295,8 +318,7 @@
     },
     "DeleteScheduledActionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeregisterScalableTargetRequest":{
       "type":"structure",
@@ -313,8 +335,7 @@
     },
     "DeregisterScalableTargetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeScalableTargetsRequest":{
       "type":"structure",
@@ -407,6 +428,33 @@
       },
       "exception":true
     },
+    "GetPredictiveScalingForecastRequest":{
+      "type":"structure",
+      "required":[
+        "ServiceNamespace",
+        "ResourceId",
+        "ScalableDimension",
+        "PolicyName",
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "ServiceNamespace":{"shape":"ServiceNamespace"},
+        "ResourceId":{"shape":"ResourceIdMaxLen1600"},
+        "ScalableDimension":{"shape":"ScalableDimension"},
+        "PolicyName":{"shape":"PolicyName"},
+        "StartTime":{"shape":"TimestampType"},
+        "EndTime":{"shape":"TimestampType"}
+      }
+    },
+    "GetPredictiveScalingForecastResponse":{
+      "type":"structure",
+      "members":{
+        "LoadForecast":{"shape":"LoadForecasts"},
+        "CapacityForecast":{"shape":"CapacityForecast"},
+        "UpdateTime":{"shape":"TimestampType"}
+      }
+    },
     "Id":{
       "type":"string",
       "max":255,
@@ -447,6 +495,23 @@
       "members":{
         "Tags":{"shape":"TagMap"}
       }
+    },
+    "LoadForecast":{
+      "type":"structure",
+      "required":[
+        "Timestamps",
+        "Values",
+        "MetricSpecification"
+      ],
+      "members":{
+        "Timestamps":{"shape":"PredictiveScalingForecastTimestamps"},
+        "Values":{"shape":"PredictiveScalingForecastValues"},
+        "MetricSpecification":{"shape":"PredictiveScalingMetricSpecification"}
+      }
+    },
+    "LoadForecasts":{
+      "type":"list",
+      "member":{"shape":"LoadForecast"}
     },
     "MaxResults":{"type":"integer"},
     "MetricAggregationType":{
@@ -507,6 +572,8 @@
         "CassandraReadCapacityUtilization",
         "CassandraWriteCapacityUtilization",
         "KafkaBrokerStorageUtilization",
+        "ElastiCacheEngineCPUUtilization",
+        "ElastiCacheDatabaseMemoryUsagePercentage",
         "ElastiCachePrimaryEngineCPUUtilization",
         "ElastiCacheReplicaEngineCPUUtilization",
         "ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage",
@@ -514,7 +581,9 @@
         "SageMakerVariantProvisionedConcurrencyUtilization",
         "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage",
         "SageMakerInferenceComponentInvocationsPerCopy",
-        "WorkSpacesAverageUserSessionsCapacityUtilization"
+        "WorkSpacesAverageUserSessionsCapacityUtilization",
+        "SageMakerInferenceComponentConcurrentRequestsPerCopyHighResolution",
+        "SageMakerVariantConcurrentRequestsPerModelHighResolution"
       ]
     },
     "MetricUnit":{"type":"string"},
@@ -550,7 +619,8 @@
       "type":"string",
       "enum":[
         "StepScaling",
-        "TargetTrackingScaling"
+        "TargetTrackingScaling",
+        "PredictiveScaling"
       ]
     },
     "PredefinedMetricSpecification":{
@@ -560,6 +630,182 @@
         "PredefinedMetricType":{"shape":"MetricType"},
         "ResourceLabel":{"shape":"ResourceLabel"}
       }
+    },
+    "PredictiveScalingCustomizedMetricSpecification":{
+      "type":"structure",
+      "required":["MetricDataQueries"],
+      "members":{
+        "MetricDataQueries":{"shape":"PredictiveScalingMetricDataQueries"}
+      }
+    },
+    "PredictiveScalingForecastTimestamps":{
+      "type":"list",
+      "member":{"shape":"TimestampType"}
+    },
+    "PredictiveScalingForecastValues":{
+      "type":"list",
+      "member":{"shape":"MetricScale"}
+    },
+    "PredictiveScalingMaxCapacityBreachBehavior":{
+      "type":"string",
+      "enum":[
+        "HonorMaxCapacity",
+        "IncreaseMaxCapacity"
+      ]
+    },
+    "PredictiveScalingMaxCapacityBuffer":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
+    "PredictiveScalingMetric":{
+      "type":"structure",
+      "members":{
+        "Dimensions":{"shape":"PredictiveScalingMetricDimensions"},
+        "MetricName":{"shape":"PredictiveScalingMetricName"},
+        "Namespace":{"shape":"PredictiveScalingMetricNamespace"}
+      }
+    },
+    "PredictiveScalingMetricDataQueries":{
+      "type":"list",
+      "member":{"shape":"PredictiveScalingMetricDataQuery"}
+    },
+    "PredictiveScalingMetricDataQuery":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"Id"},
+        "Expression":{"shape":"Expression"},
+        "MetricStat":{"shape":"PredictiveScalingMetricStat"},
+        "Label":{"shape":"XmlString"},
+        "ReturnData":{"shape":"ReturnData"}
+      }
+    },
+    "PredictiveScalingMetricDimension":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"PredictiveScalingMetricDimensionName"},
+        "Value":{"shape":"PredictiveScalingMetricDimensionValue"}
+      }
+    },
+    "PredictiveScalingMetricDimensionName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "PredictiveScalingMetricDimensionValue":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "PredictiveScalingMetricDimensions":{
+      "type":"list",
+      "member":{"shape":"PredictiveScalingMetricDimension"}
+    },
+    "PredictiveScalingMetricName":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "PredictiveScalingMetricNamespace":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "PredictiveScalingMetricSpecification":{
+      "type":"structure",
+      "required":["TargetValue"],
+      "members":{
+        "TargetValue":{"shape":"MetricScale"},
+        "PredefinedMetricPairSpecification":{"shape":"PredictiveScalingPredefinedMetricPairSpecification"},
+        "PredefinedScalingMetricSpecification":{"shape":"PredictiveScalingPredefinedScalingMetricSpecification"},
+        "PredefinedLoadMetricSpecification":{"shape":"PredictiveScalingPredefinedLoadMetricSpecification"},
+        "CustomizedScalingMetricSpecification":{"shape":"PredictiveScalingCustomizedMetricSpecification"},
+        "CustomizedLoadMetricSpecification":{"shape":"PredictiveScalingCustomizedMetricSpecification"},
+        "CustomizedCapacityMetricSpecification":{"shape":"PredictiveScalingCustomizedMetricSpecification"}
+      }
+    },
+    "PredictiveScalingMetricSpecifications":{
+      "type":"list",
+      "member":{"shape":"PredictiveScalingMetricSpecification"}
+    },
+    "PredictiveScalingMetricStat":{
+      "type":"structure",
+      "required":[
+        "Metric",
+        "Stat"
+      ],
+      "members":{
+        "Metric":{"shape":"PredictiveScalingMetric"},
+        "Stat":{"shape":"XmlString"},
+        "Unit":{"shape":"PredictiveScalingMetricUnit"}
+      }
+    },
+    "PredictiveScalingMetricType":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "PredictiveScalingMetricUnit":{
+      "type":"string",
+      "max":1023,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "PredictiveScalingMode":{
+      "type":"string",
+      "enum":[
+        "ForecastOnly",
+        "ForecastAndScale"
+      ]
+    },
+    "PredictiveScalingPolicyConfiguration":{
+      "type":"structure",
+      "required":["MetricSpecifications"],
+      "members":{
+        "MetricSpecifications":{"shape":"PredictiveScalingMetricSpecifications"},
+        "Mode":{"shape":"PredictiveScalingMode"},
+        "SchedulingBufferTime":{"shape":"PredictiveScalingSchedulingBufferTime"},
+        "MaxCapacityBreachBehavior":{"shape":"PredictiveScalingMaxCapacityBreachBehavior"},
+        "MaxCapacityBuffer":{"shape":"PredictiveScalingMaxCapacityBuffer"}
+      }
+    },
+    "PredictiveScalingPredefinedLoadMetricSpecification":{
+      "type":"structure",
+      "required":["PredefinedMetricType"],
+      "members":{
+        "PredefinedMetricType":{"shape":"PredictiveScalingMetricType"},
+        "ResourceLabel":{"shape":"ResourceLabel"}
+      }
+    },
+    "PredictiveScalingPredefinedMetricPairSpecification":{
+      "type":"structure",
+      "required":["PredefinedMetricType"],
+      "members":{
+        "PredefinedMetricType":{"shape":"PredictiveScalingMetricType"},
+        "ResourceLabel":{"shape":"ResourceLabel"}
+      }
+    },
+    "PredictiveScalingPredefinedScalingMetricSpecification":{
+      "type":"structure",
+      "required":["PredefinedMetricType"],
+      "members":{
+        "PredefinedMetricType":{"shape":"PredictiveScalingMetricType"},
+        "ResourceLabel":{"shape":"ResourceLabel"}
+      }
+    },
+    "PredictiveScalingSchedulingBufferTime":{
+      "type":"integer",
+      "max":3600,
+      "min":0
     },
     "PutScalingPolicyRequest":{
       "type":"structure",
@@ -576,7 +822,8 @@
         "ScalableDimension":{"shape":"ScalableDimension"},
         "PolicyType":{"shape":"PolicyType"},
         "StepScalingPolicyConfiguration":{"shape":"StepScalingPolicyConfiguration"},
-        "TargetTrackingScalingPolicyConfiguration":{"shape":"TargetTrackingScalingPolicyConfiguration"}
+        "TargetTrackingScalingPolicyConfiguration":{"shape":"TargetTrackingScalingPolicyConfiguration"},
+        "PredictiveScalingPolicyConfiguration":{"shape":"PredictiveScalingPolicyConfiguration"}
       }
     },
     "PutScalingPolicyResponse":{
@@ -609,8 +856,7 @@
     },
     "PutScheduledActionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RegisterScalableTargetRequest":{
       "type":"structure",
@@ -686,6 +932,7 @@
         "cassandra:table:ReadCapacityUnits",
         "cassandra:table:WriteCapacityUnits",
         "kafka:broker-storage:VolumeSize",
+        "elasticache:cache-cluster:Nodes",
         "elasticache:replication-group:NodeGroups",
         "elasticache:replication-group:Replicas",
         "neptune:cluster:ReadReplicaCount",
@@ -711,6 +958,7 @@
         "ScalableDimension":{"shape":"ScalableDimension"},
         "MinCapacity":{"shape":"ResourceCapacity"},
         "MaxCapacity":{"shape":"ResourceCapacity"},
+        "PredictedCapacity":{"shape":"ResourceCapacity"},
         "RoleARN":{"shape":"ResourceIdMaxLen1600"},
         "CreationTime":{"shape":"TimestampType"},
         "SuspendedState":{"shape":"SuspendedState"},
@@ -795,6 +1043,7 @@
         "PolicyType":{"shape":"PolicyType"},
         "StepScalingPolicyConfiguration":{"shape":"StepScalingPolicyConfiguration"},
         "TargetTrackingScalingPolicyConfiguration":{"shape":"TargetTrackingScalingPolicyConfiguration"},
+        "PredictiveScalingPolicyConfiguration":{"shape":"PredictiveScalingPolicyConfiguration"},
         "Alarms":{"shape":"Alarms"},
         "CreationTime":{"shape":"TimestampType"}
       }
@@ -914,8 +1163,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1036,8 +1284,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ValidationException":{
       "type":"structure",

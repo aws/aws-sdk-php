@@ -5,11 +5,13 @@
     "endpointPrefix":"m2",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWSMainframeModernization",
     "serviceId":"m2",
     "signatureVersion":"v4",
     "signingName":"m2",
-    "uid":"m2-2021-04-28"
+    "uid":"m2-2021-04-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelBatchJobExecution":{
@@ -40,6 +42,26 @@
       "input":{"shape":"CreateApplicationRequest"},
       "output":{"shape":"CreateApplicationResponse"},
       "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
+    "CreateDataSetExportTask":{
+      "name":"CreateDataSetExportTask",
+      "http":{
+        "method":"POST",
+        "requestUri":"/applications/{applicationId}/dataset-export-task",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateDataSetExportTaskRequest"},
+      "output":{"shape":"CreateDataSetExportTaskResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
@@ -233,6 +255,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetDataSetExportTask":{
+      "name":"GetDataSetExportTask",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/dataset-export-tasks/{taskId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetDataSetExportTaskRequest"},
+      "output":{"shape":"GetDataSetExportTaskResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetDataSetImportTask":{
       "name":"GetDataSetImportTask",
       "http":{
@@ -379,6 +418,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListDataSetExportHistory":{
+      "name":"ListDataSetExportHistory",
+      "http":{
+        "method":"GET",
+        "requestUri":"/applications/{applicationId}/dataset-export-tasks",
+        "responseCode":200
+      },
+      "input":{"shape":"ListDataSetExportHistoryRequest"},
+      "output":{"shape":"ListDataSetExportHistoryResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
@@ -732,6 +788,11 @@
       "member":{"shape":"Arn"},
       "min":1
     },
+    "AuthSecretsManagerArn":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
     "BatchJobDefinition":{
       "type":"structure",
       "members":{
@@ -817,11 +878,11 @@
       "type":"string",
       "max":32,
       "min":1,
-      "pattern":"^[A-Za-z][A-Za-z0-9]{1,7}$"
+      "pattern":"^[A-Za-z][A-Za-z0-9]{1,31}$"
     },
     "BatchParamValue":{
       "type":"string",
-      "max":80,
+      "max":1024,
       "min":0
     },
     "Boolean":{"type":"boolean"},
@@ -837,6 +898,7 @@
           "location":"uri",
           "locationName":"applicationId"
         },
+        "authSecretsManagerArn":{"shape":"AuthSecretsManagerArn"},
         "executionId":{
           "shape":"Identifier",
           "location":"uri",
@@ -852,6 +914,12 @@
     "CapacityValue":{
       "type":"integer",
       "box":true
+    },
+    "ClientToken":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^[!-~]+$"
     },
     "ConflictException":{
       "type":"structure",
@@ -876,7 +944,7 @@
       ],
       "members":{
         "clientToken":{
-          "shape":"String",
+          "shape":"ClientToken",
           "idempotencyToken":true
         },
         "definition":{"shape":"Definition"},
@@ -901,6 +969,33 @@
         "applicationVersion":{"shape":"Version"}
       }
     },
+    "CreateDataSetExportTaskRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "exportConfig"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "exportConfig":{"shape":"DataSetExportConfig"},
+        "kmsKeyId":{"shape":"KMSKeyId"}
+      }
+    },
+    "CreateDataSetExportTaskResponse":{
+      "type":"structure",
+      "required":["taskId"],
+      "members":{
+        "taskId":{"shape":"Identifier"}
+      }
+    },
     "CreateDataSetImportTaskRequest":{
       "type":"structure",
       "required":[
@@ -914,7 +1009,7 @@
           "locationName":"applicationId"
         },
         "clientToken":{
-          "shape":"String",
+          "shape":"ClientToken",
           "idempotencyToken":true
         },
         "importConfig":{"shape":"DataSetImportConfig"}
@@ -942,7 +1037,7 @@
         },
         "applicationVersion":{"shape":"Version"},
         "clientToken":{
-          "shape":"String",
+          "shape":"ClientToken",
           "idempotencyToken":true
         },
         "environmentId":{"shape":"Identifier"}
@@ -964,7 +1059,7 @@
       ],
       "members":{
         "clientToken":{
-          "shape":"String",
+          "shape":"ClientToken",
           "idempotencyToken":true
         },
         "description":{"shape":"EntityDescription"},
@@ -974,6 +1069,7 @@
         "instanceType":{"shape":"String20"},
         "kmsKeyId":{"shape":"String"},
         "name":{"shape":"EntityName"},
+        "networkType":{"shape":"NetworkType"},
         "preferredMaintenanceWindow":{"shape":"String50"},
         "publiclyAccessible":{"shape":"Boolean"},
         "securityGroupIds":{"shape":"String50List"},
@@ -1003,6 +1099,66 @@
         "relativePath":{"shape":"String"},
         "storageType":{"shape":"String"}
       }
+    },
+    "DataSetExportConfig":{
+      "type":"structure",
+      "members":{
+        "dataSets":{"shape":"DataSetExportList"},
+        "s3Location":{"shape":"String"}
+      },
+      "union":true
+    },
+    "DataSetExportItem":{
+      "type":"structure",
+      "required":[
+        "datasetName",
+        "externalLocation"
+      ],
+      "members":{
+        "datasetName":{"shape":"String200"},
+        "externalLocation":{"shape":"ExternalLocation"}
+      }
+    },
+    "DataSetExportList":{
+      "type":"list",
+      "member":{"shape":"DataSetExportItem"},
+      "max":1024,
+      "min":1
+    },
+    "DataSetExportSummary":{
+      "type":"structure",
+      "required":[
+        "failed",
+        "inProgress",
+        "pending",
+        "succeeded",
+        "total"
+      ],
+      "members":{
+        "failed":{"shape":"Integer"},
+        "inProgress":{"shape":"Integer"},
+        "pending":{"shape":"Integer"},
+        "succeeded":{"shape":"Integer"},
+        "total":{"shape":"Integer"}
+      }
+    },
+    "DataSetExportTask":{
+      "type":"structure",
+      "required":[
+        "status",
+        "summary",
+        "taskId"
+      ],
+      "members":{
+        "status":{"shape":"DataSetTaskLifecycle"},
+        "statusReason":{"shape":"String"},
+        "summary":{"shape":"DataSetExportSummary"},
+        "taskId":{"shape":"Identifier"}
+      }
+    },
+    "DataSetExportTaskList":{
+      "type":"list",
+      "member":{"shape":"DataSetExportTask"}
     },
     "DataSetImportConfig":{
       "type":"structure",
@@ -1283,7 +1439,8 @@
         "Available",
         "Updating",
         "Deleting",
-        "Failed"
+        "Failed",
+        "UnHealthy"
       ]
     },
     "EnvironmentSummary":{
@@ -1306,6 +1463,7 @@
         "environmentId":{"shape":"Identifier"},
         "instanceType":{"shape":"String20"},
         "name":{"shape":"EntityName"},
+        "networkType":{"shape":"NetworkType"},
         "status":{"shape":"EnvironmentLifecycle"}
       }
     },
@@ -1544,6 +1702,39 @@
         }
       }
     },
+    "GetDataSetExportTaskRequest":{
+      "type":"structure",
+      "required":[
+        "applicationId",
+        "taskId"
+      ],
+      "members":{
+        "applicationId":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "taskId":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"taskId"
+        }
+      }
+    },
+    "GetDataSetExportTaskResponse":{
+      "type":"structure",
+      "required":[
+        "status",
+        "taskId"
+      ],
+      "members":{
+        "kmsKeyArn":{"shape":"String"},
+        "status":{"shape":"DataSetTaskLifecycle"},
+        "statusReason":{"shape":"String"},
+        "summary":{"shape":"DataSetExportSummary"},
+        "taskId":{"shape":"Identifier"}
+      }
+    },
     "GetDataSetImportTaskRequest":{
       "type":"structure",
       "required":[
@@ -1653,6 +1844,7 @@
         "kmsKeyId":{"shape":"String"},
         "loadBalancerArn":{"shape":"String"},
         "name":{"shape":"EntityName"},
+        "networkType":{"shape":"NetworkType"},
         "pendingMaintenance":{"shape":"PendingMaintenance"},
         "preferredMaintenanceWindow":{"shape":"String50"},
         "publiclyAccessible":{"shape":"Boolean"},
@@ -1719,6 +1911,12 @@
       "members":{
         "procStepName":{"shape":"String"},
         "procStepNumber":{"shape":"Integer"},
+        "stepCheckpoint":{
+          "shape":"Integer",
+          "box":true
+        },
+        "stepCheckpointStatus":{"shape":"String"},
+        "stepCheckpointTime":{"shape":"Timestamp"},
         "stepCondCode":{"shape":"String"},
         "stepName":{"shape":"String"},
         "stepNumber":{"shape":"Integer"},
@@ -1731,9 +1929,23 @@
       "members":{
         "fromProcStep":{"shape":"String"},
         "fromStep":{"shape":"String"},
+        "skip":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "stepCheckpoint":{
+          "shape":"Integer",
+          "box":true
+        },
         "toProcStep":{"shape":"String"},
         "toStep":{"shape":"String"}
       }
+    },
+    "KMSKeyId":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9:/_-]+$"
     },
     "ListApplicationVersionsRequest":{
       "type":"structure",
@@ -1897,6 +2109,11 @@
           "location":"uri",
           "locationName":"applicationId"
         },
+        "authSecretsManagerArn":{
+          "shape":"AuthSecretsManagerArn",
+          "location":"querystring",
+          "locationName":"authSecretsManagerArn"
+        },
         "executionId":{
           "shape":"Identifier",
           "location":"uri",
@@ -1908,6 +2125,35 @@
       "type":"structure",
       "members":{
         "batchJobSteps":{"shape":"BatchJobStepList"}
+      }
+    },
+    "ListDataSetExportHistoryRequest":{
+      "type":"structure",
+      "required":["applicationId"],
+      "members":{
+        "applicationId":{
+          "shape":"Identifier",
+          "location":"uri",
+          "locationName":"applicationId"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListDataSetExportHistoryResponse":{
+      "type":"structure",
+      "required":["dataSetExportTasks"],
+      "members":{
+        "dataSetExportTasks":{"shape":"DataSetExportTaskList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListDataSetImportHistoryRequest":{
@@ -2123,6 +2369,13 @@
       "max":2000,
       "min":1
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dual"
+      ]
+    },
     "NextToken":{
       "type":"string",
       "pattern":"^\\S{1,2000}$"
@@ -2310,6 +2563,7 @@
           "location":"uri",
           "locationName":"applicationId"
         },
+        "authSecretsManagerArn":{"shape":"AuthSecretsManagerArn"},
         "batchJobIdentifier":{"shape":"BatchJobIdentifier"},
         "jobParams":{"shape":"BatchJobParametersMap"}
       }

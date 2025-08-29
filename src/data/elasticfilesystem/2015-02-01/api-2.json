@@ -702,6 +702,8 @@
         "FileSystemId":{"shape":"FileSystemId"},
         "SubnetId":{"shape":"SubnetId"},
         "IpAddress":{"shape":"IpAddress"},
+        "Ipv6Address":{"shape":"Ipv6Address"},
+        "IpAddressType":{"shape":"IpAddressType"},
         "SecurityGroups":{"shape":"SecurityGroups"}
       }
     },
@@ -806,6 +808,11 @@
           "shape":"FileSystemId",
           "location":"uri",
           "locationName":"SourceFileSystemId"
+        },
+        "DeletionMode":{
+          "shape":"DeletionMode",
+          "location":"querystring",
+          "locationName":"deletionMode"
         }
       }
     },
@@ -823,6 +830,13 @@
         },
         "TagKeys":{"shape":"TagKeys"}
       }
+    },
+    "DeletionMode":{
+      "type":"string",
+      "enum":[
+        "ALL_CONFIGURATIONS",
+        "LOCAL_CONFIGURATION_ONLY"
+      ]
     },
     "DependencyTimeout":{
       "type":"structure",
@@ -1070,7 +1084,10 @@
         "Status":{"shape":"ReplicationStatus"},
         "FileSystemId":{"shape":"FileSystemId"},
         "Region":{"shape":"RegionName"},
-        "LastReplicatedTimestamp":{"shape":"Timestamp"}
+        "LastReplicatedTimestamp":{"shape":"Timestamp"},
+        "OwnerId":{"shape":"AwsAccountId"},
+        "StatusMessage":{"shape":"StatusMessage"},
+        "RoleArn":{"shape":"RoleArn"}
       }
     },
     "DestinationToCreate":{
@@ -1079,7 +1096,8 @@
         "Region":{"shape":"RegionName"},
         "AvailabilityZoneName":{"shape":"AvailabilityZoneName"},
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "FileSystemId":{"shape":"FileSystemId"}
+        "FileSystemId":{"shape":"FileSystemId"},
+        "RoleArn":{"shape":"RoleArn"}
       }
     },
     "Destinations":{
@@ -1286,6 +1304,19 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "IPV4_ONLY",
+        "IPV6_ONLY",
+        "DUAL_STACK"
+      ]
+    },
+    "Ipv6Address":{
+      "type":"string",
+      "max":39,
+      "min":3
+    },
     "KmsKeyId":{
       "type":"string",
       "max":2048,
@@ -1404,6 +1435,7 @@
         "SubnetId":{"shape":"SubnetId"},
         "LifeCycleState":{"shape":"LifeCycleState"},
         "IpAddress":{"shape":"IpAddress"},
+        "Ipv6Address":{"shape":"Ipv6Address"},
         "NetworkInterfaceId":{"shape":"NetworkInterfaceId"},
         "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "AvailabilityZoneName":{"shape":"AvailabilityZoneName"},
@@ -1602,7 +1634,8 @@
         "SourceFileSystemArn":{"shape":"FileSystemArn"},
         "OriginalSourceFileSystemArn":{"shape":"FileSystemArn"},
         "CreationTime":{"shape":"Timestamp"},
-        "Destinations":{"shape":"Destinations"}
+        "Destinations":{"shape":"Destinations"},
+        "SourceFileSystemOwnerId":{"shape":"AwsAccountId"}
       }
     },
     "ReplicationConfigurationDescriptions":{
@@ -1667,6 +1700,11 @@
       "type":"list",
       "member":{"shape":"Resource"}
     },
+    "RoleArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:iam::\\d{12}:role/?[a-zA-Z_0-9+=,.@\\-_/]+"
+    },
     "RootDirectory":{
       "type":"structure",
       "members":{
@@ -1720,6 +1758,7 @@
         "DISABLING"
       ]
     },
+    "StatusMessage":{"type":"string"},
     "SubnetId":{
       "type":"string",
       "max":47,

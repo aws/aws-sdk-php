@@ -9,7 +9,6 @@ use Aws\S3\Crypto\S3EncryptionClientV2;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Aws\Kms\KmsClient;
 use PHPUnit\Framework\Assert;
 
@@ -34,13 +33,6 @@ class S3EncryptionContextV2 implements Context, SnippetAcceptingContext
      */
     public function setUp(BeforeScenarioScope $scope)
     {
-        $scenarioTitle = $scope->getScenario()->getTitle();
-        if (!empty($scenarioTitle) && stripos($scenarioTitle, 'gcm') !== false) {
-            if (version_compare(PHP_VERSION, '7.1', '<')) {
-                throw new PendingException('Test skipped on no GCM support');
-            }
-        }
-
         $this->plaintexts = [];
         $this->decrypted = [];
         $this->operationParams = [];

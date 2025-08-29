@@ -1,0 +1,925 @@
+{
+  "version": "2.0",
+  "service": "<p>Multi-party approval is a capability of <a href=\"http://aws.amazon.com/organizations\">Organizations</a> that allows you to protect a predefined list of operations through a distributed approval process. Use Multi-party approval to establish approval workflows and transform security processes into team-based decisions.</p> <p> <b>When to use Multi-party approval</b>:</p> <ul> <li> <p>You need to align with the Zero Trust principle of \"never trust, always verify\"</p> </li> <li> <p>You need to make sure that the right humans have access to the right things in the right way</p> </li> <li> <p>You need distributed decision-making for sensitive or critical operations</p> </li> <li> <p>You need to protect against unintended operations on sensitive or critical resources</p> </li> <li> <p>You need formal reviews and approvals for auditing or compliance reasons</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/what-is.html\">What is Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+  "operations": {
+    "CancelSession": "<p>Cancels an approval session. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Session</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "CreateApprovalTeam": "<p>Creates a new approval team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Approval team</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "CreateIdentitySource": "<p>Creates a new identity source. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Identity Source</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "DeleteIdentitySource": "<p>Deletes an identity source. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Identity Source</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "DeleteInactiveApprovalTeamVersion": "<p>Deletes an inactive approval team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p> <p>You can also use this operation to delete a team draft. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/update-team.html#update-team-draft-status\">Interacting with drafts</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "GetApprovalTeam": "<p>Returns details for an approval team.</p>",
+    "GetIdentitySource": "<p>Returns details for an identity source. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Identity Source</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "GetPolicyVersion": "<p>Returns details for the version of a policy. Policies define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "GetResourcePolicy": "<p>Returns details about a policy for a resource.</p>",
+    "GetSession": "<p>Returns details for an approval session. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Session</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "ListApprovalTeams": "<p>Returns a list of approval teams.</p>",
+    "ListIdentitySources": "<p>Returns a list of identity sources. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Identity Source</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "ListPolicies": "<p>Returns a list of policies. Policies define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "ListPolicyVersions": "<p>Returns a list of the versions for policies. Policies define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "ListResourcePolicies": "<p>Returns a list of policies for a resource.</p>",
+    "ListSessions": "<p>Returns a list of approval sessions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Session</a> in the <i>Multi-party approval User Guide</i>.</p>",
+    "ListTagsForResource": "<p>Returns a list of the tags for a resource.</p>",
+    "StartActiveApprovalTeamDeletion": "<p>Starts the deletion process for an active approval team.</p> <note> <p> <b>Deletions require team approval</b> </p> <p>Requests to delete an active team must be approved by the team.</p> </note>",
+    "TagResource": "<p>Creates or updates a resource tag. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources.</p>",
+    "UntagResource": "<p>Removes a resource tag. Each tag is a label consisting of a user-defined key and value. Tags can help you manage, identify, organize, search for, and filter resources. </p>",
+    "UpdateApprovalTeam": "<p>Updates an approval team. You can request to update the team description, approval threshold, and approvers in the team.</p> <note> <p> <b>Updates require team approval</b> </p> <p>Updates to an active team must be approved by the team.</p> </note>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action. Check your permissions, and try again.</p>",
+      "refs": {
+      }
+    },
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$RequesterAccountId": "<p>ID for the account that made the operation request.</p>",
+        "ListSessionsResponseSession$RequesterAccountId": "<p>ID for the account that made the operation request.</p>"
+      }
+    },
+    "ActionCompletionStrategy": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$ActionCompletionStrategy": "<p>Strategy for executing the protected operation. <code>AUTO_COMPLETION_UPON_APPROVAL</code> means the operation is automatically executed using the requester's permissions, if approved.</p>",
+        "ListSessionsResponseSession$ActionCompletionStrategy": "<p>Strategy for executing the protected operation. <code>AUTO_COMPLETION_UPON_APPROVAL</code> means the operation is executed automatically using the requester's permissions, if approved.</p>"
+      }
+    },
+    "ActionName": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$ActionName": "<p>Name of the protected operation.</p>",
+        "ListSessionsResponseSession$ActionName": "<p>Name of the protected operation.</p>"
+      }
+    },
+    "ApprovalStrategy": {
+      "base": "<p>Strategy for how an approval team grants approval.</p>",
+      "refs": {
+        "CreateApprovalTeamRequest$ApprovalStrategy": "<p>An <code>ApprovalStrategy</code> object. Contains details for how the team grants approval.</p>",
+        "UpdateApprovalTeamRequest$ApprovalStrategy": "<p>An <code>ApprovalStrategy</code> object. Contains details for how the team grants approval.</p>"
+      }
+    },
+    "ApprovalStrategyResponse": {
+      "base": "<p>Contains details for how an approval team grants approval.</p>",
+      "refs": {
+        "GetApprovalTeamResponse$ApprovalStrategy": "<p>An <code>ApprovalStrategyResponse</code> object. Contains details for how the team grants approval.</p>",
+        "GetSessionResponse$ApprovalStrategy": "<p>An <code>ApprovalStrategyResponse</code> object. Contains details for how the team grants approval</p>",
+        "ListApprovalTeamsResponseApprovalTeam$ApprovalStrategy": "<p>An <code>ApprovalStrategyResponse</code> object. Contains details for how an approval team grants approval.</p>",
+        "PendingUpdate$ApprovalStrategy": "<p>An <code>ApprovalStrategyResponse</code> object. Contains details for how the team grants approval.</p>"
+      }
+    },
+    "ApprovalTeamArn": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamResponse$Arn": "<p>Amazon Resource Name (ARN) for the team that was created.</p>",
+        "DeleteInactiveApprovalTeamVersionRequest$Arn": "<p>Amaazon Resource Name (ARN) for the team.</p>",
+        "GetApprovalTeamRequest$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>",
+        "GetSessionResponse$ApprovalTeamArn": "<p>Amazon Resource Name (ARN) for the approval team.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>",
+        "ListSessionsRequest$ApprovalTeamArn": "<p>Amazon Resource Name (ARN) for the approval team.</p>",
+        "ListSessionsResponseSession$ApprovalTeamArn": "<p>Amazon Resource Name (ARN) for the approval team.</p>",
+        "StartActiveApprovalTeamDeletionRequest$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>",
+        "UpdateApprovalTeamRequest$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>"
+      }
+    },
+    "ApprovalTeamName": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamRequest$Name": "<p>Name of the team.</p>",
+        "GetSessionResponse$ApprovalTeamName": "<p>Name of the approval team.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$Name": "<p>Name of the team.</p>",
+        "ListSessionsResponseSession$ApprovalTeamName": "<p>Name of the approval team.</p>"
+      }
+    },
+    "ApprovalTeamRequestApprover": {
+      "base": "<p>Contains details for an approver.</p>",
+      "refs": {
+        "ApprovalTeamRequestApprovers$member": null
+      }
+    },
+    "ApprovalTeamRequestApprovers": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamRequest$Approvers": "<p>An array of <code>ApprovalTeamRequesterApprovers</code> objects. Contains details for the approvers in the team.</p>",
+        "UpdateApprovalTeamRequest$Approvers": "<p>An array of <code>ApprovalTeamRequestApprover</code> objects. Contains details for the approvers in the team.</p>"
+      }
+    },
+    "ApprovalTeamStatus": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponse$Status": "<p>Status for the team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$Status": "<p>Status for the team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>",
+        "PendingUpdate$Status": "<p>Status for the team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>"
+      }
+    },
+    "ApprovalTeamStatusCode": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponse$StatusCode": "<p>Status code for the approval team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$StatusCode": "<p>Status code for the team. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>",
+        "PendingUpdate$StatusCode": "<p>Status code for the update. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Team health</a> in the <i>Multi-party approval User Guide</i>.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "PolicyVersion$IsDefault": "<p>Determines if the specified policy is the default for the team.</p>",
+        "PolicyVersionSummary$IsDefault": "<p>Determines if the specified policy is the default for the team.</p>"
+      }
+    },
+    "CancelSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CancelSessionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The request cannot be completed because it conflicts with the current state of a resource.</p>",
+      "refs": {
+      }
+    },
+    "CreateApprovalTeamRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateApprovalTeamResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateIdentitySourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateIdentitySourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteIdentitySourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteInactiveApprovalTeamVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteInactiveApprovalTeamVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Description": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamRequest$Description": "<p>Description for the team.</p>",
+        "GetApprovalTeamResponse$Description": "<p>Description for the team.</p>",
+        "GetSessionResponse$Description": "<p>Description for the session.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$Description": "<p>Description for the team.</p>",
+        "ListSessionsResponseSession$Description": "<p>Description for the team.</p>",
+        "UpdateApprovalTeamRequest$Description": "<p>Description for the team.</p>"
+      }
+    },
+    "Filter": {
+      "base": "<p>Contains the filter to apply to requests. You can specify up to 10 filters for a request.</p>",
+      "refs": {
+        "Filters$member": null
+      }
+    },
+    "FilterField": {
+      "base": null,
+      "refs": {
+        "Filter$FieldName": "<p>Name of the filter to use.</p> <note> <p> <b>Supported filters</b> </p> <p>The supported filters for <a>ListSessions</a> are: <code>ActionName</code>, <code>SessionStatus</code>, and <code>InitationTime</code>.</p> </note>"
+      }
+    },
+    "Filters": {
+      "base": null,
+      "refs": {
+        "ListSessionsRequest$Filters": "<p>An array of <code>Filter</code> objects. Contains the filter to apply when listing sessions.</p>"
+      }
+    },
+    "GetApprovalTeamRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetApprovalTeamResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetApprovalTeamResponseApprover": {
+      "base": "<p>Contains details for an approver.</p>",
+      "refs": {
+        "GetApprovalTeamResponseApprovers$member": null
+      }
+    },
+    "GetApprovalTeamResponseApprovers": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponse$Approvers": "<p>An array of <code>GetApprovalTeamResponseApprover </code> objects. Contains details for the approvers in the team.</p>",
+        "PendingUpdate$Approvers": "<p>An array of <code>GetApprovalTeamResponseApprover </code> objects. Contains details for the approvers in the team.</p>"
+      }
+    },
+    "GetIdentitySourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetIdentitySourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPolicyVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPolicyVersionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourcePolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSessionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSessionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSessionResponseApproverResponse": {
+      "base": "<p>Contains details for an approver response in an approval session.</p>",
+      "refs": {
+        "GetSessionResponseApproverResponses$member": null
+      }
+    },
+    "GetSessionResponseApproverResponses": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$ApproverResponses": "<p>An array of <code>GetSessionResponseApproverResponse</code> objects. Contains details for approver responses in the session.</p>"
+      }
+    },
+    "IamIdentityCenter": {
+      "base": "<p>IAM Identity Center credentials. For more information see, <a href=\"http://aws.amazon.com/identity-center/\">IAM Identity Center</a> .</p>",
+      "refs": {
+        "IdentitySourceParameters$IamIdentityCenter": "<p>IAM Identity Center credentials.</p>"
+      }
+    },
+    "IamIdentityCenterForGet": {
+      "base": "<p>IAM Identity Center credentials. For more information see, <a href=\"http://aws.amazon.com/identity-center/\">IAM Identity Center</a> .</p>",
+      "refs": {
+        "IdentitySourceParametersForGet$IamIdentityCenter": "<p>IAM Identity Center credentials.</p>"
+      }
+    },
+    "IamIdentityCenterForList": {
+      "base": "<p>IAM Identity Center credentials. For more information see, <a href=\"http://aws.amazon.com/identity-center/\">IAM Identity Center</a> .</p>",
+      "refs": {
+        "IdentitySourceParametersForList$IamIdentityCenter": "<p>IAM Identity Center credentials.</p>"
+      }
+    },
+    "IdcInstanceArn": {
+      "base": null,
+      "refs": {
+        "IamIdentityCenter$InstanceArn": "<p>Amazon Resource Name (ARN) for the IAM Identity Center instance.</p>"
+      }
+    },
+    "IdentityId": {
+      "base": null,
+      "refs": {
+        "ApprovalTeamRequestApprover$PrimaryIdentityId": "<p>ID for the user.</p>",
+        "GetApprovalTeamResponseApprover$PrimaryIdentityId": "<p>ID for the user.</p>",
+        "GetSessionResponseApproverResponse$IdentityId": "<p>ID for the identity source. The identity source manages the user authentication for approvers.</p>"
+      }
+    },
+    "IdentitySourceForList": {
+      "base": "<p>Contains details for an identity source. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Identity source</a> in the <i>Multi-party approval User Guide</i>.</p>",
+      "refs": {
+        "IdentitySources$member": null
+      }
+    },
+    "IdentitySourceParameters": {
+      "base": "<p>Contains details for the resource that provides identities to the identity source. For example, an IAM Identity Center instance.</p>",
+      "refs": {
+        "CreateIdentitySourceRequest$IdentitySourceParameters": "<p>A <code> IdentitySourceParameters</code> object. Contains details for the resource that provides identities to the identity source. For example, an IAM Identity Center instance.</p>"
+      }
+    },
+    "IdentitySourceParametersForGet": {
+      "base": "<p>Contains details for the resource that provides identities to the identity source. For example, an IAM Identity Center instance. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Identity source</a> in the <i>Multi-party approval User Guide</i>.</p>",
+      "refs": {
+        "GetIdentitySourceResponse$IdentitySourceParameters": "<p>A <code> IdentitySourceParameters</code> object. Contains details for the resource that provides identities to the identity source. For example, an IAM Identity Center instance.</p>"
+      }
+    },
+    "IdentitySourceParametersForList": {
+      "base": "<p>Contains details for the resource that provides identities to the identity source. For example, an IAM Identity Center instance. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-concepts.html\">Identity source</a> in the <i>Multi-party approval User Guide</i>.</p>",
+      "refs": {
+        "IdentitySourceForList$IdentitySourceParameters": "<p>A <code>IdentitySourceParametersForList</code> object. Contains details for the resource that provides identities to the identity source. For example, an IAM Identity Center instance.</p>"
+      }
+    },
+    "IdentitySourceStatus": {
+      "base": null,
+      "refs": {
+        "GetIdentitySourceResponse$Status": "<p>Status for the identity source. For example, if the identity source is <code>ACTIVE</code>.</p>",
+        "IdentitySourceForList$Status": "<p>Status for the identity source. For example, if the identity source is <code>ACTIVE</code>.</p>"
+      }
+    },
+    "IdentitySourceStatusCode": {
+      "base": null,
+      "refs": {
+        "GetIdentitySourceResponse$StatusCode": "<p>Status code of the identity source.</p>",
+        "IdentitySourceForList$StatusCode": "<p>Status code of the identity source.</p>"
+      }
+    },
+    "IdentitySourceType": {
+      "base": null,
+      "refs": {
+        "CreateIdentitySourceResponse$IdentitySourceType": "<p>The type of resource that provided identities to the identity source. For example, an IAM Identity Center instance.</p>",
+        "GetIdentitySourceResponse$IdentitySourceType": "<p>The type of resource that provided identities to the identity source. For example, an IAM Identity Center instance.</p>",
+        "IdentitySourceForList$IdentitySourceType": "<p>The type of resource that provided identities to the identity source. For example, an IAM Identity Center instance.</p>"
+      }
+    },
+    "IdentitySources": {
+      "base": null,
+      "refs": {
+        "ListIdentitySourcesResponse$IdentitySources": "<p>A <code>IdentitySources</code>. Contains details for identity sources.</p>"
+      }
+    },
+    "IdentityStatus": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponseApprover$PrimaryIdentityStatus": "<p>Status for the identity source. For example, if an approver has accepted a team invitation with a user authentication method managed by the identity source.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponse$NumberOfApprovers": "<p>Total number of approvers in the team.</p>",
+        "GetSessionResponse$NumberOfApprovers": "<p>Total number of approvers in the session.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$NumberOfApprovers": "<p>Total number of approvers in the team.</p>",
+        "PendingUpdate$NumberOfApprovers": "<p>Total number of approvers in the team.</p>",
+        "StartActiveApprovalTeamDeletionRequest$PendingWindowDays": "<p>Number of days between when the team approves the delete request and when the team is deleted.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The service encountered an internal error. Try your request again. If the problem persists, contact Amazon Web Services Support.</p>",
+      "refs": {
+      }
+    },
+    "InvalidParameterException": {
+      "base": "<p>The request contains an invalid parameter value.</p>",
+      "refs": {
+      }
+    },
+    "IsoTimestamp": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamResponse$CreationTime": "<p>Timestamp when the team was created.</p>",
+        "CreateIdentitySourceResponse$CreationTime": "<p>Timestamp when the identity source was created.</p>",
+        "GetApprovalTeamResponse$CreationTime": "<p>Timestamp when the team was created.</p>",
+        "GetApprovalTeamResponse$LastUpdateTime": "<p>Timestamp when the team was last updated.</p>",
+        "GetApprovalTeamResponseApprover$ResponseTime": "<p>Timestamp when the approver responded to an approval team invitation.</p>",
+        "GetIdentitySourceResponse$CreationTime": "<p>Timestamp when the identity source was created.</p>",
+        "GetSessionResponse$InitiationTime": "<p>Timestamp when the session was initiated.</p>",
+        "GetSessionResponse$ExpirationTime": "<p>Timestamp when the session will expire.</p>",
+        "GetSessionResponse$CompletionTime": "<p>Timestamp when the session completed.</p>",
+        "GetSessionResponseApproverResponse$ResponseTime": "<p>Timestamp when a approver responded to the operation request.</p>",
+        "IdentitySourceForList$CreationTime": "<p>Timestamp when the identity source was created.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$CreationTime": "<p>Timestamp when the team was created.</p>",
+        "ListSessionsResponseSession$InitiationTime": "<p>Timestamp when the session was initiated.</p>",
+        "ListSessionsResponseSession$ExpirationTime": "<p>Timestamp when the session was expire.</p>",
+        "ListSessionsResponseSession$CompletionTime": "<p>Timestamp when the session was completed.</p>",
+        "PendingUpdate$UpdateInitiationTime": "<p>Timestamp when the update request was initiated.</p>",
+        "PolicyVersion$CreationTime": "<p>Timestamp when the policy was created.</p>",
+        "PolicyVersion$LastUpdatedTime": "<p>Timestamp when the policy was last updated.</p>",
+        "PolicyVersionSummary$CreationTime": "<p>Timestamp when the policy was created.</p>",
+        "PolicyVersionSummary$LastUpdatedTime": "<p>Timestamp when the policy was last updated.</p>",
+        "StartActiveApprovalTeamDeletionResponse$DeletionCompletionTime": "<p>Timestamp when the deletion process is scheduled to complete.</p>",
+        "StartActiveApprovalTeamDeletionResponse$DeletionStartTime": "<p>Timestamp when the deletion process was initiated.</p>"
+      }
+    },
+    "ListApprovalTeamsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListApprovalTeamsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListApprovalTeamsResponseApprovalTeam": {
+      "base": "<p>Contains details for an approval team</p>",
+      "refs": {
+        "ListApprovalTeamsResponseApprovalTeams$member": null
+      }
+    },
+    "ListApprovalTeamsResponseApprovalTeams": {
+      "base": null,
+      "refs": {
+        "ListApprovalTeamsResponse$ApprovalTeams": "<p>An array of <code>ListApprovalTeamsResponseApprovalTeam</code> objects. Contains details for approval teams.</p>"
+      }
+    },
+    "ListIdentitySourcesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListIdentitySourcesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPoliciesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPoliciesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPolicyVersionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListPolicyVersionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourcePoliciesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourcePoliciesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourcePoliciesResponseResourcePolicies": {
+      "base": null,
+      "refs": {
+        "ListResourcePoliciesResponse$ResourcePolicies": "<p>An array of <code>ListResourcePoliciesResponseResourcePolicy</code> objects. Contains details about the policy for the resource.</p>"
+      }
+    },
+    "ListResourcePoliciesResponseResourcePolicy": {
+      "base": "<p>Contains details about a policy for a resource.</p>",
+      "refs": {
+        "ListResourcePoliciesResponseResourcePolicies$member": null
+      }
+    },
+    "ListSessionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSessionsResponseSession": {
+      "base": "<p>Contains details for an approval session. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-health.html\">Session</a> in the <i>Multi-party approval User Guide</i> </p>",
+      "refs": {
+        "ListSessionsResponseSessions$member": null
+      }
+    },
+    "ListSessionsResponseSessions": {
+      "base": null,
+      "refs": {
+        "ListSessionsResponse$Sessions": "<p>An array of <code>ListSessionsResponseSession</code> objects. Contains details for the sessions.</p>"
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListApprovalTeamsRequest$MaxResults": "<p>The maximum number of items to return in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that you can retrieve the remaining results.</p>",
+        "ListIdentitySourcesRequest$MaxResults": "<p>The maximum number of items to return in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that you can retrieve the remaining results.</p>",
+        "ListPoliciesRequest$MaxResults": "<p>The maximum number of items to return in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that you can retrieve the remaining results.</p>",
+        "ListPolicyVersionsRequest$MaxResults": "<p>The maximum number of items to return in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that you can retrieve the remaining results.</p>",
+        "ListResourcePoliciesRequest$MaxResults": "<p>The maximum number of items to return in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that you can retrieve the remaining results.</p>",
+        "ListSessionsRequest$MaxResults": "<p>The maximum number of items to return in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that you can retrieve the remaining results.</p>"
+      }
+    },
+    "Message": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponse$StatusMessage": "<p>Message describing the status for the team.</p>",
+        "GetSessionResponse$StatusMessage": "<p>Message describing the status for session.</p>",
+        "ListApprovalTeamsResponseApprovalTeam$StatusMessage": "<p>Message describing the status for the team.</p>",
+        "ListSessionsResponseSession$StatusMessage": "<p>Message describing the status for session.</p>",
+        "PendingUpdate$StatusMessage": "<p>Message describing the status for the team.</p>"
+      }
+    },
+    "MofNApprovalStrategy": {
+      "base": "<p>Strategy for how an approval team grants approval.</p>",
+      "refs": {
+        "ApprovalStrategy$MofN": "<p>Minimum number of approvals (M) required for a total number of approvers (N).</p>",
+        "ApprovalStrategyResponse$MofN": "<p>Minimum number of approvals (M) required for a total number of approvers (N).</p>"
+      }
+    },
+    "MofNApprovalStrategyMinApprovalsRequiredInteger": {
+      "base": null,
+      "refs": {
+        "MofNApprovalStrategy$MinApprovalsRequired": "<p>Minimum number of approvals (M) required for a total number of approvers (N).</p>"
+      }
+    },
+    "Operator": {
+      "base": null,
+      "refs": {
+        "Filter$Operator": "<p>Operator to use for filtering.</p> <ul> <li> <p> <code>EQ</code>: Equal to the specified value</p> </li> <li> <p> <code>NE</code>: Not equal to the specified value</p> </li> <li> <p> <code>GT</code>: Greater than the specified value</p> </li> <li> <p> <code>LT</code>: Less than the specified value</p> </li> <li> <p> <code>GTE</code>: Greater than or equal to the specified value</p> </li> <li> <p> <code>LTE</code>: Less than or equal to the specified value</p> </li> <li> <p> <code>CONTAINS</code>: Contains the specified value</p> </li> <li> <p> <code>NOT_CONTAINS</code>: Does not contain the specified value</p> </li> <li> <p> <code>BETWEEN</code>: Between two values, inclusive of the specified values.</p> </li> </ul> <note> <p> <b>Supported operators for each filter</b>:</p> <ul> <li> <p> <code>ActionName</code>: <code>EQ</code> | <code>NE</code> | <code>CONTAINS</code> | <code>NOT_CONTAINS</code> </p> </li> <li> <p> <code>SessionStatus</code>: <code>EQ</code> | <code>NE</code> </p> </li> <li> <p> <code>InitiationTime</code>: <code>GT</code> | <code>LT</code> | <code>GTE</code> | <code>LTE</code> | <code>BETWEEN</code> </p> </li> </ul> </note>"
+      }
+    },
+    "ParticipantId": {
+      "base": null,
+      "refs": {
+        "GetApprovalTeamResponseApprover$ApproverId": "<p>ID for the approver.</p>",
+        "GetSessionResponseApproverResponse$ApproverId": "<p>ID for the approver.</p>"
+      }
+    },
+    "PendingUpdate": {
+      "base": "<p>Contains details for the pending updates for an approval team, if applicable.</p>",
+      "refs": {
+        "GetApprovalTeamResponse$PendingUpdate": "<p>A <code>PendingUpdate</code> object. Contains details for the pending updates for the team, if applicable.</p>"
+      }
+    },
+    "Policies": {
+      "base": null,
+      "refs": {
+        "ListPoliciesResponse$Policies": "<p>An array of <code>Policy</code> objects. Contains a list of policies that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>"
+      }
+    },
+    "PoliciesReferences": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamRequest$Policies": "<p>An array of <code>PolicyReference</code> objects. Contains a list of policies that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+        "GetApprovalTeamResponse$Policies": "<p>An array of <code>PolicyReference</code> objects. Contains a list of policies that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>"
+      }
+    },
+    "Policy": {
+      "base": "<p>Contains details for a policy. Policies define what operations a team that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+      "refs": {
+        "Policies$member": null
+      }
+    },
+    "PolicyDocument": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyResponse$PolicyDocument": "<p>Document that contains the contents for the policy.</p>",
+        "PolicyVersion$Document": "<p>Document that contains the policy contents.</p>"
+      }
+    },
+    "PolicyName": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyResponse$PolicyName": "<p>Name of the policy.</p>",
+        "Policy$Name": "<p>Name of the policy.</p>",
+        "PolicyVersion$Name": "<p>Name of the policy.</p>",
+        "PolicyVersionSummary$Name": "<p>Name of the policy</p>"
+      }
+    },
+    "PolicyReference": {
+      "base": "<p>Contains the Amazon Resource Name (ARN) for a policy. Policies define what operations a team that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+      "refs": {
+        "PoliciesReferences$member": null
+      }
+    },
+    "PolicyStatus": {
+      "base": null,
+      "refs": {
+        "PolicyVersion$Status": "<p>Status for the policy. For example, if the policy is <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html\">attachable</a> or <a href=\"https://docs.aws.amazon.com/access_policies_managed-deprecated.html\">deprecated</a>.</p>",
+        "PolicyVersionSummary$Status": "<p>Status for the policy. For example, if the policy is <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_groups_manage_attach-policy.html\">attachable</a> or <a href=\"https://docs.aws.amazon.com/access_policies_managed-deprecated.html\">deprecated</a>.</p>"
+      }
+    },
+    "PolicyType": {
+      "base": null,
+      "refs": {
+        "GetResourcePolicyRequest$PolicyType": "<p>The type of policy.</p>",
+        "GetResourcePolicyResponse$PolicyType": "<p>The type of policy</p>",
+        "ListResourcePoliciesResponseResourcePolicy$PolicyType": "<p>The type of policy.</p>",
+        "Policy$PolicyType": "<p>The type of policy.</p>",
+        "PolicyVersion$PolicyType": "<p>The type of policy.</p>",
+        "PolicyVersionSummary$PolicyType": "<p>The type of policy.</p>"
+      }
+    },
+    "PolicyVersion": {
+      "base": "<p>Contains details for the version of a policy. Policies define what operations a team that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+      "refs": {
+        "GetPolicyVersionResponse$PolicyVersion": "<p>A <code>PolicyVersion</code> object. Contains details for the version of the policy. Policies define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>"
+      }
+    },
+    "PolicyVersionId": {
+      "base": null,
+      "refs": {
+        "Policy$DefaultVersion": "<p>Determines if the specified policy is the default for the team.</p>",
+        "PolicyVersion$VersionId": "<p>Verison ID</p>",
+        "PolicyVersionSummary$VersionId": "<p>Version ID for the policy.</p>"
+      }
+    },
+    "PolicyVersionSummary": {
+      "base": "<p>Contains details for the version of a policy. Policies define what operations a team that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>",
+      "refs": {
+        "PolicyVersions$member": null
+      }
+    },
+    "PolicyVersions": {
+      "base": null,
+      "refs": {
+        "ListPolicyVersionsResponse$PolicyVersions": "<p>An array of <code>PolicyVersionSummary</code> objects. Contains details for the version of the policies that define the permissions for team resources.</p> <p>The protected operation for a service integration might require specific permissions. For more information, see <a href=\"https://docs.aws.amazon.com/mpa/latest/userguide/mpa-integrations.html\">How other services work with Multi-party approval</a> in the <i>Multi-party approval User Guide</i>.</p>"
+      }
+    },
+    "QualifiedPolicyArn": {
+      "base": null,
+      "refs": {
+        "GetPolicyVersionRequest$PolicyVersionArn": "<p>Amazon Resource Name (ARN) for the policy.</p>",
+        "PolicyReference$PolicyArn": "<p>Amazon Resource Name (ARN) for the policy.</p>",
+        "PolicyVersion$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>",
+        "PolicyVersionSummary$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>"
+      }
+    },
+    "Region": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$RequesterRegion": "<p>Amazon Web Services Region where the operation request originated.</p>",
+        "ListSessionsResponseSession$RequesterRegion": "<p>Amazon Web Services Region where the operation request originated.</p>"
+      }
+    },
+    "RequesterComment": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$RequesterComment": "<p>Message from the account that made the operation request</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The specified resource doesn't exist. Check the resource ID, and try again.</p>",
+      "refs": {
+      }
+    },
+    "ServicePrincipal": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$RequesterServicePrincipal": "<p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services\">Service principal</a> for the service associated with the protected operation.</p>",
+        "ListSessionsResponseSession$RequesterServicePrincipal": "<p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html#principal-services\">Service principal</a> for the service associated with the protected operation.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The request exceeds the service quota for your account. Request a quota increase or reduce your request size.</p>",
+      "refs": {
+      }
+    },
+    "SessionArn": {
+      "base": null,
+      "refs": {
+        "CancelSessionRequest$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
+        "GetSessionRequest$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
+        "GetSessionResponse$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
+        "ListSessionsResponseSession$SessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>"
+      }
+    },
+    "SessionExecutionStatus": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$ExecutionStatus": "<p>Status for the protected operation. For example, if the operation is <code>PENDING</code>.</p>"
+      }
+    },
+    "SessionKey": {
+      "base": null,
+      "refs": {
+        "SessionMetadata$key": null
+      }
+    },
+    "SessionMetadata": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$Metadata": "<p>Metadata for the session.</p>"
+      }
+    },
+    "SessionResponse": {
+      "base": null,
+      "refs": {
+        "GetSessionResponseApproverResponse$Response": "<p>Response to the operation request.</p>"
+      }
+    },
+    "SessionStatus": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$Status": "<p>Status for the session. For example, if the team has approved the requested operation.</p>",
+        "ListSessionsResponseSession$Status": "<p>Status for the protected operation. For example, if the operation is <code>PENDING</code>.</p>"
+      }
+    },
+    "SessionStatusCode": {
+      "base": null,
+      "refs": {
+        "GetSessionResponse$StatusCode": "<p>Status code of the session.</p>",
+        "ListSessionsResponseSession$StatusCode": "<p>Status code of the session.</p>"
+      }
+    },
+    "SessionValue": {
+      "base": null,
+      "refs": {
+        "SessionMetadata$value": null
+      }
+    },
+    "StartActiveApprovalTeamDeletionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartActiveApprovalTeamDeletionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": "<p>Message for the <code>AccessDeniedException</code> error.</p>",
+        "ApprovalTeamRequestApprover$PrimaryIdentitySourceArn": "<p>Amazon Resource Name (ARN) for the identity source. The identity source manages the user authentication for approvers.</p>",
+        "ConflictException$Message": "<p>Message for the <code>ConflictException</code> error.</p>",
+        "CreateApprovalTeamResponse$Name": "<p>Name of the team that was created.</p>",
+        "CreateApprovalTeamResponse$VersionId": "<p>Version ID for the team that was created. When a team is updated, the version ID changes.</p>",
+        "CreateIdentitySourceResponse$IdentitySourceArn": "<p>Amazon Resource Name (ARN) for the identity source that was created.</p>",
+        "DeleteIdentitySourceRequest$IdentitySourceArn": "<p>Amazon Resource Name (ARN) for identity source.</p>",
+        "DeleteInactiveApprovalTeamVersionRequest$VersionId": "<p>Version ID for the team.</p>",
+        "Filter$Value": "<p>Value to use for filtering. For the <code>BETWEEN</code> operator, specify values in the format <code>a AND b</code> (<code>AND</code> is case-insensitive).</p>",
+        "GetApprovalTeamResponse$Arn": "<p>Amazon Resource Name (ARN) for the team.</p>",
+        "GetApprovalTeamResponse$Name": "<p>Name of the approval team.</p>",
+        "GetApprovalTeamResponse$UpdateSessionArn": "<p>Amazon Resource Name (ARN) for the session.</p>",
+        "GetApprovalTeamResponse$VersionId": "<p>Version ID for the team.</p>",
+        "GetApprovalTeamResponseApprover$PrimaryIdentitySourceArn": "<p>Amazon Resource Name (ARN) for the identity source. The identity source manages the user authentication for approvers.</p>",
+        "GetIdentitySourceRequest$IdentitySourceArn": "<p>Amazon Resource Name (ARN) for the identity source.</p>",
+        "GetIdentitySourceResponse$IdentitySourceArn": "<p>Amazon Resource Name (ARN) for the identity source.</p>",
+        "GetIdentitySourceResponse$StatusMessage": "<p>Message describing the status for the identity source.</p>",
+        "GetResourcePolicyRequest$ResourceArn": "<p>Amazon Resource Name (ARN) for the resource.</p>",
+        "GetResourcePolicyRequest$PolicyName": "<p>Name of the policy.</p>",
+        "GetResourcePolicyResponse$ResourceArn": "<p>Amazon Resource Name (ARN) for the resource.</p>",
+        "GetResourcePolicyResponse$PolicyVersionArn": "<p>Amazon Resource Name (ARN) for the policy version.</p>",
+        "GetSessionResponse$ProtectedResourceArn": "<p>Amazon Resource Name (ARN) for the protected operation.</p>",
+        "GetSessionResponse$RequesterPrincipalArn": "<p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-request\">IAM principal</a> that made the operation request.</p>",
+        "GetSessionResponseApproverResponse$IdentitySourceArn": "<p>Amazon Resource Name (ARN) for the identity source. The identity source manages the user authentication for approvers.</p>",
+        "IamIdentityCenter$Region": "<p>Amazon Web Services Region where the IAM Identity Center instance is located.</p>",
+        "IamIdentityCenterForGet$InstanceArn": "<p>Amazon Resource Name (ARN) for the IAM Identity Center instance.</p>",
+        "IamIdentityCenterForGet$ApprovalPortalUrl": "<p>URL for the approval portal associated with the IAM Identity Center instance.</p>",
+        "IamIdentityCenterForGet$Region": "<p>Amazon Web Services Region where the IAM Identity Center instance is located.</p>",
+        "IamIdentityCenterForList$InstanceArn": "<p>Amazon Resource Name (ARN) for the IAM Identity Center instance.</p>",
+        "IamIdentityCenterForList$ApprovalPortalUrl": "<p>URL for the approval portal associated with the IAM Identity Center instance.</p>",
+        "IamIdentityCenterForList$Region": "<p>Amazon Web Services Region where the IAM Identity Center instance is located.</p>",
+        "IdentitySourceForList$IdentitySourceArn": "<p>Amazon Resource Name (ARN) for the identity source.</p>",
+        "IdentitySourceForList$StatusMessage": "<p>Message describing the status for the identity source.</p>",
+        "InternalServerException$Message": "<p>Message for the <code>InternalServerException</code> error.</p>",
+        "InvalidParameterException$Message": "<p>Message for the <code>InvalidParameterException</code> error.</p>",
+        "ListResourcePoliciesRequest$ResourceArn": "<p>Amazon Resource Name (ARN) for the resource.</p>",
+        "ListResourcePoliciesResponseResourcePolicy$PolicyArn": "<p>Amazon Resource Name (ARN) for policy.</p>",
+        "ListResourcePoliciesResponseResourcePolicy$PolicyName": "<p>Name of the policy.</p>",
+        "ListSessionsResponseSession$ProtectedResourceArn": "<p>Amazon Resource Name (ARN) for the protected operation.</p>",
+        "ListSessionsResponseSession$RequesterPrincipalArn": "<p> <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/intro-structure.html#intro-structure-request\">IAM principal</a> that made the operation request.</p>",
+        "ListTagsForResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) for the resource.</p>",
+        "PendingUpdate$VersionId": "<p>Version ID for the team.</p>",
+        "PendingUpdate$Description": "<p>Description for the team.</p>",
+        "ResourceNotFoundException$Message": "<p>Message for the <code>ResourceNotFoundException</code> error.</p>",
+        "ServiceQuotaExceededException$Message": "<p>Message for the <code>ServiceQuotaExceededException</code> error.</p>",
+        "TagResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) for the resource you want to tag.</p>",
+        "ThrottlingException$Message": "<p>Message for the <code>ThrottlingException</code> error.</p>",
+        "TooManyTagsException$Message": "<p>Message for the <code>TooManyTagsException</code> error.</p>",
+        "TooManyTagsException$ResourceName": "<p>Name of the resource for the <code>TooManyTagsException</code> error.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>Amazon Resource Name (ARN) for the resource you want to untag.</p>",
+        "UpdateApprovalTeamResponse$VersionId": "<p>Version ID for the team that was created. When an approval team is updated, the version ID changes.</p>",
+        "ValidationException$Message": "<p>Message for the <code>ValidationException</code> error.</p>"
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "Tags$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$TagKeys": "<p>Array of tag key-value pairs that you want to untag.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "Tags$value": null
+      }
+    },
+    "Tags": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamRequest$Tags": "<p>Tags you want to attach to the team.</p>",
+        "CreateIdentitySourceRequest$Tags": "<p>Tag you want to attach to the identity source.</p>",
+        "ListTagsForResourceResponse$Tags": "<p>Tags attached to the resource.</p>",
+        "TagResourceRequest$Tags": "<p>Tags that you have added to the specified resource.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {
+      }
+    },
+    "Token": {
+      "base": null,
+      "refs": {
+        "CreateApprovalTeamRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services populates this field.</p> <note> <p> <b>What is idempotency?</b> </p> <p>When you make a mutating API request, the request typically returns a result before the operation's asynchronous workflows have completed. Operations might also time out or encounter other server issues before they complete, even though the request has already returned a result. This could make it difficult to determine whether the request succeeded or not, and could lead to multiple retries to ensure that the operation completes successfully. However, if the original request and the subsequent retries are successful, the operation is completed multiple times. This means that you might create more resources than you intended.</p> <p> <i>Idempotency</i> ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p> </note>",
+        "CreateIdentitySourceRequest$ClientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services populates this field.</p> <note> <p> <b>What is idempotency?</b> </p> <p>When you make a mutating API request, the request typically returns a result before the operation's asynchronous workflows have completed. Operations might also time out or encounter other server issues before they complete, even though the request has already returned a result. This could make it difficult to determine whether the request succeeded or not, and could lead to multiple retries to ensure that the operation completes successfully. However, if the original request and the subsequent retries are successful, the operation is completed multiple times. This means that you might create more resources than you intended.</p> <p> <i>Idempotency</i> ensures that an API request completes no more than one time. With an idempotent request, if the original request completes successfully, any subsequent retries complete successfully without performing any further actions.</p> </note>",
+        "ListApprovalTeamsRequest$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListApprovalTeamsResponse$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListIdentitySourcesRequest$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListIdentitySourcesResponse$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListPoliciesRequest$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListPoliciesResponse$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListPolicyVersionsRequest$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListPolicyVersionsResponse$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListResourcePoliciesRequest$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListResourcePoliciesResponse$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListSessionsRequest$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>",
+        "ListSessionsResponse$NextToken": "<p>If present, indicates that more output is available than is included in the current response. Use this value in the <code>NextToken</code> request parameter in a next call to the operation to get more output. You can repeat this until the <code>NextToken</code> response element returns <code>null</code>.</p>"
+      }
+    },
+    "TooManyTagsException": {
+      "base": "<p>The request exceeds the maximum number of tags allowed for this resource. Remove some tags, and try again.</p>",
+      "refs": {
+      }
+    },
+    "UnqualifiedPolicyArn": {
+      "base": null,
+      "refs": {
+        "ListPolicyVersionsRequest$PolicyArn": "<p>Amazon Resource Name (ARN) for the policy.</p>",
+        "Policy$Arn": "<p>Amazon Resource Name (ARN) for the policy.</p>",
+        "PolicyVersion$PolicyArn": "<p>Amazon Resource Name (ARN) for the policy.</p>",
+        "PolicyVersionSummary$PolicyArn": "<p>Amazon Resource Name (ARN) for the policy.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateApprovalTeamRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateApprovalTeamResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
+      "refs": {
+      }
+    }
+  }
+}

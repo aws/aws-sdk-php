@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Use the Amazon OpenSearch Serverless API to create, configure, and manage OpenSearch Serverless collections and security policies.</p> <p>OpenSearch Serverless is an on-demand, pre-provisioned serverless configuration for Amazon OpenSearch Service. OpenSearch Serverless removes the operational complexities of provisioning, configuring, and tuning your OpenSearch clusters. It enables you to easily search and analyze petabytes of data without having to worry about the underlying infrastructure and data management.</p> <p> To learn more about OpenSearch Serverless, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html\">What is Amazon OpenSearch Serverless?</a> </p>",
+  "service": "<p>Use the Amazon OpenSearch Serverless API to create, configure, and manage OpenSearch Serverless collections and security policies.</p> <p>OpenSearch Serverless is an on-demand, pre-provisioned serverless configuration for Amazon OpenSearch Service. OpenSearch Serverless removes the operational complexities of provisioning, configuring, and tuning your OpenSearch clusters. It enables you to easily search and analyze petabytes of data without having to worry about the underlying infrastructure and data management.</p> <p>To learn more about OpenSearch Serverless, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html\">What is Amazon OpenSearch Serverless?</a> </p>",
   "operations": {
     "BatchGetCollection": "<p>Returns attributes for one or more collections, including the collection endpoint and the OpenSearch Dashboards endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "BatchGetEffectiveLifecyclePolicy": "<p>Returns a list of successful and failed retrievals for the OpenSearch Serverless indexes. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
@@ -8,18 +8,21 @@
     "BatchGetVpcEndpoint": "<p>Returns attributes for one or more VPC endpoints associated with the current account. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
     "CreateAccessPolicy": "<p>Creates a data access policy for OpenSearch Serverless. Access policies limit access to collections and the resources within them, and allow a user to access that data irrespective of the access mechanism or network source. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "CreateCollection": "<p>Creates a new OpenSearch Serverless collection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
+    "CreateIndex": "<p>Creates an index within an OpenSearch Serverless collection. Unlike other OpenSearch indexes, indexes created by this API are automatically configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a> in the <i>OpenSearch User Guide</i>.</p>",
     "CreateLifecyclePolicy": "<p>Creates a lifecyle policy to be applied to OpenSearch Serverless indexes. Lifecycle policies define the number of days or hours to retain the data on an OpenSearch Serverless index. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-create\">Creating data lifecycle policies</a>.</p>",
-    "CreateSecurityConfig": "<p>Specifies a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>. </p>",
+    "CreateSecurityConfig": "<p>Specifies a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "CreateSecurityPolicy": "<p>Creates a security policy to be used by one or more OpenSearch Serverless collections. Security policies provide access to a collection and its OpenSearch Dashboards endpoint from public networks or specific VPC endpoints. They also allow you to secure a collection with a KMS encryption key. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html\">Network access for Amazon OpenSearch Serverless</a> and <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html\">Encryption at rest for Amazon OpenSearch Serverless</a>.</p>",
     "CreateVpcEndpoint": "<p>Creates an OpenSearch Serverless-managed interface VPC endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
     "DeleteAccessPolicy": "<p>Deletes an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "DeleteCollection": "<p>Deletes an OpenSearch Serverless collection. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
+    "DeleteIndex": "<p>Deletes an index from an OpenSearch Serverless collection. Be aware that the index might be configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a>.</p>",
     "DeleteLifecyclePolicy": "<p>Deletes an OpenSearch Serverless lifecycle policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-delete\">Deleting data lifecycle policies</a>.</p>",
     "DeleteSecurityConfig": "<p>Deletes a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "DeleteSecurityPolicy": "<p>Deletes an OpenSearch Serverless security policy.</p>",
     "DeleteVpcEndpoint": "<p>Deletes an OpenSearch Serverless-managed interface endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
     "GetAccessPolicy": "<p>Returns an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "GetAccountSettings": "<p>Returns account-level settings related to OpenSearch Serverless.</p>",
+    "GetIndex": "<p>Retrieves information about an index in an OpenSearch Serverless collection, including its schema definition. The index might be configured to conduct automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a>.</p>",
     "GetPoliciesStats": "<p>Returns statistical information about your OpenSearch Serverless access policies, security configurations, and security policies.</p>",
     "GetSecurityConfig": "<p>Returns information about an OpenSearch Serverless security configuration. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "GetSecurityPolicy": "<p>Returns information about a configured OpenSearch Serverless security policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html\">Network access for Amazon OpenSearch Serverless</a> and <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html\">Encryption at rest for Amazon OpenSearch Serverless</a>.</p>",
@@ -35,6 +38,7 @@
     "UpdateAccessPolicy": "<p>Updates an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html\">Data access control for Amazon OpenSearch Serverless</a>.</p>",
     "UpdateAccountSettings": "<p>Update the OpenSearch Serverless settings for the current Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-scaling.html\">Managing capacity limits for Amazon OpenSearch Serverless</a>.</p>",
     "UpdateCollection": "<p>Updates an OpenSearch Serverless collection.</p>",
+    "UpdateIndex": "<p>Updates an existing index in an OpenSearch Serverless collection. This operation allows you to modify the index schema, including adding new fields or changing field mappings. You can also enable automatic semantic enrichment ingestion and search. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html#serverless-semantic-enrichment\">About automatic semantic enrichment</a>.</p>",
     "UpdateLifecyclePolicy": "<p>Updates an OpenSearch Serverless access policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-update\">Updating data lifecycle policies</a>.</p>",
     "UpdateSecurityConfig": "<p>Updates a security configuration for OpenSearch Serverless. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-saml.html\">SAML authentication for Amazon OpenSearch Serverless</a>.</p>",
     "UpdateSecurityPolicy": "<p>Updates an OpenSearch Serverless security policy. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html\">Network access for Amazon OpenSearch Serverless</a> and <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html\">Encryption at rest for Amazon OpenSearch Serverless</a>.</p>",
@@ -83,7 +87,7 @@
       "base": "<p>OpenSearch Serverless-related information for the current account.</p>",
       "refs": {
         "GetAccountSettingsResponse$accountSettingsDetail": "<p>OpenSearch Serverless-related details for the current account.</p>",
-        "UpdateAccountSettingsResponse$accountSettingsDetail": "<p>OpenSearch Serverless-related settings for the current Amazon Web Services account. </p>"
+        "UpdateAccountSettingsResponse$accountSettingsDetail": "<p>OpenSearch Serverless-related settings for the current Amazon Web Services account.</p>"
       }
     },
     "Arn": {
@@ -208,10 +212,14 @@
         "CollectionIds$member": null,
         "CollectionSummary$id": "<p>The unique identifier of the collection.</p>",
         "CreateCollectionDetail$id": "<p>The unique identifier of the collection.</p>",
+        "CreateIndexRequest$id": "<p>The unique identifier of the collection in which to create the index.</p>",
         "DeleteCollectionDetail$id": "<p>The unique identifier of the collection.</p>",
         "DeleteCollectionRequest$id": "<p>The unique identifier of the collection. For example, <code>1iu5usc406kd</code>. The ID is part of the collection endpoint. You can also retrieve it using the <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/ServerlessAPIReference/API_ListCollections.html\">ListCollections</a> API.</p>",
+        "DeleteIndexRequest$id": "<p>The unique identifier of the collection containing the index to delete.</p>",
+        "GetIndexRequest$id": "<p>The unique identifier of the collection containing the index.</p>",
         "UpdateCollectionDetail$id": "<p>The unique identifier of the collection.</p>",
-        "UpdateCollectionRequest$id": "<p>The unique identifier of the collection.</p>"
+        "UpdateCollectionRequest$id": "<p>The unique identifier of the collection.</p>",
+        "UpdateIndexRequest$id": "<p>The unique identifier of the collection containing the index to update.</p>"
       }
     },
     "CollectionIds": {
@@ -324,6 +332,22 @@
       "refs": {
       }
     },
+    "CreateIamIdentityCenterConfigOptions": {
+      "base": "<p>Describes IAM Identity Center options for creating an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
+      "refs": {
+        "CreateSecurityConfigRequest$iamIdentityCenterOptions": "<p>Describes IAM Identity Center options in the form of a key-value map. This field is required if you specify iamidentitycenter for the type parameter.</p>"
+      }
+    },
+    "CreateIndexRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateIndexResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateLifecyclePolicyRequest": {
       "base": null,
       "refs": {
@@ -392,6 +416,16 @@
       }
     },
     "DeleteCollectionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteIndexRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteIndexResponse": {
       "base": null,
       "refs": {
       }
@@ -494,6 +528,16 @@
       "refs": {
       }
     },
+    "GetIndexRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetIndexResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetPoliciesStatsRequest": {
       "base": null,
       "refs": {
@@ -522,6 +566,66 @@
     "GetSecurityPolicyResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "IamFederationConfigOptions": {
+      "base": "<p>Describes IAM federation options for an OpenSearch Serverless security configuration in the form of a key-value map. These options define how OpenSearch Serverless integrates with external identity providers using federation.</p>",
+      "refs": {
+        "CreateSecurityConfigRequest$iamFederationOptions": "<p>Describes IAM federation options in the form of a key-value map. This field is required if you specify <code>iamFederation</code> for the <code>type</code> parameter.</p>",
+        "SecurityConfigDetail$iamFederationOptions": "<p>Describes IAM federation options in the form of a key-value map. Contains configuration details about how OpenSearch Serverless integrates with external identity providers through federation.</p>",
+        "UpdateSecurityConfigRequest$iamFederationOptions": "<p>Describes IAM federation options in the form of a key-value map for updating an existing security configuration. Use this field to modify IAM federation settings for the security configuration.</p>"
+      }
+    },
+    "IamIdentityCenterApplicationArn": {
+      "base": null,
+      "refs": {
+        "IamIdentityCenterConfigOptions$applicationArn": "<p>The ARN of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>"
+      }
+    },
+    "IamIdentityCenterConfigOptions": {
+      "base": "<p>Describes IAM Identity Center options for an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
+      "refs": {
+        "SecurityConfigDetail$iamIdentityCenterOptions": "<p>Describes IAM Identity Center options in the form of a key-value map.</p>"
+      }
+    },
+    "IamIdentityCenterGroupAttribute": {
+      "base": null,
+      "refs": {
+        "CreateIamIdentityCenterConfigOptions$groupAttribute": "<p>The group attribute for this IAM Identity Center integration. Defaults to <code>GroupId</code>.</p>",
+        "IamIdentityCenterConfigOptions$groupAttribute": "<p>The group attribute for this IAM Identity Center integration. Defaults to <code>GroupId</code>.</p>",
+        "UpdateIamIdentityCenterConfigOptions$groupAttribute": "<p>The group attribute for this IAM Identity Center integration. Defaults to <code>GroupId</code>.</p>"
+      }
+    },
+    "IamIdentityCenterInstanceArn": {
+      "base": null,
+      "refs": {
+        "CreateIamIdentityCenterConfigOptions$instanceArn": "<p>The ARN of the IAM Identity Center instance used to integrate with OpenSearch Serverless.</p>",
+        "IamIdentityCenterConfigOptions$instanceArn": "<p>The ARN of the IAM Identity Center instance used to integrate with OpenSearch Serverless.</p>"
+      }
+    },
+    "IamIdentityCenterUserAttribute": {
+      "base": null,
+      "refs": {
+        "CreateIamIdentityCenterConfigOptions$userAttribute": "<p>The user attribute for this IAM Identity Center integration. Defaults to <code>UserId</code>.</p>",
+        "IamIdentityCenterConfigOptions$userAttribute": "<p>The user attribute for this IAM Identity Center integration. Defaults to <code>UserId</code> </p>",
+        "UpdateIamIdentityCenterConfigOptions$userAttribute": "<p>The user attribute for this IAM Identity Center integration. Defaults to <code>UserId</code>.</p>"
+      }
+    },
+    "IndexName": {
+      "base": null,
+      "refs": {
+        "CreateIndexRequest$indexName": "<p>The name of the index to create. Index names must be lowercase and can't begin with underscores (_) or hyphens (-).</p>",
+        "DeleteIndexRequest$indexName": "<p>The name of the index to delete.</p>",
+        "GetIndexRequest$indexName": "<p>The name of the index to retrieve information about.</p>",
+        "UpdateIndexRequest$indexName": "<p>The name of the index to update.</p>"
+      }
+    },
+    "IndexSchema": {
+      "base": null,
+      "refs": {
+        "CreateIndexRequest$indexSchema": "<p>The JSON schema definition for the index, including field mappings and settings.</p>",
+        "GetIndexResponse$indexSchema": "<p>The JSON schema definition for the index, including field mappings and settings.</p>",
+        "UpdateIndexRequest$indexSchema": "<p>The updated JSON schema definition for the index, including field mappings and settings. </p>"
       }
     },
     "IndexingCapacityValue": {
@@ -888,7 +992,7 @@
     "SamlConfigOptions": {
       "base": "<p>Describes SAML options for an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
       "refs": {
-        "CreateSecurityConfigRequest$samlOptions": "<p>Describes SAML options in in the form of a key-value map. This field is required if you specify <code>saml</code> for the <code>type</code> parameter.</p>",
+        "CreateSecurityConfigRequest$samlOptions": "<p>Describes SAML options in in the form of a key-value map. This field is required if you specify <code>SAML</code> for the <code>type</code> parameter.</p>",
         "SecurityConfigDetail$samlOptions": "<p>SAML options for the security configuration in the form of a key-value map.</p>",
         "UpdateSecurityConfigRequest$samlOptions": "<p>SAML options in in the form of a key-value map.</p>"
       }
@@ -906,9 +1010,9 @@
       }
     },
     "SecurityConfigDetail": {
-      "base": "<p>Details about a security configuration for OpenSearch Serverless. </p>",
+      "base": "<p>Details about a security configuration for OpenSearch Serverless.</p>",
       "refs": {
-        "CreateSecurityConfigResponse$securityConfigDetail": "<p>Details about the created security configuration. </p>",
+        "CreateSecurityConfigResponse$securityConfigDetail": "<p>Details about the created security configuration.</p>",
         "GetSecurityConfigResponse$securityConfigDetail": "<p>Details of the requested security configuration.</p>",
         "UpdateSecurityConfigResponse$securityConfigDetail": "<p>Details about the updated security configuration. </p>"
       }
@@ -1020,48 +1124,54 @@
     "String": {
       "base": null,
       "refs": {
+        "CollectionDetail$description": "<p>A description of the collection.</p>",
         "CollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
+        "CollectionDetail$kmsKeyArn": "<p>The ARN of the Amazon Web Services KMS key used to encrypt the collection.</p>",
         "CollectionDetail$collectionEndpoint": "<p>Collection-specific endpoint used to submit index, search, and data upload requests to an OpenSearch Serverless collection.</p>",
         "CollectionDetail$dashboardEndpoint": "<p>Collection-specific endpoint used to access OpenSearch Dashboards.</p>",
-        "CollectionDetail$description": "<p>A description of the collection.</p>",
-        "CollectionDetail$kmsKeyArn": "<p>The ARN of the Amazon Web Services KMS key used to encrypt the collection.</p>",
-        "CollectionErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
+        "CollectionDetail$failureCode": "<p>A failure code associated with the request.</p>",
+        "CollectionDetail$failureMessage": "<p>A message associated with the failure code.</p>",
         "CollectionErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Collection is not found.</code> </p>",
+        "CollectionErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "CollectionSummary$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "ConflictException$message": null,
-        "CreateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "CreateCollectionDetail$description": "<p>A description of the collection.</p>",
+        "CreateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "CreateCollectionDetail$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key with which to encrypt the collection.</p>",
         "EffectiveLifecyclePolicyDetail$retentionPeriod": "<p>The minimum number of index retention in days or hours. This is an optional parameter that will return only if it’s set.</p>",
-        "EffectiveLifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Index resource is not found</code>.</p>",
+        "EffectiveLifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request.</p>",
+        "IamIdentityCenterConfigOptions$applicationName": "<p>The name of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
+        "IamIdentityCenterConfigOptions$applicationDescription": "<p>The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
         "InternalServerException$message": null,
-        "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
         "LifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Lifecycle Policy is not found</code>.</p>",
-        "ListAccessPoliciesRequest$nextToken": "<p>If your initial <code>ListAccessPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListAccessPolicies</code> operations, which returns results in the next page. </p>",
+        "LifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request. For example, <code>NOT_FOUND</code>.</p>",
+        "ListAccessPoliciesRequest$nextToken": "<p>If your initial <code>ListAccessPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListAccessPolicies</code> operations, which returns results in the next page.</p>",
         "ListAccessPoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListCollectionsRequest$nextToken": "<p>If your initial <code>ListCollections</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListCollections</code> operations, which returns results in the next page.</p>",
         "ListCollectionsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListLifecyclePoliciesRequest$nextToken": "<p>If your initial <code>ListLifecyclePolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListLifecyclePolicies</code> operations, which returns results in the next page.</p>",
         "ListLifecyclePoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
-        "ListSecurityConfigsRequest$nextToken": "<p>If your initial <code>ListSecurityConfigs</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityConfigs</code> operations, which returns results in the next page. </p>",
+        "ListSecurityConfigsRequest$nextToken": "<p>If your initial <code>ListSecurityConfigs</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityConfigs</code> operations, which returns results in the next page.</p>",
         "ListSecurityConfigsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
-        "ListSecurityPoliciesRequest$nextToken": "<p>If your initial <code>ListSecurityPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityPolicies</code> operations, which returns results in the next page. </p>",
+        "ListSecurityPoliciesRequest$nextToken": "<p>If your initial <code>ListSecurityPolicies</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListSecurityPolicies</code> operations, which returns results in the next page.</p>",
         "ListSecurityPoliciesResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "ListVpcEndpointsRequest$nextToken": "<p>If your initial <code>ListVpcEndpoints</code> operation returns a <code>nextToken</code>, you can include the returned <code>nextToken</code> in subsequent <code>ListVpcEndpoints</code> operations, which returns results in the next page. </p>",
         "ListVpcEndpointsResponse$nextToken": "<p>When <code>nextToken</code> is returned, there are more results available. The value of <code>nextToken</code> is a unique pagination token for each page. Make the call again using the returned token to retrieve the next page.</p>",
         "OcuLimitExceededException$message": "<p>Description of the error.</p>",
         "ResourceNotFoundException$message": null,
         "ServiceQuotaExceededException$message": "<p>Description of the error.</p>",
-        "ServiceQuotaExceededException$quotaCode": "<p>Service Quotas requirement to identify originating quota.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>Type of the resource affected.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>Service Quotas requirement to identify originating service.</p>",
-        "UpdateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>Service Quotas requirement to identify originating quota.</p>",
         "UpdateCollectionDetail$description": "<p>The description of the collection.</p>",
+        "UpdateCollectionDetail$arn": "<p>The Amazon Resource Name (ARN) of the collection.</p>",
         "ValidationException$message": null,
-        "VpcEndpointErrorDetail$errorCode": "<p>The error code for the failed request.</p>",
-        "VpcEndpointErrorDetail$errorMessage": "<p>An error message describing the reason for the failure.</p>"
+        "VpcEndpointDetail$failureCode": "<p>A failure code associated with the request.</p>",
+        "VpcEndpointDetail$failureMessage": "<p>A message associated with the failure code.</p>",
+        "VpcEndpointErrorDetail$errorMessage": "<p>An error message describing the reason for the failure.</p>",
+        "VpcEndpointErrorDetail$errorCode": "<p>The error code for the failed request.</p>"
       }
     },
     "SubnetId": {
@@ -1171,6 +1281,22 @@
       }
     },
     "UpdateCollectionResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateIamIdentityCenterConfigOptions": {
+      "base": "<p>Describes IAM Identity Center options for updating an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
+      "refs": {
+        "UpdateSecurityConfigRequest$iamIdentityCenterOptionsUpdates": "<p>Describes IAM Identity Center options in the form of a key-value map.</p>"
+      }
+    },
+    "UpdateIndexRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateIndexResponse": {
       "base": null,
       "refs": {
       }
@@ -1315,6 +1441,24 @@
       "refs": {
         "CreateVpcEndpointRequest$vpcId": "<p>The ID of the VPC from which you'll access OpenSearch Serverless.</p>",
         "VpcEndpointDetail$vpcId": "<p>The ID of the VPC from which you access OpenSearch Serverless.</p>"
+      }
+    },
+    "iamFederationGroupAttribute": {
+      "base": null,
+      "refs": {
+        "IamFederationConfigOptions$groupAttribute": "<p>The group attribute for this IAM federation integration. This attribute is used to map identity provider groups to OpenSearch Serverless permissions.</p>"
+      }
+    },
+    "iamFederationUserAttribute": {
+      "base": null,
+      "refs": {
+        "IamFederationConfigOptions$userAttribute": "<p>The user attribute for this IAM federation integration. This attribute is used to identify users in the federated authentication process.</p>"
+      }
+    },
+    "openSearchServerlessEntityId": {
+      "base": null,
+      "refs": {
+        "SamlConfigOptions$openSearchServerlessEntityId": "<p>Custom entity ID attribute to override the default entity ID for this SAML integration.</p>"
       }
     },
     "samlGroupAttribute": {

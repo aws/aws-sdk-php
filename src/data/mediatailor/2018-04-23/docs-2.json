@@ -3,7 +3,7 @@
   "service": "<p>Use the AWS Elemental MediaTailor SDKs and CLI to configure scalable ad insertion and linear channels. With MediaTailor, you can assemble existing content into a linear stream and serve targeted ads to viewers while maintaining broadcast quality in over-the-top (OTT) video applications. For information about using the service, including detailed information about the settings covered in this guide, see the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/\">AWS Elemental MediaTailor User Guide</a>.</p> <p>Through the SDKs and the CLI you manage AWS Elemental MediaTailor configurations and channels the same as you do through the console. For example, you specify ad insertion behavior and mapping information for the origin server and the ad decision server (ADS).</p>",
   "operations": {
     "ConfigureLogsForChannel": "<p>Configures Amazon CloudWatch log settings for a channel.</p>",
-    "ConfigureLogsForPlaybackConfiguration": "<p>Amazon CloudWatch log settings for a playback configuration.</p>",
+    "ConfigureLogsForPlaybackConfiguration": "<p>Defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
     "CreateChannel": "<p>Creates a channel. For information about MediaTailor channels, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/channel-assembly-channels.html\">Working with channels</a> in the <i>MediaTailor User Guide</i>.</p>",
     "CreateLiveSource": "<p>The live source configuration.</p>",
     "CreatePrefetchSchedule": "<p>Creates a prefetch schedule for a playback configuration. A prefetch schedule allows you to tell MediaTailor to fetch and prepare certain ads before an ad break happens. For more information about ad prefetching, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html\">Using ad prefetching</a> in the <i>MediaTailor User Guide</i>.</p>",
@@ -89,6 +89,15 @@
         "AdBreakOpportunities$member": null
       }
     },
+    "AdConditioningConfiguration": {
+      "base": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns.</p>",
+      "refs": {
+        "GetPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads. </p>",
+        "PlaybackConfiguration$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads.</p>",
+        "PutPlaybackConfigurationRequest$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads. </p>",
+        "PutPlaybackConfigurationResponse$AdConditioningConfiguration": "<p>The setting that indicates what conditioning MediaTailor will perform on ads that the ad decision server (ADS) returns, and what priority MediaTailor uses when inserting ads. </p>"
+      }
+    },
     "AdMarkerPassthrough": {
       "base": "<p>For HLS, when set to <code>true</code>, MediaTailor passes through <code>EXT-X-CUE-IN</code>, <code>EXT-X-CUE-OUT</code>, and <code>EXT-X-SPLICEPOINT-SCTE35</code> ad markers from the origin manifest to the MediaTailor personalized manifest.</p> <p>No logic is applied to these ad markers. For example, if <code>EXT-X-CUE-OUT</code> has a value of <code>60</code>, but no ads are filled for that ad break, MediaTailor will not set the value to <code>0</code>.</p>",
       "refs": {
@@ -99,6 +108,26 @@
       "base": null,
       "refs": {
         "adMarkupTypes$member": null
+      }
+    },
+    "AdsInteractionExcludeEventType": {
+      "base": null,
+      "refs": {
+        "__adsInteractionExcludeEventTypesList$member": null
+      }
+    },
+    "AdsInteractionLog": {
+      "base": "<p>Settings for customizing what events are included in logs for interactions with the ad decision server (ADS).</p> <p>For more information about ADS logs, inlcuding descriptions of the event types, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/ads-log-format.html\">MediaTailor ADS logs description and event types</a> in Elemental MediaTailor User Guide.</p>",
+      "refs": {
+        "ConfigureLogsForPlaybackConfigurationRequest$AdsInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the ADS.</p>",
+        "ConfigureLogsForPlaybackConfigurationResponse$AdsInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the ADS.</p>",
+        "LogConfiguration$AdsInteractionLog": "<p>Settings for customizing what events are included in logs for interactions with the ad decision server (ADS).</p>"
+      }
+    },
+    "AdsInteractionPublishOptInEventType": {
+      "base": null,
+      "refs": {
+        "__adsInteractionPublishOptInEventTypesList$member": null
       }
     },
     "Alert": {
@@ -154,8 +183,7 @@
     },
     "BadRequestException": {
       "base": "<p>A request contains unexpected data.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Bumper": {
       "base": "<p>The configuration for bumpers. Bumpers are short audio or video clips that play at the start or before the end of an ad break. To learn more about bumpers, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/bumpers.html\">Bumpers</a>.</p>",
@@ -203,96 +231,80 @@
     "ConfigurationAliasesRequest": {
       "base": "<p>The predefined aliases for dynamic variables.</p>",
       "refs": {
-        "PutPlaybackConfigurationRequest$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>"
+        "PutPlaybackConfigurationRequest$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>"
       }
     },
     "ConfigurationAliasesResponse": {
       "base": "<p>The predefined aliases for dynamic variables.</p>",
       "refs": {
-        "GetPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>",
-        "PlaybackConfiguration$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>",
-        "PutPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domain.html\">Domain Variables</a>.</p>"
+        "GetPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>",
+        "PlaybackConfiguration$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>",
+        "PutPlaybackConfigurationResponse$ConfigurationAliases": "<p>The player parameters and aliases used as dynamic variables during session initialization. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables-domains.html\">Domain Variables</a>.</p>"
       }
     },
     "ConfigureLogsForChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfigureLogsForChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfigureLogsForPlaybackConfigurationRequest": {
       "base": "<p>Configures Amazon CloudWatch log settings for a playback configuration.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConfigureLogsForPlaybackConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLiveSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLiveSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrefetchScheduleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePrefetchScheduleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProgramRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProgramResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSourceLocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSourceLocationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVodSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVodSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DashConfiguration": {
       "base": "<p>The configuration for DASH content.</p>",
@@ -328,133 +340,107 @@
     },
     "DeleteChannelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLiveSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLiveSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePlaybackConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePlaybackConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePrefetchScheduleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePrefetchScheduleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProgramRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteProgramResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSourceLocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSourceLocationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVodSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVodSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLiveSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLiveSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProgramRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProgramResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSourceLocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSourceLocationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeVodSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeVodSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "FillPolicy": {
       "base": null,
@@ -464,43 +450,35 @@
     },
     "GetChannelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelScheduleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelScheduleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaybackConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPlaybackConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPrefetchScheduleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPrefetchScheduleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HlsConfiguration": {
       "base": "<p>The configuration for HLS content.</p>",
@@ -563,10 +541,10 @@
     "Integer": {
       "base": null,
       "refs": {
-        "SegmentationDescriptor$SegmentNum": "<p>The segment number to assign to the <code>segmentation_descriptor.segment_num</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification Values must be between 0 and 256, inclusive. The default value is 0.</p>",
         "SegmentationDescriptor$SegmentationEventId": "<p>The Event Identifier to assign to the <code>segmentation_descriptor.segmentation_event_id</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. The default value is 1.</p>",
-        "SegmentationDescriptor$SegmentationTypeId": "<p>The Type Identifier to assign to the <code>segmentation_descriptor.segmentation_type_id</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is 48.</p>",
         "SegmentationDescriptor$SegmentationUpidType": "<p>The Upid Type to assign to the <code>segmentation_descriptor.segmentation_upid_type</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is 14.</p>",
+        "SegmentationDescriptor$SegmentationTypeId": "<p>The Type Identifier to assign to the <code>segmentation_descriptor.segmentation_type_id</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is 48.</p>",
+        "SegmentationDescriptor$SegmentNum": "<p>The segment number to assign to the <code>segmentation_descriptor.segment_num</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification Values must be between 0 and 256, inclusive. The default value is 0.</p>",
         "SegmentationDescriptor$SegmentsExpected": "<p>The number of segments expected, which is assigned to the <code>segmentation_descriptor.segments_expectedS</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification Values must be between 0 and 256, inclusive. The default value is 0.</p>",
         "SegmentationDescriptor$SubSegmentNum": "<p>The sub-segment number to assign to the <code>segmentation_descriptor.sub_segment_num</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The defualt value is null.</p>",
         "SegmentationDescriptor$SubSegmentsExpected": "<p>The number of sub-segments expected, which is assigned to the <code>segmentation_descriptor.sub_segments_expected</code> message, as defined in section 10.3.3.1 of the 2022 SCTE-35 specification. Values must be between 0 and 256, inclusive. The default value is null.</p>"
@@ -580,83 +558,73 @@
     },
     "ListAlertsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAlertsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChannelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChannelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLiveSourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLiveSourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPlaybackConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPlaybackConfigurationsResponse": {
       "base": null,
+      "refs": {}
+    },
+    "ListPrefetchScheduleType": {
+      "base": null,
       "refs": {
+        "ListPrefetchSchedulesRequest$ScheduleType": "<p>The type of prefetch schedules that you want to list. <code>SINGLE</code> indicates that you want to list the configured single prefetch schedules. <code>RECURRING</code> indicates that you want to list the configured recurring prefetch schedules. <code>ALL</code> indicates that you want to list all configured prefetch schedules.</p>"
       }
     },
     "ListPrefetchSchedulesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPrefetchSchedulesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSourceLocationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSourceLocationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVodSourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVodSourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LivePreRollConfiguration": {
       "base": "<p>The configuration for pre-roll ad insertion.</p>",
@@ -674,11 +642,11 @@
       }
     },
     "LogConfiguration": {
-      "base": "<p>Returns Amazon CloudWatch log settings for a playback configuration.</p>",
+      "base": "<p>Defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
       "refs": {
-        "GetPlaybackConfigurationResponse$LogConfiguration": "<p>The Amazon CloudWatch log settings for a playback configuration.</p>",
-        "PlaybackConfiguration$LogConfiguration": "<p>The Amazon CloudWatch log settings for a playback configuration.</p>",
-        "PutPlaybackConfigurationResponse$LogConfiguration": "<p>The Amazon CloudWatch log settings for a playback configuration.</p>"
+        "GetPlaybackConfigurationResponse$LogConfiguration": "<p>The configuration that defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
+        "PlaybackConfiguration$LogConfiguration": "<p>Defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>",
+        "PutPlaybackConfigurationResponse$LogConfiguration": "<p>The configuration that defines where AWS Elemental MediaTailor sends logs for the playback configuration.</p>"
       }
     },
     "LogConfigurationForChannel": {
@@ -702,6 +670,12 @@
         "LogConfigurationForChannel$LogTypes": "<p>The log types.</p>"
       }
     },
+    "LoggingStrategy": {
+      "base": null,
+      "refs": {
+        "__listOfLoggingStrategies$member": null
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
@@ -715,6 +689,20 @@
         "PlaybackConfiguration$ManifestProcessingRules": "<p>The configuration for manifest processing rules. Manifest processing rules enable customization of the personalized manifests created by MediaTailor.</p>",
         "PutPlaybackConfigurationRequest$ManifestProcessingRules": "<p>The configuration for manifest processing rules. Manifest processing rules enable customization of the personalized manifests created by MediaTailor.</p>",
         "PutPlaybackConfigurationResponse$ManifestProcessingRules": "<p>The configuration for manifest processing rules. Manifest processing rules enable customization of the personalized manifests created by MediaTailor.</p>"
+      }
+    },
+    "ManifestServiceExcludeEventType": {
+      "base": null,
+      "refs": {
+        "__manifestServiceExcludeEventTypesList$member": null
+      }
+    },
+    "ManifestServiceInteractionLog": {
+      "base": "<p>Settings for customizing what events are included in logs for interactions with the origin server.</p> <p>For more information about manifest service logs, including descriptions of the event types, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/log-types.html\">MediaTailor manifest logs description and event types</a> in Elemental MediaTailor User Guide.</p>",
+      "refs": {
+        "ConfigureLogsForPlaybackConfigurationRequest$ManifestServiceInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the origin server.</p>",
+        "ConfigureLogsForPlaybackConfigurationResponse$ManifestServiceInteractionLog": "<p>The event types that MediaTailor emits in logs for interactions with the origin server.</p>",
+        "LogConfiguration$ManifestServiceInteractionLog": "<p>Settings for customizing what events are included in logs for interactions with the origin server.</p>"
       }
     },
     "MaxResults": {
@@ -767,12 +755,12 @@
       }
     },
     "PrefetchConsumption": {
-      "base": "<p>A complex type that contains settings that determine how and when that MediaTailor places prefetched ads into upcoming ad breaks.</p>",
+      "base": "<p>For single prefetch, describes how and when that MediaTailor places prefetched ads into upcoming ad breaks.</p>",
       "refs": {
-        "CreatePrefetchScheduleRequest$Consumption": "<p>The configuration settings for MediaTailor's <i>consumption</i> of the prefetched ads from the ad decision server. Each consumption configuration contains an end time and an optional start time that define the <i>consumption window</i>. Prefetch schedules automatically expire no earlier than seven days after the end time.</p>",
-        "CreatePrefetchScheduleResponse$Consumption": "<p>The configuration settings for MediaTailor's <i>consumption</i> of the prefetched ads from the ad decision server. Each consumption configuration contains an end time and an optional start time that define the <i>consumption window</i>. Prefetch schedules automatically expire no earlier than seven days after the end time.</p>",
-        "GetPrefetchScheduleResponse$Consumption": "<p>Consumption settings determine how, and when, MediaTailor places the prefetched ads into ad breaks. Ad consumption occurs within a span of time that you define, called a <i>consumption window</i>. You can designate which ad breaks that MediaTailor fills with prefetch ads by setting avail matching criteria.</p>",
-        "PrefetchSchedule$Consumption": "<p>Consumption settings determine how, and when, MediaTailor places the prefetched ads into ad breaks. Ad consumption occurs within a span of time that you define, called a <i>consumption window</i>. You can designate which ad breaks that MediaTailor fills with prefetch ads by setting avail matching criteria.</p>"
+        "CreatePrefetchScheduleRequest$Consumption": "<p>The configuration settings for how and when MediaTailor consumes prefetched ads from the ad decision server for single prefetch schedules. Each consumption configuration contains an end time and an optional start time that define the <i>consumption window</i>. Prefetch schedules automatically expire no earlier than seven days after the end time.</p>",
+        "CreatePrefetchScheduleResponse$Consumption": "<p>The configuration settings for how and when MediaTailor consumes prefetched ads from the ad decision server for single prefetch schedules. Each consumption configuration contains an end time and an optional start time that define the <i>consumption window</i>. Prefetch schedules automatically expire no earlier than seven days after the end time.</p>",
+        "GetPrefetchScheduleResponse$Consumption": "<p>The configuration settings for how and when MediaTailor consumes prefetched ads from the ad decision server for single prefetch schedules. Each consumption configuration contains an end time and an optional start time that define the <i>consumption window</i>. Prefetch schedules automatically expire no earlier than seven days after the end time.</p>",
+        "PrefetchSchedule$Consumption": "<p>Consumption settings determine how, and when, MediaTailor places the prefetched ads into ad breaks for single prefetch schedules. Ad consumption occurs within a span of time that you define, called a <i>consumption window</i>. You can designate which ad breaks that MediaTailor fills with prefetch ads by setting avail matching criteria.</p>"
       }
     },
     "PrefetchRetrieval": {
@@ -790,24 +778,50 @@
         "__listOfPrefetchSchedule$member": null
       }
     },
-    "PutChannelPolicyRequest": {
+    "PrefetchScheduleType": {
       "base": null,
       "refs": {
+        "CreatePrefetchScheduleRequest$ScheduleType": "<p>The frequency that MediaTailor creates prefetch schedules. <code>SINGLE</code> indicates that this schedule applies to one ad break. <code>RECURRING</code> indicates that MediaTailor automatically creates a schedule for each ad avail in a live event.</p> <p>For more information about the prefetch types and when you might use each, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html\">Prefetching ads in Elemental MediaTailor.</a> </p>",
+        "CreatePrefetchScheduleResponse$ScheduleType": "<p>The frequency that MediaTailor creates prefetch schedules. <code>SINGLE</code> indicates that this schedule applies to one ad break. <code>RECURRING</code> indicates that MediaTailor automatically creates a schedule for each ad avail in a live event.</p>",
+        "GetPrefetchScheduleResponse$ScheduleType": "<p>The frequency that MediaTailor creates prefetch schedules. <code>SINGLE</code> indicates that this schedule applies to one ad break. <code>RECURRING</code> indicates that MediaTailor automatically creates a schedule for each ad avail in a live event.</p>",
+        "PrefetchSchedule$ScheduleType": "<p>The frequency that MediaTailor creates prefetch schedules. <code>SINGLE</code> indicates that this schedule applies to one ad break. <code>RECURRING</code> indicates that MediaTailor automatically creates a schedule for each ad avail in a live event.</p> <p>For more information about the prefetch types and when you might use each, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/prefetching-ads.html\">Prefetching ads in Elemental MediaTailor.</a> </p>"
       }
+    },
+    "PutChannelPolicyRequest": {
+      "base": null,
+      "refs": {}
     },
     "PutChannelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPlaybackConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPlaybackConfigurationResponse": {
       "base": null,
+      "refs": {}
+    },
+    "RecurringConsumption": {
+      "base": "<p>The settings that determine how and when MediaTailor places prefetched ads into upcoming ad breaks for recurring prefetch scedules.</p>",
       "refs": {
+        "RecurringPrefetchConfiguration$RecurringConsumption": "<p>The settings that determine how and when MediaTailor places prefetched ads into upcoming ad breaks for recurring prefetch scedules.</p>"
+      }
+    },
+    "RecurringPrefetchConfiguration": {
+      "base": "<p>The configuration that defines how MediaTailor performs recurring prefetch. </p>",
+      "refs": {
+        "CreatePrefetchScheduleRequest$RecurringPrefetchConfiguration": "<p>The configuration that defines how and when MediaTailor performs ad prefetching in a live event.</p>",
+        "CreatePrefetchScheduleResponse$RecurringPrefetchConfiguration": "<p>The configuration that defines how MediaTailor performs recurring prefetch. </p>",
+        "GetPrefetchScheduleResponse$RecurringPrefetchConfiguration": "<p>The configuration that defines how and when MediaTailor performs ad prefetching in a live event.</p>",
+        "PrefetchSchedule$RecurringPrefetchConfiguration": "<p>The settings that determine how and when MediaTailor prefetches ads and inserts them into ad breaks.</p>"
+      }
+    },
+    "RecurringRetrieval": {
+      "base": "<p>With recurring prefetch, MediaTailor automatically prefetches ads for every avail that occurs during the retrieval window. The following configurations describe the MediaTailor behavior when prefetching ads for a live event.</p>",
+      "refs": {
+        "RecurringPrefetchConfiguration$RecurringRetrieval": "<p>The configuration for prefetch ad retrieval from the ADS.</p>"
       }
     },
     "RelativePosition": {
@@ -918,22 +932,24 @@
     },
     "StartChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StopChannelResponse": {
       "base": null,
+      "refs": {}
+    },
+    "StreamingMediaFileConditioning": {
+      "base": null,
       "refs": {
+        "AdConditioningConfiguration$StreamingMediaFileConditioning": "<p>For ads that have media files with streaming delivery and supported file extensions, indicates what transcoding action MediaTailor takes when it first receives these ads from the ADS. <code>TRANSCODE</code> indicates that MediaTailor must transcode the ads. <code>NONE</code> indicates that you have already transcoded the ads outside of MediaTailor and don't need them transcoded as part of the ad insertion workflow. For more information about ad conditioning see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/precondition-ads.html\">Using preconditioned ads</a> in the Elemental MediaTailor user guide.</p>"
       }
     },
     "String": {
@@ -947,8 +963,7 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Tier": {
       "base": null,
@@ -972,6 +987,20 @@
         "AdBreak$TimeSignalMessage": "<p>Defines the SCTE-35 <code>time_signal</code> message inserted around the ad.</p> <p>Programs on a channel's schedule can be configured with one or more ad breaks. You can attach a <code>splice_insert</code> SCTE-35 message to the ad break. This message provides basic metadata about the ad break.</p> <p>See section 9.7.4 of the 2022 SCTE-35 specification for more information.</p>"
       }
     },
+    "TrafficShapingRetrievalWindow": {
+      "base": "<p>The configuration that tells Elemental MediaTailor how to spread out requests to the ad decision server (ADS). Instead of sending ADS requests for all sessions at the same time, MediaTailor spreads the requests across the amount of time specified in the retrieval window.</p>",
+      "refs": {
+        "PrefetchRetrieval$TrafficShapingRetrievalWindow": "<p>Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time.</p>",
+        "RecurringRetrieval$TrafficShapingRetrievalWindow": "<p>Configuration for spreading ADS traffic across a set window instead of sending ADS requests for all sessions at the same time.</p>"
+      }
+    },
+    "TrafficShapingType": {
+      "base": null,
+      "refs": {
+        "PrefetchRetrieval$TrafficShapingType": "<p>Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time.</p>",
+        "RecurringRetrieval$TrafficShapingType": "<p>Indicates if this configuration uses a retrieval window for traffic shaping and limiting the number of requests to the ADS at one time.</p>"
+      }
+    },
     "Transition": {
       "base": "<p>Program transition configuration.</p>",
       "refs": {
@@ -986,38 +1015,31 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLiveSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLiveSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProgramRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProgramResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProgramScheduleConfiguration": {
       "base": "<p>Schedule configuration parameters.</p>",
@@ -1033,28 +1055,36 @@
     },
     "UpdateSourceLocationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSourceLocationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVodSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVodSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "VodSource": {
       "base": "<p>VOD source configuration parameters.</p>",
       "refs": {
         "__listOfVodSource$member": null
+      }
+    },
+    "__adsInteractionExcludeEventTypesList": {
+      "base": null,
+      "refs": {
+        "AdsInteractionLog$ExcludeEventTypes": "<p>Indicates that MediaTailor won't emit the selected events in the logs for playback sessions that are initialized with this configuration.</p>"
+      }
+    },
+    "__adsInteractionPublishOptInEventTypesList": {
+      "base": null,
+      "refs": {
+        "AdsInteractionLog$PublishOptInEventTypes": "<p>Indicates that MediaTailor emits <code>RAW_ADS_RESPONSE</code> logs for playback sessions that are initialized with this configuration.</p>"
       }
     },
     "__boolean": {
@@ -1066,7 +1096,7 @@
     "__integer": {
       "base": null,
       "refs": {
-        "ConfigureLogsForPlaybackConfigurationRequest$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account. For example, if your playback configuration has 1000 sessions and percentEnabled is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
+        "ConfigureLogsForPlaybackConfigurationRequest$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your CloudWatch Logs account. For example, if your playback configuration has 1000 sessions and percentEnabled is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
         "ConfigureLogsForPlaybackConfigurationResponse$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account.</p>",
         "DashPlaylistSettings$ManifestWindowSeconds": "<p>The total duration (in seconds) of each manifest. Minimum value: <code>30</code> seconds. Maximum value: <code>3600</code> seconds.</p>",
         "DashPlaylistSettings$MinBufferTimeSeconds": "<p>Minimum amount of content (measured in seconds) that a player must keep available in the buffer. Minimum value: <code>2</code> seconds. Maximum value: <code>60</code> seconds.</p>",
@@ -1074,12 +1104,15 @@
         "DashPlaylistSettings$SuggestedPresentationDelaySeconds": "<p>Amount of time (in seconds) that the player should be from the live point at the end of the manifest. Minimum value: <code>2</code> seconds. Maximum value: <code>60</code> seconds.</p>",
         "HlsPlaylistSettings$ManifestWindowSeconds": "<p>The total duration (in seconds) of each manifest. Minimum value: <code>30</code> seconds. Maximum value: <code>3600</code> seconds.</p>",
         "LivePreRollConfiguration$MaxDurationSeconds": "<p>The maximum allowed duration for the pre-roll ad avail. AWS Elemental MediaTailor won't play pre-roll ads to exceed this duration, regardless of the total duration of ads that the ADS returns.</p>",
-        "LogConfiguration$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your Cloudwatch Logs account. For example, if your playback configuration has 1000 sessions and <code>percentEnabled</code> is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
+        "LogConfiguration$PercentEnabled": "<p>The percentage of session logs that MediaTailor sends to your configured log destination. For example, if your playback configuration has 1000 sessions and <code>percentEnabled</code> is set to <code>60</code>, MediaTailor sends logs for 600 of the sessions to CloudWatch Logs. MediaTailor decides at random which of the playback configuration sessions to send logs for. If you want to view logs for a specific session, you can use the <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/debug-log-mode.html\">debug log mode</a>.</p> <p>Valid values: <code>0</code> - <code>100</code> </p>",
+        "RecurringConsumption$RetrievedAdExpirationSeconds": "<p>The number of seconds that an ad is available for insertion after it was prefetched.</p>",
+        "RecurringRetrieval$DelayAfterAvailEndSeconds": "<p>The number of seconds that MediaTailor waits after an ad avail before prefetching ads for the next avail. If not set, the default is 0 (no delay).</p>",
         "SpliceInsertMessage$AvailNum": "<p>This is written to <code>splice_insert.avail_num</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$AvailsExpected": "<p>This is written to <code>splice_insert.avails_expected</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
         "SpliceInsertMessage$SpliceEventId": "<p>This is written to <code>splice_insert.splice_event_id</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>1</code>.</p>",
         "SpliceInsertMessage$UniqueProgramId": "<p>This is written to <code>splice_insert.unique_program_id</code>, as defined in section 9.7.3.1 of the SCTE-35 specification. The default value is <code>0</code>. Values must be between <code>0</code> and <code>256</code>, inclusive.</p>",
-        "TimeShiftConfiguration$MaxTimeDelaySeconds": "<p> The maximum time delay for time-shifted viewing. The minimum allowed maximum time delay is 0 seconds, and the maximum allowed maximum time delay is 21600 seconds (6 hours). </p>"
+        "TimeShiftConfiguration$MaxTimeDelaySeconds": "<p> The maximum time delay for time-shifted viewing. The minimum allowed maximum time delay is 0 seconds, and the maximum allowed maximum time delay is 21600 seconds (6 hours). </p>",
+        "TrafficShapingRetrievalWindow$RetrievalWindowDurationSeconds": "<p>The amount of time, in seconds, that MediaTailor spreads prefetch requests to the ADS. </p>"
       }
     },
     "__integerMin1": {
@@ -1133,7 +1166,8 @@
     "__listOfAvailMatchingCriteria": {
       "base": null,
       "refs": {
-        "PrefetchConsumption$AvailMatchingCriteria": "<p>If you only want MediaTailor to insert prefetched ads into avails (ad breaks) that match specific dynamic variables, such as <code>scte.event_id</code>, set the avail matching criteria.</p>"
+        "PrefetchConsumption$AvailMatchingCriteria": "<p>If you only want MediaTailor to insert prefetched ads into avails (ad breaks) that match specific dynamic variables, such as <code>scte.event_id</code>, set the avail matching criteria.</p>",
+        "RecurringConsumption$AvailMatchingCriteria": "<p>The configuration for the dynamic variables that determine which ad breaks that MediaTailor inserts prefetched ads in.</p>"
       }
     },
     "__listOfChannel": {
@@ -1146,6 +1180,14 @@
       "base": null,
       "refs": {
         "ListLiveSourcesResponse$Items": "<p>Lists the live sources.</p>"
+      }
+    },
+    "__listOfLoggingStrategies": {
+      "base": null,
+      "refs": {
+        "ConfigureLogsForPlaybackConfigurationRequest$EnabledLoggingStrategies": "<p>The method used for collecting logs from AWS Elemental MediaTailor. To configure MediaTailor to send logs directly to Amazon CloudWatch Logs, choose <code>LEGACY_CLOUDWATCH</code>. To configure MediaTailor to send logs to CloudWatch, which then vends the logs to your destination of choice, choose <code>VENDED_LOGS</code>. Supported destinations are CloudWatch Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream.</p> <p>To use vended logs, you must configure the delivery destination in Amazon CloudWatch, as described in <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AWS-logs-and-resource-policy.html#AWS-vended-logs-permissions-V2\">Enable logging from AWS services, Logging that requires additional permissions [V2]</a>.</p>",
+        "ConfigureLogsForPlaybackConfigurationResponse$EnabledLoggingStrategies": "<p>The method used for collecting logs from AWS Elemental MediaTailor. <code>LEGACY_CLOUDWATCH</code> indicates that MediaTailor is sending logs directly to Amazon CloudWatch Logs. <code>VENDED_LOGS</code> indicates that MediaTailor is sending logs to CloudWatch, which then vends the logs to your destination of choice. Supported destinations are CloudWatch Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream. </p>",
+        "LogConfiguration$EnabledLoggingStrategies": "<p>The method used for collecting logs from AWS Elemental MediaTailor. <code>LEGACY_CLOUDWATCH</code> indicates that MediaTailor is sending logs directly to Amazon CloudWatch Logs. <code>VENDED_LOGS</code> indicates that MediaTailor is sending logs to CloudWatch, which then vends the logs to your destination of choice. Supported destinations are CloudWatch Logs log group, Amazon S3 bucket, and Amazon Data Firehose stream. </p>"
       }
     },
     "__listOfPlaybackConfiguration": {
@@ -1207,8 +1249,8 @@
       "refs": {
         "AdBreak$OffsetMillis": "<p>How long (in milliseconds) after the beginning of the program that an ad starts. This value must fall within 100ms of a segment boundary, otherwise the ad break will be skipped.</p>",
         "AdBreakOpportunity$OffsetMillis": "<p>The offset in milliseconds from the start of the VOD source at which an ad marker was detected.</p>",
-        "AlternateMedia$DurationMillis": "<p>The duration of the alternateMedia in milliseconds.</p>",
         "AlternateMedia$ScheduledStartTimeMillis": "<p>The date and time that the alternateMedia is scheduled to start, in epoch milliseconds.</p>",
+        "AlternateMedia$DurationMillis": "<p>The duration of the alternateMedia in milliseconds.</p>",
         "ClipRange$EndOffsetMillis": "<p>The end offset of the clip range, in milliseconds, starting from the beginning of the VOD source associated with the program.</p>",
         "ClipRange$StartOffsetMillis": "<p>The start offset of the clip range, in milliseconds. This offset truncates the start at the number of milliseconds into the duration of the VOD source.</p>",
         "CreateProgramResponse$DurationMillis": "<p>The duration of the live program in milliseconds.</p>",
@@ -1217,8 +1259,14 @@
         "Transition$DurationMillis": "<p>The duration of the live program in seconds.</p>",
         "Transition$ScheduledStartTimeMillis": "<p>The date and time that the program is scheduled to start, in epoch milliseconds.</p>",
         "UpdateProgramResponse$DurationMillis": "<p>The duration of the live program in milliseconds.</p>",
-        "UpdateProgramTransition$DurationMillis": "<p>The duration of the live program in seconds.</p>",
-        "UpdateProgramTransition$ScheduledStartTimeMillis": "<p>The date and time that the program is scheduled to start, in epoch milliseconds.</p>"
+        "UpdateProgramTransition$ScheduledStartTimeMillis": "<p>The date and time that the program is scheduled to start, in epoch milliseconds.</p>",
+        "UpdateProgramTransition$DurationMillis": "<p>The duration of the live program in seconds.</p>"
+      }
+    },
+    "__manifestServiceExcludeEventTypesList": {
+      "base": null,
+      "refs": {
+        "ManifestServiceInteractionLog$ExcludeEventTypes": "<p>Indicates that MediaTailor won't emit the selected events in the logs for playback sessions that are initialized with this configuration.</p>"
       }
     },
     "__mapOf__string": {
@@ -1246,6 +1294,7 @@
         "PrefetchRetrieval$DynamicVariables": "<p>The dynamic variables to use for substitution during prefetch requests to the ad decision server (ADS).</p> <p>You initially configure <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables.html\">dynamic variables</a> for the ADS URL when you set up your playback configuration. When you specify <code>DynamicVariables</code> for prefetch retrieval, MediaTailor includes the dynamic variables in the request to the ADS.</p>",
         "PutPlaybackConfigurationRequest$Tags": "<p>The tags to assign to the playback configuration. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "PutPlaybackConfigurationResponse$Tags": "<p>The tags to assign to the playback configuration. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
+        "RecurringRetrieval$DynamicVariables": "<p>The dynamic variables to use for substitution during prefetch requests to the ADS.</p>",
         "SourceLocation$Tags": "<p>The tags assigned to the source location. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "TagResourceRequest$Tags": "<p>The tags to assign to the resource. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
         "UpdateChannelResponse$Tags": "<p>The tags to assign to the channel. Tags are key-value pairs that you can associate with Amazon resources to help with organization, access control, and cost tracking. For more information, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/tagging.html\">Tagging AWS Elemental MediaTailor Resources</a>.</p>",
@@ -1261,8 +1310,8 @@
         "Alert$AlertCode": "<p>The code for the alert. For example, <code>NOT_PROCESSED</code>.</p>",
         "Alert$AlertMessage": "<p>If an alert is generated for a resource, an explanation of the reason for the alert.</p>",
         "Alert$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
-        "AlternateMedia$LiveSourceName": "<p>The name of the live source for alternateMedia.</p>",
         "AlternateMedia$SourceLocationName": "<p>The name of the source location for alternateMedia.</p>",
+        "AlternateMedia$LiveSourceName": "<p>The name of the live source for alternateMedia.</p>",
         "AlternateMedia$VodSourceName": "<p>The name of the VOD source for alternateMedia.</p>",
         "AudienceMedia$Audience": "<p>The Audience defined in AudienceMedia.</p>",
         "AvailMatchingCriteria$DynamicVariable": "<p>The dynamic variable(s) that MediaTailor should use as avail matching criteria. MediaTailor only places the prefetched ads into the avail if the avail matches the criteria defined by the dynamic variable. For information about dynamic variables, see <a href=\"https://docs.aws.amazon.com/mediatailor/latest/ug/variables.html\">Using dynamic ad variables</a> in the <i>MediaTailor User Guide</i>.</p> <p>You can include up to 100 dynamic variables.</p>",
@@ -1363,10 +1412,10 @@
         "DescribeVodSourceResponse$VodSourceName": "<p>The name of the VOD source.</p>",
         "GetChannelPolicyRequest$ChannelName": "<p>The name of the channel associated with this Channel Policy.</p>",
         "GetChannelPolicyResponse$Policy": "<p>The IAM policy for the channel. IAM policies are used to control access to your channel.</p>",
-        "GetChannelScheduleRequest$Audience": "<p>The single audience for GetChannelScheduleRequest.</p>",
         "GetChannelScheduleRequest$ChannelName": "<p>The name of the channel associated with this Channel Schedule.</p>",
         "GetChannelScheduleRequest$DurationMinutes": "<p>The duration in minutes of the channel schedule.</p>",
         "GetChannelScheduleRequest$NextToken": "<p>(Optional) If the playback configuration has more than <code>MaxResults</code> channel schedules, use <code>NextToken</code> to get the second and subsequent pages of results.</p> <p>For the first <code>GetChannelScheduleRequest</code> request, omit this value.</p> <p>For the second and subsequent requests, get the value of <code>NextToken</code> from the previous response and specify that value for <code>NextToken</code> in the request.</p> <p>If the previous response didn't include a <code>NextToken</code> element, there are no more channel schedules to get.</p>",
+        "GetChannelScheduleRequest$Audience": "<p>The single audience for GetChannelScheduleRequest.</p>",
         "GetChannelScheduleResponse$NextToken": "<p>Pagination token returned by the list request when results exceed the maximum allowed. Use the token to fetch the next page of results.</p>",
         "GetPlaybackConfigurationRequest$Name": "<p>The identifier for the playback configuration.</p>",
         "GetPlaybackConfigurationResponse$AdDecisionServerUrl": "<p>The URL for the ad decision server (ADS). This includes the specification of static parameters and placeholders for dynamic parameters. AWS Elemental MediaTailor substitutes player-specific and session-specific parameters as needed when calling the ADS. Alternately, for testing, you can provide a static VAST URL. The maximum length is 25,000 characters.</p>",
@@ -1480,10 +1529,10 @@
         "UpdateProgramRequest$ProgramName": "<p>The name of the Program.</p>",
         "UpdateProgramResponse$Arn": "<p>The ARN to assign to the program.</p>",
         "UpdateProgramResponse$ChannelName": "<p>The name to assign to the channel for this program.</p>",
-        "UpdateProgramResponse$LiveSourceName": "<p>The name of the LiveSource for this Program.</p>",
         "UpdateProgramResponse$ProgramName": "<p>The name to assign to this program.</p>",
         "UpdateProgramResponse$SourceLocationName": "<p>The name to assign to the source location for this program.</p>",
         "UpdateProgramResponse$VodSourceName": "<p>The name that's used to refer to a VOD source.</p>",
+        "UpdateProgramResponse$LiveSourceName": "<p>The name of the LiveSource for this Program.</p>",
         "UpdateSourceLocationRequest$SourceLocationName": "<p>The name of the source location.</p>",
         "UpdateSourceLocationResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the source location.</p>",
         "UpdateSourceLocationResponse$SourceLocationName": "<p>The name of the source location.</p>",
@@ -1529,9 +1578,11 @@
         "LiveSource$CreationTime": "<p>The timestamp that indicates when the live source was created.</p>",
         "LiveSource$LastModifiedTime": "<p>The timestamp that indicates when the live source was last modified.</p>",
         "PrefetchConsumption$EndTime": "<p>The time when MediaTailor no longer considers the prefetched ads for use in an ad break. MediaTailor automatically deletes prefetch schedules no less than seven days after the end time. If you'd like to manually delete the prefetch schedule, you can call <code>DeletePrefetchSchedule</code>.</p>",
-        "PrefetchConsumption$StartTime": "<p>The time when prefetched ads are considered for use in an ad break. If you don't specify <code>StartTime</code>, the prefetched ads are available after MediaTailor retrives them from the ad decision server.</p>",
+        "PrefetchConsumption$StartTime": "<p>The time when prefetched ads are considered for use in an ad break. If you don't specify <code>StartTime</code>, the prefetched ads are available after MediaTailor retrieves them from the ad decision server.</p>",
         "PrefetchRetrieval$EndTime": "<p>The time when prefetch retrieval ends for the ad break. Prefetching will be attempted for manifest requests that occur at or before this time.</p>",
         "PrefetchRetrieval$StartTime": "<p>The time when prefetch retrievals can start for this break. Ad prefetching will be attempted for manifest requests that occur at or after this time. Defaults to the current time. If not specified, the prefetch retrieval starts as soon as possible.</p>",
+        "RecurringPrefetchConfiguration$StartTime": "<p>The start time for the window that MediaTailor prefetches and inserts ads in a live event. </p>",
+        "RecurringPrefetchConfiguration$EndTime": "<p>The end time for the window that MediaTailor prefetches and inserts ads in a live event. </p>",
         "ScheduleAdBreak$ApproximateStartTime": "<p>The approximate time that the ad will start playing.</p>",
         "ScheduleEntry$ApproximateStartTime": "<p>The approximate time that the program will start playing.</p>",
         "SourceLocation$CreationTime": "<p>The timestamp that indicates when the source location was created.</p>",

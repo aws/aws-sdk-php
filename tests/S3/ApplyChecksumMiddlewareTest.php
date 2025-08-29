@@ -1,11 +1,10 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Api\ApiProvider;
-use Aws\Middleware;
+use Aws\S3\ApplyChecksumMiddleware;
 use Aws\Test\UsesServiceTrait;
-use Psr\Http\Message\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Psr7\Request;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
 /**
  * @covers Aws\S3\ApplyChecksumMiddleware
@@ -15,163 +14,154 @@ class ApplyChecksumMiddlewareTest extends TestCase
     use UsesServiceTrait;
 
     /**
-     * @dataProvider getContentMd5UseCases
-     */
-    public function testAddsContentMd5AsAppropriate($operation, $args, $md5Added, $md5Value)
-    {
-        $s3 = $this->getTestClient(
-            's3',
-            ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand($operation, $args);
-        $command->getHandlerList()->appendBuild(
-            Middleware::tap(function ($cmd, RequestInterface $request) use ($md5Added, $md5Value) {
-                $this->assertSame($md5Added, $request->hasHeader('Content-MD5'));
-                $this->assertEquals($md5Value, $request->getHeaderLine('Content-MD5'));
-            })
-        );
-        $s3->execute($command);
-    }
-
-    public function getContentMd5UseCases()
-    {
-        return [
-            // Test that explicitly proviced Content MD5 is passed through
-            [
-                'PutBucketLogging',
-                [
-                    'Bucket' => 'foo',
-                    'BucketLoggingStatus' => [
-                        'LoggingEnabled' => [
-                            'TargetBucket' => 'bar',
-                            'TargetPrefix' => 'baz'
-                        ]
-                    ],
-                    'ContentMD5' => 'custommd5'
-                ],
-                true,
-                'custommd5'
-            ],
-            // Test MD5 added for operations that require it
-            [
-                'DeleteObjects',
-                ['Bucket' => 'foo', 'Delete' => ['Objects' => [['Key' => 'bar']]]],
-                true,
-                '/12roh/ATpPMcGD9Rj4ZlQ=='
-            ],
-            // Test MD5 not added for operations that do not require it
-            [
-                'GetObject',
-                ['Bucket' => 'foo', 'Key' => 'bar'],
-                false,
-                null,
-            ],
-        ];
-    }
-
-    public function testAddCrc32AsAppropriate()
-    {
-        $s3 = $this->getTestClient(
-            's3',
-            ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand('putBucketPolicy', [
-            'Bucket' => 'mybucket--use1-az1--x-s3',
-            'Policy' => 'policy'
-        ]);
-        $command->getHandlerList()->appendBuild(
-            Middleware::tap(function ($cmd, RequestInterface $request) {
-                $this->assertFalse($request->hasHeader('Content-MD5'));
-                $this->assertSame('8H0FFg==', $request->getHeaderLine('x-amz-checksum-crc32'));
-            })
-        );
-        $s3->execute($command);
-    }
-
-    /**
      * @dataProvider getFlexibleChecksumUseCases
      */
-    public function testAddsFlexibleChecksumAsAppropriate($operation, $args, $headerAdded, $headerValue)
-    {
-        if (isset($args['ChecksumAlgorithm'])
-            && $args['ChecksumAlgorithm'] === 'crc32c'
+    public function testFlexibleChecksums(
+        $operation,
+        $config,
+        $commandArgs,
+        $body,
+        $headerAdded,
+        $headerValue
+    ){
+        if (isset($commandArgs['ChecksumAlgorithm'])
+            && $commandArgs['ChecksumAlgorithm'] === 'crc32c'
             && !extension_loaded('awscrt')
         ) {
             $this->markTestSkipped("Cannot test crc32c without the CRT");
         }
-        $s3 = $this->getTestClient(
-            's3',
-            ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
+
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($cmd, $request) use ($headerAdded, $headerValue, $commandArgs) {
+            $checksumName = $commandArgs['ChecksumAlgorithm'] ?? "crc32";
+            if ($headerAdded) {
+                $this->assertTrue( $request->hasHeader("x-amz-checksum-{$checksumName}"));
+            }
+            $this->assertEquals($headerValue, $request->getHeaderLine("x-amz-checksum-{$checksumName}"));
+        };
+        $service = $client->getApi();
+        $mw = new ApplyChecksumMiddleware($nextHandler, $service, $config);
+        $command = $client->getCommand($operation, $commandArgs);
+        $request = new Request(
+            $operation === 'getObject'
+                ? 'GET'
+                : 'PUT',
+            'https://foo.bar',
+            [],
+            $body
         );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand($operation, $args);
-        $command->getHandlerList()->appendBuild(
-            Middleware::tap(function ($cmd, RequestInterface $request) use ($headerAdded, $headerValue, $args) {
-                $checksumName = isset($args['ChecksumAlgorithm']) ? $args['ChecksumAlgorithm'] : "";
-                $this->assertSame($headerAdded, $request->hasHeader("x-amz-checksum-{$checksumName}"));
-                $this->assertEquals($headerValue, $request->getHeaderLine("x-amz-checksum-{$checksumName}"));
-            })
-        );
-        $s3->execute($command);
+
+        $mw($command, $request);
     }
 
     public function getFlexibleChecksumUseCases()
     {
         return [
-            // Test that explicitly proviced Content MD5 is passed through
+            // httpChecksum not modeled
             [
                 'GetObject',
+                [],
                 [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumMode' => 'ENABLED'
                 ],
+                null,
                 false,
                 ''
             ],
+            // default: when_supported. defaults to crc32
             [
                 'PutObject',
+                [],
                 [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
-                    'ChecksumAlgorithm' => 'crc32',
                     'Body' => 'abc'
                 ],
+                'abc',
                 true,
-                'EZo2zw=='
+                'NSRBwg=='
             ],
+            // when_required when not required and no requested algorithm
             [
                 'PutObject',
+                ['request_checksum_calculation' => 'when_required'],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Body' => 'abc'
+                ],
+                'abc',
+                false,
+                ''
+            ],
+            // when_required when required and no requested algorithm
+            [
+                'PutObjectLockConfiguration',
+                ['request_checksum_calculation' => 'when_required'],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'ObjectLockConfiguration' => 'blah'
+                ],
+                'blah',
+                true,
+                'zilhXA=='
+            ],
+            // when_required when not required and requested algorithm
+            [
+                'PutObject',
+                ['request_checksum_calculation' => 'when_required'],
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'Body' => 'blah',
+                    'ChecksumAlgorithm' => 'crc32',
+                ],
+                'blah',
+                true,
+                'zilhXA=='
+            ],
+            // when_supported and requested algorithm
+            [
+                'PutObject',
+                [],
                 [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumAlgorithm' => 'crc32c',
                     'Body' => 'abc'
                 ],
+                'abc',
                 true,
-                'oD04yw=='
+                'Nks/tw=='
             ],
+            // when_supported and requested algorithm
             [
                 'PutObject',
+                [],
                 [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumAlgorithm' => 'sha256'
                 ],
+                '',
                 true,
-                'OmJVpLQxEjty3SMySBLGRfWtoBQ/ZXT2cT2Cjuly4XY='
+                '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='
             ],
+            // when_supported and requested algorithm
             [
                 'PutObject',
+                [],
                 [
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                     'ChecksumAlgorithm' => 'SHA1'
                 ],
+                '',
                 true,
-                'KckkIVRT7cC010EHaNNNuun5VBY='
+                '2jmj7l5rSw0yVb/vlWAYkK/YBwk='
             ],
         ];
     }
@@ -179,18 +169,19 @@ class ApplyChecksumMiddlewareTest extends TestCase
     /**
      * @dataProvider getContentSha256UseCases
      */
-    public function testAddsContentSHA256AsAppropriate($operation, $args, $hashAdded, $hashValue)
+    public function testAddsContentSHA256($operation, $args, $hashAdded, $hashValue)
     {
-        $s3 = $this->getTestClient('s3');
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand($operation, $args);
-        $command->getHandlerList()->appendBuild(
-            Middleware::tap(function ($cmd, RequestInterface $request) use ($hashAdded, $hashValue) {
-                $this->assertSame($hashAdded, $request->hasHeader('x-amz-content-sha256'));
-                $this->assertEquals($hashValue, $request->getHeaderLine('x-amz-content-sha256'));
-            })
-        );
-        $s3->execute($command);
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($cmd, $request) use ($hashAdded, $hashValue) {
+            $this->assertSame($hashAdded, $request->hasHeader('x-amz-content-sha256'));
+            $this->assertEquals($hashValue, $request->getHeaderLine('x-amz-content-sha256'));
+        };
+        $service = $client->getApi();
+        $mw = new ApplyChecksumMiddleware($nextHandler, $service);
+        $command = $client->getCommand($operation, $args);
+        $request = new Request('PUT', 'foo');
+
+        $mw($command, $request);
     }
 
     public function getContentSha256UseCases()
@@ -220,5 +211,54 @@ class ApplyChecksumMiddlewareTest extends TestCase
                 '',
             ],
         ];
+    }
+
+    public function testAddContentMd5EmitsDeprecationWarning()
+    {
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('S3 no longer supports MD5 checksums.');
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($cmd, $request) {
+            $this->assertTrue($request->hasHeader('x-amz-checksum-crc32'));
+        };
+        $service = $client->getApi();
+        $mw = new ApplyChecksumMiddleware($nextHandler, $service);
+        $command = $client->getCommand('putObject', ['AddContentMD5' => true]);
+        $request = new Request('PUT', 'foo');
+
+        $mw($command, $request);
+    }
+
+    public function testInvalidChecksumThrows()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Unsupported algorithm supplied for input variable ChecksumAlgorithm'
+        );
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($cmd, $request) {
+            $this->assertTrue($request->hasHeader('x-amz-checksum-crc32'));
+        };
+        $service = $client->getApi();
+        $mw = new ApplyChecksumMiddleware($nextHandler, $service);
+        $command = $client->getCommand('putObject', ['ChecksumAlgorithm' => 'NotAnAlgorithm']);
+        $request = new Request('PUT', 'foo');
+
+        $mw($command, $request);
+    }
+
+    public function testDoesNotCalculateChecksumIfHeaderProvided()
+    {
+        $client = $this->getTestClient('s3');
+        $nextHandler = function ($cmd, $request) {
+            $this->assertTrue($request->hasHeader('x-amz-checksum-crc32c'));
+            $this->assertEquals('foo', $request->getHeaderLine('x-amz-checksum-crc32c'));
+        };
+        $service = $client->getApi();
+        $mw = new ApplyChecksumMiddleware($nextHandler, $service);
+        $command = $client->getCommand('putObject');
+        $request = new Request('PUT', 'foo', ['x-amz-checksum-crc32c' => 'foo']);
+
+        $mw($command, $request);
     }
 }

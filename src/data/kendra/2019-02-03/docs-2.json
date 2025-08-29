@@ -9,7 +9,7 @@
     "BatchGetDocumentStatus": "<p>Returns the indexing status for one or more documents submitted with the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_BatchPutDocument.html\"> BatchPutDocument</a> API.</p> <p>When you use the <code>BatchPutDocument</code> API, documents are indexed asynchronously. You can use the <code>BatchGetDocumentStatus</code> API to get the current status of a list of documents so that you can determine if they have been successfully indexed.</p> <p>You can also use the <code>BatchGetDocumentStatus</code> API to check the status of the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_BatchDeleteDocument.html\"> BatchDeleteDocument</a> API. When a document is deleted from the index, Amazon Kendra returns <code>NOT_FOUND</code> as the status.</p>",
     "BatchPutDocument": "<p>Adds one or more documents to an index.</p> <p>The <code>BatchPutDocument</code> API enables you to ingest inline documents or a set of documents stored in an Amazon S3 bucket. Use this API to ingest your text and unstructured text into an index, add custom attributes to the documents, and to attach an access control list to the documents added to the index.</p> <p>The documents are indexed asynchronously. You can see the progress of the batch using Amazon Web Services CloudWatch. Any error messages related to processing the batch are sent to your Amazon Web Services CloudWatch log. You can also use the <code>BatchGetDocumentStatus</code> API to monitor the progress of indexing your documents.</p> <p>For an example of ingesting inline documents using Python and Java SDKs, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/in-adding-binary-doc.html\">Adding files directly to an index</a>.</p>",
     "ClearQuerySuggestions": "<p>Clears existing query suggestions from an index.</p> <p>This deletes existing suggestions only, not the queries in the query log. After you clear suggestions, Amazon Kendra learns new suggestions based on new queries added to the query log from the time you cleared suggestions. If you do not see any new suggestions, then please allow Amazon Kendra to collect enough queries to learn new suggestions.</p> <p> <code>ClearQuerySuggestions</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
-    "CreateAccessControlConfiguration": "<p>Creates an access configuration for your documents. This includes user and group access information for your documents. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p> <p>You can use this to re-configure your existing document level access control without indexing all of your documents again. For example, your index contains top-secret company documents that only certain employees or users should access. One of these users leaves the company or switches to a team that should be blocked from accessing top-secret documents. The user still has access to top-secret documents because the user had access when your documents were previously indexed. You can create a specific access control configuration for the user with deny access. You can later update the access control configuration to allow access if the user returns to the company and re-joins the 'top-secret' team. You can re-configure access control for your documents as circumstances change.</p> <p>To apply your access control configuration to certain documents, you call the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_BatchPutDocument.html\">BatchPutDocument</a> API with the <code>AccessControlConfigurationId</code> included in the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_Document.html\">Document</a> object. If you use an S3 bucket as a data source, you update the <code>.metadata.json</code> with the <code>AccessControlConfigurationId</code> and synchronize your data source. Amazon Kendra currently only supports access control configuration for S3 data sources and documents indexed using the <code>BatchPutDocument</code> API.</p>",
+    "CreateAccessControlConfiguration": "<p>Creates an access configuration for your documents. This includes user and group access information for your documents. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p> <p>You can use this to re-configure your existing document level access control without indexing all of your documents again. For example, your index contains top-secret company documents that only certain employees or users should access. One of these users leaves the company or switches to a team that should be blocked from accessing top-secret documents. The user still has access to top-secret documents because the user had access when your documents were previously indexed. You can create a specific access control configuration for the user with deny access. You can later update the access control configuration to allow access if the user returns to the company and re-joins the 'top-secret' team. You can re-configure access control for your documents as circumstances change.</p> <p>To apply your access control configuration to certain documents, you call the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_BatchPutDocument.html\">BatchPutDocument</a> API with the <code>AccessControlConfigurationId</code> included in the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_Document.html\">Document</a> object. If you use an S3 bucket as a data source, you update the <code>.metadata.json</code> with the <code>AccessControlConfigurationId</code> and synchronize your data source. Amazon Kendra currently only supports access control configuration for S3 data sources and documents indexed using the <code>BatchPutDocument</code> API.</p> <important> <p>You can't configure access control using <code>CreateAccessControlConfiguration</code> for an Amazon Kendra Gen AI Enterprise Edition index. Amazon Kendra will return a <code>ValidationException</code> error for a <code>Gen_AI_ENTERPRISE_EDITION</code> index.</p> </important>",
     "CreateDataSource": "<p>Creates a data source connector that you want to use with an Amazon Kendra index.</p> <p>You specify a name, data source connector type and description for your data source. You also specify configuration information for the data source connector.</p> <p> <code>CreateDataSource</code> is a synchronous operation. The operation returns 200 if the data source was successfully created. Otherwise, an exception is raised.</p> <p>For an example of creating an index and data source using the Python SDK, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/gs-python.html\">Getting started with Python SDK</a>. For an example of creating an index and data source using the Java SDK, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/gs-java.html\">Getting started with Java SDK</a>.</p>",
     "CreateExperience": "<p>Creates an Amazon Kendra experience such as a search application. For more information on creating a search application experience, including using the Python and Java SDKs, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/deploying-search-experience-no-code.html\">Building a search experience with no code</a>.</p>",
     "CreateFaq": "<p>Creates a set of frequently ask questions (FAQs) using a specified FAQ file stored in an Amazon S3 bucket.</p> <p>Adding FAQs to an index is an asynchronous operation.</p> <p>For an example of adding an FAQ to an index using Python and Java SDKs, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/in-creating-faq.html#using-faq-file\">Using your FAQ file</a>.</p>",
@@ -20,15 +20,15 @@
     "DeleteAccessControlConfiguration": "<p>Deletes an access control configuration that you created for your documents in an index. This includes user and group access information for your documents. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p>",
     "DeleteDataSource": "<p>Deletes an Amazon Kendra data source connector. An exception is not thrown if the data source is already being deleted. While the data source is being deleted, the <code>Status</code> field returned by a call to the <code>DescribeDataSource</code> API is set to <code>DELETING</code>. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/delete-data-source.html\">Deleting Data Sources</a>.</p> <p>Deleting an entire data source or re-syncing your index after deleting specific documents from a data source could take up to an hour or more, depending on the number of documents you want to delete.</p>",
     "DeleteExperience": "<p>Deletes your Amazon Kendra experience such as a search application. For more information on creating a search application experience, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/deploying-search-experience-no-code.html\">Building a search experience with no code</a>.</p>",
-    "DeleteFaq": "<p>Removes an FAQ from an index.</p>",
+    "DeleteFaq": "<p>Removes a FAQ from an index.</p>",
     "DeleteIndex": "<p>Deletes an Amazon Kendra index. An exception is not thrown if the index is already being deleted. While the index is being deleted, the <code>Status</code> field returned by a call to the <code>DescribeIndex</code> API is set to <code>DELETING</code>.</p>",
-    "DeletePrincipalMapping": "<p>Deletes a group so that all users and sub groups that belong to the group can no longer access documents only available to that group.</p> <p>For example, after deleting the group \"Summer Interns\", all interns who belonged to that group no longer see intern-only documents in their search results.</p> <p>If you want to delete or replace users or sub groups of a group, you need to use the <code>PutPrincipalMapping</code> operation. For example, if a user in the group \"Engineering\" leaves the engineering team and another user takes their place, you provide an updated list of users or sub groups that belong to the \"Engineering\" group when calling <code>PutPrincipalMapping</code>. You can update your internal list of users or sub groups and input this list when calling <code>PutPrincipalMapping</code>.</p> <p> <code>DeletePrincipalMapping</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
+    "DeletePrincipalMapping": "<p>Deletes a group so that all users that belong to the group can no longer access documents only available to that group.</p> <p>For example, after deleting the group \"Summer Interns\", all interns who belonged to that group no longer see intern-only documents in their search results.</p> <p>If you want to delete or replace users or sub groups of a group, you need to use the <code>PutPrincipalMapping</code> operation. For example, if a user in the group \"Engineering\" leaves the engineering team and another user takes their place, you provide an updated list of users or sub groups that belong to the \"Engineering\" group when calling <code>PutPrincipalMapping</code>. You can update your internal list of users or sub groups and input this list when calling <code>PutPrincipalMapping</code>.</p> <p> <code>DeletePrincipalMapping</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
     "DeleteQuerySuggestionsBlockList": "<p>Deletes a block list used for query suggestions for an index.</p> <p>A deleted block list might not take effect right away. Amazon Kendra needs to refresh the entire suggestions list to add back the queries that were previously blocked.</p> <p> <code>DeleteQuerySuggestionsBlockList</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
     "DeleteThesaurus": "<p>Deletes an Amazon Kendra thesaurus. </p>",
     "DescribeAccessControlConfiguration": "<p>Gets information about an access control configuration that you created for your documents in an index. This includes user and group access information for your documents. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p>",
     "DescribeDataSource": "<p>Gets information about an Amazon Kendra data source connector.</p>",
     "DescribeExperience": "<p>Gets information about your Amazon Kendra experience such as a search application. For more information on creating a search application experience, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/deploying-search-experience-no-code.html\">Building a search experience with no code</a>.</p>",
-    "DescribeFaq": "<p>Gets information about an FAQ list.</p>",
+    "DescribeFaq": "<p>Gets information about a FAQ.</p>",
     "DescribeFeaturedResultsSet": "<p>Gets information about a set of featured results. Features results are placed above all other results for certain queries. If there's an exact match of a query, then one or more specific documents are featured in the search results.</p>",
     "DescribeIndex": "<p>Gets information about an Amazon Kendra index.</p>",
     "DescribePrincipalMapping": "<p>Describes the processing of <code>PUT</code> and <code>DELETE</code> actions for mapping users to their groups. This includes information on the status of actions currently processing or yet to be processed, when actions were last updated, when actions were received by Amazon Kendra, the latest action that should process and apply after other actions, and useful error messages if an action could not be processed.</p> <p> <code>DescribePrincipalMapping</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
@@ -45,22 +45,22 @@
     "ListEntityPersonas": "<p>Lists specific permissions of users and groups with access to your Amazon Kendra experience.</p>",
     "ListExperienceEntities": "<p>Lists users or groups in your IAM Identity Center identity source that are granted access to your Amazon Kendra experience. You can create an Amazon Kendra experience such as a search application. For more information on creating a search application experience, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/deploying-search-experience-no-code.html\">Building a search experience with no code</a>.</p>",
     "ListExperiences": "<p>Lists one or more Amazon Kendra experiences. You can create an Amazon Kendra experience such as a search application. For more information on creating a search application experience, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/deploying-search-experience-no-code.html\">Building a search experience with no code</a>.</p>",
-    "ListFaqs": "<p>Gets a list of FAQ lists associated with an index.</p>",
+    "ListFaqs": "<p>Gets a list of FAQs associated with an index.</p>",
     "ListFeaturedResultsSets": "<p>Lists all your sets of featured results for a given index. Features results are placed above all other results for certain queries. If there's an exact match of a query, then one or more specific documents are featured in the search results.</p>",
     "ListGroupsOlderThanOrderingId": "<p>Provides a list of groups that are mapped to users before a given ordering or timestamp identifier.</p> <p> <code>ListGroupsOlderThanOrderingId</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
     "ListIndices": "<p>Lists the Amazon Kendra indexes that you created.</p>",
     "ListQuerySuggestionsBlockLists": "<p>Lists the block lists used for query suggestions for an index.</p> <p>For information on the current quota limits for block lists, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/quotas.html\">Quotas for Amazon Kendra</a>.</p> <p> <code>ListQuerySuggestionsBlockLists</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
-    "ListTagsForResource": "<p>Gets a list of tags associated with a specified resource. Indexes, FAQs, and data sources can have tags associated with them.</p>",
+    "ListTagsForResource": "<p>Gets a list of tags associated with a resource. Indexes, FAQs, data sources, and other resources can have tags associated with them.</p>",
     "ListThesauri": "<p>Lists the thesauri for an index.</p>",
     "PutPrincipalMapping": "<p>Maps users to their groups so that you only need to provide the user ID when you issue the query.</p> <p>You can also map sub groups to groups. For example, the group \"Company Intellectual Property Teams\" includes sub groups \"Research\" and \"Engineering\". These sub groups include their own list of users or people who work in these teams. Only users who work in research and engineering, and therefore belong in the intellectual property group, can see top-secret company documents in their search results.</p> <p>This is useful for user context filtering, where search results are filtered based on the user or their group access to documents. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/user-context-filter.html\">Filtering on user context</a>.</p> <p>If more than five <code>PUT</code> actions for a group are currently processing, a validation exception is thrown.</p>",
-    "Query": "<p>Searches an index given an input query.</p> <note> <p>If you are working with large language models (LLMs) or implementing retrieval augmented generation (RAG) systems, you can use Amazon Kendra's <a href=\"https://docs.aws.amazon.com/kendra/latest/APIReference/API_Retrieve.html\">Retrieve</a> API, which can return longer semantically relevant passages. We recommend using the <code>Retrieve</code> API instead of filing a service limit increase to increase the <code>Query</code> API document excerpt length.</p> </note> <p>You can configure boosting or relevance tuning at the query level to override boosting at the index level, filter based on document fields/attributes and faceted search, and filter based on the user or their group access to documents. You can also include certain fields in the response that might provide useful additional information.</p> <p>A query response contains three types of results.</p> <ul> <li> <p>Relevant suggested answers. The answers can be either a text excerpt or table excerpt. The answer can be highlighted in the excerpt.</p> </li> <li> <p>Matching FAQs or questions-answer from your FAQ file.</p> </li> <li> <p>Relevant documents. This result type includes an excerpt of the document with the document title. The searched terms can be highlighted in the excerpt.</p> </li> </ul> <p>You can specify that the query return only one type of result using the <code>QueryResultTypeFilter</code> parameter. Each query returns the 100 most relevant results. If you filter result type to only question-answers, a maximum of four results are returned. If you filter result type to only answers, a maximum of three results are returned.</p>",
-    "Retrieve": "<p>Retrieves relevant passages or text excerpts given an input query.</p> <p>This API is similar to the <a href=\"https://docs.aws.amazon.com/kendra/latest/APIReference/API_Query.html\">Query</a> API. However, by default, the <code>Query</code> API only returns excerpt passages of up to 100 token words. With the <code>Retrieve</code> API, you can retrieve longer passages of up to 200 token words and up to 100 semantically relevant passages. This doesn't include question-answer or FAQ type responses from your index. The passages are text excerpts that can be semantically extracted from multiple documents and multiple parts of the same document. If in extreme cases your documents produce zero passages using the <code>Retrieve</code> API, you can alternatively use the <code>Query</code> API and its types of responses.</p> <p>You can also do the following:</p> <ul> <li> <p>Override boosting at the index level</p> </li> <li> <p>Filter based on document fields or attributes</p> </li> <li> <p>Filter based on the user or their group access to documents</p> </li> <li> <p>View the confidence score bucket for a retrieved passage result. The confidence bucket provides a relative ranking that indicates how confident Amazon Kendra is that the response is relevant to the query.</p> <note> <p>Confidence score buckets are currently available only for English.</p> </note> </li> </ul> <p>You can also include certain fields in the response that might provide useful additional information.</p> <p>The <code>Retrieve</code> API shares the number of <a href=\"https://docs.aws.amazon.com/kendra/latest/APIReference/API_CapacityUnitsConfiguration.html\">query capacity units</a> that you set for your index. For more information on what's included in a single capacity unit and the default base capacity for an index, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/adjusting-capacity.html\">Adjusting capacity</a>.</p>",
+    "Query": "<p>Searches an index given an input query.</p> <note> <p>If you are working with large language models (LLMs) or implementing retrieval augmented generation (RAG) systems, you can use Amazon Kendra's <a href=\"https://docs.aws.amazon.com/kendra/latest/APIReference/API_Retrieve.html\">Retrieve</a> API, which can return longer semantically relevant passages. We recommend using the <code>Retrieve</code> API instead of filing a service limit increase to increase the <code>Query</code> API document excerpt length.</p> </note> <p>You can configure boosting or relevance tuning at the query level to override boosting at the index level, filter based on document fields/attributes and faceted search, and filter based on the user or their group access to documents. You can also include certain fields in the response that might provide useful additional information.</p> <p>A query response contains three types of results.</p> <ul> <li> <p>Relevant suggested answers. The answers can be either a text excerpt or table excerpt. The answer can be highlighted in the excerpt.</p> </li> <li> <p>Matching FAQs or questions-answer from your FAQ file.</p> </li> <li> <p>Relevant documents. This result type includes an excerpt of the document with the document title. The searched terms can be highlighted in the excerpt.</p> </li> </ul> <p>You can specify that the query return only one type of result using the <code>QueryResultTypeFilter</code> parameter. Each query returns the 100 most relevant results. If you filter result type to only question-answers, a maximum of four results are returned. If you filter result type to only answers, a maximum of three results are returned.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can only use <code>ATTRIBUTE_FILTER</code> to filter search results by user context. If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use <code>USER_TOKEN</code> to configure user context policy, Amazon Kendra returns a <code>ValidationException</code> error.</p> </important>",
+    "Retrieve": "<p>Retrieves relevant passages or text excerpts given an input query.</p> <p>This API is similar to the <a href=\"https://docs.aws.amazon.com/kendra/latest/APIReference/API_Query.html\">Query</a> API. However, by default, the <code>Query</code> API only returns excerpt passages of up to 100 token words. With the <code>Retrieve</code> API, you can retrieve longer passages of up to 200 token words and up to 100 semantically relevant passages. This doesn't include question-answer or FAQ type responses from your index. The passages are text excerpts that can be semantically extracted from multiple documents and multiple parts of the same document. If in extreme cases your documents produce zero passages using the <code>Retrieve</code> API, you can alternatively use the <code>Query</code> API and its types of responses.</p> <p>You can also do the following:</p> <ul> <li> <p>Override boosting at the index level</p> </li> <li> <p>Filter based on document fields or attributes</p> </li> <li> <p>Filter based on the user or their group access to documents</p> </li> <li> <p>View the confidence score bucket for a retrieved passage result. The confidence bucket provides a relative ranking that indicates how confident Amazon Kendra is that the response is relevant to the query.</p> <note> <p>Confidence score buckets are currently available only for English.</p> </note> </li> </ul> <p>You can also include certain fields in the response that might provide useful additional information.</p> <p>The <code>Retrieve</code> API shares the number of <a href=\"https://docs.aws.amazon.com/kendra/latest/APIReference/API_CapacityUnitsConfiguration.html\">query capacity units</a> that you set for your index. For more information on what's included in a single capacity unit and the default base capacity for an index, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/adjusting-capacity.html\">Adjusting capacity</a>.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can only use <code>ATTRIBUTE_FILTER</code> to filter search results by user context. If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use <code>USER_TOKEN</code> to configure user context policy, Amazon Kendra returns a <code>ValidationException</code> error.</p> </important>",
     "StartDataSourceSyncJob": "<p>Starts a synchronization job for a data source connector. If a synchronization job is already in progress, Amazon Kendra returns a <code>ResourceInUseException</code> exception.</p> <p>Re-syncing your data source with your index after modifying, adding, or deleting documents from your data source respository could take up to an hour or more, depending on the number of documents to sync.</p>",
     "StopDataSourceSyncJob": "<p>Stops a synchronization job that is currently running. You can't stop a scheduled synchronization job.</p>",
     "SubmitFeedback": "<p>Enables you to provide feedback to Amazon Kendra to improve the performance of your index.</p> <p> <code>SubmitFeedback</code> is currently not supported in the Amazon Web Services GovCloud (US-West) region.</p>",
-    "TagResource": "<p>Adds the specified tag to the specified index, FAQ, or data source resource. If the tag already exists, the existing value is replaced with the new value.</p>",
-    "UntagResource": "<p>Removes a tag from an index, FAQ, or a data source.</p>",
-    "UpdateAccessControlConfiguration": "<p>Updates an access control configuration for your documents in an index. This includes user and group access information for your documents. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p> <p>You can update an access control configuration you created without indexing all of your documents again. For example, your index contains top-secret company documents that only certain employees or users should access. You created an 'allow' access control configuration for one user who recently joined the 'top-secret' team, switching from a team with 'deny' access to top-secret documents. However, the user suddenly returns to their previous team and should no longer have access to top secret documents. You can update the access control configuration to re-configure access control for your documents as circumstances change.</p> <p>You call the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_BatchPutDocument.html\">BatchPutDocument</a> API to apply the updated access control configuration, with the <code>AccessControlConfigurationId</code> included in the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_Document.html\">Document</a> object. If you use an S3 bucket as a data source, you synchronize your data source to apply the <code>AccessControlConfigurationId</code> in the <code>.metadata.json</code> file. Amazon Kendra currently only supports access control configuration for S3 data sources and documents indexed using the <code>BatchPutDocument</code> API.</p>",
+    "TagResource": "<p>Adds the specified tag to the specified index, FAQ, data source, or other resource. If the tag already exists, the existing value is replaced with the new value.</p>",
+    "UntagResource": "<p>Removes a tag from an index, FAQ, data source, or other resource.</p>",
+    "UpdateAccessControlConfiguration": "<p>Updates an access control configuration for your documents in an index. This includes user and group access information for your documents. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p> <p>You can update an access control configuration you created without indexing all of your documents again. For example, your index contains top-secret company documents that only certain employees or users should access. You created an 'allow' access control configuration for one user who recently joined the 'top-secret' team, switching from a team with 'deny' access to top-secret documents. However, the user suddenly returns to their previous team and should no longer have access to top secret documents. You can update the access control configuration to re-configure access control for your documents as circumstances change.</p> <p>You call the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_BatchPutDocument.html\">BatchPutDocument</a> API to apply the updated access control configuration, with the <code>AccessControlConfigurationId</code> included in the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_Document.html\">Document</a> object. If you use an S3 bucket as a data source, you synchronize your data source to apply the <code>AccessControlConfigurationId</code> in the <code>.metadata.json</code> file. Amazon Kendra currently only supports access control configuration for S3 data sources and documents indexed using the <code>BatchPutDocument</code> API.</p> <important> <p>You can't configure access control using <code>CreateAccessControlConfiguration</code> for an Amazon Kendra Gen AI Enterprise Edition index. Amazon Kendra will return a <code>ValidationException</code> error for a <code>Gen_AI_ENTERPRISE_EDITION</code> index.</p> </important>",
     "UpdateDataSource": "<p>Updates an Amazon Kendra data source connector.</p>",
     "UpdateExperience": "<p>Updates your Amazon Kendra experience such as a search application. For more information on creating a search application experience, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/deploying-search-experience-no-code.html\">Building a search experience with no code</a>.</p>",
     "UpdateFeaturedResultsSet": "<p>Updates a set of featured results. Features results are placed above all other results for certain queries. You map specific queries to specific documents for featuring in the results. If a query contains an exact match of a query, then one or more specific documents are featured in the search results.</p>",
@@ -109,8 +109,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action. Please ensure you have the required permission policies and user accounts and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AclConfiguration": {
       "base": "<p>Provides information about the column that should be used for filtering the query response by groups.</p>",
@@ -158,9 +157,9 @@
     "AmazonResourceName": {
       "base": null,
       "refs": {
-        "ListTagsForResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the index, FAQ, or data source to get a list of tags for.</p>",
-        "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the index, FAQ, or data source to tag.</p>",
-        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the index, FAQ, or data source to remove the tag from.</p>"
+        "ListTagsForResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the index, FAQ, data source, or other resource to get a list of tags for. For example, the ARN of an index is constructed as follows: <i>arn:aws:kendra:your-region:your-account-id:index/index-id</i> For information on how to construct an ARN for all types of Amazon Kendra resources, see <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies\">Resource types</a>.</p>",
+        "TagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the index, FAQ, data source, or other resource to add a tag. For example, the ARN of an index is constructed as follows: <i>arn:aws:kendra:your-region:your-account-id:index/index-id</i> For information on how to construct an ARN for all types of Amazon Kendra resources, see <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies\">Resource types</a>.</p>",
+        "UntagResourceRequest$ResourceARN": "<p>The Amazon Resource Name (ARN) of the index, FAQ, data source, or other resource to remove a tag. For example, the ARN of an index is constructed as follows: <i>arn:aws:kendra:your-region:your-account-id:index/index-id</i> For information on how to construct an ARN for all types of Amazon Kendra resources, see <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies\">Resource types</a>.</p>"
       }
     },
     "AssociateEntitiesToExperienceFailedEntityList": {
@@ -171,13 +170,11 @@
     },
     "AssociateEntitiesToExperienceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateEntitiesToExperienceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateEntityList": {
       "base": null,
@@ -187,22 +184,20 @@
     },
     "AssociatePersonasToEntitiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociatePersonasToEntitiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AttributeFilter": {
-      "base": "<p>Filters the search results based on document attributes or fields.</p> <p>You can filter results using attributes for your particular documents. The attributes must exist in your index. For example, if your documents include the custom attribute \"Department\", you can filter documents that belong to the \"HR\" department. You would use the <code>EqualsTo</code> operation to filter results or documents with \"Department\" equals to \"HR\".</p> <p>You can use <code>AndAllFilters</code> and <code>AndOrFilters</code> in combination with each other or with other operations such as <code>EqualsTo</code>. For example:</p> <p> <code>AndAllFilters</code> </p> <ul> <li> <p> <code>EqualsTo</code>: \"Department\", \"HR\"</p> </li> <li> <p> <code>AndOrFilters</code> </p> <ul> <li> <p> <code>ContainsAny</code>: \"Project Name\", [\"new hires\", \"new hiring\"]</p> </li> </ul> </li> </ul> <p>This example filters results or documents that belong to the HR department <i>and</i> belong to projects that contain \"new hires\" <i>or</i> \"new hiring\" in the project name (must use <code>ContainAny</code> with <code>StringListValue</code>). This example is filtering with a depth of 2.</p> <p>You cannot filter more than a depth of 2, otherwise you receive a <code>ValidationException</code> exception with the message \"AttributeFilter cannot have a depth of more than 2.\" Also, if you use more than 10 attribute filters in a given list for <code>AndAllFilters</code> or <code>OrAllFilters</code>, you receive a <code>ValidationException</code> with the message \"AttributeFilter cannot have a length of more than 10\".</p> <p>For examples of using <code>AttributeFilter</code>, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/filtering.html#search-filtering\">Using document attributes to filter search results</a>.</p>",
+      "base": "<p>Filters the search results based on document attributes or fields.</p> <p>You can filter results using attributes for your particular documents. The attributes must exist in your index. For example, if your documents include the custom attribute \"Department\", you can filter documents that belong to the \"HR\" department. You would use the <code>EqualsTo</code> operation to filter results or documents with \"Department\" equals to \"HR\".</p> <p>You can use <code>AndAllFilters</code> and <code>OrAllFilters</code> in combination with each other or with other operations such as <code>EqualsTo</code>. For example:</p> <p> <code>AndAllFilters</code> </p> <ul> <li> <p> <code>EqualsTo</code>: \"Department\", \"HR\"</p> </li> <li> <p> <code>OrAllFilters</code> </p> <ul> <li> <p> <code>ContainsAny</code>: \"Project Name\", [\"new hires\", \"new hiring\"]</p> </li> </ul> </li> </ul> <p>This example filters results or documents that belong to the HR department <code>AND</code> belong to projects that contain \"new hires\" <code>OR</code> \"new hiring\" in the project name (must use <code>ContainAny</code> with <code>StringListValue</code>). This example is filtering with a depth of 2.</p> <p>You cannot filter more than a depth of 2, otherwise you receive a <code>ValidationException</code> exception with the message \"AttributeFilter cannot have a depth of more than 2.\" Also, if you use more than 10 attribute filters in a given list for <code>AndAllFilters</code> or <code>OrAllFilters</code>, you receive a <code>ValidationException</code> with the message \"AttributeFilter cannot have a length of more than 10\".</p> <p>For examples of using <code>AttributeFilter</code>, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/filtering.html#search-filtering\">Using document attributes to filter search results</a>.</p>",
       "refs": {
         "AttributeFilter$NotFilter": "<p>Performs a logical <code>NOT</code> operation on all filters that you specify.</p>",
         "AttributeFilterList$member": null,
         "AttributeSuggestionsGetConfig$AttributeFilter": "<p>Filters the search results based on document fields/attributes.</p>",
-        "QueryRequest$AttributeFilter": "<p>Filters search results by document fields/attributes. You can only provide one attribute filter; however, the <code>AndAllFilters</code>, <code>NotFilter</code>, and <code>OrAllFilters</code> parameters contain a list of other filters.</p> <p>The <code>AttributeFilter</code> parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.</p>",
-        "RetrieveRequest$AttributeFilter": "<p>Filters search results by document fields/attributes. You can only provide one attribute filter; however, the <code>AndAllFilters</code>, <code>NotFilter</code>, and <code>OrAllFilters</code> parameters contain a list of other filters.</p> <p>The <code>AttributeFilter</code> parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.</p>"
+        "QueryRequest$AttributeFilter": "<p>Filters search results by document fields/attributes. You can only provide one attribute filter; however, the <code>AndAllFilters</code>, <code>NotFilter</code>, and <code>OrAllFilters</code> parameters contain a list of other filters.</p> <p>The <code>AttributeFilter</code> parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.</p> <note> <p>For Amazon Kendra Gen AI Enterprise Edition indices use <code>AttributeFilter</code> to enable document filtering for end users using <code>_email_id</code> or include public documents (<code>_email_id=null</code>).</p> </note>",
+        "RetrieveRequest$AttributeFilter": "<p>Filters search results by document fields/attributes. You can only provide one attribute filter; however, the <code>AndAllFilters</code>, <code>NotFilter</code>, and <code>OrAllFilters</code> parameters contain a list of other filters.</p> <p>The <code>AttributeFilter</code> parameter means you can create a set of filtering rules that a document must satisfy to be included in the query results.</p> <note> <p>For Amazon Kendra Gen AI Enterprise Edition indices use <code>AttributeFilter</code> to enable document filtering for end users using <code>_email_id</code> or include public documents (<code>_email_id=null</code>).</p> </note>"
       }
     },
     "AttributeFilterList": {
@@ -257,13 +252,11 @@
     },
     "BatchDeleteDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteDocumentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteDocumentResponseFailedDocument": {
       "base": "<p>Provides information about documents that could not be removed from an index by the <code>BatchDeleteDocument</code> API.</p>",
@@ -291,23 +284,19 @@
     },
     "BatchDeleteFeaturedResultsSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchDeleteFeaturedResultsSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetDocumentStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetDocumentStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetDocumentStatusResponseError": {
       "base": "<p>Provides a response when the status of a document could not be retrieved.</p>",
@@ -323,13 +312,11 @@
     },
     "BatchPutDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchPutDocumentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchPutDocumentResponseFailedDocument": {
       "base": "<p>Provides information about a document that could not be indexed.</p>",
@@ -427,8 +414,7 @@
     },
     "ClearQuerySuggestionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClickFeedback": {
       "base": "<p>Gathers information about when a particular result was clicked by a user. Your application uses the <code>SubmitFeedback</code> API to provide click information.</p>",
@@ -491,8 +477,7 @@
     },
     "ConflictException": {
       "base": "<p>A conflict occurred with the request. Please fix any inconsistences with your resources and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictingItem": {
       "base": "<p>Information about a conflicting query used across different sets of featured results. When you create a featured results set, you must check that the queries are unique per featured results set for each index.</p>",
@@ -677,83 +662,67 @@
     },
     "CreateAccessControlConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessControlConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateExperienceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateExperienceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFaqRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFaqResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFeaturedResultsSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFeaturedResultsSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQuerySuggestionsBlockListRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQuerySuggestionsBlockListResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThesaurusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateThesaurusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomDocumentEnrichmentConfiguration": {
       "base": "<p>Provides the configuration information for altering document metadata and content during the document ingestion process.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/custom-document-enrichment.html\">Customizing document metadata during the ingestion process</a>.</p>",
@@ -817,6 +786,9 @@
     "DataSourceId": {
       "base": null,
       "refs": {
+        "BatchDeleteDocumentResponseFailedDocument$DataSourceId": "<p> The identifier of the data source connector that the document belongs to. </p>",
+        "BatchGetDocumentStatusResponseError$DataSourceId": "<p> The identifier of the data source connector that the failed document belongs to. </p>",
+        "BatchPutDocumentResponseFailedDocument$DataSourceId": "<p> The identifier of the data source connector that the failed document belongs to. </p>",
         "CreateDataSourceResponse$Id": "<p>The identifier of the data source connector.</p>",
         "DataSourceGroup$DataSourceId": "<p>The identifier of the data source group you want to add to your list of data source groups. This is for filtering search results based on the groups' access to documents in that data source.</p>",
         "DataSourceIdList$member": null,
@@ -1059,153 +1031,123 @@
     },
     "DeleteAccessControlConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessControlConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteExperienceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteExperienceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFaqRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePrincipalMappingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQuerySuggestionsBlockListRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteThesaurusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessControlConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessControlConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeDataSourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExperienceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExperienceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFaqRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFaqResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFeaturedResultsSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeFeaturedResultsSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePrincipalMappingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribePrincipalMappingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQuerySuggestionsBlockListRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQuerySuggestionsBlockListResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQuerySuggestionsConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQuerySuggestionsConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThesaurusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeThesaurusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": null,
@@ -1234,13 +1176,11 @@
     },
     "DisassociateEntitiesFromExperienceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateEntitiesFromExperienceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateEntityList": {
       "base": null,
@@ -1250,13 +1190,11 @@
     },
     "DisassociatePersonasFromEntitiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociatePersonasFromEntitiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Document": {
       "base": "<p>A document in an index.</p>",
@@ -1762,7 +1700,7 @@
       "base": null,
       "refs": {
         "CreateFaqRequest$FileFormat": "<p>The format of the FAQ input file. You can choose between a basic CSV format, a CSV format that includes customs attributes in a header, and a JSON format that includes custom attributes.</p> <p>The default format is CSV.</p> <p>The format must match the format of the file stored in the S3 bucket identified in the <code>S3Path</code> parameter.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/in-creating-faq.html\">Adding questions and answers</a>.</p>",
-        "DescribeFaqResponse$FileFormat": "<p>The file format used by the input files for the FAQ.</p>",
+        "DescribeFaqResponse$FileFormat": "<p>The file format used for the FAQ file.</p>",
         "FaqSummary$FileFormat": "<p>The file type used to create the FAQ. </p>"
       }
     },
@@ -1792,7 +1730,7 @@
       }
     },
     "FaqStatistics": {
-      "base": "<p>Provides statistical information about the FAQ questions and answers contained in an index.</p>",
+      "base": "<p>Provides statistical information about the FAQ questions and answers for an index.</p>",
       "refs": {
         "IndexStatistics$FaqStatistics": "<p>The number of question and answer topics in the index.</p>"
       }
@@ -1813,7 +1751,7 @@
     "FaqSummaryItems": {
       "base": null,
       "refs": {
-        "ListFaqsResponse$FaqSummaryItems": "<p>information about the FAQs associated with the specified index.</p>"
+        "ListFaqsResponse$FaqSummaryItems": "<p>Summary information about the FAQs for a specified index.</p>"
       }
     },
     "FeaturedDocument": {
@@ -1856,8 +1794,7 @@
     },
     "FeaturedResultsConflictException": {
       "base": "<p>An error message with a list of conflicting queries used across different sets of featured results. This occurred with the request for a new featured results set. Check that the queries you specified for featured results are unique per featured results set for each index.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "FeaturedResultsItem": {
       "base": "<p>A single featured result item. A featured result is displayed at the top of the search results page, placed above all other results for certain queries. If there's an exact match of a query, then certain documents are featured in the search results.</p>",
@@ -1976,23 +1913,19 @@
     },
     "GetQuerySuggestionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetQuerySuggestionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSnapshotsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSnapshotsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GitHubConfiguration": {
       "base": "<p>Provides the configuration information to connect to GitHub as your data source.</p> <note> <p>Amazon Kendra now supports an upgraded GitHub connector.</p> <p>You must now use the <a href=\"https://docs.aws.amazon.com/kendra/latest/APIReference/API_TemplateConfiguration.html\">TemplateConfiguration</a> object instead of the <code>GitHubConfiguration</code> object to configure your connector.</p> <p>Connectors configured using the older console and API architecture will continue to function as configured. However, you won’t be able to edit or update them. If you want to edit or update your connector configuration, you must create a new connector.</p> <p>We recommended migrating your connector workflow to the upgraded version. Support for connectors configured using the older architecture is scheduled to end by June 2024.</p> </note>",
@@ -2030,9 +1963,9 @@
       }
     },
     "GroupMembers": {
-      "base": "<p>A list of users or sub groups that belong to a group. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p>",
+      "base": "<p>A list of users that belong to a group. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p>",
       "refs": {
-        "PutPrincipalMappingRequest$GroupMembers": "<p>The list that contains your users or sub groups that belong the same group.</p> <p>For example, the group \"Company\" includes the user \"CEO\" and the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\".</p> <p>If you have more than 1000 users and/or sub groups for a single group, you need to provide the path to the S3 file that lists your users and sub groups for a group. Your sub groups can contain more than 1000 users, but the list of sub groups that belong to a group (and/or users) must be no more than 1000.</p>"
+        "PutPrincipalMappingRequest$GroupMembers": "<p>The list that contains your users that belong the same group. This can include sub groups that belong to a group.</p> <p>For example, the group \"Company A\" includes the user \"CEO\" and the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\".</p> <p>If you have more than 1000 users and/or sub groups for a single group, you need to provide the path to the S3 file that lists your users and sub groups for a group. Your sub groups can contain more than 1000 users, but the list of sub groups that belong to a group (and/or users) must be no more than 1000.</p>"
       }
     },
     "GroupOrderingIdSummaries": {
@@ -2134,7 +2067,7 @@
     "IndexEdition": {
       "base": null,
       "refs": {
-        "CreateIndexRequest$Edition": "<p>The Amazon Kendra edition to use for the index. Choose <code>DEVELOPER_EDITION</code> for indexes intended for development, testing, or proof of concept. Use <code>ENTERPRISE_EDITION</code> for production. Once you set the edition for an index, it can't be changed.</p> <p>The <code>Edition</code> parameter is optional. If you don't supply a value, the default is <code>ENTERPRISE_EDITION</code>.</p> <p>For more information on quota limits for Enterprise and Developer editions, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/quotas.html\">Quotas</a>.</p>",
+        "CreateIndexRequest$Edition": "<p>The Amazon Kendra edition to use for the index. Choose <code>DEVELOPER_EDITION</code> for indexes intended for development, testing, or proof of concept. Use <code>ENTERPRISE_EDITION</code> for production. Use <code>GEN_AI_ENTERPRISE_EDITION</code> for creating generative AI applications. Once you set the edition for an index, it can't be changed. </p> <p>The <code>Edition</code> parameter is optional. If you don't supply a value, the default is <code>ENTERPRISE_EDITION</code>.</p> <p>For more information on quota limits for Gen AI Enterprise Edition, Enterprise Edition, and Developer Edition indices, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/quotas.html\">Quotas</a>.</p>",
         "DescribeIndexResponse$Edition": "<p>The Amazon Kendra edition used for the index. You decide the edition when you create the index.</p>",
         "IndexConfigurationSummary$Edition": "<p>Indicates whether the index is a Enterprise Edition index or a Developer Edition index. </p>"
       }
@@ -2203,7 +2136,7 @@
         "ListEntityPersonasRequest$IndexId": "<p>The identifier of the index for your Amazon Kendra experience.</p>",
         "ListExperienceEntitiesRequest$IndexId": "<p>The identifier of the index for your Amazon Kendra experience.</p>",
         "ListExperiencesRequest$IndexId": "<p>The identifier of the index for your Amazon Kendra experience.</p>",
-        "ListFaqsRequest$IndexId": "<p>The index that contains the FAQ lists.</p>",
+        "ListFaqsRequest$IndexId": "<p>The index for the FAQs.</p>",
         "ListFeaturedResultsSetsRequest$IndexId": "<p>The identifier of the index used for featuring results.</p>",
         "ListGroupsOlderThanOrderingIdRequest$IndexId": "<p>The identifier of the index for getting a list of groups mapped to users before a given ordering or timestamp identifier.</p>",
         "ListQuerySuggestionsBlockListsRequest$IndexId": "<p>The identifier of the index for a list of all block lists that exist for that index.</p> <p>For information on the current quota limits for block lists, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/quotas.html\">Quotas for Amazon Kendra</a>.</p>",
@@ -2249,7 +2182,7 @@
     "IndexedQuestionAnswersCount": {
       "base": null,
       "refs": {
-        "FaqStatistics$IndexedQuestionAnswersCount": "<p>The total number of FAQ questions and answers contained in the index.</p>"
+        "FaqStatistics$IndexedQuestionAnswersCount": "<p>The total number of FAQ questions and answers for an index.</p>"
       }
     },
     "IndexedTextBytes": {
@@ -2305,8 +2238,7 @@
     },
     "InternalServerException": {
       "base": "<p>An issue occurred with the internal server used for your Amazon Kendra service. Please wait a few minutes and try again, or contact <a href=\"http://aws.amazon.com/contact-us/\">Support</a> for help.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Interval": {
       "base": null,
@@ -2316,8 +2248,7 @@
     },
     "InvalidRequestException": {
       "base": "<p>The input to the request is not valid. Please provide the correct input and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IssueSubEntity": {
       "base": null,
@@ -2388,7 +2319,7 @@
     "LambdaArn": {
       "base": null,
       "refs": {
-        "HookConfiguration$LambdaArn": "<p>The Amazon Resource Name (ARN) of a role with permission to run a Lambda function during ingestion. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM roles for Amazon Kendra</a>.</p>"
+        "HookConfiguration$LambdaArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to run a Lambda function during ingestion. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">an IAM roles for Amazon Kendra</a>.</p>"
       }
     },
     "LanguageCode": {
@@ -2405,103 +2336,83 @@
     },
     "ListAccessControlConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessControlConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataSourceSyncJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataSourceSyncJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataSourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataSourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEntityPersonasRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEntityPersonasResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExperienceEntitiesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExperienceEntitiesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExperiencesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExperiencesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFaqsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFaqsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFeaturedResultsSetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFeaturedResultsSetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroupsOlderThanOrderingIdRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListGroupsOlderThanOrderingIdResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIndicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOfGroupSummaries": {
       "base": null,
@@ -2511,33 +2422,27 @@
     },
     "ListQuerySuggestionsBlockListsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQuerySuggestionsBlockListsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThesauriRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListThesauriResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -2654,7 +2559,7 @@
     "MemberGroups": {
       "base": null,
       "refs": {
-        "GroupMembers$MemberGroups": "<p>A list of sub groups that belong to a group. For example, the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\" all belong to the group \"Company\".</p>"
+        "GroupMembers$MemberGroups": "<p>A list of users that belong to a group. This can also include sub groups. For example, the sub groups \"Research\", \"Engineering\", and \"Sales and Marketing\" all belong to the group \"Company A\".</p>"
       }
     },
     "MemberUser": {
@@ -2786,7 +2691,7 @@
     "OneDriveUserList": {
       "base": null,
       "refs": {
-        "OneDriveUsers$OneDriveUserList": "<p>A list of users whose documents should be indexed. Specify the user names in email format, for example, <code>username@tenantdomain</code>. If you need to index the documents of more than 100 users, use the <code>OneDriveUserS3Path</code> field to specify the location of a file containing a list of users.</p>"
+        "OneDriveUsers$OneDriveUserList": "<p>A list of users whose documents should be indexed. Specify the user names in email format, for example, <code>username@tenantdomain</code>. If you need to index the documents of more than 10 users, use the <code>OneDriveUserS3Path</code> field to specify the location of a file containing a list of users.</p>"
       }
     },
     "OneDriveUsers": {
@@ -2878,7 +2783,7 @@
         "GroupOrderingIdSummary$OrderingId": "<p>The order in which actions should complete processing. An action can be a <code>PUT</code> or <code>DELETE</code> action for mapping users to their groups.</p>",
         "GroupSummary$OrderingId": "<p>The timestamp identifier used for the latest <code>PUT</code> or <code>DELETE</code> action.</p>",
         "ListGroupsOlderThanOrderingIdRequest$OrderingId": "<p>The timestamp identifier used for the latest <code>PUT</code> or <code>DELETE</code> action for mapping users to their groups.</p>",
-        "PutPrincipalMappingRequest$OrderingId": "<p>The timestamp identifier you specify to ensure Amazon Kendra does not override the latest <code>PUT</code> action with previous actions. The highest number ID, which is the ordering ID, is the latest action you want to process and apply on top of other actions with lower number IDs. This prevents previous actions with lower number IDs from possibly overriding the latest action.</p> <p>The ordering ID can be the Unix time of the last update you made to a group members list. You would then provide this list when calling <code>PutPrincipalMapping</code>. This ensures your <code>PUT</code> action for that updated group with the latest members list doesn't get overwritten by earlier <code>PUT</code> actions for the same group which are yet to be processed.</p> <p>The default ordering ID is the current Unix time in milliseconds that the action was received by Amazon Kendra.</p>"
+        "PutPrincipalMappingRequest$OrderingId": "<p>The timestamp identifier you specify to ensure Amazon Kendra doesn't override the latest <code>PUT</code> action with previous actions. The highest number ID, which is the ordering ID, is the latest action you want to process and apply on top of other actions with lower number IDs. This prevents previous actions with lower number IDs from possibly overriding the latest action.</p> <p>The ordering ID can be the Unix time of the last update you made to a group members list. You would then provide this list when calling <code>PutPrincipalMapping</code>. This ensures your <code>PUT</code> action for that updated group with the latest members list doesn't get overwritten by earlier <code>PUT</code> actions for the same group which are yet to be processed.</p> <p>The default ordering ID is the current Unix time in milliseconds that the action was received by Amazon Kendra.</p>"
       }
     },
     "PrincipalType": {
@@ -2915,8 +2820,7 @@
     },
     "PutPrincipalMappingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryCapacityUnit": {
       "base": null,
@@ -2940,13 +2844,11 @@
     },
     "QueryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryResultFormat": {
       "base": null,
@@ -3094,23 +2996,19 @@
     },
     "ResourceAlreadyExistException": {
       "base": "<p>The resource you want to use already exists. Please check you have provided the correct resource and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceInUseException": {
       "base": "<p>The resource you want to use is currently in use. Please check you have provided the correct resource and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource you want to use doesn’t exist. Please check you have provided the correct resource and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceUnavailableException": {
       "base": "<p>The resource you want to use isn't available. Please check you have provided the correct resource and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResultId": {
       "base": null,
@@ -3126,13 +3024,11 @@
     },
     "RetrieveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveResult": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetrieveResultItem": {
       "base": "<p>A single retrieved relevant passage result.</p>",
@@ -3152,21 +3048,21 @@
         "BatchPutDocumentRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access your S3 bucket. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra</a>.</p>",
         "CreateDataSourceRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra.</a>.</p> <p>You can't specify the <code>RoleArn</code> parameter when the <code>Type</code> parameter is set to <code>CUSTOM</code>. If you do, you receive a <code>ValidationException</code> exception.</p> <p>The <code>RoleArn</code> parameter is required for all other data sources.</p>",
         "CreateExperienceRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access <code>Query</code> API, <code>GetQuerySuggestions</code> API, and other required APIs. The role also must include permission to access IAM Identity Center that stores your user and group information. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra</a>.</p>",
-        "CreateFaqRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the S3 bucket that contains the FAQs. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra</a>.</p>",
+        "CreateFaqRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the S3 bucket that contains the FAQ file. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra</a>.</p>",
         "CreateIndexRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access your Amazon CloudWatch logs and metrics. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra</a>.</p>",
         "CreateQuerySuggestionsBlockListRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access your S3 bucket that contains the block list text file. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra</a>.</p>",
         "CreateThesaurusRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access your S3 bucket that contains the thesaurus file. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM access roles for Amazon Kendra</a>.</p>",
-        "CustomDocumentEnrichmentConfiguration$RoleArn": "<p>The Amazon Resource Name (ARN) of a role with permission to run <code>PreExtractionHookConfiguration</code> and <code>PostExtractionHookConfiguration</code> for altering document metadata and content during the document ingestion process. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM roles for Amazon Kendra</a>.</p>",
-        "DescribeDataSourceResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the role with permission to access the data source and required resources.</p>",
-        "DescribeExperienceResponse$RoleArn": "<p>Shows the Amazon Resource Name (ARN) of a role with permission to access <code>Query</code> API, <code>QuerySuggestions</code> API, <code>SubmitFeedback</code> API, and IAM Identity Center that stores your user and group information.</p>",
-        "DescribeFaqResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the role that provides access to the S3 bucket containing the input files for the FAQ.</p>",
+        "CustomDocumentEnrichmentConfiguration$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to run <code>PreExtractionHookConfiguration</code> and <code>PostExtractionHookConfiguration</code> for altering document metadata and content during the document ingestion process. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">an IAM roles for Amazon Kendra</a>.</p>",
+        "DescribeDataSourceResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role with permission to access the data source and required resources.</p>",
+        "DescribeExperienceResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role with permission to access the <code>Query</code> API, <code>QuerySuggestions</code> API, <code>SubmitFeedback</code> API, and IAM Identity Center that stores your users and groups information.</p>",
+        "DescribeFaqResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides access to the S3 bucket containing the FAQ file.</p>",
         "DescribeIndexResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that gives Amazon Kendra permission to write to your Amazon CloudWatch logs.</p>",
         "DescribeQuerySuggestionsBlockListResponse$RoleArn": "<p>The IAM (Identity and Access Management) role used by Amazon Kendra to access the block list text file in S3.</p> <p>The role needs S3 read permissions to your file in S3 and needs to give STS (Security Token Service) assume role permissions to Amazon Kendra.</p>",
         "DescribeThesaurusResponse$RoleArn": "<p>An IAM role that gives Amazon Kendra permissions to access thesaurus file specified in <code>SourceS3Path</code>. </p>",
         "JwtTokenTypeConfiguration$SecretManagerArn": "<p>The Amazon Resource Name (arn) of the secret.</p>",
-        "PutPrincipalMappingRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of a role that has access to the S3 file that contains your list of users or sub groups that belong to a group.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-ds\">IAM roles for Amazon Kendra</a>.</p>",
-        "UpdateDataSourceRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of a role with permission to access the data source and required resources. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM roles for Amazon Kendra</a>.</p>",
-        "UpdateExperienceRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of a role with permission to access <code>Query</code> API, <code>QuerySuggestions</code> API, <code>SubmitFeedback</code> API, and IAM Identity Center that stores your user and group information. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM roles for Amazon Kendra</a>.</p>",
+        "PutPrincipalMappingRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that has access to the S3 file that contains your list of users that belong to a group.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-ds\">IAM roles for Amazon Kendra</a>.</p>",
+        "UpdateDataSourceRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the data source and required resources. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM roles for Amazon Kendra</a>.</p>",
+        "UpdateExperienceRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of an IAM role with permission to access the <code>Query</code> API, <code>QuerySuggestions</code> API, <code>SubmitFeedback</code> API, and IAM Identity Center that stores your users and groups information. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html\">IAM roles for Amazon Kendra</a>.</p>",
         "UpdateIndexRequest$RoleArn": "<p>An Identity and Access Management (IAM) role that gives Amazon Kendra permission to access Amazon CloudWatch logs and metrics.</p>",
         "UpdateQuerySuggestionsBlockListRequest$RoleArn": "<p>The IAM (Identity and Access Management) role used to access the block list text file in S3.</p>",
         "UpdateThesaurusRequest$RoleArn": "<p>An IAM role that gives Amazon Kendra permissions to access thesaurus file specified in <code>SourceS3Path</code>.</p>"
@@ -3340,16 +3236,16 @@
       "base": null,
       "refs": {
         "AlfrescoConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret that contains the key-value pairs required to connect to your Alfresco data source. The secret must contain a JSON structure with the following keys:</p> <ul> <li> <p>username—The user name of the Alfresco account.</p> </li> <li> <p>password—The password of the Alfresco account.</p> </li> </ul>",
-        "BasicAuthenticationConfiguration$Credentials": "<p>Your secret ARN, which you can create in <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html\">Secrets Manager</a> </p> <p>You use a secret if basic authentication credentials are required to connect to a website. The secret stores your credentials of user name and password.</p>",
+        "BasicAuthenticationConfiguration$Credentials": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret. You create a secret to store your credentials in <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html\">Secrets Manager</a> </p> <p>You use a secret if basic authentication credentials are required to connect to a website. The secret stores your credentials of user name and password.</p>",
         "BoxConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret that contains the key-value pairs required to connect to your Box platform. The secret must contain a JSON structure with the following keys:</p> <ul> <li> <p>clientID—The identifier of the client OAuth 2.0 authentication application created in Box.</p> </li> <li> <p>clientSecret—A set of characters known only to the OAuth 2.0 authentication application created in Box.</p> </li> <li> <p>publicKeyId—The identifier of the public key contained within an identity certificate.</p> </li> <li> <p>privateKey—A set of characters that make up an encryption key.</p> </li> <li> <p>passphrase—A set of characters that act like a password.</p> </li> </ul> <p>You create an application in Box to generate the keys or credentials required for the secret. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-box.html\">Using a Box data source</a>.</p>",
         "ConfluenceConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret that contains the user name and password required to connect to the Confluence instance. If you use Confluence Cloud, you use a generated API token as the password.</p> <p>You can also provide authentication credentials in the form of a personal access token. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-confluence.html\">Using a Confluence data source</a>.</p>",
-        "ConnectionConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of credentials stored in Secrets Manager. The credentials should be a user/password pair. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-database.html\">Using a Database Data Source</a>. For more information about Secrets Manager, see <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html\"> What Is Secrets Manager</a> in the <i> Secrets Manager </i> user guide.</p>",
+        "ConnectionConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret that stores the credentials. The credentials should be a user-password pair. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-database.html\">Using a Database Data Source</a>. For more information about Secrets Manager, see <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html\"> What Is Secrets Manager</a> in the <i>Secrets Manager</i> user guide.</p>",
         "FsxConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret that contains the key-value pairs required to connect to your Amazon FSx file system. Windows is currently the only supported type. The secret must contain a JSON structure with the following keys:</p> <ul> <li> <p>username—The Active Directory user name, along with the Domain Name System (DNS) domain name. For example, <i>user@corp.example.com</i>. The Active Directory user account must have read and mounting access to the Amazon FSx file system for Windows.</p> </li> <li> <p>password—The password of the Active Directory user account with read and mounting access to the Amazon FSx Windows file system.</p> </li> </ul>",
         "GitHubConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret that contains the key-value pairs required to connect to your GitHub. The secret must contain a JSON structure with the following keys:</p> <ul> <li> <p>personalToken—The access token created in GitHub. For more information on creating a token in GitHub, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-github.html\">Using a GitHub data source</a>.</p> </li> </ul>",
         "GoogleDriveConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of a Secrets Managersecret that contains the credentials required to connect to Google Drive. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-google-drive.html\">Using a Google Workspace Drive data source</a>.</p>",
         "JiraConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of a secret in Secrets Manager contains the key-value pairs required to connect to your Jira data source. The secret must contain a JSON structure with the following keys:</p> <ul> <li> <p>jiraId—The Jira user name or email.</p> </li> <li> <p>jiraCredentials—The Jira API token. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-jira.html\">Using a Jira data source</a>.</p> </li> </ul>",
         "OneDriveConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Managersecret that contains the user name and password to connect to OneDrive. The user name should be the application ID for the OneDrive application, and the password is the application key for the OneDrive application.</p>",
-        "ProxyConfiguration$Credentials": "<p>Your secret ARN, which you can create in <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html\">Secrets Manager</a> </p> <p>The credentials are optional. You use a secret if web proxy credentials are required to connect to a website host. Amazon Kendra currently support basic authentication to connect to a web proxy server. The secret stores your credentials.</p>",
+        "ProxyConfiguration$Credentials": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret. You create a secret to store your credentials in <a href=\"https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html\">Secrets Manager</a> </p> <p>The credentials are optional. You use a secret if web proxy credentials are required to connect to a website host. Amazon Kendra currently support basic authentication to connect to a web proxy server. The secret stores your credentials.</p>",
         "QuipConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Manager secret that contains the key-value pairs that are required to connect to your Quip. The secret must contain a JSON structure with the following keys:</p> <ul> <li> <p>accessToken—The token created in Quip. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-slack.html\">Using a Quip data source</a>.</p> </li> </ul>",
         "SalesforceConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of an Secrets Managersecret that contains the key/value pairs required to connect to your Salesforce instance. The secret must contain a JSON structure with the following keys:</p> <ul> <li> <p>authenticationUrl - The OAUTH endpoint that Amazon Kendra connects to get an OAUTH token. </p> </li> <li> <p>consumerKey - The application public key generated when you created your Salesforce application.</p> </li> <li> <p>consumerSecret - The application private key generated when you created your Salesforce application.</p> </li> <li> <p>password - The password associated with the user logging in to the Salesforce instance.</p> </li> <li> <p>securityToken - The token associated with the user logging in to the Salesforce instance.</p> </li> <li> <p>username - The user name of the user logging in to the Salesforce instance.</p> </li> </ul>",
         "ServiceNowConfiguration$SecretArn": "<p>The Amazon Resource Name (ARN) of the Secrets Manager secret that contains the user name and password required to connect to the ServiceNow instance. You can also provide OAuth authentication credentials of user name, password, client ID, and client secret. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/data-source-servicenow.html\">Using a ServiceNow data source</a>.</p>",
@@ -3432,8 +3328,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You have exceeded the set limits for your Amazon Kendra service. Please see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/quotas.html\">Quotas</a> for more information, or contact <a href=\"http://aws.amazon.com/contact-us/\">Support</a> to inquire about an increase of limits.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SharePointConfiguration": {
       "base": "<p>Provides the configuration information to connect to Microsoft SharePoint as your data source.</p>",
@@ -3595,13 +3490,11 @@
     },
     "StartDataSourceSyncJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDataSourceSyncJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Status": {
       "base": "<p>Provides information about the status of documents submitted for indexing.</p>",
@@ -3611,8 +3504,7 @@
     },
     "StopDataSourceSyncJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StorageCapacityUnit": {
       "base": null,
@@ -3667,8 +3559,7 @@
     },
     "SubmitFeedbackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SubnetId": {
       "base": null,
@@ -3792,7 +3683,7 @@
       }
     },
     "Tag": {
-      "base": "<p>A list of key/value pairs that identify an index, FAQ, or data source. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
+      "base": "<p>A key-value pair that identifies or categorizes an index, FAQ, data source, or other resource. TA tag key and value can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
       "refs": {
         "TagList$member": null
       }
@@ -3800,14 +3691,14 @@
     "TagKey": {
       "base": null,
       "refs": {
-        "Tag$Key": "<p>The key for the tag. Keys are not case sensitive and must be unique for the index, FAQ, or data source.</p>",
+        "Tag$Key": "<p>The key for the tag. Keys are not case sensitive and must be unique for the index, FAQ, data source, or other resource.</p>",
         "TagKeyList$member": null
       }
     },
     "TagKeyList": {
       "base": null,
       "refs": {
-        "UntagResourceRequest$TagKeys": "<p>A list of tag keys to remove from the index, FAQ, or data source. If a tag key does not exist on the resource, it is ignored.</p>"
+        "UntagResourceRequest$TagKeys": "<p>A list of tag keys to remove from the index, FAQ, data source, or other resource. If a tag key doesn't exist for the resource, it is ignored.</p>"
       }
     },
     "TagList": {
@@ -3819,19 +3710,17 @@
         "CreateIndexRequest$Tags": "<p>A list of key-value pairs that identify or categorize the index. You can also use tags to help control access to the index. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
         "CreateQuerySuggestionsBlockListRequest$Tags": "<p>A list of key-value pairs that identify or categorize the block list. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
         "CreateThesaurusRequest$Tags": "<p>A list of key-value pairs that identify or categorize the thesaurus. You can also use tags to help control access to the thesaurus. Tag keys and values can consist of Unicode letters, digits, white space, and any of the following symbols: _ . : / = + - @.</p>",
-        "ListTagsForResourceResponse$Tags": "<p>A list of tags associated with the index, FAQ, or data source.</p>",
-        "TagResourceRequest$Tags": "<p>A list of tag keys to add to the index, FAQ, or data source. If a tag already exists, the existing value is replaced with the new value.</p>"
+        "ListTagsForResourceResponse$Tags": "<p>A list of tags associated with the index, FAQ, data source, or other resource.</p>",
+        "TagResourceRequest$Tags": "<p>A list of tag keys to add to the index, FAQ, data source, or other resource. If a tag already exists, the existing value is replaced with the new value.</p>"
       }
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3922,8 +3811,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling. Please reduce the number of requests and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimeRange": {
       "base": "<p>Provides a range of time.</p>",
@@ -3998,63 +3886,51 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessControlConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessControlConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataSourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateExperienceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFeaturedResultsSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFeaturedResultsSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQuerySuggestionsBlockListRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQuerySuggestionsConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateThesaurusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,
@@ -4085,7 +3961,7 @@
       }
     },
     "UserContext": {
-      "base": "<p>Provides information about the user context for an Amazon Kendra index.</p> <p>User context filtering is a kind of personalized search with the benefit of controlling access to documents. For example, not all teams that search the company portal for information should access top-secret company documents, nor are these documents relevant to all users. Only specific users or groups of teams given access to top-secret documents should see these documents in their search results.</p> <p>You provide one of the following:</p> <ul> <li> <p>User token</p> </li> <li> <p>User ID, the groups the user belongs to, and any data sources the groups can access.</p> </li> </ul> <p>If you provide both, an exception is thrown.</p>",
+      "base": "<p>Provides information about the user context for an Amazon Kendra index.</p> <p>User context filtering is a kind of personalized search with the benefit of controlling access to documents. For example, not all teams that search the company portal for information should access top-secret company documents, nor are these documents relevant to all users. Only specific users or groups of teams given access to top-secret documents should see these documents in their search results.</p> <p>You provide one of the following:</p> <ul> <li> <p>User token</p> </li> <li> <p>User ID, the groups the user belongs to, and any data sources the groups can access.</p> </li> </ul> <p>If you provide both, an exception is thrown.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can use <code>UserId</code>, <code>Groups</code>, and <code>DataSourceGroups</code> to filter content. If you set the <code>UserId</code> to a particular user ID, it also includes all public documents.</p> <p>Amazon Kendra Gen AI Enterprise Edition indices don't support token based document filtering. If you're using an Amazon Kendra Gen AI Enterprise Edition index, Amazon Kendra returns a <code>ValidationException</code> error if the <code>Token</code> field has a non-null value.</p> </important>",
       "refs": {
         "AttributeSuggestionsGetConfig$UserContext": "<p>Applies user context filtering so that only users who are given access to certain documents see these document in their search results.</p>",
         "QueryRequest$UserContext": "<p>The user context token or user and group information.</p>",
@@ -4095,17 +3971,17 @@
     "UserContextPolicy": {
       "base": null,
       "refs": {
-        "CreateIndexRequest$UserContextPolicy": "<p>The user context policy.</p> <dl> <dt>ATTRIBUTE_FILTER</dt> <dd> <p>All indexed content is searchable and displayable for all users. If you want to filter search results on user context, you can use the attribute filters of <code>_user_id</code> and <code>_group_ids</code> or you can provide user and group information in <code>UserContext</code>. </p> </dd> <dt>USER_TOKEN</dt> <dd> <p>Enables token-based user access control to filter search results on user context. All documents with no access control and all documents accessible to the user will be searchable and displayable. </p> </dd> </dl>",
+        "CreateIndexRequest$UserContextPolicy": "<p>The user context policy.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can only use <code>ATTRIBUTE_FILTER</code> to filter search results by user context. If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use <code>USER_TOKEN</code> to configure user context policy, Amazon Kendra returns a <code>ValidationException</code> error.</p> </important> <dl> <dt>ATTRIBUTE_FILTER</dt> <dd> <p>All indexed content is searchable and displayable for all users. If you want to filter search results on user context, you can use the attribute filters of <code>_user_id</code> and <code>_group_ids</code> or you can provide user and group information in <code>UserContext</code>. </p> </dd> <dt>USER_TOKEN</dt> <dd> <p>Enables token-based user access control to filter search results on user context. All documents with no access control and all documents accessible to the user will be searchable and displayable. </p> </dd> </dl>",
         "DescribeIndexResponse$UserContextPolicy": "<p>The user context policy for the Amazon Kendra index.</p>",
-        "UpdateIndexRequest$UserContextPolicy": "<p>The user context policy.</p>"
+        "UpdateIndexRequest$UserContextPolicy": "<p>The user context policy.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, you can only use <code>ATTRIBUTE_FILTER</code> to filter search results by user context. If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use <code>USER_TOKEN</code> to configure user context policy, Amazon Kendra returns a <code>ValidationException</code> error.</p> </important>"
       }
     },
     "UserGroupResolutionConfiguration": {
-      "base": "<p>Provides the configuration information to get users and groups from an IAM Identity Center identity source. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents. You can also use the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_PutPrincipalMapping.html\">PutPrincipalMapping</a> API to map users to their groups so that you only need to provide the user ID when you issue the query.</p> <p>To set up an IAM Identity Center identity source in the console to use with Amazon Kendra, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/getting-started-aws-sso.html\">Getting started with an IAM Identity Center identity source</a>. You must also grant the required permissions to use IAM Identity Center with Amazon Kendra. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-aws-sso\">IAM roles for IAM Identity Center</a>.</p> <p>Amazon Kendra currently does not support using <code>UserGroupResolutionConfiguration</code> with an Amazon Web Services organization member account for your IAM Identity Center identify source. You must create your index in the management account for the organization in order to use <code>UserGroupResolutionConfiguration</code>.</p>",
+      "base": "<p>Provides the configuration information to get users and groups from an IAM Identity Center identity source. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents. You can also use the <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_PutPrincipalMapping.html\">PutPrincipalMapping</a> API to map users to their groups so that you only need to provide the user ID when you issue the query.</p> <p>To set up an IAM Identity Center identity source in the console to use with Amazon Kendra, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/getting-started-aws-sso.html\">Getting started with an IAM Identity Center identity source</a>. You must also grant the required permissions to use IAM Identity Center with Amazon Kendra. For more information, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/iam-roles.html#iam-roles-aws-sso\">IAM roles for IAM Identity Center</a>.</p> <p>Amazon Kendra currently does not support using <code>UserGroupResolutionConfiguration</code> with an Amazon Web Services organization member account for your IAM Identity Center identify source. You must create your index in the management account for the organization in order to use <code>UserGroupResolutionConfiguration</code>.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, <code>UserGroupResolutionConfiguration</code> isn't supported.</p> </important>",
       "refs": {
-        "CreateIndexRequest$UserGroupResolutionConfiguration": "<p>Gets users and groups from IAM Identity Center identity source. To configure this, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html\">UserGroupResolutionConfiguration</a>. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p>",
+        "CreateIndexRequest$UserGroupResolutionConfiguration": "<p>Gets users and groups from IAM Identity Center identity source. To configure this, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html\">UserGroupResolutionConfiguration</a>. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, <code>UserGroupResolutionConfiguration</code> isn't supported.</p> </important>",
         "DescribeIndexResponse$UserGroupResolutionConfiguration": "<p>Whether you have enabled IAM Identity Center identity source for your users and groups. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p>",
-        "UpdateIndexRequest$UserGroupResolutionConfiguration": "<p>Gets users and groups from IAM Identity Center identity source. To configure this, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html\">UserGroupResolutionConfiguration</a>. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p>"
+        "UpdateIndexRequest$UserGroupResolutionConfiguration": "<p>Gets users and groups from IAM Identity Center identity source. To configure this, see <a href=\"https://docs.aws.amazon.com/kendra/latest/dg/API_UserGroupResolutionConfiguration.html\">UserGroupResolutionConfiguration</a>. This is useful for user context filtering, where search results are filtered based on the user or their group access to documents.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index, <code>UserGroupResolutionConfiguration</code> isn't supported.</p> </important>"
       }
     },
     "UserGroupResolutionMode": {
@@ -4133,7 +4009,7 @@
       }
     },
     "UserTokenConfiguration": {
-      "base": "<p>Provides the configuration information for a token.</p>",
+      "base": "<p>Provides the configuration information for a token.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use <code>UserTokenConfigurations</code> to configure user context policy, Amazon Kendra returns a <code>ValidationException</code> error.</p> </important>",
       "refs": {
         "UserTokenConfigurationList$member": null
       }
@@ -4141,15 +4017,14 @@
     "UserTokenConfigurationList": {
       "base": null,
       "refs": {
-        "CreateIndexRequest$UserTokenConfigurations": "<p>The user token configuration.</p>",
+        "CreateIndexRequest$UserTokenConfigurations": "<p>The user token configuration.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use <code>UserTokenConfigurations</code> to configure user context policy, Amazon Kendra returns a <code>ValidationException</code> error.</p> </important>",
         "DescribeIndexResponse$UserTokenConfigurations": "<p>The user token configuration for the Amazon Kendra index.</p>",
-        "UpdateIndexRequest$UserTokenConfigurations": "<p>The user token configuration.</p>"
+        "UpdateIndexRequest$UserTokenConfigurations": "<p>The user token configuration.</p> <important> <p>If you're using an Amazon Kendra Gen AI Enterprise Edition index and you try to use <code>UserTokenConfigurations</code> to configure user context policy, Amazon Kendra returns a <code>ValidationException</code> error.</p> </important>"
       }
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints set by the Amazon Kendra service. Please provide the correct input and try again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValueImportanceMap": {
       "base": null,

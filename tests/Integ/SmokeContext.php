@@ -2,6 +2,10 @@
 namespace Aws\Test\Integ;
 
 use Aws;
+use Aws\Api\ApiProvider;
+use Aws\Api\Service;
+use Aws\AwsClient;
+use Aws\AwsClientInterface;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\Sdk;
@@ -15,6 +19,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use JmesPath\Env;
 use PHPUnit\Framework\Assert;
+use Psr\Http\Message\RequestInterface;
 
 class SmokeContext extends Assert implements
     Context,
@@ -182,15 +187,7 @@ class SmokeContext extends Assert implements
                     'destinationS3BucketName' => 'fake-bucket',
                     'snsTopicArn' => 'fake-arn',
                 ]);
-        } catch (\Exception $e) {
-            // If the test failed because the account has no support subscription,
-            // throw the exception to cause the feature to be skipped.
-            if ($e instanceof AwsException
-                && 'SubscriptionRequiredException' === $e->getAwsErrorCode()
-            ) {
-                throw $e;
-            }
-        }
+        } catch (\Exception $e) {}
     }
 
     /**
@@ -269,13 +266,17 @@ class SmokeContext extends Assert implements
         if (empty($this->serviceName)) {
             throw new PendingException(
                 'No service found for smoke test tagged with: '
-                    . implode(', ', $scope->getFeature()->getTags())
+                . implode(', ', $scope->getFeature()->getTags())
             );
         }
 
-        $this->sdk = self::getSdk(self::$configOverrides);
-
-        $this->client = $this->sdk->createClient($this->serviceName);
+        $scenarioScopeTags = $scope->getScenario()->getTags();
+        if (in_array("queryCompat", $scenarioScopeTags)) {
+            $this->client = $this->getCwQueryCompatClient();
+        } else {
+            $this->sdk = self::getSdk(self::$configOverrides);
+            $this->client = $this->sdk->createClient($this->serviceName);
+        }
     }
 
     /**
@@ -327,6 +328,14 @@ class SmokeContext extends Assert implements
     }
 
     /**
+     * @When /^I attempt to call the "([^"]*)" API, using query compatible approach, with:$/
+     */
+    public function iAttemptToCallTheAPIUsingQueryCompatibleApproachWith($command, TableNode $payload)
+    {
+        $this->iAttemptToCallTheApiWith($command, $payload);
+    }
+
+    /**
      * @When I attempt to call the :command API with JSON:
      *
      * @param string $command
@@ -367,6 +376,22 @@ class SmokeContext extends Assert implements
     }
 
     /**
+     * @Then I expect the marketplace commerce analytics response error code to be :errorCode
+     *
+     * @param string $errorCode
+     */
+    public function iExpectTheMarketplaceCommerceAnalyticsErrorCodeToBe($errorCode)
+    {
+        if ($this->error->getAwsErrorCode() === 'SubscriptionRequiredException') {
+            // For skipping subscription required exceptions
+            $this->assertTrue(true);
+            return;
+        }
+
+        $this->assertSame($errorCode, $this->error->getAwsErrorCode());
+    }
+
+    /**
      * @Then I expect the response error message to include:
      *
      * @param PyStringNode $string
@@ -393,7 +418,7 @@ class SmokeContext extends Assert implements
      * @param string $errorCode
      * @param PyStringNode $string
      */
-    public function theErrorCodeShouldBe($errorCode, PyStringNode $string = null)
+    public function theErrorCodeShouldBe($errorCode, ?PyStringNode $string = null)
     {
         $this->iExpectTheResponseErrorCodeToBe($errorCode);
 
@@ -436,5 +461,28 @@ class SmokeContext extends Assert implements
     public function theStatusCodeShouldBe($statusCode)
     {
         $this->assertEquals($statusCode, $this->error->getStatusCode());
+    }
+
+    private function getCwQueryCompatClient(): AwsClientInterface
+    {
+        $provider = ApiProvider::defaultProvider();
+        $apiDefinition = $provider('api', 'monitoring', '2010-08-01');
+        $modifiedDefinition = $apiDefinition;
+        $modifiedDefinition['metadata']['awsQueryCompatible'] = [];
+        $modifiedDefinition['metadata']['protocol'] = 'json';
+        $modifiedDefinition['metadata']['jsonVersion'] = '1.0';
+        $modifiedDefinition['metadata']['protocols'] = ['json', 'query'];
+        $modifiedDefinition['metadata']['targetPrefix'] = 'GraniteServiceVersion20100801';
+        $service = new Service($modifiedDefinition, $provider);
+
+        return new AwsClient([
+            'service' => 'monitoring',
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'ua_append' => 'PHPUnit/Integration'
+        ]);
     }
 }

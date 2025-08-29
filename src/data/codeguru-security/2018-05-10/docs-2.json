@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<note> <p>Amazon CodeGuru Security is in preview release and is subject to change.</p> </note> <p>This section provides documentation for the Amazon CodeGuru Security API operations. CodeGuru Security is a service that uses program analysis and machine learning to detect security policy violations and vulnerabilities, and recommends ways to address these security risks.</p> <p>By proactively detecting and providing recommendations for addressing security risks, CodeGuru Security improves the overall security of your application code. For more information about CodeGuru Security, see the <a href=\"https://docs.aws.amazon.com/codeguru/latest/security-ug/what-is-codeguru-security.html\">Amazon CodeGuru Security User Guide</a>. </p>",
+  "service": "<p><note> <p>On November 20, 2025, AWS will discontinue support for Amazon CodeGuru Security. After November 20, 2025, you will no longer be able to access the /codeguru/security console, service resources, or documentation. For more information, see <a href=\"https://docs.aws.amazon.com/codeguru/latest/security-ug/end-of-support.html\">https://docs.aws.amazon.com/codeguru/latest/security-ug/end-of-support.html</a>.</p> </note> <p>This section provides documentation for the Amazon CodeGuru Security API operations. CodeGuru Security is a service that uses program analysis and machine learning to detect security policy violations and vulnerabilities, and recommends ways to address these security risks.</p> <p>By proactively detecting and providing recommendations for addressing security risks, CodeGuru Security improves the overall security of your application code. For more information about CodeGuru Security, see the <a href=\"https://docs.aws.amazon.com/codeguru/latest/security-ug/what-is-codeguru-security.html\">Amazon CodeGuru Security User Guide</a>. </p></p>",
   "operations": {
     "BatchGetFindings": "<p>Returns a list of requested findings from standard scans.</p>",
     "CreateScan": "<p>Use to create a scan using code uploaded to an Amazon S3 bucket.</p>",
@@ -19,8 +19,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountFindingsMetric": {
       "base": "<p>A summary of findings metrics for an account on a specified date.</p>",
@@ -49,13 +48,11 @@
     },
     "BatchGetFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CategoriesWithMostFindings": {
       "base": null,
@@ -89,28 +86,23 @@
     },
     "ConflictException": {
       "base": "<p>The requested operation would cause a conflict with the current state of a service resource associated with the request. Resolve the conflict before retrying this request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScanRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScanResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUploadUrlRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUploadUrlResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetectorTags": {
       "base": null,
@@ -121,11 +113,11 @@
     "Double": {
       "base": null,
       "refs": {
-        "FindingMetricsValuePerSeverity$critical": "<p>A numeric value corresponding to a critical finding.</p>",
-        "FindingMetricsValuePerSeverity$high": "<p>A numeric value corresponding to a high severity finding.</p>",
         "FindingMetricsValuePerSeverity$info": "<p>A numeric value corresponding to an informational finding.</p>",
         "FindingMetricsValuePerSeverity$low": "<p>A numeric value corresponding to a low severity finding.</p>",
-        "FindingMetricsValuePerSeverity$medium": "<p>A numeric value corresponding to a medium severity finding.</p>"
+        "FindingMetricsValuePerSeverity$medium": "<p>A numeric value corresponding to a medium severity finding.</p>",
+        "FindingMetricsValuePerSeverity$high": "<p>A numeric value corresponding to a high severity finding.</p>",
+        "FindingMetricsValuePerSeverity$critical": "<p>A numeric value corresponding to a critical finding.</p>"
       }
     },
     "EncryptionConfig": {
@@ -175,10 +167,10 @@
     "FindingMetricsValuePerSeverity": {
       "base": "<p>A numeric value corresponding to the severity of a finding, such as the number of open findings or the average time it takes to close findings of a given severity.</p>",
       "refs": {
-        "AccountFindingsMetric$closedFindings": "<p>The number of closed findings of each severity on the specified date.</p>",
-        "AccountFindingsMetric$meanTimeToClose": "<p>The average time in days it takes to close findings of each severity as of a specified date.</p>",
         "AccountFindingsMetric$newFindings": "<p>The number of new findings of each severity on the specified date.</p>",
+        "AccountFindingsMetric$closedFindings": "<p>The number of closed findings of each severity on the specified date.</p>",
         "AccountFindingsMetric$openFindings": "<p>The number of open findings of each severity as of the specified date.</p>",
+        "AccountFindingsMetric$meanTimeToClose": "<p>The average time in days it takes to close findings of each severity as of a specified date.</p>",
         "MetricsSummary$openFindings": "<p>The number of open findings of each severity.</p>"
       }
     },
@@ -197,18 +189,15 @@
     },
     "GetAccountConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFindingsRequestMaxResultsInteger": {
       "base": null,
@@ -218,28 +207,23 @@
     },
     "GetFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMetricsSummaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMetricsSummaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetScanRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetScanResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HeaderKey": {
       "base": null,
@@ -258,16 +242,15 @@
       "refs": {
         "CategoryWithFindingNum$findingNumber": "<p>The number of open findings in the category.</p>",
         "CodeLine$number": "<p>The code line number.</p>",
-        "FilePath$endLine": "<p>The last line number of the code snippet where the security vulnerability appears in your code.</p>",
         "FilePath$startLine": "<p>The first line number of the code snippet where the security vulnerability appears in your code.</p>",
+        "FilePath$endLine": "<p>The last line number of the code snippet where the security vulnerability appears in your code.</p>",
         "ScanNameWithFindingNum$findingNumber": "<p>The number of findings generated by a scan.</p>",
         "Vulnerability$itemCount": "<p>The number of times the vulnerability appears in your code.</p>"
       }
     },
     "InternalServerException": {
       "base": "<p>The server encountered an internal error and is unable to complete the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyArn": {
       "base": null,
@@ -277,8 +260,7 @@
     },
     "ListFindingsMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFindingsMetricsRequestMaxResultsInteger": {
       "base": null,
@@ -288,13 +270,11 @@
     },
     "ListFindingsMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScansRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScansRequestMaxResultsInteger": {
       "base": null,
@@ -304,18 +284,15 @@
     },
     "ListScansResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -385,8 +362,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource specified in the request was not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "S3Url": {
       "base": null,
@@ -495,15 +471,15 @@
         "FilePath$name": "<p>The name of the file.</p>",
         "FilePath$path": "<p>The path to the resource with the security vulnerability.</p>",
         "Finding$description": "<p>A description of the finding.</p>",
-        "Finding$detectorId": "<p>The identifier for the detector that detected the finding in your code. A detector is a defined rule based on industry standards and AWS best practices. </p>",
-        "Finding$detectorName": "<p>The name of the detector that identified the security vulnerability in your code. </p>",
         "Finding$generatorId": "<p>The identifier for the component that generated a finding such as AmazonCodeGuruSecurity.</p>",
         "Finding$id": "<p>The identifier for a finding.</p>",
-        "Finding$ruleId": "<p>The identifier for the rule that generated the finding.</p>",
-        "Finding$title": "<p>The title of the finding.</p>",
         "Finding$type": "<p>The type of finding. </p>",
-        "FindingIdentifier$findingId": "<p>The identifier for a finding.</p>",
+        "Finding$title": "<p>The title of the finding.</p>",
+        "Finding$detectorId": "<p>The identifier for the detector that detected the finding in your code. A detector is a defined rule based on industry standards and AWS best practices. </p>",
+        "Finding$detectorName": "<p>The name of the detector that identified the security vulnerability in your code. </p>",
+        "Finding$ruleId": "<p>The identifier for the rule that generated the finding.</p>",
         "FindingIdentifier$scanName": "<p>The name of the scan that generated the finding. </p>",
+        "FindingIdentifier$findingId": "<p>The identifier for a finding.</p>",
         "InternalServerException$error": "<p>The internal error encountered by the server.</p>",
         "InternalServerException$message": "<p>Description of the error.</p>",
         "Recommendation$text": "<p>The recommended course of action to remediate the finding.</p>",
@@ -517,16 +493,16 @@
         "ResourceNotFoundException$resourceId": "<p>The identifier for the resource that was not found.</p>",
         "ResourceNotFoundException$resourceType": "<p>The type of resource that was not found.</p>",
         "ScanNameWithFindingNum$scanName": "<p>The name of the scan.</p>",
-        "SuggestedFix$code": "<p>The suggested code fix. If applicable, includes code patch to replace your source code. </p>",
         "SuggestedFix$description": "<p>A description of the suggested code fix and why it is being suggested. </p>",
+        "SuggestedFix$code": "<p>The suggested code fix. If applicable, includes code patch to replace your source code. </p>",
         "ThrottlingException$errorCode": "<p>The identifier for the error.</p>",
         "ThrottlingException$message": "<p>Description of the error.</p>",
-        "ThrottlingException$quotaCode": "<p>The identifier for the originating quota.</p>",
         "ThrottlingException$serviceCode": "<p>The identifier for the originating service.</p>",
+        "ThrottlingException$quotaCode": "<p>The identifier for the originating quota.</p>",
         "ValidationException$errorCode": "<p>The identifier for the error.</p>",
         "ValidationException$message": "<p>Description of the error.</p>",
-        "ValidationExceptionField$message": "<p>Describes the exception.</p>",
         "ValidationExceptionField$name": "<p>The name of the exception.</p>",
+        "ValidationExceptionField$message": "<p>Describes the exception.</p>",
         "Vulnerability$id": "<p>The identifier for the vulnerability.</p>"
       }
     },
@@ -565,13 +541,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -581,8 +555,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -593,8 +566,8 @@
         "GetMetricsSummaryRequest$date": "<p>The date you want to retrieve summary metrics from, rounded to the nearest day. The date must be within the past two years.</p>",
         "GetScanResponse$createdAt": "<p>The time the scan was created.</p>",
         "GetScanResponse$updatedAt": "<p>The time when the scan was last updated. Only available for <code>STANDARD</code> scan types.</p>",
-        "ListFindingsMetricsRequest$endDate": "<p>The end date of the interval which you want to retrieve metrics from. Round to the nearest day.</p>",
         "ListFindingsMetricsRequest$startDate": "<p>The start date of the interval which you want to retrieve metrics from. Rounds to the nearest day.</p>",
+        "ListFindingsMetricsRequest$endDate": "<p>The end date of the interval which you want to retrieve metrics from. Round to the nearest day.</p>",
         "MetricsSummary$date": "<p>The date from which the metrics summary information was retrieved.</p>",
         "ScanSummary$createdAt": "<p> The time when the scan was created. </p>",
         "ScanSummary$updatedAt": "<p>The time the scan was last updated. A scan is updated when it is re-run.</p>"
@@ -602,23 +575,19 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Uuid": {
       "base": null,
@@ -633,8 +602,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the specified constraints.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Information about a validation exception.</p>",

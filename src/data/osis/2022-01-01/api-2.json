@@ -246,8 +246,7 @@
   "shapes":{
     "AccessDeniedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":403},
       "exception":true
     },
@@ -320,8 +319,7 @@
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -342,7 +340,8 @@
         "VpcOptions":{"shape":"VpcOptions"},
         "BufferOptions":{"shape":"BufferOptions"},
         "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "PipelineRoleArn":{"shape":"PipelineRoleArn"}
       }
     },
     "CreatePipelineResponse":{
@@ -364,13 +363,11 @@
     },
     "DeletePipelineResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DisabledOperationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -445,15 +442,13 @@
     "Integer":{"type":"integer"},
     "InternalException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true
     },
     "InvalidPaginationTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -464,15 +459,13 @@
     },
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
     "ListPipelineBlueprintsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ListPipelineBlueprintsResponse":{
       "type":"structure",
@@ -563,7 +556,8 @@
         "VpcEndpointService":{"shape":"String"},
         "ServiceVpcEndpoints":{"shape":"ServiceVpcEndpointsList"},
         "Destinations":{"shape":"PipelineDestinationList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "PipelineRoleArn":{"shape":"PipelineRoleArn"}
       }
     },
     "PipelineArn":{
@@ -619,6 +613,12 @@
       "min":3,
       "pattern":"[a-z][a-z0-9\\-]+"
     },
+    "PipelineRoleArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:(aws|aws\\-cn|aws\\-us\\-gov|aws\\-iso|aws\\-iso\\-b|aws\\-iso\\-e|aws\\-iso\\-f):iam::[0-9]+:role\\/.*$"
+    },
     "PipelineStatus":{
       "type":"string",
       "enum":[
@@ -665,15 +665,13 @@
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
     "ResourceNotFoundException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
@@ -789,8 +787,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -816,8 +813,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePipelineRequest":{
       "type":"structure",
@@ -833,7 +829,8 @@
         "PipelineConfigurationBody":{"shape":"PipelineConfigurationBody"},
         "LogPublishingOptions":{"shape":"LogPublishingOptions"},
         "BufferOptions":{"shape":"BufferOptions"},
-        "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"}
+        "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
+        "PipelineRoleArn":{"shape":"PipelineRoleArn"}
       }
     },
     "UpdatePipelineResponse":{
@@ -858,8 +855,7 @@
     },
     "ValidationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },

@@ -1,0 +1,82 @@
+{
+  "version": "1.0",
+  "testCases": [
+    {
+      "documentation": "Default array values used",
+      "params": {},
+      "expect": {
+        "endpoint": {
+          "url": "https://example.com/defaultValue1"
+        }
+      },
+      "operationInputs": [
+        {
+          "operationName": "NoBindingsOperation"
+        }
+      ]
+    },
+    {
+      "documentation": "Empty array",
+      "params": {
+        "stringArrayParam": []
+      },
+      "expect": {
+        "error": "no array values set"
+      },
+      "operationInputs": [
+        {
+          "operationName": "EmptyStaticContextOperation"
+        }
+      ]
+    },
+    {
+      "documentation": "Static value",
+      "params": {
+        "stringArrayParam": ["staticValue1"]
+      },
+      "expect": {
+        "endpoint": {
+          "url": "https://example.com/staticValue1"
+        }
+      },
+      "operationInputs": [
+        {
+          "operationName": "StaticContextOperation"
+        }
+      ]
+    },
+    {
+      "documentation": "bound value from input",
+      "params": {
+        "stringArrayParam": ["key1"]
+      },
+      "expect": {
+        "endpoint": {
+          "url": "https://example.com/key1"
+        }
+      },
+      "operationInputs": [
+        {
+          "operationName": "ListOfObjectsOperation",
+          "operationParams": {
+            "nested": {
+              "listOfObjects": [
+                {
+                  "key": "key1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "operationName": "MapOperation",
+          "operationParams": {
+            "map": {
+              "key1": "value1"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

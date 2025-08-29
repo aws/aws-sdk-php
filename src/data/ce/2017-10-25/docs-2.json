@@ -13,9 +13,12 @@
     "GetAnomalyMonitors": "<p>Retrieves the cost anomaly monitor definitions for your account. You can filter using a list of cost anomaly monitor Amazon Resource Names (ARNs). </p>",
     "GetAnomalySubscriptions": "<p>Retrieves the cost anomaly subscription objects for your account. You can filter using a list of cost anomaly monitor Amazon Resource Names (ARNs). </p>",
     "GetApproximateUsageRecords": "<p>Retrieves estimated usage records for hourly granularity or resource-level data at daily granularity.</p>",
+    "GetCommitmentPurchaseAnalysis": "<p>Retrieves a commitment purchase analysis result based on the <code>AnalysisId</code>.</p>",
     "GetCostAndUsage": "<p>Retrieves cost and usage metrics for your account. You can specify which cost and usage-related metric that you want the request to return. For example, you can specify <code>BlendedCosts</code> or <code>UsageQuantity</code>. You can also filter and group your data by various dimensions, such as <code>SERVICE</code> or <code>AZ</code>, in a specific time range. For a complete list of valid dimensions, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html\">GetDimensionValues</a> operation. Management account in an organization in Organizations have access to all member accounts.</p> <p>For information about filter limitations, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-limits.html\">Quotas and restrictions</a> in the <i>Billing and Cost Management User Guide</i>.</p>",
+    "GetCostAndUsageComparisons": "<p>Retrieves cost and usage comparisons for your account between two periods within the last 13 months. If you have enabled multi-year data at monthly granularity, you can go back up to 38 months.</p>",
     "GetCostAndUsageWithResources": "<p>Retrieves cost and usage metrics with resources for your account. You can specify which cost and usage-related metric, such as <code>BlendedCosts</code> or <code>UsageQuantity</code>, that you want the request to return. You can also filter and group your data by various dimensions, such as <code>SERVICE</code> or <code>AZ</code>, in a specific time range. For a complete list of valid dimensions, see the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html\">GetDimensionValues</a> operation. Management account in an organization in Organizations have access to all member accounts.</p> <p>Hourly granularity is only available for EC2-Instances (Elastic Compute Cloud) resource-level data. All other resource-level data is available at daily granularity.</p> <note> <p>This is an opt-in only feature. You can enable this feature from the Cost Explorer Settings page. For information about how to access the Settings page, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html\">Controlling Access for Cost Explorer</a> in the <i>Billing and Cost Management User Guide</i>.</p> </note>",
     "GetCostCategories": "<p>Retrieves an array of Cost Category names and values incurred cost.</p> <note> <p>If some Cost Category names and values are not associated with any cost, they will not be returned by this API.</p> </note>",
+    "GetCostComparisonDrivers": "<p>Retrieves key factors driving cost changes between two time periods within the last 13 months, such as usage changes, discount changes, and commitment-based savings. If you have enabled multi-year data at monthly granularity, you can go back up to 38 months.</p>",
     "GetCostForecast": "<p>Retrieves a forecast for how much Amazon Web Services predicts that you will spend over the forecast time period that you select, based on your past costs. </p>",
     "GetDimensionValues": "<p>Retrieves all available filter values for a specified filter over a period of time. You can search the dimension values for an arbitrary string. </p>",
     "GetReservationCoverage": "<p>Retrieves the reservation coverage for your account, which you can use to see how much of your Amazon Elastic Compute Cloud, Amazon ElastiCache, Amazon Relational Database Service, or Amazon Redshift usage is covered by a reservation. An organization's management account can see the coverage of the associated member accounts. This supports dimensions, Cost Categories, and nested expressions. For any time period, you can filter data about reservation usage by the following dimensions:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DATABASE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>SERVICE</p> </li> <li> <p>TAG</p> </li> <li> <p>TENANCY</p> </li> </ul> <p>To determine valid values for a dimension, use the <code>GetDimensionValues</code> operation. </p>",
@@ -29,13 +32,15 @@
     "GetSavingsPlansUtilizationDetails": "<p>Retrieves attribute data along with aggregate utilization and savings data for a given time period. This doesn't support granular or grouped data (daily/monthly) in response. You can't retrieve data by dates in a single response similar to <code>GetSavingsPlanUtilization</code>, but you have the option to make multiple calls to <code>GetSavingsPlanUtilizationDetails</code> by providing individual dates. You can use <code>GetDimensionValues</code> in <code>SAVINGS_PLANS</code> to determine the possible dimension values.</p> <note> <p> <code>GetSavingsPlanUtilizationDetails</code> internally groups data by <code>SavingsPlansArn</code>.</p> </note>",
     "GetTags": "<p>Queries for available tag keys and tag values for a specified period. You can search the tag values for an arbitrary string. </p>",
     "GetUsageForecast": "<p>Retrieves a forecast for how much Amazon Web Services predicts that you will use over the forecast time period that you select, based on your past usage. </p>",
+    "ListCommitmentPurchaseAnalyses": "<p>Lists the commitment purchase analyses for your account.</p>",
     "ListCostAllocationTagBackfillHistory": "<p> Retrieves a list of your historical cost allocation tag backfill requests. </p>",
     "ListCostAllocationTags": "<p>Get a list of cost allocation tags. All inputs in the API are optional and serve as filters. By default, all cost allocation tags are returned. </p>",
     "ListCostCategoryDefinitions": "<p>Returns the name, Amazon Resource Name (ARN), <code>NumberOfRules</code> and effective dates of all Cost Categories defined in the account. You have the option to use <code>EffectiveOn</code> to return a list of Cost Categories that were active on a specific date. If there is no <code>EffectiveOn</code> specified, you’ll see Cost Categories that are effective on the current date. If Cost Category is still effective, <code>EffectiveEnd</code> is omitted in the response. <code>ListCostCategoryDefinitions</code> supports pagination. The request can have a <code>MaxResults</code> range up to 100.</p>",
     "ListSavingsPlansPurchaseRecommendationGeneration": "<p>Retrieves a list of your historical recommendation generations within the past 30 days.</p>",
     "ListTagsForResource": "<p>Returns a list of resource tags associated with the resource specified by the Amazon Resource Name (ARN). </p>",
     "ProvideAnomalyFeedback": "<p>Modifies the feedback property of a given cost anomaly. </p>",
-    "StartCostAllocationTagBackfill": "<p> Request a cost allocation tag backfill. This will backfill the activation status (either <code>active</code> or <code>inactive</code>) for all tag keys from <code>para:BackfillFrom</code> up to the when this request is made.</p> <p>You can request a backfill once every 24 hours. </p>",
+    "StartCommitmentPurchaseAnalysis": "<p>Specifies the parameters of a planned commitment purchase and starts the generation of the analysis. This enables you to estimate the cost, coverage, and utilization impact of your planned commitment purchases.</p>",
+    "StartCostAllocationTagBackfill": "<p> Request a cost allocation tag backfill. This will backfill the activation status (either <code>active</code> or <code>inactive</code>) for all tag keys from <code>para:BackfillFrom</code> up to the time this request is made.</p> <p>You can request a backfill once every 24 hours. </p>",
     "StartSavingsPlansPurchaseRecommendationGeneration": "<p>Requests a Savings Plans recommendation generation. This enables you to calculate a fresh set of Savings Plans recommendations that takes your latest usage data and current Savings Plans inventory into account. You can refresh Savings Plans recommendations up to three times daily for a consolidated billing family.</p> <note> <p> <code>StartSavingsPlansPurchaseRecommendationGeneration</code> has no request syntax because no input parameters are needed to support this operation.</p> </note>",
     "TagResource": "<p>An API operation for adding one or more tags (key-value pairs) to a resource.</p> <p>You can use the <code>TagResource</code> operation with a resource that already has tags. If you specify a new tag key for the resource, this tag is appended to the list of tags associated with the resource. If you specify a tag key that is already associated with the resource, the new tag value you specify replaces the previous value for that tag.</p> <p>Although the maximum number of array members is 200, user-tag maximum is 50. The remaining are reserved for Amazon Web Services use.</p>",
     "UntagResource": "<p>Removes one or more tags from a resource. Specify only tag keys in your request. Don't specify the value. </p>",
@@ -45,6 +50,12 @@
     "UpdateCostCategoryDefinition": "<p>Updates an existing Cost Category. Changes made to the Cost Category rules will be used to categorize the current month’s expenses and future expenses. This won’t change categorization for the previous months.</p>"
   },
   "shapes": {
+    "AccountId": {
+      "base": null,
+      "refs": {
+        "SavingsPlansPurchaseAnalysisConfiguration$AccountId": "<p>The account that the analysis is for.</p>"
+      }
+    },
     "AccountScope": {
       "base": null,
       "refs": {
@@ -52,6 +63,7 @@
         "GetSavingsPlansPurchaseRecommendationRequest$AccountScope": "<p>The account scope that you want your recommendations for. Amazon Web Services calculates recommendations including the management account and member accounts if the value is set to <code>PAYER</code>. If the value is <code>LINKED</code>, recommendations are calculated for individual member accounts only.</p>",
         "RecommendationDetailData$AccountScope": "<p>The account scope that you want your recommendations for. Amazon Web Services calculates recommendations including the management account and member accounts if the value is set to PAYER. If the value is LINKED, recommendations are calculated for individual member accounts only.</p>",
         "ReservationPurchaseRecommendation$AccountScope": "<p>The account scope that Amazon Web Services recommends that you purchase this instance for. For example, you can purchase this reservation for an entire organization in Amazon Web Services Organizations.</p>",
+        "SavingsPlansPurchaseAnalysisConfiguration$AccountScope": "<p>The account scope that you want your analysis for.</p>",
         "SavingsPlansPurchaseRecommendation$AccountScope": "<p>The account scope that you want your recommendations for. Amazon Web Services calculates recommendations that include the management account and member accounts if the value is set to <code>PAYER</code>. If the value is <code>LINKED</code>, recommendations are calculated for individual member accounts only.</p>"
       }
     },
@@ -65,6 +77,58 @@
       "base": null,
       "refs": {
         "ReservationAggregates$AmortizedUpfrontFee": "<p>The upfront cost of your reservation. It's amortized over the reservation period.</p>"
+      }
+    },
+    "AnalysisDetails": {
+      "base": "<p>Details about the analysis.</p>",
+      "refs": {
+        "GetCommitmentPurchaseAnalysisResponse$AnalysisDetails": "<p>Details about the analysis.</p>"
+      }
+    },
+    "AnalysisId": {
+      "base": null,
+      "refs": {
+        "AnalysisIds$member": null,
+        "AnalysisSummary$AnalysisId": "<p>The analysis ID that's associated with the commitment purchase analysis.</p>",
+        "GetCommitmentPurchaseAnalysisRequest$AnalysisId": "<p>The analysis ID that's associated with the commitment purchase analysis.</p>",
+        "GetCommitmentPurchaseAnalysisResponse$AnalysisId": "<p>The analysis ID that's associated with the commitment purchase analysis.</p>",
+        "StartCommitmentPurchaseAnalysisResponse$AnalysisId": "<p>The analysis ID that's associated with the commitment purchase analysis.</p>"
+      }
+    },
+    "AnalysisIds": {
+      "base": null,
+      "refs": {
+        "ListCommitmentPurchaseAnalysesRequest$AnalysisIds": "<p>The analysis IDs associated with the commitment purchase analyses.</p>"
+      }
+    },
+    "AnalysisNotFoundException": {
+      "base": "<p>The requested analysis can't be found.</p>",
+      "refs": {}
+    },
+    "AnalysisStatus": {
+      "base": null,
+      "refs": {
+        "AnalysisSummary$AnalysisStatus": "<p>The status of the analysis.</p>",
+        "GetCommitmentPurchaseAnalysisResponse$AnalysisStatus": "<p>The status of the analysis.</p>",
+        "ListCommitmentPurchaseAnalysesRequest$AnalysisStatus": "<p>The status of the analysis.</p>"
+      }
+    },
+    "AnalysisSummary": {
+      "base": "<p>A summary of the analysis.</p>",
+      "refs": {
+        "AnalysisSummaryList$member": null
+      }
+    },
+    "AnalysisSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCommitmentPurchaseAnalysesResponse$AnalysisSummaryList": "<p>The list of analyses.</p>"
+      }
+    },
+    "AnalysisType": {
+      "base": null,
+      "refs": {
+        "SavingsPlansPurchaseAnalysisConfiguration$AnalysisType": "<p>The type of analysis.</p>"
       }
     },
     "Anomalies": {
@@ -187,18 +251,53 @@
     },
     "BackfillLimitExceededException": {
       "base": "<p> A request to backfill is already in progress. Once the previous request is complete, you can create another request. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "BillExpirationException": {
       "base": "<p>The requested report expired. Update the date interval and try again.</p>",
+      "refs": {}
+    },
+    "BillingViewArn": {
+      "base": null,
       "refs": {
+        "GetCostAndUsageComparisonsRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetCostAndUsageRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetCostAndUsageWithResourcesRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetCostCategoriesRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetCostComparisonDriversRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetCostForecastRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetDimensionValuesRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetTagsRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>",
+        "GetUsageForecastRequest$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>"
+      }
+    },
+    "CommitmentPurchaseAnalysisConfiguration": {
+      "base": "<p>The configuration for the commitment purchase analysis.</p>",
+      "refs": {
+        "AnalysisSummary$CommitmentPurchaseAnalysisConfiguration": "<p>The configuration for the commitment purchase analysis.</p>",
+        "GetCommitmentPurchaseAnalysisResponse$CommitmentPurchaseAnalysisConfiguration": "<p>The configuration for the commitment purchase analysis.</p>",
+        "StartCommitmentPurchaseAnalysisRequest$CommitmentPurchaseAnalysisConfiguration": "<p>The configuration for the commitment purchase analysis.</p>"
+      }
+    },
+    "ComparisonMetricValue": {
+      "base": "<p>Contains cost or usage metric values for comparing two time periods. Each value includes amounts for the baseline and comparison time periods, their difference, and the unit of measurement.</p>",
+      "refs": {
+        "ComparisonMetrics$value": null
+      }
+    },
+    "ComparisonMetrics": {
+      "base": null,
+      "refs": {
+        "CostAndUsageComparison$Metrics": "<p>A mapping of metric names to their comparison values.</p>",
+        "CostComparisonDriver$Metrics": "<p>A mapping of metric names to their comparison values.</p>",
+        "CostDriver$Metrics": "<p>A mapping of metric names to their comparison values, measuring the impact of this cost driver.</p>",
+        "GetCostAndUsageComparisonsResponse$TotalCostAndUsage": "<p>A summary of the total cost and usage, comparing amounts between <code>BaselineTimePeriod</code> and <code>ComparisonTimePeriod</code> and their differences. This total represents the aggregate total across all paginated results, if the response spans multiple pages.</p>"
       }
     },
     "Context": {
       "base": null,
       "refs": {
-        "GetDimensionValuesRequest$Context": "<p>The context for the call to <code>GetDimensionValues</code>. This can be <code>RESERVATIONS</code> or <code>COST_AND_USAGE</code>. The default value is <code>COST_AND_USAGE</code>. If the context is set to <code>RESERVATIONS</code>, the resulting dimension values can be used in the <code>GetReservationUtilization</code> operation. If the context is set to <code>COST_AND_USAGE</code>, the resulting dimension values can be used in the <code>GetCostAndUsage</code> operation.</p> <p>If you set the context to <code>COST_AND_USAGE</code>, you can use the following dimensions for searching:</p> <ul> <li> <p>AZ - The Availability Zone. An example is <code>us-east-1a</code>.</p> </li> <li> <p>BILLING_ENTITY - The Amazon Web Services seller that your account is with. Possible values are the following:</p> <p>- Amazon Web Services(Amazon Web Services): The entity that sells Amazon Web Services.</p> <p>- AISPL (Amazon Internet Services Pvt. Ltd.): The local Indian entity that's an acting reseller for Amazon Web Services in India.</p> <p>- Amazon Web Services Marketplace: The entity that supports the sale of solutions that are built on Amazon Web Services by third-party software providers.</p> </li> <li> <p>CACHE_ENGINE - The Amazon ElastiCache operating system. Examples are Windows or Linux.</p> </li> <li> <p>DEPLOYMENT_OPTION - The scope of Amazon Relational Database Service deployments. Valid values are <code>SingleAZ</code> and <code>MultiAZ</code>.</p> </li> <li> <p>DATABASE_ENGINE - The Amazon Relational Database Service database. Examples are Aurora or MySQL.</p> </li> <li> <p>INSTANCE_TYPE - The type of Amazon EC2 instance. An example is <code>m4.xlarge</code>.</p> </li> <li> <p>INSTANCE_TYPE_FAMILY - A family of instance types optimized to fit different use cases. Examples are <code>Compute Optimized</code> (for example, <code>C4</code>, <code>C5</code>, <code>C6g</code>, and <code>C7g</code>), <code>Memory Optimization</code> (for example, <code>R4</code>, <code>R5n</code>, <code>R5b</code>, and <code>R6g</code>).</p> </li> <li> <p>INVOICING_ENTITY - The name of the entity that issues the Amazon Web Services invoice.</p> </li> <li> <p>LEGAL_ENTITY_NAME - The name of the organization that sells you Amazon Web Services services, such as Amazon Web Services.</p> </li> <li> <p>LINKED_ACCOUNT - The description in the attribute map that includes the full name of the member account. The value field contains the Amazon Web Services ID of the member account.</p> </li> <li> <p>OPERATING_SYSTEM - The operating system. Examples are Windows or Linux.</p> </li> <li> <p>OPERATION - The action performed. Examples include <code>RunInstance</code> and <code>CreateBucket</code>.</p> </li> <li> <p>PLATFORM - The Amazon EC2 operating system. Examples are Windows or Linux.</p> </li> <li> <p>PURCHASE_TYPE - The reservation type of the purchase that this usage is related to. Examples include On-Demand Instances and Standard Reserved Instances.</p> </li> <li> <p>RESERVATION_ID - The unique identifier for an Amazon Web Services Reservation Instance.</p> </li> <li> <p>SAVINGS_PLAN_ARN - The unique identifier for your Savings Plans.</p> </li> <li> <p>SAVINGS_PLANS_TYPE - Type of Savings Plans (EC2 Instance or Compute).</p> </li> <li> <p>SERVICE - The Amazon Web Services service such as Amazon DynamoDB.</p> </li> <li> <p>TENANCY - The tenancy of a resource. Examples are shared or dedicated.</p> </li> <li> <p>USAGE_TYPE - The type of usage. An example is DataTransfer-In-Bytes. The response for the <code>GetDimensionValues</code> operation includes a unit attribute. Examples include GB and Hrs.</p> </li> <li> <p>USAGE_TYPE_GROUP - The grouping of common usage types. An example is Amazon EC2: CloudWatch – Alarms. The response for this operation includes a unit attribute.</p> </li> <li> <p>REGION - The Amazon Web Services Region.</p> </li> <li> <p>RECORD_TYPE - The different types of charges such as Reserved Instance (RI) fees, usage costs, tax refunds, and credits.</p> </li> <li> <p>RESOURCE_ID - The unique identifier of the resource. ResourceId is an opt-in feature only available for last 14 days for EC2-Compute Service.</p> </li> </ul> <p>If you set the context to <code>RESERVATIONS</code>, you can use the following dimensions for searching:</p> <ul> <li> <p>AZ - The Availability Zone. An example is <code>us-east-1a</code>.</p> </li> <li> <p>CACHE_ENGINE - The Amazon ElastiCache operating system. Examples are Windows or Linux.</p> </li> <li> <p>DEPLOYMENT_OPTION - The scope of Amazon Relational Database Service deployments. Valid values are <code>SingleAZ</code> and <code>MultiAZ</code>.</p> </li> <li> <p>INSTANCE_TYPE - The type of Amazon EC2 instance. An example is <code>m4.xlarge</code>.</p> </li> <li> <p>LINKED_ACCOUNT - The description in the attribute map that includes the full name of the member account. The value field contains the Amazon Web Services ID of the member account.</p> </li> <li> <p>PLATFORM - The Amazon EC2 operating system. Examples are Windows or Linux.</p> </li> <li> <p>REGION - The Amazon Web Services Region.</p> </li> <li> <p>SCOPE (Utilization only) - The scope of a Reserved Instance (RI). Values are regional or a single Availability Zone.</p> </li> <li> <p>TAG (Coverage only) - The tags that are associated with a Reserved Instance (RI).</p> </li> <li> <p>TENANCY - The tenancy of a resource. Examples are shared or dedicated.</p> </li> </ul> <p>If you set the context to <code>SAVINGS_PLANS</code>, you can use the following dimensions for searching:</p> <ul> <li> <p>SAVINGS_PLANS_TYPE - Type of Savings Plans (EC2 Instance or Compute)</p> </li> <li> <p>PAYMENT_OPTION - The payment option for the given Savings Plans (for example, All Upfront)</p> </li> <li> <p>REGION - The Amazon Web Services Region.</p> </li> <li> <p>INSTANCE_TYPE_FAMILY - The family of instances (For example, <code>m5</code>)</p> </li> <li> <p>LINKED_ACCOUNT - The description in the attribute map that includes the full name of the member account. The value field contains the Amazon Web Services ID of the member account.</p> </li> <li> <p>SAVINGS_PLAN_ARN - The unique identifier for your Savings Plans.</p> </li> </ul>"
+        "GetDimensionValuesRequest$Context": "<p>The context for the call to <code>GetDimensionValues</code>. This can be <code>RESERVATIONS</code> or <code>COST_AND_USAGE</code>. The default value is <code>COST_AND_USAGE</code>. If the context is set to <code>RESERVATIONS</code>, the resulting dimension values can be used in the <code>GetReservationUtilization</code> operation. If the context is set to <code>COST_AND_USAGE</code>, the resulting dimension values can be used in the <code>GetCostAndUsage</code> operation.</p> <p>If you set the context to <code>COST_AND_USAGE</code>, you can use the following dimensions for searching:</p> <ul> <li> <p>AZ - The Availability Zone. An example is <code>us-east-1a</code>.</p> </li> <li> <p>BILLING_ENTITY - The Amazon Web Services seller that your account is with. Possible values are the following:</p> <p>- Amazon Web Services(Amazon Web Services): The entity that sells Amazon Web Services services.</p> <p>- AISPL (Amazon Internet Services Pvt. Ltd.): The local Indian entity that's an acting reseller for Amazon Web Services services in India.</p> <p>- Amazon Web Services Marketplace: The entity that supports the sale of solutions that are built on Amazon Web Services by third-party software providers.</p> </li> <li> <p>CACHE_ENGINE - The Amazon ElastiCache operating system. Examples are Windows or Linux.</p> </li> <li> <p>DEPLOYMENT_OPTION - The scope of Amazon Relational Database Service deployments. Valid values are <code>SingleAZ</code> and <code>MultiAZ</code>.</p> </li> <li> <p>DATABASE_ENGINE - The Amazon Relational Database Service database. Examples are Aurora or MySQL.</p> </li> <li> <p>INSTANCE_TYPE - The type of Amazon EC2 instance. An example is <code>m4.xlarge</code>.</p> </li> <li> <p>INSTANCE_TYPE_FAMILY - A family of instance types optimized to fit different use cases. Examples are <code>Compute Optimized</code> (for example, <code>C4</code>, <code>C5</code>, <code>C6g</code>, and <code>C7g</code>), <code>Memory Optimization</code> (for example, <code>R4</code>, <code>R5n</code>, <code>R5b</code>, and <code>R6g</code>).</p> </li> <li> <p>INVOICING_ENTITY - The name of the entity that issues the Amazon Web Services invoice.</p> </li> <li> <p>LEGAL_ENTITY_NAME - The name of the organization that sells you Amazon Web Services services, such as Amazon Web Services.</p> </li> <li> <p>LINKED_ACCOUNT - The description in the attribute map that includes the full name of the member account. The value field contains the Amazon Web Services ID of the member account.</p> </li> <li> <p>OPERATING_SYSTEM - The operating system. Examples are Windows or Linux.</p> </li> <li> <p>OPERATION - The action performed. Examples include <code>RunInstance</code> and <code>CreateBucket</code>.</p> </li> <li> <p>PLATFORM - The Amazon EC2 operating system. Examples are Windows or Linux.</p> </li> <li> <p>PURCHASE_TYPE - The reservation type of the purchase that this usage is related to. Examples include On-Demand Instances and Standard Reserved Instances.</p> </li> <li> <p>RESERVATION_ID - The unique identifier for an Amazon Web Services Reservation Instance.</p> </li> <li> <p>SAVINGS_PLAN_ARN - The unique identifier for your Savings Plans.</p> </li> <li> <p>SAVINGS_PLANS_TYPE - Type of Savings Plans (EC2 Instance or Compute).</p> </li> <li> <p>SERVICE - The Amazon Web Services service such as Amazon DynamoDB.</p> </li> <li> <p>TENANCY - The tenancy of a resource. Examples are shared or dedicated.</p> </li> <li> <p>USAGE_TYPE - The type of usage. An example is DataTransfer-In-Bytes. The response for the <code>GetDimensionValues</code> operation includes a unit attribute. Examples include GB and Hrs.</p> </li> <li> <p>USAGE_TYPE_GROUP - The grouping of common usage types. An example is Amazon EC2: CloudWatch – Alarms. The response for this operation includes a unit attribute.</p> </li> <li> <p>REGION - The Amazon Web Services Region.</p> </li> <li> <p>RECORD_TYPE - The different types of charges such as Reserved Instance (RI) fees, usage costs, tax refunds, and credits.</p> </li> <li> <p>RESOURCE_ID - The unique identifier of the resource. ResourceId is an opt-in feature only available for last 14 days for EC2-Compute Service.</p> </li> </ul> <p>If you set the context to <code>RESERVATIONS</code>, you can use the following dimensions for searching:</p> <ul> <li> <p>AZ - The Availability Zone. An example is <code>us-east-1a</code>.</p> </li> <li> <p>CACHE_ENGINE - The Amazon ElastiCache operating system. Examples are Windows or Linux.</p> </li> <li> <p>DEPLOYMENT_OPTION - The scope of Amazon Relational Database Service deployments. Valid values are <code>SingleAZ</code> and <code>MultiAZ</code>.</p> </li> <li> <p>INSTANCE_TYPE - The type of Amazon EC2 instance. An example is <code>m4.xlarge</code>.</p> </li> <li> <p>LINKED_ACCOUNT - The description in the attribute map that includes the full name of the member account. The value field contains the Amazon Web Services ID of the member account.</p> </li> <li> <p>PLATFORM - The Amazon EC2 operating system. Examples are Windows or Linux.</p> </li> <li> <p>REGION - The Amazon Web Services Region.</p> </li> <li> <p>SCOPE (Utilization only) - The scope of a Reserved Instance (RI). Values are regional or a single Availability Zone.</p> </li> <li> <p>TAG (Coverage only) - The tags that are associated with a Reserved Instance (RI).</p> </li> <li> <p>TENANCY - The tenancy of a resource. Examples are shared or dedicated.</p> </li> </ul> <p>If you set the context to <code>SAVINGS_PLANS</code>, you can use the following dimensions for searching:</p> <ul> <li> <p>SAVINGS_PLANS_TYPE - Type of Savings Plans (EC2 Instance or Compute)</p> </li> <li> <p>PAYMENT_OPTION - The payment option for the given Savings Plans (for example, All Upfront)</p> </li> <li> <p>REGION - The Amazon Web Services Region.</p> </li> <li> <p>INSTANCE_TYPE_FAMILY - The family of instances (For example, <code>m5</code>)</p> </li> <li> <p>LINKED_ACCOUNT - The description in the attribute map that includes the full name of the member account. The value field contains the Amazon Web Services ID of the member account.</p> </li> <li> <p>SAVINGS_PLAN_ARN - The unique identifier for your Savings Plans.</p> </li> </ul>"
       }
     },
     "CostAllocationTag": {
@@ -270,6 +369,24 @@
       "refs": {
         "ListCostAllocationTagBackfillHistoryRequest$MaxResults": "<p> The maximum number of objects that are returned for this request. </p>",
         "ListCostAllocationTagsRequest$MaxResults": "<p>The maximum number of objects that are returned for this request. By default, the request returns 100 results. </p>"
+      }
+    },
+    "CostAndUsageComparison": {
+      "base": "<p>Represents a comparison of cost and usage metrics between two time periods.</p>",
+      "refs": {
+        "CostAndUsageComparisons$member": null
+      }
+    },
+    "CostAndUsageComparisons": {
+      "base": null,
+      "refs": {
+        "GetCostAndUsageComparisonsResponse$CostAndUsageComparisons": "<p>An array of comparison results showing cost and usage metrics between <code>BaselineTimePeriod</code> and <code>ComparisonTimePeriod</code>.</p>"
+      }
+    },
+    "CostAndUsageComparisonsMaxResults": {
+      "base": null,
+      "refs": {
+        "GetCostAndUsageComparisonsRequest$MaxResults": "<p>The maximum number of results that are returned for the request.</p>"
       }
     },
     "CostCategory": {
@@ -452,6 +569,36 @@
         "GetCostCategoriesResponse$CostCategoryValues": "<p>The Cost Category values.</p> <p>If the <code>CostCategoryName</code> key isn't specified in the request, the <code>CostCategoryValues</code> fields aren't returned. </p>"
       }
     },
+    "CostComparisonDriver": {
+      "base": "<p>Represents a collection of cost drivers and their associated metrics for cost comparison analysis.</p>",
+      "refs": {
+        "CostComparisonDrivers$member": null
+      }
+    },
+    "CostComparisonDrivers": {
+      "base": null,
+      "refs": {
+        "GetCostComparisonDriversResponse$CostComparisonDrivers": "<p>An array of comparison results showing factors that drive significant cost differences between <code>BaselineTimePeriod</code> and <code>ComparisonTimePeriod</code>.</p>"
+      }
+    },
+    "CostComparisonDriversMaxResults": {
+      "base": null,
+      "refs": {
+        "GetCostComparisonDriversRequest$MaxResults": "<p>The maximum number of results that are returned for the request.</p>"
+      }
+    },
+    "CostDriver": {
+      "base": "<p>Represents factors that contribute to cost variations between the baseline and comparison time periods, including the type of driver, an identifier of the driver, and associated metrics.</p>",
+      "refs": {
+        "CostDrivers$member": null
+      }
+    },
+    "CostDrivers": {
+      "base": null,
+      "refs": {
+        "CostComparisonDriver$CostDrivers": "<p>An array of cost drivers, each representing a cost difference between the baseline and comparison time periods. Each entry also includes a metric delta (for example, usage change) that contributed to the cost variance, along with the identifier and type of change.</p>"
+      }
+    },
     "Coverage": {
       "base": "<p>The amount of instance usage that a reservation covered.</p>",
       "refs": {
@@ -504,33 +651,27 @@
     },
     "CreateAnomalyMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAnomalyMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAnomalySubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAnomalySubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCostCategoryDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCostCategoryDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CurrentInstance": {
       "base": "<p>Context about the current instance.</p>",
@@ -540,8 +681,7 @@
     },
     "DataUnavailableException": {
       "base": "<p>The requested data is unavailable.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DateInterval": {
       "base": "<p>The time period of the request. </p>",
@@ -549,9 +689,13 @@
         "CoverageByTime$TimePeriod": "<p>The period that this coverage was used over.</p>",
         "ForecastResult$TimePeriod": "<p>The period of time that the forecast covers.</p>",
         "GetApproximateUsageRecordsResponse$LookbackPeriod": "<p>The lookback period that's used for the estimation.</p>",
+        "GetCostAndUsageComparisonsRequest$BaselineTimePeriod": "<p>The reference time period for comparison. This time period serves as the baseline against which other cost and usage data will be compared. The interval must start and end on the first day of a month, with a duration of exactly one month.</p>",
+        "GetCostAndUsageComparisonsRequest$ComparisonTimePeriod": "<p>The comparison time period for analysis. This time period's cost and usage data will be compared against the baseline time period. The interval must start and end on the first day of a month, with a duration of exactly one month.</p>",
         "GetCostAndUsageRequest$TimePeriod": "<p>Sets the start date and end date for retrieving Amazon Web Services costs. The start date is inclusive, but the end date is exclusive. For example, if <code>start</code> is <code>2017-01-01</code> and <code>end</code> is <code>2017-05-01</code>, then the cost and usage data is retrieved from <code>2017-01-01</code> up to and including <code>2017-04-30</code> but not including <code>2017-05-01</code>.</p>",
         "GetCostAndUsageWithResourcesRequest$TimePeriod": "<p>Sets the start and end dates for retrieving Amazon Web Services costs. The range must be within the last 14 days (the start date cannot be earlier than 14 days ago). The start date is inclusive, but the end date is exclusive. For example, if <code>start</code> is <code>2017-01-01</code> and <code>end</code> is <code>2017-05-01</code>, then the cost and usage data is retrieved from <code>2017-01-01</code> up to and including <code>2017-04-30</code> but not including <code>2017-05-01</code>.</p>",
         "GetCostCategoriesRequest$TimePeriod": null,
+        "GetCostComparisonDriversRequest$BaselineTimePeriod": "<p>The reference time period for comparison. This time period serves as the baseline against which other cost and usage data will be compared. The interval must start and end on the first day of a month, with a duration of exactly one month.</p>",
+        "GetCostComparisonDriversRequest$ComparisonTimePeriod": "<p>The comparison time period for analysis. This time period's cost and usage data will be compared against the baseline time period. The interval must start and end on the first day of a month, with a duration of exactly one month.</p>",
         "GetCostForecastRequest$TimePeriod": "<p>The period of time that you want the forecast to cover. The start date must be equal to or no later than the current date to avoid a validation error.</p>",
         "GetDimensionValuesRequest$TimePeriod": "<p>The start date and end date for retrieving the dimension values. The start date is inclusive, but the end date is exclusive. For example, if <code>start</code> is <code>2017-01-01</code> and <code>end</code> is <code>2017-05-01</code>, then the cost and usage data is retrieved from <code>2017-01-01</code> up to and including <code>2017-04-30</code> but not including <code>2017-05-01</code>.</p>",
         "GetReservationCoverageRequest$TimePeriod": "<p>The start and end dates of the period that you want to retrieve data about reservation coverage for. You can retrieve data for a maximum of 13 months: the last 12 months and the current month. The start date is inclusive, but the end date is exclusive. For example, if <code>start</code> is <code>2017-01-01</code> and <code>end</code> is <code>2017-05-01</code>, then the cost and usage data is retrieved from <code>2017-01-01</code> up to and including <code>2017-04-30</code> but not including <code>2017-05-01</code>. </p>",
@@ -564,54 +708,47 @@
         "GetUsageForecastRequest$TimePeriod": "<p>The start and end dates of the period that you want to retrieve usage forecast for. The start date is included in the period, but the end date isn't included in the period. For example, if <code>start</code> is <code>2017-01-01</code> and <code>end</code> is <code>2017-05-01</code>, then the cost and usage data is retrieved from <code>2017-01-01</code> up to and including <code>2017-04-30</code> but not including <code>2017-05-01</code>. The start date must be equal to or later than the current date to avoid a validation error.</p>",
         "ResultByTime$TimePeriod": "<p>The time period that the result covers.</p>",
         "SavingsPlansCoverage$TimePeriod": null,
+        "SavingsPlansPurchaseAnalysisConfiguration$LookBackTimePeriod": "<p>The time period associated with the analysis.</p>",
         "SavingsPlansUtilizationByTime$TimePeriod": null,
         "UtilizationByTime$TimePeriod": "<p>The period of time that this utilization was used for.</p>"
       }
     },
     "DeleteAnomalyMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAnomalyMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAnomalySubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAnomalySubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCostCategoryDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCostCategoryDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCostCategoryDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCostCategoryDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Dimension": {
       "base": null,
       "refs": {
-        "DimensionValues$Key": "<p>The names of the metadata types that you can use to filter and group your results. For example, <code>AZ</code> returns a list of Availability Zones.</p> <p>Not all dimensions are supported in each API. Refer to the documentation for each specific API to see what is supported.</p> <p> <code>LINK_ACCOUNT_NAME</code> and <code>SERVICE_CODE</code> can only be used in <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_CostCategoryRule.html\">CostCategoryRule</a>.</p> <p> <code>ANOMALY_TOTAL_IMPACT_ABSOLUTE</code> and <code>ANOMALY_TOTAL_IMPACT_PERCENTAGE</code> can only be used in <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AnomalySubscription.html\">AnomalySubscriptions</a>.</p>",
+        "DimensionValues$Key": "<p>The names of the metadata types that you can use to filter and group your results. For example, <code>AZ</code> returns a list of Availability Zones.</p> <p>Not all dimensions are supported in each API. Refer to the documentation for each specific API to see what is supported.</p> <p> <code>LINKED_ACCOUNT_NAME</code> and <code>SERVICE_CODE</code> can only be used in <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_CostCategoryRule.html\">CostCategoryRule</a>.</p> <p> <code>ANOMALY_TOTAL_IMPACT_ABSOLUTE</code> and <code>ANOMALY_TOTAL_IMPACT_PERCENTAGE</code> can only be used in <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AnomalySubscription.html\">AnomalySubscriptions</a>.</p>",
         "GetDimensionValuesRequest$Dimension": "<p>The name of the dimension. Each <code>Dimension</code> is available for a different <code>Context</code>. For more information, see <code>Context</code>. <code>LINK_ACCOUNT_NAME</code> and <code>SERVICE_CODE</code> can only be used in <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/AAPI_CostCategoryRule.html\">CostCategoryRule</a>. </p>"
       }
     },
@@ -639,6 +776,12 @@
       "base": "<p>The field that contains a list of disk (local storage) metrics that are associated with the current instance. </p>",
       "refs": {
         "EC2ResourceUtilization$DiskResourceUtilization": "<p>The field that contains a list of disk (local storage) metrics that are associated with the current instance. </p>"
+      }
+    },
+    "DynamoDBCapacityDetails": {
+      "base": "<p>The DynamoDB reservations that Amazon Web Services recommends that you purchase.</p>",
+      "refs": {
+        "ReservedCapacityDetails$DynamoDBCapacityDetails": "<p>The DynamoDB reservations that Amazon Web Services recommends that you purchase.</p>"
       }
     },
     "EBSResourceUtilization": {
@@ -689,9 +832,17 @@
         "TagList$member": null
       }
     },
+    "ErrorCode": {
+      "base": null,
+      "refs": {
+        "AnalysisSummary$ErrorCode": "<p>The error code used for the analysis.</p>",
+        "GetCommitmentPurchaseAnalysisResponse$ErrorCode": "<p>The error code used for the analysis.</p>"
+      }
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
+        "AnalysisNotFoundException$Message": null,
         "BackfillLimitExceededException$Message": null,
         "BillExpirationException$Message": null,
         "DataUnavailableException$Message": null,
@@ -719,17 +870,21 @@
       "refs": {
         "AnomalyMonitor$MonitorSpecification": null,
         "AnomalySubscription$ThresholdExpression": "<p>An <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object used to specify the anomalies that you want to generate alerts for. This supports dimensions and nested expressions. The supported dimensions are <code>ANOMALY_TOTAL_IMPACT_ABSOLUTE</code> and <code>ANOMALY_TOTAL_IMPACT_PERCENTAGE</code>, corresponding to an anomaly’s TotalImpact and TotalImpactPercentage, respectively (see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Impact.html\">Impact</a> for more details). The supported nested expression types are <code>AND</code> and <code>OR</code>. The match option <code>GREATER_THAN_OR_EQUAL</code> is required. Values must be numbers between 0 and 10,000,000,000 in string format.</p> <p>One of Threshold or ThresholdExpression is required for this resource. You cannot specify both.</p> <p>The following are examples of valid ThresholdExpressions:</p> <ul> <li> <p>Absolute threshold: <code>{ \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }</code> </p> </li> <li> <p>Percentage threshold: <code>{ \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }</code> </p> </li> <li> <p> <code>AND</code> two thresholds together: <code>{ \"And\": [ { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }, { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } ] }</code> </p> </li> <li> <p> <code>OR</code> two thresholds together: <code>{ \"Or\": [ { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_ABSOLUTE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } }, { \"Dimensions\": { \"Key\": \"ANOMALY_TOTAL_IMPACT_PERCENTAGE\", \"MatchOptions\": [ \"GREATER_THAN_OR_EQUAL\" ], \"Values\": [ \"100\" ] } } ] }</code> </p> </li> </ul>",
+        "CostAndUsageComparison$CostAndUsageSelector": null,
         "CostCategoryRule$Rule": "<p>An <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object used to categorize costs. This supports dimensions, tags, and nested expressions. Currently the only dimensions supported are <code>LINKED_ACCOUNT</code>, <code>SERVICE_CODE</code>, <code>RECORD_TYPE</code>, <code>LINKED_ACCOUNT_NAME</code>, <code>REGION</code>, and <code>USAGE_TYPE</code>.</p> <p> <code>RECORD_TYPE</code> is a dimension used for Cost Explorer APIs, and is also supported for Cost Category expressions. This dimension uses different terms, depending on whether you're using the console or API/JSON editor. For a detailed comparison, see <a href=\"https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-cost-categories.html#cost-categories-terms\">Term Comparisons</a> in the <i>Billing and Cost Management User Guide</i>.</p>",
+        "CostComparisonDriver$CostSelector": null,
         "Expression$Not": "<p>Return results that don't match a <code>Dimension</code> object.</p>",
         "Expressions$member": null,
+        "GetCostAndUsageComparisonsRequest$Filter": null,
         "GetCostAndUsageRequest$Filter": "<p>Filters Amazon Web Services costs by different dimensions. For example, you can specify <code>SERVICE</code> and <code>LINKED_ACCOUNT</code> and get the costs that are associated with that account's usage of that service. You can nest <code>Expression</code> objects to define any combination of dimension filters. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. </p> <p>Valid values for <code>MatchOptions</code> for <code>Dimensions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p> <p>Valid values for <code>MatchOptions</code> for <code>CostCategories</code> and <code>Tags</code> are <code>EQUALS</code>, <code>ABSENT</code>, and <code>CASE_SENSITIVE</code>. Default values are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
-        "GetCostAndUsageWithResourcesRequest$Filter": "<p>Filters Amazon Web Services costs by different dimensions. For example, you can specify <code>SERVICE</code> and <code>LINKED_ACCOUNT</code> and get the costs that are associated with that account's usage of that service. You can nest <code>Expression</code> objects to define any combination of dimension filters. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. </p> <p>The <code>GetCostAndUsageWithResources</code> operation requires that you either group by or filter by a <code>ResourceId</code>. It requires the <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> <code>\"SERVICE = Amazon Elastic Compute Cloud - Compute\"</code> in the filter.</p> <p>Valid values for <code>MatchOptions</code> for <code>Dimensions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p> <p>Valid values for <code>MatchOptions</code> for <code>CostCategories</code> and <code>Tags</code> are <code>EQUALS</code>, <code>ABSENT</code>, and <code>CASE_SENSITIVE</code>. Default values are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
+        "GetCostAndUsageWithResourcesRequest$Filter": "<p>Filters Amazon Web Services costs by different dimensions. For example, you can specify <code>SERVICE</code> and <code>LINKED_ACCOUNT</code> and get the costs that are associated with that account's usage of that service. You can nest <code>Expression</code> objects to define any combination of dimension filters. For more information, see <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a>. </p> <p>Valid values for <code>MatchOptions</code> for <code>Dimensions</code> are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p> <p>Valid values for <code>MatchOptions</code> for <code>CostCategories</code> and <code>Tags</code> are <code>EQUALS</code>, <code>ABSENT</code>, and <code>CASE_SENSITIVE</code>. Default values are <code>EQUALS</code> and <code>CASE_SENSITIVE</code>.</p>",
         "GetCostCategoriesRequest$Filter": null,
-        "GetCostForecastRequest$Filter": "<p>The filters that you want to use to filter your forecast. The <code>GetCostForecast</code> API supports filtering by the following dimensions:</p> <ul> <li> <p> <code>AZ</code> </p> </li> <li> <p> <code>INSTANCE_TYPE</code> </p> </li> <li> <p> <code>LINKED_ACCOUNT</code> </p> </li> <li> <p> <code>LINKED_ACCOUNT_NAME</code> </p> </li> <li> <p> <code>OPERATION</code> </p> </li> <li> <p> <code>PURCHASE_TYPE</code> </p> </li> <li> <p> <code>REGION</code> </p> </li> <li> <p> <code>SERVICE</code> </p> </li> <li> <p> <code>USAGE_TYPE</code> </p> </li> <li> <p> <code>USAGE_TYPE_GROUP</code> </p> </li> <li> <p> <code>RECORD_TYPE</code> </p> </li> <li> <p> <code>OPERATING_SYSTEM</code> </p> </li> <li> <p> <code>TENANCY</code> </p> </li> <li> <p> <code>SCOPE</code> </p> </li> <li> <p> <code>PLATFORM</code> </p> </li> <li> <p> <code>SUBSCRIPTION_ID</code> </p> </li> <li> <p> <code>LEGAL_ENTITY_NAME</code> </p> </li> <li> <p> <code>DEPLOYMENT_OPTION</code> </p> </li> <li> <p> <code>DATABASE_ENGINE</code> </p> </li> <li> <p> <code>INSTANCE_TYPE_FAMILY</code> </p> </li> <li> <p> <code>BILLING_ENTITY</code> </p> </li> <li> <p> <code>RESERVATION_ID</code> </p> </li> <li> <p> <code>SAVINGS_PLAN_ARN</code> </p> </li> </ul>",
+        "GetCostComparisonDriversRequest$Filter": null,
+        "GetCostForecastRequest$Filter": "<p>The filters that you want to use to filter your forecast. The <code>GetCostForecast</code> API supports filtering by the following dimensions:</p> <ul> <li> <p> <code>AZ</code> </p> </li> <li> <p> <code>INSTANCE_TYPE</code> </p> </li> <li> <p> <code>LINKED_ACCOUNT</code> </p> </li> <li> <p> <code>OPERATION</code> </p> </li> <li> <p> <code>PURCHASE_TYPE</code> </p> </li> <li> <p> <code>REGION</code> </p> </li> <li> <p> <code>SERVICE</code> </p> </li> <li> <p> <code>USAGE_TYPE</code> </p> </li> <li> <p> <code>USAGE_TYPE_GROUP</code> </p> </li> <li> <p> <code>RECORD_TYPE</code> </p> </li> <li> <p> <code>OPERATING_SYSTEM</code> </p> </li> <li> <p> <code>TENANCY</code> </p> </li> <li> <p> <code>SCOPE</code> </p> </li> <li> <p> <code>PLATFORM</code> </p> </li> <li> <p> <code>SUBSCRIPTION_ID</code> </p> </li> <li> <p> <code>LEGAL_ENTITY_NAME</code> </p> </li> <li> <p> <code>DEPLOYMENT_OPTION</code> </p> </li> <li> <p> <code>DATABASE_ENGINE</code> </p> </li> <li> <p> <code>INSTANCE_TYPE_FAMILY</code> </p> </li> <li> <p> <code>BILLING_ENTITY</code> </p> </li> <li> <p> <code>RESERVATION_ID</code> </p> </li> <li> <p> <code>SAVINGS_PLAN_ARN</code> </p> </li> </ul>",
         "GetDimensionValuesRequest$Filter": null,
         "GetReservationCoverageRequest$Filter": "<p>Filters utilization data by dimensions. You can filter by the following dimensions:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DATABASE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>SERVICE</p> </li> <li> <p>TAG</p> </li> <li> <p>TENANCY</p> </li> </ul> <p> <code>GetReservationCoverage</code> uses the same <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object as the other operations, but only <code>AND</code> is supported among each dimension. You can nest only one level deep. If there are multiple values for a dimension, they are OR'd together.</p> <p>If you don't provide a <code>SERVICE</code> filter, Cost Explorer defaults to EC2.</p> <p>Cost category is also supported.</p>",
         "GetReservationPurchaseRecommendationRequest$Filter": null,
-        "GetReservationUtilizationRequest$Filter": "<p>Filters utilization data by dimensions. You can filter by the following dimensions:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>SERVICE</p> </li> <li> <p>SCOPE</p> </li> <li> <p>TENANCY</p> </li> </ul> <p> <code>GetReservationUtilization</code> uses the same <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object as the other operations, but only <code>AND</code> is supported among each dimension, and nesting is supported up to only one level deep. If there are multiple values for a dimension, they are OR'd together.</p>",
+        "GetReservationUtilizationRequest$Filter": "<p>Filters utilization data by dimensions. You can filter by the following dimensions:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>SERVICE</p> <note> <p>If not specified, the <code>SERVICE</code> filter defaults to Amazon Elastic Compute Cloud - Compute. Supported values for <code>SERVICE</code> are Amazon Elastic Compute Cloud - Compute, Amazon Relational Database Service, Amazon ElastiCache, Amazon Redshift, and Amazon Elasticsearch Service. The value for the <code>SERVICE</code> filter should not exceed \"1\".</p> </note> </li> <li> <p>SCOPE</p> </li> <li> <p>TENANCY</p> </li> </ul> <p> <code>GetReservationUtilization</code> uses the same <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object as the other operations, but only <code>AND</code> is supported among each dimension, and nesting is supported up to only one level deep. If there are multiple values for a dimension, they are OR'd together.</p>",
         "GetRightsizingRecommendationRequest$Filter": null,
         "GetSavingsPlansCoverageRequest$Filter": "<p>Filters Savings Plans coverage data by dimensions. You can filter data for Savings Plans usage with the following dimensions:</p> <ul> <li> <p> <code>LINKED_ACCOUNT</code> </p> </li> <li> <p> <code>REGION</code> </p> </li> <li> <p> <code>SERVICE</code> </p> </li> <li> <p> <code>INSTANCE_FAMILY</code> </p> </li> </ul> <p> <code>GetSavingsPlansCoverage</code> uses the same <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html\">Expression</a> object as the other operations, but only <code>AND</code> is supported among each dimension. If there are multiple values for a dimension, they are OR'd together.</p> <p>Cost category is also supported.</p>",
         "GetSavingsPlansPurchaseRecommendationRequest$Filter": "<p>You can filter your recommendations by Account ID with the <code>LINKED_ACCOUNT</code> dimension. To filter your recommendations by Account ID, specify <code>Key</code> as <code>LINKED_ACCOUNT</code> and <code>Value</code> as the comma-separated Acount ID(s) that you want to see Savings Plans purchase recommendations for.</p> <p>For GetSavingsPlansPurchaseRecommendation, the <code>Filter</code> doesn't include <code>CostCategories</code> or <code>Tags</code>. It only includes <code>Dimensions</code>. With <code>Dimensions</code>, <code>Key</code> must be <code>LINKED_ACCOUNT</code> and <code>Value</code> can be a single Account ID or multiple comma-separated Account IDs that you want to see Savings Plans Purchase Recommendations for. <code>AND</code> and <code>OR</code> operators are not supported.</p>",
@@ -773,9 +928,8 @@
       }
     },
     "GenerationExistsException": {
-      "base": "<p>A request to generate a recommendation is already in progress.</p>",
-      "refs": {
-      }
+      "base": "<p>A request to generate a recommendation or analysis is already in progress.</p>",
+      "refs": {}
     },
     "GenerationStatus": {
       "base": null,
@@ -822,6 +976,7 @@
         "AnomalyScore$CurrentScore": "<p>The last observed score. </p>",
         "Impact$MaxImpact": "<p>The maximum dollar value that's observed for an anomaly.</p>",
         "Impact$TotalImpact": "<p>The cumulative dollar difference between the total actual spend and total expected spend. It is calculated as <code>TotalActualSpend - TotalExpectedSpend</code>.</p>",
+        "RootCauseImpact$Contribution": "<p>The dollar amount that this root cause contributed to the anomaly's TotalImpact.</p>",
         "TotalImpactFilter$StartValue": "<p>The lower bound dollar value that's used in the filter. </p>",
         "TotalImpactFilter$EndValue": "<p>The upper bound dollar value that's used in the filter. </p>"
       }
@@ -830,7 +985,7 @@
       "base": null,
       "refs": {
         "Anomaly$AnomalyId": "<p>The unique identifier for the anomaly. </p>",
-        "Anomaly$DimensionValue": "<p>The dimension for the anomaly (for example, an Amazon Web Service in a service monitor). </p>",
+        "Anomaly$DimensionValue": "<p>The dimension for the anomaly (for example, an Amazon Web Services service in a service monitor). </p>",
         "Anomaly$MonitorArn": "<p>The Amazon Resource Name (ARN) for the cost monitor that generated this anomaly. </p>",
         "AnomalyMonitor$MonitorArn": "<p>The Amazon Resource Name (ARN) value. </p>",
         "AnomalyMonitor$MonitorName": "<p>The name of the monitor. </p>",
@@ -838,10 +993,16 @@
         "AnomalySubscription$AccountId": "<p>Your unique account identifier. </p>",
         "AnomalySubscription$SubscriptionName": "<p>The name for the subscription. </p>",
         "ApproximateUsageRecordsPerService$key": null,
+        "ComparisonMetricValue$BaselineTimePeriodAmount": "<p>The numeric value for the baseline time period measurement.</p>",
+        "ComparisonMetricValue$ComparisonTimePeriodAmount": "<p>The numeric value for the comparison time period measurement.</p>",
+        "ComparisonMetricValue$Difference": "<p>The calculated difference between <code>ComparisonTimePeriodAmount</code> and <code>BaselineTimePeriodAmount</code>.</p>",
+        "ComparisonMetricValue$Unit": "<p>The unit of measurement applicable to all numeric values in this comparison.</p>",
         "CostCategoryInheritedValueDimension$DimensionKey": "<p>The key to extract cost category values.</p>",
         "CostCategorySplitChargeRule$Source": "<p>The Cost Category value that you want to split. That value can't be used as a source or a target in other split charge rules. To indicate uncategorized costs, you can use an empty string as the source.</p>",
         "CostCategorySplitChargeRuleParameterValuesList$member": null,
         "CostCategorySplitChargeRuleTargetsList$member": null,
+        "CostDriver$Type": "<p>The category or classification of the cost driver.</p> <p>Values include: BUNDLED_DISCOUNT, CREDIT, OUT_OF_CYCLE_CHARGE, REFUND, RECURRING_RESERVATION_FEE, RESERVATION_USAGE, RI_VOLUME_DISCOUNT, SAVINGS_PLAN_USAGE, SAVINGS_PLAN_NEGATION, SAVINGS_PLAN_RECURRING_FEE, SUPPORT_FEE, TAX, UPFRONT_RESERVATION_FEE, USAGE_CHANGE, COMMITMENT</p>",
+        "CostDriver$Name": "<p>The specific identifier of the cost driver.</p>",
         "CreateAnomalyMonitorResponse$MonitorArn": "<p>The unique identifier of your newly created cost anomaly detection monitor.</p>",
         "CreateAnomalySubscriptionResponse$SubscriptionArn": "<p>The unique identifier of your newly created cost anomaly subscription. </p>",
         "CurrentInstance$ResourceId": "<p>Resource ID of the current instance.</p>",
@@ -858,6 +1019,8 @@
         "DiskResourceUtilization$DiskWriteOpsPerSecond": "<p>The maximum number of write operations per second. </p>",
         "DiskResourceUtilization$DiskReadBytesPerSecond": "<p>The maximum read throughput operations per second. </p>",
         "DiskResourceUtilization$DiskWriteBytesPerSecond": "<p>The maximum write throughput operations per second. </p>",
+        "DynamoDBCapacityDetails$CapacityUnits": "<p>The capacity unit of the recommended reservation.</p>",
+        "DynamoDBCapacityDetails$Region": "<p>The Amazon Web Services Region of the recommended reservation.</p>",
         "EBSResourceUtilization$EbsReadOpsPerSecond": "<p>The maximum number of read operations per second. </p>",
         "EBSResourceUtilization$EbsWriteOpsPerSecond": "<p>The maximum number of write operations per second. </p>",
         "EBSResourceUtilization$EbsReadBytesPerSecond": "<p>The maximum size of read operations per second </p>",
@@ -957,6 +1120,10 @@
         "ReservationPurchaseRecommendationDetail$EstimatedReservationCostForLookbackPeriod": "<p>How much Amazon Web Services estimates that you might spend for all usage during the specified historical period if you had a reservation.</p>",
         "ReservationPurchaseRecommendationDetail$UpfrontCost": "<p>How much purchasing this instance costs you upfront.</p>",
         "ReservationPurchaseRecommendationDetail$RecurringStandardMonthlyCost": "<p>How much purchasing this instance costs you on a monthly basis.</p>",
+        "ReservationPurchaseRecommendationDetail$RecommendedNumberOfCapacityUnitsToPurchase": "<p>The number of reserved capacity units that Amazon Web Services recommends that you purchase.</p>",
+        "ReservationPurchaseRecommendationDetail$MinimumNumberOfCapacityUnitsUsedPerHour": "<p>The minimum number of provisioned capacity units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.</p>",
+        "ReservationPurchaseRecommendationDetail$MaximumNumberOfCapacityUnitsUsedPerHour": "<p>The maximum number of provisioned capacity units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.</p>",
+        "ReservationPurchaseRecommendationDetail$AverageNumberOfCapacityUnitsUsedPerHour": "<p>The average number of provisioned capacity units that you used in an hour during the historical period. Amazon Web Services uses this to calculate your recommended reservation purchases.</p>",
         "ReservationPurchaseRecommendationMetadata$RecommendationId": "<p>The ID for the recommendation.</p>",
         "ReservationPurchaseRecommendationMetadata$GenerationTimestamp": "<p>The timestamp for when Amazon Web Services made the recommendation.</p>",
         "ReservationPurchaseRecommendationMetadata$AdditionalMetadata": "<p>Additional metadata that might be applicable to the recommendation.</p>",
@@ -971,11 +1138,14 @@
         "RightsizingRecommendationSummary$EstimatedTotalMonthlySavingsAmount": "<p>The estimated total savings resulting from modifications, on a monthly basis.</p>",
         "RightsizingRecommendationSummary$SavingsCurrencyCode": "<p>The currency code that Amazon Web Services used to calculate the savings.</p>",
         "RightsizingRecommendationSummary$SavingsPercentage": "<p> The savings percentage based on the recommended modifications. It's relative to the total On-Demand costs that are associated with these instances.</p>",
-        "RootCause$Service": "<p>The Amazon Web Service name that's associated with the cost anomaly. </p>",
+        "RootCause$Service": "<p>The Amazon Web Services service name that's associated with the cost anomaly. </p>",
         "RootCause$Region": "<p>The Amazon Web Services Region that's associated with the cost anomaly. </p>",
         "RootCause$LinkedAccount": "<p>The member account value that's associated with the cost anomaly. </p>",
-        "RootCause$UsageType": "<p>The <code>UsageType</code> value that's associated with the cost anomaly. </p>",
         "RootCause$LinkedAccountName": "<p>The member account name value that's associated with the cost anomaly.</p>",
+        "RootCause$UsageType": "<p>The <code>UsageType</code> value that's associated with the cost anomaly. </p>",
+        "SavingsPlans$Region": "<p>The Region associated with the Savings Plans commitment.</p>",
+        "SavingsPlans$InstanceFamily": "<p>The instance family of the Savings Plans commitment.</p>",
+        "SavingsPlans$OfferingId": "<p>The unique ID that's used to distinguish Savings Plans commitments from one another.</p>",
         "SavingsPlansAmortizedCommitment$AmortizedRecurringCommitment": "<p>The amortized amount of your Savings Plans commitment that was purchased with either a <code>Partial</code> or a <code>NoUpfront</code>.</p>",
         "SavingsPlansAmortizedCommitment$AmortizedUpfrontCommitment": "<p>The amortized amount of your Savings Plans commitment that was purchased with an <code>Upfront</code> or <code>PartialUpfront</code> Savings Plans.</p>",
         "SavingsPlansAmortizedCommitment$TotalAmortizedCommitment": "<p>The total amortized amount of your Savings Plans commitment, regardless of your Savings Plans purchase method. </p>",
@@ -986,6 +1156,27 @@
         "SavingsPlansDetails$Region": "<p>A collection of Amazon Web Services resources in a geographic area. Each Amazon Web Services Region is isolated and independent of the other Regions.</p>",
         "SavingsPlansDetails$InstanceFamily": "<p>A group of instance types that Savings Plans applies to.</p>",
         "SavingsPlansDetails$OfferingId": "<p>The unique ID that's used to distinguish Savings Plans from one another.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$CurrencyCode": "<p>The currency code used for the analysis.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$LookbackPeriodInHours": "<p>The lookback period in hours that's used to generate the analysis.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$CurrentAverageCoverage": "<p>The average value of hourly coverage over the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$CurrentAverageHourlyOnDemandSpend": "<p>The average value of hourly On-Demand spend over the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$CurrentMaximumHourlyOnDemandSpend": "<p>The highest value of hourly On-Demand spend over the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$CurrentMinimumHourlyOnDemandSpend": "<p>The lowest value of hourly On-Demand spend over the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$CurrentOnDemandSpend": "<p>The current total On-Demand spend over the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$ExistingHourlyCommitment": "<p>The existing hourly commitment for the Savings Plan type.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$HourlyCommitmentToPurchase": "<p>The recommended or custom hourly commitment.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedAverageCoverage": "<p>The estimated coverage of the Savings Plan.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedAverageUtilization": "<p>The estimated utilization of the Savings Plan.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedMonthlySavingsAmount": "<p>The estimated monthly savings amount based on the Savings Plan.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedOnDemandCost": "<p>The remaining On-Demand cost estimated to not be covered by the Savings Plan over the length of the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedOnDemandCostWithCurrentCommitment": "<p>The estimated On-Demand cost you expect with no additional commitment based on your usage of the selected time period and the Savings Plan you own.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedROI": "<p>The estimated return on investment that's based on the Savings Plan and estimated savings. This is calculated as estimatedSavingsAmount/estimatedSPCost*100.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedSavingsAmount": "<p>The estimated savings amount that's based on the Savings Plan over the length of the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedSavingsPercentage": "<p>The estimated savings percentage relative to the total cost over the cost calculation lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$EstimatedCommitmentCost": "<p>The estimated cost of the Savings Plan over the length of the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$LatestUsageTimestamp": "<p>The date and time of the last hour that went into the analysis.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$UpfrontCost": "<p>The upfront cost of the Savings Plan based on the selected payment option.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$AdditionalMetadata": "<p>Additional metadata that might be applicable to the commitment.</p>",
         "SavingsPlansPurchaseRecommendationDetail$AccountId": "<p>The <code>AccountID</code> the recommendation is generated for.</p>",
         "SavingsPlansPurchaseRecommendationDetail$UpfrontCost": "<p>The upfront cost of the recommended Savings Plans, based on the selected payment option.</p>",
         "SavingsPlansPurchaseRecommendationDetail$EstimatedROI": "<p>The estimated return on investment that's based on the recommended Savings Plans that you purchased. This is calculated as <code>estimatedSavingsAmount</code>/ <code>estimatedSPCost</code>*100.</p>",
@@ -1038,203 +1229,187 @@
     },
     "GetAnomaliesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnomaliesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnomalyMonitorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnomalyMonitorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnomalySubscriptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAnomalySubscriptionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApproximateUsageRecordsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetApproximateUsageRecordsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetCommitmentPurchaseAnalysisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCommitmentPurchaseAnalysisResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCostAndUsageComparisonsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCostAndUsageComparisonsResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetCostAndUsageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostAndUsageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostAndUsageWithResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostAndUsageWithResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostCategoriesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostCategoriesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetCostComparisonDriversRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCostComparisonDriversResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetCostForecastRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCostForecastResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDimensionValuesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDimensionValuesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationCoverageRequest": {
       "base": "<p>You can use the following request parameters to query for how much of your instance usage a reservation covered.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationCoverageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationPurchaseRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationPurchaseRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationUtilizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetReservationUtilizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRightsizingRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRightsizingRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlanPurchaseRecommendationDetailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlanPurchaseRecommendationDetailsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansCoverageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansCoverageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansPurchaseRecommendationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansPurchaseRecommendationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansUtilizationDetailsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansUtilizationDetailsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansUtilizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSavingsPlansUtilizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsageForecastRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetUsageForecastResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Granularity": {
       "base": null,
@@ -1277,10 +1452,12 @@
     "GroupDefinitions": {
       "base": null,
       "refs": {
+        "GetCostAndUsageComparisonsRequest$GroupBy": "<p>You can group results using the attributes <code>DIMENSION</code>, <code>TAG</code>, and <code>COST_CATEGORY</code>. </p>",
         "GetCostAndUsageRequest$GroupBy": "<p>You can group Amazon Web Services costs using up to two different groups, either dimensions, tag keys, cost categories, or any two group by types.</p> <p>Valid values for the <code>DIMENSION</code> type are <code>AZ</code>, <code>INSTANCE_TYPE</code>, <code>LEGAL_ENTITY_NAME</code>, <code>INVOICING_ENTITY</code>, <code>LINKED_ACCOUNT</code>, <code>OPERATION</code>, <code>PLATFORM</code>, <code>PURCHASE_TYPE</code>, <code>SERVICE</code>, <code>TENANCY</code>, <code>RECORD_TYPE</code>, and <code>USAGE_TYPE</code>.</p> <p>When you group by the <code>TAG</code> type and include a valid tag key, you get all tag values, including empty strings.</p>",
         "GetCostAndUsageResponse$GroupDefinitions": "<p>The groups that are specified by the <code>Filter</code> or <code>GroupBy</code> parameters in the request.</p>",
         "GetCostAndUsageWithResourcesRequest$GroupBy": "<p>You can group Amazon Web Services costs using up to two different groups: <code>DIMENSION</code>, <code>TAG</code>, <code>COST_CATEGORY</code>.</p>",
         "GetCostAndUsageWithResourcesResponse$GroupDefinitions": "<p>The groups that are specified by the <code>Filter</code> or <code>GroupBy</code> parameters in the request.</p>",
+        "GetCostComparisonDriversRequest$GroupBy": "<p>You can group results using the attributes <code>DIMENSION</code>, <code>TAG</code>, and <code>COST_CATEGORY</code>. Note that <code>SERVICE</code> and <code>USAGE_TYPE</code> dimensions are automatically included in the cost comparison drivers analysis.</p>",
         "GetReservationCoverageRequest$GroupBy": "<p>You can group the data by the following attributes:</p> <ul> <li> <p>AZ</p> </li> <li> <p>CACHE_ENGINE</p> </li> <li> <p>DATABASE_ENGINE</p> </li> <li> <p>DEPLOYMENT_OPTION</p> </li> <li> <p>INSTANCE_TYPE</p> </li> <li> <p>INVOICING_ENTITY</p> </li> <li> <p>LINKED_ACCOUNT</p> </li> <li> <p>OPERATING_SYSTEM</p> </li> <li> <p>PLATFORM</p> </li> <li> <p>REGION</p> </li> <li> <p>TENANCY</p> </li> </ul>",
         "GetReservationUtilizationRequest$GroupBy": "<p>Groups only by <code>SUBSCRIPTION_ID</code>. Metadata is included.</p>",
         "GetSavingsPlansCoverageRequest$GroupBy": "<p>You can group the data using the attributes <code>INSTANCE_FAMILY</code>, <code>REGION</code>, or <code>SERVICE</code>.</p>"
@@ -1306,8 +1483,7 @@
     },
     "InvalidNextTokenException": {
       "base": "<p>The pagination token is invalid. Try again without a pagination token.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Key": {
       "base": null,
@@ -1323,58 +1499,55 @@
     },
     "LimitExceededException": {
       "base": "<p>You made too many calls in a short period of time. Try again later.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ListCommitmentPurchaseAnalysesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCommitmentPurchaseAnalysesResponse": {
+      "base": null,
+      "refs": {}
     },
     "ListCostAllocationTagBackfillHistoryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCostAllocationTagBackfillHistoryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCostAllocationTagsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCostAllocationTagsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCostCategoryDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCostCategoryDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSavingsPlansPurchaseRecommendationGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSavingsPlansPurchaseRecommendationGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LookbackPeriodInDays": {
       "base": null,
@@ -1435,6 +1608,9 @@
     "MetricName": {
       "base": null,
       "refs": {
+        "ComparisonMetrics$key": null,
+        "GetCostAndUsageComparisonsRequest$MetricForComparison": "<p>The cost and usage metric to compare. Valid values are <code>AmortizedCost</code>, <code>BlendedCost</code>, <code>NetAmortizedCost</code>, <code>NetUnblendedCost</code>, <code>NormalizedUsageAmount</code>, <code>UnblendedCost</code>, and <code>UsageQuantity</code>.</p>",
+        "GetCostComparisonDriversRequest$MetricForComparison": "<p>The cost and usage metric to compare. Valid values are <code>AmortizedCost</code>, <code>BlendedCost</code>, <code>NetAmortizedCost</code>, <code>NetUnblendedCost</code>, <code>NormalizedUsageAmount</code>, <code>UnblendedCost</code>, and <code>UsageQuantity</code>.</p>",
         "MetricNames$member": null,
         "Metrics$key": null
       }
@@ -1472,7 +1648,8 @@
     "MetricsOverLookbackPeriod": {
       "base": null,
       "refs": {
-        "RecommendationDetailData$MetricsOverLookbackPeriod": "<p>The related hourly cost, coverage, and utilization metrics over the lookback period.</p>"
+        "RecommendationDetailData$MetricsOverLookbackPeriod": "<p>The related hourly cost, coverage, and utilization metrics over the lookback period.</p>",
+        "SavingsPlansPurchaseAnalysisDetails$MetricsOverLookbackPeriod": "<p>The related hourly cost, coverage, and utilization metrics over the lookback period.</p>"
       }
     },
     "ModifyRecommendationDetail": {
@@ -1521,12 +1698,16 @@
         "GetAnomalyMonitorsResponse$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
         "GetAnomalySubscriptionsRequest$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
         "GetAnomalySubscriptionsResponse$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
+        "GetCostAndUsageComparisonsRequest$NextPageToken": "<p>The token to retrieve the next set of paginated results.</p>",
+        "GetCostAndUsageComparisonsResponse$NextPageToken": "<p>The token to retrieve the next set of paginated results.</p>",
         "GetCostAndUsageRequest$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetCostAndUsageResponse$NextPageToken": "<p>The token for the next set of retrievable results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetCostAndUsageWithResourcesRequest$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetCostAndUsageWithResourcesResponse$NextPageToken": "<p>The token for the next set of retrievable results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetCostCategoriesRequest$NextPageToken": "<p>If the number of objects that are still available for retrieval exceeds the quota, Amazon Web Services returns a NextPageToken value in the response. To retrieve the next batch of objects, provide the NextPageToken from the previous call in your next request.</p>",
         "GetCostCategoriesResponse$NextPageToken": "<p>If the number of objects that are still available for retrieval exceeds the quota, Amazon Web Services returns a NextPageToken value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
+        "GetCostComparisonDriversRequest$NextPageToken": "<p>The token to retrieve the next set of paginated results.</p>",
+        "GetCostComparisonDriversResponse$NextPageToken": "<p>The token to retrieve the next set of paginated results.</p>",
         "GetDimensionValuesRequest$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetDimensionValuesResponse$NextPageToken": "<p>The token for the next set of retrievable results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetReservationCoverageRequest$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
@@ -1545,6 +1726,8 @@
         "GetSavingsPlansUtilizationDetailsResponse$NextToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetTagsRequest$NextPageToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
         "GetTagsResponse$NextPageToken": "<p>The token for the next set of retrievable results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size.</p>",
+        "ListCommitmentPurchaseAnalysesRequest$NextPageToken": "<p>The token to retrieve the next set of results.</p>",
+        "ListCommitmentPurchaseAnalysesResponse$NextPageToken": "<p>The token to retrieve the next set of results.</p>",
         "ListCostAllocationTagBackfillHistoryRequest$NextToken": "<p> The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
         "ListCostAllocationTagBackfillHistoryResponse$NextToken": "<p> The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
         "ListCostAllocationTagsRequest$NextToken": "<p>The token to retrieve the next set of results. Amazon Web Services provides the token when the response from a previous call has more results than the maximum page size. </p>",
@@ -1563,6 +1746,7 @@
         "GetReservationPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
         "GetRightsizingRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
         "GetSavingsPlansPurchaseRecommendationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>",
+        "ListCommitmentPurchaseAnalysesRequest$PageSize": "<p>The number of analyses that you want returned in a single response object.</p>",
         "ListSavingsPlansPurchaseRecommendationGenerationRequest$PageSize": "<p>The number of recommendations that you want returned in a single response object.</p>"
       }
     },
@@ -1640,6 +1824,7 @@
         "GetSavingsPlansPurchaseRecommendationRequest$PaymentOption": "<p>The payment option that's used to generate these recommendations.</p>",
         "RecommendationDetailData$PaymentOption": "<p>The payment option for the commitment (for example, All Upfront or No Upfront).</p>",
         "ReservationPurchaseRecommendation$PaymentOption": "<p>The payment option for the reservation (for example, <code>AllUpfront</code> or <code>NoUpfront</code>).</p>",
+        "SavingsPlans$PaymentOption": "<p>The payment option for the Savings Plans commitment.</p>",
         "SavingsPlansPurchaseRecommendation$PaymentOption": "<p>The payment option that's used to generate the recommendation.</p>"
       }
     },
@@ -1664,13 +1849,11 @@
     },
     "ProvideAnomalyFeedbackRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ProvideAnomalyFeedbackResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PurchasedHours": {
       "base": null,
@@ -1750,8 +1933,7 @@
     },
     "RequestChangedException": {
       "base": "<p>Your request parameters changed between pages. Try again with the old parameters or without a pagination token.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ReservationAggregates": {
       "base": "<p>The aggregated numbers for your reservation usage.</p>",
@@ -1833,6 +2015,12 @@
         "UtilizationByTime$Groups": "<p>The groups that this utilization result uses.</p>"
       }
     },
+    "ReservedCapacityDetails": {
+      "base": "<p>Details about the reservations that Amazon Web Services recommends that you purchase.</p>",
+      "refs": {
+        "ReservationPurchaseRecommendationDetail$ReservedCapacityDetails": "<p>Details about the reservations that Amazon Web Services recommends that you purchase.</p>"
+      }
+    },
     "ReservedHours": {
       "base": null,
       "refs": {
@@ -1854,8 +2042,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p> The specified ARN in the request doesn't exist. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceTag": {
       "base": "<p>The tag structure that contains a tag key and value. </p> <note> <p>Tagging is supported only for the following Cost Explorer resource types: <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AnomalyMonitor.html\"> <code>AnomalyMonitor</code> </a>, <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_AnomalySubscription.html\"> <code>AnomalySubscription</code> </a>, <a href=\"https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_CostCategory.html\"> <code>CostCategory</code> </a>.</p> </note>",
@@ -1950,9 +2137,15 @@
       }
     },
     "RootCause": {
-      "base": "<p>The combination of Amazon Web Service, linked account, linked account name, Region, and usage type where a cost anomaly is observed. The linked account name will only be available when the account name can be identified.</p>",
+      "base": "<p>The combination of Amazon Web Services service, linked account, linked account name, Region, and usage type where a cost anomaly is observed, along with the dollar and percentage amount of the anomaly impact. The linked account name will only be available when the account name can be identified.</p>",
       "refs": {
         "RootCauses$member": null
+      }
+    },
+    "RootCauseImpact": {
+      "base": "<p>The dollar value of the root cause.</p>",
+      "refs": {
+        "RootCause$Impact": "<p>The dollar impact for the root cause.</p>"
       }
     },
     "RootCauses": {
@@ -1967,12 +2160,24 @@
         "SavingsPlansUtilizationDetail$SavingsPlanArn": "<p>The unique Amazon Resource Name (ARN) for a particular Savings Plan.</p>"
       }
     },
+    "SavingsPlans": {
+      "base": "<p>The Savings Plans commitment details.</p>",
+      "refs": {
+        "SavingsPlansToAdd$member": null
+      }
+    },
     "SavingsPlansAmortizedCommitment": {
       "base": "<p>The amortized amount of Savings Plans purchased in a specific account during a specific time interval.</p>",
       "refs": {
         "SavingsPlansUtilizationAggregates$AmortizedCommitment": "<p>The total amortized commitment for a Savings Plans. This includes the sum of the upfront and recurring Savings Plans fees.</p>",
         "SavingsPlansUtilizationByTime$AmortizedCommitment": "<p>The total amortized commitment for a Savings Plans. This includes the sum of the upfront and recurring Savings Plans fees.</p>",
         "SavingsPlansUtilizationDetail$AmortizedCommitment": "<p>The total amortized commitment for a Savings Plans. Includes the sum of the upfront and recurring Savings Plans fees.</p>"
+      }
+    },
+    "SavingsPlansCommitment": {
+      "base": null,
+      "refs": {
+        "SavingsPlans$SavingsPlansCommitment": "<p>The Savings Plans commitment.</p>"
       }
     },
     "SavingsPlansCoverage": {
@@ -2011,6 +2216,24 @@
         "SavingsPlansPurchaseRecommendationDetail$SavingsPlansDetails": "<p>Details for your recommended Savings Plans.</p>"
       }
     },
+    "SavingsPlansId": {
+      "base": null,
+      "refs": {
+        "SavingsPlansToExclude$member": null
+      }
+    },
+    "SavingsPlansPurchaseAnalysisConfiguration": {
+      "base": "<p>The configuration for the Savings Plans purchase analysis.</p>",
+      "refs": {
+        "CommitmentPurchaseAnalysisConfiguration$SavingsPlansPurchaseAnalysisConfiguration": "<p>The configuration for the Savings Plans purchase analysis.</p>"
+      }
+    },
+    "SavingsPlansPurchaseAnalysisDetails": {
+      "base": "<p>Details about the Savings Plans purchase analysis.</p>",
+      "refs": {
+        "AnalysisDetails$SavingsPlansPurchaseAnalysisDetails": "<p>Details about the Savings Plans purchase analysis.</p>"
+      }
+    },
     "SavingsPlansPurchaseRecommendation": {
       "base": "<p>Contains your request parameters, Savings Plan Recommendations Summary, and Details.</p>",
       "refs": {
@@ -2047,6 +2270,18 @@
         "SavingsPlansUtilizationAggregates$Savings": "<p>The amount that's saved by using existing Savings Plans. Savings returns both net savings from Savings Plans and also the <code>onDemandCostEquivalent</code> of the Savings Plans when considering the utilization rate.</p>",
         "SavingsPlansUtilizationByTime$Savings": "<p>The amount that's saved by using existing Savings Plans. Savings returns both net savings from Savings Plans and also the <code>onDemandCostEquivalent</code> of the Savings Plans when considering the utilization rate.</p>",
         "SavingsPlansUtilizationDetail$Savings": "<p>The amount saved by using existing Savings Plans. Savings returns both net savings from savings plans and also the <code>onDemandCostEquivalent</code> of the Savings Plans when considering the utilization rate.</p>"
+      }
+    },
+    "SavingsPlansToAdd": {
+      "base": null,
+      "refs": {
+        "SavingsPlansPurchaseAnalysisConfiguration$SavingsPlansToAdd": "<p>Savings Plans to include in the analysis.</p>"
+      }
+    },
+    "SavingsPlansToExclude": {
+      "base": null,
+      "refs": {
+        "SavingsPlansPurchaseAnalysisConfiguration$SavingsPlansToExclude": "<p>Savings Plans to exclude from the analysis.</p>"
       }
     },
     "SavingsPlansUtilization": {
@@ -2098,8 +2333,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p> You've reached the limit on the number of resources you can create, or exceeded the size of an individual resource. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceSpecification": {
       "base": "<p>Hardware specifications for the service that you want recommendations for.</p>",
@@ -2139,25 +2373,29 @@
         "SortDefinition$SortOrder": "<p>The order that's used to sort the data.</p>"
       }
     },
+    "StartCommitmentPurchaseAnalysisRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "StartCommitmentPurchaseAnalysisResponse": {
+      "base": null,
+      "refs": {}
+    },
     "StartCostAllocationTagBackfillRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartCostAllocationTagBackfillResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSavingsPlansPurchaseRecommendationGenerationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSavingsPlansPurchaseRecommendationGenerationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Subscriber": {
       "base": "<p>The recipient of <code>AnomalySubscription</code> notifications. </p>",
@@ -2195,6 +2433,7 @@
       "refs": {
         "GetSavingsPlansPurchaseRecommendationRequest$SavingsPlansType": "<p>The Savings Plans recommendation type that's requested.</p>",
         "RecommendationDetailData$SavingsPlansType": "<p>The requested Savings Plan recommendation type.</p>",
+        "SavingsPlans$SavingsPlansType": "<p>The Savings Plans type.</p>",
         "SavingsPlansPurchaseRecommendation$SavingsPlansType": "<p>The requested Savings Plans recommendation type.</p>"
       }
     },
@@ -2217,13 +2456,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValues": {
       "base": "<p>The values that are available for a tag.</p> <p>If <code>Values</code> and <code>Key</code> aren't specified, the <code>ABSENT</code> <code>MatchOption</code> is applied to all tags. That is, it's filtered on resources with no tags.</p> <p>If <code>Key</code> is provided and <code>Values</code> isn't specified, the <code>ABSENT</code> <code>MatchOption</code> is applied to the tag <code>Key</code> only. That is, it's filtered on resources without the given tag key.</p>",
@@ -2257,6 +2494,7 @@
         "GetSavingsPlansPurchaseRecommendationRequest$TermInYears": "<p>The savings plan recommendation term that's used to generate these recommendations.</p>",
         "RecommendationDetailData$TermInYears": "<p>The term of the commitment in years.</p>",
         "ReservationPurchaseRecommendation$TermInYears": "<p>The term of the reservation that you want recommendations for, in years.</p>",
+        "SavingsPlans$TermInYears": "<p>The term that you want the Savings Plans commitment for.</p>",
         "SavingsPlansPurchaseRecommendation$TermInYears": "<p>The Savings Plans recommendation term in years. It's used to generate the recommendation.</p>"
       }
     },
@@ -2268,8 +2506,7 @@
     },
     "TooManyTagsException": {
       "base": "<p>Can occur if you specify a number of tags for a resource greater than the maximum 50 user tags per resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TotalActualHours": {
       "base": null,
@@ -2315,13 +2552,11 @@
     },
     "UnknownMonitorException": {
       "base": "<p>The cost anomaly monitor does not exist for the account. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnknownSubscriptionException": {
       "base": "<p>The cost anomaly subscription does not exist for the account. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UnrealizedSavings": {
       "base": null,
@@ -2331,18 +2566,15 @@
     },
     "UnresolvableUsageUnitException": {
       "base": "<p>Cost Explorer was unable to identify the usage unit. Provide <code>UsageType/UsageTypeGroup</code> filter selections that contain matching units, for example: <code>hours</code>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UnusedHours": {
       "base": null,
@@ -2358,23 +2590,19 @@
     },
     "UpdateAnomalyMonitorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAnomalyMonitorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAnomalySubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAnomalySubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCostAllocationTagsStatusError": {
       "base": "<p>Gives a detailed description of the result of an action. It's on each cost allocation tag entry in the request. </p>",
@@ -2390,23 +2618,19 @@
     },
     "UpdateCostAllocationTagsStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCostAllocationTagsStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCostCategoryDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCostCategoryDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UsageServices": {
       "base": null,
@@ -2472,6 +2696,9 @@
     "ZonedDateTime": {
       "base": "<p>The period of time that you want the usage and costs for.</p>",
       "refs": {
+        "AnalysisSummary$EstimatedCompletionTime": "<p>The estimated time for when the analysis will complete.</p>",
+        "AnalysisSummary$AnalysisCompletionTime": "<p>The completion time of the analysis.</p>",
+        "AnalysisSummary$AnalysisStartedTime": "<p>The start time of the analysis.</p>",
         "CostAllocationTag$LastUpdatedDate": "<p>The last date that the tag was either activated or deactivated.</p>",
         "CostAllocationTag$LastUsedDate": "<p>The last month that the tag was used on an Amazon Web Services resource.</p>",
         "CostAllocationTagBackfillRequest$BackfillFrom": "<p> The date the backfill starts from. </p>",
@@ -2489,10 +2716,15 @@
         "GenerationSummary$GenerationStartedTime": "<p>Indicates the start time of the recommendation generation.</p>",
         "GenerationSummary$GenerationCompletionTime": "<p>Indicates the completion time of the recommendation generation.</p>",
         "GenerationSummary$EstimatedCompletionTime": "<p>Indicates the estimated time for when the recommendation generation will complete.</p>",
+        "GetCommitmentPurchaseAnalysisResponse$EstimatedCompletionTime": "<p>The estimated time for when the analysis will complete.</p>",
+        "GetCommitmentPurchaseAnalysisResponse$AnalysisCompletionTime": "<p>The completion time of the analysis.</p>",
+        "GetCommitmentPurchaseAnalysisResponse$AnalysisStartedTime": "<p>The start time of the analysis.</p>",
         "ListCostCategoryDefinitionsRequest$EffectiveOn": "<p>The date when the Cost Category was effective. </p>",
         "RecommendationDetailData$GenerationTimestamp": null,
         "RecommendationDetailData$LatestUsageTimestamp": null,
         "RecommendationDetailHourlyMetrics$StartTime": null,
+        "StartCommitmentPurchaseAnalysisResponse$AnalysisStartedTime": "<p>The start time of the analysis.</p>",
+        "StartCommitmentPurchaseAnalysisResponse$EstimatedCompletionTime": "<p>The estimated time for when the analysis will complete.</p>",
         "StartCostAllocationTagBackfillRequest$BackfillFrom": "<p> The date you want the backfill to start from. The date can only be a first day of the month (a billing start date). Dates can't precede the previous twelve months, or in the future.</p>",
         "StartSavingsPlansPurchaseRecommendationGenerationResponse$GenerationStartedTime": "<p>The start time of the recommendation generation.</p>",
         "StartSavingsPlansPurchaseRecommendationGenerationResponse$EstimatedCompletionTime": "<p>The estimated time for when the recommendation generation will complete.</p>",

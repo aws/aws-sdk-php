@@ -21,7 +21,7 @@
     "ListAdapters": "<p>Lists all adapters that match the specified filtration criteria.</p>",
     "ListTagsForResource": "<p>Lists all tags for an Amazon Textract resource.</p>",
     "StartDocumentAnalysis": "<p>Starts the asynchronous analysis of an input document for relationships between detected items such as key-value pairs, tables, and selection elements.</p> <p> <code>StartDocumentAnalysis</code> can analyze text in documents that are in JPEG, PNG, TIFF, and PDF format. The documents are stored in an Amazon S3 bucket. Use <a>DocumentLocation</a> to specify the bucket name and file name of the document. </p> <p> <code>StartDocumentAnalysis</code> returns a job identifier (<code>JobId</code>) that you use to get the results of the operation. When text analysis is finished, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that you specify in <code>NotificationChannel</code>. To get the results of the text analysis operation, first check that the status value published to the Amazon SNS topic is <code>SUCCEEDED</code>. If so, call <a>GetDocumentAnalysis</a>, and pass the job identifier (<code>JobId</code>) from the initial call to <code>StartDocumentAnalysis</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/textract/latest/dg/how-it-works-analyzing.html\">Document Text Analysis</a>.</p>",
-    "StartDocumentTextDetection": "<p>Starts the asynchronous detection of text in a document. Amazon Textract can detect lines of text and the words that make up a line of text.</p> <p> <code>StartDocumentTextDetection</code> can analyze text in documents that are in JPEG, PNG, TIFF, and PDF format. The documents are stored in an Amazon S3 bucket. Use <a>DocumentLocation</a> to specify the bucket name and file name of the document. </p> <p> <code>StartTextDetection</code> returns a job identifier (<code>JobId</code>) that you use to get the results of the operation. When text detection is finished, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that you specify in <code>NotificationChannel</code>. To get the results of the text detection operation, first check that the status value published to the Amazon SNS topic is <code>SUCCEEDED</code>. If so, call <a>GetDocumentTextDetection</a>, and pass the job identifier (<code>JobId</code>) from the initial call to <code>StartDocumentTextDetection</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/textract/latest/dg/how-it-works-detecting.html\">Document Text Detection</a>.</p>",
+    "StartDocumentTextDetection": "<p>Starts the asynchronous detection of text in a document. Amazon Textract can detect lines of text and the words that make up a line of text.</p> <p> <code>StartDocumentTextDetection</code> can analyze text in documents that are in JPEG, PNG, TIFF, and PDF format. The documents are stored in an Amazon S3 bucket. Use <a>DocumentLocation</a> to specify the bucket name and file name of the document. </p> <p> <code>StartDocumentTextDetection</code> returns a job identifier (<code>JobId</code>) that you use to get the results of the operation. When text detection is finished, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that you specify in <code>NotificationChannel</code>. To get the results of the text detection operation, first check that the status value published to the Amazon SNS topic is <code>SUCCEEDED</code>. If so, call <a>GetDocumentTextDetection</a>, and pass the job identifier (<code>JobId</code>) from the initial call to <code>StartDocumentTextDetection</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/textract/latest/dg/how-it-works-detecting.html\">Document Text Detection</a>.</p>",
     "StartExpenseAnalysis": "<p>Starts the asynchronous analysis of invoices or receipts for data like contact information, items purchased, and vendor names.</p> <p> <code>StartExpenseAnalysis</code> can analyze text in documents that are in JPEG, PNG, and PDF format. The documents must be stored in an Amazon S3 bucket. Use the <a>DocumentLocation</a> parameter to specify the name of your S3 bucket and the name of the document in that bucket. </p> <p> <code>StartExpenseAnalysis</code> returns a job identifier (<code>JobId</code>) that you will provide to <code>GetExpenseAnalysis</code> to retrieve the results of the operation. When the analysis of the input invoices/receipts is finished, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that you provide to the <code>NotificationChannel</code>. To obtain the results of the invoice and receipt analysis operation, ensure that the status value published to the Amazon SNS topic is <code>SUCCEEDED</code>. If so, call <a>GetExpenseAnalysis</a>, and pass the job identifier (<code>JobId</code>) that was returned by your call to <code>StartExpenseAnalysis</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/textract/latest/dg/invoice-receipts.html\">Analyzing Invoices and Receipts</a>.</p>",
     "StartLendingAnalysis": "<p>Starts the classification and analysis of an input document. <code>StartLendingAnalysis</code> initiates the classification and analysis of a packet of lending documents. <code>StartLendingAnalysis</code> operates on a document file located in an Amazon S3 bucket.</p> <p> <code>StartLendingAnalysis</code> can analyze text in documents that are in one of the following formats: JPEG, PNG, TIFF, PDF. Use <code>DocumentLocation</code> to specify the bucket name and the file name of the document. </p> <p> <code>StartLendingAnalysis</code> returns a job identifier (<code>JobId</code>) that you use to get the results of the operation. When the text analysis is finished, Amazon Textract publishes a completion status to the Amazon Simple Notification Service (Amazon SNS) topic that you specify in <code>NotificationChannel</code>. To get the results of the text analysis operation, first check that the status value published to the Amazon SNS topic is SUCCEEDED. If the status is SUCCEEDED you can call either <code>GetLendingAnalysis</code> or <code>GetLendingAnalysisSummary</code> and provide the <code>JobId</code> to obtain the results of the analysis.</p> <p>If using <code>OutputConfig</code> to specify an Amazon S3 bucket, the output will be contained within the specified prefix in a directory labeled with the job-id. In the directory there are 3 sub-directories: </p> <ul> <li> <p>detailedResponse (contains the GetLendingAnalysis response)</p> </li> <li> <p>summaryResponse (for the GetLendingAnalysisSummary response)</p> </li> <li> <p>splitDocuments (documents split across logical boundaries)</p> </li> </ul>",
     "TagResource": "<p>Adds one or more tags to the specified resource.</p>",
@@ -31,8 +31,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You aren't authorized to perform the action. Use the Amazon Resource Name (ARN) of an authorized user or IAM role to perform the operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Adapter": {
       "base": "<p>An adapter selected for use when analyzing documents. Contains an adapter ID and a version number. Contains information on pages selected for analysis when analyzing documents asychronously.</p>",
@@ -182,23 +181,19 @@
     },
     "AnalyzeDocumentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AnalyzeDocumentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AnalyzeExpenseRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AnalyzeExpenseResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AnalyzeIDDetections": {
       "base": "<p>Used to contain the information detected by an AnalyzeID operation.</p>",
@@ -209,12 +204,16 @@
     },
     "AnalyzeIDRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AnalyzeIDResponse": {
       "base": null,
+      "refs": {}
+    },
+    "Angle": {
+      "base": null,
       "refs": {
+        "Geometry$RotationAngle": "<p>Provides a numerical value corresponding to the rotation of the text.</p>"
       }
     },
     "AutoUpdate": {
@@ -228,8 +227,7 @@
     },
     "BadDocumentException": {
       "base": "<p>Amazon Textract isn't able to read the document. For more information on the document limits in Amazon Textract, see <a>limits</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Block": {
       "base": "<p>A <code>Block</code> represents items that are recognized in a document within a group of pixels close to each other. The information returned in a <code>Block</code> object depends on the type of operation. In text detection for documents (for example <a>DetectDocumentText</a>), you get information about the detected words and lines of text. In text analysis (for example <a>AnalyzeDocument</a>), you can also get information about the fields, tables, and selection elements that are detected in the document.</p> <p>An array of <code>Block</code> objects is returned by both synchronous and asynchronous operations. In synchronous operations, such as <a>DetectDocumentText</a>, the array of <code>Block</code> objects is the entire set of results. In asynchronous operations, such as <a>GetDocumentAnalysis</a>, the array is returned over one or more responses.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/textract/latest/dg/how-it-works.html\">How Amazon Textract Works</a>.</p>",
@@ -251,7 +249,7 @@
     "BlockType": {
       "base": null,
       "refs": {
-        "Block$BlockType": "<p>The type of text item that's recognized. In operations for text detection, the following types are returned:</p> <ul> <li> <p> <i>PAGE</i> - Contains a list of the LINE <code>Block</code> objects that are detected on a document page.</p> </li> <li> <p> <i>WORD</i> - A word detected on a document page. A word is one or more ISO basic Latin script characters that aren't separated by spaces.</p> </li> <li> <p> <i>LINE</i> - A string of tab-delimited, contiguous words that are detected on a document page.</p> </li> </ul> <p>In text analysis operations, the following types are returned:</p> <ul> <li> <p> <i>PAGE</i> - Contains a list of child <code>Block</code> objects that are detected on a document page.</p> </li> <li> <p> <i>KEY_VALUE_SET</i> - Stores the KEY and VALUE <code>Block</code> objects for linked text that's detected on a document page. Use the <code>EntityType</code> field to determine if a KEY_VALUE_SET object is a KEY <code>Block</code> object or a VALUE <code>Block</code> object. </p> </li> <li> <p> <i>WORD</i> - A word that's detected on a document page. A word is one or more ISO basic Latin script characters that aren't separated by spaces.</p> </li> <li> <p> <i>LINE</i> - A string of tab-delimited, contiguous words that are detected on a document page.</p> </li> <li> <p> <i>TABLE</i> - A table that's detected on a document page. A table is grid-based information with two or more rows or columns, with a cell span of one row and one column each. </p> </li> <li> <p> <i>TABLE_TITLE</i> - The title of a table. A title is typically a line of text above or below a table, or embedded as the first row of a table. </p> </li> <li> <p> <i>TABLE_FOOTER</i> - The footer associated with a table. A footer is typically a line or lines of text below a table or embedded as the last row of a table. </p> </li> <li> <p> <i>CELL</i> - A cell within a detected table. The cell is the parent of the block that contains the text in the cell.</p> </li> <li> <p> <i>MERGED_CELL</i> - A cell in a table whose content spans more than one row or column. The <code>Relationships</code> array for this cell contain data from individual cells.</p> </li> <li> <p> <i>SELECTION_ELEMENT</i> - A selection element such as an option button (radio button) or a check box that's detected on a document page. Use the value of <code>SelectionStatus</code> to determine the status of the selection element.</p> </li> <li> <p> <i>SIGNATURE</i> - The location and confidence score of a signature detected on a document page. Can be returned as part of a Key-Value pair or a detected cell.</p> </li> <li> <p> <i>QUERY</i> - A question asked during the call of AnalyzeDocument. Contains an alias and an ID that attaches it to its answer.</p> </li> <li> <p> <i>QUERY_RESULT</i> - A response to a question asked during the call of analyze document. Comes with an alias and ID for ease of locating in a response. Also contains location and confidence score.</p> </li> </ul> <p>The following BlockTypes are only returned for Amazon Textract Layout.</p> <ul> <li> <p> <code>LAYOUT_TITLE</code> - The main title of the document.</p> </li> <li> <p> <code>LAYOUT_HEADER</code> - Text located in the top margin of the document.</p> </li> <li> <p> <code>LAYOUT_FOOTER</code> - Text located in the bottom margin of the document.</p> </li> <li> <p> <code>LAYOUT_SECTION_HEADER</code> - The titles of sections within a document.</p> </li> <li> <p> <code>LAYOUT_PAGE_NUMBER</code> - The page number of the documents.</p> </li> <li> <p> <code>LAYOUT_LIST</code> - Any information grouped together in list form. </p> </li> <li> <p> <code>LAYOUT_FIGURE</code> - Indicates the location of an image in a document.</p> </li> <li> <p> <code>LAYOUT_TABLE</code> - Indicates the location of a table in the document.</p> </li> <li> <p> <code>LAYOUT_KEY_VALUE</code> - Indicates the location of form key-values in a document.</p> </li> <li> <p> <code>LAYOUT_TEXT</code> - Text that is present typically as a part of paragraphs in documents.</p> </li> </ul>"
+        "Block$BlockType": "<p>The type of text item that's recognized. In operations for text detection, the following types are returned:</p> <ul> <li> <p> <i>PAGE</i> - Contains a list of the LINE <code>Block</code> objects that are detected on a document page.</p> </li> <li> <p> <i>WORD</i> - A word detected on a document page. A word is one or more ISO basic Latin script characters that aren't separated by spaces.</p> </li> <li> <p> <i>LINE</i> - A string of space-delimited, contiguous words that are detected on a document page.</p> </li> </ul> <p>In text analysis operations, the following types are returned:</p> <ul> <li> <p> <i>PAGE</i> - Contains a list of child <code>Block</code> objects that are detected on a document page.</p> </li> <li> <p> <i>KEY_VALUE_SET</i> - Stores the KEY and VALUE <code>Block</code> objects for linked text that's detected on a document page. Use the <code>EntityType</code> field to determine if a KEY_VALUE_SET object is a KEY <code>Block</code> object or a VALUE <code>Block</code> object. </p> </li> <li> <p> <i>WORD</i> - A word that's detected on a document page. A word is one or more ISO basic Latin script characters that aren't separated by spaces.</p> </li> <li> <p> <i>LINE</i> - A string of tab-delimited, contiguous words that are detected on a document page.</p> </li> <li> <p> <i>TABLE</i> - A table that's detected on a document page. A table is grid-based information with two or more rows or columns, with a cell span of one row and one column each. </p> </li> <li> <p> <i>TABLE_TITLE</i> - The title of a table. A title is typically a line of text above or below a table, or embedded as the first row of a table. </p> </li> <li> <p> <i>TABLE_FOOTER</i> - The footer associated with a table. A footer is typically a line or lines of text below a table or embedded as the last row of a table. </p> </li> <li> <p> <i>CELL</i> - A cell within a detected table. The cell is the parent of the block that contains the text in the cell.</p> </li> <li> <p> <i>MERGED_CELL</i> - A cell in a table whose content spans more than one row or column. The <code>Relationships</code> array for this cell contain data from individual cells.</p> </li> <li> <p> <i>SELECTION_ELEMENT</i> - A selection element such as an option button (radio button) or a check box that's detected on a document page. Use the value of <code>SelectionStatus</code> to determine the status of the selection element.</p> </li> <li> <p> <i>SIGNATURE</i> - The location and confidence score of a signature detected on a document page. Can be returned as part of a Key-Value pair or a detected cell.</p> </li> <li> <p> <i>QUERY</i> - A question asked during the call of AnalyzeDocument. Contains an alias and an ID that attaches it to its answer.</p> </li> <li> <p> <i>QUERY_RESULT</i> - A response to a question asked during the call of analyze document. Comes with an alias and ID for ease of locating in a response. Also contains location and confidence score.</p> </li> </ul> <p>The following BlockTypes are only returned for Amazon Textract Layout.</p> <ul> <li> <p> <code>LAYOUT_TITLE</code> - The main title of the document.</p> </li> <li> <p> <code>LAYOUT_HEADER</code> - Text located in the top margin of the document.</p> </li> <li> <p> <code>LAYOUT_FOOTER</code> - Text located in the bottom margin of the document.</p> </li> <li> <p> <code>LAYOUT_SECTION_HEADER</code> - The titles of sections within a document.</p> </li> <li> <p> <code>LAYOUT_PAGE_NUMBER</code> - The page number of the documents.</p> </li> <li> <p> <code>LAYOUT_LIST</code> - Any information grouped together in list form. </p> </li> <li> <p> <code>LAYOUT_FIGURE</code> - Indicates the location of an image in a document.</p> </li> <li> <p> <code>LAYOUT_TABLE</code> - Indicates the location of a table in the document.</p> </li> <li> <p> <code>LAYOUT_KEY_VALUE</code> - Indicates the location of form key-values in a document.</p> </li> <li> <p> <code>LAYOUT_TEXT</code> - Text that is present typically as a part of paragraphs in documents.</p> </li> </ul>"
       }
     },
     "BoundingBox": {
@@ -273,8 +271,7 @@
     },
     "ConflictException": {
       "base": "<p>Updating or deleting a resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContentClassifier": {
       "base": null,
@@ -290,23 +287,19 @@
     },
     "CreateAdapterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAdapterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAdapterVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAdapterVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DateTime": {
       "base": null,
@@ -324,33 +317,27 @@
     },
     "DeleteAdapterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAdapterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAdapterVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAdapterVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetectDocumentTextRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetectDocumentTextResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DetectedSignature": {
       "base": "<p>A structure that holds information regarding a detected signature on a page.</p>",
@@ -416,8 +403,7 @@
     },
     "DocumentTooLargeException": {
       "base": "<p>The document can't be processed because it's too large. The maximum document size for synchronous operations 10 MB. The maximum document size for asynchronous operations is 500 MB for PDF files.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "EntityType": {
       "base": null,
@@ -565,73 +551,59 @@
     },
     "GetAdapterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAdapterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAdapterVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAdapterVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentTextDetectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDocumentTextDetectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExpenseAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetExpenseAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLendingAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLendingAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLendingAnalysisSummaryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLendingAnalysisSummaryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HumanLoopActivationConditionsEvaluationResults": {
       "base": null,
@@ -683,8 +655,7 @@
     },
     "HumanLoopQuotaExceededException": {
       "base": "<p>Indicates you have exceeded the maximum number of active human in the loop workflows available</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IdList": {
       "base": null,
@@ -694,8 +665,7 @@
     },
     "IdempotentParameterMismatchException": {
       "base": "<p>A <code>ClientRequestToken</code> input parameter was reused with an operation, but at least one of the other input parameters is different from the previous call to the operation. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IdentityDocument": {
       "base": "<p>The structure that lists each document processed in an AnalyzeID operation.</p>",
@@ -730,28 +700,23 @@
     },
     "InternalServerError": {
       "base": "<p>Amazon Textract experienced a service issue. Try your call again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidJobIdException": {
       "base": "<p>An invalid job identifier was passed to an asynchronous analysis operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidKMSKeyException": {
       "base": "<p> Indicates you do not have decrypt permissions with the KMS key entered, or the KMS key was entered incorrectly. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterException": {
       "base": "<p>An input parameter violated a constraint. For example, in synchronous operations, an <code>InvalidParameterException</code> exception occurs when neither of the <code>S3Object</code> or <code>Bytes</code> values are supplied in the <code>Document</code> request parameter. Validate your parameter before calling the API operation again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidS3ObjectException": {
       "base": "<p>Amazon Textract is unable to access the S3 object that's specified in the request. for more information, <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html\">Configure Access to Amazon S3</a> For troubleshooting information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/troubleshooting.html\">Troubleshooting Amazon S3</a> </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "JobId": {
       "base": null,
@@ -848,8 +813,7 @@
     },
     "LimitExceededException": {
       "base": "<p>An Amazon Textract service limit was exceeded. For example, if you start too many asynchronous jobs concurrently, calls to start operations (<code>StartDocumentTextDetection</code>, for example) raise a LimitExceededException exception (HTTP status code: 400) until the number of concurrently running jobs is below the Amazon Textract service limit. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LineItemFields": {
       "base": "<p>A structure that holds information about the different lines found in a document's tables.</p>",
@@ -877,33 +841,27 @@
     },
     "ListAdapterVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAdapterVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAdaptersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAdaptersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": null,
@@ -1027,8 +985,7 @@
     },
     "ProvisionedThroughputExceededException": {
       "base": "<p>The number of requests exceeded your throughput limit. If you want to increase this limit, contact Amazon Textract.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Queries": {
       "base": null,
@@ -1089,8 +1046,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p> Returned when an operation tried to access a nonexistent resource. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleArn": {
       "base": null,
@@ -1117,7 +1073,7 @@
       "base": null,
       "refs": {
         "OutputConfig$S3Prefix": "<p>The prefix of the object key that the output will be saved to. When not enabled, the prefix will be “textract_output\".</p>",
-        "S3Object$Name": "<p>The file name of the input document. Synchronous operations can use image files that are in JPEG or PNG format. Asynchronous operations also support PDF and TIFF format files.</p>"
+        "S3Object$Name": "<p>The file name of the input document. Image files may be in PDF, TIFF, JPEG, or PNG format.</p>"
       }
     },
     "S3ObjectVersion": {
@@ -1141,8 +1097,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Returned when a request cannot be completed as it would exceed a maximum service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SignatureDetection": {
       "base": "<p>Information regarding a detected signature on a page.</p>",
@@ -1170,43 +1125,35 @@
     },
     "StartDocumentAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDocumentAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDocumentTextDetectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDocumentTextDetectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExpenseAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartExpenseAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartLendingAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartLendingAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StatusMessage": {
       "base": null,
@@ -1276,13 +1223,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1298,8 +1243,7 @@
     },
     "ThrottlingException": {
       "base": "<p>Amazon Textract is temporarily unable to process the request. Try your call again.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UInteger": {
       "base": null,
@@ -1342,33 +1286,27 @@
     },
     "UnsupportedDocumentException": {
       "base": "<p>The format of the input document isn't supported. Documents for operations can be in PNG, JPEG, PDF, or TIFF format.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAdapterRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAdapterResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p> Indicates that a request was not valid. Check request for proper formatting. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValueType": {
       "base": null,

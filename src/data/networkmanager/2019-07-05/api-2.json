@@ -191,6 +191,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateDirectConnectGatewayAttachment":{
+      "name":"CreateDirectConnectGatewayAttachment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/direct-connect-gateway-attachments"
+      },
+      "input":{"shape":"CreateDirectConnectGatewayAttachmentRequest"},
+      "output":{"shape":"CreateDirectConnectGatewayAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateGlobalNetwork":{
       "name":"CreateGlobalNetwork",
       "http":{
@@ -778,6 +795,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetDirectConnectGatewayAttachment":{
+      "name":"GetDirectConnectGatewayAttachment",
+      "http":{
+        "method":"GET",
+        "requestUri":"/direct-connect-gateway-attachments/{attachmentId}"
+      },
+      "input":{"shape":"GetDirectConnectGatewayAttachmentRequest"},
+      "output":{"shape":"GetDirectConnectGatewayAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetLinkAssociations":{
       "name":"GetLinkAssociations",
       "http":{
@@ -1340,6 +1373,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateDirectConnectGatewayAttachment":{
+      "name":"UpdateDirectConnectGatewayAttachment",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/direct-connect-gateway-attachments/{attachmentId}"
+      },
+      "input":{"shape":"UpdateDirectConnectGatewayAttachmentRequest"},
+      "output":{"shape":"UpdateDirectConnectGatewayAttachmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateGlobalNetwork":{
       "name":"UpdateGlobalNetwork",
       "http":{
@@ -1593,6 +1643,7 @@
         "AttachmentType":{"shape":"AttachmentType"},
         "State":{"shape":"AttachmentState"},
         "EdgeLocation":{"shape":"ExternalRegionCode"},
+        "EdgeLocations":{"shape":"ExternalRegionCodeList"},
         "ResourceArn":{"shape":"ResourceArn"},
         "AttachmentPolicyRuleNumber":{"shape":"Integer"},
         "SegmentName":{"shape":"ConstrainedString"},
@@ -1624,7 +1675,10 @@
         "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE",
         "SUBNET_NO_IPV6_CIDRS",
         "VPN_CONNECTION_NOT_FOUND",
-        "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+        "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED",
+        "DIRECT_CONNECT_GATEWAY_NOT_FOUND",
+        "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS",
+        "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
       ]
     },
     "AttachmentErrorList":{
@@ -1663,6 +1717,7 @@
         "CONNECT",
         "SITE_TO_SITE_VPN",
         "VPC",
+        "DIRECT_CONNECT_GATEWAY",
         "TRANSIT_GATEWAY_ROUTE_TABLE"
       ]
     },
@@ -2030,7 +2085,10 @@
         "DestinationIdentifier":{"shape":"ConstrainedString"},
         "InsideCidrBlocks":{"shape":"ConstrainedStringList"},
         "SharedSegments":{"shape":"ConstrainedStringList"},
-        "ServiceInsertionActions":{"shape":"ServiceInsertionActionList"}
+        "ServiceInsertionActions":{"shape":"ServiceInsertionActionList"},
+        "VpnEcmpSupport":{"shape":"Boolean"},
+        "DnsSupport":{"shape":"Boolean"},
+        "SecurityGroupReferencingSupport":{"shape":"Boolean"}
       }
     },
     "CoreNetworkEdge":{
@@ -2309,6 +2367,30 @@
       "type":"structure",
       "members":{
         "Device":{"shape":"Device"}
+      }
+    },
+    "CreateDirectConnectGatewayAttachmentRequest":{
+      "type":"structure",
+      "required":[
+        "CoreNetworkId",
+        "DirectConnectGatewayArn",
+        "EdgeLocations"
+      ],
+      "members":{
+        "CoreNetworkId":{"shape":"CoreNetworkId"},
+        "DirectConnectGatewayArn":{"shape":"DirectConnectGatewayArn"},
+        "EdgeLocations":{"shape":"ExternalRegionCodeList"},
+        "Tags":{"shape":"TagList"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateDirectConnectGatewayAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "DirectConnectGatewayAttachment":{"shape":"DirectConnectGatewayAttachment"}
       }
     },
     "CreateGlobalNetworkRequest":{
@@ -2694,8 +2776,7 @@
     },
     "DeleteResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSiteRequest":{
       "type":"structure",
@@ -2821,6 +2902,19 @@
         "DELETING",
         "UPDATING"
       ]
+    },
+    "DirectConnectGatewayArn":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"^arn:[^:]{1,63}:directconnect::[^:]{0,63}:dx-gateway\\/[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$"
+    },
+    "DirectConnectGatewayAttachment":{
+      "type":"structure",
+      "members":{
+        "Attachment":{"shape":"Attachment"},
+        "DirectConnectGatewayArn":{"shape":"DirectConnectGatewayArn"}
+      }
     },
     "DisassociateConnectPeerRequest":{
       "type":"structure",
@@ -2971,8 +3065,7 @@
     },
     "ExecuteCoreNetworkChangeSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ExternalRegionCode":{
       "type":"string",
@@ -3293,6 +3386,23 @@
       "members":{
         "Devices":{"shape":"DeviceList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetDirectConnectGatewayAttachmentRequest":{
+      "type":"structure",
+      "required":["AttachmentId"],
+      "members":{
+        "AttachmentId":{
+          "shape":"AttachmentId",
+          "location":"uri",
+          "locationName":"attachmentId"
+        }
+      }
+    },
+    "GetDirectConnectGatewayAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "DirectConnectGatewayAttachment":{"shape":"DirectConnectGatewayAttachment"}
       }
     },
     "GetLinkAssociationsRequest":{
@@ -4467,8 +4577,7 @@
     },
     "PutResourcePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ReasonContextKey":{
       "type":"string",
@@ -4902,8 +5011,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -5065,8 +5173,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConnectionRequest":{
       "type":"structure",
@@ -5145,6 +5252,24 @@
       "type":"structure",
       "members":{
         "Device":{"shape":"Device"}
+      }
+    },
+    "UpdateDirectConnectGatewayAttachmentRequest":{
+      "type":"structure",
+      "required":["AttachmentId"],
+      "members":{
+        "AttachmentId":{
+          "shape":"AttachmentId",
+          "location":"uri",
+          "locationName":"attachmentId"
+        },
+        "EdgeLocations":{"shape":"ExternalRegionCodeList"}
+      }
+    },
+    "UpdateDirectConnectGatewayAttachmentResponse":{
+      "type":"structure",
+      "members":{
+        "DirectConnectGatewayAttachment":{"shape":"DirectConnectGatewayAttachment"}
       }
     },
     "UpdateGlobalNetworkRequest":{
@@ -5329,7 +5454,9 @@
       "type":"structure",
       "members":{
         "Ipv6Support":{"shape":"Boolean"},
-        "ApplianceModeSupport":{"shape":"Boolean"}
+        "ApplianceModeSupport":{"shape":"Boolean"},
+        "DnsSupport":{"shape":"Boolean"},
+        "SecurityGroupReferencingSupport":{"shape":"Boolean"}
       }
     },
     "VpnConnectionArn":{

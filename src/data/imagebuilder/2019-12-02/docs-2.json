@@ -35,12 +35,14 @@
     "GetInfrastructureConfiguration": "<p>Gets an infrastructure configuration.</p>",
     "GetLifecycleExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the lifecycle policy.</p>",
     "GetLifecyclePolicy": "<p>Get details for the specified image lifecycle policy.</p>",
+    "GetMarketplaceResource": "<p>Verify the subscription and perform resource dependency checks on the requested Amazon Web Services Marketplace resource. For Amazon Web Services Marketplace components, the response contains fields to download the components and their artifacts.</p>",
     "GetWorkflow": "<p>Get a workflow resource object.</p>",
     "GetWorkflowExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the workflow.</p>",
     "GetWorkflowStepExecution": "<p>Get the runtime information that was logged for a specific runtime instance of the workflow step.</p>",
     "ImportComponent": "<p>Imports a component and transforms its data into a component document.</p>",
+    "ImportDiskImage": "<p>Import a Windows operating system image from a verified Microsoft ISO disk file. The following disk images are supported:</p> <ul> <li> <p>Windows 11 Enterprise</p> </li> </ul>",
     "ImportVmImage": "<p>When you export your virtual machine (VM) from its virtualization environment, that process creates a set of one or more disk container files that act as snapshots of your VM’s environment, settings, and data. The Amazon EC2 API <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ImportImage.html\">ImportImage</a> action uses those files to import your VM and create an AMI. To import using the CLI command, see <a href=\"https://docs.aws.amazon.com/cli/latest/reference/ec2/import-image.html\">import-image</a> </p> <p>You can reference the task ID from the VM import to pull in the AMI that the import created as the base image for your Image Builder recipe.</p>",
-    "ListComponentBuildVersions": "<p>Returns the list of component build versions for the specified semantic version.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
+    "ListComponentBuildVersions": "<p>Returns the list of component build versions for the specified component version Amazon Resource Name (ARN).</p>",
     "ListComponents": "<p>Returns the list of components that can be filtered by name, or by using the listed <code>filters</code> to streamline results. Newly created components can take up to two minutes to appear in the ListComponents API Results.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
     "ListContainerRecipes": "<p>Returns a list of container recipes.</p>",
     "ListDistributionConfigurations": "<p>Returns a list of distribution configurations.</p>",
@@ -88,7 +90,8 @@
       "refs": {
         "AccountList$member": null,
         "FastLaunchConfiguration$accountId": "<p>The owner account ID for the fast-launch enabled Windows AMI.</p>",
-        "LaunchTemplateConfiguration$accountId": "<p>The account ID that this configuration applies to.</p>"
+        "LaunchTemplateConfiguration$accountId": "<p>The account ID that this configuration applies to.</p>",
+        "SsmParameterConfiguration$amiAccountId": "<p>Specify the account that will own the Parameter in a given Region. During distribution, this account must be specified in distribution settings as a target account for the Region.</p>"
       }
     },
     "AccountList": {
@@ -164,40 +167,34 @@
     "BuildType": {
       "base": null,
       "refs": {
-        "Image$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> </ul>",
-        "ImageSummary$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> </ul>",
-        "ImageVersion$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> </ul>"
+        "Image$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> <li> <p> <b>IMPORT_ISO</b> – An ISO disk import created the image.</p> </li> </ul>",
+        "ImageSummary$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> <li> <p> <b>IMPORT_ISO</b> – An ISO disk import created the image.</p> </li> </ul>",
+        "ImageVersion$buildType": "<p>Indicates the type of build that created this image. The build can be initiated in the following ways:</p> <ul> <li> <p> <b>USER_INITIATED</b> – A manual pipeline build request.</p> </li> <li> <p> <b>SCHEDULED</b> – A pipeline build initiated by a cron expression in the Image Builder pipeline, or from EventBridge.</p> </li> <li> <p> <b>IMPORT</b> – A VM import created the image to use as the base image for the recipe.</p> </li> <li> <p> <b>IMPORT_ISO</b> – An ISO disk import created the image.</p> </li> </ul>"
       }
     },
     "CallRateLimitExceededException": {
       "base": "<p>You have exceeded the permitted request rate for the specific operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelImageCreationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelImageCreationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelLifecycleExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelLifecycleExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientException": {
       "base": "<p>These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn't have permissions to use the action or resource, or specifying an invalid resource identifier.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ClientToken": {
       "base": null,
@@ -225,6 +222,8 @@
         "CreateWorkflowResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "ImportComponentRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "ImportComponentResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
+        "ImportDiskImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
+        "ImportDiskImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "ImportVmImageRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
         "ImportVmImageResponse$clientToken": "<p>The client token that uniquely identifies the request.</p>",
         "SendWorkflowStepActionRequest$clientToken": "<p>Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>",
@@ -345,14 +344,15 @@
     "ComponentState": {
       "base": "<p>A group of fields that describe the current status of components.</p>",
       "refs": {
-        "Component$state": "<p>Describes the current status of the component. This is used for components that are no longer active.</p>",
+        "Component$state": "<p>Describes the current status of the component.</p>",
         "ComponentSummary$state": "<p>Describes the current status of the component.</p>"
       }
     },
     "ComponentStatus": {
       "base": null,
       "refs": {
-        "ComponentState$status": "<p>The current state of the component.</p>"
+        "ComponentState$status": "<p>The current state of the component.</p>",
+        "ComponentVersion$status": "<p>Describes the current status of the component version.</p>"
       }
     },
     "ComponentSummary": {
@@ -469,93 +469,75 @@
     },
     "CreateComponentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateComponentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerRecipeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateContainerRecipeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDistributionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDistributionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImagePipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImagePipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageRecipeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageRecipeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateImageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInfrastructureConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateInfrastructureConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CvssScore": {
       "base": "<p>Amazon Inspector generates a risk score for each finding. This score helps you to prioritize findings, to focus on the most critical findings and the most vulnerable resources. The score uses the Common Vulnerability Scoring System (CVSS) format. This format is a modification of the base CVSS score that the National Vulnerability Database (NVD) provides. For more information about severity levels, see <a href=\"https://docs.aws.amazon.com/inspector/latest/user/findings-understanding-severity.html\">Severity levels for Amazon Inspector findings</a> in the <i>Amazon Inspector User Guide</i>.</p>",
@@ -650,93 +632,75 @@
     },
     "DeleteComponentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteComponentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContainerRecipeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteContainerRecipeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDistributionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDistributionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImagePipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImagePipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageRecipeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageRecipeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteImageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInfrastructureConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteInfrastructureConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DiskImageFormat": {
       "base": null,
@@ -936,168 +900,143 @@
     },
     "ForbiddenException": {
       "base": "<p>You are not authorized to perform the requested operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetComponentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerRecipePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerRecipePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerRecipeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetContainerRecipeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDistributionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImagePipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImagePipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImagePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImagePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImageRecipePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImageRecipePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImageRecipeRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImageRecipeResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetImageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInfrastructureConfigurationRequest": {
       "base": "<p>GetInfrastructureConfiguration request object.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetInfrastructureConfigurationResponse": {
       "base": "<p>GetInfrastructureConfiguration response object.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLifecycleExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLifecycleExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetMarketplaceResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetMarketplaceResourceResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetWorkflowExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowStepExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWorkflowStepExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HttpPutResponseHopLimit": {
       "base": null,
@@ -1113,8 +1052,7 @@
     },
     "IdempotentParameterMismatchException": {
       "base": "<p>You have specified a client token for an operation using parameter values that differ from a previous request that used the same client token.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Image": {
       "base": "<p>An Image Builder image. You must specify exactly one recipe for the image – either a container recipe (<code>containerRecipe</code>), which creates a container image, or an image recipe (<code>imageRecipe</code>), which creates an AMI.</p>",
@@ -1148,6 +1086,7 @@
         "GetWorkflowStepExecutionResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image resource build version that the specified runtime instance of the workflow step creates.</p>",
         "ImageAggregation$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) that identifies the image for this aggregation.</p>",
         "ImageScanFinding$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the image build version that's associated with the finding.</p>",
+        "ImportDiskImageResponse$imageBuildVersionArn": "<p>The Amazon Resource Name (ARN) of the output AMI that was created from the ISO disk file.</p>",
         "ListImagePackagesRequest$imageBuildVersionArn": "<p>Filter results for the ListImagePackages request by the Image Build Version ARN</p>",
         "ListWorkflowExecutionsRequest$imageBuildVersionArn": "<p>List all workflow runtime instances for the specified image build version resource ARN.</p>",
         "ListWorkflowExecutionsResponse$imageBuildVersionArn": "<p>The resource ARN of the image build version for which you requested a list of workflow runtime details.</p>",
@@ -1172,6 +1111,8 @@
         "ContainerRecipeSummary$arn": "<p>The Amazon Resource Name (ARN) of the container recipe.</p>",
         "DistributionConfiguration$arn": "<p>The Amazon Resource Name (ARN) of the distribution configuration.</p>",
         "DistributionConfigurationSummary$arn": "<p>The Amazon Resource Name (ARN) of the distribution configuration.</p>",
+        "GetMarketplaceResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies an Amazon Web Services Marketplace resource.</p>",
+        "GetMarketplaceResourceResponse$resourceArn": "<p>The Amazon Resource Name (ARN) for the Amazon Web Services Marketplace resource that was requested.</p>",
         "Image$arn": "<p>The Amazon Resource Name (ARN) of the image.</p> <note> <p>Semantic versioning is included in each object's Amazon Resource Name (ARN), at the level that applies to that object as follows:</p> <ol> <li> <p>Versionless ARNs and Name ARNs do not include specific values in any of the nodes. The nodes are either left off entirely, or they are specified as wildcards, for example: x.x.x.</p> </li> <li> <p>Version ARNs have only the first three nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</p> </li> <li> <p>Build version ARNs have all four nodes, and point to a specific build for a specific version of an object.</p> </li> </ol> </note>",
         "ImagePipeline$arn": "<p>The Amazon Resource Name (ARN) of the image pipeline.</p>",
         "ImageRecipe$arn": "<p>The Amazon Resource Name (ARN) of the image recipe.</p>",
@@ -1187,7 +1128,7 @@
       }
     },
     "ImagePackage": {
-      "base": "<p>Represents a package installed on an Image Builder image.</p>",
+      "base": "<p>A software package that's installed on top of the base image to create a customized image.</p>",
       "refs": {
         "ImagePackageList$member": null
       }
@@ -1378,7 +1319,7 @@
     "ImageTestsTimeoutMinutes": {
       "base": null,
       "refs": {
-        "ImageTestsConfiguration$timeoutMinutes": "<p>The maximum time in minutes that tests are permitted to run.</p> <note> <p>The timeoutMinutes attribute is not currently active. This value is ignored.</p> </note>"
+        "ImageTestsConfiguration$timeoutMinutes": "<p>The maximum time in minutes that tests are permitted to run.</p> <note> <p>The timeout property is not currently active. This value is ignored.</p> </note>"
       }
     },
     "ImageType": {
@@ -1416,23 +1357,27 @@
     },
     "ImportComponentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportComponentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "ImportDiskImageRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ImportDiskImageResponse": {
+      "base": null,
+      "refs": {}
     },
     "ImportVmImageRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportVmImageResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "InfrastructureConfiguration": {
       "base": "<p>Details of the infrastructure configuration.</p>",
@@ -1450,6 +1395,7 @@
         "DeleteInfrastructureConfigurationRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration to delete.</p>",
         "DeleteInfrastructureConfigurationResponse$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that was deleted.</p>",
         "GetInfrastructureConfigurationRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that you want to retrieve.</p>",
+        "ImportDiskImageRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration resource that's used for launching the EC2 instance on which the ISO image is built.</p>",
         "UpdateImagePipelineRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that Image Builder uses to build images that this image pipeline has updated.</p>",
         "UpdateInfrastructureConfigurationRequest$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that you want to update.</p>",
         "UpdateInfrastructureConfigurationResponse$infrastructureConfigurationArn": "<p>The Amazon Resource Name (ARN) of the infrastructure configuration that was updated by this request.</p>"
@@ -1546,33 +1492,27 @@
     },
     "InvalidPaginationTokenException": {
       "base": "<p>You have provided an invalid pagination token in your request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterCombinationException": {
       "base": "<p>You have specified two or more mutually exclusive parameters. Review the error message for details.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterException": {
       "base": "<p>The specified parameter is invalid. Review the available parameters for the API request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidParameterValueException": {
       "base": "<p>The value that you provided for the specified parameter is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>You have requested an action that that the service doesn't support.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidVersionNumberException": {
       "base": "<p>Your version number is out of bounds or does not follow the required syntax.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LaunchPermissionConfiguration": {
       "base": "<p>Describes the configuration for a launch permission. The launch permission modification request is sent to the <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyImageAttribute.html\">Amazon EC2 ModifyImageAttribute</a> API on behalf of the user for each Region they have selected to distribute the AMI. To make an AMI public, set the launch permission authorized accounts to <code>all</code>. See the examples for making an AMI public at <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyImageAttribute.html\">Amazon EC2 ModifyImageAttribute</a>.</p>",
@@ -1866,223 +1806,179 @@
     },
     "ListComponentBuildVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentBuildVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListComponentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContainerRecipesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListContainerRecipesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDistributionConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDistributionConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageBuildVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageBuildVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagePackagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagePackagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagePipelineImagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagePipelineImagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagePipelinesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagePipelinesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageRecipesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageRecipesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageScanFindingAggregationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageScanFindingAggregationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageScanFindingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImageScanFindingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListImagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInfrastructureConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListInfrastructureConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecycleExecutionResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecycleExecutionResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecycleExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecycleExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecyclePoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecyclePoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWaitingWorkflowStepsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWaitingWorkflowStepsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowBuildVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowBuildVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowStepExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowStepExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Logging": {
       "base": "<p>Logging configuration defines where Image Builder uploads your logs.</p>",
@@ -2090,6 +1986,18 @@
         "CreateInfrastructureConfigurationRequest$logging": "<p>The logging configuration of the infrastructure configuration.</p>",
         "InfrastructureConfiguration$logging": "<p>The logging configuration of the infrastructure configuration.</p>",
         "UpdateInfrastructureConfigurationRequest$logging": "<p>The logging configuration of the infrastructure configuration.</p>"
+      }
+    },
+    "MarketplaceResourceLocation": {
+      "base": null,
+      "refs": {
+        "GetMarketplaceResourceRequest$resourceLocation": "<p>The bucket path that you can specify to download the resource from Amazon S3.</p>"
+      }
+    },
+    "MarketplaceResourceType": {
+      "base": null,
+      "refs": {
+        "GetMarketplaceResourceRequest$resourceType": "<p>Specifies which type of Amazon Web Services Marketplace resource Image Builder retrieves.</p>"
       }
     },
     "MaxParallelLaunches": {
@@ -2127,7 +2035,7 @@
         "ContainerRecipe$description": "<p>The description of the container recipe.</p>",
         "ContainerRecipe$owner": "<p>The owner of the container recipe.</p>",
         "ContainerRecipe$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the container image for distribution to the target Region.</p>",
-        "ContainerRecipe$parentImage": "<p>The base image for the container recipe.</p>",
+        "ContainerRecipe$parentImage": "<p>The base image for customizations specified in the container recipe. This can contain an Image Builder image resource ARN or a container image URI, for example <code>amazonlinux:latest</code>.</p>",
         "ContainerRecipe$workingDirectory": "<p>The working directory for use during build and test workflows.</p>",
         "ContainerRecipeSummary$owner": "<p>The owner of the container recipe.</p>",
         "ContainerRecipeSummary$parentImage": "<p>The base image for the container recipe.</p>",
@@ -2139,14 +2047,14 @@
         "CreateContainerRecipeRequest$imageOsVersionOverride": "<p>Specifies the operating system version for the base image.</p>",
         "CreateContainerRecipeRequest$parentImage": "<p>The base image for the container recipe.</p>",
         "CreateContainerRecipeRequest$workingDirectory": "<p>The working directory for use during build and test workflows.</p>",
-        "CreateContainerRecipeRequest$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the container image.</p>",
+        "CreateContainerRecipeRequest$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the Dockerfile template.</p>",
         "CreateContainerRecipeResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "CreateDistributionConfigurationRequest$description": "<p>The description of the distribution configuration.</p>",
         "CreateDistributionConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "CreateImagePipelineRequest$description": "<p>The description of the image pipeline.</p>",
         "CreateImagePipelineResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "CreateImageRecipeRequest$description": "<p>The description of the image recipe.</p>",
-        "CreateImageRecipeRequest$parentImage": "<p>The base image of the image recipe. The value of the string can be the ARN of the base image or an AMI ID. The format for the ARN follows this example: <code>arn:aws:imagebuilder:us-west-2:aws:image/windows-server-2016-english-full-base-x86/x.x.x</code>. You can provide the specific version that you want to use, or you can use a wildcard in all of the fields. If you enter an AMI ID for the string value, you must have access to the AMI, and the AMI must be in the same Region in which you are using Image Builder.</p>",
+        "CreateImageRecipeRequest$parentImage": "<p>The base image for customizations specified in the image recipe. You can specify the parent image using one of the following options:</p> <ul> <li> <p>AMI ID</p> </li> <li> <p>Image Builder image Amazon Resource Name (ARN)</p> </li> <li> <p>Amazon Web Services Systems Manager (SSM) Parameter Store Parameter, prefixed by <code>ssm:</code>, followed by the parameter name or ARN.</p> </li> <li> <p>Amazon Web Services Marketplace product ID</p> </li> </ul> <p>If you enter an AMI ID or an SSM parameter that contains the AMI ID, you must have access to the AMI, and the AMI must be in the source Region.</p>",
         "CreateImageRecipeRequest$workingDirectory": "<p>The working directory used during build and test workflows.</p>",
         "CreateImageRecipeResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "CreateImageResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
@@ -2193,15 +2101,17 @@
         "GetImageRecipeResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetImageResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetInfrastructureConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
+        "GetMarketplaceResourceResponse$url": "<p>The obfuscated S3 URL to download the component artifact from.</p>",
+        "GetMarketplaceResourceResponse$data": "<p>Returns obfuscated data that contains the YAML content of the component.</p>",
         "GetWorkflowExecutionResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetWorkflowStepExecutionResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "GetWorkflowStepExecutionResponse$onFailure": "<p>The action to perform if the workflow step fails.</p>",
-        "ImagePackage$packageName": "<p>The name of the package as reported to the operating system package manager.</p>",
-        "ImagePackage$packageVersion": "<p>The version of the package as reported to the operating system package manager.</p>",
+        "ImagePackage$packageName": "<p>The name of the package that's reported to the operating system package manager.</p>",
+        "ImagePackage$packageVersion": "<p>The version of the package that's reported to the operating system package manager.</p>",
         "ImagePipeline$description": "<p>The description of the image pipeline.</p>",
         "ImageRecipe$description": "<p>The description of the image recipe.</p>",
         "ImageRecipe$owner": "<p>The owner of the image recipe.</p>",
-        "ImageRecipe$parentImage": "<p>The base image of the image recipe.</p>",
+        "ImageRecipe$parentImage": "<p>The base image for customizations specified in the image recipe. You can specify the parent image using one of the following options:</p> <ul> <li> <p>AMI ID</p> </li> <li> <p>Image Builder image Amazon Resource Name (ARN)</p> </li> <li> <p>Amazon Web Services Systems Manager (SSM) Parameter Store Parameter, prefixed by <code>ssm:</code>, followed by the parameter name or ARN.</p> </li> <li> <p>Amazon Web Services Marketplace product ID</p> </li> </ul>",
         "ImageRecipe$workingDirectory": "<p>The working directory to be used during build and test workflows.</p>",
         "ImageRecipeSummary$owner": "<p>The owner of the image recipe.</p>",
         "ImageRecipeSummary$parentImage": "<p>The base image of the image recipe.</p>",
@@ -2220,6 +2130,9 @@
         "ImportComponentRequest$data": "<p>The data of the component. Used to specify the data inline. Either <code>data</code> or <code>uri</code> can be used to specify the data within the component.</p>",
         "ImportComponentRequest$kmsKeyId": "<p>The ID of the KMS key that should be used to encrypt this component.</p>",
         "ImportComponentResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
+        "ImportDiskImageRequest$name": "<p>The name of the image resource that's created from the import.</p>",
+        "ImportDiskImageRequest$description": "<p>The description for your disk image import.</p>",
+        "ImportDiskImageRequest$platform": "<p>The operating system platform for the imported image. Allowed values include the following: <code>Windows</code>.</p>",
         "ImportVmImageRequest$name": "<p>The name of the base image that is created by the import process.</p>",
         "ImportVmImageRequest$description": "<p>The description for the base image that is created by the import process.</p>",
         "ImportVmImageRequest$vmImportTaskId": "<p>The <code>importTaskId</code> (API) or <code>ImportTaskId</code> (CLI) from the Amazon EC2 VM import process. Image Builder retrieves information from the import process to pull in the AMI that is created from the VM source as the base image for your recipe.</p>",
@@ -2231,7 +2144,7 @@
         "InfrastructureConfigurationSummary$description": "<p>The description of the infrastructure configuration.</p>",
         "InstanceBlockDeviceMapping$deviceName": "<p>The device to which these mappings apply.</p>",
         "InstanceBlockDeviceMapping$virtualName": "<p>Use to manage instance ephemeral devices.</p>",
-        "InstanceConfiguration$image": "<p>The AMI ID to use as the base image for a container build and test instance. If not specified, Image Builder will use the appropriate ECS-optimized AMI as a base image.</p>",
+        "InstanceConfiguration$image": "<p>The base image for a container build and test instance. This can contain an AMI ID or it can specify an Amazon Web Services Systems Manager (SSM) Parameter Store Parameter, prefixed by <code>ssm:</code>, followed by the parameter name or ARN.</p> <p>If not specified, Image Builder uses the appropriate ECS-optimized AMI as a base image.</p>",
         "LifecycleExecutionResource$accountId": "<p>The account that owns the impacted resource.</p>",
         "LifecycleExecutionResource$resourceId": "<p>Identifies the impacted resource. The resource ID depends on the type of resource, as follows.</p> <ul> <li> <p>Image Builder image resources: Amazon Resource Name (ARN)</p> </li> <li> <p>Distributed AMIs: AMI ID</p> </li> <li> <p>Container images distributed to an ECR repository: image URI or SHA Digest</p> </li> </ul>",
         "LifecycleExecutionResource$region": "<p>The Amazon Web Services Region where the lifecycle execution resource is stored.</p>",
@@ -2264,6 +2177,9 @@
         "PackageVulnerabilityDetails$source": "<p>The source of the vulnerability information.</p>",
         "PackageVulnerabilityDetails$sourceUrl": "<p>A link to the source of the vulnerability information.</p>",
         "PackageVulnerabilityDetails$vendorSeverity": "<p>The severity that the vendor assigned to this vulnerability type.</p>",
+        "Placement$availabilityZone": "<p>The Availability Zone where your build and test instances will launch.</p>",
+        "Placement$hostId": "<p>The ID of the Dedicated Host on which build and test instances run. This only applies if <code>tenancy</code> is <code>host</code>. If you specify the host ID, you must not specify the resource group ARN. If you specify both, Image Builder returns an error.</p>",
+        "Placement$hostResourceGroupArn": "<p>The Amazon Resource Name (ARN) of the host resource group in which to launch build and test instances. This only applies if <code>tenancy</code> is <code>host</code>. If you specify the resource group ARN, you must not specify the host ID. If you specify both, Image Builder returns an error.</p>",
         "PutComponentPolicyResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "PutContainerRecipePolicyResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "PutImagePolicyResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
@@ -2281,7 +2197,7 @@
         "SendWorkflowStepActionRequest$reason": "<p>The reason why this action is sent.</p>",
         "StartImagePipelineExecutionResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "StringList$member": null,
-        "TargetContainerRepository$repositoryName": "<p>The name of the container repository where the output container image is stored. This name is prefixed by the repository location.</p>",
+        "TargetContainerRepository$repositoryName": "<p>The name of the container repository where the output container image is stored. This name is prefixed by the repository location. For example, <code>&lt;repository location url&gt;/repository_name</code>.</p>",
         "UpdateDistributionConfigurationRequest$description": "<p>The description of the distribution configuration.</p>",
         "UpdateDistributionConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "UpdateImagePipelineRequest$description": "<p>The description of the image pipeline.</p>",
@@ -2382,6 +2298,7 @@
         "Image$osVersion": "<p>The operating system version for instances that launch from this image. For example, Amazon Linux 2, Ubuntu 18, or Microsoft Windows Server 2019.</p>",
         "ImageSummary$osVersion": "<p>The operating system version of the instances that launch from this image. For example, Amazon Linux 2, Ubuntu 18, or Microsoft Windows Server 2019.</p>",
         "ImageVersion$osVersion": "<p>The operating system version of the Amazon EC2 build instance. For example, Amazon Linux 2, Ubuntu 18, or Microsoft Windows Server 2019.</p>",
+        "ImportDiskImageRequest$osVersion": "<p>The operating system version for the imported image. Allowed values include the following: <code>Microsoft Windows 11</code>.</p>",
         "ImportVmImageRequest$osVersion": "<p>The operating system version for the imported VM.</p>",
         "OsVersionList$member": null
       }
@@ -2486,7 +2403,7 @@
     "PipelineExecutionStartCondition": {
       "base": null,
       "refs": {
-        "Schedule$pipelineExecutionStartCondition": "<p>The condition configures when the pipeline should trigger a new image build. When the <code>pipelineExecutionStartCondition</code> is set to <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code>, and you use semantic version filters on the base image or components in your image recipe, EC2 Image Builder will build a new image only when there are new versions of the image or components in your recipe that match the semantic version filter. When it is set to <code>EXPRESSION_MATCH_ONLY</code>, it will build a new image every time the CRON expression matches the current time. For semantic version syntax, see <a href=\"https://docs.aws.amazon.com/imagebuilder/latest/APIReference/API_CreateComponent.html\">CreateComponent</a> in the <i> EC2 Image Builder API Reference</i>.</p>"
+        "Schedule$pipelineExecutionStartCondition": "<p>The start condition configures when the pipeline should trigger a new image build, as follows. If no value is set Image Builder defaults to <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code>.</p> <ul> <li> <p> <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code> (default) – When you use semantic version filters on the base image or components in your image recipe, EC2 Image Builder builds a new image only when there are new versions of the base image or components in your recipe that match the filter.</p> <note> <p>For semantic version syntax, see <a href=\"https://docs.aws.amazon.com/imagebuilder/latest/APIReference/API_CreateComponent.html\">CreateComponent</a>.</p> </note> </li> <li> <p> <code>EXPRESSION_MATCH_ONLY</code> – This condition builds a new image every time the CRON expression matches the current time.</p> </li> </ul>"
       }
     },
     "PipelineStatus": {
@@ -2495,6 +2412,15 @@
         "CreateImagePipelineRequest$status": "<p>The status of the image pipeline.</p>",
         "ImagePipeline$status": "<p>The status of the image pipeline.</p>",
         "UpdateImagePipelineRequest$status": "<p>The status of the image pipeline.</p>"
+      }
+    },
+    "Placement": {
+      "base": "<p>By default, EC2 instances run on shared tenancy hardware. This means that multiple Amazon Web Services accounts might share the same physical hardware. When you use dedicated hardware, the physical server that hosts your instances is dedicated to your Amazon Web Services account. Instance placement settings contain the details for the physical hardware where instances that Image Builder launches during image creation will run.</p>",
+      "refs": {
+        "CreateInfrastructureConfigurationRequest$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>",
+        "InfrastructureConfiguration$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>",
+        "InfrastructureConfigurationSummary$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>",
+        "UpdateInfrastructureConfigurationRequest$placement": "<p>The instance placement settings that define where the instances that are launched from your image will run.</p>"
       }
     },
     "Platform": {
@@ -2517,45 +2443,62 @@
         "ImportVmImageRequest$platform": "<p>The operating system platform for the imported VM.</p>"
       }
     },
-    "PutComponentPolicyRequest": {
+    "ProductCodeId": {
       "base": null,
       "refs": {
+        "ProductCodeListItem$productCodeId": "<p>For Amazon Web Services Marketplace components, this contains the product code ID that can be stamped onto an EC2 AMI to ensure that components are billed correctly. If this property is empty, it might mean that the component is not published.</p>"
       }
+    },
+    "ProductCodeList": {
+      "base": null,
+      "refs": {
+        "Component$productCodes": "<p>Contains product codes that are used for billing purposes for Amazon Web Services Marketplace components.</p>",
+        "ComponentVersion$productCodes": "<p>Contains product codes that are used for billing purposes for Amazon Web Services Marketplace components.</p>"
+      }
+    },
+    "ProductCodeListItem": {
+      "base": "<p>Information about a single product code.</p>",
+      "refs": {
+        "ProductCodeList$member": null
+      }
+    },
+    "ProductCodeType": {
+      "base": null,
+      "refs": {
+        "ProductCodeListItem$productCodeType": "<p>The owner of the product code that's billed. If this property is empty, it might mean that the component is not published.</p>"
+      }
+    },
+    "PutComponentPolicyRequest": {
+      "base": null,
+      "refs": {}
     },
     "PutComponentPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutContainerRecipePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutContainerRecipePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutImagePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutImagePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutImageRecipePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutImageRecipePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegionList": {
       "base": null,
@@ -2577,18 +2520,15 @@
     },
     "ResourceAlreadyExistsException": {
       "base": "<p>The resource that you are trying to create already exists.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceDependencyException": {
       "base": "<p>You have attempted to mutate or delete a resource with a dependency that prohibits this action. See the error message for more details.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceInUseException": {
       "base": "<p>The resource that you are trying to operate on is currently in use. Review the message details and retry later.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceName": {
       "base": null,
@@ -2628,8 +2568,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>At least one of the resources referenced by your request does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyDocument": {
       "base": null,
@@ -2671,7 +2610,7 @@
     "ResourceTagMap": {
       "base": null,
       "refs": {
-        "CreateInfrastructureConfigurationRequest$resourceTags": "<p>The tags attached to the resource created by Image Builder.</p>",
+        "CreateInfrastructureConfigurationRequest$resourceTags": "<p>The metadata tags to assign to the Amazon EC2 instance that Image Builder launches during the build process. Tags are formatted as key value pairs.</p>",
         "InfrastructureConfiguration$resourceTags": "<p>The tags attached to the resource created by Image Builder.</p>",
         "InfrastructureConfigurationSummary$resourceTags": "<p>The tags attached to the image created by Image Builder.</p>",
         "UpdateInfrastructureConfigurationRequest$resourceTags": "<p>The tags attached to the resource created by Image Builder.</p>"
@@ -2710,6 +2649,7 @@
         "CreateLifecyclePolicyRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to run lifecycle actions.</p>",
         "Image$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
         "ImagePipeline$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions.</p>",
+        "ImportDiskImageRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) for the IAM role you create that grants Image Builder access to perform workflow actions to import an image from a Microsoft ISO file.</p>",
         "LifecyclePolicy$executionRole": "<p>The name or Amazon Resource Name (ARN) of the IAM role that Image Builder uses to run the lifecycle policy. This is a custom role that you create.</p>",
         "LifecyclePolicySummary$executionRole": "<p>The name or Amazon Resource Name (ARN) of the IAM role that Image Builder uses to run the lifecycle policy.</p>",
         "StartResourceStateUpdateRequest$executionRole": "<p>The name or Amazon Resource Name (ARN) of the IAM role that’s used to update image state.</p>",
@@ -2747,28 +2687,23 @@
     },
     "SendWorkflowStepActionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendWorkflowStepActionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceException": {
       "base": "<p>This exception is thrown when the service encounters an unrecoverable exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You have exceeded the number of permitted resources or operations for this service. For service quotas, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/imagebuilder.html#limits_imagebuilder\">EC2 Image Builder endpoints and quotas</a>.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceUnavailableException": {
       "base": "<p>The service is unable to process your request at this time.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SeverityCountNumber": {
       "base": null,
@@ -2801,32 +2736,52 @@
         "VulnerablePackage$sourceLayerHash": "<p>The source layer hash of the vulnerable package.</p>"
       }
     },
-    "StartImagePipelineExecutionRequest": {
+    "SsmParameterConfiguration": {
+      "base": "<p>Configuration for a single Parameter in the Amazon Web Services Systems Manager (SSM) Parameter Store in a given Region.</p>",
+      "refs": {
+        "SsmParameterConfigurationList$member": null
+      }
+    },
+    "SsmParameterConfigurationList": {
       "base": null,
       "refs": {
+        "Distribution$ssmParameterConfigurations": "<p>Contains settings to update Amazon Web Services Systems Manager (SSM) Parameter Store Parameters with output AMI IDs from the build by target Region.</p>"
       }
+    },
+    "SsmParameterDataType": {
+      "base": null,
+      "refs": {
+        "SsmParameterConfiguration$dataType": "<p>The data type specifies what type of value the Parameter contains. We recommend that you use data type <code>aws:ec2:image</code>.</p>"
+      }
+    },
+    "SsmParameterName": {
+      "base": null,
+      "refs": {
+        "SsmParameterConfiguration$parameterName": "<p>This is the name of the Parameter in the target Region or account. The image distribution creates the Parameter if it doesn't already exist. Otherwise, it updates the parameter.</p>"
+      }
+    },
+    "StartImagePipelineExecutionRequest": {
+      "base": null,
+      "refs": {}
     },
     "StartImagePipelineExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartResourceStateUpdateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartResourceStateUpdateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StringList": {
       "base": null,
       "refs": {
         "Container$imageUris": "<p>A list of URIs for containers created in the context Region.</p>",
         "ContainerDistributionConfiguration$containerTags": "<p>Tags that are attached to the container distribution configuration.</p>",
-        "EcrConfiguration$containerTags": "<p>Tags for Image Builder to apply to the output container image that &amp;INS; scans. Tags can help you identify and manage your scanned images.</p>",
+        "EcrConfiguration$containerTags": "<p>Tags for Image Builder to apply to the output container image that Amazon Inspector scans. Tags can help you identify and manage your scanned images.</p>",
         "LaunchPermissionConfiguration$userGroups": "<p>The name of the group.</p>",
         "LifecycleExecutionResource$imageUris": "<p>For an impacted container image, this identifies a list of URIs for associated container images distributed to ECR repositories.</p>",
         "LifecyclePolicyDetailExclusionRulesAmis$regions": "<p>Configures Amazon Web Services Regions that are excluded from the lifecycle action.</p>"
@@ -2866,7 +2821,7 @@
         "CreateImagePipelineRequest$tags": "<p>The tags of the image pipeline.</p>",
         "CreateImageRecipeRequest$tags": "<p>The tags of the image recipe.</p>",
         "CreateImageRequest$tags": "<p>The tags of the image.</p>",
-        "CreateInfrastructureConfigurationRequest$tags": "<p>The tags of the infrastructure configuration.</p>",
+        "CreateInfrastructureConfigurationRequest$tags": "<p>The metadata tags to assign to the infrastructure configuration resource that Image Builder creates as output. Tags are formatted as key value pairs.</p>",
         "CreateLifecyclePolicyRequest$tags": "<p>Tags to apply to the lifecycle policy resource.</p>",
         "CreateWorkflowRequest$tags": "<p>Tags that apply to the workflow resource.</p>",
         "DistributionConfiguration$tags": "<p>The tags of the distribution configuration.</p>",
@@ -2877,6 +2832,7 @@
         "ImageRecipeSummary$tags": "<p>The tags of the image recipe.</p>",
         "ImageSummary$tags": "<p>The tags that apply to this image.</p>",
         "ImportComponentRequest$tags": "<p>The tags of the component.</p>",
+        "ImportDiskImageRequest$tags": "<p>Tags that are attached to image resources created from the import.</p>",
         "ImportVmImageRequest$tags": "<p>Tags that are attached to the import resources.</p>",
         "InfrastructureConfiguration$tags": "<p>The tags of the infrastructure configuration.</p>",
         "InfrastructureConfigurationSummary$tags": "<p>The tags of the infrastructure configuration.</p>",
@@ -2893,13 +2849,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2922,6 +2876,12 @@
         "FastLaunchSnapshotConfiguration$targetResourceCount": "<p>The number of pre-provisioned snapshots to keep on hand for a fast-launch enabled Windows AMI.</p>"
       }
     },
+    "TenancyType": {
+      "base": null,
+      "refs": {
+        "Placement$tenancy": "<p>The tenancy of the instance. An instance with a tenancy of <code>dedicated</code> runs on single-tenant hardware. An instance with a tenancy of <code>host</code> runs on a Dedicated Host.</p> <p>If tenancy is set to <code>host</code>, then you can optionally specify one target for placement – either host ID or host resource group ARN. If automatic placement is enabled for your host, and you don't specify any placement target, Amazon EC2 will try to find an available host for your build and test instances.</p>"
+      }
+    },
     "Timezone": {
       "base": null,
       "refs": {
@@ -2930,53 +2890,43 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDistributionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDistributionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateImagePipelineRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateImagePipelineResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInfrastructureConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateInfrastructureConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Uri": {
       "base": null,
@@ -2984,7 +2934,8 @@
         "CreateComponentRequest$uri": "<p>The <code>uri</code> of a YAML component document file. This must be an S3 URL (<code>s3://bucket/key</code>), and the requester must have permission to access the S3 bucket it points to. If you use Amazon S3, you can specify component content up to your service quota.</p> <p>Alternatively, you can specify the YAML document inline, using the component <code>data</code> property. You cannot specify both properties.</p>",
         "CreateContainerRecipeRequest$dockerfileTemplateUri": "<p>The Amazon S3 URI for the Dockerfile that will be used to build your container image.</p>",
         "CreateWorkflowRequest$uri": "<p>The <code>uri</code> of a YAML component document file. This must be an S3 URL (<code>s3://bucket/key</code>), and the requester must have permission to access the S3 bucket it points to. If you use Amazon S3, you can specify component content up to your service quota.</p> <p>Alternatively, you can specify the YAML document inline, using the component <code>data</code> property. You cannot specify both properties.</p>",
-        "ImportComponentRequest$uri": "<p>The uri of the component. Must be an Amazon S3 URL and the requester must have permission to access the Amazon S3 bucket. If you use Amazon S3, you can specify component content up to your service quota. Either <code>data</code> or <code>uri</code> can be used to specify the data within the component.</p>"
+        "ImportComponentRequest$uri": "<p>The uri of the component. Must be an Amazon S3 URL and the requester must have permission to access the Amazon S3 bucket. If you use Amazon S3, you can specify component content up to your service quota. Either <code>data</code> or <code>uri</code> can be used to specify the data within the component.</p>",
+        "ImportDiskImageRequest$uri": "<p>The <code>uri</code> of the ISO disk file that's stored in Amazon S3.</p>"
       }
     },
     "UserDataOverride": {
@@ -3009,6 +2960,7 @@
         "ImageSummary$version": "<p>The version of the image.</p>",
         "ImageVersion$version": "<p>Details for a specific version of an Image Builder image. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
         "ImportComponentRequest$semanticVersion": "<p>The semantic version of the component. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Filtering:</b> With semantic versioning, you have the flexibility to use wildcards (x) to specify the most recent versions or nodes when selecting the base image or components for your recipe. When you use a wildcard in any node, all nodes to the right of the first wildcard must also be wildcards.</p> </note>",
+        "ImportDiskImageRequest$semanticVersion": "<p>The semantic version to attach to the image that's created during the import process. This version follows the semantic version syntax.</p>",
         "ImportVmImageRequest$semanticVersion": "<p>The semantic version to attach to the base image that was created during the import process. This version follows the semantic version syntax.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> <p> <b>Assignment:</b> For the first three nodes you can assign any positive integer value, including zero, with an upper limit of 2^30-1, or 1073741823 for each node. Image Builder automatically assigns the build number to the fourth node.</p> <p> <b>Patterns:</b> You can use any numeric pattern that adheres to the assignment requirements for the nodes that you can assign. For example, you might choose a software version pattern, such as 1.0.0, or a date, such as 2021.01.01.</p> </note>",
         "LifecyclePolicyResourceSelectionRecipe$semanticVersion": "<p>The version of the Image Builder recipe specified by the <code>name</code> field.</p>",
         "Workflow$version": "<p>The workflow resource version. Workflow resources are immutable. To make a change, you can clone a workflow or create a new version.</p>",

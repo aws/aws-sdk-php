@@ -236,6 +236,51 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "CreateMultiRegionEndpoint":{
+      "name":"CreateMultiRegionEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/multi-region-endpoints"
+      },
+      "input":{"shape":"CreateMultiRegionEndpointRequest"},
+      "output":{"shape":"CreateMultiRegionEndpointResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"AlreadyExistsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "CreateTenant":{
+      "name":"CreateTenant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants"
+      },
+      "input":{"shape":"CreateTenantRequest"},
+      "output":{"shape":"CreateTenantResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "CreateTenantResourceAssociation":{
+      "name":"CreateTenantResourceAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/resources"
+      },
+      "input":{"shape":"CreateTenantResourceAssociationRequest"},
+      "output":{"shape":"CreateTenantResourceAssociationResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "DeleteConfigurationSet":{
       "name":"DeleteConfigurationSet",
       "http":{
@@ -366,6 +411,21 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "DeleteMultiRegionEndpoint":{
+      "name":"DeleteMultiRegionEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/email/multi-region-endpoints/{EndpointName}"
+      },
+      "input":{"shape":"DeleteMultiRegionEndpointRequest"},
+      "output":{"shape":"DeleteMultiRegionEndpointResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "DeleteSuppressedDestination":{
       "name":"DeleteSuppressedDestination",
       "http":{
@@ -378,6 +438,34 @@
         {"shape":"NotFoundException"},
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "DeleteTenant":{
+      "name":"DeleteTenant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/delete"
+      },
+      "input":{"shape":"DeleteTenantRequest"},
+      "output":{"shape":"DeleteTenantResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "DeleteTenantResourceAssociation":{
+      "name":"DeleteTenantResourceAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/resources/delete"
+      },
+      "input":{"shape":"DeleteTenantResourceAssociationRequest"},
+      "output":{"shape":"DeleteTenantResourceAssociationResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "GetAccount":{
@@ -659,6 +747,34 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "GetMultiRegionEndpoint":{
+      "name":"GetMultiRegionEndpoint",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/email/multi-region-endpoints/{EndpointName}"
+      },
+      "input":{"shape":"GetMultiRegionEndpointRequest"},
+      "output":{"shape":"GetMultiRegionEndpointResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "GetReputationEntity":{
+      "name":"GetReputationEntity",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/email/reputation/entities/{ReputationEntityType}/{ReputationEntityReference}"
+      },
+      "input":{"shape":"GetReputationEntityRequest"},
+      "output":{"shape":"GetReputationEntityResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "GetSuppressedDestination":{
       "name":"GetSuppressedDestination",
       "http":{
@@ -671,6 +787,20 @@
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"NotFoundException"}
+      ]
+    },
+    "GetTenant":{
+      "name":"GetTenant",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/get"
+      },
+      "input":{"shape":"GetTenantRequest"},
+      "output":{"shape":"GetTenantResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "ListConfigurationSets":{
@@ -819,6 +949,19 @@
         {"shape":"BadRequestException"}
       ]
     },
+    "ListMultiRegionEndpoints":{
+      "name":"ListMultiRegionEndpoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v2/email/multi-region-endpoints"
+      },
+      "input":{"shape":"ListMultiRegionEndpointsRequest"},
+      "output":{"shape":"ListMultiRegionEndpointsResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "ListRecommendations":{
       "name":"ListRecommendations",
       "http":{
@@ -831,6 +974,33 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"}
+      ]
+    },
+    "ListReputationEntities":{
+      "name":"ListReputationEntities",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/reputation/entities"
+      },
+      "input":{"shape":"ListReputationEntitiesRequest"},
+      "output":{"shape":"ListReputationEntitiesResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "ListResourceTenants":{
+      "name":"ListResourceTenants",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/resources/tenants/list"
+      },
+      "input":{"shape":"ListResourceTenantsRequest"},
+      "output":{"shape":"ListResourceTenantsResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "ListSuppressedDestinations":{
@@ -859,6 +1029,33 @@
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
         {"shape":"TooManyRequestsException"}
+      ]
+    },
+    "ListTenantResources":{
+      "name":"ListTenantResources",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/resources/list"
+      },
+      "input":{"shape":"ListTenantResourcesRequest"},
+      "output":{"shape":"ListTenantResourcesResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "ListTenants":{
+      "name":"ListTenants",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/email/tenants/list"
+      },
+      "input":{"shape":"ListTenantsRequest"},
+      "output":{"shape":"ListTenantsResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "PutAccountDedicatedIpWarmupAttributes":{
@@ -926,6 +1123,21 @@
         {"shape":"BadRequestException"},
         {"shape":"TooManyRequestsException"}
       ]
+    },
+    "PutConfigurationSetArchivingOptions":{
+      "name":"PutConfigurationSetArchivingOptions",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/email/configuration-sets/{ConfigurationSetName}/archiving-options"
+      },
+      "input":{"shape":"PutConfigurationSetArchivingOptionsRequest"},
+      "output":{"shape":"PutConfigurationSetArchivingOptionsResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"}
+      ],
+      "idempotent":true
     },
     "PutConfigurationSetDeliveryOptions":{
       "name":"PutConfigurationSetDeliveryOptions",
@@ -1339,6 +1551,34 @@
         {"shape":"TooManyRequestsException"},
         {"shape":"BadRequestException"}
       ]
+    },
+    "UpdateReputationEntityCustomerManagedStatus":{
+      "name":"UpdateReputationEntityCustomerManagedStatus",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/email/reputation/entities/{ReputationEntityType}/{ReputationEntityReference}/customer-managed-status"
+      },
+      "input":{"shape":"UpdateReputationEntityCustomerManagedStatusRequest"},
+      "output":{"shape":"UpdateReputationEntityCustomerManagedStatusResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "UpdateReputationEntityPolicy":{
+      "name":"UpdateReputationEntityPolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v2/email/reputation/entities/{ReputationEntityType}/{ReputationEntityReference}/policy"
+      },
+      "input":{"shape":"UpdateReputationEntityPolicyRequest"},
+      "output":{"shape":"UpdateReputationEntityPolicyResponse"},
+      "errors":[
+        {"shape":"TooManyRequestsException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConflictException"}
+      ]
     }
   },
   "shapes":{
@@ -1355,8 +1595,7 @@
     },
     "AccountSuspendedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -1377,17 +1616,83 @@
     "AdminEmail":{"type":"string"},
     "AlreadyExistsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
-    "AmazonResourceName":{"type":"string"},
+    "AmazonResourceName":{
+      "type":"string",
+      "min":1
+    },
+    "ArchiveArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:(aws|aws-[a-z-]+):ses:[a-z]{2}-[a-z-]+-[0-9]:[0-9]{1,20}:mailmanager-archive/a-[a-z0-9]{24,62}"
+    },
+    "ArchivingOptions":{
+      "type":"structure",
+      "members":{
+        "ArchiveArn":{"shape":"ArchiveArn"}
+      }
+    },
+    "Attachment":{
+      "type":"structure",
+      "required":[
+        "RawContent",
+        "FileName"
+      ],
+      "members":{
+        "RawContent":{"shape":"RawAttachmentData"},
+        "ContentDisposition":{"shape":"AttachmentContentDisposition"},
+        "FileName":{"shape":"AttachmentFileName"},
+        "ContentDescription":{"shape":"AttachmentContentDescription"},
+        "ContentId":{"shape":"AttachmentContentId"},
+        "ContentTransferEncoding":{"shape":"AttachmentContentTransferEncoding"},
+        "ContentType":{"shape":"AttachmentContentType"}
+      }
+    },
+    "AttachmentContentDescription":{
+      "type":"string",
+      "max":1000
+    },
+    "AttachmentContentDisposition":{
+      "type":"string",
+      "enum":[
+        "ATTACHMENT",
+        "INLINE"
+      ]
+    },
+    "AttachmentContentId":{
+      "type":"string",
+      "max":78,
+      "min":1
+    },
+    "AttachmentContentTransferEncoding":{
+      "type":"string",
+      "enum":[
+        "BASE64",
+        "QUOTED_PRINTABLE",
+        "SEVEN_BIT"
+      ]
+    },
+    "AttachmentContentType":{
+      "type":"string",
+      "max":78,
+      "min":1
+    },
+    "AttachmentFileName":{
+      "type":"string",
+      "max":255
+    },
+    "AttachmentList":{
+      "type":"list",
+      "member":{"shape":"Attachment"}
+    },
     "AttributesData":{"type":"string"},
     "BadRequestException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -1548,8 +1853,7 @@
     },
     "CancelExportJobResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CaseId":{"type":"string"},
     "Charset":{"type":"string"},
@@ -1588,8 +1892,7 @@
     "ComplaintSubType":{"type":"string"},
     "ConcurrentModificationException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
@@ -1601,8 +1904,7 @@
     },
     "ConflictException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":409},
       "exception":true
     },
@@ -1677,8 +1979,7 @@
     },
     "CreateConfigurationSetEventDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateConfigurationSetRequest":{
       "type":"structure",
@@ -1691,13 +1992,13 @@
         "SendingOptions":{"shape":"SendingOptions"},
         "Tags":{"shape":"TagList"},
         "SuppressionOptions":{"shape":"SuppressionOptions"},
-        "VdmOptions":{"shape":"VdmOptions"}
+        "VdmOptions":{"shape":"VdmOptions"},
+        "ArchivingOptions":{"shape":"ArchivingOptions"}
       }
     },
     "CreateConfigurationSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateContactListRequest":{
       "type":"structure",
@@ -1711,8 +2012,7 @@
     },
     "CreateContactListResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateContactRequest":{
       "type":"structure",
@@ -1734,8 +2034,7 @@
     },
     "CreateContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateCustomVerificationEmailTemplateRequest":{
       "type":"structure",
@@ -1758,8 +2057,7 @@
     },
     "CreateCustomVerificationEmailTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateDedicatedIpPoolRequest":{
       "type":"structure",
@@ -1772,8 +2070,7 @@
     },
     "CreateDedicatedIpPoolResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateDeliverabilityTestReportRequest":{
       "type":"structure",
@@ -1822,8 +2119,7 @@
     },
     "CreateEmailIdentityPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateEmailIdentityRequest":{
       "type":"structure",
@@ -1856,8 +2152,7 @@
     },
     "CreateEmailTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateExportJobRequest":{
       "type":"structure",
@@ -1891,6 +2186,59 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"}
+      }
+    },
+    "CreateMultiRegionEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "EndpointName",
+        "Details"
+      ],
+      "members":{
+        "EndpointName":{"shape":"EndpointName"},
+        "Details":{"shape":"Details"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateMultiRegionEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"Status"},
+        "EndpointId":{"shape":"EndpointId"}
+      }
+    },
+    "CreateTenantRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateTenantResourceAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "TenantName",
+        "ResourceArn"
+      ],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "CreateTenantResourceAssociationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "CreateTenantResponse":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "TenantArn":{"shape":"AmazonResourceName"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Tags":{"shape":"TagList"},
+        "SendingStatus":{"shape":"SendingStatus"}
       }
     },
     "CustomRedirectDomain":{"type":"string"},
@@ -1990,8 +2338,7 @@
     },
     "DeleteConfigurationSetEventDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteConfigurationSetRequest":{
       "type":"structure",
@@ -2006,8 +2353,7 @@
     },
     "DeleteConfigurationSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContactListRequest":{
       "type":"structure",
@@ -2022,8 +2368,7 @@
     },
     "DeleteContactListResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteContactRequest":{
       "type":"structure",
@@ -2046,8 +2391,7 @@
     },
     "DeleteContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCustomVerificationEmailTemplateRequest":{
       "type":"structure",
@@ -2062,8 +2406,7 @@
     },
     "DeleteCustomVerificationEmailTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDedicatedIpPoolRequest":{
       "type":"structure",
@@ -2078,8 +2421,7 @@
     },
     "DeleteDedicatedIpPoolResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEmailIdentityPolicyRequest":{
       "type":"structure",
@@ -2102,8 +2444,7 @@
     },
     "DeleteEmailIdentityPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEmailIdentityRequest":{
       "type":"structure",
@@ -2118,8 +2459,7 @@
     },
     "DeleteEmailIdentityResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEmailTemplateRequest":{
       "type":"structure",
@@ -2134,7 +2474,23 @@
     },
     "DeleteEmailTemplateResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteMultiRegionEndpointRequest":{
+      "type":"structure",
+      "required":["EndpointName"],
       "members":{
+        "EndpointName":{
+          "shape":"EndpointName",
+          "location":"uri",
+          "locationName":"EndpointName"
+        }
+      }
+    },
+    "DeleteMultiRegionEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"Status"}
       }
     },
     "DeleteSuppressedDestinationRequest":{
@@ -2150,8 +2506,33 @@
     },
     "DeleteSuppressedDestinationResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "DeleteTenantRequest":{
+      "type":"structure",
+      "required":["TenantName"],
       "members":{
+        "TenantName":{"shape":"TenantName"}
       }
+    },
+    "DeleteTenantResourceAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "TenantName",
+        "ResourceArn"
+      ],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "DeleteTenantResourceAssociationResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteTenantResponse":{
+      "type":"structure",
+      "members":{}
     },
     "DeliverabilityDashboardAccountStatus":{
       "type":"string",
@@ -2199,7 +2580,8 @@
       "type":"structure",
       "members":{
         "TlsPolicy":{"shape":"TlsPolicy"},
-        "SendingPoolName":{"shape":"PoolName"}
+        "SendingPoolName":{"shape":"PoolName"},
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
       }
     },
     "Description":{"type":"string"},
@@ -2209,6 +2591,13 @@
         "ToAddresses":{"shape":"EmailAddressList"},
         "CcAddresses":{"shape":"EmailAddressList"},
         "BccAddresses":{"shape":"EmailAddressList"}
+      }
+    },
+    "Details":{
+      "type":"structure",
+      "required":["RoutesDetails"],
+      "members":{
+        "RoutesDetails":{"shape":"RoutesDetails"}
       }
     },
     "DiagnosticCode":{"type":"string"},
@@ -2246,14 +2635,40 @@
       "members":{
         "DomainSigningSelector":{"shape":"Selector"},
         "DomainSigningPrivateKey":{"shape":"PrivateKey"},
-        "NextSigningKeyLength":{"shape":"DkimSigningKeyLength"}
+        "NextSigningKeyLength":{"shape":"DkimSigningKeyLength"},
+        "DomainSigningAttributesOrigin":{"shape":"DkimSigningAttributesOrigin"}
       }
     },
     "DkimSigningAttributesOrigin":{
       "type":"string",
       "enum":[
         "AWS_SES",
-        "EXTERNAL"
+        "EXTERNAL",
+        "AWS_SES_AF_SOUTH_1",
+        "AWS_SES_EU_NORTH_1",
+        "AWS_SES_AP_SOUTH_1",
+        "AWS_SES_EU_WEST_3",
+        "AWS_SES_EU_WEST_2",
+        "AWS_SES_EU_SOUTH_1",
+        "AWS_SES_EU_WEST_1",
+        "AWS_SES_AP_NORTHEAST_3",
+        "AWS_SES_AP_NORTHEAST_2",
+        "AWS_SES_ME_SOUTH_1",
+        "AWS_SES_AP_NORTHEAST_1",
+        "AWS_SES_IL_CENTRAL_1",
+        "AWS_SES_SA_EAST_1",
+        "AWS_SES_CA_CENTRAL_1",
+        "AWS_SES_AP_SOUTHEAST_1",
+        "AWS_SES_AP_SOUTHEAST_2",
+        "AWS_SES_AP_SOUTHEAST_3",
+        "AWS_SES_EU_CENTRAL_1",
+        "AWS_SES_US_EAST_1",
+        "AWS_SES_US_EAST_2",
+        "AWS_SES_US_WEST_1",
+        "AWS_SES_US_WEST_2",
+        "AWS_SES_ME_CENTRAL_1",
+        "AWS_SES_AP_SOUTH_2",
+        "AWS_SES_EU_CENTRAL_2"
       ]
     },
     "DkimSigningKeyLength":{
@@ -2401,6 +2816,13 @@
     "EmailTemplateText":{"type":"string"},
     "Enabled":{"type":"boolean"},
     "EnabledWrapper":{"type":"boolean"},
+    "EndpointId":{"type":"string"},
+    "EndpointName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[\\w\\-_]+$"
+    },
     "EngagementEventType":{
       "type":"string",
       "enum":[
@@ -2572,8 +2994,7 @@
     "GeneralEnforcementStatus":{"type":"string"},
     "GetAccountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountResponse":{
       "type":"structure",
@@ -2644,7 +3065,8 @@
         "SendingOptions":{"shape":"SendingOptions"},
         "Tags":{"shape":"TagList"},
         "SuppressionOptions":{"shape":"SuppressionOptions"},
-        "VdmOptions":{"shape":"VdmOptions"}
+        "VdmOptions":{"shape":"VdmOptions"},
+        "ArchivingOptions":{"shape":"ArchivingOptions"}
       }
     },
     "GetContactListRequest":{
@@ -2786,8 +3208,7 @@
     },
     "GetDeliverabilityDashboardOptionsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetDeliverabilityDashboardOptionsResponse":{
       "type":"structure",
@@ -3016,6 +3437,53 @@
         "Insights":{"shape":"EmailInsightsList"}
       }
     },
+    "GetMultiRegionEndpointRequest":{
+      "type":"structure",
+      "required":["EndpointName"],
+      "members":{
+        "EndpointName":{
+          "shape":"EndpointName",
+          "location":"uri",
+          "locationName":"EndpointName"
+        }
+      }
+    },
+    "GetMultiRegionEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "EndpointName":{"shape":"EndpointName"},
+        "EndpointId":{"shape":"EndpointId"},
+        "Routes":{"shape":"Routes"},
+        "Status":{"shape":"Status"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "GetReputationEntityRequest":{
+      "type":"structure",
+      "required":[
+        "ReputationEntityReference",
+        "ReputationEntityType"
+      ],
+      "members":{
+        "ReputationEntityReference":{
+          "shape":"ReputationEntityReference",
+          "location":"uri",
+          "locationName":"ReputationEntityReference"
+        },
+        "ReputationEntityType":{
+          "shape":"ReputationEntityType",
+          "location":"uri",
+          "locationName":"ReputationEntityType"
+        }
+      }
+    },
+    "GetReputationEntityResponse":{
+      "type":"structure",
+      "members":{
+        "ReputationEntity":{"shape":"ReputationEntity"}
+      }
+    },
     "GetSuppressedDestinationRequest":{
       "type":"structure",
       "required":["EmailAddress"],
@@ -3034,6 +3502,19 @@
         "SuppressedDestination":{"shape":"SuppressedDestination"}
       }
     },
+    "GetTenantRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"}
+      }
+    },
+    "GetTenantResponse":{
+      "type":"structure",
+      "members":{
+        "Tenant":{"shape":"Tenant"}
+      }
+    },
     "GuardianAttributes":{
       "type":"structure",
       "members":{
@@ -3045,6 +3526,14 @@
       "members":{
         "OptimizedSharedDelivery":{"shape":"FeatureStatus"}
       }
+    },
+    "HttpsPolicy":{
+      "type":"string",
+      "enum":[
+        "REQUIRE",
+        "REQUIRE_OPEN_ONLY",
+        "OPTIONAL"
+      ]
     },
     "Identity":{
       "type":"string",
@@ -3139,16 +3628,14 @@
     },
     "InternalServiceErrorException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
     },
     "InvalidNextTokenException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -3217,8 +3704,7 @@
     "LastFreshStart":{"type":"timestamp"},
     "LimitExceededException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -3487,6 +3973,28 @@
         "TopicName":{"shape":"TopicName"}
       }
     },
+    "ListMultiRegionEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextTokenV2",
+          "location":"querystring",
+          "locationName":"NextToken"
+        },
+        "PageSize":{
+          "shape":"PageSizeV2",
+          "location":"querystring",
+          "locationName":"PageSize"
+        }
+      }
+    },
+    "ListMultiRegionEndpointsResponse":{
+      "type":"structure",
+      "members":{
+        "MultiRegionEndpoints":{"shape":"MultiRegionEndpoints"},
+        "NextToken":{"shape":"NextTokenV2"}
+      }
+    },
     "ListOfContactLists":{
       "type":"list",
       "member":{"shape":"ContactList"}
@@ -3532,6 +4040,37 @@
       "type":"structure",
       "members":{
         "Recommendations":{"shape":"RecommendationsList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListReputationEntitiesRequest":{
+      "type":"structure",
+      "members":{
+        "Filter":{"shape":"ReputationEntityFilter"},
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
+      }
+    },
+    "ListReputationEntitiesResponse":{
+      "type":"structure",
+      "members":{
+        "ReputationEntities":{"shape":"ReputationEntitiesList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResourceTenantsRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "PageSize":{"shape":"MaxItems"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListResourceTenantsResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceTenants":{"shape":"ResourceTenantMetadataList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -3590,6 +4129,51 @@
         "Tags":{"shape":"TagList"}
       }
     },
+    "ListTenantResourcesFilter":{
+      "type":"map",
+      "key":{"shape":"ListTenantResourcesFilterKey"},
+      "value":{"shape":"ListTenantResourcesFilterValue"}
+    },
+    "ListTenantResourcesFilterKey":{
+      "type":"string",
+      "enum":["RESOURCE_TYPE"]
+    },
+    "ListTenantResourcesFilterValue":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "ListTenantResourcesRequest":{
+      "type":"structure",
+      "required":["TenantName"],
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "Filter":{"shape":"ListTenantResourcesFilter"},
+        "PageSize":{"shape":"MaxItems"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTenantResourcesResponse":{
+      "type":"structure",
+      "members":{
+        "TenantResources":{"shape":"TenantResourceList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListTenantsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "PageSize":{"shape":"MaxItems"}
+      }
+    },
+    "ListTenantsResponse":{
+      "type":"structure",
+      "members":{
+        "Tenants":{"shape":"TenantInfoList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "MailFromAttributes":{
       "type":"structure",
       "required":[
@@ -3606,8 +4190,7 @@
     "MailFromDomainName":{"type":"string"},
     "MailFromDomainNotVerifiedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -3628,6 +4211,11 @@
       ]
     },
     "Max24HourSend":{"type":"double"},
+    "MaxDeliverySeconds":{
+      "type":"long",
+      "max":50400,
+      "min":300
+    },
     "MaxItems":{"type":"integer"},
     "MaxSendRate":{"type":"double"},
     "Message":{
@@ -3639,7 +4227,8 @@
       "members":{
         "Subject":{"shape":"Content"},
         "Body":{"shape":"Body"},
-        "Headers":{"shape":"MessageHeaderList"}
+        "Headers":{"shape":"MessageHeaderList"},
+        "Attachments":{"shape":"AttachmentList"}
       }
     },
     "MessageContent":{"type":"string"},
@@ -3705,8 +4294,7 @@
     },
     "MessageRejected":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
@@ -3807,11 +4395,31 @@
         "EndDate":{"shape":"Timestamp"}
       }
     },
-    "NextToken":{"type":"string"},
-    "NotFoundException":{
+    "MultiRegionEndpoint":{
       "type":"structure",
       "members":{
-      },
+        "EndpointName":{"shape":"EndpointName"},
+        "Status":{"shape":"Status"},
+        "EndpointId":{"shape":"EndpointId"},
+        "Regions":{"shape":"Regions"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "MultiRegionEndpoints":{
+      "type":"list",
+      "member":{"shape":"MultiRegionEndpoint"}
+    },
+    "NextToken":{"type":"string"},
+    "NextTokenV2":{
+      "type":"string",
+      "max":5000,
+      "min":1,
+      "pattern":"^^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+    },
+    "NotFoundException":{
+      "type":"structure",
+      "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
     },
@@ -3823,6 +4431,11 @@
         "ReadRatePercent":{"shape":"Percentage"},
         "DomainIspPlacements":{"shape":"DomainIspPlacements"}
       }
+    },
+    "PageSizeV2":{
+      "type":"integer",
+      "max":1000,
+      "min":1
     },
     "Percentage":{"type":"double"},
     "Percentage100Wrapper":{"type":"integer"},
@@ -3874,15 +4487,13 @@
     },
     "PutAccountDedicatedIpWarmupAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutAccountDetailsRequest":{
       "type":"structure",
       "required":[
         "MailType",
-        "WebsiteURL",
-        "UseCaseDescription"
+        "WebsiteURL"
       ],
       "members":{
         "MailType":{"shape":"MailType"},
@@ -3895,8 +4506,7 @@
     },
     "PutAccountDetailsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutAccountSendingAttributesRequest":{
       "type":"structure",
@@ -3906,8 +4516,7 @@
     },
     "PutAccountSendingAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutAccountSuppressionAttributesRequest":{
       "type":"structure",
@@ -3917,8 +4526,7 @@
     },
     "PutAccountSuppressionAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutAccountVdmAttributesRequest":{
       "type":"structure",
@@ -3929,8 +4537,23 @@
     },
     "PutAccountVdmAttributesResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "PutConfigurationSetArchivingOptionsRequest":{
+      "type":"structure",
+      "required":["ConfigurationSetName"],
       "members":{
+        "ConfigurationSetName":{
+          "shape":"ConfigurationSetName",
+          "location":"uri",
+          "locationName":"ConfigurationSetName"
+        },
+        "ArchiveArn":{"shape":"ArchiveArn"}
       }
+    },
+    "PutConfigurationSetArchivingOptionsResponse":{
+      "type":"structure",
+      "members":{}
     },
     "PutConfigurationSetDeliveryOptionsRequest":{
       "type":"structure",
@@ -3942,13 +4565,13 @@
           "locationName":"ConfigurationSetName"
         },
         "TlsPolicy":{"shape":"TlsPolicy"},
-        "SendingPoolName":{"shape":"SendingPoolName"}
+        "SendingPoolName":{"shape":"SendingPoolName"},
+        "MaxDeliverySeconds":{"shape":"MaxDeliverySeconds"}
       }
     },
     "PutConfigurationSetDeliveryOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetReputationOptionsRequest":{
       "type":"structure",
@@ -3964,8 +4587,7 @@
     },
     "PutConfigurationSetReputationOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetSendingOptionsRequest":{
       "type":"structure",
@@ -3981,8 +4603,7 @@
     },
     "PutConfigurationSetSendingOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetSuppressionOptionsRequest":{
       "type":"structure",
@@ -3998,8 +4619,7 @@
     },
     "PutConfigurationSetSuppressionOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetTrackingOptionsRequest":{
       "type":"structure",
@@ -4010,13 +4630,13 @@
           "location":"uri",
           "locationName":"ConfigurationSetName"
         },
-        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"}
+        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"},
+        "HttpsPolicy":{"shape":"HttpsPolicy"}
       }
     },
     "PutConfigurationSetTrackingOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutConfigurationSetVdmOptionsRequest":{
       "type":"structure",
@@ -4032,8 +4652,7 @@
     },
     "PutConfigurationSetVdmOptionsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutDedicatedIpInPoolRequest":{
       "type":"structure",
@@ -4052,8 +4671,7 @@
     },
     "PutDedicatedIpInPoolResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutDedicatedIpPoolScalingAttributesRequest":{
       "type":"structure",
@@ -4072,8 +4690,7 @@
     },
     "PutDedicatedIpPoolScalingAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutDedicatedIpWarmupAttributesRequest":{
       "type":"structure",
@@ -4092,8 +4709,7 @@
     },
     "PutDedicatedIpWarmupAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutDeliverabilityDashboardOptionRequest":{
       "type":"structure",
@@ -4105,8 +4721,7 @@
     },
     "PutDeliverabilityDashboardOptionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailIdentityConfigurationSetAttributesRequest":{
       "type":"structure",
@@ -4122,8 +4737,7 @@
     },
     "PutEmailIdentityConfigurationSetAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailIdentityDkimAttributesRequest":{
       "type":"structure",
@@ -4139,8 +4753,7 @@
     },
     "PutEmailIdentityDkimAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailIdentityDkimSigningAttributesRequest":{
       "type":"structure",
@@ -4179,8 +4792,7 @@
     },
     "PutEmailIdentityFeedbackAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutEmailIdentityMailFromAttributesRequest":{
       "type":"structure",
@@ -4197,8 +4809,7 @@
     },
     "PutEmailIdentityMailFromAttributesResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "PutSuppressedDestinationRequest":{
       "type":"structure",
@@ -4213,8 +4824,7 @@
     },
     "PutSuppressedDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "QueryErrorCode":{
       "type":"string",
@@ -4229,6 +4839,7 @@
       "max":255,
       "min":1
     },
+    "RawAttachmentData":{"type":"blob"},
     "RawMessage":{
       "type":"structure",
       "required":["Data"],
@@ -4271,12 +4882,21 @@
         "DKIM",
         "DMARC",
         "SPF",
-        "BIMI"
+        "BIMI",
+        "COMPLAINT",
+        "BOUNCE",
+        "FEEDBACK_3P",
+        "IP_LISTING"
       ]
     },
     "RecommendationsList":{
       "type":"list",
       "member":{"shape":"Recommendation"}
+    },
+    "Region":{"type":"string"},
+    "Regions":{
+      "type":"list",
+      "member":{"shape":"Region"}
     },
     "RenderedEmailTemplate":{"type":"string"},
     "ReplacementEmailContent":{
@@ -4293,12 +4913,76 @@
     },
     "ReportId":{"type":"string"},
     "ReportName":{"type":"string"},
+    "ReputationEntitiesList":{
+      "type":"list",
+      "member":{"shape":"ReputationEntity"}
+    },
+    "ReputationEntity":{
+      "type":"structure",
+      "members":{
+        "ReputationEntityReference":{"shape":"ReputationEntityReference"},
+        "ReputationEntityType":{"shape":"ReputationEntityType"},
+        "ReputationManagementPolicy":{"shape":"AmazonResourceName"},
+        "CustomerManagedStatus":{"shape":"StatusRecord"},
+        "AwsSesManagedStatus":{"shape":"StatusRecord"},
+        "SendingStatusAggregate":{"shape":"SendingStatus"},
+        "ReputationImpact":{"shape":"RecommendationImpact"}
+      }
+    },
+    "ReputationEntityFilter":{
+      "type":"map",
+      "key":{"shape":"ReputationEntityFilterKey"},
+      "value":{"shape":"ReputationEntityFilterValue"}
+    },
+    "ReputationEntityFilterKey":{
+      "type":"string",
+      "enum":[
+        "ENTITY_TYPE",
+        "REPUTATION_IMPACT",
+        "SENDING_STATUS",
+        "ENTITY_REFERENCE_PREFIX"
+      ]
+    },
+    "ReputationEntityFilterValue":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "ReputationEntityReference":{
+      "type":"string",
+      "min":1
+    },
+    "ReputationEntityType":{
+      "type":"string",
+      "enum":["RESOURCE"]
+    },
     "ReputationOptions":{
       "type":"structure",
       "members":{
         "ReputationMetricsEnabled":{"shape":"Enabled"},
         "LastFreshStart":{"shape":"LastFreshStart"}
       }
+    },
+    "ResourceTenantMetadata":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "ResourceArn":{"shape":"AmazonResourceName"},
+        "AssociatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "ResourceTenantMetadataList":{
+      "type":"list",
+      "member":{"shape":"ResourceTenantMetadata"}
+    },
+    "ResourceType":{
+      "type":"string",
+      "enum":[
+        "EMAIL_IDENTITY",
+        "CONFIGURATION_SET",
+        "EMAIL_TEMPLATE"
+      ]
     },
     "ReviewDetails":{
       "type":"structure",
@@ -4315,6 +4999,28 @@
         "GRANTED",
         "DENIED"
       ]
+    },
+    "Route":{
+      "type":"structure",
+      "required":["Region"],
+      "members":{
+        "Region":{"shape":"Region"}
+      }
+    },
+    "RouteDetails":{
+      "type":"structure",
+      "required":["Region"],
+      "members":{
+        "Region":{"shape":"Region"}
+      }
+    },
+    "Routes":{
+      "type":"list",
+      "member":{"shape":"Route"}
+    },
+    "RoutesDetails":{
+      "type":"list",
+      "member":{"shape":"RouteDetails"}
     },
     "S3Url":{
       "type":"string",
@@ -4356,7 +5062,12 @@
         "DefaultEmailTags":{"shape":"MessageTagList"},
         "DefaultContent":{"shape":"BulkEmailContent"},
         "BulkEmailEntries":{"shape":"BulkEmailEntryList"},
-        "ConfigurationSetName":{"shape":"ConfigurationSetName"}
+        "ConfigurationSetName":{"shape":"ConfigurationSetName"},
+        "EndpointId":{
+          "shape":"EndpointId",
+          "contextParam":{"name":"EndpointId"}
+        },
+        "TenantName":{"shape":"TenantName"}
       }
     },
     "SendBulkEmailResponse":{
@@ -4397,6 +5108,11 @@
         "Content":{"shape":"EmailContent"},
         "EmailTags":{"shape":"MessageTagList"},
         "ConfigurationSetName":{"shape":"ConfigurationSetName"},
+        "EndpointId":{
+          "shape":"EndpointId",
+          "contextParam":{"name":"EndpointId"}
+        },
+        "TenantName":{"shape":"TenantName"},
         "ListManagementOptions":{"shape":"ListManagementOptions"}
       }
     },
@@ -4422,12 +5138,19 @@
     },
     "SendingPausedException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":400},
       "exception":true
     },
     "SendingPoolName":{"type":"string"},
+    "SendingStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "REINSTATED",
+        "DISABLED"
+      ]
+    },
     "SentLast24Hours":{"type":"double"},
     "SerialNumber":{"type":"long"},
     "SnsDestination":{
@@ -4435,6 +5158,28 @@
       "required":["TopicArn"],
       "members":{
         "TopicArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "READY",
+        "FAILED",
+        "DELETING"
+      ]
+    },
+    "StatusCause":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
+    "StatusRecord":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"SendingStatus"},
+        "Cause":{"shape":"StatusCause"},
+        "LastUpdatedTimestamp":{"shape":"Timestamp"}
       }
     },
     "Subject":{"type":"string"},
@@ -4554,8 +5299,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{"type":"string"},
     "Template":{
@@ -4563,11 +5307,53 @@
       "members":{
         "TemplateName":{"shape":"EmailTemplateName"},
         "TemplateArn":{"shape":"AmazonResourceName"},
+        "TemplateContent":{"shape":"EmailTemplateContent"},
         "TemplateData":{"shape":"EmailTemplateData"},
-        "Headers":{"shape":"MessageHeaderList"}
+        "Headers":{"shape":"MessageHeaderList"},
+        "Attachments":{"shape":"AttachmentList"}
       }
     },
     "TemplateContent":{"type":"string"},
+    "Tenant":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "TenantArn":{"shape":"AmazonResourceName"},
+        "CreatedTimestamp":{"shape":"Timestamp"},
+        "Tags":{"shape":"TagList"},
+        "SendingStatus":{"shape":"SendingStatus"}
+      }
+    },
+    "TenantId":{"type":"string"},
+    "TenantInfo":{
+      "type":"structure",
+      "members":{
+        "TenantName":{"shape":"TenantName"},
+        "TenantId":{"shape":"TenantId"},
+        "TenantArn":{"shape":"AmazonResourceName"},
+        "CreatedTimestamp":{"shape":"Timestamp"}
+      }
+    },
+    "TenantInfoList":{
+      "type":"list",
+      "member":{"shape":"TenantInfo"}
+    },
+    "TenantName":{
+      "type":"string",
+      "min":1
+    },
+    "TenantResource":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{"shape":"ResourceType"},
+        "ResourceArn":{"shape":"AmazonResourceName"}
+      }
+    },
+    "TenantResourceList":{
+      "type":"list",
+      "member":{"shape":"TenantResource"}
+    },
     "TestRenderEmailTemplateRequest":{
       "type":"structure",
       "required":[
@@ -4604,8 +5390,7 @@
     },
     "TooManyRequestsException":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "error":{"httpStatusCode":429},
       "exception":true
     },
@@ -4654,7 +5439,8 @@
       "type":"structure",
       "required":["CustomRedirectDomain"],
       "members":{
-        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"}
+        "CustomRedirectDomain":{"shape":"CustomRedirectDomain"},
+        "HttpsPolicy":{"shape":"HttpsPolicy"}
       }
     },
     "UnsubscribeAll":{"type":"boolean"},
@@ -4679,8 +5465,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConfigurationSetEventDestinationRequest":{
       "type":"structure",
@@ -4705,8 +5490,7 @@
     },
     "UpdateConfigurationSetEventDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactListRequest":{
       "type":"structure",
@@ -4723,8 +5507,7 @@
     },
     "UpdateContactListResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateContactRequest":{
       "type":"structure",
@@ -4750,8 +5533,7 @@
     },
     "UpdateContactResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCustomVerificationEmailTemplateRequest":{
       "type":"structure",
@@ -4778,8 +5560,7 @@
     },
     "UpdateCustomVerificationEmailTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEmailIdentityPolicyRequest":{
       "type":"structure",
@@ -4804,8 +5585,7 @@
     },
     "UpdateEmailIdentityPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateEmailTemplateRequest":{
       "type":"structure",
@@ -4824,13 +5604,63 @@
     },
     "UpdateEmailTemplateResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateReputationEntityCustomerManagedStatusRequest":{
+      "type":"structure",
+      "required":[
+        "ReputationEntityType",
+        "ReputationEntityReference",
+        "SendingStatus"
+      ],
       "members":{
+        "ReputationEntityType":{
+          "shape":"ReputationEntityType",
+          "location":"uri",
+          "locationName":"ReputationEntityType"
+        },
+        "ReputationEntityReference":{
+          "shape":"ReputationEntityReference",
+          "location":"uri",
+          "locationName":"ReputationEntityReference"
+        },
+        "SendingStatus":{"shape":"SendingStatus"}
       }
+    },
+    "UpdateReputationEntityCustomerManagedStatusResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "UpdateReputationEntityPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ReputationEntityType",
+        "ReputationEntityReference",
+        "ReputationEntityPolicy"
+      ],
+      "members":{
+        "ReputationEntityType":{
+          "shape":"ReputationEntityType",
+          "location":"uri",
+          "locationName":"ReputationEntityType"
+        },
+        "ReputationEntityReference":{
+          "shape":"ReputationEntityReference",
+          "location":"uri",
+          "locationName":"ReputationEntityReference"
+        },
+        "ReputationEntityPolicy":{"shape":"AmazonResourceName"}
+      }
+    },
+    "UpdateReputationEntityPolicyResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UseCaseDescription":{
       "type":"string",
+      "deprecated":true,
+      "deprecatedMessage":"Use case description is optional and deprecated",
       "max":5000,
-      "min":1,
       "sensitive":true
     },
     "UseDefaultIfPreferenceUnavailable":{"type":"boolean"},
@@ -4857,7 +5687,12 @@
         "DNS_SERVER_ERROR",
         "HOST_NOT_FOUND",
         "TYPE_NOT_FOUND",
-        "INVALID_VALUE"
+        "INVALID_VALUE",
+        "REPLICATION_ACCESS_DENIED",
+        "REPLICATION_PRIMARY_NOT_FOUND",
+        "REPLICATION_PRIMARY_BYO_DKIM_NOT_SUPPORTED",
+        "REPLICATION_REPLICA_AS_PRIMARY_NOT_SUPPORTED",
+        "REPLICATION_PRIMARY_INVALID_REGION"
       ]
     },
     "VerificationInfo":{
@@ -4893,7 +5728,8 @@
       "type":"string",
       "enum":[
         "IN_PROGRESS",
-        "DONE"
+        "DONE",
+        "NOT_APPLICABLE"
       ]
     },
     "WebsiteURL":{

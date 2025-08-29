@@ -75,7 +75,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     public function getRequestTestCases()
     {
-        $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com');
+        $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com/');
         $baseUserAgent = 'aws-sdk-php/' . Sdk::VERSION;
         $baseRequest = new Request(
             'POST',
@@ -202,7 +202,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 ]),
                 new Request(
                     'POST',
-                    new Uri('https://custom.com/custom/path'),
+                    new Uri('https://custom.com/custom/path/'),
                     [
                         'User-Agent' => $baseUserAgent,
                     ]
@@ -226,7 +226,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 ]),
                 new Request(
                     'POST',
-                    new Uri('https://custom.com/custom/path'),
+                    new Uri('https://custom.com/custom/path/'),
                     [
                         'User-Agent' => $baseUserAgent,
                     ]

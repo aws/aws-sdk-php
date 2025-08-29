@@ -5,39 +5,54 @@
     "BatchUpdateRule": "<p>Updates the listener rules in a batch. You can use this operation to change the priority of listener rules. This can be useful when bulk updating or swapping rule priority.</p> <p> <b>Required permissions:</b> <code>vpc-lattice:UpdateRule</code> </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/security_iam_service-with-iam.html\">How Amazon VPC Lattice works with IAM</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateAccessLogSubscription": "<p>Enables access logs to be sent to Amazon CloudWatch, Amazon S3, and Amazon Kinesis Data Firehose. The service network owner can use the access logs to audit the services in the network. The service network owner can only see access logs from clients and services that are associated with their service network. Access log entries represent traffic originated from VPCs associated with that network. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-access-logs.html\">Access logs</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateListener": "<p>Creates a listener for a service. Before you start using your Amazon VPC Lattice service, you must add one or more listeners. A listener is a process that checks for connection requests to your services. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html\">Listeners</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
+    "CreateResourceConfiguration": "<p>Creates a resource configuration. A resource configuration defines a specific resource. You can associate a resource configuration with a service network or a VPC endpoint.</p>",
+    "CreateResourceGateway": "<p>Creates a resource gateway.</p>",
     "CreateRule": "<p>Creates a listener rule. Each listener has a default rule for checking connection requests, but you can define additional rules. Each rule consists of a priority, one or more actions, and one or more conditions. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-rules\">Listener rules</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateService": "<p>Creates a service. A service is any software application that can run on instances containers, or serverless functions within an account or virtual private cloud (VPC).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/services.html\">Services</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateServiceNetwork": "<p>Creates a service network. A service network is a logical boundary for a collection of services. You can associate services and VPCs with a service network.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/service-networks.html\">Service networks</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
-    "CreateServiceNetworkServiceAssociation": "<p>Associates a service with a service network. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/service-network-associations.html#service-network-service-associations\">Manage service associations</a> in the <i>Amazon VPC Lattice User Guide</i>.</p> <p>You can't use this operation if the service and service network are already associated or if there is a disassociation or deletion in progress. If the association fails, you can retry the operation by deleting the association and recreating it.</p> <p>You cannot associate a service and service network that are shared with a caller. The caller must own either the service or the service network.</p> <p>As a result of this operation, the association is created in the service network account and the association owner account.</p>",
+    "CreateServiceNetworkResourceAssociation": "<p>Associates the specified service network with the specified resource configuration. This allows the resource configuration to receive connections through the service network, including through a service network VPC endpoint.</p>",
+    "CreateServiceNetworkServiceAssociation": "<p>Associates the specified service with the specified service network. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/service-network-associations.html#service-network-service-associations\">Manage service associations</a> in the <i>Amazon VPC Lattice User Guide</i>.</p> <p>You can't use this operation if the service and service network are already associated or if there is a disassociation or deletion in progress. If the association fails, you can retry the operation by deleting the association and recreating it.</p> <p>You cannot associate a service and service network that are shared with a caller. The caller must own either the service or the service network.</p> <p>As a result of this operation, the association is created in the service network account and the association owner account.</p>",
     "CreateServiceNetworkVpcAssociation": "<p>Associates a VPC with a service network. When you associate a VPC with the service network, it enables all the resources within that VPC to be clients and communicate with other services in the service network. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/service-network-associations.html#service-network-vpc-associations\">Manage VPC associations</a> in the <i>Amazon VPC Lattice User Guide</i>.</p> <p>You can't use this operation if there is a disassociation in progress. If the association fails, retry by deleting the association and recreating it.</p> <p>As a result of this operation, the association gets created in the service network account and the VPC owner account.</p> <p>If you add a security group to the service network and VPC association, the association must continue to always have at least one security group. You can add or edit security groups at any time. However, to remove all security groups, you must first delete the association and recreate it without security groups.</p>",
     "CreateTargetGroup": "<p>Creates a target group. A target group is a collection of targets, or compute resources, that run your application or service. A target group can only be used by a single service.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/target-groups.html\">Target groups</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "DeleteAccessLogSubscription": "<p>Deletes the specified access log subscription.</p>",
     "DeleteAuthPolicy": "<p>Deletes the specified auth policy. If an auth is set to <code>AWS_IAM</code> and the auth policy is deleted, all requests are denied. If you are trying to remove the auth policy completely, you must set the auth type to <code>NONE</code>. If auth is enabled on the resource, but no auth policy is set, all requests are denied.</p>",
     "DeleteListener": "<p>Deletes the specified listener.</p>",
+    "DeleteResourceConfiguration": "<p>Deletes the specified resource configuration.</p>",
+    "DeleteResourceEndpointAssociation": "<p>Disassociates the resource configuration from the resource VPC endpoint.</p>",
+    "DeleteResourceGateway": "<p>Deletes the specified resource gateway.</p>",
     "DeleteResourcePolicy": "<p>Deletes the specified resource policy.</p>",
     "DeleteRule": "<p>Deletes a listener rule. Each listener has a default rule for checking connection requests, but you can define additional rules. Each rule consists of a priority, one or more actions, and one or more conditions. You can delete additional listener rules, but you cannot delete the default rule.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-rules\">Listener rules</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "DeleteService": "<p>Deletes a service. A service can't be deleted if it's associated with a service network. If you delete a service, all resources related to the service, such as the resource policy, auth policy, listeners, listener rules, and access log subscriptions, are also deleted. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/services.html#delete-service\">Delete a service</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "DeleteServiceNetwork": "<p>Deletes a service network. You can only delete the service network if there is no service or VPC associated with it. If you delete a service network, all resources related to the service network, such as the resource policy, auth policy, and access log subscriptions, are also deleted. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/service-networks.html#delete-service-network\">Delete a service network</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
-    "DeleteServiceNetworkServiceAssociation": "<p>Deletes the association between a specified service and the specific service network. This operation fails if an association is still in progress.</p>",
+    "DeleteServiceNetworkResourceAssociation": "<p>Deletes the association between a service network and a resource configuration.</p>",
+    "DeleteServiceNetworkServiceAssociation": "<p>Deletes the association between a service and a service network. This operation fails if an association is still in progress.</p>",
     "DeleteServiceNetworkVpcAssociation": "<p>Disassociates the VPC from the service network. You can't disassociate the VPC if there is a create or update association in progress.</p>",
     "DeleteTargetGroup": "<p>Deletes a target group. You can't delete a target group if it is used in a listener rule or if the target group creation is in progress.</p>",
     "DeregisterTargets": "<p>Deregisters the specified targets from the specified target group.</p>",
     "GetAccessLogSubscription": "<p>Retrieves information about the specified access log subscription.</p>",
     "GetAuthPolicy": "<p>Retrieves information about the auth policy for the specified service or service network.</p>",
     "GetListener": "<p>Retrieves information about the specified listener for the specified service.</p>",
-    "GetResourcePolicy": "<p>Retrieves information about the resource policy. The resource policy is an IAM policy created on behalf of the resource owner when they share a resource.</p>",
-    "GetRule": "<p>Retrieves information about listener rules. You can also retrieve information about the default listener rule. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-rules\">Listener rules</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
+    "GetResourceConfiguration": "<p>Retrieves information about the specified resource configuration.</p>",
+    "GetResourceGateway": "<p>Retrieves information about the specified resource gateway.</p>",
+    "GetResourcePolicy": "<p>Retrieves information about the specified resource policy. The resource policy is an IAM policy created on behalf of the resource owner when they share a resource.</p>",
+    "GetRule": "<p>Retrieves information about the specified listener rules. You can also retrieve information about the default listener rule. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-rules\">Listener rules</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "GetService": "<p>Retrieves information about the specified service.</p>",
     "GetServiceNetwork": "<p>Retrieves information about the specified service network.</p>",
+    "GetServiceNetworkResourceAssociation": "<p>Retrieves information about the specified association between a service network and a resource configuration.</p>",
     "GetServiceNetworkServiceAssociation": "<p>Retrieves information about the specified association between a service network and a service.</p>",
-    "GetServiceNetworkVpcAssociation": "<p>Retrieves information about the association between a service network and a VPC.</p>",
+    "GetServiceNetworkVpcAssociation": "<p>Retrieves information about the specified association between a service network and a VPC.</p>",
     "GetTargetGroup": "<p>Retrieves information about the specified target group.</p>",
-    "ListAccessLogSubscriptions": "<p>Lists all access log subscriptions for the specified service network or service.</p>",
+    "ListAccessLogSubscriptions": "<p>Lists the access log subscriptions for the specified service network or service.</p>",
     "ListListeners": "<p>Lists the listeners for the specified service.</p>",
-    "ListRules": "<p>Lists the rules for the listener.</p>",
-    "ListServiceNetworkServiceAssociations": "<p>Lists the associations between the service network and the service. You can filter the list either by service or service network. You must provide either the service network identifier or the service identifier.</p> <p>Every association in Amazon VPC Lattice is given a unique Amazon Resource Name (ARN), such as when a service network is associated with a VPC or when a service is associated with a service network. If the association is for a resource that is shared with another account, the association includes the local account ID as the prefix in the ARN for each account the resource is shared with.</p>",
-    "ListServiceNetworkVpcAssociations": "<p>Lists the service network and VPC associations. You can filter the list either by VPC or service network. You must provide either the service network identifier or the VPC identifier.</p>",
-    "ListServiceNetworks": "<p>Lists the service networks owned by the caller account or shared with the caller account. Also includes the account ID in the ARN to show which account owns the service network.</p>",
+    "ListResourceConfigurations": "<p>Lists the resource configurations owned by or shared with this account.</p>",
+    "ListResourceEndpointAssociations": "<p>Lists the associations for the specified VPC endpoint.</p>",
+    "ListResourceGateways": "<p>Lists the resource gateways that you own or that were shared with you.</p>",
+    "ListRules": "<p>Lists the rules for the specified listener.</p>",
+    "ListServiceNetworkResourceAssociations": "<p>Lists the associations between a service network and a resource configuration.</p>",
+    "ListServiceNetworkServiceAssociations": "<p>Lists the associations between a service network and a service. You can filter the list either by service or service network. You must provide either the service network identifier or the service identifier.</p> <p>Every association in Amazon VPC Lattice has a unique Amazon Resource Name (ARN), such as when a service network is associated with a VPC or when a service is associated with a service network. If the association is for a resource is shared with another account, the association includes the local account ID as the prefix in the ARN.</p>",
+    "ListServiceNetworkVpcAssociations": "<p>Lists the associations between a service network and a VPC. You can filter the list either by VPC or service network. You must provide either the ID of the service network identifier or the ID of the VPC.</p>",
+    "ListServiceNetworkVpcEndpointAssociations": "<p>Lists the associations between a service network and a VPC endpoint.</p>",
+    "ListServiceNetworks": "<p>Lists the service networks owned by or shared with this account. The account ID in the ARN shows which account owns the service network.</p>",
     "ListServices": "<p>Lists the services owned by the caller account or shared with the caller account.</p>",
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
     "ListTargetGroups": "<p>Lists your target groups. You can narrow your search by using the filters below in your request.</p>",
@@ -49,10 +64,12 @@
     "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateAccessLogSubscription": "<p>Updates the specified access log subscription.</p>",
     "UpdateListener": "<p>Updates the specified listener for the specified service.</p>",
-    "UpdateRule": "<p>Updates a rule for the listener. You can't modify a default listener rule. To modify a default listener rule, use <code>UpdateListener</code>.</p>",
+    "UpdateResourceConfiguration": "<p>Updates the specified resource configuration.</p>",
+    "UpdateResourceGateway": "<p>Updates the specified resource gateway.</p>",
+    "UpdateRule": "<p>Updates a specified rule for the listener. You can't modify a default listener rule. To modify a default listener rule, use <code>UpdateListener</code>.</p>",
     "UpdateService": "<p>Updates the specified service.</p>",
     "UpdateServiceNetwork": "<p>Updates the specified service network.</p>",
-    "UpdateServiceNetworkVpcAssociation": "<p>Updates the service network and VPC association. If you add a security group to the service network and VPC association, the association must continue to always have at least one security group. You can add or edit security groups at any time. However, to remove all security groups, you must first delete the association and recreate it without security groups.</p>",
+    "UpdateServiceNetworkVpcAssociation": "<p>Updates the service network and VPC association. If you add a security group to the service network and VPC association, the association must continue to have at least one security group. You can add or edit security groups at any time. However, to remove all security groups, you must first delete the association and then recreate it without security groups.</p>",
     "UpdateTargetGroup": "<p>Updates the specified target group.</p>"
   },
   "shapes": {
@@ -93,9 +110,9 @@
     "AccessLogSubscriptionIdentifier": {
       "base": null,
       "refs": {
-        "DeleteAccessLogSubscriptionRequest$accessLogSubscriptionIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the access log subscription.</p>",
-        "GetAccessLogSubscriptionRequest$accessLogSubscriptionIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the access log subscription.</p>",
-        "UpdateAccessLogSubscriptionRequest$accessLogSubscriptionIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the access log subscription.</p>"
+        "DeleteAccessLogSubscriptionRequest$accessLogSubscriptionIdentifier": "<p>The ID or ARN of the access log subscription.</p>",
+        "GetAccessLogSubscriptionRequest$accessLogSubscriptionIdentifier": "<p>The ID or ARN of the access log subscription.</p>",
+        "UpdateAccessLogSubscriptionRequest$accessLogSubscriptionIdentifier": "<p>The ID or ARN of the access log subscription.</p>"
       }
     },
     "AccessLogSubscriptionList": {
@@ -113,10 +130,14 @@
     "AccountId": {
       "base": null,
       "refs": {
+        "CreateServiceNetworkResourceAssociationResponse$createdBy": "<p>The ID of the account that created the association.</p>",
         "CreateServiceNetworkServiceAssociationResponse$createdBy": "<p>The account that created the association.</p>",
         "CreateServiceNetworkVpcAssociationResponse$createdBy": "<p>The account that created the association.</p>",
+        "GetServiceNetworkResourceAssociationResponse$createdBy": "<p>The account that created the association.</p>",
         "GetServiceNetworkServiceAssociationResponse$createdBy": "<p>The account that created the association.</p>",
         "GetServiceNetworkVpcAssociationResponse$createdBy": "<p>The account that created the association.</p>",
+        "ResourceEndpointAssociationSummary$createdBy": "<p>The account that created the association.</p>",
+        "ServiceNetworkResourceAssociationSummary$createdBy": "<p>The account that created the association.</p>",
         "ServiceNetworkServiceAssociationSummary$createdBy": "<p>The account that created the association.</p>",
         "ServiceNetworkVpcAssociationSummary$createdBy": "<p>The account that created the association.</p>",
         "UpdateServiceNetworkVpcAssociationResponse$createdBy": "<p>The account that created the association.</p>"
@@ -128,6 +149,12 @@
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
+      }
+    },
+    "ArnResource": {
+      "base": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+      "refs": {
+        "ResourceConfigurationDefinition$arnResource": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
       }
     },
     "AuthPolicyState": {
@@ -173,12 +200,22 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CreateResourceConfigurationRequest$allowAssociationToShareableServiceNetwork": "<p>(SINGLE, GROUP, ARN) Specifies whether the resource configuration can be associated with a sharable service network. The default is false.</p>",
+        "CreateResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Specifies whether the resource configuration can be associated with a sharable service network.</p>",
+        "GetResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Specifies whether the resource configuration is associated with a sharable service network.</p>",
+        "GetResourceConfigurationResponse$amazonManaged": "<p>Indicates whether the resource configuration was created and is managed by Amazon.</p>",
         "GetRuleResponse$isDefault": "<p>Indicates whether this is the default rule.</p>",
+        "GetServiceNetworkResourceAssociationResponse$isManagedAssociation": "<p>Indicates whether the association is managed by Amazon.</p>",
         "HeaderMatch$caseSensitive": "<p>Indicates whether the match is case sensitive.</p>",
         "HealthCheckConfig$enabled": "<p>Indicates whether health checking is enabled.</p>",
         "PathMatch$caseSensitive": "<p>Indicates whether the match is case sensitive.</p>",
+        "ResourceConfigurationSummary$amazonManaged": "<p>Indicates whether the resource configuration was created and is managed by Amazon.</p>",
         "RuleSummary$isDefault": "<p>Indicates whether this is the default listener rule.</p>",
         "RuleUpdateSuccess$isDefault": "<p>Indicates whether this is the default rule.</p>",
+        "ServiceNetworkResourceAssociationSummary$isManagedAssociation": "<p>Specifies whether the association is managed by Amazon.</p>",
+        "SharingConfig$enabled": "<p>Specifies if the service network is enabled for sharing.</p>",
+        "UpdateResourceConfigurationRequest$allowAssociationToShareableServiceNetwork": "<p>Indicates whether to add the resource configuration to service networks that are shared with other accounts.</p>",
+        "UpdateResourceConfigurationResponse$allowAssociationToShareableServiceNetwork": "<p>Indicates whether to add the resource configuration to service networks that are shared with other accounts.</p>",
         "UpdateRuleResponse$isDefault": "<p>Indicates whether this is the default rule.</p>"
       }
     },
@@ -197,8 +234,11 @@
       "refs": {
         "CreateAccessLogSubscriptionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateListenerRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
+        "CreateResourceConfigurationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
+        "CreateResourceGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateRuleRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateServiceNetworkRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
+        "CreateServiceNetworkResourceAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateServiceNetworkServiceAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateServiceNetworkVpcAssociationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
         "CreateServiceRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If you retry a request that completed successfully using the same client token and parameters, the retry succeeds without performing any actions. If the parameters aren't identical, the retry fails.</p>",
@@ -230,6 +270,32 @@
       "refs": {
       }
     },
+    "CreateResourceConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateResourceConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateResourceGatewayRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateResourceGatewayRequestSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "CreateResourceGatewayRequest$securityGroupIds": "<p>The IDs of the security groups to apply to the resource gateway. The security groups must be in the same VPC.</p>"
+      }
+    },
+    "CreateResourceGatewayResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "CreateRuleRequest": {
       "base": null,
       "refs": {
@@ -241,6 +307,16 @@
       }
     },
     "CreateServiceNetworkRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateServiceNetworkResourceAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateServiceNetworkResourceAssociationResponse": {
       "base": null,
       "refs": {
       }
@@ -326,6 +402,36 @@
       "refs": {
       }
     },
+    "DeleteResourceConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourceConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourceEndpointAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourceEndpointAssociationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourceGatewayRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourceGatewayResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteResourcePolicyRequest": {
       "base": null,
       "refs": {
@@ -347,6 +453,16 @@
       }
     },
     "DeleteServiceNetworkRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteServiceNetworkResourceAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteServiceNetworkResourceAssociationResponse": {
       "base": null,
       "refs": {
       }
@@ -417,10 +533,27 @@
       "refs": {
         "CreateServiceNetworkServiceAssociationResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "CreateServiceResponse$dnsEntry": "<p>The public DNS name of the service.</p>",
+        "GetServiceNetworkResourceAssociationResponse$dnsEntry": "<p>The DNS entry for the service.</p>",
+        "GetServiceNetworkResourceAssociationResponse$privateDnsEntry": "<p>The private DNS entry for the service.</p>",
         "GetServiceNetworkServiceAssociationResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "GetServiceResponse$dnsEntry": "<p>The DNS name of the service.</p>",
+        "ServiceNetworkResourceAssociationSummary$dnsEntry": "<p>The DNS entry for the service.</p>",
+        "ServiceNetworkResourceAssociationSummary$privateDnsEntry": "<p>The private DNS entry for the service.</p>",
         "ServiceNetworkServiceAssociationSummary$dnsEntry": "<p>The DNS information.</p>",
         "ServiceSummary$dnsEntry": "<p>The DNS information.</p>"
+      }
+    },
+    "DnsResource": {
+      "base": "<p>The DNS name of the resource.</p>",
+      "refs": {
+        "ResourceConfigurationDefinition$dnsResource": "<p>The DNS name of the resource.</p>"
+      }
+    },
+    "DomainName": {
+      "base": null,
+      "refs": {
+        "DnsResource$domainName": "<p>The domain name of the resource.</p>",
+        "GetResourceConfigurationResponse$customDomainName": "<p>The custom domain name of the resource configuration.</p>"
       }
     },
     "FailureCode": {
@@ -479,6 +612,26 @@
       "refs": {
       }
     },
+    "GetResourceConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourceConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourceGatewayRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetResourceGatewayResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetResourcePolicyRequest": {
       "base": null,
       "refs": {
@@ -500,6 +653,16 @@
       }
     },
     "GetServiceNetworkRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetServiceNetworkResourceAssociationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetServiceNetworkResourceAssociationResponse": {
       "base": null,
       "refs": {
       }
@@ -670,11 +833,24 @@
       "refs": {
       }
     },
+    "IpAddress": {
+      "base": null,
+      "refs": {
+        "IpResource$ipAddress": "<p>The IP address of the IP resource.</p>"
+      }
+    },
     "IpAddressType": {
       "base": null,
       "refs": {
         "TargetGroupConfig$ipAddressType": "<p>The type of IP address used for the target group. Supported only if the target group type is <code>IP</code>. The default is <code>IPV4</code>.</p>",
-        "TargetGroupSummary$ipAddressType": "<p>The type of IP address used for the target group. The possible values are <code>IPV4</code> and <code>IPV6</code>. This is an optional parameter. If not specified, the default is <code>IPV4</code>.</p>"
+        "TargetGroupSummary$ipAddressType": "<p>The type of IP address used for the target group. The possible values are <code>IPV4</code> and <code>IPV6</code>. This is an optional parameter. If not specified, the default is <code>IPV4</code>.</p>",
+        "UpdateResourceGatewayResponse$ipAddressType": "<p>The type of IP address used by the resource gateway.</p>"
+      }
+    },
+    "IpResource": {
+      "base": "<p>Describes an IP resource.</p>",
+      "refs": {
+        "ResourceConfigurationDefinition$ipResource": "<p>The IP resource.</p>"
       }
     },
     "LambdaEventStructureVersion": {
@@ -704,12 +880,52 @@
       "refs": {
       }
     },
+    "ListResourceConfigurationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourceConfigurationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourceEndpointAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourceEndpointAssociationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourceGatewaysRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourceGatewaysResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListRulesRequest": {
       "base": null,
       "refs": {
       }
     },
     "ListRulesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListServiceNetworkResourceAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListServiceNetworkResourceAssociationsResponse": {
       "base": null,
       "refs": {
       }
@@ -730,6 +946,16 @@
       }
     },
     "ListServiceNetworkVpcAssociationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListServiceNetworkVpcEndpointAssociationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListServiceNetworkVpcEndpointAssociationsResponse": {
       "base": null,
       "refs": {
       }
@@ -811,15 +1037,15 @@
     "ListenerIdentifier": {
       "base": null,
       "refs": {
-        "BatchUpdateRuleRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "CreateRuleRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "DeleteListenerRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "DeleteRuleRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "GetListenerRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "GetRuleRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "ListRulesRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "UpdateListenerRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>",
-        "UpdateRuleRequest$listenerIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener.</p>"
+        "BatchUpdateRuleRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "CreateRuleRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "DeleteListenerRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "DeleteRuleRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "GetListenerRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "GetRuleRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "ListRulesRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "UpdateListenerRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>",
+        "UpdateRuleRequest$listenerIdentifier": "<p>The ID or ARN of the listener.</p>"
       }
     },
     "ListenerName": {
@@ -859,6 +1085,7 @@
       "refs": {
         "GetServiceNetworkResponse$numberOfAssociatedServices": "<p>The number of services associated with the service network.</p>",
         "GetServiceNetworkResponse$numberOfAssociatedVPCs": "<p>The number of VPCs associated with the service network.</p>",
+        "ServiceNetworkSummary$numberOfAssociatedResourceConfigurations": "<p>The number of resource configurations associated with a service network.</p>",
         "ServiceNetworkSummary$numberOfAssociatedServices": "<p>The number of services associated with the service network.</p>",
         "ServiceNetworkSummary$numberOfAssociatedVPCs": "<p>The number of VPCs associated with the service network.</p>"
       }
@@ -874,9 +1101,14 @@
       "refs": {
         "ListAccessLogSubscriptionsRequest$maxResults": "<p>The maximum number of results to return.</p>",
         "ListListenersRequest$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListResourceConfigurationsRequest$maxResults": "<p>The maximum page size.</p>",
+        "ListResourceEndpointAssociationsRequest$maxResults": "<p>The maximum page size.</p>",
+        "ListResourceGatewaysRequest$maxResults": "<p>The maximum page size.</p>",
         "ListRulesRequest$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListServiceNetworkResourceAssociationsRequest$maxResults": "<p>The maximum page size.</p>",
         "ListServiceNetworkServiceAssociationsRequest$maxResults": "<p>The maximum number of results to return.</p>",
         "ListServiceNetworkVpcAssociationsRequest$maxResults": "<p>The maximum number of results to return.</p>",
+        "ListServiceNetworkVpcEndpointAssociationsRequest$maxResults": "<p>The maximum page size.</p>",
         "ListServiceNetworksRequest$maxResults": "<p>The maximum number of results to return.</p>",
         "ListServicesRequest$maxResults": "<p>The maximum number of results to return.</p>",
         "ListTargetGroupsRequest$maxResults": "<p>The maximum number of results to return.</p>",
@@ -890,12 +1122,22 @@
         "ListAccessLogSubscriptionsResponse$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListListenersRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListListenersResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListResourceConfigurationsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
+        "ListResourceConfigurationsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListResourceEndpointAssociationsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
+        "ListResourceEndpointAssociationsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListResourceGatewaysRequest$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListResourceGatewaysResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
         "ListRulesRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListRulesResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListServiceNetworkResourceAssociationsRequest$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListServiceNetworkResourceAssociationsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
         "ListServiceNetworkServiceAssociationsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListServiceNetworkServiceAssociationsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
         "ListServiceNetworkVpcAssociationsRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListServiceNetworkVpcAssociationsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListServiceNetworkVpcEndpointAssociationsRequest$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
+        "ListServiceNetworkVpcEndpointAssociationsResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
         "ListServiceNetworksRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
         "ListServiceNetworksResponse$nextToken": "<p>If there are additional results, a pagination token for the next page of results.</p>",
         "ListServicesRequest$nextToken": "<p>A pagination token for the next page of results.</p>",
@@ -952,6 +1194,31 @@
         "UpdateListenerResponse$port": "<p>The listener port.</p>"
       }
     },
+    "PortRange": {
+      "base": null,
+      "refs": {
+        "PortRangeList$member": null
+      }
+    },
+    "PortRangeList": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationRequest$portRanges": "<p>(SINGLE, GROUP, CHILD) The TCP port ranges that a consumer can use to access a resource configuration (for example: 1-65535). You can separate port ranges using commas (for example: 1,2,22-30).</p>",
+        "CreateResourceConfigurationResponse$portRanges": "<p>The port range.</p>",
+        "GetResourceConfigurationResponse$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>",
+        "UpdateResourceConfigurationRequest$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>",
+        "UpdateResourceConfigurationResponse$portRanges": "<p>The TCP port ranges that a consumer can use to access a resource configuration. You can separate port ranges with a comma. Example: 1-65535 or 1,2,22-30</p>"
+      }
+    },
+    "ProtocolType": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationRequest$protocol": "<p>(SINGLE, GROUP) The protocol accepted by the resource configuration.</p>",
+        "CreateResourceConfigurationResponse$protocol": "<p>The protocol.</p>",
+        "GetResourceConfigurationResponse$protocol": "<p>The TCP protocol accepted by the specified resource configuration.</p>",
+        "UpdateResourceConfigurationResponse$protocol": "<p>The TCP protocol accepted by the specified resource configuration.</p>"
+      }
+    },
     "PutAuthPolicyRequest": {
       "base": null,
       "refs": {
@@ -996,8 +1263,220 @@
         "DeleteResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "GetAccessLogSubscriptionResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the service network or service.</p>",
         "GetResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the service network or service.</p>",
-        "PutResourcePolicyRequest$resourceArn": "<p>The ID or Amazon Resource Name (ARN) of the service network or service for which the policy is created.</p>",
+        "PutResourcePolicyRequest$resourceArn": "<p>The ID or ARN of the service network or service for which the policy is created.</p>",
         "UpdateAccessLogSubscriptionResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the access log subscription.</p>"
+      }
+    },
+    "ResourceConfigurationArn": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>",
+        "DeleteResourceEndpointAssociationResponse$resourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration associated with the VPC endpoint of type resource.</p>",
+        "GetResourceConfigurationResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>",
+        "GetServiceNetworkResourceAssociationResponse$resourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "ResourceConfigurationSummary$arn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>",
+        "ResourceEndpointAssociationSummary$resourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>",
+        "ServiceNetworkResourceAssociationSummary$resourceConfigurationArn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "UpdateResourceConfigurationResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurationDefinition": {
+      "base": "<p>Describes a resource configuration.</p>",
+      "refs": {
+        "CreateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>(SINGLE, CHILD, ARN) The resource configuration.</p>",
+        "CreateResourceConfigurationResponse$resourceConfigurationDefinition": "<p>The resource configuration.</p>",
+        "GetResourceConfigurationResponse$resourceConfigurationDefinition": "<p>The resource configuration.</p>",
+        "UpdateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>The resource configuration.</p>",
+        "UpdateResourceConfigurationResponse$resourceConfigurationDefinition": "<p>The resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurationId": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationResponse$id": "<p>The ID of the resource configuration.</p>",
+        "CreateResourceConfigurationResponse$resourceConfigurationGroupId": "<p>The ID of the parent resource configuration (type is GROUP).</p>",
+        "DeleteResourceEndpointAssociationResponse$resourceConfigurationId": "<p>The ID of the resource configuration.</p>",
+        "GetResourceConfigurationResponse$id": "<p>The ID of the resource configuration.</p>",
+        "GetResourceConfigurationResponse$resourceConfigurationGroupId": "<p>The ID of the group resource configuration.</p>",
+        "GetServiceNetworkResourceAssociationResponse$resourceConfigurationId": "<p>The ID of the resource configuration that is associated with the service network.</p>",
+        "ResourceConfigurationSummary$id": "<p>The ID of the resource configuration.</p>",
+        "ResourceConfigurationSummary$resourceConfigurationGroupId": "<p>The ID of the group resource configuration.</p>",
+        "ResourceEndpointAssociationSummary$resourceConfigurationId": "<p>The ID of the resource configuration.</p>",
+        "ServiceNetworkResourceAssociationSummary$resourceConfigurationId": "<p>The ID of the resource configuration associated with the service network.</p>",
+        "UpdateResourceConfigurationResponse$id": "<p>The ID of the resource configuration.</p>",
+        "UpdateResourceConfigurationResponse$resourceConfigurationGroupId": "<p>The ID of the group resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurationIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationRequest$resourceConfigurationGroupIdentifier": "<p>(CHILD) The ID or ARN of the parent resource configuration (type is <code>GROUP</code>). This is used to associate a child resource configuration with a group resource configuration.</p>",
+        "CreateServiceNetworkResourceAssociationRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configuration to associate with the service network.</p>",
+        "DeleteResourceConfigurationRequest$resourceConfigurationIdentifier": "<p>The ID or ARN of the resource configuration.</p>",
+        "GetResourceConfigurationRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configuration.</p>",
+        "ListResourceConfigurationsRequest$resourceConfigurationGroupIdentifier": "<p>The ID of the group resource configuration.</p>",
+        "ListResourceEndpointAssociationsRequest$resourceConfigurationIdentifier": "<p>The ID for the resource configuration associated with the VPC endpoint.</p>",
+        "ListServiceNetworkResourceAssociationsRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configurationk.</p>",
+        "UpdateResourceConfigurationRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurationIpAddressType": {
+      "base": null,
+      "refs": {
+        "DnsResource$ipAddressType": "<p>The type of IP address.</p>"
+      }
+    },
+    "ResourceConfigurationName": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationRequest$name": "<p>The name of the resource configuration. The name must be unique within the account. The valid characters are a-z, 0-9, and hyphens (-). You can't use a hyphen as the first or last character, or immediately after another hyphen.</p>",
+        "CreateResourceConfigurationResponse$name": "<p>The name of the resource configuration.</p>",
+        "GetResourceConfigurationResponse$name": "<p>The name of the resource configuration.</p>",
+        "GetServiceNetworkResourceAssociationResponse$resourceConfigurationName": "<p>The name of the resource configuration that is associated with the service network.</p>",
+        "ResourceConfigurationSummary$name": "<p>The name of the resource configuration.</p>",
+        "ResourceEndpointAssociationSummary$resourceConfigurationName": "<p>The name of the resource configuration.</p>",
+        "ServiceNetworkResourceAssociationSummary$resourceConfigurationName": "<p>The name of the resource configuration associated with the service network.</p>",
+        "UpdateResourceConfigurationResponse$name": "<p>The name of the resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurationStatus": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationResponse$status": "<p>The current status of the resource configuration.</p>",
+        "GetResourceConfigurationResponse$status": "<p>The status of the resource configuration.</p>",
+        "ResourceConfigurationSummary$status": "<p>The status of the resource configuration.</p>",
+        "UpdateResourceConfigurationResponse$status": "<p>The status of the resource configuration.</p>"
+      }
+    },
+    "ResourceConfigurationSummary": {
+      "base": "<p>Summary information about a resource configuration.</p>",
+      "refs": {
+        "ResourceConfigurationSummaryList$member": null
+      }
+    },
+    "ResourceConfigurationSummaryList": {
+      "base": null,
+      "refs": {
+        "ListResourceConfigurationsResponse$items": "<p>Information about the resource configurations.</p>"
+      }
+    },
+    "ResourceConfigurationType": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationRequest$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
+        "CreateResourceConfigurationResponse$type": "<p>The type of resource configuration.</p>",
+        "GetResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
+        "ResourceConfigurationSummary$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
+        "UpdateResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>"
+      }
+    },
+    "ResourceEndpointAssociationArn": {
+      "base": null,
+      "refs": {
+        "DeleteResourceEndpointAssociationResponse$arn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "ResourceEndpointAssociationSummary$arn": "<p>The Amazon Resource Name (ARN) of the VPC endpoint association.</p>"
+      }
+    },
+    "ResourceEndpointAssociationId": {
+      "base": null,
+      "refs": {
+        "DeleteResourceEndpointAssociationResponse$id": "<p>The ID of the association.</p>",
+        "ResourceEndpointAssociationSummary$id": "<p>The ID of the VPC endpoint association.</p>"
+      }
+    },
+    "ResourceEndpointAssociationIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteResourceEndpointAssociationRequest$resourceEndpointAssociationIdentifier": "<p>The ID or ARN of the association.</p>",
+        "ListResourceEndpointAssociationsRequest$resourceEndpointAssociationIdentifier": "<p>The ID of the association.</p>"
+      }
+    },
+    "ResourceEndpointAssociationList": {
+      "base": null,
+      "refs": {
+        "ListResourceEndpointAssociationsResponse$items": "<p>Information about the VPC endpoint associations.</p>"
+      }
+    },
+    "ResourceEndpointAssociationSummary": {
+      "base": "<p>Summary information about a VPC endpoint association.</p>",
+      "refs": {
+        "ResourceEndpointAssociationList$member": null
+      }
+    },
+    "ResourceGatewayArn": {
+      "base": null,
+      "refs": {
+        "CreateResourceGatewayResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource gateway.</p>",
+        "DeleteResourceGatewayResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource gateway.</p>",
+        "GetResourceGatewayResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource gateway.</p>",
+        "ResourceGatewaySummary$arn": "<p>The Amazon Resource Name (ARN) of the resource gateway.</p>",
+        "UpdateResourceGatewayResponse$arn": "<p>The Amazon Resource Name (ARN) of the resource gateway.</p>"
+      }
+    },
+    "ResourceGatewayId": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationResponse$resourceGatewayId": "<p>The ID of the resource gateway associated with the resource configuration.</p>",
+        "CreateResourceGatewayResponse$id": "<p>The ID of the resource gateway.</p>",
+        "DeleteResourceGatewayResponse$id": "<p>The ID of the resource gateway.</p>",
+        "GetResourceConfigurationResponse$resourceGatewayId": "<p>The ID of the resource gateway used to connect to the resource configuration in a given VPC. You can specify the resource gateway identifier only for resource configurations with type SINGLE, GROUP, or ARN.</p>",
+        "GetResourceGatewayResponse$id": "<p>The ID of the resource gateway.</p>",
+        "ResourceConfigurationSummary$resourceGatewayId": "<p>The ID of the resource gateway.</p>",
+        "ResourceGatewaySummary$id": "<p>The ID of the resource gateway.</p>",
+        "UpdateResourceConfigurationResponse$resourceGatewayId": "<p>The ID of the resource gateway associated with the resource configuration.</p>",
+        "UpdateResourceGatewayResponse$id": "<p>The ID of the resource gateway.</p>"
+      }
+    },
+    "ResourceGatewayIdentifier": {
+      "base": null,
+      "refs": {
+        "CreateResourceConfigurationRequest$resourceGatewayIdentifier": "<p>(SINGLE, GROUP, ARN) The ID or ARN of the resource gateway used to connect to the resource configuration. For a child resource configuration, this value is inherited from the parent resource configuration.</p>",
+        "DeleteResourceGatewayRequest$resourceGatewayIdentifier": "<p>The ID or ARN of the resource gateway.</p>",
+        "GetResourceGatewayRequest$resourceGatewayIdentifier": "<p>The ID of the resource gateway.</p>",
+        "ListResourceConfigurationsRequest$resourceGatewayIdentifier": "<p>The ID of the resource gateway for the resource configuration.</p>",
+        "UpdateResourceGatewayRequest$resourceGatewayIdentifier": "<p>The ID or ARN of the resource gateway.</p>"
+      }
+    },
+    "ResourceGatewayIpAddressType": {
+      "base": null,
+      "refs": {
+        "CreateResourceGatewayRequest$ipAddressType": "<p>The type of IP address used by the resource gateway.</p>",
+        "CreateResourceGatewayResponse$ipAddressType": "<p>The type of IP address for the resource gateway.</p>",
+        "GetResourceGatewayResponse$ipAddressType": "<p>The type of IP address for the resource gateway.</p>",
+        "ResourceGatewaySummary$ipAddressType": "<p>The type of IP address used by the resource gateway.</p>"
+      }
+    },
+    "ResourceGatewayList": {
+      "base": null,
+      "refs": {
+        "ListResourceGatewaysResponse$items": "<p>Information about the resource gateways.</p>"
+      }
+    },
+    "ResourceGatewayName": {
+      "base": null,
+      "refs": {
+        "CreateResourceGatewayRequest$name": "<p>The name of the resource gateway.</p>",
+        "CreateResourceGatewayResponse$name": "<p>The name of the resource gateway.</p>",
+        "DeleteResourceGatewayResponse$name": "<p>The name of the resource gateway.</p>",
+        "GetResourceGatewayResponse$name": "<p>The name of the resource gateway.</p>",
+        "ResourceGatewaySummary$name": "<p>The name of the resource gateway.</p>",
+        "UpdateResourceGatewayResponse$name": "<p>The name of the resource gateway.</p>"
+      }
+    },
+    "ResourceGatewayStatus": {
+      "base": null,
+      "refs": {
+        "CreateResourceGatewayResponse$status": "<p>The status of the resource gateway.</p>",
+        "DeleteResourceGatewayResponse$status": "<p>The status of the resource gateway.</p>",
+        "GetResourceGatewayResponse$status": "<p>The status for the resource gateway.</p>",
+        "ResourceGatewaySummary$status": "<p>The name of the resource gateway.</p>",
+        "UpdateResourceGatewayResponse$status": "<p>The status of the resource gateway.</p>"
+      }
+    },
+    "ResourceGatewaySummary": {
+      "base": "<p>Summary information about a resource gateway.</p>",
+      "refs": {
+        "ResourceGatewayList$member": null
       }
     },
     "ResourceId": {
@@ -1012,11 +1491,11 @@
     "ResourceIdentifier": {
       "base": null,
       "refs": {
-        "CreateAccessLogSubscriptionRequest$resourceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network or service.</p>",
-        "DeleteAuthPolicyRequest$resourceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the resource.</p>",
-        "GetAuthPolicyRequest$resourceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network or service.</p>",
-        "ListAccessLogSubscriptionsRequest$resourceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network or service.</p>",
-        "PutAuthPolicyRequest$resourceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network or service for which the policy is created.</p>"
+        "CreateAccessLogSubscriptionRequest$resourceIdentifier": "<p>The ID or ARN of the service network or service.</p>",
+        "DeleteAuthPolicyRequest$resourceIdentifier": "<p>The ID or ARN of the resource.</p>",
+        "GetAuthPolicyRequest$resourceIdentifier": "<p>The ID or ARN of the service network or service.</p>",
+        "ListAccessLogSubscriptionsRequest$resourceIdentifier": "<p>The ID or ARN of the service network or service.</p>",
+        "PutAuthPolicyRequest$resourceIdentifier": "<p>The ID or ARN of the service network or service for which the policy is created.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -1064,11 +1543,11 @@
     "RuleIdentifier": {
       "base": null,
       "refs": {
-        "DeleteRuleRequest$ruleIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the rule.</p>",
-        "GetRuleRequest$ruleIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the listener rule.</p>",
-        "RuleUpdate$ruleIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the rule.</p>",
-        "RuleUpdateFailure$ruleIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the rule.</p>",
-        "UpdateRuleRequest$ruleIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the rule.</p>"
+        "DeleteRuleRequest$ruleIdentifier": "<p>The ID or ARN of the rule.</p>",
+        "GetRuleRequest$ruleIdentifier": "<p>The ID or ARN of the listener rule.</p>",
+        "RuleUpdate$ruleIdentifier": "<p>The ID or ARN of the rule.</p>",
+        "RuleUpdateFailure$ruleIdentifier": "<p>The ID or ARN of the rule.</p>",
+        "UpdateRuleRequest$ruleIdentifier": "<p>The ID or ARN of the rule.</p>"
       }
     },
     "RuleMatch": {
@@ -1108,7 +1587,7 @@
       }
     },
     "RuleSummary": {
-      "base": "<p>Summary information about the listener rule.</p>",
+      "base": "<p>Summary information about a listener rule.</p>",
       "refs": {
         "RuleSummaryList$member": null
       }
@@ -1158,16 +1637,22 @@
     "SecurityGroupId": {
       "base": null,
       "refs": {
+        "CreateResourceGatewayRequestSecurityGroupIdsList$member": null,
         "CreateServiceNetworkVpcAssociationRequestSecurityGroupIdsList$member": null,
         "SecurityGroupList$member": null,
+        "UpdateResourceGatewayRequestSecurityGroupIdsList$member": null,
         "UpdateServiceNetworkVpcAssociationRequestSecurityGroupIdsList$member": null
       }
     },
     "SecurityGroupList": {
       "base": null,
       "refs": {
+        "CreateResourceGatewayResponse$securityGroupIds": "<p>The IDs of the security groups for the resource gateway.</p>",
         "CreateServiceNetworkVpcAssociationResponse$securityGroupIds": "<p>The IDs of the security groups.</p>",
+        "GetResourceGatewayResponse$securityGroupIds": "<p>The security group IDs associated with the resource gateway.</p>",
         "GetServiceNetworkVpcAssociationResponse$securityGroupIds": "<p>The IDs of the security groups.</p>",
+        "ResourceGatewaySummary$securityGroupIds": "<p>The IDs of the security groups applied to the resource gateway.</p>",
+        "UpdateResourceGatewayResponse$securityGroupIds": "<p>The IDs of the security groups associated with the resource gateway.</p>",
         "UpdateServiceNetworkVpcAssociationResponse$securityGroupIds": "<p>The IDs of the security groups.</p>"
       }
     },
@@ -1225,22 +1710,22 @@
     "ServiceIdentifier": {
       "base": null,
       "refs": {
-        "BatchUpdateRuleRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "CreateListenerRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "CreateRuleRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "CreateServiceNetworkServiceAssociationRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "DeleteListenerRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "DeleteRuleRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "DeleteServiceRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "GetListenerRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "GetRuleRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "GetServiceRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "ListListenersRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "ListRulesRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "ListServiceNetworkServiceAssociationsRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "UpdateListenerRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "UpdateRuleRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>",
-        "UpdateServiceRequest$serviceIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service.</p>"
+        "BatchUpdateRuleRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "CreateListenerRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "CreateRuleRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "CreateServiceNetworkServiceAssociationRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "DeleteListenerRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "DeleteRuleRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "DeleteServiceRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "GetListenerRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "GetRuleRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "GetServiceRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "ListListenersRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "ListRulesRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "ListServiceNetworkServiceAssociationsRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "UpdateListenerRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "UpdateRuleRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>",
+        "UpdateServiceRequest$serviceIdentifier": "<p>The ID or ARN of the service.</p>"
       }
     },
     "ServiceList": {
@@ -1269,10 +1754,23 @@
         "GetServiceNetworkResponse$arn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
         "GetServiceNetworkServiceAssociationResponse$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
         "GetServiceNetworkVpcAssociationResponse$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
+        "ServiceNetworkEndpointAssociation$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
         "ServiceNetworkServiceAssociationSummary$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
         "ServiceNetworkSummary$arn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
         "ServiceNetworkVpcAssociationSummary$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network.</p>",
         "UpdateServiceNetworkResponse$arn": "<p>The Amazon Resource Name (ARN) of the service network.</p>"
+      }
+    },
+    "ServiceNetworkArnWithoutRegex": {
+      "base": null,
+      "refs": {
+        "ServiceNetworkResourceAssociationSummary$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network associated with the resource configuration.</p>"
+      }
+    },
+    "ServiceNetworkEndpointAssociation": {
+      "base": "<p>Describes the association between a service network and a VPC endpoint.</p>",
+      "refs": {
+        "ServiceNetworkVpcEndpointAssociationList$member": null
       }
     },
     "ServiceNetworkId": {
@@ -1291,19 +1789,39 @@
     "ServiceNetworkIdentifier": {
       "base": null,
       "refs": {
-        "CreateServiceNetworkServiceAssociationRequest$serviceNetworkIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network. You must use the ARN if the resources specified in the operation are in different accounts.</p>",
-        "CreateServiceNetworkVpcAssociationRequest$serviceNetworkIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network. You must use the ARN when the resources specified in the operation are in different accounts.</p>",
-        "DeleteServiceNetworkRequest$serviceNetworkIdentifier": "<p>The Amazon Resource Name (ARN) or ID of the service network.</p>",
-        "GetServiceNetworkRequest$serviceNetworkIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network.</p>",
-        "ListServiceNetworkServiceAssociationsRequest$serviceNetworkIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network.</p>",
-        "ListServiceNetworkVpcAssociationsRequest$serviceNetworkIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network.</p>",
-        "UpdateServiceNetworkRequest$serviceNetworkIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the service network.</p>"
+        "CreateServiceNetworkServiceAssociationRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network. You must use an ARN if the resources are in different accounts.</p>",
+        "CreateServiceNetworkVpcAssociationRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network. You must use an ARN if the resources are in different accounts.</p>",
+        "DeleteServiceNetworkRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network.</p>",
+        "GetServiceNetworkRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network.</p>",
+        "ListServiceNetworkResourceAssociationsRequest$serviceNetworkIdentifier": "<p>The ID of the service network.</p>",
+        "ListServiceNetworkServiceAssociationsRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network.</p>",
+        "ListServiceNetworkVpcAssociationsRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network.</p>",
+        "ListServiceNetworkVpcEndpointAssociationsRequest$serviceNetworkIdentifier": "<p>The ID of the service network associated with the VPC endpoint.</p>",
+        "UpdateServiceNetworkRequest$serviceNetworkIdentifier": "<p>The ID or ARN of the service network.</p>"
+      }
+    },
+    "ServiceNetworkIdentifierWithoutRegex": {
+      "base": null,
+      "refs": {
+        "CreateServiceNetworkResourceAssociationRequest$serviceNetworkIdentifier": "<p>The ID of the service network to associate with the resource configuration.</p>",
+        "GetServiceNetworkResourceAssociationResponse$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network that is associated with the resource configuration.</p>",
+        "GetServiceNetworkResourceAssociationResponse$serviceNetworkId": "<p>The ID of the service network that is associated with the resource configuration.</p>",
+        "ServiceNetworkResourceAssociationSummary$serviceNetworkId": "<p>The ID of the service network associated with the resource configuration.</p>"
       }
     },
     "ServiceNetworkList": {
       "base": null,
       "refs": {
         "ListServiceNetworksResponse$items": "<p>Information about the service networks.</p>"
+      }
+    },
+    "ServiceNetworkLogType": {
+      "base": null,
+      "refs": {
+        "AccessLogSubscriptionSummary$serviceNetworkLogType": "<p>Log type of the service network.</p>",
+        "CreateAccessLogSubscriptionRequest$serviceNetworkLogType": "<p>The type of log that monitors your Amazon VPC Lattice service networks.</p>",
+        "CreateAccessLogSubscriptionResponse$serviceNetworkLogType": "<p>The type of log that monitors your Amazon VPC Lattice service networks.</p>",
+        "GetAccessLogSubscriptionResponse$serviceNetworkLogType": "<p>The log type for the service network.</p>"
       }
     },
     "ServiceNetworkName": {
@@ -1320,6 +1838,59 @@
         "UpdateServiceNetworkResponse$name": "<p>The name of the service network.</p>"
       }
     },
+    "ServiceNetworkNameWithoutRegex": {
+      "base": null,
+      "refs": {
+        "GetServiceNetworkResourceAssociationResponse$serviceNetworkName": "<p>The name of the service network that is associated with the resource configuration.</p>",
+        "ServiceNetworkResourceAssociationSummary$serviceNetworkName": "<p>The name of the service network associated with the resource configuration.</p>"
+      }
+    },
+    "ServiceNetworkResourceAssociationArn": {
+      "base": null,
+      "refs": {
+        "CreateServiceNetworkResourceAssociationResponse$arn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "DeleteServiceNetworkResourceAssociationResponse$arn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "GetServiceNetworkResourceAssociationResponse$arn": "<p>The Amazon Resource Name (ARN) of the association.</p>",
+        "ServiceNetworkResourceAssociationSummary$arn": "<p>The Amazon Resource Name (ARN) of the association.</p>"
+      }
+    },
+    "ServiceNetworkResourceAssociationId": {
+      "base": null,
+      "refs": {
+        "CreateServiceNetworkResourceAssociationResponse$id": "<p>The ID of the association.</p>",
+        "DeleteServiceNetworkResourceAssociationResponse$id": "<p>The ID of the association.</p>",
+        "GetServiceNetworkResourceAssociationResponse$id": "<p>The ID of the association.</p>",
+        "ServiceNetworkResourceAssociationSummary$id": "<p>The ID of the association between the service network and resource configuration.</p>"
+      }
+    },
+    "ServiceNetworkResourceAssociationIdentifier": {
+      "base": null,
+      "refs": {
+        "DeleteServiceNetworkResourceAssociationRequest$serviceNetworkResourceAssociationIdentifier": "<p>The ID of the association.</p>",
+        "GetServiceNetworkResourceAssociationRequest$serviceNetworkResourceAssociationIdentifier": "<p>The ID of the association.</p>"
+      }
+    },
+    "ServiceNetworkResourceAssociationList": {
+      "base": null,
+      "refs": {
+        "ListServiceNetworkResourceAssociationsResponse$items": "<p>Information about the associations.</p>"
+      }
+    },
+    "ServiceNetworkResourceAssociationStatus": {
+      "base": null,
+      "refs": {
+        "CreateServiceNetworkResourceAssociationResponse$status": "<p>The status of the association.</p>",
+        "DeleteServiceNetworkResourceAssociationResponse$status": "<p>The status of the association.</p>",
+        "GetServiceNetworkResourceAssociationResponse$status": "<p>The status of the association.</p>",
+        "ServiceNetworkResourceAssociationSummary$status": "<p>The status of the service network associated with the resource configuration.</p>"
+      }
+    },
+    "ServiceNetworkResourceAssociationSummary": {
+      "base": "<p>Summary information about an association between a service network and a resource configuration.</p>",
+      "refs": {
+        "ServiceNetworkResourceAssociationList$member": null
+      }
+    },
     "ServiceNetworkServiceAssociationArn": {
       "base": null,
       "refs": {
@@ -1333,9 +1904,9 @@
       "base": null,
       "refs": {
         "CreateServiceNetworkServiceAssociationResponse$id": "<p>The ID of the association.</p>",
-        "DeleteServiceNetworkServiceAssociationRequest$serviceNetworkServiceAssociationIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the association.</p>",
+        "DeleteServiceNetworkServiceAssociationRequest$serviceNetworkServiceAssociationIdentifier": "<p>The ID or ARN of the association.</p>",
         "DeleteServiceNetworkServiceAssociationResponse$id": "<p>The ID of the association.</p>",
-        "GetServiceNetworkServiceAssociationRequest$serviceNetworkServiceAssociationIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the association.</p>",
+        "GetServiceNetworkServiceAssociationRequest$serviceNetworkServiceAssociationIdentifier": "<p>The ID or ARN of the association.</p>",
         "GetServiceNetworkServiceAssociationResponse$id": "<p>The ID of the service network and service association.</p>",
         "ServiceNetworkServiceAssociationSummary$id": "<p>The ID of the association.</p>"
       }
@@ -1356,7 +1927,7 @@
       }
     },
     "ServiceNetworkServiceAssociationSummary": {
-      "base": "<p>Summary information about the association between a service network and a service.</p>",
+      "base": "<p>Summary information about an association between a service network and a service.</p>",
       "refs": {
         "ServiceNetworkServiceAssociationList$member": null
       }
@@ -1382,7 +1953,7 @@
       "refs": {
         "CreateServiceNetworkVpcAssociationResponse$id": "<p>The ID of the association.</p>",
         "DeleteServiceNetworkVpcAssociationResponse$id": "<p>The ID of the association.</p>",
-        "GetServiceNetworkVpcAssociationResponse$id": "<p>The ID of the specified association between the service network and the VPC.</p>",
+        "GetServiceNetworkVpcAssociationResponse$id": "<p>The ID of the association.</p>",
         "ServiceNetworkVpcAssociationSummary$id": "<p>The ID of the association.</p>",
         "UpdateServiceNetworkVpcAssociationResponse$id": "<p>The ID of the association.</p>"
       }
@@ -1390,9 +1961,9 @@
     "ServiceNetworkVpcAssociationIdentifier": {
       "base": null,
       "refs": {
-        "DeleteServiceNetworkVpcAssociationRequest$serviceNetworkVpcAssociationIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the association.</p>",
-        "GetServiceNetworkVpcAssociationRequest$serviceNetworkVpcAssociationIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the association.</p>",
-        "UpdateServiceNetworkVpcAssociationRequest$serviceNetworkVpcAssociationIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the association.</p>"
+        "DeleteServiceNetworkVpcAssociationRequest$serviceNetworkVpcAssociationIdentifier": "<p>The ID or ARN of the association.</p>",
+        "GetServiceNetworkVpcAssociationRequest$serviceNetworkVpcAssociationIdentifier": "<p>The ID or ARN of the association.</p>",
+        "UpdateServiceNetworkVpcAssociationRequest$serviceNetworkVpcAssociationIdentifier": "<p>The ID or ARN of the association.</p>"
       }
     },
     "ServiceNetworkVpcAssociationList": {
@@ -1417,6 +1988,12 @@
         "ServiceNetworkVpcAssociationList$member": null
       }
     },
+    "ServiceNetworkVpcEndpointAssociationList": {
+      "base": null,
+      "refs": {
+        "ListServiceNetworkVpcEndpointAssociationsResponse$items": "<p>Information about the association between the VPC endpoint and service network.</p>"
+      }
+    },
     "ServiceQuotaExceededException": {
       "base": "<p>The request would cause a service quota to be exceeded.</p>",
       "refs": {
@@ -1437,6 +2014,14 @@
         "ServiceList$member": null
       }
     },
+    "SharingConfig": {
+      "base": "<p>Specifies if the service network should be enabled for sharing.</p>",
+      "refs": {
+        "CreateServiceNetworkRequest$sharingConfig": "<p>Specify if the service network should be enabled for sharing.</p>",
+        "CreateServiceNetworkResponse$sharingConfig": "<p>Specifies if the service network is enabled for sharing.</p>",
+        "GetServiceNetworkResponse$sharingConfig": "<p>Specifies if the service network is enabled for sharing.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -1444,8 +2029,12 @@
         "ConflictException$message": null,
         "ConflictException$resourceId": "<p>The resource ID.</p>",
         "ConflictException$resourceType": "<p>The resource type.</p>",
+        "CreateResourceConfigurationResponse$failureReason": "<p>The reason that the request failed.</p>",
         "DnsEntry$domainName": "<p>The domain name of the service.</p>",
         "DnsEntry$hostedZoneId": "<p>The ID of the hosted zone.</p>",
+        "GetResourceConfigurationResponse$failureReason": "<p>The reason the create-resource-configuration request failed.</p>",
+        "GetServiceNetworkResourceAssociationResponse$failureCode": "<p>The failure code.</p>",
+        "GetServiceNetworkResourceAssociationResponse$failureReason": "<p>The reason the association request failed.</p>",
         "GetServiceNetworkServiceAssociationResponse$failureCode": "<p>The failure code.</p>",
         "GetServiceNetworkServiceAssociationResponse$failureMessage": "<p>The failure message.</p>",
         "GetServiceNetworkVpcAssociationResponse$failureCode": "<p>The failure code.</p>",
@@ -1456,6 +2045,12 @@
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The resource ID.</p>",
         "ResourceNotFoundException$resourceType": "<p>The resource type.</p>",
+        "ServiceNetworkEndpointAssociation$id": "<p>The ID of the association.</p>",
+        "ServiceNetworkEndpointAssociation$state": "<p>The state of the association.</p>",
+        "ServiceNetworkEndpointAssociation$vpcEndpointId": "<p>The ID of the VPC endpoint associated with the service network.</p>",
+        "ServiceNetworkEndpointAssociation$vpcEndpointOwnerId": "<p>The owner of the VPC endpoint associated with the service network.</p>",
+        "ServiceNetworkEndpointAssociation$vpcId": "<p>The ID of the VPC for the association.</p>",
+        "ServiceNetworkResourceAssociationSummary$failureCode": "<p>The failure code.</p>",
         "ServiceQuotaExceededException$message": null,
         "ServiceQuotaExceededException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>The resource ID.</p>",
@@ -1472,6 +2067,22 @@
         "ValidationException$message": null,
         "ValidationExceptionField$message": "<p>Additional information about why the validation failed.</p>",
         "ValidationExceptionField$name": "<p>The name of the validation exception.</p>"
+      }
+    },
+    "SubnetId": {
+      "base": null,
+      "refs": {
+        "SubnetList$member": null
+      }
+    },
+    "SubnetList": {
+      "base": null,
+      "refs": {
+        "CreateResourceGatewayRequest$subnetIds": "<p>The IDs of the VPC subnets in which to create the resource gateway.</p>",
+        "CreateResourceGatewayResponse$subnetIds": "<p>The IDs of the resource gateway subnets.</p>",
+        "GetResourceGatewayResponse$subnetIds": "<p>The IDs of the VPC subnets for resource gateway.</p>",
+        "ResourceGatewaySummary$subnetIds": "<p>The IDs of the VPC subnets for the resource gateway.</p>",
+        "UpdateResourceGatewayResponse$subnetIds": "<p>The IDs of the VPC subnets for the resource gateway.</p>"
       }
     },
     "TagKey": {
@@ -1492,8 +2103,11 @@
       "refs": {
         "CreateAccessLogSubscriptionRequest$tags": "<p>The tags for the access log subscription.</p>",
         "CreateListenerRequest$tags": "<p>The tags for the listener.</p>",
+        "CreateResourceConfigurationRequest$tags": "<p>The tags for the resource configuration.</p>",
+        "CreateResourceGatewayRequest$tags": "<p>The tags for the resource gateway.</p>",
         "CreateRuleRequest$tags": "<p>The tags for the rule.</p>",
         "CreateServiceNetworkRequest$tags": "<p>The tags for the service network.</p>",
+        "CreateServiceNetworkResourceAssociationRequest$tags": "<p>The tags for the association.</p>",
         "CreateServiceNetworkServiceAssociationRequest$tags": "<p>The tags for the association.</p>",
         "CreateServiceNetworkVpcAssociationRequest$tags": "<p>The tags for the association.</p>",
         "CreateServiceRequest$tags": "<p>The tags for the service.</p>",
@@ -1572,13 +2186,13 @@
     "TargetGroupIdentifier": {
       "base": null,
       "refs": {
-        "DeleteTargetGroupRequest$targetGroupIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the target group.</p>",
-        "DeregisterTargetsRequest$targetGroupIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the target group.</p>",
-        "GetTargetGroupRequest$targetGroupIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the target group.</p>",
-        "ListTargetsRequest$targetGroupIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the target group.</p>",
-        "RegisterTargetsRequest$targetGroupIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the target group.</p>",
-        "UpdateTargetGroupRequest$targetGroupIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the target group.</p>",
-        "WeightedTargetGroup$targetGroupIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the target group.</p>"
+        "DeleteTargetGroupRequest$targetGroupIdentifier": "<p>The ID or ARN of the target group.</p>",
+        "DeregisterTargetsRequest$targetGroupIdentifier": "<p>The ID or ARN of the target group.</p>",
+        "GetTargetGroupRequest$targetGroupIdentifier": "<p>The ID or ARN of the target group.</p>",
+        "ListTargetsRequest$targetGroupIdentifier": "<p>The ID or ARN of the target group.</p>",
+        "RegisterTargetsRequest$targetGroupIdentifier": "<p>The ID or ARN of the target group.</p>",
+        "UpdateTargetGroupRequest$targetGroupIdentifier": "<p>The ID or ARN of the target group.</p>",
+        "WeightedTargetGroup$targetGroupIdentifier": "<p>The ID or ARN of the target group.</p>"
       }
     },
     "TargetGroupList": {
@@ -1683,38 +2297,52 @@
     "Timestamp": {
       "base": null,
       "refs": {
-        "AccessLogSubscriptionSummary$createdAt": "<p>The date and time that the access log subscription was created, specified in ISO-8601 format.</p>",
-        "AccessLogSubscriptionSummary$lastUpdatedAt": "<p>The date and time that the access log subscription was last updated, specified in ISO-8601 format.</p>",
-        "GetAccessLogSubscriptionResponse$createdAt": "<p>The date and time that the access log subscription was created, specified in ISO-8601 format.</p>",
-        "GetAccessLogSubscriptionResponse$lastUpdatedAt": "<p>The date and time that the access log subscription was last updated, specified in ISO-8601 format.</p>",
-        "GetAuthPolicyResponse$createdAt": "<p>The date and time that the auth policy was created, specified in ISO-8601 format.</p>",
-        "GetAuthPolicyResponse$lastUpdatedAt": "<p>The date and time that the auth policy was last updated, specified in ISO-8601 format.</p>",
-        "GetListenerResponse$createdAt": "<p>The date and time that the listener was created, specified in ISO-8601 format.</p>",
-        "GetListenerResponse$lastUpdatedAt": "<p>The date and time that the listener was last updated, specified in ISO-8601 format.</p>",
-        "GetRuleResponse$createdAt": "<p>The date and time that the listener rule was created, specified in ISO-8601 format.</p>",
-        "GetRuleResponse$lastUpdatedAt": "<p>The date and time that the listener rule was last updated, specified in ISO-8601 format.</p>",
-        "GetServiceNetworkResponse$createdAt": "<p>The date and time that the service network was created, specified in ISO-8601 format.</p>",
-        "GetServiceNetworkResponse$lastUpdatedAt": "<p>The date and time of the last update, specified in ISO-8601 format.</p>",
-        "GetServiceNetworkServiceAssociationResponse$createdAt": "<p>The date and time that the association was created, specified in ISO-8601 format.</p>",
-        "GetServiceNetworkVpcAssociationResponse$createdAt": "<p>The date and time that the association was created, specified in ISO-8601 format.</p>",
-        "GetServiceNetworkVpcAssociationResponse$lastUpdatedAt": "<p>The date and time that the association was last updated, specified in ISO-8601 format.</p>",
-        "GetServiceResponse$createdAt": "<p>The date and time that the service was created, specified in ISO-8601 format.</p>",
-        "GetServiceResponse$lastUpdatedAt": "<p>The date and time that the service was last updated, specified in ISO-8601 format.</p>",
-        "GetTargetGroupResponse$createdAt": "<p>The date and time that the target group was created, specified in ISO-8601 format.</p>",
-        "GetTargetGroupResponse$lastUpdatedAt": "<p>The date and time that the target group was last updated, specified in ISO-8601 format.</p>",
-        "ListenerSummary$createdAt": "<p>The date and time that the listener was created, specified in ISO-8601 format.</p>",
-        "ListenerSummary$lastUpdatedAt": "<p>The date and time that the listener was last updated, specified in ISO-8601 format.</p>",
-        "RuleSummary$createdAt": "<p>The date and time that the listener rule was created, specified in ISO-8601 format.</p>",
-        "RuleSummary$lastUpdatedAt": "<p>The date and time that the listener rule was last updated, specified in ISO-8601 format.</p>",
-        "ServiceNetworkServiceAssociationSummary$createdAt": "<p>The date and time that the association was created, specified in ISO-8601 format.</p>",
-        "ServiceNetworkSummary$createdAt": "<p>The date and time that the service network was created, specified in ISO-8601 format.</p>",
-        "ServiceNetworkSummary$lastUpdatedAt": "<p>The date and time that the service network was last updated, specified in ISO-8601 format.</p>",
-        "ServiceNetworkVpcAssociationSummary$createdAt": "<p>The date and time that the association was created, specified in ISO-8601 format.</p>",
-        "ServiceNetworkVpcAssociationSummary$lastUpdatedAt": "<p>The date and time that the association was last updated, specified in ISO-8601 format.</p>",
-        "ServiceSummary$createdAt": "<p>The date and time that the service was created, specified in ISO-8601 format.</p>",
-        "ServiceSummary$lastUpdatedAt": "<p>The date and time that the service was last updated. The format is ISO-8601.</p>",
-        "TargetGroupSummary$createdAt": "<p>The date and time that the target group was created, specified in ISO-8601 format.</p>",
-        "TargetGroupSummary$lastUpdatedAt": "<p>The date and time that the target group was last updated, specified in ISO-8601 format.</p>"
+        "AccessLogSubscriptionSummary$createdAt": "<p>The date and time that the access log subscription was created, in ISO-8601 format.</p>",
+        "AccessLogSubscriptionSummary$lastUpdatedAt": "<p>The date and time that the access log subscription was last updated, in ISO-8601 format.</p>",
+        "CreateResourceConfigurationResponse$createdAt": "<p>The date and time that the resource configuration was created, in ISO-8601 format.</p>",
+        "GetAccessLogSubscriptionResponse$createdAt": "<p>The date and time that the access log subscription was created, in ISO-8601 format.</p>",
+        "GetAccessLogSubscriptionResponse$lastUpdatedAt": "<p>The date and time that the access log subscription was last updated, in ISO-8601 format.</p>",
+        "GetAuthPolicyResponse$createdAt": "<p>The date and time that the auth policy was created, in ISO-8601 format.</p>",
+        "GetAuthPolicyResponse$lastUpdatedAt": "<p>The date and time that the auth policy was last updated, in ISO-8601 format.</p>",
+        "GetListenerResponse$createdAt": "<p>The date and time that the listener was created, in ISO-8601 format.</p>",
+        "GetListenerResponse$lastUpdatedAt": "<p>The date and time that the listener was last updated, in ISO-8601 format.</p>",
+        "GetResourceConfigurationResponse$createdAt": "<p>The date and time that the resource configuration was created, in ISO-8601 format.</p>",
+        "GetResourceConfigurationResponse$lastUpdatedAt": "<p>The most recent date and time that the resource configuration was updated, in ISO-8601 format.</p>",
+        "GetResourceGatewayResponse$createdAt": "<p>The date and time that the resource gateway was created, in ISO-8601 format.</p>",
+        "GetResourceGatewayResponse$lastUpdatedAt": "<p>The date and time that the resource gateway was last updated, in ISO-8601 format.</p>",
+        "GetRuleResponse$createdAt": "<p>The date and time that the listener rule was created, in ISO-8601 format.</p>",
+        "GetRuleResponse$lastUpdatedAt": "<p>The date and time that the listener rule was last updated, in ISO-8601 format.</p>",
+        "GetServiceNetworkResourceAssociationResponse$createdAt": "<p>The date and time that the association was created, in ISO-8601 format.</p>",
+        "GetServiceNetworkResourceAssociationResponse$lastUpdatedAt": "<p>The most recent date and time that the association was updated, in ISO-8601 format.</p>",
+        "GetServiceNetworkResponse$createdAt": "<p>The date and time that the service network was created, in ISO-8601 format.</p>",
+        "GetServiceNetworkResponse$lastUpdatedAt": "<p>The date and time of the last update, in ISO-8601 format.</p>",
+        "GetServiceNetworkServiceAssociationResponse$createdAt": "<p>The date and time that the association was created, in ISO-8601 format.</p>",
+        "GetServiceNetworkVpcAssociationResponse$createdAt": "<p>The date and time that the association was created, in ISO-8601 format.</p>",
+        "GetServiceNetworkVpcAssociationResponse$lastUpdatedAt": "<p>The date and time that the association was last updated, in ISO-8601 format.</p>",
+        "GetServiceResponse$createdAt": "<p>The date and time that the service was created, in ISO-8601 format.</p>",
+        "GetServiceResponse$lastUpdatedAt": "<p>The date and time that the service was last updated, in ISO-8601 format.</p>",
+        "GetTargetGroupResponse$createdAt": "<p>The date and time that the target group was created, in ISO-8601 format.</p>",
+        "GetTargetGroupResponse$lastUpdatedAt": "<p>The date and time that the target group was last updated, in ISO-8601 format.</p>",
+        "ListenerSummary$createdAt": "<p>The date and time that the listener was created, in ISO-8601 format.</p>",
+        "ListenerSummary$lastUpdatedAt": "<p>The date and time that the listener was last updated, in ISO-8601 format.</p>",
+        "ResourceConfigurationSummary$createdAt": "<p>The date and time that the resource configuration was created, in ISO-8601 format.</p>",
+        "ResourceConfigurationSummary$lastUpdatedAt": "<p>The most recent date and time that the resource configuration was updated, in ISO-8601 format.</p>",
+        "ResourceEndpointAssociationSummary$createdAt": "<p>The date and time that the VPC endpoint association was created, in ISO-8601 format.</p>",
+        "ResourceGatewaySummary$createdAt": "<p>The date and time that the VPC endpoint association was created, in ISO-8601 format.</p>",
+        "ResourceGatewaySummary$lastUpdatedAt": "<p>The most recent date and time that the resource gateway was updated, in ISO-8601 format.</p>",
+        "RuleSummary$createdAt": "<p>The date and time that the listener rule was created, in ISO-8601 format.</p>",
+        "RuleSummary$lastUpdatedAt": "<p>The date and time that the listener rule was last updated, in ISO-8601 format.</p>",
+        "ServiceNetworkEndpointAssociation$createdAt": "<p>The date and time that the association was created, in ISO-8601 format.</p>",
+        "ServiceNetworkResourceAssociationSummary$createdAt": "<p>The date and time that the association was created, in ISO-8601 format.</p>",
+        "ServiceNetworkServiceAssociationSummary$createdAt": "<p>The date and time that the association was created, in ISO-8601 format.</p>",
+        "ServiceNetworkSummary$createdAt": "<p>The date and time that the service network was created, in ISO-8601 format.</p>",
+        "ServiceNetworkSummary$lastUpdatedAt": "<p>The date and time that the service network was last updated, in ISO-8601 format.</p>",
+        "ServiceNetworkVpcAssociationSummary$createdAt": "<p>The date and time that the association was created, in ISO-8601 format.</p>",
+        "ServiceNetworkVpcAssociationSummary$lastUpdatedAt": "<p>The date and time that the association was last updated, in ISO-8601 format.</p>",
+        "ServiceSummary$createdAt": "<p>The date and time that the service was created, in ISO-8601 format.</p>",
+        "ServiceSummary$lastUpdatedAt": "<p>The date and time that the service was last updated, in ISO-8601 format.</p>",
+        "TargetGroupSummary$createdAt": "<p>The date and time that the target group was created, in ISO-8601 format.</p>",
+        "TargetGroupSummary$lastUpdatedAt": "<p>The date and time that the target group was last updated, in ISO-8601 format.</p>"
       }
     },
     "UnhealthyThresholdCount": {
@@ -1749,6 +2377,32 @@
       }
     },
     "UpdateListenerResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateResourceConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateResourceConfigurationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateResourceGatewayRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateResourceGatewayRequestSecurityGroupIdsList": {
+      "base": null,
+      "refs": {
+        "UpdateResourceGatewayRequest$securityGroupIds": "<p>The IDs of the security groups associated with the resource gateway.</p>"
+      }
+    },
+    "UpdateResourceGatewayResponse": {
       "base": null,
       "refs": {
       }
@@ -1832,16 +2486,36 @@
         "ValidationException$reason": "<p>The reason.</p>"
       }
     },
+    "VpcEndpointId": {
+      "base": null,
+      "refs": {
+        "DeleteResourceEndpointAssociationResponse$vpcEndpointId": "<p>The ID of the resource VPC endpoint that is associated with the resource configuration.</p>",
+        "ListResourceEndpointAssociationsRequest$vpcEndpointId": "<p>The ID of the VPC endpoint in the association.</p>",
+        "ResourceEndpointAssociationSummary$vpcEndpointId": "<p>The ID of the VPC endpoint.</p>"
+      }
+    },
+    "VpcEndpointOwner": {
+      "base": null,
+      "refs": {
+        "ListResourceEndpointAssociationsRequest$vpcEndpointOwner": "<p>The owner of the VPC endpoint in the association.</p>",
+        "ResourceEndpointAssociationSummary$vpcEndpointOwner": "<p>The owner of the VPC endpoint.</p>"
+      }
+    },
     "VpcId": {
       "base": null,
       "refs": {
+        "CreateResourceGatewayRequest$vpcIdentifier": "<p>The ID of the VPC for the resource gateway.</p>",
+        "CreateResourceGatewayResponse$vpcIdentifier": "<p>The ID of the VPC.</p>",
         "CreateServiceNetworkVpcAssociationRequest$vpcIdentifier": "<p>The ID of the VPC.</p>",
+        "GetResourceGatewayResponse$vpcId": "<p>The ID of the VPC for the resource gateway.</p>",
         "GetServiceNetworkVpcAssociationResponse$vpcId": "<p>The ID of the VPC.</p>",
-        "ListServiceNetworkVpcAssociationsRequest$vpcIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the VPC.</p>",
-        "ListTargetGroupsRequest$vpcIdentifier": "<p>The ID or Amazon Resource Name (ARN) of the VPC.</p>",
+        "ListServiceNetworkVpcAssociationsRequest$vpcIdentifier": "<p>The ID or ARN of the VPC.</p>",
+        "ListTargetGroupsRequest$vpcIdentifier": "<p>The ID or ARN of the VPC.</p>",
+        "ResourceGatewaySummary$vpcIdentifier": "<p>The ID of the VPC for the resource gateway.</p>",
         "ServiceNetworkVpcAssociationSummary$vpcId": "<p>The ID of the VPC.</p>",
         "TargetGroupConfig$vpcIdentifier": "<p>The ID of the VPC. Not supported if the target group type is <code>LAMBDA</code>.</p>",
-        "TargetGroupSummary$vpcIdentifier": "<p>The ID of the VPC of the target group.</p>"
+        "TargetGroupSummary$vpcIdentifier": "<p>The ID of the VPC of the target group.</p>",
+        "UpdateResourceGatewayResponse$vpcId": "<p>The ID of the VPC for the resource gateway.</p>"
       }
     },
     "WeightedTargetGroup": {
@@ -1854,6 +2528,12 @@
       "base": null,
       "refs": {
         "ForwardAction$targetGroups": "<p>The target groups. Traffic matching the rule is forwarded to the specified target groups. With forward actions, you can assign a weight that controls the prioritization and selection of each target group. This means that requests are distributed to individual target groups based on their weights. For example, if two target groups have the same weight, each target group receives half of the traffic.</p> <p>The default value is 1. This means that if only one target group is provided, there is no need to set the weight; 100% of the traffic goes to that target group.</p>"
+      }
+    },
+    "WildcardArn": {
+      "base": null,
+      "refs": {
+        "ArnResource$arn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
       }
     }
   }

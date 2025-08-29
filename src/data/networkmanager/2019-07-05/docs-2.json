@@ -12,6 +12,7 @@
     "CreateConnection": "<p>Creates a connection between two devices. The devices can be a physical or virtual appliance that connects to a third-party appliance in a VPC, or a physical appliance that connects to another physical appliance in an on-premises network.</p>",
     "CreateCoreNetwork": "<p>Creates a core network as part of your global network, and optionally, with a core network policy.</p>",
     "CreateDevice": "<p>Creates a new device in a global network. If you specify both a site ID and a location, the location of the site is used for visualization in the Network Manager console.</p>",
+    "CreateDirectConnectGatewayAttachment": "<p>Creates an Amazon Web Services Direct Connect gateway attachment </p>",
     "CreateGlobalNetwork": "<p>Creates a new, empty global network.</p>",
     "CreateLink": "<p>Creates a new link for a specified site.</p>",
     "CreateSite": "<p>Creates a new site in a global network.</p>",
@@ -47,6 +48,7 @@
     "GetCoreNetworkPolicy": "<p>Returns details about a core network policy. You can get details about your current live policy or any previous policy version.</p>",
     "GetCustomerGatewayAssociations": "<p>Gets the association information for customer gateways that are associated with devices and links in your global network.</p>",
     "GetDevices": "<p>Gets information about one or more of your devices in a global network.</p>",
+    "GetDirectConnectGatewayAttachment": "<p>Returns information about a specific Amazon Web Services Direct Connect gateway attachment.</p>",
     "GetLinkAssociations": "<p>Gets the link associations for a device or a link. Either the device ID or the link ID must be specified.</p>",
     "GetLinks": "<p>Gets information about one or more links in a specified global network.</p> <p>If you specify the site ID, you cannot specify the type or provider in the same request. You can specify the type and provider in the same request.</p>",
     "GetNetworkResourceCounts": "<p>Gets the count of network resources, by resource type, for the specified global network.</p>",
@@ -82,6 +84,7 @@
     "UpdateConnection": "<p>Updates the information for an existing connection. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateCoreNetwork": "<p>Updates the description of a core network.</p>",
     "UpdateDevice": "<p>Updates the details for an existing device. To remove information for any of the parameters, specify an empty string.</p>",
+    "UpdateDirectConnectGatewayAttachment": "<p>Updates the edge locations associated with an Amazon Web Services Direct Connect gateway attachment. </p>",
     "UpdateGlobalNetwork": "<p>Updates an existing global network. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateLink": "<p>Updates the details for an existing link. To remove information for any of the parameters, specify an empty string.</p>",
     "UpdateNetworkResourceMetadata": "<p>Updates the resource metadata for the specified global network.</p>",
@@ -113,18 +116,15 @@
     },
     "AcceptAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AcceptAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -152,43 +152,35 @@
     },
     "AssociateConnectPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateConnectPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateCustomerGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateCustomerGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateLinkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateLinkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateTransitGatewayConnectPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateTransitGatewayConnectPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Attachment": {
       "base": "<p>Describes a core network attachment.</p>",
@@ -197,6 +189,7 @@
         "AttachmentList$member": null,
         "ConnectAttachment$Attachment": "<p>The attachment details.</p>",
         "DeleteAttachmentResponse$Attachment": "<p>Information about the deleted attachment.</p>",
+        "DirectConnectGatewayAttachment$Attachment": null,
         "RejectAttachmentResponse$Attachment": "<p>Describes the rejected attachment request.</p>",
         "SiteToSiteVpnAttachment$Attachment": "<p>Provides details about a site-to-site VPN attachment.</p>",
         "TransitGatewayRouteTableAttachment$Attachment": null,
@@ -234,12 +227,14 @@
         "CreateConnectPeerRequest$ConnectAttachmentId": "<p>The ID of the connection attachment.</p>",
         "DeleteAttachmentRequest$AttachmentId": "<p>The ID of the attachment to delete.</p>",
         "GetConnectAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
+        "GetDirectConnectGatewayAttachmentRequest$AttachmentId": "<p>The ID of the Direct Connect gateway attachment that you want to see details about.</p>",
         "GetSiteToSiteVpnAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
         "GetTransitGatewayRouteTableAttachmentRequest$AttachmentId": "<p>The ID of the transit gateway route table attachment.</p>",
         "GetVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
         "ListConnectPeersRequest$ConnectAttachmentId": "<p>The ID of the attachment.</p>",
         "NetworkRouteDestination$CoreNetworkAttachmentId": "<p>The ID of a core network attachment.</p>",
         "RejectAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>",
+        "UpdateDirectConnectGatewayAttachmentRequest$AttachmentId": "<p>The ID of the Direct Connect gateway attachment for the updated edge locations. </p>",
         "UpdateVpcAttachmentRequest$AttachmentId": "<p>The ID of the attachment.</p>"
       }
     },
@@ -280,13 +275,18 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CoreNetworkChangeValues$VpnEcmpSupport": "<p>Indicates whether Equal Cost Multipath (ECMP) is enabled for the core network.</p>",
+        "CoreNetworkChangeValues$DnsSupport": "<p>Indicates whether public DNS support is supported. The default is <code>true</code>. </p>",
+        "CoreNetworkChangeValues$SecurityGroupReferencingSupport": "<p>Indicates whether security group referencing is enabled for the core network.</p>",
         "NetworkResourceSummary$IsMiddlebox": "<p>Indicates whether this is a middlebox appliance.</p>",
         "RouteAnalysis$IncludeReturnPath": "<p>Indicates whether to analyze the return path. The return path is not analyzed if the forward path analysis does not succeed.</p>",
         "RouteAnalysis$UseMiddleboxes": "<p>Indicates whether to include the location of middlebox appliances in the route analysis.</p>",
         "StartRouteAnalysisRequest$IncludeReturnPath": "<p>Indicates whether to analyze the return path. The default is <code>false</code>.</p>",
         "StartRouteAnalysisRequest$UseMiddleboxes": "<p>Indicates whether to include the location of middlebox appliances in the route analysis. The default is <code>false</code>.</p>",
         "VpcOptions$Ipv6Support": "<p>Indicates whether IPv6 is supported.</p>",
-        "VpcOptions$ApplianceModeSupport": "<p>Indicates whether appliance mode is supported. If enabled, traffic flow between a source and destination use the same Availability Zone for the VPC attachment for the lifetime of that flow. The default value is <code>false</code>.</p>"
+        "VpcOptions$ApplianceModeSupport": "<p>Indicates whether appliance mode is supported. If enabled, traffic flow between a source and destination use the same Availability Zone for the VPC attachment for the lifetime of that flow. The default value is <code>false</code>.</p>",
+        "VpcOptions$DnsSupport": "<p>Indicates whether DNS is supported.</p>",
+        "VpcOptions$SecurityGroupReferencingSupport": "<p>Indicates whether security group referencing is enabled for this VPC attachment. The default is <code>true</code>. However, at the core network policy-level the default is set to <code>false</code>.</p>"
       }
     },
     "ChangeAction": {
@@ -322,6 +322,7 @@
         "CreateConnectAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateConnectPeerRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateCoreNetworkRequest$ClientToken": "<p>The client token associated with a core network request.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$ClientToken": "<p>client token</p>",
         "CreateSiteToSiteVpnAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateTransitGatewayPeeringRequest$ClientToken": "<p>The client token associated with the request.</p>",
         "CreateTransitGatewayRouteTableAttachmentRequest$ClientToken": "<p>The client token associated with the request.</p>",
@@ -331,8 +332,7 @@
     },
     "ConflictException": {
       "base": "<p>There was a conflict processing the request. Updating or deleting the resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectAttachment": {
       "base": "<p>Describes a core network Connect attachment.</p>",
@@ -709,6 +709,7 @@
         "CoreNetworkSegmentEdgeIdentifier$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CoreNetworkSummary$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CreateConnectAttachmentRequest$CoreNetworkId": "<p>The ID of a core network where you want to create the attachment. </p>",
+        "CreateDirectConnectGatewayAttachmentRequest$CoreNetworkId": "<p>The ID of the Cloud WAN core network that the Direct Connect gateway attachment should be attached to.</p>",
         "CreateSiteToSiteVpnAttachmentRequest$CoreNetworkId": "<p>The ID of a core network where you're creating a site-to-site VPN attachment.</p>",
         "CreateTransitGatewayPeeringRequest$CoreNetworkId": "<p>The ID of a core network.</p>",
         "CreateVpcAttachmentRequest$CoreNetworkId": "<p>The ID of a core network for the VPC attachment.</p>",
@@ -792,8 +793,7 @@
     },
     "CoreNetworkPolicyException": {
       "base": "<p>Describes a core network policy exception.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CoreNetworkPolicyVersion": {
       "base": "<p>Describes a core network policy version.</p>",
@@ -847,123 +847,107 @@
     },
     "CreateConnectAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCoreNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCoreNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "CreateDirectConnectGatewayAttachmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateDirectConnectGatewayAttachmentResponse": {
+      "base": null,
+      "refs": {}
     },
     "CreateGlobalNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateGlobalNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLinkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLinkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSiteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSiteResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSiteToSiteVpnAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSiteToSiteVpnAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTransitGatewayPeeringRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTransitGatewayPeeringResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTransitGatewayRouteTableAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTransitGatewayRouteTableAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVpcAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVpcAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomerGatewayArn": {
       "base": null,
@@ -1025,133 +1009,107 @@
     },
     "DeleteAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCoreNetworkPolicyVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCoreNetworkPolicyVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCoreNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCoreNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGlobalNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteGlobalNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLinkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLinkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePeeringRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePeeringResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSiteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSiteResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTransitGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTransitGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalNetworksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeGlobalNetworksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Device": {
       "base": "<p>Describes a device.</p>",
@@ -1210,45 +1168,52 @@
         "Device$State": "<p>The device state.</p>"
       }
     },
-    "DisassociateConnectPeerRequest": {
+    "DirectConnectGatewayArn": {
       "base": null,
       "refs": {
+        "CreateDirectConnectGatewayAttachmentRequest$DirectConnectGatewayArn": "<p>The ARN of the Direct Connect gateway attachment.</p>",
+        "DirectConnectGatewayAttachment$DirectConnectGatewayArn": "<p>The Direct Connect gateway attachment ARN.</p>"
       }
+    },
+    "DirectConnectGatewayAttachment": {
+      "base": "<p>Describes a Direct Connect gateway attachment.</p>",
+      "refs": {
+        "CreateDirectConnectGatewayAttachmentResponse$DirectConnectGatewayAttachment": "<p>Describes the details of a <code>CreateDirectConnectGatewayAttachment</code> request.</p>",
+        "GetDirectConnectGatewayAttachmentResponse$DirectConnectGatewayAttachment": "<p>Shows details about the Direct Connect gateway attachment. </p>",
+        "UpdateDirectConnectGatewayAttachmentResponse$DirectConnectGatewayAttachment": "<p>Returns details of the Direct Connect gateway attachment with the updated edge locations.</p>"
+      }
+    },
+    "DisassociateConnectPeerRequest": {
+      "base": null,
+      "refs": {}
     },
     "DisassociateConnectPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateCustomerGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateCustomerGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateLinkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateLinkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateTransitGatewayConnectPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateTransitGatewayConnectPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "EdgeOverride": {
       "base": "<p>Describes the edge that's used for the override. </p>",
@@ -1288,18 +1253,16 @@
     },
     "ExecuteCoreNetworkChangeSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExecuteCoreNetworkChangeSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ExternalRegionCode": {
       "base": null,
       "refs": {
-        "Attachment$EdgeLocation": "<p>The Region where the edge is located.</p>",
+        "Attachment$EdgeLocation": "<p>The Region where the edge is located. This is returned for all attachment types except a Direct Connect gateway attachment, which instead returns <code>EdgeLocations</code>.</p>",
         "ConnectPeer$EdgeLocation": "<p>The Connect peer Regions where edges are located.</p>",
         "ConnectPeerSummary$EdgeLocation": "<p>The Region where the edge is located.</p>",
         "CoreNetworkChangeEventValues$EdgeLocation": "<p>The edge location for the core network change event.</p>",
@@ -1322,9 +1285,12 @@
     "ExternalRegionCodeList": {
       "base": null,
       "refs": {
+        "Attachment$EdgeLocations": "<p>The edge locations that the Direct Connect gateway is associated with. This is returned only for Direct Connect gateway attachments. All other attachment types retrun <code>EdgeLocation</code>.</p>",
         "CoreNetworkChangeValues$EdgeLocations": "<p>The Regions where edges are located in a core network. </p>",
         "CoreNetworkNetworkFunctionGroup$EdgeLocations": "<p>The core network edge locations.</p>",
-        "CoreNetworkSegment$EdgeLocations": "<p>The Regions where the edges are located.</p>"
+        "CoreNetworkSegment$EdgeLocations": "<p>The Regions where the edges are located.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$EdgeLocations": "<p>One or more core network edge locations that the Direct Connect gateway attachment is associated with. </p>",
+        "UpdateDirectConnectGatewayAttachmentRequest$EdgeLocations": "<p>One or more edge locations to update for the Direct Connect gateway attachment. The updated array of edge locations overwrites the previous array of locations. <code>EdgeLocations</code> is only used for Direct Connect gateway attachments.</p>"
       }
     },
     "FilterMap": {
@@ -1353,263 +1319,219 @@
     },
     "GetConnectAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectPeerAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectPeerAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectPeerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectPeerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConnectionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkChangeEventsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkChangeEventsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkChangeSetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkChangeSetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCoreNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomerGatewayAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCustomerGatewayAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDevicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDevicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "GetDirectConnectGatewayAttachmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetDirectConnectGatewayAttachmentResponse": {
+      "base": null,
+      "refs": {}
     },
     "GetLinkAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLinkAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLinksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLinksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkResourceCountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkResourceCountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkResourceRelationshipsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkResourceRelationshipsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkResourcesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkResourcesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkRoutesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkRoutesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkTelemetryRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkTelemetryResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRouteAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRouteAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSiteToSiteVpnAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSiteToSiteVpnAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSitesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSitesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayConnectPeerAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayConnectPeerAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayPeeringRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayPeeringResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayRegistrationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayRegistrationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayRouteTableAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTransitGatewayRouteTableAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVpcAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetVpcAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlobalNetwork": {
       "base": "<p>Describes a global network. This is a single private network acting as a high-level container for your network objects, including an Amazon Web Services-managed Core Network.</p>",
@@ -1741,8 +1663,7 @@
     },
     "InternalServerException": {
       "base": "<p>The request has failed due to an internal error.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Link": {
       "base": "<p>Describes a link.</p>",
@@ -1824,73 +1745,59 @@
     },
     "ListAttachmentsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAttachmentsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectPeersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectPeersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoreNetworkPolicyVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoreNetworkPolicyVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoreNetworksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCoreNetworksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationServiceAccessStatusRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOrganizationServiceAccessStatusResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPeeringsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPeeringsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Location": {
       "base": "<p>Describes a location.</p>",
@@ -2188,23 +2095,19 @@
     },
     "PutCoreNetworkPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutCoreNetworkPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ReasonContextKey": {
       "base": null,
@@ -2226,23 +2129,19 @@
     },
     "RegisterTransitGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterTransitGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RejectAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RejectAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Relationship": {
       "base": "<p>Describes a resource relationship.</p>",
@@ -2289,8 +2188,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource could not be found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicyDocument": {
       "base": null,
@@ -2301,13 +2199,11 @@
     },
     "RestoreCoreNetworkPolicyVersionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RestoreCoreNetworkPolicyVersionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RetryAfterSeconds": {
       "base": null,
@@ -2478,8 +2374,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>A service limit was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Site": {
       "base": "<p>Describes a site.</p>",
@@ -2539,23 +2434,19 @@
     },
     "StartOrganizationServiceAccessUpdateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartOrganizationServiceAccessUpdateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRouteAnalysisRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRouteAnalysisResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SubnetArn": {
       "base": null,
@@ -2609,6 +2500,7 @@
         "CreateConnectionRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
         "CreateCoreNetworkRequest$Tags": "<p>Key-value tags associated with a core network request.</p>",
         "CreateDeviceRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
+        "CreateDirectConnectGatewayAttachmentRequest$Tags": "<p>The key value tags to apply to the Direct Connect gateway attachment during creation.</p>",
         "CreateGlobalNetworkRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
         "CreateLinkRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
         "CreateSiteRequest$Tags": "<p>The tags to apply to the resource during creation.</p>",
@@ -2630,13 +2522,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2646,8 +2536,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TransitGatewayArn": {
       "base": null,
@@ -2778,98 +2667,87 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCoreNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCoreNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateDirectConnectGatewayAttachmentRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateDirectConnectGatewayAttachmentResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateGlobalNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateGlobalNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLinkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLinkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNetworkResourceMetadataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNetworkResourceMetadataResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSiteResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVpcAttachmentRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVpcAttachmentResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Describes a validation exception for a field.</p>",

@@ -1,0 +1,3280 @@
+{
+  "version": "2.0",
+  "service": "<p>With the Amazon Location Routes API you can calculate routes and estimate travel time based on up-to-date road network and live traffic information.</p> <p>Calculate optimal travel routes and estimate travel times using up-to-date road network and traffic data. Key features include:</p> <ul> <li> <p>Point-to-point routing with estimated travel time, distance, and turn-by-turn directions</p> </li> <li> <p>Multi-point route optimization to minimize travel time or distance</p> </li> <li> <p>Route matrices for efficient multi-destination planning</p> </li> <li> <p>Isoline calculations to determine reachable areas within specified time or distance thresholds</p> </li> <li> <p>Map-matching to align GPS traces with the road network</p> </li> </ul>",
+  "operations": {
+    "CalculateIsolines": "<p>Use the <code>CalculateIsolines</code> action to find service areas that can be reached in a given threshold of time, distance.</p>",
+    "CalculateRouteMatrix": "<p> Use <code>CalculateRouteMatrix</code> to compute results for all pairs of Origins to Destinations. Each row corresponds to one entry in Origins. Each entry in the row corresponds to the route from that entry in Origins to an entry in Destinations positions.</p>",
+    "CalculateRoutes": "<p> <code>CalculateRoutes</code> computes routes given the following required parameters: <code>Origin</code> and <code>Destination</code>.</p>",
+    "OptimizeWaypoints": "<p> <code>OptimizeWaypoints</code> calculates the optimal order to travel between a set of waypoints to minimize either the travel time or the distance travelled during the journey, based on road network restrictions and the traffic pattern data.</p>",
+    "SnapToRoads": "<p> <code>SnapToRoads</code> matches GPS trace to roads most likely traveled on.</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You don't have sufficient access to perform this action.</p>",
+      "refs": {}
+    },
+    "ApiKey": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$Key": "<p>Optional: The API key to be used for authorization. Either an API key or valid SigV4 signature must be provided when making a request. </p>",
+        "CalculateRouteMatrixRequest$Key": "<p>Optional: The API key to be used for authorization. Either an API key or valid SigV4 signature must be provided when making a request. </p>",
+        "CalculateRoutesRequest$Key": "<p>Optional: The API key to be used for authorization. Either an API key or valid SigV4 signature must be provided when making a request. </p>",
+        "OptimizeWaypointsRequest$Key": "<p>Optional: The API key to be used for authorization. Either an API key or valid SigV4 signature must be provided when making a request. </p>",
+        "SnapToRoadsRequest$Key": "<p>Optional: The API key to be used for authorization. Either an API key or valid SigV4 signature must be provided when making a request. </p>"
+      }
+    },
+    "BeforeWaypointsList": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationWaypoint$Before": "<p>Constraint defining what waypoints are to be visited after this waypoint.</p>"
+      }
+    },
+    "BoundingBox": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceAreaGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>",
+        "RouteAvoidanceAreaGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>",
+        "RouteMatrixAvoidanceAreaGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>",
+        "RouteMatrixBoundaryGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>",
+        "WaypointOptimizationAvoidanceAreaGeometry$BoundingBox": "<p>Geometry defined as a bounding box. The first pair represents the X and Y coordinates (longitude and latitude,) of the southwest corner of the bounding box; the second pair represents the X and Y coordinates (longitude and latitude) of the northeast corner.</p>"
+      }
+    },
+    "CalculateIsolinesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CalculateIsolinesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CalculateRouteMatrixRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CalculateRouteMatrixRequestDestinationsList": {
+      "base": null,
+      "refs": {
+        "CalculateRouteMatrixRequest$Destinations": "<p>List of destinations for the route.</p> <note> <p>Route calculations are billed for each origin and destination pair. If you use a large matrix of origins and destinations, your costs will increase accordingly. See <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html`\"> Amazon Location's pricing page</a> for more information.</p> </note>"
+      }
+    },
+    "CalculateRouteMatrixRequestOriginsList": {
+      "base": null,
+      "refs": {
+        "CalculateRouteMatrixRequest$Origins": "<p>The position in longitude and latitude for the origin.</p> <note> <p>Route calculations are billed for each origin and destination pair. Using a large amount of Origins in a request can lead you to incur unexpected charges. See <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html`\"> Amazon Location's pricing page</a> for more information.</p> </note>"
+      }
+    },
+    "CalculateRouteMatrixResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "CalculateRouteMatrixResponseErrorCountInteger": {
+      "base": null,
+      "refs": {
+        "CalculateRouteMatrixResponse$ErrorCount": "<p>The count of error results in the route matrix. If this number is 0, all routes were calculated successfully.</p>"
+      }
+    },
+    "CalculateRoutesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "CalculateRoutesRequestLanguagesList": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$Languages": "<p>List of languages for instructions within steps in the response.</p> <note> <p>Instructions in the requested language are returned only if they are available.</p> </note>"
+      }
+    },
+    "CalculateRoutesRequestMaxAlternativesInteger": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$MaxAlternatives": "<p>Maximum number of alternative routes to be provided in the response, if available.</p>"
+      }
+    },
+    "CalculateRoutesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Circle": {
+      "base": "<p>Geometry defined as a circle. When request routing boundary was set as <code>AutoCircle</code>, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>",
+      "refs": {
+        "RouteMatrixBoundaryGeometry$Circle": "<p>Geometry defined as a circle. When request routing boundary was set as <code>AutoCircle</code>, the response routing boundary will return <code>Circle</code> derived from the <code>AutoCircle</code> settings.</p>"
+      }
+    },
+    "ClusterIndex": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationOptimizedWaypoint$ClusterIndex": "<p>Index of the cluster the waypoint is associated with. The index is included in the response only if clustering was performed while processing the request.</p>"
+      }
+    },
+    "Corridor": {
+      "base": "<p>Geometry defined as a corridor - a LineString with a radius that defines the width of the corridor.</p>",
+      "refs": {
+        "IsolineAvoidanceAreaGeometry$Corridor": "<p>Geometry defined as a corridor - a LineString with a radius that defines the width of the corridor.</p>",
+        "RouteAvoidanceAreaGeometry$Corridor": "<p>Geometry defined as a corridor - a LineString with a radius that defines the width of the corridor.</p>"
+      }
+    },
+    "CountryCode": {
+      "base": null,
+      "refs": {
+        "CountryCodeList$member": null
+      }
+    },
+    "CountryCode3": {
+      "base": null,
+      "refs": {
+        "RouteFerrySpan$Country": "<p>3 letter Country code corresponding to the Span.</p>",
+        "RoutePedestrianSpan$Country": "<p>3 letter Country code corresponding to the Span.</p>",
+        "RouteToll$Country": "<p>The alpha-2 or alpha-3 character code for the country.</p>",
+        "RouteVehicleSpan$Country": "<p>3 letter Country code corresponding to the Span.</p>"
+      }
+    },
+    "CountryCodeList": {
+      "base": null,
+      "refs": {
+        "RouteExclusionOptions$Countries": "<p>List of countries to be avoided defined by two-letter or three-letter country codes.</p>",
+        "RouteMatrixExclusionOptions$Countries": "<p>List of countries to be avoided defined by two-letter or three-letter country codes.</p>",
+        "WaypointOptimizationExclusionOptions$Countries": "<p>List of countries to be avoided defined by two-letter or three-letter country codes.</p>"
+      }
+    },
+    "CurrencyCode": {
+      "base": null,
+      "refs": {
+        "RouteTollOptions$Currency": "<p>Currency code corresponding to the price. This is the same as Currency specified in the request.</p>",
+        "RouteTollPrice$Currency": "<p>Currency code corresponding to the price. This is the same as Currency specified in the request.</p>",
+        "RouteTollPriceSummary$Currency": "<p>Currency code corresponding to the price. This is the same as Currency specified in the request.</p>"
+      }
+    },
+    "DayOfWeek": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationAccessHoursEntry$DayOfWeek": "<p>Day of the week.</p>"
+      }
+    },
+    "DimensionCentimeters": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$KpraLength": "<p>Kingpin to rear axle length of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>",
+        "RouteMatrixTruckOptions$KpraLength": "<p>Kingpin to rear axle length of the vehicle</p> <p> <b>Unit</b>: <code>centimeters</code> </p>",
+        "RouteTruckOptions$KpraLength": "<p>Kingpin to rear axle length of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>",
+        "RouteViolatedConstraints$MaxHeight": "<p>The maximum height of the vehicle.</p>",
+        "RouteViolatedConstraints$MaxKpraLength": "<p>The maximum Kpra length of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>",
+        "RouteViolatedConstraints$MaxLength": "<p>The maximum length of the vehicle.</p>",
+        "RouteViolatedConstraints$MaxWidth": "<p>The maximum width of the vehicle.</p>"
+      }
+    },
+    "DistanceMeters": {
+      "base": null,
+      "refs": {
+        "Isoline$DistanceThreshold": "<p>Distance threshold corresponding to the calculated Isoline.</p>",
+        "IsolineDestinationOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>",
+        "IsolineGranularityOptions$MaxResolution": "<p>Maximum resolution of the returned isoline.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "IsolineMatchingOptions$OnRoadThreshold": "<p>If the distance to a highway/bridge/tunnel/sliproad is within threshold, the waypoint will be snapped to the highway/bridge/tunnel/sliproad.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "IsolineMatchingOptions$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>Meters</code> </p>",
+        "IsolineOriginOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>",
+        "OptimizeWaypointsResponse$Distance": "<p>Overall distance to travel the whole sequence.</p>",
+        "RouteFerryOverviewSummary$Distance": "<p>Distance of the step.</p>",
+        "RouteFerrySpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteFerryTravelStep$Distance": "<p>Distance of the step.</p>",
+        "RouteMatchingOptions$OnRoadThreshold": "<p>If the distance to a highway/bridge/tunnel/sliproad is within threshold, the waypoint will be snapped to the highway/bridge/tunnel/sliproad.</p> <p> <b>Unit</b>: <code>meters</code> </p>",
+        "RouteMatchingOptions$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>Meters</code> </p>",
+        "RouteMatrixEntry$Distance": "<p>The total distance of travel for the route.</p>",
+        "RouteMatrixMatchingOptions$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>Meters</code> </p>",
+        "RoutePedestrianOverviewSummary$Distance": "<p>Distance of the step.</p>",
+        "RoutePedestrianSpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p>",
+        "RoutePedestrianTravelStep$Distance": "<p>Distance of the step.</p>",
+        "RouteSummary$Distance": "<p>Distance of the route.</p>",
+        "RouteVehicleOverviewSummary$Distance": "<p>Distance of the step.</p>",
+        "RouteVehicleSpan$Distance": "<p>Distance of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p>",
+        "RouteVehicleTravelStep$Distance": "<p>Distance of the step.</p>",
+        "WaypointOptimizationConnection$Distance": "<p>Distance of the step.</p>",
+        "WaypointOptimizationDrivingDistanceOptions$DrivingDistance": "<p>DrivingDistance assigns all the waypoints that are within driving distance of each other into a single cluster.</p>"
+      }
+    },
+    "DistanceThresholdList": {
+      "base": null,
+      "refs": {
+        "IsolineThresholds$Distance": "<p>Distance to be used for the isoline calculation.</p>"
+      }
+    },
+    "DistanceThresholdListMemberLong": {
+      "base": null,
+      "refs": {
+        "DistanceThresholdList$member": null
+      }
+    },
+    "Double": {
+      "base": null,
+      "refs": {
+        "BoundingBox$member": null,
+        "Position$member": null,
+        "Position23$member": null
+      }
+    },
+    "DurationSeconds": {
+      "base": null,
+      "refs": {
+        "Isoline$TimeThreshold": "<p>Time threshold corresponding to the calculated isoline.</p>",
+        "IsolineTrafficOptions$FlowEventThresholdOverride": "<p>Duration for which flow traffic is considered valid. For this period, the flow traffic is used over historical traffic data. Flow traffic refers to congestion, which changes very quickly. Duration in seconds for which flow traffic event would be considered valid. While flow traffic event is valid it will be used over the historical traffic data. </p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "OptimizeWaypointsResponse$Duration": "<p>Overall duration to travel the whole sequence.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteDestinationOptions$StopDuration": "<p>Duration of the stop.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteDriverScheduleInterval$DriveDuration": "<p>Maximum allowed driving time before stopping to rest.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteDriverScheduleInterval$RestDuration": "<p>Resting time before the driver can continue driving.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteFerryAfterTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteFerryBeforeTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteFerryOverviewSummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteFerrySpan$Duration": "<p>Duration of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteFerryTravelOnlySummary$Duration": "<p>Total duration in free flowing traffic, which is the best case or shortest duration possible to cover the leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteFerryTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteMatrixEntry$Duration": "<p>The expected duration of travel for the route.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteMatrixTrafficOptions$FlowEventThresholdOverride": "<p>Duration for which flow traffic is considered valid. For this period, the flow traffic is used over historical traffic data. Flow traffic refers to congestion, which changes very quickly. Duration in seconds for which flow traffic event would be considered valid. While flow traffic event is valid it will be used over the historical traffic data. </p>",
+        "RoutePedestrianOverviewSummary$Duration": "<p>Duration of the step.</p>",
+        "RoutePedestrianSpan$BestCaseDuration": "<p>Duration of the computed span without traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RoutePedestrianSpan$Duration": "<p>Duration of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RoutePedestrianSpan$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RoutePedestrianTravelOnlySummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RoutePedestrianTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteSpanDynamicSpeedDetails$TurnDuration": "<p>Estimated time to turn from this span into the next. </p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteSummary$Duration": "<p>Duration of the route.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTollPrice$PerDuration": "<p>Duration for which the price corresponds to.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteTrafficOptions$FlowEventThresholdOverride": "<p>Duration for which flow traffic is considered valid. For this period, the flow traffic is used over historical traffic data. Flow traffic refers to congestion, which changes very quickly. Duration in seconds for which flow traffic event would be considered valid. While flow traffic event is valid it will be used over the historical traffic data. </p>",
+        "RouteVehicleOverviewSummary$BestCaseDuration": "<p>Total duration in free flowing traffic, which is the best case or shortest duration possible to cover the leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleOverviewSummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleOverviewSummary$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion. </p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleSpan$BestCaseDuration": "<p>Duration of the computed span without traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleSpan$Duration": "<p>Duration of the computed span. This feature doesn't split a span, but is always computed on a span split by other properties.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleSpan$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion. </p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleTravelOnlySummary$BestCaseDuration": "<p>Total duration in free flowing traffic, which is the best case or shortest duration possible to cover the leg.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleTravelOnlySummary$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleTravelOnlySummary$TypicalDuration": "<p>Duration of the computed span under typical traffic congestion.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteVehicleTravelStep$Duration": "<p>Duration of the step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "RouteWaypoint$StopDuration": "<p>Duration of the stop.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationConnection$RestDuration": "<p>Resting time before the driver can continue driving.</p>",
+        "WaypointOptimizationConnection$TravelDuration": "<p>Total duration.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationConnection$WaitDuration": "<p>Duration of a wait step.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationDestinationOptions$ServiceDuration": "<p>Service time spent at the destination. At an appointment, the service time should be the appointment duration.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationRestCycleDurations$RestDuration": "<p>Resting phase of the cycle.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationRestCycleDurations$WorkDuration": "<p>Working phase of the cycle.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationTimeBreakdown$RestDuration": "<p>Resting phase of the cycle.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationTimeBreakdown$ServiceDuration": "<p>Service time spent at the destination. At an appointment, the service time should be the appointment duration.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationTimeBreakdown$TravelDuration": "<p>Traveling phase of the cycle.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationTimeBreakdown$WaitDuration": "<p>Waiting phase of the cycle.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+        "WaypointOptimizationWaypoint$ServiceDuration": "<p>Service time spent at the waypoint. At an appointment, the service time should be the appointment duration.</p> <p> <b>Unit</b>: <code>seconds</code> </p>"
+      }
+    },
+    "GeometryFormat": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$IsolineGeometryFormat": "<p>The format of the returned IsolineGeometry. </p> <p>Default Value:<code>FlexiblePolyline</code> </p>",
+        "CalculateIsolinesResponse$IsolineGeometryFormat": "<p>The format of the returned IsolineGeometry. </p> <p>Default Value:<code>FlexiblePolyline</code> </p>",
+        "CalculateRoutesRequest$LegGeometryFormat": "<p>Specifies the format of the geometry returned for each leg of the route. You can choose between two different geometry encoding formats.</p> <p> <code>FlexiblePolyline</code>: A compact and precise encoding format for the leg geometry. For more information on the format, see the GitHub repository for <a href=\"https://github.com/heremaps/flexible-polyline\"> <code>FlexiblePolyline</code> </a>.</p> <p> <code>Simple</code>: A less compact encoding, which is easier to decode but may be less precise and result in larger payloads.</p>",
+        "CalculateRoutesResponse$LegGeometryFormat": "<p>Specifies the format of the geometry returned for each leg of the route.</p>",
+        "SnapToRoadsRequest$SnappedGeometryFormat": "<p>Chooses what the returned SnappedGeometry format should be.</p> <p>Default Value: <code>FlexiblePolyline</code> </p>",
+        "SnapToRoadsResponse$SnappedGeometryFormat": "<p>Specifies the format of the geometry returned for each leg of the route.</p>"
+      }
+    },
+    "Heading": {
+      "base": null,
+      "refs": {
+        "IsolineDestinationOptions$Heading": "<p>GPS Heading at the position.</p>",
+        "IsolineOriginOptions$Heading": "<p>GPS Heading at the position.</p>",
+        "RoadSnapTracePoint$Heading": "<p>GPS Heading at the position.</p>",
+        "RouteDestinationOptions$Heading": "<p>GPS Heading at the position.</p>",
+        "RouteMatrixDestinationOptions$Heading": "<p>GPS Heading at the position.</p>",
+        "RouteMatrixOriginOptions$Heading": "<p>GPS Heading at the position.</p>",
+        "RouteOriginOptions$Heading": "<p>GPS Heading at the position.</p>",
+        "RouteWaypoint$Heading": "<p>GPS Heading at the position.</p>",
+        "WaypointOptimizationDestinationOptions$Heading": "<p>GPS Heading at the position.</p>",
+        "WaypointOptimizationWaypoint$Heading": "<p>GPS Heading at the position.</p>"
+      }
+    },
+    "IndexList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianSpan$Incidents": "<p>Incidents corresponding to the span. These index into the Incidents in the parent Leg.</p>",
+        "RouteToll$Systems": "<p>Toll systems are authorities that collect payments for the toll.</p>",
+        "RouteVehicleSpan$Incidents": "<p>Incidents corresponding to the span. These index into the Incidents in the parent Leg.</p>",
+        "RouteVehicleSpan$Notices": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>",
+        "RouteVehicleSpan$TollSystems": "<p>Toll systems are authorities that collect payments for the toll.</p>",
+        "RouteVehicleSpan$TruckRoadTypes": "<p>Truck road type identifiers. <code>BK1</code> through <code>BK4</code> apply only to Sweden. <code>A2,A4,B2,B4,C,D,ET2,ET4</code> apply only to Mexico.</p> <note> <p>There are currently no other supported values as of 26th April 2024.</p> </note>",
+        "RouteVehicleSpan$Zones": "<p>Zones corresponding to this leg of the route.</p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "Corridor$Radius": "<p>Radius that defines the width of the corridor.</p>",
+        "IndexList$member": null,
+        "PolylineCorridor$Radius": "<p>Considers all roads within the provided radius to match the provided destination to. The roads that are considered are determined by the provided Strategy.</p> <p> <b>Unit</b>: <code>Meters</code> </p>",
+        "RoadSnapTracePointIndexList$member": null
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing has failed because of an unknown error, exception or failure.</p>",
+      "refs": {}
+    },
+    "Isoline": {
+      "base": "<p>Calculated isolines and associated properties.</p>",
+      "refs": {
+        "IsolineList$member": null
+      }
+    },
+    "IsolineAllowOptions": {
+      "base": "<p>Features that are allowed while calculating an isoline.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$Allow": "<p>Features that are allowed while calculating an isoline.</p>"
+      }
+    },
+    "IsolineAvoidanceArea": {
+      "base": "<p>The area to be avoided.</p>",
+      "refs": {
+        "IsolineAvoidanceAreaList$member": null
+      }
+    },
+    "IsolineAvoidanceAreaGeometry": {
+      "base": "<p>The avoidance geometry, to be included while calculating an isoline.</p>",
+      "refs": {
+        "IsolineAvoidanceArea$Geometry": "<p>Geometry of the area to be avoided.</p>",
+        "IsolineAvoidanceAreaGeometryList$member": null
+      }
+    },
+    "IsolineAvoidanceAreaGeometryList": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceArea$Except": "<p>Exceptions to the provided avoidance geometry, to be included while calculating an isoline.</p>"
+      }
+    },
+    "IsolineAvoidanceAreaGeometryPolygonList": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceAreaGeometry$Polygon": "<p>A list of Polygon will be excluded for calculating isolines, the list can only contain 1 polygon.</p>"
+      }
+    },
+    "IsolineAvoidanceAreaGeometryPolylinePolygonList": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceAreaGeometry$PolylinePolygon": "<p>A list of PolylinePolygon's that are excluded for calculating isolines, the list can only contain 1 polygon. For more information on polyline encoding, see <a href=\"https://github.com/heremaps/flexiblepolyline/blob/master/README.md\">https://github.com/heremaps/flexiblepolyline/blob/master/README.md</a>. </p>"
+      }
+    },
+    "IsolineAvoidanceAreaList": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceOptions$Areas": "<p>Areas to be avoided.</p>"
+      }
+    },
+    "IsolineAvoidanceOptions": {
+      "base": "<p>Features that are avoided while calculating isolines. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$Avoid": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>"
+      }
+    },
+    "IsolineAvoidanceZoneCategory": {
+      "base": "<p>Zone category to be avoided.</p>",
+      "refs": {
+        "IsolineAvoidanceZoneCategoryList$member": null
+      }
+    },
+    "IsolineAvoidanceZoneCategoryList": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceOptions$ZoneCategories": "<p>Zone categories to be avoided.</p>"
+      }
+    },
+    "IsolineCarOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is <code>Car</code>.</p>",
+      "refs": {
+        "IsolineTravelModeOptions$Car": "<p>Travel mode options when the provided travel mode is \"Car\"</p>"
+      }
+    },
+    "IsolineCarOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "IsolineCarOptions$MaxSpeed": "<p>Maximum speed.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "IsolineCarOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "IsolineCarOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "IsolineConnection": {
+      "base": "<p>Isolines may contain multiple components, if these components are connected by ferry links. These components are returned as separate polygons while the ferry links are returned as connections.</p>",
+      "refs": {
+        "IsolineConnectionList$member": null
+      }
+    },
+    "IsolineConnectionFromPolygonIndexInteger": {
+      "base": null,
+      "refs": {
+        "IsolineConnection$FromPolygonIndex": "<p>Index of the polygon corresponding to the \"from\" component of the connection. The polygon is available from <code>Isoline[].Geometries</code>.</p>"
+      }
+    },
+    "IsolineConnectionGeometry": {
+      "base": "<p>Geometry of the connection between different isoline components.</p>",
+      "refs": {
+        "IsolineConnection$Geometry": "<p>The isoline geometry.</p>"
+      }
+    },
+    "IsolineConnectionList": {
+      "base": null,
+      "refs": {
+        "Isoline$Connections": "<p>Isolines may contain multiple components, if these components are connected by ferry links. These components are returned as separate polygons while the ferry links are returned as connections.</p>"
+      }
+    },
+    "IsolineConnectionToPolygonIndexInteger": {
+      "base": null,
+      "refs": {
+        "IsolineConnection$ToPolygonIndex": "<p>Index of the polygon corresponding to the \"to\" component of the connection. The polygon is available from <code>Isoline[].Geometries</code>.</p>"
+      }
+    },
+    "IsolineDestinationOptions": {
+      "base": "<p>Destination related options.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$DestinationOptions": "<p>Destination related options.</p>"
+      }
+    },
+    "IsolineEngineType": {
+      "base": null,
+      "refs": {
+        "IsolineCarOptions$EngineType": "<p>Engine type of the vehicle.</p>",
+        "IsolineScooterOptions$EngineType": "<p>Engine type of the vehicle.</p>",
+        "IsolineTruckOptions$EngineType": "<p>Engine type of the vehicle.</p>"
+      }
+    },
+    "IsolineGranularityOptions": {
+      "base": "<p>Isoline granularity related options.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$IsolineGranularity": "<p>Defines the granularity of the returned Isoline.</p>"
+      }
+    },
+    "IsolineGranularityOptionsMaxPointsInteger": {
+      "base": null,
+      "refs": {
+        "IsolineGranularityOptions$MaxPoints": "<p>Maximum number of points of returned Isoline.</p>"
+      }
+    },
+    "IsolineHazardousCargoType": {
+      "base": null,
+      "refs": {
+        "IsolineHazardousCargoTypeList$member": null
+      }
+    },
+    "IsolineHazardousCargoTypeList": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$HazardousCargos": "<p>List of Hazardous cargo contained in the vehicle.</p>"
+      }
+    },
+    "IsolineList": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesResponse$Isolines": "<p>Calculated isolines and associated properties.</p>"
+      }
+    },
+    "IsolineMatchingOptions": {
+      "base": "<p>Isoline matching related options.</p>",
+      "refs": {
+        "IsolineDestinationOptions$Matching": "<p>Options to configure matching the provided position to the road network.</p>",
+        "IsolineOriginOptions$Matching": "<p>Options to configure matching the provided position to the road network.</p>"
+      }
+    },
+    "IsolineOptimizationObjective": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$OptimizeIsolineFor": "<p>Specifies the optimization criteria for when calculating an isoline. AccurateCalculation generates an isoline of higher granularity that is more precise. FastCalculation generates an isoline faster by reducing the granularity, and in turn the quality of the isoline. BalancedCalculation generates an isoline by balancing between quality and performance. </p> <p>Default Value: <code>BalancedCalculation</code> </p>"
+      }
+    },
+    "IsolineOriginOptions": {
+      "base": "<p>Origin related options.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$OriginOptions": "<p>Origin related options.</p>"
+      }
+    },
+    "IsolineScooterOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p>",
+      "refs": {
+        "IsolineTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p> <note> <p>When travel mode is set to <code>Scooter</code>, then the avoidance option <code>ControlledAccessHighways</code> defaults to <code>true</code>.</p> </note>"
+      }
+    },
+    "IsolineScooterOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "IsolineScooterOptions$MaxSpeed": "<p>Maximum speed specified.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "IsolineScooterOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "IsolineScooterOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "IsolineShapeGeometry": {
+      "base": "<p>Geometry of the connection between different Isoline components.</p>",
+      "refs": {
+        "IsolineShapeGeometryList$member": null
+      }
+    },
+    "IsolineShapeGeometryList": {
+      "base": null,
+      "refs": {
+        "Isoline$Geometries": "<p>Geometries for the Calculated isolines.</p>"
+      }
+    },
+    "IsolineSideOfStreetOptions": {
+      "base": "<p>Options to configure matching the provided position to a side of the street.</p>",
+      "refs": {
+        "IsolineDestinationOptions$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>",
+        "IsolineOriginOptions$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>"
+      }
+    },
+    "IsolineThresholds": {
+      "base": "<p>Threshold to be used for the isoline calculation. Up to 5 thresholds per provided type can be requested.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$Thresholds": "<p>Threshold to be used for the isoline calculation. Up to 3 thresholds per provided type can be requested.</p> <p> You incur a calculation charge for each threshold. Using a large amount of thresholds in a request can lead you to incur unexpected charges. See <a href=\"https://docs.aws.amazon.com/location/latest/developerguide/routes-pricing.html`\"> Amazon Location's pricing page</a> for more information.</p>"
+      }
+    },
+    "IsolineTrafficOptions": {
+      "base": "<p>Options related to traffic.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$Traffic": "<p>Traffic related options.</p>"
+      }
+    },
+    "IsolineTrailerOptions": {
+      "base": "<p>Trailer options corresponding to the vehicle.</p>",
+      "refs": {
+        "IsolineTruckOptions$Trailer": "<p>Trailer options corresponding to the vehicle.</p>"
+      }
+    },
+    "IsolineTrailerOptionsAxleCountInteger": {
+      "base": null,
+      "refs": {
+        "IsolineTrailerOptions$AxleCount": "<p>Total number of axles of the vehicle.</p>"
+      }
+    },
+    "IsolineTrailerOptionsTrailerCountInteger": {
+      "base": null,
+      "refs": {
+        "IsolineTrailerOptions$TrailerCount": "<p>Number of trailers attached to the vehicle.</p> <p>Default Value: <code>0</code> </p>"
+      }
+    },
+    "IsolineTravelMode": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$TravelMode": "<p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p> <note> <p> The mode <code>Scooter</code> also applies to motorcycles, set to <code>Scooter</code> when wanted to calculate options for motorcycles.</p> </note> <p>Default Value: <code>Car</code> </p>"
+      }
+    },
+    "IsolineTravelModeOptions": {
+      "base": "<p>Travel mode related options for the provided travel mode.</p>",
+      "refs": {
+        "CalculateIsolinesRequest$TravelModeOptions": "<p>Travel mode related options for the provided travel mode.</p>"
+      }
+    },
+    "IsolineTruckOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>",
+      "refs": {
+        "IsolineTravelModeOptions$Truck": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>"
+      }
+    },
+    "IsolineTruckOptionsAxleCountInteger": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$AxleCount": "<p>Total number of axles of the vehicle.</p>"
+      }
+    },
+    "IsolineTruckOptionsHeightAboveFirstAxleLong": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$HeightAboveFirstAxle": "<p>Height of the vehicle above its first axle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "IsolineTruckOptionsHeightLong": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$Height": "<p>Height of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "IsolineTruckOptionsLengthLong": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$Length": "<p>Length of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "IsolineTruckOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$MaxSpeed": "<p>Maximum speed specified.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "IsolineTruckOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "IsolineTruckOptionsTireCountInteger": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$TireCount": "<p>Number of tires on the vehicle.</p>"
+      }
+    },
+    "IsolineTruckOptionsWidthLong": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$Width": "<p>Width of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "IsolineTruckType": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$TruckType": "<p>Type of the truck.</p>"
+      }
+    },
+    "IsolineVehicleLicensePlate": {
+      "base": "<p>The vehicle license plate.</p>",
+      "refs": {
+        "IsolineCarOptions$LicensePlate": "<p>The vehicle License Plate.</p>",
+        "IsolineScooterOptions$LicensePlate": "<p>The vehicle License Plate.</p>",
+        "IsolineTruckOptions$LicensePlate": "<p>The vehicle License Plate.</p>"
+      }
+    },
+    "IsolineVehicleLicensePlateLastCharacterString": {
+      "base": null,
+      "refs": {
+        "IsolineVehicleLicensePlate$LastCharacter": "<p>The last character of the License Plate.</p>"
+      }
+    },
+    "IsolineZoneCategory": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceZoneCategory$Category": "<p>Zone category to be avoided.</p>"
+      }
+    },
+    "LanguageTag": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequestLanguagesList$member": null,
+        "LocalizedString$Language": "<p>A list of BCP 47 compliant language codes for the results to be rendered in. The request uses the regional default as the fallback if the requested language can't be provided.</p>",
+        "RouteLeg$Language": "<p>List of languages for instructions within steps in the response.</p>",
+        "RouteNumber$Language": "<p>List of languages for instructions corresponding to the route number.</p>"
+      }
+    },
+    "LineString": {
+      "base": null,
+      "refs": {
+        "Corridor$LineString": "<p>An ordered list of positions used to plot a route on a map.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>",
+        "IsolineConnectionGeometry$LineString": "<p>An ordered list of positions used to plot a route on a map.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>",
+        "RoadSnapSnappedGeometry$LineString": "<p>An ordered list of positions used to plot a route on a map.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>",
+        "RouteLegGeometry$LineString": "<p>An ordered list of positions used to plot a route on a map.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>"
+      }
+    },
+    "LinearRing": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceAreaGeometryPolygonList$member": null,
+        "LinearRings$member": null,
+        "RouteAvoidanceAreaGeometryPolygonList$member": null,
+        "RouteMatrixAvoidanceAreaGeometryPolygonList$member": null,
+        "RouteMatrixBoundaryGeometryPolygonList$member": null
+      }
+    },
+    "LinearRings": {
+      "base": null,
+      "refs": {
+        "IsolineShapeGeometry$Polygon": "<p>A list of Isoline Polygons, for each isoline polygon, it contains polygons of the first linear ring (the outer ring) and from 2nd item to the last item (the inner rings).</p>"
+      }
+    },
+    "LocalizedString": {
+      "base": "<p>The localized string.</p>",
+      "refs": {
+        "LocalizedStringList$member": null,
+        "RouteMajorRoadLabel$RoadName": "<p>Name of the road (localized).</p>",
+        "RouteSignpostLabel$Text": "<p>The Signpost text.</p>"
+      }
+    },
+    "LocalizedStringList": {
+      "base": null,
+      "refs": {
+        "RouteContinueHighwayStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteContinueStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteEnterHighwayStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteExitStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteFerrySpan$Names": "<p>Provides an array of names of the ferry span in available languages.</p>",
+        "RouteKeepStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RoutePedestrianSpan$Names": "<p>Provides an array of names of the pedestrian span in available languages.</p>",
+        "RoutePedestrianTravelStep$ExitNumber": "<p>Exit number of the road exit, if applicable.</p>",
+        "RouteRampStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteRoad$RoadName": "<p>Name of the road (localized).</p>",
+        "RouteRoad$Towards": "<p>Names of destinations that can be reached when traveling on the road.</p>",
+        "RouteRoundaboutEnterStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteRoundaboutExitStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteRoundaboutPassStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteTurnStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteUTurnStepDetails$Intersection": "<p>Name of the intersection, if applicable to the step.</p>",
+        "RouteVehicleSpan$Names": "<p>Provides an array of names of the vehicle span in available languages.</p>",
+        "RouteVehicleTravelStep$ExitNumber": "<p>Exit number of the road exit, if applicable.</p>"
+      }
+    },
+    "MatchingStrategy": {
+      "base": null,
+      "refs": {
+        "IsolineMatchingOptions$Strategy": "<p>Strategy that defines matching of the position onto the road network. MatchAny considers all roads possible, whereas MatchMostSignificantRoad matches to the most significant road.</p>",
+        "RouteMatchingOptions$Strategy": "<p>Strategy that defines matching of the position onto the road network. MatchAny considers all roads possible, whereas MatchMostSignificantRoad matches to the most significant road.</p>",
+        "RouteMatrixMatchingOptions$Strategy": "<p>Strategy that defines matching of the position onto the road network. MatchAny considers all roads possible, whereas MatchMostSignificantRoad matches to the most significant road.</p>"
+      }
+    },
+    "MeasurementSystem": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$InstructionsMeasurementSystem": "<p>Measurement system to be used for instructions within steps in the response.</p>"
+      }
+    },
+    "OptimizeWaypointsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "OptimizeWaypointsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "Polyline": {
+      "base": null,
+      "refs": {
+        "IsolineConnectionGeometry$Polyline": "<p>An ordered list of positions used to plot a route on a map in a lossy compression format.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>",
+        "PolylineCorridor$Polyline": "<p>An ordered list of positions used to plot a route on a map in a lossy compression format.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>",
+        "RoadSnapSnappedGeometry$Polyline": "<p>An ordered list of positions used to plot a route on a map in a lossy compression format.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>",
+        "RouteLegGeometry$Polyline": "<p>An ordered list of positions used to plot a route on a map in a lossy compression format.</p> <note> <p>LineString and Polyline are mutually exclusive properties.</p> </note>"
+      }
+    },
+    "PolylineCorridor": {
+      "base": "<p>Geometry defined as an encoded corridor - an encoded polyline with a radius that defines the width of the corridor.</p>",
+      "refs": {
+        "IsolineAvoidanceAreaGeometry$PolylineCorridor": "<p>Geometry defined as an encoded corridor – a polyline with a radius that defines the width of the corridor. For more information on polyline encoding, see <a href=\"https://github.com/heremaps/flexiblepolyline/blob/master/README.md\">https://github.com/heremaps/flexiblepolyline/blob/master/README.md</a>.</p>",
+        "RouteAvoidanceAreaGeometry$PolylineCorridor": "<p>Geometry defined as an encoded corridor - an encoded polyline with a radius that defines the width of the corridor.</p>"
+      }
+    },
+    "PolylineRing": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceAreaGeometryPolylinePolygonList$member": null,
+        "PolylineRingList$member": null,
+        "RouteAvoidanceAreaGeometryPolylinePolygonList$member": null,
+        "RouteMatrixAvoidanceAreaGeometryPolylinePolygonList$member": null
+      }
+    },
+    "PolylineRingList": {
+      "base": null,
+      "refs": {
+        "IsolineShapeGeometry$PolylinePolygon": "<p>A list of Isoline PolylinePolygon, for each isoline PolylinePolygon, it contains PolylinePolygon of the first linear ring (the outer ring) and from 2nd item to the last item (the inner rings). For more information on polyline encoding, see <a href=\"https://github.com/heremaps/flexiblepolyline/blob/master/README.md\">https://github.com/heremaps/flexiblepolyline/blob/master/README.md</a>.</p>"
+      }
+    },
+    "Position": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$Destination": "<p>The final position for the route. In the World Geodetic System (WGS 84) format: <code>[longitude, latitude]</code>.</p>",
+        "CalculateIsolinesRequest$Origin": "<p>The start position for the route.</p>",
+        "CalculateIsolinesResponse$SnappedDestination": "<p>Snapped destination that was used for the Isoline calculation.</p>",
+        "CalculateIsolinesResponse$SnappedOrigin": "<p>Snapped origin that was used for the Isoline calculation.</p>",
+        "CalculateRoutesRequest$Destination": "<p>The final position for the route. In the World Geodetic System (WGS 84) format: <code>[longitude, latitude]</code>.</p>",
+        "CalculateRoutesRequest$Origin": "<p>The start position for the route.</p>",
+        "Circle$Center": "<p>Center of the Circle defined in longitude and latitude coordinates.</p> <p>Example: <code>[-123.1174, 49.2847]</code> represents the position with longitude <code>-123.1174</code> and latitude <code>49.2847</code>. </p>",
+        "IsolineSideOfStreetOptions$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "LineString$member": null,
+        "LinearRing$member": null,
+        "OptimizeWaypointsRequest$Destination": "<p>The final position for the route in the World Geodetic System (WGS 84) format: <code>[longitude, latitude]</code>.</p>",
+        "OptimizeWaypointsRequest$Origin": "<p>The start position for the route.</p>",
+        "RoadSnapSnappedTracePoint$OriginalPosition": "<p>Position of the TracePoint provided within the request, at the same index.</p>",
+        "RoadSnapSnappedTracePoint$SnappedPosition": "<p>Snapped position of the TracePoint provided within the request, at the same index. </p>",
+        "RoadSnapTracePoint$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RouteMatrixDestination$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RouteMatrixOrigin$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RouteMatrixSideOfStreetOptions$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RouteSideOfStreetOptions$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RouteWaypoint$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "WaypointOptimizationImpedingWaypoint$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "WaypointOptimizationOptimizedWaypoint$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "WaypointOptimizationSideOfStreetOptions$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "WaypointOptimizationWaypoint$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>"
+      }
+    },
+    "Position23": {
+      "base": null,
+      "refs": {
+        "RouteFerryPlace$OriginalPosition": "<p>Position provided in the request.</p>",
+        "RouteFerryPlace$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RoutePassThroughPlace$OriginalPosition": "<p>Position provided in the request.</p>",
+        "RoutePassThroughPlace$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RoutePedestrianPlace$OriginalPosition": "<p>Position provided in the request.</p>",
+        "RoutePedestrianPlace$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RouteTollPaymentSite$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>",
+        "RouteVehiclePlace$OriginalPosition": "<p>Position provided in the request.</p>",
+        "RouteVehiclePlace$Position": "<p>Position defined as <code>[longitude, latitude]</code>.</p>"
+      }
+    },
+    "RoadSnapHazardousCargoType": {
+      "base": null,
+      "refs": {
+        "RoadSnapHazardousCargoTypeList$member": null
+      }
+    },
+    "RoadSnapHazardousCargoTypeList": {
+      "base": null,
+      "refs": {
+        "RoadSnapTruckOptions$HazardousCargos": "<p>List of Hazardous cargos contained in the vehicle.</p>"
+      }
+    },
+    "RoadSnapNotice": {
+      "base": "<p>Notices provide information around factors that may have influenced snapping in a manner atypical to the standard use cases.</p>",
+      "refs": {
+        "RoadSnapNoticeList$member": null
+      }
+    },
+    "RoadSnapNoticeCode": {
+      "base": null,
+      "refs": {
+        "RoadSnapNotice$Code": "<p>Code corresponding to the issue.</p>"
+      }
+    },
+    "RoadSnapNoticeList": {
+      "base": null,
+      "refs": {
+        "SnapToRoadsResponse$Notices": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>"
+      }
+    },
+    "RoadSnapSnappedGeometry": {
+      "base": "<p>Interpolated geometry for the snapped route that is overlay-able onto a map.</p>",
+      "refs": {
+        "SnapToRoadsResponse$SnappedGeometry": "<p>The interpolated geometry for the snapped route onto the road network.</p>"
+      }
+    },
+    "RoadSnapSnappedTracePoint": {
+      "base": "<p>TracePoints snapped onto the road network.</p>",
+      "refs": {
+        "RoadSnapSnappedTracePointList$member": null
+      }
+    },
+    "RoadSnapSnappedTracePointConfidenceDouble": {
+      "base": null,
+      "refs": {
+        "RoadSnapSnappedTracePoint$Confidence": "<p>Confidence value for the correctness of this point match.</p>"
+      }
+    },
+    "RoadSnapSnappedTracePointList": {
+      "base": null,
+      "refs": {
+        "SnapToRoadsResponse$SnappedTracePoints": "<p>The trace points snapped onto the road network. </p>"
+      }
+    },
+    "RoadSnapTracePoint": {
+      "base": "<p>TracePoint indices for which the provided notice code corresponds to.</p>",
+      "refs": {
+        "SnapToRoadsRequestTracePointsList$member": null
+      }
+    },
+    "RoadSnapTracePointIndexList": {
+      "base": null,
+      "refs": {
+        "RoadSnapNotice$TracePointIndexes": "<p>TracePoint indices for which the provided notice code corresponds to.</p>"
+      }
+    },
+    "RoadSnapTrailerOptions": {
+      "base": "<p>Trailer options corresponding to the vehicle.</p>",
+      "refs": {
+        "RoadSnapTruckOptions$Trailer": "<p>Trailer options corresponding to the vehicle.</p>"
+      }
+    },
+    "RoadSnapTrailerOptionsTrailerCountInteger": {
+      "base": null,
+      "refs": {
+        "RoadSnapTrailerOptions$TrailerCount": "<p>Number of trailers attached to the vehicle.</p> <p>Default Value: <code>0</code> </p>"
+      }
+    },
+    "RoadSnapTravelMode": {
+      "base": null,
+      "refs": {
+        "SnapToRoadsRequest$TravelMode": "<p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p> <p>Default Value: <code>Car</code> </p>"
+      }
+    },
+    "RoadSnapTravelModeOptions": {
+      "base": "<p>Travel mode related options for the provided travel mode.</p>",
+      "refs": {
+        "SnapToRoadsRequest$TravelModeOptions": "<p>Travel mode related options for the provided travel mode.</p>"
+      }
+    },
+    "RoadSnapTruckOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is \"Truck\".</p>",
+      "refs": {
+        "RoadSnapTravelModeOptions$Truck": "<p>Travel mode options when the provided travel mode is \"Truck\".</p>"
+      }
+    },
+    "RoadSnapTruckOptionsHeightLong": {
+      "base": null,
+      "refs": {
+        "RoadSnapTruckOptions$Height": "<p>Height of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RoadSnapTruckOptionsLengthLong": {
+      "base": null,
+      "refs": {
+        "RoadSnapTruckOptions$Length": "<p>Length of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RoadSnapTruckOptionsWidthLong": {
+      "base": null,
+      "refs": {
+        "RoadSnapTruckOptions$Width": "<p>Width of the vehicle in centimenters.</p>"
+      }
+    },
+    "RoundaboutAngle": {
+      "base": null,
+      "refs": {
+        "RouteRoundaboutExitStepDetails$RoundaboutAngle": "<p>Angle of the roundabout.</p>"
+      }
+    },
+    "Route": {
+      "base": "<p>The route.</p>",
+      "refs": {
+        "RouteList$member": null
+      }
+    },
+    "RouteAllowOptions": {
+      "base": "<p>Features that are allowed while calculating a route.</p>",
+      "refs": {
+        "CalculateRoutesRequest$Allow": "<p>Features that are allowed while calculating a route.</p>"
+      }
+    },
+    "RouteAvoidanceArea": {
+      "base": "<p>Areas to be avoided.</p>",
+      "refs": {
+        "RouteAvoidanceAreaList$member": null
+      }
+    },
+    "RouteAvoidanceAreaGeometry": {
+      "base": "<p>Geometry of the area to be avoided.</p>",
+      "refs": {
+        "RouteAvoidanceArea$Geometry": null,
+        "RouteAvoidanceAreaGeometryList$member": null
+      }
+    },
+    "RouteAvoidanceAreaGeometryList": {
+      "base": null,
+      "refs": {
+        "RouteAvoidanceArea$Except": "<p>Exceptions to the provided avoidance geometry, to be included while calculating the route.</p>"
+      }
+    },
+    "RouteAvoidanceAreaGeometryPolygonList": {
+      "base": null,
+      "refs": {
+        "RouteAvoidanceAreaGeometry$Polygon": "<p>Geometry defined as a polygon with only one linear ring.</p>"
+      }
+    },
+    "RouteAvoidanceAreaGeometryPolylinePolygonList": {
+      "base": null,
+      "refs": {
+        "RouteAvoidanceAreaGeometry$PolylinePolygon": "<p>A list of Isoline PolylinePolygon, for each isoline PolylinePolygon, it contains PolylinePolygon of the first linear ring (the outer ring) and from 2nd item to the last item (the inner rings). For more information on polyline encoding, see <a href=\"https://github.com/heremaps/flexiblepolyline/blob/master/README.md\">https://github.com/heremaps/flexiblepolyline/blob/master/README.md</a>.</p>"
+      }
+    },
+    "RouteAvoidanceAreaList": {
+      "base": null,
+      "refs": {
+        "RouteAvoidanceOptions$Areas": "<p>Areas to be avoided.</p>"
+      }
+    },
+    "RouteAvoidanceOptions": {
+      "base": "<p>Specifies options for areas to avoid when calculating the route. This is a best-effort avoidance setting, meaning the router will try to honor the avoidance preferences but may still include restricted areas if no feasible alternative route exists. If avoidance options are not followed, the response will indicate that the avoidance criteria were violated.</p>",
+      "refs": {
+        "CalculateRoutesRequest$Avoid": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>"
+      }
+    },
+    "RouteAvoidanceZoneCategory": {
+      "base": "<p>Zone categories to be avoided.</p>",
+      "refs": {
+        "RouteAvoidanceZoneCategoryList$member": null
+      }
+    },
+    "RouteAvoidanceZoneCategoryList": {
+      "base": null,
+      "refs": {
+        "RouteAvoidanceOptions$ZoneCategories": "<p>Zone categories to be avoided.</p>"
+      }
+    },
+    "RouteCarOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is <code>Car</code>.</p>",
+      "refs": {
+        "RouteTravelModeOptions$Car": "<p>Travel mode options when the provided travel mode is \"Car\"</p>"
+      }
+    },
+    "RouteCarOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteCarOptions$MaxSpeed": "<p>Maximum speed specified.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteCarOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "RouteCarOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "RouteContinueHighwayStepDetails": {
+      "base": "<p>Details related to the continue highway step.</p>",
+      "refs": {
+        "RouteVehicleTravelStep$ContinueHighwayStepDetails": "<p>Details that are specific to a Continue Highway step.</p>"
+      }
+    },
+    "RouteContinueStepDetails": {
+      "base": "<p>Details related to the continue step.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$ContinueStepDetails": "<p>Details related to the continue step.</p>",
+        "RouteVehicleTravelStep$ContinueStepDetails": "<p>Details that are specific to a Continue step.</p>"
+      }
+    },
+    "RouteDestinationOptions": {
+      "base": "<p>Options related to the destination.</p>",
+      "refs": {
+        "CalculateRoutesRequest$DestinationOptions": "<p>Destination related options.</p>"
+      }
+    },
+    "RouteDestinationOptionsAvoidActionsForDistanceLong": {
+      "base": null,
+      "refs": {
+        "RouteDestinationOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>"
+      }
+    },
+    "RouteDirection": {
+      "base": null,
+      "refs": {
+        "RouteNumber$Direction": "<p>Directional identifier of the route.</p>"
+      }
+    },
+    "RouteDriverOptions": {
+      "base": "<p>Driver related options.</p>",
+      "refs": {
+        "CalculateRoutesRequest$Driver": "<p>Driver related options.</p>"
+      }
+    },
+    "RouteDriverScheduleInterval": {
+      "base": "<p>Interval of the driver work-rest schedule. Stops are added to fulfil the provided rest schedule.</p>",
+      "refs": {
+        "RouteDriverScheduleIntervalList$member": null
+      }
+    },
+    "RouteDriverScheduleIntervalList": {
+      "base": null,
+      "refs": {
+        "RouteDriverOptions$Schedule": "<p>Driver work-rest schedule. Stops are added to fulfil the provided rest schedule.</p>"
+      }
+    },
+    "RouteEmissionType": {
+      "base": "<p>Type of the emission.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3, Euro4, Euro5, Euro6, EuroEev</code> </p>",
+      "refs": {
+        "RouteTollOptions$EmissionType": "<p>Emission type of the vehicle for toll cost calculation.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3, Euro4, Euro5, Euro6, EuroEev</code> </p>"
+      }
+    },
+    "RouteEngineType": {
+      "base": null,
+      "refs": {
+        "RouteCarOptions$EngineType": "<p>Engine type of the vehicle.</p>",
+        "RouteScooterOptions$EngineType": "<p>Engine type of the vehicle.</p>",
+        "RouteTruckOptions$EngineType": "<p>Engine type of the vehicle.</p>"
+      }
+    },
+    "RouteEnterHighwayStepDetails": {
+      "base": "<p>Details related to the enter highway step.</p>",
+      "refs": {
+        "RouteVehicleTravelStep$EnterHighwayStepDetails": "<p>Details that are specific to a Enter Highway step.</p>"
+      }
+    },
+    "RouteExclusionOptions": {
+      "base": "<p>Specifies strict exclusion options for the route calculation. This setting mandates that the router will avoid any routes that include the specified options, rather than merely attempting to minimize them.</p>",
+      "refs": {
+        "CalculateRoutesRequest$Exclude": "<p>Features to be strictly excluded while calculating the route.</p>"
+      }
+    },
+    "RouteExitStepDetails": {
+      "base": "<p>Details related to the exit step.</p>",
+      "refs": {
+        "RouteVehicleTravelStep$ExitStepDetails": "<p>Details that are specific to a Roundabout Exit step.</p>"
+      }
+    },
+    "RouteExitStepDetailsRelativeExitInteger": {
+      "base": null,
+      "refs": {
+        "RouteExitStepDetails$RelativeExit": "<p>Exit to be taken.</p>"
+      }
+    },
+    "RouteFerryAfterTravelStep": {
+      "base": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>",
+      "refs": {
+        "RouteFerryAfterTravelStepList$member": null
+      }
+    },
+    "RouteFerryAfterTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteFerryLegDetails$AfterTravelSteps": "<p>Steps of a leg that must be performed after the travel portion of the leg.</p>"
+      }
+    },
+    "RouteFerryAfterTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteFerryAfterTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteFerryArrival": {
+      "base": "<p>Details corresponding to the arrival for the leg.</p>",
+      "refs": {
+        "RouteFerryLegDetails$Arrival": "<p>Details corresponding to the arrival for the leg.</p>"
+      }
+    },
+    "RouteFerryBeforeTravelStep": {
+      "base": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>",
+      "refs": {
+        "RouteFerryBeforeTravelStepList$member": null
+      }
+    },
+    "RouteFerryBeforeTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteFerryLegDetails$BeforeTravelSteps": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>"
+      }
+    },
+    "RouteFerryBeforeTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteFerryBeforeTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteFerryDeparture": {
+      "base": "<p>Details corresponding to the departure for the leg.</p>",
+      "refs": {
+        "RouteFerryLegDetails$Departure": "<p>Details corresponding to the departure for the leg.</p>"
+      }
+    },
+    "RouteFerryLegDetails": {
+      "base": "<p>FerryLegDetails is populated when the Leg type is Ferry, and provides additional information that is specific</p>",
+      "refs": {
+        "RouteLeg$FerryLegDetails": "<p>FerryLegDetails is populated when the Leg type is Ferry, and provides additional information that is specific</p>"
+      }
+    },
+    "RouteFerryNotice": {
+      "base": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>",
+      "refs": {
+        "RouteFerryNoticeList$member": null
+      }
+    },
+    "RouteFerryNoticeCode": {
+      "base": null,
+      "refs": {
+        "RouteFerryNotice$Code": "<p>Code corresponding to the issue.</p>"
+      }
+    },
+    "RouteFerryNoticeList": {
+      "base": null,
+      "refs": {
+        "RouteFerryLegDetails$Notices": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>"
+      }
+    },
+    "RouteFerryOverviewSummary": {
+      "base": "<p>Summarized details of the leg.</p>",
+      "refs": {
+        "RouteFerrySummary$Overview": "<p>Summarized details for the leg including before travel, travel and after travel steps.</p>"
+      }
+    },
+    "RouteFerryPlace": {
+      "base": "<p>Position provided in the request.</p>",
+      "refs": {
+        "RouteFerryArrival$Place": "<p>The place details.</p>",
+        "RouteFerryDeparture$Place": "<p>The place details.</p>"
+      }
+    },
+    "RouteFerryPlaceWaypointIndexInteger": {
+      "base": null,
+      "refs": {
+        "RouteFerryPlace$WaypointIndex": "<p>Index of the waypoint in the request.</p>"
+      }
+    },
+    "RouteFerrySpan": {
+      "base": "<p>Span computed for the requested SpanAdditionalFeatures.</p>",
+      "refs": {
+        "RouteFerrySpanList$member": null
+      }
+    },
+    "RouteFerrySpanGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteFerrySpan$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this span.</p>"
+      }
+    },
+    "RouteFerrySpanList": {
+      "base": null,
+      "refs": {
+        "RouteFerryLegDetails$Spans": "<p>Spans that were computed for the requested SpanAdditionalFeatures.</p>"
+      }
+    },
+    "RouteFerrySpanRegionString": {
+      "base": null,
+      "refs": {
+        "RouteFerrySpan$Region": "<p>2-3 letter Region code corresponding to the Span. This is either a province or a state.</p>"
+      }
+    },
+    "RouteFerrySummary": {
+      "base": "<p>Summarized details for the leg including travel steps only. The Distance for the travel only portion of the journey is the same as the Distance within the Overview summary.</p>",
+      "refs": {
+        "RouteFerryLegDetails$Summary": "<p>Summarized details of the leg.</p>"
+      }
+    },
+    "RouteFerryTravelOnlySummary": {
+      "base": "<p>Summarized details for the leg including travel steps only. The Distance for the travel only portion of the journey is the same as the Distance within the Overview summary.</p>",
+      "refs": {
+        "RouteFerrySummary$TravelOnly": "<p>Summarized details for the leg including travel steps only. The Distance for the travel only portion of the journey is in meters</p>"
+      }
+    },
+    "RouteFerryTravelStep": {
+      "base": "<p>Steps of a leg that must be performed during the travel portion of the leg.</p>",
+      "refs": {
+        "RouteFerryTravelStepList$member": null
+      }
+    },
+    "RouteFerryTravelStepGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteFerryTravelStep$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this step.</p>"
+      }
+    },
+    "RouteFerryTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteFerryLegDetails$TravelSteps": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>"
+      }
+    },
+    "RouteFerryTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteFerryTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteHazardousCargoType": {
+      "base": null,
+      "refs": {
+        "RouteHazardousCargoTypeList$member": null
+      }
+    },
+    "RouteHazardousCargoTypeList": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$HazardousCargos": "<p>List of Hazardous cargo contained in the vehicle.</p>",
+        "RouteViolatedConstraints$HazardousCargos": "<p>List of Hazardous cargo contained in the vehicle.</p>"
+      }
+    },
+    "RouteKeepStepDetails": {
+      "base": "<p>Details that are specific to a Keep step.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$KeepStepDetails": "<p>Details that are specific to a Keep step.</p>",
+        "RouteVehicleTravelStep$KeepStepDetails": "<p>Details that are specific to a Keep step.</p>"
+      }
+    },
+    "RouteLeg": {
+      "base": "<p>A leg is a section of a route from one waypoint to the next. A leg could be of type Vehicle, Pedestrian or Ferry. Legs of different types could occur together within a single route. For example, a car employing the use of a Ferry will contain Vehicle legs corresponding to journey on land, and Ferry legs corresponding to the journey via Ferry.</p>",
+      "refs": {
+        "RouteLegList$member": null
+      }
+    },
+    "RouteLegAdditionalFeature": {
+      "base": null,
+      "refs": {
+        "RouteLegAdditionalFeatureList$member": null
+      }
+    },
+    "RouteLegAdditionalFeatureList": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$LegAdditionalFeatures": "<p>A list of optional additional parameters such as timezone that can be requested for each result.</p> <ul> <li> <p> <code>Elevation</code>: Retrieves the elevation information for each location.</p> </li> <li> <p> <code>Incidents</code>: Provides information on traffic incidents along the route.</p> </li> <li> <p> <code>PassThroughWaypoints</code>: Indicates waypoints that are passed through without stopping.</p> </li> <li> <p> <code>Summary</code>: Returns a summary of the route, including distance and duration.</p> </li> <li> <p> <code>Tolls</code>: Supplies toll cost information along the route.</p> </li> <li> <p> <code>TravelStepInstructions</code>: Provides step-by-step instructions for travel along the route.</p> </li> <li> <p> <code>TruckRoadTypes</code>: Returns information about road types suitable for trucks.</p> </li> <li> <p> <code>TypicalDuration</code>: Gives typical travel duration based on historical data.</p> </li> <li> <p> <code>Zones</code>: Specifies the time zone information for each waypoint.</p> </li> </ul>"
+      }
+    },
+    "RouteLegGeometry": {
+      "base": "<p>The returned Route leg geometry.</p>",
+      "refs": {
+        "RouteLeg$Geometry": "<p>Geometry of the area to be avoided.</p>"
+      }
+    },
+    "RouteLegList": {
+      "base": null,
+      "refs": {
+        "Route$Legs": "<p>A leg is a section of a route from one waypoint to the next. A leg could be of type Vehicle, Pedestrian or Ferry. Legs of different types could occur together within a single route. For example, a car employing the use of a Ferry will contain Vehicle legs corresponding to journey on land, and Ferry legs corresponding to the journey via Ferry.</p>"
+      }
+    },
+    "RouteLegTravelMode": {
+      "base": null,
+      "refs": {
+        "RouteLeg$TravelMode": "<p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p> <p>Default Value: <code>Car</code> </p>"
+      }
+    },
+    "RouteLegType": {
+      "base": null,
+      "refs": {
+        "RouteLeg$Type": "<p>Type of the leg.</p>"
+      }
+    },
+    "RouteList": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesResponse$Routes": "<p>The path from the origin to the destination.</p>"
+      }
+    },
+    "RouteMajorRoadLabel": {
+      "base": "<p>Important labels including names and route numbers that differentiate the current route from the alternatives presented.</p>",
+      "refs": {
+        "RouteMajorRoadLabelsList$member": null
+      }
+    },
+    "RouteMajorRoadLabelsList": {
+      "base": null,
+      "refs": {
+        "Route$MajorRoadLabels": "<p>Important labels including names and route numbers that differentiate the current route from the alternatives presented.</p>"
+      }
+    },
+    "RouteMatchingOptions": {
+      "base": "<p>Options related to route matching.</p>",
+      "refs": {
+        "RouteDestinationOptions$Matching": "<p>Options to configure matching the provided position to the road network.</p>",
+        "RouteOriginOptions$Matching": "<p>Options to configure matching the provided position to the road network.</p>",
+        "RouteWaypoint$Matching": "<p>Options to configure matching the provided position to the road network.</p>"
+      }
+    },
+    "RouteMatchingOptionsNameHintString": {
+      "base": null,
+      "refs": {
+        "RouteMatchingOptions$NameHint": "<p>Attempts to match the provided position to a road similar to the provided name.</p>"
+      }
+    },
+    "RouteMatrix": {
+      "base": null,
+      "refs": {
+        "CalculateRouteMatrixResponse$RouteMatrix": "<p>The calculated route matrix containing the results for all pairs of Origins to Destination positions. Each row corresponds to one entry in Origins. Each entry in the row corresponds to the route from that entry in Origins to an entry in Destination positions.</p>"
+      }
+    },
+    "RouteMatrixAllowOptions": {
+      "base": "<p>Allow Options related to the route matrix.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequest$Allow": "<p>Features that are allowed while calculating a route.</p>"
+      }
+    },
+    "RouteMatrixAutoCircle": {
+      "base": "<p>Provides the circle that was used while calculating the route.</p>",
+      "refs": {
+        "RouteMatrixBoundaryGeometry$AutoCircle": "<p>Provides the circle that was used while calculating the route.</p>"
+      }
+    },
+    "RouteMatrixAutoCircleMarginLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixAutoCircle$Margin": "<p>The margin provided for the calculation.</p>"
+      }
+    },
+    "RouteMatrixAutoCircleMaxRadiusLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixAutoCircle$MaxRadius": "<p>The maximum size of the radius provided for the calculation.</p>"
+      }
+    },
+    "RouteMatrixAvoidanceArea": {
+      "base": "<p>Area to be avoided.</p>",
+      "refs": {
+        "RouteMatrixAvoidanceOptionsAreasList$member": null
+      }
+    },
+    "RouteMatrixAvoidanceAreaGeometry": {
+      "base": "<p>Geometry of the area to be avoided.</p>",
+      "refs": {
+        "RouteMatrixAvoidanceArea$Geometry": "<p>Geometry of the area to be avoided.</p>"
+      }
+    },
+    "RouteMatrixAvoidanceAreaGeometryPolygonList": {
+      "base": null,
+      "refs": {
+        "RouteMatrixAvoidanceAreaGeometry$Polygon": "<p>Geometry defined as a polygon with only one linear ring.</p>"
+      }
+    },
+    "RouteMatrixAvoidanceAreaGeometryPolylinePolygonList": {
+      "base": null,
+      "refs": {
+        "RouteMatrixAvoidanceAreaGeometry$PolylinePolygon": "<p>A list of Isoline PolylinePolygon, for each isoline PolylinePolygon, it contains PolylinePolygon of the first linear ring (the outer ring) and from second item to the last item (the inner rings). For more information on polyline encoding, see <a href=\"https://github.com/heremaps/flexiblepolyline/blob/master/README.md\">https://github.com/heremaps/flexiblepolyline/blob/master/README.md</a>.</p>"
+      }
+    },
+    "RouteMatrixAvoidanceOptions": {
+      "base": "<p>Specifies options for areas to avoid when calculating the route. This is a best-effort avoidance setting, meaning the router will try to honor the avoidance preferences but may still include restricted areas if no feasible alternative route exists. If avoidance options are not followed, the response will indicate that the avoidance criteria were violated.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequest$Avoid": "<p>Features that are avoided while calculating a route. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, it violates the avoidance and the returned response produces a notice for the violation.</p>"
+      }
+    },
+    "RouteMatrixAvoidanceOptionsAreasList": {
+      "base": null,
+      "refs": {
+        "RouteMatrixAvoidanceOptions$Areas": "<p>Areas to be avoided.</p>"
+      }
+    },
+    "RouteMatrixAvoidanceZoneCategory": {
+      "base": "<p>Zone categories to be avoided.</p>",
+      "refs": {
+        "RouteMatrixAvoidanceZoneCategoryList$member": null
+      }
+    },
+    "RouteMatrixAvoidanceZoneCategoryList": {
+      "base": null,
+      "refs": {
+        "RouteMatrixAvoidanceOptions$ZoneCategories": "<p>Zone categories to be avoided.</p>"
+      }
+    },
+    "RouteMatrixBoundary": {
+      "base": "<p>Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequest$RoutingBoundary": "<p>Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid.</p> <note> <p>When request routing boundary was set as AutoCircle, the response routing boundary will return Circle derived from the AutoCircle settings.</p> </note>",
+        "CalculateRouteMatrixResponse$RoutingBoundary": "<p>Boundary within which the matrix is to be calculated. All data, origins and destinations outside the boundary are considered invalid.</p> <note> <p>When request routing boundary was set as AutoCircle, the response routing boundary will return Circle derived from the AutoCircle settings.</p> </note>"
+      }
+    },
+    "RouteMatrixBoundaryGeometry": {
+      "base": "<p>Geometry of the routing boundary.</p>",
+      "refs": {
+        "RouteMatrixBoundary$Geometry": "<p>Geometry of the area to be avoided.</p>"
+      }
+    },
+    "RouteMatrixBoundaryGeometryPolygonList": {
+      "base": null,
+      "refs": {
+        "RouteMatrixBoundaryGeometry$Polygon": "<p>Geometry defined as a polygon with only one linear ring.</p>"
+      }
+    },
+    "RouteMatrixCarOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is <code>Car</code>.</p>",
+      "refs": {
+        "RouteMatrixTravelModeOptions$Car": "<p>Travel mode options when the provided travel mode is \"Car\"</p>"
+      }
+    },
+    "RouteMatrixCarOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteMatrixCarOptions$MaxSpeed": "<p>Maximum speed</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteMatrixCarOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "RouteMatrixCarOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "RouteMatrixDestination": {
+      "base": "<p>The route destination.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequestDestinationsList$member": null
+      }
+    },
+    "RouteMatrixDestinationOptions": {
+      "base": "<p>Options related to the destination.</p>",
+      "refs": {
+        "RouteMatrixDestination$Options": "<p>Destination related options.</p>"
+      }
+    },
+    "RouteMatrixDestinationOptionsAvoidActionsForDistanceLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixDestinationOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>"
+      }
+    },
+    "RouteMatrixEntry": {
+      "base": "<p>The calculated route matrix containing the results for all pairs of Origins to Destination positions. Each row corresponds to one entry in Origins. Each entry in the row corresponds to the route from that entry in Origins to an entry in Destination positions.</p>",
+      "refs": {
+        "RouteMatrixRow$member": null
+      }
+    },
+    "RouteMatrixErrorCode": {
+      "base": null,
+      "refs": {
+        "RouteMatrixEntry$Error": "<p>Error code that occurred during calculation of the route.</p>"
+      }
+    },
+    "RouteMatrixExclusionOptions": {
+      "base": "<p>Specifies strict exclusion options for the route calculation. This setting mandates that the router will avoid any routes that include the specified options, rather than merely attempting to minimize them.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequest$Exclude": "<p>Features to be strictly excluded while calculating the route.</p>"
+      }
+    },
+    "RouteMatrixHazardousCargoType": {
+      "base": null,
+      "refs": {
+        "RouteMatrixHazardousCargoTypeList$member": null
+      }
+    },
+    "RouteMatrixHazardousCargoTypeList": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$HazardousCargos": "<p>List of Hazardous cargo contained in the vehicle.</p>"
+      }
+    },
+    "RouteMatrixMatchingOptions": {
+      "base": "<p>Matching options.</p>",
+      "refs": {
+        "RouteMatrixDestinationOptions$Matching": "<p>Options to configure matching the provided position to the road network.</p>",
+        "RouteMatrixOriginOptions$Matching": "<p>Options to configure matching the provided position to the road network.</p>"
+      }
+    },
+    "RouteMatrixMatchingOptionsOnRoadThresholdLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixMatchingOptions$OnRoadThreshold": "<p>If the distance to a highway/bridge/tunnel/sliproad is within threshold, the waypoint will be snapped to the highway/bridge/tunnel/sliproad.</p> <p> <b>Unit</b>: <code>meters</code> </p>"
+      }
+    },
+    "RouteMatrixOrigin": {
+      "base": "<p>The start position for the route.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequestOriginsList$member": null
+      }
+    },
+    "RouteMatrixOriginOptions": {
+      "base": "<p>Origin related options.</p>",
+      "refs": {
+        "RouteMatrixOrigin$Options": "<p>Origin related options.</p>"
+      }
+    },
+    "RouteMatrixOriginOptionsAvoidActionsForDistanceLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixOriginOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>"
+      }
+    },
+    "RouteMatrixRow": {
+      "base": null,
+      "refs": {
+        "RouteMatrix$member": null
+      }
+    },
+    "RouteMatrixScooterOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p>",
+      "refs": {
+        "RouteMatrixTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p> <note> <p>When travel mode is set to <code>Scooter</code>, then the avoidance option <code>ControlledAccessHighways</code> defaults to <code>true</code>.</p> </note>"
+      }
+    },
+    "RouteMatrixScooterOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteMatrixScooterOptions$MaxSpeed": "<p>Maximum speed.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteMatrixScooterOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "RouteMatrixScooterOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "RouteMatrixSideOfStreetOptions": {
+      "base": "<p>Options to configure matching the provided position to a side of the street.</p>",
+      "refs": {
+        "RouteMatrixDestinationOptions$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>",
+        "RouteMatrixOriginOptions$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>"
+      }
+    },
+    "RouteMatrixTrafficOptions": {
+      "base": "<p>Traffic related options.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequest$Traffic": "<p>Traffic related options.</p>"
+      }
+    },
+    "RouteMatrixTrailerOptions": {
+      "base": "<p>Trailer options corresponding to the vehicle.</p>",
+      "refs": {
+        "RouteMatrixTruckOptions$Trailer": "<p>Trailer options corresponding to the vehicle.</p>"
+      }
+    },
+    "RouteMatrixTrailerOptionsTrailerCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTrailerOptions$TrailerCount": "<p>Number of trailers attached to the vehicle.</p> <p>Default Value: <code>0</code> </p>"
+      }
+    },
+    "RouteMatrixTravelMode": {
+      "base": null,
+      "refs": {
+        "CalculateRouteMatrixRequest$TravelMode": "<p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p> <p>Default Value: <code>Car</code> </p>"
+      }
+    },
+    "RouteMatrixTravelModeOptions": {
+      "base": "<p>Travel mode related options for the provided travel mode.</p>",
+      "refs": {
+        "CalculateRouteMatrixRequest$TravelModeOptions": "<p>Travel mode related options for the provided travel mode.</p>"
+      }
+    },
+    "RouteMatrixTruckOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>",
+      "refs": {
+        "RouteMatrixTravelModeOptions$Truck": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>"
+      }
+    },
+    "RouteMatrixTruckOptionsAxleCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$AxleCount": "<p>Total number of axles of the vehicle.</p>"
+      }
+    },
+    "RouteMatrixTruckOptionsHeightLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$Height": "<p>Height of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RouteMatrixTruckOptionsLengthLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$Length": "<p>Length of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RouteMatrixTruckOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$MaxSpeed": "<p>Maximum speed</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteMatrixTruckOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "RouteMatrixTruckOptionsWidthLong": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$Width": "<p>Width of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RouteMatrixTruckType": {
+      "base": null,
+      "refs": {
+        "RouteMatrixTruckOptions$TruckType": "<p>Type of the truck.</p>"
+      }
+    },
+    "RouteMatrixVehicleLicensePlate": {
+      "base": "<p>The vehicle License Plate.</p>",
+      "refs": {
+        "RouteMatrixCarOptions$LicensePlate": "<p>The vehicle License Plate.</p>",
+        "RouteMatrixScooterOptions$LicensePlate": "<p>The vehicle License Plate.</p>",
+        "RouteMatrixTruckOptions$LicensePlate": "<p>The vehicle License Plate.</p>"
+      }
+    },
+    "RouteMatrixVehicleLicensePlateLastCharacterString": {
+      "base": null,
+      "refs": {
+        "RouteMatrixVehicleLicensePlate$LastCharacter": "<p>The last character of the License Plate.</p>"
+      }
+    },
+    "RouteMatrixZoneCategory": {
+      "base": null,
+      "refs": {
+        "RouteMatrixAvoidanceZoneCategory$Category": "<p>Zone category to be avoided.</p>"
+      }
+    },
+    "RouteNoticeDetailRange": {
+      "base": "<p>Notice Detail that is a range.</p>",
+      "refs": {
+        "RouteViolatedConstraints$AxleCount": "<p>Total number of axles of the vehicle.</p>",
+        "RouteViolatedConstraints$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>",
+        "RouteViolatedConstraints$TrailerCount": "<p>Number of trailers attached to the vehicle.</p> <p>Default Value: <code>0</code> </p>"
+      }
+    },
+    "RouteNoticeDetailRangeMaxInteger": {
+      "base": null,
+      "refs": {
+        "RouteNoticeDetailRange$Max": "<p>Maximum value for the range.</p>"
+      }
+    },
+    "RouteNoticeDetailRangeMinInteger": {
+      "base": null,
+      "refs": {
+        "RouteNoticeDetailRange$Min": "<p>Minimum value for the range.</p>"
+      }
+    },
+    "RouteNoticeImpact": {
+      "base": null,
+      "refs": {
+        "RouteFerryNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
+        "RoutePedestrianNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
+        "RouteResponseNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>",
+        "RouteVehicleNotice$Impact": "<p>Impact corresponding to the issue. While Low impact notices can be safely ignored, High impact notices must be evaluated further to determine the impact.</p>"
+      }
+    },
+    "RouteNumber": {
+      "base": "<p>The route number.</p>",
+      "refs": {
+        "RouteMajorRoadLabel$RouteNumber": "<p>Route number of the road.</p>",
+        "RouteNumberList$member": null,
+        "RouteSignpostLabel$RouteNumber": "<p>Route number of the road.</p>"
+      }
+    },
+    "RouteNumberList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianSpan$RouteNumbers": "<p>Designated route name or number corresponding to the span.</p>",
+        "RouteRoad$RouteNumber": "<p>Route number of the road.</p>",
+        "RouteVehicleSpan$RouteNumbers": "<p>Designated route name or number corresponding to the span.</p>"
+      }
+    },
+    "RouteOriginOptions": {
+      "base": "<p>Origin related options.</p>",
+      "refs": {
+        "CalculateRoutesRequest$OriginOptions": "<p>Origin related options.</p>"
+      }
+    },
+    "RouteOriginOptionsAvoidActionsForDistanceLong": {
+      "base": null,
+      "refs": {
+        "RouteOriginOptions$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>"
+      }
+    },
+    "RoutePassThroughPlace": {
+      "base": "<p>The place where the waypoint is passed through and not treated as a stop.</p>",
+      "refs": {
+        "RoutePassThroughWaypoint$Place": "<p>The place details.</p>"
+      }
+    },
+    "RoutePassThroughPlaceWaypointIndexInteger": {
+      "base": null,
+      "refs": {
+        "RoutePassThroughPlace$WaypointIndex": "<p>Index of the waypoint in the request.</p>"
+      }
+    },
+    "RoutePassThroughWaypoint": {
+      "base": "<p>If the waypoint should be treated as a stop. If yes, the route is split up into different legs around the stop.</p>",
+      "refs": {
+        "RoutePassThroughWaypointList$member": null
+      }
+    },
+    "RoutePassThroughWaypointGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RoutePassThroughWaypoint$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this step.</p>"
+      }
+    },
+    "RoutePassThroughWaypointList": {
+      "base": null,
+      "refs": {
+        "RouteFerryLegDetails$PassThroughWaypoints": "<p>Waypoints that were passed through during the leg. This includes the waypoints that were configured with the PassThrough option.</p>",
+        "RoutePedestrianLegDetails$PassThroughWaypoints": "<p>Waypoints that were passed through during the leg. This includes the waypoints that were configured with the PassThrough option.</p>",
+        "RouteVehicleLegDetails$PassThroughWaypoints": "<p>Waypoints that were passed through during the leg. This includes the waypoints that were configured with the PassThrough option.</p>"
+      }
+    },
+    "RoutePedestrianArrival": {
+      "base": "<p>Details corresponding to the arrival for a leg.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+      "refs": {
+        "RoutePedestrianLegDetails$Arrival": "<p>Details corresponding to the arrival for the leg.</p>"
+      }
+    },
+    "RoutePedestrianDeparture": {
+      "base": "<p>Details corresponding to the departure for a leg.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+      "refs": {
+        "RoutePedestrianLegDetails$Departure": "<p>Details corresponding to the departure for the leg.</p>"
+      }
+    },
+    "RoutePedestrianLegDetails": {
+      "base": "<p>Details that are specific to a pedestrian leg.</p>",
+      "refs": {
+        "RouteLeg$PedestrianLegDetails": "<p>Details related to the pedestrian leg.</p>"
+      }
+    },
+    "RoutePedestrianNotice": {
+      "base": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>",
+      "refs": {
+        "RoutePedestrianNoticeList$member": null
+      }
+    },
+    "RoutePedestrianNoticeCode": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianNotice$Code": "<p>Code corresponding to the issue.</p>"
+      }
+    },
+    "RoutePedestrianNoticeList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianLegDetails$Notices": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>"
+      }
+    },
+    "RoutePedestrianOptions": {
+      "base": "<p>Options related to the pedestrian.</p>",
+      "refs": {
+        "RouteTravelModeOptions$Pedestrian": "<p>Travel mode options when the provided travel mode is \"Pedestrian\"</p>"
+      }
+    },
+    "RoutePedestrianOptionsSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianOptions$Speed": "<p>Walking speed in Kilometers per hour.</p>"
+      }
+    },
+    "RoutePedestrianOverviewSummary": {
+      "base": "<p>Provides a summary of a pedestrian route step.</p>",
+      "refs": {
+        "RoutePedestrianSummary$Overview": "<p>Summarized details for the leg including before travel, travel and after travel steps.</p>"
+      }
+    },
+    "RoutePedestrianPlace": {
+      "base": "<p>Place details corresponding to the arrival or departure.</p>",
+      "refs": {
+        "RoutePedestrianArrival$Place": "<p>The place details.</p>",
+        "RoutePedestrianDeparture$Place": "<p>The place details.</p>"
+      }
+    },
+    "RoutePedestrianPlaceWaypointIndexInteger": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianPlace$WaypointIndex": "<p>Index of the waypoint in the request.</p>"
+      }
+    },
+    "RoutePedestrianSpan": {
+      "base": "<p>Span computed for the requested SpanAdditionalFeatures.</p>",
+      "refs": {
+        "RoutePedestrianSpanList$member": null
+      }
+    },
+    "RoutePedestrianSpanFunctionalClassificationInteger": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianSpan$FunctionalClassification": "<p>Functional classification of the road segment corresponding to the span.</p>"
+      }
+    },
+    "RoutePedestrianSpanGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianSpan$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this span.</p>"
+      }
+    },
+    "RoutePedestrianSpanList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianLegDetails$Spans": "<p>Spans that were computed for the requested SpanAdditionalFeatures.</p>"
+      }
+    },
+    "RoutePedestrianSpanRegionString": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianSpan$Region": "<p>2-3 letter Region code corresponding to the Span. This is either a province or a state.</p>"
+      }
+    },
+    "RoutePedestrianSummary": {
+      "base": "<p>Summarized details for the leg including before travel, travel and after travel steps.</p>",
+      "refs": {
+        "RoutePedestrianLegDetails$Summary": "<p>Summarized details of the leg.</p>"
+      }
+    },
+    "RoutePedestrianTravelOnlySummary": {
+      "base": "<p>Summarized details for the leg including travel steps.</p>",
+      "refs": {
+        "RoutePedestrianSummary$TravelOnly": "<p>Summarized details for the leg including travel steps only. The Distance for the travel only portion of the journey is in meters</p>"
+      }
+    },
+    "RoutePedestrianTravelStep": {
+      "base": "<p>Steps of a leg that must be performed during the travel portion of the leg.</p>",
+      "refs": {
+        "RoutePedestrianTravelStepList$member": null
+      }
+    },
+    "RoutePedestrianTravelStepGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianTravelStep$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this step.</p>"
+      }
+    },
+    "RoutePedestrianTravelStepList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianLegDetails$TravelSteps": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>"
+      }
+    },
+    "RoutePedestrianTravelStepType": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteRampStepDetails": {
+      "base": "<p>Details that are specific to a ramp step.</p>",
+      "refs": {
+        "RouteVehicleTravelStep$RampStepDetails": "<p>Details that are specific to a Ramp step.</p>"
+      }
+    },
+    "RouteResponseNotice": {
+      "base": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>",
+      "refs": {
+        "RouteResponseNoticeList$member": null
+      }
+    },
+    "RouteResponseNoticeCode": {
+      "base": null,
+      "refs": {
+        "RouteResponseNotice$Code": "<p>Code corresponding to the issue.</p>"
+      }
+    },
+    "RouteResponseNoticeList": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesResponse$Notices": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>"
+      }
+    },
+    "RouteRoad": {
+      "base": "<p>The road on the route.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$CurrentRoad": "<p>Details of the current road. See RouteRoad for details of sub-attributes.</p>",
+        "RoutePedestrianTravelStep$NextRoad": "<p>Details of the next road. See RouteRoad for details of sub-attributes.</p>",
+        "RouteVehicleTravelStep$CurrentRoad": "<p>Details of the current road.</p>",
+        "RouteVehicleTravelStep$NextRoad": "<p>Details of the next road. See RouteRoad for details of sub-attributes.</p>"
+      }
+    },
+    "RouteRoadType": {
+      "base": null,
+      "refs": {
+        "RouteRoad$Type": "<p>The type of road.</p>"
+      }
+    },
+    "RouteRoundaboutEnterStepDetails": {
+      "base": "<p>Details about the roundabout leg.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$RoundaboutEnterStepDetails": "<p>Details that are specific to a Roundabout Enter step.</p>",
+        "RouteVehicleTravelStep$RoundaboutEnterStepDetails": "<p>Details that are specific to a Roundabout Enter step.</p>"
+      }
+    },
+    "RouteRoundaboutExitStepDetails": {
+      "base": "<p>Details about the roundabout step.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$RoundaboutExitStepDetails": "<p>Details that are specific to a Roundabout Exit step.</p>",
+        "RouteVehicleTravelStep$RoundaboutExitStepDetails": "<p>Details that are specific to a Roundabout Exit step.</p>"
+      }
+    },
+    "RouteRoundaboutExitStepDetailsRelativeExitInteger": {
+      "base": null,
+      "refs": {
+        "RouteRoundaboutExitStepDetails$RelativeExit": "<p>Exit to be taken.</p>"
+      }
+    },
+    "RouteRoundaboutPassStepDetails": {
+      "base": "<p>Details about the step.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$RoundaboutPassStepDetails": "<p>Details that are specific to a Roundabout Pass step.</p>",
+        "RouteVehicleTravelStep$RoundaboutPassStepDetails": "<p>Details that are specific to a Roundabout Pass step.</p>"
+      }
+    },
+    "RouteScooterOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p>",
+      "refs": {
+        "RouteTravelModeOptions$Scooter": "<p>Travel mode options when the provided travel mode is <code>Scooter</code> </p> <note> <p>When travel mode is set to <code>Scooter</code>, then the avoidance option <code>ControlledAccessHighways</code> defaults to <code>true</code>.</p> </note>"
+      }
+    },
+    "RouteScooterOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteScooterOptions$MaxSpeed": "<p>Maximum speed</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteScooterOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "RouteScooterOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "RouteSideOfStreet": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianPlace$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>",
+        "RouteVehiclePlace$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>"
+      }
+    },
+    "RouteSideOfStreetOptions": {
+      "base": "<p>Options to configure matching the provided position to a side of the street.</p>",
+      "refs": {
+        "RouteDestinationOptions$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>",
+        "RouteOriginOptions$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>",
+        "RouteWaypoint$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>"
+      }
+    },
+    "RouteSignpost": {
+      "base": "<p>Sign post information of the action, applicable only for TurnByTurn steps. See RouteSignpost for details of sub-attributes.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$Signpost": "<p>Sign post information of the action, applicable only for TurnByTurn steps. See RouteSignpost for details of sub-attributes.</p>",
+        "RouteVehicleTravelStep$Signpost": "<p>Sign post information of the action, applicable only for TurnByTurn steps. See RouteSignpost for details of sub-attributes.</p>"
+      }
+    },
+    "RouteSignpostLabel": {
+      "base": "<p>Labels presented on the sign post.</p>",
+      "refs": {
+        "RouteSignpostLabelList$member": null
+      }
+    },
+    "RouteSignpostLabelList": {
+      "base": null,
+      "refs": {
+        "RouteSignpost$Labels": "<p>Labels present on the sign post.</p>"
+      }
+    },
+    "RouteSpanAdditionalFeature": {
+      "base": null,
+      "refs": {
+        "RouteSpanAdditionalFeatureList$member": null
+      }
+    },
+    "RouteSpanAdditionalFeatureList": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$SpanAdditionalFeatures": "<p>A list of optional features such as SpeedLimit that can be requested for a Span. A span is a section of a Leg for which the requested features have the same values.</p>"
+      }
+    },
+    "RouteSpanCarAccessAttribute": {
+      "base": null,
+      "refs": {
+        "RouteSpanCarAccessAttributeList$member": null
+      }
+    },
+    "RouteSpanCarAccessAttributeList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$CarAccess": "<p>Access attributes for a car corresponding to the span.</p>"
+      }
+    },
+    "RouteSpanDynamicSpeedDetails": {
+      "base": "<p>Details about the dynamic speed.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>",
+      "refs": {
+        "RoutePedestrianSpan$DynamicSpeed": "<p>Dynamic speed details corresponding to the span.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>",
+        "RouteVehicleSpan$DynamicSpeed": "<p>Dynamic speed details corresponding to the span.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteSpanGateAttribute": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$Gate": "<p>Attributes corresponding to a gate. The gate is present at the end of the returned span.</p>"
+      }
+    },
+    "RouteSpanPedestrianAccessAttribute": {
+      "base": null,
+      "refs": {
+        "RouteSpanPedestrianAccessAttributeList$member": null
+      }
+    },
+    "RouteSpanPedestrianAccessAttributeList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianSpan$PedestrianAccess": "<p>Access attributes for a pedestrian corresponding to the span.</p>"
+      }
+    },
+    "RouteSpanRailwayCrossingAttribute": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$RailwayCrossing": "<p>Attributes corresponding to a railway crossing. The gate is present at the end of the returned span.</p>"
+      }
+    },
+    "RouteSpanRoadAttribute": {
+      "base": null,
+      "refs": {
+        "RouteSpanRoadAttributeList$member": null
+      }
+    },
+    "RouteSpanRoadAttributeList": {
+      "base": null,
+      "refs": {
+        "RoutePedestrianSpan$RoadAttributes": "<p>Attributes for the road segment corresponding to the span. </p>",
+        "RouteVehicleSpan$RoadAttributes": "<p>Attributes for the road segment corresponding to the span. </p>"
+      }
+    },
+    "RouteSpanScooterAccessAttribute": {
+      "base": null,
+      "refs": {
+        "RouteSpanScooterAccessAttributeList$member": null
+      }
+    },
+    "RouteSpanScooterAccessAttributeList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$ScooterAccess": "<p>Access attributes for a scooter corresponding to the span.</p>"
+      }
+    },
+    "RouteSpanSpeedLimitDetails": {
+      "base": "<p>Details about the speed limit corresponding to the span.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>",
+      "refs": {
+        "RoutePedestrianSpan$SpeedLimit": "<p>Speed limit details corresponding to the span.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>",
+        "RouteVehicleSpan$SpeedLimit": "<p>Speed limit details corresponding to the span.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteSpanTruckAccessAttribute": {
+      "base": null,
+      "refs": {
+        "RouteSpanTruckAccessAttributeList$member": null
+      }
+    },
+    "RouteSpanTruckAccessAttributeList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$TruckAccess": "<p>Access attributes for a truck corresponding to the span.</p>"
+      }
+    },
+    "RouteSteeringDirection": {
+      "base": null,
+      "refs": {
+        "RouteContinueHighwayStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteEnterHighwayStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteExitStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteKeepStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteRampStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteRoundaboutEnterStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteRoundaboutExitStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteRoundaboutPassStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteTurnStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>",
+        "RouteUTurnStepDetails$SteeringDirection": "<p>Steering direction for the step.</p>"
+      }
+    },
+    "RouteSummary": {
+      "base": "<p>Summarized details for the leg including travel steps only. The Distance for the travel only portion of the journey is the same as the Distance within the Overview summary.</p>",
+      "refs": {
+        "Route$Summary": "<p>Summarized details of the leg.</p>"
+      }
+    },
+    "RouteToll": {
+      "base": "<p>Provides details about toll information along a route, including the payment sites, applicable toll rates, toll systems, and the country associated with the toll collection.</p>",
+      "refs": {
+        "RouteTollList$member": null
+      }
+    },
+    "RouteTollList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$Tolls": "<p>Toll related options.</p>"
+      }
+    },
+    "RouteTollOptions": {
+      "base": "<p>Options related to Tolls on a route.</p>",
+      "refs": {
+        "CalculateRoutesRequest$Tolls": "<p>Toll related options.</p>"
+      }
+    },
+    "RouteTollPass": {
+      "base": "<p>Details if the toll rate can be a pass that supports multiple trips.</p>",
+      "refs": {
+        "RouteTollRate$Pass": "<p>Details if the toll rate can be a pass that supports multiple trips.</p>"
+      }
+    },
+    "RouteTollPassTransferCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteTollPass$TransferCount": "<p>If the toll pass can be transferred, and how many times.</p>"
+      }
+    },
+    "RouteTollPassTripCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteTollPass$TripCount": "<p>Number of trips the pass is valid for.</p>"
+      }
+    },
+    "RouteTollPassValidityPeriod": {
+      "base": "<p>Period for which the pass is valid.</p>",
+      "refs": {
+        "RouteTollPass$ValidityPeriod": "<p>Period for which the pass is valid.</p>"
+      }
+    },
+    "RouteTollPassValidityPeriodPeriodCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteTollPassValidityPeriod$PeriodCount": "<p>Counts for the validity period.</p>"
+      }
+    },
+    "RouteTollPassValidityPeriodType": {
+      "base": null,
+      "refs": {
+        "RouteTollPassValidityPeriod$Period": "<p>Validity period.</p>"
+      }
+    },
+    "RouteTollPaymentMethod": {
+      "base": null,
+      "refs": {
+        "RouteTollPaymentMethodList$member": null
+      }
+    },
+    "RouteTollPaymentMethodList": {
+      "base": null,
+      "refs": {
+        "RouteTollRate$PaymentMethods": "<p>Accepted payment methods at the toll.</p>"
+      }
+    },
+    "RouteTollPaymentSite": {
+      "base": "<p>Locations or sites where the toll fare is collected.</p>",
+      "refs": {
+        "RouteTollPaymentSiteList$member": null
+      }
+    },
+    "RouteTollPaymentSiteList": {
+      "base": null,
+      "refs": {
+        "RouteToll$PaymentSites": "<p>Locations or sites where the toll fare is collected.</p>"
+      }
+    },
+    "RouteTollPrice": {
+      "base": "<p>The toll price.</p>",
+      "refs": {
+        "RouteTollRate$ConvertedPrice": "<p>Price in the converted currency as specified in the request.</p>",
+        "RouteTollRate$LocalPrice": "<p>Price in the local regional currency.</p>"
+      }
+    },
+    "RouteTollPriceSummary": {
+      "base": "<p>Summary of the route and toll price.</p>",
+      "refs": {
+        "RouteTollSummary$Total": "<p>Total toll summary for the complete route. Total is the only summary available today.</p>"
+      }
+    },
+    "RouteTollPriceSummaryValueDouble": {
+      "base": null,
+      "refs": {
+        "RouteTollPriceSummary$Value": "<p>Exact price, if not a range.</p>"
+      }
+    },
+    "RouteTollPriceValueDouble": {
+      "base": null,
+      "refs": {
+        "RouteTollPrice$Value": "<p>Exact price, if not a range.</p>"
+      }
+    },
+    "RouteTollPriceValueRange": {
+      "base": "<p>Price range with a minimum and maximum value, if a range.</p>",
+      "refs": {
+        "RouteTollPrice$RangeValue": "<p>Price range with a minimum and maximum value, if a range.</p>",
+        "RouteTollPriceSummary$RangeValue": "<p>Price range with a minimum and maximum value, if a range.</p>"
+      }
+    },
+    "RouteTollPriceValueRangeMaxDouble": {
+      "base": null,
+      "refs": {
+        "RouteTollPriceValueRange$Max": "<p>Maximum price.</p>"
+      }
+    },
+    "RouteTollPriceValueRangeMinDouble": {
+      "base": null,
+      "refs": {
+        "RouteTollPriceValueRange$Min": "<p>Minimum price.</p>"
+      }
+    },
+    "RouteTollRate": {
+      "base": "<p>The toll rate.</p>",
+      "refs": {
+        "RouteTollRateList$member": null
+      }
+    },
+    "RouteTollRateList": {
+      "base": null,
+      "refs": {
+        "RouteToll$Rates": "<p>Toll rates that need to be paid to travel this leg of the route.</p>"
+      }
+    },
+    "RouteTollSummary": {
+      "base": "<p>The toll summary for the complete route.</p>",
+      "refs": {
+        "RouteSummary$Tolls": "<p>Toll summary for the complete route.</p>"
+      }
+    },
+    "RouteTollSystem": {
+      "base": "<p>Toll systems are authorities that collect payments for the toll.</p>",
+      "refs": {
+        "RouteTollSystemList$member": null
+      }
+    },
+    "RouteTollSystemList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$TollSystems": "<p>Toll systems are authorities that collect payments for the toll.</p>"
+      }
+    },
+    "RouteTollVehicleCategory": {
+      "base": null,
+      "refs": {
+        "RouteTollOptions$VehicleCategory": "<p>Vehicle category for toll cost calculation.</p>"
+      }
+    },
+    "RouteTrafficOptions": {
+      "base": "<p>Traffic options for the route.</p>",
+      "refs": {
+        "CalculateRoutesRequest$Traffic": "<p>Traffic related options.</p>"
+      }
+    },
+    "RouteTrailerOptions": {
+      "base": "<p>Trailer options corresponding to the vehicle.</p>",
+      "refs": {
+        "RouteTruckOptions$Trailer": "<p>Trailer options corresponding to the vehicle.</p>"
+      }
+    },
+    "RouteTrailerOptionsAxleCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteTrailerOptions$AxleCount": "<p>Total number of axles of the vehicle.</p>"
+      }
+    },
+    "RouteTrailerOptionsTrailerCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteTrailerOptions$TrailerCount": "<p>Number of trailers attached to the vehicle.</p> <p>Default Value: <code>0</code> </p>"
+      }
+    },
+    "RouteTransponder": {
+      "base": "<p>Transponders for which this toll can be applied.</p>",
+      "refs": {
+        "RouteTransponderList$member": null
+      }
+    },
+    "RouteTransponderList": {
+      "base": null,
+      "refs": {
+        "RouteTollRate$Transponders": "<p>Transponders for which this toll can be applied.</p>"
+      }
+    },
+    "RouteTravelMode": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$TravelMode": "<p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p> <p>Default Value: <code>Car</code> </p>"
+      }
+    },
+    "RouteTravelModeOptions": {
+      "base": "<p>Travel mode related options for the provided travel mode.</p>",
+      "refs": {
+        "CalculateRoutesRequest$TravelModeOptions": "<p>Travel mode related options for the provided travel mode.</p>"
+      }
+    },
+    "RouteTravelStepType": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$TravelStepType": "<p>Type of step returned by the response. Default provides basic steps intended for web based applications. TurnByTurn provides detailed instructions with more granularity intended for a turn based navigation system.</p>"
+      }
+    },
+    "RouteTruckOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>",
+      "refs": {
+        "RouteTravelModeOptions$Truck": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>"
+      }
+    },
+    "RouteTruckOptionsAxleCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$AxleCount": "<p>Total number of axles of the vehicle.</p>"
+      }
+    },
+    "RouteTruckOptionsHeightAboveFirstAxleLong": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$HeightAboveFirstAxle": "<p>Height of the vehicle above its first axle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RouteTruckOptionsHeightLong": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$Height": "<p>Height of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RouteTruckOptionsLengthLong": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$Length": "<p>Length of the vehicle.</p> <p> <b>Unit</b>: <code>c</code> </p>"
+      }
+    },
+    "RouteTruckOptionsMaxSpeedDouble": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$MaxSpeed": "<p>Maximum speed</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "RouteTruckOptionsOccupancyInteger": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$Occupancy": "<p>The number of occupants in the vehicle.</p> <p>Default Value: <code>1</code> </p>"
+      }
+    },
+    "RouteTruckOptionsTireCountInteger": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$TireCount": "<p>Number of tires on the vehicle.</p>"
+      }
+    },
+    "RouteTruckOptionsTunnelRestrictionCodeString": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$TunnelRestrictionCode": "<p>The tunnel restriction code.</p> <p>Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them.</p> <ul> <li> <p> <i>Tunnel Category B</i> </p> <ul> <li> <p> <i>Risk Level</i>: Limited risk</p> </li> <li> <p> <i>Restrictions</i>: Few restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category C</i> </p> <ul> <li> <p> <i>Risk Level</i>: Medium risk</p> </li> <li> <p> <i>Restrictions</i>: Some restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category D</i> </p> <ul> <li> <p> <i>Risk Level</i>: High risk</p> </li> <li> <p> <i>Restrictions</i>: Many restrictions occur</p> </li> </ul> </li> <li> <p> <i>Tunnel Category E</i> </p> <ul> <li> <p> <i>Risk Level</i>: Very high risk</p> </li> <li> <p> <i>Restrictions</i>: Restricted tunnel</p> </li> </ul> </li> </ul>"
+      }
+    },
+    "RouteTruckOptionsWidthLong": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$Width": "<p>Width of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "RouteTruckType": {
+      "base": null,
+      "refs": {
+        "RouteTruckOptions$TruckType": "<p>Type of the truck.</p>",
+        "RouteViolatedConstraints$TruckType": "<p>Type of the truck.</p>"
+      }
+    },
+    "RouteTurnIntensity": {
+      "base": null,
+      "refs": {
+        "RouteContinueHighwayStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteEnterHighwayStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteExitStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteKeepStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteRampStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteRoundaboutEnterStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteRoundaboutPassStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteTurnStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>",
+        "RouteUTurnStepDetails$TurnIntensity": "<p>Intensity of the turn.</p>"
+      }
+    },
+    "RouteTurnStepDetails": {
+      "base": "<p>Details related to the turn step.</p>",
+      "refs": {
+        "RoutePedestrianTravelStep$TurnStepDetails": "<p>Details that are specific to a turn step.</p>",
+        "RouteVehicleTravelStep$TurnStepDetails": "<p>Details that are specific to a Turn step.</p>"
+      }
+    },
+    "RouteUTurnStepDetails": {
+      "base": "<p>Details related to the U-turn step.</p>",
+      "refs": {
+        "RouteVehicleTravelStep$UTurnStepDetails": "<p>Details that are specific to a Turn step.</p>"
+      }
+    },
+    "RouteVehicleArrival": {
+      "base": "<p>Details corresponding to the arrival for a leg.</p>",
+      "refs": {
+        "RouteVehicleLegDetails$Arrival": "<p>Details corresponding to the arrival for the leg.</p>"
+      }
+    },
+    "RouteVehicleDeparture": {
+      "base": "<p>Details corresponding to the departure for the leg.</p>",
+      "refs": {
+        "RouteVehicleLegDetails$Departure": "<p>Details corresponding to the departure for the leg.</p>"
+      }
+    },
+    "RouteVehicleIncident": {
+      "base": "<p>Incidents corresponding to this leg of the route.</p>",
+      "refs": {
+        "RouteVehicleIncidentList$member": null
+      }
+    },
+    "RouteVehicleIncidentList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$Incidents": "<p>Incidents corresponding to this leg of the route.</p>"
+      }
+    },
+    "RouteVehicleIncidentSeverity": {
+      "base": null,
+      "refs": {
+        "RouteVehicleIncident$Severity": "<p>Severity of the incident Critical - The part of the route the incident affects is unusable. Major- Major impact on the leg duration, for example stop and go Minor- Minor impact on the leg duration, for example traffic jam Low - Low on duration, for example slightly increased traffic</p>"
+      }
+    },
+    "RouteVehicleIncidentType": {
+      "base": null,
+      "refs": {
+        "RouteVehicleIncident$Type": "<p>Type of the incident.</p>"
+      }
+    },
+    "RouteVehicleLegDetails": {
+      "base": "<p>Steps of a leg that correspond to the travel portion of the leg.</p>",
+      "refs": {
+        "RouteLeg$VehicleLegDetails": "<p>Details related to the vehicle leg.</p>"
+      }
+    },
+    "RouteVehicleLicensePlate": {
+      "base": "<p>License plate information of the vehicle. Currently, only the last character is used where license plate based controlled access is enforced.</p>",
+      "refs": {
+        "RouteCarOptions$LicensePlate": "<p>The vehicle License Plate.</p>",
+        "RouteScooterOptions$LicensePlate": "<p>The vehicle License Plate.</p>",
+        "RouteTruckOptions$LicensePlate": "<p>The vehicle License Plate.</p>"
+      }
+    },
+    "RouteVehicleLicensePlateLastCharacterString": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLicensePlate$LastCharacter": "<p>The last character of the License Plate.</p>"
+      }
+    },
+    "RouteVehicleNotice": {
+      "base": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>",
+      "refs": {
+        "RouteVehicleNoticeList$member": null
+      }
+    },
+    "RouteVehicleNoticeCode": {
+      "base": null,
+      "refs": {
+        "RouteVehicleNotice$Code": "<p>Code corresponding to the issue.</p>"
+      }
+    },
+    "RouteVehicleNoticeDetail": {
+      "base": "<p>Additional details of the notice.</p>",
+      "refs": {
+        "RouteVehicleNoticeDetailList$member": null
+      }
+    },
+    "RouteVehicleNoticeDetailList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleNotice$Details": "<p>Additional details of the notice.</p>"
+      }
+    },
+    "RouteVehicleNoticeList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$Notices": "<p>Notices are additional information returned that indicate issues that occurred during route calculation.</p>"
+      }
+    },
+    "RouteVehicleOverviewSummary": {
+      "base": "<p>Summarized details of the leg.</p>",
+      "refs": {
+        "RouteVehicleSummary$Overview": "<p>Summarized details for the leg including before travel, travel and after travel steps.</p>"
+      }
+    },
+    "RouteVehiclePlace": {
+      "base": "<p>Place details corresponding to the arrival or departure.</p>",
+      "refs": {
+        "RouteVehicleArrival$Place": "<p>The place details.</p>",
+        "RouteVehicleDeparture$Place": "<p>The place details.</p>"
+      }
+    },
+    "RouteVehiclePlaceWaypointIndexInteger": {
+      "base": null,
+      "refs": {
+        "RouteVehiclePlace$WaypointIndex": "<p>Index of the waypoint in the request.</p>"
+      }
+    },
+    "RouteVehicleSpan": {
+      "base": "<p>Span computed for the requested SpanAdditionalFeatures.</p>",
+      "refs": {
+        "RouteVehicleSpanList$member": null
+      }
+    },
+    "RouteVehicleSpanFunctionalClassificationInteger": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$FunctionalClassification": "<p>Functional classification of the road segment corresponding to the span.</p>"
+      }
+    },
+    "RouteVehicleSpanGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this span.</p>"
+      }
+    },
+    "RouteVehicleSpanList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$Spans": "<p>Spans that were computed for the requested SpanAdditionalFeatures.</p>"
+      }
+    },
+    "RouteVehicleSpanRegionString": {
+      "base": null,
+      "refs": {
+        "RouteVehicleSpan$Region": "<p>2-3 letter Region code corresponding to the Span. This is either a province or a state.</p>"
+      }
+    },
+    "RouteVehicleSummary": {
+      "base": "<p>Summarized details of the route.</p>",
+      "refs": {
+        "RouteVehicleLegDetails$Summary": "<p>Summarized details of the leg.</p>"
+      }
+    },
+    "RouteVehicleTravelOnlySummary": {
+      "base": "<p>Summarized details of the route.</p>",
+      "refs": {
+        "RouteVehicleSummary$TravelOnly": "<p>Summarized details for the leg including travel steps only. The Distance for the travel only portion of the journey is in meters</p>"
+      }
+    },
+    "RouteVehicleTravelStep": {
+      "base": "<p>Steps of a leg that correspond to the travel portion of the leg.</p>",
+      "refs": {
+        "RouteVehicleTravelStepList$member": null
+      }
+    },
+    "RouteVehicleTravelStepGeometryOffsetInteger": {
+      "base": null,
+      "refs": {
+        "RouteVehicleTravelStep$GeometryOffset": "<p>Offset in the leg geometry corresponding to the start of this step.</p>"
+      }
+    },
+    "RouteVehicleTravelStepList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$TravelSteps": "<p>Steps of a leg that must be performed before the travel portion of the leg.</p>"
+      }
+    },
+    "RouteVehicleTravelStepType": {
+      "base": null,
+      "refs": {
+        "RouteVehicleTravelStep$Type": "<p>Type of the step.</p>"
+      }
+    },
+    "RouteViolatedConstraints": {
+      "base": "<p>This property contains a summary of violated constraints.</p>",
+      "refs": {
+        "RouteVehicleNoticeDetail$ViolatedConstraints": "<p>Any violated constraints.</p>"
+      }
+    },
+    "RouteWaypoint": {
+      "base": "<p>Waypoint between the Origin and Destination.</p>",
+      "refs": {
+        "RouteWaypointList$member": null
+      }
+    },
+    "RouteWaypointAvoidActionsForDistanceLong": {
+      "base": null,
+      "refs": {
+        "RouteWaypoint$AvoidActionsForDistance": "<p>Avoids actions for the provided distance. This is typically to consider for users in moving vehicles who may not have sufficient time to make an action at an origin or a destination.</p>"
+      }
+    },
+    "RouteWaypointList": {
+      "base": null,
+      "refs": {
+        "CalculateRoutesRequest$Waypoints": "<p>List of waypoints between the Origin and Destination.</p>"
+      }
+    },
+    "RouteWeightConstraint": {
+      "base": "<p>The weight constraint for the route.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+      "refs": {
+        "RouteViolatedConstraints$MaxWeight": "<p>The maximum weight of the route.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>"
+      }
+    },
+    "RouteWeightConstraintType": {
+      "base": null,
+      "refs": {
+        "RouteWeightConstraint$Type": "<p>The type of constraint.</p>"
+      }
+    },
+    "RouteZone": {
+      "base": "<p>The zone.</p>",
+      "refs": {
+        "RouteZoneList$member": null
+      }
+    },
+    "RouteZoneCategory": {
+      "base": null,
+      "refs": {
+        "RouteAvoidanceZoneCategory$Category": "<p>Zone category to be avoided.</p>",
+        "RouteZone$Category": "<p>The zone category.</p>"
+      }
+    },
+    "RouteZoneList": {
+      "base": null,
+      "refs": {
+        "RouteVehicleLegDetails$Zones": "<p>Zones corresponding to this leg of the route.</p>"
+      }
+    },
+    "RoutingObjective": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$OptimizeRoutingFor": "<p>Specifies the optimization criteria for calculating a route.</p> <p>Default Value: <code>FastestRoute</code> </p>",
+        "CalculateRouteMatrixRequest$OptimizeRoutingFor": "<p>Specifies the optimization criteria for calculating a route.</p> <p>Default Value: <code>FastestRoute</code> </p>",
+        "CalculateRoutesRequest$OptimizeRoutingFor": "<p>Specifies the optimization criteria for calculating a route.</p> <p>Default Value: <code>FastestRoute</code> </p>"
+      }
+    },
+    "SensitiveBoolean": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
+        "CalculateRouteMatrixRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
+        "CalculateRoutesRequest$DepartNow": "<p>Uses the current time as the time of departure.</p>",
+        "IsolineAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating an isoline.</p> <p>Default value: <code>false</code> </p>",
+        "IsolineAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating an isoline.</p> <p>Default value: <code>false</code> </p>",
+        "IsolineAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$SeasonalClosure": "<p>Avoid roads that have seasonal closure while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "IsolineAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "IsolineAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating an isoline.</p>",
+        "IsolineAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating the route.</p>",
+        "RouteAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
+        "RouteAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
+        "RouteAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating the route.</p>",
+        "RouteAvoidanceOptions$SeasonalClosure": "<p>Avoid roads that have seasonal closure while calculating the route.</p>",
+        "RouteAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
+        "RouteAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteDestinationOptions$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteMatrixAllowOptions$Hot": "<p>Allow Hot (High Occupancy Toll) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteMatrixAllowOptions$Hov": "<p>Allow Hov (High Occupancy vehicle) lanes while calculating the route.</p> <p>Default value: <code>false</code> </p>",
+        "RouteMatrixAvoidanceOptions$CarShuttleTrains": "<p>Avoid car-shuttle-trains while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$Ferries": "<p>Avoid ferries while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteMatrixAvoidanceOptions$TollTransponders": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "RouteMatrixAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
+        "RouteMatrixAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteMatrixBoundary$Unbounded": "<p>No restrictions in terms of a routing boundary, and is typically used for longer routes.</p>",
+        "RouteOriginOptions$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteSpanSpeedLimitDetails$Unlimited": "<p>If the span doesn't have a speed limit like the Autobahn.</p>",
+        "RouteTollOptions$AllTransponders": "<p>Specifies if the user has valid transponder with access to all toll systems. This impacts toll calculation, and if true the price with transponders is used.</p>",
+        "RouteTollOptions$AllVignettes": "<p>Specifies if the user has valid vignettes with access for all toll roads. If a user has a vignette for a toll road, then toll cost for that road is omitted since no further payment is necessary.</p>",
+        "RouteTollPass$IncludesReturnTrip": "<p>If the pass includes the rate for the return leg of the trip.</p>",
+        "RouteTollPass$SeniorPass": "<p>If the pass is only valid for senior persons.</p>",
+        "RouteTollPrice$Estimate": "<p>If the price is an estimate or an exact value. </p>",
+        "RouteTollPrice$Range": "<p>If the price is a range or an exact value. If any of the toll fares making up the route is a range, the overall price is also a range.</p>",
+        "RouteTollPriceSummary$Estimate": "<p>If the price is an estimate or an exact value. </p>",
+        "RouteTollPriceSummary$Range": "<p>If the price is a range or an exact value. If any of the toll fares making up the route is a range, the overall price is also a range.</p>",
+        "RouteViolatedConstraints$AllHazardsRestricted": "<p>This restriction applies to truck cargo, where the resulting route excludes roads on which hazardous materials are prohibited from being transported.</p>",
+        "RouteViolatedConstraints$TimeDependent": "<p>The time dependent constraint.</p>",
+        "RouteViolatedConstraints$TravelMode": "<p>Travel mode corresponding to the leg.</p>",
+        "RouteWaypoint$AvoidUTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>",
+        "RouteWaypoint$PassThrough": "<p>If the waypoint should not be treated as a stop. If yes, the waypoint is passed through and doesn't split the route into different legs.</p>",
+        "WaypointOptimizationAvoidanceOptions$CarShuttleTrains": "<p>Avoidance options for cars-shuttles-trains.</p>",
+        "WaypointOptimizationAvoidanceOptions$ControlledAccessHighways": "<p>Avoid controlled access highways while calculating the route.</p>",
+        "WaypointOptimizationAvoidanceOptions$DirtRoads": "<p>Avoid dirt roads while calculating the route.</p>",
+        "WaypointOptimizationAvoidanceOptions$Ferries": "<p>Avoidance options for ferries.</p>",
+        "WaypointOptimizationAvoidanceOptions$TollRoads": "<p>Avoids roads where the specified toll transponders are the only mode of payment.</p>",
+        "WaypointOptimizationAvoidanceOptions$Tunnels": "<p>Avoid tunnels while calculating the route.</p>",
+        "WaypointOptimizationAvoidanceOptions$UTurns": "<p>Avoid U-turns for calculation on highways and motorways.</p>"
+      }
+    },
+    "SensitiveDouble": {
+      "base": null,
+      "refs": {
+        "Circle$Radius": "<p>Radius of the Circle.</p> <p> <b>Unit</b>: <code>meters</code> </p>"
+      }
+    },
+    "SensitiveString": {
+      "base": null,
+      "refs": {
+        "IsolineMatchingOptions$NameHint": "<p>Attempts to match the provided position to a road similar to the provided name.</p>",
+        "LocalizedString$Value": "<p>The value of the localized string.</p>",
+        "RoadSnapNotice$Title": "<p>The notice title.</p>",
+        "RouteEmissionType$Co2EmissionClass": "<p>The CO 2 emission classes.</p>",
+        "RouteEmissionType$Type": "<p>Type of the emission.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3, Euro4, Euro5, Euro6, EuroEev</code> </p>",
+        "RouteFerryAfterTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteFerryBeforeTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteFerryLegDetails$RouteName": "<p>Route name of the ferry line.</p>",
+        "RouteFerryPlace$Name": "<p>The name of the place.</p>",
+        "RouteFerryTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteMatrixMatchingOptions$NameHint": "<p>Attempts to match the provided position to a road similar to the provided name.</p>",
+        "RouteNumber$Value": "<p>The route number.</p>",
+        "RoutePedestrianPlace$Name": "<p>The name of the place.</p>",
+        "RoutePedestrianTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteTollRate$ApplicableTimes": "<p>Time when the rate is valid.</p>",
+        "RouteTollRate$Id": "<p>The Toll rate Id.</p>",
+        "RouteTollRate$Name": "<p>The name of the toll.</p>",
+        "RouteTollSystem$Name": "<p>The toll system name.</p>",
+        "RouteTransponder$SystemName": "<p>Names of the toll system collecting the toll.</p>",
+        "RouteVehicleIncident$Description": "<p>Brief readable description of the incident.</p>",
+        "RouteVehicleNoticeDetail$Title": "<p>The notice title.</p>",
+        "RouteVehiclePlace$Name": "<p>The name of the place.</p>",
+        "RouteVehicleTravelStep$Instruction": "<p>Brief description of the step in the requested language.</p> <note> <p>Only available when the TravelStepType is Default.</p> </note>",
+        "RouteZone$Name": "<p>The name of the zone.</p>",
+        "WaypointOptimizationFailedConstraint$Reason": "<p>Reason for the failed constraint.</p>"
+      }
+    },
+    "SideOfStreetMatchingStrategy": {
+      "base": null,
+      "refs": {
+        "IsolineSideOfStreetOptions$UseWith": "<p>Strategy that defines when the side of street position should be used. AnyStreet will always use the provided position.</p> <p>Default Value: <code>DividedStreetOnly</code> </p>",
+        "RouteMatrixSideOfStreetOptions$UseWith": "<p>Strategy that defines when the side of street position should be used. AnyStreet will always use the provided position.</p> <p>Default Value: <code>DividedStreetOnly</code> </p>",
+        "RouteSideOfStreetOptions$UseWith": "<p>Strategy that defines when the side of street position should be used.</p> <p>Default Value: <code>DividedStreetOnly</code> </p>",
+        "WaypointOptimizationSideOfStreetOptions$UseWith": "<p>Strategy that defines when the side of street position should be used. AnyStreet will always use the provided position.</p> <p>Default Value: <code>DividedStreetOnly</code> </p>"
+      }
+    },
+    "SnapToRoadsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "SnapToRoadsRequestSnapRadiusLong": {
+      "base": null,
+      "refs": {
+        "SnapToRoadsRequest$SnapRadius": "<p>The radius around the provided tracepoint that is considered for snapping.</p> <p> <b>Unit</b>: <code>meters</code> </p> <p>Default value: <code>300</code> </p>"
+      }
+    },
+    "SnapToRoadsRequestTracePointsList": {
+      "base": null,
+      "refs": {
+        "SnapToRoadsRequest$TracePoints": "<p>List of trace points to be snapped onto the road network.</p>"
+      }
+    },
+    "SnapToRoadsResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "SpeedKilometersPerHour": {
+      "base": null,
+      "refs": {
+        "RoadSnapTracePoint$Speed": "<p>Speed at the specified trace point .</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>",
+        "RouteSpanDynamicSpeedDetails$BestCaseSpeed": "<p>Estimated speed while traversing the span without traffic congestion.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>",
+        "RouteSpanDynamicSpeedDetails$TypicalSpeed": "<p>Estimated speed while traversing the span under typical traffic congestion.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>",
+        "RouteSpanSpeedLimitDetails$MaxSpeed": "<p>Maximum speed.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": null,
+        "CalculateIsolinesResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
+        "CalculateRouteMatrixResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
+        "CalculateRoutesResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
+        "InternalServerException$Message": null,
+        "OptimizeWaypointsResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
+        "RouteTollPaymentSite$Name": "<p>Name of the payment site.</p>",
+        "RouteViolatedConstraints$RestrictedTimes": "<p>Access radius restrictions based on time.</p>",
+        "RouteViolatedConstraints$TruckRoadType": "<p>Truck road type identifiers. <code>BK1</code> through <code>BK4</code> apply only to Sweden. <code>A2,A4,B2,B4,C,D,ET2,ET4</code> apply only to Mexico.</p> <note> <p>There are currently no other supported values as of 26th April 2024.</p> </note>",
+        "SnapToRoadsResponse$PricingBucket": "<p>The pricing bucket for which the query is charged at.</p>",
+        "ThrottlingException$Message": null,
+        "ValidationException$Message": null,
+        "ValidationExceptionField$Name": "<p>The name of the Validation Exception Field.</p>",
+        "ValidationExceptionField$Message": "<p>The error message.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {}
+    },
+    "TimeOfDay": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationAccessHoursEntry$TimeOfDay": "<p>Time of the day.</p>"
+      }
+    },
+    "TimeThresholdList": {
+      "base": null,
+      "refs": {
+        "IsolineThresholds$Time": "<p>Time to be used for the isoline calculation.</p>"
+      }
+    },
+    "TimeThresholdListMemberLong": {
+      "base": null,
+      "refs": {
+        "TimeThresholdList$member": null
+      }
+    },
+    "TimestampWithTimezoneOffset": {
+      "base": null,
+      "refs": {
+        "CalculateIsolinesRequest$ArrivalTime": "<p>Time of arrival at the destination.</p> <p>Time format: <code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "CalculateIsolinesRequest$DepartureTime": "<p>Time of departure from thr origin.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "CalculateIsolinesResponse$ArrivalTime": "<p>Time of arrival at the destination. This parameter is returned only if the Destination parameters was provided in the request. </p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "CalculateIsolinesResponse$DepartureTime": "<p>Time of departure from thr origin.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "CalculateRouteMatrixRequest$DepartureTime": "<p>Time of departure from thr origin.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "CalculateRoutesRequest$ArrivalTime": "<p>Time of arrival at the destination.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "CalculateRoutesRequest$DepartureTime": "<p>Time of departure from thr origin.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "OptimizeWaypointsRequest$DepartureTime": "<p>Departure time from the waypoint.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "RoadSnapTracePoint$Timestamp": "<p>Timestamp of the event.</p>",
+        "RouteFerryArrival$Time": "<p>The time.</p>",
+        "RouteFerryDeparture$Time": "<p>The time.</p>",
+        "RoutePedestrianArrival$Time": "<p>The time.</p>",
+        "RoutePedestrianDeparture$Time": "<p>The time.</p>",
+        "RouteVehicleArrival$Time": "<p>The time.</p>",
+        "RouteVehicleDeparture$Time": "<p>The departure time.</p>",
+        "RouteVehicleIncident$EndTime": "<p>End timestamp of the incident.</p>",
+        "RouteVehicleIncident$StartTime": "<p>Start time of the incident.</p>",
+        "WaypointOptimizationDestinationOptions$AppointmentTime": "<p>Appointment time at the destination.</p>",
+        "WaypointOptimizationOptimizedWaypoint$ArrivalTime": "<p>Estimated time of arrival at the destination.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "WaypointOptimizationOptimizedWaypoint$DepartureTime": "<p>Estimated time of departure from thr origin.</p> <p>Time format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p> <code>2020-04-22T17:57:24+02:00</code> </p>",
+        "WaypointOptimizationWaypoint$AppointmentTime": "<p>Appointment time at the waypoint.</p>"
+      }
+    },
+    "TrafficUsage": {
+      "base": null,
+      "refs": {
+        "IsolineTrafficOptions$Usage": "<p>Determines if traffic should be used or ignored while calculating the route.</p> <p>Default Value: <code>UseTrafficData</code> </p>",
+        "RouteMatrixTrafficOptions$Usage": "<p>Determines if traffic should be used or ignored while calculating the route.</p> <p>Default Value: <code>UseTrafficData</code> </p>",
+        "RouteTrafficOptions$Usage": "<p>Determines if traffic should be used or ignored while calculating the route.</p> <p>Default Value: <code>UseTrafficData</code> </p>",
+        "WaypointOptimizationTrafficOptions$Usage": "<p>Determines if traffic should be used or ignored while calculating the route.</p> <p>Default Value: <code>UseTrafficData</code> </p>"
+      }
+    },
+    "TruckRoadType": {
+      "base": null,
+      "refs": {
+        "TruckRoadTypeList$member": null
+      }
+    },
+    "TruckRoadTypeList": {
+      "base": null,
+      "refs": {
+        "IsolineAvoidanceOptions$TruckRoadTypes": "<p>Truck road type identifiers. <code>BK1</code> through <code>BK4</code> apply only to Sweden. <code>A2,A4,B2,B4,C,D,ET2,ET4</code> apply only to Mexico.</p> <note> <p>There are currently no other supported values as of 26th April 2024.</p> </note>",
+        "RouteAvoidanceOptions$TruckRoadTypes": "<p>Truck road type identifiers. <code>BK1</code> through <code>BK4</code> apply only to Sweden. <code>A2,A4,B2,B4,C,D,ET2,ET4</code> apply only to Mexico.</p> <note> <p>There are currently no other supported values as of 26th April 2024.</p> </note>",
+        "RouteMatrixAvoidanceOptions$TruckRoadTypes": "<p>Truck road type identifiers. <code>BK1</code> through <code>BK4</code> apply only to Sweden. <code>A2,A4,B2,B4,C,D,ET2,ET4</code> apply only to Mexico.</p> <note> <p>There are currently no other supported values as of 26th April 2024.</p> </note>",
+        "RouteVehicleLegDetails$TruckRoadTypes": "<p>Truck road type identifiers. <code>BK1</code> through <code>BK4</code> apply only to Sweden. <code>A2,A4,B2,B4,C,D,ET2,ET4</code> apply only to Mexico.</p> <note> <p>There are currently no other supported values as of 26th April 2024.</p> </note>"
+      }
+    },
+    "TunnelRestrictionCode": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$TunnelRestrictionCode": "<p>The tunnel restriction code.</p> <p>Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them.</p> <ul> <li> <p> <i>Tunnel Category B</i> </p> <ul> <li> <p> <i>Risk Level</i>: Limited risk</p> </li> <li> <p> <i>Restrictions</i>: Few restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category C</i> </p> <ul> <li> <p> <i>Risk Level</i>: Medium risk</p> </li> <li> <p> <i>Restrictions</i>: Some restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category D</i> </p> <ul> <li> <p> <i>Risk Level</i>: High risk</p> </li> <li> <p> <i>Restrictions</i>: Many restrictions occur</p> </li> </ul> </li> <li> <p> <i>Tunnel Category E</i> </p> <ul> <li> <p> <i>Risk Level</i>: Very high risk</p> </li> <li> <p> <i>Restrictions</i>: Restricted tunnel</p> </li> </ul> </li> </ul>",
+        "RoadSnapTruckOptions$TunnelRestrictionCode": "<p>The tunnel restriction code.</p> <p>Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them.</p> <ul> <li> <p> <i>Tunnel Category B</i> </p> <ul> <li> <p> <i>Risk Level</i>: Limited risk</p> </li> <li> <p> <i>Restrictions</i>: Few restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category C</i> </p> <ul> <li> <p> <i>Risk Level</i>: Medium risk</p> </li> <li> <p> <i>Restrictions</i>: Some restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category D</i> </p> <ul> <li> <p> <i>Risk Level</i>: High risk</p> </li> <li> <p> <i>Restrictions</i>: Many restrictions occur</p> </li> </ul> </li> <li> <p> <i>Tunnel Category E</i> </p> <ul> <li> <p> <i>Risk Level</i>: Very high risk</p> </li> <li> <p> <i>Restrictions</i>: Restricted tunnel</p> </li> </ul> </li> </ul>",
+        "RouteMatrixTruckOptions$TunnelRestrictionCode": "<p>The tunnel restriction code.</p> <p>Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them.</p> <ul> <li> <p> <i>Tunnel Category B</i> </p> <ul> <li> <p> <i>Risk Level</i>: Limited risk</p> </li> <li> <p> <i>Restrictions</i>: Few restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category C</i> </p> <ul> <li> <p> <i>Risk Level</i>: Medium risk</p> </li> <li> <p> <i>Restrictions</i>: Some restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category D</i> </p> <ul> <li> <p> <i>Risk Level</i>: High risk</p> </li> <li> <p> <i>Restrictions</i>: Many restrictions occur</p> </li> </ul> </li> <li> <p> <i>Tunnel Category E</i> </p> <ul> <li> <p> <i>Risk Level</i>: Very high risk</p> </li> <li> <p> <i>Restrictions</i>: Restricted tunnel</p> </li> </ul> </li> </ul>",
+        "RouteViolatedConstraints$TunnelRestrictionCode": "<p>The tunnel restriction code.</p> <p>Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them.</p> <ul> <li> <p> <i>Tunnel Category B</i> </p> <ul> <li> <p> <i>Risk Level</i>: Limited risk</p> </li> <li> <p> <i>Restrictions</i>: Few restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category C</i> </p> <ul> <li> <p> <i>Risk Level</i>: Medium risk</p> </li> <li> <p> <i>Restrictions</i>: Some restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category D</i> </p> <ul> <li> <p> <i>Risk Level</i>: High risk</p> </li> <li> <p> <i>Restrictions</i>: Many restrictions occur</p> </li> </ul> </li> <li> <p> <i>Tunnel Category E</i> </p> <ul> <li> <p> <i>Risk Level</i>: Very high risk</p> </li> <li> <p> <i>Restrictions</i>: Restricted tunnel</p> </li> </ul> </li> </ul>",
+        "WaypointOptimizationTruckOptions$TunnelRestrictionCode": "<p>The tunnel restriction code.</p> <p>Tunnel categories in this list indicate the restrictions which apply to certain tunnels in Great Britain. They relate to the types of dangerous goods that can be transported through them.</p> <ul> <li> <p> <i>Tunnel Category B</i> </p> <ul> <li> <p> <i>Risk Level</i>: Limited risk</p> </li> <li> <p> <i>Restrictions</i>: Few restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category C</i> </p> <ul> <li> <p> <i>Risk Level</i>: Medium risk</p> </li> <li> <p> <i>Restrictions</i>: Some restrictions</p> </li> </ul> </li> <li> <p> <i>Tunnel Category D</i> </p> <ul> <li> <p> <i>Risk Level</i>: High risk</p> </li> <li> <p> <i>Restrictions</i>: Many restrictions occur</p> </li> </ul> </li> <li> <p> <i>Tunnel Category E</i> </p> <ul> <li> <p> <i>Risk Level</i>: Very high risk</p> </li> <li> <p> <i>Restrictions</i>: Restricted tunnel</p> </li> </ul> </li> </ul>"
+      }
+    },
+    "TurnAngle": {
+      "base": null,
+      "refs": {
+        "RouteContinueHighwayStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteEnterHighwayStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteExitStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteKeepStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteRampStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteRoundaboutEnterStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteRoundaboutPassStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteTurnStepDetails$TurnAngle": "<p>Angle of the turn.</p>",
+        "RouteUTurnStepDetails$TurnAngle": "<p>Angle of the turn.</p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input fails to satisfy the constraints specified by an AWS service.</p>",
+      "refs": {}
+    },
+    "ValidationExceptionField": {
+      "base": "<p>The input fails to satisfy the constraints specified by the Amazon Location service.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": null,
+      "refs": {
+        "ValidationException$FieldList": "<p>The field where the invalid entry was detected.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$Reason": "<p>A message with the reason for the validation exception error.</p>"
+      }
+    },
+    "WaypointId": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationConnection$From": "<p>contains the ID of the starting waypoint in this connection.</p>",
+        "WaypointOptimizationConnection$To": "<p>Contains the ID of the ending waypoint in this connection.</p>",
+        "WaypointOptimizationDestinationOptions$Id": "<p>The waypoint Id.</p>",
+        "WaypointOptimizationImpedingWaypoint$Id": "<p>The waypoint Id.</p>",
+        "WaypointOptimizationOptimizedWaypoint$Id": "<p>The waypoint Id.</p>",
+        "WaypointOptimizationOriginOptions$Id": "<p>The Origin Id.</p>",
+        "WaypointOptimizationWaypoint$Id": "<p>The waypoint Id.</p>"
+      }
+    },
+    "WaypointIndex": {
+      "base": null,
+      "refs": {
+        "BeforeWaypointsList$member": null
+      }
+    },
+    "WaypointOptimizationAccessHours": {
+      "base": "<p>Access hours corresponding to when a destination can be visited.</p>",
+      "refs": {
+        "WaypointOptimizationDestinationOptions$AccessHours": "<p>Access hours corresponding to when a waypoint can be visited.</p>",
+        "WaypointOptimizationWaypoint$AccessHours": "<p>Access hours corresponding to when a waypoint can be visited.</p>"
+      }
+    },
+    "WaypointOptimizationAccessHoursEntry": {
+      "base": "<p>Hours of entry.</p>",
+      "refs": {
+        "WaypointOptimizationAccessHours$From": "<p>Contains the ID of the starting waypoint in this connection.</p>",
+        "WaypointOptimizationAccessHours$To": "<p>Contains the ID of the ending waypoint in this connection.</p>"
+      }
+    },
+    "WaypointOptimizationAvoidanceArea": {
+      "base": "<p>The area to be avoided.</p>",
+      "refs": {
+        "WaypointOptimizationAvoidanceOptionsAreasList$member": null
+      }
+    },
+    "WaypointOptimizationAvoidanceAreaGeometry": {
+      "base": "<p>Geometry of the area to be avoided.</p>",
+      "refs": {
+        "WaypointOptimizationAvoidanceArea$Geometry": "<p>Geometry of the area to be avoided.</p>"
+      }
+    },
+    "WaypointOptimizationAvoidanceOptions": {
+      "base": "<p>Specifies options for areas to avoid. This is a best-effort avoidance setting, meaning the router will try to honor the avoidance preferences but may still include restricted areas if no feasible alternative route exists. If avoidance options are not followed, the response will indicate that the avoidance criteria were violated.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$Avoid": "<p>Features that are avoided. Avoidance is on a best-case basis. If an avoidance can't be satisfied for a particular case, this setting is ignored.</p>"
+      }
+    },
+    "WaypointOptimizationAvoidanceOptionsAreasList": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationAvoidanceOptions$Areas": "<p>Areas to be avoided.</p>"
+      }
+    },
+    "WaypointOptimizationClusteringAlgorithm": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationClusteringOptions$Algorithm": "<p>The algorithm to be used. <code>DrivingDistance</code> assigns all the waypoints that are within driving distance of each other into a single cluster. <code>TopologySegment</code> assigns all the waypoints that are within the same topology segment into a single cluster. A Topology segment is a linear stretch of road between two junctions.</p>"
+      }
+    },
+    "WaypointOptimizationClusteringOptions": {
+      "base": "<p>Options for WaypointOptimizationClustering.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$Clustering": "<p>Clustering allows you to specify how nearby waypoints can be clustered to improve the optimized sequence.</p>"
+      }
+    },
+    "WaypointOptimizationConnection": {
+      "base": "<p>This contains information such as distance and duration from one waypoint to the next waypoint in the sequence.</p>",
+      "refs": {
+        "WaypointOptimizationConnectionList$member": null
+      }
+    },
+    "WaypointOptimizationConnectionList": {
+      "base": null,
+      "refs": {
+        "OptimizeWaypointsResponse$Connections": "<p>Details about the connection from one waypoint to the next, within the optimized sequence.</p>"
+      }
+    },
+    "WaypointOptimizationConstraint": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationFailedConstraint$Constraint": "<p>The failed constraint.</p>"
+      }
+    },
+    "WaypointOptimizationDestinationOptions": {
+      "base": "<p>Destination related options.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$DestinationOptions": "<p>Destination related options.</p>"
+      }
+    },
+    "WaypointOptimizationDriverOptions": {
+      "base": "<p>Driver related options.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$Driver": "<p>Driver related options.</p>"
+      }
+    },
+    "WaypointOptimizationDrivingDistanceOptions": {
+      "base": "<p>Driving distance related options.</p>",
+      "refs": {
+        "WaypointOptimizationClusteringOptions$DrivingDistanceOptions": "<p>Driving distance options to be used when the clustering algorithm is DrivingDistance.</p>"
+      }
+    },
+    "WaypointOptimizationExclusionOptions": {
+      "base": "<p>Specifies strict exclusion options for the route calculation. This setting mandates that the router will avoid any routes that include the specified options, rather than merely attempting to minimize them.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$Exclude": "<p>Features to be strictly excluded while calculating the route.</p>"
+      }
+    },
+    "WaypointOptimizationFailedConstraint": {
+      "base": "<p>The failed constraint.</p>",
+      "refs": {
+        "WaypointOptimizationFailedConstraintList$member": null
+      }
+    },
+    "WaypointOptimizationFailedConstraintList": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationImpedingWaypoint$FailedConstraints": "<p>Failed constraints for an impeding waypoint.</p>"
+      }
+    },
+    "WaypointOptimizationHazardousCargoType": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationHazardousCargoTypeList$member": null
+      }
+    },
+    "WaypointOptimizationHazardousCargoTypeList": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationTruckOptions$HazardousCargos": "<p>List of Hazardous cargo contained in the vehicle.</p>"
+      }
+    },
+    "WaypointOptimizationImpedingWaypoint": {
+      "base": "<p>The impeding waypoint.</p>",
+      "refs": {
+        "WaypointOptimizationImpedingWaypointList$member": null
+      }
+    },
+    "WaypointOptimizationImpedingWaypointList": {
+      "base": null,
+      "refs": {
+        "OptimizeWaypointsResponse$ImpedingWaypoints": "<p>Returns waypoints that caused the optimization problem to fail, and the constraints that were unsatisfied leading to the failure.</p>"
+      }
+    },
+    "WaypointOptimizationOptimizedWaypoint": {
+      "base": "<p>The optimized waypoint.</p>",
+      "refs": {
+        "WaypointOptimizationOptimizedWaypointList$member": null
+      }
+    },
+    "WaypointOptimizationOptimizedWaypointList": {
+      "base": null,
+      "refs": {
+        "OptimizeWaypointsResponse$OptimizedWaypoints": "<p>Waypoints in the order of the optimized sequence.</p>"
+      }
+    },
+    "WaypointOptimizationOriginOptions": {
+      "base": "<p>Origin related options.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$OriginOptions": "<p>Origin related options.</p>"
+      }
+    },
+    "WaypointOptimizationPedestrianOptions": {
+      "base": "<p>Options related to a pedestrian.</p>",
+      "refs": {
+        "WaypointOptimizationTravelModeOptions$Pedestrian": "<p>Travel mode options when the provided travel mode is \"Pedestrian\"</p>"
+      }
+    },
+    "WaypointOptimizationPedestrianOptionsSpeedDouble": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationPedestrianOptions$Speed": "<p>Walking speed.</p> <p> <b>Unit</b>: <code>KilometersPerHour</code> </p>"
+      }
+    },
+    "WaypointOptimizationRestCycleDurations": {
+      "base": "<p>Driver work-rest schedules defined by a short and long cycle. A rest needs to be taken after the short work duration. The short cycle can be repeated until you hit the long work duration, at which point the long rest duration should be taken before restarting.</p> <p> <b>Unit</b>: <code>seconds</code> </p>",
+      "refs": {
+        "WaypointOptimizationRestCycles$LongCycle": "<p>Long cycle for a driver work-rest schedule.</p>",
+        "WaypointOptimizationRestCycles$ShortCycle": "<p>Short cycle for a driver work-rest schedule</p>"
+      }
+    },
+    "WaypointOptimizationRestCycles": {
+      "base": "<p>Resting phase of the cycle.</p>",
+      "refs": {
+        "WaypointOptimizationDriverOptions$RestCycles": "<p>Driver work-rest schedules defined by a short and long cycle. A rest needs to be taken after the short work duration. The short cycle can be repeated until you hit the long work duration, at which point the long rest duration should be taken before restarting.</p>"
+      }
+    },
+    "WaypointOptimizationRestProfile": {
+      "base": "<p>Pre defined rest profiles for a driver schedule. The only currently supported profile is EU.</p>",
+      "refs": {
+        "WaypointOptimizationDriverOptions$RestProfile": "<p>Pre defined rest profiles for a driver schedule. The only currently supported profile is EU.</p>"
+      }
+    },
+    "WaypointOptimizationRestProfileProfileString": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationRestProfile$Profile": "<p>Pre defined rest profiles for a driver schedule. The only currently supported profile is EU.</p>"
+      }
+    },
+    "WaypointOptimizationSequencingObjective": {
+      "base": null,
+      "refs": {
+        "OptimizeWaypointsRequest$OptimizeSequencingFor": "<p>Specifies the optimization criteria for the calculated sequence.</p> <p>Default Value: <code>FastestRoute</code>.</p>"
+      }
+    },
+    "WaypointOptimizationServiceTimeTreatment": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationDriverOptions$TreatServiceTimeAs": "<p>If the service time provided at a waypoint/destination should be considered as rest or work. This contributes to the total time breakdown returned within the response.</p>"
+      }
+    },
+    "WaypointOptimizationSideOfStreetOptions": {
+      "base": "<p>Options to configure matching the provided position to a side of the street.</p>",
+      "refs": {
+        "WaypointOptimizationDestinationOptions$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>",
+        "WaypointOptimizationWaypoint$SideOfStreet": "<p>Options to configure matching the provided position to a side of the street.</p>"
+      }
+    },
+    "WaypointOptimizationTimeBreakdown": {
+      "base": "<p>Time breakdown for the sequence.</p>",
+      "refs": {
+        "OptimizeWaypointsResponse$TimeBreakdown": "<p>Time breakdown for the sequence.</p>"
+      }
+    },
+    "WaypointOptimizationTrafficOptions": {
+      "base": "<p>Options related to traffic.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$Traffic": "<p>Traffic-related options.</p>"
+      }
+    },
+    "WaypointOptimizationTrailerOptions": {
+      "base": "<p>Trailer options corresponding to the vehicle.</p>",
+      "refs": {
+        "WaypointOptimizationTruckOptions$Trailer": "<p>Trailer options corresponding to the vehicle.</p>"
+      }
+    },
+    "WaypointOptimizationTrailerOptionsTrailerCountInteger": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationTrailerOptions$TrailerCount": "<p>Number of trailers attached to the vehicle.</p> <p>Default Value: <code>0</code> </p>"
+      }
+    },
+    "WaypointOptimizationTravelMode": {
+      "base": null,
+      "refs": {
+        "OptimizeWaypointsRequest$TravelMode": "<p>Specifies the mode of transport when calculating a route. Used in estimating the speed of travel and road compatibility.</p> <p>Default Value: <code>Car</code> </p>"
+      }
+    },
+    "WaypointOptimizationTravelModeOptions": {
+      "base": "<p>Travel mode related options for the provided travel mode.</p>",
+      "refs": {
+        "OptimizeWaypointsRequest$TravelModeOptions": "<p>Travel mode related options for the provided travel mode.</p>"
+      }
+    },
+    "WaypointOptimizationTruckOptions": {
+      "base": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>",
+      "refs": {
+        "WaypointOptimizationTravelModeOptions$Truck": "<p>Travel mode options when the provided travel mode is \"Truck\"</p>"
+      }
+    },
+    "WaypointOptimizationTruckOptionsHeightLong": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationTruckOptions$Height": "<p>Height of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "WaypointOptimizationTruckOptionsLengthLong": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationTruckOptions$Length": "<p>Length of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "WaypointOptimizationTruckOptionsWidthLong": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationTruckOptions$Width": "<p>Width of the vehicle.</p> <p> <b>Unit</b>: <code>centimeters</code> </p>"
+      }
+    },
+    "WaypointOptimizationTruckType": {
+      "base": null,
+      "refs": {
+        "WaypointOptimizationTruckOptions$TruckType": "<p>Type of the truck.</p>"
+      }
+    },
+    "WaypointOptimizationWaypoint": {
+      "base": "<p>Waypoint between the Origin and Destination.</p>",
+      "refs": {
+        "WaypointOptimizationWaypointList$member": null
+      }
+    },
+    "WaypointOptimizationWaypointList": {
+      "base": null,
+      "refs": {
+        "OptimizeWaypointsRequest$Waypoints": "<p>List of waypoints between the <code>Origin</code> and <code>Destination</code>.</p>"
+      }
+    },
+    "WeightKilograms": {
+      "base": null,
+      "refs": {
+        "IsolineTruckOptions$GrossWeight": "<p>Gross weight of the vehicle including trailers, and goods at capacity.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "IsolineTruckOptions$PayloadCapacity": "<p>Payload capacity of the vehicle and trailers attached.</p> <p> <b>Unit</b>: <code>kilograms</code> </p>",
+        "IsolineTruckOptions$WeightPerAxle": "<p>Heaviest weight per axle irrespective of the axle type or the axle group. Meant for usage in countries where the differences in axle types or axle groups are not distinguished.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RoadSnapTruckOptions$GrossWeight": "<p>Gross weight of the vehicle including trailers, and goods at capacity.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteMatrixTruckOptions$GrossWeight": "<p>Gross weight of the vehicle including trailers, and goods at capacity.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteMatrixTruckOptions$PayloadCapacity": "<p>Payload capacity of the vehicle and trailers attached.</p> <p> <b>Unit</b>: <code>kilograms</code> </p>",
+        "RouteMatrixTruckOptions$WeightPerAxle": "<p>Heaviest weight per axle irrespective of the axle type or the axle group. Meant for usage in countries where the differences in axle types or axle groups are not distinguished.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteTruckOptions$GrossWeight": "<p>Gross weight of the vehicle including trailers, and goods at capacity.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteTruckOptions$PayloadCapacity": "<p>Payload capacity of the vehicle and trailers attached.</p> <p> <b>Unit</b>: <code>kilograms</code> </p>",
+        "RouteTruckOptions$WeightPerAxle": "<p>Heaviest weight per axle irrespective of the axle type or the axle group. Meant for usage in countries where the differences in axle types or axle groups are not distinguished.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteViolatedConstraints$MaxPayloadCapacity": "<p>The maximum load capacity of the vehicle.</p> <p> <b>Unit</b>: <code>kilograms</code> </p>",
+        "RouteViolatedConstraints$MaxWeightPerAxle": "<p>The maximum weight per axle of the vehicle.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteWeightConstraint$Value": "<p>The constraint value.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "WaypointOptimizationTruckOptions$GrossWeight": "<p>Gross weight of the vehicle including trailers, and goods at capacity.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "WaypointOptimizationTruckOptions$WeightPerAxle": "<p>Heaviest weight per axle irrespective of the axle type or the axle group. Meant for usage in countries where the differences in axle types or axle groups are not distinguished.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "WeightPerAxleGroup$Single": "<p>Weight for single axle group.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "WeightPerAxleGroup$Tandem": "<p>Weight for tandem axle group.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "WeightPerAxleGroup$Triple": "<p>Weight for triple axle group.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "WeightPerAxleGroup$Quad": "<p>Weight for quad axle group.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "WeightPerAxleGroup$Quint": "<p>Weight for quad quint group.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>"
+      }
+    },
+    "WeightPerAxleGroup": {
+      "base": "<p>Specifies the total weight for the specified axle group. Meant for usage in countries that have different regulations based on the axle group type.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+      "refs": {
+        "IsolineTruckOptions$WeightPerAxleGroup": "<p>Specifies the total weight for the specified axle group. Meant for usage in countries that have different regulations based on the axle group type.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteMatrixTruckOptions$WeightPerAxleGroup": "<p>Specifies the total weight for the specified axle group. Meant for usage in countries that have different regulations based on the axle group type.</p>",
+        "RouteTruckOptions$WeightPerAxleGroup": "<p>Specifies the total weight for the specified axle group. Meant for usage in countries that have different regulations based on the axle group type.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>",
+        "RouteViolatedConstraints$MaxWeightPerAxleGroup": "<p>The maximum weight per axle group of the vehicle.</p> <p> <b>Unit</b>: <code>Kilograms</code> </p>"
+      }
+    }
+  }
+}

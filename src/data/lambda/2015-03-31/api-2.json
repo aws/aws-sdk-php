@@ -2,11 +2,14 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2015-03-31",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"lambda",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS Lambda",
     "serviceId":"Lambda",
     "signatureVersion":"v4",
+    "signingName":"lambda",
     "uid":"lambda-2015-03-31"
   },
   "operations":{
@@ -20,12 +23,12 @@
       "input":{"shape":"AddLayerVersionPermissionRequest"},
       "output":{"shape":"AddLayerVersionPermissionResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"},
-        {"shape":"TooManyRequestsException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"PolicyLengthExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"PreconditionFailedException"}
       ]
     },
@@ -39,12 +42,12 @@
       "input":{"shape":"AddPermissionRequest"},
       "output":{"shape":"AddPermissionResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"PolicyLengthExceededException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"PolicyLengthExceededException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"PreconditionFailedException"}
       ]
     },
@@ -58,40 +61,41 @@
       "input":{"shape":"CreateAliasRequest"},
       "output":{"shape":"AliasConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
-      ]
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "CreateCodeSigningConfig":{
       "name":"CreateCodeSigningConfig",
       "http":{
         "method":"POST",
-        "requestUri":"/2020-04-22/code-signing-configs/",
+        "requestUri":"/2020-04-22/code-signing-configs",
         "responseCode":201
       },
       "input":{"shape":"CreateCodeSigningConfigRequest"},
       "output":{"shape":"CreateCodeSigningConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"}
       ]
     },
     "CreateEventSourceMapping":{
       "name":"CreateEventSourceMapping",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-03-31/event-source-mappings/",
+        "requestUri":"/2015-03-31/event-source-mappings",
         "responseCode":202
       },
       "input":{"shape":"CreateEventSourceMappingRequest"},
       "output":{"shape":"EventSourceMappingConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -106,16 +110,17 @@
       "input":{"shape":"CreateFunctionRequest"},
       "output":{"shape":"FunctionConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"CodeStorageExceededException"},
-        {"shape":"CodeVerificationFailedException"},
         {"shape":"InvalidCodeSignatureException"},
-        {"shape":"CodeSigningConfigNotFoundException"}
-      ]
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"CodeVerificationFailedException"},
+        {"shape":"CodeSigningConfigNotFoundException"},
+        {"shape":"CodeStorageExceededException"}
+      ],
+      "idempotent":true
     },
     "CreateFunctionUrlConfig":{
       "name":"CreateFunctionUrlConfig",
@@ -127,11 +132,11 @@
       "input":{"shape":"CreateFunctionUrlConfigRequest"},
       "output":{"shape":"CreateFunctionUrlConfigResponse"},
       "errors":[
-        {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
         {"shape":"ServiceException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteAlias":{
@@ -143,11 +148,12 @@
       },
       "input":{"shape":"DeleteAliasRequest"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteCodeSigningConfig":{
       "name":"DeleteCodeSigningConfig",
@@ -159,11 +165,12 @@
       "input":{"shape":"DeleteCodeSigningConfigRequest"},
       "output":{"shape":"DeleteCodeSigningConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"}
-      ]
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "DeleteEventSourceMapping":{
       "name":"DeleteEventSourceMapping",
@@ -175,13 +182,14 @@
       "input":{"shape":"DeleteEventSourceMappingRequest"},
       "output":{"shape":"EventSourceMappingConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ResourceConflictException"},
-        {"shape":"ResourceInUseException"}
-      ]
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "DeleteFunction":{
       "name":"DeleteFunction",
@@ -192,12 +200,13 @@
       },
       "input":{"shape":"DeleteFunctionRequest"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceConflictException"}
-      ]
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "DeleteFunctionCodeSigningConfig":{
       "name":"DeleteFunctionCodeSigningConfig",
@@ -209,11 +218,11 @@
       "input":{"shape":"DeleteFunctionCodeSigningConfigRequest"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"CodeSigningConfigNotFoundException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceConflictException"},
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"CodeSigningConfigNotFoundException"}
       ]
     },
     "DeleteFunctionConcurrency":{
@@ -225,11 +234,11 @@
       },
       "input":{"shape":"DeleteFunctionConcurrencyRequest"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteFunctionEventInvokeConfig":{
@@ -241,11 +250,11 @@
       },
       "input":{"shape":"DeleteFunctionEventInvokeConfigRequest"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteFunctionUrlConfig":{
@@ -258,9 +267,9 @@
       "input":{"shape":"DeleteFunctionUrlConfigRequest"},
       "errors":[
         {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "DeleteLayerVersion":{
@@ -274,7 +283,8 @@
       "errors":[
         {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"}
-      ]
+      ],
+      "idempotent":true
     },
     "DeleteProvisionedConcurrencyConfig":{
       "name":"DeleteProvisionedConcurrencyConfig",
@@ -287,23 +297,24 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ServiceException"}
-      ]
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "GetAccountSettings":{
       "name":"GetAccountSettings",
       "http":{
         "method":"GET",
-        "requestUri":"/2016-08-19/account-settings/",
+        "requestUri":"/2016-08-19/account-settings",
         "responseCode":200
       },
       "input":{"shape":"GetAccountSettingsRequest"},
       "output":{"shape":"GetAccountSettingsResponse"},
       "errors":[
-        {"shape":"TooManyRequestsException"},
-        {"shape":"ServiceException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"}
       ]
     },
     "GetAlias":{
@@ -316,10 +327,10 @@
       "input":{"shape":"GetAliasRequest"},
       "output":{"shape":"AliasConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetCodeSigningConfig":{
@@ -332,8 +343,8 @@
       "input":{"shape":"GetCodeSigningConfigRequest"},
       "output":{"shape":"GetCodeSigningConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -347,10 +358,10 @@
       "input":{"shape":"GetEventSourceMappingRequest"},
       "output":{"shape":"EventSourceMappingConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetFunction":{
@@ -363,10 +374,10 @@
       "input":{"shape":"GetFunctionRequest"},
       "output":{"shape":"GetFunctionResponse"},
       "errors":[
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetFunctionCodeSigningConfig":{
@@ -380,9 +391,9 @@
       "output":{"shape":"GetFunctionCodeSigningConfigResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetFunctionConcurrency":{
@@ -396,9 +407,9 @@
       "output":{"shape":"GetFunctionConcurrencyResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetFunctionConfiguration":{
@@ -411,10 +422,10 @@
       "input":{"shape":"GetFunctionConfigurationRequest"},
       "output":{"shape":"FunctionConfiguration"},
       "errors":[
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetFunctionEventInvokeConfig":{
@@ -427,10 +438,26 @@
       "input":{"shape":"GetFunctionEventInvokeConfigRequest"},
       "output":{"shape":"FunctionEventInvokeConfig"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetFunctionRecursionConfig":{
+      "name":"GetFunctionRecursionConfig",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2024-08-31/functions/{FunctionName}/recursion-config",
+        "responseCode":200
+      },
+      "input":{"shape":"GetFunctionRecursionConfigRequest"},
+      "output":{"shape":"GetFunctionRecursionConfigResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetFunctionUrlConfig":{
@@ -445,8 +472,8 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetLayerVersion":{
@@ -459,8 +486,8 @@
       "input":{"shape":"GetLayerVersionRequest"},
       "output":{"shape":"GetLayerVersionResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -475,8 +502,8 @@
       "input":{"shape":"GetLayerVersionByArnRequest"},
       "output":{"shape":"GetLayerVersionResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ResourceNotFoundException"}
       ]
@@ -491,10 +518,10 @@
       "input":{"shape":"GetLayerVersionPolicyRequest"},
       "output":{"shape":"GetLayerVersionPolicyResponse"},
       "errors":[
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetPolicy":{
@@ -507,10 +534,10 @@
       "input":{"shape":"GetPolicyRequest"},
       "output":{"shape":"GetPolicyResponse"},
       "errors":[
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetProvisionedConcurrencyConfig":{
@@ -524,10 +551,10 @@
       "output":{"shape":"GetProvisionedConcurrencyConfigResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"},
+        {"shape":"ProvisionedConcurrencyConfigNotFoundException"},
         {"shape":"ServiceException"},
-        {"shape":"ProvisionedConcurrencyConfigNotFoundException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "GetRuntimeManagementConfig":{
@@ -540,68 +567,69 @@
       "input":{"shape":"GetRuntimeManagementConfigRequest"},
       "output":{"shape":"GetRuntimeManagementConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "Invoke":{
       "name":"Invoke",
       "http":{
         "method":"POST",
-        "requestUri":"/2015-03-31/functions/{FunctionName}/invocations"
+        "requestUri":"/2015-03-31/functions/{FunctionName}/invocations",
+        "responseCode":200
       },
       "input":{"shape":"InvocationRequest"},
       "output":{"shape":"InvocationResponse"},
       "errors":[
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"InvalidSecurityGroupIDException"},
+        {"shape":"SnapStartTimeoutException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"EC2ThrottledException"},
+        {"shape":"EFSMountConnectivityException"},
+        {"shape":"SubnetIPAddressLimitReachedException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"RequestTooLargeException"},
+        {"shape":"KMSDisabledException"},
+        {"shape":"UnsupportedMediaTypeException"},
+        {"shape":"InvalidRuntimeException"},
+        {"shape":"EC2UnexpectedException"},
+        {"shape":"InvalidSubnetIDException"},
+        {"shape":"KMSNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"EC2AccessDeniedException"},
+        {"shape":"EFSIOException"},
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ENILimitReachedException"},
+        {"shape":"SnapStartNotReadyException"},
         {"shape":"ServiceException"},
+        {"shape":"SnapStartException"},
+        {"shape":"RecursiveInvocationException"},
+        {"shape":"EFSMountTimeoutException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestContentException"},
-        {"shape":"RequestTooLargeException"},
-        {"shape":"UnsupportedMediaTypeException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"},
-        {"shape":"EC2UnexpectedException"},
-        {"shape":"SubnetIPAddressLimitReachedException"},
-        {"shape":"ENILimitReachedException"},
-        {"shape":"EFSMountConnectivityException"},
-        {"shape":"EFSMountFailureException"},
-        {"shape":"EFSMountTimeoutException"},
-        {"shape":"EFSIOException"},
-        {"shape":"SnapStartException"},
-        {"shape":"SnapStartTimeoutException"},
-        {"shape":"SnapStartNotReadyException"},
-        {"shape":"EC2ThrottledException"},
-        {"shape":"EC2AccessDeniedException"},
-        {"shape":"InvalidSubnetIDException"},
-        {"shape":"InvalidSecurityGroupIDException"},
         {"shape":"InvalidZipFileException"},
-        {"shape":"KMSDisabledException"},
-        {"shape":"KMSInvalidStateException"},
-        {"shape":"KMSAccessDeniedException"},
-        {"shape":"KMSNotFoundException"},
-        {"shape":"InvalidRuntimeException"},
-        {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotReadyException"},
-        {"shape":"RecursiveInvocationException"}
+        {"shape":"EFSMountFailureException"}
       ]
     },
     "InvokeAsync":{
       "name":"InvokeAsync",
       "http":{
         "method":"POST",
-        "requestUri":"/2014-11-13/functions/{FunctionName}/invoke-async/",
+        "requestUri":"/2014-11-13/functions/{FunctionName}/invoke-async",
         "responseCode":202
       },
       "input":{"shape":"InvokeAsyncRequest"},
       "output":{"shape":"InvokeAsyncResponse"},
       "errors":[
+        {"shape":"InvalidRuntimeException"},
+        {"shape":"ResourceConflictException"},
         {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidRequestContentException"},
-        {"shape":"InvalidRuntimeException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"InvalidRequestContentException"}
       ],
       "deprecated":true
     },
@@ -609,41 +637,42 @@
       "name":"InvokeWithResponseStream",
       "http":{
         "method":"POST",
-        "requestUri":"/2021-11-15/functions/{FunctionName}/response-streaming-invocations"
+        "requestUri":"/2021-11-15/functions/{FunctionName}/response-streaming-invocations",
+        "responseCode":200
       },
       "input":{"shape":"InvokeWithResponseStreamRequest"},
       "output":{"shape":"InvokeWithResponseStreamResponse"},
       "errors":[
+        {"shape":"ResourceNotReadyException"},
+        {"shape":"InvalidSecurityGroupIDException"},
+        {"shape":"SnapStartTimeoutException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"EC2ThrottledException"},
+        {"shape":"EFSMountConnectivityException"},
+        {"shape":"SubnetIPAddressLimitReachedException"},
+        {"shape":"KMSAccessDeniedException"},
+        {"shape":"RequestTooLargeException"},
+        {"shape":"KMSDisabledException"},
+        {"shape":"UnsupportedMediaTypeException"},
+        {"shape":"InvalidRuntimeException"},
+        {"shape":"EC2UnexpectedException"},
+        {"shape":"InvalidSubnetIDException"},
+        {"shape":"KMSNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"EC2AccessDeniedException"},
+        {"shape":"EFSIOException"},
+        {"shape":"KMSInvalidStateException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ENILimitReachedException"},
+        {"shape":"SnapStartNotReadyException"},
         {"shape":"ServiceException"},
+        {"shape":"SnapStartException"},
+        {"shape":"RecursiveInvocationException"},
+        {"shape":"EFSMountTimeoutException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestContentException"},
-        {"shape":"RequestTooLargeException"},
-        {"shape":"UnsupportedMediaTypeException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"},
-        {"shape":"EC2UnexpectedException"},
-        {"shape":"SubnetIPAddressLimitReachedException"},
-        {"shape":"ENILimitReachedException"},
-        {"shape":"EFSMountConnectivityException"},
-        {"shape":"EFSMountFailureException"},
-        {"shape":"EFSMountTimeoutException"},
-        {"shape":"EFSIOException"},
-        {"shape":"SnapStartException"},
-        {"shape":"SnapStartTimeoutException"},
-        {"shape":"SnapStartNotReadyException"},
-        {"shape":"EC2ThrottledException"},
-        {"shape":"EC2AccessDeniedException"},
-        {"shape":"InvalidSubnetIDException"},
-        {"shape":"InvalidSecurityGroupIDException"},
         {"shape":"InvalidZipFileException"},
-        {"shape":"KMSDisabledException"},
-        {"shape":"KMSInvalidStateException"},
-        {"shape":"KMSAccessDeniedException"},
-        {"shape":"KMSNotFoundException"},
-        {"shape":"InvalidRuntimeException"},
-        {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotReadyException"},
-        {"shape":"RecursiveInvocationException"}
+        {"shape":"EFSMountFailureException"}
       ]
     },
     "ListAliases":{
@@ -656,40 +685,40 @@
       "input":{"shape":"ListAliasesRequest"},
       "output":{"shape":"ListAliasesResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListCodeSigningConfigs":{
       "name":"ListCodeSigningConfigs",
       "http":{
         "method":"GET",
-        "requestUri":"/2020-04-22/code-signing-configs/",
+        "requestUri":"/2020-04-22/code-signing-configs",
         "responseCode":200
       },
       "input":{"shape":"ListCodeSigningConfigsRequest"},
       "output":{"shape":"ListCodeSigningConfigsResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"}
       ]
     },
     "ListEventSourceMappings":{
       "name":"ListEventSourceMappings",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-03-31/event-source-mappings/",
+        "requestUri":"/2015-03-31/event-source-mappings",
         "responseCode":200
       },
       "input":{"shape":"ListEventSourceMappingsRequest"},
       "output":{"shape":"ListEventSourceMappingsResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListFunctionEventInvokeConfigs":{
@@ -703,9 +732,9 @@
       "output":{"shape":"ListFunctionEventInvokeConfigsResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListFunctionUrlConfigs":{
@@ -720,23 +749,23 @@
       "errors":[
         {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListFunctions":{
       "name":"ListFunctions",
       "http":{
         "method":"GET",
-        "requestUri":"/2015-03-31/functions/",
+        "requestUri":"/2015-03-31/functions",
         "responseCode":200
       },
       "input":{"shape":"ListFunctionsRequest"},
       "output":{"shape":"ListFunctionsResponse"},
       "errors":[
+        {"shape":"InvalidParameterValueException"},
         {"shape":"ServiceException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"TooManyRequestsException"}
       ]
     },
     "ListFunctionsByCodeSigningConfig":{
@@ -749,8 +778,8 @@
       "input":{"shape":"ListFunctionsByCodeSigningConfigRequest"},
       "output":{"shape":"ListFunctionsByCodeSigningConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -764,10 +793,10 @@
       "input":{"shape":"ListLayerVersionsRequest"},
       "output":{"shape":"ListLayerVersionsResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListLayers":{
@@ -780,8 +809,8 @@
       "input":{"shape":"ListLayersRequest"},
       "output":{"shape":"ListLayersResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"}
       ]
     },
@@ -796,24 +825,25 @@
       "output":{"shape":"ListProvisionedConcurrencyConfigsResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ServiceException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListTags":{
       "name":"ListTags",
       "http":{
         "method":"GET",
-        "requestUri":"/2017-03-31/tags/{ARN}"
+        "requestUri":"/2017-03-31/tags/{Resource}",
+        "responseCode":200
       },
       "input":{"shape":"ListTagsRequest"},
       "output":{"shape":"ListTagsResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListVersionsByFunction":{
@@ -826,10 +856,10 @@
       "input":{"shape":"ListVersionsByFunctionRequest"},
       "output":{"shape":"ListVersionsByFunctionResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "PublishLayerVersion":{
@@ -842,10 +872,10 @@
       "input":{"shape":"PublishLayerVersionRequest"},
       "output":{"shape":"PublishLayerVersionResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"CodeStorageExceededException"}
       ]
     },
@@ -859,13 +889,13 @@
       "input":{"shape":"PublishVersionRequest"},
       "output":{"shape":"FunctionConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"CodeStorageExceededException"},
-        {"shape":"PreconditionFailedException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"PreconditionFailedException"}
       ]
     },
     "PutFunctionCodeSigningConfig":{
@@ -878,11 +908,11 @@
       "input":{"shape":"PutFunctionCodeSigningConfigRequest"},
       "output":{"shape":"PutFunctionCodeSigningConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"TooManyRequestsException"},
         {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"CodeSigningConfigNotFoundException"}
       ]
     },
@@ -896,11 +926,11 @@
       "input":{"shape":"PutFunctionConcurrencyRequest"},
       "output":{"shape":"Concurrency"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "PutFunctionEventInvokeConfig":{
@@ -913,11 +943,28 @@
       "input":{"shape":"PutFunctionEventInvokeConfigRequest"},
       "output":{"shape":"FunctionEventInvokeConfig"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "PutFunctionRecursionConfig":{
+      "name":"PutFunctionRecursionConfig",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2024-08-31/functions/{FunctionName}/recursion-config",
+        "responseCode":200
+      },
+      "input":{"shape":"PutFunctionRecursionConfigRequest"},
+      "output":{"shape":"PutFunctionRecursionConfigResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "PutProvisionedConcurrencyConfig":{
@@ -931,11 +978,12 @@
       "output":{"shape":"PutProvisionedConcurrencyConfigResponse"},
       "errors":[
         {"shape":"InvalidParameterValueException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ServiceException"}
-      ]
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "PutRuntimeManagementConfig":{
       "name":"PutRuntimeManagementConfig",
@@ -947,11 +995,11 @@
       "input":{"shape":"PutRuntimeManagementConfigRequest"},
       "output":{"shape":"PutRuntimeManagementConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ResourceConflictException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "RemoveLayerVersionPermission":{
@@ -963,10 +1011,10 @@
       },
       "input":{"shape":"RemoveLayerVersionPermissionRequest"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"PreconditionFailedException"}
       ]
     },
@@ -979,10 +1027,10 @@
       },
       "input":{"shape":"RemovePermissionRequest"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"PreconditionFailedException"}
       ]
     },
@@ -990,32 +1038,32 @@
       "name":"TagResource",
       "http":{
         "method":"POST",
-        "requestUri":"/2017-03-31/tags/{ARN}",
+        "requestUri":"/2017-03-31/tags/{Resource}",
         "responseCode":204
       },
       "input":{"shape":"TagResourceRequest"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UntagResource":{
       "name":"UntagResource",
       "http":{
         "method":"DELETE",
-        "requestUri":"/2017-03-31/tags/{ARN}",
+        "requestUri":"/2017-03-31/tags/{Resource}",
         "responseCode":204
       },
       "input":{"shape":"UntagResourceRequest"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateAlias":{
@@ -1028,12 +1076,12 @@
       "input":{"shape":"UpdateAliasRequest"},
       "output":{"shape":"AliasConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"PreconditionFailedException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"PreconditionFailedException"}
       ]
     },
     "UpdateCodeSigningConfig":{
@@ -1046,8 +1094,8 @@
       "input":{"shape":"UpdateCodeSigningConfigRequest"},
       "output":{"shape":"UpdateCodeSigningConfigResponse"},
       "errors":[
-        {"shape":"ServiceException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -1061,12 +1109,12 @@
       "input":{"shape":"UpdateEventSourceMappingRequest"},
       "output":{"shape":"EventSourceMappingConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ResourceConflictException"},
-        {"shape":"ResourceInUseException"}
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateFunctionCode":{
@@ -1079,16 +1127,16 @@
       "input":{"shape":"UpdateFunctionCodeRequest"},
       "output":{"shape":"FunctionConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"CodeStorageExceededException"},
-        {"shape":"PreconditionFailedException"},
         {"shape":"ResourceConflictException"},
-        {"shape":"CodeVerificationFailedException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"InvalidCodeSignatureException"},
-        {"shape":"CodeSigningConfigNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"CodeVerificationFailedException"},
+        {"shape":"CodeSigningConfigNotFoundException"},
+        {"shape":"CodeStorageExceededException"},
+        {"shape":"PreconditionFailedException"}
       ]
     },
     "UpdateFunctionConfiguration":{
@@ -1101,15 +1149,15 @@
       "input":{"shape":"UpdateFunctionConfigurationRequest"},
       "output":{"shape":"FunctionConfiguration"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"},
         {"shape":"ResourceConflictException"},
-        {"shape":"PreconditionFailedException"},
-        {"shape":"CodeVerificationFailedException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
         {"shape":"InvalidCodeSignatureException"},
-        {"shape":"CodeSigningConfigNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"CodeVerificationFailedException"},
+        {"shape":"CodeSigningConfigNotFoundException"},
+        {"shape":"PreconditionFailedException"}
       ]
     },
     "UpdateFunctionEventInvokeConfig":{
@@ -1122,11 +1170,11 @@
       "input":{"shape":"UpdateFunctionEventInvokeConfigRequest"},
       "output":{"shape":"FunctionEventInvokeConfig"},
       "errors":[
-        {"shape":"ServiceException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
+        {"shape":"ServiceException"},
         {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "UpdateFunctionUrlConfig":{
@@ -1139,11 +1187,11 @@
       "input":{"shape":"UpdateFunctionUrlConfigRequest"},
       "output":{"shape":"UpdateFunctionUrlConfigResponse"},
       "errors":[
-        {"shape":"ResourceConflictException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceConflictException"},
         {"shape":"ServiceException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     }
   },
@@ -1281,16 +1329,21 @@
         "AdditionalVersionWeights":{"shape":"AdditionalVersionWeights"}
       }
     },
-    "AllowCredentials":{"type":"boolean"},
+    "AllowCredentials":{
+      "type":"boolean",
+      "box":true
+    },
     "AllowMethodsList":{
       "type":"list",
       "member":{"shape":"Method"},
-      "max":6
+      "max":6,
+      "min":0
     },
     "AllowOriginsList":{
       "type":"list",
       "member":{"shape":"Origin"},
-      "max":100
+      "max":100,
+      "min":0
     },
     "AllowedPublishers":{
       "type":"structure",
@@ -1302,7 +1355,8 @@
     "AmazonManagedKafkaEventSourceConfig":{
       "type":"structure",
       "members":{
-        "ConsumerGroupId":{"shape":"URI"}
+        "ConsumerGroupId":{"shape":"URI"},
+        "SchemaRegistryConfig":{"shape":"KafkaSchemaRegistryConfig"}
       }
     },
     "ApplicationLogLevel":{
@@ -1335,10 +1389,14 @@
     },
     "BatchSize":{
       "type":"integer",
+      "box":true,
       "max":10000,
       "min":1
     },
-    "BisectBatchOnFunctionError":{"type":"boolean"},
+    "BisectBatchOnFunctionError":{
+      "type":"boolean",
+      "box":true
+    },
     "Blob":{
       "type":"blob",
       "sensitive":true
@@ -1369,6 +1427,7 @@
     "CodeSigningConfigArn":{
       "type":"string",
       "max":200,
+      "min":0,
       "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:code-signing-config:csc-[a-z0-9]{17}"
     },
     "CodeSigningConfigId":{
@@ -1385,7 +1444,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "CodeSigningPolicies":{
@@ -1407,7 +1469,10 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "CodeVerificationFailedException":{
@@ -1416,7 +1481,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "CollectionName":{
@@ -1428,12 +1496,14 @@
     "CompatibleArchitectures":{
       "type":"list",
       "member":{"shape":"Architecture"},
-      "max":2
+      "max":2,
+      "min":0
     },
     "CompatibleRuntimes":{
       "type":"list",
       "member":{"shape":"Runtime"},
-      "max":15
+      "max":15,
+      "min":0
     },
     "Concurrency":{
       "type":"structure",
@@ -1477,7 +1547,8 @@
       "members":{
         "Description":{"shape":"Description"},
         "AllowedPublishers":{"shape":"AllowedPublishers"},
-        "CodeSigningPolicies":{"shape":"CodeSigningPolicies"}
+        "CodeSigningPolicies":{"shape":"CodeSigningPolicies"},
+        "Tags":{"shape":"Tags"}
       }
     },
     "CreateCodeSigningConfigResponse":{
@@ -1504,6 +1575,7 @@
         "MaximumRecordAgeInSeconds":{"shape":"MaximumRecordAgeInSeconds"},
         "BisectBatchOnFunctionError":{"shape":"BisectBatchOnFunctionError"},
         "MaximumRetryAttempts":{"shape":"MaximumRetryAttemptsEventSourceMapping"},
+        "Tags":{"shape":"Tags"},
         "TumblingWindowInSeconds":{"shape":"TumblingWindowInSeconds"},
         "Topics":{"shape":"Topics"},
         "Queues":{"shape":"Queues"},
@@ -1513,7 +1585,10 @@
         "AmazonManagedKafkaEventSourceConfig":{"shape":"AmazonManagedKafkaEventSourceConfig"},
         "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
         "ScalingConfig":{"shape":"ScalingConfig"},
-        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"}
+        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
       }
     },
     "CreateFunctionRequest":{
@@ -1634,8 +1709,7 @@
     },
     "DeleteCodeSigningConfigResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteEventSourceMappingRequest":{
       "type":"structure",
@@ -1765,7 +1839,7 @@
       "type":"string",
       "max":350,
       "min":0,
-      "pattern":"^$|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:([a-z]{2}(-gov)?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"
+      "pattern":"$|arn:(aws[a-zA-Z0-9-]*):([a-zA-Z0-9\\-])+:([a-z]{2}(-gov)?-[a-z]+-\\d{1})?:(\\d{12})?:(.*)"
     },
     "DestinationConfig":{
       "type":"structure",
@@ -1789,7 +1863,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "EC2ThrottledException":{
       "type":"structure",
@@ -1798,7 +1873,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "EC2UnexpectedException":{
       "type":"structure",
@@ -1808,7 +1884,8 @@
         "EC2ErrorCode":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "EFSIOException":{
       "type":"structure",
@@ -1816,7 +1893,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":410},
+      "error":{
+        "httpStatusCode":410,
+        "senderFault":true
+      },
       "exception":true
     },
     "EFSMountConnectivityException":{
@@ -1825,7 +1905,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":408},
+      "error":{
+        "httpStatusCode":408,
+        "senderFault":true
+      },
       "exception":true
     },
     "EFSMountFailureException":{
@@ -1834,7 +1917,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":403},
+      "error":{
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "EFSMountTimeoutException":{
@@ -1843,7 +1929,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":408},
+      "error":{
+        "httpStatusCode":408,
+        "senderFault":true
+      },
       "exception":true
     },
     "ENILimitReachedException":{
@@ -1853,9 +1942,13 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
-    "Enabled":{"type":"boolean"},
+    "Enabled":{
+      "type":"boolean",
+      "box":true
+    },
     "EndPointType":{
       "type":"string",
       "enum":["KAFKA_BOOTSTRAP_SERVERS"]
@@ -1864,7 +1957,7 @@
       "type":"string",
       "max":300,
       "min":1,
-      "pattern":"^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]):[0-9]{1,5}"
+      "pattern":"(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]):[0-9]{1,5}"
     },
     "EndpointLists":{
       "type":"list",
@@ -1923,8 +2016,15 @@
     },
     "EphemeralStorageSize":{
       "type":"integer",
+      "box":true,
       "max":10240,
       "min":512
+    },
+    "EventSourceMappingArn":{
+      "type":"string",
+      "max":120,
+      "min":85,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
     },
     "EventSourceMappingConfiguration":{
       "type":"structure",
@@ -1955,7 +2055,28 @@
         "AmazonManagedKafkaEventSourceConfig":{"shape":"AmazonManagedKafkaEventSourceConfig"},
         "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
         "ScalingConfig":{"shape":"ScalingConfig"},
-        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"}
+        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "FilterCriteriaError":{"shape":"FilterCriteriaError"},
+        "EventSourceMappingArn":{"shape":"EventSourceMappingArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
+      }
+    },
+    "EventSourceMappingMetric":{
+      "type":"string",
+      "enum":["EventCount"]
+    },
+    "EventSourceMappingMetricList":{
+      "type":"list",
+      "member":{"shape":"EventSourceMappingMetric"},
+      "max":1,
+      "min":0
+    },
+    "EventSourceMappingMetricsConfig":{
+      "type":"structure",
+      "members":{
+        "Metrics":{"shape":"EventSourceMappingMetricList"}
       }
     },
     "EventSourceMappingsList":{
@@ -1979,6 +2100,7 @@
     "FileSystemArn":{
       "type":"string",
       "max":200,
+      "min":0,
       "pattern":"arn:aws[a-zA-Z-]*:elasticfilesystem:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:access-point/fsap-[a-f0-9]{17}"
     },
     "FileSystemConfig":{
@@ -1995,7 +2117,8 @@
     "FileSystemConfigList":{
       "type":"list",
       "member":{"shape":"FileSystemConfig"},
-      "max":1
+      "max":1,
+      "min":0
     },
     "Filter":{
       "type":"structure",
@@ -2008,6 +2131,25 @@
       "members":{
         "Filters":{"shape":"FilterList"}
       }
+    },
+    "FilterCriteriaError":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"FilterCriteriaErrorCode"},
+        "Message":{"shape":"FilterCriteriaErrorMessage"}
+      }
+    },
+    "FilterCriteriaErrorCode":{
+      "type":"string",
+      "max":50,
+      "min":10,
+      "pattern":"[A-Za-z]+Exception"
+    },
+    "FilterCriteriaErrorMessage":{
+      "type":"string",
+      "max":2048,
+      "min":10,
+      "pattern":".*"
     },
     "FilterList":{
       "type":"list",
@@ -2035,7 +2177,8 @@
         "S3Bucket":{"shape":"S3Bucket"},
         "S3Key":{"shape":"S3Key"},
         "S3ObjectVersion":{"shape":"S3ObjectVersion"},
-        "ImageUri":{"shape":"String"}
+        "ImageUri":{"shape":"String"},
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "FunctionCodeLocation":{
@@ -2044,7 +2187,8 @@
         "RepositoryType":{"shape":"String"},
         "Location":{"shape":"String"},
         "ImageUri":{"shape":"String"},
-        "ResolvedImageUri":{"shape":"String"}
+        "ResolvedImageUri":{"shape":"String"},
+        "SourceKMSKeyArn":{"shape":"String"}
       }
     },
     "FunctionConfiguration":{
@@ -2169,8 +2313,7 @@
     },
     "GetAccountSettingsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountSettingsResponse":{
       "type":"structure",
@@ -2298,6 +2441,23 @@
         }
       }
     },
+    "GetFunctionRecursionConfigRequest":{
+      "type":"structure",
+      "required":["FunctionName"],
+      "members":{
+        "FunctionName":{
+          "shape":"UnqualifiedFunctionName",
+          "location":"uri",
+          "locationName":"FunctionName"
+        }
+      }
+    },
+    "GetFunctionRecursionConfigResponse":{
+      "type":"structure",
+      "members":{
+        "RecursiveLoop":{"shape":"RecursiveLoop"}
+      }
+    },
     "GetFunctionRequest":{
       "type":"structure",
       "required":["FunctionName"],
@@ -2320,6 +2480,7 @@
         "Configuration":{"shape":"FunctionConfiguration"},
         "Code":{"shape":"FunctionCodeLocation"},
         "Tags":{"shape":"Tags"},
+        "TagsError":{"shape":"TagsError"},
         "Concurrency":{"shape":"Concurrency"}
       }
     },
@@ -2508,17 +2669,20 @@
     "Handler":{
       "type":"string",
       "max":128,
+      "min":0,
       "pattern":"[^\\s]+"
     },
     "Header":{
       "type":"string",
       "max":1024,
+      "min":0,
       "pattern":".*"
     },
     "HeadersList":{
       "type":"list",
       "member":{"shape":"Header"},
-      "max":100
+      "max":100,
+      "min":0
     },
     "HttpStatus":{"type":"integer"},
     "ImageConfig":{
@@ -2550,7 +2714,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidParameterValueException":{
@@ -2559,7 +2726,10 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidRequestContentException":{
@@ -2568,7 +2738,10 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "InvalidRuntimeException":{
@@ -2578,7 +2751,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "InvalidSecurityGroupIDException":{
       "type":"structure",
@@ -2587,7 +2761,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "InvalidSubnetIDException":{
       "type":"structure",
@@ -2596,7 +2771,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "InvalidZipFileException":{
       "type":"structure",
@@ -2605,7 +2781,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "InvocationRequest":{
       "type":"structure",
@@ -2796,7 +2973,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "KMSDisabledException":{
       "type":"structure",
@@ -2805,7 +2983,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "KMSInvalidStateException":{
       "type":"structure",
@@ -2814,7 +2993,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "KMSKeyArn":{
       "type":"string",
@@ -2827,7 +3007,53 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
+    },
+    "KafkaSchemaRegistryAccessConfig":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"KafkaSchemaRegistryAuthType"},
+        "URI":{"shape":"Arn"}
+      }
+    },
+    "KafkaSchemaRegistryAccessConfigList":{
+      "type":"list",
+      "member":{"shape":"KafkaSchemaRegistryAccessConfig"}
+    },
+    "KafkaSchemaRegistryAuthType":{
+      "type":"string",
+      "enum":[
+        "BASIC_AUTH",
+        "CLIENT_CERTIFICATE_TLS_AUTH",
+        "SERVER_ROOT_CA_CERTIFICATE"
+      ]
+    },
+    "KafkaSchemaRegistryConfig":{
+      "type":"structure",
+      "members":{
+        "SchemaRegistryURI":{"shape":"SchemaRegistryUri"},
+        "EventRecordFormat":{"shape":"SchemaRegistryEventRecordFormat"},
+        "AccessConfigs":{"shape":"KafkaSchemaRegistryAccessConfigList"},
+        "SchemaValidationConfigs":{"shape":"KafkaSchemaValidationConfigList"}
+      }
+    },
+    "KafkaSchemaValidationAttribute":{
+      "type":"string",
+      "enum":[
+        "KEY",
+        "VALUE"
+      ]
+    },
+    "KafkaSchemaValidationConfig":{
+      "type":"structure",
+      "members":{
+        "Attribute":{"shape":"KafkaSchemaValidationAttribute"}
+      }
+    },
+    "KafkaSchemaValidationConfigList":{
+      "type":"list",
+      "member":{"shape":"KafkaSchemaValidationConfig"}
     },
     "LastUpdateStatus":{
       "type":"string",
@@ -2892,6 +3118,7 @@
     "LayerPermissionAllowedAction":{
       "type":"string",
       "max":22,
+      "min":0,
       "pattern":"lambda:GetLayerVersion"
     },
     "LayerPermissionAllowedPrincipal":{
@@ -2958,7 +3185,8 @@
     },
     "LicenseInfo":{
       "type":"string",
-      "max":512
+      "max":512,
+      "min":0
     },
     "ListAliasesRequest":{
       "type":"structure",
@@ -3267,9 +3495,9 @@
       "required":["Resource"],
       "members":{
         "Resource":{
-          "shape":"FunctionArn",
+          "shape":"TaggableResource",
           "location":"uri",
-          "locationName":"ARN"
+          "locationName":"Resource"
         }
       }
     },
@@ -3310,7 +3538,8 @@
     "LocalMountPath":{
       "type":"string",
       "max":160,
-      "pattern":"^/mnt/[a-zA-Z0-9-_.]+$"
+      "min":0,
+      "pattern":"/mnt/[a-zA-Z0-9-_.]+"
     },
     "LogFormat":{
       "type":"string",
@@ -3348,73 +3577,99 @@
     },
     "MaxAge":{
       "type":"integer",
+      "box":true,
       "max":86400,
       "min":0
     },
     "MaxFunctionEventInvokeConfigListItems":{
       "type":"integer",
+      "box":true,
       "max":50,
       "min":1
     },
     "MaxItems":{
       "type":"integer",
+      "box":true,
       "max":50,
       "min":1
     },
     "MaxLayerListItems":{
       "type":"integer",
+      "box":true,
       "max":50,
       "min":1
     },
     "MaxListItems":{
       "type":"integer",
+      "box":true,
       "max":10000,
       "min":1
     },
     "MaxProvisionedConcurrencyConfigListItems":{
       "type":"integer",
+      "box":true,
       "max":50,
       "min":1
     },
     "MaximumBatchingWindowInSeconds":{
       "type":"integer",
+      "box":true,
       "max":300,
       "min":0
     },
     "MaximumConcurrency":{
       "type":"integer",
+      "box":true,
       "max":1000,
       "min":2
     },
     "MaximumEventAgeInSeconds":{
       "type":"integer",
+      "box":true,
       "max":21600,
       "min":60
     },
+    "MaximumNumberOfPollers":{
+      "type":"integer",
+      "box":true,
+      "max":2000,
+      "min":1
+    },
     "MaximumRecordAgeInSeconds":{
       "type":"integer",
+      "box":true,
       "max":604800,
       "min":-1
     },
     "MaximumRetryAttempts":{
       "type":"integer",
+      "box":true,
       "max":2,
       "min":0
     },
     "MaximumRetryAttemptsEventSourceMapping":{
       "type":"integer",
+      "box":true,
       "max":10000,
       "min":-1
     },
     "MemorySize":{
       "type":"integer",
+      "box":true,
       "max":10240,
       "min":128
     },
     "Method":{
       "type":"string",
       "max":6,
+      "min":0,
       "pattern":".*"
+    },
+    "MinimumNumberOfPollers":{
+      "type":"integer",
+      "box":true,
+      "max":200,
+      "min":1
     },
     "NameSpacedFunctionArn":{
       "type":"string",
@@ -3434,9 +3689,13 @@
     },
     "NonNegativeInteger":{
       "type":"integer",
+      "box":true,
       "min":0
     },
-    "NullableBoolean":{"type":"boolean"},
+    "NullableBoolean":{
+      "type":"boolean",
+      "box":true
+    },
     "OnFailure":{
       "type":"structure",
       "members":{
@@ -3452,6 +3711,7 @@
     "OrganizationId":{
       "type":"string",
       "max":34,
+      "min":0,
       "pattern":"o-[a-z0-9]{10,32}"
     },
     "Origin":{
@@ -3469,6 +3729,7 @@
     },
     "ParallelizationFactor":{
       "type":"integer",
+      "box":true,
       "max":10,
       "min":1
     },
@@ -3484,11 +3745,15 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "PositiveInteger":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "PreconditionFailedException":{
@@ -3497,7 +3762,10 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":412},
+      "error":{
+        "httpStatusCode":412,
+        "senderFault":true
+      },
       "exception":true
     },
     "Principal":{
@@ -3508,7 +3776,7 @@
       "type":"string",
       "max":34,
       "min":12,
-      "pattern":"^o-[a-z0-9]{10,32}$"
+      "pattern":"o-[a-z0-9]{10,32}"
     },
     "ProvisionedConcurrencyConfigList":{
       "type":"list",
@@ -3532,7 +3800,10 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ProvisionedConcurrencyStatusEnum":{
@@ -3542,6 +3813,13 @@
         "READY",
         "FAILED"
       ]
+    },
+    "ProvisionedPollerConfig":{
+      "type":"structure",
+      "members":{
+        "MinimumPollers":{"shape":"MinimumNumberOfPollers"},
+        "MaximumPollers":{"shape":"MaximumNumberOfPollers"}
+      }
     },
     "PublishLayerVersionRequest":{
       "type":"structure",
@@ -3650,6 +3928,27 @@
         "DestinationConfig":{"shape":"DestinationConfig"}
       }
     },
+    "PutFunctionRecursionConfigRequest":{
+      "type":"structure",
+      "required":[
+        "FunctionName",
+        "RecursiveLoop"
+      ],
+      "members":{
+        "FunctionName":{
+          "shape":"UnqualifiedFunctionName",
+          "location":"uri",
+          "locationName":"FunctionName"
+        },
+        "RecursiveLoop":{"shape":"RecursiveLoop"}
+      }
+    },
+    "PutFunctionRecursionConfigResponse":{
+      "type":"structure",
+      "members":{
+        "RecursiveLoop":{"shape":"RecursiveLoop"}
+      }
+    },
     "PutProvisionedConcurrencyConfigRequest":{
       "type":"structure",
       "required":[
@@ -3739,8 +4038,18 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
+    },
+    "RecursiveLoop":{
+      "type":"string",
+      "enum":[
+        "Allow",
+        "Terminate"
+      ]
     },
     "RemoveLayerVersionPermissionRequest":{
       "type":"structure",
@@ -3807,11 +4116,15 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":413},
+      "error":{
+        "httpStatusCode":413,
+        "senderFault":true
+      },
       "exception":true
     },
     "ReservedConcurrentExecutions":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "ResourceArn":{
@@ -3824,7 +4137,10 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResourceInUseException":{
@@ -3833,7 +4149,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResourceNotFoundException":{
@@ -3842,7 +4161,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":404},
+      "error":{
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "ResourceNotReadyException":{
@@ -3852,7 +4174,8 @@
         "message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "ResponseStreamingInvocationType":{
       "type":"string",
@@ -3901,18 +4224,21 @@
         "java17",
         "ruby3.2",
         "ruby3.3",
+        "ruby3.4",
         "python3.11",
         "nodejs20.x",
         "provided.al2023",
         "python3.12",
-        "java21"
+        "java21",
+        "python3.13",
+        "nodejs22.x"
       ]
     },
     "RuntimeVersionArn":{
       "type":"string",
       "max":2048,
       "min":26,
-      "pattern":"^arn:(aws[a-zA-Z-]*):lambda:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}::runtime:.+$"
+      "pattern":"arn:(aws[a-zA-Z-]*):lambda:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}::runtime:.+"
     },
     "RuntimeVersionConfig":{
       "type":"structure",
@@ -3932,7 +4258,7 @@
       "type":"string",
       "max":63,
       "min":3,
-      "pattern":"^[0-9A-Za-z\\.\\-_]*(?<!\\.)$"
+      "pattern":"[0-9A-Za-z\\.\\-_]*(?<!\\.)"
     },
     "S3Key":{
       "type":"string",
@@ -3950,11 +4276,25 @@
         "MaximumConcurrency":{"shape":"MaximumConcurrency"}
       }
     },
+    "SchemaRegistryEventRecordFormat":{
+      "type":"string",
+      "enum":[
+        "JSON",
+        "SOURCE"
+      ]
+    },
+    "SchemaRegistryUri":{
+      "type":"string",
+      "max":10000,
+      "min":1,
+      "pattern":"[a-zA-Z0-9-\\/*:_+=.@-]*"
+    },
     "SecurityGroupId":{"type":"string"},
     "SecurityGroupIds":{
       "type":"list",
       "member":{"shape":"SecurityGroupId"},
-      "max":5
+      "max":5,
+      "min":0
     },
     "SelfManagedEventSource":{
       "type":"structure",
@@ -3965,7 +4305,8 @@
     "SelfManagedKafkaEventSourceConfig":{
       "type":"structure",
       "members":{
-        "ConsumerGroupId":{"shape":"URI"}
+        "ConsumerGroupId":{"shape":"URI"},
+        "SchemaRegistryConfig":{"shape":"KafkaSchemaRegistryConfig"}
       }
     },
     "SensitiveString":{
@@ -3979,7 +4320,8 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":500},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "SigningProfileVersionArns":{
       "type":"list",
@@ -4006,7 +4348,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":400},
+      "error":{
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
     },
     "SnapStartNotReadyException":{
@@ -4015,7 +4360,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":409},
+      "error":{
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "SnapStartOptimizationStatus":{
@@ -4038,7 +4386,10 @@
         "Type":{"shape":"String"},
         "Message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":408},
+      "error":{
+        "httpStatusCode":408,
+        "senderFault":true
+      },
       "exception":true
     },
     "SourceAccessConfiguration":{
@@ -4070,6 +4421,7 @@
     "SourceOwner":{
       "type":"string",
       "max":12,
+      "min":0,
       "pattern":"\\d{12}"
     },
     "State":{
@@ -4121,7 +4473,8 @@
     "StringList":{
       "type":"list",
       "member":{"shape":"String"},
-      "max":1500
+      "max":1500,
+      "min":0
     },
     "SubnetIPAddressLimitReachedException":{
       "type":"structure",
@@ -4130,13 +4483,15 @@
         "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":502},
-      "exception":true
+      "exception":true,
+      "fault":true
     },
     "SubnetId":{"type":"string"},
     "SubnetIds":{
       "type":"list",
       "member":{"shape":"SubnetId"},
-      "max":16
+      "max":16,
+      "min":0
     },
     "SystemLogLevel":{
       "type":"string",
@@ -4159,18 +4514,47 @@
       ],
       "members":{
         "Resource":{
-          "shape":"FunctionArn",
+          "shape":"TaggableResource",
           "location":"uri",
-          "locationName":"ARN"
+          "locationName":"Resource"
         },
         "Tags":{"shape":"Tags"}
       }
     },
     "TagValue":{"type":"string"},
+    "TaggableResource":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z-]*):lambda:[a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:\\d{12}:(function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?|code-signing-config:csc-[a-z0-9]{17}|event-source-mapping:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+    },
     "Tags":{
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"}
+    },
+    "TagsError":{
+      "type":"structure",
+      "required":[
+        "ErrorCode",
+        "Message"
+      ],
+      "members":{
+        "ErrorCode":{"shape":"TagsErrorCode"},
+        "Message":{"shape":"TagsErrorMessage"}
+      }
+    },
+    "TagsErrorCode":{
+      "type":"string",
+      "max":21,
+      "min":10,
+      "pattern":"[A-Za-z]+Exception"
+    },
+    "TagsErrorMessage":{
+      "type":"string",
+      "max":1000,
+      "min":84,
+      "pattern":".*"
     },
     "ThrottleReason":{
       "type":"string",
@@ -4185,6 +4569,7 @@
     },
     "Timeout":{
       "type":"integer",
+      "box":true,
       "min":1
     },
     "Timestamp":{"type":"string"},
@@ -4200,14 +4585,17 @@
         "message":{"shape":"String"},
         "Reason":{"shape":"ThrottleReason"}
       },
-      "error":{"httpStatusCode":429},
+      "error":{
+        "httpStatusCode":429,
+        "senderFault":true
+      },
       "exception":true
     },
     "Topic":{
       "type":"string",
       "max":249,
       "min":1,
-      "pattern":"^[^.]([a-zA-Z0-9\\-_.]+)"
+      "pattern":"[^.]([a-zA-Z0-9\\-_.]+)"
     },
     "Topics":{
       "type":"list",
@@ -4236,6 +4624,7 @@
     },
     "TumblingWindowInSeconds":{
       "type":"integer",
+      "box":true,
       "max":900,
       "min":0
     },
@@ -4245,8 +4634,15 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-\\/*:_+=.@-]*"
     },
+    "UnqualifiedFunctionName":{
+      "type":"string",
+      "max":140,
+      "min":1,
+      "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}((-gov)|(-iso([a-z]?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)"
+    },
     "UnreservedConcurrentExecutions":{
       "type":"integer",
+      "box":true,
       "min":0
     },
     "UnsupportedMediaTypeException":{
@@ -4255,7 +4651,10 @@
         "Type":{"shape":"String"},
         "message":{"shape":"String"}
       },
-      "error":{"httpStatusCode":415},
+      "error":{
+        "httpStatusCode":415,
+        "senderFault":true
+      },
       "exception":true
     },
     "UntagResourceRequest":{
@@ -4266,9 +4665,9 @@
       ],
       "members":{
         "Resource":{
-          "shape":"FunctionArn",
+          "shape":"TaggableResource",
           "location":"uri",
-          "locationName":"ARN"
+          "locationName":"Resource"
         },
         "TagKeys":{
           "shape":"TagKeyList",
@@ -4344,7 +4743,12 @@
         "TumblingWindowInSeconds":{"shape":"TumblingWindowInSeconds"},
         "FunctionResponseTypes":{"shape":"FunctionResponseTypeList"},
         "ScalingConfig":{"shape":"ScalingConfig"},
-        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"}
+        "AmazonManagedKafkaEventSourceConfig":{"shape":"AmazonManagedKafkaEventSourceConfig"},
+        "SelfManagedKafkaEventSourceConfig":{"shape":"SelfManagedKafkaEventSourceConfig"},
+        "DocumentDBEventSourceConfig":{"shape":"DocumentDBEventSourceConfig"},
+        "KMSKeyArn":{"shape":"KMSKeyArn"},
+        "MetricsConfig":{"shape":"EventSourceMappingMetricsConfig"},
+        "ProvisionedPollerConfig":{"shape":"ProvisionedPollerConfig"}
       }
     },
     "UpdateFunctionCodeRequest":{
@@ -4364,7 +4768,8 @@
         "Publish":{"shape":"Boolean"},
         "DryRun":{"shape":"Boolean"},
         "RevisionId":{"shape":"String"},
-        "Architectures":{"shape":"ArchitecturesList"}
+        "Architectures":{"shape":"ArchitecturesList"},
+        "SourceKMSKeyArn":{"shape":"KMSKeyArn"}
       }
     },
     "UpdateFunctionConfigurationRequest":{
@@ -4492,7 +4897,8 @@
     },
     "WorkingDirectory":{
       "type":"string",
-      "max":1000
+      "max":1000,
+      "min":0
     }
   }
 }

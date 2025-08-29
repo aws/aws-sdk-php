@@ -11,7 +11,8 @@
     "serviceId":"Route53Resolver",
     "signatureVersion":"v4",
     "targetPrefix":"Route53Resolver",
-    "uid":"route53resolver-2018-04-01"
+    "uid":"route53resolver-2018-04-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AssociateFirewallRuleGroup":{
@@ -240,6 +241,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InternalServiceErrorException"},
+        {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ]
     },
@@ -1291,6 +1293,14 @@
       ]
     },
     "Boolean":{"type":"boolean"},
+    "ConfidenceThreshold":{
+      "type":"string",
+      "enum":[
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+      ]
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1352,7 +1362,6 @@
       "required":[
         "CreatorRequestId",
         "FirewallRuleGroupId",
-        "FirewallDomainListId",
         "Priority",
         "Action",
         "Name"
@@ -1363,7 +1372,10 @@
           "idempotencyToken":true
         },
         "FirewallRuleGroupId":{"shape":"ResourceId"},
-        "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
         "Priority":{"shape":"Priority"},
         "Action":{"shape":"Action"},
         "BlockResponse":{
@@ -1389,6 +1401,14 @@
         },
         "Qtype":{
           "shape":"Qtype",
+          "box":true
+        },
+        "DnsThreatProtection":{
+          "shape":"DnsThreatProtection",
+          "box":true
+        },
+        "ConfidenceThreshold":{
+          "shape":"ConfidenceThreshold",
           "box":true
         }
       }
@@ -1524,6 +1544,10 @@
         "Tags":{
           "shape":"TagList",
           "box":true
+        },
+        "DelegationRecord":{
+          "shape":"DelegationRecord",
+          "box":true
         }
       }
     },
@@ -1536,6 +1560,11 @@
     "CreatorRequestId":{
       "type":"string",
       "max":255,
+      "min":1
+    },
+    "DelegationRecord":{
+      "type":"string",
+      "max":256,
       "min":1
     },
     "DeleteFirewallDomainListRequest":{
@@ -1566,13 +1595,17 @@
     },
     "DeleteFirewallRuleRequest":{
       "type":"structure",
-      "required":[
-        "FirewallRuleGroupId",
-        "FirewallDomainListId"
-      ],
+      "required":["FirewallRuleGroupId"],
       "members":{
         "FirewallRuleGroupId":{"shape":"ResourceId"},
-        "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        },
         "Qtype":{"shape":"Qtype"}
       }
     },
@@ -1703,6 +1736,13 @@
         "ResolverRuleAssociation":{"shape":"ResolverRuleAssociation"}
       }
     },
+    "DnsThreatProtection":{
+      "type":"string",
+      "enum":[
+        "DGA",
+        "DNS_TUNNELING"
+      ]
+    },
     "DomainListFileUrl":{
       "type":"string",
       "max":1024,
@@ -1832,6 +1872,7 @@
       "members":{
         "FirewallRuleGroupId":{"shape":"ResourceId"},
         "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallThreatProtectionId":{"shape":"ResourceId"},
         "Name":{"shape":"Name"},
         "Priority":{"shape":"Priority"},
         "Action":{"shape":"Action"},
@@ -1843,7 +1884,9 @@
         "CreationTime":{"shape":"Rfc3339TimeString"},
         "ModificationTime":{"shape":"Rfc3339TimeString"},
         "FirewallDomainRedirectionAction":{"shape":"FirewallDomainRedirectionAction"},
-        "Qtype":{"shape":"Qtype"}
+        "Qtype":{"shape":"Qtype"},
+        "DnsThreatProtection":{"shape":"DnsThreatProtection"},
+        "ConfidenceThreshold":{"shape":"ConfidenceThreshold"}
       }
     },
     "FirewallRuleGroup":{
@@ -2233,7 +2276,8 @@
         "DELETING",
         "DELETE_FAILED_FAS_EXPIRED",
         "UPDATING",
-        "UPDATE_FAILED"
+        "UPDATE_FAILED",
+        "ISOLATED"
       ]
     },
     "IpAddressUpdate":{
@@ -2897,7 +2941,8 @@
       "type":"string",
       "enum":[
         "INBOUND",
-        "OUTBOUND"
+        "OUTBOUND",
+        "INBOUND_DELEGATION"
       ]
     },
     "ResolverEndpointStatus":{
@@ -3013,7 +3058,8 @@
         "OwnerId":{"shape":"AccountId"},
         "ShareStatus":{"shape":"ShareStatus"},
         "CreationTime":{"shape":"Rfc3339TimeString"},
-        "ModificationTime":{"shape":"Rfc3339TimeString"}
+        "ModificationTime":{"shape":"Rfc3339TimeString"},
+        "DelegationRecord":{"shape":"DelegationRecord"}
       }
     },
     "ResolverRuleAssociation":{
@@ -3113,12 +3159,18 @@
       "enum":[
         "FORWARD",
         "SYSTEM",
-        "RECURSIVE"
+        "RECURSIVE",
+        "DELEGATE"
       ]
     },
     "SecurityGroupIds":{
       "type":"list",
       "member":{"shape":"ResourceId"}
+    },
+    "ServerNameIndication":{
+      "type":"string",
+      "max":255,
+      "min":0
     },
     "ServicePrinciple":{
       "type":"string",
@@ -3201,8 +3253,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -3226,6 +3277,10 @@
         },
         "Protocol":{
           "shape":"Protocol",
+          "box":true
+        },
+        "ServerNameIndication":{
+          "shape":"ServerNameIndication",
           "box":true
         }
       }
@@ -3263,8 +3318,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateFirewallConfigRequest":{
       "type":"structure",
@@ -3332,13 +3386,17 @@
     },
     "UpdateFirewallRuleRequest":{
       "type":"structure",
-      "required":[
-        "FirewallRuleGroupId",
-        "FirewallDomainListId"
-      ],
+      "required":["FirewallRuleGroupId"],
       "members":{
         "FirewallRuleGroupId":{"shape":"ResourceId"},
-        "FirewallDomainListId":{"shape":"ResourceId"},
+        "FirewallDomainListId":{
+          "shape":"ResourceId",
+          "box":true
+        },
+        "FirewallThreatProtectionId":{
+          "shape":"ResourceId",
+          "box":true
+        },
         "Priority":{
           "shape":"Priority",
           "box":true
@@ -3371,7 +3429,15 @@
           "shape":"FirewallDomainRedirectionAction",
           "box":true
         },
-        "Qtype":{"shape":"Qtype"}
+        "Qtype":{"shape":"Qtype"},
+        "DnsThreatProtection":{
+          "shape":"DnsThreatProtection",
+          "box":true
+        },
+        "ConfidenceThreshold":{
+          "shape":"ConfidenceThreshold",
+          "box":true
+        }
       }
     },
     "UpdateFirewallRuleResponse":{

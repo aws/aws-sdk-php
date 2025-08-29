@@ -8,7 +8,10 @@
     "protocol": "rest-json",
     "jsonVersion": "1.1",
     "uid": "route53-recovery-control-config-2020-11-02",
-    "signatureVersion": "v4"
+    "signatureVersion": "v4",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
   },
   "operations": {
     "CreateCluster": {
@@ -641,6 +644,40 @@
         }
       ]
     },
+    "UpdateCluster": {
+      "name": "UpdateCluster",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/cluster",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateClusterRequest"
+      },
+      "output": {
+        "shape": "UpdateClusterResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        },
+        {
+          "shape": "AccessDeniedException"
+        },
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
     "UpdateControlPanel": {
       "name": "UpdateControlPanel",
       "http": {
@@ -826,6 +863,9 @@
         },
         "Owner": {
           "shape": "__stringMin12Max12PatternD12"
+        },
+        "NetworkType": {
+          "shape": "NetworkType"
         }
       }
     },
@@ -894,6 +934,9 @@
         },
         "Tags": {
           "shape": "__mapOf__stringMin0Max256PatternS"
+        },
+        "NetworkType": {
+          "shape": "NetworkType"
         }
       },
       "required": [
@@ -1435,6 +1478,13 @@
       "min": 1,
       "max": 1000
     },
+    "NetworkType": {
+      "type": "string",
+      "enum": [
+        "IPV4",
+        "DUALSTACK"
+      ]
+    },
     "NewAssertionRule": {
       "type": "structure",
       "members": {
@@ -1650,6 +1700,29 @@
     "UntagResourceResponse": {
       "type": "structure",
       "members": {}
+    },
+    "UpdateClusterRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterArn": {
+          "shape": "__stringMin1Max256PatternAZaZ09"
+        },
+        "NetworkType": {
+          "shape": "NetworkType"
+        }
+      },
+      "required": [
+        "ClusterArn",
+        "NetworkType"
+      ]
+    },
+    "UpdateClusterResponse": {
+      "type": "structure",
+      "members": {
+        "Cluster": {
+          "shape": "Cluster"
+        }
+      }
     },
     "UpdateControlPanelRequest": {
       "type": "structure",

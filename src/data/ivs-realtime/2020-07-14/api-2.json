@@ -2,6 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2020-07-14",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"ivsrealtime",
     "protocol":"rest-json",
     "protocols":["rest-json"],
@@ -29,6 +30,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
+    "CreateIngestConfiguration":{
+      "name":"CreateIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/CreateIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateIngestConfigurationRequest"},
+      "output":{"shape":"CreateIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"PendingVerification"}
       ]
     },
@@ -100,6 +117,23 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteIngestConfiguration":{
+      "name":"DeleteIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeleteIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteIngestConfigurationRequest"},
+      "output":{"shape":"DeleteIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
       ]
     },
     "DeletePublicKey":{
@@ -204,6 +238,21 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "GetIngestConfiguration":{
+      "name":"GetIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/GetIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"GetIngestConfigurationRequest"},
+      "output":{"shape":"GetIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "GetParticipant":{
@@ -335,6 +384,20 @@
         {"shape":"ConflictException"}
       ]
     },
+    "ListIngestConfigurations":{
+      "name":"ListIngestConfigurations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListIngestConfigurations",
+        "responseCode":200
+      },
+      "input":{"shape":"ListIngestConfigurationsRequest"},
+      "output":{"shape":"ListIngestConfigurationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListParticipantEvents":{
       "name":"ListParticipantEvents",
       "http":{
@@ -344,6 +407,20 @@
       },
       "input":{"shape":"ListParticipantEventsRequest"},
       "output":{"shape":"ListParticipantEventsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListParticipantReplicas":{
+      "name":"ListParticipantReplicas",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListParticipantReplicas",
+        "responseCode":200
+      },
+      "input":{"shape":"ListParticipantReplicasRequest"},
+      "output":{"shape":"ListParticipantReplicasResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"AccessDeniedException"}
@@ -457,6 +534,25 @@
         {"shape":"PendingVerification"}
       ]
     },
+    "StartParticipantReplication":{
+      "name":"StartParticipantReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StartParticipantReplication",
+        "responseCode":200
+      },
+      "input":{"shape":"StartParticipantReplicationRequest"},
+      "output":{"shape":"StartParticipantReplicationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
     "StopComposition":{
       "name":"StopComposition",
       "http":{
@@ -473,6 +569,22 @@
         {"shape":"InternalServerException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ConflictException"}
+      ]
+    },
+    "StopParticipantReplication":{
+      "name":"StopParticipantReplication",
+      "http":{
+        "method":"POST",
+        "requestUri":"/StopParticipantReplication",
+        "responseCode":200
+      },
+      "input":{"shape":"StopParticipantReplicationRequest"},
+      "output":{"shape":"StopParticipantReplicationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "TagResource":{
@@ -506,6 +618,23 @@
       ],
       "idempotent":true
     },
+    "UpdateIngestConfiguration":{
+      "name":"UpdateIngestConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/UpdateIngestConfiguration",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateIngestConfigurationRequest"},
+      "output":{"shape":"UpdateIngestConfigurationResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"PendingVerification"}
+      ]
+    },
     "UpdateStage":{
       "name":"UpdateStage",
       "http":{
@@ -529,6 +658,46 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -548,7 +717,11 @@
       "required":["storageConfigurationArn"],
       "members":{
         "storageConfigurationArn":{"shape":"AutoParticipantRecordingStorageConfigurationArn"},
-        "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"}
+        "mediaTypes":{"shape":"ParticipantRecordingMediaTypeList"},
+        "thumbnailConfiguration":{"shape":"ParticipantThumbnailConfiguration"},
+        "recordingReconnectWindowSeconds":{"shape":"ParticipantRecordingReconnectWindowSeconds"},
+        "hlsConfiguration":{"shape":"ParticipantRecordingHlsConfiguration"},
+        "recordParticipantReplicas":{"shape":"RecordParticipantReplicas"}
       }
     },
     "AutoParticipantRecordingStorageConfigurationArn":{
@@ -563,6 +736,7 @@
       "max":8500000,
       "min":1
     },
+    "Boolean":{"type":"boolean"},
     "ChannelArn":{
       "type":"string",
       "max":128,
@@ -609,6 +783,18 @@
       "min":1,
       "pattern":"[a-zA-Z0-9-_]*"
     },
+    "CompositionRecordingHlsConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetSegmentDurationSeconds":{"shape":"CompositionRecordingTargetSegmentDurationSeconds"}
+      }
+    },
+    "CompositionRecordingTargetSegmentDurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
+    },
     "CompositionState":{
       "type":"string",
       "enum":[
@@ -641,9 +827,62 @@
       "type":"list",
       "member":{"shape":"CompositionSummary"}
     },
+    "CompositionThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"}
+      }
+    },
+    "CompositionThumbnailConfigurationList":{
+      "type":"list",
+      "member":{"shape":"CompositionThumbnailConfiguration"},
+      "max":1,
+      "min":0
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -664,6 +903,25 @@
       "type":"structure",
       "members":{
         "encoderConfiguration":{"shape":"EncoderConfiguration"}
+      }
+    },
+    "CreateIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["ingestProtocol"],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "userId":{"shape":"UserId"},
+        "attributes":{"shape":"ParticipantAttributes"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "insecureIngest":{"shape":"InsecureIngest"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "CreateIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
       }
     },
     "CreateParticipantTokenRequest":{
@@ -722,6 +980,19 @@
       }
     },
     "DeleteEncoderConfigurationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"},
+        "force":{"shape":"Boolean"}
+      }
+    },
+    "DeleteIngestConfigurationResponse":{
       "type":"structure",
       "members":{
       }
@@ -910,7 +1181,10 @@
         "participantId":{"shape":"ParticipantId"},
         "eventTime":{"shape":"Time"},
         "remoteParticipantId":{"shape":"ParticipantId"},
-        "errorCode":{"shape":"EventErrorCode"}
+        "errorCode":{"shape":"EventErrorCode"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "destinationSessionId":{"shape":"StageSessionId"},
+        "replica":{"shape":"Replica"}
       }
     },
     "EventErrorCode":{
@@ -918,7 +1192,18 @@
       "enum":[
         "INSUFFICIENT_CAPABILITIES",
         "QUOTA_EXCEEDED",
-        "PUBLISHER_NOT_FOUND"
+        "PUBLISHER_NOT_FOUND",
+        "BITRATE_EXCEEDED",
+        "RESOLUTION_EXCEEDED",
+        "STREAM_DURATION_EXCEEDED",
+        "INVALID_AUDIO_CODEC",
+        "INVALID_VIDEO_CODEC",
+        "INVALID_PROTOCOL",
+        "INVALID_STREAM_KEY",
+        "REUSE_OF_STREAM_KEY",
+        "B_FRAME_PRESENT",
+        "INVALID_INPUT",
+        "INTERNAL_SERVER_EXCEPTION"
       ]
     },
     "EventList":{
@@ -936,7 +1221,9 @@
         "SUBSCRIBE_STOPPED",
         "PUBLISH_ERROR",
         "SUBSCRIBE_ERROR",
-        "JOIN_ERROR"
+        "JOIN_ERROR",
+        "REPLICATION_STARTED",
+        "REPLICATION_STOPPED"
       ]
     },
     "Framerate":{
@@ -969,6 +1256,19 @@
       "type":"structure",
       "members":{
         "encoderConfiguration":{"shape":"EncoderConfiguration"}
+      }
+    },
+    "GetIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"}
+      }
+    },
+    "GetIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
       }
     },
     "GetParticipantRequest":{
@@ -1064,7 +1364,7 @@
       "type":"integer",
       "box":true,
       "max":1920,
-      "min":1
+      "min":2
     },
     "ImportPublicKeyRequest":{
       "type":"structure",
@@ -1081,9 +1381,128 @@
         "publicKey":{"shape":"PublicKey"}
       }
     },
+    "IngestConfiguration":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "ingestProtocol",
+        "streamKey",
+        "stageArn",
+        "participantId",
+        "state"
+      ],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "arn":{"shape":"IngestConfigurationArn"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "streamKey":{"shape":"StreamKey"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "state":{"shape":"IngestConfigurationState"},
+        "userId":{"shape":"UserId"},
+        "attributes":{"shape":"ParticipantAttributes"},
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "IngestConfigurationArn":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"arn:aws:ivs:[a-z0-9-]+:[0-9]+:ingest-configuration/[a-zA-Z0-9-]+"
+    },
+    "IngestConfigurationList":{
+      "type":"list",
+      "member":{"shape":"IngestConfigurationSummary"}
+    },
+    "IngestConfigurationName":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
+    "IngestConfigurationStageArn":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^$|^arn:aws:ivs:[a-z0-9-]+:[0-9]+:stage/[a-zA-Z0-9-]+$"
+    },
+    "IngestConfigurationState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "IngestConfigurationSummary":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "ingestProtocol",
+        "stageArn",
+        "participantId",
+        "state"
+      ],
+      "members":{
+        "name":{"shape":"IngestConfigurationName"},
+        "arn":{"shape":"IngestConfigurationArn"},
+        "ingestProtocol":{"shape":"IngestProtocol"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "state":{"shape":"IngestConfigurationState"},
+        "userId":{"shape":"UserId"}
+      }
+    },
+    "IngestProtocol":{
+      "type":"string",
+      "enum":[
+        "RTMP",
+        "RTMPS"
+      ]
+    },
+    "InsecureIngest":{"type":"boolean"},
     "InternalServerException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{"httpStatusCode":500},
@@ -1129,6 +1548,23 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListIngestConfigurationsRequest":{
+      "type":"structure",
+      "members":{
+        "filterByStageArn":{"shape":"StageArn"},
+        "filterByState":{"shape":"IngestConfigurationState"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxIngestConfigurationResults"}
+      }
+    },
+    "ListIngestConfigurationsResponse":{
+      "type":"structure",
+      "required":["ingestConfigurations"],
+      "members":{
+        "ingestConfigurations":{"shape":"IngestConfigurationList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListParticipantEventsRequest":{
       "type":"structure",
       "required":[
@@ -1149,6 +1585,27 @@
       "required":["events"],
       "members":{
         "events":{"shape":"EventList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListParticipantReplicasRequest":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "participantId"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "nextToken":{"shape":"PaginationToken"},
+        "maxResults":{"shape":"MaxParticipantReplicaResults"}
+      }
+    },
+    "ListParticipantReplicasResponse":{
+      "type":"structure",
+      "required":["replicas"],
+      "members":{
+        "replicas":{"shape":"ParticipantReplicaList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -1269,10 +1726,22 @@
       "max":100,
       "min":1
     },
+    "MaxIngestConfigurationResults":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "MaxParticipantEventResults":{
       "type":"integer",
       "box":true,
       "max":100,
+      "min":1
+    },
+    "MaxParticipantReplicaResults":{
+      "type":"integer",
+      "box":true,
+      "max":50,
       "min":1
     },
     "MaxParticipantResults":{
@@ -1329,7 +1798,12 @@
         "sdkVersion":{"shape":"ParticipantClientAttribute"},
         "recordingS3BucketName":{"shape":"ParticipantRecordingS3BucketName"},
         "recordingS3Prefix":{"shape":"ParticipantRecordingS3Prefix"},
-        "recordingState":{"shape":"ParticipantRecordingState"}
+        "recordingState":{"shape":"ParticipantRecordingState"},
+        "protocol":{"shape":"ParticipantProtocol"},
+        "replicationType":{"shape":"ReplicationType"},
+        "replicationState":{"shape":"ReplicationState"},
+        "sourceStageArn":{"shape":"StageArn"},
+        "sourceSessionId":{"shape":"StageSessionId"}
       }
     },
     "ParticipantAttributes":{
@@ -1353,6 +1827,15 @@
       "type":"list",
       "member":{"shape":"ParticipantSummary"}
     },
+    "ParticipantProtocol":{
+      "type":"string",
+      "enum":[
+        "UNKNOWN",
+        "WHIP",
+        "RTMP",
+        "RTMPS"
+      ]
+    },
     "ParticipantRecordingFilterByRecordingState":{
       "type":"string",
       "enum":[
@@ -1363,17 +1846,29 @@
         "FAILED"
       ]
     },
+    "ParticipantRecordingHlsConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetSegmentDurationSeconds":{"shape":"ParticipantRecordingTargetSegmentDurationSeconds"}
+      }
+    },
     "ParticipantRecordingMediaType":{
       "type":"string",
       "enum":[
         "AUDIO_VIDEO",
-        "AUDIO_ONLY"
+        "AUDIO_ONLY",
+        "NONE"
       ]
     },
     "ParticipantRecordingMediaTypeList":{
       "type":"list",
       "member":{"shape":"ParticipantRecordingMediaType"},
       "max":1,
+      "min":0
+    },
+    "ParticipantRecordingReconnectWindowSeconds":{
+      "type":"integer",
+      "max":300,
       "min":0
     },
     "ParticipantRecordingS3BucketName":{
@@ -1399,6 +1894,35 @@
         "DISABLED"
       ]
     },
+    "ParticipantRecordingTargetSegmentDurationSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":10,
+      "min":2
+    },
+    "ParticipantReplica":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "participantId",
+        "sourceSessionId",
+        "destinationStageArn",
+        "destinationSessionId",
+        "replicationState"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "sourceSessionId":{"shape":"StageSessionId"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "destinationSessionId":{"shape":"StageSessionId"},
+        "replicationState":{"shape":"ReplicationState"}
+      }
+    },
+    "ParticipantReplicaList":{
+      "type":"list",
+      "member":{"shape":"ParticipantReplica"}
+    },
     "ParticipantState":{
       "type":"string",
       "enum":[
@@ -1414,7 +1938,19 @@
         "state":{"shape":"ParticipantState"},
         "firstJoinTime":{"shape":"Time"},
         "published":{"shape":"Published"},
-        "recordingState":{"shape":"ParticipantRecordingState"}
+        "recordingState":{"shape":"ParticipantRecordingState"},
+        "replicationType":{"shape":"ReplicationType"},
+        "replicationState":{"shape":"ReplicationState"},
+        "sourceStageArn":{"shape":"StageArn"},
+        "sourceSessionId":{"shape":"StageSessionId"}
+      }
+    },
+    "ParticipantThumbnailConfiguration":{
+      "type":"structure",
+      "members":{
+        "targetIntervalSeconds":{"shape":"ThumbnailIntervalSeconds"},
+        "storage":{"shape":"ThumbnailStorageTypeList"},
+        "recordingMode":{"shape":"ThumbnailRecordingMode"}
       }
     },
     "ParticipantToken":{
@@ -1472,7 +2008,12 @@
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
-    "ParticipantTokenId":{"type":"string"},
+    "ParticipantTokenId":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"[a-zA-Z0-9-_]*"
+    },
     "ParticipantTokenList":{
       "type":"list",
       "member":{"shape":"ParticipantToken"}
@@ -1489,6 +2030,46 @@
     "PendingVerification":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1582,15 +2163,39 @@
       }
     },
     "Published":{"type":"boolean"},
+    "ReconnectWindowSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":60,
+      "min":0
+    },
+    "RecordParticipantReplicas":{"type":"boolean"},
     "RecordingConfiguration":{
       "type":"structure",
       "members":{
+        "hlsConfiguration":{"shape":"CompositionRecordingHlsConfiguration"},
         "format":{"shape":"RecordingConfigurationFormat"}
       }
     },
     "RecordingConfigurationFormat":{
       "type":"string",
       "enum":["HLS"]
+    },
+    "Replica":{"type":"boolean"},
+    "ReplicationState":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "STOPPED"
+      ]
+    },
+    "ReplicationType":{
+      "type":"string",
+      "enum":[
+        "SOURCE",
+        "REPLICA",
+        "NONE"
+      ]
     },
     "ResourceArn":{
       "type":"string",
@@ -1601,6 +2206,46 @@
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1624,7 +2269,8 @@
       "members":{
         "storageConfigurationArn":{"shape":"StorageConfigurationArn"},
         "encoderConfigurationArns":{"shape":"EncoderConfigurationArnList"},
-        "recordingConfiguration":{"shape":"RecordingConfiguration"}
+        "recordingConfiguration":{"shape":"RecordingConfiguration"},
+        "thumbnailConfigurations":{"shape":"CompositionThumbnailConfigurationList"}
       }
     },
     "S3Detail":{
@@ -1644,6 +2290,46 @@
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1679,7 +2365,9 @@
       "type":"structure",
       "members":{
         "events":{"shape":"StageEndpoint"},
-        "whip":{"shape":"StageEndpoint"}
+        "whip":{"shape":"StageEndpoint"},
+        "rtmp":{"shape":"StageEndpoint"},
+        "rtmps":{"shape":"StageEndpoint"}
       }
     },
     "StageName":{
@@ -1751,6 +2439,61 @@
         "composition":{"shape":"Composition"}
       }
     },
+    "StartParticipantReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "destinationStageArn",
+        "participantId"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"},
+        "reconnectWindowSeconds":{"shape":"ReconnectWindowSeconds"},
+        "attributes":{"shape":"ParticipantAttributes"}
+      }
+    },
+    "StartParticipantReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        }
+      }
+    },
     "StopCompositionRequest":{
       "type":"structure",
       "required":["arn"],
@@ -1761,6 +2504,59 @@
     "StopCompositionResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "StopParticipantReplicationRequest":{
+      "type":"structure",
+      "required":[
+        "sourceStageArn",
+        "destinationStageArn",
+        "participantId"
+      ],
+      "members":{
+        "sourceStageArn":{"shape":"StageArn"},
+        "destinationStageArn":{"shape":"StageArn"},
+        "participantId":{"shape":"ParticipantId"}
+      }
+    },
+    "StopParticipantReplicationResponse":{
+      "type":"structure",
+      "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        }
       }
     },
     "StorageConfiguration":{
@@ -1798,6 +2594,11 @@
     "StorageConfigurationSummaryList":{
       "type":"list",
       "member":{"shape":"StorageConfigurationSummary"}
+    },
+    "StreamKey":{
+      "type":"string",
+      "pattern":"rt_[0-9]+_[a-z0-9-]+_[a-zA-Z0-9-]+_.+",
+      "sensitive":true
     },
     "String":{"type":"string"},
     "TagKey":{
@@ -1843,6 +2644,32 @@
       "max":50,
       "min":0
     },
+    "ThumbnailIntervalSeconds":{
+      "type":"integer",
+      "box":true,
+      "max":86400,
+      "min":1
+    },
+    "ThumbnailRecordingMode":{
+      "type":"string",
+      "enum":[
+        "INTERVAL",
+        "DISABLED"
+      ]
+    },
+    "ThumbnailStorageType":{
+      "type":"string",
+      "enum":[
+        "SEQUENTIAL",
+        "LATEST"
+      ]
+    },
+    "ThumbnailStorageTypeList":{
+      "type":"list",
+      "member":{"shape":"ThumbnailStorageType"},
+      "max":2,
+      "min":0
+    },
     "Time":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -1871,6 +2698,20 @@
       "members":{
       }
     },
+    "UpdateIngestConfigurationRequest":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"IngestConfigurationArn"},
+        "stageArn":{"shape":"IngestConfigurationStageArn"}
+      }
+    },
+    "UpdateIngestConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "ingestConfiguration":{"shape":"IngestConfiguration"}
+      }
+    },
     "UpdateStageRequest":{
       "type":"structure",
       "required":["arn"],
@@ -1894,6 +2735,46 @@
     "ValidationException":{
       "type":"structure",
       "members":{
+        "accessControlAllowOrigin":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Allow-Origin"
+        },
+        "accessControlExposeHeaders":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Access-Control-Expose-Headers"
+        },
+        "cacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
+        },
+        "contentSecurityPolicy":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Content-Security-Policy"
+        },
+        "strictTransportSecurity":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Strict-Transport-Security"
+        },
+        "xContentTypeOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Content-Type-Options"
+        },
+        "xFrameOptions":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"X-Frame-Options"
+        },
+        "xAmznErrorType":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amzn-ErrorType"
+        },
         "exceptionMessage":{"shape":"errorMessage"}
       },
       "error":{
@@ -1932,7 +2813,7 @@
       "type":"integer",
       "box":true,
       "max":1920,
-      "min":1
+      "min":2
     },
     "errorMessage":{"type":"string"}
   }

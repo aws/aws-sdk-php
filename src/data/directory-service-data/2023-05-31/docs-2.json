@@ -1,0 +1,634 @@
+{
+  "version": "2.0",
+  "service": "<p> Amazon Web Services Directory Service Data is an extension of Directory Service. This API reference provides detailed information about Directory Service Data operations and object types. </p> <p> With Directory Service Data, you can create, read, update, and delete users, groups, and memberships from your Managed Microsoft AD without additional costs and without deploying dedicated management instances. You can also perform built-in object management tasks across directories without direct network connectivity, which simplifies provisioning and access management to achieve fully automated deployments. Directory Service Data supports user and group write operations, such as <code>CreateUser</code> and <code>CreateGroup</code>, within the organizational unit (OU) of your Managed Microsoft AD. Directory Service Data supports read operations, such as <code>ListUsers</code> and <code>ListGroups</code>, on all users, groups, and group memberships within your Managed Microsoft AD and across trusted realms. Directory Service Data supports adding and removing group members in your OU and the Amazon Web Services Delegated Groups OU, so you can grant and deny access to specific roles and permissions. For more information, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_manage_users_groups.html\">Manage users and groups</a> in the <i>Directory Service Administration Guide</i>. </p> <note> <p> Directory management operations and configuration changes made against the Directory Service API will also reflect in Directory Service Data API with eventual consistency. You can expect a short delay between management changes, such as adding a new directory trust and calling the Directory Service Data API for the newly created trusted realm. </p> </note> <p> Directory Service Data connects to your Managed Microsoft AD domain controllers and performs operations on underlying directory objects. When you create your Managed Microsoft AD, you choose subnets for domain controllers that Directory Service creates on your behalf. If a domain controller is unavailable, Directory Service Data uses an available domain controller. As a result, you might notice eventual consistency while objects replicate from one domain controller to another domain controller. For more information, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ms_ad_getting_started_what_gets_created.html\">What gets created</a> in the <i>Directory Service Administration Guide</i>. Directory limits vary by Managed Microsoft AD edition: </p> <ul> <li> <p> <b>Standard edition</b> – Supports 8 transactions per second (TPS) for read operations and 4 TPS for write operations per directory. There's a concurrency limit of 10 concurrent requests. </p> </li> <li> <p> <b>Enterprise edition</b> – Supports 16 transactions per second (TPS) for read operations and 8 TPS for write operations per directory. There's a concurrency limit of 10 concurrent requests.</p> </li> <li> <p> <b>Amazon Web Services Account</b> - Supports a total of 100 TPS for Directory Service Data operations across all directories.</p> </li> </ul> <p> Directory Service Data only supports the Managed Microsoft AD directory type and is only available in the primary Amazon Web Services Region. For more information, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/directory_microsoft_ad.html\">Managed Microsoft AD</a> and <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/multi-region-global-primary-additional.html\">Primary vs additional Regions</a> in the <i>Directory Service Administration Guide</i>. </p>",
+  "operations": {
+    "AddGroupMember": "<p>Adds an existing user, group, or computer as a group member.</p>",
+    "CreateGroup": "<p>Creates a new group.</p>",
+    "CreateUser": "<p>Creates a new user.</p>",
+    "DeleteGroup": "<p>Deletes a group.</p>",
+    "DeleteUser": "<p>Deletes a user.</p>",
+    "DescribeGroup": "<p>Returns information about a specific group.</p>",
+    "DescribeUser": "<p>Returns information about a specific user.</p>",
+    "DisableUser": "<p> Deactivates an active user account. For information about how to enable an inactive user account, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/devguide/API_ResetUserPassword.html\">ResetUserPassword</a> in the <i>Directory Service API Reference</i>.</p>",
+    "ListGroupMembers": "<p> Returns member information for the specified group. </p> <p> This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>ListGroupMembers.NextToken</code> member contains a token that you pass in the next call to <code>ListGroupMembers</code>. This retrieves the next set of items. </p> <p> You can also specify a maximum number of return results with the <code>MaxResults</code> parameter. </p>",
+    "ListGroups": "<p> Returns group information for the specified directory. </p> <p> This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>ListGroups.NextToken</code> member contains a token that you pass in the next call to <code>ListGroups</code>. This retrieves the next set of items. </p> <p> You can also specify a maximum number of return results with the <code>MaxResults</code> parameter. </p>",
+    "ListGroupsForMember": "<p> Returns group information for the specified member. </p> <p> This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>ListGroupsForMember.NextToken</code> member contains a token that you pass in the next call to <code>ListGroupsForMember</code>. This retrieves the next set of items. </p> <p> You can also specify a maximum number of return results with the <code>MaxResults</code> parameter. </p>",
+    "ListUsers": "<p> Returns user information for the specified directory. </p> <p> This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>ListUsers.NextToken</code> member contains a token that you pass in the next call to <code>ListUsers</code>. This retrieves the next set of items. </p> <p> You can also specify a maximum number of return results with the <code>MaxResults</code> parameter. </p>",
+    "RemoveGroupMember": "<p> Removes a member from a group. </p>",
+    "SearchGroups": "<p> Searches the specified directory for a group. You can find groups that match the <code>SearchString</code> parameter with the value of their attributes included in the <code>SearchString</code> parameter. </p> <p> This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>SearchGroups.NextToken</code> member contains a token that you pass in the next call to <code>SearchGroups</code>. This retrieves the next set of items. </p> <p> You can also specify a maximum number of return results with the <code>MaxResults</code> parameter. </p>",
+    "SearchUsers": "<p> Searches the specified directory for a user. You can find users that match the <code>SearchString</code> parameter with the value of their attributes included in the <code>SearchString</code> parameter.</p> <p> This operation supports pagination with the use of the <code>NextToken</code> request and response parameters. If more results are available, the <code>SearchUsers.NextToken</code> member contains a token that you pass in the next call to <code>SearchUsers</code>. This retrieves the next set of items. </p> <p> You can also specify a maximum number of return results with the <code>MaxResults</code> parameter. </p>",
+    "UpdateGroup": "<p> Updates group information. </p>",
+    "UpdateUser": "<p> Updates user information. </p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p> You don't have permission to perform the request or access the directory. It can also occur when the <code>DirectoryId</code> doesn't exist or the user, member, or group might be outside of your organizational unit (OU). </p> <p> Make sure that you have the authentication and authorization to perform the action. Review the directory information in the request, and make sure that the object isn't outside of your OU. </p>",
+      "refs": {
+      }
+    },
+    "AccessDeniedReason": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Reason": "<p> Reason the request was unauthorized. </p>"
+      }
+    },
+    "AddGroupMemberRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AddGroupMemberResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AttributeValue": {
+      "base": "<p> The data type for an attribute. Each attribute value is described as a name-value pair. The name is the AD schema name, and the value is the data itself. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p>",
+      "refs": {
+        "Attributes$value": null
+      }
+    },
+    "Attributes": {
+      "base": null,
+      "refs": {
+        "CreateGroupRequest$OtherAttributes": "<p> An expression that defines one or more attributes with the data type and value of each attribute. </p>",
+        "CreateUserRequest$OtherAttributes": "<p> An expression that defines one or more attribute names with the data type and value of each attribute. A key is an attribute name, and the value is a list of maps. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p> <note> <p> Attribute names are case insensitive. </p> </note>",
+        "DescribeGroupResult$OtherAttributes": "<p> The attribute values that are returned for the attribute names that are included in the request. </p>",
+        "DescribeUserResult$OtherAttributes": "<p> The attribute values that are returned for the attribute names that are included in the request. </p> <note> <p> Attribute names are case insensitive. </p> </note>",
+        "Group$OtherAttributes": "<p> An expression of one or more attributes, data types, and the values of a group. </p>",
+        "UpdateGroupRequest$OtherAttributes": "<p> An expression that defines one or more attributes with the data type and the value of each attribute. </p>",
+        "UpdateUserRequest$OtherAttributes": "<p> An expression that defines one or more attribute names with the data type and value of each attribute. A key is an attribute name, and the value is a list of maps. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p> <note> <p> Attribute names are case insensitive. </p> </note>",
+        "User$OtherAttributes": "<p> An expression that includes one or more attributes, data types, and values of a user.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "DescribeUserResult$Enabled": "<p> Indicates whether the user account is active. </p>",
+        "User$Enabled": "<p> Indicates whether the user account is active. </p>",
+        "UserSummary$Enabled": "<p>Indicates whether the user account is active.</p>"
+      }
+    },
+    "BooleanAttributeValue": {
+      "base": null,
+      "refs": {
+        "AttributeValue$BOOL": "<p> Indicates that the attribute type value is a boolean. For example: </p> <p> <code>\"BOOL\": true</code> </p>"
+      }
+    },
+    "ClientToken": {
+      "base": null,
+      "refs": {
+        "AddGroupMemberRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "CreateGroupRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "CreateUserRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "DeleteGroupRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "DeleteUserRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "DisableUserRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "RemoveGroupMemberRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "UpdateGroupRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>",
+        "UpdateUserRequest$ClientToken": "<p> A unique and case-sensitive identifier that you provide to make sure the idempotency of the request, so multiple identical calls have the same effect as one single call. </p> <p> A client token is valid for 8 hours after the first request that uses it completes. After 8 hours, any request with the same client token is treated as a new request. If the request succeeds, any future uses of that token will be idempotent for another 8 hours. </p> <p> If you submit a request with the same client token but change one of the other parameters within the 8-hour idempotency window, Directory Service Data returns an <code>ConflictException</code>. </p> <note> <p> This parameter is optional when using the CLI or SDK. </p> </note>"
+      }
+    },
+    "ConflictException": {
+      "base": "<p> This error will occur when you try to create a resource that conflicts with an existing object. It can also occur when adding a member to a group that the member is already in.</p> <p> This error can be caused by a request sent within the 8-hour idempotency window with the same client token but different input parameters. Client tokens should not be re-used across different requests. After 8 hours, any request with the same client token is treated as a new request. </p>",
+      "refs": {
+      }
+    },
+    "CreateGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGroupResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateUserRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateUserResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGroupResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteUserRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteUserResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeGroupResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeUserRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeUserResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DirectoryId": {
+      "base": null,
+      "refs": {
+        "AddGroupMemberRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "CreateGroupRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "CreateGroupResult$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "CreateUserRequest$DirectoryId": "<p> The identifier (ID) of the directory that’s associated with the user. </p>",
+        "CreateUserResult$DirectoryId": "<p> The identifier (ID) of the directory where the address block is added. </p>",
+        "DeleteGroupRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "DeleteUserRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>",
+        "DescribeGroupRequest$DirectoryId": "<p>The Identifier (ID) of the directory associated with the group.</p>",
+        "DescribeGroupResult$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "DescribeUserRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>",
+        "DescribeUserResult$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>",
+        "DisableUserRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>",
+        "ListGroupMembersRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "ListGroupMembersResult$DirectoryId": "<p>Identifier (ID) of the directory associated with the group.</p>",
+        "ListGroupsForMemberRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the member. </p>",
+        "ListGroupsForMemberResult$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the member. </p>",
+        "ListGroupsRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "ListGroupsResult$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "ListUsersRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>",
+        "ListUsersResult$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>",
+        "RemoveGroupMemberRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the member. </p>",
+        "SearchGroupsRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "SearchGroupsResult$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "SearchUsersRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>",
+        "SearchUsersResult$DirectoryId": "<p> The identifier (ID) of the directory where the address block is added. </p>",
+        "UpdateGroupRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the group. </p>",
+        "UpdateUserRequest$DirectoryId": "<p> The identifier (ID) of the directory that's associated with the user. </p>"
+      }
+    },
+    "DirectoryUnavailableException": {
+      "base": "<p> The request could not be completed due to a problem in the configuration or current state of the specified directory. </p>",
+      "refs": {
+      }
+    },
+    "DirectoryUnavailableReason": {
+      "base": null,
+      "refs": {
+        "DirectoryUnavailableException$Reason": "<p> Reason the request failed for the specified directory. </p>"
+      }
+    },
+    "DisableUserRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisableUserResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DistinguishedName": {
+      "base": null,
+      "refs": {
+        "DescribeGroupResult$DistinguishedName": "<p> The <a href=\"https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities#distinguished-name\">distinguished name</a> of the object. </p>",
+        "DescribeUserResult$DistinguishedName": "<p> The <a href=\"https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities#distinguished-name\">distinguished name</a> of the object. </p>",
+        "Group$DistinguishedName": "<p>The <a href=\"https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities#distinguished-name\">distinguished name</a> of the object. </p>",
+        "User$DistinguishedName": "<p> The <a href=\"https://learn.microsoft.com/en-us/windows/win32/ad/object-names-and-identities#distinguished-name\">distinguished name</a> of the object. </p>"
+      }
+    },
+    "EmailAddress": {
+      "base": null,
+      "refs": {
+        "CreateUserRequest$EmailAddress": "<p> The email address of the user. </p>",
+        "DescribeUserResult$EmailAddress": "<p> The email address of the user. </p>",
+        "UpdateUserRequest$EmailAddress": "<p> The email address of the user. </p>",
+        "User$EmailAddress": "<p> The email address of the user. </p>"
+      }
+    },
+    "ExceptionMessage": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Message": null,
+        "ConflictException$Message": null,
+        "DirectoryUnavailableException$Message": null,
+        "InternalServerException$Message": null,
+        "ResourceNotFoundException$Message": null,
+        "ThrottlingException$Message": null,
+        "ValidationException$Message": null
+      }
+    },
+    "GivenName": {
+      "base": null,
+      "refs": {
+        "CreateUserRequest$GivenName": "<p> The first name of the user. </p>",
+        "DescribeUserResult$GivenName": "<p> The first name of the user. </p>",
+        "UpdateUserRequest$GivenName": "<p> The first name of the user. </p>",
+        "User$GivenName": "<p> The first name of the user. </p>",
+        "UserSummary$GivenName": "<p>The first name of the user. </p>"
+      }
+    },
+    "Group": {
+      "base": "<p> A group object that contains identifying information and attributes for a specified group. </p>",
+      "refs": {
+        "GroupList$member": null
+      }
+    },
+    "GroupList": {
+      "base": null,
+      "refs": {
+        "SearchGroupsResult$Groups": "<p> The group information that the request returns. </p>"
+      }
+    },
+    "GroupName": {
+      "base": null,
+      "refs": {
+        "AddGroupMemberRequest$GroupName": "<p> The name of the group. </p>",
+        "CreateGroupRequest$SAMAccountName": "<p> The name of the group. </p>",
+        "CreateGroupResult$SAMAccountName": "<p> The name of the group. </p>",
+        "DeleteGroupRequest$SAMAccountName": "<p> The name of the group. </p>",
+        "DescribeGroupRequest$SAMAccountName": "<p> The name of the group. </p>",
+        "DescribeGroupResult$SAMAccountName": "<p> The name of the group. </p>",
+        "Group$SAMAccountName": "<p> The name of the group. </p>",
+        "GroupSummary$SAMAccountName": "<p>The name of the group.</p>",
+        "ListGroupMembersRequest$SAMAccountName": "<p> The name of the group. </p>",
+        "RemoveGroupMemberRequest$GroupName": "<p> The name of the group. </p>",
+        "UpdateGroupRequest$SAMAccountName": "<p> The name of the group. </p>"
+      }
+    },
+    "GroupScope": {
+      "base": null,
+      "refs": {
+        "CreateGroupRequest$GroupScope": "<p> The scope of the AD group. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#group-scope\">Active Directory security group scope</a>. </p>",
+        "DescribeGroupResult$GroupScope": "<p> The scope of the AD group. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#group-scope\">Active Directory security groups</a>. </p>",
+        "Group$GroupScope": "<p> The scope of the AD group. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#group-scope\">Active Directory security groups</a> </p>",
+        "GroupSummary$GroupScope": "<p>The scope of the AD group. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#group-scope\">Active Directory security groups</a>.</p>",
+        "UpdateGroupRequest$GroupScope": "<p> The scope of the AD group. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#group-scope\">Active Directory security groups</a>. </p>"
+      }
+    },
+    "GroupSummary": {
+      "base": "<p>A structure containing a subset of fields of a group object from a directory.</p>",
+      "refs": {
+        "GroupSummaryList$member": null
+      }
+    },
+    "GroupSummaryList": {
+      "base": null,
+      "refs": {
+        "ListGroupsForMemberResult$Groups": "<p> The group information that the request returns. </p>",
+        "ListGroupsResult$Groups": "<p> The group information that the request returns. </p>"
+      }
+    },
+    "GroupType": {
+      "base": null,
+      "refs": {
+        "CreateGroupRequest$GroupType": "<p> The AD group type. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#how-active-directory-security-groups-work\">Active Directory security group type</a>.</p>",
+        "DescribeGroupResult$GroupType": "<p> The AD group type. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#how-active-directory-security-groups-work\">Active Directory security group type</a>. </p>",
+        "Group$GroupType": "<p> The AD group type. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#how-active-directory-security-groups-work\">Active Directory security group type</a>. </p>",
+        "GroupSummary$GroupType": "<p>The AD group type. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#how-active-directory-security-groups-work\">Active Directory security group type</a>.</p>",
+        "UpdateGroupRequest$GroupType": "<p> The AD group type. For details, see <a href=\"https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#how-active-directory-security-groups-work\">Active Directory security group type</a>. </p>"
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$RetryAfterSeconds": "<p> The recommended amount of seconds to retry after a throttling exception. </p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p> The operation didn't succeed because an internal error occurred. Try again later. </p>",
+      "refs": {
+      }
+    },
+    "LdapDisplayName": {
+      "base": null,
+      "refs": {
+        "Attributes$key": null,
+        "LdapDisplayNameList$member": null
+      }
+    },
+    "LdapDisplayNameList": {
+      "base": null,
+      "refs": {
+        "DescribeGroupRequest$OtherAttributes": "<p> One or more attributes to be returned for the group. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p>",
+        "DescribeUserRequest$OtherAttributes": "<p> One or more attribute names to be returned for the user. A key is an attribute name, and the value is a list of maps. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p>",
+        "SearchGroupsRequest$SearchAttributes": "<p> One or more data attributes that are used to search for a group. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p>",
+        "SearchUsersRequest$SearchAttributes": "<p> One or more data attributes that are used to search for a user. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p>"
+      }
+    },
+    "ListGroupMembersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGroupMembersResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGroupsForMemberRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGroupsForMemberResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGroupsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGroupsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListUsersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListUsersResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "MaxResults": {
+      "base": null,
+      "refs": {
+        "ListGroupMembersRequest$MaxResults": "<p> The maximum number of results to be returned per request. </p>",
+        "ListGroupsForMemberRequest$MaxResults": "<p> The maximum number of results to be returned per request. </p>",
+        "ListGroupsRequest$MaxResults": "<p> The maximum number of results to be returned per request. </p>",
+        "ListUsersRequest$MaxResults": "<p> The maximum number of results to be returned per request. </p>",
+        "SearchGroupsRequest$MaxResults": "<p> The maximum number of results to be returned per request. </p>",
+        "SearchUsersRequest$MaxResults": "<p> The maximum number of results to be returned per request. </p>"
+      }
+    },
+    "Member": {
+      "base": "<p>A member object that contains identifying information for a specified member.</p>",
+      "refs": {
+        "MemberList$member": null
+      }
+    },
+    "MemberList": {
+      "base": null,
+      "refs": {
+        "ListGroupMembersResult$Members": "<p> The member information that the request returns. </p>"
+      }
+    },
+    "MemberName": {
+      "base": null,
+      "refs": {
+        "AddGroupMemberRequest$MemberName": "<p> The <code>SAMAccountName</code> of the user, group, or computer to add as a group member. </p>",
+        "ListGroupsForMemberRequest$SAMAccountName": "<p> The <code>SAMAccountName</code> of the user, group, or computer that's a member of the group. </p>",
+        "Member$SAMAccountName": "<p> The name of the group member. </p>",
+        "RemoveGroupMemberRequest$MemberName": "<p> The <code>SAMAccountName</code> of the user, group, or computer to remove from the group. </p>"
+      }
+    },
+    "MemberType": {
+      "base": null,
+      "refs": {
+        "Member$MemberType": "<p> The AD type of the member object.</p>"
+      }
+    },
+    "NextToken": {
+      "base": null,
+      "refs": {
+        "ListGroupMembersRequest$NextToken": "<p>An encoded paging token for paginated calls that can be passed back to retrieve the next page.</p>",
+        "ListGroupMembersResult$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "ListGroupsForMemberRequest$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "ListGroupsForMemberResult$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "ListGroupsRequest$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "ListGroupsResult$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "ListUsersRequest$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "ListUsersResult$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "SearchGroupsRequest$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "SearchGroupsResult$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "SearchUsersRequest$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>",
+        "SearchUsersResult$NextToken": "<p> An encoded paging token for paginated calls that can be passed back to retrieve the next page. </p>"
+      }
+    },
+    "NumberAttributeValue": {
+      "base": null,
+      "refs": {
+        "AttributeValue$N": "<p> Indicates that the attribute type value is a number. For example: </p> <p> <code>\"N\": \"16\"</code> </p>"
+      }
+    },
+    "Realm": {
+      "base": null,
+      "refs": {
+        "AddGroupMemberRequest$MemberRealm": "<p> The domain name that's associated with the group member. This parameter is required only when adding a member outside of your Managed Microsoft AD domain to a group inside of your Managed Microsoft AD domain. This parameter defaults to the Managed Microsoft AD domain. </p> <note> <p> This parameter is case insensitive. </p> </note>",
+        "DescribeGroupRequest$Realm": "<p> The domain name that's associated with the group. </p> <note> <p> This parameter is optional, so you can return groups outside of your Managed Microsoft AD domain. When no value is defined, only your Managed Microsoft AD groups are returned. </p> <p> This value is case insensitive. </p> </note>",
+        "DescribeGroupResult$Realm": "<p> The domain name that's associated with the group. </p>",
+        "DescribeUserRequest$Realm": "<p> The domain name that's associated with the user. </p> <note> <p> This parameter is optional, so you can return users outside your Managed Microsoft AD domain. When no value is defined, only your Managed Microsoft AD users are returned. </p> <p> This value is case insensitive. </p> </note>",
+        "DescribeUserResult$Realm": "<p> The domain name that's associated with the user. </p>",
+        "ListGroupMembersRequest$MemberRealm": "<p> The domain name that's associated with the group member. This parameter defaults to the Managed Microsoft AD domain. </p> <note> <p> This parameter is optional and case insensitive. </p> </note>",
+        "ListGroupMembersRequest$Realm": "<p> The domain name that's associated with the group. </p> <note> <p> This parameter is optional, so you can return members from a group outside of your Managed Microsoft AD domain. When no value is defined, only members of your Managed Microsoft AD groups are returned. </p> <p> This value is case insensitive. </p> </note>",
+        "ListGroupMembersResult$MemberRealm": "<p> The domain name that's associated with the member. </p>",
+        "ListGroupMembersResult$Realm": "<p> The domain name that's associated with the group. </p>",
+        "ListGroupsForMemberRequest$MemberRealm": "<p> The domain name that's associated with the group member. </p> <note> <p> This parameter is optional, so you can limit your results to the group members in a specific domain. </p> <p> This parameter is case insensitive and defaults to <code>Realm</code> </p> </note>",
+        "ListGroupsForMemberRequest$Realm": "<p> The domain name that's associated with the group. </p> <note> <p> This parameter is optional, so you can return groups outside of your Managed Microsoft AD domain. When no value is defined, only your Managed Microsoft AD groups are returned. </p> <p> This value is case insensitive and defaults to your Managed Microsoft AD domain. </p> </note>",
+        "ListGroupsForMemberResult$MemberRealm": "<p> The domain that's associated with the member. </p>",
+        "ListGroupsForMemberResult$Realm": "<p> The domain that's associated with the group. </p>",
+        "ListGroupsRequest$Realm": "<p> The domain name associated with the directory. </p> <note> <p> This parameter is optional, so you can return groups outside of your Managed Microsoft AD domain. When no value is defined, only your Managed Microsoft AD groups are returned. </p> <p> This value is case insensitive. </p> </note>",
+        "ListGroupsResult$Realm": "<p>The domain name associated with the group.</p>",
+        "ListUsersRequest$Realm": "<p> The domain name that's associated with the user. </p> <note> <p> This parameter is optional, so you can return users outside of your Managed Microsoft AD domain. When no value is defined, only your Managed Microsoft AD users are returned. </p> <p> This value is case insensitive. </p> </note>",
+        "ListUsersResult$Realm": "<p> The domain that's associated with the user. </p>",
+        "RemoveGroupMemberRequest$MemberRealm": "<p> The domain name that's associated with the group member. This parameter defaults to the Managed Microsoft AD domain. </p> <note> <p> This parameter is optional and case insensitive. </p> </note>",
+        "SearchGroupsRequest$Realm": "<p> The domain name that's associated with the group. </p> <note> <p> This parameter is optional, so you can return groups outside of your Managed Microsoft AD domain. When no value is defined, only your Managed Microsoft AD groups are returned. </p> <p> This value is case insensitive. </p> </note>",
+        "SearchGroupsResult$Realm": "<p> The domain that's associated with the group. </p>",
+        "SearchUsersRequest$Realm": "<p> The domain name that's associated with the user. </p> <note> <p> This parameter is optional, so you can return users outside of your Managed Microsoft AD domain. When no value is defined, only your Managed Microsoft AD users are returned. </p> <p> This value is case insensitive. </p> </note>",
+        "SearchUsersResult$Realm": "<p> The domain that's associated with the user. </p>"
+      }
+    },
+    "RemoveGroupMemberRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RemoveGroupMemberResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p> The resource couldn't be found. </p>",
+      "refs": {
+      }
+    },
+    "SID": {
+      "base": null,
+      "refs": {
+        "CreateGroupResult$SID": "<p> The unique security identifier (SID) of the group. </p>",
+        "CreateUserResult$SID": "<p> The unique security identifier (SID) of the user. </p>",
+        "DescribeGroupResult$SID": "<p> The unique security identifier (SID) of the group. </p>",
+        "DescribeUserResult$SID": "<p> The unique security identifier (SID) of the user. </p>",
+        "Group$SID": "<p> The unique security identifier (SID) of the group. </p>",
+        "GroupSummary$SID": "<p>The unique security identifier (SID) of the group.</p>",
+        "Member$SID": "<p> The unique security identifier (SID) of the group member. </p>",
+        "User$SID": "<p> The unique security identifier (SID) of the user. </p>",
+        "UserSummary$SID": "<p> The unique security identifier (SID) of the user.</p>"
+      }
+    },
+    "SearchGroupsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchGroupsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchString": {
+      "base": null,
+      "refs": {
+        "SearchGroupsRequest$SearchString": "<p> The attribute value that you want to search for. </p> <note> <p> Wildcard <code>(*)</code> searches aren't supported. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p> </note>",
+        "SearchUsersRequest$SearchString": "<p> The attribute value that you want to search for. </p> <note> <p> Wildcard <code>(*)</code> searches aren't supported. For a list of supported attributes, see <a href=\"https://docs.aws.amazon.com/directoryservice/latest/admin-guide/ad_data_attributes.html\">Directory Service Data Attributes</a>. </p> </note>"
+      }
+    },
+    "SearchUsersRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SearchUsersResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StringAttributeValue": {
+      "base": null,
+      "refs": {
+        "AttributeValue$S": "<p> Indicates that the attribute type value is a string. For example: </p> <p> <code>\"S\": \"S Group\"</code> </p>",
+        "StringSetAttributeValue$member": null
+      }
+    },
+    "StringSetAttributeValue": {
+      "base": null,
+      "refs": {
+        "AttributeValue$SS": "<p> Indicates that the attribute type value is a string set. For example: </p> <p> <code>\"SS\": [\"sample_service_class/host.sample.com:1234/sample_service_name_1\", \"sample_service_class/host.sample.com:1234/sample_service_name_2\"]</code> </p>"
+      }
+    },
+    "Surname": {
+      "base": null,
+      "refs": {
+        "CreateUserRequest$Surname": "<p> The last name of the user. </p>",
+        "DescribeUserResult$Surname": "<p> The last name of the user. </p>",
+        "UpdateUserRequest$Surname": "<p> The last name of the user. </p>",
+        "User$Surname": "<p> The last name of the user. </p>",
+        "UserSummary$Surname": "<p>The last name of the user.</p>"
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p> The limit on the number of requests per second has been exceeded. </p>",
+      "refs": {
+      }
+    },
+    "UpdateGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateGroupResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateType": {
+      "base": null,
+      "refs": {
+        "UpdateGroupRequest$UpdateType": "<p> The type of update to be performed. If no value exists for the attribute, use <code>ADD</code>. Otherwise, use <code>REPLACE</code> to change an attribute value or <code>REMOVE</code> to clear the attribute value. </p>",
+        "UpdateUserRequest$UpdateType": "<p> The type of update to be performed. If no value exists for the attribute, use <code>ADD</code>. Otherwise, use <code>REPLACE</code> to change an attribute value or <code>REMOVE</code> to clear the attribute value. </p>"
+      }
+    },
+    "UpdateUserRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateUserResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "User": {
+      "base": "<p> A user object that contains identifying information and attributes for a specified user. </p>",
+      "refs": {
+        "UserList$member": null
+      }
+    },
+    "UserList": {
+      "base": null,
+      "refs": {
+        "SearchUsersResult$Users": "<p> The user information that the request returns. </p>"
+      }
+    },
+    "UserName": {
+      "base": null,
+      "refs": {
+        "CreateUserRequest$SAMAccountName": "<p> The name of the user. </p>",
+        "CreateUserResult$SAMAccountName": "<p> The name of the user. </p>",
+        "DeleteUserRequest$SAMAccountName": "<p> The name of the user. </p>",
+        "DescribeUserRequest$SAMAccountName": "<p> The name of the user. </p>",
+        "DescribeUserResult$SAMAccountName": "<p> The name of the user. </p>",
+        "DisableUserRequest$SAMAccountName": "<p> The name of the user. </p>",
+        "UpdateUserRequest$SAMAccountName": "<p> The name of the user. </p>",
+        "User$SAMAccountName": "<p> The name of the user. </p>",
+        "UserSummary$SAMAccountName": "<p>The name of the user.</p>"
+      }
+    },
+    "UserPrincipalName": {
+      "base": null,
+      "refs": {
+        "DescribeUserResult$UserPrincipalName": "<p> The UPN that is an Internet-style login name for a user and is based on the Internet standard <a href=\"https://datatracker.ietf.org/doc/html/rfc822\">RFC 822</a>. The UPN is shorter than the distinguished name and easier to remember. </p>",
+        "User$UserPrincipalName": "<p> The UPN that is an internet-style login name for a user and based on the internet standard <a href=\"https://datatracker.ietf.org/doc/html/rfc822\">RFC 822</a>. The UPN is shorter than the distinguished name and easier to remember. </p>"
+      }
+    },
+    "UserSummary": {
+      "base": "<p>A structure containing a subset of the fields of a user object from a directory.</p>",
+      "refs": {
+        "UserSummaryList$member": null
+      }
+    },
+    "UserSummaryList": {
+      "base": null,
+      "refs": {
+        "ListUsersResult$Users": "<p> The user information that the request returns. </p>"
+      }
+    },
+    "ValidationException": {
+      "base": "<p> The request isn't valid. Review the details in the error message to update the invalid parameters or values in your request. </p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$Reason": "<p> Reason the request failed validation. </p>"
+      }
+    }
+  }
+}

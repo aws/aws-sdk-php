@@ -5,12 +5,14 @@
     "endpointPrefix":"api.tunneling.iot",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS IoT Secure Tunneling",
     "serviceId":"IoTSecureTunneling",
     "signatureVersion":"v4",
     "signingName":"IoTSecuredTunneling",
     "targetPrefix":"IoTSecuredTunneling",
-    "uid":"iotsecuretunneling-2018-10-05"
+    "uid":"iotsecuretunneling-2018-10-05",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CloseTunnel":{
@@ -138,8 +140,7 @@
     },
     "CloseTunnelResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConnectionState":{
       "type":"structure",
@@ -328,8 +329,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -417,8 +417,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     }
   }
 }

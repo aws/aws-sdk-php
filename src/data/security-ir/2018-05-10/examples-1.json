@@ -1,0 +1,516 @@
+{
+  "version": "1.0",
+  "examples": {
+    "BatchGetMemberAccountDetails": [
+      {
+        "input": {
+          "accountIds": [
+            "123412341234"
+          ],
+          "membershipId": "m-abcd1234efgh"
+        },
+        "output": {
+          "items": [
+            {
+              "accountId": "123412341234",
+              "relationshipStatus": "Associated",
+              "relationshipType": "Organization"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke BatchGetMemberAccountDetails"
+      }
+    ],
+    "CancelMembership": [
+      {
+        "input": {
+          "membershipId": "m-abcd1234efgh"
+        },
+        "output": {
+          "membershipId": "m-abcd1234efgh"
+        },
+        "id": "example-1",
+        "title": "Invoke CancelMembership"
+      }
+    ],
+    "CloseCase": [
+      {
+        "input": {
+          "caseId": "8403556009"
+        },
+        "output": {
+          "caseStatus": "Closed",
+          "closedDate": "2024-02-27T17:01:33.000Z"
+        },
+        "id": "example-1",
+        "title": "Invoke CloseCase"
+      }
+    ],
+    "CreateCase": [
+      {
+        "input": {
+          "description": "Case description",
+          "engagementType": "Investigation",
+          "impactedAccounts": [
+            "000000000000",
+            "111111111111"
+          ],
+          "impactedAwsRegions": [
+            {
+              "region": "ap-southeast-1"
+            }
+          ],
+          "impactedServices": [
+            "Amazon EC2",
+            "Amazon EKS"
+          ],
+          "reportedIncidentStartDate": "2023-03-27T15:32:01.789Z",
+          "resolverType": "Self",
+          "threatActorIpAddresses": [
+            {
+              "ipAddress": "192.168.192.168",
+              "userAgent": "Browser"
+            }
+          ],
+          "title": "My sample case",
+          "watchers": [
+            {
+              "name": "Alice",
+              "email": "alice@example.com",
+              "jobTitle": "CEO"
+            },
+            {
+              "name": "Bob",
+              "email": "bob@example.com",
+              "jobTitle": "CFO"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke CreateCase"
+      }
+    ],
+    "CreateCaseComment": [
+      {
+        "input": {
+          "body": "Case comment body.",
+          "caseId": "8403556009"
+        },
+        "output": {
+          "commentId": "000000"
+        },
+        "id": "example-1",
+        "title": "Invoke CreateCaseComment"
+      }
+    ],
+    "CreateMembership": [
+      {
+        "input": {
+          "incidentResponseTeam": [
+            {
+              "name": "Bob Jones",
+              "email": "bob.jones@gmail.com",
+              "jobTitle": "Security Responder"
+            },
+            {
+              "name": "Alice",
+              "email": "alice@example.com",
+              "jobTitle": "CEO"
+            }
+          ],
+          "membershipName": "Example Membership Name.",
+          "optInFeatures": [
+            {
+              "featureName": "Triage",
+              "isEnabled": true
+            }
+          ]
+        },
+        "output": {
+          "membershipId": "m-abcd1234efgh"
+        },
+        "id": "example-1",
+        "title": "Invoke CreateMembership"
+      }
+    ],
+    "GetCase": [
+      {
+        "input": {
+          "caseId": "8403556009"
+        },
+        "output": {
+          "actualIncidentStartDate": "2023-03-27T15:32:01.789Z",
+          "caseArn": "arn:aws:security-ir:us-west-1:123456789012:case/1234567890",
+          "caseStatus": "Submitted",
+          "createdDate": "2023-01-27T15:32:01.789Z",
+          "description": "Case description",
+          "engagementType": "Investigation",
+          "impactedAccounts": [
+            "000000000000",
+            "111111111111"
+          ],
+          "impactedAwsRegions": [
+            {
+              "region": "ap-southeast-1"
+            }
+          ],
+          "impactedServices": [
+            "Amazon EC2",
+            "Amazon EKS"
+          ],
+          "lastUpdatedDate": "2023-02-27T15:32:01.789Z",
+          "pendingAction": "Customer",
+          "reportedIncidentStartDate": "2023-03-27T15:32:01.789Z",
+          "resolverType": "Self",
+          "threatActorIpAddresses": [
+            {
+              "ipAddress": "192.168.192.168",
+              "userAgent": "Browser"
+            }
+          ],
+          "title": "My sample case",
+          "watchers": [
+            {
+              "name": "Alice",
+              "email": "alice@example.com",
+              "jobTitle": "CEO"
+            },
+            {
+              "name": "Bob",
+              "email": "bob@example.com",
+              "jobTitle": "CFO"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke GetCase"
+      }
+    ],
+    "GetCaseAttachmentDownloadUrl": [
+      {
+        "input": {
+          "attachmentId": "3C5A6B89-1DEF-4C2D-A5B6-123456789ABC",
+          "caseId": "8403556009"
+        },
+        "output": {
+          "attachmentPresignedUrl": "https://presignedurl.com"
+        },
+        "id": "example-1",
+        "title": "Invoke GetCaseAttachmentDownloadUrl"
+      }
+    ],
+    "GetCaseAttachmentUploadUrl": [
+      {
+        "input": {
+          "caseId": "8403556009",
+          "contentLength": 1500,
+          "fileName": "TestFileName"
+        },
+        "output": {
+          "attachmentPresignedUrl": "https://presignedurl.com"
+        },
+        "id": "example-1",
+        "title": "Invoke GetCaseAttachmentUploadUrl"
+      }
+    ],
+    "GetMembership": [
+      {
+        "input": {
+          "membershipId": "m-abcd1234efgh"
+        },
+        "output": {
+          "accountId": "123412341234",
+          "customerType": "Standalone",
+          "incidentResponseTeam": [
+            {
+              "name": "Bob Jones",
+              "email": "bob.jones@gmail.com",
+              "jobTitle": "Security Responder"
+            },
+            {
+              "name": "Alice",
+              "email": "alice@example.com",
+              "jobTitle": "CEO"
+            }
+          ],
+          "membershipActivationTimestamp": "2023-03-27T15:32:01.789Z",
+          "membershipArn": "arn:aws:security-ir:us-west-1:123456789012:membership/m-abcd1234efgh",
+          "membershipDeactivationTimestamp": "2023-04-27T15:32:01.789Z",
+          "membershipId": "m-abcd1234efgh",
+          "membershipName": "Example Membership",
+          "membershipStatus": "Active",
+          "numberOfAccountsCovered": 50,
+          "optInFeatures": [
+            {
+              "featureName": "Triage",
+              "isEnabled": true
+            }
+          ],
+          "region": "af-south-1"
+        },
+        "id": "example-1",
+        "title": "Invoke GetMembership"
+      }
+    ],
+    "ListCaseEdits": [
+      {
+        "input": {
+          "caseId": "8403556009"
+        },
+        "output": {
+          "items": [
+            {
+              "action": "Add comment",
+              "eventTimestamp": "2023-03-27T15:32:01.789Z",
+              "message": "Added comment to ask question to responder.",
+              "principal": "00000000000"
+            }
+          ],
+          "total": 1
+        },
+        "id": "example-1",
+        "title": "Invoke ListCaseEdits"
+      }
+    ],
+    "ListCases": [
+      {
+        "input": {
+          "maxResults": 10
+        },
+        "output": {
+          "items": [
+            {
+              "caseArn": "arn:aws:security-ir:us-west-1:123456789012:case/1234567890",
+              "caseId": "8403556009",
+              "caseStatus": "Acknowledged",
+              "createdDate": "2023-01-27T15:32:01.789Z",
+              "engagementType": "Security Incident",
+              "lastUpdatedDate": "2023-03-27T15:32:01.789Z",
+              "pendingAction": "None",
+              "resolverType": "Self",
+              "title": "Example case title"
+            }
+          ],
+          "total": 1
+        },
+        "id": "example-1",
+        "title": "Invoke ListCases"
+      }
+    ],
+    "ListComments": [
+      {
+        "input": {
+          "caseId": "8403556009"
+        },
+        "output": {
+          "items": [
+            {
+              "body": "Case comment body.",
+              "commentId": "000000"
+            }
+          ],
+          "total": 1
+        },
+        "id": "example-1",
+        "title": "Invoke ListComments"
+      }
+    ],
+    "ListMemberships": [
+      {
+        "input": {
+          "maxResults": 10
+        },
+        "output": {
+          "items": [
+            {
+              "accountId": "123123123123",
+              "membershipArn": "arn:aws:security-ir:us-west-1:123456789012:membership/m-abcd1234efgh",
+              "membershipId": "m-abcd1234efgh",
+              "membershipStatus": "Cancelled",
+              "region": "af-south-1"
+            }
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke ListMemberships"
+      }
+    ],
+    "ListTagsForResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:security-ir:us-west-1:123456789012:membership/m-abcd1234efgh"
+        },
+        "output": {
+          "tags": {
+            "key": "example-tag-key",
+            "value": "example-tag-value"
+          }
+        },
+        "id": "example-1",
+        "title": "Invoke ListTagsForResource"
+      }
+    ],
+    "TagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:security-ir:us-west-1:123456789012:membership/m-abcd1234efgh",
+          "tags": {
+            "key": "example-tag-key",
+            "value": "example-tag-value"
+          }
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Invoke TagResource"
+      }
+    ],
+    "UntagResource": [
+      {
+        "input": {
+          "resourceArn": "arn:aws:security-ir:us-west-1:123456789012:membership/m-abcd1234efgh",
+          "tagKeys": [
+            "example-tag-key"
+          ]
+        },
+        "id": "example-1",
+        "title": "Invoke UntagResource"
+      }
+    ],
+    "UpdateCase": [
+      {
+        "input": {
+          "actualIncidentStartDate": "2023-03-25T15:32:01.789Z",
+          "caseId": "8403556009",
+          "description": "Case description",
+          "engagementType": "Investigation",
+          "impactedAccountsToAdd": [
+            "000000000000"
+          ],
+          "impactedAccountsToDelete": [
+            "111111111111"
+          ],
+          "impactedAwsRegionsToAdd": [
+            {
+              "region": "ap-southeast-1"
+            }
+          ],
+          "impactedAwsRegionsToDelete": [
+            {
+              "region": "us-east-1"
+            }
+          ],
+          "impactedServicesToAdd": [
+            "Amazon EC2"
+          ],
+          "impactedServicesToDelete": [
+            "Amazon EKS"
+          ],
+          "reportedIncidentStartDate": "2023-03-27T15:32:01.789Z",
+          "threatActorIpAddressesToAdd": [
+            {
+              "ipAddress": "190.160.190.160",
+              "userAgent": "Browser"
+            }
+          ],
+          "threatActorIpAddressesToDelete": [
+            {
+              "ipAddress": "192.168.192.168",
+              "userAgent": "Browser"
+            }
+          ],
+          "title": "My sample case",
+          "watchersToAdd": [
+            {
+              "name": "Same",
+              "email": "Sam@example.com",
+              "jobTitle": "CEO"
+            }
+          ],
+          "watchersToDelete": [
+            {
+              "name": "Bob",
+              "email": "bob@example.com",
+              "jobTitle": "CFO"
+            }
+          ]
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Invoke UpdateCase"
+      }
+    ],
+    "UpdateCaseComment": [
+      {
+        "input": {
+          "body": "Updated case comment.",
+          "caseId": "8403556009",
+          "commentId": "000000"
+        },
+        "output": {
+          "body": "Updated case comment.",
+          "commentId": "000000"
+        },
+        "id": "example-1",
+        "title": "Invoke UpdateCaseComment"
+      }
+    ],
+    "UpdateCaseStatus": [
+      {
+        "input": {
+          "caseId": "8403556009",
+          "caseStatus": "Post-incident Activities"
+        },
+        "output": {
+          "caseStatus": "Post-incident Activities"
+        },
+        "id": "example-1",
+        "title": "Invoke UpdateCaseStatus"
+      }
+    ],
+    "UpdateMembership": [
+      {
+        "input": {
+          "incidentResponseTeam": [
+            {
+              "name": "Bob Jones",
+              "email": "bob.jones@gmail.com",
+              "jobTitle": "Security Responder"
+            },
+            {
+              "name": "Alice",
+              "email": "alice@example.com",
+              "jobTitle": "CEO"
+            }
+          ],
+          "membershipId": "m-abcd1234efgh",
+          "membershipName": "New membership name",
+          "optInFeatures": [
+            {
+              "featureName": "Triage",
+              "isEnabled": true
+            }
+          ]
+        },
+        "output": {},
+        "id": "example-1",
+        "title": "Invoke UpdateMembership"
+      }
+    ],
+    "UpdateResolverType": [
+      {
+        "input": {
+          "caseId": "8403556009",
+          "resolverType": "AWS"
+        },
+        "output": {
+          "caseId": "8403556009",
+          "caseStatus": "Detection and Analysis",
+          "resolverType": "AWS"
+        },
+        "id": "example-1",
+        "title": "Invoke UpdateResolverType"
+      }
+    ]
+  }
+}

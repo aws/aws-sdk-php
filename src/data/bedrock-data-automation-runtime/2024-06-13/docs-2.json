@@ -1,0 +1,329 @@
+{
+  "version": "2.0",
+  "service": "<p>Amazon Bedrock Data Automation Runtime</p>",
+  "operations": {
+    "GetDataAutomationStatus": "<p>API used to get data automation status.</p>",
+    "InvokeDataAutomationAsync": "<p>Async API: Invoke data automation.</p>",
+    "ListTagsForResource": "<p>List tags for an Amazon Bedrock Data Automation resource</p>",
+    "TagResource": "<p>Tag an Amazon Bedrock Data Automation resource</p>",
+    "UntagResource": "<p>Untag an Amazon Bedrock Data Automation resource</p>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>This exception will be thrown when customer does not have access to API.</p>",
+      "refs": {
+      }
+    },
+    "AssetProcessingConfiguration": {
+      "base": "<p>Config containing asset processing related knobs for all modalities</p>",
+      "refs": {
+        "InputConfiguration$assetProcessingConfiguration": "<p>Asset processing configuration</p>"
+      }
+    },
+    "AutomationJobStatus": {
+      "base": "<p>List of status supported by automation jobs</p>",
+      "refs": {
+        "GetDataAutomationStatusResponse$status": "<p>Job Status.</p>"
+      }
+    },
+    "Blueprint": {
+      "base": "<p>Structure for single blueprint entity.</p>",
+      "refs": {
+        "BlueprintList$member": "<p>Blueprint.</p>"
+      }
+    },
+    "BlueprintArn": {
+      "base": "<p>ARN of a Blueprint</p>",
+      "refs": {
+        "Blueprint$blueprintArn": "<p>Arn of blueprint.</p>"
+      }
+    },
+    "BlueprintList": {
+      "base": "<p>Blueprint list.</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$blueprints": "<p>Blueprint list.</p>"
+      }
+    },
+    "BlueprintStage": {
+      "base": "<p>Blueprint stage enum.</p>",
+      "refs": {
+        "Blueprint$stage": "<p>Stage of blueprint.</p>"
+      }
+    },
+    "BlueprintVersion": {
+      "base": "<p>Blueprint version.</p>",
+      "refs": {
+        "Blueprint$version": "<p>Version of blueprint.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "EventBridgeConfiguration$eventBridgeEnabled": "<p>Event bridge flag.</p>"
+      }
+    },
+    "DataAutomationArn": {
+      "base": "<p>Data automation arn.</p>",
+      "refs": {
+        "DataAutomationConfiguration$dataAutomationProjectArn": "<p>Data automation project arn.</p>"
+      }
+    },
+    "DataAutomationConfiguration": {
+      "base": "<p>Data automation configuration.</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$dataAutomationConfiguration": "<p>Data automation configuration.</p>"
+      }
+    },
+    "DataAutomationProfileArn": {
+      "base": "<p>Data automation profile arn.</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$dataAutomationProfileArn": "<p>Data automation profile ARN</p>"
+      }
+    },
+    "DataAutomationStage": {
+      "base": "<p>Data automation stage.</p>",
+      "refs": {
+        "DataAutomationConfiguration$stage": "<p>Data automation stage.</p>"
+      }
+    },
+    "EncryptionConfiguration": {
+      "base": "<p>Encryption configuration.</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$encryptionConfiguration": "<p>Encryption configuration.</p>"
+      }
+    },
+    "EncryptionContextKey": {
+      "base": "<p>Excryption context key.</p>",
+      "refs": {
+        "EncryptionContextMap$key": null
+      }
+    },
+    "EncryptionContextMap": {
+      "base": null,
+      "refs": {
+        "EncryptionConfiguration$kmsEncryptionContext": "<p>KMS encryption context.</p>"
+      }
+    },
+    "EncryptionContextValue": {
+      "base": "<p>Encryption context value.</p>",
+      "refs": {
+        "EncryptionContextMap$value": null
+      }
+    },
+    "EventBridgeConfiguration": {
+      "base": "<p>Event bridge configuration.</p>",
+      "refs": {
+        "NotificationConfiguration$eventBridgeConfiguration": "<p>Event bridge configuration.</p>"
+      }
+    },
+    "GetDataAutomationStatusRequest": {
+      "base": "<p>Structure for request of GetDataAutomationStatus API.</p>",
+      "refs": {
+      }
+    },
+    "GetDataAutomationStatusResponse": {
+      "base": "<p>Response of GetDataAutomationStatus API.</p>",
+      "refs": {
+      }
+    },
+    "IdempotencyToken": {
+      "base": "<p>Client specified token used for idempotency checks</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$clientToken": "<p>Idempotency token.</p>"
+      }
+    },
+    "InputConfiguration": {
+      "base": "<p>Input configuration.</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$inputConfiguration": "<p>Input configuration.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>This exception is for any internal un-expected service errors.</p>",
+      "refs": {
+      }
+    },
+    "InvocationArn": {
+      "base": "<p>Invocation arn.</p>",
+      "refs": {
+        "GetDataAutomationStatusRequest$invocationArn": "<p>Invocation arn.</p>",
+        "InvokeDataAutomationAsyncResponse$invocationArn": "<p>ARN of the automation job</p>"
+      }
+    },
+    "InvokeDataAutomationAsyncRequest": {
+      "base": "<p>Invoke Data Automation Async Request</p>",
+      "refs": {
+      }
+    },
+    "InvokeDataAutomationAsyncResponse": {
+      "base": "<p>Invoke Data Automation Async Response</p>",
+      "refs": {
+      }
+    },
+    "KMSKeyId": {
+      "base": null,
+      "refs": {
+        "EncryptionConfiguration$kmsKeyId": "<p>Customer KMS key used for encryption</p>"
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "NonBlankString": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ServiceQuotaExceededException$message": null,
+        "ThrottlingException$message": null,
+        "ValidationException$message": null
+      }
+    },
+    "NotificationConfiguration": {
+      "base": "<p>Notification configuration.</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$notificationConfiguration": "<p>Notification configuration.</p>"
+      }
+    },
+    "OutputConfiguration": {
+      "base": "<p>Output configuration.</p>",
+      "refs": {
+        "GetDataAutomationStatusResponse$outputConfiguration": "<p>Output configuration.</p>",
+        "InvokeDataAutomationAsyncRequest$outputConfiguration": "<p>Output configuration.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>This exception will be thrown when resource provided from customer not found.</p>",
+      "refs": {
+      }
+    },
+    "S3Uri": {
+      "base": "<p>A path in S3</p>",
+      "refs": {
+        "InputConfiguration$s3Uri": "<p>S3 uri.</p>",
+        "OutputConfiguration$s3Uri": "<p>S3 uri.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>This exception will be thrown when service quota is exceeded.</p>",
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "GetDataAutomationStatusResponse$errorType": "<p>Error Type.</p>",
+        "GetDataAutomationStatusResponse$errorMessage": "<p>Error Message.</p>"
+      }
+    },
+    "Tag": {
+      "base": "<p>Key value pair of a tag</p>",
+      "refs": {
+        "TagList$member": null
+      }
+    },
+    "TagKey": {
+      "base": "<p>Defines the context of the tag.</p>",
+      "refs": {
+        "Tag$key": null,
+        "TagKeyList$member": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys</p>",
+      "refs": {
+        "UntagResourceRequest$tagKeys": null
+      }
+    },
+    "TagList": {
+      "base": "<p>List of tags</p>",
+      "refs": {
+        "InvokeDataAutomationAsyncRequest$tags": "<p>List of tags.</p>",
+        "ListTagsForResourceResponse$tags": null,
+        "TagResourceRequest$tags": null
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": "<p>Defines the value within the context. e.g. &lt;key=reason, value=training&gt;.</p>",
+      "refs": {
+        "Tag$value": null
+      }
+    },
+    "TaggableResourceArn": {
+      "base": "<p>ARN of a taggable resource</p>",
+      "refs": {
+        "ListTagsForResourceRequest$resourceARN": null,
+        "TagResourceRequest$resourceARN": null,
+        "UntagResourceRequest$resourceARN": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>This exception will be thrown when customer reached API TPS limit.</p>",
+      "refs": {
+      }
+    },
+    "TimestampSegment": {
+      "base": "<p>Timestamp segment</p>",
+      "refs": {
+        "VideoSegmentConfiguration$timestampSegment": "<p>Timestamp segment</p>"
+      }
+    },
+    "TimestampSegmentEndTimeMillisLong": {
+      "base": null,
+      "refs": {
+        "TimestampSegment$endTimeMillis": "<p>End timestamp in milliseconds</p>"
+      }
+    },
+    "TimestampSegmentStartTimeMillisLong": {
+      "base": null,
+      "refs": {
+        "TimestampSegment$startTimeMillis": "<p>Start timestamp in milliseconds</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>This exception will be thrown when customer provided invalid parameters.</p>",
+      "refs": {
+      }
+    },
+    "VideoAssetProcessingConfiguration": {
+      "base": "<p>Video asset processing configuration</p>",
+      "refs": {
+        "AssetProcessingConfiguration$video": "<p>Video asset processing configuration</p>"
+      }
+    },
+    "VideoSegmentConfiguration": {
+      "base": "<p>Delimits the segment of the input that will be processed</p>",
+      "refs": {
+        "VideoAssetProcessingConfiguration$segmentConfiguration": "<p>Delimits the segment of the input that will be processed</p>"
+      }
+    }
+  }
+}

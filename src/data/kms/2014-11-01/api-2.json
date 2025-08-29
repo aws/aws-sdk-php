@@ -194,6 +194,7 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteImportedKeyMaterialRequest"},
+      "output":{"shape":"DeleteImportedKeyMaterialResponse"},
       "errors":[
         {"shape":"InvalidArnException"},
         {"shape":"UnsupportedOperationException"},
@@ -1021,6 +1022,18 @@
       "max":262144,
       "min":1
     },
+    "BackingKeyIdResponseType":{
+      "type":"string",
+      "max":64,
+      "min":0,
+      "pattern":"^[a-f0-9]+$"
+    },
+    "BackingKeyIdType":{
+      "type":"string",
+      "max":64,
+      "min":64,
+      "pattern":"^[a-f0-9]+$"
+    },
     "BooleanType":{"type":"boolean"},
     "CancelKeyDeletionRequest":{
       "type":"structure",
@@ -1097,8 +1110,7 @@
     },
     "ConnectCustomKeyStoreResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConnectionErrorCodeType":{
       "type":"string",
@@ -1340,7 +1352,8 @@
         "KeyId":{"shape":"KeyIdType"},
         "Plaintext":{"shape":"PlaintextType"},
         "EncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
-        "CiphertextForRecipient":{"shape":"CiphertextType"}
+        "CiphertextForRecipient":{"shape":"CiphertextType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "DeleteAliasRequest":{
@@ -1359,14 +1372,21 @@
     },
     "DeleteCustomKeyStoreResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteImportedKeyMaterialRequest":{
       "type":"structure",
       "required":["KeyId"],
       "members":{
-        "KeyId":{"shape":"KeyIdType"}
+        "KeyId":{"shape":"KeyIdType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
+      }
+    },
+    "DeleteImportedKeyMaterialResponse":{
+      "type":"structure",
+      "members":{
+        "KeyId":{"shape":"KeyIdType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdResponseType"}
       }
     },
     "DependencyTimeoutException":{
@@ -1469,8 +1489,7 @@
     },
     "DisconnectCustomKeyStoreResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DryRunOperationException":{
       "type":"structure",
@@ -1575,7 +1594,8 @@
         "PublicKey":{"shape":"PublicKeyType"},
         "KeyId":{"shape":"KeyIdType"},
         "KeyPairSpec":{"shape":"DataKeyPairSpec"},
-        "CiphertextForRecipient":{"shape":"CiphertextType"}
+        "CiphertextForRecipient":{"shape":"CiphertextType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "GenerateDataKeyPairWithoutPlaintextRequest":{
@@ -1598,7 +1618,8 @@
         "PrivateKeyCiphertextBlob":{"shape":"CiphertextType"},
         "PublicKey":{"shape":"PublicKeyType"},
         "KeyId":{"shape":"KeyIdType"},
-        "KeyPairSpec":{"shape":"DataKeyPairSpec"}
+        "KeyPairSpec":{"shape":"DataKeyPairSpec"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "GenerateDataKeyRequest":{
@@ -1620,7 +1641,8 @@
         "CiphertextBlob":{"shape":"CiphertextType"},
         "Plaintext":{"shape":"PlaintextType"},
         "KeyId":{"shape":"KeyIdType"},
-        "CiphertextForRecipient":{"shape":"CiphertextType"}
+        "CiphertextForRecipient":{"shape":"CiphertextType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "GenerateDataKeyWithoutPlaintextRequest":{
@@ -1639,7 +1661,8 @@
       "type":"structure",
       "members":{
         "CiphertextBlob":{"shape":"CiphertextType"},
-        "KeyId":{"shape":"KeyIdType"}
+        "KeyId":{"shape":"KeyIdType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "GenerateMacRequest":{
@@ -1844,13 +1867,39 @@
         "ImportToken":{"shape":"CiphertextType"},
         "EncryptedKeyMaterial":{"shape":"CiphertextType"},
         "ValidTo":{"shape":"DateType"},
-        "ExpirationModel":{"shape":"ExpirationModelType"}
+        "ExpirationModel":{"shape":"ExpirationModelType"},
+        "ImportType":{"shape":"ImportType"},
+        "KeyMaterialDescription":{"shape":"KeyMaterialDescriptionType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "ImportKeyMaterialResponse":{
       "type":"structure",
       "members":{
+        "KeyId":{"shape":"KeyIdType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"}
       }
+    },
+    "ImportState":{
+      "type":"string",
+      "enum":[
+        "IMPORTED",
+        "PENDING_IMPORT"
+      ]
+    },
+    "ImportType":{
+      "type":"string",
+      "enum":[
+        "NEW_KEY_MATERIAL",
+        "EXISTING_KEY_MATERIAL"
+      ]
+    },
+    "IncludeKeyMaterial":{
+      "type":"string",
+      "enum":[
+        "ALL_KEY_MATERIAL",
+        "ROTATIONS_ONLY"
+      ]
     },
     "IncorrectKeyException":{
       "type":"structure",
@@ -1993,6 +2042,20 @@
         "CUSTOMER"
       ]
     },
+    "KeyMaterialDescriptionType":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^[a-zA-Z0-9:/_\\s.-]+$"
+    },
+    "KeyMaterialState":{
+      "type":"string",
+      "enum":[
+        "NON_CURRENT",
+        "CURRENT",
+        "PENDING_ROTATION"
+      ]
+    },
     "KeyMetadata":{
       "type":"structure",
       "required":["KeyId"],
@@ -2025,7 +2088,8 @@
         "MultiRegionConfiguration":{"shape":"MultiRegionConfiguration"},
         "PendingDeletionWindowInDays":{"shape":"PendingWindowInDaysType"},
         "MacAlgorithms":{"shape":"MacAlgorithmSpecList"},
-        "XksKeyConfiguration":{"shape":"XksKeyConfigurationType"}
+        "XksKeyConfiguration":{"shape":"XksKeyConfigurationType"},
+        "CurrentKeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "KeySpec":{
@@ -2043,7 +2107,10 @@
         "HMAC_256",
         "HMAC_384",
         "HMAC_512",
-        "SM2"
+        "SM2",
+        "ML_DSA_44",
+        "ML_DSA_65",
+        "ML_DSA_87"
       ]
     },
     "KeyState":{
@@ -2151,6 +2218,7 @@
       "required":["KeyId"],
       "members":{
         "KeyId":{"shape":"KeyIdType"},
+        "IncludeKeyMaterial":{"shape":"IncludeKeyMaterial"},
         "Limit":{"shape":"LimitType"},
         "Marker":{"shape":"MarkerType"}
       }
@@ -2234,7 +2302,8 @@
       "type":"string",
       "enum":[
         "RAW",
-        "DIGEST"
+        "DIGEST",
+        "EXTERNAL_MU"
       ]
     },
     "MultiRegionConfiguration":{
@@ -2361,7 +2430,9 @@
         "SourceKeyId":{"shape":"KeyIdType"},
         "KeyId":{"shape":"KeyIdType"},
         "SourceEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
-        "DestinationEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"}
+        "DestinationEncryptionAlgorithm":{"shape":"EncryptionAlgorithmSpec"},
+        "SourceKeyMaterialId":{"shape":"BackingKeyIdType"},
+        "DestinationKeyMaterialId":{"shape":"BackingKeyIdType"}
       }
     },
     "RecipientInfo":{
@@ -2454,6 +2525,12 @@
       "type":"structure",
       "members":{
         "KeyId":{"shape":"KeyIdType"},
+        "KeyMaterialId":{"shape":"BackingKeyIdType"},
+        "KeyMaterialDescription":{"shape":"KeyMaterialDescriptionType"},
+        "ImportState":{"shape":"ImportState"},
+        "KeyMaterialState":{"shape":"KeyMaterialState"},
+        "ExpirationModel":{"shape":"ExpirationModelType"},
+        "ValidTo":{"shape":"DateType"},
         "RotationDate":{"shape":"DateType"},
         "RotationType":{"shape":"RotationType"}
       }
@@ -2511,7 +2588,8 @@
         "ECDSA_SHA_256",
         "ECDSA_SHA_384",
         "ECDSA_SHA_512",
-        "SM2DSA"
+        "SM2DSA",
+        "ML_DSA_SHAKE_256"
       ]
     },
     "SigningAlgorithmSpecList":{
@@ -2616,8 +2694,7 @@
     },
     "UpdateCustomKeyStoreResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateKeyDescriptionRequest":{
       "type":"structure",

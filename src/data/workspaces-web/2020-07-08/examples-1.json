@@ -1,5 +1,333 @@
 {
   "version": "1.0",
   "examples": {
+    "AssociateSessionLogger": [
+      {
+        "input": {
+          "portalArn": "arn:aws:workspaces-web:us-west-2:123456789012:portal/12345678-1234-1234-1234-123456789012",
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/11111111-1111-1111-1111-111111111111"
+        },
+        "output": {
+          "portalArn": "arn:aws:workspaces-web:us-west-2:123456789012:portal/12345678-1234-1234-1234-123456789012",
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/11111111-1111-1111-1111-111111111111"
+        },
+        "description": "Associates a session logger with a portal",
+        "id": "example-1",
+        "title": "Associate Session Logger with Portal"
+      }
+    ],
+    "CreateSessionLogger": [
+      {
+        "input": {
+          "displayName": "Session Logger with All Events",
+          "eventFilter": {
+            "all": {
+            }
+          },
+          "logConfiguration": {
+            "s3": {
+              "bucket": "my-session-logs-bucket",
+              "bucketOwner": "123456789012",
+              "folderStructure": "Flat",
+              "keyPrefix": "session-logs/all/events",
+              "logFileFormat": "Json"
+            }
+          }
+        },
+        "output": {
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/12345678-1234-1234-1234-123456789012"
+        },
+        "description": "Creates a session logger that captures all events and stores them in S3 with JSON format and flat folder structure",
+        "id": "example-1",
+        "title": "Create Session Logger with All Events"
+      },
+      {
+        "input": {
+          "additionalEncryptionContext": {
+            "EncryptionContextKey": "EncryptionContextValue"
+          },
+          "customerManagedKey": "arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-123456789012",
+          "displayName": "Session Logger with Each Events",
+          "eventFilter": {
+            "include": [
+              "SessionStart",
+              "SessionEnd",
+              "UrlLoad",
+              "WebsiteInteract"
+            ]
+          },
+          "logConfiguration": {
+            "s3": {
+              "bucket": "my-session-logs-bucket",
+              "bucketOwner": "123456789012",
+              "folderStructure": "NestedByDate",
+              "keyPrefix": "session-logs/each/event",
+              "logFileFormat": "JSONLines"
+            }
+          },
+          "tags": [
+            {
+              "Key": "KEY-1",
+              "Value": "VALUE-1"
+            },
+            {
+              "Key": "KEY-2",
+              "Value": "VALUE-2"
+            }
+          ]
+        },
+        "output": {
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/87654321-4321-4321-4321-210987654321"
+        },
+        "description": "Creates a session logger that captures only specific events with JSONLines format and nested folder structure",
+        "id": "example-2",
+        "title": "Create Session Logger with Specific Events"
+      }
+    ],
+    "DeleteSessionLogger": [
+      {
+        "input": {
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/12345678-1234-1234-1234-123456789012"
+        },
+        "output": {
+        },
+        "description": "Deletes a session logger resource",
+        "id": "example-1",
+        "title": "Delete Session Logger"
+      }
+    ],
+    "DisassociateSessionLogger": [
+      {
+        "input": {
+          "portalArn": "arn:aws:workspaces-web:us-west-2:123456789012:portal/12345678-1234-1234-1234-123456789012"
+        },
+        "output": {
+        },
+        "description": "Removes the association between a session logger and a portal",
+        "id": "example-1",
+        "title": "Disassociate Session Logger from Portal"
+      }
+    ],
+    "GetSessionLogger": [
+      {
+        "input": {
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/12345678-1234-1234-1234-123456789012"
+        },
+        "output": {
+          "sessionLogger": {
+            "associatedPortalArns": [
+              "arn:aws:workspaces-web:us-west-2:123456789012:portal/87654321-4321-4321-4321-210987654321"
+            ],
+            "creationDate": "2024-01-15T10:30:00Z",
+            "displayName": "Session Logger with All Events",
+            "eventFilter": {
+              "all": {
+              }
+            },
+            "logConfiguration": {
+              "s3": {
+                "bucket": "my-session-logs-bucket-1",
+                "bucketOwner": "123456789012",
+                "folderStructure": "Flat",
+                "keyPrefix": "session-logs/all/events",
+                "logFileFormat": "Json"
+              }
+            },
+            "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/12345678-1234-1234-1234-123456789012"
+          }
+        },
+        "description": "Retrieves a session logger configured for all events",
+        "id": "example-1",
+        "title": "Get Session Logger with All Events"
+      },
+      {
+        "input": {
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/87654321-4321-4321-4321-210987654321"
+        },
+        "output": {
+          "sessionLogger": {
+            "additionalEncryptionContext": {
+              "EncryptionContextKey": "EncryptionContextValue"
+            },
+            "creationDate": "2024-01-15T14:45:00Z",
+            "customerManagedKey": "arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-123456789012",
+            "displayName": "Session Logger with Each Events",
+            "eventFilter": {
+              "include": [
+                "SessionStart",
+                "SessionEnd",
+                "UrlLoad",
+                "WebsiteInteract"
+              ]
+            },
+            "logConfiguration": {
+              "s3": {
+                "bucket": "my-session-logs-bucket-2",
+                "bucketOwner": "123456789012",
+                "folderStructure": "NestedByDate",
+                "keyPrefix": "session-logs/each/event",
+                "logFileFormat": "JSONLines"
+              }
+            },
+            "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/87654321-4321-4321-4321-210987654321"
+          }
+        },
+        "description": "Retrieves a session logger configured for specific events",
+        "id": "example-2",
+        "title": "Get Session Logger with Specific Events"
+      }
+    ],
+    "ListSessionLoggers": [
+      {
+        "input": {
+        },
+        "output": {
+          "sessionLoggers": [
+            {
+              "creationDate": "2024-01-15T10:30:00Z",
+              "displayName": "Session Logger with All Events",
+              "logConfiguration": {
+                "s3": {
+                  "bucket": "my-session-logs-bucket-1",
+                  "bucketOwner": "123456789012",
+                  "folderStructure": "Flat",
+                  "keyPrefix": "session-logs/all/events",
+                  "logFileFormat": "Json"
+                }
+              },
+              "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/12345678-1234-1234-1234-123456789012"
+            },
+            {
+              "creationDate": "2024-01-15T14:45:00Z",
+              "displayName": "Session Logger with Each Events",
+              "logConfiguration": {
+                "s3": {
+                  "bucket": "my-session-logs-bucket-2",
+                  "bucketOwner": "123456789012",
+                  "folderStructure": "NestedByDate",
+                  "keyPrefix": "session-logs/each/event",
+                  "logFileFormat": "JSONLines"
+                }
+              },
+              "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/87654321-4321-4321-4321-210987654321"
+            }
+          ]
+        },
+        "description": "Lists all session loggers in the account without pagination",
+        "id": "example-1",
+        "title": "List All Session Loggers"
+      },
+      {
+        "input": {
+          "maxResults": 1,
+          "nextToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        },
+        "output": {
+          "nextToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+          "sessionLoggers": [
+            {
+              "creationDate": "2024-03-15T12:45:00Z",
+              "displayName": "Session Logger Example with Pagination",
+              "logConfiguration": {
+                "s3": {
+                  "bucket": "my-session-logs-bucket-3",
+                  "bucketOwner": "123456789012",
+                  "folderStructure": "Flat",
+                  "keyPrefix": "session-logs/pagination/example",
+                  "logFileFormat": "JSONLines"
+                }
+              },
+              "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/11111111-1111-1111-1111-111111111111"
+            }
+          ]
+        },
+        "description": "Lists session loggers with pagination parameters",
+        "id": "example-2",
+        "title": "List Session Loggers with Pagination"
+      }
+    ],
+    "UpdateSessionLogger": [
+      {
+        "input": {
+          "eventFilter": {
+            "include": [
+              "SessionStart",
+              "SessionEnd",
+              "UrlLoad",
+              "WebsiteInteract"
+            ]
+          },
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/12345678-1234-1234-1234-123456789012"
+        },
+        "output": {
+          "sessionLogger": {
+            "creationDate": "2024-01-15T10:30:00Z",
+            "displayName": "Updated Session Logger with Specific Events",
+            "eventFilter": {
+              "include": [
+                "SessionStart",
+                "SessionEnd",
+                "UrlLoad",
+                "WebsiteInteract"
+              ]
+            },
+            "logConfiguration": {
+              "s3": {
+                "bucket": "my-session-logs-bucket",
+                "bucketOwner": "123456789012",
+                "folderStructure": "Flat",
+                "keyPrefix": "updated/session-logs/each/event",
+                "logFileFormat": "Json"
+              }
+            },
+            "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/12345678-1234-1234-1234-123456789012"
+          }
+        },
+        "description": "Updates a session logger to capture specific events instead of all events",
+        "id": "example-1",
+        "title": "Update Session Logger Event Filter"
+      },
+      {
+        "input": {
+          "logConfiguration": {
+            "s3": {
+              "bucket": "updated-my-session-logs-bucket-2",
+              "bucketOwner": "123456789012",
+              "folderStructure": "Flat",
+              "keyPrefix": "updated/key/prefix",
+              "logFileFormat": "Json"
+            }
+          },
+          "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/87654321-4321-4321-4321-210987654321"
+        },
+        "output": {
+          "sessionLogger": {
+            "additionalEncryptionContext": {
+              "EncryptionContextKey": "EncryptionContextValue"
+            },
+            "creationDate": "2024-01-15T14:45:00Z",
+            "customerManagedKey": "arn:aws:kms:us-west-2:123456789012:key/12345678-1234-1234-1234-123456789012",
+            "displayName": "Updated Session Logger with Log Config",
+            "eventFilter": {
+              "all": {
+              }
+            },
+            "logConfiguration": {
+              "s3": {
+                "bucket": "updated-my-session-logs-bucket-2",
+                "bucketOwner": "123456789012",
+                "folderStructure": "Flat",
+                "keyPrefix": "updated/key/prefix",
+                "logFileFormat": "Json"
+              }
+            },
+            "sessionLoggerArn": "arn:aws:workspaces-web:us-west-2:123456789012:sessionLogger/87654321-4321-4321-4321-210987654321"
+          }
+        },
+        "description": "Updates the log configuration of a session logger",
+        "id": "example-2",
+        "title": "Update Session Logger Configuration"
+      }
+    ]
   }
 }

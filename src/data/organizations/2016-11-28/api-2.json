@@ -5,12 +5,14 @@
     "endpointPrefix":"organizations",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Organizations",
     "serviceFullName":"AWS Organizations",
     "serviceId":"Organizations",
     "signatureVersion":"v4",
     "targetPrefix":"AWSOrganizationsV20161128",
-    "uid":"organizations-2016-11-28"
+    "uid":"organizations-2016-11-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptHandshake":{
@@ -539,6 +541,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"AWSOrganizationsNotInUseException"},
         {"shape":"ConcurrentModificationException"},
+        {"shape":"ConstraintViolationException"},
         {"shape":"HandshakeConstraintViolationException"},
         {"shape":"InvalidInputException"},
         {"shape":"ServiceException"},
@@ -659,6 +662,25 @@
         {"shape":"TooManyRequestsException"}
       ]
     },
+    "ListAccountsWithInvalidEffectivePolicy":{
+      "name":"ListAccountsWithInvalidEffectivePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListAccountsWithInvalidEffectivePolicyRequest"},
+      "output":{"shape":"ListAccountsWithInvalidEffectivePolicyResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"EffectivePolicyNotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"UnsupportedAPIEndpointException"}
+      ]
+    },
     "ListChildren":{
       "name":"ListChildren",
       "http":{
@@ -728,6 +750,26 @@
         {"shape":"InvalidInputException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"ServiceException"},
+        {"shape":"UnsupportedAPIEndpointException"}
+      ]
+    },
+    "ListEffectivePolicyValidationErrors":{
+      "name":"ListEffectivePolicyValidationErrors",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListEffectivePolicyValidationErrorsRequest"},
+      "output":{"shape":"ListEffectivePolicyValidationErrorsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"AWSOrganizationsNotInUseException"},
+        {"shape":"ConstraintViolationException"},
+        {"shape":"EffectivePolicyNotFoundException"},
+        {"shape":"ServiceException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"AccountNotFoundException"},
+        {"shape":"InvalidInputException"},
         {"shape":"UnsupportedAPIEndpointException"}
       ]
     },
@@ -1293,13 +1335,16 @@
         "CANNOT_REGISTER_MASTER_AS_DELEGATED_ADMINISTRATOR",
         "CANNOT_REMOVE_DELEGATED_ADMINISTRATOR_FROM_ORG",
         "DELEGATED_ADMINISTRATOR_EXISTS_FOR_THIS_SERVICE",
+        "POLICY_TYPE_ENABLED_FOR_THIS_SERVICE",
         "MASTER_ACCOUNT_MISSING_BUSINESS_LICENSE",
         "CANNOT_CLOSE_MANAGEMENT_ACCOUNT",
         "CLOSE_ACCOUNT_QUOTA_EXCEEDED",
         "CLOSE_ACCOUNT_REQUESTS_LIMIT_EXCEEDED",
         "SERVICE_ACCESS_NOT_ENABLED",
         "INVALID_PAYMENT_INSTRUMENT",
-        "ACCOUNT_CREATION_NOT_COMPLETE"
+        "ACCOUNT_CREATION_NOT_COMPLETE",
+        "CANNOT_REGISTER_SUSPENDED_ACCOUNT_AS_DELEGATED_ADMINISTRATOR",
+        "ALL_FEATURES_MIGRATION_ORGANIZATION_SIZE_LIMIT_EXCEEDED"
       ]
     },
     "CreateAccountFailureReason":{
@@ -1717,8 +1762,24 @@
       "enum":[
         "TAG_POLICY",
         "BACKUP_POLICY",
-        "AISERVICES_OPT_OUT_POLICY"
+        "AISERVICES_OPT_OUT_POLICY",
+        "CHATBOT_POLICY",
+        "DECLARATIVE_POLICY_EC2",
+        "SECURITYHUB_POLICY"
       ]
+    },
+    "EffectivePolicyValidationError":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "ErrorMessage":{"shape":"ErrorMessage"},
+        "PathToError":{"shape":"PathToError"},
+        "ContributingPolicies":{"shape":"PolicyIds"}
+      }
+    },
+    "EffectivePolicyValidationErrors":{
+      "type":"list",
+      "member":{"shape":"EffectivePolicyValidationError"}
     },
     "Email":{
       "type":"string",
@@ -1736,8 +1797,7 @@
     },
     "EnableAllFeaturesRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "EnableAllFeaturesResponse":{
       "type":"structure",
@@ -1773,6 +1833,8 @@
       "type":"list",
       "member":{"shape":"EnabledServicePrincipal"}
     },
+    "ErrorCode":{"type":"string"},
+    "ErrorMessage":{"type":"string"},
     "ExceptionMessage":{"type":"string"},
     "ExceptionType":{"type":"string"},
     "FinalizingOrganizationException":{
@@ -1982,9 +2044,11 @@
         "TARGET_NOT_SUPPORTED",
         "INVALID_EMAIL_ADDRESS_TARGET",
         "INVALID_RESOURCE_POLICY_JSON",
+        "INVALID_PRINCIPAL",
         "UNSUPPORTED_ACTION_IN_RESOURCE_POLICY",
         "UNSUPPORTED_POLICY_TYPE_IN_RESOURCE_POLICY",
-        "UNSUPPORTED_RESOURCE_IN_RESOURCE_POLICY"
+        "UNSUPPORTED_RESOURCE_IN_RESOURCE_POLICY",
+        "NON_DETACHABLE_POLICY"
       ]
     },
     "InviteAccountToOrganizationRequest":{
@@ -2043,6 +2107,23 @@
       "type":"structure",
       "members":{
         "Accounts":{"shape":"Accounts"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAccountsWithInvalidEffectivePolicyRequest":{
+      "type":"structure",
+      "required":["PolicyType"],
+      "members":{
+        "PolicyType":{"shape":"EffectivePolicyType"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListAccountsWithInvalidEffectivePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "Accounts":{"shape":"Accounts"},
+        "PolicyType":{"shape":"EffectivePolicyType"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2110,6 +2191,30 @@
       "members":{
         "DelegatedServices":{"shape":"DelegatedServices"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListEffectivePolicyValidationErrorsRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "PolicyType"
+      ],
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "PolicyType":{"shape":"EffectivePolicyType"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListEffectivePolicyValidationErrorsResponse":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "PolicyType":{"shape":"EffectivePolicyType"},
+        "Path":{"shape":"Path"},
+        "EvaluationTimestamp":{"shape":"Timestamp"},
+        "NextToken":{"shape":"NextToken"},
+        "EffectivePolicyValidationErrors":{"shape":"EffectivePolicyValidationErrors"}
       }
     },
     "ListHandshakesForAccountRequest":{
@@ -2398,6 +2503,11 @@
       "type":"list",
       "member":{"shape":"Parent"}
     },
+    "Path":{
+      "type":"string",
+      "pattern":"^(o-[a-z0-9]{10,32}\\/r-[0-9a-z]{4,32}(\\/ou\\-[0-9a-z]{4,32}-[a-z0-9]{8,32})*(\\/\\d{12})*)\\/"
+    },
+    "PathToError":{"type":"string"},
     "Policies":{
       "type":"list",
       "member":{"shape":"PolicySummary"}
@@ -2434,6 +2544,10 @@
       "type":"string",
       "max":130,
       "pattern":"^p-[0-9a-zA-Z_]{8,128}$"
+    },
+    "PolicyIds":{
+      "type":"list",
+      "member":{"shape":"PolicyId"}
     },
     "PolicyInUseException":{
       "type":"structure",
@@ -2495,9 +2609,13 @@
       "type":"string",
       "enum":[
         "SERVICE_CONTROL_POLICY",
+        "RESOURCE_CONTROL_POLICY",
         "TAG_POLICY",
         "BACKUP_POLICY",
-        "AISERVICES_OPT_OUT_POLICY"
+        "AISERVICES_OPT_OUT_POLICY",
+        "CHATBOT_POLICY",
+        "DECLARATIVE_POLICY_EC2",
+        "SECURITYHUB_POLICY"
       ]
     },
     "PolicyTypeAlreadyEnabledException":{

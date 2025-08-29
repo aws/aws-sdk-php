@@ -4,11 +4,13 @@
     "apiVersion":"2015-05-28",
     "endpointPrefix":"iot",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"AWS IoT",
     "serviceId":"IoT",
     "signatureVersion":"v4",
     "signingName":"iot",
-    "uid":"iot-2015-05-28"
+    "uid":"iot-2015-05-28",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptCertificateTransfer":{
@@ -57,6 +59,25 @@
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "AssociateSbomWithPackageVersion":{
+      "name":"AssociateSbomWithPackageVersion",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/packages/{packageName}/versions/{versionName}/sbom",
+        "responseCode":200
+      },
+      "input":{"shape":"AssociateSbomWithPackageVersionRequest"},
+      "output":{"shape":"AssociateSbomWithPackageVersionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
     },
     "AssociateTargetsWithJob":{
       "name":"AssociateTargetsWithJob",
@@ -351,6 +372,22 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "CreateCommand":{
+      "name":"CreateCommand",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"CreateCommandRequest"},
+      "output":{"shape":"CreateCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "CreateCustomMetric":{
@@ -785,7 +822,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ServiceUnavailableException"},
-        {"shape":"ConflictingResourceUpdateException"}
+        {"shape":"ConflictingResourceUpdateException"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "CreateTopicRuleDestination":{
@@ -801,7 +839,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ServiceUnavailableException"},
-        {"shape":"ConflictingResourceUpdateException"}
+        {"shape":"ConflictingResourceUpdateException"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "DeleteAccountAuditConfiguration":{
@@ -918,6 +957,36 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteCommand":{
+      "name":"DeleteCommand",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"DeleteCommandRequest"},
+      "output":{"shape":"DeleteCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DeleteCommandExecution":{
+      "name":"DeleteCommandExecution",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/command-executions/{executionId}"
+      },
+      "input":{"shape":"DeleteCommandExecutionRequest"},
+      "output":{"shape":"DeleteCommandExecutionResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "DeleteCustomMetric":{
@@ -1603,6 +1672,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeEncryptionConfiguration":{
+      "name":"DescribeEncryptionConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/encryption-configuration"
+      },
+      "input":{"shape":"DescribeEncryptionConfigurationRequest"},
+      "output":{"shape":"DescribeEncryptionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeEndpoint":{
       "name":"DescribeEndpoint",
       "http":{
@@ -1981,6 +2066,24 @@
         {"shape":"ConflictingResourceUpdateException"}
       ]
     },
+    "DisassociateSbomFromPackageVersion":{
+      "name":"DisassociateSbomFromPackageVersion",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/packages/{packageName}/versions/{versionName}/sbom",
+        "responseCode":200
+      },
+      "input":{"shape":"DisassociateSbomFromPackageVersionRequest"},
+      "output":{"shape":"DisassociateSbomFromPackageVersionResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "EnableTopicRule":{
       "name":"EnableTopicRule",
       "http":{
@@ -2049,6 +2152,36 @@
         {"shape":"InvalidQueryException"},
         {"shape":"InvalidAggregationException"},
         {"shape":"IndexNotReadyException"}
+      ]
+    },
+    "GetCommand":{
+      "name":"GetCommand",
+      "http":{
+        "method":"GET",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"GetCommandRequest"},
+      "output":{"shape":"GetCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetCommandExecution":{
+      "name":"GetCommandExecution",
+      "http":{
+        "method":"GET",
+        "requestUri":"/command-executions/{executionId}"
+      },
+      "input":{"shape":"GetCommandExecutionRequest"},
+      "output":{"shape":"GetCommandExecutionResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "GetEffectivePolicies":{
@@ -2264,6 +2397,24 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidQueryException"},
         {"shape":"InvalidAggregationException"},
+        {"shape":"IndexNotReadyException"}
+      ]
+    },
+    "GetThingConnectivityData":{
+      "name":"GetThingConnectivityData",
+      "http":{
+        "method":"POST",
+        "requestUri":"/things/{thingName}/connectivity-data"
+      },
+      "input":{"shape":"GetThingConnectivityDataRequest"},
+      "output":{"shape":"GetThingConnectivityDataResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"IndexNotReadyException"}
       ]
     },
@@ -2507,6 +2658,35 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListCommandExecutions":{
+      "name":"ListCommandExecutions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/command-executions"
+      },
+      "input":{"shape":"ListCommandExecutionsRequest"},
+      "output":{"shape":"ListCommandExecutionsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListCommands":{
+      "name":"ListCommands",
+      "http":{
+        "method":"GET",
+        "requestUri":"/commands"
+      },
+      "input":{"shape":"ListCommandsRequest"},
+      "output":{"shape":"ListCommandsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListCustomMetrics":{
@@ -2864,6 +3044,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListPrincipalThingsV2":{
+      "name":"ListPrincipalThingsV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/principals/things-v2"
+      },
+      "input":{"shape":"ListPrincipalThingsV2Request"},
+      "output":{"shape":"ListPrincipalThingsV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListProvisioningTemplateVersions":{
       "name":"ListProvisioningTemplateVersions",
       "http":{
@@ -2924,6 +3121,22 @@
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListSbomValidationResults":{
+      "name":"ListSbomValidationResults",
+      "http":{
+        "method":"GET",
+        "requestUri":"/packages/{packageName}/versions/{versionName}/sbom-validation-results",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSbomValidationResultsRequest"},
+      "output":{"shape":"ListSbomValidationResultsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListScheduledAudits":{
@@ -3081,6 +3294,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "ListThingPrincipalsV2":{
+      "name":"ListThingPrincipalsV2",
+      "http":{
+        "method":"GET",
+        "requestUri":"/things/{thingName}/principals-v2"
+      },
+      "input":{"shape":"ListThingPrincipalsV2Request"},
+      "output":{"shape":"ListThingPrincipalsV2Response"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListThingRegistrationTaskReports":{
       "name":"ListThingRegistrationTaskReports",
       "http":{
@@ -3199,7 +3429,8 @@
       "errors":[
         {"shape":"InternalException"},
         {"shape":"InvalidRequestException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"UnauthorizedException"}
       ]
     },
     "ListV2LoggingLevels":{
@@ -3757,6 +3988,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateCommand":{
+      "name":"UpdateCommand",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/commands/{commandId}"
+      },
+      "input":{"shape":"UpdateCommandRequest"},
+      "output":{"shape":"UpdateCommandResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateCustomMetric":{
       "name":"UpdateCustomMetric",
       "http":{
@@ -3820,6 +4067,22 @@
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidQueryException"}
+      ]
+    },
+    "UpdateEncryptionConfiguration":{
+      "name":"UpdateEncryptionConfiguration",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/encryption-configuration"
+      },
+      "input":{"shape":"UpdateEncryptionConfigurationRequest"},
+      "output":{"shape":"UpdateEncryptionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "UpdateEventConfigurations":{
@@ -4028,6 +4291,7 @@
       "output":{"shape":"UpdateStreamResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"LimitExceededException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"UnauthorizedException"},
@@ -4082,6 +4346,23 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateThingType":{
+      "name":"UpdateThingType",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/thing-types/{thingTypeName}"
+      },
+      "input":{"shape":"UpdateThingTypeRequest"},
+      "output":{"shape":"UpdateThingTypeResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "UpdateTopicRuleDestination":{
@@ -4246,8 +4527,7 @@
     },
     "AddThingToBillingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddThingToThingGroupRequest":{
       "type":"structure",
@@ -4261,8 +4541,7 @@
     },
     "AddThingToThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AddThingsToThingGroupParams":{
       "type":"structure",
@@ -4345,6 +4624,15 @@
         "policies":{"shape":"Policies"}
       }
     },
+    "ApplicationProtocol":{
+      "type":"string",
+      "enum":[
+        "SECURE_MQTT",
+        "MQTT_WSS",
+        "HTTPS",
+        "DEFAULT"
+      ]
+    },
     "ApproximateSecondsBeforeTimedOut":{"type":"long"},
     "AscendingOrder":{"type":"boolean"},
     "AssetId":{"type":"string"},
@@ -4397,6 +4685,42 @@
         "integerValue":{"shape":"AssetPropertyIntegerValue"},
         "doubleValue":{"shape":"AssetPropertyDoubleValue"},
         "booleanValue":{"shape":"AssetPropertyBooleanValue"}
+      }
+    },
+    "AssociateSbomWithPackageVersionRequest":{
+      "type":"structure",
+      "required":[
+        "packageName",
+        "versionName",
+        "sbom"
+      ],
+      "members":{
+        "packageName":{
+          "shape":"PackageName",
+          "location":"uri",
+          "locationName":"packageName"
+        },
+        "versionName":{
+          "shape":"VersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "sbom":{"shape":"Sbom"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "AssociateSbomWithPackageVersionResponse":{
+      "type":"structure",
+      "members":{
+        "packageName":{"shape":"PackageName"},
+        "versionName":{"shape":"VersionName"},
+        "sbom":{"shape":"Sbom"},
+        "sbomValidationStatus":{"shape":"SbomValidationStatus"}
       }
     },
     "AssociateTargetsWithJobRequest":{
@@ -4483,8 +4807,7 @@
     },
     "AttachSecurityProfileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AttachThingPrincipalRequest":{
       "type":"structure",
@@ -4502,13 +4825,17 @@
           "shape":"Principal",
           "location":"header",
           "locationName":"x-amzn-principal"
+        },
+        "thingPrincipalType":{
+          "shape":"ThingPrincipalType",
+          "location":"querystring",
+          "locationName":"thingPrincipalType"
         }
       }
     },
     "AttachThingPrincipalResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "AttributeKey":{"type":"string"},
     "AttributeName":{
@@ -4526,7 +4853,7 @@
     "AttributeValue":{
       "type":"string",
       "max":800,
-      "pattern":"[a-zA-Z0-9_.,@/:#-]*"
+      "pattern":"[a-zA-Z0-9_.,@/:#=\\[\\]-]*"
     },
     "Attributes":{
       "type":"map",
@@ -4541,7 +4868,8 @@
     "AuditCheckConfiguration":{
       "type":"structure",
       "members":{
-        "enabled":{"shape":"Enabled"}
+        "enabled":{"shape":"Enabled"},
+        "configuration":{"shape":"CheckCustomConfiguration"}
       }
     },
     "AuditCheckConfigurations":{
@@ -4799,6 +5127,16 @@
       "type":"list",
       "member":{"shape":"AuthResult"}
     },
+    "AuthenticationType":{
+      "type":"string",
+      "enum":[
+        "CUSTOM_AUTH_X509",
+        "CUSTOM_AUTH",
+        "AWS_X509",
+        "AWS_SIGV4",
+        "DEFAULT"
+      ]
+    },
     "AuthorizerArn":{
       "type":"string",
       "max":2048
@@ -4974,6 +5312,7 @@
     },
     "AwsJobTimeoutInProgressTimeoutInMinutes":{"type":"long"},
     "BatchMode":{"type":"boolean"},
+    "BeforeSubstitutionFlag":{"type":"boolean"},
     "Behavior":{
       "type":"structure",
       "required":["name"],
@@ -5067,8 +5406,18 @@
         "billingGroupDescription":{"shape":"BillingGroupDescription"}
       }
     },
+    "BinaryCommandExecutionResult":{
+      "type":"blob",
+      "min":1
+    },
+    "BinaryParameterValue":{
+      "type":"blob",
+      "min":1
+    },
     "Boolean":{"type":"boolean"},
+    "BooleanCommandExecutionResult":{"type":"boolean"},
     "BooleanKey":{"type":"boolean"},
+    "BooleanParameterValue":{"type":"boolean"},
     "BooleanWrapperObject":{"type":"boolean"},
     "Bucket":{
       "type":"structure",
@@ -5143,8 +5492,7 @@
     },
     "CancelAuditMitigationActionsTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelAuditTaskRequest":{
       "type":"structure",
@@ -5159,8 +5507,7 @@
     },
     "CancelAuditTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelCertificateTransferRequest":{
       "type":"structure",
@@ -5186,8 +5533,7 @@
     },
     "CancelDetectMitigationActionsTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CancelJobExecutionRequest":{
       "type":"structure",
@@ -5398,6 +5744,11 @@
     },
     "ChannelName":{"type":"string"},
     "CheckCompliant":{"type":"boolean"},
+    "CheckCustomConfiguration":{
+      "type":"map",
+      "key":{"shape":"ConfigName"},
+      "value":{"shape":"ConfigValue"}
+    },
     "Cidr":{
       "type":"string",
       "max":43,
@@ -5410,12 +5761,21 @@
     },
     "ClearDefaultAuthorizerRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ClearDefaultAuthorizerResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "ClientCertificateCallbackArn":{
+      "type":"string",
+      "max":2048,
+      "pattern":"[\\s\\S]*"
+    },
+    "ClientCertificateConfig":{
+      "type":"structure",
       "members":{
+        "clientCertificateCallbackArn":{"shape":"ClientCertificateCallbackArn"}
       }
     },
     "ClientId":{"type":"string"},
@@ -5504,6 +5864,155 @@
       }
     },
     "CognitoIdentityPoolId":{"type":"string"},
+    "CommandArn":{"type":"string"},
+    "CommandDescription":{
+      "type":"string",
+      "max":2028,
+      "pattern":"[^\\p{C}]*"
+    },
+    "CommandExecutionId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CommandExecutionParameterMap":{
+      "type":"map",
+      "key":{"shape":"CommandParameterName"},
+      "value":{"shape":"CommandParameterValue"},
+      "min":1
+    },
+    "CommandExecutionResult":{
+      "type":"structure",
+      "members":{
+        "S":{"shape":"StringCommandExecutionResult"},
+        "B":{"shape":"BooleanCommandExecutionResult"},
+        "BIN":{"shape":"BinaryCommandExecutionResult"}
+      }
+    },
+    "CommandExecutionResultMap":{
+      "type":"map",
+      "key":{"shape":"CommandExecutionResultName"},
+      "value":{"shape":"CommandExecutionResult"},
+      "min":1
+    },
+    "CommandExecutionResultName":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CommandExecutionStatus":{
+      "type":"string",
+      "enum":[
+        "CREATED",
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED",
+        "REJECTED",
+        "TIMED_OUT"
+      ]
+    },
+    "CommandExecutionSummary":{
+      "type":"structure",
+      "members":{
+        "commandArn":{"shape":"CommandArn"},
+        "executionId":{"shape":"CommandExecutionId"},
+        "targetArn":{"shape":"TargetArn"},
+        "status":{"shape":"CommandExecutionStatus"},
+        "createdAt":{"shape":"DateType"},
+        "startedAt":{"shape":"DateType"},
+        "completedAt":{"shape":"DateType"}
+      }
+    },
+    "CommandExecutionSummaryList":{
+      "type":"list",
+      "member":{"shape":"CommandExecutionSummary"}
+    },
+    "CommandExecutionTimeoutInSeconds":{
+      "type":"long",
+      "min":1
+    },
+    "CommandId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "CommandMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "CommandNamespace":{
+      "type":"string",
+      "enum":[
+        "AWS-IoT",
+        "AWS-IoT-FleetWise"
+      ]
+    },
+    "CommandParameter":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"CommandParameterName"},
+        "value":{"shape":"CommandParameterValue"},
+        "defaultValue":{"shape":"CommandParameterValue"},
+        "description":{"shape":"CommandParameterDescription"}
+      }
+    },
+    "CommandParameterDescription":{
+      "type":"string",
+      "max":2028,
+      "pattern":"[^\\p{C}]*"
+    },
+    "CommandParameterList":{
+      "type":"list",
+      "member":{"shape":"CommandParameter"},
+      "min":1
+    },
+    "CommandParameterName":{
+      "type":"string",
+      "max":192,
+      "min":1,
+      "pattern":"^[.$a-zA-Z0-9_-]+$"
+    },
+    "CommandParameterValue":{
+      "type":"structure",
+      "members":{
+        "S":{"shape":"StringParameterValue"},
+        "B":{"shape":"BooleanParameterValue"},
+        "I":{"shape":"IntegerParameterValue"},
+        "L":{"shape":"LongParameterValue"},
+        "D":{"shape":"DoubleParameterValue"},
+        "BIN":{"shape":"BinaryParameterValue"},
+        "UL":{"shape":"UnsignedLongParameterValue"}
+      }
+    },
+    "CommandPayload":{
+      "type":"structure",
+      "members":{
+        "content":{"shape":"CommandPayloadBlob"},
+        "contentType":{"shape":"MimeType"}
+      }
+    },
+    "CommandPayloadBlob":{"type":"blob"},
+    "CommandSummary":{
+      "type":"structure",
+      "members":{
+        "commandArn":{"shape":"CommandArn"},
+        "commandId":{"shape":"CommandId"},
+        "displayName":{"shape":"DisplayName"},
+        "deprecated":{"shape":"DeprecationFlag"},
+        "createdAt":{"shape":"DateType"},
+        "lastUpdatedAt":{"shape":"DateType"},
+        "pendingDeletion":{"shape":"BooleanWrapperObject"}
+      }
+    },
+    "CommandSummaryList":{
+      "type":"list",
+      "member":{"shape":"CommandSummary"}
+    },
     "Comment":{
       "type":"string",
       "max":2028,
@@ -5533,11 +6042,38 @@
         "HIGH"
       ]
     },
+    "ConfigName":{
+      "type":"string",
+      "enum":[
+        "CERT_AGE_THRESHOLD_IN_DAYS",
+        "CERT_EXPIRATION_THRESHOLD_IN_DAYS"
+      ]
+    },
+    "ConfigValue":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "Configuration":{
       "type":"structure",
       "members":{
         "Enabled":{"shape":"Enabled"}
       }
+    },
+    "ConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "configurationStatus":{"shape":"ConfigurationStatus"},
+        "errorCode":{"shape":"ErrorCode"},
+        "errorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "ConfigurationStatus":{
+      "type":"string",
+      "enum":[
+        "HEALTHY",
+        "UNHEALTHY"
+      ]
     },
     "ConfirmTopicRuleDestinationRequest":{
       "type":"structure",
@@ -5552,8 +6088,7 @@
     },
     "ConfirmTopicRuleDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "ConfirmationToken":{
       "type":"string",
@@ -5576,6 +6111,18 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ConnectionAttributeName":{
+      "type":"string",
+      "max":128,
+      "pattern":"[a-zA-Z0-9:.]+"
+    },
+    "ConnectivityApiThingName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9:_-]+",
+      "sensitive":true
     },
     "ConnectivityTimestamp":{"type":"long"},
     "ConsecutiveDatapointsToAlarm":{
@@ -5620,8 +6167,7 @@
     },
     "CreateAuditSuppressionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateAuthorizerRequest":{
       "type":"structure",
@@ -5721,6 +6267,31 @@
         "certificateProviderArn":{"shape":"CertificateProviderArn"}
       }
     },
+    "CreateCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        },
+        "namespace":{"shape":"CommandNamespace"},
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "payload":{"shape":"CommandPayload"},
+        "mandatoryParameters":{"shape":"CommandParameterList"},
+        "roleArn":{"shape":"RoleArn"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateCommandResponse":{
+      "type":"structure",
+      "members":{
+        "commandId":{"shape":"CommandId"},
+        "commandArn":{"shape":"CommandArn"}
+      }
+    },
     "CreateCustomMetricRequest":{
       "type":"structure",
       "required":[
@@ -5796,7 +6367,10 @@
         "serviceType":{"shape":"ServiceType"},
         "tags":{"shape":"TagList"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "CreateDomainConfigurationResponse":{
@@ -6068,6 +6642,8 @@
         },
         "description":{"shape":"ResourceDescription"},
         "attributes":{"shape":"ResourceAttributes"},
+        "artifact":{"shape":"PackageVersionArtifact"},
+        "recipe":{"shape":"PackageVersionRecipe"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -6498,8 +7074,7 @@
     },
     "DeleteAccountAuditConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAdditionalMetricsToRetain":{"type":"boolean"},
     "DeleteAlertTargets":{"type":"boolean"},
@@ -6516,8 +7091,7 @@
     },
     "DeleteAuditSuppressionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteAuthorizerRequest":{
       "type":"structure",
@@ -6532,8 +7106,7 @@
     },
     "DeleteAuthorizerResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteBehaviors":{"type":"boolean"},
     "DeleteBillingGroupRequest":{
@@ -6554,8 +7127,7 @@
     },
     "DeleteBillingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCACertificateRequest":{
       "type":"structure",
@@ -6570,8 +7142,7 @@
     },
     "DeleteCACertificateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCertificateProviderRequest":{
       "type":"structure",
@@ -6586,8 +7157,7 @@
     },
     "DeleteCertificateProviderResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCertificateRequest":{
       "type":"structure",
@@ -6602,6 +7172,49 @@
           "shape":"ForceDelete",
           "location":"querystring",
           "locationName":"forceDelete"
+        }
+      }
+    },
+    "DeleteCommandExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "targetArn"
+      ],
+      "members":{
+        "executionId":{
+          "shape":"CommandExecutionId",
+          "location":"uri",
+          "locationName":"executionId"
+        },
+        "targetArn":{
+          "shape":"TargetArn",
+          "location":"querystring",
+          "locationName":"targetArn"
+        }
+      }
+    },
+    "DeleteCommandExecutionResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        }
+      }
+    },
+    "DeleteCommandResponse":{
+      "type":"structure",
+      "members":{
+        "statusCode":{
+          "shape":"StatusCode",
+          "location":"statusCode"
         }
       }
     },
@@ -6626,8 +7239,7 @@
     },
     "DeleteCustomMetricResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDimensionRequest":{
       "type":"structure",
@@ -6642,8 +7254,7 @@
     },
     "DeleteDimensionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDomainConfigurationRequest":{
       "type":"structure",
@@ -6658,8 +7269,7 @@
     },
     "DeleteDomainConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDynamicThingGroupRequest":{
       "type":"structure",
@@ -6679,8 +7289,7 @@
     },
     "DeleteDynamicThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteFleetMetricRequest":{
       "type":"structure",
@@ -6779,8 +7388,7 @@
     },
     "DeleteMitigationActionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteOTAUpdateRequest":{
       "type":"structure",
@@ -6805,8 +7413,7 @@
     },
     "DeleteOTAUpdateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePackageRequest":{
       "type":"structure",
@@ -6827,8 +7434,7 @@
     },
     "DeletePackageResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePackageVersionRequest":{
       "type":"structure",
@@ -6857,8 +7463,7 @@
     },
     "DeletePackageVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyRequest":{
       "type":"structure",
@@ -6903,8 +7508,7 @@
     },
     "DeleteProvisioningTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteProvisioningTemplateVersionRequest":{
       "type":"structure",
@@ -6927,18 +7531,15 @@
     },
     "DeleteProvisioningTemplateVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegistrationCodeRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRegistrationCodeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteRoleAliasRequest":{
       "type":"structure",
@@ -6953,8 +7554,7 @@
     },
     "DeleteRoleAliasResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteScheduledAuditRequest":{
       "type":"structure",
@@ -6969,8 +7569,7 @@
     },
     "DeleteScheduledAuditResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteScheduledAudits":{"type":"boolean"},
     "DeleteSecurityProfileRequest":{
@@ -6991,8 +7590,7 @@
     },
     "DeleteSecurityProfileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteStream":{"type":"boolean"},
     "DeleteStreamRequest":{
@@ -7008,8 +7606,7 @@
     },
     "DeleteStreamResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteThingGroupRequest":{
       "type":"structure",
@@ -7029,8 +7626,7 @@
     },
     "DeleteThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteThingRequest":{
       "type":"structure",
@@ -7050,8 +7646,7 @@
     },
     "DeleteThingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteThingTypeRequest":{
       "type":"structure",
@@ -7066,8 +7661,7 @@
     },
     "DeleteThingTypeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTopicRuleDestinationRequest":{
       "type":"structure",
@@ -7082,8 +7676,7 @@
     },
     "DeleteTopicRuleDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTopicRuleRequest":{
       "type":"structure",
@@ -7137,14 +7730,13 @@
     },
     "DeprecateThingTypeResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeprecationDate":{"type":"timestamp"},
+    "DeprecationFlag":{"type":"boolean"},
     "DescribeAccountAuditConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeAccountAuditConfigurationResponse":{
       "type":"structure",
@@ -7357,8 +7949,7 @@
     },
     "DescribeDefaultAuthorizerRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeDefaultAuthorizerResponse":{
       "type":"structure",
@@ -7429,7 +8020,24 @@
         "domainType":{"shape":"DomainType"},
         "lastStatusChangeDate":{"shape":"DateType"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
+      }
+    },
+    "DescribeEncryptionConfigurationRequest":{
+      "type":"structure",
+      "members":{}
+    },
+    "DescribeEncryptionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "kmsAccessRoleArn":{"shape":"KmsAccessRoleArn"},
+        "configurationDetails":{"shape":"ConfigurationDetails"},
+        "lastModifiedDate":{"shape":"DateType"}
       }
     },
     "DescribeEndpointRequest":{
@@ -7450,8 +8058,7 @@
     },
     "DescribeEventConfigurationsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DescribeEventConfigurationsResponse":{
       "type":"structure",
@@ -7547,6 +8154,11 @@
           "shape":"JobId",
           "location":"uri",
           "locationName":"jobId"
+        },
+        "beforeSubstitution":{
+          "shape":"BeforeSubstitutionFlag",
+          "location":"querystring",
+          "locationName":"beforeSubstitution"
         }
       }
     },
@@ -7945,8 +8557,7 @@
     },
     "DetachSecurityProfileResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DetachThingPrincipalRequest":{
       "type":"structure",
@@ -7969,8 +8580,7 @@
     },
     "DetachThingPrincipalResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DetailsKey":{
       "type":"string",
@@ -8127,7 +8737,60 @@
         }
       }
     },
+    "DisassociateSbomFromPackageVersionRequest":{
+      "type":"structure",
+      "required":[
+        "packageName",
+        "versionName"
+      ],
+      "members":{
+        "packageName":{
+          "shape":"PackageName",
+          "location":"uri",
+          "locationName":"packageName"
+        },
+        "versionName":{
+          "shape":"VersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
+    "DisassociateSbomFromPackageVersionResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DisconnectReason":{"type":"string"},
+    "DisconnectReasonValue":{
+      "type":"string",
+      "enum":[
+        "AUTH_ERROR",
+        "CLIENT_INITIATED_DISCONNECT",
+        "CLIENT_ERROR",
+        "CONNECTION_LOST",
+        "DUPLICATE_CLIENTID",
+        "FORBIDDEN_ACCESS",
+        "MQTT_KEEP_ALIVE_TIMEOUT",
+        "SERVER_ERROR",
+        "SERVER_INITIATED_DISCONNECT",
+        "THROTTLED",
+        "WEBSOCKET_TTL_EXPIRATION",
+        "CUSTOMAUTH_TTL_EXPIRATION",
+        "UNKNOWN",
+        "NONE"
+      ]
+    },
+    "DisplayName":{
+      "type":"string",
+      "max":64,
+      "pattern":"[^\\p{C}]*"
+    },
     "DocumentParameter":{
       "type":"structure",
       "members":{
@@ -8182,6 +8845,7 @@
         "CUSTOMER_MANAGED"
       ]
     },
+    "DoubleParameterValue":{"type":"double"},
     "DurationInMinutes":{
       "type":"integer",
       "max":1430,
@@ -8300,6 +8964,13 @@
     "EnabledBoolean":{
       "type":"boolean",
       "box":true
+    },
+    "EncryptionType":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_MANAGED_KMS_KEY",
+        "AWS_OWNED_KMS_KEY"
+      ]
     },
     "EndpointAddress":{"type":"string"},
     "EndpointType":{
@@ -8599,6 +9270,76 @@
         "cardinality":{"shape":"Count"}
       }
     },
+    "GetCommandExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "executionId",
+        "targetArn"
+      ],
+      "members":{
+        "executionId":{
+          "shape":"CommandExecutionId",
+          "location":"uri",
+          "locationName":"executionId"
+        },
+        "targetArn":{
+          "shape":"TargetArn",
+          "location":"querystring",
+          "locationName":"targetArn"
+        },
+        "includeResult":{
+          "shape":"BooleanWrapperObject",
+          "location":"querystring",
+          "locationName":"includeResult"
+        }
+      }
+    },
+    "GetCommandExecutionResponse":{
+      "type":"structure",
+      "members":{
+        "executionId":{"shape":"CommandExecutionId"},
+        "commandArn":{"shape":"CommandArn"},
+        "targetArn":{"shape":"TargetArn"},
+        "status":{"shape":"CommandExecutionStatus"},
+        "statusReason":{"shape":"StatusReason"},
+        "result":{"shape":"CommandExecutionResultMap"},
+        "parameters":{"shape":"CommandExecutionParameterMap"},
+        "executionTimeoutSeconds":{"shape":"CommandExecutionTimeoutInSeconds"},
+        "createdAt":{"shape":"DateType"},
+        "lastUpdatedAt":{"shape":"DateType"},
+        "startedAt":{"shape":"DateType"},
+        "completedAt":{"shape":"DateType"},
+        "timeToLive":{"shape":"DateType"}
+      }
+    },
+    "GetCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        }
+      }
+    },
+    "GetCommandResponse":{
+      "type":"structure",
+      "members":{
+        "commandId":{"shape":"CommandId"},
+        "commandArn":{"shape":"CommandArn"},
+        "namespace":{"shape":"CommandNamespace"},
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "mandatoryParameters":{"shape":"CommandParameterList"},
+        "payload":{"shape":"CommandPayload"},
+        "roleArn":{"shape":"RoleArn"},
+        "createdAt":{"shape":"DateType"},
+        "lastUpdatedAt":{"shape":"DateType"},
+        "deprecated":{"shape":"DeprecationFlag"},
+        "pendingDeletion":{"shape":"BooleanWrapperObject"}
+      }
+    },
     "GetEffectivePoliciesRequest":{
       "type":"structure",
       "members":{
@@ -8619,8 +9360,7 @@
     },
     "GetIndexingConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetIndexingConfigurationResponse":{
       "type":"structure",
@@ -8637,6 +9377,11 @@
           "shape":"JobId",
           "location":"uri",
           "locationName":"jobId"
+        },
+        "beforeSubstitution":{
+          "shape":"BeforeSubstitutionFlag",
+          "location":"querystring",
+          "locationName":"beforeSubstitution"
         }
       }
     },
@@ -8648,8 +9393,7 @@
     },
     "GetLoggingOptionsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetLoggingOptionsResponse":{
       "type":"structure",
@@ -8677,8 +9421,7 @@
     },
     "GetPackageConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetPackageConfigurationResponse":{
       "type":"structure",
@@ -8735,10 +9478,14 @@
         "versionName":{"shape":"VersionName"},
         "description":{"shape":"ResourceDescription"},
         "attributes":{"shape":"ResourceAttributes"},
+        "artifact":{"shape":"PackageVersionArtifact"},
         "status":{"shape":"PackageVersionStatus"},
         "errorReason":{"shape":"PackageVersionErrorReason"},
         "creationDate":{"shape":"CreationDate"},
-        "lastModifiedDate":{"shape":"LastModifiedDate"}
+        "lastModifiedDate":{"shape":"LastModifiedDate"},
+        "sbom":{"shape":"Sbom"},
+        "sbomValidationStatus":{"shape":"SbomValidationStatus"},
+        "recipe":{"shape":"PackageVersionRecipe"}
       }
     },
     "GetPercentilesRequest":{
@@ -8815,8 +9562,7 @@
     },
     "GetRegistrationCodeRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetRegistrationCodeResponse":{
       "type":"structure",
@@ -8838,6 +9584,26 @@
       "type":"structure",
       "members":{
         "statistics":{"shape":"Statistics"}
+      }
+    },
+    "GetThingConnectivityDataRequest":{
+      "type":"structure",
+      "required":["thingName"],
+      "members":{
+        "thingName":{
+          "shape":"ConnectivityApiThingName",
+          "location":"uri",
+          "locationName":"thingName"
+        }
+      }
+    },
+    "GetThingConnectivityDataResponse":{
+      "type":"structure",
+      "members":{
+        "thingName":{"shape":"ConnectivityApiThingName"},
+        "connected":{"shape":"Boolean"},
+        "timestamp":{"shape":"Timestamp"},
+        "disconnectReason":{"shape":"DisconnectReasonValue"}
       }
     },
     "GetTopicRuleDestinationRequest":{
@@ -8877,8 +9643,7 @@
     },
     "GetV2LoggingOptionsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetV2LoggingOptionsResponse":{
       "type":"structure",
@@ -9040,6 +9805,7 @@
       "max":128,
       "min":1
     },
+    "IntegerParameterValue":{"type":"integer"},
     "InternalException":{
       "type":"structure",
       "members":{
@@ -9463,6 +10229,14 @@
         "streamName":{"shape":"StreamName"},
         "partitionKey":{"shape":"PartitionKey"}
       }
+    },
+    "KmsAccessRoleArn":{
+      "type":"string",
+      "max":2048
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048
     },
     "LambdaAction":{
       "type":"structure",
@@ -9912,6 +10686,72 @@
       "members":{
         "certificates":{"shape":"Certificates"},
         "nextMarker":{"shape":"Marker"}
+      }
+    },
+    "ListCommandExecutionsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"CommandMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "namespace":{"shape":"CommandNamespace"},
+        "status":{"shape":"CommandExecutionStatus"},
+        "sortOrder":{"shape":"SortOrder"},
+        "startedTimeFilter":{"shape":"TimeFilter"},
+        "completedTimeFilter":{"shape":"TimeFilter"},
+        "targetArn":{"shape":"TargetArn"},
+        "commandArn":{"shape":"CommandArn"}
+      }
+    },
+    "ListCommandExecutionsResponse":{
+      "type":"structure",
+      "members":{
+        "commandExecutions":{"shape":"CommandExecutionSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListCommandsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"CommandMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "namespace":{
+          "shape":"CommandNamespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "commandParameterName":{
+          "shape":"CommandParameterName",
+          "location":"querystring",
+          "locationName":"commandParameterName"
+        },
+        "sortOrder":{
+          "shape":"SortOrder",
+          "location":"querystring",
+          "locationName":"sortOrder"
+        }
+      }
+    },
+    "ListCommandsResponse":{
+      "type":"structure",
+      "members":{
+        "commands":{"shape":"CommandSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListCustomMetricsRequest":{
@@ -10616,6 +11456,39 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListPrincipalThingsV2Request":{
+      "type":"structure",
+      "required":["principal"],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"RegistryMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "principal":{
+          "shape":"Principal",
+          "location":"header",
+          "locationName":"x-amzn-principal"
+        },
+        "thingPrincipalType":{
+          "shape":"ThingPrincipalType",
+          "location":"querystring",
+          "locationName":"thingPrincipalType"
+        }
+      }
+    },
+    "ListPrincipalThingsV2Response":{
+      "type":"structure",
+      "members":{
+        "principalThingObjects":{"shape":"PrincipalThingObjects"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListProvisioningTemplateVersionsRequest":{
       "type":"structure",
       "required":["templateName"],
@@ -10719,6 +11592,47 @@
       "members":{
         "roleAliases":{"shape":"RoleAliases"},
         "nextMarker":{"shape":"Marker"}
+      }
+    },
+    "ListSbomValidationResultsRequest":{
+      "type":"structure",
+      "required":[
+        "packageName",
+        "versionName"
+      ],
+      "members":{
+        "packageName":{
+          "shape":"PackageName",
+          "location":"uri",
+          "locationName":"packageName"
+        },
+        "versionName":{
+          "shape":"VersionName",
+          "location":"uri",
+          "locationName":"versionName"
+        },
+        "validationResult":{
+          "shape":"SbomValidationResult",
+          "location":"querystring",
+          "locationName":"validationResult"
+        },
+        "maxResults":{
+          "shape":"PackageCatalogMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListSbomValidationResultsResponse":{
+      "type":"structure",
+      "members":{
+        "validationResultSummaries":{"shape":"SbomValidationResultSummaryList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListScheduledAuditsRequest":{
@@ -11006,6 +11920,39 @@
       "type":"structure",
       "members":{
         "principals":{"shape":"Principals"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListThingPrincipalsV2Request":{
+      "type":"structure",
+      "required":["thingName"],
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"RegistryMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "thingName":{
+          "shape":"ThingName",
+          "location":"uri",
+          "locationName":"thingName"
+        },
+        "thingPrincipalType":{
+          "shape":"ThingPrincipalType",
+          "location":"querystring",
+          "locationName":"thingPrincipalType"
+        }
+      }
+    },
+    "ListThingPrincipalsV2Response":{
+      "type":"structure",
+      "members":{
+        "thingPrincipalObjects":{"shape":"ThingPrincipalObjects"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -11420,6 +12367,7 @@
         "logLevel":{"shape":"LogLevel"}
       }
     },
+    "LongParameterValue":{"type":"long"},
     "MachineLearningDetectionConfig":{
       "type":"structure",
       "required":["confidenceLevel"],
@@ -11579,6 +12527,10 @@
         "roleArn":{"shape":"RoleArn"}
       }
     },
+    "MimeType":{
+      "type":"string",
+      "min":1
+    },
     "Minimum":{"type":"double"},
     "MinimumNumberOfExecutedThings":{
       "type":"integer",
@@ -11662,6 +12614,12 @@
         "ACTIVE",
         "EXPIRED"
       ]
+    },
+    "Mqtt5Configuration":{
+      "type":"structure",
+      "members":{
+        "propagatingAttributes":{"shape":"PropagatingAttributeList"}
+      }
     },
     "MqttClientId":{
       "type":"string",
@@ -11752,6 +12710,10 @@
     "NumberOfThings":{
       "type":"integer",
       "min":1
+    },
+    "OCSPLambdaArn":{
+      "type":"string",
+      "max":140
     },
     "OTAUpdateArn":{"type":"string"},
     "OTAUpdateDescription":{
@@ -11901,7 +12863,18 @@
       "min":1,
       "pattern":"^arn:[!-~]+$"
     },
+    "PackageVersionArtifact":{
+      "type":"structure",
+      "members":{
+        "s3Location":{"shape":"S3Location"}
+      }
+    },
     "PackageVersionErrorReason":{"type":"string"},
+    "PackageVersionRecipe":{
+      "type":"string",
+      "max":3072,
+      "sensitive":true
+    },
     "PackageVersionStatus":{
       "type":"string",
       "enum":[
@@ -11948,7 +12921,7 @@
     },
     "ParameterValue":{
       "type":"string",
-      "max":512,
+      "max":30720,
       "min":1,
       "pattern":"[^\\p{C}]+"
     },
@@ -12087,6 +13060,18 @@
       "min":1,
       "pattern":"[a-zA-Z0-9]+"
     },
+    "PrincipalThingObject":{
+      "type":"structure",
+      "required":["thingName"],
+      "members":{
+        "thingName":{"shape":"ThingName"},
+        "thingPrincipalType":{"shape":"ThingPrincipalType"}
+      }
+    },
+    "PrincipalThingObjects":{
+      "type":"list",
+      "member":{"shape":"PrincipalThingObject"}
+    },
     "Principals":{
       "type":"list",
       "member":{"shape":"PrincipalArn"}
@@ -12100,6 +13085,18 @@
     "ProcessingTargetNameList":{
       "type":"list",
       "member":{"shape":"ProcessingTargetName"}
+    },
+    "PropagatingAttribute":{
+      "type":"structure",
+      "members":{
+        "userPropertyKey":{"shape":"UserPropertyKeyName"},
+        "thingAttribute":{"shape":"AttributeName"},
+        "connectionAttribute":{"shape":"ConnectionAttributeName"}
+      }
+    },
+    "PropagatingAttributeList":{
+      "type":"list",
+      "member":{"shape":"PropagatingAttribute"}
     },
     "Protocol":{
       "type":"string",
@@ -12207,8 +13204,7 @@
     },
     "PutVerificationStateOnViolationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Qos":{
       "type":"integer",
@@ -12410,8 +13406,7 @@
     },
     "RemoveThingFromBillingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveThingFromThingGroupRequest":{
       "type":"structure",
@@ -12424,8 +13419,7 @@
     },
     "RemoveThingFromThingGroupResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "RemoveThingType":{"type":"boolean"},
     "RemovedThings":{"type":"integer"},
@@ -12714,6 +13708,48 @@
       "type":"string",
       "min":40
     },
+    "Sbom":{
+      "type":"structure",
+      "members":{
+        "s3Location":{"shape":"S3Location"}
+      }
+    },
+    "SbomValidationErrorCode":{
+      "type":"string",
+      "enum":[
+        "INCOMPATIBLE_FORMAT",
+        "FILE_SIZE_LIMIT_EXCEEDED"
+      ]
+    },
+    "SbomValidationErrorMessage":{"type":"string"},
+    "SbomValidationResult":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "SUCCEEDED"
+      ]
+    },
+    "SbomValidationResultSummary":{
+      "type":"structure",
+      "members":{
+        "fileName":{"shape":"FileName"},
+        "validationResult":{"shape":"SbomValidationResult"},
+        "errorCode":{"shape":"SbomValidationErrorCode"},
+        "errorMessage":{"shape":"SbomValidationErrorMessage"}
+      }
+    },
+    "SbomValidationResultSummaryList":{
+      "type":"list",
+      "member":{"shape":"SbomValidationResultSummary"}
+    },
+    "SbomValidationStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "FAILED",
+        "SUCCEEDED"
+      ]
+    },
     "ScheduledAuditArn":{"type":"string"},
     "ScheduledAuditMetadata":{
       "type":"structure",
@@ -12851,7 +13887,9 @@
     "ServerCertificateConfig":{
       "type":"structure",
       "members":{
-        "enableOCSPCheck":{"shape":"EnableOCSPCheck"}
+        "enableOCSPCheck":{"shape":"EnableOCSPCheck"},
+        "ocspLambdaArn":{"shape":"OCSPLambdaArn"},
+        "ocspAuthorizedResponderArn":{"shape":"AcmCertificateArn"}
       }
     },
     "ServerCertificateStatus":{
@@ -13022,6 +14060,13 @@
     "SnsTopicArn":{
       "type":"string",
       "max":350
+    },
+    "SortOrder":{
+      "type":"string",
+      "enum":[
+        "ASCENDING",
+        "DESCENDING"
+      ]
     },
     "SqlParseException":{
       "type":"structure",
@@ -13197,6 +14242,25 @@
         "Cancelling"
       ]
     },
+    "StatusCode":{"type":"integer"},
+    "StatusReason":{
+      "type":"structure",
+      "required":["reasonCode"],
+      "members":{
+        "reasonCode":{"shape":"StatusReasonCode"},
+        "reasonDescription":{"shape":"StatusReasonDescription"}
+      }
+    },
+    "StatusReasonCode":{
+      "type":"string",
+      "max":64,
+      "pattern":"[A-Z0-9_-]+"
+    },
+    "StatusReasonDescription":{
+      "type":"string",
+      "max":1024,
+      "pattern":"[^\\p{C}]*"
+    },
     "StdDeviation":{"type":"double"},
     "StepFunctionsAction":{
       "type":"structure",
@@ -13223,8 +14287,7 @@
     },
     "StopThingRegistrationTaskResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Stream":{
       "type":"structure",
@@ -13291,6 +14354,10 @@
       "member":{"shape":"StreamSummary"}
     },
     "String":{"type":"string"},
+    "StringCommandExecutionResult":{
+      "type":"string",
+      "min":1
+    },
     "StringDateTime":{
       "type":"string",
       "max":64,
@@ -13304,6 +14371,10 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"String"}
+    },
+    "StringParameterValue":{
+      "type":"string",
+      "min":1
     },
     "SubnetId":{"type":"string"},
     "SubnetIdList":{
@@ -13360,8 +14431,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -13682,6 +14752,25 @@
       "type":"list",
       "member":{"shape":"ThingName"}
     },
+    "ThingPrincipalObject":{
+      "type":"structure",
+      "required":["principal"],
+      "members":{
+        "principal":{"shape":"Principal"},
+        "thingPrincipalType":{"shape":"ThingPrincipalType"}
+      }
+    },
+    "ThingPrincipalObjects":{
+      "type":"list",
+      "member":{"shape":"ThingPrincipalObject"}
+    },
+    "ThingPrincipalType":{
+      "type":"string",
+      "enum":[
+        "EXCLUSIVE_THING",
+        "NON_EXCLUSIVE_THING"
+      ]
+    },
     "ThingTypeArn":{"type":"string"},
     "ThingTypeDefinition":{
       "type":"structure",
@@ -13720,7 +14809,8 @@
       "type":"structure",
       "members":{
         "thingTypeDescription":{"shape":"ThingTypeDescription"},
-        "searchableAttributes":{"shape":"SearchableAttributes"}
+        "searchableAttributes":{"shape":"SearchableAttributes"},
+        "mqtt5Configuration":{"shape":"Mqtt5Configuration"}
       }
     },
     "ThrottlingException":{
@@ -13730,6 +14820,13 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "TimeFilter":{
+      "type":"structure",
+      "members":{
+        "after":{"shape":"StringDateTime"},
+        "before":{"shape":"StringDateTime"}
+      }
     },
     "TimedOutThings":{"type":"integer"},
     "TimeoutConfig":{
@@ -13995,6 +15092,12 @@
       "type":"long",
       "min":0
     },
+    "UnsignedLongParameterValue":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"^[0-9]*$"
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -14008,8 +15111,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAccountAuditConfigurationRequest":{
       "type":"structure",
@@ -14021,8 +15123,7 @@
     },
     "UpdateAccountAuditConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAuditSuppressionRequest":{
       "type":"structure",
@@ -14040,8 +15141,7 @@
     },
     "UpdateAuditSuppressionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAuthorizerRequest":{
       "type":"structure",
@@ -14157,6 +15257,30 @@
         }
       }
     },
+    "UpdateCommandRequest":{
+      "type":"structure",
+      "required":["commandId"],
+      "members":{
+        "commandId":{
+          "shape":"CommandId",
+          "location":"uri",
+          "locationName":"commandId"
+        },
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "deprecated":{"shape":"DeprecationFlag"}
+      }
+    },
+    "UpdateCommandResponse":{
+      "type":"structure",
+      "members":{
+        "commandId":{"shape":"CommandId"},
+        "displayName":{"shape":"DisplayName"},
+        "description":{"shape":"CommandDescription"},
+        "deprecated":{"shape":"DeprecationFlag"},
+        "lastUpdatedAt":{"shape":"DateType"}
+      }
+    },
     "UpdateCustomMetricRequest":{
       "type":"structure",
       "required":[
@@ -14229,7 +15353,10 @@
         "domainConfigurationStatus":{"shape":"DomainConfigurationStatus"},
         "removeAuthorizerConfig":{"shape":"RemoveAuthorizerConfig"},
         "tlsConfig":{"shape":"TlsConfig"},
-        "serverCertificateConfig":{"shape":"ServerCertificateConfig"}
+        "serverCertificateConfig":{"shape":"ServerCertificateConfig"},
+        "authenticationType":{"shape":"AuthenticationType"},
+        "applicationProtocol":{"shape":"ApplicationProtocol"},
+        "clientCertificateConfig":{"shape":"ClientCertificateConfig"}
       }
     },
     "UpdateDomainConfigurationResponse":{
@@ -14264,6 +15391,19 @@
         "version":{"shape":"Version"}
       }
     },
+    "UpdateEncryptionConfigurationRequest":{
+      "type":"structure",
+      "required":["encryptionType"],
+      "members":{
+        "encryptionType":{"shape":"EncryptionType"},
+        "kmsKeyArn":{"shape":"KmsKeyArn"},
+        "kmsAccessRoleArn":{"shape":"KmsAccessRoleArn"}
+      }
+    },
+    "UpdateEncryptionConfigurationResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "UpdateEventConfigurationsRequest":{
       "type":"structure",
       "members":{
@@ -14272,8 +15412,7 @@
     },
     "UpdateEventConfigurationsResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateFleetMetricRequest":{
       "type":"structure",
@@ -14307,8 +15446,7 @@
     },
     "UpdateIndexingConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateJobRequest":{
       "type":"structure",
@@ -14366,8 +15504,7 @@
     },
     "UpdatePackageConfigurationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePackageRequest":{
       "type":"structure",
@@ -14391,8 +15528,7 @@
     },
     "UpdatePackageResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdatePackageVersionRequest":{
       "type":"structure",
@@ -14413,7 +15549,9 @@
         },
         "description":{"shape":"ResourceDescription"},
         "attributes":{"shape":"ResourceAttributes"},
+        "artifact":{"shape":"PackageVersionArtifact"},
         "action":{"shape":"PackageVersionAction"},
+        "recipe":{"shape":"PackageVersionRecipe"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true,
@@ -14424,8 +15562,7 @@
     },
     "UpdatePackageVersionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateProvisioningTemplateRequest":{
       "type":"structure",
@@ -14446,8 +15583,7 @@
     },
     "UpdateProvisioningTemplateResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateRoleAliasRequest":{
       "type":"structure",
@@ -14596,8 +15732,7 @@
     },
     "UpdateThingGroupsForThingResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateThingRequest":{
       "type":"structure",
@@ -14616,8 +15751,23 @@
     },
     "UpdateThingResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateThingTypeRequest":{
+      "type":"structure",
+      "required":["thingTypeName"],
       "members":{
+        "thingTypeName":{
+          "shape":"ThingTypeName",
+          "location":"uri",
+          "locationName":"thingTypeName"
+        },
+        "thingTypeProperties":{"shape":"ThingTypeProperties"}
       }
+    },
+    "UpdateThingTypeResponse":{
+      "type":"structure",
+      "members":{}
     },
     "UpdateTopicRuleDestinationRequest":{
       "type":"structure",
@@ -14632,8 +15782,7 @@
     },
     "UpdateTopicRuleDestinationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Url":{
       "type":"string",
@@ -14661,6 +15810,11 @@
       "type":"string",
       "max":1024,
       "min":0
+    },
+    "UserPropertyKeyName":{
+      "type":"string",
+      "max":128,
+      "pattern":"[a-zA-Z0-9:$.]+"
     },
     "UserPropertyValue":{
       "type":"string",

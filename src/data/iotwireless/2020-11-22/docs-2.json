@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>AWS IoT Wireless provides bi-directional communication between internet-connected wireless devices and the AWS Cloud. To onboard both LoRaWAN and Sidewalk devices to AWS IoT, use the IoT Wireless API. These wireless devices use the Low Power Wide Area Networking (LPWAN) communication protocol to communicate with AWS IoT.</p> <p>Using the API, you can perform create, read, update, and delete operations for your wireless devices, gateways, destinations, and profiles. After onboarding your devices, you can use the API operations to set log levels and monitor your devices with CloudWatch.</p> <p>You can also use the API operations to create multicast groups and schedule a multicast session for sending a downlink message to devices in the group. By using Firmware Updates Over-The-Air (FUOTA) API operations, you can create a FUOTA task and schedule a session to update the firmware of individual devices or an entire group of devices in a multicast group.</p> <p>To connect to the AWS IoT Wireless Service, use the Service endpoints as described in <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-lorawan.html#iot-wireless_region\">IoT Wireless Service endpoints</a> in the <i>AWS General Reference</i>.</p>",
+  "service": "<p>AWS IoT Wireless provides bi-directional communication between internet-connected wireless devices and the AWS Cloud. To onboard both <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/developerguide/iot-lorawan.html\">LoRaWAN</a> and <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/developerguide/iot-sidewalk.html\">Sidewalk</a> devices to AWS IoT, use the IoT Wireless API. These wireless devices use the Low Power Wide Area Networking (LPWAN) communication protocol to communicate with AWS IoT. </p> <p>Using the API, you can perform create, read, update, and delete operations for your wireless devices, gateways, destinations, and profiles. After onboarding your devices, you can use the API operations to set log levels and monitor your devices with CloudWatch.</p> <p>You can also use the API operations to create multicast groups and schedule a multicast session for sending a downlink message to devices in the group. By using Firmware Updates Over-The-Air (FUOTA) API operations, you can create a FUOTA task and schedule a session to update the firmware of individual devices or an entire group of devices in a multicast group.</p> <p>To connect to the AWS IoT Wireless Service, use the Service endpoints as described in <a href=\"https://docs.aws.amazon.com/general/latest/gr/iot-lorawan.html#iot-wireless_region\">IoT Wireless Service endpoints</a>. You can use both IPv4 and IPv6 protocols to connect to the endpoints and send requests to the AWS IoT Wireless service. For more information, see <a href=\"https://docs.aws.amazon.com/iot-wireless/latest/developerguide/wireless-ipv6-access.html\">Using IPv6 with AWS IoT Wireless</a>.</p>",
   "operations": {
     "AssociateAwsAccountWithPartnerAccount": "<p>Associates a partner account with your AWS account.</p>",
     "AssociateMulticastGroupWithFuotaTask": "<p>Associate a multicast group with a FUOTA task.</p>",
@@ -23,7 +23,7 @@
     "DeleteDestination": "<p>Deletes a destination.</p>",
     "DeleteDeviceProfile": "<p>Deletes a device profile.</p>",
     "DeleteFuotaTask": "<p>Deletes a FUOTA task.</p>",
-    "DeleteMulticastGroup": "<p>Deletes a multicast group if it is not in use by a fuota task.</p>",
+    "DeleteMulticastGroup": "<p>Deletes a multicast group if it is not in use by a FUOTA task.</p>",
     "DeleteNetworkAnalyzerConfiguration": "<p>Deletes a network analyzer configuration.</p>",
     "DeleteQueuedMessages": "<p>Remove queued messages from the downlink queue.</p>",
     "DeleteServiceProfile": "<p>Deletes a service profile.</p>",
@@ -34,7 +34,7 @@
     "DeleteWirelessGatewayTaskDefinition": "<p>Deletes a wireless gateway task definition. Deleting this task definition does not affect tasks that are currently in progress.</p>",
     "DeregisterWirelessDevice": "<p>Deregister a wireless device from AWS IoT Wireless.</p>",
     "DisassociateAwsAccountFromPartnerAccount": "<p>Disassociates your AWS account from a partner account. If <code>PartnerAccountId</code> and <code>PartnerType</code> are <code>null</code>, disassociates your AWS account from all partner accounts.</p>",
-    "DisassociateMulticastGroupFromFuotaTask": "<p>Disassociates a multicast group from a fuota task.</p>",
+    "DisassociateMulticastGroupFromFuotaTask": "<p>Disassociates a multicast group from a FUOTA task.</p>",
     "DisassociateWirelessDeviceFromFuotaTask": "<p>Disassociates a wireless device from a FUOTA task.</p>",
     "DisassociateWirelessDeviceFromMulticastGroup": "<p>Disassociates a wireless device from a multicast group.</p>",
     "DisassociateWirelessDeviceFromThing": "<p>Disassociates a wireless device from its currently associated thing.</p>",
@@ -44,7 +44,7 @@
     "GetDeviceProfile": "<p>Gets information about a device profile.</p>",
     "GetEventConfigurationByResourceTypes": "<p>Get the event configuration based on resource types.</p>",
     "GetFuotaTask": "<p>Gets information about a FUOTA task.</p>",
-    "GetLogLevelsByResourceTypes": "<p>Returns current default log levels or log levels by resource types. Based on resource types, log levels can be for wireless device log options or wireless gateway log options.</p>",
+    "GetLogLevelsByResourceTypes": "<p>Returns current default log levels or log levels by resource types. Based on the resource type, log levels can be returned for wireless device, wireless gateway, or FUOTA task log options.</p>",
     "GetMetricConfiguration": "<p>Get the metric configuration status for this AWS account.</p>",
     "GetMetrics": "<p>Get the summary metrics for this AWS account.</p>",
     "GetMulticastGroup": "<p>Gets information about a multicast group.</p>",
@@ -55,7 +55,7 @@
     "GetPositionConfiguration": "<p>Get position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to retrieve the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
     "GetPositionEstimate": "<p>Get estimated position information as a payload in GeoJSON format. The payload measurement data is resolved using solvers that are provided by third-party vendors.</p>",
     "GetResourceEventConfiguration": "<p>Get the event configuration for a particular resource identifier.</p>",
-    "GetResourceLogLevel": "<p>Fetches the log-level override, if any, for a given resource-ID and resource-type. It can be used for a wireless device or a wireless gateway.</p>",
+    "GetResourceLogLevel": "<p>Fetches the log-level override, if any, for a given resource ID and resource type..</p>",
     "GetResourcePosition": "<p>Get the position information for a given wireless device or a wireless gateway resource. The position information uses the <a href=\"https://gisgeography.com/wgs84-world-geodetic-system/\"> World Geodetic System (WGS84)</a>.</p>",
     "GetServiceEndpoint": "<p>Gets the account-specific endpoint for Configuration and Update Server (CUPS) protocol or LoRaWAN Network Server (LNS) connections.</p>",
     "GetServiceProfile": "<p>Gets information about a service profile.</p>",
@@ -74,7 +74,7 @@
     "ListEventConfigurations": "<p>List event configurations where at least one event topic has been enabled.</p>",
     "ListFuotaTasks": "<p>Lists the FUOTA tasks registered to your AWS account.</p>",
     "ListMulticastGroups": "<p>Lists the multicast groups registered to your AWS account.</p>",
-    "ListMulticastGroupsByFuotaTask": "<p>List all multicast groups associated with a fuota task.</p>",
+    "ListMulticastGroupsByFuotaTask": "<p>List all multicast groups associated with a FUOTA task.</p>",
     "ListNetworkAnalyzerConfigurations": "<p>Lists the network analyzer configurations.</p>",
     "ListPartnerAccounts": "<p>Lists the partner accounts associated with your AWS account.</p>",
     "ListPositionConfigurations": "<p>List position configurations for a given resource, such as positioning solvers.</p> <important> <p>This action is no longer supported. Calls to retrieve position information should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_GetResourcePosition.html\">GetResourcePosition</a> API operation instead.</p> </important>",
@@ -86,9 +86,9 @@
     "ListWirelessGatewayTaskDefinitions": "<p>List the wireless gateway tasks definitions registered to your AWS account.</p>",
     "ListWirelessGateways": "<p>Lists the wireless gateways registered to your AWS account.</p>",
     "PutPositionConfiguration": "<p>Put position configuration for a given resource.</p> <important> <p>This action is no longer supported. Calls to update the position configuration should use the <a href=\"https://docs.aws.amazon.com/iot-wireless/2020-11-22/apireference/API_UpdateResourcePosition.html\">UpdateResourcePosition</a> API operation instead.</p> </important>",
-    "PutResourceLogLevel": "<p>Sets the log-level override for a resource-ID and resource-type. This option can be specified for a wireless gateway or a wireless device. A limit of 200 log level override can be set per account.</p>",
-    "ResetAllResourceLogLevels": "<p>Removes the log-level overrides for all resources; both wireless devices and wireless gateways.</p>",
-    "ResetResourceLogLevel": "<p>Removes the log-level override, if any, for a specific resource-ID and resource-type. It can be used for a wireless device or a wireless gateway.</p>",
+    "PutResourceLogLevel": "<p>Sets the log-level override for a resource ID and resource type. A limit of 200 log level override can be set per account.</p>",
+    "ResetAllResourceLogLevels": "<p>Removes the log-level overrides for all resources; wireless devices, wireless gateways, and FUOTA tasks.</p>",
+    "ResetResourceLogLevel": "<p>Removes the log-level override, if any, for a specific resource ID and resource type. It can be used for a wireless device, a wireless gateway, or a FUOTA task.</p>",
     "SendDataToMulticastGroup": "<p>Sends the specified data to a multicast group.</p>",
     "SendDataToWirelessDevice": "<p>Sends a decrypted application data frame to a device.</p>",
     "StartBulkAssociateWirelessDeviceWithMulticastGroup": "<p>Starts a bulk association of all qualifying wireless devices with a multicast group.</p>",
@@ -103,7 +103,7 @@
     "UpdateDestination": "<p>Updates properties of a destination.</p>",
     "UpdateEventConfigurationByResourceTypes": "<p>Update the event configuration based on resource types.</p>",
     "UpdateFuotaTask": "<p>Updates properties of a FUOTA task.</p>",
-    "UpdateLogLevelsByResourceTypes": "<p>Set default log level, or log levels by resource types. This can be for wireless device log options or wireless gateways log options and is used to control the log messages that'll be displayed in CloudWatch.</p>",
+    "UpdateLogLevelsByResourceTypes": "<p>Set default log level, or log levels by resource types. This can be for wireless device, wireless gateway, or FUOTA task log options, and is used to control the log messages that'll be displayed in CloudWatch.</p>",
     "UpdateMetricConfiguration": "<p>Update the summary metric configuration.</p>",
     "UpdateMulticastGroup": "<p>Updates properties of a multicast group session.</p>",
     "UpdateNetworkAnalyzerConfiguration": "<p>Update network analyzer configuration.</p>",
@@ -130,8 +130,7 @@
     },
     "AccessDeniedException": {
       "base": "<p>User does not have permission to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountLinked": {
       "base": null,
@@ -249,73 +248,59 @@
     },
     "AssociateAwsAccountWithPartnerAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateAwsAccountWithPartnerAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMulticastGroupWithFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateMulticastGroupWithFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessDeviceWithFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessDeviceWithFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessDeviceWithMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessDeviceWithMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessDeviceWithThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessDeviceWithThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessGatewayWithCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessGatewayWithCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessGatewayWithThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AssociateWirelessGatewayWithThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "AutoCreateTasks": {
       "base": null,
@@ -395,13 +380,11 @@
     },
     "CancelMulticastGroupSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelMulticastGroupSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CaptureTimeAccuracy": {
       "base": null,
@@ -515,8 +498,7 @@
     },
     "ConflictException": {
       "base": "<p>Adding, updating, or deleting the resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectionStatus": {
       "base": null,
@@ -554,103 +536,83 @@
     },
     "CreateDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeviceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDeviceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNetworkAnalyzerConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateNetworkAnalyzerConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessGatewayTaskDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessGatewayTaskDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessGatewayTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWirelessGatewayTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatedAt": {
       "base": "<p>Created at timestamp for the resource.</p>",
@@ -693,133 +655,107 @@
     },
     "DeleteDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeviceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDeviceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNetworkAnalyzerConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteNetworkAnalyzerConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueuedMessagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueuedMessagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessDeviceImportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessDeviceImportTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessGatewayTaskDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessGatewayTaskDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessGatewayTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWirelessGatewayTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterWirelessDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterWirelessDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Description": {
       "base": "<p>The description of the new resource.</p>",
@@ -979,7 +915,7 @@
     "DeviceProfileName": {
       "base": null,
       "refs": {
-        "CreateDeviceProfileRequest$Name": "<p>The name of the new resource.</p>",
+        "CreateDeviceProfileRequest$Name": "<p>The name of the new resource.</p> <note> <p>The following special characters aren't accepted: <code>&lt;&gt;^#~$</code> </p> </note>",
         "DeviceProfile$Name": "<p>The name of the resource.</p>",
         "GetDeviceProfileResponse$Name": "<p>The name of the resource.</p>"
       }
@@ -1044,73 +980,59 @@
     },
     "DisassociateAwsAccountFromPartnerAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateAwsAccountFromPartnerAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMulticastGroupFromFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateMulticastGroupFromFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessDeviceFromFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessDeviceFromFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessDeviceFromMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessDeviceFromMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessDeviceFromThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessDeviceFromThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessGatewayFromCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessGatewayFromCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessGatewayFromThingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DisassociateWirelessGatewayFromThingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DlAllowed": {
       "base": null,
@@ -1351,6 +1273,14 @@
         "DakCertificateMetadata$FactorySupport": "<p>Whether factory support has been enabled.</p>"
       }
     },
+    "FileDescriptor": {
+      "base": "<p>The descriptor is the metadata about the file that is transferred to the device using FUOTA, such as the software version. It is a binary field encoded in base64.</p>",
+      "refs": {
+        "CreateFuotaTaskRequest$Descriptor": null,
+        "GetFuotaTaskResponse$Descriptor": null,
+        "UpdateFuotaTaskRequest$Descriptor": null
+      }
+    },
     "Fingerprint": {
       "base": null,
       "refs": {
@@ -1409,6 +1339,24 @@
         "GetFuotaTaskResponse$Arn": null
       }
     },
+    "FuotaTaskEvent": {
+      "base": "<p>The event for a log message, if the log message is tied to a FUOTA task.</p>",
+      "refs": {
+        "FuotaTaskEventLogOption$Event": null
+      }
+    },
+    "FuotaTaskEventLogOption": {
+      "base": "<p>The log options for a FUOTA task event and can be used to set log levels for a specific FUOTA task event.</p> <p>For a LoRaWAN FUOTA task, the only possible event for a log message is <code>Fuota</code>.</p>",
+      "refs": {
+        "FuotaTaskEventLogOptionList$member": null
+      }
+    },
+    "FuotaTaskEventLogOptionList": {
+      "base": "<p>The list of FUOTA task event log options.</p>",
+      "refs": {
+        "FuotaTaskLogOption$Events": null
+      }
+    },
     "FuotaTaskId": {
       "base": "<p>The ID of a FUOTA task.</p>",
       "refs": {
@@ -1433,6 +1381,19 @@
         "ListFuotaTasksResponse$FuotaTaskList": null
       }
     },
+    "FuotaTaskLogOption": {
+      "base": "<p>The log options for FUOTA tasks and can be used to set log levels for a specific type of FUOTA task.</p>",
+      "refs": {
+        "FuotaTaskLogOptionList$member": null
+      }
+    },
+    "FuotaTaskLogOptionList": {
+      "base": "<p>The list of FUOTA task log options.</p>",
+      "refs": {
+        "GetLogLevelsByResourceTypesResponse$FuotaTaskLogOptions": null,
+        "UpdateLogLevelsByResourceTypesRequest$FuotaTaskLogOptions": null
+      }
+    },
     "FuotaTaskName": {
       "base": "<p>The name of a FUOTA task.</p>",
       "refs": {
@@ -1446,6 +1407,12 @@
       "base": "<p>The status of a FUOTA task.</p>",
       "refs": {
         "GetFuotaTaskResponse$Status": null
+      }
+    },
+    "FuotaTaskType": {
+      "base": "<p>The FUOTA task type.</p>",
+      "refs": {
+        "FuotaTaskLogOption$Type": "<p>The FUOTA task type.</p>"
       }
     },
     "GPST": {
@@ -1471,6 +1438,12 @@
       "base": "<p>Gateway list item object that specifies the frequency and list of gateways for which the downlink message should be sent.</p>",
       "refs": {
         "GatewayList$member": null
+      }
+    },
+    "GatewayListMulticast": {
+      "base": null,
+      "refs": {
+        "ParticipatingGatewaysMulticast$GatewayList": "<p>The list of gateways that you want to use for sending the multicast downlink message. Each downlink message will be sent to all the gateways in the list in the order that you provided. If the gateway list is empty, then AWS IoT Core for LoRaWAN chooses the gateways that were most recently used by the devices to send an uplink message.</p>"
       }
     },
     "GatewayMaxEirp": {
@@ -1503,283 +1476,227 @@
     },
     "GetDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeviceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDeviceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventConfigurationByResourceTypesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetEventConfigurationByResourceTypesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogLevelsByResourceTypesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetLogLevelsByResourceTypesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMetricConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMetricConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMetricsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMetricsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMulticastGroupSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMulticastGroupSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkAnalyzerConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetNetworkAnalyzerConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPartnerAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPartnerAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPositionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPositionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPositionEstimateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPositionEstimateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPositionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPositionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceEventConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceEventConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceLogLevelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceLogLevelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePositionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePositionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessDeviceImportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessDeviceImportTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessDeviceStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessDeviceStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayFirmwareInformationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayFirmwareInformationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayStatisticsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayStatisticsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayTaskDefinitionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayTaskDefinitionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetWirelessGatewayTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlobalIdentity": {
       "base": "<p>Global identity information.</p>",
@@ -1963,8 +1880,7 @@
     },
     "InternalServerException": {
       "base": "<p>An unexpected error occurred while processing a request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IotCertificateId": {
       "base": null,
@@ -2034,173 +1950,139 @@
     },
     "ListDestinationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDestinationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeviceProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDeviceProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDevicesForWirelessDeviceImportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDevicesForWirelessDeviceImportTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListEventConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFuotaTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFuotaTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMulticastGroupsByFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMulticastGroupsByFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMulticastGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMulticastGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNetworkAnalyzerConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListNetworkAnalyzerConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartnerAccountsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPartnerAccountsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPositionConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPositionConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueuedMessagesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListQueuedMessagesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessDeviceImportTasksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessDeviceImportTasksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessDevicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessDevicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessGatewayTaskDefinitionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessGatewayTaskDefinitionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessGatewaysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWirelessGatewaysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LoRaWANConnectionStatusEventNotificationConfigurations": {
       "base": "<p>Object for LoRaWAN connection status resource type event configuration.</p>",
@@ -2385,6 +2267,8 @@
     "LogLevel": {
       "base": "<p>The log level for a log message. The log levels can be disabled, or set to <code>ERROR</code> to display less verbose logs containing only error information, or to <code>INFO</code> for more detailed logs.</p>",
       "refs": {
+        "FuotaTaskEventLogOption$LogLevel": null,
+        "FuotaTaskLogOption$LogLevel": null,
         "GetLogLevelsByResourceTypesResponse$DefaultLogLevel": null,
         "GetResourceLogLevelResponse$LogLevel": null,
         "PutResourceLogLevelRequest$LogLevel": null,
@@ -2743,6 +2627,20 @@
         "LteObj$NrCapable": "<p>Parameter that determines whether the LTE object is capable of supporting NR (new radio).</p>"
       }
     },
+    "NbTransMax": {
+      "base": null,
+      "refs": {
+        "LoRaWANGetServiceProfileInfo$NbTransMax": "<p>The maximum number of transmissions.</p> <p>Default: <code>3</code> </p>",
+        "LoRaWANServiceProfile$NbTransMax": "<p>The maximum number of transmissions.</p> <p>Default: <code>3</code> </p>"
+      }
+    },
+    "NbTransMin": {
+      "base": null,
+      "refs": {
+        "LoRaWANGetServiceProfileInfo$NbTransMin": "<p>The minimum number of transmissions.</p> <p>Default: <code>0</code> </p>",
+        "LoRaWANServiceProfile$NbTransMin": "<p>The minimum number of transmissions.</p> <p>Default: <code>0</code> </p>"
+      }
+    },
     "NetId": {
       "base": "<p>LoRaWAN network ID.</p>",
       "refs": {
@@ -2931,6 +2829,13 @@
       "base": "<p>Specify the list of gateways to which you want to send downlink data traffic when the wireless device is running in class B or class C mode.</p>",
       "refs": {
         "LoRaWANSendDataToDevice$ParticipatingGateways": "<p>Choose the gateways that you want to use for the downlink data traffic when the wireless device is running in class B or class C mode.</p>"
+      }
+    },
+    "ParticipatingGatewaysMulticast": {
+      "base": "<p>Specify the list of gateways to which you want to send the multicast downlink messages. The multicast message will be sent to each gateway in the list, with the transmission interval as the time interval between each message.</p>",
+      "refs": {
+        "LoRaWANMulticast$ParticipatingGateways": null,
+        "LoRaWANMulticastGet$ParticipatingGateways": null
       }
     },
     "PartnerAccountArn": {
@@ -3159,23 +3064,19 @@
     },
     "PutPositionConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutPositionConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourceLogLevelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourceLogLevelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "QualificationStatus": {
       "base": null,
@@ -3260,23 +3161,19 @@
     },
     "ResetAllResourceLogLevelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetAllResourceLogLevelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetResourceLogLevelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetResourceLogLevelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceId": {
       "base": null,
@@ -3286,7 +3183,7 @@
       }
     },
     "ResourceIdentifier": {
-      "base": "<p>The identifier of the resource. For a Wireless Device, it is the wireless device ID. For a wireless gateway, it is the wireless gateway ID.</p>",
+      "base": "<p>The unique identifier of the resource, which can be the wireless gateway ID, the wireless device ID, or the FUOTA task ID.</p>",
       "refs": {
         "GetResourceLogLevelRequest$ResourceIdentifier": null,
         "PutResourceLogLevelRequest$ResourceIdentifier": null,
@@ -3295,16 +3192,15 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Resource does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
       "refs": {
         "ConflictException$ResourceType": "<p>Type of the resource in the conflicting operation.</p>",
-        "GetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code> or <code>WirelessGateway</code>.</p>",
-        "PutResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code> or <code>WirelessGateway</code>.</p>",
-        "ResetResourceLogLevelRequest$ResourceType": "<p>The type of the resource, which can be <code>WirelessDevice</code> or <code>WirelessGateway</code>.</p>",
+        "GetResourceLogLevelRequest$ResourceType": "<p>The type of resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
+        "PutResourceLogLevelRequest$ResourceType": "<p>The type of resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
+        "ResetResourceLogLevelRequest$ResourceType": "<p>The type of resource, which can be <code>WirelessDevice</code>, <code>WirelessGateway</code>, or <code>FuotaTask</code>.</p>",
         "ResourceNotFoundException$ResourceType": "<p>Type of the font found resource.</p>"
       }
     },
@@ -3390,23 +3286,19 @@
     },
     "SendDataToMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendDataToMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendDataToWirelessDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendDataToWirelessDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Seq": {
       "base": null,
@@ -3450,7 +3342,7 @@
     "ServiceProfileName": {
       "base": null,
       "refs": {
-        "CreateServiceProfileRequest$Name": "<p>The name of the new resource.</p>",
+        "CreateServiceProfileRequest$Name": "<p>The name of the new resource.</p> <note> <p>The following special characters aren't accepted: <code>&lt;&gt;^#~$</code> </p> </note>",
         "GetServiceProfileResponse$Name": "<p>The name of the resource.</p>",
         "ServiceProfile$Name": "<p>The name of the resource.</p>"
       }
@@ -3474,7 +3366,7 @@
       }
     },
     "SessionTimeout": {
-      "base": "<p>How long before a multicast group session is to timeout.</p>",
+      "base": "<p>How long before a multicast group session is to timeout.</p> <note> <p>We recommend that you provide a timeout value that is a power-of-two (such as 64, 128, 256). If a non-power-of-two value is provided, it will automatically be rounded up to the next supported power-of-two within the allowed range.</p> </note>",
       "refs": {
         "LoRaWANMulticastSession$SessionTimeout": null
       }
@@ -3612,53 +3504,43 @@
     },
     "StartBulkAssociateWirelessDeviceWithMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBulkAssociateWirelessDeviceWithMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBulkDisassociateWirelessDeviceFromMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartBulkDisassociateWirelessDeviceFromMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMulticastGroupSessionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartMulticastGroupSessionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSingleWirelessDeviceImportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartSingleWirelessDeviceImportTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTime": {
       "base": "<p>Start time of a FUOTA task.</p>",
@@ -3669,13 +3551,11 @@
     },
     "StartWirelessDeviceImportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartWirelessDeviceImportTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Station": {
       "base": null,
@@ -3837,13 +3717,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -3895,13 +3773,11 @@
     },
     "TestWirelessDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestWirelessDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThingArn": {
       "base": null,
@@ -3921,13 +3797,11 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied because it exceeded the allowed API request rate.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TooManyTagsException": {
       "base": "<p>The request was denied because the resource can't have any more tags.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TraceContent": {
       "base": "<p>Trace content for your wireless devices, gateways, and multicast groups.</p>",
@@ -3943,11 +3817,31 @@
         "ParticipatingGateways$TransmissionInterval": "<p>The duration of time for which AWS IoT Core for LoRaWAN will wait before transmitting the payload to the next gateway.</p>"
       }
     },
+    "TransmissionIntervalMulticast": {
+      "base": null,
+      "refs": {
+        "ParticipatingGatewaysMulticast$TransmissionInterval": "<p>The duration of time in milliseconds for which AWS IoT Core for LoRaWAN will wait before transmitting the multicast payload to the next gateway in the list.</p>"
+      }
+    },
     "TransmitMode": {
       "base": null,
       "refs": {
         "DownlinkQueueMessage$TransmitMode": "<p>The transmit mode to use for sending data to the wireless device. This can be <code>0</code> for UM (unacknowledge mode) or <code>1</code> for AM (acknowledge mode).</p>",
         "SendDataToWirelessDeviceRequest$TransmitMode": "<p>The transmit mode to use to send data to the wireless device. Can be: <code>0</code> for UM (unacknowledge mode) or <code>1</code> for AM (acknowledge mode).</p>"
+      }
+    },
+    "TxPowerIndexMax": {
+      "base": null,
+      "refs": {
+        "LoRaWANGetServiceProfileInfo$TxPowerIndexMax": "<p>The Transmit Power Index maximum value.</p> <p>Default: <code>15</code> </p>",
+        "LoRaWANServiceProfile$TxPowerIndexMax": "<p>The Transmit Power Index maximum.</p> <p>Default: <code>15</code> </p>"
+      }
+    },
+    "TxPowerIndexMin": {
+      "base": null,
+      "refs": {
+        "LoRaWANGetServiceProfileInfo$TxPowerIndexMin": "<p>The Transmit Power Index minimum value.</p> <p>Default: <code>0</code> </p>",
+        "LoRaWANServiceProfile$TxPowerIndexMin": "<p>The Transmit Power Index minimum.</p> <p>Default: <code>0</code> </p>"
       }
     },
     "UARFCN": {
@@ -3984,13 +3878,11 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAbpV1_0_x": {
       "base": "<p>ABP device object for LoRaWAN specification v1.0.x</p>",
@@ -4013,23 +3905,19 @@
     },
     "UpdateDestinationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDestinationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventConfigurationByResourceTypesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateEventConfigurationByResourceTypesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFPorts": {
       "base": "<p>Object for updating the FPorts information.</p>",
@@ -4039,93 +3927,75 @@
     },
     "UpdateFuotaTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateFuotaTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLogLevelsByResourceTypesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLogLevelsByResourceTypesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMetricConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMetricConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMulticastGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateMulticastGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNetworkAnalyzerConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateNetworkAnalyzerConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePartnerAccountRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePartnerAccountResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePositionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePositionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceEventConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceEventConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourcePositionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourcePositionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSignature": {
       "base": null,
@@ -4135,33 +4005,27 @@
     },
     "UpdateWirelessDeviceImportTaskRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWirelessDeviceImportTaskResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWirelessDeviceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWirelessDeviceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWirelessGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWirelessGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWirelessGatewayTaskCreate": {
       "base": "<p>UpdateWirelessGatewayTaskCreate object.</p>",
@@ -4193,8 +4057,7 @@
     },
     "ValidationException": {
       "base": "<p>The input did not meet the specified constraints.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VerticalAccuracy": {
       "base": null,
@@ -4343,9 +4206,9 @@
     "WirelessDeviceName": {
       "base": null,
       "refs": {
-        "CreateWirelessDeviceRequest$Name": "<p>The name of the new resource.</p>",
+        "CreateWirelessDeviceRequest$Name": "<p>The name of the new resource.</p> <note> <p>The following special characters aren't accepted: <code>&lt;&gt;^#~$</code> </p> </note>",
         "GetWirelessDeviceResponse$Name": "<p>The name of the resource.</p>",
-        "UpdateWirelessDeviceRequest$Name": "<p>The new name of the resource.</p>",
+        "UpdateWirelessDeviceRequest$Name": "<p>The new name of the resource.</p> <note> <p>The following special characters aren't accepted: <code>&lt;&gt;^#~$</code> </p> </note>",
         "WirelessDeviceStatistics$Name": "<p>The name of the resource.</p>"
       }
     },
@@ -4418,6 +4281,7 @@
         "DisassociateWirelessGatewayFromCertificateRequest$Id": "<p>The ID of the resource to update.</p>",
         "DisassociateWirelessGatewayFromThingRequest$Id": "<p>The ID of the resource to update.</p>",
         "GatewayListItem$GatewayId": "<p>The ID of the wireless gateways that you want to add to the list of gateways when sending downlink messages.</p>",
+        "GatewayListMulticast$member": null,
         "GetWirelessGatewayCertificateRequest$Id": "<p>The ID of the resource to get.</p>",
         "GetWirelessGatewayFirmwareInformationRequest$Id": "<p>The ID of the resource to get.</p>",
         "GetWirelessGatewayResponse$Id": "<p>The ID of the wireless gateway.</p>",
@@ -4461,16 +4325,16 @@
     "WirelessGatewayName": {
       "base": null,
       "refs": {
-        "CreateWirelessGatewayRequest$Name": "<p>The name of the new resource.</p>",
+        "CreateWirelessGatewayRequest$Name": "<p>The name of the new resource.</p> <note> <p>The following special characters aren't accepted: <code>&lt;&gt;^#~$</code> </p> </note>",
         "GetWirelessGatewayResponse$Name": "<p>The name of the resource.</p>",
-        "UpdateWirelessGatewayRequest$Name": "<p>The new name of the resource.</p>",
+        "UpdateWirelessGatewayRequest$Name": "<p>The new name of the resource.</p> <note> <p>The following special characters aren't accepted: <code>&lt;&gt;^#~$</code> </p> </note>",
         "WirelessGatewayStatistics$Name": "<p>The name of the resource.</p>"
       }
     },
     "WirelessGatewayServiceType": {
       "base": null,
       "refs": {
-        "GetServiceEndpointRequest$ServiceType": "<p>The service type for which to get endpoint information about. Can be <code>CUPS</code> for the Configuration and Update Server endpoint, or <code>LNS</code> for the LoRaWAN Network Server endpoint or <code>CLAIM</code> for the global endpoint.</p>",
+        "GetServiceEndpointRequest$ServiceType": "<p>The service type for which to get endpoint information about. Can be <code>CUPS</code> for the Configuration and Update Server endpoint, or <code>LNS</code> for the LoRaWAN Network Server endpoint.</p>",
         "GetServiceEndpointResponse$ServiceType": "<p>The endpoint's service type.</p>"
       }
     },

@@ -5,11 +5,13 @@
     "endpointPrefix":"route53",
     "globalEndpoint":"route53.amazonaws.com",
     "protocol":"rest-xml",
+    "protocols":["rest-xml"],
     "serviceAbbreviation":"Route 53",
     "serviceFullName":"Amazon Route 53",
     "serviceId":"Route 53",
     "signatureVersion":"v4",
-    "uid":"route53-2013-04-01"
+    "uid":"route53-2013-04-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "ActivateKeySigningKey":{
@@ -1358,8 +1360,7 @@
     },
     "ChangeTagsForResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Changes":{
       "type":"list",
@@ -1563,7 +1564,14 @@
         "us-isob-east-1",
         "ap-southeast-4",
         "il-central-1",
-        "ca-west-1"
+        "ca-west-1",
+        "ap-southeast-5",
+        "mx-central-1",
+        "us-isof-south-1",
+        "us-isof-east-1",
+        "ap-southeast-7",
+        "ap-east-2",
+        "eu-isoe-west-1"
       ],
       "max":64,
       "min":1
@@ -2033,8 +2041,7 @@
     },
     "DeleteCidrCollectionResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteHealthCheckRequest":{
       "type":"structure",
@@ -2049,8 +2056,7 @@
     },
     "DeleteHealthCheckResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteHostedZoneRequest":{
       "type":"structure",
@@ -2109,8 +2115,7 @@
     },
     "DeleteQueryLoggingConfigResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteReusableDelegationSetRequest":{
       "type":"structure",
@@ -2125,8 +2130,7 @@
     },
     "DeleteReusableDelegationSetResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTrafficPolicyInstanceRequest":{
       "type":"structure",
@@ -2141,8 +2145,7 @@
     },
     "DeleteTrafficPolicyInstanceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTrafficPolicyRequest":{
       "type":"structure",
@@ -2165,8 +2168,7 @@
     },
     "DeleteTrafficPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVPCAssociationAuthorizationRequest":{
       "type":"structure",
@@ -2185,8 +2187,7 @@
     },
     "DeleteVPCAssociationAuthorizationResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Dimension":{
       "type":"structure",
@@ -2402,8 +2403,7 @@
     },
     "GetCheckerIpRangesRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetCheckerIpRangesResponse":{
       "type":"structure",
@@ -2463,8 +2463,7 @@
     },
     "GetHealthCheckCountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetHealthCheckCountResponse":{
       "type":"structure",
@@ -2529,8 +2528,7 @@
     },
     "GetHostedZoneCountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetHostedZoneCountResponse":{
       "type":"structure",
@@ -2657,8 +2655,7 @@
     },
     "GetTrafficPolicyInstanceCountRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetTrafficPolicyInstanceCountResponse":{
       "type":"structure",
@@ -4082,7 +4079,11 @@
         "SPF",
         "AAAA",
         "CAA",
-        "DS"
+        "DS",
+        "TLSA",
+        "SSHFP",
+        "SVCB",
+        "HTTPS"
       ]
     },
     "RecordData":{
@@ -4210,7 +4211,13 @@
         "eu-south-2",
         "ap-southeast-4",
         "il-central-1",
-        "ca-west-1"
+        "ca-west-1",
+        "ap-southeast-5",
+        "mx-central-1",
+        "ap-southeast-7",
+        "us-gov-east-1",
+        "us-gov-west-1",
+        "ap-east-2"
       ],
       "max":64,
       "min":1
@@ -4826,12 +4833,20 @@
         "sa-east-1",
         "ca-central-1",
         "cn-north-1",
+        "cn-northwest-1",
         "af-south-1",
         "eu-south-1",
         "eu-south-2",
         "ap-southeast-4",
         "il-central-1",
-        "ca-west-1"
+        "ca-west-1",
+        "ap-southeast-5",
+        "mx-central-1",
+        "us-isof-south-1",
+        "us-isof-east-1",
+        "ap-southeast-7",
+        "ap-east-2",
+        "eu-isoe-west-1"
       ],
       "max":64,
       "min":1

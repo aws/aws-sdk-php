@@ -9,7 +9,10 @@
     "uid": "medialive-2017-10-14",
     "signatureVersion": "v4",
     "serviceAbbreviation": "MediaLive",
-    "jsonVersion": "1.1"
+    "jsonVersion": "1.1",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
   },
   "operations": {
     "AcceptInputDeviceTransfer": {
@@ -3337,6 +3340,1051 @@
           "shape": "ConflictException"
         }
       ]
+    },
+    "CreateChannelPlacementGroup": {
+      "name": "CreateChannelPlacementGroup",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/clusters/{clusterId}/channelplacementgroups",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateChannelPlacementGroupRequest"
+      },
+      "output": {
+        "shape": "CreateChannelPlacementGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "CreateCluster": {
+      "name": "CreateCluster",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/clusters",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateClusterRequest"
+      },
+      "output": {
+        "shape": "CreateClusterResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateNetwork": {
+      "name": "CreateNetwork",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/networks",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateNetworkRequest"
+      },
+      "output": {
+        "shape": "CreateNetworkResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateNode": {
+      "name": "CreateNode",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/clusters/{clusterId}/nodes",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateNodeRequest"
+      },
+      "output": {
+        "shape": "CreateNodeResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "CreateNodeRegistrationScript": {
+      "name": "CreateNodeRegistrationScript",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/clusters/{clusterId}/nodeRegistrationScript",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "CreateNodeRegistrationScriptRequest"
+      },
+      "output": {
+        "shape": "CreateNodeRegistrationScriptResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteChannelPlacementGroup": {
+      "name": "DeleteChannelPlacementGroup",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/clusters/{clusterId}/channelplacementgroups/{channelPlacementGroupId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DeleteChannelPlacementGroupRequest"
+      },
+      "output": {
+        "shape": "DeleteChannelPlacementGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteCluster": {
+      "name": "DeleteCluster",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/clusters/{clusterId}",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "DeleteClusterRequest"
+      },
+      "output": {
+        "shape": "DeleteClusterResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteNetwork": {
+      "name": "DeleteNetwork",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/networks/{networkId}",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "DeleteNetworkRequest"
+      },
+      "output": {
+        "shape": "DeleteNetworkResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteNode": {
+      "name": "DeleteNode",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/clusters/{clusterId}/nodes/{nodeId}",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "DeleteNodeRequest"
+      },
+      "output": {
+        "shape": "DeleteNodeResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DescribeChannelPlacementGroup": {
+      "name": "DescribeChannelPlacementGroup",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/clusters/{clusterId}/channelplacementgroups/{channelPlacementGroupId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeChannelPlacementGroupRequest"
+      },
+      "output": {
+        "shape": "DescribeChannelPlacementGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "DescribeCluster": {
+      "name": "DescribeCluster",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/clusters/{clusterId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeClusterRequest"
+      },
+      "output": {
+        "shape": "DescribeClusterResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "DescribeNetwork": {
+      "name": "DescribeNetwork",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/networks/{networkId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeNetworkRequest"
+      },
+      "output": {
+        "shape": "DescribeNetworkResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "DescribeNode": {
+      "name": "DescribeNode",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/clusters/{clusterId}/nodes/{nodeId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeNodeRequest"
+      },
+      "output": {
+        "shape": "DescribeNodeResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListChannelPlacementGroups": {
+      "name": "ListChannelPlacementGroups",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/clusters/{clusterId}/channelplacementgroups",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListChannelPlacementGroupsRequest"
+      },
+      "output": {
+        "shape": "ListChannelPlacementGroupsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListClusters": {
+      "name": "ListClusters",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/clusters",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListClustersRequest"
+      },
+      "output": {
+        "shape": "ListClustersResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListNetworks": {
+      "name": "ListNetworks",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/networks",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListNetworksRequest"
+      },
+      "output": {
+        "shape": "ListNetworksResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListNodes": {
+      "name": "ListNodes",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/clusters/{clusterId}/nodes",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListNodesRequest"
+      },
+      "output": {
+        "shape": "ListNodesResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "UpdateChannelPlacementGroup": {
+      "name": "UpdateChannelPlacementGroup",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/clusters/{clusterId}/channelplacementgroups/{channelPlacementGroupId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateChannelPlacementGroupRequest"
+      },
+      "output": {
+        "shape": "UpdateChannelPlacementGroupResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateCluster": {
+      "name": "UpdateCluster",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/clusters/{clusterId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateClusterRequest"
+      },
+      "output": {
+        "shape": "UpdateClusterResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateNetwork": {
+      "name": "UpdateNetwork",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/networks/{networkId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateNetworkRequest"
+      },
+      "output": {
+        "shape": "UpdateNetworkResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateNode": {
+      "name": "UpdateNode",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/clusters/{clusterId}/nodes/{nodeId}",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "UpdateNodeRequest"
+      },
+      "output": {
+        "shape": "UpdateNodeResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "UpdateNodeState": {
+      "name": "UpdateNodeState",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/clusters/{clusterId}/nodes/{nodeId}/state",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "UpdateNodeStateRequest"
+      },
+      "output": {
+        "shape": "UpdateNodeStateResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "ListVersions": {
+      "name": "ListVersions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/versions",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListVersionsRequest"
+      },
+      "output": {
+        "shape": "ListVersionsResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "CreateSdiSource": {
+      "name": "CreateSdiSource",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/sdiSources",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "CreateSdiSourceRequest"
+      },
+      "output": {
+        "shape": "CreateSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DeleteSdiSource": {
+      "name": "DeleteSdiSource",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/prod/sdiSources/{sdiSourceId}",
+        "responseCode": 202
+      },
+      "input": {
+        "shape": "DeleteSdiSourceRequest"
+      },
+      "output": {
+        "shape": "DeleteSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "DescribeSdiSource": {
+      "name": "DescribeSdiSource",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/sdiSources/{sdiSourceId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DescribeSdiSourceRequest"
+      },
+      "output": {
+        "shape": "DescribeSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "ListSdiSources": {
+      "name": "ListSdiSources",
+      "http": {
+        "method": "GET",
+        "requestUri": "/prod/sdiSources",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListSdiSourcesRequest"
+      },
+      "output": {
+        "shape": "ListSdiSourcesResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
+    "UpdateSdiSource": {
+      "name": "UpdateSdiSource",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/prod/sdiSources/{sdiSourceId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateSdiSourceRequest"
+      },
+      "output": {
+        "shape": "UpdateSdiSourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
     }
   },
   "shapes": {
@@ -3538,8 +4586,7 @@
     },
     "AcceptInputDeviceTransferResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "AccessDenied": {
       "type": "structure",
@@ -3663,13 +4710,11 @@
     },
     "AribDestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "AribSourceSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "AudioChannelMapping": {
       "type": "structure",
@@ -4563,6 +5608,10 @@
         "YPosition": {
           "shape": "__integerMin0",
           "locationName": "yPosition"
+        },
+        "SubtitleRows": {
+          "shape": "BurnInDestinationSubtitleRows",
+          "locationName": "subtitleRows"
         }
       }
     },
@@ -4618,8 +5667,7 @@
     },
     "CancelInputDeviceTransferResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "CaptionDescription": {
       "type": "structure",
@@ -4913,6 +5961,14 @@
         "Vpc": {
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "DescribeAnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -5027,6 +6083,18 @@
         "Vpc": {
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "DescribeAnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
+        },
+        "UsedChannelEngineVersions": {
+          "shape": "__listOfChannelEngineVersionResponse",
+          "locationName": "usedChannelEngineVersions"
         }
       }
     },
@@ -5041,8 +6109,7 @@
     },
     "ClaimDeviceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "ColorCorrection": {
       "type": "structure",
@@ -5089,8 +6156,7 @@
     },
     "ColorSpacePassthroughSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "ConflictException": {
       "type": "structure",
@@ -5165,6 +6231,18 @@
         "Vpc": {
           "shape": "VpcOutputSettings",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "AnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -5228,6 +6306,18 @@
         "Vpc": {
           "shape": "VpcOutputSettings",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "AnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
         }
       }
     },
@@ -5296,6 +6386,26 @@
         "Vpc": {
           "shape": "InputVpcRequest",
           "locationName": "vpc"
+        },
+        "SrtSettings": {
+          "shape": "SrtSettingsRequest",
+          "locationName": "srtSettings"
+        },
+        "InputNetworkLocation": {
+          "shape": "InputNetworkLocation",
+          "locationName": "inputNetworkLocation"
+        },
+        "MulticastSettings": {
+          "shape": "MulticastSettingsCreateRequest",
+          "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -5346,6 +6456,26 @@
         "Vpc": {
           "shape": "InputVpcRequest",
           "locationName": "vpc"
+        },
+        "SrtSettings": {
+          "shape": "SrtSettingsRequest",
+          "locationName": "srtSettings"
+        },
+        "InputNetworkLocation": {
+          "shape": "InputNetworkLocation",
+          "locationName": "inputNetworkLocation"
+        },
+        "MulticastSettings": {
+          "shape": "MulticastSettingsCreateRequest",
+          "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -5708,6 +6838,14 @@
         "Vpc": {
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "DescribeAnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -5726,8 +6864,7 @@
     },
     "DeleteInputResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DeleteInputSecurityGroupRequest": {
       "type": "structure",
@@ -5744,8 +6881,7 @@
     },
     "DeleteInputSecurityGroupResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DeleteMultiplexProgramRequest": {
       "type": "structure",
@@ -5958,8 +7094,7 @@
     },
     "DeleteScheduleResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DeleteTagsRequest": {
       "type": "structure",
@@ -5982,8 +7117,7 @@
     },
     "DescribeAccountConfigurationRequest": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DescribeAccountConfigurationResponse": {
       "type": "structure",
@@ -6090,6 +7224,14 @@
         "Vpc": {
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "DescribeAnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -6303,6 +7445,26 @@
         "Type": {
           "shape": "InputType",
           "locationName": "type"
+        },
+        "SrtSettings": {
+          "shape": "SrtSettings",
+          "locationName": "srtSettings"
+        },
+        "InputNetworkLocation": {
+          "shape": "InputNetworkLocation",
+          "locationName": "inputNetworkLocation"
+        },
+        "MulticastSettings": {
+          "shape": "MulticastSettings",
+          "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -6716,8 +7878,7 @@
     },
     "DolbyVision81Settings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "DvbNitSettings": {
       "type": "structure",
@@ -6878,6 +8039,10 @@
         "YPosition": {
           "shape": "__integerMin0",
           "locationName": "yPosition"
+        },
+        "SubtitleRows": {
+          "shape": "DvbSubDestinationSubtitleRows",
+          "locationName": "subtitleRows"
         }
       }
     },
@@ -7209,6 +8374,14 @@
         "StyleControl": {
           "shape": "EbuTtDDestinationStyleControl",
           "locationName": "styleControl"
+        },
+        "DefaultFontSize": {
+          "shape": "__integerMin1Max800",
+          "locationName": "defaultFontSize"
+        },
+        "DefaultLineHeight": {
+          "shape": "__integerMin80Max800",
+          "locationName": "defaultLineHeight"
         }
       }
     },
@@ -7235,13 +8408,11 @@
     },
     "EmbeddedDestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "EmbeddedPlusScte20DestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "EmbeddedScte20Detection": {
       "type": "string",
@@ -7273,8 +8444,7 @@
     },
     "Empty": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "EncoderSettings": {
       "type": "structure",
@@ -7589,8 +8759,7 @@
     },
     "FrameCaptureHlsSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "FrameCaptureIntervalUnit": {
       "type": "string",
@@ -7705,7 +8874,8 @@
       "type": "string",
       "enum": [
         "EPOCH_LOCKING",
-        "PIPELINE_LOCKING"
+        "PIPELINE_LOCKING",
+        "DISABLED"
       ]
     },
     "GlobalConfigurationOutputTimingSource": {
@@ -7764,6 +8934,10 @@
         "TemporalFilterSettings": {
           "shape": "TemporalFilterSettings",
           "locationName": "temporalFilterSettings"
+        },
+        "BandwidthReductionFilterSettings": {
+          "shape": "BandwidthReductionFilterSettings",
+          "locationName": "bandwidthReductionFilterSettings"
         }
       }
     },
@@ -8050,6 +9224,10 @@
         "TimecodeBurninSettings": {
           "shape": "TimecodeBurninSettings",
           "locationName": "timecodeBurninSettings"
+        },
+        "MinQp": {
+          "shape": "__integerMin1Max51",
+          "locationName": "minQp"
         }
       }
     },
@@ -8145,6 +9323,10 @@
         "TemporalFilterSettings": {
           "shape": "TemporalFilterSettings",
           "locationName": "temporalFilterSettings"
+        },
+        "BandwidthReductionFilterSettings": {
+          "shape": "BandwidthReductionFilterSettings",
+          "locationName": "bandwidthReductionFilterSettings"
         }
       }
     },
@@ -8364,6 +9546,14 @@
         "TreeblockSize": {
           "shape": "H265TreeblockSize",
           "locationName": "treeblockSize"
+        },
+        "MinQp": {
+          "shape": "__integerMin1Max51",
+          "locationName": "minQp"
+        },
+        "Deblocking": {
+          "shape": "H265Deblocking",
+          "locationName": "deblocking"
         }
       },
       "required": [
@@ -9012,8 +10202,7 @@
     },
     "HtmlMotionGraphicsSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "IFrameOnlyPlaylistType": {
       "type": "string",
@@ -9024,8 +10213,7 @@
     },
     "ImmediateModeScheduleActionStartSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "IncludeFillerNalUnits": {
       "type": "string",
@@ -9101,6 +10289,26 @@
         "Type": {
           "shape": "InputType",
           "locationName": "type"
+        },
+        "SrtSettings": {
+          "shape": "SrtSettings",
+          "locationName": "srtSettings"
+        },
+        "InputNetworkLocation": {
+          "shape": "InputNetworkLocation",
+          "locationName": "inputNetworkLocation"
+        },
+        "MulticastSettings": {
+          "shape": "MulticastSettings",
+          "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -9122,6 +10330,10 @@
         "InputSettings": {
           "shape": "InputSettings",
           "locationName": "inputSettings"
+        },
+        "LogicalInterfaceNames": {
+          "shape": "__listOf__string",
+          "locationName": "logicalInterfaceNames"
         }
       }
     },
@@ -9209,6 +10421,14 @@
         "Vpc": {
           "shape": "InputDestinationVpc",
           "locationName": "vpc"
+        },
+        "Network": {
+          "shape": "__string",
+          "locationName": "network"
+        },
+        "NetworkRoutes": {
+          "shape": "__listOfInputDestinationRoute",
+          "locationName": "networkRoutes"
         }
       }
     },
@@ -9218,6 +10438,18 @@
         "StreamName": {
           "shape": "__string",
           "locationName": "streamName"
+        },
+        "Network": {
+          "shape": "__string",
+          "locationName": "network"
+        },
+        "NetworkRoutes": {
+          "shape": "__listOfInputRequestDestinationRoute",
+          "locationName": "networkRoutes"
+        },
+        "StaticIpAddress": {
+          "shape": "__string",
+          "locationName": "staticIpAddress"
         }
       }
     },
@@ -9343,6 +10575,10 @@
         "AudioChannelPairs": {
           "shape": "__listOfInputDeviceConfigurableAudioChannelPairConfig",
           "locationName": "audioChannelPairs"
+        },
+        "InputResolution": {
+          "shape": "__string",
+          "locationName": "inputResolution"
         }
       }
     },
@@ -9662,6 +10898,10 @@
         "AudioChannelPairs": {
           "shape": "__listOfInputDeviceUhdAudioChannelPairConfig",
           "locationName": "audioChannelPairs"
+        },
+        "InputResolution": {
+          "shape": "__string",
+          "locationName": "inputResolution"
         }
       }
     },
@@ -10017,7 +11257,11 @@
         "MEDIACONNECT",
         "INPUT_DEVICE",
         "AWS_CDI",
-        "TS_FILE"
+        "TS_FILE",
+        "SRT_CALLER",
+        "MULTICAST",
+        "SMPTE_2110_RECEIVER_GROUP",
+        "SDI"
       ]
     },
     "InputVpcRequest": {
@@ -11171,13 +12415,20 @@
         "ChannelId": {
           "shape": "__stringMin1",
           "locationName": "channelId"
+        },
+        "ChannelGroup": {
+          "shape": "__stringMin1",
+          "locationName": "channelGroup"
+        },
+        "ChannelName": {
+          "shape": "__stringMin1",
+          "locationName": "channelName"
         }
       }
     },
     "MediaPackageOutputSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "MotionGraphicsActivateScheduleActionSettings": {
       "type": "structure",
@@ -11218,8 +12469,7 @@
     },
     "MotionGraphicsDeactivateScheduleActionSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "MotionGraphicsInsertion": {
       "type": "string",
@@ -11570,8 +12820,7 @@
     },
     "MultiplexGroupSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "MultiplexMediaConnectOutputDestinationSettings": {
       "type": "structure",
@@ -11597,6 +12846,10 @@
         "Destination": {
           "shape": "OutputLocationRef",
           "locationName": "destination"
+        },
+        "ContainerSettings": {
+          "shape": "MultiplexContainerSettings",
+          "locationName": "containerSettings"
         }
       },
       "required": [
@@ -11695,6 +12948,22 @@
         "VideoPid": {
           "shape": "__integer",
           "locationName": "videoPid"
+        },
+        "AribCaptionsPid": {
+          "shape": "__integer",
+          "locationName": "aribCaptionsPid"
+        },
+        "DvbTeletextPids": {
+          "shape": "__listOf__integer",
+          "locationName": "dvbTeletextPids"
+        },
+        "EcmPid": {
+          "shape": "__integer",
+          "locationName": "ecmPid"
+        },
+        "Smpte2038Pid": {
+          "shape": "__integer",
+          "locationName": "smpte2038Pid"
         }
       }
     },
@@ -11901,6 +13170,10 @@
         "ServerValidation": {
           "shape": "NetworkInputServerValidation",
           "locationName": "serverValidation"
+        },
+        "MulticastInputSettings": {
+          "shape": "MulticastInputSettings",
+          "locationName": "multicastInputSettings"
         }
       }
     },
@@ -12133,6 +13406,14 @@
         "Settings": {
           "shape": "__listOfOutputDestinationSettings",
           "locationName": "settings"
+        },
+        "SrtSettings": {
+          "shape": "__listOfSrtOutputDestinationSettings",
+          "locationName": "srtSettings"
+        },
+        "LogicalInterfaceNames": {
+          "shape": "__listOf__string",
+          "locationName": "logicalInterfaceNames"
         }
       }
     },
@@ -12216,6 +13497,10 @@
         "CmafIngestGroupSettings": {
           "shape": "CmafIngestGroupSettings",
           "locationName": "cmafIngestGroupSettings"
+        },
+        "SrtGroupSettings": {
+          "shape": "SrtGroupSettings",
+          "locationName": "srtGroupSettings"
         }
       }
     },
@@ -12279,13 +13564,16 @@
         "CmafIngestOutputSettings": {
           "shape": "CmafIngestOutputSettings",
           "locationName": "cmafIngestOutputSettings"
+        },
+        "SrtOutputSettings": {
+          "shape": "SrtOutputSettings",
+          "locationName": "srtOutputSettings"
         }
       }
     },
     "PassThroughSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "PauseStateScheduleActionSettings": {
       "type": "structure",
@@ -12318,6 +13606,10 @@
         "PipelineId": {
           "shape": "__string",
           "locationName": "pipelineId"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -12330,8 +13622,7 @@
     },
     "PipelineLockingSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "PipelinePauseStateSettings": {
       "type": "structure",
@@ -12445,8 +13736,7 @@
     },
     "RawSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "RebootInputDevice": {
       "type": "structure",
@@ -12483,18 +13773,15 @@
     },
     "RebootInputDeviceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "Rec601Settings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "Rec709Settings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "RejectInputDeviceTransferRequest": {
       "type": "structure",
@@ -12511,8 +13798,7 @@
     },
     "RejectInputDeviceTransferResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "RemixSettings": {
       "type": "structure",
@@ -12643,7 +13929,8 @@
         "AVC",
         "HEVC",
         "AUDIO",
-        "LINK"
+        "LINK",
+        "AV1"
       ]
     },
     "ReservationMaximumBitrate": {
@@ -12783,8 +14070,7 @@
     },
     "RtmpCaptionInfoDestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "RtmpGroupSettings": {
       "type": "structure",
@@ -12947,6 +14233,14 @@
         "StaticImageOutputDeactivateSettings": {
           "shape": "StaticImageOutputDeactivateScheduleActionSettings",
           "locationName": "staticImageOutputDeactivateSettings"
+        },
+        "Id3SegmentTaggingSettings": {
+          "shape": "Id3SegmentTaggingScheduleActionSettings",
+          "locationName": "id3SegmentTaggingSettings"
+        },
+        "TimedMetadataSettings": {
+          "shape": "TimedMetadataScheduleActionSettings",
+          "locationName": "timedMetadataSettings"
         }
       }
     },
@@ -12969,8 +14263,7 @@
     },
     "ScheduleDeleteResultModel": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "ScheduleDescribeResultModel": {
       "type": "structure",
@@ -12997,8 +14290,7 @@
     },
     "Scte20PlusEmbeddedDestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "Scte20SourceSettings": {
       "type": "structure",
@@ -13015,8 +14307,7 @@
     },
     "Scte27DestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "Scte27OcrLanguage": {
       "type": "string",
@@ -13375,8 +14666,7 @@
     },
     "SmpteTtDestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "StandardHlsSettings": {
       "type": "structure",
@@ -13481,6 +14771,14 @@
         "Vpc": {
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "DescribeAnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -13499,8 +14797,7 @@
     },
     "StartInputDeviceMaintenanceWindowResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "StartInputDeviceRequest": {
       "type": "structure",
@@ -13517,8 +14814,7 @@
     },
     "StartInputDeviceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "StartMultiplexRequest": {
       "type": "structure",
@@ -13824,6 +15120,14 @@
         "Vpc": {
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "DescribeAnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -13842,8 +15146,7 @@
     },
     "StopInputDeviceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "StopMultiplexRequest": {
       "type": "structure",
@@ -13936,8 +15239,7 @@
     },
     "TeletextDestinationSettings": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "TeletextSourceSettings": {
       "type": "structure",
@@ -14052,8 +15354,7 @@
     },
     "ThumbnailNoData": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "ThumbnailState": {
       "type": "string",
@@ -14194,8 +15495,7 @@
     },
     "TransferInputDeviceResponse": {
       "type": "structure",
-      "members": {
-      }
+      "members": {}
     },
     "TransferringInputDeviceSummary": {
       "type": "structure",
@@ -14384,6 +15684,18 @@
         "RoleArn": {
           "shape": "__string",
           "locationName": "roleArn"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
+        },
+        "AnywhereSettings": {
+          "shape": "AnywhereSettings",
+          "locationName": "anywhereSettings"
         }
       }
     },
@@ -14477,6 +15789,18 @@
         "RoleArn": {
           "shape": "__string",
           "locationName": "roleArn"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionRequest",
+          "locationName": "channelEngineVersion"
+        },
+        "DryRun": {
+          "shape": "__boolean",
+          "locationName": "dryRun"
+        },
+        "AnywhereSettings": {
+          "shape": "AnywhereSettings",
+          "locationName": "anywhereSettings"
         }
       },
       "required": [
@@ -14531,6 +15855,22 @@
         "Sources": {
           "shape": "__listOfInputSourceRequest",
           "locationName": "sources"
+        },
+        "SrtSettings": {
+          "shape": "SrtSettingsRequest",
+          "locationName": "srtSettings"
+        },
+        "MulticastSettings": {
+          "shape": "MulticastSettingsUpdateRequest",
+          "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       }
     },
@@ -14688,6 +16028,22 @@
         "Sources": {
           "shape": "__listOfInputSourceRequest",
           "locationName": "sources"
+        },
+        "SrtSettings": {
+          "shape": "SrtSettingsRequest",
+          "locationName": "srtSettings"
+        },
+        "MulticastSettings": {
+          "shape": "MulticastSettingsUpdateRequest",
+          "locationName": "multicastSettings"
+        },
+        "Smpte2110ReceiverGroupSettings": {
+          "shape": "Smpte2110ReceiverGroupSettings",
+          "locationName": "smpte2110ReceiverGroupSettings"
+        },
+        "SdiSources": {
+          "shape": "InputSdiSources",
+          "locationName": "sdiSources"
         }
       },
       "required": [
@@ -14722,7 +16078,10 @@
         },
         "Tags": {
           "shape": "Tags",
-          "locationName": "tags"
+          "locationName": "tags",
+          "deprecated": true,
+          "deprecatedMessage": "This API is deprecated. You must use UpdateTagsForResource instead.",
+          "deprecatedSince": "2024-11-20"
         },
         "WhitelistRules": {
           "shape": "__listOfInputWhitelistRuleCidr",
@@ -14761,6 +16120,10 @@
         "Name": {
           "shape": "__string",
           "locationName": "name"
+        },
+        "PacketIdentifiersMapping": {
+          "shape": "MultiplexPacketIdentifiersMapping",
+          "locationName": "packetIdentifiersMapping"
         }
       }
     },
@@ -14829,6 +16192,10 @@
         "Name": {
           "shape": "__string",
           "locationName": "name"
+        },
+        "PacketIdentifiersMapping": {
+          "shape": "MultiplexPacketIdentifiersMapping",
+          "locationName": "packetIdentifiersMapping"
         }
       },
       "required": [
@@ -14949,6 +16316,10 @@
         "Mpeg2Settings": {
           "shape": "Mpeg2Settings",
           "locationName": "mpeg2Settings"
+        },
+        "Av1Settings": {
+          "shape": "Av1Settings",
+          "locationName": "av1Settings"
         }
       }
     },
@@ -16065,6 +17436,14 @@
         "Vpc": {
           "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
+        },
+        "AnywhereSettings": {
+          "shape": "DescribeAnywhereSettings",
+          "locationName": "anywhereSettings"
+        },
+        "ChannelEngineVersion": {
+          "shape": "ChannelEngineVersionResponse",
+          "locationName": "channelEngineVersion"
         }
       }
     },
@@ -16138,6 +17517,50 @@
         "SendDelayMs": {
           "shape": "__integerMin0Max2000",
           "locationName": "sendDelayMs"
+        },
+        "KlvBehavior": {
+          "shape": "CmafKLVBehavior",
+          "locationName": "klvBehavior"
+        },
+        "KlvNameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "klvNameModifier"
+        },
+        "NielsenId3NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "nielsenId3NameModifier"
+        },
+        "Scte35NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "scte35NameModifier"
+        },
+        "Id3Behavior": {
+          "shape": "CmafId3Behavior",
+          "locationName": "id3Behavior"
+        },
+        "Id3NameModifier": {
+          "shape": "__stringMax100",
+          "locationName": "id3NameModifier"
+        },
+        "CaptionLanguageMappings": {
+          "shape": "__listOfCmafIngestCaptionLanguageMapping",
+          "locationName": "captionLanguageMappings"
+        },
+        "TimedMetadataId3Frame": {
+          "shape": "CmafTimedMetadataId3Frame",
+          "locationName": "timedMetadataId3Frame"
+        },
+        "TimedMetadataId3Period": {
+          "shape": "__integerMin0Max10000",
+          "locationName": "timedMetadataId3Period"
+        },
+        "TimedMetadataPassthrough": {
+          "shape": "CmafTimedMetadataPassthrough",
+          "locationName": "timedMetadataPassthrough"
+        },
+        "AdditionalDestinations": {
+          "shape": "__listOfAdditionalDestinations",
+          "locationName": "additionalDestinations"
         }
       },
       "required": [
@@ -16400,7 +17823,8 @@
         "MEDIAPACKAGE_CHANNEL",
         "MEDIAPACKAGE_ORIGIN_ENDPOINT",
         "MEDIACONNECT_FLOW",
-        "S3_BUCKET"
+        "S3_BUCKET",
+        "MEDIATAILOR_PLAYBACK_CONFIGURATION"
       ]
     },
     "CloudWatchAlarmTemplateTreatMissingData": {
@@ -16435,6 +17859,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -16455,6 +17884,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -16587,6 +18021,11 @@
         "TreatMissingData": {
           "shape": "CloudWatchAlarmTemplateTreatMissingData",
           "locationName": "treatMissingData"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -16656,6 +18095,11 @@
         "TreatMissingData": {
           "shape": "CloudWatchAlarmTemplateTreatMissingData",
           "locationName": "treatMissingData"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -16846,6 +18290,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -16866,6 +18315,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -16970,6 +18424,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17004,6 +18463,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17136,6 +18600,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -17169,6 +18638,11 @@
         "Tags": {
           "shape": "TagMap",
           "locationName": "tags"
+        },
+        "RequestId": {
+          "shape": "__stringMin1Max256PatternS",
+          "locationName": "requestId",
+          "idempotencyToken": true
         }
       },
       "required": [
@@ -19989,6 +21463,3177 @@
       "enum": [
         "ALL_OUTPUT_GROUPS",
         "SCTE35_ENABLED_OUTPUT_GROUPS"
+      ]
+    },
+    "Algorithm": {
+      "type": "string",
+      "enum": [
+        "AES128",
+        "AES192",
+        "AES256"
+      ]
+    },
+    "SrtCallerDecryption": {
+      "type": "structure",
+      "members": {
+        "Algorithm": {
+          "shape": "Algorithm",
+          "locationName": "algorithm"
+        },
+        "PassphraseSecretArn": {
+          "shape": "__string",
+          "locationName": "passphraseSecretArn"
+        }
+      }
+    },
+    "SrtCallerDecryptionRequest": {
+      "type": "structure",
+      "members": {
+        "Algorithm": {
+          "shape": "Algorithm",
+          "locationName": "algorithm"
+        },
+        "PassphraseSecretArn": {
+          "shape": "__string",
+          "locationName": "passphraseSecretArn"
+        }
+      }
+    },
+    "SrtCallerSource": {
+      "type": "structure",
+      "members": {
+        "Decryption": {
+          "shape": "SrtCallerDecryption",
+          "locationName": "decryption"
+        },
+        "MinimumLatency": {
+          "shape": "__integer",
+          "locationName": "minimumLatency"
+        },
+        "SrtListenerAddress": {
+          "shape": "__string",
+          "locationName": "srtListenerAddress"
+        },
+        "SrtListenerPort": {
+          "shape": "__string",
+          "locationName": "srtListenerPort"
+        },
+        "StreamId": {
+          "shape": "__string",
+          "locationName": "streamId"
+        }
+      }
+    },
+    "SrtCallerSourceRequest": {
+      "type": "structure",
+      "members": {
+        "Decryption": {
+          "shape": "SrtCallerDecryptionRequest",
+          "locationName": "decryption"
+        },
+        "MinimumLatency": {
+          "shape": "__integer",
+          "locationName": "minimumLatency"
+        },
+        "SrtListenerAddress": {
+          "shape": "__string",
+          "locationName": "srtListenerAddress"
+        },
+        "SrtListenerPort": {
+          "shape": "__string",
+          "locationName": "srtListenerPort"
+        },
+        "StreamId": {
+          "shape": "__string",
+          "locationName": "streamId"
+        }
+      }
+    },
+    "SrtSettings": {
+      "type": "structure",
+      "members": {
+        "SrtCallerSources": {
+          "shape": "__listOfSrtCallerSource",
+          "locationName": "srtCallerSources"
+        }
+      }
+    },
+    "SrtSettingsRequest": {
+      "type": "structure",
+      "members": {
+        "SrtCallerSources": {
+          "shape": "__listOfSrtCallerSourceRequest",
+          "locationName": "srtCallerSources"
+        }
+      }
+    },
+    "__listOfSrtCallerSource": {
+      "type": "list",
+      "member": {
+        "shape": "SrtCallerSource"
+      }
+    },
+    "__listOfSrtCallerSourceRequest": {
+      "type": "list",
+      "member": {
+        "shape": "SrtCallerSourceRequest"
+      }
+    },
+    "MultiplexPacketIdentifiersMapping": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "MultiplexProgramPacketIdentifiersMap"
+      }
+    },
+    "__integerMin1Max51": {
+      "type": "integer",
+      "min": 1,
+      "max": 51
+    },
+    "AnywhereSettings": {
+      "type": "structure",
+      "members": {
+        "ChannelPlacementGroupId": {
+          "shape": "__string",
+          "locationName": "channelPlacementGroupId"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        }
+      }
+    },
+    "Av1ColorSpaceSettings": {
+      "type": "structure",
+      "members": {
+        "ColorSpacePassthroughSettings": {
+          "shape": "ColorSpacePassthroughSettings",
+          "locationName": "colorSpacePassthroughSettings"
+        },
+        "Hdr10Settings": {
+          "shape": "Hdr10Settings",
+          "locationName": "hdr10Settings"
+        },
+        "Rec601Settings": {
+          "shape": "Rec601Settings",
+          "locationName": "rec601Settings"
+        },
+        "Rec709Settings": {
+          "shape": "Rec709Settings",
+          "locationName": "rec709Settings"
+        }
+      }
+    },
+    "Av1GopSizeUnits": {
+      "type": "string",
+      "enum": [
+        "FRAMES",
+        "SECONDS"
+      ]
+    },
+    "Av1Level": {
+      "type": "string",
+      "enum": [
+        "AV1_LEVEL_2",
+        "AV1_LEVEL_2_1",
+        "AV1_LEVEL_3",
+        "AV1_LEVEL_3_1",
+        "AV1_LEVEL_4",
+        "AV1_LEVEL_4_1",
+        "AV1_LEVEL_5",
+        "AV1_LEVEL_5_1",
+        "AV1_LEVEL_5_2",
+        "AV1_LEVEL_5_3",
+        "AV1_LEVEL_6",
+        "AV1_LEVEL_6_1",
+        "AV1_LEVEL_6_2",
+        "AV1_LEVEL_6_3",
+        "AV1_LEVEL_AUTO"
+      ]
+    },
+    "Av1LookAheadRateControl": {
+      "type": "string",
+      "enum": [
+        "HIGH",
+        "LOW",
+        "MEDIUM"
+      ]
+    },
+    "Av1SceneChangeDetect": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Av1Settings": {
+      "type": "structure",
+      "members": {
+        "AfdSignaling": {
+          "shape": "AfdSignaling",
+          "locationName": "afdSignaling"
+        },
+        "BufSize": {
+          "shape": "__integerMin50000Max24000000",
+          "locationName": "bufSize"
+        },
+        "ColorSpaceSettings": {
+          "shape": "Av1ColorSpaceSettings",
+          "locationName": "colorSpaceSettings"
+        },
+        "FixedAfd": {
+          "shape": "FixedAfd",
+          "locationName": "fixedAfd"
+        },
+        "FramerateDenominator": {
+          "shape": "__integerMin1Max3003",
+          "locationName": "framerateDenominator"
+        },
+        "FramerateNumerator": {
+          "shape": "__integerMin1",
+          "locationName": "framerateNumerator"
+        },
+        "GopSize": {
+          "shape": "__doubleMin0",
+          "locationName": "gopSize"
+        },
+        "GopSizeUnits": {
+          "shape": "Av1GopSizeUnits",
+          "locationName": "gopSizeUnits"
+        },
+        "Level": {
+          "shape": "Av1Level",
+          "locationName": "level"
+        },
+        "LookAheadRateControl": {
+          "shape": "Av1LookAheadRateControl",
+          "locationName": "lookAheadRateControl"
+        },
+        "MaxBitrate": {
+          "shape": "__integerMin50000Max12000000",
+          "locationName": "maxBitrate"
+        },
+        "MinIInterval": {
+          "shape": "__integerMin0Max30",
+          "locationName": "minIInterval"
+        },
+        "ParDenominator": {
+          "shape": "__integerMin1",
+          "locationName": "parDenominator"
+        },
+        "ParNumerator": {
+          "shape": "__integerMin1",
+          "locationName": "parNumerator"
+        },
+        "QvbrQualityLevel": {
+          "shape": "__integerMin1Max10",
+          "locationName": "qvbrQualityLevel"
+        },
+        "SceneChangeDetect": {
+          "shape": "Av1SceneChangeDetect",
+          "locationName": "sceneChangeDetect"
+        },
+        "TimecodeBurninSettings": {
+          "shape": "TimecodeBurninSettings",
+          "locationName": "timecodeBurninSettings"
+        },
+        "Bitrate": {
+          "shape": "__integerMin50000Max12000000",
+          "locationName": "bitrate"
+        },
+        "RateControlMode": {
+          "shape": "Av1RateControlMode",
+          "locationName": "rateControlMode"
+        }
+      },
+      "required": [
+        "FramerateNumerator",
+        "FramerateDenominator"
+      ]
+    },
+    "ChannelPlacementGroupState": {
+      "type": "string",
+      "enum": [
+        "UNASSIGNED",
+        "ASSIGNING",
+        "ASSIGNED",
+        "DELETING",
+        "DELETE_FAILED",
+        "DELETED",
+        "UNASSIGNING"
+      ]
+    },
+    "ClusterNetworkSettings": {
+      "type": "structure",
+      "members": {
+        "DefaultRoute": {
+          "shape": "__string",
+          "locationName": "defaultRoute"
+        },
+        "InterfaceMappings": {
+          "shape": "__listOfInterfaceMapping",
+          "locationName": "interfaceMappings"
+        }
+      }
+    },
+    "ClusterNetworkSettingsCreateRequest": {
+      "type": "structure",
+      "members": {
+        "DefaultRoute": {
+          "shape": "__string",
+          "locationName": "defaultRoute"
+        },
+        "InterfaceMappings": {
+          "shape": "__listOfInterfaceMappingCreateRequest",
+          "locationName": "interfaceMappings"
+        }
+      }
+    },
+    "ClusterNetworkSettingsUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "DefaultRoute": {
+          "shape": "__string",
+          "locationName": "defaultRoute"
+        },
+        "InterfaceMappings": {
+          "shape": "__listOfInterfaceMappingUpdateRequest",
+          "locationName": "interfaceMappings"
+        }
+      }
+    },
+    "ClusterState": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "DELETING",
+        "DELETE_FAILED",
+        "DELETED"
+      ]
+    },
+    "ClusterType": {
+      "type": "string",
+      "enum": [
+        "ON_PREMISES"
+      ]
+    },
+    "CreateChannelPlacementGroupRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "CreateChannelPlacementGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        },
+        "State": {
+          "shape": "ChannelPlacementGroupState",
+          "locationName": "state"
+        }
+      }
+    },
+    "CreateClusterRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "InstanceRoleArn": {
+          "shape": "__string",
+          "locationName": "instanceRoleArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettingsCreateRequest",
+          "locationName": "networkSettings"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreateClusterResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelIds": {
+          "shape": "__listOf__string",
+          "locationName": "channelIds"
+        },
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceRoleArn": {
+          "shape": "__string",
+          "locationName": "instanceRoleArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettings",
+          "locationName": "networkSettings"
+        },
+        "State": {
+          "shape": "ClusterState",
+          "locationName": "state"
+        }
+      }
+    },
+    "CreateNetworkRequest": {
+      "type": "structure",
+      "members": {
+        "IpPools": {
+          "shape": "__listOfIpPoolCreateRequest",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Routes": {
+          "shape": "__listOfRouteCreateRequest",
+          "locationName": "routes"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreateNetworkResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "AssociatedClusterIds": {
+          "shape": "__listOf__string",
+          "locationName": "associatedClusterIds"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "IpPools": {
+          "shape": "__listOfIpPool",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Routes": {
+          "shape": "__listOfRoute",
+          "locationName": "routes"
+        },
+        "State": {
+          "shape": "NetworkState",
+          "locationName": "state"
+        }
+      }
+    },
+    "CreateNodeRegistrationScriptRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "CreateNodeRegistrationScriptResponse": {
+      "type": "structure",
+      "members": {
+        "NodeRegistrationScript": {
+          "shape": "__string",
+          "locationName": "nodeRegistrationScript"
+        }
+      }
+    },
+    "CreateNodeRegistrationScriptResult": {
+      "type": "structure",
+      "members": {
+        "NodeRegistrationScript": {
+          "shape": "__string",
+          "locationName": "nodeRegistrationScript"
+        }
+      }
+    },
+    "CreateNodeRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMappingCreateRequest",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "CreateNodeResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelPlacementGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelPlacementGroups"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "ConnectionState": {
+          "shape": "NodeConnectionState",
+          "locationName": "connectionState"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceArn": {
+          "shape": "__string",
+          "locationName": "instanceArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "State": {
+          "shape": "NodeState",
+          "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
+        }
+      }
+    },
+    "DeleteChannelPlacementGroupRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelPlacementGroupId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelPlacementGroupId"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        }
+      },
+      "required": [
+        "ClusterId",
+        "ChannelPlacementGroupId"
+      ]
+    },
+    "DeleteChannelPlacementGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        },
+        "State": {
+          "shape": "ChannelPlacementGroupState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DeleteClusterRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "DeleteClusterResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelIds": {
+          "shape": "__listOf__string",
+          "locationName": "channelIds"
+        },
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceRoleArn": {
+          "shape": "__string",
+          "locationName": "instanceRoleArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettings",
+          "locationName": "networkSettings"
+        },
+        "State": {
+          "shape": "ClusterState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DeleteNetworkRequest": {
+      "type": "structure",
+      "members": {
+        "NetworkId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "networkId"
+        }
+      },
+      "required": [
+        "NetworkId"
+      ]
+    },
+    "DeleteNetworkResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "AssociatedClusterIds": {
+          "shape": "__listOf__string",
+          "locationName": "associatedClusterIds"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "IpPools": {
+          "shape": "__listOfIpPool",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Routes": {
+          "shape": "__listOfRoute",
+          "locationName": "routes"
+        },
+        "State": {
+          "shape": "NetworkState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DeleteNodeRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "NodeId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "nodeId"
+        }
+      },
+      "required": [
+        "NodeId",
+        "ClusterId"
+      ]
+    },
+    "DeleteNodeResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelPlacementGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelPlacementGroups"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "ConnectionState": {
+          "shape": "NodeConnectionState",
+          "locationName": "connectionState"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceArn": {
+          "shape": "__string",
+          "locationName": "instanceArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "State": {
+          "shape": "NodeState",
+          "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
+        }
+      }
+    },
+    "DescribeAnywhereSettings": {
+      "type": "structure",
+      "members": {
+        "ChannelPlacementGroupId": {
+          "shape": "__string",
+          "locationName": "channelPlacementGroupId"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        }
+      }
+    },
+    "DescribeChannelPlacementGroupRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelPlacementGroupId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelPlacementGroupId"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        }
+      },
+      "required": [
+        "ClusterId",
+        "ChannelPlacementGroupId"
+      ]
+    },
+    "DescribeChannelPlacementGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        },
+        "State": {
+          "shape": "ChannelPlacementGroupState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeChannelPlacementGroupResult": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        },
+        "State": {
+          "shape": "ChannelPlacementGroupState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeChannelPlacementGroupSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        },
+        "State": {
+          "shape": "ChannelPlacementGroupState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeClusterRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "DescribeClusterResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelIds": {
+          "shape": "__listOf__string",
+          "locationName": "channelIds"
+        },
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceRoleArn": {
+          "shape": "__string",
+          "locationName": "instanceRoleArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettings",
+          "locationName": "networkSettings"
+        },
+        "State": {
+          "shape": "ClusterState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeClusterResult": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelIds": {
+          "shape": "__listOf__string",
+          "locationName": "channelIds"
+        },
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceRoleArn": {
+          "shape": "__string",
+          "locationName": "instanceRoleArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettings",
+          "locationName": "networkSettings"
+        },
+        "State": {
+          "shape": "ClusterState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeClusterSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelIds": {
+          "shape": "__listOf__string",
+          "locationName": "channelIds"
+        },
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceRoleArn": {
+          "shape": "__string",
+          "locationName": "instanceRoleArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettings",
+          "locationName": "networkSettings"
+        },
+        "State": {
+          "shape": "ClusterState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeNetworkRequest": {
+      "type": "structure",
+      "members": {
+        "NetworkId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "networkId"
+        }
+      },
+      "required": [
+        "NetworkId"
+      ]
+    },
+    "DescribeNetworkResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "AssociatedClusterIds": {
+          "shape": "__listOf__string",
+          "locationName": "associatedClusterIds"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "IpPools": {
+          "shape": "__listOfIpPool",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Routes": {
+          "shape": "__listOfRoute",
+          "locationName": "routes"
+        },
+        "State": {
+          "shape": "NetworkState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeNetworkResult": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "AssociatedClusterIds": {
+          "shape": "__listOf__string",
+          "locationName": "associatedClusterIds"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "IpPools": {
+          "shape": "__listOfIpPool",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Routes": {
+          "shape": "__listOfRoute",
+          "locationName": "routes"
+        },
+        "State": {
+          "shape": "NetworkState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeNetworkSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "AssociatedClusterIds": {
+          "shape": "__listOf__string",
+          "locationName": "associatedClusterIds"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "IpPools": {
+          "shape": "__listOfIpPool",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Routes": {
+          "shape": "__listOfRoute",
+          "locationName": "routes"
+        },
+        "State": {
+          "shape": "NetworkState",
+          "locationName": "state"
+        }
+      }
+    },
+    "DescribeNodeRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "NodeId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "nodeId"
+        }
+      },
+      "required": [
+        "NodeId",
+        "ClusterId"
+      ]
+    },
+    "DescribeNodeResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelPlacementGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelPlacementGroups"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "ConnectionState": {
+          "shape": "NodeConnectionState",
+          "locationName": "connectionState"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceArn": {
+          "shape": "__string",
+          "locationName": "instanceArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "State": {
+          "shape": "NodeState",
+          "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
+        }
+      }
+    },
+    "DescribeNodeResult": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelPlacementGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelPlacementGroups"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "ConnectionState": {
+          "shape": "NodeConnectionState",
+          "locationName": "connectionState"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceArn": {
+          "shape": "__string",
+          "locationName": "instanceArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "State": {
+          "shape": "NodeState",
+          "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
+        }
+      }
+    },
+    "DescribeNodeSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelPlacementGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelPlacementGroups"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "ConnectionState": {
+          "shape": "NodeConnectionState",
+          "locationName": "connectionState"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceArn": {
+          "shape": "__string",
+          "locationName": "instanceArn"
+        },
+        "ManagedInstanceId": {
+          "shape": "__string",
+          "locationName": "managedInstanceId"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "State": {
+          "shape": "NodeState",
+          "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
+        }
+      }
+    },
+    "InputDestinationRoute": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        },
+        "Gateway": {
+          "shape": "__string",
+          "locationName": "gateway"
+        }
+      }
+    },
+    "InputNetworkLocation": {
+      "type": "string",
+      "enum": [
+        "AWS",
+        "ON_PREMISES"
+      ]
+    },
+    "InputRequestDestinationRoute": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        },
+        "Gateway": {
+          "shape": "__string",
+          "locationName": "gateway"
+        }
+      }
+    },
+    "InterfaceMapping": {
+      "type": "structure",
+      "members": {
+        "LogicalInterfaceName": {
+          "shape": "__string",
+          "locationName": "logicalInterfaceName"
+        },
+        "NetworkId": {
+          "shape": "__string",
+          "locationName": "networkId"
+        }
+      }
+    },
+    "InterfaceMappingCreateRequest": {
+      "type": "structure",
+      "members": {
+        "LogicalInterfaceName": {
+          "shape": "__string",
+          "locationName": "logicalInterfaceName"
+        },
+        "NetworkId": {
+          "shape": "__string",
+          "locationName": "networkId"
+        }
+      }
+    },
+    "InterfaceMappingUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "LogicalInterfaceName": {
+          "shape": "__string",
+          "locationName": "logicalInterfaceName"
+        },
+        "NetworkId": {
+          "shape": "__string",
+          "locationName": "networkId"
+        }
+      }
+    },
+    "IpPool": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        }
+      }
+    },
+    "IpPoolCreateRequest": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        }
+      }
+    },
+    "IpPoolUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        }
+      }
+    },
+    "ListChannelPlacementGroupsRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "ListChannelPlacementGroupsResponse": {
+      "type": "structure",
+      "members": {
+        "ChannelPlacementGroups": {
+          "shape": "__listOfDescribeChannelPlacementGroupSummary",
+          "locationName": "channelPlacementGroups"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListChannelPlacementGroupsResult": {
+      "type": "structure",
+      "members": {
+        "ChannelPlacementGroups": {
+          "shape": "__listOfDescribeChannelPlacementGroupSummary",
+          "locationName": "channelPlacementGroups"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListClustersRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListClustersResponse": {
+      "type": "structure",
+      "members": {
+        "Clusters": {
+          "shape": "__listOfDescribeClusterSummary",
+          "locationName": "clusters"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListClustersResult": {
+      "type": "structure",
+      "members": {
+        "Clusters": {
+          "shape": "__listOfDescribeClusterSummary",
+          "locationName": "clusters"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListNetworksRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListNetworksResponse": {
+      "type": "structure",
+      "members": {
+        "Networks": {
+          "shape": "__listOfDescribeNetworkSummary",
+          "locationName": "networks"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListNetworksResult": {
+      "type": "structure",
+      "members": {
+        "Networks": {
+          "shape": "__listOfDescribeNetworkSummary",
+          "locationName": "networks"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListNodesRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "ListNodesResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "Nodes": {
+          "shape": "__listOfDescribeNodeSummary",
+          "locationName": "nodes"
+        }
+      }
+    },
+    "ListNodesResult": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "Nodes": {
+          "shape": "__listOfDescribeNodeSummary",
+          "locationName": "nodes"
+        }
+      }
+    },
+    "MulticastInputSettings": {
+      "type": "structure",
+      "members": {
+        "SourceIpAddress": {
+          "shape": "__string",
+          "locationName": "sourceIpAddress"
+        }
+      }
+    },
+    "MulticastSettings": {
+      "type": "structure",
+      "members": {
+        "Sources": {
+          "shape": "__listOfMulticastSource",
+          "locationName": "sources"
+        }
+      }
+    },
+    "MulticastSettingsCreateRequest": {
+      "type": "structure",
+      "members": {
+        "Sources": {
+          "shape": "__listOfMulticastSourceCreateRequest",
+          "locationName": "sources"
+        }
+      }
+    },
+    "MulticastSettingsUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "Sources": {
+          "shape": "__listOfMulticastSourceUpdateRequest",
+          "locationName": "sources"
+        }
+      }
+    },
+    "MulticastSource": {
+      "type": "structure",
+      "members": {
+        "SourceIp": {
+          "shape": "__string",
+          "locationName": "sourceIp"
+        },
+        "Url": {
+          "shape": "__string",
+          "locationName": "url"
+        }
+      },
+      "required": [
+        "Url"
+      ]
+    },
+    "MulticastSourceCreateRequest": {
+      "type": "structure",
+      "members": {
+        "SourceIp": {
+          "shape": "__string",
+          "locationName": "sourceIp"
+        },
+        "Url": {
+          "shape": "__string",
+          "locationName": "url"
+        }
+      },
+      "required": [
+        "Url"
+      ]
+    },
+    "MulticastSourceUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "SourceIp": {
+          "shape": "__string",
+          "locationName": "sourceIp"
+        },
+        "Url": {
+          "shape": "__string",
+          "locationName": "url"
+        }
+      },
+      "required": [
+        "Url"
+      ]
+    },
+    "NetworkInterfaceMode": {
+      "type": "string",
+      "enum": [
+        "NAT",
+        "BRIDGE"
+      ]
+    },
+    "NetworkState": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "CREATE_FAILED",
+        "ACTIVE",
+        "DELETING",
+        "IDLE",
+        "IN_USE",
+        "UPDATING",
+        "DELETE_FAILED",
+        "DELETED"
+      ]
+    },
+    "NodeConfigurationValidationError": {
+      "type": "structure",
+      "members": {
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        },
+        "ValidationErrors": {
+          "shape": "__listOfValidationError",
+          "locationName": "validationErrors"
+        }
+      }
+    },
+    "NodeConnectionState": {
+      "type": "string",
+      "enum": [
+        "CONNECTED",
+        "DISCONNECTED"
+      ]
+    },
+    "NodeInterfaceMapping": {
+      "type": "structure",
+      "members": {
+        "LogicalInterfaceName": {
+          "shape": "__string",
+          "locationName": "logicalInterfaceName"
+        },
+        "NetworkInterfaceMode": {
+          "shape": "NetworkInterfaceMode",
+          "locationName": "networkInterfaceMode"
+        },
+        "PhysicalInterfaceName": {
+          "shape": "__string",
+          "locationName": "physicalInterfaceName"
+        }
+      }
+    },
+    "NodeInterfaceMappingCreateRequest": {
+      "type": "structure",
+      "members": {
+        "LogicalInterfaceName": {
+          "shape": "__string",
+          "locationName": "logicalInterfaceName"
+        },
+        "NetworkInterfaceMode": {
+          "shape": "NetworkInterfaceMode",
+          "locationName": "networkInterfaceMode"
+        },
+        "PhysicalInterfaceName": {
+          "shape": "__string",
+          "locationName": "physicalInterfaceName"
+        }
+      }
+    },
+    "NodeRole": {
+      "type": "string",
+      "enum": [
+        "BACKUP",
+        "ACTIVE"
+      ]
+    },
+    "NodeState": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "REGISTERING",
+        "READY_TO_ACTIVATE",
+        "REGISTRATION_FAILED",
+        "ACTIVATION_FAILED",
+        "ACTIVE",
+        "READY",
+        "IN_USE",
+        "DEREGISTERING",
+        "DRAINING",
+        "DEREGISTRATION_FAILED",
+        "DEREGISTERED"
+      ]
+    },
+    "Route": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        },
+        "Gateway": {
+          "shape": "__string",
+          "locationName": "gateway"
+        }
+      }
+    },
+    "RouteCreateRequest": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        },
+        "Gateway": {
+          "shape": "__string",
+          "locationName": "gateway"
+        }
+      }
+    },
+    "RouteUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "Cidr": {
+          "shape": "__string",
+          "locationName": "cidr"
+        },
+        "Gateway": {
+          "shape": "__string",
+          "locationName": "gateway"
+        }
+      }
+    },
+    "SrtEncryptionType": {
+      "type": "string",
+      "enum": [
+        "AES128",
+        "AES192",
+        "AES256"
+      ]
+    },
+    "SrtGroupSettings": {
+      "type": "structure",
+      "members": {
+        "InputLossAction": {
+          "shape": "InputLossActionForUdpOut",
+          "locationName": "inputLossAction"
+        }
+      }
+    },
+    "SrtOutputDestinationSettings": {
+      "type": "structure",
+      "members": {
+        "EncryptionPassphraseSecretArn": {
+          "shape": "__string",
+          "locationName": "encryptionPassphraseSecretArn"
+        },
+        "StreamId": {
+          "shape": "__string",
+          "locationName": "streamId"
+        },
+        "Url": {
+          "shape": "__string",
+          "locationName": "url"
+        }
+      }
+    },
+    "SrtOutputSettings": {
+      "type": "structure",
+      "members": {
+        "BufferMsec": {
+          "shape": "__integerMin0Max10000",
+          "locationName": "bufferMsec"
+        },
+        "ContainerSettings": {
+          "shape": "UdpContainerSettings",
+          "locationName": "containerSettings"
+        },
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        },
+        "EncryptionType": {
+          "shape": "SrtEncryptionType",
+          "locationName": "encryptionType"
+        },
+        "Latency": {
+          "shape": "__integerMin40Max16000",
+          "locationName": "latency"
+        }
+      },
+      "required": [
+        "Destination",
+        "ContainerSettings"
+      ]
+    },
+    "UpdateChannelPlacementGroupRequest": {
+      "type": "structure",
+      "members": {
+        "ChannelPlacementGroupId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "channelPlacementGroupId"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        }
+      },
+      "required": [
+        "ClusterId",
+        "ChannelPlacementGroupId"
+      ]
+    },
+    "UpdateChannelPlacementGroupResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Channels": {
+          "shape": "__listOf__string",
+          "locationName": "channels"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Nodes": {
+          "shape": "__listOf__string",
+          "locationName": "nodes"
+        },
+        "State": {
+          "shape": "ChannelPlacementGroupState",
+          "locationName": "state"
+        }
+      }
+    },
+    "UpdateClusterRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettingsUpdateRequest",
+          "locationName": "networkSettings"
+        }
+      },
+      "required": [
+        "ClusterId"
+      ]
+    },
+    "UpdateClusterResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelIds": {
+          "shape": "__listOf__string",
+          "locationName": "channelIds"
+        },
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettings",
+          "locationName": "networkSettings"
+        },
+        "State": {
+          "shape": "ClusterState",
+          "locationName": "state"
+        }
+      }
+    },
+    "UpdateClusterResult": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelIds": {
+          "shape": "__listOf__string",
+          "locationName": "channelIds"
+        },
+        "ClusterType": {
+          "shape": "ClusterType",
+          "locationName": "clusterType"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkSettings": {
+          "shape": "ClusterNetworkSettings",
+          "locationName": "networkSettings"
+        },
+        "State": {
+          "shape": "ClusterState",
+          "locationName": "state"
+        }
+      }
+    },
+    "UpdateNetworkRequest": {
+      "type": "structure",
+      "members": {
+        "IpPools": {
+          "shape": "__listOfIpPoolUpdateRequest",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NetworkId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "networkId"
+        },
+        "Routes": {
+          "shape": "__listOfRouteUpdateRequest",
+          "locationName": "routes"
+        }
+      },
+      "required": [
+        "NetworkId"
+      ]
+    },
+    "UpdateNetworkResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "AssociatedClusterIds": {
+          "shape": "__listOf__string",
+          "locationName": "associatedClusterIds"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "IpPools": {
+          "shape": "__listOfIpPool",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Routes": {
+          "shape": "__listOfRoute",
+          "locationName": "routes"
+        },
+        "State": {
+          "shape": "NetworkState",
+          "locationName": "state"
+        }
+      }
+    },
+    "UpdateNetworkResult": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "AssociatedClusterIds": {
+          "shape": "__listOf__string",
+          "locationName": "associatedClusterIds"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "IpPools": {
+          "shape": "__listOfIpPool",
+          "locationName": "ipPools"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Routes": {
+          "shape": "__listOfRoute",
+          "locationName": "routes"
+        },
+        "State": {
+          "shape": "NetworkState",
+          "locationName": "state"
+        }
+      }
+    },
+    "UpdateNodeRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "nodeId"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappingsUpdateRequest",
+          "locationName": "sdiSourceMappings"
+        }
+      },
+      "required": [
+        "NodeId",
+        "ClusterId"
+      ]
+    },
+    "UpdateNodeResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelPlacementGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelPlacementGroups"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "ConnectionState": {
+          "shape": "NodeConnectionState",
+          "locationName": "connectionState"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceArn": {
+          "shape": "__string",
+          "locationName": "instanceArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "State": {
+          "shape": "NodeState",
+          "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
+        }
+      }
+    },
+    "UpdateNodeState": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "DRAINING"
+      ]
+    },
+    "UpdateNodeStateRequest": {
+      "type": "structure",
+      "members": {
+        "ClusterId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "clusterId"
+        },
+        "NodeId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "nodeId"
+        },
+        "State": {
+          "shape": "UpdateNodeState",
+          "locationName": "state"
+        }
+      },
+      "required": [
+        "NodeId",
+        "ClusterId"
+      ]
+    },
+    "UpdateNodeStateResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "ChannelPlacementGroups": {
+          "shape": "__listOf__string",
+          "locationName": "channelPlacementGroups"
+        },
+        "ClusterId": {
+          "shape": "__string",
+          "locationName": "clusterId"
+        },
+        "ConnectionState": {
+          "shape": "NodeConnectionState",
+          "locationName": "connectionState"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "InstanceArn": {
+          "shape": "__string",
+          "locationName": "instanceArn"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NodeInterfaceMappings": {
+          "shape": "__listOfNodeInterfaceMapping",
+          "locationName": "nodeInterfaceMappings"
+        },
+        "Role": {
+          "shape": "NodeRole",
+          "locationName": "role"
+        },
+        "State": {
+          "shape": "NodeState",
+          "locationName": "state"
+        },
+        "SdiSourceMappings": {
+          "shape": "SdiSourceMappings",
+          "locationName": "sdiSourceMappings"
+        }
+      }
+    },
+    "__integerMin40Max16000": {
+      "type": "integer",
+      "min": 40,
+      "max": 16000
+    },
+    "__integerMin50000Max24000000": {
+      "type": "integer",
+      "min": 50000,
+      "max": 24000000
+    },
+    "__integerMin50000Max12000000": {
+      "type": "integer",
+      "min": 50000,
+      "max": 12000000
+    },
+    "__listOfDescribeChannelPlacementGroupSummary": {
+      "type": "list",
+      "member": {
+        "shape": "DescribeChannelPlacementGroupSummary"
+      }
+    },
+    "__listOfDescribeClusterSummary": {
+      "type": "list",
+      "member": {
+        "shape": "DescribeClusterSummary"
+      }
+    },
+    "__listOfDescribeNetworkSummary": {
+      "type": "list",
+      "member": {
+        "shape": "DescribeNetworkSummary"
+      }
+    },
+    "__listOfDescribeNodeSummary": {
+      "type": "list",
+      "member": {
+        "shape": "DescribeNodeSummary"
+      }
+    },
+    "__listOfInputDestinationRoute": {
+      "type": "list",
+      "member": {
+        "shape": "InputDestinationRoute"
+      }
+    },
+    "__listOfInputRequestDestinationRoute": {
+      "type": "list",
+      "member": {
+        "shape": "InputRequestDestinationRoute"
+      }
+    },
+    "__listOfInterfaceMapping": {
+      "type": "list",
+      "member": {
+        "shape": "InterfaceMapping"
+      }
+    },
+    "__listOfInterfaceMappingCreateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "InterfaceMappingCreateRequest"
+      }
+    },
+    "__listOfInterfaceMappingUpdateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "InterfaceMappingUpdateRequest"
+      }
+    },
+    "__listOfIpPool": {
+      "type": "list",
+      "member": {
+        "shape": "IpPool"
+      }
+    },
+    "__listOfIpPoolCreateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "IpPoolCreateRequest"
+      }
+    },
+    "__listOfIpPoolUpdateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "IpPoolUpdateRequest"
+      }
+    },
+    "__listOfMulticastSource": {
+      "type": "list",
+      "member": {
+        "shape": "MulticastSource"
+      }
+    },
+    "__listOfMulticastSourceCreateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "MulticastSourceCreateRequest"
+      }
+    },
+    "__listOfMulticastSourceUpdateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "MulticastSourceUpdateRequest"
+      }
+    },
+    "__listOfNodeInterfaceMapping": {
+      "type": "list",
+      "member": {
+        "shape": "NodeInterfaceMapping"
+      }
+    },
+    "__listOfNodeInterfaceMappingCreateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "NodeInterfaceMappingCreateRequest"
+      }
+    },
+    "__listOfRoute": {
+      "type": "list",
+      "member": {
+        "shape": "Route"
+      }
+    },
+    "__listOfRouteCreateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "RouteCreateRequest"
+      }
+    },
+    "__listOfRouteUpdateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "RouteUpdateRequest"
+      }
+    },
+    "__listOfSrtOutputDestinationSettings": {
+      "type": "list",
+      "member": {
+        "shape": "SrtOutputDestinationSettings"
+      }
+    },
+    "BandwidthReductionFilterSettings": {
+      "type": "structure",
+      "members": {
+        "PostFilterSharpening": {
+          "shape": "BandwidthReductionPostFilterSharpening",
+          "locationName": "postFilterSharpening"
+        },
+        "Strength": {
+          "shape": "BandwidthReductionFilterStrength",
+          "locationName": "strength"
+        }
+      }
+    },
+    "BandwidthReductionFilterStrength": {
+      "type": "string",
+      "enum": [
+        "AUTO",
+        "STRENGTH_1",
+        "STRENGTH_2",
+        "STRENGTH_3",
+        "STRENGTH_4"
+      ]
+    },
+    "BandwidthReductionPostFilterSharpening": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "SHARPENING_1",
+        "SHARPENING_2",
+        "SHARPENING_3"
+      ]
+    },
+    "MultiplexContainerSettings": {
+      "type": "structure",
+      "members": {
+        "MultiplexM2tsSettings": {
+          "shape": "MultiplexM2tsSettings",
+          "locationName": "multiplexM2tsSettings"
+        }
+      }
+    },
+    "MultiplexM2tsSettings": {
+      "type": "structure",
+      "members": {
+        "AbsentInputAudioBehavior": {
+          "shape": "M2tsAbsentInputAudioBehavior",
+          "locationName": "absentInputAudioBehavior"
+        },
+        "Arib": {
+          "shape": "M2tsArib",
+          "locationName": "arib"
+        },
+        "AudioBufferModel": {
+          "shape": "M2tsAudioBufferModel",
+          "locationName": "audioBufferModel"
+        },
+        "AudioFramesPerPes": {
+          "shape": "__integerMin0",
+          "locationName": "audioFramesPerPes"
+        },
+        "AudioStreamType": {
+          "shape": "M2tsAudioStreamType",
+          "locationName": "audioStreamType"
+        },
+        "CcDescriptor": {
+          "shape": "M2tsCcDescriptor",
+          "locationName": "ccDescriptor"
+        },
+        "Ebif": {
+          "shape": "M2tsEbifControl",
+          "locationName": "ebif"
+        },
+        "EsRateInPes": {
+          "shape": "M2tsEsRateInPes",
+          "locationName": "esRateInPes"
+        },
+        "Klv": {
+          "shape": "M2tsKlv",
+          "locationName": "klv"
+        },
+        "NielsenId3Behavior": {
+          "shape": "M2tsNielsenId3Behavior",
+          "locationName": "nielsenId3Behavior"
+        },
+        "PcrControl": {
+          "shape": "M2tsPcrControl",
+          "locationName": "pcrControl"
+        },
+        "PcrPeriod": {
+          "shape": "__integerMin0Max500",
+          "locationName": "pcrPeriod"
+        },
+        "Scte35Control": {
+          "shape": "M2tsScte35Control",
+          "locationName": "scte35Control"
+        },
+        "Scte35PrerollPullupMilliseconds": {
+          "shape": "__doubleMin0Max5000",
+          "locationName": "scte35PrerollPullupMilliseconds"
+        }
+      }
+    },
+    "H265Deblocking": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "CmafKLVBehavior": {
+      "type": "string",
+      "enum": [
+        "NO_PASSTHROUGH",
+        "PASSTHROUGH"
+      ]
+    },
+    "__stringMax100": {
+      "type": "string",
+      "max": 100
+    },
+    "ChannelEngineVersionRequest": {
+      "type": "structure",
+      "members": {
+        "Version": {
+          "shape": "__string",
+          "locationName": "version"
+        }
+      }
+    },
+    "ChannelEngineVersionResponse": {
+      "type": "structure",
+      "members": {
+        "ExpirationDate": {
+          "shape": "__timestampIso8601",
+          "locationName": "expirationDate"
+        },
+        "Version": {
+          "shape": "__string",
+          "locationName": "version"
+        }
+      }
+    },
+    "ListVersionsRequest": {
+      "type": "structure",
+      "members": {}
+    },
+    "ListVersionsResponse": {
+      "type": "structure",
+      "members": {
+        "Versions": {
+          "shape": "__listOfChannelEngineVersionResponse",
+          "locationName": "versions"
+        }
+      }
+    },
+    "__listOfChannelEngineVersionResponse": {
+      "type": "list",
+      "member": {
+        "shape": "ChannelEngineVersionResponse"
+      }
+    },
+    "CmafId3Behavior": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "Id3SegmentTaggingScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Id3": {
+          "shape": "__string",
+          "locationName": "id3"
+        },
+        "Tag": {
+          "shape": "__string",
+          "locationName": "tag"
+        }
+      }
+    },
+    "TimedMetadataScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Id3": {
+          "shape": "__string",
+          "locationName": "id3"
+        }
+      },
+      "required": [
+        "Id3"
+      ]
+    },
+    "__stringMin1Max256PatternS": {
+      "type": "string",
+      "min": 1,
+      "max": 256,
+      "pattern": "^[\\S]+$"
+    },
+    "__integerMin1Max800": {
+      "type": "integer",
+      "min": 1,
+      "max": 800
+    },
+    "__integerMin80Max800": {
+      "type": "integer",
+      "min": 80,
+      "max": 800
+    },
+    "InputSdpLocation": {
+      "type": "structure",
+      "members": {
+        "MediaIndex": {
+          "shape": "__integer",
+          "locationName": "mediaIndex"
+        },
+        "SdpUrl": {
+          "shape": "__string",
+          "locationName": "sdpUrl"
+        }
+      }
+    },
+    "Smpte2110ReceiverGroup": {
+      "type": "structure",
+      "members": {
+        "SdpSettings": {
+          "shape": "Smpte2110ReceiverGroupSdpSettings",
+          "locationName": "sdpSettings"
+        }
+      }
+    },
+    "Smpte2110ReceiverGroupSdpSettings": {
+      "type": "structure",
+      "members": {
+        "AncillarySdps": {
+          "shape": "__listOfInputSdpLocation",
+          "locationName": "ancillarySdps"
+        },
+        "AudioSdps": {
+          "shape": "__listOfInputSdpLocation",
+          "locationName": "audioSdps"
+        },
+        "VideoSdp": {
+          "shape": "InputSdpLocation",
+          "locationName": "videoSdp"
+        }
+      }
+    },
+    "Smpte2110ReceiverGroupSettings": {
+      "type": "structure",
+      "members": {
+        "Smpte2110ReceiverGroups": {
+          "shape": "__listOfSmpte2110ReceiverGroup",
+          "locationName": "smpte2110ReceiverGroups"
+        }
+      }
+    },
+    "__listOfInputSdpLocation": {
+      "type": "list",
+      "member": {
+        "shape": "InputSdpLocation"
+      }
+    },
+    "__listOfSmpte2110ReceiverGroup": {
+      "type": "list",
+      "member": {
+        "shape": "Smpte2110ReceiverGroup"
+      }
+    },
+    "CreateSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      }
+    },
+    "CreateSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "DeleteSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "SdiSourceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "sdiSourceId"
+        }
+      },
+      "required": [
+        "SdiSourceId"
+      ]
+    },
+    "DeleteSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "DescribeSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "SdiSourceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "sdiSourceId"
+        }
+      },
+      "required": [
+        "SdiSourceId"
+      ]
+    },
+    "DescribeSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "InputSdiSources": {
+      "type": "list",
+      "member": {
+        "shape": "__string"
+      }
+    },
+    "ListSdiSourcesRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListSdiSourcesResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "SdiSources": {
+          "shape": "__listOfSdiSourceSummary",
+          "locationName": "sdiSources"
+        }
+      }
+    },
+    "SdiSource": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Inputs": {
+          "shape": "__listOf__string",
+          "locationName": "inputs"
+        },
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "State": {
+          "shape": "SdiSourceState",
+          "locationName": "state"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      }
+    },
+    "SdiSourceMapping": {
+      "type": "structure",
+      "members": {
+        "CardNumber": {
+          "shape": "__integer",
+          "locationName": "cardNumber"
+        },
+        "ChannelNumber": {
+          "shape": "__integer",
+          "locationName": "channelNumber"
+        },
+        "SdiSource": {
+          "shape": "__string",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "SdiSourceMappingUpdateRequest": {
+      "type": "structure",
+      "members": {
+        "CardNumber": {
+          "shape": "__integer",
+          "locationName": "cardNumber"
+        },
+        "ChannelNumber": {
+          "shape": "__integer",
+          "locationName": "channelNumber"
+        },
+        "SdiSource": {
+          "shape": "__string",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "SdiSourceMappings": {
+      "type": "list",
+      "member": {
+        "shape": "SdiSourceMapping"
+      }
+    },
+    "SdiSourceMappingsUpdateRequest": {
+      "type": "list",
+      "member": {
+        "shape": "SdiSourceMappingUpdateRequest"
+      }
+    },
+    "SdiSourceMode": {
+      "type": "string",
+      "enum": [
+        "QUADRANT",
+        "INTERLEAVE"
+      ]
+    },
+    "SdiSourceState": {
+      "type": "string",
+      "enum": [
+        "IDLE",
+        "IN_USE",
+        "DELETED"
+      ]
+    },
+    "SdiSourceSummary": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "Inputs": {
+          "shape": "__listOf__string",
+          "locationName": "inputs"
+        },
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "State": {
+          "shape": "SdiSourceState",
+          "locationName": "state"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      }
+    },
+    "SdiSourceType": {
+      "type": "string",
+      "enum": [
+        "SINGLE",
+        "QUAD"
+      ]
+    },
+    "UpdateSdiSourceRequest": {
+      "type": "structure",
+      "members": {
+        "Mode": {
+          "shape": "SdiSourceMode",
+          "locationName": "mode"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "SdiSourceId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "sdiSourceId"
+        },
+        "Type": {
+          "shape": "SdiSourceType",
+          "locationName": "type"
+        }
+      },
+      "required": [
+        "SdiSourceId"
+      ]
+    },
+    "UpdateSdiSourceResponse": {
+      "type": "structure",
+      "members": {
+        "SdiSource": {
+          "shape": "SdiSource",
+          "locationName": "sdiSource"
+        }
+      }
+    },
+    "__listOfSdiSourceSummary": {
+      "type": "list",
+      "member": {
+        "shape": "SdiSourceSummary"
+      }
+    },
+    "CmafIngestCaptionLanguageMapping": {
+      "type": "structure",
+      "members": {
+        "CaptionChannel": {
+          "shape": "__integerMin1Max4",
+          "locationName": "captionChannel"
+        },
+        "LanguageCode": {
+          "shape": "__stringMin3Max3",
+          "locationName": "languageCode"
+        }
+      },
+      "required": [
+        "LanguageCode",
+        "CaptionChannel"
+      ]
+    },
+    "CmafTimedMetadataId3Frame": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PRIV",
+        "TDRL"
+      ]
+    },
+    "CmafTimedMetadataPassthrough": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "__listOfCmafIngestCaptionLanguageMapping": {
+      "type": "list",
+      "member": {
+        "shape": "CmafIngestCaptionLanguageMapping"
+      }
+    },
+    "Av1RateControlMode": {
+      "type": "string",
+      "enum": [
+        "CBR",
+        "QVBR"
+      ]
+    },
+    "AdditionalDestinations": {
+      "type": "structure",
+      "members": {
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        }
+      },
+      "required": [
+        "Destination"
+      ]
+    },
+    "__listOfAdditionalDestinations": {
+      "type": "list",
+      "member": {
+        "shape": "AdditionalDestinations"
+      }
+    },
+    "BurnInDestinationSubtitleRows": {
+      "type": "string",
+      "enum": [
+        "ROWS_16",
+        "ROWS_20",
+        "ROWS_24"
+      ]
+    },
+    "DvbSubDestinationSubtitleRows": {
+      "type": "string",
+      "enum": [
+        "ROWS_16",
+        "ROWS_20",
+        "ROWS_24"
       ]
     }
   }

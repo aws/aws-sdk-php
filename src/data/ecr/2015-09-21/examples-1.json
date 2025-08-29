@@ -12,9 +12,7 @@
           "repositoryName": "ubuntu"
         },
         "output": {
-          "failures": [
-
-          ],
+          "failures": [],
           "imageIds": [
             {
               "imageDigest": "sha256:examplee6d1e504117a17000003d3753086354a38375961f2e665416ef4b1b2f",
@@ -22,8 +20,7 @@
             }
           ]
         },
-        "comments": {
-        },
+        "comments": {},
         "description": "This example deletes images with the tags precise and trusty in a repository called ubuntu in the default registry for an account.",
         "id": "batchdeleteimages-example-1470860541707",
         "title": "To delete multiple images"
@@ -40,9 +37,7 @@
           "repositoryName": "ubuntu"
         },
         "output": {
-          "failures": [
-
-          ],
+          "failures": [],
           "images": [
             {
               "imageId": {
@@ -87,6 +82,62 @@
         "title": "To create a new repository"
       }
     ],
+    "CreateRepositoryCreationTemplate": [
+      {
+        "input": {
+          "appliedFor": [
+            "REPLICATION",
+            "PULL_THROUGH_CACHE"
+          ],
+          "description": "Repos for testing images",
+          "encryptionConfiguration": {
+            "encryptionType": "AES256"
+          },
+          "imageTagMutability": "MUTABLE",
+          "lifecyclePolicy": "{\r\n    \"rules\": [\r\n        {\r\n            \"rulePriority\": 1,\r\n            \"description\": \"Expire images older than 14 days\",\r\n            \"selection\": {\r\n                \"tagStatus\": \"untagged\",\r\n                \"countType\": \"sinceImagePushed\",\r\n                \"countUnit\": \"days\",\r\n                \"countNumber\": 14\r\n            },\r\n            \"action\": {\r\n                \"type\": \"expire\"\r\n            }\r\n        }\r\n    ]\r\n}",
+          "prefix": "eng/test",
+          "repositoryPolicy": "{\r\n  \"Version\": \"2012-10-17\",\r\n  \"Statement\": [\r\n    {\r\n      \"Sid\": \"LambdaECRPullPolicy\",\r\n      \"Effect\": \"Allow\",\r\n      \"Principal\": {\r\n        \"Service\": \"lambda.amazonaws.com\"\r\n      },\r\n      \"Action\": \"ecr:BatchGetImage\"\r\n    }\r\n  ]\r\n}",
+          "resourceTags": [
+            {
+              "Key": "environment",
+              "Value": "test"
+            }
+          ]
+        },
+        "output": {
+          "registryId": "012345678901",
+          "repositoryCreationTemplate": {
+            "appliedFor": [
+              "REPLICATION",
+              "PULL_THROUGH_CACHE"
+            ],
+            "createdAt": "2023-12-16T17:29:02-07:00",
+            "description": "Repos for testing images",
+            "encryptionConfiguration": {
+              "encryptionType": "AES256"
+            },
+            "imageTagMutability": "MUTABLE",
+            "lifecyclePolicy": "{\r\n    \"rules\": [\r\n        {\r\n            \"rulePriority\": 1,\r\n            \"description\": \"Expire images older than 14 days\",\r\n            \"selection\": {\r\n                \"tagStatus\": \"untagged\",\r\n                \"countType\": \"sinceImagePushed\",\r\n                \"countUnit\": \"days\",\r\n                \"countNumber\": 14\r\n            },\r\n            \"action\": {\r\n                \"type\": \"expire\"\r\n            }\r\n        }\r\n    ]\r\n}",
+            "prefix": "eng/test",
+            "repositoryPolicy": "{\n  \"Version\" : \"2012-10-17\",\n  \"Statement\" : [ {\n    \"Sid\" : \"LambdaECRPullPolicy\",\n    \"Effect\" : \"Allow\",\n    \"Principal\" : {\n      \"Service\" : \"lambda.amazonaws.com\"\n    },\n    \"Action\" : \"ecr:BatchGetImage\"\n  } ]\n}",
+            "resourceTags": [
+              {
+                "Key": "environment",
+                "Value": "test"
+              }
+            ],
+            "updatedAt": "2023-12-16T17:29:02-07:00"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example creates a repository creation template.",
+        "id": "create-a-new-repository-creation-template-1713296923053",
+        "title": "Create a new repository creation template"
+      }
+    ],
     "DeleteRepository": [
       {
         "input": {
@@ -110,6 +161,32 @@
         "title": "To force delete a repository"
       }
     ],
+    "DeleteRepositoryCreationTemplate": [
+      {
+        "input": {
+          "prefix": "eng"
+        },
+        "output": {
+          "registryId": "012345678901",
+          "repositoryCreationTemplate": {
+            "createdAt": "2023-12-03T16:27:57.933000-08:00",
+            "encryptionConfiguration": {
+              "encryptionType": "AES256"
+            },
+            "imageTagMutability": "MUTABLE",
+            "prefix": "eng",
+            "updatedAt": "2023-12-03T16:27:57.933000-08:00"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example deletes a repository creation template.",
+        "id": "delete-a-repository-creation-template-1713298142230",
+        "title": "Delete a repository creation template"
+      }
+    ],
     "DeleteRepositoryPolicy": [
       {
         "input": {
@@ -120,8 +197,7 @@
           "registryId": "012345678901",
           "repositoryName": "ubuntu"
         },
-        "comments": {
-        },
+        "comments": {},
         "description": "This example deletes the policy associated with the repository named ubuntu in the current account.",
         "id": "deleterepositorypolicy-example-1470866943748",
         "title": "To delete the policy associated with a repository"
@@ -129,8 +205,7 @@
     ],
     "DescribeRepositories": [
       {
-        "input": {
-        },
+        "input": {},
         "output": {
           "repositories": [
             {
@@ -146,18 +221,65 @@
           ]
         },
         "comments": {
-          "output": {
-          }
+          "output": {}
         },
         "description": "The following example obtains a list and description of all repositories in the default registry to which the current user has access.",
         "id": "describe-repositories-1470856017467",
         "title": "To describe all repositories in the current account"
       }
     ],
-    "GetAuthorizationToken": [
+    "DescribeRepositoryCreationTemplates": [
       {
         "input": {
+          "maxResults": 123,
+          "nextToken": "",
+          "prefixes": [
+            "eng"
+          ]
         },
+        "output": {
+          "nextToken": "",
+          "registryId": "012345678901",
+          "repositoryCreationTemplates": [
+            {
+              "appliedFor": [
+                "PULL_THROUGH_CACHE",
+                "REPLICATION"
+              ],
+              "createdAt": "2023-12-16T17:29:02-07:00",
+              "encryptionConfiguration": {
+                "encryptionType": "AES256"
+              },
+              "imageTagMutability": "MUTABLE",
+              "prefix": "eng/test",
+              "updatedAt": "2023-12-16T19:55:02-07:00"
+            },
+            {
+              "appliedFor": [
+                "REPLICATION"
+              ],
+              "createdAt": "2023-12-14T17:29:02-07:00",
+              "encryptionConfiguration": {
+                "encryptionType": "AES256"
+              },
+              "imageTagMutability": "IMMUTABLE",
+              "prefix": "eng/replication-test",
+              "updatedAt": "2023-12-14T19:55:02-07:00"
+            }
+          ]
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example describes the contents of a repository creation template.",
+        "id": "describe-a-repository-creation-template-1713298784302",
+        "title": "Describe a repository creation template"
+      }
+    ],
+    "GetAuthorizationToken": [
+      {
+        "input": {},
         "output": {
           "authorizationData": [
             {
@@ -167,8 +289,7 @@
             }
           ]
         },
-        "comments": {
-        },
+        "comments": {},
         "description": "This example gets an authorization token for your default registry.",
         "id": "getauthorizationtoken-example-1470867047084",
         "title": "To obtain an authorization token"
@@ -184,8 +305,7 @@
           "registryId": "012345678901",
           "repositoryName": "ubuntu"
         },
-        "comments": {
-        },
+        "comments": {},
         "description": "This example obtains the repository policy for the repository named ubuntu.",
         "id": "getrepositorypolicy-example-1470867669211",
         "title": "To get the current policy for a repository"
@@ -204,11 +324,57 @@
             }
           ]
         },
-        "comments": {
-        },
+        "comments": {},
         "description": "This example lists all of the images in the repository named ubuntu in the default registry in the current account. ",
         "id": "listimages-example-1470868161594",
         "title": "To list all images in a repository"
+      }
+    ],
+    "UpdateRepositoryCreationTemplate": [
+      {
+        "input": {
+          "appliedFor": [
+            "REPLICATION"
+          ],
+          "prefix": "eng/test",
+          "resourceTags": [
+            {
+              "Key": "environment",
+              "Value": "test"
+            }
+          ]
+        },
+        "output": {
+          "registryId": "012345678901",
+          "repositoryCreationTemplate": {
+            "appliedFor": [
+              "REPLICATION"
+            ],
+            "createdAt": "2023-12-16T17:29:02-07:00",
+            "description": "Repos for testing images",
+            "encryptionConfiguration": {
+              "encryptionType": "AES256"
+            },
+            "imageTagMutability": "MUTABLE",
+            "lifecyclePolicy": "{\r\n    \"rules\": [\r\n        {\r\n            \"rulePriority\": 1,\r\n            \"description\": \"Expire images older than 14 days\",\r\n            \"selection\": {\r\n                \"tagStatus\": \"untagged\",\r\n                \"countType\": \"sinceImagePushed\",\r\n                \"countUnit\": \"days\",\r\n                \"countNumber\": 14\r\n            },\r\n            \"action\": {\r\n                \"type\": \"expire\"\r\n            }\r\n        }\r\n    ]\r\n}",
+            "prefix": "eng/test",
+            "repositoryPolicy": "{\n  \"Version\" : \"2012-10-17\",\n  \"Statement\" : [ {\n    \"Sid\" : \"LambdaECRPullPolicy\",\n    \"Effect\" : \"Allow\",\n    \"Principal\" : {\n      \"Service\" : \"lambda.amazonaws.com\"\n    },\n    \"Action\" : \"ecr:BatchGetImage\"\n  } ]\n}",
+            "resourceTags": [
+              {
+                "Key": "environment",
+                "Value": "test"
+              }
+            ],
+            "updatedAt": "2023-12-16T19:55:02-07:00"
+          }
+        },
+        "comments": {
+          "input": {},
+          "output": {}
+        },
+        "description": "This example updates a repository creation template.",
+        "id": "update-a-repository-creation-template-1713299261276",
+        "title": "Update a repository creation template"
       }
     ]
   }

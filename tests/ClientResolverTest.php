@@ -2,12 +2,11 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
-use Aws\Auth\AuthSchemeResolver;
 use Aws\Auth\AuthSchemeResolverInterface;
 use Aws\ClientResolver;
 use Aws\ClientSideMonitoring\Configuration;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
-use Aws\CommandInterface;
+use Aws\Configuration\ConfigurationResolver;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
@@ -18,8 +17,8 @@ use Aws\Exception\InvalidRegionException;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
-use Aws\Sdk;
 use Aws\Result;
+use Generator;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
@@ -830,267 +829,7 @@ EOT;
         $this->assertArrayHasKey('ua_append', $conf);
         $this->assertIsArray($conf['ua_append']);
         $this->assertContains('PHPUnit/Unit', $conf['ua_append']);
-        $this->assertContains('aws-sdk-php/' . Sdk::VERSION, $conf['ua_append']);
     }
-
-    public function testUserAgentAlwaysStartsWithSdkAgentString()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-    public function testUserAgentAddsEndpointDiscoveryConfiguration()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'endpoint_discovery' => new \Aws\EndpointDiscovery\Configuration (
-                true,
-                1000
-            ),
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-
-    public function testUserAgentAddsEndpointDiscoveryArray()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/endpoint-discovery/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'endpoint_discovery' => [
-                'enabled' => true,
-                'cache_limit' => 1000
-            ],
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-    public function testUserAgentAddsRetryModeConfiguration()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#adaptive/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'retries' => new \Aws\Retry\Configuration('adaptive', 10)
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
-
-    public function testUserAgentAddsRetryWithArray()
-    {
-        $command = $this->getMockBuilder(CommandInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $request = $this->getMockBuilder(RequestInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $request->expects($this->exactly(2))
-            ->method('getHeader')
-            ->withConsecutive(
-                ['X-Amz-User-Agent'],
-                ['User-Agent']
-            )
-            ->willReturnOnConsecutiveCalls(
-                ["MockBuilder"],
-                ['MockBuilder']
-            );
-
-        $request->expects($this->exactly(2))
-            ->method('withHeader')
-            ->withConsecutive(
-                [
-                    'X-Amz-User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
-                    )
-                ],
-                [
-                    'User-Agent',
-                    new \PHPUnit\Framework\Constraint\RegularExpression(
-                        '/aws-sdk-php\/' . Sdk::VERSION . '.* cfg\/retry-mode#standard/'
-                    )
-                ]
-            )
-            ->willReturnOnConsecutiveCalls(
-                $request,
-                $request
-            );
-
-        $args = [
-            'retries' => [
-                'mode' => 'standard',
-            ],
-        ];
-        $list = new HandlerList(function () {
-        });
-        ClientResolver::_apply_user_agent([], $args, $list);
-        call_user_func($list->resolve(), $command, $request);
-    }
-
 
     /**
      * @dataProvider statValueProvider
@@ -1676,5 +1415,304 @@ EOF;
             AuthSchemeResolverInterface::class,
             $conf['auth_scheme_resolver']
         );
+    }
+
+    public function testEmitsDeprecationWarning()
+    {
+        if (PHP_VERSION_ID >= 80100) {
+            $this->markTestSkipped();
+        }
+
+        putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=false');
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('This installation of the SDK is using PHP version');
+
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+
+        try {
+            $r->resolve(['service' => 'sqs', 'region' => 'x'], new HandlerList());
+        } finally {
+            putenv('AWS_SUPPRESS_PHP_DEPRECATION_WARNING=true');
+        }
+    }
+
+    /**
+     * Tests the flag `use_aws_shared_config_files` is applied to the method
+     * for resolving a default value for a config.
+     *
+     * @return void
+     */
+    public function testResolveFromEnvIniUseAwsSharedFiles(): void
+    {
+        // The config being tested
+        $configKey = 'foo-config-key';
+        $configValue = 'foo-config-value';
+        // Populate config file
+        $tempDir = sys_get_temp_dir();
+        $awsDir = $tempDir . "/.aws";
+        if (!is_dir($awsDir)) {
+            mkdir($awsDir, 0777, true);
+        }
+        $configFile = $awsDir . "/config";
+        $configData = <<<EOF
+[default]
+$configKey=$configValue
+EOF;
+        file_put_contents($configFile, $configData);
+        $currentEnvConfigFile = getenv(ConfigurationResolver::ENV_CONFIG_FILE);
+        putenv(ConfigurationResolver::ENV_CONFIG_FILE . "=" . $configFile);
+
+        try {
+            $resolver = new ClientResolver([
+                $configKey => [
+                    'type' => 'value',
+                    'valid' => ['string'],
+                    'fn' => function ($value, array &$args) use ($configKey) {
+                        if (empty($value)) {
+                            $args[$configKey] = null;
+
+                            return;
+                        }
+
+                        $args[$configKey] = $value;
+                    },
+                    'default' => ClientResolver::DEFAULT_FROM_ENV_INI
+                ]
+            ]);
+            $testCases = [
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => true
+                    ],
+                    'expected' => $configValue
+                ],
+                [
+                    'args' => [
+                        'use_aws_shared_config_files' => false
+                    ],
+                    'expected' => null
+                ]
+            ];
+            foreach ($testCases as $case) {
+                $resolvedArgs = $resolver->resolve(
+                    $case['args'],
+                    new HandlerList()
+                );
+                if ($case['expected']) {
+                    $this->assertEquals(
+                        $case['expected'],
+                        $resolvedArgs[$configKey]
+                    );
+                } else {
+                    $this->assertNull($resolvedArgs[$configKey]);
+                }
+            }
+        } finally {
+            unlink($configFile);
+            if ($currentEnvConfigFile) {
+                putenv(
+                    ConfigurationResolver::ENV_CONFIG_FILE
+                    . "="
+                    . $currentEnvConfigFile
+                );
+            } else {
+                putenv(ConfigurationResolver::ENV_CONFIG_FILE);
+            }
+        }
+    }
+
+    /**
+     * @param bool $isExpected
+     * @param array $expectedValue
+     * @param array $args
+     * @param string|null $ini
+     * @param string|null $env
+     * @return void
+     *
+     * @dataProvider resolvesAuthSchemePreferenceProvider
+     */
+    public function testResolvesAuthSchemePreference(
+        bool $isExpected,
+        array $expectedValue,
+        array $args = [],
+        ?string $ini = null,
+        ?string $env = null,
+    ): void
+    {
+        // Callback list to be executed after test is executed
+        $onCompletionCallbacks = [];
+        if ($ini !== null) {
+            $currentEnvAwsConfigFile = getenv('AWS_CONFIG_FILE');
+            $tempDir = sys_get_temp_dir() . '/test-auth-preference/.aws/';
+            $tempConfigFile = $tempDir . 'config';
+            $configContent = "[default]\nauth_scheme_preference=$ini";
+
+            // If the temp directory does not exist then we create it
+            if (!is_dir($tempDir)) {
+                mkdir($tempDir, 0777, true);
+            }
+
+            file_put_contents($tempConfigFile, $configContent);
+            putenv("AWS_CONFIG_FILE=$tempConfigFile");
+
+            $onCompletionCallbacks[] = function () use (
+                $tempConfigFile,
+                $tempDir,
+                $currentEnvAwsConfigFile
+            ) {
+                if ($currentEnvAwsConfigFile !== false) {
+                    putenv("AWS_CONFIG_FILE=$currentEnvAwsConfigFile");
+                } else {
+                    putenv('AWS_CONFIG_FILE=');
+                }
+                unlink($tempConfigFile);
+                rmdir($tempDir);
+            };
+        }
+
+        if ($env !== null) {
+            $currentEnvAuthSchemePreference = getenv('AWS_AUTH_SCHEME_PREFERENCE');
+            putenv(
+                "AWS_AUTH_SCHEME_PREFERENCE=$env",
+            );
+            $onCompletionCallbacks[] = function () use (
+                $currentEnvAuthSchemePreference
+            ) {
+                if ($currentEnvAuthSchemePreference !== false) {
+                    putenv(
+                        "AWS_AUTH_SCHEME_PREFERENCE=$currentEnvAuthSchemePreference"
+                    );
+                } else {
+                    putenv('AWS_AUTH_SCHEME_PREFERENCE=');
+                }
+            };
+        }
+
+        try {
+            // To create the source such as env or from ini
+            $clientResolver = new ClientResolver(
+                ClientResolver::getDefaultArguments()
+            );
+            $resolvedConfig = $clientResolver->resolve([
+                    'service' => 's3',
+                    'region' => 'us-east-1'
+                ] + $args, new HandlerList());
+
+            if ($isExpected) {
+                $this->assertArrayHasKey(
+                    'auth_scheme_preference',
+                    $resolvedConfig
+                );
+                $this->assertTrue(
+                    is_array($resolvedConfig['auth_scheme_preference'])
+                );
+                $this->assertEquals(
+                    $expectedValue,
+                    $resolvedConfig['auth_scheme_preference']
+                );
+            } else {
+                $this->assertArrayNotHasKey(
+                    'auth_scheme_preference',
+                    $resolvedConfig
+                );
+            }
+        } finally {
+            foreach ($onCompletionCallbacks as $onCompletionCallback) {
+                call_user_func($onCompletionCallback);
+            }
+        }
+    }
+
+    /**
+     * @return Generator
+     */
+    public function resolvesAuthSchemePreferenceProvider(): Generator
+    {
+        $cases = [
+            'provided_at_client_construction' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#httpBearerAuth',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [
+                    'auth_scheme_preference' => [
+                        'smithy.api#httpBearerAuth',
+                        'smithy.api#noAuth',
+                    ]
+                ],
+            ],
+            'provided_auth_scheme_preference_from_env_1' => [
+                'is_expected' => true,
+                'expected' => [
+                    'aws.auth#sigv4a',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'aws.auth#sigv4a,smithy.api#noAuth',
+            ],
+            'provided_auth_scheme_preference_from_env_ignore_spaces' => [
+                'is_expected' => true,
+                'expected' => [
+                    'aws.auth#sigv4a',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'aws.auth#sigv4a,      smithy.api#noAuth'
+            ],
+            'provided_auth_scheme_preference_from_ini' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#noAuth',
+                    'aws.auth#sigv4'
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'smithy.api#noAuth, aws.auth#sigv4'
+            ],
+            'provided_auth_scheme_preference_from_ini_ignores_tab_and_spaces' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#noAuth',
+                    'aws.auth#sigv4',
+                    'aws.auth#sigv4a'
+                ],
+                'args' => [],
+                'ini' => null,
+                'env' => 'smithy.api#noAuth,   aws.auth#sigv4 , aws.auth#sigv4a'
+            ],
+            'provided_at_client_construction_takes_precedence_over' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#httpBearerAuth',
+                    'smithy.api#noAuth',
+                ],
+                'args' => [
+                    'auth_scheme_preference' => [
+                        'smithy.api#httpBearerAuth',
+                        'smithy.api#noAuth',
+                    ]
+                ],
+                'ini' => 'aws.auth#sigv4,aws.auth#sigv4a',
+                'env' => 'smithy.api#noAuth,aws.auth#sigv4,aws.auth#sigv4a'
+            ],
+            'provided_at_env_takes_precedence_over_ini' => [
+                'is_expected' => true,
+                'expected' => [
+                    'smithy.api#noAuth',
+                    'aws.auth#sigv4',
+                    'aws.auth#sigv4a'
+                ],
+                'args' => [],
+                'ini' => 'aws.auth#sigv4,aws.auth#sigv4a',
+                'env' => 'smithy.api#noAuth,aws.auth#sigv4,aws.auth#sigv4a'
+            ]
+        ];
+
+        foreach ($cases as $key => $case) {
+            yield $key => $case;
+        }
     }
 }

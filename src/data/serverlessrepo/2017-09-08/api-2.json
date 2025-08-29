@@ -1,1857 +1,2055 @@
 {
-  "metadata" : {
-    "apiVersion" : "2017-09-08",
-    "endpointPrefix" : "serverlessrepo",
-    "signingName" : "serverlessrepo",
-    "serviceFullName" : "AWSServerlessApplicationRepository",
-    "serviceId" : "ServerlessApplicationRepository",
-    "protocol" : "rest-json",
-    "jsonVersion" : "1.1",
-    "uid" : "serverlessrepo-2017-09-08",
-    "signatureVersion" : "v4"
+  "metadata": {
+    "apiVersion": "2017-09-08",
+    "endpointPrefix": "serverlessrepo",
+    "signingName": "serverlessrepo",
+    "serviceFullName": "AWSServerlessApplicationRepository",
+    "serviceId": "ServerlessApplicationRepository",
+    "protocol": "rest-json",
+    "jsonVersion": "1.1",
+    "uid": "serverlessrepo-2017-09-08",
+    "signatureVersion": "v4",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
   },
-  "operations" : {
-    "CreateApplication" : {
-      "name" : "CreateApplication",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/applications",
-        "responseCode" : 201
+  "operations": {
+    "CreateApplication": {
+      "name": "CreateApplication",
+      "http": {
+        "method": "POST",
+        "requestUri": "/applications",
+        "responseCode": 201
       },
-      "input" : {
-        "shape" : "CreateApplicationRequest"
+      "input": {
+        "shape": "CreateApplicationRequest"
       },
-      "output" : {
-        "shape" : "CreateApplicationResponse"
+      "output": {
+        "shape": "CreateApplicationResponse"
       },
-      "errors" : [ {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "CreateApplicationVersion" : {
-      "name" : "CreateApplicationVersion",
-      "http" : {
-        "method" : "PUT",
-        "requestUri" : "/applications/{applicationId}/versions/{semanticVersion}",
-        "responseCode" : 201
+    "CreateApplicationVersion": {
+      "name": "CreateApplicationVersion",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/applications/{applicationId}/versions/{semanticVersion}",
+        "responseCode": 201
       },
-      "input" : {
-        "shape" : "CreateApplicationVersionRequest"
+      "input": {
+        "shape": "CreateApplicationVersionRequest"
       },
-      "output" : {
-        "shape" : "CreateApplicationVersionResponse"
+      "output": {
+        "shape": "CreateApplicationVersionResponse"
       },
-      "errors" : [ {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "CreateCloudFormationChangeSet" : {
-      "name" : "CreateCloudFormationChangeSet",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/applications/{applicationId}/changesets",
-        "responseCode" : 201
+    "CreateCloudFormationChangeSet": {
+      "name": "CreateCloudFormationChangeSet",
+      "http": {
+        "method": "POST",
+        "requestUri": "/applications/{applicationId}/changesets",
+        "responseCode": 201
       },
-      "input" : {
-        "shape" : "CreateCloudFormationChangeSetRequest"
+      "input": {
+        "shape": "CreateCloudFormationChangeSetRequest"
       },
-      "output" : {
-        "shape" : "CreateCloudFormationChangeSetResponse"
+      "output": {
+        "shape": "CreateCloudFormationChangeSetResponse"
       },
-      "errors" : [ {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "CreateCloudFormationTemplate" : {
-      "name" : "CreateCloudFormationTemplate",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/applications/{applicationId}/templates",
-        "responseCode" : 201
+    "CreateCloudFormationTemplate": {
+      "name": "CreateCloudFormationTemplate",
+      "http": {
+        "method": "POST",
+        "requestUri": "/applications/{applicationId}/templates",
+        "responseCode": 201
       },
-      "input" : {
-        "shape" : "CreateCloudFormationTemplateRequest"
+      "input": {
+        "shape": "CreateCloudFormationTemplateRequest"
       },
-      "output" : {
-        "shape" : "CreateCloudFormationTemplateResponse"
+      "output": {
+        "shape": "CreateCloudFormationTemplateResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DeleteApplication" : {
-      "name" : "DeleteApplication",
-      "http" : {
-        "method" : "DELETE",
-        "requestUri" : "/applications/{applicationId}",
-        "responseCode" : 204
+    "DeleteApplication": {
+      "name": "DeleteApplication",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/applications/{applicationId}",
+        "responseCode": 204
       },
-      "input" : {
-        "shape" : "DeleteApplicationRequest"
+      "input": {
+        "shape": "DeleteApplicationRequest"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      }, {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "ConflictException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
     },
-    "GetApplication" : {
-      "name" : "GetApplication",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/applications/{applicationId}",
-        "responseCode" : 200
+    "GetApplication": {
+      "name": "GetApplication",
+      "http": {
+        "method": "GET",
+        "requestUri": "/applications/{applicationId}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "GetApplicationRequest"
+      "input": {
+        "shape": "GetApplicationRequest"
       },
-      "output" : {
-        "shape" : "GetApplicationResponse"
+      "output": {
+        "shape": "GetApplicationResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "GetApplicationPolicy" : {
-      "name" : "GetApplicationPolicy",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/applications/{applicationId}/policy",
-        "responseCode" : 200
+    "GetApplicationPolicy": {
+      "name": "GetApplicationPolicy",
+      "http": {
+        "method": "GET",
+        "requestUri": "/applications/{applicationId}/policy",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "GetApplicationPolicyRequest"
+      "input": {
+        "shape": "GetApplicationPolicyRequest"
       },
-      "output" : {
-        "shape" : "GetApplicationPolicyResponse"
+      "output": {
+        "shape": "GetApplicationPolicyResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "GetCloudFormationTemplate" : {
-      "name" : "GetCloudFormationTemplate",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/applications/{applicationId}/templates/{templateId}",
-        "responseCode" : 200
+    "GetCloudFormationTemplate": {
+      "name": "GetCloudFormationTemplate",
+      "http": {
+        "method": "GET",
+        "requestUri": "/applications/{applicationId}/templates/{templateId}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "GetCloudFormationTemplateRequest"
+      "input": {
+        "shape": "GetCloudFormationTemplateRequest"
       },
-      "output" : {
-        "shape" : "GetCloudFormationTemplateResponse"
+      "output": {
+        "shape": "GetCloudFormationTemplateResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListApplicationDependencies" : {
-      "name" : "ListApplicationDependencies",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/applications/{applicationId}/dependencies",
-        "responseCode" : 200
+    "ListApplicationDependencies": {
+      "name": "ListApplicationDependencies",
+      "http": {
+        "method": "GET",
+        "requestUri": "/applications/{applicationId}/dependencies",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListApplicationDependenciesRequest"
+      "input": {
+        "shape": "ListApplicationDependenciesRequest"
       },
-      "output" : {
-        "shape" : "ListApplicationDependenciesResponse"
+      "output": {
+        "shape": "ListApplicationDependenciesResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListApplicationVersions" : {
-      "name" : "ListApplicationVersions",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/applications/{applicationId}/versions",
-        "responseCode" : 200
+    "ListApplicationVersions": {
+      "name": "ListApplicationVersions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/applications/{applicationId}/versions",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListApplicationVersionsRequest"
+      "input": {
+        "shape": "ListApplicationVersionsRequest"
       },
-      "output" : {
-        "shape" : "ListApplicationVersionsResponse"
+      "output": {
+        "shape": "ListApplicationVersionsResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListApplications" : {
-      "name" : "ListApplications",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/applications",
-        "responseCode" : 200
+    "ListApplications": {
+      "name": "ListApplications",
+      "http": {
+        "method": "GET",
+        "requestUri": "/applications",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListApplicationsRequest"
+      "input": {
+        "shape": "ListApplicationsRequest"
       },
-      "output" : {
-        "shape" : "ListApplicationsResponse"
+      "output": {
+        "shape": "ListApplicationsResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "PutApplicationPolicy" : {
-      "name" : "PutApplicationPolicy",
-      "http" : {
-        "method" : "PUT",
-        "requestUri" : "/applications/{applicationId}/policy",
-        "responseCode" : 200
+    "PutApplicationPolicy": {
+      "name": "PutApplicationPolicy",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/applications/{applicationId}/policy",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "PutApplicationPolicyRequest"
+      "input": {
+        "shape": "PutApplicationPolicyRequest"
       },
-      "output" : {
-        "shape" : "PutApplicationPolicyResponse"
+      "output": {
+        "shape": "PutApplicationPolicyResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "UnshareApplication" : {
-      "name" : "UnshareApplication",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/applications/{applicationId}/unshare",
-        "responseCode" : 204
+    "UnshareApplication": {
+      "name": "UnshareApplication",
+      "http": {
+        "method": "POST",
+        "requestUri": "/applications/{applicationId}/unshare",
+        "responseCode": 204
       },
-      "input" : {
-        "shape" : "UnshareApplicationRequest"
+      "input": {
+        "shape": "UnshareApplicationRequest"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "UpdateApplication" : {
-      "name" : "UpdateApplication",
-      "http" : {
-        "method" : "PATCH",
-        "requestUri" : "/applications/{applicationId}",
-        "responseCode" : 200
+    "UpdateApplication": {
+      "name": "UpdateApplication",
+      "http": {
+        "method": "PATCH",
+        "requestUri": "/applications/{applicationId}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "UpdateApplicationRequest"
+      "input": {
+        "shape": "UpdateApplicationRequest"
       },
-      "output" : {
-        "shape" : "UpdateApplicationResponse"
+      "output": {
+        "shape": "UpdateApplicationResponse"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      }, {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "TooManyRequestsException"
-      }, {
-        "shape" : "ConflictException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
     }
   },
-  "shapes" : {
-    "Application" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+  "shapes": {
+    "Application": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
         },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
         },
-        "IsVerifiedAuthor" : {
-          "shape" : "__boolean",
-          "locationName" : "isVerifiedAuthor"
+        "IsVerifiedAuthor": {
+          "shape": "__boolean",
+          "locationName": "isVerifiedAuthor"
         },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
         },
-        "LicenseUrl" : {
-          "shape" : "__string",
-          "locationName" : "licenseUrl"
+        "LicenseUrl": {
+          "shape": "__string",
+          "locationName": "licenseUrl"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
         },
-        "SpdxLicenseId" : {
-          "shape" : "__string",
-          "locationName" : "spdxLicenseId"
+        "SpdxLicenseId": {
+          "shape": "__string",
+          "locationName": "spdxLicenseId"
         },
-        "VerifiedAuthorUrl" : {
-          "shape" : "__string",
-          "locationName" : "verifiedAuthorUrl"
+        "VerifiedAuthorUrl": {
+          "shape": "__string",
+          "locationName": "verifiedAuthorUrl"
         },
-        "Version" : {
-          "shape" : "Version",
-          "locationName" : "version"
+        "Version": {
+          "shape": "Version",
+          "locationName": "version"
         }
       },
-      "required" : [ "Description", "Author", "ApplicationId", "Name" ]
+      "required": [
+        "Description",
+        "Author",
+        "ApplicationId",
+        "Name"
+      ]
     },
-    "ApplicationDependencyPage" : {
-      "type" : "structure",
-      "members" : {
-        "Dependencies" : {
-          "shape" : "__listOfApplicationDependencySummary",
-          "locationName" : "dependencies"
+    "ApplicationDependencyPage": {
+      "type": "structure",
+      "members": {
+        "Dependencies": {
+          "shape": "__listOfApplicationDependencySummary",
+          "locationName": "dependencies"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         }
       },
-      "required" : [ "Dependencies" ]
+      "required": [
+        "Dependencies"
+      ]
     },
-    "ApplicationDependencySummary" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "ApplicationDependencySummary": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
         }
       },
-      "required" : [ "ApplicationId", "SemanticVersion" ]
+      "required": [
+        "ApplicationId",
+        "SemanticVersion"
+      ]
     },
-    "ApplicationPage" : {
-      "type" : "structure",
-      "members" : {
-        "Applications" : {
-          "shape" : "__listOfApplicationSummary",
-          "locationName" : "applications"
+    "ApplicationPage": {
+      "type": "structure",
+      "members": {
+        "Applications": {
+          "shape": "__listOfApplicationSummary",
+          "locationName": "applications"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         }
       },
-      "required" : [ "Applications" ]
+      "required": [
+        "Applications"
+      ]
     },
-    "ApplicationPolicy" : {
-      "type" : "structure",
-      "members" : {
-        "Statements" : {
-          "shape" : "__listOfApplicationPolicyStatement",
-          "locationName" : "statements"
+    "ApplicationPolicy": {
+      "type": "structure",
+      "members": {
+        "Statements": {
+          "shape": "__listOfApplicationPolicyStatement",
+          "locationName": "statements"
         }
       },
-      "required" : [ "Statements" ]
+      "required": [
+        "Statements"
+      ]
     },
-    "ApplicationPolicyStatement" : {
-      "type" : "structure",
-      "members" : {
-        "Actions" : {
-          "shape" : "__listOf__string",
-          "locationName" : "actions"
+    "ApplicationPolicyStatement": {
+      "type": "structure",
+      "members": {
+        "Actions": {
+          "shape": "__listOf__string",
+          "locationName": "actions"
         },
-        "PrincipalOrgIDs" : {
-          "shape" : "__listOf__string",
-          "locationName" : "principalOrgIDs"
+        "PrincipalOrgIDs": {
+          "shape": "__listOf__string",
+          "locationName": "principalOrgIDs"
         },
-        "Principals" : {
-          "shape" : "__listOf__string",
-          "locationName" : "principals"
+        "Principals": {
+          "shape": "__listOf__string",
+          "locationName": "principals"
         },
-        "StatementId" : {
-          "shape" : "__string",
-          "locationName" : "statementId"
+        "StatementId": {
+          "shape": "__string",
+          "locationName": "statementId"
         }
       },
-      "required" : [ "Principals", "Actions" ]
+      "required": [
+        "Principals",
+        "Actions"
+      ]
     },
-    "ApplicationSummary" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "ApplicationSummary": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
         },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
         },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "SpdxLicenseId" : {
-          "shape" : "__string",
-          "locationName" : "spdxLicenseId"
+        "SpdxLicenseId": {
+          "shape": "__string",
+          "locationName": "spdxLicenseId"
         }
       },
-      "required" : [ "Description", "Author", "ApplicationId", "Name" ]
+      "required": [
+        "Description",
+        "Author",
+        "ApplicationId",
+        "Name"
+      ]
     },
-    "ApplicationVersionPage" : {
-      "type" : "structure",
-      "members" : {
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+    "ApplicationVersionPage": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         },
-        "Versions" : {
-          "shape" : "__listOfVersionSummary",
-          "locationName" : "versions"
+        "Versions": {
+          "shape": "__listOfVersionSummary",
+          "locationName": "versions"
         }
       },
-      "required" : [ "Versions" ]
+      "required": [
+        "Versions"
+      ]
     },
-    "BadRequestException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorCode" : {
-          "shape" : "__string",
-          "locationName" : "errorCode"
+    "BadRequestException": {
+      "type": "structure",
+      "members": {
+        "ErrorCode": {
+          "shape": "__string",
+          "locationName": "errorCode"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 400
+      "exception": true,
+      "error": {
+        "httpStatusCode": 400
       }
     },
-    "Capability" : {
-      "type" : "string",
-      "enum" : [ "CAPABILITY_IAM", "CAPABILITY_NAMED_IAM", "CAPABILITY_AUTO_EXPAND", "CAPABILITY_RESOURCE_POLICY" ]
+    "Capability": {
+      "type": "string",
+      "enum": [
+        "CAPABILITY_IAM",
+        "CAPABILITY_NAMED_IAM",
+        "CAPABILITY_AUTO_EXPAND",
+        "CAPABILITY_RESOURCE_POLICY"
+      ]
     },
-    "ChangeSetDetails" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "ChangeSetDetails": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "ChangeSetId" : {
-          "shape" : "__string",
-          "locationName" : "changeSetId"
+        "ChangeSetId": {
+          "shape": "__string",
+          "locationName": "changeSetId"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
         },
-        "StackId" : {
-          "shape" : "__string",
-          "locationName" : "stackId"
+        "StackId": {
+          "shape": "__string",
+          "locationName": "stackId"
         }
       },
-      "required" : [ "ChangeSetId", "ApplicationId", "StackId", "SemanticVersion" ]
+      "required": [
+        "ChangeSetId",
+        "ApplicationId",
+        "StackId",
+        "SemanticVersion"
+      ]
     },
-    "ConflictException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorCode" : {
-          "shape" : "__string",
-          "locationName" : "errorCode"
+    "ConflictException": {
+      "type": "structure",
+      "members": {
+        "ErrorCode": {
+          "shape": "__string",
+          "locationName": "errorCode"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 409
+      "exception": true,
+      "error": {
+        "httpStatusCode": 409
       }
     },
-    "CreateApplicationInput" : {
-      "type" : "structure",
-      "members" : {
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
+    "CreateApplicationInput": {
+      "type": "structure",
+      "members": {
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
         },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
         },
-        "LicenseBody" : {
-          "shape" : "__string",
-          "locationName" : "licenseBody"
+        "LicenseBody": {
+          "shape": "__string",
+          "locationName": "licenseBody"
         },
-        "LicenseUrl" : {
-          "shape" : "__string",
-          "locationName" : "licenseUrl"
+        "LicenseUrl": {
+          "shape": "__string",
+          "locationName": "licenseUrl"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "ReadmeBody" : {
-          "shape" : "__string",
-          "locationName" : "readmeBody"
+        "ReadmeBody": {
+          "shape": "__string",
+          "locationName": "readmeBody"
         },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
         },
-        "SourceCodeArchiveUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeArchiveUrl"
+        "SourceCodeArchiveUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeArchiveUrl"
         },
-        "SourceCodeUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeUrl"
+        "SourceCodeUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeUrl"
         },
-        "SpdxLicenseId" : {
-          "shape" : "__string",
-          "locationName" : "spdxLicenseId"
+        "SpdxLicenseId": {
+          "shape": "__string",
+          "locationName": "spdxLicenseId"
         },
-        "TemplateBody" : {
-          "shape" : "__string",
-          "locationName" : "templateBody"
+        "TemplateBody": {
+          "shape": "__string",
+          "locationName": "templateBody"
         },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
         }
       },
-      "required" : [ "Description", "Name", "Author" ]
+      "required": [
+        "Description",
+        "Name",
+        "Author"
+      ]
     },
-    "CreateApplicationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
+    "CreateApplicationRequest": {
+      "type": "structure",
+      "members": {
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
         },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
         },
-        "LicenseBody" : {
-          "shape" : "__string",
-          "locationName" : "licenseBody"
+        "LicenseBody": {
+          "shape": "__string",
+          "locationName": "licenseBody"
         },
-        "LicenseUrl" : {
-          "shape" : "__string",
-          "locationName" : "licenseUrl"
+        "LicenseUrl": {
+          "shape": "__string",
+          "locationName": "licenseUrl"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "ReadmeBody" : {
-          "shape" : "__string",
-          "locationName" : "readmeBody"
+        "ReadmeBody": {
+          "shape": "__string",
+          "locationName": "readmeBody"
         },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
         },
-        "SourceCodeArchiveUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeArchiveUrl"
+        "SourceCodeArchiveUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeArchiveUrl"
         },
-        "SourceCodeUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeUrl"
+        "SourceCodeUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeUrl"
         },
-        "SpdxLicenseId" : {
-          "shape" : "__string",
-          "locationName" : "spdxLicenseId"
+        "SpdxLicenseId": {
+          "shape": "__string",
+          "locationName": "spdxLicenseId"
         },
-        "TemplateBody" : {
-          "shape" : "__string",
-          "locationName" : "templateBody"
+        "TemplateBody": {
+          "shape": "__string",
+          "locationName": "templateBody"
         },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
         }
       },
-      "required" : [ "Description", "Name", "Author" ]
+      "required": [
+        "Description",
+        "Name",
+        "Author"
+      ]
     },
-    "CreateApplicationResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "CreateApplicationResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
         },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
         },
-        "IsVerifiedAuthor" : {
-          "shape" : "__boolean",
-          "locationName" : "isVerifiedAuthor"
+        "IsVerifiedAuthor": {
+          "shape": "__boolean",
+          "locationName": "isVerifiedAuthor"
         },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
         },
-        "LicenseUrl" : {
-          "shape" : "__string",
-          "locationName" : "licenseUrl"
+        "LicenseUrl": {
+          "shape": "__string",
+          "locationName": "licenseUrl"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
         },
-        "SpdxLicenseId" : {
-          "shape" : "__string",
-          "locationName" : "spdxLicenseId"
+        "SpdxLicenseId": {
+          "shape": "__string",
+          "locationName": "spdxLicenseId"
         },
-        "VerifiedAuthorUrl" : {
-          "shape" : "__string",
-          "locationName" : "verifiedAuthorUrl"
+        "VerifiedAuthorUrl": {
+          "shape": "__string",
+          "locationName": "verifiedAuthorUrl"
         },
-        "Version" : {
-          "shape" : "Version",
-          "locationName" : "version"
-        }
-      }
-    },
-    "CreateApplicationVersionInput" : {
-      "type" : "structure",
-      "members" : {
-        "SourceCodeArchiveUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeArchiveUrl"
-        },
-        "SourceCodeUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeUrl"
-        },
-        "TemplateBody" : {
-          "shape" : "__string",
-          "locationName" : "templateBody"
-        },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
-        }
-      }
-    },
-    "CreateApplicationVersionRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
-        },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "semanticVersion"
-        },
-        "SourceCodeArchiveUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeArchiveUrl"
-        },
-        "SourceCodeUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeUrl"
-        },
-        "TemplateBody" : {
-          "shape" : "__string",
-          "locationName" : "templateBody"
-        },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
-        }
-      },
-      "required" : [ "ApplicationId", "SemanticVersion" ]
-    },
-    "CreateApplicationVersionResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
-        },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
-        },
-        "ParameterDefinitions" : {
-          "shape" : "__listOfParameterDefinition",
-          "locationName" : "parameterDefinitions"
-        },
-        "RequiredCapabilities" : {
-          "shape" : "__listOfCapability",
-          "locationName" : "requiredCapabilities"
-        },
-        "ResourcesSupported" : {
-          "shape" : "__boolean",
-          "locationName" : "resourcesSupported"
-        },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
-        },
-        "SourceCodeArchiveUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeArchiveUrl"
-        },
-        "SourceCodeUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeUrl"
-        },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
+        "Version": {
+          "shape": "Version",
+          "locationName": "version"
         }
       }
     },
-    "CreateCloudFormationChangeSetInput" : {
-      "type" : "structure",
-      "members" : {
-        "Capabilities" : {
-          "shape" : "__listOf__string",
-          "locationName" : "capabilities"
+    "CreateApplicationVersionInput": {
+      "type": "structure",
+      "members": {
+        "SourceCodeArchiveUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeArchiveUrl"
         },
-        "ChangeSetName" : {
-          "shape" : "__string",
-          "locationName" : "changeSetName"
+        "SourceCodeUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeUrl"
         },
-        "ClientToken" : {
-          "shape" : "__string",
-          "locationName" : "clientToken"
+        "TemplateBody": {
+          "shape": "__string",
+          "locationName": "templateBody"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
+        }
+      }
+    },
+    "CreateApplicationVersionRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "NotificationArns" : {
-          "shape" : "__listOf__string",
-          "locationName" : "notificationArns"
+        "SemanticVersion": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "semanticVersion"
         },
-        "ParameterOverrides" : {
-          "shape" : "__listOfParameterValue",
-          "locationName" : "parameterOverrides"
+        "SourceCodeArchiveUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeArchiveUrl"
         },
-        "ResourceTypes" : {
-          "shape" : "__listOf__string",
-          "locationName" : "resourceTypes"
+        "SourceCodeUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeUrl"
         },
-        "RollbackConfiguration" : {
-          "shape" : "RollbackConfiguration",
-          "locationName" : "rollbackConfiguration"
+        "TemplateBody": {
+          "shape": "__string",
+          "locationName": "templateBody"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
-        },
-        "StackName" : {
-          "shape" : "__string",
-          "locationName" : "stackName"
-        },
-        "Tags" : {
-          "shape" : "__listOfTag",
-          "locationName" : "tags"
-        },
-        "TemplateId" : {
-          "shape" : "__string",
-          "locationName" : "templateId"
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
         }
       },
-      "required" : [ "StackName" ]
+      "required": [
+        "ApplicationId",
+        "SemanticVersion"
+      ]
     },
-    "CreateCloudFormationChangeSetRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+    "CreateApplicationVersionResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "Capabilities" : {
-          "shape" : "__listOf__string",
-          "locationName" : "capabilities"
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
         },
-        "ChangeSetName" : {
-          "shape" : "__string",
-          "locationName" : "changeSetName"
+        "ParameterDefinitions": {
+          "shape": "__listOfParameterDefinition",
+          "locationName": "parameterDefinitions"
         },
-        "ClientToken" : {
-          "shape" : "__string",
-          "locationName" : "clientToken"
+        "RequiredCapabilities": {
+          "shape": "__listOfCapability",
+          "locationName": "requiredCapabilities"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "ResourcesSupported": {
+          "shape": "__boolean",
+          "locationName": "resourcesSupported"
         },
-        "NotificationArns" : {
-          "shape" : "__listOf__string",
-          "locationName" : "notificationArns"
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
         },
-        "ParameterOverrides" : {
-          "shape" : "__listOfParameterValue",
-          "locationName" : "parameterOverrides"
+        "SourceCodeArchiveUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeArchiveUrl"
         },
-        "ResourceTypes" : {
-          "shape" : "__listOf__string",
-          "locationName" : "resourceTypes"
+        "SourceCodeUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeUrl"
         },
-        "RollbackConfiguration" : {
-          "shape" : "RollbackConfiguration",
-          "locationName" : "rollbackConfiguration"
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
+        }
+      }
+    },
+    "CreateCloudFormationChangeSetInput": {
+      "type": "structure",
+      "members": {
+        "Capabilities": {
+          "shape": "__listOf__string",
+          "locationName": "capabilities"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "ChangeSetName": {
+          "shape": "__string",
+          "locationName": "changeSetName"
         },
-        "StackName" : {
-          "shape" : "__string",
-          "locationName" : "stackName"
+        "ClientToken": {
+          "shape": "__string",
+          "locationName": "clientToken"
         },
-        "Tags" : {
-          "shape" : "__listOfTag",
-          "locationName" : "tags"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "TemplateId" : {
-          "shape" : "__string",
-          "locationName" : "templateId"
+        "NotificationArns": {
+          "shape": "__listOf__string",
+          "locationName": "notificationArns"
+        },
+        "ParameterOverrides": {
+          "shape": "__listOfParameterValue",
+          "locationName": "parameterOverrides"
+        },
+        "ResourceTypes": {
+          "shape": "__listOf__string",
+          "locationName": "resourceTypes"
+        },
+        "RollbackConfiguration": {
+          "shape": "RollbackConfiguration",
+          "locationName": "rollbackConfiguration"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
+        },
+        "StackName": {
+          "shape": "__string",
+          "locationName": "stackName"
+        },
+        "Tags": {
+          "shape": "__listOfTag",
+          "locationName": "tags"
+        },
+        "TemplateId": {
+          "shape": "__string",
+          "locationName": "templateId"
         }
       },
-      "required" : [ "ApplicationId", "StackName" ]
+      "required": [
+        "StackName"
+      ]
     },
-    "CreateCloudFormationChangeSetResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "CreateCloudFormationChangeSetRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "ChangeSetId" : {
-          "shape" : "__string",
-          "locationName" : "changeSetId"
+        "Capabilities": {
+          "shape": "__listOf__string",
+          "locationName": "capabilities"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "ChangeSetName": {
+          "shape": "__string",
+          "locationName": "changeSetName"
         },
-        "StackId" : {
-          "shape" : "__string",
-          "locationName" : "stackId"
-        }
-      }
-    },
-    "CreateCloudFormationTemplateRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+        "ClientToken": {
+          "shape": "__string",
+          "locationName": "clientToken"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
-        }
-      },
-      "required" : [ "ApplicationId" ]
-    },
-    "CreateCloudFormationTemplateResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
+        "NotificationArns": {
+          "shape": "__listOf__string",
+          "locationName": "notificationArns"
         },
-        "ExpirationTime" : {
-          "shape" : "__string",
-          "locationName" : "expirationTime"
+        "ParameterOverrides": {
+          "shape": "__listOfParameterValue",
+          "locationName": "parameterOverrides"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "ResourceTypes": {
+          "shape": "__listOf__string",
+          "locationName": "resourceTypes"
         },
-        "Status" : {
-          "shape" : "Status",
-          "locationName" : "status"
+        "RollbackConfiguration": {
+          "shape": "RollbackConfiguration",
+          "locationName": "rollbackConfiguration"
         },
-        "TemplateId" : {
-          "shape" : "__string",
-          "locationName" : "templateId"
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
         },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
-        }
-      }
-    },
-    "DeleteApplicationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+        "StackName": {
+          "shape": "__string",
+          "locationName": "stackName"
+        },
+        "Tags": {
+          "shape": "__listOfTag",
+          "locationName": "tags"
+        },
+        "TemplateId": {
+          "shape": "__string",
+          "locationName": "templateId"
         }
       },
-      "required" : [ "ApplicationId" ]
+      "required": [
+        "ApplicationId",
+        "StackName"
+      ]
     },
-    "ForbiddenException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorCode" : {
-          "shape" : "__string",
-          "locationName" : "errorCode"
+    "CreateCloudFormationChangeSetResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "ChangeSetId": {
+          "shape": "__string",
+          "locationName": "changeSetId"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
+        },
+        "StackId": {
+          "shape": "__string",
+          "locationName": "stackId"
+        }
+      }
+    },
+    "CreateCloudFormationTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 403
+      "required": [
+        "ApplicationId"
+      ]
+    },
+    "CreateCloudFormationTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
+        },
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
+        },
+        "ExpirationTime": {
+          "shape": "__string",
+          "locationName": "expirationTime"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
+        },
+        "Status": {
+          "shape": "Status",
+          "locationName": "status"
+        },
+        "TemplateId": {
+          "shape": "__string",
+          "locationName": "templateId"
+        },
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
+        }
       }
     },
-    "GetApplicationPolicyRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+    "DeleteApplicationRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         }
       },
-      "required" : [ "ApplicationId" ]
+      "required": [
+        "ApplicationId"
+      ]
     },
-    "GetApplicationPolicyResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Statements" : {
-          "shape" : "__listOfApplicationPolicyStatement",
-          "locationName" : "statements"
-        }
-      }
-    },
-    "GetApplicationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+    "ForbiddenException": {
+      "type": "structure",
+      "members": {
+        "ErrorCode": {
+          "shape": "__string",
+          "locationName": "errorCode"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "semanticVersion"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "ApplicationId" ]
-    },
-    "GetApplicationResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
-        },
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
-        },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
-        },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
-        },
-        "IsVerifiedAuthor" : {
-          "shape" : "__boolean",
-          "locationName" : "isVerifiedAuthor"
-        },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
-        },
-        "LicenseUrl" : {
-          "shape" : "__string",
-          "locationName" : "licenseUrl"
-        },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
-        },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
-        },
-        "SpdxLicenseId" : {
-          "shape" : "__string",
-          "locationName" : "spdxLicenseId"
-        },
-        "VerifiedAuthorUrl" : {
-          "shape" : "__string",
-          "locationName" : "verifiedAuthorUrl"
-        },
-        "Version" : {
-          "shape" : "Version",
-          "locationName" : "version"
-        }
+      "exception": true,
+      "error": {
+        "httpStatusCode": 403
       }
     },
-    "GetCloudFormationTemplateRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
-        },
-        "TemplateId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "templateId"
+    "GetApplicationPolicyRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         }
       },
-      "required" : [ "ApplicationId", "TemplateId" ]
+      "required": [
+        "ApplicationId"
+      ]
     },
-    "GetCloudFormationTemplateResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
-        },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
-        },
-        "ExpirationTime" : {
-          "shape" : "__string",
-          "locationName" : "expirationTime"
-        },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
-        },
-        "Status" : {
-          "shape" : "Status",
-          "locationName" : "status"
-        },
-        "TemplateId" : {
-          "shape" : "__string",
-          "locationName" : "templateId"
-        },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
+    "GetApplicationPolicyResponse": {
+      "type": "structure",
+      "members": {
+        "Statements": {
+          "shape": "__listOfApplicationPolicyStatement",
+          "locationName": "statements"
         }
       }
     },
-    "InternalServerErrorException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorCode" : {
-          "shape" : "__string",
-          "locationName" : "errorCode"
+    "GetApplicationRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "SemanticVersion": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "semanticVersion"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 500
+      "required": [
+        "ApplicationId"
+      ]
+    },
+    "GetApplicationResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
+        },
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
+        },
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
+        },
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
+        },
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
+        },
+        "IsVerifiedAuthor": {
+          "shape": "__boolean",
+          "locationName": "isVerifiedAuthor"
+        },
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
+        },
+        "LicenseUrl": {
+          "shape": "__string",
+          "locationName": "licenseUrl"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
+        },
+        "SpdxLicenseId": {
+          "shape": "__string",
+          "locationName": "spdxLicenseId"
+        },
+        "VerifiedAuthorUrl": {
+          "shape": "__string",
+          "locationName": "verifiedAuthorUrl"
+        },
+        "Version": {
+          "shape": "Version",
+          "locationName": "version"
+        }
       }
     },
-    "ListApplicationDependenciesRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+    "GetCloudFormationTemplateRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "MaxItems" : {
-          "shape" : "MaxItems",
-          "location" : "querystring",
-          "locationName" : "maxItems"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
-        },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "semanticVersion"
+        "TemplateId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "templateId"
         }
       },
-      "required" : [ "ApplicationId" ]
+      "required": [
+        "ApplicationId",
+        "TemplateId"
+      ]
     },
-    "ListApplicationDependenciesResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Dependencies" : {
-          "shape" : "__listOfApplicationDependencySummary",
-          "locationName" : "dependencies"
+    "GetCloudFormationTemplateResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
+        },
+        "ExpirationTime": {
+          "shape": "__string",
+          "locationName": "expirationTime"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
+        },
+        "Status": {
+          "shape": "Status",
+          "locationName": "status"
+        },
+        "TemplateId": {
+          "shape": "__string",
+          "locationName": "templateId"
+        },
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
         }
       }
     },
-    "ListApplicationVersionsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+    "InternalServerErrorException": {
+      "type": "structure",
+      "members": {
+        "ErrorCode": {
+          "shape": "__string",
+          "locationName": "errorCode"
         },
-        "MaxItems" : {
-          "shape" : "MaxItems",
-          "location" : "querystring",
-          "locationName" : "maxItems"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "ApplicationId" ]
-    },
-    "ListApplicationVersionsResponse" : {
-      "type" : "structure",
-      "members" : {
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        },
-        "Versions" : {
-          "shape" : "__listOfVersionSummary",
-          "locationName" : "versions"
-        }
+      "exception": true,
+      "error": {
+        "httpStatusCode": 500
       }
     },
-    "ListApplicationsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "MaxItems" : {
-          "shape" : "MaxItems",
-          "location" : "querystring",
-          "locationName" : "maxItems"
+    "ListApplicationDependenciesRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "ListApplicationsResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Applications" : {
-          "shape" : "__listOfApplicationSummary",
-          "locationName" : "applications"
+        "MaxItems": {
+          "shape": "MaxItems",
+          "location": "querystring",
+          "locationName": "maxItems"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "MaxItems" : {
-      "type" : "integer",
-      "min" : 1,
-      "max" : 100
-    },
-    "NotFoundException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorCode" : {
-          "shape" : "__string",
-          "locationName" : "errorCode"
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "SemanticVersion": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "semanticVersion"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 404
+      "required": [
+        "ApplicationId"
+      ]
+    },
+    "ListApplicationDependenciesResponse": {
+      "type": "structure",
+      "members": {
+        "Dependencies": {
+          "shape": "__listOfApplicationDependencySummary",
+          "locationName": "dependencies"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
       }
     },
-    "ParameterDefinition" : {
-      "type" : "structure",
-      "members" : {
-        "AllowedPattern" : {
-          "shape" : "__string",
-          "locationName" : "allowedPattern"
+    "ListApplicationVersionsRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "AllowedValues" : {
-          "shape" : "__listOf__string",
-          "locationName" : "allowedValues"
+        "MaxItems": {
+          "shape": "MaxItems",
+          "location": "querystring",
+          "locationName": "maxItems"
         },
-        "ConstraintDescription" : {
-          "shape" : "__string",
-          "locationName" : "constraintDescription"
-        },
-        "DefaultValue" : {
-          "shape" : "__string",
-          "locationName" : "defaultValue"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
-        },
-        "MaxLength" : {
-          "shape" : "__integer",
-          "locationName" : "maxLength"
-        },
-        "MaxValue" : {
-          "shape" : "__integer",
-          "locationName" : "maxValue"
-        },
-        "MinLength" : {
-          "shape" : "__integer",
-          "locationName" : "minLength"
-        },
-        "MinValue" : {
-          "shape" : "__integer",
-          "locationName" : "minValue"
-        },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
-        },
-        "NoEcho" : {
-          "shape" : "__boolean",
-          "locationName" : "noEcho"
-        },
-        "ReferencedByResources" : {
-          "shape" : "__listOf__string",
-          "locationName" : "referencedByResources"
-        },
-        "Type" : {
-          "shape" : "__string",
-          "locationName" : "type"
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
         }
       },
-      "required" : [ "ReferencedByResources", "Name" ]
+      "required": [
+        "ApplicationId"
+      ]
     },
-    "ParameterValue" : {
-      "type" : "structure",
-      "members" : {
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+    "ListApplicationVersionsResponse": {
+      "type": "structure",
+      "members": {
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         },
-        "Value" : {
-          "shape" : "__string",
-          "locationName" : "value"
+        "Versions": {
+          "shape": "__listOfVersionSummary",
+          "locationName": "versions"
+        }
+      }
+    },
+    "ListApplicationsRequest": {
+      "type": "structure",
+      "members": {
+        "MaxItems": {
+          "shape": "MaxItems",
+          "location": "querystring",
+          "locationName": "maxItems"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListApplicationsResponse": {
+      "type": "structure",
+      "members": {
+        "Applications": {
+          "shape": "__listOfApplicationSummary",
+          "locationName": "applications"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "MaxItems": {
+      "type": "integer",
+      "min": 1,
+      "max": 100
+    },
+    "NotFoundException": {
+      "type": "structure",
+      "members": {
+        "ErrorCode": {
+          "shape": "__string",
+          "locationName": "errorCode"
+        },
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "Value", "Name" ]
+      "exception": true,
+      "error": {
+        "httpStatusCode": 404
+      }
     },
-    "PutApplicationPolicyRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+    "ParameterDefinition": {
+      "type": "structure",
+      "members": {
+        "AllowedPattern": {
+          "shape": "__string",
+          "locationName": "allowedPattern"
         },
-        "Statements" : {
-          "shape" : "__listOfApplicationPolicyStatement",
-          "locationName" : "statements"
+        "AllowedValues": {
+          "shape": "__listOf__string",
+          "locationName": "allowedValues"
+        },
+        "ConstraintDescription": {
+          "shape": "__string",
+          "locationName": "constraintDescription"
+        },
+        "DefaultValue": {
+          "shape": "__string",
+          "locationName": "defaultValue"
+        },
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
+        },
+        "MaxLength": {
+          "shape": "__integer",
+          "locationName": "maxLength"
+        },
+        "MaxValue": {
+          "shape": "__integer",
+          "locationName": "maxValue"
+        },
+        "MinLength": {
+          "shape": "__integer",
+          "locationName": "minLength"
+        },
+        "MinValue": {
+          "shape": "__integer",
+          "locationName": "minValue"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "NoEcho": {
+          "shape": "__boolean",
+          "locationName": "noEcho"
+        },
+        "ReferencedByResources": {
+          "shape": "__listOf__string",
+          "locationName": "referencedByResources"
+        },
+        "Type": {
+          "shape": "__string",
+          "locationName": "type"
         }
       },
-      "required" : [ "ApplicationId", "Statements" ]
+      "required": [
+        "ReferencedByResources",
+        "Name"
+      ]
     },
-    "PutApplicationPolicyResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Statements" : {
-          "shape" : "__listOfApplicationPolicyStatement",
-          "locationName" : "statements"
-        }
-      }
-    },
-    "RollbackConfiguration" : {
-      "type" : "structure",
-      "members" : {
-        "MonitoringTimeInMinutes" : {
-          "shape" : "__integer",
-          "locationName" : "monitoringTimeInMinutes"
+    "ParameterValue": {
+      "type": "structure",
+      "members": {
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "RollbackTriggers" : {
-          "shape" : "__listOfRollbackTrigger",
-          "locationName" : "rollbackTriggers"
-        }
-      }
-    },
-    "RollbackTrigger" : {
-      "type" : "structure",
-      "members" : {
-        "Arn" : {
-          "shape" : "__string",
-          "locationName" : "arn"
-        },
-        "Type" : {
-          "shape" : "__string",
-          "locationName" : "type"
+        "Value": {
+          "shape": "__string",
+          "locationName": "value"
         }
       },
-      "required" : [ "Type", "Arn" ]
+      "required": [
+        "Value",
+        "Name"
+      ]
     },
-    "Status" : {
-      "type" : "string",
-      "enum" : [ "PREPARING", "ACTIVE", "EXPIRED" ]
-    },
-    "Tag" : {
-      "type" : "structure",
-      "members" : {
-        "Key" : {
-          "shape" : "__string",
-          "locationName" : "key"
+    "PutApplicationPolicyRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "Value" : {
-          "shape" : "__string",
-          "locationName" : "value"
+        "Statements": {
+          "shape": "__listOfApplicationPolicyStatement",
+          "locationName": "statements"
         }
       },
-      "required" : [ "Value", "Key" ]
+      "required": [
+        "ApplicationId",
+        "Statements"
+      ]
     },
-    "TemplateDetails" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "PutApplicationPolicyResponse": {
+      "type": "structure",
+      "members": {
+        "Statements": {
+          "shape": "__listOfApplicationPolicyStatement",
+          "locationName": "statements"
+        }
+      }
+    },
+    "RollbackConfiguration": {
+      "type": "structure",
+      "members": {
+        "MonitoringTimeInMinutes": {
+          "shape": "__integer",
+          "locationName": "monitoringTimeInMinutes"
         },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
+        "RollbackTriggers": {
+          "shape": "__listOfRollbackTrigger",
+          "locationName": "rollbackTriggers"
+        }
+      }
+    },
+    "RollbackTrigger": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
         },
-        "ExpirationTime" : {
-          "shape" : "__string",
-          "locationName" : "expirationTime"
-        },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
-        },
-        "Status" : {
-          "shape" : "Status",
-          "locationName" : "status"
-        },
-        "TemplateId" : {
-          "shape" : "__string",
-          "locationName" : "templateId"
-        },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
+        "Type": {
+          "shape": "__string",
+          "locationName": "type"
         }
       },
-      "required" : [ "Status", "TemplateUrl", "CreationTime", "ExpirationTime", "ApplicationId", "TemplateId", "SemanticVersion" ]
+      "required": [
+        "Type",
+        "Arn"
+      ]
     },
-    "TooManyRequestsException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorCode" : {
-          "shape" : "__string",
-          "locationName" : "errorCode"
+    "Status": {
+      "type": "string",
+      "enum": [
+        "PREPARING",
+        "ACTIVE",
+        "EXPIRED"
+      ]
+    },
+    "Tag": {
+      "type": "structure",
+      "members": {
+        "Key": {
+          "shape": "__string",
+          "locationName": "key"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "Value": {
+          "shape": "__string",
+          "locationName": "value"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 429
-      }
+      "required": [
+        "Value",
+        "Key"
+      ]
     },
-    "UnshareApplicationInput" : {
-      "type" : "structure",
-      "members" : {
-        "OrganizationId" : {
-          "shape" : "__string",
-          "locationName" : "organizationId"
+    "TemplateDetails": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
+        },
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
+        },
+        "ExpirationTime": {
+          "shape": "__string",
+          "locationName": "expirationTime"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
+        },
+        "Status": {
+          "shape": "Status",
+          "locationName": "status"
+        },
+        "TemplateId": {
+          "shape": "__string",
+          "locationName": "templateId"
+        },
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
         }
       },
-      "required" : [ "OrganizationId" ]
+      "required": [
+        "Status",
+        "TemplateUrl",
+        "CreationTime",
+        "ExpirationTime",
+        "ApplicationId",
+        "TemplateId",
+        "SemanticVersion"
+      ]
     },
-    "UnshareApplicationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
+    "TooManyRequestsException": {
+      "type": "structure",
+      "members": {
+        "ErrorCode": {
+          "shape": "__string",
+          "locationName": "errorCode"
         },
-        "OrganizationId" : {
-          "shape" : "__string",
-          "locationName" : "organizationId"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "ApplicationId", "OrganizationId" ]
-    },
-    "UpdateApplicationInput" : {
-      "type" : "structure",
-      "members" : {
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
-        },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
-        },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
-        },
-        "ReadmeBody" : {
-          "shape" : "__string",
-          "locationName" : "readmeBody"
-        },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
-        }
+      "exception": true,
+      "error": {
+        "httpStatusCode": 429
       }
     },
-    "UpdateApplicationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "applicationId"
-        },
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
-        },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
-        },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
-        },
-        "ReadmeBody" : {
-          "shape" : "__string",
-          "locationName" : "readmeBody"
-        },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
+    "UnshareApplicationInput": {
+      "type": "structure",
+      "members": {
+        "OrganizationId": {
+          "shape": "__string",
+          "locationName": "organizationId"
         }
       },
-      "required" : [ "ApplicationId" ]
+      "required": [
+        "OrganizationId"
+      ]
     },
-    "UpdateApplicationResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "UnshareApplicationRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
         },
-        "Author" : {
-          "shape" : "__string",
-          "locationName" : "author"
-        },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
-        },
-        "HomePageUrl" : {
-          "shape" : "__string",
-          "locationName" : "homePageUrl"
-        },
-        "IsVerifiedAuthor" : {
-          "shape" : "__boolean",
-          "locationName" : "isVerifiedAuthor"
-        },
-        "Labels" : {
-          "shape" : "__listOf__string",
-          "locationName" : "labels"
-        },
-        "LicenseUrl" : {
-          "shape" : "__string",
-          "locationName" : "licenseUrl"
-        },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
-        },
-        "ReadmeUrl" : {
-          "shape" : "__string",
-          "locationName" : "readmeUrl"
-        },
-        "SpdxLicenseId" : {
-          "shape" : "__string",
-          "locationName" : "spdxLicenseId"
-        },
-        "VerifiedAuthorUrl" : {
-          "shape" : "__string",
-          "locationName" : "verifiedAuthorUrl"
-        },
-        "Version" : {
-          "shape" : "Version",
-          "locationName" : "version"
-        }
-      }
-    },
-    "Version" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
-        },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
-        },
-        "ParameterDefinitions" : {
-          "shape" : "__listOfParameterDefinition",
-          "locationName" : "parameterDefinitions"
-        },
-        "RequiredCapabilities" : {
-          "shape" : "__listOfCapability",
-          "locationName" : "requiredCapabilities"
-        },
-        "ResourcesSupported" : {
-          "shape" : "__boolean",
-          "locationName" : "resourcesSupported"
-        },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
-        },
-        "SourceCodeArchiveUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeArchiveUrl"
-        },
-        "SourceCodeUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeUrl"
-        },
-        "TemplateUrl" : {
-          "shape" : "__string",
-          "locationName" : "templateUrl"
+        "OrganizationId": {
+          "shape": "__string",
+          "locationName": "organizationId"
         }
       },
-      "required" : [ "TemplateUrl", "ParameterDefinitions", "ResourcesSupported", "CreationTime", "RequiredCapabilities", "ApplicationId", "SemanticVersion" ]
+      "required": [
+        "ApplicationId",
+        "OrganizationId"
+      ]
     },
-    "VersionSummary" : {
-      "type" : "structure",
-      "members" : {
-        "ApplicationId" : {
-          "shape" : "__string",
-          "locationName" : "applicationId"
+    "UpdateApplicationInput": {
+      "type": "structure",
+      "members": {
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
         },
-        "CreationTime" : {
-          "shape" : "__string",
-          "locationName" : "creationTime"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "SemanticVersion" : {
-          "shape" : "__string",
-          "locationName" : "semanticVersion"
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
         },
-        "SourceCodeUrl" : {
-          "shape" : "__string",
-          "locationName" : "sourceCodeUrl"
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
+        },
+        "ReadmeBody": {
+          "shape": "__string",
+          "locationName": "readmeBody"
+        },
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
+        }
+      }
+    },
+    "UpdateApplicationRequest": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "applicationId"
+        },
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
+        },
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
+        },
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
+        },
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
+        },
+        "ReadmeBody": {
+          "shape": "__string",
+          "locationName": "readmeBody"
+        },
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
         }
       },
-      "required" : [ "CreationTime", "ApplicationId", "SemanticVersion" ]
+      "required": [
+        "ApplicationId"
+      ]
     },
-    "__boolean" : {
-      "type" : "boolean"
-    },
-    "__double" : {
-      "type" : "double"
-    },
-    "__integer" : {
-      "type" : "integer"
-    },
-    "__listOfApplicationDependencySummary" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "ApplicationDependencySummary"
+    "UpdateApplicationResponse": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
+        },
+        "Author": {
+          "shape": "__string",
+          "locationName": "author"
+        },
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
+        },
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
+        },
+        "HomePageUrl": {
+          "shape": "__string",
+          "locationName": "homePageUrl"
+        },
+        "IsVerifiedAuthor": {
+          "shape": "__boolean",
+          "locationName": "isVerifiedAuthor"
+        },
+        "Labels": {
+          "shape": "__listOf__string",
+          "locationName": "labels"
+        },
+        "LicenseUrl": {
+          "shape": "__string",
+          "locationName": "licenseUrl"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "ReadmeUrl": {
+          "shape": "__string",
+          "locationName": "readmeUrl"
+        },
+        "SpdxLicenseId": {
+          "shape": "__string",
+          "locationName": "spdxLicenseId"
+        },
+        "VerifiedAuthorUrl": {
+          "shape": "__string",
+          "locationName": "verifiedAuthorUrl"
+        },
+        "Version": {
+          "shape": "Version",
+          "locationName": "version"
+        }
       }
     },
-    "__listOfApplicationPolicyStatement" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "ApplicationPolicyStatement"
+    "Version": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
+        },
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
+        },
+        "ParameterDefinitions": {
+          "shape": "__listOfParameterDefinition",
+          "locationName": "parameterDefinitions"
+        },
+        "RequiredCapabilities": {
+          "shape": "__listOfCapability",
+          "locationName": "requiredCapabilities"
+        },
+        "ResourcesSupported": {
+          "shape": "__boolean",
+          "locationName": "resourcesSupported"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
+        },
+        "SourceCodeArchiveUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeArchiveUrl"
+        },
+        "SourceCodeUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeUrl"
+        },
+        "TemplateUrl": {
+          "shape": "__string",
+          "locationName": "templateUrl"
+        }
+      },
+      "required": [
+        "TemplateUrl",
+        "ParameterDefinitions",
+        "ResourcesSupported",
+        "CreationTime",
+        "RequiredCapabilities",
+        "ApplicationId",
+        "SemanticVersion"
+      ]
+    },
+    "VersionSummary": {
+      "type": "structure",
+      "members": {
+        "ApplicationId": {
+          "shape": "__string",
+          "locationName": "applicationId"
+        },
+        "CreationTime": {
+          "shape": "__string",
+          "locationName": "creationTime"
+        },
+        "SemanticVersion": {
+          "shape": "__string",
+          "locationName": "semanticVersion"
+        },
+        "SourceCodeUrl": {
+          "shape": "__string",
+          "locationName": "sourceCodeUrl"
+        }
+      },
+      "required": [
+        "CreationTime",
+        "ApplicationId",
+        "SemanticVersion"
+      ]
+    },
+    "__boolean": {
+      "type": "boolean"
+    },
+    "__double": {
+      "type": "double"
+    },
+    "__integer": {
+      "type": "integer"
+    },
+    "__listOfApplicationDependencySummary": {
+      "type": "list",
+      "member": {
+        "shape": "ApplicationDependencySummary"
       }
     },
-    "__listOfApplicationSummary" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "ApplicationSummary"
+    "__listOfApplicationPolicyStatement": {
+      "type": "list",
+      "member": {
+        "shape": "ApplicationPolicyStatement"
       }
     },
-    "__listOfCapability" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "Capability"
+    "__listOfApplicationSummary": {
+      "type": "list",
+      "member": {
+        "shape": "ApplicationSummary"
       }
     },
-    "__listOfParameterDefinition" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "ParameterDefinition"
+    "__listOfCapability": {
+      "type": "list",
+      "member": {
+        "shape": "Capability"
       }
     },
-    "__listOfParameterValue" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "ParameterValue"
+    "__listOfParameterDefinition": {
+      "type": "list",
+      "member": {
+        "shape": "ParameterDefinition"
       }
     },
-    "__listOfRollbackTrigger" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "RollbackTrigger"
+    "__listOfParameterValue": {
+      "type": "list",
+      "member": {
+        "shape": "ParameterValue"
       }
     },
-    "__listOfTag" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "Tag"
+    "__listOfRollbackTrigger": {
+      "type": "list",
+      "member": {
+        "shape": "RollbackTrigger"
       }
     },
-    "__listOfVersionSummary" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "VersionSummary"
+    "__listOfTag": {
+      "type": "list",
+      "member": {
+        "shape": "Tag"
       }
     },
-    "__listOf__string" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "__string"
+    "__listOfVersionSummary": {
+      "type": "list",
+      "member": {
+        "shape": "VersionSummary"
       }
     },
-    "__long" : {
-      "type" : "long"
+    "__listOf__string": {
+      "type": "list",
+      "member": {
+        "shape": "__string"
+      }
     },
-    "__string" : {
-      "type" : "string"
+    "__long": {
+      "type": "long"
+    },
+    "__string": {
+      "type": "string"
     }
   }
 }

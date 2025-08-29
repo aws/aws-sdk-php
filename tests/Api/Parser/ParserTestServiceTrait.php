@@ -3,6 +3,7 @@ namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\AwsClientInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 
@@ -11,16 +12,18 @@ use GuzzleHttp\Psr7\Response;
  */
 trait ParserTestServiceTrait
 {
-
     /**
      * Creates a service for the test
      *
      * @param Service $service
-     * @param $content
+     * @param mixed $content
      *
      * @return AwsClient
      */
-    private function generateTestClient(Service $service, $content)
+    private function generateTestClient(
+        Service $service,
+        mixed $content
+    ): AwsClientInterface
     {
         return new AwsClient(
             array_merge(
@@ -33,7 +36,11 @@ trait ParserTestServiceTrait
                     'version' => 'latest',
                     'http_handler' => function () use ($content) {
                         return new FulfilledPromise(new Response(200, [], $content));
-                    }
+                    },
+                    'credentials' => [
+                        'key' => 'foo',
+                        'secret' => 'bar'
+                    ]
                 ]
             )
         );
@@ -46,12 +53,13 @@ trait ParserTestServiceTrait
      *
      * @return Service
      */
-    private function generateTestService($protocol)
+    private function generateTestService(string $protocol): Service
     {
         $metadata = [
             "protocol" => "{$protocol}",
             "apiVersion" => "2014-01-01"
         ];
+
         if ($protocol === 'json') {
             $metadata['jsonVersion'] = "1.1";
         }
@@ -60,6 +68,15 @@ trait ParserTestServiceTrait
             [
                 'metadata' => $metadata,
                 'shapes' => [
+                    'DocumentTypeAsPayloadInputOutput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'documentValue' => [
+                                'shape' => 'DocumentType'
+                            ]
+                        ],
+                        'payload' => 'documentValue'
+                    ],
                     "ParseIso8601Response" => [
                         "type" => "structure",
                         "members" => [
@@ -94,6 +111,7 @@ trait ParserTestServiceTrait
                     ],
                     "DocumentType" => [
                         "type" => "structure",
+                        'members' => [],
                         "document" => true
                     ],
                     "__timestampIso8601" => [
@@ -109,6 +127,21 @@ trait ParserTestServiceTrait
                     ],
                 ],
                 'operations' => [
+                    'DocumentTypeAsPayload' => [
+                        'name' => 'DocumentTypeAsPayload',
+                        'http' => [
+                            'method' => 'PUT',
+                            'requestUri' => '/DocumentTypeAsPayload',
+                            'responseCode' => 200
+                        ],
+                        'input' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'output' => [
+                            'shape' => 'DocumentTypeAsPayloadInputOutput'
+                        ],
+                        'idempotent' => true
+                    ],
                     "ParseDocType" => [
                         "name" => "ParseDocType",
                         "http" => [

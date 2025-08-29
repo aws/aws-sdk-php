@@ -1,0 +1,361 @@
+{
+  "version": "2.0",
+  "service": "<p>This is an interface reference for Amazon Aurora DSQL. It contains documentation for one of the programming or command line interfaces you can use to manage Amazon Aurora DSQL.</p> <p>Amazon Aurora DSQL is a serverless, distributed SQL database suitable for workloads of any size. is available in both single-Region and multi-Region configurations, so your clusters and databases are always available even if an Availability Zone or an Amazon Web Services Region are unavailable. lets you focus on using your data to acquire new insights for your business and customers.</p>",
+  "operations": {
+    "CreateCluster": "<p>The CreateCluster API allows you to create both single-region clusters and multi-Region clusters. With the addition of the <i>multiRegionProperties</i> parameter, you can create a cluster with witness Region support and establish peer relationships with clusters in other Regions during creation.</p> <note> <p>Creating multi-Region clusters requires additional IAM permissions beyond those needed for single-Region clusters, as detailed in the <b>Required permissions</b> section below.</p> </note> <p> <b>Required permissions</b> </p> <dl> <dt>dsql:CreateCluster</dt> <dd> <p>Required to create a cluster.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:TagResource</dt> <dd> <p>Permission to add tags to a resource.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:PutMultiRegionProperties</dt> <dd> <p>Permission to configure multi-region properties for a cluster.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </dd> <dt>dsql:AddPeerCluster</dt> <dd> <p>When specifying <code>multiRegionProperties.clusters</code>, permission to add peer clusters.</p> <p>Resources:</p> <ul> <li> <p>Local cluster: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> </li> <li> <p>Each peer cluster: exact ARN of each specified peer cluster</p> </li> </ul> </dd> <dt>dsql:PutWitnessRegion</dt> <dd> <p>When specifying <code>multiRegionProperties.witnessRegion</code>, permission to set a witness Region. This permission is checked both in the cluster Region and in the witness Region.</p> <p>Resources: <code>arn:aws:dsql:region:account-id:cluster/*</code> </p> <p>Condition Keys: <code>dsql:WitnessRegion</code> (matching the specified witness region)</p> </dd> </dl> <important> <ul> <li> <p>The witness Region specified in <code>multiRegionProperties.witnessRegion</code> cannot be the same as the cluster's Region.</p> </li> </ul> </important>",
+    "DeleteCluster": "<p>Deletes a cluster in Amazon Aurora DSQL.</p>",
+    "GetCluster": "<p>Retrieves information about a cluster.</p>",
+    "GetVpcEndpointServiceName": "<p>Retrieves the VPC endpoint service name.</p>",
+    "ListClusters": "<p>Retrieves information about a list of clusters.</p>",
+    "ListTagsForResource": "<p>Lists all of the tags for a resource.</p>",
+    "TagResource": "<p>Tags a resource with a map of key and value pairs.</p>",
+    "UntagResource": "<p>Removes a tag from a resource.</p>",
+    "UpdateCluster": "<p>The <i>UpdateCluster</i> API allows you to modify both single-Region and multi-Region cluster configurations. With the <i>multiRegionProperties</i> parameter, you can add or modify witness Region support and manage peer relationships with clusters in other Regions.</p> <note> <p>Note that updating multi-region clusters requires additional IAM permissions beyond those needed for standard cluster updates, as detailed in the Permissions section.</p> </note> <p> <b>Required permissions</b> </p> <dl> <dt>dsql:UpdateCluster</dt> <dd> <p>Permission to update a DSQL cluster.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> </dl> <dl> <dt>dsql:PutMultiRegionProperties</dt> <dd> <p>Permission to configure multi-Region properties for a cluster.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> </dl> <dl> <dt>dsql:GetCluster</dt> <dd> <p>Permission to retrieve cluster information.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </dd> <dt>dsql:AddPeerCluster</dt> <dd> <p>Permission to add peer clusters.</p> <p>Resources:</p> <ul> <li> <p>Local cluster: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> </li> <li> <p>Each peer cluster: exact ARN of each specified peer cluster</p> </li> </ul> </dd> <dt>dsql:RemovePeerCluster</dt> <dd> <p>Permission to remove peer clusters. The <i>dsql:RemovePeerCluster</i> permission uses a wildcard ARN pattern to simplify permission management during updates.</p> <p>Resources: <code>arn:aws:dsql:*:<i>account-id</i>:cluster/*</code> </p> </dd> </dl> <dl> <dt>dsql:PutWitnessRegion</dt> <dd> <p>Permission to set a witness Region.</p> <p>Resources: <code>arn:aws:dsql:<i>region</i>:<i>account-id</i>:cluster/<i>cluster-id</i> </code> </p> <p>Condition Keys: dsql:WitnessRegion (matching the specified witness Region)</p> <p> <b>This permission is checked both in the cluster Region and in the witness Region.</b> </p> </dd> </dl> <important> <ul> <li> <p>The witness region specified in <code>multiRegionProperties.witnessRegion</code> cannot be the same as the cluster's Region.</p> </li> <li> <p>When updating clusters with peer relationships, permissions are checked for both adding and removing peers.</p> </li> <li> <p>The <code>dsql:RemovePeerCluster</code> permission uses a wildcard ARN pattern to simplify permission management during updates.</p> </li> </ul> </important>"
+  },
+  "shapes": {
+    "AccessDeniedException": {
+      "base": "<p>You do not have sufficient access to perform this action.</p>",
+      "refs": {
+      }
+    },
+    "Arn": {
+      "base": "<p>Amazon Resource Name.</p>",
+      "refs": {
+        "ListTagsForResourceInput$resourceArn": "<p>The ARN of the resource for which you want to list the tags.</p>",
+        "TagResourceInput$resourceArn": "<p>The ARN of the resource that you want to tag.</p>",
+        "UntagResourceInput$resourceArn": "<p>The ARN of the resource from which to remove tags.</p>"
+      }
+    },
+    "ClientToken": {
+      "base": "<p>Idempotency token so a request is only processed once.</p>",
+      "refs": {
+        "CreateClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
+        "DeleteClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>",
+        "UpdateClusterInput$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully. The subsequent retries with the same client token return the result from the original successful request and they have no additional effect.</p> <p>If you don't specify a client token, the Amazon Web Services SDK automatically generates one.</p>"
+      }
+    },
+    "ClusterArn": {
+      "base": "<p>The Amazon Resource Name of the cluster.</p>",
+      "refs": {
+        "ClusterArnList$member": null,
+        "ClusterSummary$arn": "<p>The ARN of the cluster.</p>",
+        "CreateClusterOutput$arn": "<p>The ARN of the created cluster.</p>",
+        "DeleteClusterOutput$arn": "<p>The ARN of the deleted cluster.</p>",
+        "GetClusterOutput$arn": "<p>The ARN of the retrieved cluster.</p>",
+        "UpdateClusterOutput$arn": "<p>The ARN of the updated cluster.</p>"
+      }
+    },
+    "ClusterArnList": {
+      "base": "<p>A list of the Amazon Resource Names of the cluster.</p>",
+      "refs": {
+        "MultiRegionProperties$clusters": "<p>The set of linked clusters that form the multi-Region cluster configuration. Each linked cluster represents a database instance in a different Region.</p>"
+      }
+    },
+    "ClusterCreationTime": {
+      "base": "<p>The timestamp when the cluster was created.</p>",
+      "refs": {
+        "CreateClusterOutput$creationTime": "<p>The time of when created the cluster.</p>",
+        "DeleteClusterOutput$creationTime": "<p>The time of when the cluster was created.</p>",
+        "GetClusterOutput$creationTime": "<p>The time of when the cluster was created.</p>",
+        "UpdateClusterOutput$creationTime": "<p>The time of when the cluster was created.</p>"
+      }
+    },
+    "ClusterId": {
+      "base": "<p>The ID of the cluster.</p>",
+      "refs": {
+        "ClusterSummary$identifier": "<p>The ID of the cluster.</p>",
+        "CreateClusterOutput$identifier": "<p>The ID of the created cluster.</p>",
+        "DeleteClusterInput$identifier": "<p>The ID of the cluster to delete.</p>",
+        "DeleteClusterOutput$identifier": "<p>The ID of the deleted cluster.</p>",
+        "GetClusterInput$identifier": "<p>The ID of the cluster to retrieve.</p>",
+        "GetClusterOutput$identifier": "<p>The ID of the retrieved cluster.</p>",
+        "GetVpcEndpointServiceNameInput$identifier": "<p>The ID of the cluster to retrieve.</p>",
+        "UpdateClusterInput$identifier": "<p>The ID of the cluster you want to update.</p>",
+        "UpdateClusterOutput$identifier": "<p>The ID of the cluster to update.</p>"
+      }
+    },
+    "ClusterList": {
+      "base": "<p>The list of clusters.</p>",
+      "refs": {
+        "ListClustersOutput$clusters": "<p>An array of the returned clusters.</p>"
+      }
+    },
+    "ClusterStatus": {
+      "base": "<p>The current status of a cluster.</p>",
+      "refs": {
+        "CreateClusterOutput$status": "<p>The status of the created cluster.</p>",
+        "DeleteClusterOutput$status": "<p>The status of the cluster.</p>",
+        "GetClusterOutput$status": "<p>The status of the retrieved cluster.</p>",
+        "UpdateClusterOutput$status": "<p>The status of the updated cluster.</p>"
+      }
+    },
+    "ClusterSummary": {
+      "base": "<p>A summary of the properties of a cluster.</p>",
+      "refs": {
+        "ClusterList$member": null
+      }
+    },
+    "ConflictException": {
+      "base": "<p>The submitted action has conflicts.</p>",
+      "refs": {
+      }
+    },
+    "CreateClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateClusterOutput": {
+      "base": "<p>The output of a created cluster.</p>",
+      "refs": {
+      }
+    },
+    "DeleteClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteClusterOutput": {
+      "base": "<p>The output from a deleted cluster.</p>",
+      "refs": {
+      }
+    },
+    "DeletionProtectionEnabled": {
+      "base": "<p>Indicates whether deletion protection is enabled for a cluster.</p>",
+      "refs": {
+        "CreateClusterInput$deletionProtectionEnabled": "<p>If enabled, you can't delete your cluster. You must first disable this property before you can delete your cluster.</p>",
+        "CreateClusterOutput$deletionProtectionEnabled": "<p>Whether deletion protection is enabled on this cluster.</p>",
+        "GetClusterOutput$deletionProtectionEnabled": "<p>Whether deletion protection is enabled in this cluster.</p>",
+        "UpdateClusterInput$deletionProtectionEnabled": "<p>Specifies whether to enable deletion protection in your cluster.</p>"
+      }
+    },
+    "EncryptionDetails": {
+      "base": "<p>Configuration details about encryption for the cluster including the KMS key ARN, encryption type, and encryption status.</p>",
+      "refs": {
+        "CreateClusterOutput$encryptionDetails": "<p>The encryption configuration for the cluster that was specified during the creation process, including the KMS key identifier and encryption state.</p>",
+        "GetClusterOutput$encryptionDetails": "<p>The current encryption configuration details for the cluster.</p>"
+      }
+    },
+    "EncryptionStatus": {
+      "base": null,
+      "refs": {
+        "EncryptionDetails$encryptionStatus": "<p>The status of encryption for the cluster.</p>"
+      }
+    },
+    "EncryptionType": {
+      "base": null,
+      "refs": {
+        "EncryptionDetails$encryptionType": "<p>The type of encryption that protects the data on your cluster.</p>"
+      }
+    },
+    "GetClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetClusterOutput": {
+      "base": "<p>The output of a cluster.</p>",
+      "refs": {
+      }
+    },
+    "GetVpcEndpointServiceNameInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetVpcEndpointServiceNameOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "InternalServerException$retryAfterSeconds": "<p>Retry after seconds.</p>",
+        "ThrottlingException$retryAfterSeconds": "<p>The request exceeds a request rate quota. Retry after seconds.</p>"
+      }
+    },
+    "InternalServerException": {
+      "base": "<p>The request processing has failed because of an unknown error, exception or failure.</p>",
+      "refs": {
+      }
+    },
+    "KmsEncryptionKey": {
+      "base": null,
+      "refs": {
+        "CreateClusterInput$kmsEncryptionKey": "<p>The KMS key that encrypts and protects the data on your cluster. You can specify the ARN, ID, or alias of an existing key or have Amazon Web Services create a default key for you.</p>",
+        "UpdateClusterInput$kmsEncryptionKey": "<p>The KMS key that encrypts and protects the data on your cluster. You can specify the ARN, ID, or alias of an existing key or have Amazon Web Services create a default key for you.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "EncryptionDetails$kmsKeyArn": "<p>The ARN of the KMS key that encrypts data in the cluster.</p>"
+      }
+    },
+    "ListClustersInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListClustersOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "MaxResults": {
+      "base": "<p>Max results that will be returned per page.</p>",
+      "refs": {
+        "ListClustersInput$maxResults": "<p>An optional parameter that specifies the maximum number of results to return. You can use nextToken to display the next page of results.</p>"
+      }
+    },
+    "MultiRegionProperties": {
+      "base": "<p>Defines the structure for multi-Region cluster configurations, containing the witness region and linked cluster settings.</p>",
+      "refs": {
+        "CreateClusterInput$multiRegionProperties": "<p>The configuration settings when creating a multi-Region cluster, including the witness region and linked cluster properties.</p>",
+        "CreateClusterOutput$multiRegionProperties": "<p>The multi-Region cluster configuration details that were set during cluster creation</p>",
+        "GetClusterOutput$multiRegionProperties": "<p>Returns the current multi-Region cluster configuration, including witness region and linked cluster information.</p>",
+        "UpdateClusterInput$multiRegionProperties": "<p>The new multi-Region cluster configuration settings to be applied during an update operation.</p>"
+      }
+    },
+    "NextToken": {
+      "base": "<p>Token used to retrieve next page.</p>",
+      "refs": {
+        "ListClustersInput$nextToken": "<p>If your initial ListClusters operation returns a nextToken, you can include the returned nextToken in following ListClusters operations, which returns results in the next page.</p>",
+        "ListClustersOutput$nextToken": "<p>If nextToken is returned, there are more results available. The value of nextToken is a unique pagination token for each page. To retrieve the next page, make the call again using the returned token.</p>"
+      }
+    },
+    "Region": {
+      "base": "<p> Region name.</p>",
+      "refs": {
+        "MultiRegionProperties$witnessRegion": "<p>The that serves as the witness region for a multi-Region cluster. The witness region helps maintain cluster consistency and quorum.</p>"
+      }
+    },
+    "ResourceNotFoundException": {
+      "base": "<p>The resource could not be found.</p>",
+      "refs": {
+      }
+    },
+    "ServiceName": {
+      "base": "<p>The name of the VPC endpoint service that provides access to your cluster. Use this endpoint to establish a private connection between your VPC and the cluster.</p>",
+      "refs": {
+        "GetVpcEndpointServiceNameOutput$serviceName": "<p>The VPC endpoint service name.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>The service limit was exceeded.</p>",
+      "refs": {
+      }
+    },
+    "String": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$message": null,
+        "ConflictException$message": null,
+        "ConflictException$resourceId": "<p>Resource Id</p>",
+        "ConflictException$resourceType": "<p>Resource Type</p>",
+        "InternalServerException$message": null,
+        "ResourceNotFoundException$message": null,
+        "ResourceNotFoundException$resourceId": "<p>The resource ID could not be found.</p>",
+        "ResourceNotFoundException$resourceType": "<p>The resource type could not be found.</p>",
+        "ServiceQuotaExceededException$message": "<p>The service exception for exceeding a quota.</p>",
+        "ServiceQuotaExceededException$resourceId": "<p>The resource ID exceeds a quota.</p>",
+        "ServiceQuotaExceededException$resourceType": "<p>The resource type exceeds a quota.</p>",
+        "ServiceQuotaExceededException$serviceCode": "<p>The request exceeds a service quota.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The service exceeds a quota.</p>",
+        "ThrottlingException$message": "<p>The message that the request was denied due to request throttling.</p>",
+        "ThrottlingException$serviceCode": "<p>The request exceeds a service quota.</p>",
+        "ThrottlingException$quotaCode": "<p>The request exceeds a request rate quota.</p>",
+        "ValidationException$message": null,
+        "ValidationExceptionField$name": "<p>The name of the field.</p>",
+        "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>"
+      }
+    },
+    "TagKey": {
+      "base": "<p>Unique tag key, maximum 128 Unicode characters in UTF-8.</p>",
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": "<p>List of tag keys.</p>",
+      "refs": {
+        "UntagResourceInput$tagKeys": "<p>The array of keys of the tags that you want to remove.</p>"
+      }
+    },
+    "TagMap": {
+      "base": "<p>Map of tags.</p>",
+      "refs": {
+        "CreateClusterInput$tags": "<p>A map of key and value pairs to use to tag your cluster.</p>",
+        "GetClusterOutput$tags": null,
+        "ListTagsForResourceOutput$tags": "<p>A map of key and value pairs that you used to tag your resource.</p>",
+        "TagResourceInput$tags": "<p>A map of key and value pairs to use to tag your resource.</p>"
+      }
+    },
+    "TagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": "<p>Tag value, maximum 256 Unicode characters in UTF-8.</p>",
+      "refs": {
+        "TagMap$value": null
+      }
+    },
+    "ThrottlingException": {
+      "base": "<p>The request was denied due to request throttling.</p>",
+      "refs": {
+      }
+    },
+    "UntagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateClusterInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateClusterOutput": {
+      "base": "<p>The details of the cluster after it has been updated.</p>",
+      "refs": {
+      }
+    },
+    "ValidationException": {
+      "base": "<p>The input failed to satisfy the constraints specified by an Amazon Web Services service.</p>",
+      "refs": {
+      }
+    },
+    "ValidationExceptionField": {
+      "base": "<p>Stores information about a field passed inside a request that resulted in an validation error.</p>",
+      "refs": {
+        "ValidationExceptionFieldList$member": null
+      }
+    },
+    "ValidationExceptionFieldList": {
+      "base": "<p>A list of fields that didn't validate.</p>",
+      "refs": {
+        "ValidationException$fieldList": "<p>A list of fields that didn't validate.</p>"
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": "<p>The reason for the validation exception.</p>",
+      "refs": {
+        "ValidationException$reason": "<p>The reason for the validation exception.</p>"
+      }
+    }
+  }
+}
