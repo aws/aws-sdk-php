@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.8 - 2025-08-29
 
 * `Aws\BedrockRuntime` - Fixed stop sequence limit for converse API.
 * `Aws\EC2` - Release shows new route types such as filtered and advertisement.
