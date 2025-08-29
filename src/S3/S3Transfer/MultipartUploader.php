@@ -13,7 +13,6 @@ use GuzzleHttp\Promise\Create;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\LazyOpenStream;
 use GuzzleHttp\Psr7\Utils;
-use HashContext;
 use Psr\Http\Message\StreamInterface;
 use Throwable;
 
@@ -35,9 +34,6 @@ class MultipartUploader extends AbstractMultipartUploader
 
     /** @var StreamInterface */
     private StreamInterface $body;
-
-    /** @var HashContext */
-    private HashContext $hashContext;
 
     public function __construct(
         S3ClientInterface $s3Client,
@@ -74,6 +70,9 @@ class MultipartUploader extends AbstractMultipartUploader
     }
 
     /**
+     * Parses the source into an instance of
+     * StreamInterface to be read.
+     *
      * @param string|StreamInterface $source
      *
      * @return StreamInterface
@@ -86,7 +85,8 @@ class MultipartUploader extends AbstractMultipartUploader
             // Make sure the files exists
             if (!is_readable($source)) {
                 throw new \InvalidArgumentException(
-                    "The source for this upload must be either a readable file path or a valid stream."
+                    "The source for this upload must be either a"
+                    . " readable file path or a valid stream."
                 );
             }
             $body = new LazyOpenStream($source, 'r');
@@ -106,6 +106,10 @@ class MultipartUploader extends AbstractMultipartUploader
     }
 
     /**
+     * Evaluates if custom checksum has been provided,
+     * and if so then, the values are placed in the
+     * respective properties.
+     *
      * @return void
      */
     private function evaluateCustomChecksum(): void
@@ -128,6 +132,11 @@ class MultipartUploader extends AbstractMultipartUploader
         }
     }
 
+    /**
+     * Process a multipart upload operation.
+     *
+     * @return PromiseInterface
+     */
     protected function processMultipartOperation(): PromiseInterface
     {
         $uploadPartCommandArgs = $this->requestArgs;
@@ -181,7 +190,8 @@ class MultipartUploader extends AbstractMultipartUploader
 
             if ($partNo > $partsCount) {
                 return Create::rejectionFor(
-                    "The current part `$partNo` is over the expected number of parts `$partsCount`"
+                    "The current part `$partNo` is over "
+                    . "the expected number of parts `$partsCount`"
                 );
             }
         }

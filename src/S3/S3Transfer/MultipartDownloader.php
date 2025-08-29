@@ -190,7 +190,8 @@ abstract class MultipartDownloader implements PromisorInterface
 
                 if ($this->currentPartNo !== $this->objectPartsCount) {
                     throw new S3TransferException(
-                        "Expected number of parts `$this->objectPartsCount` to have been transferred but got `$this->currentPartNo`."
+                        "Expected number of parts `$this->objectPartsCount`"
+                        . " to have been transferred but got `$this->currentPartNo`."
                     );
                 }
 
