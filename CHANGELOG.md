@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - Fixed stop sequence limit for converse API.
+* `Aws\EC2` - Release shows new route types such as filtered and advertisement.
+* `Aws\XRay` - AWS X-Ray Features: Support Sampling Rate Boost On Anomaly
+
 ## 3.356.7 - 2025-08-28
 
 * `Aws\Credentials` - Updates `CredentialProvider::memoize()` to refresh credentials that within 1 minute of expiration.

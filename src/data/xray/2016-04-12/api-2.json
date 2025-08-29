@@ -568,6 +568,10 @@
       "type":"list",
       "member":{"shape":"AnomalousService"}
     },
+    "AnomalyCount":{
+      "type":"integer",
+      "min":0
+    },
     "AttributeKey":{
       "type":"string",
       "max":32,
@@ -637,6 +641,10 @@
       "type":"string",
       "max":24,
       "min":24
+    },
+    "CooldownWindowMinutes":{
+      "type":"integer",
+      "min":0
     },
     "CreateGroupRequest":{
       "type":"structure",
@@ -1062,7 +1070,8 @@
       "type":"structure",
       "required":["SamplingStatisticsDocuments"],
       "members":{
-        "SamplingStatisticsDocuments":{"shape":"SamplingStatisticsDocumentList"}
+        "SamplingStatisticsDocuments":{"shape":"SamplingStatisticsDocumentList"},
+        "SamplingBoostStatisticsDocuments":{"shape":"SamplingBoostStatisticsDocumentList"}
       }
     },
     "GetSamplingTargetsResult":{
@@ -1070,7 +1079,8 @@
       "members":{
         "SamplingTargetDocuments":{"shape":"SamplingTargetDocumentList"},
         "LastRuleModification":{"shape":"Timestamp"},
-        "UnprocessedStatistics":{"shape":"UnprocessedStatisticsList"}
+        "UnprocessedStatistics":{"shape":"UnprocessedStatisticsList"},
+        "UnprocessedBoostStatistics":{"shape":"UnprocessedStatisticsList"}
       }
     },
     "GetServiceGraphRequest":{
@@ -1475,6 +1485,11 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "MaxRate":{
+      "type":"double",
+      "max":1,
+      "min":0
+    },
     "NullableBoolean":{"type":"boolean"},
     "NullableDouble":{"type":"double"},
     "NullableInteger":{"type":"integer"},
@@ -1734,9 +1749,59 @@
       "max":32,
       "min":1
     },
+    "SampledAnomalyCount":{
+      "type":"integer",
+      "min":0
+    },
     "SampledCount":{
       "type":"integer",
       "min":0
+    },
+    "SamplingBoost":{
+      "type":"structure",
+      "required":[
+        "BoostRate",
+        "BoostRateTTL"
+      ],
+      "members":{
+        "BoostRate":{"shape":"Double"},
+        "BoostRateTTL":{"shape":"Timestamp"}
+      }
+    },
+    "SamplingBoostStatisticsDocument":{
+      "type":"structure",
+      "required":[
+        "RuleName",
+        "ServiceName",
+        "Timestamp",
+        "AnomalyCount",
+        "TotalCount",
+        "SampledAnomalyCount"
+      ],
+      "members":{
+        "RuleName":{"shape":"RuleName"},
+        "ServiceName":{"shape":"ServiceName"},
+        "Timestamp":{"shape":"Timestamp"},
+        "AnomalyCount":{"shape":"AnomalyCount"},
+        "TotalCount":{"shape":"TotalCount"},
+        "SampledAnomalyCount":{"shape":"SampledAnomalyCount"}
+      }
+    },
+    "SamplingBoostStatisticsDocumentList":{
+      "type":"list",
+      "member":{"shape":"SamplingBoostStatisticsDocument"},
+      "max":25
+    },
+    "SamplingRateBoost":{
+      "type":"structure",
+      "required":[
+        "MaxRate",
+        "CooldownWindowMinutes"
+      ],
+      "members":{
+        "MaxRate":{"shape":"MaxRate"},
+        "CooldownWindowMinutes":{"shape":"CooldownWindowMinutes"}
+      }
     },
     "SamplingRule":{
       "type":"structure",
@@ -1765,7 +1830,8 @@
         "HTTPMethod":{"shape":"HTTPMethod"},
         "URLPath":{"shape":"URLPath"},
         "Version":{"shape":"Version"},
-        "Attributes":{"shape":"AttributeMap"}
+        "Attributes":{"shape":"AttributeMap"},
+        "SamplingRateBoost":{"shape":"SamplingRateBoost"}
       }
     },
     "SamplingRuleRecord":{
@@ -1794,7 +1860,8 @@
         "ServiceType":{"shape":"ServiceType"},
         "HTTPMethod":{"shape":"HTTPMethod"},
         "URLPath":{"shape":"URLPath"},
-        "Attributes":{"shape":"AttributeMap"}
+        "Attributes":{"shape":"AttributeMap"},
+        "SamplingRateBoost":{"shape":"SamplingRateBoost"}
       }
     },
     "SamplingStatisticSummary":{
@@ -1855,7 +1922,8 @@
         "FixedRate":{"shape":"Double"},
         "ReservoirQuota":{"shape":"NullableInteger"},
         "ReservoirQuotaTTL":{"shape":"Timestamp"},
-        "Interval":{"shape":"NullableInteger"}
+        "Interval":{"shape":"NullableInteger"},
+        "SamplingBoost":{"shape":"SamplingBoost"}
       }
     },
     "SamplingTargetDocumentList":{
@@ -2085,6 +2153,10 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "TotalCount":{
+      "type":"integer",
+      "min":0
     },
     "Trace":{
       "type":"structure",
