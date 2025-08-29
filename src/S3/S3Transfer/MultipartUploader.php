@@ -138,22 +138,13 @@ class MultipartUploader extends AbstractMultipartUploader
         $partNo = count($this->parts);
         $uploadPartCommandArgs['UploadId'] = $this->uploadId;
         // Customer provided checksum
-        $hashBody = false;
         if ($this->requestChecksum !== null) {
-            // To avoid default calculation
+            // To avoid default calculation for individual parts
             $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
             unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
         } elseif ($this->requestChecksumAlgorithm !== null) {
             // Normalize algorithm name
-            $algoName = strtolower($this->requestChecksumAlgorithm);
-            if ($algoName === self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM) {
-                $algoName = 'crc32b';
-            }
-
-            $hashBody = true;
-            $this->hashContext = hash_init($algoName);
-            // To avoid default calculation
-            $uploadPartCommandArgs['@context']['request_checksum_calculation'] = 'when_required';
+            $this->requestChecksumAlgorithm = strtolower($this->requestChecksumAlgorithm);
             unset($uploadPartCommandArgs['Checksum'. strtoupper($this->requestChecksumAlgorithm)]);
         }
 
@@ -164,10 +155,6 @@ class MultipartUploader extends AbstractMultipartUploader
             // we already reached the end of file.
             if (empty($read) && $this->body->eof()) {
                 break;
-            }
-
-            if ($hashBody) {
-                hash_update($this->hashContext, $read);
             }
 
             $partBody = Utils::streamFor($read);
@@ -197,15 +184,6 @@ class MultipartUploader extends AbstractMultipartUploader
                     "The current part `$partNo` is over the expected number of parts `$partsCount`"
                 );
             }
-        }
-
-        if ($hashBody) {
-            $this->requestChecksum = base64_encode(
-                hash_final(
-                    $this->hashContext,
-                    true
-                )
-            );
         }
 
         return (new CommandPool(

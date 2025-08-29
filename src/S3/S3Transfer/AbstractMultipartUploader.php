@@ -18,7 +18,7 @@ use GuzzleHttp\Promise\PromisorInterface;
 use Throwable;
 
 /**
- * Abstract base class for multipart operations (upload/copy).
+ * Abstract base class for multipart operations
  */
 abstract class AbstractMultipartUploader implements PromisorInterface
 {
@@ -31,16 +31,16 @@ abstract class AbstractMultipartUploader implements PromisorInterface
     /** @var S3ClientInterface */
     protected readonly S3ClientInterface $s3Client;
 
-    /** @var array @ */
+    /** @var array */
     protected readonly array $requestArgs;
 
-    /** @var array @ */
+    /** @var array */
     protected readonly array $config;
 
     /** @var string|null */
     protected string|null $uploadId;
 
-    /** @var array @ */
+    /** @var array */
     protected array $parts;
 
     /** @var array */
@@ -66,6 +66,9 @@ abstract class AbstractMultipartUploader implements PromisorInterface
      * @var string|null
      */
     protected ?string $requestChecksumAlgorithm;
+
+    /** @var bool */
+    private bool $isFullObjectChecksum;
 
     /**
      * @param S3ClientInterface $s3Client
@@ -96,6 +99,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         $this->parts = $parts;
         $this->currentSnapshot = $currentSnapshot;
         $this->listenerNotifier = $listenerNotifier;
+        $this->isFullObjectChecksum = false;
     }
 
     /**
@@ -181,10 +185,10 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         if ($this->requestChecksum !== null) {
             $createMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
             $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
+            $this->isFullObjectChecksum = true;
         } elseif ($this->config['request_checksum_calculation'] === 'when_supported') {
             $this->requestChecksumAlgorithm = $createMultipartUploadArgs['ChecksumAlgorithm']
                 ?? self::DEFAULT_CHECKSUM_CALCULATION_ALGORITHM;
-            $createMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
             $createMultipartUploadArgs['ChecksumAlgorithm'] = $this->requestChecksumAlgorithm;
         }
         
@@ -225,7 +229,7 @@ abstract class AbstractMultipartUploader implements PromisorInterface
         ];
         $completeMultipartUploadArgs['MpuObjectSize'] = $this->getTotalSize();
 
-        if ($this->requestChecksum !== null) {
+        if ($this->isFullObjectChecksum && $this->requestChecksum !== null) {
             $completeMultipartUploadArgs['ChecksumType'] = self::CHECKSUM_TYPE_FULL_OBJECT;
             $completeMultipartUploadArgs[
                 'Checksum' . strtoupper($this->requestChecksumAlgorithm)

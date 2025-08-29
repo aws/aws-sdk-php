@@ -1084,8 +1084,6 @@ EOF;
                     "StorageClass" => 'test-storage-class',
                     "Tagging" => 'test-tagging',
                     "WebsiteRedirectLocation" => 'test-website-redirect-location',
-                    'ChecksumType' => 'FULL_OBJECT',
-                    'ChecksumAlgorithm' => 'crc32',
                 ],
                 'UploadPart' => [
                     "Bucket" => 'test-bucket',
@@ -1106,8 +1104,6 @@ EOF;
                     "SSECustomerAlgorithm" => 'test-sse-customer-algorithm',
                     "SSECustomerKey" => 'test-sse-customer-key',
                     "SSECustomerKeyMD5" => 'test-sse-customer-key-md5',
-                    'ChecksumType' => 'FULL_OBJECT',
-                    'ChecksumCRC32' => 'tx0IFA==', // From default algorithm used
                 ],
             ],
             'expects_error' => false,
