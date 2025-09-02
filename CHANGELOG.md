@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.9 - 2025-09-02
 
 * `Aws\Sms` - Removes the Service Migration Service, which has been deprecated.
 * `Aws\EC2` - MaximumEbsAttachments and AttachmentLimitType fields added to DescribeInstanceTypesResponse. G6f, Gr6f, R8i, R8i-flex and p5.4xlarge instance types added to InstanceTypes enum.
