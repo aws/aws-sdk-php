@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Sms` - Removes the Service Migration Service, which has been deprecated.
+* `Aws\EC2` - MaximumEbsAttachments and AttachmentLimitType fields added to DescribeInstanceTypesResponse. G6f, Gr6f, R8i, R8i-flex and p5.4xlarge instance types added to InstanceTypes enum.
+* `Aws\Notifications` - Added Org support for notifications: - `ListMemberAccounts` gets member accounts list, `AssociateOrganizationalUnit` links OU to notification configuration, `DisassociateOrganizationalUnit` removes OU from notification configuration, `ListOrganizationalUnits` shows OUs configured for notifications.
+* `Aws\Neptune` - Removed the deprecated marker from publiclyAccessible parameter from DbInstance, CreateDbInstance and ModifyDbInstance and added relevant usage information for the parameter.
+* `Aws\WorkMail` - Make RoleArn an optional parameter for the PutEmailMonitoringConfiguration API, and add UnsupportedOperationException to RegisterToWorkMail.
+
 ## 3.356.8 - 2025-08-29
 
 * `Aws\BedrockRuntime` - Fixed stop sequence limit for converse API.
