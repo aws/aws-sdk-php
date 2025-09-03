@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.10 - 2025-09-03
 
 * `Aws\CleanRooms` - Added support for adding new data provider members to an existing collaboration.
 * `Aws\MQ` - Add CONFIG_MANAGED as a supported AuthenticationStrategy for Amazon MQ for RabbitMQ brokers. Make username and password optional on broker creation for CONFIG_MANAGED brokers.
