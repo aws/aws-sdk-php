@@ -100,6 +100,25 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "CreateCollaborationChangeRequest":{
+      "name":"CreateCollaborationChangeRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/collaborations/{collaborationIdentifier}/changeRequests",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateCollaborationChangeRequestInput"},
+      "output":{"shape":"CreateCollaborationChangeRequestOutput"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateConfiguredAudienceModelAssociation":{
       "name":"CreateConfiguredAudienceModelAssociation",
       "http":{
@@ -543,6 +562,23 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetCollaborationChangeRequest":{
+      "name":"GetCollaborationChangeRequest",
+      "http":{
+        "method":"GET",
+        "requestUri":"/collaborations/{collaborationIdentifier}/changeRequests/{changeRequestIdentifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetCollaborationChangeRequestInput"},
+      "output":{"shape":"GetCollaborationChangeRequestOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "GetCollaborationConfiguredAudienceModelAssociation":{
       "name":"GetCollaborationConfiguredAudienceModelAssociation",
       "http":{
@@ -841,6 +877,23 @@
       },
       "input":{"shape":"ListCollaborationAnalysisTemplatesInput"},
       "output":{"shape":"ListCollaborationAnalysisTemplatesOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListCollaborationChangeRequests":{
+      "name":"ListCollaborationChangeRequests",
+      "http":{
+        "method":"GET",
+        "requestUri":"/collaborations/{collaborationIdentifier}/changeRequests",
+        "responseCode":200
+      },
+      "input":{"shape":"ListCollaborationChangeRequestsInput"},
+      "output":{"shape":"ListCollaborationChangeRequestsOutput"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
@@ -2005,6 +2058,14 @@
       "min":1,
       "pattern":"([a-zA-Z0-9._-])*"
     },
+    "AutoApprovedChangeType":{
+      "type":"string",
+      "enum":["ADD_MEMBER"]
+    },
+    "AutoApprovedChangeTypeList":{
+      "type":"list",
+      "member":{"shape":"AutoApprovedChangeType"}
+    },
     "BatchGetCollaborationAnalysisTemplateError":{
       "type":"structure",
       "required":[
@@ -2160,6 +2221,72 @@
       "type":"boolean",
       "box":true
     },
+    "Change":{
+      "type":"structure",
+      "required":[
+        "specificationType",
+        "specification",
+        "types"
+      ],
+      "members":{
+        "specificationType":{"shape":"ChangeSpecificationType"},
+        "specification":{"shape":"ChangeSpecification"},
+        "types":{"shape":"ChangeTypeList"}
+      }
+    },
+    "ChangeInput":{
+      "type":"structure",
+      "required":[
+        "specificationType",
+        "specification"
+      ],
+      "members":{
+        "specificationType":{"shape":"ChangeSpecificationType"},
+        "specification":{"shape":"ChangeSpecification"}
+      }
+    },
+    "ChangeInputList":{
+      "type":"list",
+      "member":{"shape":"ChangeInput"},
+      "max":10,
+      "min":1
+    },
+    "ChangeList":{
+      "type":"list",
+      "member":{"shape":"Change"},
+      "max":10,
+      "min":1
+    },
+    "ChangeRequestStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "APPROVED",
+        "CANCELLED",
+        "DENIED",
+        "COMMITTED"
+      ]
+    },
+    "ChangeSpecification":{
+      "type":"structure",
+      "members":{
+        "member":{"shape":"MemberChangeSpecification"}
+      },
+      "union":true
+    },
+    "ChangeSpecificationType":{
+      "type":"string",
+      "enum":["MEMBER"]
+    },
+    "ChangeType":{
+      "type":"string",
+      "enum":["ADD_MEMBER"]
+    },
+    "ChangeTypeList":{
+      "type":"list",
+      "member":{"shape":"ChangeType"},
+      "min":1
+    },
     "CleanroomsArn":{
       "type":"string",
       "max":100,
@@ -2194,7 +2321,8 @@
         "dataEncryptionMetadata":{"shape":"DataEncryptionMetadata"},
         "queryLogStatus":{"shape":"CollaborationQueryLogStatus"},
         "jobLogStatus":{"shape":"CollaborationJobLogStatus"},
-        "analyticsEngine":{"shape":"AnalyticsEngine"}
+        "analyticsEngine":{"shape":"AnalyticsEngine"},
+        "autoApprovedChangeTypes":{"shape":"AutoApprovedChangeTypeList"}
       }
     },
     "CollaborationAnalysisTemplate":{
@@ -2269,6 +2397,58 @@
       "max":100,
       "min":0,
       "pattern":"arn:aws:[\\w]+:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:collaboration/[\\d\\w-]+"
+    },
+    "CollaborationChangeRequest":{
+      "type":"structure",
+      "required":[
+        "id",
+        "collaborationId",
+        "createTime",
+        "updateTime",
+        "status",
+        "isAutoApproved",
+        "changes"
+      ],
+      "members":{
+        "id":{"shape":"UUID"},
+        "collaborationId":{"shape":"UUID"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "status":{"shape":"ChangeRequestStatus"},
+        "isAutoApproved":{"shape":"Boolean"},
+        "changes":{"shape":"ChangeList"}
+      }
+    },
+    "CollaborationChangeRequestIdentifier":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+    },
+    "CollaborationChangeRequestSummary":{
+      "type":"structure",
+      "required":[
+        "id",
+        "collaborationId",
+        "createTime",
+        "updateTime",
+        "status",
+        "isAutoApproved",
+        "changes"
+      ],
+      "members":{
+        "id":{"shape":"UUID"},
+        "collaborationId":{"shape":"UUID"},
+        "createTime":{"shape":"Timestamp"},
+        "updateTime":{"shape":"Timestamp"},
+        "status":{"shape":"ChangeRequestStatus"},
+        "isAutoApproved":{"shape":"Boolean"},
+        "changes":{"shape":"ChangeList"}
+      }
+    },
+    "CollaborationChangeRequestSummaryList":{
+      "type":"list",
+      "member":{"shape":"CollaborationChangeRequestSummary"}
     },
     "CollaborationConfiguredAudienceModelAssociation":{
       "type":"structure",
@@ -3049,6 +3229,28 @@
         "analysisTemplate":{"shape":"AnalysisTemplate"}
       }
     },
+    "CreateCollaborationChangeRequestInput":{
+      "type":"structure",
+      "required":[
+        "collaborationIdentifier",
+        "changes"
+      ],
+      "members":{
+        "collaborationIdentifier":{
+          "shape":"CollaborationIdentifier",
+          "location":"uri",
+          "locationName":"collaborationIdentifier"
+        },
+        "changes":{"shape":"ChangeInputList"}
+      }
+    },
+    "CreateCollaborationChangeRequestOutput":{
+      "type":"structure",
+      "required":["collaborationChangeRequest"],
+      "members":{
+        "collaborationChangeRequest":{"shape":"CollaborationChangeRequest"}
+      }
+    },
     "CreateCollaborationInput":{
       "type":"structure",
       "required":[
@@ -3071,7 +3273,8 @@
         "jobLogStatus":{"shape":"CollaborationJobLogStatus"},
         "tags":{"shape":"TagMap"},
         "creatorPaymentConfiguration":{"shape":"PaymentConfiguration"},
-        "analyticsEngine":{"shape":"AnalyticsEngine"}
+        "analyticsEngine":{"shape":"AnalyticsEngine"},
+        "autoApprovedChangeRequestTypes":{"shape":"AutoApprovedChangeTypeList"}
       }
     },
     "CreateCollaborationOutput":{
@@ -3880,6 +4083,32 @@
       "required":["collaborationAnalysisTemplate"],
       "members":{
         "collaborationAnalysisTemplate":{"shape":"CollaborationAnalysisTemplate"}
+      }
+    },
+    "GetCollaborationChangeRequestInput":{
+      "type":"structure",
+      "required":[
+        "collaborationIdentifier",
+        "changeRequestIdentifier"
+      ],
+      "members":{
+        "collaborationIdentifier":{
+          "shape":"CollaborationIdentifier",
+          "location":"uri",
+          "locationName":"collaborationIdentifier"
+        },
+        "changeRequestIdentifier":{
+          "shape":"CollaborationChangeRequestIdentifier",
+          "location":"uri",
+          "locationName":"changeRequestIdentifier"
+        }
+      }
+    },
+    "GetCollaborationChangeRequestOutput":{
+      "type":"structure",
+      "required":["collaborationChangeRequest"],
+      "members":{
+        "collaborationChangeRequest":{"shape":"CollaborationChangeRequest"}
       }
     },
     "GetCollaborationConfiguredAudienceModelAssociationInput":{
@@ -4695,6 +4924,40 @@
         "collaborationAnalysisTemplateSummaries":{"shape":"CollaborationAnalysisTemplateSummaryList"}
       }
     },
+    "ListCollaborationChangeRequestsInput":{
+      "type":"structure",
+      "required":["collaborationIdentifier"],
+      "members":{
+        "collaborationIdentifier":{
+          "shape":"CollaborationIdentifier",
+          "location":"uri",
+          "locationName":"collaborationIdentifier"
+        },
+        "status":{
+          "shape":"ChangeRequestStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListCollaborationChangeRequestsOutput":{
+      "type":"structure",
+      "required":["collaborationChangeRequestSummaries"],
+      "members":{
+        "collaborationChangeRequestSummaries":{"shape":"CollaborationChangeRequestSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListCollaborationConfiguredAudienceModelAssociationsInput":{
       "type":"structure",
       "required":["collaborationIdentifier"],
@@ -5264,6 +5527,18 @@
         "CAN_RECEIVE_RESULTS",
         "CAN_RUN_JOB"
       ]
+    },
+    "MemberChangeSpecification":{
+      "type":"structure",
+      "required":[
+        "accountId",
+        "memberAbilities"
+      ],
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "memberAbilities":{"shape":"MemberAbilities"},
+        "displayName":{"shape":"DisplayName"}
+      }
     },
     "MemberList":{
       "type":"list",

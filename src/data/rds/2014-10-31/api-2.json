@@ -3622,7 +3622,8 @@
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "EnableLocalWriteForwarding":{"shape":"BooleanOptional"},
         "CACertificateIdentifier":{"shape":"String"},
-        "EngineLifecycleSupport":{"shape":"String"}
+        "EngineLifecycleSupport":{"shape":"String"},
+        "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -3740,7 +3741,8 @@
         "DBSystemId":{"shape":"String"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
         "MultiTenant":{"shape":"BooleanOptional"},
-        "EngineLifecycleSupport":{"shape":"String"}
+        "EngineLifecycleSupport":{"shape":"String"},
+        "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"}
       }
     },
     "CreateDBInstanceReadReplicaMessage":{
@@ -7685,6 +7687,13 @@
       "max":340,
       "min":1
     },
+    "MasterUserAuthenticationType":{
+      "type":"string",
+      "enum":[
+        "password",
+        "iam-db-auth"
+      ]
+    },
     "MasterUserSecret":{
       "type":"structure",
       "members":{
@@ -7865,7 +7874,8 @@
         "EnableLocalWriteForwarding":{"shape":"BooleanOptional"},
         "AwsBackupRecoveryPointArn":{"shape":"AwsBackupRecoveryPointArn"},
         "EnableLimitlessDatabase":{"shape":"BooleanOptional"},
-        "CACertificateIdentifier":{"shape":"String"}
+        "CACertificateIdentifier":{"shape":"String"},
+        "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -7968,7 +7978,8 @@
         "MasterUserSecretKmsKeyId":{"shape":"String"},
         "Engine":{"shape":"String"},
         "DedicatedLogVolume":{"shape":"BooleanOptional"},
-        "MultiTenant":{"shape":"BooleanOptional"}
+        "MultiTenant":{"shape":"BooleanOptional"},
+        "MasterUserAuthenticationType":{"shape":"MasterUserAuthenticationType"}
       }
     },
     "ModifyDBInstanceResult":{

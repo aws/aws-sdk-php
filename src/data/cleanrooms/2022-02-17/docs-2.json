@@ -7,6 +7,7 @@
     "BatchGetSchemaAnalysisRule": "<p>Retrieves multiple analysis rule schemas.</p>",
     "CreateAnalysisTemplate": "<p>Creates a new analysis template.</p>",
     "CreateCollaboration": "<p>Creates a new collaboration.</p>",
+    "CreateCollaborationChangeRequest": "<p>Creates a new change request to modify an existing collaboration. This enables post-creation modifications to collaborations through a structured API-driven approach.</p>",
     "CreateConfiguredAudienceModelAssociation": "<p>Provides the details necessary to create a configured audience model association.</p>",
     "CreateConfiguredTable": "<p>Creates a new configured table resource.</p>",
     "CreateConfiguredTableAnalysisRule": "<p>Creates a new analysis rule for a configured table. Currently, only one analysis rule can be created for a given configured table.</p>",
@@ -31,6 +32,7 @@
     "GetAnalysisTemplate": "<p>Retrieves an analysis template.</p>",
     "GetCollaboration": "<p>Returns metadata about a collaboration.</p>",
     "GetCollaborationAnalysisTemplate": "<p>Retrieves an analysis template within a collaboration.</p>",
+    "GetCollaborationChangeRequest": "<p>Retrieves detailed information about a specific collaboration change request.</p>",
     "GetCollaborationConfiguredAudienceModelAssociation": "<p>Retrieves a configured audience model association within a collaboration.</p>",
     "GetCollaborationIdNamespaceAssociation": "<p>Retrieves an ID namespace association from a specific collaboration.</p>",
     "GetCollaborationPrivacyBudgetTemplate": "<p>Returns details about a specified privacy budget template.</p>",
@@ -49,6 +51,7 @@
     "GetSchemaAnalysisRule": "<p>Retrieves a schema analysis rule.</p>",
     "ListAnalysisTemplates": "<p>Lists analysis templates that the caller owns.</p>",
     "ListCollaborationAnalysisTemplates": "<p>Lists analysis templates within a collaboration.</p>",
+    "ListCollaborationChangeRequests": "<p>Lists all change requests for a collaboration with pagination support. Returns change requests sorted by creation time.</p>",
     "ListCollaborationConfiguredAudienceModelAssociations": "<p>Lists configured audience model associations within a collaboration.</p>",
     "ListCollaborationIdNamespaceAssociations": "<p>Returns a list of the ID namespace associations in a collaboration.</p>",
     "ListCollaborationPrivacyBudgetTemplates": "<p>Returns an array that summarizes each privacy budget template in a specified collaboration.</p>",
@@ -116,6 +119,7 @@
         "CollaborationSummary$creatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "ConsolidatedPolicyCustomAllowedAnalysisProvidersList$member": null,
         "DeleteMemberInput$accountId": "<p>The account ID of the member to remove.</p>",
+        "MemberChangeSpecification$accountId": "<p>The Amazon Web Services account ID of the member to add to the collaboration.</p>",
         "MemberSpecification$accountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "MemberSummary$accountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
         "Membership$collaborationCreatorAccountId": "<p>The identifier used to reference members of the collaboration. Currently only supports Amazon Web Services account ID.</p>",
@@ -571,6 +575,19 @@
         "AthenaTableReference$workGroup": "<p> The workgroup of the Athena table reference.</p>"
       }
     },
+    "AutoApprovedChangeType": {
+      "base": null,
+      "refs": {
+        "AutoApprovedChangeTypeList$member": null
+      }
+    },
+    "AutoApprovedChangeTypeList": {
+      "base": null,
+      "refs": {
+        "Collaboration$autoApprovedChangeTypes": "<p>The types of change requests that are automatically approved for this collaboration.</p>",
+        "CreateCollaborationInput$autoApprovedChangeRequestTypes": "<p>The types of change requests that are automatically approved for this collaboration.</p>"
+      }
+    },
     "BatchGetCollaborationAnalysisTemplateError": {
       "base": "<p>Details of errors thrown by the call to retrieve multiple analysis templates within a collaboration by their identifiers.</p>",
       "refs": {
@@ -646,6 +663,8 @@
     "Boolean": {
       "base": null,
       "refs": {
+        "CollaborationChangeRequest$isAutoApproved": "<p>Whether the change request was automatically approved based on the collaboration's auto-approval settings.</p>",
+        "CollaborationChangeRequestSummary$isAutoApproved": "<p>Whether the change request was automatically approved.</p>",
         "ConfiguredAudienceModelAssociation$manageResourcePolicies": "<p>When <code>TRUE</code>, indicates that the resource policy for the configured audience model resource being associated is configured for Clean Rooms to manage permissions related to the given collaboration. When <code>FALSE</code>, indicates that the configured audience model resource owner will manage permissions related to the given collaboration.</p>",
         "CreateConfiguredAudienceModelAssociationInput$manageResourcePolicies": "<p>When <code>TRUE</code>, indicates that the resource policy for the configured audience model resource being associated is configured for Clean Rooms to manage permissions related to the given collaboration. When <code>FALSE</code>, indicates that the configured audience model resource owner will manage permissions related to the given collaboration.</p> <p>Setting this to <code>TRUE</code> requires you to have permissions to create, update, and delete the resource policy for the <code>cleanrooms-ml</code> resource when you call the <a>DeleteConfiguredAudienceModelAssociation</a> resource. In addition, if you are the collaboration creator and specify <code>TRUE</code>, you must have the same permissions when you call the <a>DeleteMember</a> and <a>DeleteCollaboration</a> APIs.</p>",
         "DataEncryptionMetadata$allowCleartext": "<p>Indicates whether encrypted tables can contain cleartext data (<code>TRUE</code>) or are to cryptographically process every column (<code>FALSE</code>).</p>",
@@ -664,6 +683,65 @@
         "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model training costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
         "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>"
+      }
+    },
+    "Change": {
+      "base": "<p>Represents a single change within a collaboration change request, containing the change identifier and specification.</p>",
+      "refs": {
+        "ChangeList$member": null
+      }
+    },
+    "ChangeInput": {
+      "base": "<p>Specifies a change to apply to a collaboration.</p>",
+      "refs": {
+        "ChangeInputList$member": null
+      }
+    },
+    "ChangeInputList": {
+      "base": null,
+      "refs": {
+        "CreateCollaborationChangeRequestInput$changes": "<p>The list of changes to apply to the collaboration. Each change specifies the type of modification and the details of what should be changed.</p>"
+      }
+    },
+    "ChangeList": {
+      "base": null,
+      "refs": {
+        "CollaborationChangeRequest$changes": "<p>The list of changes specified in this change request.</p>",
+        "CollaborationChangeRequestSummary$changes": "<p>Summary of the changes in this change request.</p>"
+      }
+    },
+    "ChangeRequestStatus": {
+      "base": null,
+      "refs": {
+        "CollaborationChangeRequest$status": "<p>The current status of the change request. Valid values are <code>PENDING</code>, <code>APPROVED</code>, <code>DENIED</code>, <code>COMMITTED</code>, and <code>CANCELLED</code>.</p>",
+        "CollaborationChangeRequestSummary$status": "<p>The current status of the change request.</p>",
+        "ListCollaborationChangeRequestsInput$status": "<p>A filter to only return change requests with the specified status.</p>"
+      }
+    },
+    "ChangeSpecification": {
+      "base": "<p>A union that contains the specification details for different types of changes.</p>",
+      "refs": {
+        "Change$specification": "<p>The specification details for this change.</p>",
+        "ChangeInput$specification": "<p>The specification details for the change. The structure depends on the specification type.</p>"
+      }
+    },
+    "ChangeSpecificationType": {
+      "base": null,
+      "refs": {
+        "Change$specificationType": "<p>The type of specification for this change.</p>",
+        "ChangeInput$specificationType": "<p>The type of specification for the change. Currently supports <code>MEMBER</code> for member-related changes.</p>"
+      }
+    },
+    "ChangeType": {
+      "base": null,
+      "refs": {
+        "ChangeTypeList$member": null
+      }
+    },
+    "ChangeTypeList": {
+      "base": null,
+      "refs": {
+        "Change$types": "<p>The list of change types that were applied.</p>"
       }
     },
     "CleanroomsArn": {
@@ -738,6 +816,31 @@
         "SchemaSummary$collaborationArn": "<p>The unique ARN for the collaboration that the schema belongs to.</p>"
       }
     },
+    "CollaborationChangeRequest": {
+      "base": "<p>Represents a request to modify a collaboration. Change requests enable structured modifications to collaborations after they have been created.</p>",
+      "refs": {
+        "CreateCollaborationChangeRequestOutput$collaborationChangeRequest": null,
+        "GetCollaborationChangeRequestOutput$collaborationChangeRequest": "<p>The collaboration change request that was requested.</p>"
+      }
+    },
+    "CollaborationChangeRequestIdentifier": {
+      "base": null,
+      "refs": {
+        "GetCollaborationChangeRequestInput$changeRequestIdentifier": "<p>A unique identifier for the change request to retrieve.</p>"
+      }
+    },
+    "CollaborationChangeRequestSummary": {
+      "base": "<p>Summary information about a collaboration change request.</p>",
+      "refs": {
+        "CollaborationChangeRequestSummaryList$member": null
+      }
+    },
+    "CollaborationChangeRequestSummaryList": {
+      "base": null,
+      "refs": {
+        "ListCollaborationChangeRequestsOutput$collaborationChangeRequestSummaries": "<p>The list of collaboration change request summaries.</p>"
+      }
+    },
     "CollaborationConfiguredAudienceModelAssociation": {
       "base": "<p>The configured audience model association within a collaboration.</p>",
       "refs": {
@@ -789,10 +892,12 @@
         "BatchGetCollaborationAnalysisTemplateInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the analysis templates belong to. Currently accepts collaboration ID.</p>",
         "BatchGetSchemaAnalysisRuleInput$collaborationIdentifier": "<p>The unique identifier of the collaboration that contains the schema analysis rule.</p>",
         "BatchGetSchemaInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the schemas belong to. Currently accepts collaboration ID.</p>",
+        "CreateCollaborationChangeRequestInput$collaborationIdentifier": "<p>The identifier of the collaboration that the change request is made against.</p>",
         "CreateMembershipInput$collaborationIdentifier": "<p>The unique ID for the associated collaboration.</p>",
         "DeleteCollaborationInput$collaborationIdentifier": "<p>The identifier for the collaboration.</p>",
         "DeleteMemberInput$collaborationIdentifier": "<p>The unique identifier for the associated collaboration.</p>",
         "GetCollaborationAnalysisTemplateInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the analysis templates belong to. Currently accepts collaboration ID.</p>",
+        "GetCollaborationChangeRequestInput$collaborationIdentifier": "<p>The identifier of the collaboration that the change request is made against.</p>",
         "GetCollaborationConfiguredAudienceModelAssociationInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the configured audience model association belongs to. Accepts a collaboration ID.</p>",
         "GetCollaborationIdNamespaceAssociationInput$collaborationIdentifier": "<p>The unique identifier of the collaboration that contains the ID namespace association that you want to retrieve.</p>",
         "GetCollaborationInput$collaborationIdentifier": "<p>The identifier for the collaboration.</p>",
@@ -800,6 +905,7 @@
         "GetSchemaAnalysisRuleInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the schema belongs to. Currently accepts a collaboration ID.</p>",
         "GetSchemaInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the schema belongs to. Currently accepts a collaboration ID.</p>",
         "ListCollaborationAnalysisTemplatesInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the analysis templates belong to. Currently accepts collaboration ID.</p>",
+        "ListCollaborationChangeRequestsInput$collaborationIdentifier": "<p>The identifier of the collaboration that the change request is made against.</p>",
         "ListCollaborationConfiguredAudienceModelAssociationsInput$collaborationIdentifier": "<p>A unique identifier for the collaboration that the configured audience model association belongs to. Accepts a collaboration ID.</p>",
         "ListCollaborationIdNamespaceAssociationsInput$collaborationIdentifier": "<p>The unique identifier of the collaboration that contains the ID namespace associations that you want to retrieve.</p>",
         "ListCollaborationPrivacyBudgetTemplatesInput$collaborationIdentifier": "<p>A unique identifier for one of your collaborations.</p>",
@@ -1234,6 +1340,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateCollaborationChangeRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateCollaborationChangeRequestOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateCollaborationInput": {
       "base": null,
       "refs": {}
@@ -1579,6 +1693,7 @@
         "ConfiguredTableSummary$name": "<p>The name of the configured table.</p>",
         "CreateCollaborationInput$creatorDisplayName": "<p>The display name of the collaboration creator.</p>",
         "CreateConfiguredTableInput$name": "<p>The name of the configured table.</p>",
+        "MemberChangeSpecification$displayName": "<p>Specifies the display name that will be shown for this member in the collaboration. While this field is required when inviting new members, it becomes optional when modifying abilities of existing collaboration members. </p>",
         "MemberSpecification$displayName": "<p>The member's display name.</p>",
         "MemberSummary$displayName": "<p>The member's display name.</p>",
         "Membership$collaborationCreatorDisplayName": "<p>The display name of the collaboration creator.</p>",
@@ -1661,6 +1776,14 @@
       "refs": {}
     },
     "GetCollaborationAnalysisTemplateOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCollaborationChangeRequestInput": {
+      "base": null,
+      "refs": {}
+    },
+    "GetCollaborationChangeRequestOutput": {
       "base": null,
       "refs": {}
     },
@@ -2055,6 +2178,14 @@
       "base": null,
       "refs": {}
     },
+    "ListCollaborationChangeRequestsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListCollaborationChangeRequestsOutput": {
+      "base": null,
+      "refs": {}
+    },
     "ListCollaborationConfiguredAudienceModelAssociationsInput": {
       "base": null,
       "refs": {}
@@ -2227,6 +2358,7 @@
       "refs": {
         "ListAnalysisTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListCollaborationAnalysisTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
+        "ListCollaborationChangeRequestsInput$maxResults": "<p>The maximum number of results that are returned for an API request call.</p>",
         "ListCollaborationConfiguredAudienceModelAssociationsInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
         "ListCollaborationIdNamespaceAssociationsInput$maxResults": "<p>The maximum size of the results that is returned per call. Service chooses a default if it has not been set. Service may return a nextToken even if the maximum results has not been met.&gt;</p>",
         "ListCollaborationPrivacyBudgetTemplatesInput$maxResults": "<p>The maximum number of results that are returned for an API request call. The service chooses a default number if you don't set one. The service might return a `nextToken` even if the `maxResults` value has not been met.</p>",
@@ -2250,6 +2382,7 @@
       "base": null,
       "refs": {
         "CreateCollaborationInput$creatorMemberAbilities": "<p>The abilities granted to the collaboration creator.</p>",
+        "MemberChangeSpecification$memberAbilities": "<p>The abilities granted to the collaboration member. These determine what actions the member can perform within the collaboration.</p> <note> <p>The following values are currently not supported: <code>CAN_QUERY</code>, <code>CAN_RECEIVE_RESULTS,</code> and <code>CAN_RUN_JOB</code>. </p> <p>Set the value of <code>memberAbilities</code> to <code>[]</code> to allow a member to contribute data.</p> </note>",
         "MemberSpecification$memberAbilities": "<p>The abilities granted to the collaboration member.</p>",
         "MemberSummary$abilities": "<p>The abilities granted to the collaboration member.</p>",
         "Membership$memberAbilities": "<p>The abilities granted to the collaboration member.</p>",
@@ -2260,6 +2393,12 @@
       "base": null,
       "refs": {
         "MemberAbilities$member": null
+      }
+    },
+    "MemberChangeSpecification": {
+      "base": "<p>Specifies changes to collaboration membership, including adding new members with their abilities and display names.</p>",
+      "refs": {
+        "ChangeSpecification$member": "<p>The member change specification when the change type is <code>MEMBER</code>.</p>"
       }
     },
     "MemberList": {
@@ -2511,6 +2650,8 @@
         "ListAnalysisTemplatesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCollaborationAnalysisTemplatesInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCollaborationAnalysisTemplatesOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationChangeRequestsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
+        "ListCollaborationChangeRequestsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCollaborationConfiguredAudienceModelAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCollaborationConfiguredAudienceModelAssociationsOutput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
         "ListCollaborationIdNamespaceAssociationsInput$nextToken": "<p>The pagination token that's used to fetch the next set of results.</p>",
@@ -3554,6 +3695,10 @@
         "CollaborationAnalysisTemplate$updateTime": "<p>The time that the analysis template in the collaboration was last updated.</p>",
         "CollaborationAnalysisTemplateSummary$createTime": "<p>The time that the summary of the analysis template in a collaboration was created.</p>",
         "CollaborationAnalysisTemplateSummary$updateTime": "<p>The time that the summary of the analysis template in the collaboration was last updated.</p>",
+        "CollaborationChangeRequest$createTime": "<p>The time when the change request was created.</p>",
+        "CollaborationChangeRequest$updateTime": "<p>The time when the change request was last updated.</p>",
+        "CollaborationChangeRequestSummary$createTime": "<p>The time when the change request was created.</p>",
+        "CollaborationChangeRequestSummary$updateTime": "<p>The time when the change request was last updated.</p>",
         "CollaborationConfiguredAudienceModelAssociation$createTime": "<p>The time at which the configured audience model association was created.</p>",
         "CollaborationConfiguredAudienceModelAssociation$updateTime": "<p>The most recent time at which the configured audience model association was updated.</p>",
         "CollaborationConfiguredAudienceModelAssociationSummary$createTime": "<p>The time at which the configured audience model association was created.</p>",
@@ -3627,6 +3772,10 @@
         "Collaboration$membershipId": "<p>The unique ID for your membership within the collaboration.</p>",
         "CollaborationAnalysisTemplate$collaborationId": "<p>A unique identifier for the collaboration that the analysis templates belong to. Currently accepts collaboration ID.</p>",
         "CollaborationAnalysisTemplateSummary$collaborationId": "<p>A unique identifier for the collaboration that the analysis templates belong to. Currently accepts collaboration ID.</p>",
+        "CollaborationChangeRequest$id": "<p>The unique identifier for the change request.</p>",
+        "CollaborationChangeRequest$collaborationId": "<p>The unique identifier for the collaboration being modified.</p>",
+        "CollaborationChangeRequestSummary$id": "<p>The unique identifier for the change request.</p>",
+        "CollaborationChangeRequestSummary$collaborationId": "<p>The unique identifier for the collaboration.</p>",
         "CollaborationConfiguredAudienceModelAssociation$collaborationId": "<p>A unique identifier for the collaboration that the configured audience model associations belong to. Accepts collaboration ID.</p>",
         "CollaborationConfiguredAudienceModelAssociationSummary$collaborationId": "<p>A unique identifier for the collaboration that the configured audience model associations belong to. Accepts collaboration ID.</p>",
         "CollaborationIdNamespaceAssociation$collaborationId": "<p>The unique identifier of the collaboration that contains the collaboration ID namespace association.</p>",

@@ -4469,7 +4469,8 @@
         "OriginProtocolPolicy":{"shape":"OriginProtocolPolicy"},
         "OriginSslProtocols":{"shape":"OriginSslProtocols"},
         "OriginReadTimeout":{"shape":"integer"},
-        "OriginKeepaliveTimeout":{"shape":"integer"}
+        "OriginKeepaliveTimeout":{"shape":"integer"},
+        "IpAddressType":{"shape":"IpAddressType"}
       }
     },
     "CustomizationActionType":{
@@ -7108,6 +7109,14 @@
         "shape":"InvalidationSummary",
         "locationName":"InvalidationSummary"
       }
+    },
+    "IpAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dualstack"
+      ]
     },
     "ItemSelection":{
       "type":"string",

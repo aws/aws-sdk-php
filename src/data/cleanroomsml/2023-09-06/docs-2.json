@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>Welcome to the <i>Amazon Web Services Clean Rooms ML API Reference</i>.</p> <p>Amazon Web Services Clean Rooms ML provides a privacy-enhancing method for two parties to identify similar users in their data without the need to share their data with each other. The first party brings the training data to Clean Rooms so that they can create and configure an audience model (lookalike model) and associate it with a collaboration. The second party then brings their seed data to Clean Rooms and generates an audience (lookalike segment) that resembles the training data.</p> <p>To learn more about Amazon Web Services Clean Rooms ML concepts, procedures, and best practices, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/userguide/machine-learning.html\">Clean Rooms User Guide</a>.</p> <p>To learn more about SQL commands, functions, and conditions supported in Clean Rooms, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/sql-reference/sql-reference.html\">Clean Rooms SQL Reference</a>.</p>",
+  "service": "<p>Welcome to the <i>Amazon Web Services Clean Rooms ML API Reference</i>.</p> <p>Amazon Web Services Clean Rooms ML provides a privacy-enhancing method for two parties to identify similar users in their data without the need to share their data with each other. The first party brings the training data to Clean Rooms so that they can create and configure an audience model (lookalike model) and associate it with a collaboration. The second party then brings their seed data to Clean Rooms and generates an audience (lookalike segment) that resembles the training data.</p> <p>To learn more about Amazon Web Services Clean Rooms ML concepts, procedures, and best practices, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/userguide/machine-learning.html\">Clean Rooms User Guide</a>.</p> <p>To learn more about SQL commands, functions, and conditions supported in Clean Rooms, see the <a href=\"https://docs.aws.amazon.com/clean-rooms/latest/sql-reference/sql-reference.html\">Clean Rooms SQL Reference</a>.</p> <p/>",
   "operations": {
     "CancelTrainedModel": "<p>Submits a request to cancel the trained model job.</p>",
     "CancelTrainedModelInferenceJob": "<p>Submits a request to cancel a trained model inference job.</p>",
@@ -65,8 +65,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -258,13 +257,11 @@
     },
     "CancelTrainedModelInferenceJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelTrainedModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CollaborationConfiguredModelAlgorithmAssociationList": {
       "base": null,
@@ -479,8 +476,7 @@
     },
     "ConflictException": {
       "base": "<p>You can't complete this action because another resource depends on this resource.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContainerArgument": {
       "base": null,
@@ -515,48 +511,39 @@
     },
     "CreateAudienceModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAudienceModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredAudienceModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredAudienceModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredModelAlgorithmAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredModelAlgorithmAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredModelAlgorithmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConfiguredModelAlgorithmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMLInputChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateMLInputChannelRequestConfiguredModelAlgorithmAssociationsList": {
       "base": null,
@@ -572,23 +559,19 @@
     },
     "CreateMLInputChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrainedModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrainedModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrainingDatasetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTrainingDatasetRequestTrainingDataList": {
       "base": null,
@@ -598,7 +581,24 @@
     },
     "CreateTrainingDatasetResponse": {
       "base": null,
+      "refs": {}
+    },
+    "CustomDataIdentifier": {
+      "base": null,
       "refs": {
+        "CustomDataIdentifierList$member": null
+      }
+    },
+    "CustomDataIdentifierList": {
+      "base": null,
+      "refs": {
+        "CustomEntityConfig$customDataIdentifiers": "<p>Defines data identifiers for the custom entity configuration. Provide this only if CUSTOM redaction is configured. </p>"
+      }
+    },
+    "CustomEntityConfig": {
+      "base": "<p>The configuration for defining custom patterns to be redacted from logs and error messages. This is for the CUSTOM config under entitiesToRedact. Both CustomEntityConfig and entitiesToRedact need to be present or not present.</p>",
+      "refs": {
+        "LogRedactionConfiguration$customEntityConfig": "<p>Specifies the configuration for custom entities in the context of log redaction.</p>"
       }
     },
     "DataSource": {
@@ -640,58 +640,60 @@
     },
     "DeleteAudienceGenerationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAudienceModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredAudienceModelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredAudienceModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredModelAlgorithmAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConfiguredModelAlgorithmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMLConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteMLInputChannelDataRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTrainedModelOutputRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTrainingDatasetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Destination": {
       "base": "<p>The Amazon S3 location where the exported model artifacts are stored.</p>",
       "refs": {
         "MLOutputConfiguration$destination": "<p>The Amazon S3 location where exported model artifacts are stored.</p>"
+      }
+    },
+    "EntityType": {
+      "base": null,
+      "refs": {
+        "EntityTypeList$member": null
+      }
+    },
+    "EntityTypeList": {
+      "base": null,
+      "refs": {
+        "LogRedactionConfiguration$entitiesToRedact": "<p>Specifies the entities to be redacted from logs. Entities to redact are \"ALL_PERSONALLY_IDENTIFIABLE_INFORMATION\", \"NUMBERS\",\"CUSTOM\". If CUSTOM is supplied or configured, custom patterns (customDataIdentifiers) should be provided, and the patterns will be redacted in logs or error messages.</p>"
       }
     },
     "Environment": {
@@ -715,43 +717,35 @@
     },
     "GetAudienceGenerationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAudienceGenerationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAudienceModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAudienceModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationConfiguredModelAlgorithmAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationConfiguredModelAlgorithmAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationMLInputChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationMLInputChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationMLInputChannelResponseConfiguredModelAlgorithmAssociationsList": {
       "base": null,
@@ -773,73 +767,59 @@
     },
     "GetCollaborationTrainedModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetCollaborationTrainedModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredAudienceModelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredAudienceModelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredAudienceModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredAudienceModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredModelAlgorithmAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredModelAlgorithmAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredModelAlgorithmRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetConfiguredModelAlgorithmResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMLConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMLConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMLInputChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMLInputChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetMLInputChannelResponseConfiguredModelAlgorithmAssociationsList": {
       "base": null,
@@ -873,33 +853,27 @@
     },
     "GetTrainedModelInferenceJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTrainedModelInferenceJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTrainedModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTrainedModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTrainingDatasetRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTrainingDatasetResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GlueDataSource": {
       "base": "<p>Defines the Glue data source that contains the training data.</p>",
@@ -1092,8 +1066,7 @@
     },
     "InternalServiceException": {
       "base": "<p>An internal service error occurred. Retry your request. If the problem persists, contact AWS Support.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyArn": {
       "base": null,
@@ -1112,172 +1085,150 @@
     },
     "ListAudienceExportJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAudienceExportJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAudienceGenerationJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAudienceGenerationJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAudienceModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAudienceModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationConfiguredModelAlgorithmAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationConfiguredModelAlgorithmAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationMLInputChannelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationMLInputChannelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationTrainedModelExportJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationTrainedModelExportJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationTrainedModelInferenceJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationTrainedModelInferenceJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationTrainedModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollaborationTrainedModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredAudienceModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredAudienceModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredModelAlgorithmAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredModelAlgorithmAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredModelAlgorithmsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConfiguredModelAlgorithmsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMLInputChannelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListMLInputChannelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainedModelInferenceJobsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainedModelInferenceJobsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainedModelVersionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainedModelVersionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainedModelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainedModelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainingDatasetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTrainingDatasetsResponse": {
       "base": null,
+      "refs": {}
+    },
+    "LogRedactionConfiguration": {
+      "base": "<p>The configuration for log redaction.</p>",
       "refs": {
+        "LogsConfigurationPolicy$logRedactionConfiguration": "<p>Specifies the log redaction configuration for this policy.</p>"
+      }
+    },
+    "LogType": {
+      "base": null,
+      "refs": {
+        "LogsConfigurationPolicy$logType": "<p>Specifies the type of log this policy applies to. The currently supported policies are ALL or ERROR_SUMMARY.</p>"
       }
     },
     "LogsConfigurationPolicy": {
@@ -1609,18 +1560,15 @@
     },
     "PutConfiguredAudienceModelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutConfiguredAudienceModelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutMLConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RelevanceMetric": {
       "base": "<p>The relevance score of a generated audience.</p>",
@@ -1706,8 +1654,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The resource you are requesting does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourcePolicy": {
       "base": null,
@@ -1746,8 +1693,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>You have exceeded your service quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceQuotaExceededExceptionQuotaValueDouble": {
       "base": null,
@@ -1763,33 +1709,27 @@
     },
     "StartAudienceExportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAudienceGenerationJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartAudienceGenerationJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTrainedModelExportJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTrainedModelInferenceJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartTrainedModelInferenceJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StatusDetails": {
       "base": "<p>Details about the status of a resource.</p>",
@@ -1961,13 +1901,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1985,8 +1923,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TrainedModelArn": {
       "base": null,
@@ -2311,28 +2248,23 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredAudienceModelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConfiguredAudienceModelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The request parameters for this request are incorrect.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "WorkerComputeConfiguration": {
       "base": "<p>Configuration information about the compute workers that perform the transform job.</p>",

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CleanRooms` - Added support for adding new data provider members to an existing collaboration.
+* `Aws\MQ` - Add CONFIG_MANAGED as a supported AuthenticationStrategy for Amazon MQ for RabbitMQ brokers. Make username and password optional on broker creation for CONFIG_MANAGED brokers.
+* `Aws\CloudFront` - Adding an optional field IpAddressType in CustomOriginConfig
+* `Aws\CleanRoomsML` - AWS Clean Rooms ML adds log sanitization for privacy-enhanced error summaries, supports new instance types for custom models providing better performance and lower costs, and deprecates P3-series instances.
+* `Aws\RDS` - This release adds support for MasterUserAuthenticationType parameter on CreateDBInstance, ModifyDBInstance, CreateDBCluster, and ModifyDBCluster operations.
+* `Aws\Route53Domains` - Added new ExtraParams AU_ELIGIBILITY_TYPE, AU_POLICY_REASON, and AU_REGISTRANT_NAME
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (New Zealand) Region (ap-southeast-6) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+
 ## 3.356.9 - 2025-09-02
 
 * `Aws\Sms` - Removes the Service Migration Service, which has been deprecated.

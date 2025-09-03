@@ -1798,6 +1798,25 @@
         "trainingDatasetArn":{"shape":"TrainingDatasetArn"}
       }
     },
+    "CustomDataIdentifier":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\_\\#\\=\\@/\\;\\,\\-\\ \\^\\$\\?\\[\\]\\{\\}\\|\\\\\\*\\+\\.\\(\\)]+"
+    },
+    "CustomDataIdentifierList":{
+      "type":"list",
+      "member":{"shape":"CustomDataIdentifier"},
+      "max":10,
+      "min":1
+    },
+    "CustomEntityConfig":{
+      "type":"structure",
+      "required":["customDataIdentifiers"],
+      "members":{
+        "customDataIdentifiers":{"shape":"CustomDataIdentifierList"}
+      }
+    },
     "DataSource":{
       "type":"structure",
       "required":["glueDataSource"],
@@ -1987,6 +2006,19 @@
         "s3Destination":{"shape":"S3ConfigMap"}
       }
     },
+    "EntityType":{
+      "type":"string",
+      "enum":[
+        "ALL_PERSONALLY_IDENTIFIABLE_INFORMATION",
+        "NUMBERS",
+        "CUSTOM"
+      ]
+    },
+    "EntityTypeList":{
+      "type":"list",
+      "member":{"shape":"EntityType"},
+      "min":1
+    },
     "Environment":{
       "type":"map",
       "key":{"shape":"EnvironmentKeyString"},
@@ -2147,21 +2179,18 @@
     "GetCollaborationMLInputChannelResponse":{
       "type":"structure",
       "required":[
-        "createTime",
-        "updateTime",
-        "creatorAccountId",
         "membershipIdentifier",
         "collaborationIdentifier",
         "mlInputChannelArn",
         "name",
         "configuredModelAlgorithmAssociations",
         "status",
-        "retentionInDays"
+        "retentionInDays",
+        "createTime",
+        "updateTime",
+        "creatorAccountId"
       ],
       "members":{
-        "createTime":{"shape":"SyntheticTimestamp_date_time"},
-        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
-        "creatorAccountId":{"shape":"AccountId"},
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
         "mlInputChannelArn":{"shape":"MLInputChannelArn"},
@@ -2171,7 +2200,10 @@
         "statusDetails":{"shape":"StatusDetails"},
         "retentionInDays":{"shape":"GetCollaborationMLInputChannelResponseRetentionInDaysInteger"},
         "numberOfRecords":{"shape":"GetCollaborationMLInputChannelResponseNumberOfRecordsLong"},
-        "description":{"shape":"ResourceDescription"}
+        "description":{"shape":"ResourceDescription"},
+        "createTime":{"shape":"SyntheticTimestamp_date_time"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "creatorAccountId":{"shape":"AccountId"}
       }
     },
     "GetCollaborationMLInputChannelResponseConfiguredModelAlgorithmAssociationsList":{
@@ -2440,24 +2472,20 @@
     "GetMLInputChannelResponse":{
       "type":"structure",
       "required":[
-        "createTime",
-        "updateTime",
         "membershipIdentifier",
         "collaborationIdentifier",
-        "inputChannel",
         "mlInputChannelArn",
         "name",
         "configuredModelAlgorithmAssociations",
         "status",
-        "retentionInDays"
+        "retentionInDays",
+        "createTime",
+        "updateTime",
+        "inputChannel"
       ],
       "members":{
-        "createTime":{"shape":"SyntheticTimestamp_date_time"},
-        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
         "membershipIdentifier":{"shape":"UUID"},
         "collaborationIdentifier":{"shape":"UUID"},
-        "inputChannel":{"shape":"InputChannel"},
-        "protectedQueryIdentifier":{"shape":"UUID"},
         "mlInputChannelArn":{"shape":"MLInputChannelArn"},
         "name":{"shape":"NameString"},
         "configuredModelAlgorithmAssociations":{"shape":"GetMLInputChannelResponseConfiguredModelAlgorithmAssociationsList"},
@@ -2465,9 +2493,13 @@
         "statusDetails":{"shape":"StatusDetails"},
         "retentionInDays":{"shape":"GetMLInputChannelResponseRetentionInDaysInteger"},
         "numberOfRecords":{"shape":"GetMLInputChannelResponseNumberOfRecordsLong"},
+        "description":{"shape":"ResourceDescription"},
+        "createTime":{"shape":"SyntheticTimestamp_date_time"},
+        "updateTime":{"shape":"SyntheticTimestamp_date_time"},
+        "inputChannel":{"shape":"InputChannel"},
+        "protectedQueryIdentifier":{"shape":"UUID"},
         "numberOfFiles":{"shape":"GetMLInputChannelResponseNumberOfFilesDouble"},
         "sizeInGb":{"shape":"GetMLInputChannelResponseSizeInGbDouble"},
-        "description":{"shape":"ResourceDescription"},
         "kmsKeyArn":{"shape":"KmsKeyArn"},
         "tags":{"shape":"TagMap"}
       }
@@ -2810,7 +2842,6 @@
         "ml.r6i.large",
         "ml.g5.2xlarge",
         "ml.m5.large",
-        "ml.p3.16xlarge",
         "ml.m7i.48xlarge",
         "ml.m6i.16xlarge",
         "ml.p2.16xlarge",
@@ -2858,7 +2889,6 @@
         "ml.m6i.2xlarge",
         "ml.g5.16xlarge",
         "ml.m7i.4xlarge",
-        "ml.p3.2xlarge",
         "ml.r6i.32xlarge",
         "ml.m6i.4xlarge",
         "ml.m5.xlarge",
@@ -2884,8 +2914,10 @@
         "ml.p2.8xlarge",
         "ml.r6i.4xlarge",
         "ml.m6i.32xlarge",
-        "ml.p3.8xlarge",
-        "ml.m4.4xlarge"
+        "ml.m4.4xlarge",
+        "ml.p3.16xlarge",
+        "ml.p3.2xlarge",
+        "ml.p3.8xlarge"
       ]
     },
     "InferenceOutputConfiguration":{
@@ -2974,10 +3006,6 @@
         "ml.p2.xlarge",
         "ml.p2.8xlarge",
         "ml.p2.16xlarge",
-        "ml.p3.2xlarge",
-        "ml.p3.8xlarge",
-        "ml.p3.16xlarge",
-        "ml.p3dn.24xlarge",
         "ml.p4d.24xlarge",
         "ml.p4de.24xlarge",
         "ml.p5.48xlarge",
@@ -3038,7 +3066,55 @@
         "ml.r5.8xlarge",
         "ml.r5.12xlarge",
         "ml.r5.16xlarge",
-        "ml.r5.24xlarge"
+        "ml.r5.24xlarge",
+        "ml.c7i.large",
+        "ml.c7i.xlarge",
+        "ml.c7i.2xlarge",
+        "ml.c7i.4xlarge",
+        "ml.c7i.8xlarge",
+        "ml.c7i.12xlarge",
+        "ml.c7i.16xlarge",
+        "ml.c7i.24xlarge",
+        "ml.c7i.48xlarge",
+        "ml.m7i.large",
+        "ml.m7i.xlarge",
+        "ml.m7i.2xlarge",
+        "ml.m7i.4xlarge",
+        "ml.m7i.8xlarge",
+        "ml.m7i.12xlarge",
+        "ml.m7i.16xlarge",
+        "ml.m7i.24xlarge",
+        "ml.m7i.48xlarge",
+        "ml.r7i.large",
+        "ml.r7i.xlarge",
+        "ml.r7i.2xlarge",
+        "ml.r7i.4xlarge",
+        "ml.r7i.8xlarge",
+        "ml.r7i.12xlarge",
+        "ml.r7i.16xlarge",
+        "ml.r7i.24xlarge",
+        "ml.r7i.48xlarge",
+        "ml.g6.xlarge",
+        "ml.g6.2xlarge",
+        "ml.g6.4xlarge",
+        "ml.g6.8xlarge",
+        "ml.g6.12xlarge",
+        "ml.g6.16xlarge",
+        "ml.g6.24xlarge",
+        "ml.g6.48xlarge",
+        "ml.g6e.xlarge",
+        "ml.g6e.2xlarge",
+        "ml.g6e.4xlarge",
+        "ml.g6e.8xlarge",
+        "ml.g6e.12xlarge",
+        "ml.g6e.16xlarge",
+        "ml.g6e.24xlarge",
+        "ml.g6e.48xlarge",
+        "ml.p5en.48xlarge",
+        "ml.p3.2xlarge",
+        "ml.p3.8xlarge",
+        "ml.p3.16xlarge",
+        "ml.p3dn.24xlarge"
       ]
     },
     "InternalServiceException":{
@@ -3564,12 +3640,29 @@
         "trainingDatasets":{"shape":"TrainingDatasetList"}
       }
     },
+    "LogRedactionConfiguration":{
+      "type":"structure",
+      "required":["entitiesToRedact"],
+      "members":{
+        "entitiesToRedact":{"shape":"EntityTypeList"},
+        "customEntityConfig":{"shape":"CustomEntityConfig"}
+      }
+    },
+    "LogType":{
+      "type":"string",
+      "enum":[
+        "ALL",
+        "ERROR_SUMMARY"
+      ]
+    },
     "LogsConfigurationPolicy":{
       "type":"structure",
       "required":["allowedAccountIds"],
       "members":{
         "allowedAccountIds":{"shape":"AccountIdList"},
-        "filterPattern":{"shape":"LogsConfigurationPolicyFilterPatternString"}
+        "filterPattern":{"shape":"LogsConfigurationPolicyFilterPatternString"},
+        "logType":{"shape":"LogType"},
+        "logRedactionConfiguration":{"shape":"LogRedactionConfiguration"}
       }
     },
     "LogsConfigurationPolicyFilterPatternString":{
@@ -4153,8 +4246,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -4484,8 +4576,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateConfiguredAudienceModelRequest":{
       "type":"structure",
