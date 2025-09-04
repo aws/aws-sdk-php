@@ -112,8 +112,6 @@ class EndpointV2MiddlewareTest extends TestCase
 
         $reflection = new ReflectionClass(EndpointV2Middleware::class);
         $method = $reflection->getMethod('resolveAuthScheme');
-        $method->setAccessible(true);
-
         $this->expectException(UnresolvedAuthSchemeException::class);
         $this->expectExceptionMessage(
             "This operation requests `invalidAuthScheme` auth schemes, but the client currently supports"
@@ -151,8 +149,6 @@ class EndpointV2MiddlewareTest extends TestCase
 
         $reflection = new ReflectionClass(EndpointV2Middleware::class);
         $method = $reflection->getMethod('resolveAuthScheme');
-        $method->setAccessible(true);
-
         $result = $method->invoke($middleware, $authSchemes);
         $this->assertSame($expected, $result['version']);
     }
@@ -197,8 +193,6 @@ class EndpointV2MiddlewareTest extends TestCase
 
         $reflection = new ReflectionClass(EndpointV2Middleware::class);
         $method = $reflection->getMethod('resolveAuthScheme');
-        $method->setAccessible(true);
-
        $method->invoke($middleware, [['name' => 'sigv4a']]);
     }
 

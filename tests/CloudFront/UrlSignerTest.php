@@ -12,7 +12,6 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class UrlSignerTest extends TestCase
 {
-
     protected $key;
     protected $kp;
 
@@ -142,10 +141,15 @@ class UrlSignerTest extends TestCase
     {
         $s = new UrlSigner('a', $this->key);
         $m = new \ReflectionMethod(get_class($s), 'createResource');
-        $m->setAccessible(true);
-
         $scheme = parse_url($url)['scheme'];
-        $this->assertSame($resource, $m->invoke($s, $scheme, $url));
+        $result = $m->invoke($s, $scheme, $url);
+
+        // On Windows, root-level RTMP paths may have leading slashes (forward or back)
+        if (PHP_OS_FAMILY === 'Windows' && $scheme === 'rtmp') {
+            $result = ltrim($result, '\\/');  // Remove both backslashes and forward slashes
+        }
+
+        $this->assertSame($resource, $result);
     }
 
     public function urlAndResourceProvider()

@@ -38,7 +38,6 @@ class MultiRegionClientTest extends TestCase
         ]);
         $property = (new \ReflectionClass(MultiRegionClient::class))
             ->getProperty('clientPool');
-        $property->setAccessible(true);
         $property->setValue($this->instance, [
             '' => $this->mockRegionalClient,
         ]);

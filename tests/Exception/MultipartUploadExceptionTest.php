@@ -58,7 +58,8 @@ An exception occurred while uploading parts to a multipart upload. The following
 - Part 8: Needs more love.
 
 MSG;
-
+        //Normalize line endings to \n for Windows
+        $expected = str_replace("\r\n", "\n", $expected);
         $this->assertSame($expected, $exception->getMessage());
     }
 }
