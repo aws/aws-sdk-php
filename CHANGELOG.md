@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.11 - 2025-09-04
 
 * `Aws\OpenSearchServerless` - Add support for Federal Information Processing Standards (FIPS) and Federal Risk and Authorization Management Program (FedRAMP) compliance
 * `Aws\CloudFormation` - ListHookResults API now supports retrieving invocation results for all CloudFormation Hooks (previously limited to create change set and Cloud Control operations) with new optional parameters for filtering by Hook status and ARN.
