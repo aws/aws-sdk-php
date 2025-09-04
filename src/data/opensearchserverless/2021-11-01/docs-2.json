@@ -2,7 +2,7 @@
   "version": "2.0",
   "service": "<p>Use the Amazon OpenSearch Serverless API to create, configure, and manage OpenSearch Serverless collections and security policies.</p> <p>OpenSearch Serverless is an on-demand, pre-provisioned serverless configuration for Amazon OpenSearch Service. OpenSearch Serverless removes the operational complexities of provisioning, configuring, and tuning your OpenSearch clusters. It enables you to easily search and analyze petabytes of data without having to worry about the underlying infrastructure and data management.</p> <p>To learn more about OpenSearch Serverless, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-overview.html\">What is Amazon OpenSearch Serverless?</a> </p>",
   "operations": {
-    "BatchGetCollection": "<p>Returns attributes for one or more collections, including the collection endpoint and the OpenSearch Dashboards endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
+    "BatchGetCollection": "<p>Returns attributes for one or more collections, including the collection endpoint, the OpenSearch Dashboards endpoint, and FIPS-compliant endpoints. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-manage.html\">Creating and managing Amazon OpenSearch Serverless collections</a>.</p>",
     "BatchGetEffectiveLifecyclePolicy": "<p>Returns a list of successful and failed retrievals for the OpenSearch Serverless indexes. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "BatchGetLifecyclePolicy": "<p>Returns one or more configured OpenSearch Serverless lifecycle policies. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html#serverless-lifecycle-list\">Viewing data lifecycle policies</a>.</p>",
     "BatchGetVpcEndpoint": "<p>Returns attributes for one or more VPC endpoints associated with the current account. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
@@ -100,43 +100,35 @@
     },
     "BatchGetCollectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetCollectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetEffectiveLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetEffectiveLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetVpcEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetVpcEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -175,7 +167,7 @@
       }
     },
     "CollectionDetail": {
-      "base": "<p>Details about each OpenSearch Serverless collection, including the collection endpoint and the OpenSearch Dashboards endpoint.</p>",
+      "base": "<p>Details about each OpenSearch Serverless collection, including the collection endpoint, the OpenSearch Dashboards endpoint, and FIPS-compliant endpoints for federal government workloads.</p>",
       "refs": {
         "CollectionDetails$member": null
       }
@@ -297,18 +289,15 @@
     },
     "ConflictException": {
       "base": "<p>When creating a resource, thrown when a resource with the same name already exists or is being created. When deleting a resource, thrown when the resource is not in the ACTIVE or FAILED state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCollectionDetail": {
       "base": "<p>Details about the created OpenSearch Serverless collection.</p>",
@@ -318,8 +307,7 @@
     },
     "CreateCollectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateCollectionRequestDescriptionString": {
       "base": null,
@@ -329,8 +317,7 @@
     },
     "CreateCollectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIamIdentityCenterConfigOptions": {
       "base": "<p>Describes IAM Identity Center options for creating an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
@@ -340,43 +327,35 @@
     },
     "CreateIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSecurityConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSecurityConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSecurityPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateSecurityPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVpcEndpointDetail": {
       "base": "<p>Creation details for an OpenSearch Serverless-managed interface endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-vpc.html\">Access Amazon OpenSearch Serverless using an interface endpoint</a>.</p>",
@@ -386,23 +365,19 @@
     },
     "CreateVpcEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateVpcEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCollectionDetail": {
       "base": "<p>Details about a deleted OpenSearch Serverless collection.</p>",
@@ -412,53 +387,43 @@
     },
     "DeleteCollectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCollectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSecurityConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSecurityConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSecurityPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSecurityPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVpcEndpointDetail": {
       "base": "<p>Deletion details for an OpenSearch Serverless-managed interface endpoint.</p>",
@@ -468,13 +433,11 @@
     },
     "DeleteVpcEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteVpcEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Document": {
       "base": null,
@@ -508,65 +471,59 @@
         "BatchGetEffectiveLifecyclePolicyResponse$effectiveLifecyclePolicyErrorDetails": "<p>A list of resources for which retrieval failed.</p>"
       }
     },
+    "FipsEndpoints": {
+      "base": "<p>FIPS-compliant endpoint URLs for an OpenSearch Serverless collection. These endpoints ensure all data transmission uses FIPS 140-3 validated cryptographic implementations, meeting federal security requirements for government workloads.</p>",
+      "refs": {
+        "CollectionDetail$fipsEndpoints": "<p>FIPS-compliant endpoints for the collection. These endpoints use FIPS 140-3 validated cryptographic modules and are required for federal government workloads that must comply with FedRAMP security standards.</p>"
+      }
+    },
     "GetAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccountSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPoliciesStatsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPoliciesStatsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSecurityConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSecurityConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSecurityPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSecurityPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IamFederationConfigOptions": {
       "base": "<p>Describes IAM federation options for an OpenSearch Serverless security configuration in the form of a key-value map. These options define how OpenSearch Serverless integrates with external identity providers using federation.</p>",
@@ -636,8 +593,7 @@
     },
     "InternalServerException": {
       "base": "<p>Thrown when an error internal to the service occurs while processing a request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LifecyclePolicyDetail": {
       "base": "<p>Details about an OpenSearch Serverless lifecycle policy.</p>",
@@ -731,8 +687,7 @@
     },
     "ListAccessPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessPoliciesRequestMaxResultsInteger": {
       "base": null,
@@ -748,13 +703,11 @@
     },
     "ListAccessPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollectionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCollectionsRequestMaxResultsInteger": {
       "base": null,
@@ -764,13 +717,11 @@
     },
     "ListCollectionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecyclePoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListLifecyclePoliciesRequestMaxResultsInteger": {
       "base": null,
@@ -786,13 +737,11 @@
     },
     "ListLifecyclePoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityConfigsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityConfigsRequestMaxResultsInteger": {
       "base": null,
@@ -802,13 +751,11 @@
     },
     "ListSecurityConfigsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityPoliciesRequestMaxResultsInteger": {
       "base": null,
@@ -824,23 +771,19 @@
     },
     "ListSecurityPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVpcEndpointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListVpcEndpointsRequestMaxResultsInteger": {
       "base": null,
@@ -850,8 +793,7 @@
     },
     "ListVpcEndpointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Long": {
       "base": null,
@@ -890,8 +832,7 @@
     },
     "OcuLimitExceededException": {
       "base": "<p>Thrown when the collection you're attempting to create results in a number of search or indexing OCUs that exceeds the account limit. </p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PolicyDescription": {
       "base": null,
@@ -980,8 +921,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Thrown when accessing or deleting a resource that does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -1110,8 +1050,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Thrown when you attempt to create more resources than the service allows based on service quotas.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "StandbyReplicas": {
       "base": null,
@@ -1141,6 +1080,8 @@
         "EffectiveLifecyclePolicyDetail$retentionPeriod": "<p>The minimum number of index retention in days or hours. This is an optional parameter that will return only if it’s set.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorMessage": "<p>A description of the error. For example, <code>The specified Index resource is not found</code>.</p>",
         "EffectiveLifecyclePolicyErrorDetail$errorCode": "<p>The error code for the request.</p>",
+        "FipsEndpoints$collectionEndpoint": "<p>FIPS-compliant collection endpoint used to submit index, search, and data upload requests to an OpenSearch Serverless collection. This endpoint uses FIPS 140-3 validated cryptography and is required for federal government workloads.</p>",
+        "FipsEndpoints$dashboardEndpoint": "<p>FIPS-compliant endpoint used to access OpenSearch Dashboards. This endpoint uses FIPS 140-3 validated cryptography and is required for federal government workloads that need dashboard visualization capabilities.</p>",
         "IamIdentityCenterConfigOptions$applicationName": "<p>The name of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
         "IamIdentityCenterConfigOptions$applicationDescription": "<p>The description of the IAM Identity Center application used to integrate with OpenSearch Serverless.</p>",
         "InternalServerException$message": null,
@@ -1211,13 +1152,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1235,33 +1174,27 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountSettingsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccountSettingsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCollectionDetail": {
       "base": "<p>Details about an updated OpenSearch Serverless collection.</p>",
@@ -1271,8 +1204,7 @@
     },
     "UpdateCollectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCollectionRequestDescriptionString": {
       "base": null,
@@ -1282,8 +1214,7 @@
     },
     "UpdateCollectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIamIdentityCenterConfigOptions": {
       "base": "<p>Describes IAM Identity Center options for updating an OpenSearch Serverless security configuration in the form of a key-value map.</p>",
@@ -1293,43 +1224,35 @@
     },
     "UpdateIndexRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIndexResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLifecyclePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLifecyclePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSecurityConfigRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSecurityConfigResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSecurityPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateSecurityPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVpcEndpointDetail": {
       "base": "<p>Update details for an OpenSearch Serverless-managed interface endpoint.</p>",
@@ -1339,18 +1262,15 @@
     },
     "UpdateVpcEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateVpcEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>Thrown when the HTTP request contains invalid input or is missing required input.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "VpcEndpointDetail": {
       "base": "<p>Details about an OpenSearch Serverless-managed interface endpoint.</p>",

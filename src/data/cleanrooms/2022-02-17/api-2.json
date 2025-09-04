@@ -6082,12 +6082,20 @@
         "resultConfiguration":{"shape":"ProtectedJobResultConfigurationOutput"},
         "statistics":{"shape":"ProtectedJobStatistics"},
         "result":{"shape":"ProtectedJobResult"},
-        "error":{"shape":"ProtectedJobError"}
+        "error":{"shape":"ProtectedJobError"},
+        "computeConfiguration":{"shape":"ProtectedJobComputeConfiguration"}
       }
     },
     "ProtectedJobAnalysisType":{
       "type":"string",
       "enum":["DIRECT_ANALYSIS"]
+    },
+    "ProtectedJobComputeConfiguration":{
+      "type":"structure",
+      "members":{
+        "worker":{"shape":"ProtectedJobWorkerComputeConfiguration"}
+      },
+      "union":true
     },
     "ProtectedJobConfigurationDetails":{
       "type":"structure",
@@ -6289,6 +6297,30 @@
     "ProtectedJobType":{
       "type":"string",
       "enum":["PYSPARK"]
+    },
+    "ProtectedJobWorkerComputeConfiguration":{
+      "type":"structure",
+      "required":[
+        "type",
+        "number"
+      ],
+      "members":{
+        "type":{"shape":"ProtectedJobWorkerComputeType"},
+        "number":{"shape":"ProtectedJobWorkerComputeConfigurationNumberInteger"}
+      }
+    },
+    "ProtectedJobWorkerComputeConfigurationNumberInteger":{
+      "type":"integer",
+      "box":true,
+      "max":128,
+      "min":4
+    },
+    "ProtectedJobWorkerComputeType":{
+      "type":"string",
+      "enum":[
+        "CR.1X",
+        "CR.4X"
+      ]
     },
     "ProtectedQuery":{
       "type":"structure",
@@ -6933,7 +6965,8 @@
           "locationName":"membershipIdentifier"
         },
         "jobParameters":{"shape":"ProtectedJobParameters"},
-        "resultConfiguration":{"shape":"ProtectedJobResultConfigurationInput"}
+        "resultConfiguration":{"shape":"ProtectedJobResultConfigurationInput"},
+        "computeConfiguration":{"shape":"ProtectedJobComputeConfiguration"}
       }
     },
     "StartProtectedJobOutput":{

@@ -2721,6 +2721,12 @@
       "max":100,
       "min":1
     },
+    "HookInvocationId":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
     "HookInvocationPoint":{
       "type":"string",
       "enum":["PRE_PROVISION"]
@@ -2748,13 +2754,19 @@
     "HookResultSummary":{
       "type":"structure",
       "members":{
+        "HookResultId":{"shape":"HookInvocationId"},
         "InvocationPoint":{"shape":"HookInvocationPoint"},
         "FailureMode":{"shape":"HookFailureMode"},
         "TypeName":{"shape":"HookTypeName"},
         "TypeVersionId":{"shape":"HookTypeVersionId"},
         "TypeConfigurationVersionId":{"shape":"HookTypeConfigurationVersionId"},
         "Status":{"shape":"HookStatus"},
-        "HookStatusReason":{"shape":"HookStatusReason"}
+        "HookStatusReason":{"shape":"HookStatusReason"},
+        "InvokedAt":{"shape":"Timestamp"},
+        "TargetType":{"shape":"ListHookResultsTargetType"},
+        "TargetId":{"shape":"HookResultId"},
+        "TypeArn":{"shape":"HookTypeArn"},
+        "HookExecutionTarget":{"shape":"HookResultId"}
       }
     },
     "HookStatus":{
@@ -2785,6 +2797,11 @@
       "type":"string",
       "max":255,
       "min":1
+    },
+    "HookTypeArn":{
+      "type":"string",
+      "max":1024,
+      "pattern":"arn:aws[A-Za-z0-9-]{0,64}:cloudformation:[A-Za-z0-9-]{1,64}:([0-9]{12})?:type/hook/[A-Za-z0-9-]+/?"
     },
     "HookTypeConfigurationVersionId":{
       "type":"string",
@@ -2962,13 +2979,11 @@
     },
     "ListHookResultsInput":{
       "type":"structure",
-      "required":[
-        "TargetType",
-        "TargetId"
-      ],
       "members":{
         "TargetType":{"shape":"ListHookResultsTargetType"},
         "TargetId":{"shape":"HookResultId"},
+        "TypeArn":{"shape":"HookTypeArn"},
+        "Status":{"shape":"HookStatus"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -4410,6 +4425,7 @@
         "HookStatus":{"shape":"HookStatus"},
         "HookStatusReason":{"shape":"HookStatusReason"},
         "HookInvocationPoint":{"shape":"HookInvocationPoint"},
+        "HookInvocationId":{"shape":"HookInvocationId"},
         "HookFailureMode":{"shape":"HookFailureMode"},
         "DetailedStatus":{"shape":"DetailedStatus"}
       }

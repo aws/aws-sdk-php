@@ -3844,7 +3844,8 @@
         "VpcSubnetIds":{"shape":"StringList"},
         "VpcSecurityGroupIds":{"shape":"StringList"},
         "TargetRole":{"shape":"DBProxyEndpointTargetRole"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "EndpointNetworkType":{"shape":"EndpointNetworkType"}
       }
     },
     "CreateDBProxyEndpointResponse":{
@@ -3872,7 +3873,9 @@
         "RequireTLS":{"shape":"Boolean"},
         "IdleClientTimeout":{"shape":"IntegerOptional"},
         "DebugLogging":{"shape":"Boolean"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "EndpointNetworkType":{"shape":"EndpointNetworkType"},
+        "TargetConnectionNetworkType":{"shape":"TargetConnectionNetworkType"}
       }
     },
     "CreateDBProxyResponse":{
@@ -5128,7 +5131,9 @@
         "IdleClientTimeout":{"shape":"Integer"},
         "DebugLogging":{"shape":"Boolean"},
         "CreatedDate":{"shape":"TStamp"},
-        "UpdatedDate":{"shape":"TStamp"}
+        "UpdatedDate":{"shape":"TStamp"},
+        "EndpointNetworkType":{"shape":"EndpointNetworkType"},
+        "TargetConnectionNetworkType":{"shape":"TargetConnectionNetworkType"}
       }
     },
     "DBProxyAlreadyExistsFault":{
@@ -5154,7 +5159,8 @@
         "Endpoint":{"shape":"String"},
         "CreatedDate":{"shape":"TStamp"},
         "TargetRole":{"shape":"DBProxyEndpointTargetRole"},
-        "IsDefault":{"shape":"Boolean"}
+        "IsDefault":{"shape":"Boolean"},
+        "EndpointNetworkType":{"shape":"EndpointNetworkType"}
       }
     },
     "DBProxyEndpointAlreadyExistsFault":{
@@ -6734,6 +6740,14 @@
         "Port":{"shape":"Integer"},
         "HostedZoneId":{"shape":"String"}
       }
+    },
+    "EndpointNetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6",
+        "DUAL"
+      ]
     },
     "Engine":{
       "type":"string",
@@ -9993,6 +10007,13 @@
       "members":{
         "TagList":{"shape":"TagList"}
       }
+    },
+    "TargetConnectionNetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4",
+        "IPV6"
+      ]
     },
     "TargetDBClusterParameterGroupName":{
       "type":"string",

@@ -36,8 +36,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ActionId": {
       "base": null,
@@ -123,8 +122,7 @@
     },
     "BatchGetPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetPolicyInputItem": {
       "base": "<p>Information about a policy that you include in a <code>BatchGetPolicy</code> API request.</p>",
@@ -140,8 +138,7 @@
     },
     "BatchGetPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetPolicyOutputItem": {
       "base": "<p>Contains information about a policy returned from a <code>BatchGetPolicy</code> API request.</p>",
@@ -157,8 +154,7 @@
     },
     "BatchIsAuthorizedInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchIsAuthorizedInputItem": {
       "base": "<p>An authorization request that you include in a <code>BatchIsAuthorized</code> API request.</p>",
@@ -175,8 +171,7 @@
     },
     "BatchIsAuthorizedOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchIsAuthorizedOutputItem": {
       "base": "<p>The decision, based on policy evaluation, from an individual authorization request in a <code>BatchIsAuthorized</code> API request.</p>",
@@ -192,8 +187,7 @@
     },
     "BatchIsAuthorizedWithTokenInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchIsAuthorizedWithTokenInputItem": {
       "base": "<p>An authorization request that you include in a <code>BatchIsAuthorizedWithToken</code> API request.</p>",
@@ -210,8 +204,7 @@
     },
     "BatchIsAuthorizedWithTokenOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchIsAuthorizedWithTokenOutputItem": {
       "base": "<p>The decision, based on policy evaluation, from an individual authorization request in a <code>BatchIsAuthorizedWithToken</code> API request.</p>",
@@ -345,8 +338,7 @@
     },
     "ConflictException": {
       "base": "<p>The request failed because another request to modify a resource occurred at the same.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ContextDefinition": {
       "base": "<p>Contains additional details about the context of the request. Verified Permissions evaluates this information in an authorization request as part of the <code>when</code> and <code>unless</code> clauses in a policy.</p> <p>This data type is used as a request parameter for the <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html\">IsAuthorized</a>, <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html\">BatchIsAuthorized</a>, and <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html\">IsAuthorizedWithToken</a> operations.</p> <p>If you're passing context as part of the request, exactly one instance of <code>context</code> must be passed. If you don't want to pass context, omit the <code>context</code> parameter from your request rather than sending <code>context {}</code>.</p> <p>Example: <code>\"context\":{\"contextMap\":{\"&lt;KeyName1&gt;\":{\"boolean\":true},\"&lt;KeyName2&gt;\":{\"long\":1234}}}</code> </p>",
@@ -365,42 +357,40 @@
     },
     "CreateIdentitySourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateIdentitySourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyStoreInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyStoreOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreatePolicyTemplateOutput": {
       "base": null,
+      "refs": {}
+    },
+    "DatetimeAttribute": {
+      "base": null,
       "refs": {
+        "AttributeValue$datetime": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-datetime\">datetime</a> type.</p> <p>Example: <code>{\"datetime\": \"2024-10-15T11:35:00Z\"}</code> </p>"
       }
     },
     "Decimal": {
@@ -420,43 +410,35 @@
     },
     "DeleteIdentitySourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteIdentitySourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyStoreInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyStoreOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletePolicyTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeletionProtection": {
       "base": null,
@@ -486,6 +468,12 @@
       "refs": {
         "IdentitySourceDetails$discoveryUrl": "<p>The well-known URL that points to this user pool's OIDC discovery endpoint. This is a URL string in the following format. This URL replaces the placeholders for both the Amazon Web Services Region and the user pool identifier with those appropriate for this user pool.</p> <p> <code>https://cognito-idp.<i>&lt;region&gt;</i>.amazonaws.com/<i>&lt;user-pool-id&gt;</i>/.well-known/openid-configuration</code> </p>",
         "IdentitySourceItemDetails$discoveryUrl": "<p>The well-known URL that points to this user pool's OIDC discovery endpoint. This is a URL string in the following format. This URL replaces the placeholders for both the Amazon Web Services Region and the user pool identifier with those appropriate for this user pool.</p> <p> <code>https://cognito-idp.<i>&lt;region&gt;</i>.amazonaws.com/<i>&lt;user-pool-id&gt;</i>/.well-known/openid-configuration</code> </p>"
+      }
+    },
+    "Duration": {
+      "base": null,
+      "refs": {
+        "AttributeValue$duration": "<p>An attribute value of <a href=\"https://docs.cedarpolicy.com/policies/syntax-datatypes.html#datatype-duration\">duration</a> type.</p> <p>Example: <code>{\"duration\": \"1h30m\"}</code> </p>"
       }
     },
     "EntitiesDefinition": {
@@ -591,53 +579,43 @@
     },
     "GetIdentitySourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetIdentitySourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyStoreInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyStoreOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetPolicyTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetSchemaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GroupEntityType": {
       "base": null,
@@ -711,13 +689,11 @@
     },
     "InternalServerException": {
       "base": "<p>The request failed because of an internal error. Try your request again later</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidStateException": {
       "base": "<p>The policy store can't be deleted because deletion protection is enabled. To delete this policy store, disable deletion protection.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddr": {
       "base": null,
@@ -727,23 +703,19 @@
     },
     "IsAuthorizedInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IsAuthorizedOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IsAuthorizedWithTokenInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "IsAuthorizedWithTokenOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Issuer": {
       "base": null,
@@ -758,8 +730,7 @@
     },
     "ListIdentitySourcesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListIdentitySourcesMaxResults": {
       "base": null,
@@ -769,48 +740,39 @@
     },
     "ListIdentitySourcesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPoliciesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPoliciesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyStoresInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyStoresOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyTemplatesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListPolicyTemplatesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LongAttribute": {
       "base": null,
@@ -1157,13 +1119,11 @@
     },
     "PutSchemaInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutSchemaOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RecordAttribute": {
       "base": null,
@@ -1194,8 +1154,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The request failed because it references a resource that doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -1220,8 +1179,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request failed because it would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SetAttribute": {
       "base": null,
@@ -1316,13 +1274,11 @@
     },
     "TagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1343,15 +1299,14 @@
       }
     },
     "TemplateLinkedPolicyDefinitionItem": {
-      "base": "<p>Contains information about a policy created by instantiating a policy template. </p> <p>This </p>",
+      "base": "<p>Contains information about a policy created by instantiating a policy template. </p>",
       "refs": {
         "PolicyDefinitionItem$templateLinked": "<p>Information about a template-linked policy that was created by instantiating a policy template.</p>"
       }
     },
     "ThrottlingException": {
       "base": "<p>The request failed because it exceeded a throttling quota.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TimestampFormat": {
       "base": null,
@@ -1407,18 +1362,15 @@
     },
     "TooManyTagsException": {
       "base": "<p>No more tags be added because the limit (50) has been reached. To add new tags, use <code>UntagResource</code> to remove existing tags.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCognitoGroupConfiguration": {
       "base": "<p>The user group entities from an Amazon Cognito user pool identity source.</p>",
@@ -1440,13 +1392,11 @@
     },
     "UpdateIdentitySourceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateIdentitySourceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOpenIdConnectAccessTokenConfiguration": {
       "base": "<p>The configuration of an OpenID Connect (OIDC) identity source for handling access token claims. Contains the claim that you want to identify as the principal in an authorization request, and the values of the <code>aud</code> claim, or audiences, that you want to accept.</p> <p>This data type is part of a <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_UpdateOpenIdConnectTokenSelection.html\">UpdateOpenIdConnectTokenSelection</a> structure, which is a parameter to <a href=\"https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_UpdateIdentitySource.html\">UpdateIdentitySource</a>.</p>",
@@ -1486,33 +1436,27 @@
     },
     "UpdatePolicyInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePolicyOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePolicyStoreInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePolicyStoreOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePolicyTemplateInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdatePolicyTemplateOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateStaticPolicyDefinition": {
       "base": "<p>Contains information about an update to a static policy.</p>",
@@ -1533,8 +1477,7 @@
     },
     "ValidationException": {
       "base": "<p>The request failed because one or more input parameters don't satisfy their constraint requirements. The output is provided as a list of fields and a reason for each field that isn't valid.</p> <p>The possible reasons include the following:</p> <ul> <li> <p> <b>UnrecognizedEntityType</b> </p> <p>The policy includes an entity type that isn't found in the schema.</p> </li> <li> <p> <b>UnrecognizedActionId</b> </p> <p>The policy includes an action id that isn't found in the schema.</p> </li> <li> <p> <b>InvalidActionApplication</b> </p> <p>The policy includes an action that, according to the schema, doesn't support the specified principal and resource.</p> </li> <li> <p> <b>UnexpectedType</b> </p> <p>The policy included an operand that isn't a valid type for the specified operation.</p> </li> <li> <p> <b>IncompatibleTypes</b> </p> <p>The types of elements included in a <code>set</code>, or the types of expressions used in an <code>if...then...else</code> clause aren't compatible in this context.</p> </li> <li> <p> <b>MissingAttribute</b> </p> <p>The policy attempts to access a record or entity attribute that isn't specified in the schema. Test for the existence of the attribute first before attempting to access its value. For more information, see the <a href=\"https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test\">has (presence of attribute test) operator</a> in the <i>Cedar Policy Language Guide</i>.</p> </li> <li> <p> <b>UnsafeOptionalAttributeAccess</b> </p> <p>The policy attempts to access a record or entity attribute that is optional and isn't guaranteed to be present. Test for the existence of the attribute first before attempting to access its value. For more information, see the <a href=\"https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test\">has (presence of attribute test) operator</a> in the <i>Cedar Policy Language Guide</i>.</p> </li> <li> <p> <b>ImpossiblePolicy</b> </p> <p>Cedar has determined that a policy condition always evaluates to false. If the policy is always false, it can never apply to any query, and so it can never affect an authorization decision.</p> </li> <li> <p> <b>WrongNumberArguments</b> </p> <p>The policy references an extension type with the wrong number of arguments.</p> </li> <li> <p> <b>FunctionArgumentValidationError</b> </p> <p>Cedar couldn't parse the argument passed to an extension type. For example, a string that is to be parsed as an IPv4 address can contain only digits and the period character.</p> </li> </ul>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Details about a field that failed policy validation.</p>",

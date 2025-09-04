@@ -2424,6 +2424,15 @@
         "DBInstance$ListenerEndpoint": "<p>The listener connection endpoint for SQL Server Always On.</p>"
       }
     },
+    "EndpointNetworkType": {
+      "base": null,
+      "refs": {
+        "CreateDBProxyEndpointRequest$EndpointNetworkType": "<p>The network type of the DB proxy endpoint. The network type determines the IP version that the proxy endpoint supports.</p> <p>Valid values:</p> <ul> <li> <p> <code>IPV4</code> - The proxy endpoint supports IPv4 only.</p> </li> <li> <p> <code>IPV6</code> - The proxy endpoint supports IPv6 only.</p> </li> <li> <p> <code>DUAL</code> - The proxy endpoint supports both IPv4 and IPv6.</p> </li> </ul> <p>Default: <code>IPV4</code> </p> <p>Constraints:</p> <ul> <li> <p>If you specify <code>IPV6</code> or <code>DUAL</code>, the VPC and all subnets must have an IPv6 CIDR block.</p> </li> <li> <p>If you specify <code>IPV6</code> or <code>DUAL</code>, the VPC tenancy cannot be <code>dedicated</code>.</p> </li> </ul>",
+        "CreateDBProxyRequest$EndpointNetworkType": "<p>The network type of the DB proxy endpoint. The network type determines the IP version that the proxy endpoint supports.</p> <p>Valid values:</p> <ul> <li> <p> <code>IPV4</code> - The proxy endpoint supports IPv4 only.</p> </li> <li> <p> <code>IPV6</code> - The proxy endpoint supports IPv6 only.</p> </li> <li> <p> <code>DUAL</code> - The proxy endpoint supports both IPv4 and IPv6.</p> </li> </ul> <p>Default: <code>IPV4</code> </p> <p>Constraints:</p> <ul> <li> <p>If you specify <code>IPV6</code> or <code>DUAL</code>, the VPC and all subnets must have an IPv6 CIDR block.</p> </li> <li> <p>If you specify <code>IPV6</code> or <code>DUAL</code>, the VPC tenancy cannot be <code>dedicated</code>.</p> </li> </ul>",
+        "DBProxy$EndpointNetworkType": "<p>The network type of the DB proxy endpoint. The network type determines the IP version that the proxy endpoint supports.</p> <p>Valid values:</p> <ul> <li> <p> <code>IPV4</code> - The proxy endpoint supports IPv4 only.</p> </li> <li> <p> <code>IPV6</code> - The proxy endpoint supports IPv6 only.</p> </li> <li> <p> <code>DUAL</code> - The proxy endpoint supports both IPv4 and IPv6.</p> </li> </ul>",
+        "DBProxyEndpoint$EndpointNetworkType": "<p>The network type of the DB proxy endpoint. The network type determines the IP version that the proxy endpoint supports.</p> <p>Valid values:</p> <ul> <li> <p> <code>IPV4</code> - The proxy endpoint supports IPv4 only.</p> </li> <li> <p> <code>IPV6</code> - The proxy endpoint supports IPv6 only.</p> </li> <li> <p> <code>DUAL</code> - The proxy endpoint supports both IPv4 and IPv6.</p> </li> </ul>"
+      }
+    },
     "Engine": {
       "base": null,
       "refs": {
@@ -5696,6 +5705,13 @@
     "TagListMessage": {
       "base": "<p/>",
       "refs": {}
+    },
+    "TargetConnectionNetworkType": {
+      "base": null,
+      "refs": {
+        "CreateDBProxyRequest$TargetConnectionNetworkType": "<p>The network type that the proxy uses to connect to the target database. The network type determines the IP version that the proxy uses for connections to the database.</p> <p>Valid values:</p> <ul> <li> <p> <code>IPV4</code> - The proxy connects to the database using IPv4 only.</p> </li> <li> <p> <code>IPV6</code> - The proxy connects to the database using IPv6 only.</p> </li> </ul> <p>Default: <code>IPV4</code> </p> <p>Constraints:</p> <ul> <li> <p>If you specify <code>IPV6</code>, the database must support dual-stack mode. RDS doesn't support IPv6-only databases.</p> </li> <li> <p>All targets registered with the proxy must be compatible with the specified network type.</p> </li> </ul>",
+        "DBProxy$TargetConnectionNetworkType": "<p>The network type that the proxy uses to connect to the target database. The network type determines the IP version that the proxy uses for connections to the database.</p> <p>Valid values:</p> <ul> <li> <p> <code>IPV4</code> - The proxy connects to the database using IPv4 only.</p> </li> <li> <p> <code>IPV6</code> - The proxy connects to the database using IPv6 only.</p> </li> </ul>"
+      }
     },
     "TargetDBClusterParameterGroupName": {
       "base": null,

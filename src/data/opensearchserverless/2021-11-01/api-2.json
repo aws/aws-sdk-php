@@ -92,8 +92,8 @@
       "input":{"shape":"CreateCollectionRequest"},
       "output":{"shape":"CreateCollectionResponse"},
       "errors":[
-        {"shape":"OcuLimitExceededException"},
         {"shape":"InternalServerException"},
+        {"shape":"OcuLimitExceededException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
@@ -110,8 +110,8 @@
       "output":{"shape":"CreateIndexResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -190,8 +190,8 @@
       "output":{"shape":"DeleteAccessPolicyResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -206,8 +206,8 @@
       "output":{"shape":"DeleteCollectionResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -237,8 +237,8 @@
       "output":{"shape":"DeleteLifecyclePolicyResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -253,8 +253,8 @@
       "output":{"shape":"DeleteSecurityConfigResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -269,8 +269,8 @@
       "output":{"shape":"DeleteSecurityPolicyResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -285,8 +285,8 @@
       "output":{"shape":"DeleteVpcEndpointResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -474,8 +474,8 @@
       "output":{"shape":"TagResourceResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
       ]
@@ -490,8 +490,8 @@
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -505,8 +505,8 @@
       "output":{"shape":"UpdateAccessPolicyResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -564,8 +564,8 @@
       "output":{"shape":"UpdateLifecyclePolicyResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
@@ -581,8 +581,8 @@
       "output":{"shape":"UpdateSecurityConfigResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ],
       "idempotent":true
@@ -597,8 +597,8 @@
       "output":{"shape":"UpdateSecurityPolicyResponse"},
       "errors":[
         {"shape":"InternalServerException"},
-        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
         {"shape":"ServiceQuotaExceededException"}
       ],
@@ -756,6 +756,7 @@
         "lastModifiedDate":{"shape":"Long"},
         "collectionEndpoint":{"shape":"String"},
         "dashboardEndpoint":{"shape":"String"},
+        "fipsEndpoints":{"shape":"FipsEndpoints"},
         "failureCode":{"shape":"String"},
         "failureMessage":{"shape":"String"}
       }
@@ -944,8 +945,7 @@
     },
     "CreateIndexResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "CreateLifecyclePolicyRequest":{
       "type":"structure",
@@ -1069,8 +1069,7 @@
     },
     "DeleteAccessPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteCollectionDetail":{
       "type":"structure",
@@ -1110,8 +1109,7 @@
     },
     "DeleteIndexResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteLifecyclePolicyRequest":{
       "type":"structure",
@@ -1130,8 +1128,7 @@
     },
     "DeleteLifecyclePolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSecurityConfigRequest":{
       "type":"structure",
@@ -1146,8 +1143,7 @@
     },
     "DeleteSecurityConfigResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteSecurityPolicyRequest":{
       "type":"structure",
@@ -1166,8 +1162,7 @@
     },
     "DeleteSecurityPolicyResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteVpcEndpointDetail":{
       "type":"structure",
@@ -1196,8 +1191,7 @@
     },
     "Document":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "EffectiveLifecyclePolicyDetail":{
@@ -1228,6 +1222,13 @@
       "type":"list",
       "member":{"shape":"EffectiveLifecyclePolicyErrorDetail"}
     },
+    "FipsEndpoints":{
+      "type":"structure",
+      "members":{
+        "collectionEndpoint":{"shape":"String"},
+        "dashboardEndpoint":{"shape":"String"}
+      }
+    },
     "GetAccessPolicyRequest":{
       "type":"structure",
       "required":[
@@ -1247,8 +1248,7 @@
     },
     "GetAccountSettingsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetAccountSettingsResponse":{
       "type":"structure",
@@ -1275,8 +1275,7 @@
     },
     "GetPoliciesStatsRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetPoliciesStatsResponse":{
       "type":"structure",
@@ -1366,8 +1365,7 @@
     "IndexName":{"type":"string"},
     "IndexSchema":{
       "type":"structure",
-      "members":{
-      },
+      "members":{},
       "document":true
     },
     "IndexingCapacityValue":{
@@ -1842,7 +1840,6 @@
     "SubnetIds":{
       "type":"list",
       "member":{"shape":"SubnetId"},
-      "max":6,
       "min":1
     },
     "Tag":{
@@ -1880,8 +1877,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1907,8 +1903,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateAccessPolicyRequest":{
       "type":"structure",
@@ -2004,8 +1999,7 @@
     },
     "UpdateIndexResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLifecyclePolicyRequest":{
       "type":"structure",

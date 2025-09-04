@@ -578,7 +578,9 @@
         "set":{"shape":"SetAttribute"},
         "record":{"shape":"RecordAttribute"},
         "ipaddr":{"shape":"IpAddr"},
-        "decimal":{"shape":"Decimal"}
+        "decimal":{"shape":"Decimal"},
+        "datetime":{"shape":"DatetimeAttribute"},
+        "duration":{"shape":"Duration"}
       },
       "union":true
     },
@@ -1054,6 +1056,13 @@
         "lastUpdatedDate":{"shape":"TimestampFormat"}
       }
     },
+    "DatetimeAttribute":{
+      "type":"string",
+      "max":28,
+      "min":10,
+      "pattern":"\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?(Z|[+-]\\d{4}))?",
+      "sensitive":true
+    },
     "Decimal":{
       "type":"string",
       "max":23,
@@ -1081,8 +1090,7 @@
     },
     "DeleteIdentitySourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyInput":{
       "type":"structure",
@@ -1097,8 +1105,7 @@
     },
     "DeletePolicyOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyStoreInput":{
       "type":"structure",
@@ -1109,8 +1116,7 @@
     },
     "DeletePolicyStoreOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletePolicyTemplateInput":{
       "type":"structure",
@@ -1125,8 +1131,7 @@
     },
     "DeletePolicyTemplateOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeletionProtection":{
       "type":"string",
@@ -1151,6 +1156,13 @@
       "max":2048,
       "min":1,
       "pattern":"https://.*"
+    },
+    "Duration":{
+      "type":"string",
+      "max":100,
+      "min":2,
+      "pattern":"-?(\\d+d)?(\\d+h)?(\\d+m)?(\\d+s)?(\\d+ms)?",
+      "sensitive":true
     },
     "EntitiesDefinition":{
       "type":"structure",
@@ -2159,8 +2171,7 @@
     },
     "TagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2237,8 +2248,7 @@
     },
     "UntagResourceOutput":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateCognitoGroupConfiguration":{
       "type":"structure",

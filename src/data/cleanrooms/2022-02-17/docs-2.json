@@ -2871,6 +2871,13 @@
         "ProtectedJobReceiverConfiguration$analysisType": "<p> The analysis type for the protected job receiver configuration.</p>"
       }
     },
+    "ProtectedJobComputeConfiguration": {
+      "base": "<p>The configuration of the compute resources for a PySpark job.</p>",
+      "refs": {
+        "ProtectedJob$computeConfiguration": "<p>The compute configuration for the protected job.</p>",
+        "StartProtectedJobInput$computeConfiguration": "<p>The compute configuration for the protected job.</p>"
+      }
+    },
     "ProtectedJobConfigurationDetails": {
       "base": "<p>The protected job configuration details.</p>",
       "refs": {
@@ -3042,6 +3049,24 @@
       "base": null,
       "refs": {
         "StartProtectedJobInput$type": "<p> The type of protected job to start.</p>"
+      }
+    },
+    "ProtectedJobWorkerComputeConfiguration": {
+      "base": "<p>The configuration of the compute resources for a PySpark job.</p>",
+      "refs": {
+        "ProtectedJobComputeConfiguration$worker": "<p>The worker configuration for the compute environment.</p>"
+      }
+    },
+    "ProtectedJobWorkerComputeConfigurationNumberInteger": {
+      "base": null,
+      "refs": {
+        "ProtectedJobWorkerComputeConfiguration$number": "<p>The number of workers for a PySpark job.</p>"
+      }
+    },
+    "ProtectedJobWorkerComputeType": {
+      "base": null,
+      "refs": {
+        "ProtectedJobWorkerComputeConfiguration$type": "<p>The worker compute configuration type.</p>"
       }
     },
     "ProtectedQuery": {
@@ -3982,7 +4007,7 @@
     "WorkerComputeConfigurationNumberInteger": {
       "base": null,
       "refs": {
-        "WorkerComputeConfiguration$number": "<p> The number of workers.</p>"
+        "WorkerComputeConfiguration$number": "<p> The number of workers.</p> <p>SQL queries support a minimum value of 2 and a maximum value of 400. </p> <p>PySpark jobs support a minimum value of 4 and a maximum value of 128.</p>"
       }
     },
     "WorkerComputeType": {
