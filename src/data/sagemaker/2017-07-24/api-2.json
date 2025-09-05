@@ -6833,6 +6833,13 @@
       "type":"string",
       "pattern":"[a-z]{3}\\d-az\\d"
     },
+    "ClusterConfigMode":{
+      "type":"string",
+      "enum":[
+        "Enable",
+        "Disable"
+      ]
+    },
     "ClusterEbsVolumeConfig":{
       "type":"structure",
       "members":{
@@ -6981,6 +6988,12 @@
     "ClusterInstanceGroupsToDelete":{
       "type":"list",
       "member":{"shape":"ClusterInstanceGroupName"},
+      "max":100,
+      "min":0
+    },
+    "ClusterInstanceMemoryAllocationPercentage":{
+      "type":"integer",
+      "box":true,
       "max":100,
       "min":0
     },
@@ -7430,6 +7443,14 @@
       "box":true,
       "max":2,
       "min":1
+    },
+    "ClusterTieredStorageConfig":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"ClusterConfigMode"},
+        "InstanceMemoryAllocationPercentage":{"shape":"ClusterInstanceMemoryAllocationPercentage"}
+      }
     },
     "CodeEditorAppImageConfig":{
       "type":"structure",
@@ -8160,6 +8181,7 @@
         "Tags":{"shape":"TagList"},
         "Orchestrator":{"shape":"ClusterOrchestrator"},
         "NodeRecovery":{"shape":"ClusterNodeRecovery"},
+        "TieredStorageConfig":{"shape":"ClusterTieredStorageConfig"},
         "NodeProvisioningMode":{"shape":"ClusterNodeProvisioningMode"},
         "ClusterRole":{"shape":"RoleArn"},
         "AutoScaling":{"shape":"ClusterAutoScalingConfig"}
@@ -9098,6 +9120,7 @@
         "InstanceType":{"shape":"InstanceType"},
         "SubnetId":{"shape":"SubnetId"},
         "SecurityGroupIds":{"shape":"SecurityGroupIds"},
+        "IpAddressType":{"shape":"IPAddressType"},
         "RoleArn":{"shape":"RoleArn"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "Tags":{"shape":"TagList"},
@@ -10921,6 +10944,7 @@
         "RestrictedInstanceGroups":{"shape":"ClusterRestrictedInstanceGroupDetailsList"},
         "VpcConfig":{"shape":"VpcConfig"},
         "Orchestrator":{"shape":"ClusterOrchestrator"},
+        "TieredStorageConfig":{"shape":"ClusterTieredStorageConfig"},
         "NodeRecovery":{"shape":"ClusterNodeRecovery"},
         "NodeProvisioningMode":{"shape":"ClusterNodeProvisioningMode"},
         "ClusterRole":{"shape":"RoleArn"},
@@ -12237,6 +12261,7 @@
         "FailureReason":{"shape":"FailureReason"},
         "Url":{"shape":"NotebookInstanceUrl"},
         "InstanceType":{"shape":"InstanceType"},
+        "IpAddressType":{"shape":"IPAddressType"},
         "SubnetId":{"shape":"SubnetId"},
         "SecurityGroups":{"shape":"SecurityGroupIds"},
         "RoleArn":{"shape":"RoleArn"},
@@ -15608,6 +15633,13 @@
       "type":"integer",
       "box":true,
       "min":1
+    },
+    "IPAddressType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "dualstack"
+      ]
     },
     "IamIdentity":{
       "type":"structure",
@@ -22341,7 +22373,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:processing-job/.*"
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:processing-job/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "ProcessingJobName":{
       "type":"string",
@@ -22867,7 +22899,8 @@
         "ml.c6in.24xlarge",
         "ml.c6in.32xlarge",
         "ml.p6-b200.48xlarge",
-        "ml.p6e-gb200.36xlarge"
+        "ml.p6e-gb200.36xlarge",
+        "ml.p5.4xlarge"
       ]
     },
     "ProductionVariantList":{
@@ -26489,7 +26522,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:training-job/.*"
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:training-job/[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
     "TrainingJobDefinition":{
       "type":"structure",
@@ -27561,6 +27594,7 @@
         "ClusterName":{"shape":"ClusterNameOrArn"},
         "InstanceGroups":{"shape":"ClusterInstanceGroupSpecifications"},
         "RestrictedInstanceGroups":{"shape":"ClusterRestrictedInstanceGroupSpecifications"},
+        "TieredStorageConfig":{"shape":"ClusterTieredStorageConfig"},
         "NodeRecovery":{"shape":"ClusterNodeRecovery"},
         "InstanceGroupsToDelete":{"shape":"ClusterInstanceGroupsToDelete"},
         "ClusterRole":{"shape":"RoleArn"},
@@ -28112,6 +28146,7 @@
       "members":{
         "NotebookInstanceName":{"shape":"NotebookInstanceName"},
         "InstanceType":{"shape":"InstanceType"},
+        "IpAddressType":{"shape":"IPAddressType"},
         "RoleArn":{"shape":"RoleArn"},
         "LifecycleConfigName":{"shape":"NotebookInstanceLifecycleConfigName"},
         "DisassociateLifecycleConfig":{

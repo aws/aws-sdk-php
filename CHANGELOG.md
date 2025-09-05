@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - This is a documentation only release that adds additional information for Amazon ECS Availability Zone rebalancing.
+* `Aws\PCS` - Documentation-only update to add AccountingStorageEnforce to SlurmCustomSetting.
+* `Aws\SageMaker` - Release IPv6 support with dualstack in SageMaker Notebooks, Tiered Storage Checkpointing Support in SageMaker HyperPod and P5.4xlarge instance type for SageMaker Hosting.
+
 ## 3.356.11 - 2025-09-04
 
 * `Aws\OpenSearchServerless` - Add support for Federal Information Processing Standards (FIPS) and Federal Risk and Authorization Management Program (FedRAMP) compliance
