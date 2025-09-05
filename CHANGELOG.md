@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.12 - 2025-09-05
 
 * `Aws\ECS` - This is a documentation only release that adds additional information for Amazon ECS Availability Zone rebalancing.
 * `Aws\PCS` - Documentation-only update to add AccountingStorageEnforce to SlurmCustomSetting.
