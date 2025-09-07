@@ -32,9 +32,7 @@ class ConfigurationResolver
         $config = []
     )
     {
-        $iniOptions = isset($config['ini_resolver_options'])
-            ? $config['ini_resolver_options']
-            : [];
+        $iniOptions = $config['ini_resolver_options'] ?? [];
 
         $envValue = self::env($key, $expectedType);
         if (!is_null($envValue)) {
@@ -115,10 +113,7 @@ class ConfigurationResolver
         //TODO change after deprecation
         $data = @\Aws\parse_ini_file($filename, true, INI_SCANNER_NORMAL);
 
-        if (isset($options['section'])
-            && isset($options['subsection'])
-            && isset($options['key']))
-        {
+        if (isset($options['section'], $options['subsection'], $options['key'])) {
             return self::retrieveValueFromIniSubsection(
                 $data,
                 $profile,
@@ -128,10 +123,7 @@ class ConfigurationResolver
             );
         }
 
-        if ($data === false
-            || !isset($data[$profile])
-            || !isset($data[$profile][$key])
-        ) {
+        if (empty($data[$profile][$key]) || $data === false) {
             return null;
         }
 
