@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.13 - 2025-09-08
 
 * `Aws\IoTSiteWise` - Add ComputationModelVersion support in IoT SiteWise APIs
 * `Aws\SecurityHub` - This release adds the RESOURCE_NOT_FOUND error code as a possible value in responses to the following operations: BatchGetStandardsControlAssociations, BatchUpdateStandardsControlAssociations, and BatchGetSecurityControls.
