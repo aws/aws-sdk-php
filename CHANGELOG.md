@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTSiteWise` - Add ComputationModelVersion support in IoT SiteWise APIs
+* `Aws\SecurityHub` - This release adds the RESOURCE_NOT_FOUND error code as a possible value in responses to the following operations: BatchGetStandardsControlAssociations, BatchUpdateStandardsControlAssociations, and BatchGetSecurityControls.
+* `Aws\S3` - This release includes backward compatibility work on the "Expires" parameter.
+
 ## 3.356.12 - 2025-09-05
 
 * `Aws\ECS` - This is a documentation only release that adds additional information for Amazon ECS Availability Zone rebalancing.

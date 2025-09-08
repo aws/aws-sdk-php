@@ -3284,6 +3284,10 @@
       "type":"string",
       "enum":["ANOMALY_DETECTION"]
     },
+    "ComputationModelVersionFilter":{
+      "type":"string",
+      "pattern":"^(LATEST|ACTIVE|[1-9]{1}\\d{0,9})$"
+    },
     "ComputeLocation":{
       "type":"string",
       "enum":[
@@ -4604,6 +4608,11 @@
           "shape":"ID",
           "location":"uri",
           "locationName":"computationModelId"
+        },
+        "computationModelVersion":{
+          "shape":"ComputationModelVersionFilter",
+          "location":"querystring",
+          "locationName":"computationModelVersion"
         }
       }
     },
