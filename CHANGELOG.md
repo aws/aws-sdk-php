@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.14 - 2025-09-09
 
 * `Aws\AutoScaling` - Added WaitForTransitioningInstances parameter to the CancelInstanceRefresh API, allowing the caller to cancel an instance refresh without waiting for on-going launches and terminations.
 * `Aws\DataZone` - Adds support for custom blueprints
