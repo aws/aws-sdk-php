@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<note> <p>This guide is intended for creating AWS Elemental MediaPackage resources in MediaPackage Version 2 (v2) starting from May 2023. To get started with MediaPackage v2, create your MediaPackage resources. There isn't an automated process to migrate your resources from MediaPackage v1 to MediaPackage v2. </p> <p>The names of the entities that you use to access this API, like URLs and ARNs, all have the versioning information added, like \"v2\", to distinguish from the prior version. If you used MediaPackage prior to this release, you can't use the MediaPackage v2 CLI or the MediaPackage v2 API to access any MediaPackage v1 resources.</p> <p>If you created resources in MediaPackage v1, use video on demand (VOD) workflows, and aren't looking to migrate to MediaPackage v2 yet, see the <a href=\"https://docs.aws.amazon.com/mediapackage/latest/apireference/what-is.html\">MediaPackage v1 Live API Reference</a>.</p> </note> <p>This is the AWS Elemental MediaPackage v2 Live REST API Reference. It describes all the MediaPackage API operations for live content in detail, and provides sample requests, responses, and errors for the supported web services protocols.</p> <p>We assume that you have the IAM permissions that you need to use MediaPackage via the REST API. We also assume that you are familiar with the features and operations of MediaPackage, as described in the AWS Elemental MediaPackage User Guide.</p>",
+  "service": "<p><note> <p>This guide is intended for creating AWS Elemental MediaPackage resources in MediaPackage Version 2 (v2) starting from May 2023. To get started with MediaPackage v2, create your MediaPackage resources. There isn't an automated process to migrate your resources from MediaPackage v1 to MediaPackage v2. </p> <p>The names of the entities that you use to access this API, like URLs and ARNs, all have the versioning information added, like &quot;v2&quot;, to distinguish from the prior version. If you used MediaPackage prior to this release, you can't use the MediaPackage v2 CLI or the MediaPackage v2 API to access any MediaPackage v1 resources.</p> <p>If you created resources in MediaPackage v1, use video on demand (VOD) workflows, and aren't looking to migrate to MediaPackage v2 yet, see the <a href=\"https://docs.aws.amazon.com/mediapackage/latest/apireference/what-is.html\">MediaPackage v1 Live API Reference</a>.</p> </note> <p>This is the AWS Elemental MediaPackage v2 Live REST API Reference. It describes all the MediaPackage API operations for live content in detail, and provides sample requests, responses, and errors for the supported web services protocols.</p> <p>We assume that you have the IAM permissions that you need to use MediaPackage via the REST API. We also assume that you are familiar with the features and operations of MediaPackage, as described in the AWS Elemental MediaPackage User Guide.</p></p>",
   "operations": {
     "CancelHarvestJob": "<p>Cancels an in-progress harvest job.</p>",
     "CreateChannel": "<p>Create a channel to start receiving content streams. The channel represents the input to MediaPackage for incoming live content from an encoder such as AWS Elemental MediaLive. The channel receives content, and after packaging it, outputs it through an origin endpoint to downstream devices (such as video players or CDNs) that request the content. You can create only one channel with each request. We recommend that you spread out channels between channel groups, such as putting redundant channels in the same AWS Region in different channel groups.</p>",
@@ -36,8 +36,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>Access is denied because either you don't have permissions to perform the requested operation or MediaPackage is getting throttling errors with CDN authorization. The user or role that is making the request must have at least one IAM permissions policy attached that grants the required permissions. For more information, see Access Management in the IAM User Guide. Or, if you're using CDN authorization, you will receive this exception if MediaPackage receives a throttling error from Secrets Manager.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AdMarkerDash": {
       "base": null,
@@ -69,13 +68,11 @@
     },
     "CancelHarvestJobRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CancelHarvestJobResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CdnAuthConfiguration": {
       "base": "<p>The settings to enable CDN authorization headers in MediaPackage.</p>",
@@ -134,8 +131,7 @@
     },
     "ConflictException": {
       "base": "<p>Updating or deleting this resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConflictExceptionType": {
       "base": null,
@@ -156,23 +152,19 @@
     },
     "CreateChannelGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateChannelGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDashManifestConfiguration": {
       "base": "<p>Create a DASH manifest configuration.</p>",
@@ -213,13 +205,11 @@
     },
     "CreateHarvestJobRequest": {
       "base": "<p>The request object for creating a new harvest job.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateHarvestJobResponse": {
       "base": "<p>The response object returned after creating a harvest job.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateHlsManifestConfiguration": {
       "base": "<p>Create an HTTP live streaming (HLS) manifest configuration.</p>",
@@ -292,8 +282,7 @@
     },
     "CreateOriginEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateOriginEndpointRequestStartoverWindowSecondsInteger": {
       "base": null,
@@ -303,8 +292,7 @@
     },
     "CreateOriginEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DashBaseUrl": {
       "base": "<p>The base URLs to use for retrieving segments. You can specify multiple locations and indicate the priority and weight for when each should be used, for use in mutli-CDN workflows.</p>",
@@ -522,53 +510,43 @@
     },
     "DeleteChannelGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOriginEndpointPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOriginEndpointPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOriginEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteOriginEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Destination": {
       "base": "<p>The configuration for the destination where the harvested content will be exported.</p>",
@@ -692,33 +670,27 @@
     },
     "GetChannelGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDashManifestConfiguration": {
       "base": "<p>Retrieve the DASH manifest configuration.</p>",
@@ -736,13 +708,11 @@
     },
     "GetHarvestJobRequest": {
       "base": "<p>The request object for retrieving a specific harvest job.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetHarvestJobResponse": {
       "base": "<p>The response object containing the details of the requested harvest job.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetHlsManifestConfiguration": {
       "base": "<p>Retrieve the HTTP live streaming (HLS) manifest configuration.</p>",
@@ -788,23 +758,19 @@
     },
     "GetOriginEndpointPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOriginEndpointPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOriginEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetOriginEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HarvestJob": {
       "base": "<p>Represents a harvest job resource in MediaPackage v2, which is used to export content from an origin endpoint to an S3 bucket.</p>",
@@ -949,8 +915,7 @@
     },
     "InternalServerException": {
       "base": "<p>Indicates that an error from the service occurred while trying to process a request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IsmEncryptionMethod": {
       "base": null,
@@ -960,23 +925,19 @@
     },
     "ListChannelGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChannelGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChannelsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListChannelsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDashManifestConfiguration": {
       "base": "<p>List the DASH manifest configuration.</p>",
@@ -992,8 +953,7 @@
     },
     "ListHarvestJobsRequest": {
       "base": "<p>The request object for listing harvest jobs.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListHarvestJobsRequestChannelNameString": {
       "base": null,
@@ -1015,8 +975,7 @@
     },
     "ListHarvestJobsResponse": {
       "base": "<p>The response object containing the list of harvest jobs that match the specified criteria.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListHlsManifestConfiguration": {
       "base": "<p>List the HTTP live streaming (HLS) manifest configuration.</p>",
@@ -1056,13 +1015,11 @@
     },
     "ListOriginEndpointsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListOriginEndpointsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceMaxResults": {
       "base": null,
@@ -1074,13 +1031,11 @@
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ManifestName": {
       "base": null,
@@ -1146,43 +1101,35 @@
     },
     "PutChannelPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutChannelPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutOriginEndpointPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutOriginEndpointPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetChannelStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetChannelStateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetOriginEndpointStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResetOriginEndpointStateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceDescription": {
       "base": null,
@@ -1322,8 +1269,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The specified resource doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceTypeNotFound": {
       "base": null,
@@ -1407,8 +1353,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SpekeKeyProvider": {
       "base": "<p>The parameters for the SPEKE key provider.</p>",
@@ -1563,8 +1508,7 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -1574,8 +1518,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request throughput limit was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1629,33 +1572,27 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateChannelResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOriginEndpointRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateOriginEndpointRequestStartoverWindowSecondsInteger": {
       "base": null,
@@ -1665,13 +1602,11 @@
     },
     "UpdateOriginEndpointResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input failed to meet the constraints specified by the AWS service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionType": {
       "base": null,

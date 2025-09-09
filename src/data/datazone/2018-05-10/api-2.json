@@ -435,6 +435,26 @@
         {"shape":"UnauthorizedException"}
       ]
     },
+    "CreateEnvironmentBlueprint":{
+      "name":"CreateEnvironmentBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v2/domains/{domainIdentifier}/environment-blueprints",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateEnvironmentBlueprintInput"},
+      "output":{"shape":"CreateEnvironmentBlueprintOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ]
+    },
     "CreateEnvironmentProfile":{
       "name":"CreateEnvironmentProfile",
       "http":{
@@ -912,6 +932,25 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteEnvironmentActionInput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteEnvironmentBlueprint":{
+      "name":"DeleteEnvironmentBlueprint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v2/domains/{domainIdentifier}/environment-blueprints/{identifier}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteEnvironmentBlueprintInput"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -2940,6 +2979,27 @@
         {"shape":"ValidationException"},
         {"shape":"UnauthorizedException"}
       ]
+    },
+    "UpdateEnvironmentBlueprint":{
+      "name":"UpdateEnvironmentBlueprint",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/v2/domains/{domainIdentifier}/environment-blueprints/{identifier}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateEnvironmentBlueprintInput"},
+      "output":{"shape":"UpdateEnvironmentBlueprintOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"UnauthorizedException"}
+      ],
+      "idempotent":true
     },
     "UpdateEnvironmentProfile":{
       "name":"UpdateEnvironmentProfile",
@@ -4984,6 +5044,46 @@
         "parameters":{"shape":"ActionParameters"}
       }
     },
+    "CreateEnvironmentBlueprintInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "name",
+        "provisioningProperties"
+      ],
+      "members":{
+        "description":{"shape":"Description"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "name":{"shape":"EnvironmentBlueprintName"},
+        "provisioningProperties":{"shape":"ProvisioningProperties"},
+        "userParameters":{"shape":"CustomParameterList"}
+      }
+    },
+    "CreateEnvironmentBlueprintOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "provider",
+        "provisioningProperties"
+      ],
+      "members":{
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "deploymentProperties":{"shape":"DeploymentProperties"},
+        "description":{"shape":"Description"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "id":{"shape":"EnvironmentBlueprintId"},
+        "name":{"shape":"EnvironmentBlueprintName"},
+        "provider":{"shape":"String"},
+        "provisioningProperties":{"shape":"ProvisioningProperties"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "userParameters":{"shape":"CustomParameterList"}
+      }
+    },
     "CreateEnvironmentInput":{
       "type":"structure",
       "required":[
@@ -5743,6 +5843,7 @@
         "fieldType":{"shape":"String"},
         "isEditable":{"shape":"Boolean"},
         "isOptional":{"shape":"Boolean"},
+        "isUpdateSupported":{"shape":"Boolean"},
         "keyName":{"shape":"CustomParameterKeyNameString"}
       }
     },
@@ -6394,6 +6495,25 @@
     "DeleteEnvironmentBlueprintConfigurationOutput":{
       "type":"structure",
       "members":{}
+    },
+    "DeleteEnvironmentBlueprintInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"EnvironmentBlueprintId",
+          "location":"uri",
+          "locationName":"identifier"
+        }
+      }
     },
     "DeleteEnvironmentInput":{
       "type":"structure",
@@ -9221,6 +9341,11 @@
         "status":{"shape":"UserProfileStatus"},
         "type":{"shape":"UserProfileType"}
       }
+    },
+    "GlobalParameterMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
     },
     "GlossaryDescription":{
       "type":"string",
@@ -12506,6 +12631,7 @@
           "locationName":"environmentBlueprintIdentifier"
         },
         "environmentRolePermissionBoundary":{"shape":"PolicyArn"},
+        "globalParameters":{"shape":"GlobalParameterMap"},
         "manageAccessRoleArn":{"shape":"RoleArn"},
         "provisioningConfigurations":{"shape":"ProvisioningConfigurationList"},
         "provisioningRoleArn":{"shape":"RoleArn"},
@@ -14995,6 +15121,49 @@
         "id":{"shape":"EnvironmentActionId"},
         "name":{"shape":"String"},
         "parameters":{"shape":"ActionParameters"}
+      }
+    },
+    "UpdateEnvironmentBlueprintInput":{
+      "type":"structure",
+      "required":[
+        "domainIdentifier",
+        "identifier"
+      ],
+      "members":{
+        "description":{"shape":"String"},
+        "domainIdentifier":{
+          "shape":"DomainId",
+          "location":"uri",
+          "locationName":"domainIdentifier"
+        },
+        "identifier":{
+          "shape":"EnvironmentBlueprintId",
+          "location":"uri",
+          "locationName":"identifier"
+        },
+        "provisioningProperties":{"shape":"ProvisioningProperties"},
+        "userParameters":{"shape":"CustomParameterList"}
+      }
+    },
+    "UpdateEnvironmentBlueprintOutput":{
+      "type":"structure",
+      "required":[
+        "id",
+        "name",
+        "provider",
+        "provisioningProperties"
+      ],
+      "members":{
+        "createdAt":{"shape":"SyntheticTimestamp_date_time"},
+        "deploymentProperties":{"shape":"DeploymentProperties"},
+        "description":{"shape":"Description"},
+        "glossaryTerms":{"shape":"GlossaryTerms"},
+        "id":{"shape":"EnvironmentBlueprintId"},
+        "name":{"shape":"EnvironmentBlueprintName"},
+        "provider":{"shape":"String"},
+        "provisioningProperties":{"shape":"ProvisioningProperties"},
+        "updatedAt":{"shape":"SyntheticTimestamp_date_time"},
+        "userParameters":{"shape":"CustomParameterList"}
       }
     },
     "UpdateEnvironmentInput":{

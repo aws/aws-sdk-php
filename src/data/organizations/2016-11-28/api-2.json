@@ -1131,6 +1131,7 @@
         "Email":{"shape":"Email"},
         "Name":{"shape":"AccountName"},
         "Status":{"shape":"AccountStatus"},
+        "State":{"shape":"AccountState"},
         "JoinedMethod":{"shape":"AccountJoinedMethod"},
         "JoinedTimestamp":{"shape":"Timestamp"}
       }
@@ -1192,6 +1193,16 @@
         "Message":{"shape":"ExceptionMessage"}
       },
       "exception":true
+    },
+    "AccountState":{
+      "type":"string",
+      "enum":[
+        "PENDING_ACTIVATION",
+        "ACTIVE",
+        "SUSPENDED",
+        "PENDING_CLOSURE",
+        "CLOSED"
+      ]
     },
     "AccountStatus":{
       "type":"string",

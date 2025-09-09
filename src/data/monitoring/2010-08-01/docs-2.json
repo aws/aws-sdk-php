@@ -7,6 +7,7 @@
     "DeleteDashboards": "<p>Deletes all dashboards that you specify. You can specify up to 100 dashboards to delete. If there is an error during this call, no dashboards are deleted.</p>",
     "DeleteInsightRules": "<p>Permanently deletes the specified Contributor Insights rules.</p> <p>If you create a rule, delete it, and then re-create it with the same name, historical data from the first time the rule was created might not be available.</p>",
     "DeleteMetricStream": "<p>Permanently deletes the metric stream that you specify.</p>",
+    "DescribeAlarmContributors": "<p>Returns the information of the current alarm contributors that are in <code>ALARM</code> state. This operation returns details about the individual time series that contribute to the alarm's state.</p>",
     "DescribeAlarmHistory": "<p>Retrieves the history for the specified alarm. You can filter the results by date range or item type. If an alarm name is not specified, the histories for either all metric alarms or all composite alarms are returned.</p> <p>CloudWatch retains the history of an alarm even if you delete the alarm.</p> <p>To use this operation and return information about a composite alarm, you must be signed on with the <code>cloudwatch:DescribeAlarmHistory</code> permission that is scoped to <code>*</code>. You can't return information about composite alarms if your <code>cloudwatch:DescribeAlarmHistory</code> permission has a narrower scope.</p>",
     "DescribeAlarms": "<p>Retrieves the specified alarms. You can filter the results by specifying a prefix for the alarm name, the alarm state, or a prefix for any action.</p> <p>To use this operation and return information about composite alarms, you must be signed on with the <code>cloudwatch:DescribeAlarms</code> permission that is scoped to <code>*</code>. You can't return information about composite alarms if your <code>cloudwatch:DescribeAlarms</code> permission has a narrower scope.</p>",
     "DescribeAlarmsForMetric": "<p>Retrieves the alarms for the specified metric. To filter the results, specify a statistic, period, or unit.</p> <p>This operation retrieves only standard alarms that are based on the specified metric. It does not return alarms based on math expressions that use the specified metric, or composite alarms that use the specified metric.</p>",
@@ -87,6 +88,18 @@
         "PutCompositeAlarmInput$ActionsSuppressor": "<p> Actions will be suppressed if the suppressor alarm is in the <code>ALARM</code> state. <code>ActionsSuppressor</code> can be an AlarmName or an Amazon Resource Name (ARN) from an existing alarm. </p>"
       }
     },
+    "AlarmContributor": {
+      "base": "<p>Represents an individual contributor to a multi-timeseries alarm, containing information about a specific time series and its contribution to the alarm's state.</p>",
+      "refs": {
+        "AlarmContributors$member": null
+      }
+    },
+    "AlarmContributors": {
+      "base": null,
+      "refs": {
+        "DescribeAlarmContributorsOutput$AlarmContributors": "<p>A list of alarm contributors that provide details about the individual time series contributing to the alarm's state.</p>"
+      }
+    },
     "AlarmDescription": {
       "base": null,
       "refs": {
@@ -114,6 +127,7 @@
         "AlarmHistoryItem$AlarmName": "<p>The descriptive name for the alarm.</p>",
         "AlarmNames$member": null,
         "CompositeAlarm$AlarmName": "<p>The name of the alarm.</p>",
+        "DescribeAlarmContributorsInput$AlarmName": "<p>The name of the alarm for which to retrieve contributor information.</p>",
         "DescribeAlarmHistoryInput$AlarmName": "<p>The name of the alarm.</p>",
         "DescribeAlarmsInput$ChildrenOfAlarmName": "<p>If you use this parameter and specify the name of a composite alarm, the operation returns information about the \"children\" alarms of the alarm you specify. These are the metric alarms and composite alarms referenced in the <code>AlarmRule</code> field of the composite alarm that you specify in <code>ChildrenOfAlarmName</code>. Information about the composite alarm that you name in <code>ChildrenOfAlarmName</code> is not returned.</p> <p>If you specify <code>ChildrenOfAlarmName</code>, you cannot specify any other parameters in the request except for <code>MaxRecords</code> and <code>NextToken</code>. If you do so, you receive a validation error.</p> <note> <p>Only the <code>Alarm Name</code>, <code>ARN</code>, <code>StateValue</code> (OK/ALARM/INSUFFICIENT_DATA), and <code>StateUpdatedTimestamp</code> information are returned by this operation when you use this parameter. To get complete information about these alarms, perform another <code>DescribeAlarms</code> operation and specify the parent alarm names in the <code>AlarmNames</code> parameter.</p> </note>",
         "DescribeAlarmsInput$ParentsOfAlarmName": "<p>If you use this parameter and specify the name of a metric or composite alarm, the operation returns information about the \"parent\" alarms of the alarm you specify. These are the composite alarms that have <code>AlarmRule</code> parameters that reference the alarm named in <code>ParentsOfAlarmName</code>. Information about the alarm that you specify in <code>ParentsOfAlarmName</code> is not returned.</p> <p>If you specify <code>ParentsOfAlarmName</code>, you cannot specify any other parameters in the request except for <code>MaxRecords</code> and <code>NextToken</code>. If you do so, you receive a validation error.</p> <note> <p>Only the Alarm Name and ARN are returned by this operation when you use this parameter. To get complete information about these alarms, perform another <code>DescribeAlarms</code> operation and specify the parent alarm names in the <code>AlarmNames</code> parameter.</p> </note>",
@@ -236,6 +250,18 @@
         "DescribeAnomalyDetectorsOutput$AnomalyDetectors": "<p>The list of anomaly detection models returned by the operation.</p>"
       }
     },
+    "AttributeName": {
+      "base": null,
+      "refs": {
+        "ContributorAttributes$key": null
+      }
+    },
+    "AttributeValue": {
+      "base": null,
+      "refs": {
+        "ContributorAttributes$value": null
+      }
+    },
     "AwsQueryErrorMessage": {
       "base": null,
       "refs": {
@@ -279,6 +305,21 @@
     "ConflictException": {
       "base": "<p>This operation attempted to create a resource that already exists.</p>",
       "refs": {}
+    },
+    "ContributorAttributes": {
+      "base": null,
+      "refs": {
+        "AlarmContributor$ContributorAttributes": "<p>A map of attributes that describe the contributor, such as metric dimensions and other identifying characteristics.</p>",
+        "AlarmHistoryItem$AlarmContributorAttributes": "<p>A map of attributes that describe the alarm contributor associated with this history item, providing context about the contributor's characteristics at the time of the event.</p>"
+      }
+    },
+    "ContributorId": {
+      "base": null,
+      "refs": {
+        "AlarmContributor$ContributorId": "<p>The unique identifier for this alarm contributor.</p>",
+        "AlarmHistoryItem$AlarmContributorId": "<p>The unique identifier of the alarm contributor associated with this history item, if applicable.</p>",
+        "DescribeAlarmHistoryInput$AlarmContributorId": "<p>The unique identifier of a specific alarm contributor to filter the alarm history results.</p>"
+      }
     },
     "Counts": {
       "base": null,
@@ -451,6 +492,14 @@
       "refs": {}
     },
     "DeleteMetricStreamOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAlarmContributorsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeAlarmContributorsOutput": {
       "base": null,
       "refs": {}
     },
@@ -914,7 +963,7 @@
       "base": null,
       "refs": {
         "InsightRule$ApplyOnTransformedLogs": "<p>Displays whether the rule is evaluated on the transformed versions of logs, for log groups that have <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html\">Log transformation</a> enabled. If this is <code>false</code>, log events are evaluated before they are transformed.</p>",
-        "PutInsightRuleInput$ApplyOnTransformedLogs": "<p>Specify <code>true</code> to have this rule evalute log events after they have been transformed by <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html\">Log transformation</a>. If you specify <code>true</code>, then the log events in log groups that have transformers will be evaluated by Contributor Insights after being transformed. Log groups that don't have transformers will still have their original log events evaluated by Contributor Insights.</p> <p>The default is <code>false</code> </p> <note> <p>If a log group has a transformer, and transformation fails for some log events, those log events won't be evaluated by Contributor Insights. For information about investigating log transformation failures, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Transformation-Errors-Metrics.html\">Transformation metrics and errors</a>.</p> </note>"
+        "PutInsightRuleInput$ApplyOnTransformedLogs": "<p>Specify <code>true</code> to have this rule evaluate log events after they have been transformed by <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html\">Log transformation</a>. If you specify <code>true</code>, then the log events in log groups that have transformers will be evaluated by Contributor Insights after being transformed. Log groups that don't have transformers will still have their original log events evaluated by Contributor Insights.</p> <p>The default is <code>false</code> </p> <note> <p>If a log group has a transformer, and transformation fails for some log events, those log events won't be evaluated by Contributor Insights. For information about investigating log transformation failures, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Transformation-Errors-Metrics.html\">Transformation metrics and errors</a>.</p> </note>"
       }
     },
     "InsightRuleOrderBy": {
@@ -1400,6 +1449,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "DescribeAlarmContributorsInput$NextToken": "<p>The token returned by a previous call to indicate that there is more data available.</p>",
+        "DescribeAlarmContributorsOutput$NextToken": "<p>The token that marks the start of the next batch of returned results.</p>",
         "DescribeAlarmHistoryInput$NextToken": "<p>The token returned by a previous call to indicate that there is more data available.</p>",
         "DescribeAlarmHistoryOutput$NextToken": "<p>The token that marks the start of the next batch of returned results.</p>",
         "DescribeAlarmsInput$NextToken": "<p>The token returned by a previous call to indicate that there is more data available.</p>",
@@ -1623,6 +1674,7 @@
     "StateReason": {
       "base": null,
       "refs": {
+        "AlarmContributor$StateReason": "<p>An explanation for the contributor's current state, providing context about why it is in its current condition.</p>",
         "CompositeAlarm$StateReason": "<p>An explanation for the alarm state, in text format.</p>",
         "MetricAlarm$StateReason": "<p>An explanation for the alarm state, in text format.</p>",
         "SetAlarmStateInput$StateReason": "<p>The reason that this alarm is set to this specific state, in text format.</p>"
@@ -1763,6 +1815,7 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AlarmContributor$StateTransitionedTimestamp": "<p>The timestamp when the contributor last transitioned to its current state.</p>",
         "AlarmHistoryItem$Timestamp": "<p>The time stamp for the alarm history item.</p>",
         "CompositeAlarm$AlarmConfigurationUpdatedTimestamp": "<p>The time stamp of the last update to the alarm configuration.</p>",
         "CompositeAlarm$StateUpdatedTimestamp": "<p>Tracks the timestamp of any state update, even if <code>StateValue</code> doesn't change.</p>",

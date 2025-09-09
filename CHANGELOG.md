@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Added WaitForTransitioningInstances parameter to the CancelInstanceRefresh API, allowing the caller to cancel an instance refresh without waiting for on-going launches and terminations.
+* `Aws\DataZone` - Adds support for custom blueprints
+* `Aws\MediaPackageV2` - Added CUE tag SCTE output to MediaPackageV2 HLS and LL-HLS manifests.
+* `Aws\SageMaker` - Released IPv6 support with dual-stack domain options on SageMaker Studio and introduced support for p6-b200.48xlarge instance type on SageMaker Studio for JupyterLab and CodeEditor applications.
+* `Aws\CloudWatch` - Added a new API - DescribeAlarmContributors API, to retrieve alarm contributors in ALARM state. Added support in DescribeAlarmHistory API to query alarm contributor history
+* `Aws\Connect` - SDK release for user defined predefined attributes.
+* `Aws\Organizations` - Documentation updates for AWS Organizations APIs.
+
 ## 3.356.13 - 2025-09-08
 
 * `Aws\IoTSiteWise` - Add ComputationModelVersion support in IoT SiteWise APIs

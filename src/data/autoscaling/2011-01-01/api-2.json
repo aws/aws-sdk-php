@@ -1437,6 +1437,7 @@
       "type":"list",
       "member":{"shape":"BlockDeviceMapping"}
     },
+    "BooleanType":{"type":"boolean"},
     "BurstablePerformance":{
       "type":"string",
       "enum":[
@@ -1455,7 +1456,8 @@
       "type":"structure",
       "required":["AutoScalingGroupName"],
       "members":{
-        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"}
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "WaitForTransitioningInstances":{"shape":"BooleanType"}
       }
     },
     "CapacityDistributionStrategy":{

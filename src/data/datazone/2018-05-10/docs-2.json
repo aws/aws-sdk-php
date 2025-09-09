@@ -8,25 +8,26 @@
     "AddPolicyGrant": "<p>Adds a policy grant (an authorization policy) to a specified entity, including domain units, environment blueprint configurations, or environment profiles.</p>",
     "AssociateEnvironmentRole": "<p>Associates the environment role in Amazon DataZone.</p>",
     "AssociateGovernedTerms": "<p>Associates governed terms with an asset.</p>",
-    "CancelMetadataGenerationRun": "<p>Cancels the metadata generation run.</p>",
+    "CancelMetadataGenerationRun": "<p>Cancels the metadata generation run.</p> <p>Prerequisites:</p> <ul> <li> <p>The run must exist and be in a cancelable status (e.g., SUBMITTED, IN_PROGRESS). </p> </li> <li> <p>Runs in SUCCEEDED status cannot be cancelled.</p> </li> <li> <p>User must have access to the run and cancel permissions.</p> </li> </ul>",
     "CancelSubscription": "<p>Cancels the subscription to the specified asset.</p>",
     "CreateAccountPool": "<p>Creates an account pool. </p>",
-    "CreateAsset": "<p>Creates an asset in Amazon DataZone catalog.</p>",
-    "CreateAssetFilter": "<p>Creates a data asset filter.</p>",
-    "CreateAssetRevision": "<p>Creates a revision of the asset.</p>",
-    "CreateAssetType": "<p>Creates a custom asset type.</p>",
+    "CreateAsset": "<p>Creates an asset in Amazon DataZone catalog.</p> <p>Before creating assets, make sure that the following requirements are met:</p> <ul> <li> <p> <code>--domain-identifier</code> must refer to an existing domain.</p> </li> <li> <p> <code>--owning-project-identifier</code> must be a valid project within the domain.</p> </li> <li> <p>Asset type must be created beforehand using <code>create-asset-type</code>, or be a supported system-defined type. For more information, see <a href=\"https://docs.aws.amazon.com/cli/latest/reference/datazone/create-asset-type.html\">create-asset-type</a>.</p> </li> <li> <p> <code>--type-revision</code> (if used) must match a valid revision of the asset type.</p> </li> <li> <p>Form type must exist and be associated with the asset type. Use <code>create-form-type</code> to define. For more information, see <a href=\"https://docs.aws.amazon.com/cli/latest/reference/datazone/create-form-type.html\">create-form-type</a>.</p> </li> <li> <p>Form content must include all required fields as per the form schema (e.g., <code>bucketArn</code>).</p> </li> </ul> <p>You must invoke the following pre-requisite commands before invoking this API:</p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/datazone/latest/APIReference/API_CreateFormType.html\">CreateFormType</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/datazone/latest/APIReference/API_CreateAssetType.html\">CreateAssetType</a> </p> </li> </ul>",
+    "CreateAssetFilter": "<p>Creates a data asset filter.</p> <p>Asset filters provide a sophisticated way to create controlled views of data assets by selecting specific columns or applying row-level filters. This capability is crucial for organizations that need to share data while maintaining security and privacy controls. For example, your database might be filtered to show only non-PII fields to certain users, or sales data might be filtered by region for different regional teams. Asset filters enable fine-grained access control while maintaining a single source of truth.</p> <p>Prerequisites:</p> <ul> <li> <p>A valid domain (<code>--domain-identifier</code>) must exist. </p> </li> <li> <p>A data asset (<code>--asset-identifier</code>) must already be created under that domain.</p> </li> <li> <p>The asset must have the referenced columns available in its schema for column-based filtering.</p> </li> <li> <p>You cannot specify both (<code>columnConfiguration</code>, <code>rowConfiguration</code>)at the same time.</p> </li> </ul>",
+    "CreateAssetRevision": "<p>Creates a revision of the asset.</p> <p>Asset revisions represent new versions of existing assets, capturing changes to either the underlying data or its metadata. They maintain a historical record of how assets evolve over time, who made changes, and when those changes occurred. This versioning capability is crucial for governance and compliance, allowing organizations to track changes, understand their impact, and roll back if necessary.</p> <p>Prerequisites:</p> <ul> <li> <p>Asset must already exist in the domain with identifier. </p> </li> <li> <p>The form type with correct revision must be registered in the same domain.</p> </li> <li> <p>The form content must include all required fields (e.g., <code>bucketArn</code> for <code>S3ObjectCollectionForm</code>).</p> </li> <li> <p>The owning project of the original asset must still exist and be active.</p> </li> <li> <p>User must have write access to the project and domain.</p> </li> </ul>",
+    "CreateAssetType": "<p>Creates a custom asset type.</p> <p>Prerequisites:</p> <ul> <li> <p>The form type with <code>typeIdentifier</code> and <code>typeRevision</code> must exist and be published. </p> </li> <li> <p>You must have <code>CreateAssetType</code> permissions.</p> </li> <li> <p>The domain-identifier and owning-project-identifier must be valid and active.</p> </li> <li> <p>The name of the asset type must be unique within the domain — duplicate names will cause failure.</p> </li> <li> <p>JSON input must be valid — incorrect formatting causes Invalid JSON errors.</p> </li> </ul>",
     "CreateConnection": "<p>Creates a new connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
-    "CreateDataProduct": "<p>Creates a data product.</p>",
-    "CreateDataProductRevision": "<p>Creates a data product revision.</p>",
+    "CreateDataProduct": "<p>Creates a data product.</p> <p>A data product is a comprehensive package that combines data assets with their associated metadata, documentation, and access controls. It's designed to serve specific business needs or use cases, making it easier for users to find and consume data appropriately. Data products include important information about data quality, freshness, and usage guidelines, effectively bridging the gap between data producers and consumers while ensuring proper governance.</p> <p>Prerequisites:</p> <ul> <li> <p>The domain must exist and be accessible. </p> </li> <li> <p>The owning project must be valid and active.</p> </li> <li> <p>The name must be unique within the domain (no existing data product with the same name).</p> </li> <li> <p>User must have create permissions for data products in the project.</p> </li> <li> <p>The domain must have Amazon DataZone publishing enabled.</p> </li> </ul>",
+    "CreateDataProductRevision": "<p>Creates a data product revision.</p> <p>Prerequisites:</p> <ul> <li> <p>The original data product must exist in the given domain. </p> </li> <li> <p>User must have permissions on the data product.</p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>The new revision name must comply with naming constraints (if required).</p> </li> </ul>",
     "CreateDataSource": "<p>Creates an Amazon DataZone data source.</p>",
     "CreateDomain": "<p>Creates an Amazon DataZone domain.</p>",
     "CreateDomainUnit": "<p>Creates a domain unit in Amazon DataZone.</p>",
     "CreateEnvironment": "<p>Create an Amazon DataZone environment.</p>",
     "CreateEnvironmentAction": "<p>Creates an action for the environment, for example, creates a console link for an analytics tool that is available in this environment.</p>",
+    "CreateEnvironmentBlueprint": "<p>Creates a Amazon DataZone blueprint.</p>",
     "CreateEnvironmentProfile": "<p>Creates an Amazon DataZone environment profile.</p>",
-    "CreateFormType": "<p>Creates a metadata form type.</p>",
-    "CreateGlossary": "<p>Creates an Amazon DataZone business glossary.</p>",
-    "CreateGlossaryTerm": "<p>Creates a business glossary term.</p>",
+    "CreateFormType": "<p>Creates a metadata form type.</p> <p>Prerequisites:</p> <ul> <li> <p>The domain must exist and be in an <code>ENABLED</code> state. </p> </li> <li> <p>The owning project must exist and be accessible.</p> </li> <li> <p>The name must be unique within the domain.</p> </li> </ul>",
+    "CreateGlossary": "<p>Creates an Amazon DataZone business glossary.</p> <p>Specifies that this is a create glossary policy.</p> <p>A glossary serves as the central repository for business terminology and definitions within an organization. It helps establish and maintain a common language across different departments and teams, reducing miscommunication and ensuring consistent interpretation of business concepts. Glossaries can include hierarchical relationships between terms, cross-references, and links to actual data assets, making them invaluable for both business users and technical teams trying to understand and use data correctly.</p> <p>Prerequisites:</p> <ul> <li> <p>Domain must exist and be in an active state. </p> </li> <li> <p>Owning project must exist and be accessible by the caller.</p> </li> <li> <p>The glossary name must be unique within the domain.</p> </li> </ul>",
+    "CreateGlossaryTerm": "<p>Creates a business glossary term.</p> <p>A glossary term represents an individual entry within the Amazon DataZone glossary, serving as a standardized definition for a specific business concept or data element. Each term can include rich metadata such as detailed definitions, synonyms, related terms, and usage examples. Glossary terms can be linked directly to data assets, providing business context to technical data elements. This linking capability helps users understand the business meaning of data fields and ensures consistent interpretation across different systems and teams. Terms can also have relationships with other terms, creating a semantic network that reflects the complexity of business concepts.</p> <p>Prerequisites:</p> <ul> <li> <p>Domain must exist. </p> </li> <li> <p>Glossary must exist and be in an ENABLED state.</p> </li> <li> <p>The term name must be unique within the glossary.</p> </li> <li> <p>Ensure term does not conflict with existing terms in hierarchy.</p> </li> </ul>",
     "CreateGroupProfile": "<p>Creates a group profile in Amazon DataZone.</p>",
     "CreateListingChangeSet": "<p>Publishes a listing (a record of an asset at a given time) or removes a listing from the catalog. </p>",
     "CreateProject": "<p>Creates an Amazon DataZone project.</p>",
@@ -38,21 +39,22 @@
     "CreateSubscriptionTarget": "<p>Creates a subscription target in Amazon DataZone.</p>",
     "CreateUserProfile": "<p>Creates a user profile in Amazon DataZone.</p>",
     "DeleteAccountPool": "<p>Deletes an account pool.</p>",
-    "DeleteAsset": "<p>Deletes an asset in Amazon DataZone.</p>",
-    "DeleteAssetFilter": "<p>Deletes an asset filter.</p>",
-    "DeleteAssetType": "<p>Deletes an asset type in Amazon DataZone.</p>",
+    "DeleteAsset": "<p>Deletes an asset in Amazon DataZone.</p> <ul> <li> <p>--domain-identifier must refer to a valid and existing domain. </p> </li> <li> <p>--identifier must refer to an existing asset in the specified domain.</p> </li> <li> <p>Asset must not be referenced in any existing asset filters.</p> </li> <li> <p>Asset must not be linked to any draft or published data product.</p> </li> <li> <p>User must have delete permissions for the domain and project.</p> </li> </ul>",
+    "DeleteAssetFilter": "<p>Deletes an asset filter.</p> <p>Prerequisites:</p> <ul> <li> <p>The asset filter must exist. </p> </li> <li> <p>The domain and asset must not have been deleted.</p> </li> <li> <p>Ensure the --identifier refers to a valid filter ID.</p> </li> </ul>",
+    "DeleteAssetType": "<p>Deletes an asset type in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The asset type must exist in the domain. </p> </li> <li> <p>You must have DeleteAssetType permission.</p> </li> <li> <p>The asset type must not be in use (e.g., assigned to any asset). If used, deletion will fail.</p> </li> <li> <p>You should retrieve the asset type using get-asset-type to confirm its presence before deletion.</p> </li> </ul>",
     "DeleteConnection": "<p>Deletes and connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
-    "DeleteDataProduct": "<p>Deletes a data product in Amazon DataZone.</p>",
+    "DeleteDataProduct": "<p>Deletes a data product in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product must exist and not be deleted or archived. </p> </li> <li> <p>The user must have delete permissions for the data product.</p> </li> <li> <p>Ensure there are no active dependencies (e.g., published links, assets using the product).</p> </li> <li> <p>Domain and project must be active.</p> </li> </ul>",
     "DeleteDataSource": "<p>Deletes a data source in Amazon DataZone.</p>",
     "DeleteDomain": "<p>Deletes a Amazon DataZone domain.</p>",
     "DeleteDomainUnit": "<p>Deletes a domain unit.</p>",
     "DeleteEnvironment": "<p>Deletes an environment in Amazon DataZone.</p>",
     "DeleteEnvironmentAction": "<p>Deletes an action for the environment, for example, deletes a console link for an analytics tool that is available in this environment.</p>",
+    "DeleteEnvironmentBlueprint": "<p>Deletes a blueprint in Amazon DataZone.</p>",
     "DeleteEnvironmentBlueprintConfiguration": "<p>Deletes the blueprint configuration in Amazon DataZone.</p>",
     "DeleteEnvironmentProfile": "<p>Deletes an environment profile in Amazon DataZone.</p>",
-    "DeleteFormType": "<p>Delets and metadata form type in Amazon DataZone.</p>",
-    "DeleteGlossary": "<p>Deletes a business glossary in Amazon DataZone.</p>",
-    "DeleteGlossaryTerm": "<p>Deletes a business glossary term in Amazon DataZone.</p>",
+    "DeleteFormType": "<p>Deletes and metadata form type in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The form type must exist in the domain. </p> </li> <li> <p>The form type must not be in use by any asset types or assets.</p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>User must have delete permissions on the form type.</p> </li> <li> <p>Any dependencies (such as linked asset types) must be removed first.</p> </li> </ul>",
+    "DeleteGlossary": "<p>Deletes a business glossary in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The glossary must be in DISABLED state. </p> </li> <li> <p>The glossary must not have any glossary terms associated with it.</p> </li> <li> <p>The glossary must exist in the specified domain.</p> </li> <li> <p>The caller must have the <code>datazone:DeleteGlossary</code> permission in the domain and glossary.</p> </li> <li> <p>There should be no active assets or metadata linked to the glossary.</p> </li> </ul>",
+    "DeleteGlossaryTerm": "<p>Deletes a business glossary term in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Glossary term must exist and be active. </p> </li> <li> <p>The term must not be linked to other assets or child terms.</p> </li> <li> <p>Caller must have delete permissions in the domain/glossary.</p> </li> <li> <p>Ensure all associations (such as to assets or parent terms) are removed before deletion.</p> </li> </ul>",
     "DeleteListing": "<p>Deletes a listing (a record of an asset at a given time).</p>",
     "DeleteProject": "<p>Deletes a project in Amazon DataZone. </p>",
     "DeleteProjectMembership": "<p>Deletes project membership in Amazon DataZone.</p>",
@@ -65,11 +67,11 @@
     "DisassociateEnvironmentRole": "<p>Disassociates the environment role in Amazon DataZone.</p>",
     "DisassociateGovernedTerms": "<p>Disassociates restricted terms from an asset.</p>",
     "GetAccountPool": "<p>Gets the details of the account pool.</p>",
-    "GetAsset": "<p>Gets an Amazon DataZone asset.</p>",
-    "GetAssetFilter": "<p>Gets an asset filter.</p>",
-    "GetAssetType": "<p>Gets an Amazon DataZone asset type.</p>",
+    "GetAsset": "<p>Gets an Amazon DataZone asset.</p> <p>An asset is the fundamental building block in Amazon DataZone, representing any data resource that needs to be cataloged and managed. It can take many forms, from Amazon S3 buckets and database tables to dashboards and machine learning models. Each asset contains comprehensive metadata about the resource, including its location, schema, ownership, and lineage information. Assets are essential for organizing and managing data resources across an organization, making them discoverable and usable while maintaining proper governance.</p> <p>Before using the Amazon DataZone GetAsset command, ensure the following prerequisites are met:</p> <ul> <li> <p>Domain identifier must exist and be valid</p> </li> <li> <p>Asset identifier must exist</p> </li> <li> <p>User must have the required permissions to perform the action</p> </li> </ul>",
+    "GetAssetFilter": "<p>Gets an asset filter.</p> <p>Prerequisites:</p> <ul> <li> <p>Domain (<code>--domain-identifier</code>), asset (<code>--asset-identifier</code>), and filter (<code>--identifier</code>) must all exist. </p> </li> <li> <p>The asset filter should not have been deleted.</p> </li> <li> <p>The asset must still exist (since the filter is linked to it).</p> </li> </ul>",
+    "GetAssetType": "<p>Gets an Amazon DataZone asset type.</p> <p>Asset types define the categories and characteristics of different kinds of data assets within Amazon DataZone.. They determine what metadata fields are required, what operations are possible, and how the asset integrates with other Amazon Web Services services. Asset types can range from built-in types like Amazon S3 buckets and Amazon Web Services Glue tables to custom types defined for specific organizational needs. Understanding asset types is crucial for properly organizing and managing different kinds of data resources.</p> <p>Prerequisites:</p> <ul> <li> <p>The asset type with identifier must exist in the domain. ResourceNotFoundException.</p> </li> <li> <p>You must have the GetAssetType permission.</p> </li> <li> <p>Ensure the domain-identifier value is correct and accessible.</p> </li> </ul>",
     "GetConnection": "<p>Gets a connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
-    "GetDataProduct": "<p>Gets the data product.</p>",
+    "GetDataProduct": "<p>Gets the data product.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product ID must exist. </p> </li> <li> <p>The domain must be valid and accessible.</p> </li> <li> <p>User must have read or discovery permissions for the data product.</p> </li> </ul>",
     "GetDataSource": "<p>Gets an Amazon DataZone data source.</p>",
     "GetDataSourceRun": "<p>Gets an Amazon DataZone data source run.</p>",
     "GetDomain": "<p>Gets an Amazon DataZone domain.</p>",
@@ -80,16 +82,16 @@
     "GetEnvironmentBlueprintConfiguration": "<p>Gets the blueprint configuration in Amazon DataZone.</p>",
     "GetEnvironmentCredentials": "<p>Gets the credentials of an environment in Amazon DataZone.</p>",
     "GetEnvironmentProfile": "<p>Gets an evinronment profile in Amazon DataZone.</p>",
-    "GetFormType": "<p>Gets a metadata form type in Amazon DataZone.</p>",
-    "GetGlossary": "<p>Gets a business glossary in Amazon DataZone.</p>",
-    "GetGlossaryTerm": "<p>Gets a business glossary term in Amazon DataZone.</p>",
+    "GetFormType": "<p>Gets a metadata form type in Amazon DataZone.</p> <p>Form types define the structure and validation rules for collecting metadata about assets in Amazon DataZone. They act as templates that ensure consistent metadata capture across similar types of assets, while allowing for customization to meet specific organizational needs. Form types can include required fields, validation rules, and dependencies, helping maintain high-quality metadata that makes data assets more discoverable and usable.</p> <ul> <li> <p>The form type with the specified identifier must exist in the given domain. </p> </li> <li> <p>The domain must be valid and active.</p> </li> <li> <p>User must have permission on the form type.</p> </li> <li> <p>The form type should not be deleted or in an invalid state.</p> </li> </ul>",
+    "GetGlossary": "<p>Gets a business glossary in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The specified glossary ID must exist and be associated with the given domain. </p> </li> <li> <p>The caller must have the <code>datazone:GetGlossary</code> permission on the domain.</p> </li> </ul>",
+    "GetGlossaryTerm": "<p>Gets a business glossary term in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Glossary term with identifier must exist in the domain. </p> </li> <li> <p>User must have permission on the glossary term.</p> </li> <li> <p>Domain must be accessible and active.</p> </li> </ul>",
     "GetGroupProfile": "<p>Gets a group profile in Amazon DataZone.</p>",
     "GetIamPortalLoginUrl": "<p>Gets the data portal URL for the specified Amazon DataZone domain.</p>",
     "GetJobRun": "<p>The details of the job run.</p>",
     "GetLineageEvent": "<p>Describes the lineage event.</p>",
     "GetLineageNode": "<p>Gets the data lineage node.</p>",
     "GetListing": "<p>Gets a listing (a record of an asset at a given time). If you specify a listing version, only details that are specific to that version are returned.</p>",
-    "GetMetadataGenerationRun": "<p>Gets a metadata generation run in Amazon DataZone.</p>",
+    "GetMetadataGenerationRun": "<p>Gets a metadata generation run in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Valid domain and run identifier. </p> </li> <li> <p>The metadata generation run must exist.</p> </li> <li> <p>User must have read access to the metadata run.</p> </li> </ul>",
     "GetProject": "<p>Gets a project in Amazon DataZone.</p>",
     "GetProjectProfile": "<p>The details of the project profile.</p>",
     "GetRule": "<p>Gets the details of a rule in Amazon DataZone. A rule is a formal agreement that enforces specific requirements across user workflows (e.g., publishing assets to the catalog, requesting subscriptions, creating projects) within the Amazon DataZone data portal. These rules help maintain consistency, ensure compliance, and uphold governance standards in data management processes. For instance, a metadata enforcement rule can specify the required information for creating a subscription request or publishing a data asset to the catalog, ensuring alignment with organizational standards.</p>",
@@ -101,10 +103,10 @@
     "GetUserProfile": "<p>Gets a user profile in Amazon DataZone.</p>",
     "ListAccountPools": "<p>Lists existing account pools.</p>",
     "ListAccountsInAccountPool": "<p>Lists the accounts in the specified account pool.</p>",
-    "ListAssetFilters": "<p>Lists asset filters.</p>",
-    "ListAssetRevisions": "<p>Lists the revisions for the asset.</p>",
+    "ListAssetFilters": "<p>Lists asset filters.</p> <p>Prerequisites:</p> <ul> <li> <p>A valid domain and asset must exist. </p> </li> <li> <p>The asset must have at least one filter created to return results. </p> </li> </ul>",
+    "ListAssetRevisions": "<p>Lists the revisions for the asset.</p> <p>Prerequisites:</p> <ul> <li> <p>The asset must exist in the domain. </p> </li> <li> <p>There must be at least one revision of the asset (which happens automatically after creation).</p> </li> <li> <p>The domain must be valid and active.</p> </li> <li> <p>User must have permissions on the asset and domain.</p> </li> </ul>",
     "ListConnections": "<p>Lists connections. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
-    "ListDataProductRevisions": "<p>Lists data product revisions.</p>",
+    "ListDataProductRevisions": "<p>Lists data product revisions.</p> <p>Prerequisites:</p> <ul> <li> <p>The data product ID must exist within the domain. </p> </li> <li> <p>User must have view permissions on the data product.</p> </li> <li> <p>The domain must be in a valid and accessible state.</p> </li> </ul>",
     "ListDataSourceRunActivities": "<p>Lists data source run activities.</p>",
     "ListDataSourceRuns": "<p>Lists data source runs in Amazon DataZone.</p>",
     "ListDataSources": "<p>Lists data sources in Amazon DataZone.</p>",
@@ -119,7 +121,7 @@
     "ListJobRuns": "<p>Lists job runs.</p>",
     "ListLineageEvents": "<p>Lists lineage events.</p>",
     "ListLineageNodeHistory": "<p>Lists the history of the specified data lineage node.</p>",
-    "ListMetadataGenerationRuns": "<p>Lists all metadata generation runs.</p>",
+    "ListMetadataGenerationRuns": "<p>Lists all metadata generation runs.</p> <p>Metadata generation runs represent automated processes that leverage AI/ML capabilities to create or enhance asset metadata at scale. This feature helps organizations maintain comprehensive and consistent metadata across large numbers of assets without manual intervention. It can automatically generate business descriptions, tags, and other metadata elements, significantly reducing the time and effort required for metadata management while improving consistency and completeness.</p> <p>Prerequisites:</p> <ul> <li> <p>Valid domain identifier. </p> </li> <li> <p>User must have access to metadata generation runs in the domain.</p> </li> </ul>",
     "ListNotifications": "<p>Lists all Amazon DataZone notifications.</p>",
     "ListPolicyGrants": "<p>Lists policy grants.</p>",
     "ListProjectMemberships": "<p>Lists all members of the specified project.</p>",
@@ -140,26 +142,27 @@
     "RemoveEntityOwner": "<p>Removes an owner from an entity.</p>",
     "RemovePolicyGrant": "<p>Removes a policy grant.</p>",
     "RevokeSubscription": "<p>Revokes a specified subscription in Amazon DataZone.</p>",
-    "Search": "<p>Searches for assets in Amazon DataZone.</p>",
+    "Search": "<p>Searches for assets in Amazon DataZone.</p> <p>Search in Amazon DataZone is a powerful capability that enables users to discover and explore data assets, glossary terms, and data products across their organization. It provides both basic and advanced search functionality, allowing users to find resources based on names, descriptions, metadata, and other attributes. Search can be scoped to specific types of resources (like assets, glossary terms, or data products) and can be filtered using various criteria such as creation date, owner, or status. The search functionality is essential for making the wealth of data resources in an organization discoverable and usable, helping users find the right data for their needs quickly and efficiently.</p> <p>Many search commands in Amazon DataZone are paginated, including <code>search</code> and <code>search-types</code>. When the result set is large, Amazon DataZone returns a <code>nextToken</code> in the response. This token can be used to retrieve the next page of results. </p> <p>Prerequisites:</p> <ul> <li> <p>The --domain-identifier must refer to an existing Amazon DataZone domain. </p> </li> <li> <p>--search-scope must be one of: ASSET, GLOSSARY_TERM, DATA_PRODUCT, or GLOSSARY.</p> </li> <li> <p>The user must have search permissions in the specified domain.</p> </li> <li> <p>If using --filters, ensure that the JSON is well-formed and that each filter includes valid attribute and value keys. </p> </li> <li> <p>For paginated results, be prepared to use --next-token to fetch additional pages.</p> </li> </ul>",
     "SearchGroupProfiles": "<p>Searches group profiles in Amazon DataZone.</p>",
     "SearchListings": "<p>Searches listings (records of an asset at a given time) in Amazon DataZone.</p>",
-    "SearchTypes": "<p>Searches for types in Amazon DataZone.</p>",
+    "SearchTypes": "<p>Searches for types in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The --domain-identifier must refer to an existing Amazon DataZone domain. </p> </li> <li> <p>--search-scope must be one of the valid values including: ASSET_TYPE, GLOSSARY_TERM_TYPE, DATA_PRODUCT_TYPE.</p> </li> <li> <p>The --managed flag must be present without a value.</p> </li> <li> <p>The user must have permissions for form or asset types in the domain.</p> </li> <li> <p>If using --filters, ensure that the JSON is valid.</p> </li> <li> <p>Filters contain correct structure (attribute, value, operator).</p> </li> </ul>",
     "SearchUserProfiles": "<p>Searches user profiles in Amazon DataZone.</p>",
     "StartDataSourceRun": "<p>Start the run of the specified data source in Amazon DataZone.</p>",
-    "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p>",
+    "StartMetadataGenerationRun": "<p>Starts the metadata generation run.</p> <p>Prerequisites:</p> <ul> <li> <p>Asset must be created and belong to the specified domain and project. </p> </li> <li> <p>Asset type must be supported for metadata generation (e.g., Amazon Web Services Glue table).</p> </li> <li> <p>Asset must have a structured schema with valid rows and columns.</p> </li> <li> <p>Valid values for --type: BUSINESS_DESCRIPTIONS, BUSINESS_NAMES.</p> </li> <li> <p>The user must have permission to run metadata generation in the domain/project.</p> </li> </ul>",
     "TagResource": "<p>Tags a resource in Amazon DataZone.</p>",
     "UntagResource": "<p>Untags a resource in Amazon DataZone.</p>",
     "UpdateAccountPool": "<p>Updates the account pool.</p>",
-    "UpdateAssetFilter": "<p>Updates an asset filter.</p>",
+    "UpdateAssetFilter": "<p>Updates an asset filter.</p> <p>Prerequisites:</p> <ul> <li> <p>The domain, asset, and asset filter identifier must all exist. </p> </li> <li> <p>The asset must contain the columns being referenced in the update.</p> </li> <li> <p>If applying a row filter, ensure the column referenced in the expression exists in the asset schema.</p> </li> </ul>",
     "UpdateConnection": "<p>Updates a connection. In Amazon DataZone, a connection enables you to connect your resources (domains, projects, and environments) to external resources and services.</p>",
     "UpdateDataSource": "<p>Updates the specified data source in Amazon DataZone.</p>",
     "UpdateDomain": "<p>Updates a Amazon DataZone domain.</p>",
     "UpdateDomainUnit": "<p>Updates the domain unit.</p>",
     "UpdateEnvironment": "<p>Updates the specified environment in Amazon DataZone.</p>",
     "UpdateEnvironmentAction": "<p>Updates an environment action.</p>",
+    "UpdateEnvironmentBlueprint": "<p>Updates an environment blueprint in Amazon DataZone.</p>",
     "UpdateEnvironmentProfile": "<p>Updates the specified environment profile in Amazon DataZone.</p>",
-    "UpdateGlossary": "<p>Updates the business glossary in Amazon DataZone.</p>",
-    "UpdateGlossaryTerm": "<p>Updates a business glossary term in Amazon DataZone.</p>",
+    "UpdateGlossary": "<p>Updates the business glossary in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>The glossary must exist in the given domain. </p> </li> <li> <p>The caller must have the <code>datazone:UpdateGlossary</code> permission to update it.</p> </li> <li> <p>When updating the name, the new name must be unique within the domain.</p> </li> <li> <p>The glossary must not be deleted or in a terminal state.</p> </li> </ul>",
+    "UpdateGlossaryTerm": "<p>Updates a business glossary term in Amazon DataZone.</p> <p>Prerequisites:</p> <ul> <li> <p>Glossary term must exist in the specified domain. </p> </li> <li> <p>New name must not conflict with existing terms in the same glossary.</p> </li> <li> <p>User must have permissions on the term.</p> </li> <li> <p>The term must not be in DELETED status.</p> </li> </ul>",
     "UpdateGroupProfile": "<p>Updates the specified group profile in Amazon DataZone.</p>",
     "UpdateProject": "<p>Updates the specified project in Amazon DataZone.</p>",
     "UpdateProjectProfile": "<p>Updates a project profile.</p>",
@@ -902,6 +905,7 @@
         "CreateProjectPolicyGrantDetail$includeChildDomainUnits": "<p>Specifies whether the policy grant is applied to child domain units.</p>",
         "CustomParameter$isEditable": "<p>Specifies whether the parameter is editable.</p>",
         "CustomParameter$isOptional": "<p>Specifies whether the custom parameter is optional.</p>",
+        "CustomParameter$isUpdateSupported": "<p>Specifies whether a parameter value can be updated after creation. </p>",
         "DeleteDataSourceInput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
         "DeleteDataSourceOutput$publishOnImport": "<p>Specifies whether the assets that this data source creates in the inventory are to be also automatically published to the catalog.</p>",
         "DeleteDataSourceOutput$retainPermissionsOnRevokeFailure": "<p>Specifies that the granted permissions are retained in case of a self-subscribe functionality failure for a data source.</p>",
@@ -1301,6 +1305,14 @@
       "base": null,
       "refs": {}
     },
+    "CreateEnvironmentBlueprintInput": {
+      "base": null,
+      "refs": {}
+    },
+    "CreateEnvironmentBlueprintOutput": {
+      "base": null,
+      "refs": {}
+    },
     "CreateEnvironmentInput": {
       "base": null,
       "refs": {}
@@ -1348,7 +1360,7 @@
     "CreateGlossaryPolicyGrantDetail": {
       "base": "<p>The details of the policy grant.</p>",
       "refs": {
-        "PolicyGrantDetail$createGlossary": "<p>Specifies that this is a create glossary policy.</p>"
+        "PolicyGrantDetail$createGlossary": "<p> Specifies that this is a create glossary policy.</p>"
       }
     },
     "CreateGlossaryTermInput": {
@@ -1666,11 +1678,15 @@
     "CustomParameterList": {
       "base": null,
       "refs": {
+        "CreateEnvironmentBlueprintInput$userParameters": "<p>The user parameters of this Amazon DataZone blueprint.</p>",
+        "CreateEnvironmentBlueprintOutput$userParameters": "<p>The user parameters of this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentOutput$userParameters": "<p>The user parameters of this Amazon DataZone environment.</p>",
         "CreateEnvironmentProfileOutput$userParameters": "<p>The user parameters of this Amazon DataZone environment profile.</p>",
         "GetEnvironmentBlueprintOutput$userParameters": "<p>The user parameters of this blueprint.</p>",
         "GetEnvironmentOutput$userParameters": "<p>The user parameters of this Amazon DataZone environment.</p>",
         "GetEnvironmentProfileOutput$userParameters": "<p>The user parameters of the environment profile.</p>",
+        "UpdateEnvironmentBlueprintInput$userParameters": "<p>The user parameters to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
+        "UpdateEnvironmentBlueprintOutput$userParameters": "<p>The user parameters to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentOutput$userParameters": "<p>The user parameters to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentProfileOutput$userParameters": "<p>The user parameters to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>"
       }
@@ -2091,6 +2107,10 @@
       "base": null,
       "refs": {}
     },
+    "DeleteEnvironmentBlueprintInput": {
+      "base": null,
+      "refs": {}
+    },
     "DeleteEnvironmentInput": {
       "base": null,
       "refs": {}
@@ -2222,9 +2242,11 @@
     "DeploymentProperties": {
       "base": "<p>The deployment properties of the Amazon DataZone blueprint.</p>",
       "refs": {
+        "CreateEnvironmentBlueprintOutput$deploymentProperties": "<p>The deployment properties of this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentOutput$deploymentProperties": "<p>The deployment properties of this Amazon DataZone environment.</p>",
         "GetEnvironmentBlueprintOutput$deploymentProperties": "<p>The deployment properties of this Amazon DataZone blueprint.</p>",
         "GetEnvironmentOutput$deploymentProperties": "<p>The deployment properties of the environment.</p>",
+        "UpdateEnvironmentBlueprintOutput$deploymentProperties": "<p>The deployment properties to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentOutput$deploymentProperties": "<p>The deployment properties to be updated as part of the <code>UpdateEnvironment</code> action.</p>"
       }
     },
@@ -2272,6 +2294,8 @@
         "CreateConnectionOutput$description": "<p>The connection description.</p>",
         "CreateDataSourceInput$description": "<p>The description of the data source.</p>",
         "CreateDataSourceOutput$description": "<p>The description of the data source.</p>",
+        "CreateEnvironmentBlueprintInput$description": "<p>The description of the Amazon DataZone blueprint.</p>",
+        "CreateEnvironmentBlueprintOutput$description": "<p>The description of this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentOutput$description": "<p>The description of this Amazon DataZone environment.</p>",
         "CreateEnvironmentProfileInput$description": "<p>The description of this Amazon DataZone environment profile.</p>",
         "CreateEnvironmentProfileOutput$description": "<p>The description of this Amazon DataZone environment profile.</p>",
@@ -2317,6 +2341,7 @@
         "UpdateConnectionOutput$description": "<p>The connection description.</p>",
         "UpdateDataSourceInput$description": "<p>The description to be updated as part of the <code>UpdateDataSource</code> action.</p>",
         "UpdateDataSourceOutput$description": "<p>The description to be updated as part of the <code>UpdateDataSource</code> action.</p>",
+        "UpdateEnvironmentBlueprintOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentProfileOutput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentProfile</code> action.</p>",
         "UpdateProjectInput$description": "<p>The description to be updated as part of the <code>UpdateProject</code> action.</p>",
@@ -2421,6 +2446,7 @@
         "CreateDomainUnitOutput$domainId": "<p>The ID of the domain where the domain unit was created.</p>",
         "CreateEnvironmentActionInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the environment action is created.</p>",
         "CreateEnvironmentActionOutput$domainId": "<p>The ID of the domain in which the environment action is created.</p>",
+        "CreateEnvironmentBlueprintInput$domainIdentifier": "<p>The identifier of the domain in which this blueprint is created.</p>",
         "CreateEnvironmentInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which the environment is created.</p>",
         "CreateEnvironmentOutput$domainId": "<p>The identifier of the Amazon DataZone domain in which the environment is created.</p>",
         "CreateEnvironmentProfileInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which this environment profile is created.</p>",
@@ -2464,6 +2490,7 @@
         "DeleteDomainUnitInput$domainIdentifier": "<p>The ID of the domain where you want to delete a domain unit.</p>",
         "DeleteEnvironmentActionInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which an environment action is deleted.</p>",
         "DeleteEnvironmentBlueprintConfigurationInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the blueprint configuration is deleted.</p>",
+        "DeleteEnvironmentBlueprintInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the blueprint is deleted.</p>",
         "DeleteEnvironmentInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the environment is deleted.</p>",
         "DeleteEnvironmentProfileInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the environment profile is deleted.</p>",
         "DeleteFormTypeInput$domainIdentifier": "<p>The ID of the Amazon DataZone domain in which the metadata form type is deleted.</p>",
@@ -2639,6 +2666,7 @@
         "UpdateDomainUnitOutput$domainId": "<p>The ID of the domain where you want to update the domain unit.</p>",
         "UpdateEnvironmentActionInput$domainIdentifier": "<p>The domain ID of the environment action.</p>",
         "UpdateEnvironmentActionOutput$domainId": "<p>The domain ID of the environment action.</p>",
+        "UpdateEnvironmentBlueprintInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which an environment blueprint is to be updated.</p>",
         "UpdateEnvironmentInput$domainIdentifier": "<p>The identifier of the domain in which the environment is to be updated.</p>",
         "UpdateEnvironmentOutput$domainId": "<p>The identifier of the domain in which the environment is to be updated.</p>",
         "UpdateEnvironmentProfileInput$domainIdentifier": "<p>The identifier of the Amazon DataZone domain in which an environment profile is to be updated.</p>",
@@ -2945,10 +2973,12 @@
     "EnvironmentBlueprintId": {
       "base": null,
       "refs": {
+        "CreateEnvironmentBlueprintOutput$id": "<p>The ID of this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentOutput$environmentBlueprintId": "<p>The ID of the blueprint with which this Amazon DataZone environment was created.</p>",
         "CreateEnvironmentProfileInput$environmentBlueprintIdentifier": "<p>The ID of the blueprint with which this environment profile is created.</p>",
         "CreateEnvironmentProfileOutput$environmentBlueprintId": "<p>The ID of the blueprint with which this environment profile is created.</p>",
         "DeleteEnvironmentBlueprintConfigurationInput$environmentBlueprintIdentifier": "<p>The ID of the blueprint the configuration of which is deleted.</p>",
+        "DeleteEnvironmentBlueprintInput$identifier": "<p>The ID of the blueprint that is deleted.</p>",
         "EnvironmentBlueprintConfigurationItem$environmentBlueprintId": "<p>The identifier of the environment blueprint.</p>",
         "EnvironmentBlueprintSummary$id": "<p>The identifier of the blueprint.</p>",
         "EnvironmentConfiguration$environmentBlueprintId": "<p>The environment blueprint ID.</p>",
@@ -2963,6 +2993,8 @@
         "ListEnvironmentsInput$environmentBlueprintIdentifier": "<p>The identifier of the Amazon DataZone blueprint.</p>",
         "PutEnvironmentBlueprintConfigurationInput$environmentBlueprintIdentifier": "<p>The identifier of the environment blueprint.</p>",
         "PutEnvironmentBlueprintConfigurationOutput$environmentBlueprintId": "<p>The identifier of the environment blueprint.</p>",
+        "UpdateEnvironmentBlueprintInput$identifier": "<p>The identifier of the environment blueprint to be updated.</p>",
+        "UpdateEnvironmentBlueprintOutput$id": "<p>The identifier of the blueprint to be updated.</p>",
         "UpdateEnvironmentOutput$environmentBlueprintId": "<p>The blueprint identifier of the environment.</p>",
         "UpdateEnvironmentProfileOutput$environmentBlueprintId": "<p>The identifier of the blueprint of the environment profile that is to be updated.</p>"
       }
@@ -2970,9 +3002,12 @@
     "EnvironmentBlueprintName": {
       "base": null,
       "refs": {
+        "CreateEnvironmentBlueprintInput$name": "<p>The name of this Amazon DataZone blueprint.</p>",
+        "CreateEnvironmentBlueprintOutput$name": "<p>The name of this Amazon DataZone blueprint.</p>",
         "EnvironmentBlueprintSummary$name": "<p>The name of the blueprint.</p>",
         "GetEnvironmentBlueprintOutput$name": "<p>The name of this Amazon DataZone blueprint.</p>",
-        "ListEnvironmentBlueprintsInput$name": "<p>The name of the Amazon DataZone environment.</p>"
+        "ListEnvironmentBlueprintsInput$name": "<p>The name of the Amazon DataZone environment.</p>",
+        "UpdateEnvironmentBlueprintOutput$name": "<p>The name to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>"
       }
     },
     "EnvironmentBlueprintSummaries": {
@@ -3830,6 +3865,12 @@
       "base": null,
       "refs": {}
     },
+    "GlobalParameterMap": {
+      "base": null,
+      "refs": {
+        "PutEnvironmentBlueprintConfigurationInput$globalParameters": "<p>Region-agnostic environment blueprint parameters. </p>"
+      }
+    },
     "GlossaryDescription": {
       "base": null,
       "refs": {
@@ -3962,6 +4003,7 @@
         "CreateDataProductOutput$glossaryTerms": "<p>The glossary terms of the data product.</p>",
         "CreateDataProductRevisionInput$glossaryTerms": "<p>The glossary terms of the data product revision.</p>",
         "CreateDataProductRevisionOutput$glossaryTerms": "<p>The glossary terms of the data product revision.</p>",
+        "CreateEnvironmentBlueprintOutput$glossaryTerms": "<p>The glossary terms attached to this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentInput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone environment.</p>",
         "CreateEnvironmentOutput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone environment.</p>",
         "CreateProjectInput$glossaryTerms": "<p>The glossary terms that can be used in this Amazon DataZone project.</p>",
@@ -3972,6 +4014,7 @@
         "GetEnvironmentBlueprintOutput$glossaryTerms": "<p>The glossary terms attached to this Amazon DataZone blueprint.</p>",
         "GetEnvironmentOutput$glossaryTerms": "<p>The business glossary terms that can be used in this environment.</p>",
         "GetProjectOutput$glossaryTerms": "<p>The business glossary terms that can be used in the project.</p>",
+        "UpdateEnvironmentBlueprintOutput$glossaryTerms": "<p>The glossary terms to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentInput$glossaryTerms": "<p>The glossary terms to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentOutput$glossaryTerms": "<p>The glossary terms to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateProjectInput$glossaryTerms": "<p>The glossary terms to be updated as part of the <code>UpdateProject</code> action.</p>",
@@ -5874,10 +5917,14 @@
     "ProvisioningProperties": {
       "base": "<p>The provisioning properties of an environment blueprint.</p>",
       "refs": {
+        "CreateEnvironmentBlueprintInput$provisioningProperties": "<p>The provisioning properties of this Amazon DataZone blueprint.</p>",
+        "CreateEnvironmentBlueprintOutput$provisioningProperties": "<p>The provisioning properties of this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentOutput$provisioningProperties": "<p>The provisioning properties of this Amazon DataZone environment.</p>",
         "EnvironmentBlueprintSummary$provisioningProperties": "<p>The provisioning properties of the blueprint.</p>",
         "GetEnvironmentBlueprintOutput$provisioningProperties": "<p>The provisioning properties of this Amazon DataZone blueprint.</p>",
         "GetEnvironmentOutput$provisioningProperties": "<p>The provisioning properties of this Amazon DataZone environment.</p>",
+        "UpdateEnvironmentBlueprintInput$provisioningProperties": "<p>The provisioning properties to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
+        "UpdateEnvironmentBlueprintOutput$provisioningProperties": "<p>The provisioning properties to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
         "UpdateEnvironmentOutput$provisioningProperties": "<p>The provisioning properties to be updated as part of the <code>UpdateEnvironment</code> action.</p>"
       }
     },
@@ -7087,6 +7134,7 @@
         "CreateEnvironmentActionInput$name": "<p>The name of the environment action.</p>",
         "CreateEnvironmentActionOutput$description": "<p>The description of the environment action.</p>",
         "CreateEnvironmentActionOutput$name": "<p>The name of the environment action.</p>",
+        "CreateEnvironmentBlueprintOutput$provider": "<p>The provider of this Amazon DataZone blueprint.</p>",
         "CreateEnvironmentInput$description": "<p>The description of the Amazon DataZone environment.</p>",
         "CreateEnvironmentInput$environmentAccountIdentifier": "<p>The ID of the account in which the environment is being created.</p>",
         "CreateEnvironmentInput$environmentAccountRegion": "<p>The region of the account in which the environment is being created.</p>",
@@ -7174,6 +7222,8 @@
         "GetSubscriptionRequestDetailsOutput$reviewerId": "<p>The identifier of the Amazon DataZone user who reviewed the subscription request.</p>",
         "GetSubscriptionTargetOutput$provider": "<p>The provider of the subscription target.</p>",
         "GetSubscriptionTargetOutput$type": "<p>The type of the subscription target.</p>",
+        "GlobalParameterMap$key": null,
+        "GlobalParameterMap$value": null,
         "GlueConnection$lastUpdatedBy": "<p>The user who last updated the Amazon Web Services Glue connection.</p>",
         "GlueConnection$name": "<p>The name of the Amazon Web Services Glue connection.</p>",
         "GlueConnectionInput$description": "<p>The description of the Amazon Web Services Glue connection.</p>",
@@ -7304,6 +7354,8 @@
         "UpdateEnvironmentActionInput$name": "<p>The name of the environment action.</p>",
         "UpdateEnvironmentActionOutput$description": "<p>The description of the environment action.</p>",
         "UpdateEnvironmentActionOutput$name": "<p>The name of the environment action.</p>",
+        "UpdateEnvironmentBlueprintInput$description": "<p>The description to be updated as part of the <code>UpdateEnvironmentBlueprint</code> action.</p>",
+        "UpdateEnvironmentBlueprintOutput$provider": "<p>The provider of the blueprint to be udpated.</p>",
         "UpdateEnvironmentInput$blueprintVersion": "<p>The blueprint version to which the environment should be updated. You can only specify the following string for this parameter: <code>latest</code>.</p>",
         "UpdateEnvironmentInput$description": "<p>The description to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
         "UpdateEnvironmentInput$name": "<p>The name to be updated as part of the <code>UpdateEnvironment</code> action.</p>",
@@ -7650,6 +7702,8 @@
         "ConnectionCredentials$expiration": "<p>The expiration of the connection credentials.</p>",
         "CreateAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
         "CreateAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
+        "CreateEnvironmentBlueprintOutput$createdAt": "<p>The timestamp at which the environment blueprint was created.</p>",
+        "CreateEnvironmentBlueprintOutput$updatedAt": "<p>The timestamp of when this blueprint was updated.</p>",
         "CreateEnvironmentOutput$createdAt": "<p>The timestamp of when the environment was created.</p>",
         "CreateEnvironmentOutput$updatedAt": "<p>The timestamp of when this environment was updated.</p>",
         "CreateEnvironmentProfileOutput$createdAt": "<p>The timestamp of when this environment profile was created.</p>",
@@ -7690,6 +7744,8 @@
         "SparkEmrPropertiesOutput$credentialsExpiration": "<p>The credential expiration of the Spark EMR.</p>",
         "UpdateAccountPoolOutput$createdAt": "<p>The timestamp at which the account pool was created.</p>",
         "UpdateAccountPoolOutput$lastUpdatedAt": "<p>The timestamp at which the account pool was last updated.</p>",
+        "UpdateEnvironmentBlueprintOutput$createdAt": "<p>The timestamp of when the environment blueprint was created.</p>",
+        "UpdateEnvironmentBlueprintOutput$updatedAt": "<p>The timestamp of when the blueprint was updated.</p>",
         "UpdateEnvironmentOutput$createdAt": "<p>The timestamp of when the environment was created.</p>",
         "UpdateEnvironmentOutput$updatedAt": "<p>The timestamp of when the environment was updated.</p>",
         "UpdateEnvironmentProfileOutput$createdAt": "<p>The timestamp of when the environment profile was created.</p>",
@@ -8074,6 +8130,14 @@
       "base": null,
       "refs": {}
     },
+    "UpdateEnvironmentBlueprintInput": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateEnvironmentBlueprintOutput": {
+      "base": null,
+      "refs": {}
+    },
     "UpdateEnvironmentInput": {
       "base": null,
       "refs": {}
@@ -8213,7 +8277,7 @@
         "RejectSubscriptionRequestOutput$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "RevokeSubscriptionOutput$updatedAt": "<p>The timestamp of when the subscription was revoked.</p>",
         "RuleSummary$updatedAt": "<p>The timestamp at which the rule was last updated.</p>",
-        "SubscriptionGrantSummary$updatedAt": "<p>The timestampf of when the subscription grant was updated.</p>",
+        "SubscriptionGrantSummary$updatedAt": "<p>The timestamp of when the subscription grant was updated.</p>",
         "SubscriptionRequestSummary$updatedAt": "<p>The timestamp of when the subscription request was updated.</p>",
         "SubscriptionSummary$updatedAt": "<p>The timestamp of when the subscription was updated.</p>",
         "SubscriptionTargetSummary$updatedAt": "<p>The timestamp of when the subscription target was updated.</p>",

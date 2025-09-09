@@ -6488,7 +6488,8 @@
     "ContactSearchSummarySegmentAttributes":{
       "type":"map",
       "key":{"shape":"SegmentAttributeName"},
-      "value":{"shape":"ContactSearchSummarySegmentAttributeValue"}
+      "value":{"shape":"ContactSearchSummarySegmentAttributeValue"},
+      "sensitive":true
     },
     "ContactState":{
       "type":"string",
@@ -6973,8 +6974,7 @@
       "type":"structure",
       "required":[
         "InstanceId",
-        "Name",
-        "Values"
+        "Name"
       ],
       "members":{
         "InstanceId":{
@@ -6983,7 +6983,9 @@
           "locationName":"InstanceId"
         },
         "Name":{"shape":"PredefinedAttributeName"},
-        "Values":{"shape":"PredefinedAttributeValues"}
+        "Values":{"shape":"PredefinedAttributeValues"},
+        "Purposes":{"shape":"PredefinedAttributePurposeNameList"},
+        "AttributeConfiguration":{"shape":"InputPredefinedAttributeConfiguration"}
       }
     },
     "CreatePromptRequest":{
@@ -9577,6 +9579,7 @@
       "type":"structure",
       "members":{}
     },
+    "EnableValueValidationOnAssociation":{"type":"boolean"},
     "EncryptionConfig":{
       "type":"structure",
       "required":[
@@ -11259,6 +11262,12 @@
       "type":"list",
       "member":{"shape":"ContactInitiationMethod"}
     },
+    "InputPredefinedAttributeConfiguration":{
+      "type":"structure",
+      "members":{
+        "EnableValueValidationOnAssociation":{"shape":"EnableValueValidationOnAssociation"}
+      }
+    },
     "Instance":{
       "type":"structure",
       "members":{
@@ -11523,6 +11532,7 @@
       "type":"list",
       "member":{"shape":"IpCidr"}
     },
+    "IsReadOnly":{"type":"boolean"},
     "IvrRecordingTrack":{
       "type":"string",
       "enum":["ALL"]
@@ -14270,14 +14280,34 @@
       "members":{
         "Name":{"shape":"PredefinedAttributeName"},
         "Values":{"shape":"PredefinedAttributeValues"},
+        "Purposes":{"shape":"PredefinedAttributePurposeNameList"},
+        "AttributeConfiguration":{"shape":"PredefinedAttributeConfiguration"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedRegion":{"shape":"RegionName"}
       }
     },
+    "PredefinedAttributeConfiguration":{
+      "type":"structure",
+      "members":{
+        "EnableValueValidationOnAssociation":{"shape":"EnableValueValidationOnAssociation"},
+        "IsReadOnly":{"shape":"IsReadOnly"}
+      }
+    },
     "PredefinedAttributeName":{
       "type":"string",
-      "max":64,
+      "max":100,
       "min":1
+    },
+    "PredefinedAttributePurposeName":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "PredefinedAttributePurposeNameList":{
+      "type":"list",
+      "member":{"shape":"PredefinedAttributePurposeName"},
+      "max":10,
+      "min":0
     },
     "PredefinedAttributeSearchConditionList":{
       "type":"list",
@@ -14297,14 +14327,14 @@
     },
     "PredefinedAttributeStringValue":{
       "type":"string",
-      "max":64,
+      "max":100,
       "min":1
     },
     "PredefinedAttributeStringValuesList":{
       "type":"list",
       "member":{"shape":"PredefinedAttributeStringValue"},
-      "max":128,
-      "min":1
+      "max":500,
+      "min":0
     },
     "PredefinedAttributeSummary":{
       "type":"structure",
@@ -16360,10 +16390,16 @@
       "members":{
         "ValueString":{"shape":"SegmentAttributeValueString"},
         "ValueMap":{"shape":"SegmentAttributeValueMap"},
-        "ValueInteger":{"shape":"SegmentAttributeValueInteger"}
+        "ValueInteger":{"shape":"SegmentAttributeValueInteger"},
+        "ValueList":{"shape":"SegmentAttributeValueList"},
+        "ValueArn":{"shape":"SegmentAttributeValueString"}
       }
     },
     "SegmentAttributeValueInteger":{"type":"integer"},
+    "SegmentAttributeValueList":{
+      "type":"list",
+      "member":{"shape":"SegmentAttributeValue"}
+    },
     "SegmentAttributeValueMap":{
       "type":"map",
       "key":{"shape":"SegmentAttributeName"},
@@ -18335,7 +18371,9 @@
           "location":"uri",
           "locationName":"Name"
         },
-        "Values":{"shape":"PredefinedAttributeValues"}
+        "Values":{"shape":"PredefinedAttributeValues"},
+        "Purposes":{"shape":"PredefinedAttributePurposeNameList"},
+        "AttributeConfiguration":{"shape":"InputPredefinedAttributeConfiguration"}
       }
     },
     "UpdatePromptRequest":{

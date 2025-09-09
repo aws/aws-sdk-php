@@ -37,7 +37,7 @@
     "CreateIntegrationAssociation": "<p>Creates an Amazon Web Services resource association with an Amazon Connect instance.</p>",
     "CreateParticipant": "<p>Adds a new participant into an on-going chat contact or webRTC call. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-customize-flow.html\">Customize chat flow experiences by integrating custom participants</a> or <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-multiuser-inapp.html\">Enable multi-user web, in-app, and video calling</a>.</p>",
     "CreatePersistentContactAssociation": "<p>Enables rehydration of chats for the lifespan of a contact. For more information about chat rehydration, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/chat-persistence.html\">Enable persistent chat</a> in the <i>Amazon Connect Administrator Guide</i>. </p>",
-    "CreatePredefinedAttribute": "<p>Creates a new predefined attribute for the specified Amazon Connect instance. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
+    "CreatePredefinedAttribute": "<p>Creates a new predefined attribute for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value.</p> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Create an attribute for routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Create an attribute for business unit name that has a list of predefined business unit names used in your organization. This is a use case where information for a contact varies between transfers or conferences. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "CreatePrompt": "<p>Creates a prompt. For more information about prompts, such as supported file types and maximum length, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/prompts.html\">Create prompts</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "CreatePushNotificationRegistration": "<p>Creates registration for a device token and a chat contact to receive real-time push notifications. For more information about push notifications, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/enable-push-notifications-for-mobile-chat.html\">Set up push notifications in Amazon Connect for mobile chat</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "CreateQueue": "<p>Creates a new queue for the specified Amazon Connect instance.</p> <important> <ul> <li> <p>If the phone number is claimed to a traffic distribution group that was created in the same Region as the Amazon Connect instance where you are calling this API, then you can use a full phone number ARN or a UUID for <code>OutboundCallerIdNumberId</code>. However, if the phone number is claimed to a traffic distribution group that is in one Region, and you are calling this API from an instance in another Amazon Web Services Region that is associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you will receive a <code>ResourceNotFoundException</code>.</p> </li> <li> <p>Only use the phone number ARN format that doesn't contain <code>instance</code> in the path, for example, <code>arn:aws:connect:us-east-1:1234567890:phone-number/uuid</code>. This is the same ARN format that is returned when you call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API.</p> </li> <li> <p>If you plan to use IAM policies to allow/deny access to this API for phone number resources claimed to a traffic distribution group, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/security_iam_resource-level-policy-examples.html#allow-deny-queue-actions-replica-region\">Allow or Deny queue API actions for phone numbers in a replica Region</a>.</p> </li> </ul> </important>",
@@ -95,7 +95,7 @@
     "DescribeInstanceAttribute": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Describes the specified instance attribute.</p>",
     "DescribeInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Retrieves the current storage configurations for the specified resource type, association ID, and instance ID.</p>",
     "DescribePhoneNumber": "<p>Gets details and status of a phone number that’s claimed to your Amazon Connect instance or traffic distribution group.</p> <important> <p>If the number is claimed to a traffic distribution group, and you are calling in the Amazon Web Services Region where the traffic distribution group was created, you can use either a phone number ARN or UUID value for the <code>PhoneNumberId</code> URI request parameter. However, if the number is claimed to a traffic distribution group and you are calling this API in the alternate Amazon Web Services Region associated with the traffic distribution group, you must provide a full phone number ARN. If a UUID is provided in this scenario, you receive a <code>ResourceNotFoundException</code>.</p> </important>",
-    "DescribePredefinedAttribute": "<p>Describes a predefined attribute for the specified Amazon Connect instance. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
+    "DescribePredefinedAttribute": "<p>Describes a predefined attribute for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "DescribePrompt": "<p>Describes the prompt.</p>",
     "DescribeQueue": "<p>Describes the specified queue.</p>",
     "DescribeQuickConnect": "<p>Describes the quick connect.</p>",
@@ -162,7 +162,7 @@
     "ListLexBots": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Returns a paginated list of all the Amazon Lex V1 bots currently associated with the instance. To return both Amazon Lex V1 and V2 bots, use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListBots.html\">ListBots</a> API. </p>",
     "ListPhoneNumbers": "<p>Provides information about the phone numbers for the specified Amazon Connect instance. </p> <p>For more information about phone numbers, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html\">Set Up Phone Numbers for Your Contact Center</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <important> <ul> <li> <p>We recommend using <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> to return phone number types. ListPhoneNumbers doesn't support number types <code>UIFN</code>, <code>SHARED</code>, <code>THIRD_PARTY_TF</code>, and <code>THIRD_PARTY_DID</code>. While it returns numbers of those types, it incorrectly lists them as <code>TOLL_FREE</code> or <code>DID</code>. </p> </li> <li> <p>The phone number <code>Arn</code> value that is returned from each of the items in the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbers.html#connect-ListPhoneNumbers-response-PhoneNumberSummaryList\">PhoneNumberSummaryList</a> cannot be used to tag phone number resources. It will fail with a <code>ResourceNotFoundException</code>. Instead, use the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_ListPhoneNumbersV2.html\">ListPhoneNumbersV2</a> API. It returns the new phone number ARN that can be used to tag phone number resources.</p> </li> </ul> </important>",
     "ListPhoneNumbersV2": "<p>Lists phone numbers claimed to your Amazon Connect instance or traffic distribution group. If the provided <code>TargetArn</code> is a traffic distribution group, you can call this API in both Amazon Web Services Regions associated with traffic distribution group.</p> <p>For more information about phone numbers, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html\">Set Up Phone Numbers for Your Contact Center</a> in the <i>Amazon Connect Administrator Guide</i>.</p> <note> <ul> <li> <p>When given an instance ARN, <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the instance.</p> </li> <li> <p>When given a traffic distribution group ARN <code>ListPhoneNumbersV2</code> returns only the phone numbers claimed to the traffic distribution group.</p> </li> </ul> </note>",
-    "ListPredefinedAttributes": "<p>Lists predefined attributes for the specified Amazon Connect instance. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
+    "ListPredefinedAttributes": "<p>Lists predefined attributes for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "ListPrompts": "<p>Provides information about the prompts for the specified Amazon Connect instance.</p>",
     "ListQueueQuickConnects": "<p>Lists the quick connects associated with a queue.</p>",
     "ListQueues": "<p>Provides information about the queues for the specified Amazon Connect instance.</p> <p>If you do not specify a <code>QueueTypes</code> parameter, both standard and agent queues are returned. This might cause an unexpected truncation of results if you have more than 1000 agents and you limit the number of results of the API call in code.</p> <p>For more information about queues, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-queues-standard-and-agent.html\">Queues: Standard and Agent</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
@@ -200,7 +200,7 @@
     "SearchEmailAddresses": "<p>Searches email address in an instance, with optional filtering.</p>",
     "SearchHoursOfOperationOverrides": "<p>Searches the hours of operation overrides.</p>",
     "SearchHoursOfOperations": "<p>Searches the hours of operation in an Amazon Connect instance, with optional filtering.</p>",
-    "SearchPredefinedAttributes": "<p>Searches predefined attributes that meet certain criteria. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
+    "SearchPredefinedAttributes": "<p>Searches predefined attributes that meet certain criteria. A <i>predefined attribute</i> is made up of a name and a value. You can use predefined attributes for:</p> <ul> <li> <p>Routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Contact information that varies between transfers or conferences, such as the name of the business unit handling the contact. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "SearchPrompts": "<p>Searches prompts in an Amazon Connect instance, with optional filtering.</p>",
     "SearchQueues": "<p>Searches queues in an Amazon Connect instance, with optional filtering.</p>",
     "SearchQuickConnects": "<p>Searches quick connects in an Amazon Connect instance, with optional filtering.</p>",
@@ -256,7 +256,7 @@
     "UpdateParticipantRoleConfig": "<p>Updates timeouts for when human chat participants are to be considered idle, and when agents are automatically disconnected from a chat due to idleness. You can set four timers:</p> <ul> <li> <p>Customer idle timeout</p> </li> <li> <p>Customer auto-disconnect timeout</p> </li> <li> <p>Agent idle timeout</p> </li> <li> <p>Agent auto-disconnect timeout</p> </li> </ul> <p>For more information about how chat timeouts work, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html\">Set up chat timeouts for human participants</a>. </p>",
     "UpdatePhoneNumber": "<p>Updates your claimed phone number from its current Amazon Connect instance or traffic distribution group to another Amazon Connect instance or traffic distribution group in the same Amazon Web Services Region.</p> <important> <p>After using this API, you must verify that the phone number is attached to the correct flow in the target instance or traffic distribution group. You need to do this because the API switches only the phone number to a new instance or traffic distribution group. It doesn't migrate the flow configuration of the phone number, too.</p> <p>You can call <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API to verify the status of a previous <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdatePhoneNumber.html\">UpdatePhoneNumber</a> operation.</p> </important>",
     "UpdatePhoneNumberMetadata": "<p>Updates a phone number’s metadata.</p> <important> <p>To verify the status of a previous UpdatePhoneNumberMetadata operation, call the <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribePhoneNumber.html\">DescribePhoneNumber</a> API.</p> </important>",
-    "UpdatePredefinedAttribute": "<p>Updates a predefined attribute for the specified Amazon Connect instance. <i>Predefined attributes</i> are attributes in an Amazon Connect instance that can be used to route contacts to an agent or pools of agents within a queue. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p>",
+    "UpdatePredefinedAttribute": "<p>Updates a predefined attribute for the specified Amazon Connect instance. A <i>predefined attribute</i> is made up of a name and a value.</p> <p>For the predefined attributes per instance quota, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html#connect-quotas\">Amazon Connect quotas</a>.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Update routing proficiency (for example, agent certification) that has predefined values (for example, a list of possible certifications). For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/predefined-attributes.html\">Create predefined attributes for routing contacts to agents</a>.</p> </li> <li> <p>Update an attribute for business unit name that has a list of predefined business unit names used in your organization. This is a use case where information for a contact varies between transfers or conferences. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-contact-segment-attributes.html\">Use contact segment attributes</a>.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "UpdatePrompt": "<p>Updates a prompt.</p>",
     "UpdateQueueHoursOfOperation": "<p>Updates the hours of operation for the specified queue.</p>",
     "UpdateQueueMaxContacts": "<p>Updates the maximum number of contacts allowed in a queue before it is considered full.</p>",
@@ -3447,6 +3447,13 @@
         "FieldValueUnion$EmptyValue": "<p>An empty value.</p>"
       }
     },
+    "EnableValueValidationOnAssociation": {
+      "base": null,
+      "refs": {
+        "InputPredefinedAttributeConfiguration$EnableValueValidationOnAssociation": "<p>When this parameter is set to true, Amazon Connect enforces strict validation on the specific values, if the values are predefined in attributes. The contact will store only valid and predefined values for the predefined attribute key.</p>",
+        "PredefinedAttributeConfiguration$EnableValueValidationOnAssociation": "<p>When this parameter is set to true, Amazon Connect enforces strict validation on the specific values, if the values are predefined in attributes. The contact will store only valid and predefined values for teh predefined attribute key.</p>"
+      }
+    },
     "EncryptionConfig": {
       "base": "<p>The encryption configuration.</p>",
       "refs": {
@@ -4757,6 +4764,13 @@
         "SearchCriteria$InitiationMethods": "<p>The list of initiation methods associated with contacts.</p>"
       }
     },
+    "InputPredefinedAttributeConfiguration": {
+      "base": "<p>Custom metadata that is associated to predefined attributes to control behavior in upstream services, such as controlling how a predefined attribute should be displayed in the Amazon Connect admin website.</p>",
+      "refs": {
+        "CreatePredefinedAttributeRequest$AttributeConfiguration": "<p>Custom metadata that is associated to predefined attributes to control behavior in upstream services, such as controlling how a predefined attribute should be displayed in the Amazon Connect admin website.</p>",
+        "UpdatePredefinedAttributeRequest$AttributeConfiguration": "<p>Custom metadata that is associated to predefined attributes to control behavior in upstream services, such as controlling how a predefined attribute should be displayed in the Amazon Connect admin website.</p>"
+      }
+    },
     "Instance": {
       "base": "<p>The Amazon Connect instance.</p>",
       "refs": {
@@ -5235,6 +5249,12 @@
         "AuthenticationProfile$BlockedIps": "<p>A list of IP address range strings that are blocked from accessing the Amazon Connect instance. For more information about how to configure IP addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html#configure-ip-based-ac\">Configure IP address based access control</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
         "UpdateAuthenticationProfileRequest$AllowedIps": "<p>A list of IP address range strings that are allowed to access the instance. For more information on how to configure IP addresses, see<a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html#configure-session-timeouts\">Configure session timeouts</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
         "UpdateAuthenticationProfileRequest$BlockedIps": "<p>A list of IP address range strings that are blocked from accessing the instance. For more information on how to configure IP addresses, For more information on how to configure IP addresses, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/authentication-profiles.html#configure-ip-based-ac\">Configure IP-based access control</a> in the <i>Amazon Connect Administrator Guide</i>. </p>"
+      }
+    },
+    "IsReadOnly": {
+      "base": null,
+      "refs": {
+        "PredefinedAttributeConfiguration$IsReadOnly": "<p>A boolean flag used to indicate whether a predefined attribute should be displayed in the Amazon Connect admin website.</p>"
       }
     },
     "IvrRecordingTrack": {
@@ -6786,6 +6806,12 @@
         "PredefinedAttributeSearchSummaryList$member": null
       }
     },
+    "PredefinedAttributeConfiguration": {
+      "base": "<p>Custom metadata that is associated to predefined attributes to control behavior in upstream services, such as controlling how a predefined attribute should be displayed in the Amazon Connect admin website.</p>",
+      "refs": {
+        "PredefinedAttribute$AttributeConfiguration": "<p>Custom metadata that is associated to predefined attributes to control behavior in upstream services, such as controlling how a predefined attribute should be displayed in the Amazon Connect admin website.</p>"
+      }
+    },
     "PredefinedAttributeName": {
       "base": null,
       "refs": {
@@ -6798,6 +6824,20 @@
         "UpdatePredefinedAttributeRequest$Name": "<p>The name of the predefined attribute.</p>",
         "UserProficiency$AttributeName": "<p>The name of user's proficiency. You must use name of predefined attribute present in the Amazon Connect instance.</p>",
         "UserProficiencyDisassociate$AttributeName": "<p>The name of user's proficiency.</p>"
+      }
+    },
+    "PredefinedAttributePurposeName": {
+      "base": null,
+      "refs": {
+        "PredefinedAttributePurposeNameList$member": null
+      }
+    },
+    "PredefinedAttributePurposeNameList": {
+      "base": null,
+      "refs": {
+        "CreatePredefinedAttributeRequest$Purposes": "<p>Values that enable you to categorize your predefined attributes. You can use them in custom UI elements across the Amazon Connect admin website.</p>",
+        "PredefinedAttribute$Purposes": "<p>Values that enable you to categorize your predefined attributes. You can use them in custom UI elements across the Amazon Connect admin website.</p>",
+        "UpdatePredefinedAttributeRequest$Purposes": "<p>Values that enable you to categorize your predefined attributes. You can use them in custom UI elements across the Amazon Connect admin website.</p>"
       }
     },
     "PredefinedAttributeSearchConditionList": {
@@ -8579,6 +8619,7 @@
     "SegmentAttributeValue": {
       "base": "<p>A value for a segment attribute. This is structured as a map where the key is <code>valueString</code> and the value is a string.</p>",
       "refs": {
+        "SegmentAttributeValueList$member": null,
         "SegmentAttributeValueMap$value": null,
         "SegmentAttributes$value": null
       }
@@ -8587,6 +8628,12 @@
       "base": null,
       "refs": {
         "SegmentAttributeValue$ValueInteger": "<p>The value of a segment attribute.</p>"
+      }
+    },
+    "SegmentAttributeValueList": {
+      "base": null,
+      "refs": {
+        "SegmentAttributeValue$ValueList": "<p>The value of a segment attribute. This is only supported for system-defined attributes, not for user-defined attributes.</p>"
       }
     },
     "SegmentAttributeValueMap": {
@@ -8599,7 +8646,8 @@
       "base": null,
       "refs": {
         "ContactSearchSummarySegmentAttributeValue$ValueString": "<p>The value of a segment attribute represented as a string.</p>",
-        "SegmentAttributeValue$ValueString": "<p>The value of a segment attribute.</p>"
+        "SegmentAttributeValue$ValueString": "<p>The value of a segment attribute.</p>",
+        "SegmentAttributeValue$ValueArn": "<p>The value of a segment attribute that has to be a valid ARN. This is only supported for system-defined attributes, not for user-defined attributes.</p>"
       }
     },
     "SegmentAttributes": {
@@ -8611,7 +8659,7 @@
         "StartEmailContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments using an attribute map. The attributes are standard Amazon Connect attributes. They can be accessed in flows.</p> <p>Attribute keys can include only alphanumeric, -, and _.</p> <p>This field can be used to show channel subtype, such as <code>connect:Guide</code>.</p> <note> <p>To set contact expiry, a <code>ValueMap</code> must be specified containing the integer number of minutes the contact will be active for before expiring, with <code>SegmentAttributes</code> like { <code> \"connect:ContactExpiry\": {\"ValueMap\" : { \"ExpiryDuration\": { \"ValueInteger\":135}}}}</code>.</p> </note>",
         "StartOutboundChatContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments using an attribute map. The attributes are standard Amazon Connect attributes. They can be accessed in flows.</p> <ul> <li> <p>Attribute keys can include only alphanumeric, <code>-</code>, and <code>_</code>.</p> </li> <li> <p>This field can be used to show channel subtype, such as <code>connect:Guide</code> and <code>connect:SMS</code>.</p> </li> </ul>",
         "StartTaskContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments (unique contact ID) using an attribute map. The attributes are standard Amazon Connect attributes. They can be accessed in flows.</p> <p>Attribute keys can include only alphanumeric, -, and _.</p> <p>This field can be used to set Contact Expiry as a duration in minutes and set a UserId for the User who created a task.</p> <note> <p>To set contact expiry, a ValueMap must be specified containing the integer number of minutes the contact will be active for before expiring, with <code>SegmentAttributes</code> like { <code> \"connect:ContactExpiry\": {\"ValueMap\" : { \"ExpiryDuration\": { \"ValueInteger\": 135}}}}</code>. </p> <p>To set the created by user, a valid AgentResourceId must be supplied, with <code>SegmentAttributes</code> like { <code>\"connect:CreatedByUser\" { \"ValueString\": \"arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/agent/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"}}}</code>. </p> </note>",
-        "UpdateContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments (unique contact ID) using an attribute map. The attributes are standard Amazon Connect attributes. They can be accessed in flows.</p> <p>Attribute keys can include only alphanumeric, -, and _.</p> <p>This field can be used to show channel subtype, such as <code>connect:Guide</code>.</p> <p>Currently Contact Expiry is the only segment attribute which can be updated by using the UpdateContact API.</p>"
+        "UpdateContactRequest$SegmentAttributes": "<p>A set of system defined key-value pairs stored on individual contact segments (unique contact ID) using an attribute map. The attributes are standard Amazon Connect attributes. They can be accessed in flows.</p> <p>Attribute keys can include only alphanumeric, -, and _.</p> <p>This field can be used to show channel subtype, such as <code>connect:Guide</code>.</p> <p>Contact Expiry, and user-defined attributes (String - String) that are defined in predefined attributes, can be updated by using the UpdateContact API.</p>"
       }
     },
     "SendChatIntegrationEventRequest": {
