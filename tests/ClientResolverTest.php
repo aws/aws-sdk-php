@@ -1539,86 +1539,54 @@ EOF;
         ?string $env = null,
     ): void
     {
-        // Callback list to be executed after test is executed
-        $onCompletionCallbacks = [];
-        if ($ini !== null) {
-            $currentEnvAwsConfigFile = getenv('AWS_CONFIG_FILE');
-            $tempDir = sys_get_temp_dir() . '/test-auth-preference/.aws/';
-            $tempConfigFile = $tempDir . 'config';
-            $configContent = "[default]\nauth_scheme_preference=$ini";
-
-            // If the temp directory does not exist then we create it
-            if (!is_dir($tempDir)) {
-                mkdir($tempDir, 0777, true);
-            }
-
-            file_put_contents($tempConfigFile, $configContent);
-            putenv("AWS_CONFIG_FILE=$tempConfigFile");
-
-            $onCompletionCallbacks[] = function () use (
-                $tempConfigFile,
-                $tempDir,
-                $currentEnvAwsConfigFile
-            ) {
-                if ($currentEnvAwsConfigFile !== false) {
-                    putenv("AWS_CONFIG_FILE=$currentEnvAwsConfigFile");
-                } else {
-                    putenv('AWS_CONFIG_FILE=');
-                }
-                unlink($tempConfigFile);
-                rmdir($tempDir);
-            };
-        }
-
-        if ($env !== null) {
-            $currentEnvAuthSchemePreference = getenv('AWS_AUTH_SCHEME_PREFERENCE');
-            putenv(
-                "AWS_AUTH_SCHEME_PREFERENCE=$env",
-            );
-            $onCompletionCallbacks[] = function () use (
-                $currentEnvAuthSchemePreference
-            ) {
-                if ($currentEnvAuthSchemePreference !== false) {
-                    putenv(
-                        "AWS_AUTH_SCHEME_PREFERENCE=$currentEnvAuthSchemePreference"
-                    );
-                } else {
-                    putenv('AWS_AUTH_SCHEME_PREFERENCE=');
-                }
-            };
-        }
+        // Store original values
+        $originalConfigFile = getenv('AWS_CONFIG_FILE');
+        $originalAuthScheme = getenv('AWS_AUTH_SCHEME_PREFERENCE');
+        $tempConfigFile = null;
 
         try {
-            // To create the source such as env or from ini
-            $clientResolver = new ClientResolver(
-                ClientResolver::getDefaultArguments()
-            );
+            // Set up environment
+            if ($env !== null) {
+                putenv("AWS_AUTH_SCHEME_PREFERENCE={$env}");
+            }
+
+            // Set up config file
+            if ($ini !== null) {
+                $tempConfigFile = tempnam(sys_get_temp_dir(), 'aws_config_');
+                file_put_contents($tempConfigFile, "[default]\nauth_scheme_preference={$ini}");
+                putenv("AWS_CONFIG_FILE={$tempConfigFile}");
+            }
+
+            $clientResolver = new ClientResolver(ClientResolver::getDefaultArguments());
             $resolvedConfig = $clientResolver->resolve([
                     'service' => 's3',
                     'region' => 'us-east-1'
                 ] + $args, new HandlerList());
 
             if ($isExpected) {
-                $this->assertArrayHasKey(
-                    'auth_scheme_preference',
-                    $resolvedConfig
-                );
-                $this->assertTrue(
-                    is_array($resolvedConfig['auth_scheme_preference'])
-                );
-                $this->assertEquals(
-                    $expectedValue,
-                    $resolvedConfig['auth_scheme_preference']
-                );
+                $this->assertArrayHasKey('auth_scheme_preference', $resolvedConfig);
+                $this->assertIsArray($resolvedConfig['auth_scheme_preference']);
+                $this->assertEquals($expectedValue, $resolvedConfig['auth_scheme_preference']);
             } else {
-                $this->assertArrayNotHasKey(
-                    'auth_scheme_preference',
-                    $resolvedConfig
-                );
+                $this->assertArrayNotHasKey('auth_scheme_preference', $resolvedConfig);
             }
         } finally {
-            foreach ($onCompletionCallbacks as $onCompletionCallback) {
-                call_user_func($onCompletionCallback);
+            // Restore environment
+            if ($originalAuthScheme !== false) {
+                putenv("AWS_AUTH_SCHEME_PREFERENCE={$originalAuthScheme}");
+            } else {
+                putenv("AWS_AUTH_SCHEME_PREFERENCE=");
+            }
+
+            if ($originalConfigFile !== false) {
+                putenv("AWS_CONFIG_FILE={$originalConfigFile}");
+            } else {
+                putenv("AWS_CONFIG_FILE=");
+            }
+
+            // Clean up temp file
+            if ($tempConfigFile && file_exists($tempConfigFile)) {
+                unlink($tempConfigFile);
             }
         }
     }

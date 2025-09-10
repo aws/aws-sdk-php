@@ -11,6 +11,7 @@ class Token extends BearerTokenIdentity implements TokenInterface, \Serializable
 {
     protected $token;
     protected $expires;
+    protected ?TokenSource $source;
 
     /**
      * Constructs a new basic token object, with the specified AWS
@@ -19,10 +20,14 @@ class Token extends BearerTokenIdentity implements TokenInterface, \Serializable
      * @param string $token   Security token to use
      * @param int    $expires UNIX timestamp for when the token expires
      */
-    public function __construct($token, $expires = null)
-    {
+    public function __construct(
+        $token,
+        $expires = null,
+        ?TokenSource $source = null
+    ){
         $this->token = $token;
         $this->expires = $expires;
+        $this->source = $source;
     }
 
     /**
@@ -55,6 +60,14 @@ class Token extends BearerTokenIdentity implements TokenInterface, \Serializable
     }
 
     /**
+     * @return string|null
+     */
+    public function getSource(): ?string
+    {
+        return $this->source?->value;
+    }
+
+    /**
      * @return bool
      */
     public function isExpired()
@@ -69,7 +82,8 @@ class Token extends BearerTokenIdentity implements TokenInterface, \Serializable
     {
         return [
             'token'   => $this->token,
-            'expires' => $this->expires
+            'expires' => $this->expires,
+            'source'  => $this->source?->value
         ];
     }
 
@@ -106,5 +120,8 @@ class Token extends BearerTokenIdentity implements TokenInterface, \Serializable
     {
         $this->token = $data['token'];
         $this->expires = $data['expires'];
+        $this->source = isset($data['source'])
+            ? TokenSource::from($data['source'])
+            : null;
     }
 }
