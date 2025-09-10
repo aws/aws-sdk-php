@@ -2,8 +2,8 @@
   "version": "2.0",
   "service": "<p>Network Flow Monitor is a feature of Amazon CloudWatch Network Monitoring that provides visibility into the performance of network flows for your Amazon Web Services workloads, between instances in subnets, as well as to and from Amazon Web Services. Lightweight agents that you install on the instances capture performance metrics for your network flows, such as packet loss and latency, and send them to the Network Flow Monitor backend. Then, you can view and analyze metrics from the top contributors for each metric type, to help troubleshoot issues.</p> <p>In addition, when you create a monitor, Network Flow Monitor provides a network health indicator (NHI) that informs you whether there were Amazon Web Services network issues for one or more of the network flows tracked by a monitor, during a time period that you choose. By using this value, you can independently determine if the Amazon Web Services network is impacting your workload during a specific time frame, to help you focus troubleshooting efforts.</p> <p>To learn more about Network Flow Monitor, see the <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-NetworkFlowMonitor.html\">Network Flow Monitor User Guide</a> in the Amazon CloudWatch User Guide.</p>",
   "operations": {
-    "CreateMonitor": "<p>Create a monitor for specific network flows between local and remote resources, so that you can monitor network performance for one or several of your workloads. For each monitor, Network Flow Monitor publishes detailed end-to-end performance metrics and a network health indicators (NHI) that informs you whether there were Amazon Web Services network issues for one or more of the network flows tracked by a monitor, during a time period that you choose. </p>",
-    "CreateScope": "<p>Create a scope of resources that you want to be available for Network Flow Monitor to generate metrics for, when you have active agents on those resources sending metrics reports to the Network Flow Monitor backend. This call returns a scope ID to identify the scope.</p> <p>When you create a scope, you enable permissions for Network Flow Monitor. The scope is set to the resources for the Amazon Web Services that enables the feature.</p>",
+    "CreateMonitor": "<p>Create a monitor for specific network flows between local and remote resources, so that you can monitor network performance for one or several of your workloads. For each monitor, Network Flow Monitor publishes detailed end-to-end performance metrics and a network health indicator (NHI) that informs you whether there were Amazon Web Services network issues for one or more of the network flows tracked by a monitor, during a time period that you choose. </p>",
+    "CreateScope": "<p>In Network Flow Monitor, you specify a scope for the service to generate metrics for. By using the scope, Network Flow Monitor can generate a topology of all the resources to measure performance metrics for. When you create a scope, you enable permissions for Network Flow Monitor.</p> <p>A scope is a Region-account pair or multiple Region-account pairs. Network Flow Monitor uses your scope to determine all the resources (the topology) where Network Flow Monitor will gather network flow performance metrics for you. To provide performance metrics, Network Flow Monitor uses the data that is sent by the Network Flow Monitor agents you install on the resources.</p> <p>To define the Region-account pairs for your scope, the Network Flow Monitor API uses the following constucts, which allow for future flexibility in defining scopes:</p> <ul> <li> <p> <i>Targets</i>, which are arrays of targetResources.</p> </li> <li> <p> <i>Target resources</i>, which are Region-targetIdentifier pairs.</p> </li> <li> <p> <i>Target identifiers</i>, made up of a targetID (currently always an account ID) and a targetType (currently always an account). </p> </li> </ul>",
     "DeleteMonitor": "<p>Deletes a monitor in Network Flow Monitor.</p>",
     "DeleteScope": "<p>Deletes a scope that has been defined.</p>",
     "GetMonitor": "<p>Gets information about a monitor in Network Flow Monitor based on a monitor name. The information returned includes the Amazon Resource Name (ARN), create time, modified time, resources included in the monitor, and status information.</p>",
@@ -49,7 +49,7 @@
         "ListTagsForResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "ScopeSummary$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>",
         "TagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
-        "TraversedComponent$componentArn": "<p>The Amazon Resource Name (ARN) of a tranversed component.</p>",
+        "TraversedComponent$componentArn": "<p>The Amazon Resource Name (ARN) of a traversed component.</p>",
         "UntagResourceInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
         "UpdateScopeOutput$scopeArn": "<p>The Amazon Resource Name (ARN) of the scope.</p>"
       }
@@ -67,7 +67,7 @@
       "refs": {
         "MonitorTopContributorsRow$localRegion": "<p>The Amazon Web Services Region for the local resource for a top contributor network flow.</p>",
         "MonitorTopContributorsRow$remoteRegion": "<p>The Amazon Web Services Region for the remote resource for a top contributor network flow.</p>",
-        "TargetResource$region": "<p>The Amazon Web Services Region where the target resource is located.</p>",
+        "TargetResource$region": "<p>The Amazon Web Services Region for the scope.</p>",
         "WorkloadInsightsTopContributorsRow$localRegion": "<p>The Amazon Web Services Region where the local resource is located.</p>"
       }
     },
@@ -94,7 +94,7 @@
     "CreateMonitorInputLocalResourcesList": {
       "base": null,
       "refs": {
-        "CreateMonitorInput$localResources": "<p>The local resources to monitor. A local resource, in a bi-directional flow of a workload, is the host where the agent is installed. For example, if a workload consists of an interaction between a web service and a backend database (for example, Amazon Relational Database Service (RDS)), the EC2 instance hosting the web service, which also runs the agent, is the local resource.</p>"
+        "CreateMonitorInput$localResources": "<p>The local resources to monitor. A local resource in a workload is the location of the host, or hosts, where the Network Flow Monitor agent is installed. For example, if a workload consists of an interaction between a web service and a backend database (for example, Amazon Dynamo DB), the subnet with the EC2 instance that hosts the web service, which also runs the agent, is the local resource.</p> <p>Be aware that all local resources must belong to the current Region.</p>"
       }
     },
     "CreateMonitorOutput": {
@@ -108,7 +108,7 @@
     "CreateScopeInputTargetsList": {
       "base": null,
       "refs": {
-        "CreateScopeInput$targets": "<p>The targets to define the scope to be monitored. Currently, a target is an Amazon Web Services account.</p>"
+        "CreateScopeInput$targets": "<p>The targets to define the scope to be monitored. A target is an array of targetResources, which are currently Region-account pairs, defined by targetResource constructs.</p>"
       }
     },
     "CreateScopeOutput": {
@@ -134,10 +134,10 @@
     "DestinationCategory": {
       "base": null,
       "refs": {
-        "MonitorTopContributorsRow$destinationCategory": "<p>The destination category for a top contributors row. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AWS_SERVICES</code>: Top contributor network flows to or from Amazon Web Services services</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>",
-        "StartQueryMonitorTopContributorsInput$destinationCategory": "<p>The category that you want to query top contributors for, for a specific monitor. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AMAZON_S3</code>: Top contributor network flows to or from Amazon S3</p> </li> <li> <p> <code>AMAZON_DYNAMODB</code>: Top contributor network flows to or from Amazon Dynamo DB</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>",
-        "StartQueryWorkloadInsightsTopContributorsDataInput$destinationCategory": "<p>The destination category for a top contributors. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AWS_SERVICES</code>: Top contributor network flows to or from Amazon Web Services services</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>",
-        "StartQueryWorkloadInsightsTopContributorsInput$destinationCategory": "<p>The destination category for a top contributors row. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AWS_SERVICES</code>: Top contributor network flows to or from Amazon Web Services services</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>"
+        "MonitorTopContributorsRow$destinationCategory": "<p>The destination category for a top contributors row. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_REGION</code>: Top contributor network flows between Regions (to the edge of another Region)</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AWS_SERVICES</code>: Top contributor network flows to or from Amazon Web Services services</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>",
+        "StartQueryMonitorTopContributorsInput$destinationCategory": "<p>The category that you want to query top contributors for, for a specific monitor. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_REGION</code>: Top contributor network flows between Regions (to the edge of another Region)</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AMAZON_S3</code>: Top contributor network flows to or from Amazon S3</p> </li> <li> <p> <code>AMAZON_DYNAMODB</code>: Top contributor network flows to or from Amazon Dynamo DB</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>",
+        "StartQueryWorkloadInsightsTopContributorsDataInput$destinationCategory": "<p>The destination category for a top contributors. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_REGION</code>: Top contributor network flows between Regions (to the edge of another Region)</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AWS_SERVICES</code>: Top contributor network flows to or from Amazon Web Services services</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>",
+        "StartQueryWorkloadInsightsTopContributorsInput$destinationCategory": "<p>The destination category for a top contributors row. Destination categories can be one of the following: </p> <ul> <li> <p> <code>INTRA_AZ</code>: Top contributor network flows within a single Availability Zone</p> </li> <li> <p> <code>INTER_AZ</code>: Top contributor network flows between Availability Zones</p> </li> <li> <p> <code>INTER_REGION</code>: Top contributor network flows between Regions (to the edge of another Region)</p> </li> <li> <p> <code>INTER_VPC</code>: Top contributor network flows between VPCs</p> </li> <li> <p> <code>AWS_SERVICES</code>: Top contributor network flows to or from Amazon Web Services services</p> </li> <li> <p> <code>UNCLASSIFIED</code>: Top contributor network flows that do not have a bucket classification</p> </li> </ul>"
       }
     },
     "Double": {
@@ -328,7 +328,7 @@
       }
     },
     "MonitorLocalResource": {
-      "base": "<p>A local resource is the host where the agent is installed. Local resources can be a a subnet, a VPC, or an Availability Zone.</p>",
+      "base": "<p>A local resource is the host where the agent is installed. Local resources can be a a subnet, a VPC, an Availability Zone, or an Amazon Web Services service.</p>",
       "refs": {
         "CreateMonitorInputLocalResourcesList$member": null,
         "MonitorLocalResources$member": null
@@ -337,17 +337,17 @@
     "MonitorLocalResourceType": {
       "base": null,
       "refs": {
-        "MonitorLocalResource$type": "<p>The type of the local resource. Valid values are <code>AWS::EC2::VPC</code> <code>AWS::AvailabilityZone</code> or <code>AWS::EC2::Subnet</code>.</p>"
+        "MonitorLocalResource$type": "<p>The type of the local resource. Valid values are <code>AWS::EC2::VPC</code> <code>AWS::AvailabilityZone</code>, <code>AWS::EC2::Subnet</code>, or <code>AWS::Region</code>.</p>"
       }
     },
     "MonitorLocalResources": {
       "base": null,
       "refs": {
-        "CreateMonitorOutput$localResources": "<p>The local resources to monitor. A local resource, in a bi-directional flow of a workload, is the host where the agent is installed. </p>",
-        "GetMonitorOutput$localResources": "<p>The local resources for this monitor.</p>",
-        "UpdateMonitorInput$localResourcesToAdd": "<p>The local resources to add, as an array of resources with identifiers and types.</p>",
+        "CreateMonitorOutput$localResources": "<p>The local resources to monitor. A local resource in a workload is the location of hosts where the Network Flow Monitor agent is installed. </p>",
+        "GetMonitorOutput$localResources": "<p>The local resources to monitor. A local resource in a workload is the location of the hosts where the Network Flow Monitor agent is installed. </p>",
+        "UpdateMonitorInput$localResourcesToAdd": "<p>Additional local resources to specify network flows for a monitor, as an array of resources with identifiers and types. A local resource in a workload is the location of hosts where the Network Flow Monitor agent is installed. </p>",
         "UpdateMonitorInput$localResourcesToRemove": "<p>The local resources to remove, as an array of resources with identifiers and types.</p>",
-        "UpdateMonitorOutput$localResources": "<p>The local resources updated for a monitor, as an array of resources with identifiers and types.</p>"
+        "UpdateMonitorOutput$localResources": "<p>The local resources to monitor. A local resource in a workload is the location of hosts where the Network Flow Monitor agent is installed. </p>"
       }
     },
     "MonitorMetric": {
@@ -357,7 +357,7 @@
       }
     },
     "MonitorRemoteResource": {
-      "base": "<p>A remote resource is the other endpoint in a network flow. That is, one endpoint is the local resource and the other is the remote resource. Remote resources can be a a subnet, a VPC, an Availability Zone, or an Amazon Web Services service. </p>",
+      "base": "<p>A remote resource is the other endpoint in a network flow. That is, one endpoint is the local resource and the other is the remote resource. Remote resources can be a a subnet, a VPC, an Availability Zone, an Amazon Web Services service, or an Amazon Web Services Region.</p> <p>When a remote resource is an Amazon Web Services Region, Network Flow Monitor provides network performance measurements up to the edge of the Region that you specify.</p>",
       "refs": {
         "MonitorRemoteResources$member": null
       }
@@ -365,18 +365,18 @@
     "MonitorRemoteResourceType": {
       "base": null,
       "refs": {
-        "MonitorRemoteResource$type": "<p>The type of the remote resource. Valid values are <code>AWS::EC2::VPC</code> <code>AWS::AvailabilityZone</code>, <code>AWS::EC2::Subnet</code>, or <code>AWS::AWSService</code>.</p>"
+        "MonitorRemoteResource$type": "<p>The type of the remote resource. Valid values are <code>AWS::EC2::VPC</code> <code>AWS::AvailabilityZone</code>, <code>AWS::EC2::Subnet</code>, <code>AWS::AWSService</code>, or <code>AWS::Region</code>.</p>"
       }
     },
     "MonitorRemoteResources": {
       "base": null,
       "refs": {
-        "CreateMonitorInput$remoteResources": "<p>The remote resources to monitor. A remote resource is the other endpoint in the bi-directional flow of a workload, with a local resource. For example, Amazon Relational Database Service (RDS) can be a remote resource.</p>",
-        "CreateMonitorOutput$remoteResources": "<p>The remote resources to monitor. A remote resource is the other endpoint in the bi-directional flow of a workload, with a local resource. For example, Amazon Relational Database Service (RDS) can be a remote resource. The remote resource is identified by its ARN or an identifier.</p>",
-        "GetMonitorOutput$remoteResources": "<p>The remote resources for this monitor.</p>",
-        "UpdateMonitorInput$remoteResourcesToAdd": "<p>The remove resources to add, as an array of resources with identifiers and types.</p>",
-        "UpdateMonitorInput$remoteResourcesToRemove": "<p>The remove resources to remove, as an array of resources with identifiers and types.</p>",
-        "UpdateMonitorOutput$remoteResources": "<p>The remote resources updated for a monitor, as an array of resources with identifiers and types.</p>"
+        "CreateMonitorInput$remoteResources": "<p>The remote resources to monitor. A remote resource is the other endpoint in the bi-directional flow of a workload, with a local resource. For example, Amazon Dynamo DB can be a remote resource.</p> <p>When you specify remote resources, be aware that specific combinations of resources are allowed and others are not, including the following constraints:</p> <ul> <li> <p>All remote resources that you specify must all belong to a single Region.</p> </li> <li> <p>If you specify Amazon Web Services services as remote resources, any other remote resources that you specify must be in the current Region.</p> </li> <li> <p>When you specify a remote resource for another Region, you can only specify the <code>Region</code> resource type. You cannot specify a subnet, VPC, or Availability Zone in another Region.</p> </li> <li> <p>If you leave the <code>RemoteResources</code> parameter empty, the monitor will include all network flows that terminate in the current Region.</p> </li> </ul>",
+        "CreateMonitorOutput$remoteResources": "<p>The remote resources to monitor. A remote resource is the other endpoint specified for the network flow of a workload, with a local resource. For example, Amazon Dynamo DB can be a remote resource. </p>",
+        "GetMonitorOutput$remoteResources": "<p>The remote resources to monitor. A remote resource is the other endpoint specified for the network flow of a workload, with a local resource. For example, Amazon Dynamo DB can be a remote resource. </p>",
+        "UpdateMonitorInput$remoteResourcesToAdd": "<p>The remote resources to add, as an array of resources with identifiers and types.</p> <p>A remote resource is the other endpoint in the flow of a workload, with a local resource. For example, Amazon Dynamo DB can be a remote resource. </p>",
+        "UpdateMonitorInput$remoteResourcesToRemove": "<p>The remote resources to remove, as an array of resources with identifiers and types.</p> <p>A remote resource is the other endpoint specified for the network flow of a workload, with a local resource. For example, Amazon Dynamo DB can be a remote resource. </p>",
+        "UpdateMonitorOutput$remoteResources": "<p>The remote resources updated for a monitor, as an array of resources with identifiers and types.</p> <p>A remote resource is the other endpoint specified for the network flow of a workload, with a local resource. For example, Amazon Dynamo DB can be a remote resource.</p>"
       }
     },
     "MonitorStatus": {
@@ -390,7 +390,7 @@
       }
     },
     "MonitorSummary": {
-      "base": "<p>A summary of information about a monitor, includ the ARN, the name, and the status.</p>",
+      "base": "<p>A summary of information about a monitor, including the ARN, the name, and the status.</p>",
       "refs": {
         "MonitorList$member": null
       }
@@ -446,7 +446,7 @@
         "GetQueryStatusWorkloadInsightsTopContributorsDataInput$scopeId": "<p>The identifier for the scope that includes the resources you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for a specific root account. A scope ID is returned from a <code>CreateScope</code> API call.</p>",
         "GetQueryStatusWorkloadInsightsTopContributorsInput$scopeId": "<p>The identifier for the scope that includes the resources you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for a specific root account.</p>",
         "GetScopeOutput$scopeId": "<p>The identifier for the scope that includes the resources you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for a specific root account. A scope ID is returned from a <code>CreateScope</code> API call.</p>",
-        "ScopeSummary$scopeId": "<p>The identifier for the scope that includes the resources you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for a specific root account.</p>",
+        "ScopeSummary$scopeId": "<p>The identifier for the scope that includes the resources that you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for the accounts in a scope.</p>",
         "StartQueryWorkloadInsightsTopContributorsDataInput$scopeId": "<p>The identifier for the scope that includes the resources you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for a specific root account.</p>",
         "StartQueryWorkloadInsightsTopContributorsInput$scopeId": "<p>The identifier for the scope that includes the resources you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for a specific root account. A scope ID is returned from a <code>CreateScope</code> API call.</p>",
         "StopQueryWorkloadInsightsTopContributorsDataInput$scopeId": "<p>The identifier for the scope that includes the resources you want to get data results for. A scope ID is an internally-generated identifier that includes all the resources for a specific root account.</p>",
@@ -556,8 +556,8 @@
         "ListMonitorsOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "ListScopesInput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
         "ListScopesOutput$nextToken": "<p>The token for the next set of results. You receive this token from a previous call.</p>",
-        "MonitorLocalResource$identifier": "<p>The identifier of the local resource, such as an ARN.</p>",
-        "MonitorRemoteResource$identifier": "<p>The identifier of the remote resource, such as an ARN.</p>",
+        "MonitorLocalResource$identifier": "<p>The identifier of the local resource. For a VPC or subnet, this identifier is the VPC Amazon Resource Name (ARN) or subnet ARN. For an Availability Zone, this identifier is the AZ name, for example, us-west-2b.</p>",
+        "MonitorRemoteResource$identifier": "<p>The identifier of the remote resource. For a VPC or subnet, this identifier is the VPC Amazon Resource Name (ARN) or subnet ARN. For an Availability Zone, this identifier is the AZ name, for example, us-west-2b. For an Amazon Web Services Region , this identifier is the Region name, for example, us-west-2. </p>",
         "MonitorTopContributorsRow$localIp": "<p>The IP address of the local resource for a top contributor network flow.</p>",
         "MonitorTopContributorsRow$snatIp": "<p>The secure network address translation (SNAT) IP address for a top contributor network flow.</p>",
         "MonitorTopContributorsRow$remoteIp": "<p>The IP address of the remote resource for a top contributor network flow.</p>",
@@ -574,7 +574,7 @@
         "TraversedComponent$serviceName": "<p>The service name for the traversed component.</p>",
         "ValidationException$message": null,
         "WorkloadInsightsTopContributorsDataPoint$label": "<p>The label identifying the data point.</p>",
-        "WorkloadInsightsTopContributorsRow$remoteIdentifier": "<p>The identifier of a remote resource.</p>"
+        "WorkloadInsightsTopContributorsRow$remoteIdentifier": "<p>The identifier of a remote resource. For a VPC or subnet, this identifier is the VPC Amazon Resource Name (ARN) or subnet ARN. For an Availability Zone, this identifier is the AZ name, for example, us-west-2b. For an Amazon Web Services Region , this identifier is the Region name, for example, us-west-2.</p>"
       }
     },
     "SubnetArn": {
@@ -596,11 +596,11 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
-        "StartQueryMonitorTopContributorsInput$startTime": "<p>The timestamp that is the date and time beginning of the period that you want to retrieve results for with your query.</p>",
+        "StartQueryMonitorTopContributorsInput$startTime": "<p>The timestamp that is the date and time that is the beginning of the period that you want to retrieve results for with your query.</p>",
         "StartQueryMonitorTopContributorsInput$endTime": "<p>The timestamp that is the date and time end of the period that you want to retrieve results for with your query.</p>",
-        "StartQueryWorkloadInsightsTopContributorsDataInput$startTime": "<p>The timestamp that is the date and time beginning of the period that you want to retrieve results for with your query.</p>",
+        "StartQueryWorkloadInsightsTopContributorsDataInput$startTime": "<p>The timestamp that is the date and time that is the beginning of the period that you want to retrieve results for with your query.</p>",
         "StartQueryWorkloadInsightsTopContributorsDataInput$endTime": "<p>The timestamp that is the date and time end of the period that you want to retrieve results for with your query.</p>",
-        "StartQueryWorkloadInsightsTopContributorsInput$startTime": "<p>The timestamp that is the date and time beginning of the period that you want to retrieve results for with your query.</p>",
+        "StartQueryWorkloadInsightsTopContributorsInput$startTime": "<p>The timestamp that is the date and time that is the beginning of the period that you want to retrieve results for with your query.</p>",
         "StartQueryWorkloadInsightsTopContributorsInput$endTime": "<p>The timestamp that is the date and time end of the period that you want to retrieve results for with your query.</p>",
         "WorkloadInsightsTopContributorsTimestampsList$member": null
       }
@@ -650,17 +650,17 @@
     "TargetId": {
       "base": "<p>A target ID is an internally-generated identifier for a target. A target allows you to identify all the resources in a Network Flow Monitor scope. Currently, a target is always an Amazon Web Services account.</p>",
       "refs": {
-        "TargetIdentifier$targetId": "<p>The identifier for a target.</p>"
+        "TargetIdentifier$targetId": "<p>The identifier for a target, which is currently always an account ID .</p>"
       }
     },
     "TargetIdentifier": {
-      "base": "<p>A target identifier is a pair of identifying information for a resource that is included in a target. A target identifier includes the target ID and the target type.</p>",
+      "base": "<p>A target identifier is a pair of identifying information for a scope that is included in a target. A target identifier is made up of a target ID and a target type. Currently the target ID is always an account ID and the target type is always ACCOUNT.</p>",
       "refs": {
-        "TargetResource$targetIdentifier": "<p>A target identifier is a pair of identifying information for a resource that is included in a target. A target identifier includes the target ID and the target type.</p>"
+        "TargetResource$targetIdentifier": "<p>A target identifier is a pair of identifying information for a scope. A target identifier is made up of a targetID (currently always an account ID) and a targetType (currently always an account).</p>"
       }
     },
     "TargetResource": {
-      "base": "<p>A target resource in a scope. The resource is identified by a Region and a target identifier, which includes a target ID and a target type.</p>",
+      "base": "<p>A target resource in a scope. The resource is identified by a Region and an account, defined by a target identifier. A target identifier is made up of a target ID (currently always an account ID) and a target type (currently always <code>ACCOUNT</code>).</p>",
       "refs": {
         "CreateScopeInputTargetsList$member": null,
         "TargetResourceList$member": null,
@@ -671,13 +671,13 @@
     "TargetResourceList": {
       "base": null,
       "refs": {
-        "GetScopeOutput$targets": "<p>The targets for a scope</p>"
+        "GetScopeOutput$targets": "<p>The targets to define the scope to be monitored. A target is an array of targetResources, which are currently Region-account pairs, defined by targetResource constructs.</p>"
       }
     },
     "TargetType": {
       "base": null,
       "refs": {
-        "TargetIdentifier$targetType": "<p>The type of a target. A target type is currently always <code>ACCOUNT</code> because a target is currently a single Amazon Web Services account.</p>"
+        "TargetIdentifier$targetType": "<p>The type of a target. A target type is currently always <code>ACCOUNT</code>.</p>"
       }
     },
     "ThrottlingException": {
