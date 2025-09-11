@@ -3,11 +3,14 @@
 namespace Aws\Tests\Token;
 
 use Aws\Exception\TokenException;
+use Aws\MetricsBuilder;
+use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Aws\Token\BedrockTokenProvider;
 use Aws\Token\Token;
 use Aws\Token\TokenInterface;
 use Aws\Token\TokenProvider;
+use Aws\Token\TokenSource;
 use GuzzleHttp\Promise;
 use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
@@ -288,6 +291,17 @@ class BedrockTokenProviderTest extends TestCase
         // Check token value
         if ($expectations['token'] !== null) {
             $this->assertEquals($expectations['token'], $token->getToken());
+
+            if (isset($envVars['AWS_BEARER_TOKEN_BEDROCK'])
+                && !isset($clientArgs['token'])
+            ) {
+                $this->assertEquals(
+                    TokenSource::BEARER_SERVICE_ENV_VARS->value,
+                    $token->getSource()
+                );
+            } else {
+                $this->assertNull($token->getSource());
+            }
         } else {
             $this->assertNull($token);
         }
@@ -376,5 +390,90 @@ class BedrockTokenProviderTest extends TestCase
                 ]
             ];
         }
+    }
+
+    /**
+     * Test that token source is added to user agent header
+     *
+     * @dataProvider tokenSourceUserAgentProvider
+     */
+    public function testTokenSourceInUserAgent(
+        string $service,
+        string $operation,
+        array $args
+    ): void
+    {
+        putenv('AWS_BEARER_TOKEN_BEDROCK=foo-token');
+
+        $client = $this->getTestClient($service, [
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => [
+                'key' => 'key',
+                'secret' => 'secret'
+            ]
+        ]);
+
+        $this->assertEquals(
+            BedrockTokenProvider::BEARER_AUTH,
+            $client->getConfig('auth_scheme_preference')[0]
+        );
+
+        $client->getHandlerList()->appendSign(
+            function (callable $handler) {
+                return function ($command, $request) use ($handler, &$assertionMade) {
+                    $this->assertStringEndsWith(
+                        MetricsBuilder::BEARER_SERVICE_ENV_VARS,
+                        $request->getHeaderLine('user-agent')
+                    );
+
+                    return $handler($command, $request);
+                };
+            },
+            'test-token-source'
+        );
+
+        $this->addMockResults($client, [
+            new Result([])
+        ]);
+
+        $client->{$operation}($args);
+    }
+
+    public function tokenSourceUserAgentProvider(): \Generator
+    {
+        yield 'bedrock' => [
+            'service' => 'bedrock',
+            'operation' => 'listCustomModelDeployments',
+            'args' => []
+        ];
+
+        //TODO enable tests when these services support bearer auth
+//        yield 'bedrock-data-automation' => [
+//            'service' => 'bedrock-data-automation',
+//            'operation' => 'listBlueprints',
+//            'args' => []
+//        ];
+//
+//        yield 'bedrock-agent-runtime' => [
+//            'service' => 'bedrock-agent-runtime',
+//            'operation' => 'listFlowExecutions',
+//            'args' => ['flowIdentifier' => 'dummy-flow-id']
+//        ];
+//
+//        yield 'bedrock-data-automation-runtime' => [
+//            'service' => 'bedrock-data-automation-runtime',
+//            'operation' => 'listTagsForResource',
+//            'args' => ['resourceArn' => 'arn:aws:bedrock:us-east-1:123456789012:dummy']
+//        ];
+//
+//        yield 'bedrock-agent' => [
+//            'service' => 'bedrock-agent',
+//            'operation' => 'listAgentActionGroups',
+//            'args' => [
+//                'agentId' => 'dummy-agent-id',
+//                'agentVersion' => 'dummy-version'
+//            ]
+//        ];
     }
 }

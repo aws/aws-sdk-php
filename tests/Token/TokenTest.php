@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Aws\Token\Token
  */
-class CredentialsTest extends TestCase
+class TokenTest extends TestCase
 {
     public function testHasGetters()
     {
@@ -20,7 +20,8 @@ class CredentialsTest extends TestCase
         $this->assertSame($exp, $token->getExpiration());
         $this->assertEquals([
             'token'     => 'foo',
-            'expires' => $exp
+            'expires' => $exp,
+            'source' => null
         ], $token->toArray());
     }
 
@@ -42,6 +43,7 @@ class CredentialsTest extends TestCase
         $this->assertEquals([
             'token'     => 'token-value',
             'expires' => null,
+            'source'   => null
         ], $actual);
 
         $token = new Token('token-value',  10);
@@ -50,6 +52,7 @@ class CredentialsTest extends TestCase
         $this->assertEquals([
             'token'     => 'token-value',
             'expires' => 10,
+            'source'   => null
         ], $actual);
     }
 
