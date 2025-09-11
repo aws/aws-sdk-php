@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.16 - 2025-09-11
 
 * `Aws\Api` - Fixes bug in document type validation where unordered integer array keys are not considered.
 * `Aws\GuardDuty` - Updated Java SDK implementation of entity set status in GuardDuty API.
