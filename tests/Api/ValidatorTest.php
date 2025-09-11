@@ -424,6 +424,21 @@ class ValidatorTest extends TestCase
                         ]
                     ]
                 ],
+                [
+                    'documentVal' => ['json' => [[1 => "Blah blah"]]]
+                ],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
                 ['documentVal' => null],
                 true
             ],
