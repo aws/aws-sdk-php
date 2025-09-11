@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Elastic VMware Service** service.
+ * @method \Aws\Result associateEipToVlan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateEipToVlanAsync(array $args = [])
  * @method \Aws\Result createEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createEnvironmentAsync(array $args = [])
  * @method \Aws\Result createEnvironmentHost(array $args = [])
@@ -13,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteEnvironmentAsync(array $args = [])
  * @method \Aws\Result deleteEnvironmentHost(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEnvironmentHostAsync(array $args = [])
+ * @method \Aws\Result disassociateEipFromVlan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateEipFromVlanAsync(array $args = [])
  * @method \Aws\Result getEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnvironmentAsync(array $args = [])
  * @method \Aws\Result listEnvironmentHosts(array $args = [])

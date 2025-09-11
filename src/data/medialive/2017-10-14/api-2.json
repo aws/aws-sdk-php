@@ -12403,6 +12403,10 @@
         "Destination": {
           "shape": "OutputLocationRef",
           "locationName": "destination"
+        },
+        "MediapackageV2GroupSettings": {
+          "shape": "MediaPackageV2GroupSettings",
+          "locationName": "mediapackageV2GroupSettings"
         }
       },
       "required": [
@@ -12428,7 +12432,12 @@
     },
     "MediaPackageOutputSettings": {
       "type": "structure",
-      "members": {}
+      "members": {
+        "MediaPackageV2DestinationSettings": {
+          "shape": "MediaPackageV2DestinationSettings",
+          "locationName": "mediaPackageV2DestinationSettings"
+        }
+      }
     },
     "MotionGraphicsActivateScheduleActionSettings": {
       "type": "structure",
@@ -24635,6 +24644,52 @@
         "ROWS_20",
         "ROWS_24"
       ]
+    },
+    "HlsAutoSelect": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "OMIT",
+        "YES"
+      ]
+    },
+    "HlsDefault": {
+      "type": "string",
+      "enum": [
+        "NO",
+        "OMIT",
+        "YES"
+      ]
+    },
+    "MediaPackageV2DestinationSettings": {
+      "type": "structure",
+      "members": {
+        "AudioGroupId": {
+          "shape": "__string",
+          "locationName": "audioGroupId"
+        },
+        "AudioRenditionSets": {
+          "shape": "__string",
+          "locationName": "audioRenditionSets"
+        },
+        "HlsAutoSelect": {
+          "shape": "HlsAutoSelect",
+          "locationName": "hlsAutoSelect"
+        },
+        "HlsDefault": {
+          "shape": "HlsDefault",
+          "locationName": "hlsDefault"
+        }
+      }
+    },
+    "MediaPackageV2GroupSettings": {
+      "type": "structure",
+      "members": {
+        "CaptionLanguageMappings": {
+          "shape": "__listOfCaptionLanguageMapping",
+          "locationName": "captionLanguageMappings"
+        }
+      }
     }
   }
 }

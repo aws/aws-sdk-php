@@ -1894,6 +1894,13 @@
         "RestoreDBInstanceFromS3Message$DatabaseInsightsMode": "<p>Specifies the mode of Database Insights to enable for the DB instance.</p> <note> <p>Aurora DB instances inherit this value from the DB cluster, so you can't change this value.</p> </note>"
       }
     },
+    "DefaultAuthScheme": {
+      "base": null,
+      "refs": {
+        "CreateDBProxyRequest$DefaultAuthScheme": "<p>The default authentication scheme that the proxy uses for client connections to the proxy and connections from the proxy to the underlying database. Valid values are <code>NONE</code> and <code>IAM_AUTH</code>. When set to <code>IAM_AUTH</code>, the proxy uses end-to-end IAM authentication to connect to the database. If you don't specify <code>DefaultAuthScheme</code> or specify this parameter as <code>NONE</code>, you must specify the <code>Auth</code> option.</p>",
+        "ModifyDBProxyRequest$DefaultAuthScheme": "<p>The default authentication scheme that the proxy uses for client connections to the proxy and connections from the proxy to the underlying database. Valid values are <code>NONE</code> and <code>IAM_AUTH</code>. When set to <code>IAM_AUTH</code>, the proxy uses end-to-end IAM authentication to connect to the database.</p>"
+      }
+    },
     "DeleteBlueGreenDeploymentRequest": {
       "base": null,
       "refs": {}
@@ -4683,6 +4690,7 @@
         "DBProxy$DBProxyArn": "<p>The Amazon Resource Name (ARN) for the proxy.</p>",
         "DBProxy$EngineFamily": "<p>The kinds of databases that the proxy can connect to. This value determines which database network protocol the proxy recognizes when it interprets network traffic to and from the database. <code>MYSQL</code> supports Aurora MySQL, RDS for MariaDB, and RDS for MySQL databases. <code>POSTGRESQL</code> supports Aurora PostgreSQL and RDS for PostgreSQL databases. <code>SQLSERVER</code> supports RDS for Microsoft SQL Server databases.</p>",
         "DBProxy$VpcId": "<p>Provides the VPC ID of the DB proxy.</p>",
+        "DBProxy$DefaultAuthScheme": "<p>The default authentication scheme that the proxy uses for client connections to the proxy and connections from the proxy to the underlying database. Valid values are <code>NONE</code> and <code>IAM_AUTH</code>. When set to <code>IAM_AUTH</code>, the proxy uses end-to-end IAM authentication to connect to the database. </p>",
         "DBProxy$RoleArn": "<p>The Amazon Resource Name (ARN) for the IAM role that the proxy uses to access Amazon Secrets Manager.</p>",
         "DBProxy$Endpoint": "<p>The endpoint that you can use to connect to the DB proxy. You include the endpoint value in the connection string for a database client application.</p>",
         "DBProxyEndpoint$DBProxyEndpointName": "<p>The name for the DB proxy endpoint. An identifier must begin with a letter and must contain only ASCII letters, digits, and hyphens; it can't end with a hyphen or contain two consecutive hyphens.</p>",

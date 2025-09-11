@@ -16,6 +16,21 @@
     "uid":"evs-2023-07-27"
   },
   "operations":{
+    "AssociateEipToVlan":{
+      "name":"AssociateEipToVlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateEipToVlanRequest"},
+      "output":{"shape":"AssociateEipToVlanResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "CreateEnvironment":{
       "name":"CreateEnvironment",
       "http":{
@@ -66,6 +81,21 @@
       "input":{"shape":"DeleteEnvironmentHostRequest"},
       "output":{"shape":"DeleteEnvironmentHostResponse"},
       "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "DisassociateEipFromVlan":{
+      "name":"DisassociateEipFromVlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateEipFromVlanRequest"},
+      "output":{"shape":"DisassociateEipFromVlanResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"}
       ],
@@ -166,11 +196,51 @@
     }
   },
   "shapes":{
+    "AllocationId":{
+      "type":"string",
+      "max":26,
+      "min":9,
+      "pattern":"eipalloc-[a-zA-Z0-9_-]+"
+    },
     "Arn":{
       "type":"string",
       "max":1011,
       "min":1,
       "pattern":"arn:aws:evs:[a-z]{2}-[a-z]+-[0-9]:[0-9]{12}:environment/[a-zA-Z0-9_-]+"
+    },
+    "AssociateEipToVlanRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "vlanName",
+        "allocationId"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{"shape":"EnvironmentId"},
+        "vlanName":{"shape":"AssociateEipToVlanRequestVlanNameString"},
+        "allocationId":{"shape":"AllocationId"}
+      }
+    },
+    "AssociateEipToVlanRequestVlanNameString":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "AssociateEipToVlanResponse":{
+      "type":"structure",
+      "members":{
+        "vlan":{"shape":"Vlan"}
+      }
+    },
+    "AssociationId":{
+      "type":"string",
+      "max":26,
+      "min":9,
+      "pattern":"eipassoc-[a-zA-Z0-9_-]+"
     },
     "Boolean":{
       "type":"boolean",
@@ -329,6 +399,46 @@
       "members":{
         "environment":{"shape":"Environment"}
       }
+    },
+    "DisassociateEipFromVlanRequest":{
+      "type":"structure",
+      "required":[
+        "environmentId",
+        "vlanName",
+        "associationId"
+      ],
+      "members":{
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
+        "environmentId":{"shape":"EnvironmentId"},
+        "vlanName":{"shape":"DisassociateEipFromVlanRequestVlanNameString"},
+        "associationId":{"shape":"AssociationId"}
+      }
+    },
+    "DisassociateEipFromVlanRequestVlanNameString":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "DisassociateEipFromVlanResponse":{
+      "type":"structure",
+      "members":{
+        "vlan":{"shape":"Vlan"}
+      }
+    },
+    "EipAssociation":{
+      "type":"structure",
+      "members":{
+        "associationId":{"shape":"AssociationId"},
+        "allocationId":{"shape":"AllocationId"},
+        "ipAddress":{"shape":"IpAddress"}
+      }
+    },
+    "EipAssociationList":{
+      "type":"list",
+      "member":{"shape":"EipAssociation"}
     },
     "Environment":{
       "type":"structure",
@@ -498,7 +608,9 @@
         "nsxUplink":{"shape":"InitialVlanInfo"},
         "hcx":{"shape":"InitialVlanInfo"},
         "expansionVlan1":{"shape":"InitialVlanInfo"},
-        "expansionVlan2":{"shape":"InitialVlanInfo"}
+        "expansionVlan2":{"shape":"InitialVlanInfo"},
+        "isHcxPublic":{"shape":"Boolean"},
+        "hcxNetworkAclId":{"shape":"NetworkAclId"}
       }
     },
     "InstanceType":{
@@ -601,6 +713,12 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "NetworkAclId":{
+      "type":"string",
+      "max":21,
+      "min":4,
+      "pattern":"acl-[a-zA-Z0-9_-]+"
     },
     "NetworkInterface":{
       "type":"structure",
@@ -867,7 +985,10 @@
         "createdAt":{"shape":"Timestamp"},
         "modifiedAt":{"shape":"Timestamp"},
         "vlanState":{"shape":"VlanState"},
-        "stateDetails":{"shape":"StateDetails"}
+        "stateDetails":{"shape":"StateDetails"},
+        "eipAssociations":{"shape":"EipAssociationList"},
+        "isPublic":{"shape":"Boolean"},
+        "networkAclId":{"shape":"NetworkAclId"}
       }
     },
     "VlanId":{

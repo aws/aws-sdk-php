@@ -1824,7 +1824,8 @@
       "members":{
         "hookTargetArn":{"shape":"String"},
         "roleArn":{"shape":"IAMRoleArn"},
-        "lifecycleStages":{"shape":"DeploymentLifecycleHookStageList"}
+        "lifecycleStages":{"shape":"DeploymentLifecycleHookStageList"},
+        "hookDetails":{"shape":"HookDetails"}
       }
     },
     "DeploymentLifecycleHookList":{
@@ -2333,6 +2334,11 @@
         "UNHEALTHY",
         "UNKNOWN"
       ]
+    },
+    "HookDetails":{
+      "type":"structure",
+      "members":{},
+      "document":true
     },
     "HostEntry":{
       "type":"structure",

@@ -1279,7 +1279,7 @@
     "H264AdaptiveQuantization": {
       "base": "H264 Adaptive Quantization",
       "refs": {
-        "H264Settings$AdaptiveQuantization": "Enables or disables adaptive quantization, which is a technique MediaLive can apply to video on a frame-by-frame basis to produce more compression without losing quality. There are three types of adaptive quantization: flicker, spatial, and temporal. Set the field in one of these ways: Set to Auto. Recommended. For each type of AQ, MediaLive will determine if AQ is needed, and if so, the appropriate strength. Set a strength (a value other than Auto or Disable). This strength will apply to any of the AQ fields that you choose to enable. Set to Disabled to disable all types of adaptive quantization."
+        "H264Settings$AdaptiveQuantization": "Enables or disables adaptive quantization (AQ), which is a technique MediaLive can apply to video on a frame-by-frame basis to produce more compression without losing quality. There are three types of adaptive quantization: spatial, temporal, and flicker. We recommend that you set the field to Auto. For more information about all the options, see the topic about video adaptive quantization in the MediaLive user guide."
       }
     },
     "H264ColorMetadata": {
@@ -1309,7 +1309,7 @@
     "H264FlickerAq": {
       "base": "H264 Flicker Aq",
       "refs": {
-        "H264Settings$FlickerAq": "Flicker AQ makes adjustments within each frame to reduce flicker or 'pop' on I-frames. The value to enter in this field depends on the value in the Adaptive quantization field: If you have set the Adaptive quantization field to Auto, MediaLive ignores any value in this field. MediaLive will determine if flicker AQ is appropriate and will apply the appropriate strength. If you have set the Adaptive quantization field to a strength, you can set this field to Enabled or Disabled. Enabled: MediaLive will apply flicker AQ using the specified strength. Disabled: MediaLive won't apply flicker AQ. If you have set the Adaptive quantization to Disabled, MediaLive ignores any value in this field and doesn't apply flicker AQ."
+        "H264Settings$FlickerAq": "Flicker AQ makes adjustments within each frame to reduce flicker or 'pop' on I-frames. The value to enter in this field depends on the value in the Adaptive quantization field. For more information, see the topic about video adaptive quantization in the MediaLive user guide."
       }
     },
     "H264ForceFieldPictures": {
@@ -1393,7 +1393,7 @@
     "H264SpatialAq": {
       "base": "H264 Spatial Aq",
       "refs": {
-        "H264Settings$SpatialAq": "Spatial AQ makes adjustments within each frame based on spatial variation of content complexity. The value to enter in this field depends on the value in the Adaptive quantization field: If you have set the Adaptive quantization field to Auto, MediaLive ignores any value in this field. MediaLive will determine if spatial AQ is appropriate and will apply the appropriate strength. If you have set the Adaptive quantization field to a strength, you can set this field to Enabled or Disabled. Enabled: MediaLive will apply spatial AQ using the specified strength. Disabled: MediaLive won't apply spatial AQ. If you have set the Adaptive quantization to Disabled, MediaLive ignores any value in this field and doesn't apply spatial AQ."
+        "H264Settings$SpatialAq": "Spatial AQ makes adjustments within each frame based on spatial variation of content complexity. The value to enter in this field depends on the value in the Adaptive quantization field. For more information, see the topic about video adaptive quantization in the MediaLive user guide."
       }
     },
     "H264SubGopLength": {
@@ -1411,7 +1411,7 @@
     "H264TemporalAq": {
       "base": "H264 Temporal Aq",
       "refs": {
-        "H264Settings$TemporalAq": "Temporal makes adjustments within each frame based on temporal variation of content complexity. The value to enter in this field depends on the value in the Adaptive quantization field: If you have set the Adaptive quantization field to Auto, MediaLive ignores any value in this field. MediaLive will determine if temporal AQ is appropriate and will apply the appropriate strength. If you have set the Adaptive quantization field to a strength, you can set this field to Enabled or Disabled. Enabled: MediaLive will apply temporal AQ using the specified strength. Disabled: MediaLive won't apply temporal AQ. If you have set the Adaptive quantization to Disabled, MediaLive ignores any value in this field and doesn't apply temporal AQ."
+        "H264Settings$TemporalAq": "Temporal makes adjustments within each frame based on variations in content complexity over time. The value to enter in this field depends on the value in the Adaptive quantization field. For more information, see the topic about video adaptive quantization in the MediaLive user guide."
       }
     },
     "H264TimecodeInsertionBehavior": {
@@ -1423,7 +1423,7 @@
     "H265AdaptiveQuantization": {
       "base": "H265 Adaptive Quantization",
       "refs": {
-        "H265Settings$AdaptiveQuantization": "Adaptive quantization. Allows intra-frame quantizers to vary to improve visual quality."
+        "H265Settings$AdaptiveQuantization": "Enables or disables adaptive quantization (AQ), which is a technique MediaLive can apply to video on a frame-by-frame basis to produce more compression without losing quality. There are three types of adaptive quantization: spatial, temporal, and flicker. Flicker is the only type that you can customize. We recommend that you set the field to Auto. For more information about all the options, see the topic about video adaptive quantization in the MediaLive user guide."
       }
     },
     "H265AlternativeTransferFunction": {
@@ -1453,7 +1453,7 @@
     "H265FlickerAq": {
       "base": "H265 Flicker Aq",
       "refs": {
-        "H265Settings$FlickerAq": "If set to enabled, adjust quantization within each frame to reduce flicker or 'pop' on I-frames."
+        "H265Settings$FlickerAq": "Flicker AQ makes adjustments within each frame to reduce flicker or 'pop' on I-frames. The value to enter in this field depends on the value in the Adaptive quantization field. For more information, see the topic about video adaptive quantization in the MediaLive user guide."
       }
     },
     "H265GopSizeUnits": {
@@ -4468,7 +4468,8 @@
     "__listOfCaptionLanguageMapping": {
       "base": null,
       "refs": {
-        "HlsGroupSettings$CaptionLanguageMappings": "Mapping of up to 4 caption channels to caption languages.  Is only meaningful if captionLanguageSetting is set to \"insert\"."
+        "HlsGroupSettings$CaptionLanguageMappings": "Mapping of up to 4 caption channels to caption languages.  Is only meaningful if captionLanguageSetting is set to \"insert\".",
+        "MediaPackageV2GroupSettings$CaptionLanguageMappings": "Mapping of up to 4 caption channels to caption languages."
       }
     },
     "__listOfCaptionSelector": {
@@ -5255,7 +5256,9 @@
         "SdiSourceSummary$Arn": "The ARN of this SdiSource. It is automatically assigned when the SdiSource is created.",
         "SdiSourceSummary$Id": "The ID of the SdiSource. Unique in the AWS account.The ID is the resource-id portion of the ARN.",
         "SdiSourceSummary$Name": "The name of the SdiSource.",
-        "UpdateSdiSourceRequest$Name": "Include this parameter only if you want to change the name of the SdiSource. Specify a name that is unique in the AWS account. We recommend you assign a name that describes the source, for example curling-cameraA. Names are case-sensitive."
+        "UpdateSdiSourceRequest$Name": "Include this parameter only if you want to change the name of the SdiSource. Specify a name that is unique in the AWS account. We recommend you assign a name that describes the source, for example curling-cameraA. Names are case-sensitive.",
+        "MediaPackageV2DestinationSettings$AudioGroupId": "Applies only to an output that contains audio. If you want to put several audio encodes into one audio rendition group, decide on a name (ID) for the group. Then in every audio output that you want to belong to that group, enter that ID in this field. Note that this information is part of the HLS specification (not the CMAF specification), but if you include it then MediaPackage will include it in the manifest it creates for the video player.",
+        "MediaPackageV2DestinationSettings$AudioRenditionSets": "Applies only to an output that contains video, and only if you want to associate one or more audio groups to this video. In this field you assign the groups that you create (in the Group ID fields in the various audio outputs). Enter one group ID, or enter a comma-separated list of group IDs. Note that this information is part of the HLS specification (not the CMAF specification), but if you include it then MediaPackage will include it in the manifest it creates for the video player."
       }
     },
     "__stringMax1000": {
@@ -7190,6 +7193,30 @@
       "base": "Dvb Sub Destination Subtitle Rows",
       "refs": {
         "DvbSubDestinationSettings$SubtitleRows": "Applies only when the input captions are Teletext and the output captions are DVB-Sub or Burn-In. Choose the number of lines for the captions bitmap. The captions bitmap is 700 wide \u00d7 576 high and will be laid over the video. For example, a value of 16 divides the bitmap into 16 lines, with each line 36 pixels high (16 \u00d7 36 = 576). The default is 24 (24 pixels high). Enter the same number in every encode in every output that converts the same Teletext source to DVB-Sub or Burn-in."
+      }
+    },
+    "HlsAutoSelect": {
+      "base": "Hls Auto Select",
+      "refs": {
+        "MediaPackageV2DestinationSettings$HlsAutoSelect": "Specifies whether MediaPackage should set this output as the auto-select rendition in the HLS manifest. YES means this must be the auto-select. NO means this should never be the auto-select. OMIT means MediaPackage decides what to set on this rendition.\nWhen you consider all the renditions, follow these guidelines. You can set zero or one renditions to YES. You can set zero or more renditions to NO, but you can't set all renditions to NO. You can set zero, some, or all to OMIT."
+      }
+    },
+    "HlsDefault": {
+      "base": "Hls Default",
+      "refs": {
+        "MediaPackageV2DestinationSettings$HlsDefault": "Specifies whether MediaPackage should set this output as the default rendition in the HLS manifest. YES means this must be the default. NO means this should never be the default. OMIT means MediaPackage decides what to set on this rendition.\nWhen you consider all the renditions, follow these guidelines. You can set zero or one renditions to YES. You can set zero or more renditions to NO, but you can't set all renditions to NO. You can set zero, some, or all to OMIT."
+      }
+    },
+    "MediaPackageV2DestinationSettings": {
+      "base": "Media Package V2 Destination Settings",
+      "refs": {
+        "MediaPackageOutputSettings$MediaPackageV2DestinationSettings": "Optional settings for MediaPackage V2 destinations"
+      }
+    },
+    "MediaPackageV2GroupSettings": {
+      "base": "Media Package V2 Group Settings",
+      "refs": {
+        "MediaPackageGroupSettings$MediapackageV2GroupSettings": "Parameters that apply only if the destination parameter (for the output group) specifies a channelGroup and channelName. Use of these two paramters indicates that the output group is for MediaPackage V2 (CMAF Ingest)."
       }
     }
   },

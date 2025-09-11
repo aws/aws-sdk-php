@@ -550,6 +550,7 @@
           "idempotencyToken":true
         },
         "name":{"shape":"ResourceNameString"},
+        "containerProvider":{"shape":"ContainerProvider"},
         "securityConfigurationData":{"shape":"SecurityConfigurationData"},
         "tags":{"shape":"TagMap"}
       }
@@ -777,7 +778,8 @@
     "EksInfo":{
       "type":"structure",
       "members":{
-        "namespace":{"shape":"KubernetesNamespace"}
+        "namespace":{"shape":"KubernetesNamespace"},
+        "nodeLabel":{"shape":"ResourceNameString"}
       }
     },
     "EncryptionConfiguration":{

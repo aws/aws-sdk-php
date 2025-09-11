@@ -233,6 +233,23 @@
       ],
       "idempotent":true
     },
+    "DeleteScraperLoggingConfiguration":{
+      "name":"DeleteScraperLoggingConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/scrapers/{scraperId}/logging-configuration",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteScraperLoggingConfigurationRequest"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "DeleteWorkspace":{
       "name":"DeleteWorkspace",
       "http":{
@@ -345,6 +362,22 @@
       "output":{"shape":"DescribeScraperResponse"},
       "errors":[
         {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeScraperLoggingConfiguration":{
+      "name":"DescribeScraperLoggingConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/scrapers/{scraperId}/logging-configuration",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeScraperLoggingConfigurationRequest"},
+      "output":{"shape":"DescribeScraperLoggingConfigurationResponse"},
+      "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
@@ -616,6 +649,24 @@
       ],
       "idempotent":true
     },
+    "UpdateScraperLoggingConfiguration":{
+      "name":"UpdateScraperLoggingConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/scrapers/{scraperId}/logging-configuration",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateScraperLoggingConfigurationRequest"},
+      "output":{"shape":"UpdateScraperLoggingConfigurationResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "UpdateWorkspaceAlias":{
       "name":"UpdateWorkspaceAlias",
       "http":{
@@ -722,6 +773,12 @@
     "ClusterArn":{
       "type":"string",
       "pattern":"arn:aws[-a-z]*:eks:[-a-z0-9]+:[0-9]{12}:cluster/.+"
+    },
+    "ComponentConfig":{
+      "type":"structure",
+      "members":{
+        "options":{"shape":"StringMap"}
+      }
     },
     "ConflictException":{
       "type":"structure",
@@ -1014,6 +1071,23 @@
         }
       }
     },
+    "DeleteScraperLoggingConfigurationRequest":{
+      "type":"structure",
+      "required":["scraperId"],
+      "members":{
+        "scraperId":{
+          "shape":"ScraperId",
+          "location":"uri",
+          "locationName":"scraperId"
+        },
+        "clientToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
     "DeleteScraperRequest":{
       "type":"structure",
       "required":["scraperId"],
@@ -1163,6 +1237,34 @@
         "ruleGroupsNamespace":{"shape":"RuleGroupsNamespaceDescription"}
       }
     },
+    "DescribeScraperLoggingConfigurationRequest":{
+      "type":"structure",
+      "required":["scraperId"],
+      "members":{
+        "scraperId":{
+          "shape":"ScraperId",
+          "location":"uri",
+          "locationName":"scraperId"
+        }
+      }
+    },
+    "DescribeScraperLoggingConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "status",
+        "scraperId",
+        "loggingDestination",
+        "scraperComponents",
+        "modifiedAt"
+      ],
+      "members":{
+        "status":{"shape":"ScraperLoggingConfigurationStatus"},
+        "scraperId":{"shape":"ScraperId"},
+        "loggingDestination":{"shape":"ScraperLoggingDestination"},
+        "scraperComponents":{"shape":"ScraperComponents"},
+        "modifiedAt":{"shape":"Timestamp"}
+      }
+    },
     "DescribeScraperRequest":{
       "type":"structure",
       "required":["scraperId"],
@@ -1254,8 +1356,7 @@
     },
     "GetDefaultScraperConfigurationRequest":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "GetDefaultScraperConfigurationResponse":{
       "type":"structure",
@@ -1719,7 +1820,7 @@
     },
     "RuleGroupsNamespaceName":{
       "type":"string",
-      "max":64,
+      "max":128,
       "min":1,
       "pattern":".*[0-9A-Za-z][-.0-9A-Z_a-z]*.*"
     },
@@ -1778,6 +1879,27 @@
       "pattern":"[0-9A-Za-z][-.0-9A-Z_a-z]*"
     },
     "ScraperArn":{"type":"string"},
+    "ScraperComponent":{
+      "type":"structure",
+      "required":["type"],
+      "members":{
+        "type":{"shape":"ScraperComponentType"},
+        "config":{"shape":"ComponentConfig"}
+      }
+    },
+    "ScraperComponentType":{
+      "type":"string",
+      "enum":[
+        "SERVICE_DISCOVERY",
+        "COLLECTOR",
+        "EXPORTER"
+      ]
+    },
+    "ScraperComponents":{
+      "type":"list",
+      "member":{"shape":"ScraperComponent"},
+      "min":1
+    },
     "ScraperDescription":{
       "type":"structure",
       "required":[
@@ -1819,6 +1941,32 @@
       "max":64,
       "min":1,
       "pattern":"[0-9A-Za-z][-.0-9A-Z_a-z]*"
+    },
+    "ScraperLoggingConfigurationStatus":{
+      "type":"structure",
+      "required":["statusCode"],
+      "members":{
+        "statusCode":{"shape":"ScraperLoggingConfigurationStatusCode"},
+        "statusReason":{"shape":"String"}
+      }
+    },
+    "ScraperLoggingConfigurationStatusCode":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "DELETING",
+        "CREATION_FAILED",
+        "UPDATE_FAILED"
+      ]
+    },
+    "ScraperLoggingDestination":{
+      "type":"structure",
+      "members":{
+        "cloudWatchLogs":{"shape":"CloudWatchLogDestination"}
+      },
+      "union":true
     },
     "ScraperStatus":{
       "type":"structure",
@@ -1917,6 +2065,11 @@
       "min":1
     },
     "String":{"type":"string"},
+    "StringMap":{
+      "type":"map",
+      "key":{"shape":"String"},
+      "value":{"shape":"String"}
+    },
     "SubnetId":{
       "type":"string",
       "max":255,
@@ -1963,8 +2116,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -2014,8 +2166,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateLoggingConfigurationRequest":{
       "type":"structure",
@@ -2067,6 +2218,29 @@
       "required":["status"],
       "members":{
         "status":{"shape":"QueryLoggingConfigurationStatus"}
+      }
+    },
+    "UpdateScraperLoggingConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "scraperId",
+        "loggingDestination"
+      ],
+      "members":{
+        "scraperId":{
+          "shape":"ScraperId",
+          "location":"uri",
+          "locationName":"scraperId"
+        },
+        "loggingDestination":{"shape":"ScraperLoggingDestination"},
+        "scraperComponents":{"shape":"ScraperComponents"}
+      }
+    },
+    "UpdateScraperLoggingConfigurationResponse":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{"shape":"ScraperLoggingConfigurationStatus"}
       }
     },
     "UpdateScraperRequest":{

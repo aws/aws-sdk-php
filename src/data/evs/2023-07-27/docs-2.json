@@ -2,10 +2,12 @@
   "version": "2.0",
   "service": "<p>Amazon Elastic VMware Service (Amazon EVS) is a service that you can use to deploy a VMware Cloud Foundation (VCF) software environment directly on EC2 bare metal instances within an Amazon Virtual Private Cloud (VPC).</p> <p>Workloads running on Amazon EVS are fully compatible with workloads running on any standard VMware vSphere environment. This means that you can migrate any VMware-based workload to Amazon EVS without workload modification.</p>",
   "operations": {
+    "AssociateEipToVlan": "<p>Associates an Elastic IP address with a public HCX VLAN. This operation is only allowed for public HCX VLANs at this time.</p>",
     "CreateEnvironment": "<p>Creates an Amazon EVS environment that runs VCF software, such as SDDC Manager, NSX Manager, and vCenter Server.</p> <p>During environment creation, Amazon EVS performs validations on DNS settings, provisions VLAN subnets and hosts, and deploys the supplied version of VCF.</p> <p>It can take several hours to create an environment. After the deployment completes, you can configure VCF in the vSphere user interface according to your needs.</p> <note> <p>You cannot use the <code>dedicatedHostId</code> and <code>placementGroupId</code> parameters together in the same <code>CreateEnvironment</code> action. This results in a <code>ValidationException</code> response.</p> </note>",
     "CreateEnvironmentHost": "<p>Creates an ESXi host and adds it to an Amazon EVS environment. Amazon EVS supports 4-16 hosts per environment.</p> <p>This action can only be used after the Amazon EVS environment is deployed.</p> <p>You can use the <code>dedicatedHostId</code> parameter to specify an Amazon EC2 Dedicated Host for ESXi host creation.</p> <p> You can use the <code>placementGroupId</code> parameter to specify a cluster or partition placement group to launch EC2 instances into.</p> <note> <p>You cannot use the <code>dedicatedHostId</code> and <code>placementGroupId</code> parameters together in the same <code>CreateEnvironmentHost</code> action. This results in a <code>ValidationException</code> response.</p> </note>",
     "DeleteEnvironment": "<p>Deletes an Amazon EVS environment.</p> <p>Amazon EVS environments will only be enabled for deletion once the hosts are deleted. You can delete hosts using the <code>DeleteEnvironmentHost</code> action.</p> <p>Environment deletion also deletes the associated Amazon EVS VLAN subnets and Amazon Web Services Secrets Manager secrets that Amazon EVS created. Amazon Web Services resources that you create are not deleted. These resources may continue to incur costs.</p>",
     "DeleteEnvironmentHost": "<p>Deletes a host from an Amazon EVS environment.</p> <note> <p>Before deleting a host, you must unassign and decommission the host from within the SDDC Manager user interface. Not doing so could impact the availability of your virtual machines or result in data loss.</p> </note>",
+    "DisassociateEipFromVlan": "<p>Disassociates an Elastic IP address from a public HCX VLAN. This operation is only allowed for public HCX VLANs at this time.</p>",
     "GetEnvironment": "<p>Returns a description of the specified environment.</p>",
     "ListEnvironmentHosts": "<p>List the hosts within an environment.</p>",
     "ListEnvironmentVlans": "<p>Lists environment VLANs that are associated with the specified environment.</p>",
@@ -15,6 +17,13 @@
     "UntagResource": "<p>Deletes specified tags from an Amazon EVS resource.</p>"
   },
   "shapes": {
+    "AllocationId": {
+      "base": null,
+      "refs": {
+        "AssociateEipToVlanRequest$allocationId": "<p>The Elastic IP address allocation ID.</p>",
+        "EipAssociation$allocationId": "<p>The Elastic IP address allocation ID.</p>"
+      }
+    },
     "Arn": {
       "base": null,
       "refs": {
@@ -25,11 +34,34 @@
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource to delete tags from.</p>"
       }
     },
+    "AssociateEipToVlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateEipToVlanRequestVlanNameString": {
+      "base": null,
+      "refs": {
+        "AssociateEipToVlanRequest$vlanName": "<p>The name of the VLAN. <code>hcx</code> is the only accepted VLAN name at this time.</p>"
+      }
+    },
+    "AssociateEipToVlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociationId": {
+      "base": null,
+      "refs": {
+        "DisassociateEipFromVlanRequest$associationId": "<p> A unique ID for the Elastic IP address association.</p>",
+        "EipAssociation$associationId": "<p>A unique ID for the elastic IP address association with the VLAN subnet.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "CreateEnvironmentRequest$termsAccepted": "<p>Customer confirmation that the customer has purchased and will continue to maintain the required number of VCF software licenses to cover all physical processor cores in the Amazon EVS environment. Information about your VCF software in Amazon EVS will be shared with Broadcom to verify license compliance. Amazon EVS does not validate license keys. To validate license keys, visit the Broadcom support portal.</p>",
-        "Environment$termsAccepted": "<p>Customer confirmation that the customer has purchased and will continue to maintain the required number of VCF software licenses to cover all physical processor cores in the Amazon EVS environment. Information about your VCF software in Amazon EVS will be shared with Broadcom to verify license compliance. Amazon EVS does not validate license keys. To validate license keys, visit the Broadcom support portal. </p>"
+        "Environment$termsAccepted": "<p>Customer confirmation that the customer has purchased and will continue to maintain the required number of VCF software licenses to cover all physical processor cores in the Amazon EVS environment. Information about your VCF software in Amazon EVS will be shared with Broadcom to verify license compliance. Amazon EVS does not validate license keys. To validate license keys, visit the Broadcom support portal. </p>",
+        "InitialVlans$isHcxPublic": "<p>Determines if the HCX VLAN that Amazon EVS provisions is public or private.</p>",
+        "Vlan$isPublic": "<p>Determines if the VLAN that Amazon EVS provisions is public or private.</p>"
       }
     },
     "Check": {
@@ -68,10 +100,12 @@
     "ClientToken": {
       "base": null,
       "refs": {
+        "AssociateEipToVlanRequest$clientToken": "<p><note> <p>This parameter is not used in Amazon EVS currently. If you supply input for this parameter, it will have no effect.</p> </note> <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the environment creation request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.</p></p>",
         "CreateEnvironmentHostRequest$clientToken": "<p><note> <p>This parameter is not used in Amazon EVS currently. If you supply input for this parameter, it will have no effect.</p> </note> <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the host creation request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.</p></p>",
         "CreateEnvironmentRequest$clientToken": "<p><note> <p>This parameter is not used in Amazon EVS currently. If you supply input for this parameter, it will have no effect.</p> </note> <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the environment creation request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.</p></p>",
         "DeleteEnvironmentHostRequest$clientToken": "<p><note> <p>This parameter is not used in Amazon EVS currently. If you supply input for this parameter, it will have no effect.</p> </note> <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the host deletion request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.</p></p>",
-        "DeleteEnvironmentRequest$clientToken": "<p><note> <p>This parameter is not used in Amazon EVS currently. If you supply input for this parameter, it will have no effect.</p> </note> <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the environment deletion request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.</p></p>"
+        "DeleteEnvironmentRequest$clientToken": "<p><note> <p>This parameter is not used in Amazon EVS currently. If you supply input for this parameter, it will have no effect.</p> </note> <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the environment deletion request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.</p></p>",
+        "DisassociateEipFromVlanRequest$clientToken": "<p><note> <p>This parameter is not used in Amazon EVS currently. If you supply input for this parameter, it will have no effect.</p> </note> <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the environment creation request. If you do not specify a client token, a randomly generated token is used for the request to ensure idempotency.</p></p>"
       }
     },
     "ConnectivityInfo": {
@@ -120,6 +154,32 @@
       "base": null,
       "refs": {}
     },
+    "DisassociateEipFromVlanRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateEipFromVlanRequestVlanNameString": {
+      "base": null,
+      "refs": {
+        "DisassociateEipFromVlanRequest$vlanName": "<p>The name of the VLAN. <code>hcx</code> is the only accepted VLAN name at this time.</p>"
+      }
+    },
+    "DisassociateEipFromVlanResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "EipAssociation": {
+      "base": "<p>An Elastic IP address association with the elastic network interface in the VLAN subnet.</p>",
+      "refs": {
+        "EipAssociationList$member": null
+      }
+    },
+    "EipAssociationList": {
+      "base": null,
+      "refs": {
+        "Vlan$eipAssociations": "<p>An array of Elastic IP address associations.</p>"
+      }
+    },
     "Environment": {
       "base": "<p>An object that represents an Amazon EVS environment.</p>",
       "refs": {
@@ -131,9 +191,11 @@
     "EnvironmentId": {
       "base": null,
       "refs": {
+        "AssociateEipToVlanRequest$environmentId": "<p>A unique ID for the environment containing the VLAN that the Elastic IP address associates with.</p>",
         "CreateEnvironmentHostRequest$environmentId": "<p>A unique ID for the environment that the host is added to.</p>",
         "DeleteEnvironmentHostRequest$environmentId": "<p>A unique ID for the host's environment.</p>",
         "DeleteEnvironmentRequest$environmentId": "<p>A unique ID associated with the environment to be deleted.</p>",
+        "DisassociateEipFromVlanRequest$environmentId": "<p>A unique ID for the environment containing the VLAN that the Elastic IP address disassociates from.</p>",
         "Environment$environmentId": "<p>The unique ID for the environment.</p>",
         "EnvironmentSummary$environmentId": "<p>A unique ID for the environment.</p>",
         "GetEnvironmentRequest$environmentId": "<p>A unique ID for the environment.</p>",
@@ -245,7 +307,7 @@
         "InitialVlans$vTep": "<p> The VTEP VLAN subnet. This VLAN subnet handles internal network traffic between virtual machines within a VCF instance.</p>",
         "InitialVlans$edgeVTep": "<p>The edge VTEP VLAN subnet. This VLAN subnet manages traffic flowing between the internal network and external networks, including internet access and other site connections.</p>",
         "InitialVlans$nsxUplink": "<p> The NSX uplink VLAN subnet. This VLAN subnet allows connectivity to the NSX overlay network.</p>",
-        "InitialVlans$hcx": "<p>The HCX VLAN subnet. This VLAN subnet allows the HCX Interconnnect (IX) and HCX Network Extension (NE) to reach their peers and enable HCX Service Mesh creation.</p>",
+        "InitialVlans$hcx": "<p>The HCX VLAN subnet. This VLAN subnet allows the HCX Interconnnect (IX) and HCX Network Extension (NE) to reach their peers and enable HCX Service Mesh creation.</p> <p>If you plan to use a public HCX VLAN subnet, the following requirements must be met:</p> <ul> <li> <p>Must have a /28 netmask and be allocated from the IPAM public pool. Required for HCX internet access configuration.</p> </li> <li> <p>The HCX public VLAN CIDR block must be added to the VPC as a secondary CIDR block.</p> </li> <li> <p>Must have at least three Elastic IP addresses to be allocated from the public IPAM pool for HCX components.</p> </li> </ul>",
         "InitialVlans$expansionVlan1": "<p>An additional VLAN subnet that can be used to extend VCF capabilities once configured. For example, you can configure an expansion VLAN subnet to use NSX Federation for centralized management and synchronization of multiple NSX deployments across different locations.</p>",
         "InitialVlans$expansionVlan2": "<p>An additional VLAN subnet that can be used to extend VCF capabilities once configured. For example, you can configure an expansion VLAN subnet to use NSX Federation for centralized management and synchronization of multiple NSX deployments across different locations.</p>"
       }
@@ -272,6 +334,7 @@
     "IpAddress": {
       "base": null,
       "refs": {
+        "EipAssociation$ipAddress": "<p>The Elastic IP address.</p>",
         "Host$ipAddress": "<p>The IP address of the host.</p>"
       }
     },
@@ -333,6 +396,13 @@
         "ListEnvironmentHostsRequest$maxResults": "<p>The maximum number of results to return. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified.</p>",
         "ListEnvironmentVlansRequest$maxResults": "<p>The maximum number of results to return. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified.</p>",
         "ListEnvironmentsRequest$maxResults": "<p>The maximum number of results to return. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified.</p>"
+      }
+    },
+    "NetworkAclId": {
+      "base": null,
+      "refs": {
+        "InitialVlans$hcxNetworkAclId": "<p>A unique ID for a network access control list that the HCX VLAN uses. Required when <code>isHcxPublic</code> is set to <code>true</code>.</p>",
+        "Vlan$networkAclId": "<p>A unique ID for a network access control list.</p>"
       }
     },
     "NetworkInterface": {
@@ -514,7 +584,7 @@
       }
     },
     "ThrottlingException": {
-      "base": "<p>The <code>CreateEnvironmentHost</code> operation couldn't be performed because the service is throttling requests. This exception is thrown when the <code>CreateEnvironmentHost</code> request exceeds concurrency of 1 transaction per second (TPS).</p>",
+      "base": "<p>The operation couldn't be performed because the service is throttling requests. This exception is thrown when there are too many requests accepted concurrently from the service endpoint.</p>",
       "refs": {}
     },
     "Timestamp": {
@@ -589,6 +659,8 @@
     "Vlan": {
       "base": "<p>The VLANs that Amazon EVS creates during environment creation.</p>",
       "refs": {
+        "AssociateEipToVlanResponse$vlan": null,
+        "DisassociateEipFromVlanResponse$vlan": null,
         "VlanList$member": null
       }
     },

@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixes bug in document type validation where unordered integer array keys are not considered.
+* `Aws\GuardDuty` - Updated Java SDK implementation of entity set status in GuardDuty API.
+* `Aws\DataZone` - adding IAM principal id to IAM user profile details
+* `Aws\QuickSight` - This release adds support for Account level custom permissions, additional Dashboard Options, and Null support for Q&A.
+* `Aws\PrometheusService` - Add Vended Logs APIs for Amazon Prometheus Managed Collector
+* `Aws\RDS` - Adds support for end-to-end IAM authentication in RDS Proxy for MySQL, MariaDB, and PostgreSQL engines.
+* `Aws\MediaLive` - AWS Elemental MediaLive adds a new feature in MediaPackage output group that enables MediaPackage V2 users to control HLS-related parameters directly in MediaLive. These parameter settings are then reflected in MediaPackage outputs, providing more streamlined control over HLS configurations.
+* `Aws\Evs` - CreateEnvironment API now supports parameters (isHcxPublic & hcxNetworkAclId) for HCX migration via public internet, adding flexibility for migration scenarios. New APIs have been added for associating (AssociateEipToVlan) & disassociating (DisassociateEipFromVlan) Elastic IP (EIP) addresses.
+* `Aws\ECS` - This release supports hook details for Amazon ECS lifecycle hooks.
+* `Aws\EMRContainers` - Added nodeLabel support in container provider to aid hardware isolation support for virtual cluster and security configuration.
+
 ## 3.356.15 - 2025-09-10
 
 * `Aws\NetworkFlowMonitor` - Added new enum value (AWS::Region) for type field under MonitorLocalResource and MonitorRemoteResource. Workload Insights and Monitor top contributors queries now support a new DestinationCategory (INTER_REGION).

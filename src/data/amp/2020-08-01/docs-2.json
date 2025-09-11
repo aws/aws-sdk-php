@@ -14,6 +14,7 @@
     "DeleteResourcePolicy": "<p>Deletes the resource-based policy attached to an Amazon Managed Service for Prometheus workspace.</p>",
     "DeleteRuleGroupsNamespace": "<p>Deletes one rule groups namespace and its associated rule groups definition.</p>",
     "DeleteScraper": "<p>The <code>DeleteScraper</code> operation deletes one scraper, and stops any metrics collection that the scraper performs.</p>",
+    "DeleteScraperLoggingConfiguration": "<p>Deletes the logging configuration for a Amazon Managed Service for Prometheus scraper.</p>",
     "DeleteWorkspace": "<p>Deletes an existing workspace. </p> <note> <p>When you delete a workspace, the data that has been ingested into it is not immediately deleted. It will be permanently deleted within one month.</p> </note>",
     "DescribeAlertManagerDefinition": "<p>Retrieves the full information about the alert manager definition for a workspace.</p>",
     "DescribeLoggingConfiguration": "<p>Returns complete information about the current rules and alerting logging configuration of the workspace.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
@@ -21,6 +22,7 @@
     "DescribeResourcePolicy": "<p>Returns information about the resource-based policy attached to an Amazon Managed Service for Prometheus workspace.</p>",
     "DescribeRuleGroupsNamespace": "<p>Returns complete information about one rule groups namespace. To retrieve a list of rule groups namespaces, use <code>ListRuleGroupsNamespaces</code>.</p>",
     "DescribeScraper": "<p>The <code>DescribeScraper</code> operation displays information about an existing scraper.</p>",
+    "DescribeScraperLoggingConfiguration": "<p>Describes the logging configuration for a Amazon Managed Service for Prometheus scraper.</p>",
     "DescribeWorkspace": "<p>Returns information about an existing workspace. </p>",
     "DescribeWorkspaceConfiguration": "<p>Use this operation to return information about the configuration of a workspace. The configuration details returned include workspace configuration status, label set limits, and retention period.</p>",
     "GetDefaultScraperConfiguration": "<p>The <code>GetDefaultScraperConfiguration</code> operation returns the default scraper configuration used when Amazon EKS creates a scraper for you.</p>",
@@ -36,14 +38,14 @@
     "UpdateLoggingConfiguration": "<p>Updates the log group ARN or the workspace ID of the current rules and alerting logging configuration.</p> <note> <p>These logging configurations are only for rules and alerting logs.</p> </note>",
     "UpdateQueryLoggingConfiguration": "<p>Updates the query logging configuration for the specified workspace.</p>",
     "UpdateScraper": "<p>Updates an existing scraper.</p> <p>You can't use this function to update the source from which the scraper is collecting metrics. To change the source, delete the scraper and create a new one.</p>",
+    "UpdateScraperLoggingConfiguration": "<p>Updates the logging configuration for a Amazon Managed Service for Prometheus scraper.</p>",
     "UpdateWorkspaceAlias": "<p>Updates the alias of an existing workspace. </p>",
     "UpdateWorkspaceConfiguration": "<p>Use this operation to create or update the label sets, label set limits, and retention period of a workspace.</p> <p>You must specify at least one of <code>limitsPerLabelSet</code> or <code>retentionPeriodInDays</code> for the request to be valid.</p>"
   },
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AlertManagerDefinitionData": {
       "base": "<p>The base-64 encoded blob that is alert manager definition.</p> <p>For details about the alert manager definition, see <a href=\"https://docs.aws.amazon.com/prometheus/latest/APIReference/yaml-AlertManagerDefinitionData.html\">AlertManagedDefinitionData</a>.</p>",
@@ -89,7 +91,8 @@
     "CloudWatchLogDestination": {
       "base": "<p>Configuration details for logging to CloudWatch Logs.</p>",
       "refs": {
-        "LoggingDestination$cloudWatchLogs": "<p>Configuration details for logging to CloudWatch Logs.</p>"
+        "LoggingDestination$cloudWatchLogs": "<p>Configuration details for logging to CloudWatch Logs.</p>",
+        "ScraperLoggingDestination$cloudWatchLogs": "<p>The CloudWatch Logs configuration for the scraper logging destination.</p>"
       }
     },
     "ClusterArn": {
@@ -98,190 +101,171 @@
         "EksConfiguration$clusterArn": "<p>ARN of the Amazon EKS cluster.</p>"
       }
     },
+    "ComponentConfig": {
+      "base": "<p>Configuration settings for a scraper component.</p>",
+      "refs": {
+        "ScraperComponent$config": "<p>The configuration settings for the scraper component.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>The request would cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAlertManagerDefinitionRequest": {
       "base": "<p>Represents the input of a <code>CreateAlertManagerDefinition</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAlertManagerDefinitionResponse": {
       "base": "<p>Represents the output of a <code>CreateAlertManagerDefinition</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLoggingConfigurationRequest": {
       "base": "<p>Represents the input of a <code>CreateLoggingConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateLoggingConfigurationResponse": {
       "base": "<p>Represents the output of a <code>CreateLoggingConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueryLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateQueryLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRuleGroupsNamespaceRequest": {
       "base": "<p>Represents the input of a <code>CreateRuleGroupsNamespace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRuleGroupsNamespaceResponse": {
       "base": "<p>Represents the output of a <code>CreateRuleGroupsNamespace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScraperRequest": {
       "base": "<p>Represents the input of a <code>CreateScraper</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateScraperResponse": {
       "base": "<p>Represents the output of a <code>CreateScraper</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceRequest": {
       "base": "<p>Represents the input of a <code>CreateWorkspace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkspaceResponse": {
       "base": "<p>Represents the output of a <code>CreateWorkspace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAlertManagerDefinitionRequest": {
       "base": "<p>Represents the input of a <code>DeleteAlertManagerDefinition</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteLoggingConfigurationRequest": {
       "base": "<p>Represents the input of a <code>DeleteLoggingConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteQueryLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRuleGroupsNamespaceRequest": {
       "base": "<p>Represents the input of a <code>DeleteRuleGroupsNamespace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteScraperLoggingConfigurationRequest": {
+      "base": null,
+      "refs": {}
     },
     "DeleteScraperRequest": {
       "base": "<p>Represents the input of a <code>DeleteScraper</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteScraperResponse": {
       "base": "<p>Represents the output of a <code>DeleteScraper</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkspaceRequest": {
       "base": "<p>Represents the input of a <code>DeleteWorkspace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAlertManagerDefinitionRequest": {
       "base": "<p>Represents the input of a <code>DescribeAlertManagerDefinition</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAlertManagerDefinitionResponse": {
       "base": "<p>Represents the output of a <code>DescribeAlertManagerDefinition</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLoggingConfigurationRequest": {
       "base": "<p>Represents the input of a <code>DescribeLoggingConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeLoggingConfigurationResponse": {
       "base": "<p>Represents the output of a <code>DescribeLoggingConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQueryLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeQueryLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRuleGroupsNamespaceRequest": {
       "base": "<p>Represents the input of a <code>DescribeRuleGroupsNamespace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeRuleGroupsNamespaceResponse": {
       "base": "<p>Represents the output of a <code>DescribeRuleGroupsNamespace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DescribeScraperLoggingConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DescribeScraperLoggingConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "DescribeScraperRequest": {
       "base": "<p>Represents the input of a <code>DescribeScraper</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeScraperResponse": {
       "base": "<p>Represents the output of a <code>DescribeScraper</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceRequest": {
       "base": "<p>Represents the input of a <code>DescribeWorkspace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkspaceResponse": {
       "base": "<p>Represents the output of a <code>DescribeWorkspace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Destination": {
       "base": "<p>Where to send the metrics from a scraper.</p>",
@@ -318,13 +302,11 @@
     },
     "GetDefaultScraperConfigurationRequest": {
       "base": "<p>Represents the input of a <code>GetDefaultScraperConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDefaultScraperConfigurationResponse": {
       "base": "<p>Represents the output of a <code>GetDefaultScraperConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IamRoleArn": {
       "base": "<p>An ARN identifying an IAM role used by the scraper.</p>",
@@ -349,6 +331,7 @@
         "DeleteQueryLoggingConfigurationRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "DeleteResourcePolicyRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the request is safe to retry (idempotent).</p>",
         "DeleteRuleGroupsNamespaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
+        "DeleteScraperLoggingConfigurationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the request is processed exactly once.</p>",
         "DeleteScraperRequest$clientToken": "<p>(Optional) A unique, case-sensitive identifier that you can provide to ensure the idempotency of the request.</p>",
         "DeleteWorkspaceRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
         "PutAlertManagerDefinitionRequest$clientToken": "<p>A unique identifier that you can provide to ensure the idempotency of the request. Case-sensitive.</p>",
@@ -370,8 +353,7 @@
     },
     "InternalServerException": {
       "base": "<p>An unexpected error occurred during the processing of the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsKeyArn": {
       "base": "<p>A KMS Key ARN.</p>",
@@ -427,8 +409,7 @@
     },
     "ListRuleGroupsNamespacesRequest": {
       "base": "<p>Represents the input of a <code>ListRuleGroupsNamespaces</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRuleGroupsNamespacesRequestMaxResultsInteger": {
       "base": null,
@@ -438,13 +419,11 @@
     },
     "ListRuleGroupsNamespacesResponse": {
       "base": "<p>Represents the output of a <code>ListRuleGroupsNamespaces</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScrapersRequest": {
       "base": "<p>Represents the input of a <code>ListScrapers</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListScrapersRequestMaxResultsInteger": {
       "base": null,
@@ -454,23 +433,19 @@
     },
     "ListScrapersResponse": {
       "base": "<p>Represents the output of a <code>ListScrapers</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspacesRequest": {
       "base": "<p>Represents the input of a <code>ListWorkspaces</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkspacesRequestMaxResultsInteger": {
       "base": null,
@@ -480,8 +455,7 @@
     },
     "ListWorkspacesResponse": {
       "base": "<p>Represents the output of a <code>ListWorkspaces</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "LogGroupArn": {
       "base": null,
@@ -551,33 +525,27 @@
     },
     "PutAlertManagerDefinitionRequest": {
       "base": "<p>Represents the input of a <code>PutAlertManagerDefinition</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutAlertManagerDefinitionResponse": {
       "base": "<p>Represents the output of a <code>PutAlertManagerDefinition</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRuleGroupsNamespaceRequest": {
       "base": "<p>Represents the input of a <code>PutRuleGroupsNamespace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "PutRuleGroupsNamespaceResponse": {
       "base": "<p>Represents the output of a <code>PutRuleGroupsNamespace</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "QueryLoggingConfigurationMetadata": {
       "base": "<p>The metadata for a query logging configuration.</p>",
@@ -601,8 +569,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The request references a resources that doesn't exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RoleConfiguration": {
       "base": "<p>Use this structure to enable cross-account access, so that you can use a target account to access Prometheus metrics from source accounts.</p>",
@@ -703,6 +670,25 @@
         "UpdateScraperResponse$arn": "<p>The Amazon Resource Name (ARN) of the updated scraper.</p>"
       }
     },
+    "ScraperComponent": {
+      "base": "<p>A component of a Amazon Managed Service for Prometheus scraper that can be configured for logging.</p>",
+      "refs": {
+        "ScraperComponents$member": null
+      }
+    },
+    "ScraperComponentType": {
+      "base": null,
+      "refs": {
+        "ScraperComponent$type": "<p>The type of the scraper component.</p>"
+      }
+    },
+    "ScraperComponents": {
+      "base": null,
+      "refs": {
+        "DescribeScraperLoggingConfigurationResponse$scraperComponents": "<p>The list of scraper components configured for logging.</p>",
+        "UpdateScraperLoggingConfigurationRequest$scraperComponents": "<p>The list of scraper components to configure for logging.</p>"
+      }
+    },
     "ScraperDescription": {
       "base": "<p>The <code>ScraperDescription</code> structure contains the full details about one scraper in your account.</p>",
       "refs": {
@@ -719,13 +705,37 @@
       "base": "<p>A scraper ID.</p>",
       "refs": {
         "CreateScraperResponse$scraperId": "<p>The ID of the new scraper.</p>",
+        "DeleteScraperLoggingConfigurationRequest$scraperId": "<p>The ID of the scraper whose logging configuration will be deleted.</p>",
         "DeleteScraperRequest$scraperId": "<p>The ID of the scraper to delete.</p>",
         "DeleteScraperResponse$scraperId": "<p>The ID of the scraper to delete.</p>",
+        "DescribeScraperLoggingConfigurationRequest$scraperId": "<p>The ID of the scraper whose logging configuration will be described.</p>",
+        "DescribeScraperLoggingConfigurationResponse$scraperId": "<p>The ID of the scraper.</p>",
         "DescribeScraperRequest$scraperId": "<p>The ID of the scraper to describe.</p>",
         "ScraperDescription$scraperId": "<p>The ID of the scraper. For example, <code>s-example1-1234-abcd-5678-ef9012abcd34</code>.</p>",
         "ScraperSummary$scraperId": "<p>The ID of the scraper.</p>",
+        "UpdateScraperLoggingConfigurationRequest$scraperId": "<p>The ID of the scraper whose logging configuration will be updated.</p>",
         "UpdateScraperRequest$scraperId": "<p>The ID of the scraper to update.</p>",
         "UpdateScraperResponse$scraperId": "<p>The ID of the updated scraper.</p>"
+      }
+    },
+    "ScraperLoggingConfigurationStatus": {
+      "base": "<p>The status of a scraper logging configuration.</p>",
+      "refs": {
+        "DescribeScraperLoggingConfigurationResponse$status": "<p>The status of the scraper logging configuration.</p>",
+        "UpdateScraperLoggingConfigurationResponse$status": "<p>The status of the updated scraper logging configuration.</p>"
+      }
+    },
+    "ScraperLoggingConfigurationStatusCode": {
+      "base": null,
+      "refs": {
+        "ScraperLoggingConfigurationStatus$statusCode": "<p>The status code of the scraper logging configuration.</p>"
+      }
+    },
+    "ScraperLoggingDestination": {
+      "base": "<p>The destination where scraper logs are sent.</p>",
+      "refs": {
+        "DescribeScraperLoggingConfigurationResponse$loggingDestination": "<p>The destination where scraper logs are sent.</p>",
+        "UpdateScraperLoggingConfigurationRequest$loggingDestination": "<p>The destination where scraper logs will be sent.</p>"
       }
     },
     "ScraperStatus": {
@@ -770,8 +780,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>Completing the request would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Source": {
       "base": "<p>The source of collected metrics for a scraper.</p>",
@@ -810,11 +819,14 @@
         "ResourceNotFoundException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ResourceNotFoundException$resourceType": "<p>Type of the resource affected.</p>",
         "RuleGroupsNamespaceStatus$statusReason": "<p>The reason for the failure, if any.</p>",
+        "ScraperLoggingConfigurationStatus$statusReason": "<p>The reason for the current status of the scraper logging configuration.</p>",
         "ServiceQuotaExceededException$message": "<p>Description of the error.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>Identifier of the resource affected.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>Type of the resource affected.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>Service quotas code for the originating service.</p>",
         "ServiceQuotaExceededException$quotaCode": "<p>Service quotas code of the originating quota.</p>",
+        "StringMap$key": null,
+        "StringMap$value": null,
         "TagResourceRequest$resourceArn": "<p>The ARN of the resource to apply tags to.</p>",
         "ThrottlingException$message": "<p>Description of the error.</p>",
         "ThrottlingException$serviceCode": "<p>Service quotas code for the originating service.</p>",
@@ -824,6 +836,12 @@
         "ValidationExceptionField$name": "<p>The name of the field that caused an exception.</p>",
         "ValidationExceptionField$message": "<p>A message describing why the field caused an exception.</p>",
         "WorkspaceConfigurationStatus$statusReason": "<p>The reason for the current status, if a reason is available.</p>"
+      }
+    },
+    "StringMap": {
+      "base": null,
+      "refs": {
+        "ComponentConfig$options": "<p>Configuration options for the scraper component.</p>"
       }
     },
     "SubnetId": {
@@ -874,13 +892,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -890,14 +906,14 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
       "refs": {
         "AlertManagerDefinitionDescription$createdAt": "<p>The date and time that the alert manager definition was created.</p>",
         "AlertManagerDefinitionDescription$modifiedAt": "<p>The date and time that the alert manager definition was most recently changed.</p>",
+        "DescribeScraperLoggingConfigurationResponse$modifiedAt": "<p>The date and time when the logging configuration was last modified.</p>",
         "LoggingConfigurationMetadata$createdAt": "<p>The date and time that the logging configuration was created.</p>",
         "LoggingConfigurationMetadata$modifiedAt": "<p>The date and time that the logging configuration was most recently changed.</p>",
         "QueryLoggingConfigurationMetadata$createdAt": "<p>The date and time when the query logging configuration was created.</p>",
@@ -916,53 +932,51 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLoggingConfigurationRequest": {
       "base": "<p>Represents the input of an <code>UpdateLoggingConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateLoggingConfigurationResponse": {
       "base": "<p>Represents the output of an <code>UpdateLoggingConfiguration</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueryLoggingConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateQueryLoggingConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "UpdateScraperLoggingConfigurationRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateScraperLoggingConfigurationResponse": {
+      "base": null,
+      "refs": {}
     },
     "UpdateScraperRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateScraperResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceAliasRequest": {
       "base": "<p>Represents the input of an <code>UpdateWorkspaceAlias</code> operation.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWorkspaceConfigurationRequestRetentionPeriodInDaysInteger": {
       "base": null,
@@ -972,8 +986,7 @@
     },
     "UpdateWorkspaceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Uri": {
       "base": null,
@@ -983,8 +996,7 @@
     },
     "ValidationException": {
       "base": "<p>The input fails to satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Information about a field passed into a request that resulted in an exception.</p>",

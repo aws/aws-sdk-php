@@ -524,6 +524,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteAccountCustomPermission":{
+      "name":"DeleteAccountCustomPermission",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permission"
+      },
+      "input":{"shape":"DeleteAccountCustomPermissionRequest"},
+      "output":{"shape":"DeleteAccountCustomPermissionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DeleteAccountCustomization":{
       "name":"DeleteAccountCustomization",
       "http":{
@@ -1072,6 +1088,22 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeAccountCustomPermission":{
+      "name":"DescribeAccountCustomPermission",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permission"
+      },
+      "input":{"shape":"DescribeAccountCustomPermissionRequest"},
+      "output":{"shape":"DescribeAccountCustomPermissionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2927,6 +2959,22 @@
       },
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateAccountCustomPermission":{
+      "name":"UpdateAccountCustomPermission",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/custom-permission"
+      },
+      "input":{"shape":"UpdateAccountCustomPermissionRequest"},
+      "output":{"shape":"UpdateAccountCustomPermissionResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidParameterValueException"},
@@ -5902,7 +5950,9 @@
         "ExportToPdfInScheduledReports":{"shape":"CapabilityState"},
         "ExportToCsvInScheduledReports":{"shape":"CapabilityState"},
         "ExportToExcelInScheduledReports":{"shape":"CapabilityState"},
-        "IncludeContentInScheduledReportsEmail":{"shape":"CapabilityState"}
+        "IncludeContentInScheduledReportsEmail":{"shape":"CapabilityState"},
+        "Dashboard":{"shape":"CapabilityState"},
+        "Analysis":{"shape":"CapabilityState"}
       }
     },
     "CapabilityState":{
@@ -7723,6 +7773,12 @@
       "member":{"shape":"CustomColor"},
       "max":50
     },
+    "CustomConnectionParameters":{
+      "type":"structure",
+      "members":{
+        "ConnectionType":{"shape":"String"}
+      }
+    },
     "CustomContentConfiguration":{
       "type":"structure",
       "members":{
@@ -7961,7 +8017,9 @@
         "DataPointDrillUpDownOption":{"shape":"DataPointDrillUpDownOption"},
         "DataPointMenuLabelOption":{"shape":"DataPointMenuLabelOption"},
         "DataPointTooltipOption":{"shape":"DataPointTooltipOption"},
-        "DataQAEnabledOption":{"shape":"DataQAEnabledOption"}
+        "DataQAEnabledOption":{"shape":"DataQAEnabledOption"},
+        "ExecutiveSummaryOption":{"shape":"ExecutiveSummaryOption"},
+        "DataStoriesSharingOption":{"shape":"DataStoriesSharingOption"}
       }
     },
     "DashboardSearchFilter":{
@@ -8559,7 +8617,8 @@
         "StarburstParameters":{"shape":"StarburstParameters"},
         "TrinoParameters":{"shape":"TrinoParameters"},
         "BigQueryParameters":{"shape":"BigQueryParameters"},
-        "ImpalaParameters":{"shape":"ImpalaParameters"}
+        "ImpalaParameters":{"shape":"ImpalaParameters"},
+        "CustomConnectionParameters":{"shape":"CustomConnectionParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -8633,7 +8692,8 @@
         "DATABRICKS",
         "STARBURST",
         "TRINO",
-        "BIGQUERY"
+        "BIGQUERY",
+        "GOOGLESHEETS"
       ]
     },
     "DataStoriesConfigurations":{
@@ -8641,6 +8701,12 @@
       "required":["Enabled"],
       "members":{
         "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "DataStoriesSharingOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
     "Database":{
@@ -9153,6 +9219,24 @@
       "type":"structure",
       "members":{
         "DisplayOptions":{"shape":"TextFieldControlDisplayOptions"}
+      }
+    },
+    "DeleteAccountCustomPermissionRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DeleteAccountCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{"shape":"StatusCode"}
       }
     },
     "DeleteAccountCustomizationRequest":{
@@ -10174,6 +10258,25 @@
       "type":"string",
       "max":1,
       "min":1
+    },
+    "DescribeAccountCustomPermissionRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeAccountCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
+        "CustomPermissionsName":{"shape":"CustomPermissionsName"},
+        "RequestId":{"shape":"String"},
+        "Status":{"shape":"StatusCode"}
+      }
     },
     "DescribeAccountCustomizationRequest":{
       "type":"structure",
@@ -11273,6 +11376,7 @@
       "members":{
         "AwsAccountId":{"shape":"AwsAccountId"},
         "KeyRegistration":{"shape":"KeyRegistration"},
+        "QDataKey":{"shape":"QDataKey"},
         "RequestId":{"shape":"NonEmptyString"},
         "Status":{"shape":"StatusCode"}
       }
@@ -12122,6 +12226,12 @@
       "required":["Enabled"],
       "members":{
         "Enabled":{"shape":"Boolean"}
+      }
+    },
+    "ExecutiveSummaryOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
     "ExplicitHierarchy":{
@@ -16905,7 +17015,8 @@
         "NUMERIC_EQUALITY_FILTER",
         "NUMERIC_RANGE_FILTER",
         "DATE_RANGE_FILTER",
-        "RELATIVE_DATE_FILTER"
+        "RELATIVE_DATE_FILTER",
+        "NULL_FILTER"
       ]
     },
     "Namespace":{
@@ -17054,6 +17165,14 @@
       "max":20
     },
     "NullFilterOption":{
+      "type":"string",
+      "enum":[
+        "ALL_VALUES",
+        "NON_NULLS_ONLY",
+        "NULLS_ONLY"
+      ]
+    },
+    "NullFilterType":{
       "type":"string",
       "enum":[
         "ALL_VALUES",
@@ -18350,6 +18469,20 @@
       "enum":[
         "ENABLED",
         "DISABLED"
+      ]
+    },
+    "QDataKey":{
+      "type":"structure",
+      "members":{
+        "QDataKeyArn":{"shape":"String"},
+        "QDataKeyType":{"shape":"QDataKeyType"}
+      }
+    },
+    "QDataKeyType":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED",
+        "CMK"
       ]
     },
     "QSearchStatus":{
@@ -22078,7 +22211,8 @@
         "NumericEqualityFilter":{"shape":"TopicNumericEqualityFilter"},
         "NumericRangeFilter":{"shape":"TopicNumericRangeFilter"},
         "DateRangeFilter":{"shape":"TopicDateRangeFilter"},
-        "RelativeDateFilter":{"shape":"TopicRelativeDateFilter"}
+        "RelativeDateFilter":{"shape":"TopicRelativeDateFilter"},
+        "NullFilter":{"shape":"TopicNullFilter"}
       }
     },
     "TopicFilterAttribute":{
@@ -22247,6 +22381,14 @@
         "EntitySynonyms":{"shape":"Synonyms"},
         "SemanticEntityType":{"shape":"SemanticEntityType"},
         "Definition":{"shape":"NamedEntityDefinitions"}
+      }
+    },
+    "TopicNullFilter":{
+      "type":"structure",
+      "members":{
+        "NullFilterType":{"shape":"NullFilterType"},
+        "Constant":{"shape":"TopicSingularFilterConstant"},
+        "Inverse":{"shape":"Boolean"}
       }
     },
     "TopicNumericEqualityFilter":{
@@ -22805,6 +22947,28 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "UpdateAccountCustomPermissionRequest":{
+      "type":"structure",
+      "required":[
+        "CustomPermissionsName",
+        "AwsAccountId"
+      ],
+      "members":{
+        "CustomPermissionsName":{"shape":"CustomPermissionsName"},
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "UpdateAccountCustomPermissionResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{"shape":"StatusCode"}
       }
     },
     "UpdateAccountCustomizationRequest":{
