@@ -181,6 +181,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetCertificateSigningRequest":{
+      "name":"GetCertificateSigningRequest",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetCertificateSigningRequestInput"},
+      "output":{"shape":"GetCertificateSigningRequestOutput"},
+      "errors":[
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetDefaultKeyReplicationRegions":{
       "name":"GetDefaultKeyReplicationRegions",
       "http":{
@@ -520,6 +537,68 @@
       "type":"boolean",
       "box":true
     },
+    "CertificateSigningRequestType":{
+      "type":"string",
+      "max":32768,
+      "min":1,
+      "pattern":"[^\\[;\\]<>]+",
+      "sensitive":true
+    },
+    "CertificateSubjectType":{
+      "type":"structure",
+      "required":["CommonName"],
+      "members":{
+        "CommonName":{"shape":"CertificateSubjectTypeCommonNameString"},
+        "OrganizationUnit":{"shape":"CertificateSubjectTypeOrganizationUnitString"},
+        "Organization":{"shape":"CertificateSubjectTypeOrganizationString"},
+        "City":{"shape":"CertificateSubjectTypeCityString"},
+        "Country":{"shape":"CertificateSubjectTypeCountryString"},
+        "StateOrProvince":{"shape":"CertificateSubjectTypeStateOrProvinceString"},
+        "EmailAddress":{"shape":"CertificateSubjectTypeEmailAddressString"}
+      }
+    },
+    "CertificateSubjectTypeCityString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z]+"
+    },
+    "CertificateSubjectTypeCommonNameString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z]+"
+    },
+    "CertificateSubjectTypeCountryString":{
+      "type":"string",
+      "max":2,
+      "min":2,
+      "pattern":"[A-Za-z]+"
+    },
+    "CertificateSubjectTypeEmailAddressString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*"
+    },
+    "CertificateSubjectTypeOrganizationString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z]+"
+    },
+    "CertificateSubjectTypeOrganizationUnitString":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[A-Za-z]+"
+    },
+    "CertificateSubjectTypeStateOrProvinceString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[A-Za-z]+"
+    },
     "CertificateType":{
       "type":"string",
       "max":32768,
@@ -761,13 +840,14 @@
       "required":[
         "CertificateAuthorityPublicKeyIdentifier",
         "WrappingKeyCertificate",
-        "ExportToken",
         "KeyBlockFormat"
       ],
       "members":{
         "CertificateAuthorityPublicKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
         "WrappingKeyCertificate":{"shape":"CertificateType"},
         "ExportToken":{"shape":"ExportTokenId"},
+        "SigningKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "SigningKeyCertificate":{"shape":"CertificateType"},
         "KeyBlockFormat":{"shape":"Tr34KeyBlockFormat"},
         "RandomNonce":{"shape":"EvenHexLengthBetween16And32"},
         "KeyBlockHeaders":{"shape":"KeyBlockHeaders"}
@@ -785,6 +865,26 @@
       "required":["Alias"],
       "members":{
         "Alias":{"shape":"Alias"}
+      }
+    },
+    "GetCertificateSigningRequestInput":{
+      "type":"structure",
+      "required":[
+        "KeyIdentifier",
+        "SigningAlgorithm",
+        "CertificateSubject"
+      ],
+      "members":{
+        "KeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "SigningAlgorithm":{"shape":"SigningAlgorithmType"},
+        "CertificateSubject":{"shape":"CertificateSubjectType"}
+      }
+    },
+    "GetCertificateSigningRequestOutput":{
+      "type":"structure",
+      "required":["CertificateSigningRequest"],
+      "members":{
+        "CertificateSigningRequest":{"shape":"CertificateSigningRequestType"}
       }
     },
     "GetDefaultKeyReplicationRegionsInput":{
@@ -981,7 +1081,6 @@
       "required":[
         "CertificateAuthorityPublicKeyIdentifier",
         "SigningKeyCertificate",
-        "ImportToken",
         "WrappedKeyBlock",
         "KeyBlockFormat"
       ],
@@ -989,6 +1088,8 @@
         "CertificateAuthorityPublicKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
         "SigningKeyCertificate":{"shape":"CertificateType"},
         "ImportToken":{"shape":"ImportTokenId"},
+        "WrappingKeyIdentifier":{"shape":"KeyArnOrKeyAliasType"},
+        "WrappingKeyCertificate":{"shape":"CertificateType"},
         "WrappedKeyBlock":{"shape":"Tr34WrappedKeyBlock"},
         "KeyBlockFormat":{"shape":"Tr34KeyBlockFormat"},
         "RandomNonce":{"shape":"EvenHexLengthBetween16And32"}
@@ -1437,6 +1538,15 @@
       "max":2048,
       "min":2,
       "pattern":"(?:[0-9a-fA-F][0-9a-fA-F])+"
+    },
+    "SigningAlgorithmType":{
+      "type":"string",
+      "enum":[
+        "SHA224",
+        "SHA256",
+        "SHA384",
+        "SHA512"
+      ]
     },
     "StartKeyUsageInput":{
       "type":"structure",

@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise exportKeyAsync(array $args = [])
  * @method \Aws\Result getAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAliasAsync(array $args = [])
+ * @method \Aws\Result getCertificateSigningRequest(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCertificateSigningRequestAsync(array $args = [])
  * @method \Aws\Result getDefaultKeyReplicationRegions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDefaultKeyReplicationRegionsAsync(array $args = [])
  * @method \Aws\Result getKey(array $args = [])
