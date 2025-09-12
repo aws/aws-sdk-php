@@ -1175,6 +1175,10 @@ EOXML;
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'foo',
+                'secret' => 'bar',
+            ],
             'disable_express_session_auth' => true,
             'http_handler' => function (RequestInterface $r, array $opts = []) {
                 $this->assertEmpty($r->getHeaderLine('x-amz-s3session-token'));

@@ -21,15 +21,40 @@ use Yoast\PHPUnitPolyfills\TestCases\TestCase;
  */
 class StsClientTest extends TestCase
 {
-    private $deferredFns = [];
+    private $originalEnv = [];
+    private $tempFiles = [];
 
-    public function tearDown(): void
+    protected function setUp(): void
     {
-        foreach ($this->deferredFns as $deferredFn) {
-            $deferredFn();
+        parent::setUp();
+        // Store original environment variables that might be modified
+        $this->originalEnv = [
+            CredentialProvider::ENV_ARN => getenv(CredentialProvider::ENV_ARN),
+            CredentialProvider::ENV_ROLE_SESSION_NAME => getenv(CredentialProvider::ENV_ROLE_SESSION_NAME),
+            CredentialProvider::ENV_TOKEN_FILE => getenv(CredentialProvider::ENV_TOKEN_FILE),
+        ];
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        // Restore original environment variables
+        foreach ($this->originalEnv as $key => $value) {
+            if ($value !== false) {
+                putenv("{$key}={$value}");
+            } else {
+                putenv("{$key}=");
+            }
         }
 
-        $this->deferredFns = [];
+        // Clean up temporary files
+        foreach ($this->tempFiles as $file) {
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
+        $this->tempFiles = [];
     }
 
     public function testCanCreateCredentialsObjectFromStsResult()
@@ -209,10 +234,11 @@ class StsClientTest extends TestCase
 
     /**
      * @dataProvider stsAssumeRoleWithSAMLOperationsDataProvider
-     *
-     * @return void
      */
-    public function testStsAssumeRoleWithSAMLOperationsWithAccountId($response, $expected)
+    public function testStsAssumeRoleWithSAMLOperationsWithAccountId(
+        $response,
+        $expected
+    ): void
     {
         $operation = 'assumeRoleWithSAML';
         $stsClient = $this->getTestStsClient($operation, $response);
@@ -267,19 +293,23 @@ class StsClientTest extends TestCase
 
     /**
      * @dataProvider stsAssumeRoleWithWebIdentityOperationsDataProvider
-     *
-     * @return void
      */
-    public function testStsAssumeRoleWithWebIdentityOperationsWithAccountId($response, $expected)
+    public function testStsAssumeRoleWithWebIdentityOperationsWithAccountId(
+        $response,
+        $expected
+    ) :void
     {
         $operation = 'assumeRoleWithWebIdentity';
         $stsClient = $this->getTestStsClient($operation, $response);
+
+        // Create token file and track it for cleanup
         $tokenPath = $this->createTestWebIdentityToken();
-        $this->putEnv([
-            CredentialProvider::ENV_ARN => 'arn:aws:sts::123456789012:assumed-role/test-role/Name',
-            CredentialProvider::ENV_ROLE_SESSION_NAME => 'TestSession',
-            CredentialProvider::ENV_TOKEN_FILE => $tokenPath
-        ]);
+
+        // Set environment variables
+        putenv(CredentialProvider::ENV_ARN . '=arn:aws:sts::123456789012:assumed-role/test-role/Name');
+        putenv(CredentialProvider::ENV_ROLE_SESSION_NAME . '=TestSession');
+        putenv(CredentialProvider::ENV_TOKEN_FILE . '=' . $tokenPath);
+
         $params = [
             'stsClient' => $stsClient,
             'region' => 'us-east-1'
@@ -319,10 +349,11 @@ class StsClientTest extends TestCase
 
     /**
      * @dataProvider stsGetFederationTokenOperationsDataProvider
-     *
-     * @return void
      */
-    public function testStsGetFederationTokenOperationsWithAccountId($response, $expected)
+    public function testStsGetFederationTokenOperationsWithAccountId(
+        $response,
+        $expected
+    ): void
     {
         $operation = 'getFederationToken';
         $stsClient = $this->getTestStsClient($operation, $response);
@@ -371,6 +402,28 @@ class StsClientTest extends TestCase
                 ]
             ],
         ];
+    }
+
+    public function testCreateCredentialsAddSource(): void
+    {
+        $result = new Result([
+            'Credentials' => [
+                'AccessKeyId' => 'foo',
+                'SecretAccessKey' => 'foo'
+            ]
+        ]);
+        $stsClient = new StsClient([
+            'region' => 'us-east-1'
+        ]);
+        $credentials = $stsClient->createCredentials(
+            $result,
+            CredentialSources::PROFILE
+        );
+        $this->assertNotEmpty($credentials->getSource());
+        $this->assertEquals(
+            CredentialSources::PROFILE,
+            $credentials->getSource()
+        );
     }
 
     private function getTestStsClient($operation, $response)
@@ -422,65 +475,16 @@ class StsClientTest extends TestCase
     }
 
     /**
-     * This method is designed for setting environment variables. It takes an array of key-value
-     * pairs where the keys represent the environment variable names and the values represent
-     * their corresponding values.
-     *
-     * @param array $envValues
-     * @return void
-     */
-    private function putEnv(array $envValues): void
-    {
-        foreach ($envValues as $key => $value) {
-            $currentValue = getenv($key);
-            $deferFn = function () use ($key, $currentValue) {
-                if (!empty($currentValue)) {
-                    putenv($key.'='.$currentValue);
-                }
-            };
-            $this->deferredFns[] = $deferFn;
-
-            putenv($key.'='.$value);
-        }
-    }
-
-    /**
      * This method creates a test token file at a temporary location.
      *
      * @return string the path for the test token file created.
      */
     private function createTestWebIdentityToken(): string
     {
-        $dir = sys_get_temp_dir();
-        $tokenPath = $dir . '/token';
+        $tokenPath = tempnam(sys_get_temp_dir(), 'aws_test_token_');
         file_put_contents($tokenPath, 'token');
-        $deferFn = function () use ($tokenPath) {
-            unlink($tokenPath);
-        };
-        $this->deferredFns[] = $deferFn;
+        $this->tempFiles[] = $tokenPath; // Track for cleanup
 
         return $tokenPath;
-    }
-
-    public function testCreateCredentialsAddSource()
-    {
-        $result = new Result([
-            'Credentials' => [
-                'AccessKeyId' => 'foo',
-                'SecretAccessKey' => 'foo'
-            ]
-        ]);
-        $stsClient = new StsClient([
-            'region' => 'us-east-1'
-        ]);
-        $credentials = $stsClient->createCredentials(
-            $result,
-            CredentialSources::PROFILE
-        );
-        $this->assertNotEmpty($credentials->getSource());
-        $this->assertEquals(
-            CredentialSources::PROFILE,
-            $credentials->getSource()
-        );
     }
 }

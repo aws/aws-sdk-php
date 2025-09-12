@@ -95,7 +95,22 @@ class UserAgentMiddlewareTest extends TestCase
             }
         }
 
-        $this->cleanUpDir($this->tempDir);
+        if (is_dir($this->tempDir)) {
+            $it = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($this->tempDir, \FilesystemIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($it as $file) {
+                if ($file->isDir() && !is_link($file->getPathname())) {
+                    @rmdir($file->getPathname());
+                } else {
+                    @unlink($file->getPathname());
+                }
+            }
+
+            @rmdir($this->tempDir);
+        }
     }
 
     /**
