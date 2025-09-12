@@ -1,0 +1,66 @@
+name: PHP Composer Windows
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - php-versions: '8.1'
+            composer-options: ''
+          - php-versions: '8.2'
+            composer-options: ''
+          - php-versions: '8.3'
+            composer-options: ''
+          - php-versions: '8.4'
+            composer-options: ''
+          - php-versions: '8.5'
+            composer-options: ''
+    name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
+    env:
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: bar
+      AWS_CSM_ENABLED: false
+      AWS_SUPPRESS_PHP_DEPRECATION_WARNING: true
+    steps:
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: xdebug
+          php-version: ${{ matrix.php-versions }}
+          ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
+          extensions: sockets
+
+      - name: Checkout codebase
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
+
+      - name: Run test suite
+        run: make test
+
+      - name: Static analysis
+        run: |
+          composer require --dev nette/neon "^3.4.4" phpstan/phpstan "2.1.1" --ignore-platform-req=php --update-with-all-dependencies
+          vendor\bin\phpstan analyse src
+
+      - if: ${{ matrix.composer-options == '' }}
+        name: Code Coverage
+        run: |
+          curl -o codecov.exe https://uploader.codecov.io/latest/windows/codecov.exe
+          .\codecov.exe

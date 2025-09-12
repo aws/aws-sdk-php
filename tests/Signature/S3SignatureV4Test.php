@@ -58,10 +58,8 @@ class S3SignatureV4Test extends TestCase
         $uri = $request->getUri()->withPath('/.././foo');
         $request = $request->withUri($uri);
         $p = new \ReflectionMethod($signature, 'parseRequest');
-        $p->setAccessible(true);
         $parsed = $p->invoke($signature, $request);
         $meth = new \ReflectionMethod($signature, 'createContext');
-        $meth->setAccessible(true);
         $ctx = $meth->invoke($signature, $parsed, 'foo');
         $this->assertStringStartsWith(
             "GET\n/.././foo",
@@ -75,10 +73,8 @@ class S3SignatureV4Test extends TestCase
         $uri = $request->getUri()->withPath('//foo');
         $request = $request->withUri($uri);
         $p = new \ReflectionMethod($signature, 'parseRequest');
-        $p->setAccessible(true);
         $parsed = $p->invoke($signature, $request);
         $meth = new \ReflectionMethod($signature, 'createContext');
-        $meth->setAccessible(true);
         $ctx = $meth->invoke($signature, $parsed, 'foo');
         $this->assertStringStartsWith(
             "GET\n//foo",

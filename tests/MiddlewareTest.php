@@ -331,7 +331,9 @@ class MiddlewareTest extends TestCase
     {
         $list = new HandlerList();
         $list->setHandler(function () {
-            usleep(1000); // wait for a millisecond
+            // Use a longer sleep on Windows to ensure measurable time
+            $sleepTime = PHP_OS_FAMILY === 'Windows' ? 2000 : 1000;
+            usleep($sleepTime);
             return Promise\Create::promiseFor(new Result);
         });
         $list->prependInit(Middleware::timer());

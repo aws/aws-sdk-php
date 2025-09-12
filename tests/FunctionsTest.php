@@ -16,8 +16,8 @@ class FunctionsTest extends TestCase
     {
         $iter = Aws\recursive_dir_iterator(__DIR__);
         $this->assertInstanceOf('Iterator', $iter);
-        $files = iterator_to_array($iter);
-        $this->assertContains(__FILE__, $files);
+        $files = array_map('realpath', iterator_to_array($iter));
+        $this->assertContains(realpath(__FILE__), $files);
     }
 
     /**
