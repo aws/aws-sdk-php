@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.17 - 2025-09-12
 
 * `Aws\` - Once again allow psr/http-message 1.0, for increased compatibility with other packages.
 * `Aws\PaymentCryptography` - Add support for certificates to be signed by 3rd party certificate authorities. New API GetCertificateSigningRequest API and support for providing certificates at run-time for tr-34 import/export
