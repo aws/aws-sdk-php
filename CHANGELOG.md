@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.18 - 2025-09-15
 
 * `Aws\S3Control` - Introduce three new encryption filters: EncryptionType (SSE-S3, SSE-KMS, DSSE-KMS, SSE-C, NOT-SSE), KmsKeyArn (for SSE-KMS and DSSE-KMS), and BucketKeyEnabled (for SSE-KMS).
 * `Aws\ObservabilityAdmin` - CloudWatch Observability Admin adds the ability to enable telemetry centralization in customers' Organizations. The release introduces new APIs to manage centralization rules, which define settings to replicate telemetry data to a central destination in the customers' Organization.
