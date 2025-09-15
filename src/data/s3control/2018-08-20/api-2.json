@@ -2327,6 +2327,15 @@
       },
       "sensitive":true
     },
+    "DSSEKMSFilter":{
+      "type":"structure",
+      "members":{
+        "KmsKeyArn":{
+          "shape":"NonEmptyKmsKeyArnString",
+          "box":true
+        }
+      }
+    },
     "DataSourceId":{
       "type":"string",
       "max":191
@@ -4042,7 +4051,8 @@
           "shape":"ObjectSizeLessThanBytes",
           "box":true
         },
-        "MatchAnyStorageClass":{"shape":"StorageClassList"}
+        "MatchAnyStorageClass":{"shape":"StorageClassList"},
+        "MatchAnyObjectEncryption":{"shape":"ObjectEncryptionFilterList"}
       }
     },
     "JobManifestLocation":{
@@ -5043,6 +5053,12 @@
       "exception":true
     },
     "NoSuchPublicAccessBlockConfigurationMessage":{"type":"string"},
+    "NonEmptyKmsKeyArnString":{
+      "type":"string",
+      "max":2000,
+      "min":1,
+      "pattern":"arn:aws[a-zA-Z0-9-]*:kms:[a-z0-9-]+:[0-9]{12}:key/[a-zA-Z0-9-]+"
+    },
     "NonEmptyMaxLength1024String":{
       "type":"string",
       "max":1024,
@@ -5099,8 +5115,47 @@
       },
       "exception":true
     },
+    "NotSSEFilter":{
+      "type":"structure",
+      "members":{}
+    },
     "ObjectAgeValue":{"type":"integer"},
     "ObjectCreationTime":{"type":"timestamp"},
+    "ObjectEncryptionFilter":{
+      "type":"structure",
+      "members":{
+        "SSES3":{
+          "shape":"SSES3Filter",
+          "locationName":"SSE-S3"
+        },
+        "SSEKMS":{
+          "shape":"SSEKMSFilter",
+          "locationName":"SSE-KMS"
+        },
+        "DSSEKMS":{
+          "shape":"DSSEKMSFilter",
+          "locationName":"DSSE-KMS"
+        },
+        "SSEC":{
+          "shape":"SSECFilter",
+          "locationName":"SSE-C"
+        },
+        "NOTSSE":{
+          "shape":"NotSSEFilter",
+          "locationName":"NOT-SSE"
+        }
+      },
+      "union":true
+    },
+    "ObjectEncryptionFilterList":{
+      "type":"list",
+      "member":{
+        "shape":"ObjectEncryptionFilter",
+        "locationName":"ObjectEncryption"
+      },
+      "max":1,
+      "min":1
+    },
     "ObjectLambdaAccessPoint":{
       "type":"structure",
       "required":["Name"],
@@ -6366,6 +6421,10 @@
       "value":{"shape":"MaxLength1024String"},
       "max":8192
     },
+    "SSECFilter":{
+      "type":"structure",
+      "members":{}
+    },
     "SSEKMS":{
       "type":"structure",
       "required":["KeyId"],
@@ -6382,6 +6441,19 @@
       },
       "locationName":"SSE-KMS"
     },
+    "SSEKMSFilter":{
+      "type":"structure",
+      "members":{
+        "KmsKeyArn":{
+          "shape":"NonEmptyKmsKeyArnString",
+          "box":true
+        },
+        "BucketKeyEnabled":{
+          "shape":"Boolean",
+          "box":true
+        }
+      }
+    },
     "SSEKMSKeyId":{"type":"string"},
     "SSES3":{
       "type":"structure",
@@ -6392,6 +6464,10 @@
       "type":"structure",
       "members":{},
       "locationName":"SSE-S3"
+    },
+    "SSES3Filter":{
+      "type":"structure",
+      "members":{}
     },
     "Scope":{
       "type":"structure",

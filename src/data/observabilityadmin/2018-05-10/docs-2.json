@@ -2,14 +2,18 @@
   "version": "2.0",
   "service": "<p> You can use Amazon CloudWatch Observability Admin to discover and understand the state of telemetry configuration in CloudWatch for your Amazon Web Services Organization or account. This simplifies the process of auditing your telemetry collection configurations across multiple resource types within your Amazon Web Services Organization or account. By providing a consolidated view, it allows you to easily review and manage telemetry settings, helping you ensure proper monitoring and data collection across your Amazon Web Services environment. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry conﬁgurations</a> in the CloudWatch User Guide.</p> <p>For information on the permissions you need to use this API, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/auth-and-access-control-cw.html\">Identity and access management for Amazon CloudWatch</a> in the CloudWatch User Guide.</p>",
   "operations": {
+    "CreateCentralizationRuleForOrganization": "<p>Creates a centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
     "CreateTelemetryRule": "<p> Creates a telemetry rule that defines how telemetry should be configured for Amazon Web Services resources in your account. The rule specifies which resources should have telemetry enabled and how that telemetry data should be collected based on resource type, telemetry type, and selection criteria. </p>",
     "CreateTelemetryRuleForOrganization": "<p> Creates a telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
+    "DeleteCentralizationRuleForOrganization": "<p>Deletes an organization-wide centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
     "DeleteTelemetryRule": "<p> Deletes a telemetry rule from your account. Any telemetry configurations previously created by the rule will remain but no new resources will be configured by this rule. </p>",
     "DeleteTelemetryRuleForOrganization": "<p> Deletes an organization-wide telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
+    "GetCentralizationRuleForOrganization": "<p>Retrieves the details of a specific organization centralization rule. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
     "GetTelemetryEvaluationStatus": "<p> Returns the current onboarding status of the telemetry config feature, including the status of the feature and reason the feature failed to start or stop. </p>",
     "GetTelemetryEvaluationStatusForOrganization": "<p> This returns the onboarding status of the telemetry configuration feature for the organization. It can only be called by a Management Account of an Amazon Web Services Organization or an assigned Delegated Admin Account of Amazon CloudWatch telemetry config. </p>",
     "GetTelemetryRule": "<p> Retrieves the details of a specific telemetry rule in your account. </p>",
     "GetTelemetryRuleForOrganization": "<p> Retrieves the details of a specific organization telemetry rule. This operation can only be called by the organization's management account or a delegated administrator account. </p>",
+    "ListCentralizationRulesForOrganization": "<p>Lists all centralization rules in your organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
     "ListResourceTelemetry": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/telemetry-config-cloudwatch.html\">Auditing CloudWatch telemetry configurations</a>. </p>",
     "ListResourceTelemetryForOrganization": "<p> Returns a list of telemetry configurations for Amazon Web Services resources supported by telemetry config in the organization. </p>",
     "ListTagsForResource": "<p> Lists all tags attached to the specified telemetry rule resource. </p>",
@@ -21,6 +25,7 @@
     "StopTelemetryEvaluationForOrganization": "<p> This action offboards the Organization of the caller Amazon Web Services account from the telemetry config feature. </p>",
     "TagResource": "<p> Adds or updates tags for a telemetry rule resource. </p>",
     "UntagResource": "<p> Removes tags from a telemetry rule resource. </p>",
+    "UpdateCentralizationRuleForOrganization": "<p>Updates an existing centralization rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account.</p>",
     "UpdateTelemetryRule": "<p> Updates an existing telemetry rule in your account. </p>",
     "UpdateTelemetryRuleForOrganization": "<p> Updates an existing telemetry rule that applies across an Amazon Web Services Organization. This operation can only be called by the organization's management account or a delegated administrator account. </p>"
   },
@@ -34,6 +39,7 @@
       "base": null,
       "refs": {
         "AccountIdentifiers$member": null,
+        "CentralizationRuleDestination$Account": "<p>The destination account (within the organization) to which the telemetry data should be centralized.</p>",
         "TelemetryConfiguration$AccountIdentifier": "<p> The account ID which contains the resource managed in telemetry configuration. An example of a valid account ID is <code>012345678901</code>. </p>"
       }
     },
@@ -44,8 +50,63 @@
         "ListTelemetryRulesForOrganizationInput$SourceAccountIds": "<p> The list of account IDs to filter organization telemetry rules by their source accounts. </p>"
       }
     },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "ListCentralizationRulesForOrganizationInput$AllRegions": "<p>A flag determining whether to return organization centralization rules from all regions or only the current region.</p>"
+      }
+    },
+    "CentralizationFailureReason": {
+      "base": null,
+      "refs": {
+        "CentralizationRuleSummary$FailureReason": "<p>The reason why an organization centralization rule is marked UNHEALTHY.</p>",
+        "GetCentralizationRuleForOrganizationOutput$FailureReason": "<p>The reason why an organization centralization rule is marked UNHEALTHY.</p>"
+      }
+    },
+    "CentralizationRule": {
+      "base": "<p>Defines how telemetry data should be centralized across an Amazon Web Services Organization, including source and destination configurations.</p>",
+      "refs": {
+        "CreateCentralizationRuleForOrganizationInput$Rule": "<p>The configuration details for the organization-wide centralization rule, including the source configuration and the destination configuration to centralize telemetry data across the organization.</p>",
+        "GetCentralizationRuleForOrganizationOutput$CentralizationRule": "<p>The configuration details for the organization centralization rule.</p>",
+        "UpdateCentralizationRuleForOrganizationInput$Rule": "<p>The configuration details for the organization-wide centralization rule, including the source configuration and the destination configuration to centralize telemetry data across the organization.</p>"
+      }
+    },
+    "CentralizationRuleDestination": {
+      "base": "<p>Configuration specifying the primary destination for centralized telemetry data.</p>",
+      "refs": {
+        "CentralizationRule$Destination": "<p>Configuration determining where the telemetry data should be centralized, backed up, as well as encryption configuration for the primary and backup destinations.</p>"
+      }
+    },
+    "CentralizationRuleSource": {
+      "base": "<p>Configuration specifying the source of telemetry data to be centralized.</p>",
+      "refs": {
+        "CentralizationRule$Source": "<p>Configuration determining the source of the telemetry data to be centralized.</p>"
+      }
+    },
+    "CentralizationRuleSummaries": {
+      "base": null,
+      "refs": {
+        "ListCentralizationRulesForOrganizationOutput$CentralizationRuleSummaries": "<p>A list of centralization rule summaries.</p>"
+      }
+    },
+    "CentralizationRuleSummary": {
+      "base": "<p>A summary of a centralization rule's key properties and status.</p>",
+      "refs": {
+        "CentralizationRuleSummaries$member": null
+      }
+    },
     "ConflictException": {
       "base": "<p> The requested operation conflicts with the current state of the specified resource or with another request. </p>",
+      "refs": {
+      }
+    },
+    "CreateCentralizationRuleForOrganizationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCentralizationRuleForOrganizationOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -69,6 +130,11 @@
       "refs": {
       }
     },
+    "DeleteCentralizationRuleForOrganizationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteTelemetryRuleForOrganizationInput": {
       "base": null,
       "refs": {
@@ -79,10 +145,34 @@
       "refs": {
       }
     },
+    "DestinationLogsConfiguration": {
+      "base": "<p>Configuration for centralization destination log groups, including encryption and backup settings.</p>",
+      "refs": {
+        "CentralizationRuleDestination$DestinationLogsConfiguration": "<p>Log specific configuration for centralization destination log groups.</p>"
+      }
+    },
     "DestinationType": {
       "base": null,
       "refs": {
         "TelemetryDestinationConfiguration$DestinationType": "<p> The type of destination for the telemetry data (e.g., \"Amazon CloudWatch Logs\", \"S3\"). </p>"
+      }
+    },
+    "EncryptedLogGroupStrategy": {
+      "base": null,
+      "refs": {
+        "SourceLogsConfiguration$EncryptedLogGroupStrategy": "<p>A strategy determining whether to centralize source log groups that are encrypted with customer managed KMS keys (CMK). ALLOW will consider CMK encrypted source log groups for centralization while SKIP will skip CMK encrypted source log groups from centralization.</p>"
+      }
+    },
+    "EncryptionConflictResolutionStrategy": {
+      "base": null,
+      "refs": {
+        "LogsEncryptionConfiguration$EncryptionConflictResolutionStrategy": "<p>Conflict resolution strategy for centralization if the encryption strategy is set to CUSTOMER_MANAGED and the destination log group is encrypted with an AWS_OWNED KMS Key. ALLOW lets centralization go through while SKIP prevents centralization into the destination log group.</p>"
+      }
+    },
+    "EncryptionStrategy": {
+      "base": null,
+      "refs": {
+        "LogsEncryptionConfiguration$EncryptionStrategy": "<p>Configuration that determines the encryption strategy of the destination log groups. CUSTOMER_MANAGED uses the configured KmsKeyArn to encrypt newly created destination log groups.</p>"
       }
     },
     "FailureReason": {
@@ -90,6 +180,16 @@
       "refs": {
         "GetTelemetryEvaluationStatusForOrganizationOutput$FailureReason": "<p> This field describes the reason for the failure status. The field will only be populated if <code>Status</code> is <code>FAILED_START</code> or <code>FAILED_STOP</code>. </p>",
         "GetTelemetryEvaluationStatusOutput$FailureReason": "<p> Describes the reason for the failure status. The field will only be populated if <code>Status</code> is <code>FAILED_START</code> or <code>FAILED_STOP</code>. </p>"
+      }
+    },
+    "GetCentralizationRuleForOrganizationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCentralizationRuleForOrganizationOutput": {
+      "base": null,
+      "refs": {
       }
     },
     "GetTelemetryEvaluationStatusForOrganizationOutput": {
@@ -130,6 +230,28 @@
     },
     "InternalServerException": {
       "base": "<p> Indicates the request has failed to process because of an unknown server error, exception, or failure. </p>",
+      "refs": {
+      }
+    },
+    "ListCentralizationRulesForOrganizationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCentralizationRulesForOrganizationInputRuleNamePrefixString": {
+      "base": null,
+      "refs": {
+        "ListCentralizationRulesForOrganizationInput$RuleNamePrefix": "<p>A string to filter organization centralization rules whose names begin with the specified prefix.</p>"
+      }
+    },
+    "ListCentralizationRulesForOrganizationMaxResults": {
+      "base": null,
+      "refs": {
+        "ListCentralizationRulesForOrganizationInput$MaxResults": "<p>The maximum number of organization centralization rules to return in a single call.</p>"
+      }
+    },
+    "ListCentralizationRulesForOrganizationOutput": {
+      "base": null,
       "refs": {
       }
     },
@@ -207,9 +329,31 @@
       "refs": {
       }
     },
+    "LogsBackupConfiguration": {
+      "base": "<p>Configuration for backing up centralized log data to a secondary region.</p>",
+      "refs": {
+        "DestinationLogsConfiguration$BackupConfiguration": "<p>Configuration defining the backup region and an optional KMS key for the backup destination.</p>"
+      }
+    },
+    "LogsEncryptionConfiguration": {
+      "base": "<p>Configuration for encrypting centralized log groups. This configuration is only applied to destination log groups for which the corresponding source log groups are encrypted using Customer Managed KMS Keys.</p>",
+      "refs": {
+        "DestinationLogsConfiguration$LogsEncryptionConfiguration": "<p>The encryption configuration for centralization destination log groups.</p>"
+      }
+    },
+    "LogsFilterString": {
+      "base": null,
+      "refs": {
+        "SourceLogsConfiguration$LogGroupSelectionCriteria": "<p>The selection criteria that specifies which source log groups to centralize. The selection criteria uses the same format as OAM link filters.</p>"
+      }
+    },
     "Long": {
       "base": null,
       "refs": {
+        "CentralizationRuleSummary$CreatedTimeStamp": "<p>The timestamp when the organization centralization rule was created.</p>",
+        "CentralizationRuleSummary$LastUpdateTimeStamp": "<p>The timestamp when the organization centralization rule was last updated.</p>",
+        "GetCentralizationRuleForOrganizationOutput$CreatedTimeStamp": "<p>The timestamp when the organization centralization rule was created.</p>",
+        "GetCentralizationRuleForOrganizationOutput$LastUpdateTimeStamp": "<p>The timestamp when the organization centralization rule was last updated.</p>",
         "GetTelemetryRuleForOrganizationOutput$CreatedTimeStamp": "<p> The timestamp when the organization telemetry rule was created. </p>",
         "GetTelemetryRuleForOrganizationOutput$LastUpdateTimeStamp": "<p> The timestamp when the organization telemetry rule was last updated. </p>",
         "GetTelemetryRuleOutput$CreatedTimeStamp": "<p> The timestamp when the telemetry rule was created. </p>",
@@ -222,6 +366,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListCentralizationRulesForOrganizationInput$NextToken": "<p>The token for the next set of results. A previous call generates this token.</p>",
+        "ListCentralizationRulesForOrganizationOutput$NextToken": "<p>A token to resume pagination of results.</p>",
         "ListResourceTelemetryForOrganizationInput$NextToken": "<p> The token for the next set of items to return. A previous call provides this token. </p>",
         "ListResourceTelemetryForOrganizationOutput$NextToken": "<p> The token for the next set of items to return. A previous call provides this token. </p>",
         "ListResourceTelemetryInput$NextToken": "<p> The token for the next set of items to return. A previous call generates this token. </p>",
@@ -244,17 +390,40 @@
         "ListTelemetryRulesForOrganizationInput$SourceOrganizationUnitIds": "<p> The list of organizational unit IDs to filter organization telemetry rules by their source organizational units. </p>"
       }
     },
+    "Region": {
+      "base": null,
+      "refs": {
+        "CentralizationRuleDestination$Region": "<p>The primary destination region to which telemetry data should be centralized.</p>",
+        "CentralizationRuleSummary$CreatedRegion": "<p>The Amazon Web Services region where the organization centralization rule was created.</p>",
+        "CentralizationRuleSummary$DestinationRegion": "<p>The primary destination region of the organization centralization rule.</p>",
+        "GetCentralizationRuleForOrganizationOutput$CreatedRegion": "<p>The Amazon Web Services region where the organization centralization rule was created.</p>",
+        "LogsBackupConfiguration$Region": "<p>Logs specific backup destination region within the primary destination account to which log data should be centralized.</p>",
+        "Regions$member": null
+      }
+    },
+    "Regions": {
+      "base": null,
+      "refs": {
+        "CentralizationRuleSource$Regions": "<p>The list of source regions from which telemetry data should be centralized.</p>"
+      }
+    },
     "ResourceArn": {
       "base": null,
       "refs": {
+        "CentralizationRuleSummary$RuleArn": "<p>The Amazon Resource Name (ARN) of the organization centralization rule.</p>",
+        "CreateCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the created organization centralization rule.</p>",
         "CreateTelemetryRuleForOrganizationOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the created organization telemetry rule. </p>",
         "CreateTelemetryRuleOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the created telemetry rule. </p>",
+        "GetCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the organization centralization rule.</p>",
         "GetTelemetryRuleForOrganizationOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the organization telemetry rule. </p>",
         "GetTelemetryRuleOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the telemetry rule. </p>",
         "ListTagsForResourceInput$ResourceARN": "<p> The Amazon Resource Name (ARN) of the telemetry rule resource whose tags you want to list. </p>",
+        "LogsBackupConfiguration$KmsKeyArn": "<p>KMS Key arn belonging to the primary destination account and backup region, to encrypt newly created central log groups in the backup destination.</p>",
+        "LogsEncryptionConfiguration$KmsKeyArn": "<p>KMS Key arn belonging to the primary destination account and region, to encrypt newly created central log groups in the primary destination.</p>",
         "TagResourceInput$ResourceARN": "<p> The Amazon Resource Name (ARN) of the telemetry rule resource to tag. </p>",
         "TelemetryRuleSummary$RuleArn": "<p> The Amazon Resource Name (ARN) of the telemetry rule. </p>",
         "UntagResourceInput$ResourceARN": "<p> The Amazon Resource Name (ARN) of the telemetry rule resource to remove tags from. </p>",
+        "UpdateCentralizationRuleForOrganizationOutput$RuleArn": "<p>The Amazon Resource Name (ARN) of the updated organization centralization rule.</p>",
         "UpdateTelemetryRuleForOrganizationOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the updated organization telemetry rule. </p>",
         "UpdateTelemetryRuleOutput$RuleArn": "<p> The Amazon Resource Name (ARN) of the updated telemetry rule. </p>"
       }
@@ -299,13 +468,23 @@
         "TelemetryDestinationConfiguration$RetentionInDays": "<p> The number of days to retain the telemetry data in the destination. </p>"
       }
     },
+    "RuleHealth": {
+      "base": null,
+      "refs": {
+        "CentralizationRuleSummary$RuleHealth": "<p>The health status of the organization centralization rule.</p>",
+        "GetCentralizationRuleForOrganizationOutput$RuleHealth": "<p>The health status of the organization centralization rule.</p>"
+      }
+    },
     "RuleIdentifier": {
       "base": null,
       "refs": {
+        "DeleteCentralizationRuleForOrganizationInput$RuleIdentifier": "<p>The identifier (name or ARN) of the organization centralization rule to delete.</p>",
         "DeleteTelemetryRuleForOrganizationInput$RuleIdentifier": "<p> The identifier (name or ARN) of the organization telemetry rule to delete. </p>",
         "DeleteTelemetryRuleInput$RuleIdentifier": "<p> The identifier (name or ARN) of the telemetry rule to delete. </p>",
+        "GetCentralizationRuleForOrganizationInput$RuleIdentifier": "<p>The identifier (name or ARN) of the organization centralization rule to retrieve.</p>",
         "GetTelemetryRuleForOrganizationInput$RuleIdentifier": "<p> The identifier (name or ARN) of the organization telemetry rule to retrieve. </p>",
         "GetTelemetryRuleInput$RuleIdentifier": "<p> The identifier (name or ARN) of the telemetry rule to retrieve. </p>",
+        "UpdateCentralizationRuleForOrganizationInput$RuleIdentifier": "<p>The identifier (name or ARN) of the organization centralization rule to update.</p>",
         "UpdateTelemetryRuleForOrganizationInput$RuleIdentifier": "<p> The identifier (name or ARN) of the organization telemetry rule to update. </p>",
         "UpdateTelemetryRuleInput$RuleIdentifier": "<p> The identifier (name or ARN) of the telemetry rule to update. </p>"
       }
@@ -313,8 +492,11 @@
     "RuleName": {
       "base": null,
       "refs": {
+        "CentralizationRuleSummary$RuleName": "<p>The name of the organization centralization rule.</p>",
+        "CreateCentralizationRuleForOrganizationInput$RuleName": "<p>A unique name for the organization-wide centralization rule being created.</p>",
         "CreateTelemetryRuleForOrganizationInput$RuleName": "<p> A unique name for the organization-wide telemetry rule being created. </p>",
         "CreateTelemetryRuleInput$RuleName": "<p> A unique name for the telemetry rule being created. </p>",
+        "GetCentralizationRuleForOrganizationOutput$RuleName": "<p>The name of the organization centralization rule.</p>",
         "GetTelemetryRuleForOrganizationOutput$RuleName": "<p> The name of the organization telemetry rule. </p>",
         "GetTelemetryRuleOutput$RuleName": "<p> The name of the telemetry rule. </p>",
         "TelemetryRuleSummary$RuleName": "<p> The name of the telemetry rule. </p>"
@@ -323,6 +505,18 @@
     "ServiceQuotaExceededException": {
       "base": "<p> The requested operation would exceed the allowed quota for the specified resource type. </p>",
       "refs": {
+      }
+    },
+    "SourceFilterString": {
+      "base": null,
+      "refs": {
+        "CentralizationRuleSource$Scope": "<p>The organizational scope from which telemetry data should be centralized, specified using organization id, accounts or organizational unit ids.</p>"
+      }
+    },
+    "SourceLogsConfiguration": {
+      "base": "<p>Configuration for selecting and handling source log groups for centralization.</p>",
+      "refs": {
+        "CentralizationRuleSource$SourceLogsConfiguration": "<p>Log specific configuration for centralization source log groups.</p>"
       }
     },
     "Status": {
@@ -337,7 +531,10 @@
       "refs": {
         "AccessDeniedException$Message": null,
         "AccessDeniedException$amznErrorType": "<p> The name of the exception. </p>",
+        "CentralizationRuleSummary$CreatorAccountId": "<p>The Amazon Web Services Account that created the organization centralization rule.</p>",
+        "CentralizationRuleSummary$DestinationAccountId": "<p>The primary destination account of the organization centralization rule.</p>",
         "ConflictException$Message": null,
+        "GetCentralizationRuleForOrganizationOutput$CreatorAccountId": "<p>The Amazon Web Services Account that created the organization centralization rule.</p>",
         "InternalServerException$Message": null,
         "InternalServerException$amznErrorType": "<p> The name of the exception. </p>",
         "ListTelemetryRulesForOrganizationInput$RuleNamePrefix": "<p> A string to filter organization telemetry rules whose names begin with the specified prefix. </p>",
@@ -372,6 +569,7 @@
     "TagMapInput": {
       "base": null,
       "refs": {
+        "CreateCentralizationRuleForOrganizationInput$Tags": "<p>The key-value pairs to associate with the organization telemetry rule resource for categorization and management purposes.</p>",
         "CreateTelemetryRuleForOrganizationInput$Tags": "<p> The key-value pairs to associate with the organization telemetry rule resource for categorization and management purposes. </p>",
         "CreateTelemetryRuleInput$Tags": "<p> The key-value pairs to associate with the telemetry rule resource for categorization and management purposes. </p>",
         "ListResourceTelemetryForOrganizationInput$ResourceTags": "<p> A key-value pair to filter resources in the organization based on tags associated with the resource. Fore more information about tags, see <a href=\"https://docs.aws.amazon.com/whitepapers/latest/tagging-best-practices/what-are-tags.html\">What are tags?</a> </p>",
@@ -468,6 +666,16 @@
       }
     },
     "UntagResourceInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCentralizationRuleForOrganizationInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCentralizationRuleForOrganizationOutput": {
       "base": null,
       "refs": {
       }
