@@ -52,8 +52,10 @@
       "base": null,
       "refs": {
         "GridConfiguration$featuredParticipantAttribute": "<p>This attribute name identifies the featured slot. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the featured slot. Default: <code>\"\"</code> (no featured participant).</p>",
+        "GridConfiguration$participantOrderAttribute": "<p>Attribute name in <a>ParticipantTokenConfiguration</a> identifying the participant ordering key. Participants with <code>participantOrderAttribute</code> set to <code>\"\"</code> or not specified are ordered based on their arrival time into the stage.</p>",
         "PipConfiguration$featuredParticipantAttribute": "<p>This attribute name identifies the featured slot. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the featured slot. Default: <code>\"\"</code> (no featured participant).</p>",
-        "PipConfiguration$pipParticipantAttribute": "<p>Specifies the participant for the PiP window. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the PiP slot. Default: <code>\"\"</code> (no PiP participant).</p>"
+        "PipConfiguration$pipParticipantAttribute": "<p>Specifies the participant for the PiP window. A participant with this attribute set to <code>\"true\"</code> (as a string value) in <a>ParticipantTokenConfiguration</a> is placed in the PiP slot. Default: <code>\"\"</code> (no PiP participant).</p>",
+        "PipConfiguration$participantOrderAttribute": "<p>Attribute name in <a>ParticipantTokenConfiguration</a> identifying the participant ordering key. Participants with <code>participantOrderAttribute</code> set to <code>\"\"</code> or not specified are ordered based on their arrival time into the stage.</p>"
       }
     },
     "AutoParticipantRecordingConfiguration": {
@@ -1152,7 +1154,7 @@
     "Replica": {
       "base": null,
       "refs": {
-        "Event$replica": "<p>If true, this indicates the <code>participantId</code> is a replicated participant. If this is a subscribe event, then this flag refers to <code>remoteParticipantId</code>.</p>"
+        "Event$replica": "<p>If true, this indicates the <code>participantId</code> is a replicated participant. If this is a subscribe event, then this flag refers to <code>remoteParticipantId</code>. Default: <code>false</code>.</p>"
       }
     },
     "ReplicationState": {
@@ -1243,7 +1245,7 @@
         "Participant$sourceStageArn": "<p>Source stage ARN from which this participant is replicated, if <code>replicationType</code> is <code>REPLICA</code>. </p>",
         "ParticipantReplica$sourceStageArn": "<p>ARN of the stage from which this participant is replicated.</p>",
         "ParticipantReplica$destinationStageArn": "<p>ARN of the stage where the participant is replicated.</p>",
-        "ParticipantSummary$sourceStageArn": "<p>ARN of the stage from which this participant is replicated.</p>",
+        "ParticipantSummary$sourceStageArn": "<p>Source stage ARN from which this participant is replicated, if <code>replicationType</code> is <code>REPLICA</code>.</p>",
         "Stage$arn": "<p>Stage ARN.</p>",
         "StageSummary$arn": "<p>Stage ARN.</p>",
         "StartCompositionRequest$stageArn": "<p>ARN of the stage to be used for compositing.</p>",

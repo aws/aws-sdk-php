@@ -2399,6 +2399,10 @@
       ]
     },
     "DynamicTokenPosition":{"type":"integer"},
+    "EmitSystemFields":{
+      "type":"list",
+      "member":{"shape":"SystemField"}
+    },
     "EncryptionKey":{
       "type":"string",
       "max":256
@@ -2596,6 +2600,11 @@
     "FieldIndexes":{
       "type":"list",
       "member":{"shape":"FieldIndex"}
+    },
+    "FieldSelectionCriteria":{
+      "type":"string",
+      "max":2000,
+      "min":0
     },
     "FieldsData":{
       "type":"structure",
@@ -3439,7 +3448,9 @@
         "metricTransformations":{"shape":"MetricTransformations"},
         "creationTime":{"shape":"Timestamp"},
         "logGroupName":{"shape":"LogGroupName"},
-        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"}
+        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"},
+        "fieldSelectionCriteria":{"shape":"FieldSelectionCriteria"},
+        "emitSystemFieldDimensions":{"shape":"EmitSystemFields"}
       }
     },
     "MetricFilterMatchRecord":{
@@ -4073,7 +4084,9 @@
         "filterName":{"shape":"FilterName"},
         "filterPattern":{"shape":"FilterPattern"},
         "metricTransformations":{"shape":"MetricTransformations"},
-        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"}
+        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"},
+        "fieldSelectionCriteria":{"shape":"FieldSelectionCriteria"},
+        "emitSystemFieldDimensions":{"shape":"EmitSystemFields"}
       }
     },
     "PutQueryDefinitionRequest":{
@@ -4142,7 +4155,9 @@
         "destinationArn":{"shape":"DestinationArn"},
         "roleArn":{"shape":"RoleArn"},
         "distribution":{"shape":"Distribution"},
-        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"}
+        "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"},
+        "fieldSelectionCriteria":{"shape":"FieldSelectionCriteria"},
+        "emitSystemFields":{"shape":"EmitSystemFields"}
       }
     },
     "PutTransformerRequest":{
@@ -4627,7 +4642,9 @@
         "roleArn":{"shape":"RoleArn"},
         "distribution":{"shape":"Distribution"},
         "applyOnTransformedLogs":{"shape":"ApplyOnTransformedLogs"},
-        "creationTime":{"shape":"Timestamp"}
+        "creationTime":{"shape":"Timestamp"},
+        "fieldSelectionCriteria":{"shape":"FieldSelectionCriteria"},
+        "emitSystemFields":{"shape":"EmitSystemFields"}
       }
     },
     "SubscriptionFilters":{
@@ -4690,6 +4707,7 @@
         "HOURS"
       ]
     },
+    "SystemField":{"type":"string"},
     "TagKey":{
       "type":"string",
       "max":128,

@@ -624,7 +624,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[a-zA-Z0-9/:_+=.\\-@]{0,75}[a-zA-Z0-9]$"
+      "pattern":"^arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[a-zA-Z0-9/:_\\+=\\.\\-@]{0,75}[a-zA-Z0-9]$"
     },
     "Budget":{
       "type":"structure",
@@ -1322,7 +1322,8 @@
       "enum":[
         "BILLING_VIEW_NO_ACCESS",
         "BILLING_VIEW_UNHEALTHY",
-        "FILTER_INVALID"
+        "FILTER_INVALID",
+        "MULTI_YEAR_HISTORICAL_DATA_DISABLED"
       ]
     },
     "HealthStatusValue":{
@@ -1742,7 +1743,8 @@
         "DAILY",
         "MONTHLY",
         "QUARTERLY",
-        "ANNUALLY"
+        "ANNUALLY",
+        "CUSTOM"
       ]
     },
     "UnitValue":{

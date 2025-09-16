@@ -30,6 +30,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "CreatePipelineEndpoint":{
+      "name":"CreatePipelineEndpoint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2022-01-01/osis/createPipelineEndpoint"
+      },
+      "input":{"shape":"CreatePipelineEndpointRequest"},
+      "output":{"shape":"CreatePipelineEndpointResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeletePipeline":{
       "name":"DeletePipeline",
       "http":{
@@ -46,6 +63,40 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"}
       ]
+    },
+    "DeletePipelineEndpoint":{
+      "name":"DeletePipelineEndpoint",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2022-01-01/osis/deletePipelineEndpoint/{EndpointId}"
+      },
+      "input":{"shape":"DeletePipelineEndpointRequest"},
+      "output":{"shape":"DeletePipelineEndpointResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2022-01-01/osis/resourcePolicy/{ResourceArn}"
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "GetPipeline":{
       "name":"GetPipeline",
@@ -95,6 +146,23 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetResourcePolicy":{
+      "name":"GetResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2022-01-01/osis/resourcePolicy/{ResourceArn}"
+      },
+      "input":{"shape":"GetResourcePolicyRequest"},
+      "output":{"shape":"GetResourcePolicyResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListPipelineBlueprints":{
       "name":"ListPipelineBlueprints",
       "http":{
@@ -109,6 +177,38 @@
         {"shape":"InternalException"},
         {"shape":"AccessDeniedException"},
         {"shape":"InvalidPaginationTokenException"}
+      ]
+    },
+    "ListPipelineEndpointConnections":{
+      "name":"ListPipelineEndpointConnections",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2022-01-01/osis/listPipelineEndpointConnections"
+      },
+      "input":{"shape":"ListPipelineEndpointConnectionsRequest"},
+      "output":{"shape":"ListPipelineEndpointConnectionsResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "ListPipelineEndpoints":{
+      "name":"ListPipelineEndpoints",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2022-01-01/osis/listPipelineEndpoints"
+      },
+      "input":{"shape":"ListPipelineEndpointsRequest"},
+      "output":{"shape":"ListPipelineEndpointsResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "ListPipelines":{
@@ -142,6 +242,41 @@
         {"shape":"InternalException"},
         {"shape":"AccessDeniedException"}
       ]
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2022-01-01/osis/resourcePolicy/{ResourceArn}"
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
+    "RevokePipelineEndpointConnections":{
+      "name":"RevokePipelineEndpointConnections",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2022-01-01/osis/revokePipelineEndpointConnections"
+      },
+      "input":{"shape":"RevokePipelineEndpointConnectionsRequest"},
+      "output":{"shape":"RevokePipelineEndpointConnectionsResponse"},
+      "errors":[
+        {"shape":"DisabledOperationException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "StartPipeline":{
       "name":"StartPipeline",
@@ -250,6 +385,12 @@
       "error":{"httpStatusCode":403},
       "exception":true
     },
+    "AwsAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"^\\\\d{12}$"
+    },
     "BlueprintFormat":{
       "type":"string",
       "pattern":"(YAML|JSON)"
@@ -323,6 +464,26 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
+    "CreatePipelineEndpointRequest":{
+      "type":"structure",
+      "required":[
+        "PipelineArn",
+        "VpcOptions"
+      ],
+      "members":{
+        "PipelineArn":{"shape":"PipelineArn"},
+        "VpcOptions":{"shape":"PipelineEndpointVpcOptions"}
+      }
+    },
+    "CreatePipelineEndpointResponse":{
+      "type":"structure",
+      "members":{
+        "PipelineArn":{"shape":"PipelineArn"},
+        "EndpointId":{"shape":"PipelineEndpointId"},
+        "Status":{"shape":"PipelineEndpointStatus"},
+        "VpcId":{"shape":"String"}
+      }
+    },
     "CreatePipelineRequest":{
       "type":"structure",
       "required":[
@@ -350,6 +511,21 @@
         "Pipeline":{"shape":"Pipeline"}
       }
     },
+    "DeletePipelineEndpointRequest":{
+      "type":"structure",
+      "required":["EndpointId"],
+      "members":{
+        "EndpointId":{
+          "shape":"PipelineEndpointId",
+          "location":"uri",
+          "locationName":"EndpointId"
+        }
+      }
+    },
+    "DeletePipelineEndpointResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "DeletePipelineRequest":{
       "type":"structure",
       "required":["PipelineName"],
@@ -362,6 +538,21 @@
       }
     },
     "DeletePipelineResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"PipelineArn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        }
+      }
+    },
+    "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{}
     },
@@ -435,6 +626,24 @@
         "Pipeline":{"shape":"Pipeline"}
       }
     },
+    "GetResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"PipelineArn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        }
+      }
+    },
+    "GetResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"PipelineArn"},
+        "Policy":{"shape":"ResourcePolicy"}
+      }
+    },
     "IngestEndpointUrlsList":{
       "type":"list",
       "member":{"shape":"String"}
@@ -471,6 +680,50 @@
       "type":"structure",
       "members":{
         "Blueprints":{"shape":"PipelineBlueprintsSummaryList"}
+      }
+    },
+    "ListPipelineEndpointConnectionsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPipelineEndpointConnectionsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "PipelineEndpointConnections":{"shape":"PipelineEndpointConnectionsSummaryList"}
+      }
+    },
+    "ListPipelineEndpointsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListPipelineEndpointsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "PipelineEndpoints":{"shape":"PipelineEndpointsSummaryList"}
       }
     },
     "ListPipelinesRequest":{
@@ -607,6 +860,62 @@
       "type":"list",
       "member":{"shape":"PipelineDestination"}
     },
+    "PipelineEndpoint":{
+      "type":"structure",
+      "members":{
+        "PipelineArn":{"shape":"PipelineArn"},
+        "EndpointId":{"shape":"PipelineEndpointId"},
+        "Status":{"shape":"PipelineEndpointStatus"},
+        "VpcId":{"shape":"String"},
+        "VpcOptions":{"shape":"PipelineEndpointVpcOptions"},
+        "IngestEndpointUrl":{"shape":"String"}
+      }
+    },
+    "PipelineEndpointConnection":{
+      "type":"structure",
+      "members":{
+        "PipelineArn":{"shape":"PipelineArn"},
+        "EndpointId":{"shape":"PipelineEndpointId"},
+        "Status":{"shape":"PipelineEndpointStatus"},
+        "VpcEndpointOwner":{"shape":"AwsAccountId"}
+      }
+    },
+    "PipelineEndpointConnectionsSummaryList":{
+      "type":"list",
+      "member":{"shape":"PipelineEndpointConnection"}
+    },
+    "PipelineEndpointId":{
+      "type":"string",
+      "max":512,
+      "min":3,
+      "pattern":"^[a-zA-Z0-9][a-zA-Z0-9-_]+$"
+    },
+    "PipelineEndpointIdsList":{
+      "type":"list",
+      "member":{"shape":"PipelineEndpointId"}
+    },
+    "PipelineEndpointStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "CREATE_FAILED",
+        "DELETING",
+        "REVOKING",
+        "REVOKED"
+      ]
+    },
+    "PipelineEndpointVpcOptions":{
+      "type":"structure",
+      "members":{
+        "SubnetIds":{"shape":"SubnetIds"},
+        "SecurityGroupIds":{"shape":"SecurityGroupIds"}
+      }
+    },
+    "PipelineEndpointsSummaryList":{
+      "type":"list",
+      "member":{"shape":"PipelineEndpoint"}
+    },
     "PipelineName":{
       "type":"string",
       "max":28,
@@ -663,6 +972,28 @@
       "type":"integer",
       "min":1
     },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Policy"
+      ],
+      "members":{
+        "ResourceArn":{
+          "shape":"PipelineArn",
+          "location":"uri",
+          "locationName":"ResourceArn"
+        },
+        "Policy":{"shape":"ResourcePolicy"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceArn":{"shape":"PipelineArn"},
+        "Policy":{"shape":"ResourcePolicy"}
+      }
+    },
     "ResourceAlreadyExistsException":{
       "type":"structure",
       "members":{},
@@ -674,6 +1005,28 @@
       "members":{},
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "ResourcePolicy":{
+      "type":"string",
+      "max":204800,
+      "min":2
+    },
+    "RevokePipelineEndpointConnectionsRequest":{
+      "type":"structure",
+      "required":[
+        "PipelineArn",
+        "EndpointIds"
+      ],
+      "members":{
+        "PipelineArn":{"shape":"PipelineArn"},
+        "EndpointIds":{"shape":"PipelineEndpointIdsList"}
+      }
+    },
+    "RevokePipelineEndpointConnectionsResponse":{
+      "type":"structure",
+      "members":{
+        "PipelineArn":{"shape":"PipelineArn"}
+      }
     },
     "SecurityGroupId":{
       "type":"string",
