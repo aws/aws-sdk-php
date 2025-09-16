@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.19 - 2025-09-16
 
 * `Aws\CloudWatchLogs` - Cloudwatch Logs added support for 2 new API parameters in metric and subscription filter APIs to filter log events based on system field values and emit system field values as dimensions and send them to customer destination as additional metadata.
 * `Aws\IVSRealTime` - IVS now offers customers the ability to control the positioning of participants in both grid and PiP layouts based on custom attribute values in participant tokens.
