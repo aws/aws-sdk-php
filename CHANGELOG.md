@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.20 - 2025-09-17
 
 * `Aws\NetworkFirewall` - Network Firewall now prevents TLS handshakes with the target server until after the Server Name Indication (SNI) has been seen and verified. The monitoring dashboard now provides deeper insights into PrivateLink endpoint candidates and offers filters based on IP addresses and protocol.
 * `Aws\PCS` - Add support for Amazon EC2 Capacity Blocks for ML
