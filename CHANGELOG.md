@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NetworkFirewall` - Network Firewall now prevents TLS handshakes with the target server until after the Server Name Indication (SNI) has been seen and verified. The monitoring dashboard now provides deeper insights into PrivateLink endpoint candidates and offers filters based on IP addresses and protocol.
+* `Aws\PCS` - Add support for Amazon EC2 Capacity Blocks for ML
+* `Aws\EC2` - Add mac-m4.metal and mac-m4pro.metal instance types.
+
 ## 3.356.19 - 2025-09-16
 
 * `Aws\CloudWatchLogs` - Cloudwatch Logs added support for 2 new API parameters in metric and subscription filter APIs to filter log events based on system field values and emit system field values as dimensions and send them to customer destination as additional metadata.
