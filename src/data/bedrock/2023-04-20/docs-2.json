@@ -546,6 +546,12 @@
         "UpdateAutomatedReasoningPolicyTestCaseResponse$policyArn": "<p>The Amazon Resource Name (ARN) of the policy that contains the updated test.</p>"
       }
     },
+    "AutomatedReasoningPolicyBuildDocumentBlob": {
+      "base": null,
+      "refs": {
+        "AutomatedReasoningPolicyBuildWorkflowDocument$document": "<p>The actual content of the source document that will be analyzed to extract policy rules and concepts.</p>"
+      }
+    },
     "AutomatedReasoningPolicyBuildDocumentContentType": {
       "base": null,
       "refs": {
@@ -637,12 +643,6 @@
       "base": "<p>Represents a source document used in the policy build workflow, containing the content and metadata needed for policy generation.</p>",
       "refs": {
         "AutomatedReasoningPolicyBuildWorkflowDocumentList$member": null
-      }
-    },
-    "AutomatedReasoningPolicyBuildWorkflowDocumentDocumentBlob": {
-      "base": null,
-      "refs": {
-        "AutomatedReasoningPolicyBuildWorkflowDocument$document": "<p>The actual content of the source document that will be analyzed to extract policy rules and concepts.</p>"
       }
     },
     "AutomatedReasoningPolicyBuildWorkflowDocumentList": {
@@ -3582,8 +3582,7 @@
         "GetModelCopyJobResponse$targetModelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key encrypting the copied model.</p>",
         "GetModelCustomizationJobResponse$outputModelKmsKeyArn": "<p>The custom model is encrypted at rest using this key.</p>",
         "GetModelImportJobResponse$importedModelKmsKeyArn": "<p>The imported model is encrypted at rest using this key.</p>",
-        "ModelCopyJobSummary$targetModelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the copied model.</p>",
-        "UpdateAutomatedReasoningPolicyTestCaseRequest$kmsKeyArn": "<p>The KMS key ARN for encrypting the test at rest. If not provided, the key will not be updated. Use <code>DISCARD</code> to remove the key.</p>"
+        "ModelCopyJobSummary$targetModelKmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the copied model.</p>"
       }
     },
     "KmsKeyId": {

@@ -14834,6 +14834,21 @@
         }
       }
     },
+    "CreationDateCondition":{
+      "type":"structure",
+      "members":{
+        "MaximumDaysSinceCreated":{
+          "shape":"MaximumDaysSinceCreatedValue",
+          "locationName":"maximumDaysSinceCreated"
+        }
+      }
+    },
+    "CreationDateConditionRequest":{
+      "type":"structure",
+      "members":{
+        "MaximumDaysSinceCreated":{"shape":"MaximumDaysSinceCreatedValue"}
+      }
+    },
     "CreditSpecification":{
       "type":"structure",
       "members":{
@@ -16682,6 +16697,21 @@
           "shape":"Boolean",
           "locationName":"dryRun"
         }
+      }
+    },
+    "DeprecationTimeCondition":{
+      "type":"structure",
+      "members":{
+        "MaximumDaysSinceDeprecated":{
+          "shape":"MaximumDaysSinceDeprecatedValue",
+          "locationName":"maximumDaysSinceDeprecated"
+        }
+      }
+    },
+    "DeprecationTimeConditionRequest":{
+      "type":"structure",
+      "members":{
+        "MaximumDaysSinceDeprecated":{"shape":"MaximumDaysSinceDeprecatedValue"}
       }
     },
     "DeprovisionByoipCidrRequest":{
@@ -28919,6 +28949,22 @@
         "ImageProviders":{
           "shape":"ImageProviderList",
           "locationName":"imageProviderSet"
+        },
+        "MarketplaceProductCodes":{
+          "shape":"MarketplaceProductCodeList",
+          "locationName":"marketplaceProductCodeSet"
+        },
+        "ImageNames":{
+          "shape":"ImageNameList",
+          "locationName":"imageNameSet"
+        },
+        "DeprecationTimeCondition":{
+          "shape":"DeprecationTimeCondition",
+          "locationName":"deprecationTimeCondition"
+        },
+        "CreationDateCondition":{
+          "shape":"CreationDateCondition",
+          "locationName":"creationDateCondition"
         }
       }
     },
@@ -28935,7 +28981,17 @@
         "ImageProviders":{
           "shape":"ImageProviderRequestList",
           "locationName":"ImageProvider"
-        }
+        },
+        "MarketplaceProductCodes":{
+          "shape":"MarketplaceProductCodeRequestList",
+          "locationName":"MarketplaceProductCode"
+        },
+        "ImageNames":{
+          "shape":"ImageNameRequestList",
+          "locationName":"ImageName"
+        },
+        "DeprecationTimeCondition":{"shape":"DeprecationTimeConditionRequest"},
+        "CreationDateCondition":{"shape":"CreationDateConditionRequest"}
       }
     },
     "ImageCriterionRequestList":{
@@ -29024,6 +29080,22 @@
           "shape":"Boolean",
           "locationName":"isPublic"
         }
+      }
+    },
+    "ImageName":{"type":"string"},
+    "ImageNameList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageName",
+        "locationName":"item"
+      }
+    },
+    "ImageNameRequest":{"type":"string"},
+    "ImageNameRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageNameRequest",
+        "locationName":"item"
       }
     },
     "ImageProvider":{"type":"string"},
@@ -36877,6 +36949,22 @@
         "capacity-block"
       ]
     },
+    "MarketplaceProductCode":{"type":"string"},
+    "MarketplaceProductCodeList":{
+      "type":"list",
+      "member":{
+        "shape":"MarketplaceProductCode",
+        "locationName":"item"
+      }
+    },
+    "MarketplaceProductCodeRequest":{"type":"string"},
+    "MarketplaceProductCodeRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"MarketplaceProductCodeRequest",
+        "locationName":"item"
+      }
+    },
     "MaxIpv4AddrPerInterface":{"type":"integer"},
     "MaxIpv6AddrPerInterface":{"type":"integer"},
     "MaxNetworkInterfaces":{"type":"integer"},
@@ -36887,6 +36975,16 @@
       "min":0
     },
     "MaximumBandwidthInMbps":{"type":"integer"},
+    "MaximumDaysSinceCreatedValue":{
+      "type":"integer",
+      "max":2147483647,
+      "min":0
+    },
+    "MaximumDaysSinceDeprecatedValue":{
+      "type":"integer",
+      "max":2147483647,
+      "min":0
+    },
     "MaximumEbsAttachments":{"type":"integer"},
     "MaximumEfaInterfaces":{"type":"integer"},
     "MaximumEnaQueueCount":{"type":"integer"},

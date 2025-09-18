@@ -425,6 +425,7 @@
         {"shape":"ValidationException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ThrottlingException"}
       ],
       "idempotent":true
@@ -2138,6 +2139,12 @@
       "min":1,
       "pattern":"arn:aws(-[^:]+)?:bedrock:[a-z0-9-]{1,20}:[0-9]{12}:automated-reasoning-policy/[a-z0-9]{12}(:([1-9][0-9]{0,11}))?"
     },
+    "AutomatedReasoningPolicyBuildDocumentBlob":{
+      "type":"blob",
+      "max":5000000,
+      "min":1,
+      "sensitive":true
+    },
     "AutomatedReasoningPolicyBuildDocumentContentType":{
       "type":"string",
       "enum":[
@@ -2253,16 +2260,11 @@
         "documentName"
       ],
       "members":{
-        "document":{"shape":"AutomatedReasoningPolicyBuildWorkflowDocumentDocumentBlob"},
+        "document":{"shape":"AutomatedReasoningPolicyBuildDocumentBlob"},
         "documentContentType":{"shape":"AutomatedReasoningPolicyBuildDocumentContentType"},
         "documentName":{"shape":"AutomatedReasoningPolicyBuildDocumentName"},
         "documentDescription":{"shape":"AutomatedReasoningPolicyBuildDocumentDescription"}
       }
-    },
-    "AutomatedReasoningPolicyBuildWorkflowDocumentDocumentBlob":{
-      "type":"blob",
-      "max":4500000,
-      "min":1
     },
     "AutomatedReasoningPolicyBuildWorkflowDocumentList":{
       "type":"list",
@@ -8780,7 +8782,6 @@
         "lastUpdatedAt":{"shape":"Timestamp"},
         "expectedAggregatedFindingsResult":{"shape":"AutomatedReasoningCheckResult"},
         "confidenceThreshold":{"shape":"AutomatedReasoningCheckTranslationConfidence"},
-        "kmsKeyArn":{"shape":"KmsKeyArn"},
         "clientRequestToken":{
           "shape":"IdempotencyToken",
           "idempotencyToken":true

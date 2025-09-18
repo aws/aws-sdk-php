@@ -186,6 +186,10 @@
         "BudgetPerformanceHistory$BillingViewArn": "<p>The Amazon Resource Name (ARN) that uniquely identifies a specific billing view. The ARN is used to specify which particular billing view you want to interact with or retrieve information from when making API calls related to Amazon Web Services Billing and Cost Management features. The BillingViewArn can be retrieved by calling the ListBillingViews API.</p>"
       }
     },
+    "BillingViewHealthStatusException": {
+      "base": "<p> The billing view status must be HEALTHY to perform this action. Try again when the status is HEALTHY. </p>",
+      "refs": {}
+    },
     "Budget": {
       "base": "<p>Represents the output of the <code>CreateBudget</code> operation. The content consists of the detailed metadata and data file information, and the current status of the <code>budget</code> object.</p> <p>This is the Amazon Resource Name (ARN) pattern for a budget: </p> <p> <code>arn:aws:budgets::AccountId:budget/budgetName</code> </p>",
       "refs": {
@@ -1051,6 +1055,7 @@
       "base": "<p>The error message the exception carries.</p>",
       "refs": {
         "AccessDeniedException$Message": null,
+        "BillingViewHealthStatusException$Message": null,
         "CreationLimitExceededException$Message": null,
         "DuplicateRecordException$Message": null,
         "ExpiredNextTokenException$Message": null,

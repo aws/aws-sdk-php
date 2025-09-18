@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Exception` - Loosens requirements for `$previous` `AwsException` parameter from `Exception` to `Throwable`.
+* `Aws\Bedrock` - Release includes an increase to the maximum policy build document size, an update to DeleteAutomatedReasoningPolicyBuildWorkflow to add ResourceInUseException, and corrections to UpdateAutomatedReasoningPolicyTestCaseRequest.
+* `Aws\ChimeSDKMessaging` - Amazon Chime SDK Messaging GetMessagingSessionEndpoint API now returns dual-stack WebSocket endpoints supporting IPv4/IPv6.
+* `Aws\EC2` - Allowed AMIs adds support for four new parameters - marketplaceProductCodes, deprecationTimeCondition, creationDateCondition and imageNames
+* `Aws\Budgets` - Added BillingViewHealthStatus Exception which is thrown when a Budget is created or updated with a Billing View that is not in the HEALTHY status
+
 ## 3.356.20 - 2025-09-17
 
 * `Aws\NetworkFirewall` - Network Firewall now prevents TLS handshakes with the target server until after the Server Name Indication (SNI) has been seen and verified. The monitoring dashboard now provides deeper insights into PrivateLink endpoint candidates and offers filters based on IP addresses and protocol.

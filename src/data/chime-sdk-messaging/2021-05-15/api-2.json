@@ -2124,7 +2124,13 @@
     },
     "GetMessagingSessionEndpointRequest":{
       "type":"structure",
-      "members":{}
+      "members":{
+        "NetworkType":{
+          "shape":"NetworkType",
+          "location":"querystring",
+          "locationName":"network-type"
+        }
+      }
     },
     "GetMessagingSessionEndpointResponse":{
       "type":"structure",
@@ -2652,6 +2658,13 @@
       "type":"integer",
       "max":40,
       "min":1
+    },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4_ONLY",
+        "DUAL_STACK"
+      ]
     },
     "NextToken":{
       "type":"string",
