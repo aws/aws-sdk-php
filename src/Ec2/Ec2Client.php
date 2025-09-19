@@ -8,7 +8,7 @@ use Aws\Api\ApiProvider;
 use Aws\PresignUrlMiddleware;
 
 /**
- * Client used to interact with Amazon EC2.
+ * Client used to interact with **Amazon EC2**.
  *
  * @method \Aws\Result acceptVpcPeeringConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptVpcPeeringConnectionAsync(array $args = [])
