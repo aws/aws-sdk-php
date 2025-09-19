@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.22 - 2025-09-19
 
 * `Aws\MediaLive` - Add MinBitrate for QVBR mode under H264/H265/AV1 output codec. Add GopBReference, GopNumBFrames, SubGopLength fields under H265 output codec.
 * `Aws\KendraRanking` - Model whitespace change - no client difference
