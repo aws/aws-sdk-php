@@ -415,6 +415,19 @@ EOT;
                 $latest = '';
             }
             $html .= '</ul></article>';
+
+            // Add Examples (from the developer guide) section, where applicable
+            $serviceExamples = require __DIR__ . '/../config/dev-guide-service-examples.php';
+            if (isset($serviceExamples[$service->name])) {
+                $html .= '<h2>Examples</h2>';
+                $html .= '<p>The following examples demonstrate how to use this service with the AWS SDK for PHP. These code examples are available in the <a href="' . $serviceExamples[$service->name]['landing_page'] . '">AWS SDK for PHP Developer Guide</a>.</p>';
+                $html .= '<ul>';
+                foreach ($serviceExamples[$service->name]['scenarios'] as $title => $link) {
+                    $html .= sprintf('<li><a href="%s">%s</a></li>', $link, $title);
+                }
+                $html .= '</ul>';
+            }
+
             $this->replaceInner($service->clientLink, $html, '<!-- api -->');
         }
     }
