@@ -9228,6 +9228,10 @@
         "MinQp": {
           "shape": "__integerMin1Max51",
           "locationName": "minQp"
+        },
+        "MinBitrate": {
+          "shape": "__integerMin0",
+          "locationName": "minBitrate"
         }
       }
     },
@@ -9554,6 +9558,22 @@
         "Deblocking": {
           "shape": "H265Deblocking",
           "locationName": "deblocking"
+        },
+        "GopBReference": {
+          "shape": "H265GopBReference",
+          "locationName": "gopBReference"
+        },
+        "GopNumBFrames": {
+          "shape": "__integerMin0Max3",
+          "locationName": "gopNumBFrames"
+        },
+        "MinBitrate": {
+          "shape": "__integerMin0Max40000000",
+          "locationName": "minBitrate"
+        },
+        "SubgopLength": {
+          "shape": "H265SubGopLength",
+          "locationName": "subgopLength"
         }
       },
       "required": [
@@ -21756,6 +21776,10 @@
         "RateControlMode": {
           "shape": "Av1RateControlMode",
           "locationName": "rateControlMode"
+        },
+        "MinBitrate": {
+          "shape": "__integerMin0Max8000000",
+          "locationName": "minBitrate"
         }
       },
       "required": [
@@ -24690,6 +24714,35 @@
           "locationName": "captionLanguageMappings"
         }
       }
+    },
+    "H265GopBReference": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "H265SubGopLength": {
+      "type": "string",
+      "enum": [
+        "DYNAMIC",
+        "FIXED"
+      ]
+    },
+    "__integerMin0Max3": {
+      "type": "integer",
+      "min": 0,
+      "max": 3
+    },
+    "__integerMin0Max40000000": {
+      "type": "integer",
+      "min": 0,
+      "max": 40000000
+    },
+    "__integerMin0Max8000000": {
+      "type": "integer",
+      "min": 0,
+      "max": 8000000
     }
   }
 }

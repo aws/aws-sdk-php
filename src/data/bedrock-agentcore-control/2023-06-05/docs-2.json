@@ -1,35 +1,35 @@
 {
   "version": "2.0",
-  "service": "<p><note> <p>Amazon Bedrock AgentCore is in preview release and is subject to change.</p> </note> <p>Amazon Bedrock Agent Core Control is a service that enables you to manage memory resources for your Amazon Bedrock agents.</p> <p>Use this API to create, retrieve, update, and delete memory resources and their associated memory strategies. Memory resources enable your agents to store and retrieve information from conversations and interactions.</p></p>",
+  "service": "<p><note> <p> is in preview release and is subject to change.</p> </note> <p>Welcome to the Amazon Bedrock AgentCore Control plane API reference. Control plane actions configure, create, modify, and monitor Amazon Web Services resources.</p></p>",
   "operations": {
-    "CreateAgentRuntime": "<p>Creates an Amazon Secure Agent.</p>",
-    "CreateAgentRuntimeEndpoint": "<p>Creates an Amazon Secure AgentEndpoint.</p>",
+    "CreateAgentRuntime": "<p>Creates an Amazon Bedrock AgentCore Runtime.</p>",
+    "CreateAgentRuntimeEndpoint": "<p>Creates an AgentCore Runtime endpoint.</p>",
     "CreateApiKeyCredentialProvider": "<p>Creates a new API key credential provider.</p>",
     "CreateBrowser": "<p>Creates a custom browser.</p>",
     "CreateCodeInterpreter": "<p>Creates a custom code interpreter.</p>",
     "CreateGateway": "<p>Creates a gateway for Amazon Bedrock Agent. A gateway serves as an integration point between your agent and external services.</p> <p>To create a gateway, you must specify a name, protocol type, and IAM role. The role grants the gateway permission to access Amazon Web Services services and resources.</p>",
-    "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p> <p>To create a target, you must specify the gateway identifier and target configuration.</p>",
-    "CreateMemory": "<p>Creates a new memory.</p>",
+    "CreateGatewayTarget": "<p>Creates a target for a gateway. A target defines an endpoint that the gateway can connect to.</p>",
+    "CreateMemory": "<p>Creates a new Amazon Bedrock AgentCore Memory resource.</p>",
     "CreateOauth2CredentialProvider": "<p>Creates a new OAuth2 credential provider.</p>",
     "CreateWorkloadIdentity": "<p>Creates a new workload identity.</p>",
-    "DeleteAgentRuntime": "<p>Deletes an Amazon Secure Agent.</p>",
-    "DeleteAgentRuntimeEndpoint": "<p>Deletes an Amazon Secure AgentEndpoint.</p>",
+    "DeleteAgentRuntime": "<p>Deletes an Amazon Bedrock AgentCore Runtime.</p>",
+    "DeleteAgentRuntimeEndpoint": "<p>Deletes an AAgentCore Runtime endpoint.</p>",
     "DeleteApiKeyCredentialProvider": "<p>Deletes an API key credential provider.</p>",
     "DeleteBrowser": "<p>Deletes a custom browser.</p>",
     "DeleteCodeInterpreter": "<p>Deletes a custom code interpreter.</p>",
-    "DeleteGateway": "<p>Deletes a Gateway.</p>",
-    "DeleteGatewayTarget": "<p>Deletes a Gateway Target.</p>",
-    "DeleteMemory": "<p>Deletes a memory.</p>",
+    "DeleteGateway": "<p>Deletes a gateway.</p>",
+    "DeleteGatewayTarget": "<p>Deletes a gateway target.</p>",
+    "DeleteMemory": "<p>Deletes an Amazon Bedrock AgentCore Memory resource.</p>",
     "DeleteOauth2CredentialProvider": "<p>Deletes an OAuth2 credential provider.</p>",
     "DeleteWorkloadIdentity": "<p>Deletes a workload identity.</p>",
-    "GetAgentRuntime": "<p>Gets an Amazon Secure Agent.</p>",
+    "GetAgentRuntime": "<p>Gets an Amazon Bedrock AgentCore Runtime.</p>",
     "GetAgentRuntimeEndpoint": "<p>Gets information about an Amazon Secure AgentEndpoint.</p>",
     "GetApiKeyCredentialProvider": "<p>Retrieves information about an API key credential provider.</p>",
     "GetBrowser": "<p>Gets information about a custom browser.</p>",
     "GetCodeInterpreter": "<p>Gets information about a custom code interpreter.</p>",
     "GetGateway": "<p>Retrieves information about a specific Gateway.</p>",
-    "GetGatewayTarget": "<p>Retrieves information about a specific Gateway Target.</p>",
-    "GetMemory": "<p>Retrieve an existing memory.</p>",
+    "GetGatewayTarget": "<p>Retrieves information about a specific gateway target.</p>",
+    "GetMemory": "<p>Retrieve an existing Amazon Bedrock AgentCore Memory resource.</p>",
     "GetOauth2CredentialProvider": "<p>Retrieves information about an OAuth2 credential provider.</p>",
     "GetTokenVault": "<p>Retrieves information about a token vault.</p>",
     "GetWorkloadIdentity": "<p>Retrieves information about a workload identity.</p>",
@@ -39,18 +39,21 @@
     "ListApiKeyCredentialProviders": "<p>Lists all API key credential providers in your account.</p>",
     "ListBrowsers": "<p>Lists all custom browsers in your account.</p>",
     "ListCodeInterpreters": "<p>Lists all custom code interpreters in your account.</p>",
-    "ListGatewayTargets": "<p>Lists all targets for a specific Gateway.</p>",
-    "ListGateways": "<p>Lists all Gateways in the account.</p>",
-    "ListMemories": "<p>Lists the memory present.</p>",
+    "ListGatewayTargets": "<p>Lists all targets for a specific gateway.</p>",
+    "ListGateways": "<p>Lists all gateways in the account.</p>",
+    "ListMemories": "<p>Lists the available Amazon Bedrock AgentCore Memory resources in the current Amazon Web Services Region.</p>",
     "ListOauth2CredentialProviders": "<p>Lists all OAuth2 credential providers in your account.</p>",
+    "ListTagsForResource": "<p>Lists the tags associated with the specified resource.</p>",
     "ListWorkloadIdentities": "<p>Lists all workload identities in your account.</p>",
     "SetTokenVaultCMK": "<p>Sets the customer master key (CMK) for a token vault.</p>",
+    "TagResource": "<p>Associates the specified tags to a resource with the specified resourceArn. If existing tags on a resource are not specified in the request parameters, they are not changed. When a resource is deleted, the tags associated with that resource are also deleted.</p>",
+    "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateAgentRuntime": "<p>Updates an existing Amazon Secure Agent.</p>",
-    "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Secure AgentEndpoint.</p>",
+    "UpdateAgentRuntimeEndpoint": "<p>Updates an existing Amazon Bedrock AgentCore Runtime endpoint.</p>",
     "UpdateApiKeyCredentialProvider": "<p>Updates an existing API key credential provider.</p>",
-    "UpdateGateway": "<p>Updates an existing Gateway.</p>",
-    "UpdateGatewayTarget": "<p>Updates an existing Gateway Target.</p>",
-    "UpdateMemory": "<p>Update memory.</p>",
+    "UpdateGateway": "<p>Updates an existing gateway.</p>",
+    "UpdateGatewayTarget": "<p>Updates an existing gateway target.</p>",
+    "UpdateMemory": "<p>Update an Amazon Bedrock AgentCore Memory resource memory.</p>",
     "UpdateOauth2CredentialProvider": "<p>Updates an existing OAuth2 credential provider.</p>",
     "UpdateWorkloadIdentity": "<p>Updates an existing workload identity.</p>"
   },
@@ -59,140 +62,140 @@
       "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
       "refs": {}
     },
-    "Agent": {
-      "base": "<p>Contains information about an agent runtime. An agent runtime is the execution environment for a Amazon Bedrock Agent.</p>",
-      "refs": {
-        "Agents$member": null
-      }
-    },
-    "AgentArtifact": {
-      "base": "<p>The artifact of the agent.</p>",
-      "refs": {
-        "CreateAgentRuntimeRequest$agentRuntimeArtifact": "<p>The artifact of the agent.</p>",
-        "GetAgentRuntimeResponse$agentRuntimeArtifact": "<p>The artifact of the agent runtime.</p>",
-        "UpdateAgentRuntimeRequest$agentRuntimeArtifact": "<p>The updated artifact of the agent runtime.</p>"
-      }
-    },
-    "AgentEndpoint": {
-      "base": "<p>Contains information about an agent runtime endpoint. An endpoint provides a way to connect to and interact with an agent runtime.</p>",
-      "refs": {
-        "AgentEndpoints$member": null
-      }
-    },
     "AgentEndpointDescription": {
       "base": null,
       "refs": {
-        "AgentEndpoint$description": "<p>The description of the agent runtime endpoint.</p>",
-        "CreateAgentRuntimeEndpointRequest$description": "<p>The description of the agent runtime endpoint.</p>",
-        "GetAgentRuntimeEndpointResponse$description": "<p>The description of the agent runtime endpoint.</p>",
-        "UpdateAgentRuntimeEndpointRequest$description": "<p>The updated description of the agent runtime endpoint.</p>"
+        "AgentRuntimeEndpoint$description": "<p>The description of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointRequest$description": "<p>The description of the AgentCore Runtime endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$description": "<p>The description of the AgentCore Runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointRequest$description": "<p>The updated description of the AgentCore Runtime endpoint.</p>"
       }
     },
-    "AgentEndpointStatus": {
-      "base": null,
+    "AgentRuntime": {
+      "base": "<p>Contains information about an agent runtime. An agent runtime is the execution environment for a Amazon Bedrock Agent.</p>",
       "refs": {
-        "AgentEndpoint$status": "<p>The current status of the agent runtime endpoint.</p>",
-        "CreateAgentRuntimeEndpointResponse$status": "<p>The current status of the agent runtime endpoint.</p>",
-        "DeleteAgentRuntimeEndpointResponse$status": "<p>The current status of the agent runtime endpoint deletion.</p>",
-        "GetAgentRuntimeEndpointResponse$status": "<p>The current status of the agent runtime endpoint.</p>",
-        "UpdateAgentRuntimeEndpointResponse$status": "<p>The current status of the updated agent runtime endpoint.</p>"
-      }
-    },
-    "AgentEndpoints": {
-      "base": null,
-      "refs": {
-        "ListAgentRuntimeEndpointsResponse$runtimeEndpoints": "<p>The list of agent runtime endpoints.</p>"
+        "AgentRuntimes$member": null
       }
     },
     "AgentRuntimeArn": {
       "base": null,
       "refs": {
-        "Agent$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
-        "AgentEndpoint$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime associated with the endpoint.</p>",
-        "CreateAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
-        "CreateAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
-        "GetAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
-        "GetAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
-        "UpdateAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
-        "UpdateAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the updated agent runtime.</p>"
+        "AgentRuntime$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime.</p>",
+        "AgentRuntimeEndpoint$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the agent runtime associated with the endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
+        "CreateAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
+        "GetAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeEndpointResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeResponse$agentRuntimeArn": "<p>The Amazon Resource Name (ARN) of the updated AgentCore Runtime.</p>"
+      }
+    },
+    "AgentRuntimeArtifact": {
+      "base": "<p>The artifact of the agent.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$agentRuntimeArtifact": "<p>The artifact of the AgentCore Runtime.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeArtifact": "<p>The artifact of the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$agentRuntimeArtifact": "<p>The updated artifact of the AgentCore Runtime.</p>"
+      }
+    },
+    "AgentRuntimeEndpoint": {
+      "base": "<p>Contains information about an agent runtime endpoint. An endpoint provides a way to connect to and interact with an agent runtime.</p>",
+      "refs": {
+        "AgentRuntimeEndpoints$member": null
       }
     },
     "AgentRuntimeEndpointArn": {
       "base": null,
       "refs": {
-        "AgentEndpoint$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>",
-        "CreateAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>",
-        "GetAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>",
-        "UpdateAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>"
+        "AgentRuntimeEndpoint$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$agentRuntimeEndpointArn": "<p>The Amazon Resource Name (ARN) of the AgentCore Runtime endpoint.</p>"
       }
     },
     "AgentRuntimeEndpointId": {
       "base": null,
       "refs": {
-        "AgentEndpoint$id": "<p>The unique identifier of the agent runtime endpoint.</p>",
-        "GetAgentRuntimeEndpointResponse$id": "<p>The unique identifier of the agent runtime endpoint.</p>"
+        "AgentRuntimeEndpoint$id": "<p>The unique identifier of the agent runtime endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$id": "<p>The unique identifier of the AgentCore Runtime endpoint.</p>"
+      }
+    },
+    "AgentRuntimeEndpointStatus": {
+      "base": null,
+      "refs": {
+        "AgentRuntimeEndpoint$status": "<p>The current status of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$status": "<p>The current status of the AgentCore Runtime endpoint.</p>",
+        "DeleteAgentRuntimeEndpointResponse$status": "<p>The current status of the AgentCore Runtime endpoint deletion.</p>",
+        "GetAgentRuntimeEndpointResponse$status": "<p>The current status of the AgentCore Runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$status": "<p>The current status of the updated AgentCore Runtime endpoint.</p>"
+      }
+    },
+    "AgentRuntimeEndpoints": {
+      "base": null,
+      "refs": {
+        "ListAgentRuntimeEndpointsResponse$runtimeEndpoints": "<p>The list of AgentCore Runtime endpoints.</p>"
       }
     },
     "AgentRuntimeId": {
       "base": null,
       "refs": {
-        "Agent$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
-        "CreateAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to create an endpoint for.</p>",
-        "CreateAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
-        "DeleteAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime associated with the endpoint.</p>",
-        "DeleteAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to delete.</p>",
-        "GetAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime associated with the endpoint.</p>",
-        "GetAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to retrieve.</p>",
-        "GetAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
-        "ListAgentRuntimeEndpointsRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to list endpoints for.</p>",
-        "ListAgentRuntimeVersionsRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to list versions for.</p>",
-        "UpdateAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime associated with the endpoint.</p>",
-        "UpdateAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the agent runtime to update.</p>",
-        "UpdateAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the updated agent runtime.</p>"
+        "AgentRuntime$agentRuntimeId": "<p>The unique identifier of the agent runtime.</p>",
+        "CreateAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to create an endpoint for.</p>",
+        "CreateAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime.</p>",
+        "DeleteAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime associated with the endpoint.</p>",
+        "DeleteAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to delete.</p>",
+        "GetAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime associated with the endpoint.</p>",
+        "GetAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to retrieve.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime.</p>",
+        "ListAgentRuntimeEndpointsRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to list endpoints for.</p>",
+        "ListAgentRuntimeVersionsRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to list versions for.</p>",
+        "UpdateAgentRuntimeEndpointRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime associated with the endpoint.</p>",
+        "UpdateAgentRuntimeRequest$agentRuntimeId": "<p>The unique identifier of the AgentCore Runtime to update.</p>",
+        "UpdateAgentRuntimeResponse$agentRuntimeId": "<p>The unique identifier of the updated AgentCore Runtime.</p>"
       }
     },
     "AgentRuntimeName": {
       "base": null,
       "refs": {
-        "Agent$agentRuntimeName": "<p>The name of the agent runtime.</p>",
-        "CreateAgentRuntimeRequest$agentRuntimeName": "<p>The name of the secure agent.</p>",
-        "GetAgentRuntimeResponse$agentRuntimeName": "<p>The name of the agent runtime.</p>"
+        "AgentRuntime$agentRuntimeName": "<p>The name of the agent runtime.</p>",
+        "CreateAgentRuntimeRequest$agentRuntimeName": "<p>The name of the AgentCore Runtime.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeName": "<p>The name of the AgentCore Runtime.</p>"
+      }
+    },
+    "AgentRuntimeStatus": {
+      "base": null,
+      "refs": {
+        "AgentRuntime$status": "<p>The current status of the agent runtime.</p>",
+        "CreateAgentRuntimeResponse$status": "<p>The current status of the AgentCore Runtime.</p>",
+        "DeleteAgentRuntimeResponse$status": "<p>The current status of the AgentCore Runtime deletion.</p>",
+        "GetAgentRuntimeResponse$status": "<p>The current status of the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeResponse$status": "<p>The current status of the updated AgentCore Runtime.</p>"
       }
     },
     "AgentRuntimeVersion": {
       "base": null,
       "refs": {
-        "Agent$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
-        "AgentEndpoint$liveVersion": "<p>The live version of the agent runtime endpoint. This is the version that is currently serving requests.</p>",
-        "AgentEndpoint$targetVersion": "<p>The target version of the agent runtime endpoint. This is the version that the endpoint is being updated to.</p>",
-        "CreateAgentRuntimeEndpointRequest$agentRuntimeVersion": "<p>The version of the agent runtime to use for the endpoint.</p>",
-        "CreateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the agent runtime for the endpoint.</p>",
-        "CreateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
-        "GetAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the agent runtime on the endpoint.</p>",
-        "GetAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the agent runtime for the endpoint.</p>",
-        "GetAgentRuntimeRequest$agentRuntimeVersion": "<p>The version of the agent runtime to retrieve.</p>",
-        "GetAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
-        "UpdateAgentRuntimeEndpointRequest$agentRuntimeVersion": "<p>The updated version of the agent runtime for the endpoint.</p>",
-        "UpdateAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the agent runtime on the endpoint.</p>",
-        "UpdateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the agent runtime for the endpoint.</p>",
-        "UpdateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the updated agent runtime.</p>"
+        "AgentRuntime$agentRuntimeVersion": "<p>The version of the agent runtime.</p>",
+        "AgentRuntimeEndpoint$liveVersion": "<p>The live version of the agent runtime endpoint. This is the version that is currently serving requests.</p>",
+        "AgentRuntimeEndpoint$targetVersion": "<p>The target version of the agent runtime endpoint. This is the version that the endpoint is being updated to.</p>",
+        "CreateAgentRuntimeEndpointRequest$agentRuntimeVersion": "<p>The version of the AgentCore Runtime to use for the endpoint.</p>",
+        "CreateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the AgentCore Runtime for the endpoint.</p>",
+        "CreateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the AgentCore Runtime.</p>",
+        "GetAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the AgentCore Runtime on the endpoint.</p>",
+        "GetAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the AgentCore Runtime for the endpoint.</p>",
+        "GetAgentRuntimeRequest$agentRuntimeVersion": "<p>The version of the AgentCore Runtime to retrieve.</p>",
+        "GetAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeEndpointRequest$agentRuntimeVersion": "<p>The updated version of the AgentCore Runtime for the endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$liveVersion": "<p>The currently deployed version of the AgentCore Runtime on the endpoint.</p>",
+        "UpdateAgentRuntimeEndpointResponse$targetVersion": "<p>The target version of the AgentCore Runtime for the endpoint.</p>",
+        "UpdateAgentRuntimeResponse$agentRuntimeVersion": "<p>The version of the updated AgentCore Runtime.</p>"
       }
     },
-    "AgentStatus": {
+    "AgentRuntimes": {
       "base": null,
       "refs": {
-        "Agent$status": "<p>The current status of the agent runtime.</p>",
-        "CreateAgentRuntimeResponse$status": "<p>The current status of the agent runtime.</p>",
-        "DeleteAgentRuntimeResponse$status": "<p>The current status of the agent runtime deletion.</p>",
-        "GetAgentRuntimeResponse$status": "<p>The current status of the agent runtime.</p>",
-        "UpdateAgentRuntimeResponse$status": "<p>The current status of the updated agent runtime.</p>"
-      }
-    },
-    "Agents": {
-      "base": null,
-      "refs": {
-        "ListAgentRuntimeVersionsResponse$agentRuntimes": "<p>The list of agent runtime versions.</p>",
-        "ListAgentRuntimesResponse$agentRuntimes": "<p>The list of agent runtimes.</p>"
+        "ListAgentRuntimeVersionsResponse$agentRuntimes": "<p>The list of AgentCore Runtime versions.</p>",
+        "ListAgentRuntimesResponse$agentRuntimes": "<p>The list of AgentCore Runtime resources.</p>"
       }
     },
     "AllowedAudience": {
@@ -291,7 +294,7 @@
         "CreateMemoryInput$memoryExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the memory to access Amazon Web Services services.</p>",
         "Memory$encryptionKeyArn": "<p>The ARN of the KMS key used to encrypt the memory.</p>",
         "Memory$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the memory.</p>",
-        "UpdateMemoryInput$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the memory.</p>"
+        "UpdateMemoryInput$memoryExecutionRoleArn": "<p>The ARN of the IAM role that provides permissions for the AgentCore Memory resource.</p>"
       }
     },
     "AuthorizationEndpointType": {
@@ -303,14 +306,14 @@
     "AuthorizerConfiguration": {
       "base": "<p>Represents inbound authorization configuration options used to authenticate incoming requests. </p>",
       "refs": {
-        "CreateAgentRuntimeRequest$authorizerConfiguration": "<p>The authorizer configuration for the agent runtime.</p>",
-        "CreateGatewayRequest$authorizerConfiguration": "<p>The authorizer configuration for the Gateway.</p>",
-        "CreateGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the created Gateway.</p>",
-        "GetAgentRuntimeResponse$authorizerConfiguration": "<p>The authorizer configuration for the agent runtime.</p>",
-        "GetGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the Gateway.</p>",
-        "UpdateAgentRuntimeRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the agent runtime.</p>",
-        "UpdateGatewayRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the Gateway.</p>",
-        "UpdateGatewayResponse$authorizerConfiguration": "<p>The updated authorizer configuration for the Gateway.</p>"
+        "CreateAgentRuntimeRequest$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
+        "CreateGatewayRequest$authorizerConfiguration": "<p>The authorizer configuration for the gateway.</p>",
+        "CreateGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the created gateway.</p>",
+        "GetAgentRuntimeResponse$authorizerConfiguration": "<p>The authorizer configuration for the AgentCore Runtime.</p>",
+        "GetGatewayResponse$authorizerConfiguration": "<p>The authorizer configuration for the gateway.</p>",
+        "UpdateAgentRuntimeRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the AgentCore Runtime.</p>",
+        "UpdateGatewayRequest$authorizerConfiguration": "<p>The updated authorizer configuration for the gateway.</p>",
+        "UpdateGatewayResponse$authorizerConfiguration": "<p>The updated authorizer configuration for the gateway.</p>"
       }
     },
     "AuthorizerType": {
@@ -320,8 +323,8 @@
         "CreateGatewayResponse$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
         "GatewaySummary$authorizerType": "<p>The type of authorizer used by the gateway.</p>",
         "GetGatewayResponse$authorizerType": "<p>Authorizer type for the gateway.</p>",
-        "UpdateGatewayRequest$authorizerType": "<p>The updated authorizer type for the Gateway.</p>",
-        "UpdateGatewayResponse$authorizerType": "<p>The updated authorizer type for the Gateway.</p>"
+        "UpdateGatewayRequest$authorizerType": "<p>The updated authorizer type for the gateway.</p>",
+        "UpdateGatewayResponse$authorizerType": "<p>The updated authorizer type for the gateway.</p>"
       }
     },
     "AwsAccountId": {
@@ -418,8 +421,8 @@
         "CreateAgentRuntimeRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "CreateBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
         "CreateCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
-        "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
-        "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the operation completes no more than one time. If this token matches a previous request, Amazon Bedrock ignores the request but does not return an error.</p>",
+        "CreateGatewayRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
+        "CreateGatewayTargetRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure that the API request completes no more than one time. If this token matches a previous request, the service ignores the request, but does not return an error. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring idempotency</a>.</p>",
         "DeleteAgentRuntimeEndpointRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteBrowserRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
         "DeleteCodeInterpreterRequest$clientToken": "<p>A unique, case-sensitive identifier to ensure idempotency of the request.</p>",
@@ -497,7 +500,7 @@
     "ContainerConfiguration": {
       "base": "<p>Representation of a container configuration.</p>",
       "refs": {
-        "AgentArtifact$containerConfiguration": "<p>The container configuration for the agent artifact.</p>"
+        "AgentRuntimeArtifact$containerConfiguration": "<p>The container configuration for the agent artifact.</p>"
       }
     },
     "CreateAgentRuntimeEndpointRequest": {
@@ -618,9 +621,9 @@
       "refs": {
         "CreateGatewayTargetRequest$credentialProviderConfigurations": "<p>The credential provider configurations for the target. These configurations specify how the gateway authenticates with the target endpoint.</p>",
         "CreateGatewayTargetResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the target.</p>",
-        "GetGatewayTargetResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the Gateway Target.</p>",
-        "UpdateGatewayTargetRequest$credentialProviderConfigurations": "<p>The updated credential provider configurations for the Gateway Target.</p>",
-        "UpdateGatewayTargetResponse$credentialProviderConfigurations": "<p>The updated credential provider configurations for the Gateway Target.</p>"
+        "GetGatewayTargetResponse$credentialProviderConfigurations": "<p>The credential provider configurations for the gateway target.</p>",
+        "UpdateGatewayTargetRequest$credentialProviderConfigurations": "<p>The updated credential provider configurations for the gateway target.</p>",
+        "UpdateGatewayTargetResponse$credentialProviderConfigurations": "<p>The updated credential provider configurations for the gateway target.</p>"
       }
     },
     "CredentialProviderName": {
@@ -717,15 +720,15 @@
     "DateTimestamp": {
       "base": null,
       "refs": {
-        "Agent$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
-        "AgentEndpoint$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
-        "AgentEndpoint$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
+        "AgentRuntime$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
+        "AgentRuntimeEndpoint$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
+        "AgentRuntimeEndpoint$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
         "BrowserSummary$createdAt": "<p>The timestamp when the browser was created.</p>",
         "BrowserSummary$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
         "CodeInterpreterSummary$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
         "CodeInterpreterSummary$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
-        "CreateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
-        "CreateAgentRuntimeResponse$createdAt": "<p>The timestamp when the agent runtime was created.</p>",
+        "CreateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
+        "CreateAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
         "CreateBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
         "CreateCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
         "CreateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
@@ -736,28 +739,28 @@
         "DeleteCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
         "GatewaySummary$createdAt": "<p>The timestamp when the gateway was created.</p>",
         "GatewaySummary$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
-        "GetAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
-        "GetAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
-        "GetAgentRuntimeResponse$createdAt": "<p>The timestamp when the agent runtime was created.</p>",
-        "GetAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
+        "GetAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
+        "GetAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime endpoint was last updated.</p>",
+        "GetAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
+        "GetAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime was last updated.</p>",
         "GetBrowserResponse$createdAt": "<p>The timestamp when the browser was created.</p>",
         "GetBrowserResponse$lastUpdatedAt": "<p>The timestamp when the browser was last updated.</p>",
         "GetCodeInterpreterResponse$createdAt": "<p>The timestamp when the code interpreter was created.</p>",
         "GetCodeInterpreterResponse$lastUpdatedAt": "<p>The timestamp when the code interpreter was last updated.</p>",
-        "GetGatewayResponse$createdAt": "<p>The timestamp when the Gateway was created.</p>",
-        "GetGatewayResponse$updatedAt": "<p>The timestamp when the Gateway was last updated.</p>",
-        "GetGatewayTargetResponse$createdAt": "<p>The timestamp when the Gateway Target was created.</p>",
-        "GetGatewayTargetResponse$updatedAt": "<p>The timestamp when the Gateway Target was last updated.</p>",
+        "GetGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
+        "GetGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "GetGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
+        "GetGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>",
         "TargetSummary$createdAt": "<p>The timestamp when the target was created.</p>",
         "TargetSummary$updatedAt": "<p>The timestamp when the target was last updated.</p>",
-        "UpdateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the agent runtime endpoint was created.</p>",
-        "UpdateAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime endpoint was last updated.</p>",
-        "UpdateAgentRuntimeResponse$createdAt": "<p>The timestamp when the agent runtime was created.</p>",
-        "UpdateAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the agent runtime was last updated.</p>",
-        "UpdateGatewayResponse$createdAt": "<p>The timestamp when the Gateway was created.</p>",
-        "UpdateGatewayResponse$updatedAt": "<p>The timestamp when the Gateway was last updated.</p>",
-        "UpdateGatewayTargetResponse$createdAt": "<p>The timestamp when the Gateway Target was created.</p>",
-        "UpdateGatewayTargetResponse$updatedAt": "<p>The timestamp when the Gateway Target was last updated.</p>"
+        "UpdateAgentRuntimeEndpointResponse$createdAt": "<p>The timestamp when the AgentCore Runtime endpoint was created.</p>",
+        "UpdateAgentRuntimeEndpointResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime endpoint was last updated.</p>",
+        "UpdateAgentRuntimeResponse$createdAt": "<p>The timestamp when the AgentCore Runtime was created.</p>",
+        "UpdateAgentRuntimeResponse$lastUpdatedAt": "<p>The timestamp when the AgentCore Runtime was last updated.</p>",
+        "UpdateGatewayResponse$createdAt": "<p>The timestamp when the gateway was created.</p>",
+        "UpdateGatewayResponse$updatedAt": "<p>The timestamp when the gateway was last updated.</p>",
+        "UpdateGatewayTargetResponse$createdAt": "<p>The timestamp when the gateway target was created.</p>",
+        "UpdateGatewayTargetResponse$updatedAt": "<p>The timestamp when the gateway target was last updated.</p>"
       }
     },
     "DecryptionFailure": {
@@ -865,15 +868,15 @@
     "Description": {
       "base": null,
       "refs": {
-        "Agent$description": "<p>The description of the agent runtime.</p>",
+        "AgentRuntime$description": "<p>The description of the agent runtime.</p>",
         "BrowserSummary$description": "<p>The description of the browser.</p>",
         "CodeInterpreterSummary$description": "<p>The description of the code interpreter.</p>",
-        "CreateAgentRuntimeRequest$description": "<p>The description of the agent runtime.</p>",
+        "CreateAgentRuntimeRequest$description": "<p>The description of the AgentCore Runtime.</p>",
         "CreateBrowserRequest$description": "<p>The description of the browser.</p>",
         "CreateCodeInterpreterRequest$description": "<p>The description of the code interpreter.</p>",
         "CreateMemoryInput$description": "<p>The description of the memory.</p>",
         "CustomMemoryStrategyInput$description": "<p>The description of the custom memory strategy.</p>",
-        "GetAgentRuntimeResponse$description": "<p>The description of the agent runtime.</p>",
+        "GetAgentRuntimeResponse$description": "<p>The description of the AgentCore Runtime.</p>",
         "GetBrowserResponse$description": "<p>The description of the browser.</p>",
         "GetCodeInterpreterResponse$description": "<p>The description of the code interpreter.</p>",
         "Memory$description": "<p>The description of the memory.</p>",
@@ -881,8 +884,8 @@
         "ModifyMemoryStrategyInput$description": "<p>The updated description of the memory strategy.</p>",
         "SemanticMemoryStrategyInput$description": "<p>The description of the semantic memory strategy.</p>",
         "SummaryMemoryStrategyInput$description": "<p>The description of the summary memory strategy.</p>",
-        "UpdateAgentRuntimeRequest$description": "<p>The updated description of the agent runtime.</p>",
-        "UpdateMemoryInput$description": "<p>The updated description of the memory.</p>",
+        "UpdateAgentRuntimeRequest$description": "<p>The updated description of the AgentCore Runtime.</p>",
+        "UpdateMemoryInput$description": "<p>The updated description of the AgentCore Memory resource.</p>",
         "UserPreferenceMemoryStrategyInput$description": "<p>The description of the user preference memory strategy.</p>"
       }
     },
@@ -905,12 +908,12 @@
     "EndpointName": {
       "base": null,
       "refs": {
-        "AgentEndpoint$name": "<p>The name of the agent runtime endpoint.</p>",
-        "CreateAgentRuntimeEndpointRequest$name": "<p>The name of the agent runtime endpoint.</p>",
-        "DeleteAgentRuntimeEndpointRequest$endpointName": "<p>The name of the agent runtime endpoint to delete.</p>",
-        "GetAgentRuntimeEndpointRequest$endpointName": "<p>The name of the agent runtime endpoint to retrieve.</p>",
-        "GetAgentRuntimeEndpointResponse$name": "<p>The name of the agent runtime endpoint.</p>",
-        "UpdateAgentRuntimeEndpointRequest$endpointName": "<p>The name of the agent runtime endpoint to update.</p>"
+        "AgentRuntimeEndpoint$name": "<p>The name of the agent runtime endpoint.</p>",
+        "CreateAgentRuntimeEndpointRequest$name": "<p>The name of the AgentCore Runtime endpoint.</p>",
+        "DeleteAgentRuntimeEndpointRequest$endpointName": "<p>The name of the AgentCore Runtime endpoint to delete.</p>",
+        "GetAgentRuntimeEndpointRequest$endpointName": "<p>The name of the AgentCore Runtime endpoint to retrieve.</p>",
+        "GetAgentRuntimeEndpointResponse$name": "<p>The name of the AgentCore Runtime endpoint.</p>",
+        "UpdateAgentRuntimeEndpointRequest$endpointName": "<p>The name of the AgentCore Runtime endpoint to update.</p>"
       }
     },
     "EnvironmentVariableKey": {
@@ -928,19 +931,19 @@
     "EnvironmentVariablesMap": {
       "base": null,
       "refs": {
-        "CreateAgentRuntimeRequest$environmentVariables": "<p>Environment variables to set in the agent runtime environment.</p>",
-        "GetAgentRuntimeResponse$environmentVariables": "<p>Environment variables set in the agent runtime environment.</p>",
-        "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the agent runtime environment.</p>"
+        "CreateAgentRuntimeRequest$environmentVariables": "<p>Environment variables to set in the AgentCore Runtime environment.</p>",
+        "GetAgentRuntimeResponse$environmentVariables": "<p>Environment variables set in the AgentCore Runtime environment.</p>",
+        "UpdateAgentRuntimeRequest$environmentVariables": "<p>Updated environment variables to set in the AgentCore Runtime environment.</p>"
       }
     },
     "ExceptionLevel": {
       "base": null,
       "refs": {
-        "CreateGatewayRequest$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
-        "CreateGatewayResponse$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
-        "GetGatewayResponse$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
-        "UpdateGatewayRequest$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>",
-        "UpdateGatewayResponse$exceptionLevel": "<p>The verbosity of exception messages. Use DEBUG mode to see granular exception messages from a Gateway. If this parameter is not set, exception messages are by default sanitized for presentation to end users.</p>"
+        "CreateGatewayRequest$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>",
+        "CreateGatewayResponse$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>",
+        "GetGatewayResponse$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>",
+        "UpdateGatewayRequest$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>",
+        "UpdateGatewayResponse$exceptionLevel": "<p>The level of detail in error messages returned when invoking the gateway.</p> <ul> <li> <p>If the value is <code>DEBUG</code>, granular exception messages are returned to help a user debug the gateway.</p> </li> <li> <p>If the value is omitted, a generic error message is returned to the end user.</p> </li> </ul>"
       }
     },
     "ExtractionConfiguration": {
@@ -954,11 +957,11 @@
       "refs": {
         "CreateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the created gateway.</p>",
         "CreateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
-        "DeleteGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>",
-        "GetGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>",
-        "GetGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>",
-        "UpdateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the updated Gateway.</p>",
-        "UpdateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the Gateway.</p>"
+        "DeleteGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "GetGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "GetGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>",
+        "UpdateGatewayResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the updated gateway.</p>",
+        "UpdateGatewayTargetResponse$gatewayArn": "<p>The Amazon Resource Name (ARN) of the gateway.</p>"
       }
     },
     "GatewayDescription": {
@@ -967,38 +970,38 @@
         "CreateGatewayRequest$description": "<p>The description of the gateway.</p>",
         "CreateGatewayResponse$description": "<p>The description of the gateway.</p>",
         "GatewaySummary$description": "<p>The description of the gateway.</p>",
-        "GetGatewayResponse$description": "<p>The description of the Gateway.</p>",
-        "UpdateGatewayRequest$description": "<p>The updated description for the Gateway.</p>",
-        "UpdateGatewayResponse$description": "<p>The updated description of the Gateway.</p>"
+        "GetGatewayResponse$description": "<p>The description of the gateway.</p>",
+        "UpdateGatewayRequest$description": "<p>The updated description for the gateway.</p>",
+        "UpdateGatewayResponse$description": "<p>The updated description of the gateway.</p>"
       }
     },
     "GatewayId": {
       "base": null,
       "refs": {
         "CreateGatewayResponse$gatewayId": "<p>The unique identifier of the created gateway.</p>",
-        "DeleteGatewayResponse$gatewayId": "<p>The unique identifier of the deleted Gateway.</p>",
+        "DeleteGatewayResponse$gatewayId": "<p>The unique identifier of the deleted gateway.</p>",
         "GatewaySummary$gatewayId": "<p>The unique identifier of the gateway.</p>",
-        "GetGatewayResponse$gatewayId": "<p>The unique identifier of the Gateway.</p>",
-        "UpdateGatewayResponse$gatewayId": "<p>The unique identifier of the updated Gateway.</p>"
+        "GetGatewayResponse$gatewayId": "<p>The unique identifier of the gateway.</p>",
+        "UpdateGatewayResponse$gatewayId": "<p>The unique identifier of the updated gateway.</p>"
       }
     },
     "GatewayIdentifier": {
       "base": null,
       "refs": {
-        "CreateGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway to create a target for. This can be either the gateway ID or the gateway ARN.</p>",
-        "DeleteGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to delete. This can be either the gateway ID or the gateway ARN.</p>",
-        "DeleteGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the Gateway associated with the target.</p>",
-        "GetGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to retrieve. This can be either the gateway ID or the gateway ARN.</p>",
-        "GetGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway that contains the target. This can be either the gateway ID or the gateway ARN.</p>",
-        "ListGatewayTargetsRequest$gatewayIdentifier": "<p>The identifier of the gateway to list targets for. This can be either the gateway ID or the gateway ARN.</p>",
-        "UpdateGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to update. This can be either the gateway ID or the gateway ARN.</p>",
-        "UpdateGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the Gateway associated with the target.</p>"
+        "CreateGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway to create a target for.</p>",
+        "DeleteGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to delete.</p>",
+        "DeleteGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>",
+        "GetGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to retrieve.</p>",
+        "GetGatewayTargetRequest$gatewayIdentifier": "<p>The identifier of the gateway that contains the target.</p>",
+        "ListGatewayTargetsRequest$gatewayIdentifier": "<p>The identifier of the gateway to list targets for.</p>",
+        "UpdateGatewayRequest$gatewayIdentifier": "<p>The identifier of the gateway to update.</p>",
+        "UpdateGatewayTargetRequest$gatewayIdentifier": "<p>The unique identifier of the gateway associated with the target.</p>"
       }
     },
     "GatewayMaxResults": {
       "base": null,
       "refs": {
-        "ListGatewaysRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>"
+        "ListGatewaysRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
       }
     },
     "GatewayName": {
@@ -1007,22 +1010,22 @@
         "CreateGatewayRequest$name": "<p>The name of the gateway. The name must be unique within your account.</p>",
         "CreateGatewayResponse$name": "<p>The name of the gateway.</p>",
         "GatewaySummary$name": "<p>The name of the gateway.</p>",
-        "GetGatewayResponse$name": "<p>The name of the Gateway.</p>",
-        "UpdateGatewayRequest$name": "<p>The updated name for the Gateway.</p>",
-        "UpdateGatewayResponse$name": "<p>The updated name of the Gateway.</p>"
+        "GetGatewayResponse$name": "<p>The name of the gateway.</p>",
+        "UpdateGatewayRequest$name": "<p>The name of the gateway. This name must be the same as the one when the gateway was created.</p>",
+        "UpdateGatewayResponse$name": "<p>The name of the gateway.</p>"
       }
     },
     "GatewayNextToken": {
       "base": null,
       "refs": {
-        "ListGatewaysRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
-        "ListGatewaysResponse$nextToken": "<p>Opaque continuation token for the next paginated response.</p>"
+        "ListGatewaysRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListGatewaysResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
       }
     },
     "GatewayProtocolConfiguration": {
       "base": "<p>The configuration for a gateway protocol. This structure defines how the gateway communicates with external services.</p>",
       "refs": {
-        "CreateGatewayRequest$protocolConfiguration": "<p>The configuration settings for the protocol specified in the protocolType parameter.</p>",
+        "CreateGatewayRequest$protocolConfiguration": "<p>The configuration settings for the protocol specified in the <code>protocolType</code> parameter.</p>",
         "CreateGatewayResponse$protocolConfiguration": "<p>The configuration settings for the protocol used by the gateway.</p>",
         "GetGatewayResponse$protocolConfiguration": null,
         "UpdateGatewayRequest$protocolConfiguration": null,
@@ -1032,28 +1035,28 @@
     "GatewayProtocolType": {
       "base": null,
       "refs": {
-        "CreateGatewayRequest$protocolType": "<p>The protocol type for the gateway. Currently supports MCP (Model Context Protocol).</p>",
+        "CreateGatewayRequest$protocolType": "<p>The protocol type for the gateway.</p>",
         "CreateGatewayResponse$protocolType": "<p>The protocol type of the gateway.</p>",
         "GatewaySummary$protocolType": "<p>The protocol type used by the gateway.</p>",
-        "GetGatewayResponse$protocolType": "<p>Protocol applied to a Gateway.</p>",
-        "UpdateGatewayRequest$protocolType": "<p>The updated protocol type for the Gateway.</p>",
-        "UpdateGatewayResponse$protocolType": "<p>The updated protocol type for the Gateway.</p>"
+        "GetGatewayResponse$protocolType": "<p>Protocol applied to a gateway.</p>",
+        "UpdateGatewayRequest$protocolType": "<p>The updated protocol type for the gateway.</p>",
+        "UpdateGatewayResponse$protocolType": "<p>The updated protocol type for the gateway.</p>"
       }
     },
     "GatewayStatus": {
       "base": null,
       "refs": {
         "CreateGatewayResponse$status": "<p>The current status of the gateway.</p>",
-        "DeleteGatewayResponse$status": "<p>The current status of the Gateway deletion.</p>",
+        "DeleteGatewayResponse$status": "<p>The current status of the gateway deletion.</p>",
         "GatewaySummary$status": "<p>The current status of the gateway.</p>",
-        "GetGatewayResponse$status": "<p>The current status of the Gateway.</p>",
-        "UpdateGatewayResponse$status": "<p>The current status of the updated Gateway.</p>"
+        "GetGatewayResponse$status": "<p>The current status of the gateway.</p>",
+        "UpdateGatewayResponse$status": "<p>The current status of the updated gateway.</p>"
       }
     },
     "GatewaySummaries": {
       "base": null,
       "refs": {
-        "ListGatewaysResponse$items": "<p>The list of Gateway summaries.</p>"
+        "ListGatewaysResponse$items": "<p>The list of gateway summaries.</p>"
       }
     },
     "GatewaySummary": {
@@ -1066,8 +1069,8 @@
       "base": null,
       "refs": {
         "CreateGatewayResponse$gatewayUrl": "<p>The URL endpoint for the created gateway.</p>",
-        "GetGatewayResponse$gatewayUrl": "<p>An endpoint for invoking Gateway.</p>",
-        "UpdateGatewayResponse$gatewayUrl": "<p>An endpoint for invoking the updated Gateway.</p>"
+        "GetGatewayResponse$gatewayUrl": "<p>An endpoint for invoking gateway.</p>",
+        "UpdateGatewayResponse$gatewayUrl": "<p>An endpoint for invoking the updated gateway.</p>"
       }
     },
     "GetAgentRuntimeEndpointRequest": {
@@ -1182,6 +1185,12 @@
         "Oauth2ProviderConfigOutput$googleOauth2ProviderConfig": "<p>The output configuration for a Google OAuth2 provider.</p>"
       }
     },
+    "HeaderName": {
+      "base": null,
+      "refs": {
+        "RequestHeaderAllowlist$member": null
+      }
+    },
     "InlinePayload": {
       "base": null,
       "refs": {
@@ -1217,10 +1226,10 @@
       "refs": {
         "CreateGatewayRequest$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
         "CreateGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt data associated with the gateway.</p>",
-        "GetGatewayResponse$kmsKeyArn": "<p>The ARN of the KMS key used to encrypt the Gateway.</p>",
+        "GetGatewayResponse$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key used to encrypt the gateway.</p>",
         "KmsConfiguration$kmsKeyArn": "<p>The Amazon Resource Name (ARN) of the KMS key.</p>",
-        "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the Gateway.</p>",
-        "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the Gateway.</p>"
+        "UpdateGatewayRequest$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>",
+        "UpdateGatewayResponse$kmsKeyArn": "<p>The updated ARN of the KMS key used to encrypt the gateway.</p>"
       }
     },
     "LambdaFunctionArn": {
@@ -1321,6 +1330,14 @@
       "base": null,
       "refs": {}
     },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListWorkloadIdentitiesRequest": {
       "base": null,
       "refs": {}
@@ -1386,8 +1403,8 @@
       "base": "<p>Contains information about a memory resource.</p>",
       "refs": {
         "CreateMemoryOutput$memory": "<p>The details of the created memory, including its ID, ARN, name, description, and configuration settings.</p>",
-        "GetMemoryOutput$memory": "<p>The retrieved memory details.</p>",
-        "UpdateMemoryOutput$memory": "<p>The updated memory details.</p>"
+        "GetMemoryOutput$memory": "<p>The retrieved AgentCore Memory resource details.</p>",
+        "UpdateMemoryOutput$memory": "<p>The updated AgentCore Memory resource details.</p>"
       }
     },
     "MemoryArn": {
@@ -1407,7 +1424,7 @@
       "base": null,
       "refs": {
         "DeleteMemoryInput$memoryId": "<p>The unique identifier of the memory to delete.</p>",
-        "DeleteMemoryOutput$memoryId": "<p>The unique identifier of the deleted memory.</p>",
+        "DeleteMemoryOutput$memoryId": "<p>The unique identifier of the deleted AgentCore Memory resource.</p>",
         "GetMemoryInput$memoryId": "<p>The unique identifier of the memory to retrieve.</p>",
         "Memory$id": "<p>The unique identifier of the memory.</p>",
         "MemorySummary$id": "<p>The unique identifier of the memory.</p>",
@@ -1417,7 +1434,7 @@
     "MemoryStatus": {
       "base": null,
       "refs": {
-        "DeleteMemoryOutput$status": "<p>The current status of the memory deletion.</p>",
+        "DeleteMemoryOutput$status": "<p>The current status of the AgentCore Memory resource deletion.</p>",
         "Memory$status": "<p>The current status of the memory.</p>",
         "MemorySummary$status": "<p>The current status of the memory.</p>"
       }
@@ -1474,7 +1491,7 @@
     "MemorySummaryList": {
       "base": null,
       "refs": {
-        "ListMemoriesOutput$memories": "<p>The list of memory summaries.</p>"
+        "ListMemoriesOutput$memories": "<p>The list of AgentCore Memory resource summaries.</p>"
       }
     },
     "MicrosoftOauth2ProviderConfigInput": {
@@ -1557,15 +1574,15 @@
     "NetworkConfiguration": {
       "base": "<p>SecurityConfig for the Agent.</p>",
       "refs": {
-        "CreateAgentRuntimeRequest$networkConfiguration": "<p>The network configuration for the agent runtime.</p>",
-        "GetAgentRuntimeResponse$networkConfiguration": "<p>The network configuration for the agent runtime.</p>",
-        "UpdateAgentRuntimeRequest$networkConfiguration": "<p>The updated network configuration for the agent runtime.</p>"
+        "CreateAgentRuntimeRequest$networkConfiguration": "<p>The network configuration for the AgentCore Runtime.</p>",
+        "GetAgentRuntimeResponse$networkConfiguration": "<p>The network configuration for the AgentCore Runtime.</p>",
+        "UpdateAgentRuntimeRequest$networkConfiguration": "<p>The updated network configuration for the AgentCore Runtime.</p>"
       }
     },
     "NetworkMode": {
       "base": null,
       "refs": {
-        "NetworkConfiguration$networkMode": "<p>The network mode for the agent runtime.</p>"
+        "NetworkConfiguration$networkMode": "<p>The network mode for the AgentCore Runtime.</p>"
       }
     },
     "NextToken": {
@@ -1717,6 +1734,20 @@
         "GetBrowserResponse$recording": null
       }
     },
+    "RequestHeaderAllowlist": {
+      "base": null,
+      "refs": {
+        "RequestHeaderConfiguration$requestHeaderAllowlist": "<p>A list of HTTP request headers that are allowed to be passed through to the runtime.</p>"
+      }
+    },
+    "RequestHeaderConfiguration": {
+      "base": "<p>Configuration for HTTP request headers that will be passed through to the runtime.</p>",
+      "refs": {
+        "CreateAgentRuntimeRequest$requestHeaderConfiguration": "<p>Configuration for HTTP request headers that will be passed through to the runtime.</p>",
+        "GetAgentRuntimeResponse$requestHeaderConfiguration": "<p>Configuration for HTTP request headers that will be passed through to the runtime.</p>",
+        "UpdateAgentRuntimeRequest$requestHeaderConfiguration": "<p>The updated configuration for HTTP request headers that will be passed through to the runtime.</p>"
+      }
+    },
     "RequiredProperties": {
       "base": null,
       "refs": {
@@ -1769,18 +1800,18 @@
     "RoleArn": {
       "base": null,
       "refs": {
-        "CreateAgentRuntimeRequest$roleArn": "<p>The IAM role ARN that provides permissions for the agent runtime.</p>",
+        "CreateAgentRuntimeRequest$roleArn": "<p>The IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "CreateBrowserRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the browser to access Amazon Web Services services.</p>",
         "CreateCodeInterpreterRequest$executionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the code interpreter to access Amazon Web Services services.</p>",
         "CreateGatewayRequest$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that provides permissions for the gateway to access Amazon Web Services services.</p>",
         "CreateGatewayResponse$roleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the gateway.</p>",
-        "GetAgentRuntimeResponse$roleArn": "<p>The IAM role ARN that provides permissions for the agent runtime.</p>",
+        "GetAgentRuntimeResponse$roleArn": "<p>The IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
         "GetBrowserResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the browser.</p>",
         "GetCodeInterpreterResponse$executionRoleArn": "<p>The IAM role ARN that provides permissions for the code interpreter.</p>",
-        "GetGatewayResponse$roleArn": "<p>The IAM role ARN that provides permissions for the Gateway.</p>",
-        "UpdateAgentRuntimeRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the agent runtime.</p>",
-        "UpdateGatewayRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the Gateway.</p>",
-        "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the Gateway.</p>"
+        "GetGatewayResponse$roleArn": "<p>The IAM role ARN that provides permissions for the gateway.</p>",
+        "UpdateAgentRuntimeRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the AgentCore Runtime.</p>",
+        "UpdateGatewayRequest$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>",
+        "UpdateGatewayResponse$roleArn": "<p>The updated IAM role ARN that provides permissions for the gateway.</p>"
       }
     },
     "RuntimeContainerUri": {
@@ -1887,6 +1918,18 @@
         "Secret$secretArn": "<p>The Amazon Resource Name (ARN) of the secret in AWS Secrets Manager.</p>"
       }
     },
+    "SecurityGroupId": {
+      "base": null,
+      "refs": {
+        "SecurityGroups$member": null
+      }
+    },
+    "SecurityGroups": {
+      "base": null,
+      "refs": {
+        "VpcConfig$securityGroups": "<p>The security groups associated with the VPC configuration.</p>"
+      }
+    },
     "SemanticConsolidationOverride": {
       "base": "<p>Contains semantic consolidation override configuration.</p>",
       "refs": {
@@ -1970,12 +2013,12 @@
       "refs": {
         "CreateGatewayResponse$statusReasons": "<p>The reasons for the current status of the gateway.</p>",
         "CreateGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the target.</p>",
-        "DeleteGatewayResponse$statusReasons": "<p>The reasons for the current status of the Gateway deletion.</p>",
-        "DeleteGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the Gateway Target deletion.</p>",
-        "GetGatewayResponse$statusReasons": "<p>The reasons for the current status of the Gateway.</p>",
-        "GetGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the Gateway Target.</p>",
-        "UpdateGatewayResponse$statusReasons": "<p>The reasons for the current status of the updated Gateway.</p>",
-        "UpdateGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the updated Gateway Target.</p>"
+        "DeleteGatewayResponse$statusReasons": "<p>The reasons for the current status of the gateway deletion.</p>",
+        "DeleteGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the gateway target deletion.</p>",
+        "GetGatewayResponse$statusReasons": "<p>The reasons for the current status of the gateway.</p>",
+        "GetGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the gateway target.</p>",
+        "UpdateGatewayResponse$statusReasons": "<p>The reasons for the current status of the updated gateway.</p>",
+        "UpdateGatewayTargetResponse$statusReasons": "<p>The reasons for the current status of the updated gateway target.</p>"
       }
     },
     "StrategyConfiguration": {
@@ -1991,7 +2034,9 @@
         "DecryptionFailure$message": null,
         "DeleteMemoryStrategyInput$memoryStrategyId": "<p>The unique identifier of the memory strategy to delete.</p>",
         "EncryptionFailure$message": null,
-        "GetAgentRuntimeEndpointResponse$failureReason": "<p>The reason for failure if the agent runtime endpoint is in a failed state.</p>",
+        "GetAgentRuntimeEndpointResponse$failureReason": "<p>The reason for failure if the AgentCore Runtime endpoint is in a failed state.</p>",
+        "GetBrowserResponse$failureReason": "<p>The reason for failure if the browser is in a failed state.</p>",
+        "GetCodeInterpreterResponse$failureReason": "<p>The reason for failure if the code interpreter is in a failed state.</p>",
         "ListApiKeyCredentialProvidersRequest$nextToken": "<p>Pagination token.</p>",
         "ListApiKeyCredentialProvidersResponse$nextToken": "<p>Pagination token for the next page of results.</p>",
         "ListMemoriesInput$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -2025,6 +2070,18 @@
         "ValidationExceptionField$message": "<p>A message describing why this field failed validation.</p>"
       }
     },
+    "SubnetId": {
+      "base": null,
+      "refs": {
+        "Subnets$member": null
+      }
+    },
+    "Subnets": {
+      "base": null,
+      "refs": {
+        "VpcConfig$subnets": "<p>The subnets associated with the VPC configuration.</p>"
+      }
+    },
     "SummaryConsolidationOverride": {
       "base": "<p>Contains summary consolidation override configuration.</p>",
       "refs": {
@@ -2050,6 +2107,52 @@
         "SummaryOverrideConfigurationInput$consolidation": "<p>The consolidation configuration for a summary override.</p>"
       }
     },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "TagsMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$tagKeys": "<p>The tag keys of the tags to remove from the resource.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagsMap$value": null
+      }
+    },
+    "TaggableResourcesArn": {
+      "base": null,
+      "refs": {
+        "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource for which you want to list tags.</p>",
+        "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>",
+        "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>"
+      }
+    },
+    "TagsMap": {
+      "base": null,
+      "refs": {
+        "CreateAgentRuntimeEndpointRequest$tags": "<p>A map of tag keys and values to assign to the agent runtime endpoint. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateAgentRuntimeRequest$tags": "<p>A map of tag keys and values to assign to the agent runtime. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateBrowserRequest$tags": "<p>A map of tag keys and values to assign to the browser. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "CreateCodeInterpreterRequest$tags": "<p>A map of tag keys and values to assign to the code interpreter. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment.</p>",
+        "ListTagsForResourceResponse$tags": "<p>The tags associated with the resource.</p>",
+        "TagResourceRequest$tags": "<p>The tags to add to the resource. A tag is a key-value pair.</p>"
+      }
+    },
     "TargetConfiguration": {
       "base": "<p>The configuration for a gateway target. This structure defines how the gateway connects to and interacts with the target endpoint.</p>",
       "refs": {
@@ -2065,29 +2168,29 @@
       "refs": {
         "CreateGatewayTargetRequest$description": "<p>The description of the gateway target.</p>",
         "CreateGatewayTargetResponse$description": "<p>The description of the target.</p>",
-        "GetGatewayTargetResponse$description": "<p>The description of the Gateway Target.</p>",
+        "GetGatewayTargetResponse$description": "<p>The description of the gateway target.</p>",
         "TargetSummary$description": "<p>The description of the target.</p>",
-        "UpdateGatewayTargetRequest$description": "<p>The updated description for the Gateway Target.</p>",
-        "UpdateGatewayTargetResponse$description": "<p>The updated description of the Gateway Target.</p>"
+        "UpdateGatewayTargetRequest$description": "<p>The updated description for the gateway target.</p>",
+        "UpdateGatewayTargetResponse$description": "<p>The updated description of the gateway target.</p>"
       }
     },
     "TargetId": {
       "base": null,
       "refs": {
         "CreateGatewayTargetResponse$targetId": "<p>The unique identifier of the created target.</p>",
-        "DeleteGatewayTargetRequest$targetId": "<p>The unique identifier of the Gateway Target to delete.</p>",
-        "DeleteGatewayTargetResponse$targetId": "<p>The unique identifier of the deleted Gateway Target.</p>",
+        "DeleteGatewayTargetRequest$targetId": "<p>The unique identifier of the gateway target to delete.</p>",
+        "DeleteGatewayTargetResponse$targetId": "<p>The unique identifier of the deleted gateway target.</p>",
         "GetGatewayTargetRequest$targetId": "<p>The unique identifier of the target to retrieve.</p>",
-        "GetGatewayTargetResponse$targetId": "<p>The unique identifier of the Gateway Target.</p>",
+        "GetGatewayTargetResponse$targetId": "<p>The unique identifier of the gateway target.</p>",
         "TargetSummary$targetId": "<p>The unique identifier of the target.</p>",
-        "UpdateGatewayTargetRequest$targetId": "<p>The unique identifier of the Gateway Target to update.</p>",
-        "UpdateGatewayTargetResponse$targetId": "<p>The unique identifier of the updated Gateway Target.</p>"
+        "UpdateGatewayTargetRequest$targetId": "<p>The unique identifier of the gateway target to update.</p>",
+        "UpdateGatewayTargetResponse$targetId": "<p>The unique identifier of the updated gateway target.</p>"
       }
     },
     "TargetMaxResults": {
       "base": null,
       "refs": {
-        "ListGatewayTargetsRequest$maxResults": "<p>The maximum number of results to return in a single call. The default value is 10. The maximum value is 50.</p>"
+        "ListGatewayTargetsRequest$maxResults": "<p>The maximum number of results to return in the response. If the total number of results is greater than this value, use the token returned in the response in the <code>nextToken</code> field when making another request to return the next batch of results.</p>"
       }
     },
     "TargetName": {
@@ -2095,33 +2198,33 @@
       "refs": {
         "CreateGatewayTargetRequest$name": "<p>The name of the gateway target. The name must be unique within the gateway.</p>",
         "CreateGatewayTargetResponse$name": "<p>The name of the target.</p>",
-        "GetGatewayTargetResponse$name": "<p>The name of the Gateway Target.</p>",
+        "GetGatewayTargetResponse$name": "<p>The name of the gateway target.</p>",
         "TargetSummary$name": "<p>The name of the target.</p>",
-        "UpdateGatewayTargetRequest$name": "<p>The updated name for the Gateway Target.</p>",
-        "UpdateGatewayTargetResponse$name": "<p>The updated name of the Gateway Target.</p>"
+        "UpdateGatewayTargetRequest$name": "<p>The updated name for the gateway target.</p>",
+        "UpdateGatewayTargetResponse$name": "<p>The updated name of the gateway target.</p>"
       }
     },
     "TargetNextToken": {
       "base": null,
       "refs": {
-        "ListGatewayTargetsRequest$nextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
-        "ListGatewayTargetsResponse$nextToken": "<p>Opaque continuation token for the next paginated response.</p>"
+        "ListGatewayTargetsRequest$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, enter the token returned in the <code>nextToken</code> field in the response in this field to return the next batch of results.</p>",
+        "ListGatewayTargetsResponse$nextToken": "<p>If the total number of results is greater than the <code>maxResults</code> value provided in the request, use this token when making another request in the <code>nextToken</code> field to return the next batch of results.</p>"
       }
     },
     "TargetStatus": {
       "base": null,
       "refs": {
         "CreateGatewayTargetResponse$status": "<p>The current status of the target.</p>",
-        "DeleteGatewayTargetResponse$status": "<p>The current status of the Gateway Target deletion.</p>",
-        "GetGatewayTargetResponse$status": "<p>The current status of the Gateway Target.</p>",
+        "DeleteGatewayTargetResponse$status": "<p>The current status of the gateway target deletion.</p>",
+        "GetGatewayTargetResponse$status": "<p>The current status of the gateway target.</p>",
         "TargetSummary$status": "<p>The current status of the target.</p>",
-        "UpdateGatewayTargetResponse$status": "<p>The current status of the updated Gateway Target.</p>"
+        "UpdateGatewayTargetResponse$status": "<p>The current status of the updated gateway target.</p>"
       }
     },
     "TargetSummaries": {
       "base": null,
       "refs": {
-        "ListGatewayTargetsResponse$items": "<p>The list of Gateway Target summaries.</p>"
+        "ListGatewayTargetsResponse$items": "<p>The list of gateway target summaries.</p>"
       }
     },
     "TargetSummary": {
@@ -2202,6 +2305,14 @@
     },
     "UnauthorizedException": {
       "base": "<p>This exception is thrown when the JWT bearer token is invalid or not found for OAuth bearer token based access</p>",
+      "refs": {}
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UntagResourceResponse": {
+      "base": null,
       "refs": {}
     },
     "UpdateAgentRuntimeEndpointRequest": {
@@ -2340,6 +2451,14 @@
         "ValidationException$reason": null
       }
     },
+    "VpcConfig": {
+      "base": "<p>VpcConfig for the Agent.</p>",
+      "refs": {
+        "BrowserNetworkConfiguration$vpcConfig": null,
+        "CodeInterpreterNetworkConfiguration$vpcConfig": null,
+        "NetworkConfiguration$networkModeConfig": "<p>The network mode configuration for the AgentCore Runtime.</p>"
+      }
+    },
     "WorkloadIdentityArn": {
       "base": null,
       "refs": {
@@ -2358,12 +2477,12 @@
     "WorkloadIdentityDetails": {
       "base": "<p>The information about the workload identity.</p>",
       "refs": {
-        "CreateAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the agent runtime.</p>",
-        "CreateGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the created Gateway.</p>",
-        "GetAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the agent runtime.</p>",
-        "GetGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the Gateway.</p>",
-        "UpdateAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the updated agent runtime.</p>",
-        "UpdateGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the updated Gateway.</p>"
+        "CreateAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the AgentCore Runtime.</p>",
+        "CreateGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the created gateway.</p>",
+        "GetAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the AgentCore Runtime.</p>",
+        "GetGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the gateway.</p>",
+        "UpdateAgentRuntimeResponse$workloadIdentityDetails": "<p>The workload identity details for the updated AgentCore Runtime.</p>",
+        "UpdateGatewayResponse$workloadIdentityDetails": "<p>The workload identity details for the updated gateway.</p>"
       }
     },
     "WorkloadIdentityList": {

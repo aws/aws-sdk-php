@@ -13916,6 +13916,7 @@
         "SourceContactId":{"shape":"ContactId"}
       }
     },
+    "PersistentConnection":{"type":"boolean"},
     "PhoneNumber":{
       "type":"string",
       "pattern":"\\\\+[1-9]\\\\d{1,14}$"
@@ -19187,7 +19188,11 @@
         "PhoneType":{"shape":"PhoneType"},
         "AutoAccept":{"shape":"AutoAccept"},
         "AfterContactWorkTimeLimit":{"shape":"AfterContactWorkTimeLimit"},
-        "DeskPhoneNumber":{"shape":"PhoneNumber"}
+        "DeskPhoneNumber":{"shape":"PhoneNumber"},
+        "PersistentConnection":{
+          "shape":"PersistentConnection",
+          "box":true
+        }
       }
     },
     "UserProficiency":{

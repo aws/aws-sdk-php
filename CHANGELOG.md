@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - Add MinBitrate for QVBR mode under H264/H265/AV1 output codec. Add GopBReference, GopNumBFrames, SubGopLength fields under H265 output codec.
+* `Aws\KendraRanking` - Model whitespace change - no client difference
+* `Aws\LicenseManagerUserSubscriptions` - Added support for cross-account Active Directories.
+* `Aws\Connect` - This release adds a persistent connection field to UserPhoneConfig that maintains agent's softphone media connection for faster call connections.
+* `Aws\ConfigService` - Add UNKNOWN state to RemediationExecutionState and add IN_PROGRESS/EXITED/UNKNOWN states to RemediationExecutionStepState.
+* `Aws\BedrockAgentCoreControl` - Add tagging and VPC support to AgentCore Runtime, Code Interpreter, and Browser resources. Add support for configuring request headers in Runtime. Fix AgentCore Runtime shape names.
+* `Aws\SQS` - Update invalid character handling documentation for SQS SendMessage API
+
 ## 3.356.21 - 2025-09-18
 
 * `Aws\Exception` - Loosens requirements for `$previous` `AwsException` parameter from `Exception` to `Throwable`.

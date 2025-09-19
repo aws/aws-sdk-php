@@ -420,7 +420,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetAgentRuntimeEndpoint":{
       "name":"GetAgentRuntimeEndpoint",
@@ -437,7 +438,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetApiKeyCredentialProvider":{
       "name":"GetApiKeyCredentialProvider",
@@ -456,7 +458,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetBrowser":{
       "name":"GetBrowser",
@@ -473,7 +476,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetCodeInterpreter":{
       "name":"GetCodeInterpreter",
@@ -490,7 +494,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetGateway":{
       "name":"GetGateway",
@@ -507,7 +512,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetGatewayTarget":{
       "name":"GetGatewayTarget",
@@ -524,7 +530,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetMemory":{
       "name":"GetMemory",
@@ -541,7 +548,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetOauth2CredentialProvider":{
       "name":"GetOauth2CredentialProvider",
@@ -560,7 +568,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetTokenVault":{
       "name":"GetTokenVault",
@@ -578,7 +587,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetWorkloadIdentity":{
       "name":"GetWorkloadIdentity",
@@ -596,7 +606,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAgentRuntimeEndpoints":{
       "name":"ListAgentRuntimeEndpoints",
@@ -612,7 +623,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAgentRuntimeVersions":{
       "name":"ListAgentRuntimeVersions",
@@ -629,7 +641,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListAgentRuntimes":{
       "name":"ListAgentRuntimes",
@@ -645,7 +658,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListApiKeyCredentialProviders":{
       "name":"ListApiKeyCredentialProviders",
@@ -663,7 +677,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBrowsers":{
       "name":"ListBrowsers",
@@ -679,7 +694,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListCodeInterpreters":{
       "name":"ListCodeInterpreters",
@@ -695,7 +711,8 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGatewayTargets":{
       "name":"ListGatewayTargets",
@@ -711,7 +728,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListGateways":{
       "name":"ListGateways",
@@ -727,7 +745,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListMemories":{
       "name":"ListMemories",
@@ -744,7 +763,8 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottledException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListOauth2CredentialProviders":{
       "name":"ListOauth2CredentialProviders",
@@ -762,7 +782,26 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tags/{resourceArn}",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ],
+      "readonly":true
     },
     "ListWorkloadIdentities":{
       "name":"ListWorkloadIdentities",
@@ -780,7 +819,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "SetTokenVaultCMK":{
       "name":"SetTokenVaultCMK",
@@ -800,6 +840,42 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"}
       ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tags/{resourceArn}",
+        "responseCode":204
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/tags/{resourceArn}",
+        "responseCode":204
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
     },
     "UpdateAgentRuntime":{
       "name":"UpdateAgentRuntime",
@@ -978,7 +1054,12 @@
       },
       "exception":true
     },
-    "Agent":{
+    "AgentEndpointDescription":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "AgentRuntime":{
       "type":"structure",
       "required":[
         "agentRuntimeArn",
@@ -996,17 +1077,21 @@
         "agentRuntimeName":{"shape":"AgentRuntimeName"},
         "description":{"shape":"Description"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
-        "status":{"shape":"AgentStatus"}
+        "status":{"shape":"AgentRuntimeStatus"}
       }
     },
-    "AgentArtifact":{
+    "AgentRuntimeArn":{
+      "type":"string",
+      "pattern":"arn:(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:agent/[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}:([0-9]{0,4}[1-9][0-9]{0,4})"
+    },
+    "AgentRuntimeArtifact":{
       "type":"structure",
       "members":{
         "containerConfiguration":{"shape":"ContainerConfiguration"}
       },
       "union":true
     },
-    "AgentEndpoint":{
+    "AgentRuntimeEndpoint":{
       "type":"structure",
       "required":[
         "name",
@@ -1023,36 +1108,12 @@
         "targetVersion":{"shape":"AgentRuntimeVersion"},
         "agentRuntimeEndpointArn":{"shape":"AgentRuntimeEndpointArn"},
         "agentRuntimeArn":{"shape":"AgentRuntimeArn"},
-        "status":{"shape":"AgentEndpointStatus"},
+        "status":{"shape":"AgentRuntimeEndpointStatus"},
         "id":{"shape":"AgentRuntimeEndpointId"},
         "description":{"shape":"AgentEndpointDescription"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
-    },
-    "AgentEndpointDescription":{
-      "type":"string",
-      "max":256,
-      "min":1
-    },
-    "AgentEndpointStatus":{
-      "type":"string",
-      "enum":[
-        "CREATING",
-        "CREATE_FAILED",
-        "UPDATING",
-        "UPDATE_FAILED",
-        "READY",
-        "DELETING"
-      ]
-    },
-    "AgentEndpoints":{
-      "type":"list",
-      "member":{"shape":"AgentEndpoint"}
-    },
-    "AgentRuntimeArn":{
-      "type":"string",
-      "pattern":"arn:(-[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:agent/[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}:([0-9]{0,4}[1-9][0-9]{0,4})"
     },
     "AgentRuntimeEndpointArn":{
       "type":"string",
@@ -1062,21 +1123,7 @@
       "type":"string",
       "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,99}-[a-zA-Z0-9]{10}"
     },
-    "AgentRuntimeId":{
-      "type":"string",
-      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,99}-[a-zA-Z0-9]{10}"
-    },
-    "AgentRuntimeName":{
-      "type":"string",
-      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
-    },
-    "AgentRuntimeVersion":{
-      "type":"string",
-      "max":5,
-      "min":1,
-      "pattern":"([1-9][0-9]{0,4})"
-    },
-    "AgentStatus":{
+    "AgentRuntimeEndpointStatus":{
       "type":"string",
       "enum":[
         "CREATING",
@@ -1087,9 +1134,38 @@
         "DELETING"
       ]
     },
-    "Agents":{
+    "AgentRuntimeEndpoints":{
       "type":"list",
-      "member":{"shape":"Agent"}
+      "member":{"shape":"AgentRuntimeEndpoint"}
+    },
+    "AgentRuntimeId":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,99}-[a-zA-Z0-9]{10}"
+    },
+    "AgentRuntimeName":{
+      "type":"string",
+      "pattern":"[a-zA-Z][a-zA-Z0-9_]{0,47}"
+    },
+    "AgentRuntimeStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "CREATE_FAILED",
+        "UPDATING",
+        "UPDATE_FAILED",
+        "READY",
+        "DELETING"
+      ]
+    },
+    "AgentRuntimeVersion":{
+      "type":"string",
+      "max":5,
+      "min":1,
+      "pattern":"([1-9][0-9]{0,4})"
+    },
+    "AgentRuntimes":{
+      "type":"list",
+      "member":{"shape":"AgentRuntime"}
     },
     "AllowedAudience":{"type":"string"},
     "AllowedAudienceList":{
@@ -1207,12 +1283,16 @@
       "type":"structure",
       "required":["networkMode"],
       "members":{
-        "networkMode":{"shape":"BrowserNetworkMode"}
+        "networkMode":{"shape":"BrowserNetworkMode"},
+        "vpcConfig":{"shape":"VpcConfig"}
       }
     },
     "BrowserNetworkMode":{
       "type":"string",
-      "enum":["PUBLIC"]
+      "enum":[
+        "PUBLIC",
+        "VPC"
+      ]
     },
     "BrowserStatus":{
       "type":"string",
@@ -1276,14 +1356,16 @@
       "type":"structure",
       "required":["networkMode"],
       "members":{
-        "networkMode":{"shape":"CodeInterpreterNetworkMode"}
+        "networkMode":{"shape":"CodeInterpreterNetworkMode"},
+        "vpcConfig":{"shape":"VpcConfig"}
       }
     },
     "CodeInterpreterNetworkMode":{
       "type":"string",
       "enum":[
         "PUBLIC",
-        "SANDBOX"
+        "SANDBOX",
+        "VPC"
       ]
     },
     "CodeInterpreterStatus":{
@@ -1374,7 +1456,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateAgentRuntimeEndpointResponse":{
@@ -1390,7 +1473,7 @@
         "targetVersion":{"shape":"AgentRuntimeVersion"},
         "agentRuntimeEndpointArn":{"shape":"AgentRuntimeEndpointArn"},
         "agentRuntimeArn":{"shape":"AgentRuntimeArn"},
-        "status":{"shape":"AgentEndpointStatus"},
+        "status":{"shape":"AgentRuntimeEndpointStatus"},
         "createdAt":{"shape":"DateTimestamp"}
       }
     },
@@ -1405,7 +1488,7 @@
       "members":{
         "agentRuntimeName":{"shape":"AgentRuntimeName"},
         "description":{"shape":"Description"},
-        "agentRuntimeArtifact":{"shape":"AgentArtifact"},
+        "agentRuntimeArtifact":{"shape":"AgentRuntimeArtifact"},
         "roleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
@@ -1414,7 +1497,9 @@
           "idempotencyToken":true
         },
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
-        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"}
+        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
+        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateAgentRuntimeResponse":{
@@ -1432,7 +1517,7 @@
         "agentRuntimeId":{"shape":"AgentRuntimeId"},
         "agentRuntimeVersion":{"shape":"AgentRuntimeVersion"},
         "createdAt":{"shape":"DateTimestamp"},
-        "status":{"shape":"AgentStatus"}
+        "status":{"shape":"AgentRuntimeStatus"}
       }
     },
     "CreateApiKeyCredentialProviderRequest":{
@@ -1474,7 +1559,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateBrowserResponse":{
@@ -1506,7 +1592,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "tags":{"shape":"TagsMap"}
       }
     },
     "CreateCodeInterpreterResponse":{
@@ -1890,7 +1977,7 @@
       "type":"structure",
       "required":["status"],
       "members":{
-        "status":{"shape":"AgentEndpointStatus"}
+        "status":{"shape":"AgentRuntimeEndpointStatus"}
       }
     },
     "DeleteAgentRuntimeRequest":{
@@ -1908,7 +1995,7 @@
       "type":"structure",
       "required":["status"],
       "members":{
-        "status":{"shape":"AgentStatus"}
+        "status":{"shape":"AgentRuntimeStatus"}
       }
     },
     "DeleteApiKeyCredentialProviderRequest":{
@@ -2285,7 +2372,7 @@
         "agentRuntimeEndpointArn":{"shape":"AgentRuntimeEndpointArn"},
         "agentRuntimeArn":{"shape":"AgentRuntimeArn"},
         "description":{"shape":"AgentEndpointDescription"},
-        "status":{"shape":"AgentEndpointStatus"},
+        "status":{"shape":"AgentRuntimeEndpointStatus"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
         "failureReason":{"shape":"String"},
@@ -2332,12 +2419,13 @@
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
         "roleArn":{"shape":"RoleArn"},
-        "agentRuntimeArtifact":{"shape":"AgentArtifact"},
+        "agentRuntimeArtifact":{"shape":"AgentRuntimeArtifact"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
         "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
-        "status":{"shape":"AgentStatus"}
+        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"},
+        "status":{"shape":"AgentRuntimeStatus"}
       }
     },
     "GetApiKeyCredentialProviderRequest":{
@@ -2395,6 +2483,7 @@
         "networkConfiguration":{"shape":"BrowserNetworkConfiguration"},
         "recording":{"shape":"RecordingConfig"},
         "status":{"shape":"BrowserStatus"},
+        "failureReason":{"shape":"String"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -2429,6 +2518,7 @@
         "executionRoleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"CodeInterpreterNetworkConfiguration"},
         "status":{"shape":"CodeInterpreterStatus"},
+        "failureReason":{"shape":"String"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -2644,6 +2734,12 @@
         "oauthDiscovery":{"shape":"Oauth2Discovery"}
       }
     },
+    "HeaderName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"(Authorization|X-Amzn-Bedrock-AgentCore-Runtime-Custom-[a-zA-Z0-9_-]+)"
+    },
     "InlinePayload":{
       "type":"string",
       "sensitive":true
@@ -2710,7 +2806,7 @@
       "type":"structure",
       "required":["runtimeEndpoints"],
       "members":{
-        "runtimeEndpoints":{"shape":"AgentEndpoints"},
+        "runtimeEndpoints":{"shape":"AgentRuntimeEndpoints"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2739,7 +2835,7 @@
       "type":"structure",
       "required":["agentRuntimes"],
       "members":{
-        "agentRuntimes":{"shape":"Agents"},
+        "agentRuntimes":{"shape":"AgentRuntimes"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2762,7 +2858,7 @@
       "type":"structure",
       "required":["agentRuntimes"],
       "members":{
-        "agentRuntimes":{"shape":"Agents"},
+        "agentRuntimes":{"shape":"AgentRuntimes"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -2929,6 +3025,23 @@
       "members":{
         "credentialProviders":{"shape":"Oauth2CredentialProviders"},
         "nextToken":{"shape":"String"}
+      }
+    },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"TaggableResourcesArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagsMap"}
       }
     },
     "ListWorkloadIdentitiesRequest":{
@@ -3205,12 +3318,16 @@
       "type":"structure",
       "required":["networkMode"],
       "members":{
-        "networkMode":{"shape":"NetworkMode"}
+        "networkMode":{"shape":"NetworkMode"},
+        "networkModeConfig":{"shape":"VpcConfig"}
       }
     },
     "NetworkMode":{
       "type":"string",
-      "enum":["PUBLIC"]
+      "enum":[
+        "PUBLIC",
+        "VPC"
+      ]
     },
     "NextToken":{
       "type":"string",
@@ -3362,6 +3479,19 @@
         "s3Location":{"shape":"S3Location"}
       }
     },
+    "RequestHeaderAllowlist":{
+      "type":"list",
+      "member":{"shape":"HeaderName"},
+      "max":20,
+      "min":1
+    },
+    "RequestHeaderConfiguration":{
+      "type":"structure",
+      "members":{
+        "requestHeaderAllowlist":{"shape":"RequestHeaderAllowlist"}
+      },
+      "union":true
+    },
     "RequiredProperties":{
       "type":"list",
       "member":{"shape":"String"}
@@ -3420,7 +3550,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"\\d{12}\\.dkr\\.ecr\\.([a-z0-9-]+)\\.amazonaws\\.com/((?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*)([:@]\\S+)"
+      "pattern":"([0-9]{12})\\.dkr\\.ecr\\.([a-z0-9-]+)\\.amazonaws\\.com/((?:[a-z0-9]+(?:[._-][a-z0-9]+)*/)*[a-z0-9]+(?:[._-][a-z0-9]+)*)(?::([^:@]{1,300}))?(?:@(.+))?"
     },
     "S3BucketUri":{
       "type":"string",
@@ -3515,6 +3645,16 @@
     "SecretArn":{
       "type":"string",
       "pattern":"arn:(aws|aws-us-gov):secretsmanager:[A-Za-z0-9-]{1,64}:[0-9]{12}:secret:[a-zA-Z0-9-_/+=.@!]+"
+    },
+    "SecurityGroupId":{
+      "type":"string",
+      "pattern":"sg-[0-9a-zA-Z]{8,17}"
+    },
+    "SecurityGroups":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":16,
+      "min":1
     },
     "SemanticConsolidationOverride":{
       "type":"structure",
@@ -3663,6 +3803,16 @@
       }
     },
     "String":{"type":"string"},
+    "SubnetId":{
+      "type":"string",
+      "pattern":"subnet-[0-9a-zA-Z]{8,17}"
+    },
+    "Subnets":{
+      "type":"list",
+      "member":{"shape":"SubnetId"},
+      "max":16,
+      "min":1
+    },
     "SummaryConsolidationOverride":{
       "type":"structure",
       "required":[
@@ -3699,6 +3849,56 @@
         "appendToPrompt":{"shape":"Prompt"},
         "modelId":{"shape":"String"}
       }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":0
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"TaggableResourcesArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tags":{"shape":"TagsMap"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"[a-zA-Z0-9\\s._:/=+@-]*"
+    },
+    "TaggableResourcesArn":{
+      "type":"string",
+      "max":1011,
+      "min":20,
+      "pattern":"arn:(?:[^:]+)?:bedrock-agentcore:[a-z0-9-]+:[0-9]{12}:([a-z-]+/[^/]+)(?:/[a-z-]+/[^/]+)*"
+    },
+    "TagsMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":50,
+      "min":0
     },
     "TargetConfiguration":{
       "type":"structure",
@@ -3835,6 +4035,29 @@
       },
       "exception":true
     },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"TaggableResourcesArn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tagKeys":{
+          "shape":"TagKeyList",
+          "location":"querystring",
+          "locationName":"tagKeys"
+        }
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "UpdateAgentRuntimeEndpointRequest":{
       "type":"structure",
       "required":[
@@ -3874,7 +4097,7 @@
         "targetVersion":{"shape":"AgentRuntimeVersion"},
         "agentRuntimeEndpointArn":{"shape":"AgentRuntimeEndpointArn"},
         "agentRuntimeArn":{"shape":"AgentRuntimeArn"},
-        "status":{"shape":"AgentEndpointStatus"},
+        "status":{"shape":"AgentRuntimeEndpointStatus"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"}
       }
@@ -3894,7 +4117,7 @@
           "locationName":"agentRuntimeId"
         },
         "description":{"shape":"Description"},
-        "agentRuntimeArtifact":{"shape":"AgentArtifact"},
+        "agentRuntimeArtifact":{"shape":"AgentRuntimeArtifact"},
         "roleArn":{"shape":"RoleArn"},
         "networkConfiguration":{"shape":"NetworkConfiguration"},
         "protocolConfiguration":{"shape":"ProtocolConfiguration"},
@@ -3903,7 +4126,8 @@
           "idempotencyToken":true
         },
         "environmentVariables":{"shape":"EnvironmentVariablesMap"},
-        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"}
+        "authorizerConfiguration":{"shape":"AuthorizerConfiguration"},
+        "requestHeaderConfiguration":{"shape":"RequestHeaderConfiguration"}
       }
     },
     "UpdateAgentRuntimeResponse":{
@@ -3923,7 +4147,7 @@
         "agentRuntimeVersion":{"shape":"AgentRuntimeVersion"},
         "createdAt":{"shape":"DateTimestamp"},
         "lastUpdatedAt":{"shape":"DateTimestamp"},
-        "status":{"shape":"AgentStatus"}
+        "status":{"shape":"AgentRuntimeStatus"}
       }
     },
     "UpdateApiKeyCredentialProviderRequest":{
@@ -4259,6 +4483,17 @@
         "EventInOtherSession",
         "ResourceConflict"
       ]
+    },
+    "VpcConfig":{
+      "type":"structure",
+      "required":[
+        "securityGroups",
+        "subnets"
+      ],
+      "members":{
+        "securityGroups":{"shape":"SecurityGroups"},
+        "subnets":{"shape":"Subnets"}
+      }
     },
     "WorkloadIdentityArn":{
       "type":"string",

@@ -2,16 +2,15 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2018-05-10",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"license-manager-user-subscriptions",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceFullName":"AWS License Manager User Subscriptions",
     "serviceId":"License Manager User Subscriptions",
     "signatureVersion":"v4",
     "signingName":"license-manager-user-subscriptions",
-    "uid":"license-manager-user-subscriptions-2018-05-10",
-    "auth":["aws.auth#sigv4"]
+    "uid":"license-manager-user-subscriptions-2018-05-10"
   },
   "operations":{
     "AssociateUser":{
@@ -25,8 +24,8 @@
       "output":{"shape":"AssociateUserResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -45,8 +44,8 @@
       "output":{"shape":"CreateLicenseServerEndpointResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -65,8 +64,8 @@
       "output":{"shape":"DeleteLicenseServerEndpointResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -85,8 +84,8 @@
       "output":{"shape":"DeregisterIdentityProviderResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -105,8 +104,8 @@
       "output":{"shape":"DisassociateUserResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -125,8 +124,8 @@
       "output":{"shape":"ListIdentityProvidersResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -144,8 +143,8 @@
       "output":{"shape":"ListInstancesResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -163,8 +162,8 @@
       "output":{"shape":"ListLicenseServerEndpointsResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
@@ -181,8 +180,8 @@
       "output":{"shape":"ListProductSubscriptionsResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -215,8 +214,8 @@
       "output":{"shape":"ListUserAssociationsResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -234,8 +233,8 @@
       "output":{"shape":"RegisterIdentityProviderResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -254,8 +253,8 @@
       "output":{"shape":"StartProductSubscriptionResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -273,8 +272,8 @@
       "output":{"shape":"StopProductSubscriptionResponse"},
       "errors":[
         {"shape":"ServiceQuotaExceededException"},
-        {"shape":"ConflictException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -341,17 +340,18 @@
     "ActiveDirectoryIdentityProvider":{
       "type":"structure",
       "members":{
+        "DirectoryId":{"shape":"Directory"},
         "ActiveDirectorySettings":{"shape":"ActiveDirectorySettings"},
         "ActiveDirectoryType":{"shape":"ActiveDirectoryType"},
-        "DirectoryId":{"shape":"Directory"}
+        "IsSharedActiveDirectory":{"shape":"Boolean"}
       }
     },
     "ActiveDirectorySettings":{
       "type":"structure",
       "members":{
-        "DomainCredentialsProvider":{"shape":"CredentialsProvider"},
-        "DomainIpv4List":{"shape":"ActiveDirectorySettingsDomainIpv4ListList"},
         "DomainName":{"shape":"String"},
+        "DomainIpv4List":{"shape":"ActiveDirectorySettingsDomainIpv4ListList"},
+        "DomainCredentialsProvider":{"shape":"CredentialsProvider"},
         "DomainNetworkSettings":{"shape":"DomainNetworkSettings"}
       }
     },
@@ -370,21 +370,21 @@
     },
     "Arn":{
       "type":"string",
-      "pattern":"^arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{1,63}:[a-zA-Z0-9-\\.]{1,510}/[a-zA-Z0-9-\\.]{1,510}$"
+      "pattern":"arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{1,63}:[a-zA-Z0-9-\\.]{1,510}/[a-zA-Z0-9-\\.]{1,510}"
     },
     "AssociateUserRequest":{
       "type":"structure",
       "required":[
-        "IdentityProvider",
+        "Username",
         "InstanceId",
-        "Username"
+        "IdentityProvider"
       ],
       "members":{
-        "Domain":{"shape":"String"},
-        "IdentityProvider":{"shape":"IdentityProvider"},
+        "Username":{"shape":"String"},
         "InstanceId":{"shape":"String"},
-        "Tags":{"shape":"Tags"},
-        "Username":{"shape":"String"}
+        "IdentityProvider":{"shape":"IdentityProvider"},
+        "Domain":{"shape":"String"},
+        "Tags":{"shape":"Tags"}
       }
     },
     "AssociateUserResponse":{
@@ -393,6 +393,10 @@
       "members":{
         "InstanceUserSummary":{"shape":"InstanceUserSummary"}
       }
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
     },
     "BoxInteger":{
       "type":"integer",
@@ -453,8 +457,8 @@
       "type":"structure",
       "members":{
         "IdentityProvider":{"shape":"IdentityProvider"},
-        "IdentityProviderArn":{"shape":"Arn"},
-        "Product":{"shape":"String"}
+        "Product":{"shape":"String"},
+        "IdentityProviderArn":{"shape":"Arn"}
       }
     },
     "DeregisterIdentityProviderResponse":{
@@ -466,16 +470,16 @@
     },
     "Directory":{
       "type":"string",
-      "pattern":"^(d|sd)-[0-9a-f]{10}$"
+      "pattern":"(d|sd)-[0-9a-f]{10}"
     },
     "DisassociateUserRequest":{
       "type":"structure",
       "members":{
-        "Domain":{"shape":"String"},
-        "IdentityProvider":{"shape":"IdentityProvider"},
+        "Username":{"shape":"String"},
         "InstanceId":{"shape":"String"},
+        "IdentityProvider":{"shape":"IdentityProvider"},
         "InstanceUserArn":{"shape":"Arn"},
-        "Username":{"shape":"String"}
+        "Domain":{"shape":"String"}
       }
     },
     "DisassociateUserResponse":{
@@ -520,17 +524,18 @@
       "type":"structure",
       "required":[
         "IdentityProvider",
-        "Product",
         "Settings",
+        "Product",
         "Status"
       ],
       "members":{
-        "FailureMessage":{"shape":"String"},
         "IdentityProvider":{"shape":"IdentityProvider"},
-        "IdentityProviderArn":{"shape":"Arn"},
-        "Product":{"shape":"String"},
         "Settings":{"shape":"Settings"},
-        "Status":{"shape":"String"}
+        "Product":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "IdentityProviderArn":{"shape":"Arn"},
+        "FailureMessage":{"shape":"String"},
+        "OwnerAccountId":{"shape":"String"}
       }
     },
     "IdentityProviderSummaryList":{
@@ -541,15 +546,17 @@
       "type":"structure",
       "required":[
         "InstanceId",
-        "Products",
-        "Status"
+        "Status",
+        "Products"
       ],
       "members":{
         "InstanceId":{"shape":"String"},
-        "LastStatusCheckDate":{"shape":"String"},
-        "Products":{"shape":"StringList"},
         "Status":{"shape":"String"},
-        "StatusMessage":{"shape":"String"}
+        "Products":{"shape":"StringList"},
+        "LastStatusCheckDate":{"shape":"String"},
+        "StatusMessage":{"shape":"String"},
+        "OwnerAccountId":{"shape":"String"},
+        "IdentityProvider":{"shape":"IdentityProvider"}
       }
     },
     "InstanceSummaryList":{
@@ -559,21 +566,21 @@
     "InstanceUserSummary":{
       "type":"structure",
       "required":[
-        "IdentityProvider",
+        "Username",
         "InstanceId",
-        "Status",
-        "Username"
+        "IdentityProvider",
+        "Status"
       ],
       "members":{
-        "AssociationDate":{"shape":"String"},
-        "DisassociationDate":{"shape":"String"},
-        "Domain":{"shape":"String"},
-        "IdentityProvider":{"shape":"IdentityProvider"},
+        "Username":{"shape":"String"},
         "InstanceId":{"shape":"String"},
-        "InstanceUserArn":{"shape":"Arn"},
+        "IdentityProvider":{"shape":"IdentityProvider"},
         "Status":{"shape":"String"},
+        "InstanceUserArn":{"shape":"Arn"},
         "StatusMessage":{"shape":"String"},
-        "Username":{"shape":"String"}
+        "Domain":{"shape":"String"},
+        "AssociationDate":{"shape":"String"},
+        "DisassociationDate":{"shape":"String"}
       }
     },
     "InstanceUserSummaryList":{
@@ -591,28 +598,28 @@
     },
     "IpV4":{
       "type":"string",
-      "pattern":"^(?:(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\\.(?!$)|$)){4}$"
+      "pattern":"(?:(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])(\\.(?!$)|$)){4}"
     },
     "LicenseServer":{
       "type":"structure",
       "members":{
+        "ProvisioningStatus":{"shape":"LicenseServerEndpointProvisioningStatus"},
         "HealthStatus":{"shape":"LicenseServerHealthStatus"},
-        "Ipv4Address":{"shape":"String"},
-        "ProvisioningStatus":{"shape":"LicenseServerEndpointProvisioningStatus"}
+        "Ipv4Address":{"shape":"String"}
       }
     },
     "LicenseServerEndpoint":{
       "type":"structure",
       "members":{
-        "CreationTime":{"shape":"Timestamp"},
         "IdentityProviderArn":{"shape":"String"},
-        "LicenseServerEndpointArn":{"shape":"Arn"},
+        "ServerType":{"shape":"ServerType"},
+        "ServerEndpoint":{"shape":"ServerEndpoint"},
+        "StatusMessage":{"shape":"String"},
         "LicenseServerEndpointId":{"shape":"LicenseServerEndpointId"},
+        "LicenseServerEndpointArn":{"shape":"Arn"},
         "LicenseServerEndpointProvisioningStatus":{"shape":"LicenseServerEndpointProvisioningStatus"},
         "LicenseServers":{"shape":"LicenseServerList"},
-        "ServerEndpoint":{"shape":"ServerEndpoint"},
-        "ServerType":{"shape":"ServerType"},
-        "StatusMessage":{"shape":"String"}
+        "CreationTime":{"shape":"Timestamp"}
       }
     },
     "LicenseServerEndpointId":{"type":"string"},
@@ -646,19 +653,19 @@
     "LicenseServerSettings":{
       "type":"structure",
       "required":[
-        "ServerSettings",
-        "ServerType"
+        "ServerType",
+        "ServerSettings"
       ],
       "members":{
-        "ServerSettings":{"shape":"ServerSettings"},
-        "ServerType":{"shape":"ServerType"}
+        "ServerType":{"shape":"ServerType"},
+        "ServerSettings":{"shape":"ServerSettings"}
       }
     },
     "ListIdentityProvidersRequest":{
       "type":"structure",
       "members":{
-        "Filters":{"shape":"FilterList"},
         "MaxResults":{"shape":"BoxInteger"},
+        "Filters":{"shape":"FilterList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -673,9 +680,9 @@
     "ListInstancesRequest":{
       "type":"structure",
       "members":{
-        "Filters":{"shape":"FilterList"},
         "MaxResults":{"shape":"BoxInteger"},
-        "NextToken":{"shape":"String"}
+        "NextToken":{"shape":"String"},
+        "Filters":{"shape":"FilterList"}
       }
     },
     "ListInstancesResponse":{
@@ -688,8 +695,8 @@
     "ListLicenseServerEndpointsRequest":{
       "type":"structure",
       "members":{
-        "Filters":{"shape":"FilterList"},
         "MaxResults":{"shape":"ListLicenseServerEndpointsRequestMaxResultsInteger"},
+        "Filters":{"shape":"FilterList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -710,18 +717,18 @@
       "type":"structure",
       "required":["IdentityProvider"],
       "members":{
-        "Filters":{"shape":"FilterList"},
+        "Product":{"shape":"String"},
         "IdentityProvider":{"shape":"IdentityProvider"},
         "MaxResults":{"shape":"BoxInteger"},
-        "NextToken":{"shape":"String"},
-        "Product":{"shape":"String"}
+        "Filters":{"shape":"FilterList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "ListProductSubscriptionsResponse":{
       "type":"structure",
       "members":{
-        "NextToken":{"shape":"String"},
-        "ProductUserSummaries":{"shape":"ProductUserSummaryList"}
+        "ProductUserSummaries":{"shape":"ProductUserSummaryList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -744,14 +751,14 @@
     "ListUserAssociationsRequest":{
       "type":"structure",
       "required":[
-        "IdentityProvider",
-        "InstanceId"
+        "InstanceId",
+        "IdentityProvider"
       ],
       "members":{
-        "Filters":{"shape":"FilterList"},
-        "IdentityProvider":{"shape":"IdentityProvider"},
         "InstanceId":{"shape":"String"},
+        "IdentityProvider":{"shape":"IdentityProvider"},
         "MaxResults":{"shape":"BoxInteger"},
+        "Filters":{"shape":"FilterList"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -765,21 +772,21 @@
     "ProductUserSummary":{
       "type":"structure",
       "required":[
-        "IdentityProvider",
+        "Username",
         "Product",
-        "Status",
-        "Username"
+        "IdentityProvider",
+        "Status"
       ],
       "members":{
-        "Domain":{"shape":"String"},
-        "IdentityProvider":{"shape":"IdentityProvider"},
+        "Username":{"shape":"String"},
         "Product":{"shape":"String"},
-        "ProductUserArn":{"shape":"Arn"},
+        "IdentityProvider":{"shape":"IdentityProvider"},
         "Status":{"shape":"String"},
+        "ProductUserArn":{"shape":"Arn"},
         "StatusMessage":{"shape":"String"},
-        "SubscriptionEndDate":{"shape":"String"},
+        "Domain":{"shape":"String"},
         "SubscriptionStartDate":{"shape":"String"},
-        "Username":{"shape":"String"}
+        "SubscriptionEndDate":{"shape":"String"}
       }
     },
     "ProductUserSummaryList":{
@@ -815,7 +822,7 @@
     },
     "ResourceArn":{
       "type":"string",
-      "pattern":"^arn:([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,510})/([a-z0-9-\\.]{1,510})$"
+      "pattern":"arn:([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,63}):([a-z0-9-\\.]{1,510})/([a-z0-9-\\.]{1,510})"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -842,7 +849,7 @@
       "type":"string",
       "max":200,
       "min":5,
-      "pattern":"^sg-(([0-9a-z]{8})|([0-9a-z]{17}))$"
+      "pattern":"sg-(([0-9a-z]{8})|([0-9a-z]{17}))"
     },
     "ServerEndpoint":{
       "type":"structure",
@@ -871,12 +878,12 @@
     "Settings":{
       "type":"structure",
       "required":[
-        "SecurityGroupId",
-        "Subnets"
+        "Subnets",
+        "SecurityGroupId"
       ],
       "members":{
-        "SecurityGroupId":{"shape":"SecurityGroup"},
-        "Subnets":{"shape":"SettingsSubnetsList"}
+        "Subnets":{"shape":"SettingsSubnetsList"},
+        "SecurityGroupId":{"shape":"SecurityGroup"}
       }
     },
     "SettingsSubnetsList":{
@@ -887,16 +894,16 @@
     "StartProductSubscriptionRequest":{
       "type":"structure",
       "required":[
+        "Username",
         "IdentityProvider",
-        "Product",
-        "Username"
+        "Product"
       ],
       "members":{
-        "Domain":{"shape":"String"},
+        "Username":{"shape":"String"},
         "IdentityProvider":{"shape":"IdentityProvider"},
         "Product":{"shape":"String"},
-        "Tags":{"shape":"Tags"},
-        "Username":{"shape":"String"}
+        "Domain":{"shape":"String"},
+        "Tags":{"shape":"Tags"}
       }
     },
     "StartProductSubscriptionResponse":{
@@ -909,11 +916,11 @@
     "StopProductSubscriptionRequest":{
       "type":"structure",
       "members":{
-        "Domain":{"shape":"String"},
+        "Username":{"shape":"String"},
         "IdentityProvider":{"shape":"IdentityProvider"},
         "Product":{"shape":"String"},
         "ProductUserArn":{"shape":"Arn"},
-        "Username":{"shape":"String"}
+        "Domain":{"shape":"String"}
       }
     },
     "StopProductSubscriptionResponse":{
@@ -930,7 +937,7 @@
     },
     "Subnet":{
       "type":"string",
-      "pattern":"^subnet-[a-z0-9]{8,17}"
+      "pattern":"subnet-[a-z0-9]{8,17}.*"
     },
     "Subnets":{
       "type":"list",
@@ -960,8 +967,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "Tags":{
       "type":"map",
@@ -1000,16 +1006,15 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateIdentityProviderSettingsRequest":{
       "type":"structure",
       "required":["UpdateSettings"],
       "members":{
         "IdentityProvider":{"shape":"IdentityProvider"},
-        "IdentityProviderArn":{"shape":"Arn"},
         "Product":{"shape":"String"},
+        "IdentityProviderArn":{"shape":"Arn"},
         "UpdateSettings":{"shape":"UpdateSettings"}
       }
     },
