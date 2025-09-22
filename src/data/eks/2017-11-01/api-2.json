@@ -3313,8 +3313,26 @@
     "NodeRepairConfig":{
       "type":"structure",
       "members":{
-        "enabled":{"shape":"BoxedBoolean"}
+        "enabled":{"shape":"BoxedBoolean"},
+        "maxUnhealthyNodeThresholdCount":{"shape":"NonZeroInteger"},
+        "maxUnhealthyNodeThresholdPercentage":{"shape":"PercentCapacity"},
+        "maxParallelNodesRepairedCount":{"shape":"NonZeroInteger"},
+        "maxParallelNodesRepairedPercentage":{"shape":"PercentCapacity"},
+        "nodeRepairConfigOverrides":{"shape":"NodeRepairConfigOverridesList"}
       }
+    },
+    "NodeRepairConfigOverrides":{
+      "type":"structure",
+      "members":{
+        "nodeMonitoringCondition":{"shape":"String"},
+        "nodeUnhealthyReason":{"shape":"String"},
+        "minRepairWaitTimeMins":{"shape":"NonZeroInteger"},
+        "repairAction":{"shape":"RepairAction"}
+      }
+    },
+    "NodeRepairConfigOverridesList":{
+      "type":"list",
+      "member":{"shape":"NodeRepairConfigOverrides"}
     },
     "Nodegroup":{
       "type":"structure",
@@ -3621,6 +3639,14 @@
       "type":"list",
       "member":{"shape":"RemotePodNetwork"},
       "max":1
+    },
+    "RepairAction":{
+      "type":"string",
+      "enum":[
+        "Replace",
+        "Reboot",
+        "NoAction"
+      ]
     },
     "ResolveConflicts":{
       "type":"string",
@@ -4127,7 +4153,8 @@
         "StorageConfig",
         "KubernetesNetworkConfig",
         "RemoteNetworkConfig",
-        "DeletionProtection"
+        "DeletionProtection",
+        "NodeRepairConfig"
       ]
     },
     "UpdateParams":{

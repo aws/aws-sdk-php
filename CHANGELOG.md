@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Starting in JAN 2026, AWS Batch will change the default AMI for new Amazon ECS compute environments from Amazon Linux 2 to Amazon Linux 2023. We recommend migrating AWS Batch Amazon ECS compute environments to Amazon Linux 2023 to maintain optimal performance and security.
+* `Aws\EKS` - Adds support for RepairConfig overrides and configurations in EKS Managed Node Groups.
+* `Aws\imagebuilder` - Version ARNs are no longer required for the EC2 Image Builder list-image-build-version, list-component-build-version, and list-workflow-build-version APIs. Calling these APIs without the ARN returns all build versions for the given resource type in the requesting account.
+
 ## 3.356.22 - 2025-09-19
 
 * `Aws\MediaLive` - Add MinBitrate for QVBR mode under H264/H265/AV1 output codec. Add GopBReference, GopNumBFrames, SubGopLength fields under H265 output codec.

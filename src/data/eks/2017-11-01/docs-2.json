@@ -1350,6 +1350,18 @@
         "UpdateNodegroupConfigRequest$nodeRepairConfig": "<p>The node auto repair configuration for the node group.</p>"
       }
     },
+    "NodeRepairConfigOverrides": {
+      "base": "<p>Specify granular overrides for specific repair actions. These overrides control the repair action and the repair delay time before a node is considered eligible for repair. If you use this, you must specify all the values.</p>",
+      "refs": {
+        "NodeRepairConfigOverridesList$member": null
+      }
+    },
+    "NodeRepairConfigOverridesList": {
+      "base": null,
+      "refs": {
+        "NodeRepairConfig$nodeRepairConfigOverrides": "<p>Specify granular overrides for specific repair actions. These overrides control the repair action and the repair delay time before a node is considered eligible for repair. If you use this, you must specify all the values.</p>"
+      }
+    },
     "Nodegroup": {
       "base": "<p>An object representing an Amazon EKS managed node group.</p>",
       "refs": {
@@ -1407,6 +1419,9 @@
     "NonZeroInteger": {
       "base": null,
       "refs": {
+        "NodeRepairConfig$maxUnhealthyNodeThresholdCount": "<p>Specify a count threshold of unhealthy nodes, above which node auto repair actions will stop. When using this, you cannot also set <code>maxUnhealthyNodeThresholdPercentage</code> at the same time.</p>",
+        "NodeRepairConfig$maxParallelNodesRepairedCount": "<p>Specify the maximum number of nodes that can be repaired concurrently or in parallel, expressed as a count of unhealthy nodes. This gives you finer-grained control over the pace of node replacements. When using this, you cannot also set <code>maxParallelNodesRepairedPercentage</code> at the same time.</p>",
+        "NodeRepairConfigOverrides$minRepairWaitTimeMins": "<p>Specify the minimum time in minutes to wait before attempting to repair a node with this specific <code>nodeMonitoringCondition</code> and <code>nodeUnhealthyReason</code>.</p>",
         "NodegroupUpdateConfig$maxUnavailable": "<p>The maximum number of nodes unavailable at once during a version update. Nodes are updated in parallel. This value or <code>maxUnavailablePercentage</code> is required to have a value.The maximum number is 100.</p>"
       }
     },
@@ -1447,6 +1462,8 @@
     "PercentCapacity": {
       "base": null,
       "refs": {
+        "NodeRepairConfig$maxUnhealthyNodeThresholdPercentage": "<p>Specify a percentage threshold of unhealthy nodes, above which node auto repair actions will stop. When using this, you cannot also set <code>maxUnhealthyNodeThresholdCount</code> at the same time.</p>",
+        "NodeRepairConfig$maxParallelNodesRepairedPercentage": "<p>Specify the maximum number of nodes that can be repaired concurrently or in parallel, expressed as a percentage of unhealthy nodes. This gives you finer-grained control over the pace of node replacements. When using this, you cannot also set <code>maxParallelNodesRepairedCount</code> at the same time.</p>",
         "NodegroupUpdateConfig$maxUnavailablePercentage": "<p>The maximum percentage of nodes unavailable during a version update. This percentage of nodes are updated in parallel, up to 100 nodes at once. This value or <code>maxUnavailable</code> is required to have a value.</p>"
       }
     },
@@ -1529,6 +1546,12 @@
       "refs": {
         "RemoteNetworkConfigRequest$remotePodNetworks": "<p>The list of network CIDRs that can contain pods that run Kubernetes webhooks on hybrid nodes.</p> <p>These CIDR blocks are determined by configuring your Container Network Interface (CNI) plugin. We recommend the Calico CNI or Cilium CNI. Note that the Amazon VPC CNI plugin for Kubernetes isn't available for on-premises and edge locations.</p> <p>Enter one or more IPv4 CIDR blocks in decimal dotted-quad notation (for example, <code> 10.2.0.0/16</code>).</p> <p>It must satisfy the following requirements:</p> <ul> <li> <p>Each block must be within an <code>IPv4</code> RFC-1918 network range. Minimum allowed size is /32, maximum allowed size is /8. Publicly-routable addresses aren't supported.</p> </li> <li> <p>Each block cannot overlap with the range of the VPC CIDR blocks for your EKS resources, or the block of the Kubernetes service IP range.</p> </li> </ul>",
         "RemoteNetworkConfigResponse$remotePodNetworks": "<p>The list of network CIDRs that can contain pods that run Kubernetes webhooks on hybrid nodes.</p>"
+      }
+    },
+    "RepairAction": {
+      "base": null,
+      "refs": {
+        "NodeRepairConfigOverrides$repairAction": "<p>Specify the repair action to take for nodes when all of the specified conditions are met.</p>"
       }
     },
     "ResolveConflicts": {
@@ -1837,6 +1860,8 @@
         "ListUpdatesResponse$nextToken": "<p>The <code>nextToken</code> value returned from a previous paginated request, where <code>maxResults</code> was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the <code>nextToken</code> value. This value is null when there are no more results to return.</p> <note> <p>This token should be treated as an opaque identifier that is used only to retrieve the next items in a list and not for other programmatic purposes.</p> </note>",
         "MarketplaceInformation$productId": "<p>The product ID from the Amazon Web Services Marketplace.</p>",
         "MarketplaceInformation$productUrl": "<p>The product URL from the Amazon Web Services Marketplace.</p>",
+        "NodeRepairConfigOverrides$nodeMonitoringCondition": "<p>Specify an unhealthy condition reported by the node monitoring agent that this override would apply to.</p>",
+        "NodeRepairConfigOverrides$nodeUnhealthyReason": "<p>Specify a reason reported by the node monitoring agent that this override would apply to.</p>",
         "Nodegroup$nodegroupName": "<p>The name associated with an Amazon EKS managed node group.</p>",
         "Nodegroup$nodegroupArn": "<p>The Amazon Resource Name (ARN) associated with the managed node group.</p>",
         "Nodegroup$clusterName": "<p>The name of your cluster.</p>",
