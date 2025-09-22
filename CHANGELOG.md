@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.23 - 2025-09-22
 
 * `Aws\Batch` - Starting in JAN 2026, AWS Batch will change the default AMI for new Amazon ECS compute environments from Amazon Linux 2 to Amazon Linux 2023. We recommend migrating AWS Batch Amazon ECS compute environments to Amazon Linux 2023 to maintain optimal performance and security.
 * `Aws\EKS` - Adds support for RepairConfig overrides and configurations in EKS Managed Node Groups.
