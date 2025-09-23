@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.24 - 2025-09-23
 
 * `Aws\SSM` - Added Dualstack support to GetDeployablePatchSnapshotForInstance
 * `Aws\SSOAdmin` - Add support for encryption at rest with Customer Managed KMS Key in AWS IAM Identity Center
