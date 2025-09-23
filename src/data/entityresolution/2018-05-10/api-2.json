@@ -813,6 +813,7 @@
         "inputSourceConfig":{"shape":"IdMappingWorkflowInputSourceConfig"},
         "outputSourceConfig":{"shape":"IdMappingWorkflowOutputSourceConfig"},
         "idMappingTechniques":{"shape":"IdMappingTechniques"},
+        "incrementalRunConfig":{"shape":"IdMappingIncrementalRunConfig"},
         "roleArn":{"shape":"IdMappingRoleArn"},
         "tags":{"shape":"TagMap"}
       }
@@ -832,6 +833,7 @@
         "inputSourceConfig":{"shape":"IdMappingWorkflowInputSourceConfig"},
         "outputSourceConfig":{"shape":"IdMappingWorkflowOutputSourceConfig"},
         "idMappingTechniques":{"shape":"IdMappingTechniques"},
+        "incrementalRunConfig":{"shape":"IdMappingIncrementalRunConfig"},
         "roleArn":{"shape":"IdMappingRoleArn"}
       }
     },
@@ -1145,14 +1147,10 @@
         "errorMessage"
       ],
       "members":{
-        "inputSourceARN":{"shape":"FailedRecordInputSourceARNString"},
+        "inputSourceARN":{"shape":"InputSourceARN"},
         "uniqueId":{"shape":"String"},
         "errorMessage":{"shape":"ErrorMessage"}
       }
-    },
-    "FailedRecordInputSourceARNString":{
-      "type":"string",
-      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "FailedRecordsList":{
       "type":"list",
@@ -1224,7 +1222,8 @@
         "endTime":{"shape":"Timestamp"},
         "metrics":{"shape":"IdMappingJobMetrics"},
         "errorDetails":{"shape":"ErrorDetails"},
-        "outputSourceConfig":{"shape":"IdMappingJobOutputSourceConfig"}
+        "outputSourceConfig":{"shape":"IdMappingJobOutputSourceConfig"},
+        "jobType":{"shape":"JobType"}
       }
     },
     "GetIdMappingWorkflowInput":{
@@ -1257,6 +1256,7 @@
         "idMappingTechniques":{"shape":"IdMappingTechniques"},
         "createdAt":{"shape":"Timestamp"},
         "updatedAt":{"shape":"Timestamp"},
+        "incrementalRunConfig":{"shape":"IdMappingIncrementalRunConfig"},
         "roleArn":{"shape":"IdMappingRoleArn"},
         "tags":{"shape":"TagMap"}
       }
@@ -1498,16 +1498,34 @@
       "min":1,
       "pattern":"[a-zA-Z_0-9-+=/,]*"
     },
+    "IdMappingIncrementalRunConfig":{
+      "type":"structure",
+      "members":{
+        "incrementalRunType":{"shape":"IdMappingIncrementalRunType"}
+      }
+    },
+    "IdMappingIncrementalRunType":{
+      "type":"string",
+      "enum":["ON_DEMAND"]
+    },
     "IdMappingJobMetrics":{
       "type":"structure",
       "members":{
         "inputRecords":{"shape":"Integer"},
         "totalRecordsProcessed":{"shape":"Integer"},
         "recordsNotProcessed":{"shape":"Integer"},
+        "deleteRecordsProcessed":{"shape":"Integer"},
         "totalMappedRecords":{"shape":"Integer"},
         "totalMappedSourceRecords":{"shape":"Integer"},
         "totalMappedTargetRecords":{"shape":"Integer"},
-        "uniqueRecordsLoaded":{"shape":"Integer"}
+        "uniqueRecordsLoaded":{"shape":"Integer"},
+        "newMappedRecords":{"shape":"Integer"},
+        "newMappedSourceRecords":{"shape":"Integer"},
+        "newMappedTargetRecords":{"shape":"Integer"},
+        "newUniqueRecordsLoaded":{"shape":"Integer"},
+        "mappedRecordsRemoved":{"shape":"Integer"},
+        "mappedSourceRecordsRemoved":{"shape":"Integer"},
+        "mappedTargetRecordsRemoved":{"shape":"Integer"}
       }
     },
     "IdMappingJobOutputSource":{
@@ -1578,7 +1596,7 @@
       "type":"structure",
       "required":["inputSourceARN"],
       "members":{
-        "inputSourceARN":{"shape":"IdMappingWorkflowInputSourceInputSourceARNString"},
+        "inputSourceARN":{"shape":"InputSourceARN"},
         "schemaName":{"shape":"EntityName"},
         "type":{"shape":"IdNamespaceType"}
       }
@@ -1588,10 +1606,6 @@
       "member":{"shape":"IdMappingWorkflowInputSource"},
       "max":20,
       "min":1
-    },
-    "IdMappingWorkflowInputSourceInputSourceARNString":{
-      "type":"string",
-      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "IdMappingWorkflowList":{
       "type":"list",
@@ -1673,7 +1687,7 @@
       "type":"structure",
       "required":["inputSourceARN"],
       "members":{
-        "inputSourceARN":{"shape":"IdNamespaceInputSourceInputSourceARNString"},
+        "inputSourceARN":{"shape":"InputSourceARN"},
         "schemaName":{"shape":"EntityName"}
       }
     },
@@ -1682,10 +1696,6 @@
       "member":{"shape":"IdNamespaceInputSource"},
       "max":20,
       "min":0
-    },
-    "IdNamespaceInputSourceInputSourceARNString":{
-      "type":"string",
-      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "IdNamespaceList":{
       "type":"list",
@@ -1734,20 +1744,20 @@
         "schemaName"
       ],
       "members":{
-        "inputSourceARN":{"shape":"InputSourceInputSourceARNString"},
+        "inputSourceARN":{"shape":"InputSourceARN"},
         "schemaName":{"shape":"EntityName"},
         "applyNormalization":{"shape":"Boolean"}
       }
+    },
+    "InputSourceARN":{
+      "type":"string",
+      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "InputSourceConfig":{
       "type":"list",
       "member":{"shape":"InputSource"},
       "max":20,
       "min":1
-    },
-    "InputSourceInputSourceARNString":{
-      "type":"string",
-      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "Integer":{
       "type":"integer",
@@ -1784,6 +1794,7 @@
         "inputRecords":{"shape":"Integer"},
         "totalRecordsProcessed":{"shape":"Integer"},
         "recordsNotProcessed":{"shape":"Integer"},
+        "deleteRecordsProcessed":{"shape":"Integer"},
         "matchIDs":{"shape":"Integer"}
       }
     },
@@ -1827,6 +1838,14 @@
         "startTime":{"shape":"Timestamp"},
         "endTime":{"shape":"Timestamp"}
       }
+    },
+    "JobType":{
+      "type":"string",
+      "enum":[
+        "BATCH",
+        "INCREMENTAL",
+        "DELETE_ONLY"
+      ]
     },
     "KMSArn":{
       "type":"string",
@@ -2090,13 +2109,9 @@
         "recordId"
       ],
       "members":{
-        "inputSourceARN":{"shape":"MatchedRecordInputSourceARNString"},
+        "inputSourceARN":{"shape":"InputSourceARN"},
         "recordId":{"shape":"String"}
       }
-    },
-    "MatchedRecordInputSourceARNString":{
-      "type":"string",
-      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "MatchedRecordsList":{
       "type":"list",
@@ -2346,7 +2361,7 @@
         "recordAttributeMap"
       ],
       "members":{
-        "inputSourceARN":{"shape":"RecordInputSourceARNString"},
+        "inputSourceARN":{"shape":"InputSourceARN"},
         "uniqueId":{"shape":"UniqueId"},
         "recordAttributeMap":{"shape":"RecordAttributeMapString255"}
       }
@@ -2384,10 +2399,6 @@
       "max":255,
       "min":0,
       "pattern":"[a-zA-Z_0-9-./@ ()+\\t]*"
-    },
-    "RecordInputSourceARNString":{
-      "type":"string",
-      "pattern":"arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(idnamespace/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):entityresolution:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(matchingworkflow/[a-zA-Z_0-9-]{1,255})$|^arn:(aws|aws-us-gov|aws-cn):glue:[a-z]{2}-[a-z]{1,10}-[0-9]:[0-9]{12}:(table/[a-zA-Z_0-9-]{1,255}/[a-zA-Z_0-9-]{1,255})"
     },
     "RecordMatchingModel":{
       "type":"string",
@@ -2619,7 +2630,8 @@
           "location":"uri",
           "locationName":"workflowName"
         },
-        "outputSourceConfig":{"shape":"IdMappingJobOutputSourceConfig"}
+        "outputSourceConfig":{"shape":"IdMappingJobOutputSourceConfig"},
+        "jobType":{"shape":"JobType"}
       }
     },
     "StartIdMappingJobOutput":{
@@ -2627,7 +2639,8 @@
       "required":["jobId"],
       "members":{
         "jobId":{"shape":"JobId"},
-        "outputSourceConfig":{"shape":"IdMappingJobOutputSourceConfig"}
+        "outputSourceConfig":{"shape":"IdMappingJobOutputSourceConfig"},
+        "jobType":{"shape":"JobType"}
       }
     },
     "StartMatchingJobInput":{
@@ -2794,6 +2807,7 @@
         "inputSourceConfig":{"shape":"IdMappingWorkflowInputSourceConfig"},
         "outputSourceConfig":{"shape":"IdMappingWorkflowOutputSourceConfig"},
         "idMappingTechniques":{"shape":"IdMappingTechniques"},
+        "incrementalRunConfig":{"shape":"IdMappingIncrementalRunConfig"},
         "roleArn":{"shape":"IdMappingRoleArn"}
       }
     },
@@ -2812,6 +2826,7 @@
         "inputSourceConfig":{"shape":"IdMappingWorkflowInputSourceConfig"},
         "outputSourceConfig":{"shape":"IdMappingWorkflowOutputSourceConfig"},
         "idMappingTechniques":{"shape":"IdMappingTechniques"},
+        "incrementalRunConfig":{"shape":"IdMappingIncrementalRunConfig"},
         "roleArn":{"shape":"IdMappingRoleArn"}
       }
     },

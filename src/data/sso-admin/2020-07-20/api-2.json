@@ -1202,6 +1202,7 @@
       "errors":[
         {"shape":"ThrottlingException"},
         {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"ConflictException"}
@@ -1305,11 +1306,16 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"AccessDeniedExceptionMessage"}
+        "Message":{"shape":"AccessDeniedExceptionMessage"},
+        "Reason":{"shape":"AccessDeniedExceptionReason"}
       },
       "exception":true
     },
     "AccessDeniedExceptionMessage":{"type":"string"},
+    "AccessDeniedExceptionReason":{
+      "type":"string",
+      "enum":["KMS_AccessDeniedException"]
+    },
     "AccountAssignment":{
       "type":"structure",
       "members":{
@@ -2036,7 +2042,9 @@
         "OwnerAccountId":{"shape":"AccountId"},
         "Name":{"shape":"NameType"},
         "CreatedDate":{"shape":"Date"},
-        "Status":{"shape":"InstanceStatus"}
+        "Status":{"shape":"InstanceStatus"},
+        "StatusReason":{"shape":"Reason"},
+        "EncryptionConfigurationDetails":{"shape":"EncryptionConfigurationDetails"}
       }
     },
     "DescribePermissionSetProvisioningStatusRequest":{
@@ -2141,6 +2149,23 @@
       "max":100,
       "min":1,
       "pattern":"(-?)P(?=\\d|T\\d)(?:(\\d+)Y)?(?:(\\d+)M)?(?:(\\d+)([DW]))?(?:T(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+(?:\\.\\d+)?)S)?)?"
+    },
+    "EncryptionConfiguration":{
+      "type":"structure",
+      "required":["KeyType"],
+      "members":{
+        "KeyType":{"shape":"KmsKeyType"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
+      }
+    },
+    "EncryptionConfigurationDetails":{
+      "type":"structure",
+      "members":{
+        "KeyType":{"shape":"KmsKeyType"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
+        "EncryptionStatus":{"shape":"KmsKeyStatus"},
+        "EncryptionStatusReason":{"shape":"Reason"}
+      }
     },
     "FederationProtocol":{
       "type":"string",
@@ -2353,13 +2378,15 @@
         "OwnerAccountId":{"shape":"AccountId"},
         "Name":{"shape":"NameType"},
         "CreatedDate":{"shape":"Date"},
-        "Status":{"shape":"InstanceStatus"}
+        "Status":{"shape":"InstanceStatus"},
+        "StatusReason":{"shape":"Reason"}
       }
     },
     "InstanceStatus":{
       "type":"string",
       "enum":[
         "CREATE_IN_PROGRESS",
+        "CREATE_FAILED",
         "DELETE_IN_PROGRESS",
         "ACTIVE"
       ]
@@ -2388,6 +2415,27 @@
       "members":{
         "AuthorizedTokenIssuers":{"shape":"AuthorizedTokenIssuers"}
       }
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"arn:(aws|aws-us-gov|aws-cn|aws-iso|aws-iso-[bcd]):kms:([a-z]{2,}(-[a-z0-9]+)+){1}:[0-9]{12}:key/(mrk-[a-f0-9]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"
+    },
+    "KmsKeyStatus":{
+      "type":"string",
+      "enum":[
+        "UPDATING",
+        "ENABLED",
+        "UPDATE_FAILED"
+      ]
+    },
+    "KmsKeyType":{
+      "type":"string",
+      "enum":[
+        "AWS_OWNED_KMS_KEY",
+        "CUSTOMER_MANAGED_KEY"
+      ]
     },
     "ListAccountAssignmentCreationStatusRequest":{
       "type":"structure",
@@ -3081,9 +3129,14 @@
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"ResourceNotFoundMessage"}
+        "Message":{"shape":"ResourceNotFoundMessage"},
+        "Reason":{"shape":"ResourceNotFoundExceptionReason"}
       },
       "exception":true
+    },
+    "ResourceNotFoundExceptionReason":{
+      "type":"string",
+      "enum":["KMS_NotFoundException"]
     },
     "ResourceNotFoundMessage":{"type":"string"},
     "ResourceServerConfig":{
@@ -3241,11 +3294,16 @@
     "ThrottlingException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"ThrottlingExceptionMessage"}
+        "Message":{"shape":"ThrottlingExceptionMessage"},
+        "Reason":{"shape":"ThrottlingExceptionReason"}
       },
       "exception":true
     },
     "ThrottlingExceptionMessage":{"type":"string"},
+    "ThrottlingExceptionReason":{
+      "type":"string",
+      "enum":["KMS_ThrottlingException"]
+    },
     "Token":{
       "type":"string",
       "max":2048,
@@ -3376,13 +3434,11 @@
     },
     "UpdateInstanceRequest":{
       "type":"structure",
-      "required":[
-        "Name",
-        "InstanceArn"
-      ],
+      "required":["InstanceArn"],
       "members":{
         "Name":{"shape":"NameType"},
-        "InstanceArn":{"shape":"InstanceArn"}
+        "InstanceArn":{"shape":"InstanceArn"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "UpdateInstanceResponse":{
@@ -3430,10 +3486,19 @@
     "ValidationException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"ValidationExceptionMessage"}
+        "Message":{"shape":"ValidationExceptionMessage"},
+        "Reason":{"shape":"ValidationExceptionReason"}
       },
       "exception":true
     },
-    "ValidationExceptionMessage":{"type":"string"}
+    "ValidationExceptionMessage":{"type":"string"},
+    "ValidationExceptionReason":{
+      "type":"string",
+      "enum":[
+        "KMS_InvalidKeyUsageException",
+        "KMS_InvalidStateException",
+        "KMS_DisabledException"
+      ]
+    }
   }
 }

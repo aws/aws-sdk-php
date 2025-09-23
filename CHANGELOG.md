@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SSM` - Added Dualstack support to GetDeployablePatchSnapshotForInstance
+* `Aws\SSOAdmin` - Add support for encryption at rest with Customer Managed KMS Key in AWS IAM Identity Center
+* `Aws\EC2` - Add Amazon EC2 R8gn instance types
+* `Aws\SSOOIDC` - This release includes exception definition and documentation updates.
+* `Aws\CleanRooms` - Added support for running incremental ID mapping for rule-based workflows.
+* `Aws\EntityResolution` - Support incremental id mapping workflow for AWS Entity Resolution
+
 ## 3.356.23 - 2025-09-22
 
 * `Aws\Batch` - Starting in JAN 2026, AWS Batch will change the default AMI for new Amazon ECS compute environments from Amazon Linux 2 to Amazon Linux 2023. We recommend migrating AWS Batch Amazon ECS compute environments to Amazon Linux 2023 to maintain optimal performance and security.

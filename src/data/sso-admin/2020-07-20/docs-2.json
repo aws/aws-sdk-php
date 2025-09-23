@@ -125,6 +125,12 @@
         "AccessDeniedException$Message": null
       }
     },
+    "AccessDeniedExceptionReason": {
+      "base": null,
+      "refs": {
+        "AccessDeniedException$Reason": "<p>The reason for the access denied exception.</p>"
+      }
+    },
     "AccountAssignment": {
       "base": "<p>The assignment that indicates a principal's limited access to a specified Amazon Web Services account with a specified permission set.</p> <note> <p>The term <i>principal</i> here refers to a user or group that is defined in IAM Identity Center.</p> </note>",
       "refs": {
@@ -723,6 +729,18 @@
         "UpdatePermissionSetRequest$SessionDuration": "<p>The length of time that the application user sessions are valid for in the ISO-8601 standard.</p>"
       }
     },
+    "EncryptionConfiguration": {
+      "base": "<p> A structure that specifies the KMS key type and KMS key ARN used to encrypt data in your IAM Identity Center instance.</p>",
+      "refs": {
+        "UpdateInstanceRequest$EncryptionConfiguration": "<p>Specifies the encryption configuration for your IAM Identity Center instance. You can use this to configure customer managed KMS keys (CMK) or Amazon Web Services owned KMS keys for encrypting your instance data.</p>"
+      }
+    },
+    "EncryptionConfigurationDetails": {
+      "base": "<p>The encryption configuration of your IAM Identity Center instance, including the key type, KMS key ARN, and current encryption status. </p>",
+      "refs": {
+        "DescribeInstanceResponse$EncryptionConfigurationDetails": "<p>Contains the encryption configuration for your IAM Identity Center instance, including the encryption status, KMS key type, and KMS key ARN.</p>"
+      }
+    },
     "FederationProtocol": {
       "base": null,
       "refs": {
@@ -956,6 +974,26 @@
       "base": "<p>A structure that defines configuration settings for an application that supports the JWT Bearer Token Authorization Grant. The <code>AuthorizedAudience</code> field is the aud claim. For more information, see <a href=\"https://datatracker.ietf.org/doc/html/rfc7523\">RFC 7523</a>.</p>",
       "refs": {
         "Grant$JwtBearer": "<p>Configuration options for the <code>urn:ietf:params:oauth:grant-type:jwt-bearer</code> grant type.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "EncryptionConfiguration$KmsKeyArn": "<p>The ARN of the KMS key used to encrypt data. Required when KeyType is CUSTOMER_MANAGED_KEY. Cannot be specified when KeyType is AWS_OWNED_KMS_KEY.</p>",
+        "EncryptionConfigurationDetails$KmsKeyArn": "<p>The ARN of the KMS key currently used to encrypt data in your IAM Identity Center instance. </p>"
+      }
+    },
+    "KmsKeyStatus": {
+      "base": null,
+      "refs": {
+        "EncryptionConfigurationDetails$EncryptionStatus": "<p>The current status of encryption configuration.</p>"
+      }
+    },
+    "KmsKeyType": {
+      "base": null,
+      "refs": {
+        "EncryptionConfiguration$KeyType": "<p>The type of KMS key used for encryption.</p>",
+        "EncryptionConfigurationDetails$KeyType": "<p>The type of KMS key used for encryption.</p>"
       }
     },
     "ListAccountAssignmentCreationStatusRequest": {
@@ -1426,6 +1464,9 @@
       "base": null,
       "refs": {
         "AccountAssignmentOperationStatus$FailureReason": "<p>The message that contains an error or exception in case of an operation failure.</p>",
+        "DescribeInstanceResponse$StatusReason": "<p>Provides additional context about the current status of the IAM Identity Center instance. This field is particularly useful when an instance is in a non-ACTIVE state, such as CREATE_FAILED. When an instance fails to create or update, this field contains information about the cause, which may include issues with KMS key configuration, permission problems with the specified KMS key, or service-related errors. </p>",
+        "EncryptionConfigurationDetails$EncryptionStatusReason": "<p>Provides additional context about the current encryption status. This field is particularly useful when the encryption status is UPDATE_FAILED. When encryption configuration update fails, this field contains information about the cause, which may include KMS key access issues, key not found errors, invalid key configuration, key in an invalid state, or a disabled key. </p>",
+        "InstanceMetadata$StatusReason": "<p>Provides additional context about the current status of the IAM Identity Center instance. This field is particularly useful when an instance is in a non-ACTIVE state, such as CREATE_FAILED. When an instance creation fails, this field contains information about the cause, which may include issues with KMS key configuration or insufficient permissions. </p>",
         "PermissionSetProvisioningStatus$FailureReason": "<p>The message that contains an error or exception in case of an operation failure.</p>"
       }
     },
@@ -1452,6 +1493,12 @@
     "ResourceNotFoundException": {
       "base": "<p>Indicates that a requested resource is not found.</p>",
       "refs": {}
+    },
+    "ResourceNotFoundExceptionReason": {
+      "base": null,
+      "refs": {
+        "ResourceNotFoundException$Reason": "<p>The reason for the resource not found exception.</p>"
+      }
     },
     "ResourceNotFoundMessage": {
       "base": null,
@@ -1631,6 +1678,12 @@
       "base": null,
       "refs": {
         "ThrottlingException$Message": null
+      }
+    },
+    "ThrottlingExceptionReason": {
+      "base": null,
+      "refs": {
+        "ThrottlingException$Reason": "<p>The reason for the throttling exception.</p>"
       }
     },
     "Token": {
@@ -1843,6 +1896,12 @@
       "base": null,
       "refs": {
         "ValidationException$Message": null
+      }
+    },
+    "ValidationExceptionReason": {
+      "base": null,
+      "refs": {
+        "ValidationException$Reason": "<p>The reason for the validation exception.</p>"
       }
     }
   }
