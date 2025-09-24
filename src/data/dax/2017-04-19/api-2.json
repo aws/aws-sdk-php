@@ -71,7 +71,8 @@
         {"shape":"SubnetGroupQuotaExceededFault"},
         {"shape":"SubnetQuotaExceededFault"},
         {"shape":"InvalidSubnet"},
-        {"shape":"ServiceLinkedRoleNotFoundFault"}
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"SubnetNotAllowedFault"}
       ]
     },
     "DecreaseReplicationFactor":{
@@ -360,7 +361,8 @@
         {"shape":"SubnetQuotaExceededFault"},
         {"shape":"SubnetInUse"},
         {"shape":"InvalidSubnet"},
-        {"shape":"ServiceLinkedRoleNotFoundFault"}
+        {"shape":"ServiceLinkedRoleNotFoundFault"},
+        {"shape":"SubnetNotAllowedFault"}
       ]
     }
   },
@@ -397,7 +399,8 @@
         "IamRoleArn":{"shape":"String"},
         "ParameterGroup":{"shape":"ParameterGroupStatus"},
         "SSEDescription":{"shape":"SSEDescription"},
-        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"}
+        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "ClusterAlreadyExistsFault":{
@@ -452,7 +455,8 @@
         "ParameterGroupName":{"shape":"String"},
         "Tags":{"shape":"TagList"},
         "SSESpecification":{"shape":"SSESpecification"},
-        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"}
+        "ClusterEndpointEncryptionType":{"shape":"ClusterEndpointEncryptionType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateClusterResponse":{
@@ -760,6 +764,18 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6",
+        "dual_stack"
+      ]
+    },
+    "NetworkTypeList":{
+      "type":"list",
+      "member":{"shape":"NetworkType"}
+    },
     "Node":{
       "type":"structure",
       "members":{
@@ -965,7 +981,8 @@
       "type":"structure",
       "members":{
         "SubnetIdentifier":{"shape":"String"},
-        "SubnetAvailabilityZone":{"shape":"String"}
+        "SubnetAvailabilityZone":{"shape":"String"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroup":{
@@ -974,7 +991,8 @@
         "SubnetGroupName":{"shape":"String"},
         "Description":{"shape":"String"},
         "VpcId":{"shape":"String"},
-        "Subnets":{"shape":"SubnetList"}
+        "Subnets":{"shape":"SubnetList"},
+        "SupportedNetworkTypes":{"shape":"NetworkTypeList"}
       }
     },
     "SubnetGroupAlreadyExistsFault":{
@@ -1017,6 +1035,11 @@
     "SubnetList":{
       "type":"list",
       "member":{"shape":"Subnet"}
+    },
+    "SubnetNotAllowedFault":{
+      "type":"structure",
+      "members":{},
+      "exception":true
     },
     "SubnetQuotaExceededFault":{
       "type":"structure",

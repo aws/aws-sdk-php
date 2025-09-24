@@ -607,7 +607,7 @@
           "input": {
             "CiphertextBlob": "The encrypted data. This ciphertext was encrypted with the KMS key",
             "KeyId": "The KMS key to use to decrypt the ciphertext",
-            "Recipient": "Specifies the attestation document from the Nitro enclave and the encryption algorithm to use with the public key from the attestation document"
+            "Recipient": "Specifies the attestation document from the Nitro enclave or NitroTPM and the encryption algorithm to use with the public key from the attestation document"
           },
           "output": {
             "CiphertextForRecipient": "The decrypted CiphertextBlob encrypted with the public key from the attestation document",
@@ -615,9 +615,9 @@
             "Plaintext": "This field is null or empty"
           }
         },
-        "description": "The following Decrypt example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave. Instead of returning the decrypted data in plaintext (Plaintext), the operation returns the decrypted data encrypted by the public key from the attestation document (CiphertextForRecipient).",
-        "id": "to-decrypt-data-for-a-nitro-enclave-2",
-        "title": "To decrypt data for a Nitro enclave"
+        "description": "The following Decrypt example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave or NitroTPM. Instead of returning the decrypted data in plaintext (Plaintext), the operation returns the decrypted data encrypted by the public key from the attestation document (CiphertextForRecipient).",
+        "id": "to-decrypt-data-for-attestation-2",
+        "title": "To decrypt data for a Nitro enclave or NitroTPM"
       }
     ],
     "DeleteAlias": [
@@ -698,6 +698,42 @@
         "description": "The following example derives a shared secret using a key agreement algorithm.",
         "id": "to-derive-a-shared-secret-1718381818754",
         "title": "To derive a shared secret"
+      },
+      {
+        "input": {
+          "KeyAgreementAlgorithm": "ECDH",
+          "KeyId": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+          "PublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvH3Yj0wbkLEpUl95Cv1cJVjsVNSjwGq3tCLnzXfhVwVvmzGN8pYj3U8nKwgouaHbBWNJYjP5VutbbkKS4Kv4GojwZBJyHN17kmxo8yTjRmjR15SKIQ8cqRA2uaERMLnpztIXdZp232PQPbWGxDyXYJ0aJ5EFSag",
+          "Recipient": {
+            "AttestationDocument": "<attestation document>",
+            "KeyEncryptionAlgorithm": "RSAES_OAEP_SHA_256"
+          }
+        },
+        "output": {
+          "CiphertextForRecipient": "<binary data>",
+          "KeyAgreementAlgorithm": "ECDH",
+          "KeyId": "arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+          "KeyOrigin": "AWS_KMS",
+          "SharedSecret": ""
+        },
+        "comments": {
+          "input": {
+            "KeyAgreementAlgorithm": "The key agreement algorithm used to derive the shared secret. The only valid value is ECDH.",
+            "KeyId": "The key identifier for an asymmetric KMS key pair. The private key in the specified key pair is used to derive the shared secret.",
+            "PublicKey": "The public key in your peer's asymmetric key pair.",
+            "Recipient": "Specifies the attestation document from the Nitro enclave or NitroTPM and the encryption algorithm to use with the public key from the attestation document"
+          },
+          "output": {
+            "CiphertextForRecipient": "The shared secret encrypted by the public key from the attestation document",
+            "KeyAgreementAlgorithm": "The key agreement algorithm used to derive the shared secret.",
+            "KeyId": "The asymmetric KMS key pair used to derive the shared secret.",
+            "KeyOrigin": "The source of the key material for the specified KMS key.",
+            "SharedSecret": "This field is null or empty"
+          }
+        },
+        "description": "The following example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave or NitroTPM. Instead of returning a plaintext shared secret, DeriveSharedSecret returns the shared secret encrypted by the public key from the attestation document.",
+        "id": "to-derive-a-shared-secret-for-attestation-2",
+        "title": "To derive a shared secret for a Nitro enclave or NitroTPM"
       }
     ],
     "DescribeCustomKeyStores": [
@@ -1243,7 +1279,7 @@
           "input": {
             "KeyId": "Identifies the KMS key used to encrypt the encrypted data key (CiphertextBlob)",
             "KeySpec": "Specifies the type of data key to return",
-            "Recipient": "Specifies the attestation document from the Nitro enclave and the encryption algorithm to use with the public key from the attestation document"
+            "Recipient": "Specifies the attestation document from the Nitro enclave or NitroTPM and the encryption algorithm to use with the public key from the attestation document"
           },
           "output": {
             "CiphertextBlob": "The data key encrypted by the specified KMS key",
@@ -1252,9 +1288,9 @@
             "Plaintext": "This field is null or empty"
           }
         },
-        "description": "The following example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave. Instead of returning a copy of the data key encrypted by the KMS key and a plaintext copy of the data key, GenerateDataKey returns one copy of the data key encrypted by the KMS key (CiphertextBlob) and one copy of the data key encrypted by the public key from the attestation document (CiphertextForRecipient). The operation doesn't return a plaintext data key. ",
-        "id": "to-generate-a-data-key-for-a-nitro-enclave-2",
-        "title": "To generate a data key pair for a Nitro enclave"
+        "description": "The following example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave or NitroTPM. Instead of returning a copy of the data key encrypted by the KMS key and a plaintext copy of the data key, GenerateDataKey returns one copy of the data key encrypted by the KMS key (CiphertextBlob) and one copy of the data key encrypted by the public key from the attestation document (CiphertextForRecipient). The operation doesn't return a plaintext data key. ",
+        "id": "to-generate-a-data-key-for-attestation-2",
+        "title": "To generate a data key for a Nitro enclave or NitroTPM"
       }
     ],
     "GenerateDataKeyPair": [
@@ -1311,7 +1347,7 @@
           "input": {
             "KeyId": "The key ID of the symmetric encryption KMS key that encrypts the private RSA key in the data key pair.",
             "KeyPairSpec": "The requested key spec of the RSA data key pair.",
-            "Recipient": "Specifies the attestation document from the Nitro enclave and the encryption algorithm to use with the public key from the attestation document."
+            "Recipient": "Specifies the attestation document from the Nitro enclave or NitroTPM and the encryption algorithm to use with the public key from the attestation document."
           },
           "output": {
             "CiphertextForRecipient": "The private key of the RSA data key pair encrypted by the public key from the attestation document",
@@ -1323,9 +1359,9 @@
             "PublicKey": "The public key (plaintext) of the RSA data key pair."
           }
         },
-        "description": "The following example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave. Instead of returning a plaintext copy of the private data key, GenerateDataKeyPair returns a copy of the private data key encrypted by the public key from the attestation document (CiphertextForRecipient). It returns the public data key (PublicKey) and a copy of private data key encrypted under the specified KMS key (PrivateKeyCiphertextBlob), as usual, but plaintext private data key field (PrivateKeyPlaintext) is null or empty. ",
-        "id": "to-generate-a-data-key-pair-for-a-nitro-enclave-2",
-        "title": "To generate a data key pair for a Nitro enclave"
+        "description": "The following example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave or NitroTPM. Instead of returning a plaintext copy of the private data key, GenerateDataKeyPair returns a copy of the private data key encrypted by the public key from the attestation document (CiphertextForRecipient). It returns the public data key (PublicKey) and a copy of private data key encrypted under the specified KMS key (PrivateKeyCiphertextBlob), as usual, but plaintext private data key field (PrivateKeyPlaintext) is null or empty. ",
+        "id": "to-generate-a-data-key-pair-for-attestation-2",
+        "title": "To generate a data key pair for a Nitro enclave or NitroTPM"
       }
     ],
     "GenerateDataKeyPairWithoutPlaintext": [
@@ -1450,16 +1486,16 @@
         "comments": {
           "input": {
             "NumberOfBytes": "The length of the random byte string",
-            "Recipient": "Specifies the attestation document from the Nitro enclave and the encryption algorithm to use with the public key from the attestation document"
+            "Recipient": "Specifies the attestation document from the Nitro enclave or NitroTPM and the encryption algorithm to use with the public key from the attestation document"
           },
           "output": {
             "CiphertextForRecipient": "The random data encrypted under the public key from the attestation document",
             "Plaintext": "This field is null or empty"
           }
         },
-        "description": "The following example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave. Instead of returning a plaintext (unencrypted) byte string, GenerateRandom returns the byte string encrypted by the public key from the enclave's attestation document.",
-        "id": "to-generate-random-data-2",
-        "title": "To generate random data"
+        "description": "The following example includes the Recipient parameter with a signed attestation document from an AWS Nitro enclave or NitroTPM. Instead of returning a plaintext (unencrypted) byte string, GenerateRandom returns the byte string encrypted by the public key from the attestation document.",
+        "id": "to-generate-random-data-for-attestation-2",
+        "title": "To generate random data for a Nitro enclave or NitroTPM"
       }
     ],
     "GetKeyPolicy": [

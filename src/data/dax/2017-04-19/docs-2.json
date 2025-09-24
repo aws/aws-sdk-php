@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<p>DAX is a managed caching service engineered for Amazon DynamoDB. DAX dramatically speeds up database reads by caching frequently-accessed data from DynamoDB, so applications can access that data with sub-millisecond latency. You can create a DAX cluster easily, using the AWS Management Console. With a few simple modifications to your code, your application can begin taking advantage of the DAX cluster and realize significant improvements in read performance.</p>",
+  "service": "<p>DAX is a managed caching service engineered for Amazon DynamoDB. DAX dramatically speeds up database reads by caching frequently-accessed data from DynamoDB, so applications can access that data with sub-millisecond latency. You can create a DAX cluster easily, using the Amazon Web Services Management Console. With a few simple modifications to your code, your application can begin taking advantage of the DAX cluster and realize significant improvements in read performance.</p>",
   "operations": {
     "CreateCluster": "<p>Creates a DAX cluster. All nodes in the cluster run the same DAX caching software.</p>",
     "CreateParameterGroup": "<p>Creates a new parameter group. A parameter group is a collection of parameters that you apply to all of the nodes in a DAX cluster.</p>",
@@ -17,7 +17,7 @@
     "DescribeSubnetGroups": "<p>Returns a list of subnet group descriptions. If a subnet group name is specified, the list will contain only the description of that group.</p>",
     "IncreaseReplicationFactor": "<p>Adds one or more nodes to a DAX cluster.</p>",
     "ListTags": "<p>List all of the tags for a DAX cluster. You can call <code>ListTags</code> up to 10 times per second, per account.</p>",
-    "RebootNode": "<p>Reboots a single node of a DAX cluster. The reboot action takes place as soon as possible. During the reboot, the node status is set to REBOOTING.</p> <note> <p> <code>RebootNode</code> restarts the DAX engine process and does not remove the contents of the cache. </p> </note>",
+    "RebootNode": "<p>Reboots a single node of a DAX cluster. The reboot action takes place as soon as possible. During the reboot, the node status is set to REBOOTING.</p> <note> <p> <code>RebootNode</code> restarts the DAX engine process and does not remove the contents of the cache.</p> </note>",
     "TagResource": "<p>Associates a set of tags with a DAX resource. You can call <code>TagResource</code> up to 5 times per second, per account. </p>",
     "UntagResource": "<p>Removes the association of tags from a DAX resource. You can call <code>UntagResource</code> up to 5 times per second, per account. </p>",
     "UpdateCluster": "<p>Modifies the settings for a DAX cluster. You can use this action to change one or more cluster configuration parameters by specifying the parameters and the new values.</p>",
@@ -53,7 +53,7 @@
         "CreateClusterResponse$Cluster": "<p>A description of the DAX cluster that you have created.</p>",
         "DecreaseReplicationFactorResponse$Cluster": "<p>A description of the DAX cluster, after you have decreased its replication factor.</p>",
         "DeleteClusterResponse$Cluster": "<p>A description of the DAX cluster that is being deleted.</p>",
-        "IncreaseReplicationFactorResponse$Cluster": "<p>A description of the DAX cluster. with its new replication factor.</p>",
+        "IncreaseReplicationFactorResponse$Cluster": "<p>A description of the DAX cluster, with its new replication factor.</p>",
         "RebootNodeResponse$Cluster": "<p>A description of the DAX cluster after a node has been rebooted.</p>",
         "UpdateClusterResponse$Cluster": "<p>A description of the DAX cluster, after it has been modified.</p>"
       }
@@ -86,7 +86,7 @@
       "refs": {}
     },
     "ClusterQuotaForCustomerExceededFault": {
-      "base": "<p>You have attempted to exceed the maximum number of DAX clusters for your AWS account.</p>",
+      "base": "<p>You have attempted to exceed the maximum number of DAX clusters for your Amazon Web Services account.</p>",
       "refs": {}
     },
     "CreateClusterRequest": {
@@ -227,7 +227,7 @@
     "Integer": {
       "base": null,
       "refs": {
-        "CreateClusterRequest$ReplicationFactor": "<p>The number of nodes in the DAX cluster. A replication factor of 1 will create a single-node cluster, without any read replicas. For additional fault tolerance, you can create a multiple node cluster with one or more read replicas. To do this, set <code>ReplicationFactor</code> to a number between 3 (one primary and two read replicas) and 10 (one primary and nine read replicas). <code>If the AvailabilityZones</code> parameter is provided, its length must equal the <code>ReplicationFactor</code>.</p> <note> <p>AWS recommends that you have at least two read replicas per cluster.</p> </note>",
+        "CreateClusterRequest$ReplicationFactor": "<p>The number of nodes in the DAX cluster. A replication factor of 1 will create a single-node cluster, without any read replicas. For additional fault tolerance, you can create a multiple node cluster with one or more read replicas. To do this, set <code>ReplicationFactor</code> to a number between 3 (one primary and two read replicas) and 10 (one primary and nine read replicas). <code>If the AvailabilityZones</code> parameter is provided, its length must equal the <code>ReplicationFactor</code>.</p> <note> <p>Amazon Web Services recommends that you have at least two read replicas per cluster.</p> </note>",
         "DecreaseReplicationFactorRequest$NewReplicationFactor": "<p>The new number of nodes for the DAX cluster.</p>",
         "Endpoint$Port": "<p>The port number that applications should use to connect to the endpoint.</p>",
         "IncreaseReplicationFactorRequest$NewReplicationFactor": "<p>The new number of nodes for the DAX cluster.</p>"
@@ -295,6 +295,21 @@
       "base": null,
       "refs": {}
     },
+    "NetworkType": {
+      "base": null,
+      "refs": {
+        "Cluster$NetworkType": "<p>The IP address type of the cluster. Values are:</p> <ul> <li> <p> <code>ipv4</code> - IPv4 addresses only</p> </li> <li> <p> <code>ipv6</code> - IPv6 addresses only</p> </li> <li> <p> <code>dual_stack</code> - Both IPv4 and IPv6 addresses</p> </li> </ul>",
+        "CreateClusterRequest$NetworkType": "<p>Specifies the IP protocol(s) the cluster uses for network communications. Values are:</p> <ul> <li> <p> <code>ipv4</code> - The cluster is accessible only through IPv4 addresses</p> </li> <li> <p> <code>ipv6</code> - The cluster is accessible only through IPv6 addresses</p> </li> <li> <p> <code>dual_stack</code> - The cluster is accessible through both IPv4 and IPv6 addresses.</p> </li> </ul> <note> <p>If no explicit <code>NetworkType</code> is provided, the network type is derived based on the subnet group's configuration.</p> </note>",
+        "NetworkTypeList$member": null
+      }
+    },
+    "NetworkTypeList": {
+      "base": null,
+      "refs": {
+        "Subnet$SupportedNetworkTypes": "<p>The network types supported by this subnet. Returns an array of strings that can include <code>ipv4</code>, <code>ipv6</code>, or both, indicating whether the subnet supports IPv4 only, IPv6 only, or dual-stack deployments.</p>",
+        "SubnetGroup$SupportedNetworkTypes": "<p>The network types supported by this subnet. Returns an array of strings that can include <code>ipv4</code>, <code>ipv6</code>, or both, indicating whether the subnet group supports IPv4 only, IPv6 only, or dual-stack deployments. </p>"
+      }
+    },
     "Node": {
       "base": "<p>Represents an individual node within a DAX cluster.</p>",
       "refs": {
@@ -324,7 +339,7 @@
       "refs": {}
     },
     "NodeQuotaForCustomerExceededFault": {
-      "base": "<p>You have attempted to exceed the maximum number of nodes for your AWS account.</p>",
+      "base": "<p>You have attempted to exceed the maximum number of nodes for your Amazon Web Services account.</p>",
       "refs": {}
     },
     "NodeTypeSpecificValue": {
@@ -470,7 +485,7 @@
       "refs": {}
     },
     "ServiceQuotaExceededException": {
-      "base": "<p>You have reached the maximum number of x509 certificates that can be created for encrypted clusters in a 30 day period. Contact AWS customer support to discuss options for continuing to create encrypted clusters.</p>",
+      "base": "<p>You have reached the maximum number of x509 certificates that can be created for encrypted clusters in a 30 day period. Contact Amazon Web Services customer support to discuss options for continuing to create encrypted clusters.</p>",
       "refs": {}
     },
     "SourceType": {
@@ -542,7 +557,7 @@
         "NodeIdentifierList$member": null,
         "NodeTypeSpecificValue$NodeType": "<p>A node type to which the parameter value applies.</p>",
         "NodeTypeSpecificValue$Value": "<p>The parameter value for this node type.</p>",
-        "NotificationConfiguration$TopicArn": "<p>The Amazon Resource Name (ARN) that identifies the topic. </p>",
+        "NotificationConfiguration$TopicArn": "<p>The Amazon Resource Name (ARN) that identifies the topic.</p>",
         "NotificationConfiguration$TopicStatus": "<p>The current state of the topic. A value of “active” means that notifications will be sent to the topic. A value of “inactive” means that notifications will not be sent to the topic.</p>",
         "Parameter$ParameterName": "<p>The name of the parameter.</p>",
         "Parameter$ParameterValue": "<p>The value for the parameter.</p>",
@@ -570,7 +585,7 @@
         "SubnetGroupNameList$member": null,
         "SubnetIdentifierList$member": null,
         "Tag$Key": "<p>The key for the tag. Tag keys are case sensitive. Every DAX cluster can only have one tag with the same key. If you try to add an existing tag (same key), the existing tag value will be updated to the new value.</p>",
-        "Tag$Value": "<p>The value of the tag. Tag values are case-sensitive and can be null. </p>",
+        "Tag$Value": "<p>The value of the tag. Tag values are case-sensitive and can be null.</p>",
         "TagResourceRequest$ResourceName": "<p>The name of the DAX resource to which tags should be added.</p>",
         "UntagResourceRequest$ResourceName": "<p>The name of the DAX resource from which the tags should be removed.</p>",
         "UpdateClusterRequest$ClusterName": "<p>The name of the DAX cluster to be modified.</p>",
@@ -643,6 +658,10 @@
         "SubnetGroup$Subnets": "<p>A list of subnets associated with the subnet group. </p>"
       }
     },
+    "SubnetNotAllowedFault": {
+      "base": "<p>The specified subnet can't be used for the requested network type. This error occurs when either there aren't enough subnets of the required network type to create the cluster, or when you try to use a subnet that doesn't support the requested network type (for example, trying to create a dual-stack cluster with a subnet that doesn't have IPv6 CIDR). </p>",
+      "refs": {}
+    },
     "SubnetQuotaExceededFault": {
       "base": "<p>The request cannot be processed because it would exceed the allowed number of subnets in a subnet group.</p>",
       "refs": {}
@@ -657,7 +676,7 @@
       }
     },
     "Tag": {
-      "base": "<p>A description of a tag. Every tag is a key-value pair. You can add up to 50 tags to a single DAX cluster.</p> <p>AWS-assigned tag names and values are automatically assigned the <code>aws:</code> prefix, which the user cannot assign. AWS-assigned tag names do not count towards the tag limit of 50. User-assigned tag names have the prefix <code>user:</code>.</p> <p>You cannot backdate the application of a tag.</p>",
+      "base": "<p>A description of a tag. Every tag is a key-value pair. You can add up to 50 tags to a single DAX cluster.</p> <p>Amazon Web Services-assigned tag names and values are automatically assigned the <code>aws:</code> prefix, which the user cannot assign. Amazon Web Services-assigned tag names do not count towards the tag limit of 50. User-assigned tag names have the prefix <code>user:</code>.</p> <p>You cannot backdate the application of a tag.</p>",
       "refs": {
         "TagList$member": null
       }

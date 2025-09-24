@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - G6f instance support for AppStream 2.0
+* `Aws\KMS` - Documentation only updates for KMS.
+* `Aws\Neptune` - Doc-only update to address customer use.
+* `Aws\DAX` - This release adds support for IPv6-only, DUAL_STACK DAX instances
+* `Aws\CloudWatch` - Fix default dualstack FIPS endpoints in AWS GovCloud(US) regions
+
 ## 3.356.24 - 2025-09-23
 
 * `Aws\SSM` - Added Dualstack support to GetDeployablePatchSnapshotForInstance
