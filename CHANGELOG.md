@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.25 - 2025-09-24
 
 * `Aws\AppStream` - G6f instance support for AppStream 2.0
 * `Aws\KMS` - Documentation only updates for KMS.
