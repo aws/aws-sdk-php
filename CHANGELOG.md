@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.26 - 2025-09-25
 
 * `Aws\Lightsail` - Attribute HTTP binding update for Get/Delete operations
 * `Aws\Glue` - Update GetConnection(s) API to return KmsKeyArn & Add 63 missing connection types
