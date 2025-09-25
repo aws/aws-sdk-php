@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lightsail` - Attribute HTTP binding update for Get/Delete operations
+* `Aws\Glue` - Update GetConnection(s) API to return KmsKeyArn & Add 63 missing connection types
+* `Aws\NetworkFirewall` - Network Firewall now introduces Reject and Alert action support for stateful domain list rule groups, providing customers with more granular control over their network traffic.
+
 ## 3.356.25 - 2025-09-24
 
 * `Aws\AppStream` - G6f instance support for AppStream 2.0
