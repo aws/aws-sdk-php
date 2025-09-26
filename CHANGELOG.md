@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.27 - 2025-09-26
 
 * `Aws\BedrockDataAutomation` - Added support for configurable Speaker Labeling and Channel Labeling features for Audio modality.
 * `Aws\CostExplorer` - Support for payer account dimension and billing view health status.
