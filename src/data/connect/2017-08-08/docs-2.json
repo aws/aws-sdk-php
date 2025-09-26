@@ -6,6 +6,7 @@
     "AssociateAnalyticsDataSet": "<p>Associates the specified dataset for a Amazon Connect instance with the target account. You can associate only one dataset in a single call.</p>",
     "AssociateApprovedOrigin": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Associates an approved origin to an Amazon Connect instance.</p>",
     "AssociateBot": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Allows the specified Amazon Connect instance to access the specified Amazon Lex or Amazon Lex V2 bot.</p>",
+    "AssociateContactWithUser": "<p>Associates a queued contact with an agent.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>Custom contact routing. You can build custom contact routing mechanisms beyond the default system routing in Amazon Connect. You can create tailored contact distribution logic that offers queued contacts directly to specific agents.</p> </li> <li> <p>Manual contact assignment. You can programmatically assign queued contacts to available users. This provides flexibility to contact centers that require manual oversight or specialized routing workflows outside of standard queue management.</p> <p>For information about how manual contact assignment works in the agent workspace, see the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/worklist-app.html\">Access the Worklist app in the Amazon Connect agent workspace</a> in the <i>Amazon Connect Administrator Guide</i>. </p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>Use this API chat/SMS, email, and task contacts. It does not support voice contacts.</p> </li> <li> <p>Use it to associate contacts with users regardless of their current state, including custom states. Ensure your application logic accounts for user availability before making associations.</p> </li> <li> <p>It honors the IAM context key <code>connect:PreferredUserArn</code> to prevent unauthorized contact associations.</p> </li> <li> <p>It respects the IAM context key <code>connect:PreferredUserArn</code> to enforce authorization controls and prevent unauthorized contact associations. Verify that your IAM policies are properly configured to support your intended use cases.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "AssociateDefaultVocabulary": "<p>Associates an existing vocabulary as the default. Contact Lens for Amazon Connect uses the vocabulary in post-call and real-time analysis sessions for the given language.</p>",
     "AssociateFlow": "<p>Associates a connect resource to a flow.</p>",
     "AssociateInstanceStorageConfig": "<p>This API is in preview release for Amazon Connect and is subject to change.</p> <p>Associates a storage resource type for the first time. You can only associate one type of storage configuration in a single call. This means, for example, that you can't define an instance with multiple S3 buckets for storing chat transcripts.</p> <p>This API does not create a resource that doesn't exist. It only associates it to the instance. Ensure that the resource being specified in the storage configuration, like an S3 bucket, exists when being used for association.</p>",
@@ -168,6 +169,7 @@
     "ListQueues": "<p>Provides information about the queues for the specified Amazon Connect instance.</p> <p>If you do not specify a <code>QueueTypes</code> parameter, both standard and agent queues are returned. This might cause an unexpected truncation of results if you have more than 1000 agents and you limit the number of results of the API call in code.</p> <p>For more information about queues, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-queues-standard-and-agent.html\">Queues: Standard and Agent</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "ListQuickConnects": "<p>Provides information about the quick connects for the specified Amazon Connect instance. </p>",
     "ListRealtimeContactAnalysisSegmentsV2": "<p>Provides a list of analysis segments for a real-time chat analysis session. This API supports CHAT channels only. </p> <important> <p>This API does not support VOICE. If you attempt to use it for VOICE, an <code>InvalidRequestException</code> occurs.</p> </important>",
+    "ListRoutingProfileManualAssignmentQueues": "<p>Lists the manual assignment queues associated with a routing profile.</p> <p> <b>Use cases</b> </p> <p>Following are common uses cases for this API:</p> <ul> <li> <p>This API returns list of queues where contacts can be manually assigned or picked. The user can additionally filter on queues, if they have access to those queues (otherwise a invalid request exception will be thrown).</p> <p>For information about how manual contact assignment works in the agent workspace, see the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/worklist-app.html\">Access the Worklist app in the Amazon Connect agent workspace</a> in the <i>Amazon Connect Administrator Guide</i>. </p> </li> </ul> <p> <b>Important things to know</b> </p> <ul> <li> <p>This API only returns the manual assignment queues associated with a routing profile. Use the ListRoutingProfileQueues API to list the auto assignment queues for the routing profile.</p> </li> </ul> <p> <b>Endpoints</b>: See <a href=\"https://docs.aws.amazon.com/general/latest/gr/connect_region.html\">Amazon Connect endpoints and quotas</a>.</p>",
     "ListRoutingProfileQueues": "<p>Lists the queues associated with a routing profile.</p>",
     "ListRoutingProfiles": "<p>Provides summary information about the routing profiles for the specified Amazon Connect instance.</p> <p>For more information about routing profiles, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/concepts-routing.html\">Routing Profiles</a> and <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/routing-profiles.html\">Create a Routing Profile</a> in the <i>Amazon Connect Administrator Guide</i>.</p>",
     "ListRules": "<p>List all rules for the specified Amazon Connect instance.</p>",
@@ -410,6 +412,7 @@
         "ReplicateInstanceResponse$Arn": "<p>The Amazon Resource Name (ARN) of the replicated instance.</p>",
         "ResourceInUseException$ResourceId": "<p>The identifier for the resource.</p>",
         "RoutingProfile$RoutingProfileArn": "<p>The Amazon Resource Name (ARN) of the routing profile.</p>",
+        "RoutingProfileManualAssignmentQueueConfigSummary$QueueArn": "<p>The Amazon Resource Name (ARN) of the queue.</p>",
         "RoutingProfileQueueConfigSummary$QueueArn": "<p>The Amazon Resource Name (ARN) of the queue.</p>",
         "RoutingProfileReference$Arn": "<p>The Amazon Resource Name (ARN) of the routing profile.</p>",
         "RoutingProfileSummary$Arn": "<p>The Amazon Resource Name (ARN) of the routing profile.</p>",
@@ -599,6 +602,7 @@
       "refs": {
         "AgentInfo$Id": "<p>The identifier of the agent who accepted the contact.</p>",
         "AgentResourceIdList$member": null,
+        "AssociateContactWithUserRequest$UserId": "<p>The identifier for the user. This can be the ID or the ARN of the user.</p>",
         "ContactSearchSummaryAgentInfo$Id": "<p>The identifier of the agent who accepted the contact.</p>",
         "GetFederationTokenResponse$UserId": "<p>The identifier for the user. This can be the ID or the ARN of the user.</p>",
         "MonitorContactRequest$UserId": "<p>The identifier of the user account.</p>",
@@ -609,7 +613,8 @@
     "AgentResourceIdList": {
       "base": null,
       "refs": {
-        "SearchCriteria$AgentIds": "<p>The identifiers of agents who handled the contacts.</p>"
+        "SearchCriteria$AgentIds": "<p>The identifiers of agents who handled the contacts.</p>",
+        "SearchableAgentCriteriaStep$AgentIds": "<p>The identifiers of agents used in preferred agents matching.</p>"
       }
     },
     "AgentStatus": {
@@ -901,6 +906,14 @@
       "base": null,
       "refs": {}
     },
+    "AssociateContactWithUserRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateContactWithUserResponse": {
+      "base": null,
+      "refs": {}
+    },
     "AssociateDefaultVocabularyRequest": {
       "base": null,
       "refs": {}
@@ -980,7 +993,8 @@
     "AssociatedQueueIdList": {
       "base": null,
       "refs": {
-        "RoutingProfile$AssociatedQueueIds": "<p>The IDs of the associated queue.</p>"
+        "RoutingProfile$AssociatedQueueIds": "<p>The IDs of the associated queue.</p>",
+        "RoutingProfile$AssociatedManualAssignmentQueueIds": "<p>The IDs of the associated manual assignment queues.</p>"
       }
     },
     "AssociationId": {
@@ -1354,6 +1368,7 @@
         "CreateContactRequest$Channel": "<p>The channel for the contact.</p> <important> <p>The CHAT channel is not supported. The following information is incorrect. We're working to correct it.</p> </important>",
         "Dimensions$Channel": "<p>The channel used for grouping and filters.</p>",
         "MediaConcurrency$Channel": "<p>The channels that agents can handle in the Contact Control Panel (CCP).</p>",
+        "RoutingProfileManualAssignmentQueueConfigSummary$Channel": "<p>The channels this queue supports. Valid Values: CHAT | TASK | EMAIL </p>",
         "RoutingProfileQueueConfigSummary$Channel": "<p>The channels this queue supports.</p>",
         "RoutingProfileQueueReference$Channel": "<p>The channels agents can handle in the Contact Control Panel (CCP) for this routing profile.</p>"
       }
@@ -1942,6 +1957,7 @@
       "base": null,
       "refs": {
         "AgentContactReference$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
+        "AssociateContactWithUserRequest$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
         "AssociatedContactSummary$ContactId": "<p>The identifier of the contact in this instance of Amazon Connect. </p>",
         "AssociatedContactSummary$InitialContactId": "<p>If this contact is related to other contacts, this is the ID of the initial contact.</p>",
         "AssociatedContactSummary$PreviousContactId": "<p>If this contact is not the first contact, this is the ID of the previous contact.</p>",
@@ -2068,7 +2084,7 @@
       }
     },
     "ContactNotFoundException": {
-      "base": "<p>The contact with the specified ID is not active or does not exist. Applies to Voice calls only, not to Chat or Task contacts.</p>",
+      "base": "<p>The contact with the specified ID is not active or does not exist.</p>",
       "refs": {}
     },
     "ContactRecordingType": {
@@ -4806,6 +4822,7 @@
         "AssociateAnalyticsDataSetRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateApprovedOriginRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateBotRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "AssociateContactWithUserRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateDefaultVocabularyRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateFlowRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "AssociateInstanceStorageConfigRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -4962,6 +4979,7 @@
         "ListQueuesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListQuickConnectsRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListRealtimeContactAnalysisSegmentsV2Request$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
+        "ListRoutingProfileManualAssignmentQueuesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListRoutingProfileQueuesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListRoutingProfilesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
         "ListRulesRequest$InstanceId": "<p>The identifier of the Amazon Connect instance. You can <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html\">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>",
@@ -5647,6 +5665,14 @@
       "base": null,
       "refs": {}
     },
+    "ListRoutingProfileManualAssignmentQueuesRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListRoutingProfileManualAssignmentQueuesResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ListRoutingProfileQueuesRequest": {
       "base": null,
       "refs": {}
@@ -5787,6 +5813,7 @@
       "base": null,
       "refs": {
         "RoutingProfile$NumberOfAssociatedQueues": "<p>The number of associated queues in routing profile.</p>",
+        "RoutingProfile$NumberOfAssociatedManualAssignmentQueues": "<p>The number of associated manual assignment queues in routing profile.</p>",
         "RoutingProfile$NumberOfAssociatedUsers": "<p>The number of associated users in routing profile.</p>"
       }
     },
@@ -5821,6 +5848,7 @@
         "ListPredefinedAttributesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListQueueQuickConnectsRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListRealtimeContactAnalysisSegmentsV2Request$MaxResults": "<p>The maximum number of results to return per page.</p>",
+        "ListRoutingProfileManualAssignmentQueuesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListRoutingProfileQueuesRequest$MaxResults": "<p>The maximum number of results to return per page. The default MaxResult size is 100.</p>",
         "ListTaskTemplatesRequest$MaxResults": "<p>The maximum number of results to return per page.</p> <important> <p>It is not expected that you set this.</p> </important>",
         "ListUseCasesRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
@@ -6109,6 +6137,7 @@
       "base": null,
       "refs": {
         "Contact$Name": "<p>The name of the contact.</p>",
+        "ContactSearchSummary$Name": "<p>Indicates name of the contact.</p>",
         "CreateContactRequest$Name": "<p>The name of a the contact.</p>",
         "StartEmailContactRequest$Name": "<p>The name of a email that is shown to an agent in the Contact Control Panel (CCP).</p>",
         "StartOutboundVoiceContactRequest$Name": "<p>The name of a voice contact that is shown to an agent in the Contact Control Panel (CCP).</p>",
@@ -6122,6 +6151,12 @@
         "CreateTrafficDistributionGroupRequest$Name": "<p>The name for the traffic distribution group. </p>",
         "TrafficDistributionGroup$Name": "<p>The name of the traffic distribution group.</p>",
         "TrafficDistributionGroupSummary$Name": "<p>The name of the traffic distribution group.</p>"
+      }
+    },
+    "NameCriteria": {
+      "base": "<p>The search criteria based on the contact name</p>",
+      "refs": {
+        "SearchCriteria$Name": "<p>Name of the contact.</p>"
       }
     },
     "Namespace": {
@@ -6209,6 +6244,8 @@
         "ListQueuesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListQuickConnectsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListQuickConnectsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
+        "ListRoutingProfileManualAssignmentQueuesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListRoutingProfileManualAssignmentQueuesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListRoutingProfileQueuesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
         "ListRoutingProfileQueuesResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListRoutingProfilesRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
@@ -7096,6 +7133,7 @@
         "QueueSummary$Id": "<p>The identifier of the queue.</p>",
         "Queues$member": null,
         "RoutingProfile$DefaultOutboundQueueId": "<p>The identifier of the default outbound queue for this routing profile.</p>",
+        "RoutingProfileManualAssignmentQueueConfigSummary$QueueId": "<p>The identifier for the queue.</p>",
         "RoutingProfileQueueConfigSummary$QueueId": "<p>The identifier for the queue.</p>",
         "RoutingProfileQueueReference$QueueId": "<p>The identifier for the queue.</p>",
         "StartOutboundVoiceContactRequest$QueueId": "<p>The queue for the call. If you specify a queue, the phone displayed for caller ID is the phone number specified in the queue. If you do not specify a queue, the queue defined in the flow is used. If you do not specify a queue, you must specify a source phone number.</p>",
@@ -7139,6 +7177,7 @@
       "base": null,
       "refs": {
         "QueueSummary$Name": "<p>The name of the queue.</p>",
+        "RoutingProfileManualAssignmentQueueConfigSummary$QueueName": "<p>The name of the queue.</p>",
         "RoutingProfileQueueConfigSummary$QueueName": "<p>The name of the queue.</p>"
       }
     },
@@ -7748,6 +7787,7 @@
         "HoursOfOperationSummary$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListHoursOfOperationOverridesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
+        "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListSecurityProfileApplicationsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedRegion": "<p>The Amazon Web Services Region where this resource was last modified.</p>",
@@ -7944,7 +7984,8 @@
     "RoutingCriteria": {
       "base": "<p>Latest routing criteria on the contact.</p>",
       "refs": {
-        "Contact$RoutingCriteria": "<p>Latest routing criteria on the contact.</p>"
+        "Contact$RoutingCriteria": "<p>Latest routing criteria on the contact.</p>",
+        "ContactSearchSummary$RoutingCriteria": null
       }
     },
     "RoutingCriteriaInput": {
@@ -8014,6 +8055,7 @@
         "DeleteRoutingProfileRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "DescribeRoutingProfileRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "DisassociateRoutingProfileQueuesRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
+        "ListRoutingProfileManualAssignmentQueuesRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "ListRoutingProfileQueuesRequest$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "RoutingProfile$RoutingProfileId": "<p>The identifier of the routing profile.</p>",
         "RoutingProfileReference$Id": "<p>The identifier of the routing profile.</p>",
@@ -8033,6 +8075,31 @@
       "base": null,
       "refs": {
         "SearchRoutingProfilesResponse$RoutingProfiles": "<p>Information about the routing profiles.</p>"
+      }
+    },
+    "RoutingProfileManualAssignmentQueueConfig": {
+      "base": "<p>Contains information about the queue and channel for manual assignment behaviour can be enabled.</p>",
+      "refs": {
+        "RoutingProfileManualAssignmentQueueConfigList$member": null
+      }
+    },
+    "RoutingProfileManualAssignmentQueueConfigList": {
+      "base": null,
+      "refs": {
+        "AssociateRoutingProfileQueuesRequest$ManualAssignmentQueueConfigs": "<p>The manual assignment queues to associate with this routing profile.</p>",
+        "CreateRoutingProfileRequest$ManualAssignmentQueueConfigs": "<p>The manual assignment queues associated with the routing profile. If no queue is added, agents and supervisors can't pick or assign any contacts from this routing profile. The limit of 10 array members applies to the maximum number of RoutingProfileManualAssignmentQueueConfig objects that can be passed during a CreateRoutingProfile API request. It is different from the quota of 50 queues per routing profile per instance that is listed in Amazon Connect service quotas.</p>"
+      }
+    },
+    "RoutingProfileManualAssignmentQueueConfigSummary": {
+      "base": "<p>Contains summary information about a routing profile manual assignment queue.</p>",
+      "refs": {
+        "RoutingProfileManualAssignmentQueueConfigSummaryList$member": null
+      }
+    },
+    "RoutingProfileManualAssignmentQueueConfigSummaryList": {
+      "base": null,
+      "refs": {
+        "ListRoutingProfileManualAssignmentQueuesResponse$RoutingProfileManualAssignmentQueueConfigSummaryList": "<p>Information about the manual assignment queues associated with the routing profile.</p>"
       }
     },
     "RoutingProfileName": {
@@ -8073,6 +8140,7 @@
     "RoutingProfileQueueReference": {
       "base": "<p>Contains the channel and queue identifier for a routing profile.</p>",
       "refs": {
+        "RoutingProfileManualAssignmentQueueConfig$QueueReference": null,
         "RoutingProfileQueueConfig$QueueReference": "<p>Contains information about a queue resource.</p>",
         "RoutingProfileQueueReferenceList$member": null
       }
@@ -8080,7 +8148,8 @@
     "RoutingProfileQueueReferenceList": {
       "base": null,
       "refs": {
-        "DisassociateRoutingProfileQueuesRequest$QueueReferences": "<p>The queues to disassociate from this routing profile.</p>"
+        "DisassociateRoutingProfileQueuesRequest$QueueReferences": "<p>The queues to disassociate from this routing profile.</p>",
+        "DisassociateRoutingProfileQueuesRequest$ManualAssignmentQueueReferences": "<p>The manual assignment queues to disassociate with this routing profile.</p>"
       }
     },
     "RoutingProfileReference": {
@@ -8257,9 +8326,30 @@
       "base": null,
       "refs": {}
     },
+    "SearchContactsAdditionalTimeRange": {
+      "base": "<p>Time range that you additionally want to filter on.</p>",
+      "refs": {
+        "SearchCriteria$AdditionalTimeRange": "<p>Additional TimeRange used to filter contacts.</p>"
+      }
+    },
+    "SearchContactsAdditionalTimeRangeCriteria": {
+      "base": "<p>The criteria of the time range to additionally filter on.</p>",
+      "refs": {
+        "SearchContactsAdditionalTimeRangeCriteriaList$member": null
+      }
+    },
+    "SearchContactsAdditionalTimeRangeCriteriaList": {
+      "base": null,
+      "refs": {
+        "SearchContactsAdditionalTimeRange$Criteria": "<p>List of criteria of the time range to additionally filter on.</p>"
+      }
+    },
     "SearchContactsMatchType": {
       "base": null,
       "refs": {
+        "NameCriteria$MatchType": "<p>The match type combining name search criteria using multiple search texts in a name criteria.</p>",
+        "SearchContactsAdditionalTimeRange$MatchType": "<p>The match type combining multiple time range filters.</p>",
+        "SearchableAgentCriteriaStep$MatchType": "<p>The match type combining multiple agent criteria steps.</p>",
         "SearchableContactAttributes$MatchType": "<p>The match type combining search criteria using multiple searchable contact attributes.</p>",
         "SearchableSegmentAttributes$MatchType": "<p>The match type combining search criteria using multiple searchable segment attributes.</p>",
         "Transcript$MatchType": "<p>The match type combining search criteria using multiple transcript criteria.</p>",
@@ -8277,13 +8367,27 @@
     "SearchContactsTimeRange": {
       "base": "<p>A structure of time range that you want to search results.</p>",
       "refs": {
+        "SearchContactsAdditionalTimeRangeCriteria$TimeRange": null,
         "SearchContactsRequest$TimeRange": "<p>Time range that you want to search results.</p>"
+      }
+    },
+    "SearchContactsTimeRangeConditionType": {
+      "base": null,
+      "refs": {
+        "SearchContactsTimestampCondition$ConditionType": "<p>Condition of the timestamp on the contact.</p>"
       }
     },
     "SearchContactsTimeRangeType": {
       "base": null,
       "refs": {
-        "SearchContactsTimeRange$Type": "<p>The type of timestamp to search.</p>"
+        "SearchContactsTimeRange$Type": "<p>The type of timestamp to search.</p>",
+        "SearchContactsTimestampCondition$Type": "<p>Type of the timestamps to use for the filter.</p>"
+      }
+    },
+    "SearchContactsTimestampCondition": {
+      "base": "<p>The timestamp condition indicating which timestamp should be used and how it should be filtered.</p>",
+      "refs": {
+        "SearchContactsAdditionalTimeRangeCriteria$TimestampCondition": "<p>List of the timestamp conditions.</p>"
       }
     },
     "SearchCriteria": {
@@ -8381,6 +8485,7 @@
     "SearchTextList": {
       "base": null,
       "refs": {
+        "NameCriteria$SearchText": "<p>The words or phrases used to match the contact name.</p>",
         "TranscriptCriteria$SearchText": "<p>The words or phrases used to search within a transcript.</p>"
       }
     },
@@ -8407,6 +8512,12 @@
     "SearchVocabulariesResponse": {
       "base": null,
       "refs": {}
+    },
+    "SearchableAgentCriteriaStep": {
+      "base": "<p>The agent criteria to search for preferred agents on the routing criteria.</p>",
+      "refs": {
+        "SearchableRoutingCriteriaStep$AgentCriteria": "<p>Agent matching the routing step of the routing criteria</p>"
+      }
     },
     "SearchableContactAttributeKey": {
       "base": null,
@@ -8448,6 +8559,24 @@
       "base": null,
       "refs": {
         "QueueSearchCriteria$QueueTypeCondition": "<p>The type of queue.</p>"
+      }
+    },
+    "SearchableRoutingCriteria": {
+      "base": "<p>Routing criteria of the contact to match on.</p>",
+      "refs": {
+        "SearchCriteria$RoutingCriteria": "<p>Routing criteria for the contact.</p>"
+      }
+    },
+    "SearchableRoutingCriteriaStep": {
+      "base": "<p>Routing criteria of the contact to match on.</p>",
+      "refs": {
+        "SearchableRoutingCriteriaStepList$member": null
+      }
+    },
+    "SearchableRoutingCriteriaStepList": {
+      "base": null,
+      "refs": {
+        "SearchableRoutingCriteria$Steps": "<p>The list of Routing criteria steps of the contact routing.</p>"
       }
     },
     "SearchableSegmentAttributeKey": {
@@ -8645,6 +8774,7 @@
     "SegmentAttributeValueMap": {
       "base": null,
       "refs": {
+        "ContactSearchSummarySegmentAttributeValue$ValueMap": "<p>The key and value of a segment attribute.</p>",
         "SegmentAttributeValue$ValueMap": "<p>The value of a segment attribute.</p>"
       }
     },
@@ -9552,6 +9682,7 @@
         "InstanceSummary$CreatedTime": "<p>When the instance was created.</p>",
         "ListHoursOfOperationOverridesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListQueueQuickConnectsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
+        "ListRoutingProfileManualAssignmentQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListRoutingProfileQueuesResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListSecurityProfileApplicationsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",
         "ListSecurityProfilePermissionsResponse$LastModifiedTime": "<p>The timestamp when this resource was last modified.</p>",

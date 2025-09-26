@@ -188,7 +188,8 @@
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"RequestChangedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetCostAndUsageComparisons":{
@@ -203,7 +204,8 @@
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetCostAndUsageWithResources":{
@@ -220,7 +222,8 @@
         {"shape":"BillExpirationException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"RequestChangedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetCostCategories":{
@@ -237,7 +240,8 @@
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"RequestChangedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetCostComparisonDrivers":{
@@ -252,7 +256,8 @@
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"LimitExceededException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetCostForecast":{
@@ -266,7 +271,8 @@
       "errors":[
         {"shape":"LimitExceededException"},
         {"shape":"DataUnavailableException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetDimensionValues":{
@@ -283,7 +289,8 @@
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"RequestChangedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetReservationCoverage":{
@@ -422,7 +429,8 @@
         {"shape":"DataUnavailableException"},
         {"shape":"InvalidNextTokenException"},
         {"shape":"RequestChangedException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "GetUsageForecast":{
@@ -437,7 +445,8 @@
         {"shape":"LimitExceededException"},
         {"shape":"DataUnavailableException"},
         {"shape":"UnresolvableUsageUnitException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"BillingViewHealthStatusException"}
       ]
     },
     "ListCommitmentPurchaseAnalyses":{
@@ -879,6 +888,13 @@
       "max":2048,
       "min":20,
       "pattern":"^arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[-a-zA-Z0-9/:_+=.-@]{1,43}$"
+    },
+    "BillingViewHealthStatusException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
     },
     "CommitmentPurchaseAnalysisConfiguration":{
       "type":"structure",
@@ -1426,6 +1442,7 @@
         "AZ",
         "INSTANCE_TYPE",
         "LINKED_ACCOUNT",
+        "PAYER_ACCOUNT",
         "LINKED_ACCOUNT_NAME",
         "OPERATION",
         "PURCHASE_TYPE",

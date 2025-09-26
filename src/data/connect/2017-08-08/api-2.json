@@ -81,6 +81,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "AssociateContactWithUser":{
+      "name":"AssociateContactWithUser",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contacts/{InstanceId}/{ContactId}/associate-user"
+      },
+      "input":{"shape":"AssociateContactWithUserRequest"},
+      "output":{"shape":"AssociateContactWithUserResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "AssociateDefaultVocabulary":{
       "name":"AssociateDefaultVocabulary",
       "http":{
@@ -2731,6 +2748,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListRoutingProfileManualAssignmentQueues":{
+      "name":"ListRoutingProfileManualAssignmentQueues",
+      "http":{
+        "method":"GET",
+        "requestUri":"/routing-profiles/{InstanceId}/{RoutingProfileId}/manual-assignment-queues"
+      },
+      "input":{"shape":"ListRoutingProfileManualAssignmentQueuesRequest"},
+      "output":{"shape":"ListRoutingProfileManualAssignmentQueuesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListRoutingProfileQueues":{
       "name":"ListRoutingProfileQueues",
       "http":{
@@ -5126,6 +5159,31 @@
         }
       }
     },
+    "AssociateContactWithUserRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "UserId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "ContactId":{
+          "shape":"ContactId",
+          "location":"uri",
+          "locationName":"ContactId"
+        },
+        "UserId":{"shape":"AgentResourceId"}
+      }
+    },
+    "AssociateContactWithUserResponse":{
+      "type":"structure",
+      "members":{}
+    },
     "AssociateDefaultVocabularyRequest":{
       "type":"structure",
       "required":[
@@ -5280,8 +5338,7 @@
       "type":"structure",
       "required":[
         "InstanceId",
-        "RoutingProfileId",
-        "QueueConfigs"
+        "RoutingProfileId"
       ],
       "members":{
         "InstanceId":{
@@ -5294,7 +5351,8 @@
           "location":"uri",
           "locationName":"RoutingProfileId"
         },
-        "QueueConfigs":{"shape":"RoutingProfileQueueConfigList"}
+        "QueueConfigs":{"shape":"RoutingProfileQueueConfigList"},
+        "ManualAssignmentQueueConfigs":{"shape":"RoutingProfileManualAssignmentQueueConfigList"}
       }
     },
     "AssociateSecurityKeyRequest":{
@@ -6462,7 +6520,9 @@
         "InitiationTimestamp":{"shape":"timestamp"},
         "DisconnectTimestamp":{"shape":"timestamp"},
         "ScheduledTimestamp":{"shape":"timestamp"},
-        "SegmentAttributes":{"shape":"ContactSearchSummarySegmentAttributes"}
+        "SegmentAttributes":{"shape":"ContactSearchSummarySegmentAttributes"},
+        "Name":{"shape":"Name"},
+        "RoutingCriteria":{"shape":"RoutingCriteria"}
       }
     },
     "ContactSearchSummaryAgentInfo":{
@@ -6482,7 +6542,8 @@
     "ContactSearchSummarySegmentAttributeValue":{
       "type":"structure",
       "members":{
-        "ValueString":{"shape":"SegmentAttributeValueString"}
+        "ValueString":{"shape":"SegmentAttributeValueString"},
+        "ValueMap":{"shape":"SegmentAttributeValueMap"}
       }
     },
     "ContactSearchSummarySegmentAttributes":{
@@ -7124,6 +7185,7 @@
         "Description":{"shape":"RoutingProfileDescription"},
         "DefaultOutboundQueueId":{"shape":"QueueId"},
         "QueueConfigs":{"shape":"RoutingProfileQueueConfigList"},
+        "ManualAssignmentQueueConfigs":{"shape":"RoutingProfileManualAssignmentQueueConfigList"},
         "MediaConcurrencies":{"shape":"MediaConcurrencies"},
         "Tags":{"shape":"TagMap"},
         "AgentAvailabilityTimer":{"shape":"AgentAvailabilityTimer"}
@@ -9248,8 +9310,7 @@
       "type":"structure",
       "required":[
         "InstanceId",
-        "RoutingProfileId",
-        "QueueReferences"
+        "RoutingProfileId"
       ],
       "members":{
         "InstanceId":{
@@ -9262,7 +9323,8 @@
           "location":"uri",
           "locationName":"RoutingProfileId"
         },
-        "QueueReferences":{"shape":"RoutingProfileQueueReferenceList"}
+        "QueueReferences":{"shape":"RoutingProfileQueueReferenceList"},
+        "ManualAssignmentQueueReferences":{"shape":"RoutingProfileQueueReferenceList"}
       }
     },
     "DisassociateSecurityKeyRequest":{
@@ -12708,6 +12770,45 @@
         "NextToken":{"shape":"LargeNextToken"}
       }
     },
+    "ListRoutingProfileManualAssignmentQueuesRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "RoutingProfileId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "RoutingProfileId":{
+          "shape":"RoutingProfileId",
+          "location":"uri",
+          "locationName":"RoutingProfileId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListRoutingProfileManualAssignmentQueuesResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "RoutingProfileManualAssignmentQueueConfigSummaryList":{"shape":"RoutingProfileManualAssignmentQueueConfigSummaryList"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedRegion":{"shape":"RegionName"}
+      }
+    },
     "ListRoutingProfileQueuesRequest":{
       "type":"structure",
       "required":[
@@ -13516,6 +13617,17 @@
       "max":128,
       "min":1,
       "pattern":"(^[\\S].*[\\S]$)|(^[\\S]$)"
+    },
+    "NameCriteria":{
+      "type":"structure",
+      "required":[
+        "SearchText",
+        "MatchType"
+      ],
+      "members":{
+        "SearchText":{"shape":"SearchTextList"},
+        "MatchType":{"shape":"SearchContactsMatchType"}
+      }
     },
     "Namespace":{
       "type":"string",
@@ -15475,12 +15587,14 @@
         "DefaultOutboundQueueId":{"shape":"QueueId"},
         "Tags":{"shape":"TagMap"},
         "NumberOfAssociatedQueues":{"shape":"Long"},
+        "NumberOfAssociatedManualAssignmentQueues":{"shape":"Long"},
         "NumberOfAssociatedUsers":{"shape":"Long"},
         "AgentAvailabilityTimer":{"shape":"AgentAvailabilityTimer"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedRegion":{"shape":"RegionName"},
         "IsDefault":{"shape":"Boolean"},
-        "AssociatedQueueIds":{"shape":"AssociatedQueueIdList"}
+        "AssociatedQueueIds":{"shape":"AssociatedQueueIdList"},
+        "AssociatedManualAssignmentQueueIds":{"shape":"AssociatedQueueIdList"}
       }
     },
     "RoutingProfileDescription":{
@@ -15492,6 +15606,38 @@
     "RoutingProfileList":{
       "type":"list",
       "member":{"shape":"RoutingProfile"}
+    },
+    "RoutingProfileManualAssignmentQueueConfig":{
+      "type":"structure",
+      "required":["QueueReference"],
+      "members":{
+        "QueueReference":{"shape":"RoutingProfileQueueReference"}
+      }
+    },
+    "RoutingProfileManualAssignmentQueueConfigList":{
+      "type":"list",
+      "member":{"shape":"RoutingProfileManualAssignmentQueueConfig"},
+      "max":10,
+      "min":1
+    },
+    "RoutingProfileManualAssignmentQueueConfigSummary":{
+      "type":"structure",
+      "required":[
+        "QueueId",
+        "QueueArn",
+        "QueueName",
+        "Channel"
+      ],
+      "members":{
+        "QueueId":{"shape":"QueueId"},
+        "QueueArn":{"shape":"ARN"},
+        "QueueName":{"shape":"QueueName"},
+        "Channel":{"shape":"Channel"}
+      }
+    },
+    "RoutingProfileManualAssignmentQueueConfigSummaryList":{
+      "type":"list",
+      "member":{"shape":"RoutingProfileManualAssignmentQueueConfigSummary"}
     },
     "RoutingProfileName":{
       "type":"string",
@@ -15822,11 +15968,35 @@
         "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
+    "SearchContactsAdditionalTimeRange":{
+      "type":"structure",
+      "required":[
+        "Criteria",
+        "MatchType"
+      ],
+      "members":{
+        "Criteria":{"shape":"SearchContactsAdditionalTimeRangeCriteriaList"},
+        "MatchType":{"shape":"SearchContactsMatchType"}
+      }
+    },
+    "SearchContactsAdditionalTimeRangeCriteria":{
+      "type":"structure",
+      "members":{
+        "TimeRange":{"shape":"SearchContactsTimeRange"},
+        "TimestampCondition":{"shape":"SearchContactsTimestampCondition"}
+      }
+    },
+    "SearchContactsAdditionalTimeRangeCriteriaList":{
+      "type":"list",
+      "member":{"shape":"SearchContactsAdditionalTimeRangeCriteria"}
+    },
     "SearchContactsMatchType":{
       "type":"string",
       "enum":[
         "MATCH_ALL",
-        "MATCH_ANY"
+        "MATCH_ANY",
+        "MATCH_EXACT",
+        "MATCH_NONE"
       ]
     },
     "SearchContactsRequest":{
@@ -15869,24 +16039,43 @@
         "EndTime":{"shape":"Timestamp"}
       }
     },
+    "SearchContactsTimeRangeConditionType":{
+      "type":"string",
+      "enum":["NOT_EXISTS"]
+    },
     "SearchContactsTimeRangeType":{
       "type":"string",
       "enum":[
         "INITIATION_TIMESTAMP",
         "SCHEDULED_TIMESTAMP",
         "CONNECTED_TO_AGENT_TIMESTAMP",
-        "DISCONNECT_TIMESTAMP"
+        "DISCONNECT_TIMESTAMP",
+        "ENQUEUE_TIMESTAMP"
       ]
+    },
+    "SearchContactsTimestampCondition":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "ConditionType"
+      ],
+      "members":{
+        "Type":{"shape":"SearchContactsTimeRangeType"},
+        "ConditionType":{"shape":"SearchContactsTimeRangeConditionType"}
+      }
     },
     "SearchCriteria":{
       "type":"structure",
       "members":{
+        "Name":{"shape":"NameCriteria"},
         "AgentIds":{"shape":"AgentResourceIdList"},
         "AgentHierarchyGroups":{"shape":"AgentHierarchyGroups"},
         "Channels":{"shape":"ChannelList"},
         "ContactAnalysis":{"shape":"ContactAnalysis"},
         "InitiationMethods":{"shape":"InitiationMethodList"},
         "QueueIds":{"shape":"QueueIdList"},
+        "RoutingCriteria":{"shape":"SearchableRoutingCriteria"},
+        "AdditionalTimeRange":{"shape":"SearchContactsAdditionalTimeRange"},
         "SearchableContactAttributes":{"shape":"SearchableContactAttributes"},
         "SearchableSegmentAttributes":{"shape":"SearchableSegmentAttributes"}
       }
@@ -16184,6 +16373,13 @@
         "NextToken":{"shape":"VocabularyNextToken"}
       }
     },
+    "SearchableAgentCriteriaStep":{
+      "type":"structure",
+      "members":{
+        "AgentIds":{"shape":"AgentResourceIdList"},
+        "MatchType":{"shape":"SearchContactsMatchType"}
+      }
+    },
     "SearchableContactAttributeKey":{
       "type":"string",
       "max":100,
@@ -16230,6 +16426,22 @@
     "SearchableQueueType":{
       "type":"string",
       "enum":["STANDARD"]
+    },
+    "SearchableRoutingCriteria":{
+      "type":"structure",
+      "members":{
+        "Steps":{"shape":"SearchableRoutingCriteriaStepList"}
+      }
+    },
+    "SearchableRoutingCriteriaStep":{
+      "type":"structure",
+      "members":{
+        "AgentCriteria":{"shape":"SearchableAgentCriteriaStep"}
+      }
+    },
+    "SearchableRoutingCriteriaStepList":{
+      "type":"list",
+      "member":{"shape":"SearchableRoutingCriteriaStep"}
     },
     "SearchableSegmentAttributeKey":{
       "type":"string",
@@ -16598,7 +16810,8 @@
         "CONNECTED_TO_AGENT_TIMESTAMP",
         "DISCONNECT_TIMESTAMP",
         "INITIATION_METHOD",
-        "CHANNEL"
+        "CHANNEL",
+        "EXPIRY_TIMESTAMP"
       ]
     },
     "SourceApplicationName":{

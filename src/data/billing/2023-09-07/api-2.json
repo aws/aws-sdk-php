@@ -15,6 +15,26 @@
     "uid":"billing-2023-09-07"
   },
   "operations":{
+    "AssociateSourceViews":{
+      "name":"AssociateSourceViews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateSourceViewsRequest"},
+      "output":{"shape":"AssociateSourceViewsResponse"},
+      "errors":[
+        {"shape":"BillingViewHealthStatusException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "CreateBillingView":{
       "name":"CreateBillingView",
       "http":{
@@ -24,8 +44,10 @@
       "input":{"shape":"CreateBillingViewRequest"},
       "output":{"shape":"CreateBillingViewResponse"},
       "errors":[
+        {"shape":"BillingViewHealthStatusException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ConflictException"},
         {"shape":"ValidationException"},
@@ -50,6 +72,25 @@
       ],
       "idempotent":true
     },
+    "DisassociateSourceViews":{
+      "name":"DisassociateSourceViews",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateSourceViewsRequest"},
+      "output":{"shape":"DisassociateSourceViewsResponse"},
+      "errors":[
+        {"shape":"BillingViewHealthStatusException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ],
+      "idempotent":true
+    },
     "GetBillingView":{
       "name":"GetBillingView",
       "http":{
@@ -64,7 +105,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetResourcePolicy":{
       "name":"GetResourcePolicy",
@@ -80,7 +122,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListBillingViews":{
       "name":"ListBillingViews",
@@ -95,7 +138,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListSourceViewsForBillingView":{
       "name":"ListSourceViewsForBillingView",
@@ -111,7 +155,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -127,7 +172,8 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
-      ]
+      ],
+      "readonly":true
     },
     "TagResource":{
       "name":"TagResource",
@@ -170,6 +216,7 @@
       "input":{"shape":"UpdateBillingViewRequest"},
       "output":{"shape":"UpdateBillingViewResponse"},
       "errors":[
+        {"shape":"BillingViewHealthStatusException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
@@ -205,9 +252,27 @@
         "activeBeforeInclusive":{"shape":"Timestamp"}
       }
     },
+    "AssociateSourceViewsRequest":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "sourceViews"
+      ],
+      "members":{
+        "arn":{"shape":"BillingViewArn"},
+        "sourceViews":{"shape":"BillingViewSourceViewsList"}
+      }
+    },
+    "AssociateSourceViewsResponse":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"BillingViewArn"}
+      }
+    },
     "BillingViewArn":{
       "type":"string",
-      "pattern":"arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[a-zA-Z0-9/:_\\+=\\.\\-@]{0,59}[a-zA-Z0-9]"
+      "pattern":"arn:aws[a-z-]*:(billing)::[0-9]{12}:billingview/[a-zA-Z0-9/:_\\+=\\.\\-@]{0,75}[a-zA-Z0-9]"
     },
     "BillingViewArnList":{
       "type":"list",
@@ -230,10 +295,30 @@
         "description":{"shape":"BillingViewDescription"},
         "billingViewType":{"shape":"BillingViewType"},
         "ownerAccountId":{"shape":"AccountId"},
+        "sourceAccountId":{"shape":"AccountId"},
         "dataFilterExpression":{"shape":"Expression"},
         "createdAt":{"shape":"Timestamp"},
-        "updatedAt":{"shape":"Timestamp"}
+        "updatedAt":{"shape":"Timestamp"},
+        "derivedViewCount":{"shape":"Integer"},
+        "sourceViewCount":{"shape":"Integer"},
+        "viewDefinitionLastUpdatedAt":{"shape":"Timestamp"},
+        "healthStatus":{"shape":"BillingViewHealthStatus"}
       }
+    },
+    "BillingViewHealthStatus":{
+      "type":"structure",
+      "members":{
+        "statusCode":{"shape":"BillingViewStatus"},
+        "statusReasons":{"shape":"BillingViewStatusReasons"}
+      }
+    },
+    "BillingViewHealthStatusException":{
+      "type":"structure",
+      "required":["message"],
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
     },
     "BillingViewList":{
       "type":"list",
@@ -246,7 +331,9 @@
         "name":{"shape":"BillingViewName"},
         "description":{"shape":"BillingViewDescription"},
         "ownerAccountId":{"shape":"AccountId"},
-        "billingViewType":{"shape":"BillingViewType"}
+        "sourceAccountId":{"shape":"AccountId"},
+        "billingViewType":{"shape":"BillingViewType"},
+        "healthStatus":{"shape":"BillingViewHealthStatus"}
       }
     },
     "BillingViewName":{
@@ -259,8 +346,34 @@
     "BillingViewSourceViewsList":{
       "type":"list",
       "member":{"shape":"BillingViewArn"},
-      "max":1,
+      "max":10,
       "min":1
+    },
+    "BillingViewStatus":{
+      "type":"string",
+      "enum":[
+        "HEALTHY",
+        "UNHEALTHY",
+        "CREATING",
+        "UPDATING"
+      ]
+    },
+    "BillingViewStatusReason":{
+      "type":"string",
+      "enum":[
+        "SOURCE_VIEW_UNHEALTHY",
+        "SOURCE_VIEW_UPDATING",
+        "SOURCE_VIEW_ACCESS_DENIED",
+        "SOURCE_VIEW_NOT_FOUND",
+        "CYCLIC_DEPENDENCY",
+        "SOURCE_VIEW_DEPTH_EXCEEDED",
+        "AGGREGATE_SOURCE",
+        "VIEW_OWNER_NOT_MANAGEMENT_ACCOUNT"
+      ]
+    },
+    "BillingViewStatusReasons":{
+      "type":"list",
+      "member":{"shape":"BillingViewStatusReason"}
     },
     "BillingViewType":{
       "type":"string",
@@ -279,6 +392,10 @@
       "box":true,
       "max":100,
       "min":1
+    },
+    "Boolean":{
+      "type":"boolean",
+      "box":true
     },
     "ClientToken":{
       "type":"string",
@@ -328,7 +445,8 @@
       "type":"structure",
       "required":["arn"],
       "members":{
-        "arn":{"shape":"BillingViewArn"}
+        "arn":{"shape":"BillingViewArn"},
+        "force":{"shape":"Boolean"}
       }
     },
     "DeleteBillingViewResponse":{
@@ -353,6 +471,24 @@
         "values":{"shape":"Values"}
       }
     },
+    "DisassociateSourceViewsRequest":{
+      "type":"structure",
+      "required":[
+        "arn",
+        "sourceViews"
+      ],
+      "members":{
+        "arn":{"shape":"BillingViewArn"},
+        "sourceViews":{"shape":"BillingViewSourceViewsList"}
+      }
+    },
+    "DisassociateSourceViewsResponse":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"BillingViewArn"}
+      }
+    },
     "ErrorMessage":{
       "type":"string",
       "max":1024,
@@ -362,7 +498,8 @@
       "type":"structure",
       "members":{
         "dimensions":{"shape":"DimensionValues"},
-        "tags":{"shape":"TagValues"}
+        "tags":{"shape":"TagValues"},
+        "timeRange":{"shape":"TimeRange"}
       }
     },
     "FieldName":{
@@ -399,6 +536,10 @@
         "policy":{"shape":"PolicyDocument"}
       }
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["message"],
@@ -415,6 +556,7 @@
         "arns":{"shape":"BillingViewArnList"},
         "billingViewTypes":{"shape":"BillingViewTypeList"},
         "ownerAccountId":{"shape":"AccountId"},
+        "sourceAccountId":{"shape":"AccountId"},
         "maxResults":{"shape":"BillingViewsMaxResults"},
         "nextToken":{"shape":"PageToken"}
       }
@@ -588,6 +730,13 @@
         "message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "TimeRange":{
+      "type":"structure",
+      "members":{
+        "beginDateInclusive":{"shape":"Timestamp"},
+        "endDateInclusive":{"shape":"Timestamp"}
+      }
     },
     "Timestamp":{"type":"timestamp"},
     "UntagResourceRequest":{

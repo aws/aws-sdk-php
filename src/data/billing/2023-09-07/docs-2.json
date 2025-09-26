@@ -2,8 +2,10 @@
   "version": "2.0",
   "service": "<p> You can use the Billing API to programatically list the billing views available to you for a given time period. A billing view represents a set of billing data. </p> <p>The Billing API provides the following endpoint:</p> <p> <code>https://billing.us-east-1.api.aws</code> </p>",
   "operations": {
+    "AssociateSourceViews": "<p> Associates one or more source billing views with an existing billing view. This allows creating aggregate billing views that combine data from multiple sources. </p>",
     "CreateBillingView": "<p> Creates a billing view with the specified billing view attributes. </p>",
     "DeleteBillingView": "<p>Deletes the specified billing view.</p>",
+    "DisassociateSourceViews": "<p> Removes the association between one or more source billing views and an existing billing view. This allows modifying the composition of aggregate billing views. </p>",
     "GetBillingView": "<p>Returns the metadata associated to the specified billing view ARN. </p>",
     "GetResourcePolicy": "<p>Returns the resource-based policy document attached to the resource in <code>JSON</code> format. </p>",
     "ListBillingViews": "<p>Lists the billing views available for a given time period. </p> <p>Every Amazon Web Services account has a unique <code>PRIMARY</code> billing view that represents the billing data available by default. Accounts that use Billing Conductor also have <code>BILLING_GROUP</code> billing views representing pro forma costs associated with each created billing group.</p>",
@@ -22,8 +24,11 @@
       "base": null,
       "refs": {
         "BillingViewElement$ownerAccountId": "<p>The account owner of the billing view. </p>",
+        "BillingViewElement$sourceAccountId": "<p> The Amazon Web Services account ID that owns the source billing view, if this is a derived billing view. </p>",
         "BillingViewListElement$ownerAccountId": "<p> The list of owners of the Billing view. </p>",
-        "ListBillingViewsRequest$ownerAccountId": "<p> The list of owners of the billing view. </p>"
+        "BillingViewListElement$sourceAccountId": "<p> The Amazon Web Services account ID that owns the source billing view, if this is a derived billing view. </p>",
+        "ListBillingViewsRequest$ownerAccountId": "<p> The list of owners of the billing view. </p>",
+        "ListBillingViewsRequest$sourceAccountId": "<p> Filters the results to include only billing views that use the specified account as a source. </p>"
       }
     },
     "ActiveTimeRange": {
@@ -32,9 +37,19 @@
         "ListBillingViewsRequest$activeTimeRange": "<p> The time range for the billing views listed. <code>PRIMARY</code> billing view is always listed. <code>BILLING_GROUP</code> billing views are listed for time ranges when the associated billing group resource in Billing Conductor is active. The time range must be within one calendar month. </p>"
       }
     },
+    "AssociateSourceViewsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "AssociateSourceViewsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "BillingViewArn": {
       "base": null,
       "refs": {
+        "AssociateSourceViewsRequest$arn": "<p> The Amazon Resource Name (ARN) of the billing view to associate source views with. </p>",
+        "AssociateSourceViewsResponse$arn": "<p> The ARN of the billing view that the source views were associated with. </p>",
         "BillingViewArnList$member": null,
         "BillingViewElement$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
         "BillingViewListElement$arn": "<p>The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
@@ -42,6 +57,8 @@
         "CreateBillingViewResponse$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
         "DeleteBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
         "DeleteBillingViewResponse$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
+        "DisassociateSourceViewsRequest$arn": "<p> The Amazon Resource Name (ARN) of the billing view to disassociate source views from. </p>",
+        "DisassociateSourceViewsResponse$arn": "<p> The ARN of the billing view that the source views were disassociated from. </p>",
         "GetBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
         "ListSourceViewsForBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
         "UpdateBillingViewRequest$arn": "<p> The Amazon Resource Name (ARN) that can be used to uniquely identify the billing view. </p>",
@@ -69,6 +86,17 @@
         "GetBillingViewResponse$billingView": "<p>The billing view element associated with the specified ARN. </p>"
       }
     },
+    "BillingViewHealthStatus": {
+      "base": "<p> Represents the health status of a billing view, including a status code and optional reasons for the status. </p>",
+      "refs": {
+        "BillingViewElement$healthStatus": "<p> The current health status of the billing view. </p>",
+        "BillingViewListElement$healthStatus": "<p> The current health status of the billing view. </p>"
+      }
+    },
+    "BillingViewHealthStatusException": {
+      "base": "<p> Exception thrown when a billing view's health status prevents an operation from being performed. This may occur if the billing view is in a state other than <code>HEALTHY</code>.</p>",
+      "refs": {}
+    },
     "BillingViewList": {
       "base": null,
       "refs": {
@@ -93,8 +121,28 @@
     "BillingViewSourceViewsList": {
       "base": null,
       "refs": {
+        "AssociateSourceViewsRequest$sourceViews": "<p> A list of ARNs of the source billing views to associate. </p>",
         "CreateBillingViewRequest$sourceViews": "<p>A list of billing views used as the data source for the custom billing view.</p>",
+        "DisassociateSourceViewsRequest$sourceViews": "<p> A list of ARNs of the source billing views to disassociate. </p>",
         "ListSourceViewsForBillingViewResponse$sourceViews": "<p>A list of billing views used as the data source for the custom billing view. </p>"
+      }
+    },
+    "BillingViewStatus": {
+      "base": null,
+      "refs": {
+        "BillingViewHealthStatus$statusCode": "<p>The current health status code of the billing view.</p>"
+      }
+    },
+    "BillingViewStatusReason": {
+      "base": null,
+      "refs": {
+        "BillingViewStatusReasons$member": null
+      }
+    },
+    "BillingViewStatusReasons": {
+      "base": null,
+      "refs": {
+        "BillingViewHealthStatus$statusReasons": "<p>A list of reasons explaining the current health status, if applicable.</p>"
       }
     },
     "BillingViewType": {
@@ -116,6 +164,12 @@
       "refs": {
         "ListBillingViewsRequest$maxResults": "<p>The maximum number of billing views to retrieve. Default is 100. </p>",
         "ListSourceViewsForBillingViewRequest$maxResults": "<p> The number of entries a paginated response contains. </p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "DeleteBillingViewRequest$force": "<p> If set to true, forces deletion of the billing view even if it has derived resources (e.g. other billing views or budgets). Use with caution as this may break dependent resources. </p>"
       }
     },
     "ClientToken": {
@@ -156,10 +210,19 @@
         "Expression$dimensions": "<p> The specific <code>Dimension</code> to use for <code>Expression</code>. </p>"
       }
     },
+    "DisassociateSourceViewsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "DisassociateSourceViewsResponse": {
+      "base": null,
+      "refs": {}
+    },
     "ErrorMessage": {
       "base": null,
       "refs": {
         "AccessDeniedException$message": null,
+        "BillingViewHealthStatusException$message": null,
         "ConflictException$message": null,
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
@@ -198,6 +261,13 @@
     "GetResourcePolicyResponse": {
       "base": null,
       "refs": {}
+    },
+    "Integer": {
+      "base": null,
+      "refs": {
+        "BillingViewElement$derivedViewCount": "<p> The number of billing views that use this billing view as a source. </p>",
+        "BillingViewElement$sourceViewCount": "<p> The number of source views associated with this billing view. </p>"
+      }
     },
     "InternalServerException": {
       "base": "<p>The request processing failed because of an unknown error, exception, or failure. </p>",
@@ -345,6 +415,12 @@
       "base": "<p>The request was denied due to request throttling. </p>",
       "refs": {}
     },
+    "TimeRange": {
+      "base": "<p> Specifies a time range with inclusive begin and end dates. </p>",
+      "refs": {
+        "Expression$timeRange": "<p> Specifies a time range filter for the billing view data. </p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -352,7 +428,10 @@
         "ActiveTimeRange$activeBeforeInclusive": "<p> The inclusive time range end date. </p>",
         "BillingViewElement$createdAt": "<p>The time when the billing view was created. </p>",
         "BillingViewElement$updatedAt": "<p>The time when the billing view was last updated. </p>",
+        "BillingViewElement$viewDefinitionLastUpdatedAt": "<p> The timestamp of when the billing view definition was last updated. </p>",
         "CreateBillingViewResponse$createdAt": "<p> The time when the billing view was created. </p>",
+        "TimeRange$beginDateInclusive": "<p> The inclusive start date of the time range. </p>",
+        "TimeRange$endDateInclusive": "<p> The inclusive end date of the time range. </p>",
         "UpdateBillingViewResponse$updatedAt": "<p> The time when the billing view was last updated. </p>"
       }
     },

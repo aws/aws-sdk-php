@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockDataAutomation` - Added support for configurable Speaker Labeling and Channel Labeling features for Audio modality.
+* `Aws\CostExplorer` - Support for payer account dimension and billing view health status.
+* `Aws\Connect` - Adds supports for manual contact picking (WorkList) operations on Routing Profiles, Agent Management and SearchContacts APIs.
+* `Aws\Billing` - Add ability to combine custom billing views to create new consolidated views.
+* `Aws\DynamoDBStreams` - Added support for IPv6 compatible endpoints for DynamoDB Streams.
+* `Aws\BedrockAgentRuntime` - This release enhances the information provided through Flow Traces. New information includes source/next node tracking, execution chains for complex nodes, dependency action (operation) details, and dependency traces.
+* `Aws\EC2` - This release includes documentation updates for Amazon EBS General Purpose SSD (gp3) volumes with larger size and higher IOPS and throughput.
+* `Aws\Redshift` - Support tagging and tag propagation to IAM Identity Center for Redshift Idc Applications
+
 ## 3.356.26 - 2025-09-25
 
 * `Aws\Lightsail` - Attribute HTTP binding update for Get/Delete operations

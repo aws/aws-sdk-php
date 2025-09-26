@@ -283,7 +283,8 @@
       "required":["state"],
       "members":{
         "state":{"shape":"State"},
-        "types":{"shape":"AudioExtractionCategoryTypes"}
+        "types":{"shape":"AudioExtractionCategoryTypes"},
+        "typeConfiguration":{"shape":"AudioExtractionCategoryTypeConfiguration"}
       }
     },
     "AudioExtractionCategoryType":{
@@ -293,6 +294,12 @@
         "TRANSCRIPT",
         "TOPIC_CONTENT_MODERATION"
       ]
+    },
+    "AudioExtractionCategoryTypeConfiguration":{
+      "type":"structure",
+      "members":{
+        "transcript":{"shape":"TranscriptConfiguration"}
+      }
     },
     "AudioExtractionCategoryTypes":{
       "type":"list",
@@ -441,6 +448,13 @@
     "Blueprints":{
       "type":"list",
       "member":{"shape":"BlueprintSummary"}
+    },
+    "ChannelLabelingConfiguration":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"State"}
+      }
     },
     "ClientToken":{
       "type":"string",
@@ -657,8 +671,7 @@
     },
     "DeleteBlueprintResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteDataAutomationProjectRequest":{
       "type":"structure",
@@ -1055,6 +1068,13 @@
       },
       "exception":true
     },
+    "SpeakerLabelingConfiguration":{
+      "type":"structure",
+      "required":["state"],
+      "members":{
+        "state":{"shape":"State"}
+      }
+    },
     "SplitterConfiguration":{
       "type":"structure",
       "members":{
@@ -1118,8 +1138,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1143,6 +1162,13 @@
       },
       "exception":true
     },
+    "TranscriptConfiguration":{
+      "type":"structure",
+      "members":{
+        "speakerLabeling":{"shape":"SpeakerLabelingConfiguration"},
+        "channelLabeling":{"shape":"ChannelLabelingConfiguration"}
+      }
+    },
     "Type":{
       "type":"string",
       "enum":[
@@ -1165,8 +1191,7 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "UpdateBlueprintRequest":{
       "type":"structure",

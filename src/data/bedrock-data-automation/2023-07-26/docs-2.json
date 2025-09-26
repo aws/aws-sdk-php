@@ -20,8 +20,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>This exception is thrown when a request is denied per access permissions</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AudioExtractionCategory": {
       "base": "<p>Category of Audio Extraction</p>",
@@ -33,6 +32,12 @@
       "base": null,
       "refs": {
         "AudioExtractionCategoryTypes$member": null
+      }
+    },
+    "AudioExtractionCategoryTypeConfiguration": {
+      "base": "<p>Configuration for different audio extraction category types</p>",
+      "refs": {
+        "AudioExtractionCategory$typeConfiguration": null
       }
     },
     "AudioExtractionCategoryTypes": {
@@ -175,6 +180,12 @@
         "ListBlueprintsResponse$blueprints": null
       }
     },
+    "ChannelLabelingConfiguration": {
+      "base": "<p>Channel labeling configuration</p>",
+      "refs": {
+        "TranscriptConfiguration$channelLabeling": null
+      }
+    },
     "ClientToken": {
       "base": "<p>Client specified token used for idempotency checks</p>",
       "refs": {
@@ -185,38 +196,31 @@
     },
     "ConflictException": {
       "base": "<p>This exception is thrown when there is a conflict performing an operation</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintRequest": {
       "base": "<p>Create Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintResponse": {
       "base": "<p>Create Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintVersionRequest": {
       "base": "<p>Create Blueprint Version Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateBlueprintVersionResponse": {
       "base": "<p>Create Blueprint Version Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataAutomationProjectRequest": {
       "base": "<p>Create DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateDataAutomationProjectResponse": {
       "base": "<p>Create DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomOutputConfiguration": {
       "base": "<p>Custom output configuration</p>",
@@ -322,23 +326,19 @@
     },
     "DeleteBlueprintRequest": {
       "base": "<p>Delete Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteBlueprintResponse": {
       "base": "<p>Delete Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataAutomationProjectRequest": {
       "base": "<p>Delete DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteDataAutomationProjectResponse": {
       "base": "<p>Delete DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "DesiredModality": {
       "base": "<p>Desired Modality types</p>",
@@ -450,23 +450,19 @@
     },
     "GetBlueprintRequest": {
       "base": "<p>Get Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetBlueprintResponse": {
       "base": "<p>Get Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataAutomationProjectRequest": {
       "base": "<p>Get DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "GetDataAutomationProjectResponse": {
       "base": "<p>Get DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ImageBoundingBox": {
       "base": "<p>Bounding Box Configuration of Image Extraction</p>",
@@ -530,8 +526,7 @@
     },
     "InternalServerException": {
       "base": "<p>This exception is thrown if there was an unexpected error during processing of request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "KmsEncryptionContext": {
       "base": "<p>KMS Encryption Context</p>",
@@ -551,33 +546,27 @@
     },
     "ListBlueprintsRequest": {
       "base": "<p>List Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListBlueprintsResponse": {
       "base": "<p>List Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataAutomationProjectsRequest": {
       "base": "<p>List DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListDataAutomationProjectsResponse": {
       "base": "<p>List DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "MaxResults": {
       "base": "<p>Max Results</p>",
@@ -634,8 +623,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>This exception is thrown when a resource referenced by the operation does not exist</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceOwner": {
       "base": "<p>Resource Owner</p>",
@@ -646,7 +634,12 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>This exception is thrown when a request is made beyond the service quota</p>",
+      "refs": {}
+    },
+    "SpeakerLabelingConfiguration": {
+      "base": "<p>Speaker labeling configuration</p>",
       "refs": {
+        "TranscriptConfiguration$speakerLabeling": null
       }
     },
     "SplitterConfiguration": {
@@ -668,6 +661,7 @@
       "refs": {
         "AudioExtractionCategory$state": null,
         "AudioStandardGenerativeField$state": null,
+        "ChannelLabelingConfiguration$state": null,
         "DocumentBoundingBox$state": null,
         "DocumentOutputAdditionalFileFormat$state": null,
         "DocumentStandardGenerativeField$state": null,
@@ -675,6 +669,7 @@
         "ImageExtractionCategory$state": null,
         "ImageStandardGenerativeField$state": null,
         "ModalityProcessingConfiguration$state": null,
+        "SpeakerLabelingConfiguration$state": null,
         "SplitterConfiguration$state": null,
         "VideoBoundingBox$state": null,
         "VideoExtractionCategory$state": null,
@@ -711,13 +706,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": "<p>Defines the value within the context. e.g. &lt;key=reason, value=training&gt;.</p>",
@@ -735,7 +728,12 @@
     },
     "ThrottlingException": {
       "base": "<p>This exception is thrown when the number of requests exceeds the limit</p>",
+      "refs": {}
+    },
+    "TranscriptConfiguration": {
+      "base": "<p>Configuration for transcript related features</p>",
       "refs": {
+        "AudioExtractionCategoryTypeConfiguration$transcript": null
       }
     },
     "Type": {
@@ -747,38 +745,31 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBlueprintRequest": {
       "base": "<p>Update Blueprint Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateBlueprintResponse": {
       "base": "<p>Update Blueprint Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataAutomationProjectRequest": {
       "base": "<p>Update DataAutomationProject Request</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateDataAutomationProjectResponse": {
       "base": "<p>Update DataAutomationProject Response</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>This exception is thrown when the request's input validation fails</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Stores information about a field passed inside a request that resulted in an exception</p>",

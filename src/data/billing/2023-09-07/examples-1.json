@@ -1,6 +1,22 @@
 {
   "version": "1.0",
   "examples": {
+    "AssociateSourceViews": [
+      {
+        "input": {
+          "arn": "arn:aws:billing::123456789012:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899",
+          "sourceViews": [
+            "arn:aws:billing::123456789012:billingview/primary",
+            "arn:aws:billing::123456789012:billingview/custom-d3f9c7e4-8b2f-4a6e-9d3b-2f7c8a1e5f6d"
+          ]
+        },
+        "output": {
+          "arn": "arn:aws:billing::123456789012:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899"
+        },
+        "id": "example-1",
+        "title": "Invoke AssociateSourceViews"
+      }
+    ],
     "CreateBillingView": [
       {
         "input": {
@@ -36,6 +52,22 @@
         },
         "id": "example-1",
         "title": "Invoke DeleteBillingView"
+      }
+    ],
+    "DisassociateSourceViews": [
+      {
+        "input": {
+          "arn": "arn:aws:billing::123456789012:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899",
+          "sourceViews": [
+            "arn:aws:billing::123456789012:billingview/primary",
+            "arn:aws:billing::123456789012:billingview/custom-d3f9c7e4-8b2f-4a6e-9d3b-2f7c8a1e5f6d"
+          ]
+        },
+        "output": {
+          "arn": "arn:aws:billing::123456789012:billingview/custom-46f47cb2-a11d-43f3-983d-470b5708a899"
+        },
+        "id": "example-1",
+        "title": "Invoke DisassociateSourceViews"
       }
     ],
     "GetBillingView": [
