@@ -144,6 +144,18 @@
         "ImportVmImageResponse$imageArn": "<p>The Amazon Resource Name (ARN) of the AMI that was created during the VM import process. This AMI is used as the base image for the recipe that imported the VM.</p>"
       }
     },
+    "AutoDisableFailureCount": {
+      "base": null,
+      "refs": {
+        "AutoDisablePolicy$failureCount": "<p>The number of consecutive scheduled image pipeline executions that must fail before Image Builder automatically disables the pipeline.</p>"
+      }
+    },
+    "AutoDisablePolicy": {
+      "base": "<p>Defines the rules by which an image pipeline is automatically disabled when it fails.</p>",
+      "refs": {
+        "Schedule$autoDisablePolicy": "<p>The policy that configures when Image Builder should automatically disable a pipeline that is failing.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -399,6 +411,12 @@
       "base": null,
       "refs": {
         "ListComponentsResponse$componentVersionList": "<p>The list of component semantic versions.</p> <note> <p>The semantic version has four nodes: &lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;/&lt;build&gt;. You can assign values for the first three, and can filter on all of them.</p> </note>"
+      }
+    },
+    "ConsecutiveFailures": {
+      "base": null,
+      "refs": {
+        "ImagePipeline$consecutiveFailures": "<p>Image Builder tracks the number of consecutive failures for scheduled pipeline executions and takes one of the following actions each time it runs on a schedule:</p> <ul> <li> <p>If the pipeline execution is successful, the number of consecutive failures resets to zero.</p> </li> <li> <p>If the pipeline execution fails, Image Builder increments the number of consecutive failures. If the failure count exceeds the limit defined in the <code>AutoDisablePolicy</code>, Image Builder disables the pipeline.</p> </li> </ul> <p>The consecutive failure count is also reset to zero under the following conditions:</p> <ul> <li> <p>The pipeline runs manually and succeeds.</p> </li> <li> <p>The pipeline configuration is updated.</p> </li> </ul> <p>If the pipeline runs manually and fails, the count remains the same. The next scheduled run continues to increment where it left off before.</p>"
       }
     },
     "Container": {
@@ -1055,7 +1073,7 @@
       "refs": {}
     },
     "Image": {
-      "base": "<p>An Image Builder image. You must specify exactly one recipe for the image – either a container recipe (<code>containerRecipe</code>), which creates a container image, or an image recipe (<code>imageRecipe</code>), which creates an AMI.</p>",
+      "base": "<p>An Image Builder image resource that keeps track of all of the settings used to create, configure, and distribute output for that image. You must specify exactly one recipe for the image – either a container recipe (<code>containerRecipe</code>), which creates a container image, or an image recipe (<code>imageRecipe</code>), which creates an AMI.</p>",
       "refs": {
         "GetImageResponse$image": "<p>The image object.</p>"
       }
@@ -1125,6 +1143,16 @@
         "ListTagsForResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource whose tags you want to retrieve.</p>",
         "TagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to tag.</p>",
         "UntagResourceRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that you want to untag.</p>"
+      }
+    },
+    "ImageLoggingConfiguration": {
+      "base": "<p>The logging configuration that's defined for the image. Image Builder uses the defined settings to direct execution log output during image creation.</p>",
+      "refs": {
+        "CreateImageRequest$loggingConfiguration": "<p>Define logging configuration for the image build process.</p>",
+        "Image$loggingConfiguration": "<p>The logging configuration that's defined for the image. Image Builder uses the defined settings to direct execution log output during image creation.</p>",
+        "ImageSummary$loggingConfiguration": "<p>The logging configuration that's defined for the image.</p>",
+        "ImportDiskImageRequest$loggingConfiguration": "<p>Define logging configuration for the image build process.</p>",
+        "ImportVmImageRequest$loggingConfiguration": "<p>Define logging configuration for the image build process.</p>"
       }
     },
     "ImagePackage": {
@@ -1204,7 +1232,7 @@
     "ImageRecipeSummaryList": {
       "base": null,
       "refs": {
-        "ListImageRecipesResponse$imageRecipeSummaryList": "<p>The list of image pipelines.</p>"
+        "ListImageRecipesResponse$imageRecipeSummaryList": "<p>A list of <code>ImageRecipeSummary</code> objects that contain identifying characteristics for the image recipe, such as the name, the Amazon Resource Name (ARN), and the date created, along with other key details.</p>"
       }
     },
     "ImageScanFinding": {
@@ -1290,6 +1318,7 @@
     "ImageStatus": {
       "base": null,
       "refs": {
+        "ImagePipeline$lastRunStatus": "<p>The status of the last image that this pipeline built, such as <code>BUILDING</code>, <code>TESTING</code>, <code>FAILED</code>, or <code>AVAILABLE</code>.</p>",
         "ImageState$status": "<p>The status of the image.</p>"
       }
     },
@@ -1980,6 +2009,14 @@
       "base": null,
       "refs": {}
     },
+    "LogGroupName": {
+      "base": null,
+      "refs": {
+        "ImageLoggingConfiguration$logGroupName": "<p>The log group name that Image Builder uses for image creation. If not specified, the log group name defaults to <code>/aws/imagebuilder/image-name</code>.</p>",
+        "PipelineLoggingConfiguration$imageLogGroupName": "<p>The log group name that Image Builder uses for image creation. If not specified, the log group name defaults to <code>/aws/imagebuilder/image-name</code>.</p>",
+        "PipelineLoggingConfiguration$pipelineLogGroupName": "<p>The log group name that Image Builder uses for the log output during creation of a new pipeline. If not specified, the pipeline log group name defaults to <code>/aws/imagebuilder/pipeline/pipeline-name</code>.</p>"
+      }
+    },
     "Logging": {
       "base": "<p>Logging configuration defines where Image Builder uploads your logs.</p>",
       "refs": {
@@ -2016,12 +2053,12 @@
         "Ami$description": "<p>The description of the Amazon EC2 AMI. Minimum and maximum length are in characters.</p>",
         "Ami$accountId": "<p>The account ID of the owner of the AMI.</p>",
         "AmiDistributionConfiguration$description": "<p>The description of the AMI distribution configuration. Minimum and maximum length are in characters.</p>",
-        "AmiDistributionConfiguration$kmsKeyId": "<p>The KMS key identifier used to encrypt the distributed image.</p>",
+        "AmiDistributionConfiguration$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies the KMS key used to encrypt the distributed image. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "CancelImageCreationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "Component$description": "<p>The description of the component.</p>",
         "Component$changeDescription": "<p>Describes what change has been made in this version of the component, or what makes this version different from other versions of the component.</p>",
         "Component$owner": "<p>The owner of the component.</p>",
-        "Component$kmsKeyId": "<p>The KMS key identifier used to encrypt the component.</p>",
+        "Component$kmsKeyId": "<p>The KMS key identifier used to encrypt the component. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "Component$publisher": "<p>Contains the name of the publisher if this is a third-party component. Otherwise, this property is empty.</p>",
         "ComponentState$reason": "<p>Describes how or why the component changed state.</p>",
         "ComponentSummary$owner": "<p>The owner of the component.</p>",
@@ -2034,20 +2071,21 @@
         "ContainerDistributionConfiguration$description": "<p>The description of the container distribution configuration.</p>",
         "ContainerRecipe$description": "<p>The description of the container recipe.</p>",
         "ContainerRecipe$owner": "<p>The owner of the container recipe.</p>",
-        "ContainerRecipe$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the container image for distribution to the target Region.</p>",
+        "ContainerRecipe$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies which KMS key is used to encrypt the container image for distribution to the target Region. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "ContainerRecipe$parentImage": "<p>The base image for customizations specified in the container recipe. This can contain an Image Builder image resource ARN or a container image URI, for example <code>amazonlinux:latest</code>.</p>",
         "ContainerRecipe$workingDirectory": "<p>The working directory for use during build and test workflows.</p>",
         "ContainerRecipeSummary$owner": "<p>The owner of the container recipe.</p>",
         "ContainerRecipeSummary$parentImage": "<p>The base image for the container recipe.</p>",
+        "ContainerRecipeSummary$instanceImage": "<p>The base image for a container build and test instance. This can contain an AMI ID or it can specify an Amazon Web Services Systems Manager (SSM) Parameter Store Parameter, prefixed by <code>ssm:</code>, followed by the parameter name or ARN.</p> <p>If not specified, Image Builder uses the appropriate ECS-optimized AMI as a base image.</p>",
         "CreateComponentRequest$description": "<p>Describes the contents of the component.</p>",
         "CreateComponentRequest$changeDescription": "<p>The change description of the component. Describes what change has been made in this version, or what makes this version different from other versions of the component.</p>",
-        "CreateComponentRequest$kmsKeyId": "<p>The ID of the KMS key that is used to encrypt this component.</p>",
+        "CreateComponentRequest$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies the KMS key used to encrypt this component. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "CreateComponentResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "CreateContainerRecipeRequest$description": "<p>The description of the container recipe.</p>",
         "CreateContainerRecipeRequest$imageOsVersionOverride": "<p>Specifies the operating system version for the base image.</p>",
         "CreateContainerRecipeRequest$parentImage": "<p>The base image for the container recipe.</p>",
         "CreateContainerRecipeRequest$workingDirectory": "<p>The working directory for use during build and test workflows.</p>",
-        "CreateContainerRecipeRequest$kmsKeyId": "<p>Identifies which KMS key is used to encrypt the Dockerfile template.</p>",
+        "CreateContainerRecipeRequest$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies which KMS key is used to encrypt the Dockerfile template. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "CreateContainerRecipeResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "CreateDistributionConfigurationRequest$description": "<p>The description of the distribution configuration.</p>",
         "CreateDistributionConfigurationResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
@@ -2065,7 +2103,7 @@
         "CreateLifecyclePolicyRequest$description": "<p>Optional description for the lifecycle policy.</p>",
         "CreateWorkflowRequest$description": "<p>Describes the workflow.</p>",
         "CreateWorkflowRequest$changeDescription": "<p>Describes what change has been made in this version of the workflow, or what makes this version different from other versions of the workflow.</p>",
-        "CreateWorkflowRequest$kmsKeyId": "<p>The ID of the KMS key that is used to encrypt this workflow resource.</p>",
+        "CreateWorkflowRequest$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies the KMS key used to encrypt this workflow resource. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "CvssScore$scoringVector": "<p>The vector string of the CVSS score.</p>",
         "CvssScore$version": "<p>The CVSS version that generated the score.</p>",
         "CvssScore$source": "<p>The source of the CVSS score.</p>",
@@ -2085,7 +2123,7 @@
         "Distribution$region": "<p>The target Region.</p>",
         "DistributionConfiguration$description": "<p>The description of the distribution configuration.</p>",
         "DistributionConfigurationSummary$description": "<p>The description of the distribution configuration.</p>",
-        "EbsInstanceBlockDeviceSpecification$kmsKeyId": "<p>Use to configure the KMS key to use when encrypting the device.</p>",
+        "EbsInstanceBlockDeviceSpecification$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies the KMS key to use when encrypting the device. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "EbsInstanceBlockDeviceSpecification$snapshotId": "<p>The snapshot that defines the device contents.</p>",
         "EcrConfiguration$repositoryName": "<p>The name of the container repository that Amazon Inspector scans to identify findings for your container images. The name includes the path for the repository location. If you don’t provide this information, Image Builder creates a repository in your account named <code>image-builder-image-scanning-repository</code> for vulnerability scans of your output container images.</p>",
         "FastLaunchLaunchTemplateSpecification$launchTemplateName": "<p>The name of the launch template to use for faster launching for a Windows AMI.</p>",
@@ -2128,7 +2166,7 @@
         "ImportComponentRequest$description": "<p>The description of the component. Describes the contents of the component.</p>",
         "ImportComponentRequest$changeDescription": "<p>The change description of the component. This description indicates the change that has been made in this version, or what makes this version different from other versions of the component.</p>",
         "ImportComponentRequest$data": "<p>The data of the component. Used to specify the data inline. Either <code>data</code> or <code>uri</code> can be used to specify the data within the component.</p>",
-        "ImportComponentRequest$kmsKeyId": "<p>The ID of the KMS key that should be used to encrypt this component.</p>",
+        "ImportComponentRequest$kmsKeyId": "<p>The Amazon Resource Name (ARN) that uniquely identifies the KMS key used to encrypt this component. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "ImportComponentResponse$requestId": "<p>The request ID that uniquely identifies this request.</p>",
         "ImportDiskImageRequest$name": "<p>The name of the image resource that's created from the import.</p>",
         "ImportDiskImageRequest$description": "<p>The description for your disk image import.</p>",
@@ -2218,7 +2256,7 @@
         "Workflow$description": "<p>The description of the workflow.</p>",
         "Workflow$changeDescription": "<p>Describes what change has been made in this version of the workflow, or what makes this version different from other versions of the workflow.</p>",
         "Workflow$owner": "<p>The owner of the workflow resource.</p>",
-        "Workflow$kmsKeyId": "<p>The KMS key identifier used to encrypt the workflow resource.</p>",
+        "Workflow$kmsKeyId": "<p>The KMS key identifier used to encrypt the workflow resource. This can be either the Key ARN or the Alias ARN. For more information, see <a href=\"https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id-key-ARN\">Key identifiers (KeyId)</a> in the <i>Key Management Service Developer Guide</i>.</p>",
         "WorkflowState$reason": "<p>Describes how or why the workflow changed state.</p>",
         "WorkflowSummary$description": "<p>Describes the workflow.</p>",
         "WorkflowSummary$changeDescription": "<p>The change description for the current version of the workflow resource.</p>",
@@ -2257,7 +2295,7 @@
         "ImageTestsConfiguration$imageTestsEnabled": "<p>Determines if tests should run after building the image. Image Builder defaults to enable tests to run following the image build, before image distribution.</p>",
         "InfrastructureConfiguration$terminateInstanceOnFailure": "<p>The terminate instance on failure configuration of the infrastructure configuration.</p>",
         "ListImagesRequest$includeDeprecated": "<p>Includes deprecated images in the response list.</p>",
-        "SystemsManagerAgent$uninstallAfterBuild": "<p>Controls whether the Systems Manager agent is removed from your final build image, prior to creating the new AMI. If this is set to true, then the agent is removed from the final image. If it's set to false, then the agent is left in, so that it is included in the new AMI. The default value is false.</p>",
+        "SystemsManagerAgent$uninstallAfterBuild": "<p>Controls whether the Systems Manager agent is removed from your final build image, prior to creating the new AMI. If this is set to true, then the agent is removed from the final image. If it's set to false, then the agent is left in, so that it is included in the new AMI. default value is false.</p> <p>The default behavior of uninstallAfterBuild is to remove the SSM Agent if it was installed by EC2 Image Builder</p>",
         "UpdateImagePipelineRequest$enhancedImageMetadataEnabled": "<p>Collects additional information about the image being created, including the operating system (OS) version and package list. This information is used to enhance the overall experience of using EC2 Image Builder. Enabled by default.</p>",
         "UpdateInfrastructureConfigurationRequest$terminateInstanceOnFailure": "<p>The terminate instance on failure setting of the infrastructure configuration. Set to false if you want Image Builder to retain the instance used to configure your AMI if the build or test phase of your workflow fails.</p>"
       }
@@ -2324,7 +2362,7 @@
       "refs": {
         "ListComponentsRequest$owner": "<p>Filters results based on the type of owner for the component. By default, this request returns a list of components that your account owns. To see results for other types of owners, you can specify components that Amazon manages, third party components, or components that other accounts have shared with you.</p>",
         "ListContainerRecipesRequest$owner": "<p>Returns container recipes belonging to the specified owner, that have been shared with you. You can omit this field to return container recipes belonging to your account.</p>",
-        "ListImageRecipesRequest$owner": "<p>The owner defines which image recipes you want to list. By default, this request will only show image recipes owned by your account. You can use this field to specify if you want to view image recipes owned by yourself, by Amazon, or those image recipes that have been shared with you by other customers.</p>",
+        "ListImageRecipesRequest$owner": "<p>You can specify the recipe owner to filter results by that owner. By default, this request will only show image recipes owned by your account. To filter by a different owner, specify one of the <code>Valid Values</code> that are listed for this parameter.</p>",
         "ListImagesRequest$owner": "<p>The owner defines which images you want to list. By default, this request will only show images owned by your account. You can use this field to specify if you want to view images owned by yourself, by Amazon, or those images that have been shared with you by other customers.</p>",
         "ListWorkflowsRequest$owner": "<p>Used to get a list of workflow build version filtered by the identity of the creator.</p>"
       }
@@ -2404,6 +2442,14 @@
       "base": null,
       "refs": {
         "Schedule$pipelineExecutionStartCondition": "<p>The start condition configures when the pipeline should trigger a new image build, as follows. If no value is set Image Builder defaults to <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code>.</p> <ul> <li> <p> <code>EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE</code> (default) – When you use semantic version filters on the base image or components in your image recipe, EC2 Image Builder builds a new image only when there are new versions of the base image or components in your recipe that match the filter.</p> <note> <p>For semantic version syntax, see <a href=\"https://docs.aws.amazon.com/imagebuilder/latest/APIReference/API_CreateComponent.html\">CreateComponent</a>.</p> </note> </li> <li> <p> <code>EXPRESSION_MATCH_ONLY</code> – This condition builds a new image every time the CRON expression matches the current time.</p> </li> </ul>"
+      }
+    },
+    "PipelineLoggingConfiguration": {
+      "base": "<p>The logging configuration that's defined for pipeline execution.</p>",
+      "refs": {
+        "CreateImagePipelineRequest$loggingConfiguration": "<p>Define logging configuration for the image build process.</p>",
+        "ImagePipeline$loggingConfiguration": "<p>Defines logging configuration for the output image.</p>",
+        "UpdateImagePipelineRequest$loggingConfiguration": "<p>Update logging configuration for the output image that's created when the pipeline runs.</p>"
       }
     },
     "PipelineStatus": {
@@ -2619,26 +2665,26 @@
     "RestrictedInteger": {
       "base": null,
       "refs": {
-        "ListComponentBuildVersionsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListComponentsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListContainerRecipesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListDistributionConfigurationsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListImageBuildVersionsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListImagePackagesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListImagePipelineImagesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListImagePipelinesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListImageRecipesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListImageScanFindingsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListImagesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListInfrastructureConfigurationsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListLifecycleExecutionResourcesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListLifecycleExecutionsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListLifecyclePoliciesRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListWaitingWorkflowStepsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListWorkflowBuildVersionsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListWorkflowExecutionsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListWorkflowStepExecutionsRequest$maxResults": "<p>The maximum items to return in a request.</p>",
-        "ListWorkflowsRequest$maxResults": "<p>The maximum items to return in a request.</p>"
+        "ListComponentBuildVersionsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListComponentsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListContainerRecipesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListDistributionConfigurationsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListImageBuildVersionsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListImagePackagesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListImagePipelineImagesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListImagePipelinesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListImageRecipesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListImageScanFindingsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListImagesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListInfrastructureConfigurationsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListLifecycleExecutionResourcesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListLifecycleExecutionsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListLifecyclePoliciesRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListWaitingWorkflowStepsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListWorkflowBuildVersionsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListWorkflowExecutionsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListWorkflowStepExecutionsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>",
+        "ListWorkflowsRequest$maxResults": "<p>Specify the maximum number of items to return in a request.</p>"
       }
     },
     "RoleNameOrArn": {
@@ -2820,6 +2866,7 @@
         "CreateDistributionConfigurationRequest$tags": "<p>The tags of the distribution configuration.</p>",
         "CreateImagePipelineRequest$tags": "<p>The tags of the image pipeline.</p>",
         "CreateImageRecipeRequest$tags": "<p>The tags of the image recipe.</p>",
+        "CreateImageRecipeRequest$amiTags": "<p>Tags that are applied to the AMI that Image Builder creates during the Build phase prior to image distribution.</p>",
         "CreateImageRequest$tags": "<p>The tags of the image.</p>",
         "CreateInfrastructureConfigurationRequest$tags": "<p>The metadata tags to assign to the infrastructure configuration resource that Image Builder creates as output. Tags are formatted as key value pairs.</p>",
         "CreateLifecyclePolicyRequest$tags": "<p>Tags to apply to the lifecycle policy resource.</p>",
@@ -2829,6 +2876,7 @@
         "Image$tags": "<p>The tags that apply to this image.</p>",
         "ImagePipeline$tags": "<p>The tags of this image pipeline.</p>",
         "ImageRecipe$tags": "<p>The tags of the image recipe.</p>",
+        "ImageRecipe$amiTags": "<p>Tags that are applied to the AMI that Image Builder creates during the Build phase prior to image distribution.</p>",
         "ImageRecipeSummary$tags": "<p>The tags of the image recipe.</p>",
         "ImageSummary$tags": "<p>The tags that apply to this image.</p>",
         "ImportComponentRequest$tags": "<p>The tags of the component.</p>",
@@ -2842,6 +2890,7 @@
         "LifecyclePolicyResourceSelection$tagMap": "<p>A list of tags that are used as selection criteria for the Image Builder image resources that the lifecycle policy applies to.</p>",
         "LifecyclePolicySummary$tags": "<p>To help manage your lifecycle policy resources, you can assign your own metadata to each resource in the form of tags. Each tag consists of a key and an optional value, both of which you define.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags for the specified resource.</p>",
+        "StartImagePipelineExecutionRequest$tags": "<p>Specify tags for Image Builder to apply to the image resource that's created When it starts pipeline execution.</p>",
         "TagResourceRequest$tags": "<p>The tags to apply to the resource.</p>",
         "Workflow$tags": "<p>The tags that apply to the workflow resource</p>",
         "WorkflowSummary$tags": "<p>Contains a list of tags that are defined for the workflow.</p>"

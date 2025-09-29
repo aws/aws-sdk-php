@@ -2477,6 +2477,12 @@
       "refs": {
       }
     },
+    "GetFoundationModelIdentifier": {
+      "base": null,
+      "refs": {
+        "GetFoundationModelRequest$modelIdentifier": "<p>The model identifier. </p>"
+      }
+    },
     "GetFoundationModelRequest": {
       "base": null,
       "refs": {
@@ -4101,7 +4107,6 @@
         "CreateProvisionedModelThroughputRequest$modelId": "<p>The Amazon Resource Name (ARN) or name of the model to associate with this Provisioned Throughput. For a list of models for which you can purchase Provisioned Throughput, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#prov-throughput-models\">Amazon Bedrock model IDs for purchasing Provisioned Throughput</a> in the <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html\">Amazon Bedrock User Guide</a>.</p>",
         "DeleteCustomModelRequest$modelIdentifier": "<p>Name of the model to delete.</p>",
         "GetCustomModelRequest$modelIdentifier": "<p>Name or Amazon Resource Name (ARN) of the custom model.</p>",
-        "GetFoundationModelRequest$modelIdentifier": "<p>The model identifier. </p>",
         "UpdateProvisionedModelThroughputRequest$desiredModelId": "<p>The Amazon Resource Name (ARN) of the new model to associate with this Provisioned Throughput. You can't specify this field if this Provisioned Throughput is associated with a base model.</p> <p>If this Provisioned Throughput is associated with a custom model, you can specify one of the following options:</p> <ul> <li> <p>The base model from which the custom model was customized.</p> </li> <li> <p>Another custom model that was customized from the same base model as the custom model.</p> </li> </ul>"
       }
     },
@@ -4733,7 +4738,7 @@
       }
     },
     "RoleArn": {
-      "base": "<p>ARN of a IAM role</p>",
+      "base": null,
       "refs": {
         "CloudWatchConfig$roleArn": "<p>The role Amazon Resource Name (ARN).</p>",
         "CreateCustomModelRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM service role that Amazon Bedrock assumes to perform tasks on your behalf. This role must have permissions to access the Amazon S3 bucket containing your model artifacts and the KMS key (if specified). For more information, see <a href=\"https://docs.aws.amazon.com/bedrock/latest/userguide/model-import-iam-role.html\">Setting up an IAM service role for importing models</a> in the Amazon Bedrock User Guide.</p>",

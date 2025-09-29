@@ -6,7 +6,7 @@
     "CreateAccessLogSubscription": "<p>Enables access logs to be sent to Amazon CloudWatch, Amazon S3, and Amazon Kinesis Data Firehose. The service network owner can use the access logs to audit the services in the network. The service network owner can only see access logs from clients and services that are associated with their service network. Access log entries represent traffic originated from VPCs associated with that network. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/monitoring-access-logs.html\">Access logs</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateListener": "<p>Creates a listener for a service. Before you start using your Amazon VPC Lattice service, you must add one or more listeners. A listener is a process that checks for connection requests to your services. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html\">Listeners</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateResourceConfiguration": "<p>Creates a resource configuration. A resource configuration defines a specific resource. You can associate a resource configuration with a service network or a VPC endpoint.</p>",
-    "CreateResourceGateway": "<p>Creates a resource gateway.</p>",
+    "CreateResourceGateway": "<p>A resource gateway is a point of ingress into the VPC where a resource resides. It spans multiple Availability Zones. For your resource to be accessible from all Availability Zones, you should create your resource gateways to span as many Availability Zones as possible. A VPC can have multiple resource gateways.</p>",
     "CreateRule": "<p>Creates a listener rule. Each listener has a default rule for checking connection requests, but you can define additional rules. Each rule consists of a priority, one or more actions, and one or more conditions. For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-rules\">Listener rules</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateService": "<p>Creates a service. A service is any software application that can run on instances containers, or serverless functions within an account or virtual private cloud (VPC).</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/services.html\">Services</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
     "CreateServiceNetwork": "<p>Creates a service network. A service network is a logical boundary for a collection of services. You can associate services and VPCs with a service network.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/vpc-lattice/latest/ug/service-networks.html\">Service networks</a> in the <i>Amazon VPC Lattice User Guide</i>.</p>",
@@ -75,8 +75,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>The user does not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccessLogDestinationArn": {
       "base": null,
@@ -189,13 +188,11 @@
     },
     "BatchUpdateRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
@@ -208,6 +205,7 @@
         "GetServiceNetworkResourceAssociationResponse$isManagedAssociation": "<p>Indicates whether the association is managed by Amazon.</p>",
         "HeaderMatch$caseSensitive": "<p>Indicates whether the match is case sensitive.</p>",
         "HealthCheckConfig$enabled": "<p>Indicates whether health checking is enabled.</p>",
+        "ListServiceNetworkResourceAssociationsRequest$includeChildren": "<p>Include service network resource associations of the child resource configuration with the grouped resource configuration.</p> <p>The type is boolean and the default value is false.</p>",
         "PathMatch$caseSensitive": "<p>Indicates whether the match is case sensitive.</p>",
         "ResourceConfigurationSummary$amazonManaged": "<p>Indicates whether the resource configuration was created and is managed by Amazon.</p>",
         "RuleSummary$isDefault": "<p>Indicates whether this is the default listener rule.</p>",
@@ -247,43 +245,35 @@
     },
     "ConflictException": {
       "base": "<p>The request conflicts with the current state of the resource. Updating or deleting a resource can cause an inconsistent state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessLogSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessLogSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateListenerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateListenerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateResourceGatewayRequestSecurityGroupIdsList": {
       "base": null,
@@ -293,53 +283,43 @@
     },
     "CreateResourceGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkResourceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkResourceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkServiceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkServiceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkVpcAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceNetworkVpcAssociationRequestSecurityGroupIdsList": {
       "base": null,
@@ -349,173 +329,139 @@
     },
     "CreateServiceNetworkVpcAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTargetGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateTargetGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessLogSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAccessLogSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAuthPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAuthPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteListenerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteListenerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceEndpointAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceEndpointAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourceGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkResourceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkResourceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkServiceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkServiceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkVpcAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceNetworkVpcAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTargetGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteTargetGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTargetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeregisterTargetsRequestTargetsList": {
       "base": null,
@@ -525,16 +471,15 @@
     },
     "DeregisterTargetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DnsEntry": {
       "base": "<p>Describes the DNS information of a service.</p>",
       "refs": {
         "CreateServiceNetworkServiceAssociationResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "CreateServiceResponse$dnsEntry": "<p>The public DNS name of the service.</p>",
-        "GetServiceNetworkResourceAssociationResponse$dnsEntry": "<p>The DNS entry for the service.</p>",
         "GetServiceNetworkResourceAssociationResponse$privateDnsEntry": "<p>The private DNS entry for the service.</p>",
+        "GetServiceNetworkResourceAssociationResponse$dnsEntry": "<p>The DNS entry for the service.</p>",
         "GetServiceNetworkServiceAssociationResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "GetServiceResponse$dnsEntry": "<p>The DNS name of the service.</p>",
         "ServiceNetworkResourceAssociationSummary$dnsEntry": "<p>The DNS entry for the service.</p>",
@@ -584,133 +529,107 @@
     },
     "GetAccessLogSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAccessLogSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAuthPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetAuthPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetListenerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetListenerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourceGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkResourceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkResourceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkServiceAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkServiceAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkVpcAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceNetworkVpcAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTargetGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetTargetGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "HeaderMatch": {
       "base": "<p>Describes the constraints for a header match. Matches incoming requests with rule based on request header value before applying rule action.</p>",
@@ -818,7 +737,7 @@
     "HttpStatusCode": {
       "base": null,
       "refs": {
-        "FixedResponseAction$statusCode": "<p>The HTTP response code.</p>"
+        "FixedResponseAction$statusCode": "<p>The HTTP response code. Only <code>404</code> and <code>500</code> status codes are supported.</p>"
       }
     },
     "Integer": {
@@ -830,8 +749,7 @@
     },
     "InternalServerException": {
       "base": "<p>An unexpected error occurred while processing the request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddress": {
       "base": null,
@@ -853,6 +771,15 @@
         "ResourceConfigurationDefinition$ipResource": "<p>The IP resource.</p>"
       }
     },
+    "Ipv4AddressesPerEni": {
+      "base": null,
+      "refs": {
+        "CreateResourceGatewayRequest$ipv4AddressesPerEni": "<p>The number of IPv4 addresses in each ENI for the resource gateway.</p>",
+        "CreateResourceGatewayResponse$ipv4AddressesPerEni": "<p>The number of IPv4 addresses in each ENI for the resource gateway.</p>",
+        "GetResourceGatewayResponse$ipv4AddressesPerEni": "<p>The number of IPv4 addresses in each ENI for the resource gateway.</p>",
+        "ResourceGatewaySummary$ipv4AddressesPerEni": "<p>The number of IPv4 addresses in each ENI for the resource gateway.</p>"
+      }
+    },
     "LambdaEventStructureVersion": {
       "base": null,
       "refs": {
@@ -862,148 +789,119 @@
     },
     "ListAccessLogSubscriptionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessLogSubscriptionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListListenersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListListenersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceConfigurationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceConfigurationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceEndpointAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceEndpointAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceGatewaysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListResourceGatewaysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRulesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListRulesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkResourceAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkResourceAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkServiceAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkServiceAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkVpcAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkVpcAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkVpcEndpointAssociationsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworkVpcEndpointAssociationsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworksRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceNetworksResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServicesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServicesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetGroupsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetGroupsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTargetsRequestTargetsList": {
       "base": null,
@@ -1013,8 +911,7 @@
     },
     "ListTargetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListenerArn": {
       "base": null,
@@ -1083,11 +980,11 @@
     "Long": {
       "base": null,
       "refs": {
-        "GetServiceNetworkResponse$numberOfAssociatedServices": "<p>The number of services associated with the service network.</p>",
         "GetServiceNetworkResponse$numberOfAssociatedVPCs": "<p>The number of VPCs associated with the service network.</p>",
-        "ServiceNetworkSummary$numberOfAssociatedResourceConfigurations": "<p>The number of resource configurations associated with a service network.</p>",
+        "GetServiceNetworkResponse$numberOfAssociatedServices": "<p>The number of services associated with the service network.</p>",
+        "ServiceNetworkSummary$numberOfAssociatedVPCs": "<p>The number of VPCs associated with the service network.</p>",
         "ServiceNetworkSummary$numberOfAssociatedServices": "<p>The number of services associated with the service network.</p>",
-        "ServiceNetworkSummary$numberOfAssociatedVPCs": "<p>The number of VPCs associated with the service network.</p>"
+        "ServiceNetworkSummary$numberOfAssociatedResourceConfigurations": "<p>The number of resource configurations associated with a service network.</p>"
       }
     },
     "Matcher": {
@@ -1221,28 +1118,23 @@
     },
     "PutAuthPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutAuthPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "PutResourcePolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterTargetsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "RegisterTargetsRequestTargetsList": {
       "base": null,
@@ -1252,8 +1144,7 @@
     },
     "RegisterTargetsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceArn": {
       "base": null,
@@ -1283,10 +1174,10 @@
     "ResourceConfigurationDefinition": {
       "base": "<p>Describes a resource configuration.</p>",
       "refs": {
-        "CreateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>(SINGLE, CHILD, ARN) The resource configuration.</p>",
-        "CreateResourceConfigurationResponse$resourceConfigurationDefinition": "<p>The resource configuration.</p>",
+        "CreateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>Identifies the resource configuration in one of the following ways:</p> <ul> <li> <p> <b>Amazon Resource Name (ARN)</b> - Supported resource-types that are provisioned by Amazon Web Services services, such as RDS databases, can be identified by their ARN.</p> </li> <li> <p> <b>Domain name</b> - Any domain name that is publicly resolvable.</p> </li> <li> <p> <b>IP address</b> - For IPv4 and IPv6, only IP addresses in the VPC are supported.</p> </li> </ul>",
+        "CreateResourceConfigurationResponse$resourceConfigurationDefinition": "<p>Identifies the resource configuration in one of the following ways:</p> <ul> <li> <p> <b>Amazon Resource Name (ARN)</b> - Supported resource-types that are provisioned by Amazon Web Services services, such as RDS databases, can be identified by their ARN.</p> </li> <li> <p> <b>Domain name</b> - Any domain name that is publicly resolvable.</p> </li> <li> <p> <b>IP address</b> - For IPv4 and IPv6, only IP addresses in the VPC are supported.</p> </li> </ul>",
         "GetResourceConfigurationResponse$resourceConfigurationDefinition": "<p>The resource configuration.</p>",
-        "UpdateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>The resource configuration.</p>",
+        "UpdateResourceConfigurationRequest$resourceConfigurationDefinition": "<p>Identifies the resource configuration in one of the following ways:</p> <ul> <li> <p> <b>Amazon Resource Name (ARN)</b> - Supported resource-types that are provisioned by Amazon Web Services services, such as RDS databases, can be identified by their ARN.</p> </li> <li> <p> <b>Domain name</b> - Any domain name that is publicly resolvable.</p> </li> <li> <p> <b>IP address</b> - For IPv4 and IPv6, only IP addresses in the VPC are supported.</p> </li> </ul>",
         "UpdateResourceConfigurationResponse$resourceConfigurationDefinition": "<p>The resource configuration.</p>"
       }
     },
@@ -1294,7 +1185,7 @@
       "base": null,
       "refs": {
         "CreateResourceConfigurationResponse$id": "<p>The ID of the resource configuration.</p>",
-        "CreateResourceConfigurationResponse$resourceConfigurationGroupId": "<p>The ID of the parent resource configuration (type is GROUP).</p>",
+        "CreateResourceConfigurationResponse$resourceConfigurationGroupId": "<p>The ID of the parent resource configuration of type <code>GROUP</code>.</p>",
         "DeleteResourceEndpointAssociationResponse$resourceConfigurationId": "<p>The ID of the resource configuration.</p>",
         "GetResourceConfigurationResponse$id": "<p>The ID of the resource configuration.</p>",
         "GetResourceConfigurationResponse$resourceConfigurationGroupId": "<p>The ID of the group resource configuration.</p>",
@@ -1310,20 +1201,20 @@
     "ResourceConfigurationIdentifier": {
       "base": null,
       "refs": {
-        "CreateResourceConfigurationRequest$resourceConfigurationGroupIdentifier": "<p>(CHILD) The ID or ARN of the parent resource configuration (type is <code>GROUP</code>). This is used to associate a child resource configuration with a group resource configuration.</p>",
+        "CreateResourceConfigurationRequest$resourceConfigurationGroupIdentifier": "<p>(CHILD) The ID or ARN of the parent resource configuration of type <code>GROUP</code>. This is used to associate a child resource configuration with a group resource configuration.</p>",
         "CreateServiceNetworkResourceAssociationRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configuration to associate with the service network.</p>",
         "DeleteResourceConfigurationRequest$resourceConfigurationIdentifier": "<p>The ID or ARN of the resource configuration.</p>",
         "GetResourceConfigurationRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configuration.</p>",
-        "ListResourceConfigurationsRequest$resourceConfigurationGroupIdentifier": "<p>The ID of the group resource configuration.</p>",
+        "ListResourceConfigurationsRequest$resourceConfigurationGroupIdentifier": "<p>The ID of the resource configuration of type <code>Group</code>.</p>",
         "ListResourceEndpointAssociationsRequest$resourceConfigurationIdentifier": "<p>The ID for the resource configuration associated with the VPC endpoint.</p>",
-        "ListServiceNetworkResourceAssociationsRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configurationk.</p>",
+        "ListServiceNetworkResourceAssociationsRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configuration.</p>",
         "UpdateResourceConfigurationRequest$resourceConfigurationIdentifier": "<p>The ID of the resource configuration.</p>"
       }
     },
     "ResourceConfigurationIpAddressType": {
       "base": null,
       "refs": {
-        "DnsResource$ipAddressType": "<p>The type of IP address.</p>"
+        "DnsResource$ipAddressType": "<p>The type of IP address. Dualstack is currently not supported.</p>"
       }
     },
     "ResourceConfigurationName": {
@@ -1363,10 +1254,10 @@
     "ResourceConfigurationType": {
       "base": null,
       "refs": {
-        "CreateResourceConfigurationRequest$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
-        "CreateResourceConfigurationResponse$type": "<p>The type of resource configuration.</p>",
+        "CreateResourceConfigurationRequest$type": "<p>The type of resource configuration. A resource configuration can be one of the following types:</p> <ul> <li> <p> <b>SINGLE</b> - A single resource.</p> </li> <li> <p> <b>GROUP</b> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <b>CHILD</b> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <b>ARN</b> - An Amazon Web Services resource.</p> </li> </ul>",
+        "CreateResourceConfigurationResponse$type": "<p>The type of resource configuration. A resource configuration can be one of the following types:</p> <ul> <li> <p> <b>SINGLE</b> - A single resource.</p> </li> <li> <p> <b>GROUP</b> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <b>CHILD</b> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <b>ARN</b> - An Amazon Web Services resource.</p> </li> </ul>",
         "GetResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
-        "ResourceConfigurationSummary$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
+        "ResourceConfigurationSummary$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources. You must create a group resource configuration before you create a child resource configuration.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>",
         "UpdateResourceConfigurationResponse$type": "<p>The type of resource configuration.</p> <ul> <li> <p> <code>SINGLE</code> - A single resource.</p> </li> <li> <p> <code>GROUP</code> - A group of resources.</p> </li> <li> <p> <code>CHILD</code> - A single resource that is part of a group resource configuration.</p> </li> <li> <p> <code>ARN</code> - An Amazon Web Services resource.</p> </li> </ul>"
       }
     },
@@ -1440,7 +1331,7 @@
     "ResourceGatewayIpAddressType": {
       "base": null,
       "refs": {
-        "CreateResourceGatewayRequest$ipAddressType": "<p>The type of IP address used by the resource gateway.</p>",
+        "CreateResourceGatewayRequest$ipAddressType": "<p>A resource gateway can have IPv4, IPv6 or dualstack addresses. The IP address type of a resource gateway must be compatible with the subnets of the resource gateway and the IP address type of the resource, as described here: </p> <ul> <li> <p> <b>IPv4</b>Assign IPv4 addresses to your resource gateway network interfaces. This option is supported only if all selected subnets have IPv4 address ranges, and the resource also has an IPv4 address.</p> </li> <li> <p> <b>IPv6</b>Assign IPv6 addresses to your resource gateway network interfaces. This option is supported only if all selected subnets are IPv6 only subnets, and the resource also has an IPv6 address.</p> </li> <li> <p> <b>Dualstack</b>Assign both IPv4 and IPv6 addresses to your resource gateway network interfaces. This option is supported only if all selected subnets have both IPv4 and IPv6 address ranges, and the resource either has an IPv4 or IPv6 address.</p> </li> </ul> <p>The IP address type of the resource gateway is independent of the IP address type of the client or the VPC endpoint through which the resource is accessed.</p>",
         "CreateResourceGatewayResponse$ipAddressType": "<p>The type of IP address for the resource gateway.</p>",
         "GetResourceGatewayResponse$ipAddressType": "<p>The type of IP address for the resource gateway.</p>",
         "ResourceGatewaySummary$ipAddressType": "<p>The type of IP address used by the resource gateway.</p>"
@@ -1500,8 +1391,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>The request references a resource that does not exist.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "RuleAction": {
       "base": "<p>Describes the action for a rule.</p>",
@@ -1804,8 +1694,8 @@
       "base": null,
       "refs": {
         "CreateServiceNetworkResourceAssociationRequest$serviceNetworkIdentifier": "<p>The ID of the service network to associate with the resource configuration.</p>",
-        "GetServiceNetworkResourceAssociationResponse$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network that is associated with the resource configuration.</p>",
         "GetServiceNetworkResourceAssociationResponse$serviceNetworkId": "<p>The ID of the service network that is associated with the resource configuration.</p>",
+        "GetServiceNetworkResourceAssociationResponse$serviceNetworkArn": "<p>The Amazon Resource Name (ARN) of the service network that is associated with the resource configuration.</p>",
         "ServiceNetworkResourceAssociationSummary$serviceNetworkId": "<p>The ID of the service network associated with the resource configuration.</p>"
       }
     },
@@ -1882,7 +1772,7 @@
         "CreateServiceNetworkResourceAssociationResponse$status": "<p>The status of the association.</p>",
         "DeleteServiceNetworkResourceAssociationResponse$status": "<p>The status of the association.</p>",
         "GetServiceNetworkResourceAssociationResponse$status": "<p>The status of the association.</p>",
-        "ServiceNetworkResourceAssociationSummary$status": "<p>The status of the service network associated with the resource configuration.</p>"
+        "ServiceNetworkResourceAssociationSummary$status": "<p>The status of the service network’s association with the resource configuration. If the deletion fails, try to delete again. </p>"
       }
     },
     "ServiceNetworkResourceAssociationSummary": {
@@ -1923,7 +1813,7 @@
         "CreateServiceNetworkServiceAssociationResponse$status": "<p>The association status.</p>",
         "DeleteServiceNetworkServiceAssociationResponse$status": "<p>The status. You can retry the operation if the status is <code>DELETE_FAILED</code>. However, if you retry it when the status is <code>DELETE_IN_PROGRESS</code>, there is no change in the status.</p>",
         "GetServiceNetworkServiceAssociationResponse$status": "<p>The status of the association.</p>",
-        "ServiceNetworkServiceAssociationSummary$status": "<p>The status. If the deletion fails, try to delete again.</p>"
+        "ServiceNetworkServiceAssociationSummary$status": "<p>The status of the service network’s association with the service. If the deletion fails, try to delete again.</p>"
       }
     },
     "ServiceNetworkServiceAssociationSummary": {
@@ -1996,8 +1886,7 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>The request would cause a service quota to be exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ServiceStatus": {
       "base": null,
@@ -2033,40 +1922,40 @@
         "DnsEntry$domainName": "<p>The domain name of the service.</p>",
         "DnsEntry$hostedZoneId": "<p>The ID of the hosted zone.</p>",
         "GetResourceConfigurationResponse$failureReason": "<p>The reason the create-resource-configuration request failed.</p>",
-        "GetServiceNetworkResourceAssociationResponse$failureCode": "<p>The failure code.</p>",
         "GetServiceNetworkResourceAssociationResponse$failureReason": "<p>The reason the association request failed.</p>",
-        "GetServiceNetworkServiceAssociationResponse$failureCode": "<p>The failure code.</p>",
+        "GetServiceNetworkResourceAssociationResponse$failureCode": "<p>The failure code.</p>",
         "GetServiceNetworkServiceAssociationResponse$failureMessage": "<p>The failure message.</p>",
-        "GetServiceNetworkVpcAssociationResponse$failureCode": "<p>The failure code.</p>",
+        "GetServiceNetworkServiceAssociationResponse$failureCode": "<p>The failure code.</p>",
         "GetServiceNetworkVpcAssociationResponse$failureMessage": "<p>The failure message.</p>",
-        "GetTargetGroupResponse$failureCode": "<p>The failure code.</p>",
+        "GetServiceNetworkVpcAssociationResponse$failureCode": "<p>The failure code.</p>",
         "GetTargetGroupResponse$failureMessage": "<p>The failure message.</p>",
+        "GetTargetGroupResponse$failureCode": "<p>The failure code.</p>",
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,
         "ResourceNotFoundException$resourceId": "<p>The resource ID.</p>",
         "ResourceNotFoundException$resourceType": "<p>The resource type.</p>",
+        "ServiceNetworkEndpointAssociation$vpcEndpointId": "<p>The ID of the VPC endpoint associated with the service network.</p>",
+        "ServiceNetworkEndpointAssociation$vpcId": "<p>The ID of the VPC for the association.</p>",
+        "ServiceNetworkEndpointAssociation$vpcEndpointOwnerId": "<p>The owner of the VPC endpoint associated with the service network.</p>",
         "ServiceNetworkEndpointAssociation$id": "<p>The ID of the association.</p>",
         "ServiceNetworkEndpointAssociation$state": "<p>The state of the association.</p>",
-        "ServiceNetworkEndpointAssociation$vpcEndpointId": "<p>The ID of the VPC endpoint associated with the service network.</p>",
-        "ServiceNetworkEndpointAssociation$vpcEndpointOwnerId": "<p>The owner of the VPC endpoint associated with the service network.</p>",
-        "ServiceNetworkEndpointAssociation$vpcId": "<p>The ID of the VPC for the association.</p>",
         "ServiceNetworkResourceAssociationSummary$failureCode": "<p>The failure code.</p>",
         "ServiceQuotaExceededException$message": null,
-        "ServiceQuotaExceededException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ServiceQuotaExceededException$resourceId": "<p>The resource ID.</p>",
         "ServiceQuotaExceededException$resourceType": "<p>The resource type.</p>",
         "ServiceQuotaExceededException$serviceCode": "<p>The service code.</p>",
+        "ServiceQuotaExceededException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
+        "TargetFailure$id": "<p>The ID of the target. If the target group type is <code>INSTANCE</code>, this is an instance ID. If the target group type is <code>IP</code>, this is an IP address. If the target group type is <code>LAMBDA</code>, this is the ARN of a Lambda function. If the target group type is <code>ALB</code>, this is the ARN of an Application Load Balancer.</p>",
         "TargetFailure$failureCode": "<p>The failure code.</p>",
         "TargetFailure$failureMessage": "<p>The failure message.</p>",
-        "TargetFailure$id": "<p>The ID of the target. If the target group type is <code>INSTANCE</code>, this is an instance ID. If the target group type is <code>IP</code>, this is an IP address. If the target group type is <code>LAMBDA</code>, this is the ARN of a Lambda function. If the target group type is <code>ALB</code>, this is the ARN of an Application Load Balancer.</p>",
         "TargetSummary$id": "<p>The ID of the target. If the target group type is <code>INSTANCE</code>, this is an instance ID. If the target group type is <code>IP</code>, this is an IP address. If the target group type is <code>LAMBDA</code>, this is the ARN of a Lambda function. If the target type is <code>ALB</code>, this is the ARN of an Application Load Balancer.</p>",
         "TargetSummary$reasonCode": "<p>The code for why the target status is what it is.</p>",
         "ThrottlingException$message": null,
-        "ThrottlingException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ThrottlingException$serviceCode": "<p>The service code.</p>",
+        "ThrottlingException$quotaCode": "<p>The ID of the service quota that was exceeded.</p>",
         "ValidationException$message": null,
-        "ValidationExceptionField$message": "<p>Additional information about why the validation failed.</p>",
-        "ValidationExceptionField$name": "<p>The name of the validation exception.</p>"
+        "ValidationExceptionField$name": "<p>The name of the validation exception.</p>",
+        "ValidationExceptionField$message": "<p>Additional information about why the validation failed.</p>"
       }
     },
     "SubnetId": {
@@ -2107,7 +1996,7 @@
         "CreateResourceGatewayRequest$tags": "<p>The tags for the resource gateway.</p>",
         "CreateRuleRequest$tags": "<p>The tags for the rule.</p>",
         "CreateServiceNetworkRequest$tags": "<p>The tags for the service network.</p>",
-        "CreateServiceNetworkResourceAssociationRequest$tags": "<p>The tags for the association.</p>",
+        "CreateServiceNetworkResourceAssociationRequest$tags": "<p>A key-value pair to associate with a resource.</p>",
         "CreateServiceNetworkServiceAssociationRequest$tags": "<p>The tags for the association.</p>",
         "CreateServiceNetworkVpcAssociationRequest$tags": "<p>The tags for the association.</p>",
         "CreateServiceRequest$tags": "<p>The tags for the service.</p>",
@@ -2118,13 +2007,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -2291,8 +2178,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The limit on the number of requests per second was exceeded.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -2353,48 +2239,39 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessLogSubscriptionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessLogSubscriptionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateListenerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateListenerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceConfigurationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceConfigurationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceGatewayRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateResourceGatewayRequestSecurityGroupIdsList": {
       "base": null,
@@ -2404,33 +2281,27 @@
     },
     "UpdateResourceGatewayResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRuleRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateRuleResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceNetworkRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceNetworkResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceNetworkVpcAssociationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceNetworkVpcAssociationRequestSecurityGroupIdsList": {
       "base": null,
@@ -2440,33 +2311,27 @@
     },
     "UpdateServiceNetworkVpcAssociationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTargetGroupRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateTargetGroupResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The input does not satisfy the constraints specified by an Amazon Web Services service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionField": {
       "base": "<p>Describes a validation failure.</p>",

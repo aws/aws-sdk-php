@@ -1442,6 +1442,18 @@
       "pattern":"^[-_A-Za-z0-9{][-_A-Za-z0-9\\s:{}\\.]+[-_A-Za-z0-9}]$"
     },
     "Arn":{"type":"string"},
+    "AutoDisableFailureCount":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
+    "AutoDisablePolicy":{
+      "type":"structure",
+      "required":["failureCount"],
+      "members":{
+        "failureCount":{"shape":"AutoDisableFailureCount"}
+      }
+    },
     "Boolean":{"type":"boolean"},
     "BuildType":{
       "type":"string",
@@ -1694,6 +1706,10 @@
       "type":"list",
       "member":{"shape":"ComponentVersion"}
     },
+    "ConsecutiveFailures":{
+      "type":"integer",
+      "min":0
+    },
     "Container":{
       "type":"structure",
       "members":{
@@ -1750,6 +1766,7 @@
         "owner":{"shape":"NonEmptyString"},
         "parentImage":{"shape":"NonEmptyString"},
         "dateCreated":{"shape":"DateTime"},
+        "instanceImage":{"shape":"NonEmptyString"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1890,7 +1907,8 @@
         },
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "workflows":{"shape":"WorkflowConfigurationList"},
-        "executionRole":{"shape":"RoleNameOrArn"}
+        "executionRole":{"shape":"RoleNameOrArn"},
+        "loggingConfiguration":{"shape":"PipelineLoggingConfiguration"}
       }
     },
     "CreateImagePipelineResponse":{
@@ -1920,6 +1938,7 @@
         "tags":{"shape":"TagMap"},
         "workingDirectory":{"shape":"NonEmptyString"},
         "additionalInstanceConfiguration":{"shape":"AdditionalInstanceConfiguration"},
+        "amiTags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1954,7 +1973,8 @@
         },
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "workflows":{"shape":"WorkflowConfigurationList"},
-        "executionRole":{"shape":"RoleNameOrArn"}
+        "executionRole":{"shape":"RoleNameOrArn"},
+        "loggingConfiguration":{"shape":"ImageLoggingConfiguration"}
       }
     },
     "CreateImageResponse":{
@@ -2823,7 +2843,8 @@
         "deprecationTime":{"shape":"DateTimeTimestamp"},
         "lifecycleExecutionId":{"shape":"LifecycleExecutionId"},
         "executionRole":{"shape":"RoleNameOrArn"},
-        "workflows":{"shape":"WorkflowConfigurationList"}
+        "workflows":{"shape":"WorkflowConfigurationList"},
+        "loggingConfiguration":{"shape":"ImageLoggingConfiguration"}
       }
     },
     "ImageAggregation":{
@@ -2845,6 +2866,12 @@
     "ImageBuilderArn":{
       "type":"string",
       "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws(?:-[a-z-]+)?):(?:image-recipe|container-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline|lifecycle-policy|workflow\\/(?:build|test|distribution))/[a-z0-9-_]+(?:/(?:(?:x|[0-9]+)\\.(?:x|[0-9]+)\\.(?:x|[0-9]+))(?:/[0-9]+)?)?$"
+    },
+    "ImageLoggingConfiguration":{
+      "type":"structure",
+      "members":{
+        "logGroupName":{"shape":"LogGroupName"}
+      }
     },
     "ImagePackage":{
       "type":"structure",
@@ -2875,11 +2902,14 @@
         "dateCreated":{"shape":"DateTime"},
         "dateUpdated":{"shape":"DateTime"},
         "dateLastRun":{"shape":"DateTime"},
+        "lastRunStatus":{"shape":"ImageStatus"},
         "dateNextRun":{"shape":"DateTime"},
         "tags":{"shape":"TagMap"},
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "executionRole":{"shape":"RoleNameOrArn"},
-        "workflows":{"shape":"WorkflowConfigurationList"}
+        "workflows":{"shape":"WorkflowConfigurationList"},
+        "loggingConfiguration":{"shape":"PipelineLoggingConfiguration"},
+        "consecutiveFailures":{"shape":"ConsecutiveFailures"}
       }
     },
     "ImagePipelineAggregation":{
@@ -2913,7 +2943,8 @@
         "dateCreated":{"shape":"DateTime"},
         "tags":{"shape":"TagMap"},
         "workingDirectory":{"shape":"NonEmptyString"},
-        "additionalInstanceConfiguration":{"shape":"AdditionalInstanceConfiguration"}
+        "additionalInstanceConfiguration":{"shape":"AdditionalInstanceConfiguration"},
+        "amiTags":{"shape":"TagMap"}
       }
     },
     "ImageRecipeArn":{
@@ -3068,7 +3099,8 @@
         "buildType":{"shape":"BuildType"},
         "imageSource":{"shape":"ImageSource"},
         "deprecationTime":{"shape":"DateTimeTimestamp"},
-        "lifecycleExecutionId":{"shape":"LifecycleExecutionId"}
+        "lifecycleExecutionId":{"shape":"LifecycleExecutionId"},
+        "loggingConfiguration":{"shape":"ImageLoggingConfiguration"}
       }
     },
     "ImageSummaryList":{
@@ -3177,6 +3209,7 @@
         "executionRole":{"shape":"RoleNameOrArn"},
         "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "uri":{"shape":"Uri"},
+        "loggingConfiguration":{"shape":"ImageLoggingConfiguration"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -3207,6 +3240,7 @@
         "platform":{"shape":"Platform"},
         "osVersion":{"shape":"OsVersion"},
         "vmImportTaskId":{"shape":"NonEmptyString"},
+        "loggingConfiguration":{"shape":"ImageLoggingConfiguration"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -4144,6 +4178,12 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "LogGroupName":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9\\-_/\\.]{1,512}$"
+    },
     "Logging":{
       "type":"structure",
       "members":{
@@ -4270,6 +4310,13 @@
         "EXPRESSION_MATCH_ONLY",
         "EXPRESSION_MATCH_AND_DEPENDENCY_UPDATES_AVAILABLE"
       ]
+    },
+    "PipelineLoggingConfiguration":{
+      "type":"structure",
+      "members":{
+        "imageLogGroupName":{"shape":"LogGroupName"},
+        "pipelineLogGroupName":{"shape":"LogGroupName"}
+      }
     },
     "PipelineStatus":{
       "type":"string",
@@ -4521,7 +4568,8 @@
       "members":{
         "scheduleExpression":{"shape":"NonEmptyString"},
         "timezone":{"shape":"Timezone"},
-        "pipelineExecutionStartCondition":{"shape":"PipelineExecutionStartCondition"}
+        "pipelineExecutionStartCondition":{"shape":"PipelineExecutionStartCondition"},
+        "autoDisablePolicy":{"shape":"AutoDisablePolicy"}
       }
     },
     "SecurityGroupIds":{
@@ -4631,7 +4679,8 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "tags":{"shape":"TagMap"}
       }
     },
     "StartImagePipelineExecutionResponse":{
@@ -4823,6 +4872,7 @@
         },
         "imageScanningConfiguration":{"shape":"ImageScanningConfiguration"},
         "workflows":{"shape":"WorkflowConfigurationList"},
+        "loggingConfiguration":{"shape":"PipelineLoggingConfiguration"},
         "executionRole":{"shape":"RoleNameOrArn"}
       }
     },

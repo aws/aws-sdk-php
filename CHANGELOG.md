@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BedrockRuntime` - New stop reason for Converse and ConverseStream
+* `Aws\VPCLattice` - Adds support for specifying the number of IPv4 addresses in each ENI for the resource gateway for VPC Lattice.
+* `Aws\Bedrock` - Release for fixing GetFoundationModel API behavior. Imported and custom models have their own exclusive API and GetFM should not accept those ARNS as input
+* `Aws\imagebuilder` - This release introduces several new features and improvements to enhance pipeline management, logging, and resource configuration.
+
 ## 3.356.27 - 2025-09-26
 
 * `Aws\BedrockDataAutomation` - Added support for configurable Speaker Labeling and Channel Labeling features for Audio modality.

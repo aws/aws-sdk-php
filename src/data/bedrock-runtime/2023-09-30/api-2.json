@@ -48,6 +48,9 @@
                     "shape": "InternalServerException"
                 },
                 {
+                    "shape": "ServiceUnavailableException"
+                },
+                {
                     "shape": "ValidationException"
                 },
                 {
@@ -173,7 +176,8 @@
                 {
                     "shape": "ValidationException"
                 }
-            ]
+            ],
+            "readonly": true
         },
         "GetAsyncInvoke": {
             "name": "GetAsyncInvoke",
@@ -201,7 +205,8 @@
                 {
                     "shape": "ValidationException"
                 }
-            ]
+            ],
+            "readonly": true
         },
         "InvokeModel": {
             "name": "InvokeModel",
@@ -324,7 +329,8 @@
                 {
                     "shape": "ValidationException"
                 }
-            ]
+            ],
+            "readonly": true
         },
         "StartAsyncInvoke": {
             "name": "StartAsyncInvoke",
@@ -3377,7 +3383,8 @@
                 "max_tokens",
                 "stop_sequence",
                 "guardrail_intervened",
-                "content_filtered"
+                "content_filtered",
+                "model_context_window_exceeded"
             ]
         },
         "String": {
