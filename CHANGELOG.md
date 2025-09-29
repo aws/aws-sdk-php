@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.28 - 2025-09-29
 
 * `Aws\BedrockRuntime` - New stop reason for Converse and ConverseStream
 * `Aws\VPCLattice` - Adds support for specifying the number of IPv4 addresses in each ENI for the resource gateway for VPC Lattice.
