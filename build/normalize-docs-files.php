@@ -142,6 +142,60 @@ function updateSearchIndex($filePath) {
     }
 }
 
+function insertSnsValidatorNotice($directory)
+{
+    $targetFile = $directory . '/class-Aws.Sns.MessageValidator.html';
+
+    if (!file_exists($targetFile)) {
+        echo "SNS MessageValidator class file not found\n";
+        return;
+    }
+
+    $doc = new DOMDocument();
+    @$doc->loadHTMLFile($targetFile);
+
+    $titleElement = null;
+    $h2Elements = $doc->getElementsByTagName('h2');
+    foreach ($h2Elements as $h2) {
+        if ($h2->getAttribute('class') === 'phpdocumentor-content__title') {
+            $titleElement = $h2;
+            break;
+        }
+    }
+
+    if (!$titleElement) {
+        echo "Could not find title element in MessageValidator documentation\n";
+        return;
+    }
+
+    $noticeDiv = $doc->createElement('div');
+    $noticeDiv->setAttribute('class', 'phpdocumentor-admonition');
+
+    // Create header paragraph with icon and Info text
+    $headerParagraph = $doc->createElement('p');
+    $icon = $doc->createElement('i');
+    $icon->setAttribute('class', 'fas fa-question-circle phpdocumentor-admonition__icon');
+    $headerParagraph->appendChild($icon);
+
+    // Create the main content paragraph
+    $contentParagraph = $doc->createElement('p');
+    $textBefore = $doc->createTextNode('This class is maintained in ');
+    $link = $doc->createElement('a', 'aws-php-sns-message-validator');
+    $link->setAttribute('href', 'https://github.com/aws/aws-php-sns-message-validator');
+
+    $contentParagraph->appendChild($textBefore);
+    $contentParagraph->appendChild($link);
+
+    // Append both paragraphs to the notice div
+    $noticeDiv->appendChild($headerParagraph);
+    $noticeDiv->appendChild($contentParagraph);
+
+    $titleElement->parentNode->insertBefore($noticeDiv, $titleElement->nextSibling);
+
+    $doc->saveHTMLFile($targetFile);
+    echo "Added SNS validator notice to MessageValidator documentation\n";
+}
+
 function copyDirectory($src, $dst) {
     if (!file_exists($dst)) {
         mkdir($dst, 0777, true);
@@ -200,6 +254,9 @@ updateHtmlHrefs($parentDirectory);
 
 // Updates search index urls with generated api pages
 updateSearchIndex($parentDirectory . '/js/searchIndex.js');
+
+// Add the SNS validator notice
+insertSnsValidatorNotice($parentDirectory);
 
 //move static assets
 copyDirectory(__DIR__ . '/docs/static', $parentDirectory . '/static');
