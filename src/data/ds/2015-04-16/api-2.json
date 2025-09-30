@@ -1708,6 +1708,14 @@
       "type":"list",
       "member":{"shape":"CidrIp"}
     },
+    "CidrIpv6":{
+      "type":"string",
+      "pattern":"^((([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4})|(([0-9a-fA-F]{1,4}:){1,7}:)|(([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4})|(([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2})|(([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3})|(([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4})|(([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5})|([0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6}))|(:((:[0-9a-fA-F]{1,4}){1,7}|:)))\\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])$"
+    },
+    "CidrIpv6s":{
+      "type":"list",
+      "member":{"shape":"CidrIpv6"}
+    },
     "ClientAuthenticationSettingInfo":{
       "type":"structure",
       "members":{
@@ -1774,6 +1782,7 @@
       "members":{
         "RemoteDomainName":{"shape":"RemoteDomainName"},
         "DnsIpAddrs":{"shape":"DnsIpAddrs"},
+        "DnsIpv6Addrs":{"shape":"DnsIpv6Addrs"},
         "ReplicationScope":{"shape":"ReplicationScope"}
       }
     },
@@ -1796,7 +1805,8 @@
         "Description":{"shape":"Description"},
         "Size":{"shape":"DirectorySize"},
         "ConnectSettings":{"shape":"DirectoryConnectSettings"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "ConnectDirectoryResult":{
@@ -1855,13 +1865,13 @@
       "type":"structure",
       "required":[
         "DirectoryId",
-        "RemoteDomainName",
-        "DnsIpAddrs"
+        "RemoteDomainName"
       ],
       "members":{
         "DirectoryId":{"shape":"DirectoryId"},
         "RemoteDomainName":{"shape":"RemoteDomainName"},
-        "DnsIpAddrs":{"shape":"DnsIpAddrs"}
+        "DnsIpAddrs":{"shape":"DnsIpAddrs"},
+        "DnsIpv6Addrs":{"shape":"DnsIpv6Addrs"}
       }
     },
     "CreateConditionalForwarderResult":{
@@ -1882,7 +1892,8 @@
         "Description":{"shape":"Description"},
         "Size":{"shape":"DirectorySize"},
         "VpcSettings":{"shape":"DirectoryVpcSettings"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateDirectoryResult":{
@@ -1938,7 +1949,8 @@
         "Description":{"shape":"Description"},
         "VpcSettings":{"shape":"DirectoryVpcSettings"},
         "Edition":{"shape":"DirectoryEdition"},
-        "Tags":{"shape":"Tags"}
+        "Tags":{"shape":"Tags"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateMicrosoftADResult":{
@@ -1978,6 +1990,7 @@
         "TrustDirection":{"shape":"TrustDirection"},
         "TrustType":{"shape":"TrustType"},
         "ConditionalForwarderIpAddrs":{"shape":"DnsIpAddrs"},
+        "ConditionalForwarderIpv6Addrs":{"shape":"DnsIpv6Addrs"},
         "SelectiveAuth":{"shape":"SelectiveAuth"}
       }
     },
@@ -2460,13 +2473,13 @@
       "required":[
         "VpcId",
         "SubnetIds",
-        "CustomerDnsIps",
         "CustomerUserName"
       ],
       "members":{
         "VpcId":{"shape":"VpcId"},
         "SubnetIds":{"shape":"SubnetIds"},
         "CustomerDnsIps":{"shape":"DnsIpAddrs"},
+        "CustomerDnsIpsV6":{"shape":"DnsIpv6Addrs"},
         "CustomerUserName":{"shape":"UserName"}
       }
     },
@@ -2478,7 +2491,8 @@
         "CustomerUserName":{"shape":"UserName"},
         "SecurityGroupId":{"shape":"SecurityGroupId"},
         "AvailabilityZones":{"shape":"AvailabilityZones"},
-        "ConnectIps":{"shape":"IpAddrs"}
+        "ConnectIps":{"shape":"IpAddrs"},
+        "ConnectIpsV6":{"shape":"IpV6Addrs"}
       }
     },
     "DirectoryDescription":{
@@ -2493,6 +2507,7 @@
         "AccessUrl":{"shape":"AccessUrl"},
         "Description":{"shape":"Description"},
         "DnsIpAddrs":{"shape":"DnsIpAddrs"},
+        "DnsIpv6Addrs":{"shape":"DnsIpv6Addrs"},
         "Stage":{"shape":"DirectoryStage"},
         "ShareStatus":{"shape":"ShareStatus"},
         "ShareMethod":{"shape":"ShareMethod"},
@@ -2510,7 +2525,8 @@
         "OwnerDirectoryDescription":{"shape":"OwnerDirectoryDescription"},
         "RegionsInfo":{"shape":"RegionsInfo"},
         "OsVersion":{"shape":"OSVersion"},
-        "HybridSettings":{"shape":"HybridSettingsDescription"}
+        "HybridSettings":{"shape":"HybridSettingsDescription"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "DirectoryDescriptions":{
@@ -2529,7 +2545,8 @@
       "type":"string",
       "enum":[
         "Enterprise",
-        "Standard"
+        "Standard",
+        "Hybrid"
       ]
     },
     "DirectoryId":{
@@ -2592,6 +2609,12 @@
         "Small",
         "Large"
       ]
+    },
+    "DirectorySizeUpdateSettings":{
+      "type":"structure",
+      "members":{
+        "DirectorySize":{"shape":"DirectorySize"}
+      }
     },
     "DirectoryStage":{
       "type":"string",
@@ -2735,12 +2758,17 @@
       "type":"list",
       "member":{"shape":"IpAddr"}
     },
+    "DnsIpv6Addrs":{
+      "type":"list",
+      "member":{"shape":"Ipv6Addr"}
+    },
     "DomainController":{
       "type":"structure",
       "members":{
         "DirectoryId":{"shape":"DirectoryId"},
         "DomainControllerId":{"shape":"DomainControllerId"},
         "DnsIpAddr":{"shape":"IpAddr"},
+        "DnsIpv6Addr":{"shape":"Ipv6Addr"},
         "VpcId":{"shape":"VpcId"},
         "SubnetId":{"shape":"SubnetId"},
         "AvailabilityZone":{"shape":"AvailabilityZone"},
@@ -3079,6 +3107,7 @@
       "type":"structure",
       "members":{
         "CidrIp":{"shape":"CidrIp"},
+        "CidrIpv6":{"shape":"CidrIpv6"},
         "Description":{"shape":"Description"}
       }
     },
@@ -3087,6 +3116,7 @@
       "members":{
         "DirectoryId":{"shape":"DirectoryId"},
         "CidrIp":{"shape":"CidrIp"},
+        "CidrIpv6":{"shape":"CidrIpv6"},
         "IpRouteStatusMsg":{"shape":"IpRouteStatusMsg"},
         "AddedDateTime":{"shape":"AddedDateTime"},
         "IpRouteStatusReason":{"shape":"IpRouteStatusReason"},
@@ -3120,6 +3150,14 @@
     "IpRoutesInfo":{
       "type":"list",
       "member":{"shape":"IpRouteInfo"}
+    },
+    "IpV6Addrs":{
+      "type":"list",
+      "member":{"shape":"Ipv6Addr"}
+    },
+    "Ipv6Addr":{
+      "type":"string",
+      "pattern":"^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$"
     },
     "LDAPSSettingInfo":{
       "type":"structure",
@@ -3272,6 +3310,21 @@
       "member":{"shape":"LogSubscription"}
     },
     "ManualSnapshotsLimitReached":{"type":"boolean"},
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "Dual-stack",
+        "IPv4",
+        "IPv6"
+      ]
+    },
+    "NetworkUpdateSettings":{
+      "type":"structure",
+      "members":{
+        "NetworkType":{"shape":"NetworkType"},
+        "CustomerDnsIpsV6":{"shape":"DnsIpv6Addrs"}
+      }
+    },
     "NextToken":{"type":"string"},
     "NoAvailableCertificateException":{
       "type":"structure",
@@ -3324,9 +3377,11 @@
         "DirectoryId":{"shape":"DirectoryId"},
         "AccountId":{"shape":"CustomerId"},
         "DnsIpAddrs":{"shape":"DnsIpAddrs"},
+        "DnsIpv6Addrs":{"shape":"DnsIpv6Addrs"},
         "VpcSettings":{"shape":"DirectoryVpcSettingsDescription"},
         "RadiusSettings":{"shape":"RadiusSettings"},
-        "RadiusStatus":{"shape":"RadiusStatus"}
+        "RadiusStatus":{"shape":"RadiusStatus"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "PageLimit":{
@@ -3371,6 +3426,7 @@
       "type":"structure",
       "members":{
         "RadiusServers":{"shape":"Servers"},
+        "RadiusServersIpv6":{"shape":"Servers"},
         "RadiusPort":{"shape":"PortNumber"},
         "RadiusTimeout":{"shape":"RadiusTimeout"},
         "RadiusRetries":{"shape":"RadiusRetries"},
@@ -3503,13 +3559,11 @@
     },
     "RemoveIpRoutesRequest":{
       "type":"structure",
-      "required":[
-        "DirectoryId",
-        "CidrIps"
-      ],
+      "required":["DirectoryId"],
       "members":{
         "DirectoryId":{"shape":"DirectoryId"},
-        "CidrIps":{"shape":"CidrIps"}
+        "CidrIps":{"shape":"CidrIps"},
+        "CidrIpv6s":{"shape":"CidrIpv6s"}
       }
     },
     "RemoveIpRoutesResult":{
@@ -4070,13 +4124,13 @@
       "type":"structure",
       "required":[
         "DirectoryId",
-        "RemoteDomainName",
-        "DnsIpAddrs"
+        "RemoteDomainName"
       ],
       "members":{
         "DirectoryId":{"shape":"DirectoryId"},
         "RemoteDomainName":{"shape":"RemoteDomainName"},
-        "DnsIpAddrs":{"shape":"DnsIpAddrs"}
+        "DnsIpAddrs":{"shape":"DnsIpAddrs"},
+        "DnsIpv6Addrs":{"shape":"DnsIpv6Addrs"}
       }
     },
     "UpdateConditionalForwarderResult":{
@@ -4093,6 +4147,8 @@
         "DirectoryId":{"shape":"DirectoryId"},
         "UpdateType":{"shape":"UpdateType"},
         "OSUpdateSettings":{"shape":"OSUpdateSettings"},
+        "DirectorySizeUpdateSettings":{"shape":"DirectorySizeUpdateSettings"},
+        "NetworkUpdateSettings":{"shape":"NetworkUpdateSettings"},
         "CreateSnapshotBeforeUpdate":{
           "shape":"CreateSnapshotBeforeUpdate",
           "box":true
@@ -4206,7 +4262,11 @@
     },
     "UpdateType":{
       "type":"string",
-      "enum":["OS"]
+      "enum":[
+        "OS",
+        "NETWORK",
+        "SIZE"
+      ]
     },
     "UpdateValue":{
       "type":"structure",

@@ -12,7 +12,7 @@
     "CreateLayout": "<p>Creates a layout in the Cases domain. Layouts define the following configuration in the top section and More Info tab of the Cases user interface:</p> <ul> <li> <p>Fields to display to the users</p> </li> <li> <p>Field ordering</p> </li> </ul> <note> <p>Title and Status fields cannot be part of layouts since they are not configurable.</p> </note>",
     "CreateRelatedItem": "<p>Creates a related item (comments, tasks, and contacts) and associates it with a case.</p> <note> <ul> <li> <p>A Related Item is a resource that is associated with a case. It may or may not have an external identifier linking it to an external resource (for example, a <code>contactArn</code>). All Related Items have their own internal identifier, the <code>relatedItemArn</code>. Examples of related items include <code>comments</code> and <code>contacts</code>.</p> </li> <li> <p>If you provide a value for <code>performedBy.userArn</code> you must also have <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeUser.html\">DescribeUser</a> permission on the ARN of the user that you provide.</p> </li> <li> <p>The <code>type</code> field is reserved for internal use only.</p> </li> </ul> </note>",
     "CreateTemplate": "<p>Creates a template in the Cases domain. This template is used to define the case object model (that is, to define what data can be captured on cases) in a Cases domain. A template must have a unique name within a domain, and it must reference existing field IDs and layout IDs. Additionally, multiple fields with same IDs are not allowed within the same Template. A template can be either Active or Inactive, as indicated by its status. Inactive templates cannot be used to create cases.</p> <p> Other template APIs are: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_DeleteTemplate.html\">DeleteTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_GetTemplate.html\">GetTemplate</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_ListTemplates.html\">ListTemplates</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_UpdateTemplate.html\">UpdateTemplate</a> </p> </li> </ul>",
-    "DeleteCase": "<p> The DeleteCase API permanently deletes a case and all its associated resources from the cases data store. After a successful deletion, you cannot:</p> <ul> <li> <p>Retrieve related items</p> </li> <li> <p>Access audit history</p> </li> <li> <p>Perform any operations that require the CaseID</p> </li> </ul> <important> <p>This action is irreversible. Once you delete a case, you cannot recover its data.</p> </important>",
+    "DeleteCase": "<p> The DeleteCase API permanently deletes a case and all its associated resources from the cases data store. After a successful deletion, you cannot:</p> <ul> <li> <p>Retrieve related items</p> </li> <li> <p>Access audit history</p> </li> <li> <p>Perform any operations that require the CaseID</p> </li> </ul> <important> <p>This action is irreversible. After you delete a case, you cannot recover its data.</p> </important>",
     "DeleteCaseRule": "<p>Deletes a case rule. In the Amazon Connect admin website, case rules are known as <i>case field conditions</i>. For more information about case field conditions, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/case-field-conditions.html\">Add case field conditions to a case template</a>.</p>",
     "DeleteDomain": "<p>Deletes a Cases domain.</p> <note> <p>After deleting your domain you must disassociate the deleted domain from your Amazon Connect instance with another API call before being able to use Cases again with this Amazon Connect instance. See <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteIntegrationAssociation.html\">DeleteIntegrationAssociation</a>.</p> </note>",
     "DeleteField": "<p>Deletes a field from a cases template. You can delete up to 100 fields per domain.</p> <p>After a field is deleted:</p> <ul> <li> <p>You can still retrieve the field by calling <code>BatchGetField</code>.</p> </li> <li> <p>You cannot update a deleted field by calling <code>UpdateField</code>; it throws a <code>ValidationException</code>.</p> </li> <li> <p>Deleted fields are not included in the <code>ListFields</code> response.</p> </li> <li> <p>Calling <code>CreateCase</code> with a deleted field throws a <code>ValidationException</code> denoting which field IDs in the request have been deleted.</p> </li> <li> <p>Calling <code>GetCase</code> with a deleted field ID returns the deleted field's value if one exists.</p> </li> <li> <p>Calling <code>UpdateCase</code> with a deleted field ID throws a <code>ValidationException</code> if the case does not already contain a value for the deleted field. Otherwise it succeeds, allowing you to update or remove (using <code>emptyValue: {}</code>) the field's value from the case.</p> </li> <li> <p> <code>GetTemplate</code> does not return field IDs for deleted fields.</p> </li> <li> <p> <code>GetLayout</code> does not return field IDs for deleted fields.</p> </li> <li> <p>Calling <code>SearchCases</code> with the deleted field ID as a filter returns any cases that have a value for the deleted field that matches the filter criteria.</p> </li> <li> <p>Calling <code>SearchCases</code> with a <code>searchTerm</code> value that matches a deleted field's value on a case returns the case in the response.</p> </li> <li> <p>Calling <code>BatchPutFieldOptions</code> with a deleted field ID throw a <code>ValidationException</code>.</p> </li> <li> <p>Calling <code>GetCaseEventConfiguration</code> does not return field IDs for deleted fields.</p> </li> </ul>",
@@ -97,8 +97,8 @@
     "AuditEventFieldValueUnion": {
       "base": "<p>Object to store union of Field values.</p>",
       "refs": {
-        "AuditEventField$newValue": "<p>Union of potential field value types.</p>",
-        "AuditEventField$oldValue": "<p>Union of potential field value types.</p>"
+        "AuditEventField$oldValue": "<p>Union of potential field value types.</p>",
+        "AuditEventField$newValue": "<p>Union of potential field value types.</p>"
       }
     },
     "AuditEventFieldValueUnionStringValueString": {
@@ -278,6 +278,9 @@
       "base": null,
       "refs": {
         "CaseSummary$caseId": "<p>A unique identifier of the case.</p>",
+        "ConnectCaseContent$caseId": "<p>The unique identifier of the related case</p>",
+        "ConnectCaseFilter$caseId": "<p>The unique identifier of the case to filter by</p>",
+        "ConnectCaseInputContent$caseId": "<p>The unique identifier of the case to be related</p>",
         "CreateCaseResponse$caseId": "<p>A unique identifier of the case.</p>",
         "CreateRelatedItemRequest$caseId": "<p>A unique identifier of the case.</p>",
         "DeleteCaseRequest$caseId": "<p>A unique identifier of the case.</p>",
@@ -401,6 +404,24 @@
     "ConflictException": {
       "base": "<p>The requested operation would cause a conflict with the current state of a service resource associated with the request. Resolve the conflict before retrying this request. See the accompanying error message for details.</p>",
       "refs": {
+      }
+    },
+    "ConnectCaseContent": {
+      "base": "<p>Represents the content of a Case related item</p>",
+      "refs": {
+        "RelatedItemContent$connectCase": "<p>Content for a related Connect case</p>"
+      }
+    },
+    "ConnectCaseFilter": {
+      "base": "<p>A filter for related items of type Case</p>",
+      "refs": {
+        "RelatedItemTypeFilter$connectCase": "<p>Filter for related items of type Connect case</p>"
+      }
+    },
+    "ConnectCaseInputContent": {
+      "base": "<p>Represents the input content of a Case related item</p>",
+      "refs": {
+        "RelatedItemInputContent$connectCase": "<p>Input content for a related Connect case</p>"
       }
     },
     "ConnectedToSystemTime": {
@@ -534,10 +555,55 @@
         "GetTemplateResponse$createdTime": "<p>Timestamp at which the resource was created.</p>"
       }
     },
+    "CustomContent": {
+      "base": "<p>Represents the content of a Custom related item</p>",
+      "refs": {
+        "RelatedItemContent$custom": "<p>Content for a custom related item</p>"
+      }
+    },
     "CustomEntity": {
       "base": null,
       "refs": {
         "UserUnion$customEntity": "<p>Any provided entity.</p>"
+      }
+    },
+    "CustomFieldsFilter": {
+      "base": "<p>A filter for fields in related items of type Custom</p>",
+      "refs": {
+        "CustomFieldsFilter$not": "<p>Excludes items matching the filter</p>",
+        "CustomFieldsFilterAndAllList$member": null,
+        "CustomFieldsFilterOrAllList$member": null,
+        "CustomFilter$fields": "<p>Filter conditions for custom fields</p>"
+      }
+    },
+    "CustomFieldsFilterAndAllList": {
+      "base": null,
+      "refs": {
+        "CustomFieldsFilter$andAll": "<p>Matches items that satisfy all of the specified filter conditions</p>"
+      }
+    },
+    "CustomFieldsFilterOrAllList": {
+      "base": null,
+      "refs": {
+        "CustomFieldsFilter$orAll": "<p>Matches items that satisfy any of the specified filter conditions</p>"
+      }
+    },
+    "CustomFilter": {
+      "base": "<p>A filter for related items of type Custom</p>",
+      "refs": {
+        "RelatedItemTypeFilter$custom": "<p>Filter for related items of type Custom</p>"
+      }
+    },
+    "CustomInputContent": {
+      "base": "<p>Represents the input content of a Custom related item</p>",
+      "refs": {
+        "RelatedItemInputContent$custom": "<p>Input content for a custom related item</p>"
+      }
+    },
+    "CustomInputContentFieldsList": {
+      "base": null,
+      "refs": {
+        "CustomInputContent$fields": "<p>List of field values for the custom related item</p>"
       }
     },
     "DeleteCaseRequest": {
@@ -757,7 +823,8 @@
     "FieldFilter": {
       "base": "<p>A filter for fields. Only one value can be provided.</p>",
       "refs": {
-        "CaseFilter$field": "<p>A list of fields to filter on.</p>"
+        "CaseFilter$field": "<p>A list of fields to filter on.</p>",
+        "CustomFieldsFilter$field": null
       }
     },
     "FieldGroup": {
@@ -881,15 +948,23 @@
       "base": "<p>Object for case field values.</p>",
       "refs": {
         "CreateCaseRequestFieldsList$member": null,
-        "FieldFilter$contains": "<p>Object containing field identifier and value information.</p>",
+        "CustomInputContentFieldsList$member": null,
         "FieldFilter$equalTo": "<p>Object containing field identifier and value information.</p>",
+        "FieldFilter$contains": "<p>Object containing field identifier and value information.</p>",
         "FieldFilter$greaterThan": "<p>Object containing field identifier and value information.</p>",
         "FieldFilter$greaterThanOrEqualTo": "<p>Object containing field identifier and value information.</p>",
         "FieldFilter$lessThan": "<p>Object containing field identifier and value information.</p>",
         "FieldFilter$lessThanOrEqualTo": "<p>Object containing field identifier and value information. </p>",
+        "FieldValueList$member": null,
         "GetCaseResponseFieldsList$member": null,
         "SearchCasesResponseItemFieldsList$member": null,
         "UpdateCaseRequestFieldsList$member": null
+      }
+    },
+    "FieldValueList": {
+      "base": null,
+      "refs": {
+        "CustomContent$fields": "<p>List of field values for the custom related item</p>"
       }
     },
     "FieldValueUnion": {
@@ -933,7 +1008,7 @@
     "GetCaseAuditEventsRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "GetCaseAuditEventsRequest$maxResults": "<p>The maximum number of audit events to return. The current maximum supported value is 25. This is also the default when no other value is provided.</p>"
+        "GetCaseAuditEventsRequest$maxResults": "<p>The maximum number of audit events to return. When no value is provided, 25 is the default.</p>"
       }
     },
     "GetCaseAuditEventsResponse": {
@@ -1095,8 +1170,8 @@
     "LayoutSections": {
       "base": "<p>Ordered list containing different kinds of sections that can be added. A LayoutSections object can only contain one section.</p>",
       "refs": {
-        "BasicLayout$moreInfo": "<p>This represents sections in a tab of the page layout.</p>",
-        "BasicLayout$topPanel": "<p>This represents sections in a panel of the page layout.</p>"
+        "BasicLayout$topPanel": "<p>This represents sections in a panel of the page layout.</p>",
+        "BasicLayout$moreInfo": "<p>This represents sections in a tab of the page layout.</p>"
       }
     },
     "LayoutSummary": {
@@ -1389,7 +1464,7 @@
     "SearchCasesRequestMaxResultsInteger": {
       "base": null,
       "refs": {
-        "SearchCasesRequest$maxResults": "<p>The maximum number of cases to return. The current maximum supported value is 25. This is also the default value when no other value is provided.</p>"
+        "SearchCasesRequest$maxResults": "<p>The maximum number of cases to return. When no value is provided, 25 is the default.</p>"
       }
     },
     "SearchCasesRequestSearchTermString": {
@@ -1565,8 +1640,8 @@
         "ConflictException$message": null,
         "FieldError$errorCode": "<p>The error code from getting a field.</p>",
         "FieldError$message": "<p>The error message from getting a field.</p>",
-        "FieldOptionError$errorCode": "<p>Error code from creating or updating field option.</p>",
         "FieldOptionError$message": "<p>Error message from creating or updating field option.</p>",
+        "FieldOptionError$errorCode": "<p>Error code from creating or updating field option.</p>",
         "FieldValueUnion$userArnValue": "<p>Represents the user that performed the audit.</p>",
         "InternalServerException$message": null,
         "ResourceNotFoundException$message": null,

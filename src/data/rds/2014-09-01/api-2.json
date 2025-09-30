@@ -1098,7 +1098,7 @@
         "DBInstanceClass":{"shape":"String"},
         "Engine":{"shape":"String"},
         "MasterUsername":{"shape":"String"},
-        "MasterUserPassword":{"shape":"String"},
+        "MasterUserPassword":{"shape":"SensitiveString"},
         "DBSecurityGroups":{"shape":"DBSecurityGroupNameList"},
         "VpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "AvailabilityZone":{"shape":"String"},
@@ -1119,7 +1119,7 @@
         "Tags":{"shape":"TagList"},
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
-        "TdeCredentialPassword":{"shape":"String"}
+        "TdeCredentialPassword":{"shape":"SensitiveString"}
       }
     },
     "CreateDBInstanceReadReplicaMessage":{
@@ -1379,7 +1379,8 @@
       "members":{},
       "error":{
         "code":"DBInstanceNotReady",
-        "httpStatusCode":503
+        "httpStatusCode":400,
+        "senderFault":true
       },
       "exception":true
     },
@@ -2021,7 +2022,7 @@
     "DownloadDBLogFilePortionDetails":{
       "type":"structure",
       "members":{
-        "LogFileData":{"shape":"String"},
+        "LogFileData":{"shape":"SensitiveString"},
         "Marker":{"shape":"String"},
         "AdditionalDataPending":{"shape":"Boolean"}
       }
@@ -2366,7 +2367,7 @@
         "DBSecurityGroups":{"shape":"DBSecurityGroupNameList"},
         "VpcSecurityGroupIds":{"shape":"VpcSecurityGroupIdList"},
         "ApplyImmediately":{"shape":"Boolean"},
-        "MasterUserPassword":{"shape":"String"},
+        "MasterUserPassword":{"shape":"SensitiveString"},
         "DBParameterGroupName":{"shape":"String"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "PreferredBackupWindow":{"shape":"String"},
@@ -2380,7 +2381,7 @@
         "NewDBInstanceIdentifier":{"shape":"String"},
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
-        "TdeCredentialPassword":{"shape":"String"}
+        "TdeCredentialPassword":{"shape":"SensitiveString"}
       }
     },
     "ModifyDBInstanceResult":{
@@ -2609,7 +2610,7 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"String"},
-        "Value":{"shape":"String"},
+        "Value":{"shape":"SensitiveString"},
         "DefaultValue":{"shape":"String"},
         "Description":{"shape":"String"},
         "ApplyType":{"shape":"String"},
@@ -2704,7 +2705,7 @@
       "members":{
         "DBInstanceClass":{"shape":"String"},
         "AllocatedStorage":{"shape":"IntegerOptional"},
-        "MasterUserPassword":{"shape":"String"},
+        "MasterUserPassword":{"shape":"SensitiveString"},
         "Port":{"shape":"IntegerOptional"},
         "BackupRetentionPeriod":{"shape":"IntegerOptional"},
         "MultiAZ":{"shape":"BooleanOptional"},
@@ -2966,7 +2967,7 @@
         "Tags":{"shape":"TagList"},
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
-        "TdeCredentialPassword":{"shape":"String"}
+        "TdeCredentialPassword":{"shape":"SensitiveString"}
       }
     },
     "RestoreDBInstanceFromDBSnapshotResult":{
@@ -3001,7 +3002,7 @@
         "Tags":{"shape":"TagList"},
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
-        "TdeCredentialPassword":{"shape":"String"}
+        "TdeCredentialPassword":{"shape":"SensitiveString"}
       }
     },
     "RestoreDBInstanceToPointInTimeResult":{
@@ -3056,6 +3057,10 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SensitiveString":{
+      "type":"string",
+      "sensitive":true
     },
     "SnapshotQuotaExceededFault":{
       "type":"structure",

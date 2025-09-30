@@ -5,16 +5,21 @@
     "BatchGetServiceLevelObjectiveBudgetReport": "<p>Use this operation to retrieve one or more <i>service level objective (SLO) budget reports</i>.</p> <p>An <i>error budget</i> is the amount of time or requests in an unhealthy state that your service can accumulate during an interval before your overall SLO budget health is breached and the SLO is considered to be unmet. For example, an SLO with a threshold of 99.95% and a monthly interval translates to an error budget of 21.9 minutes of downtime in a 30-day month.</p> <p>Budget reports include a health indicator, the attainment value, and remaining budget.</p> <p>For more information about SLO error budgets, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-ServiceLevelObjectives.html#CloudWatch-ServiceLevelObjectives-concepts\"> SLO concepts</a>.</p>",
     "BatchUpdateExclusionWindows": "<p>Add or remove time window exclusions for one or more Service Level Objectives (SLOs).</p>",
     "CreateServiceLevelObjective": "<p>Creates a service level objective (SLO), which can help you ensure that your critical business operations are meeting customer expectations. Use SLOs to set and track specific target levels for the reliability and availability of your applications and services. SLOs use service level indicators (SLIs) to calculate whether the application is performing at the level that you want.</p> <p>Create an SLO to set a target for a service or operation’s availability or latency. CloudWatch measures this target frequently you can find whether it has been breached. </p> <p>The target performance quality that is defined for an SLO is the <i>attainment goal</i>.</p> <p>You can set SLO targets for your applications that are discovered by Application Signals, using critical metrics such as latency and availability. You can also set SLOs against any CloudWatch metric or math expression that produces a time series.</p> <note> <p>You can't create an SLO for a service operation that was discovered by Application Signals until after that operation has reported standard metrics to Application Signals.</p> </note> <p>When you create an SLO, you specify whether it is a <i>period-based SLO</i> or a <i>request-based SLO</i>. Each type of SLO has a different way of evaluating your application's performance against its attainment goal.</p> <ul> <li> <p>A <i>period-based SLO</i> uses defined <i>periods</i> of time within a specified total time interval. For each period of time, Application Signals determines whether the application met its goal. The attainment rate is calculated as the <code>number of good periods/number of total periods</code>.</p> <p>For example, for a period-based SLO, meeting an attainment goal of 99.9% means that within your interval, your application must meet its performance goal during at least 99.9% of the time periods.</p> </li> <li> <p>A <i>request-based SLO</i> doesn't use pre-defined periods of time. Instead, the SLO measures <code>number of good requests/number of total requests</code> during the interval. At any time, you can find the ratio of good requests to total requests for the interval up to the time stamp that you specify, and measure that ratio against the goal set in your SLO.</p> </li> </ul> <p>After you have created an SLO, you can retrieve error budget reports for it. An <i>error budget</i> is the amount of time or amount of requests that your application can be non-compliant with the SLO's goal, and still have your application meet the goal.</p> <ul> <li> <p>For a period-based SLO, the error budget starts at a number defined by the highest number of periods that can fail to meet the threshold, while still meeting the overall goal. The <i>remaining error budget</i> decreases with every failed period that is recorded. The error budget within one interval can never increase.</p> <p>For example, an SLO with a threshold that 99.95% of requests must be completed under 2000ms every month translates to an error budget of 21.9 minutes of downtime per month.</p> </li> <li> <p>For a request-based SLO, the remaining error budget is dynamic and can increase or decrease, depending on the ratio of good requests to total requests.</p> </li> </ul> <p>For more information about SLOs, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-ServiceLevelObjectives.html\"> Service level objectives (SLOs)</a>. </p> <p>When you perform a <code>CreateServiceLevelObjective</code> operation, Application Signals creates the <i>AWSServiceRoleForCloudWatchApplicationSignals</i> service-linked role, if it doesn't already exist in your account. This service- linked role has the following permissions:</p> <ul> <li> <p> <code>xray:GetServiceGraph</code> </p> </li> <li> <p> <code>logs:StartQuery</code> </p> </li> <li> <p> <code>logs:GetQueryResults</code> </p> </li> <li> <p> <code>cloudwatch:GetMetricData</code> </p> </li> <li> <p> <code>cloudwatch:ListMetrics</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> <li> <p> <code>autoscaling:DescribeAutoScalingGroups</code> </p> </li> </ul>",
+    "DeleteGroupingConfiguration": "<p>Deletes the grouping configuration for this account. This removes all custom grouping attribute definitions that were previously configured.</p>",
     "DeleteServiceLevelObjective": "<p>Deletes the specified service level objective.</p>",
     "GetService": "<p>Returns information about a service discovered by Application Signals.</p>",
     "GetServiceLevelObjective": "<p>Returns information about one SLO created in the account. </p>",
+    "ListAuditFindings": "<p>Returns a list of audit findings that provide automated analysis of service behavior and root cause analysis. These findings help identify the most significant observations about your services, including performance issues, anomalies, and potential problems. The findings are generated using heuristic algorithms based on established troubleshooting patterns.</p>",
+    "ListGroupingAttributeDefinitions": "<p>Returns the current grouping configuration for this account, including all custom grouping attribute definitions that have been configured. These definitions determine how services are logically grouped based on telemetry attributes, Amazon Web Services tags, or predefined mappings.</p>",
     "ListServiceDependencies": "<p>Returns a list of service dependencies of the service that you specify. A dependency is an infrastructure component that an operation of this service connects with. Dependencies can include Amazon Web Services services, Amazon Web Services resources, and third-party services. </p>",
     "ListServiceDependents": "<p>Returns the list of dependents that invoked the specified service during the provided time range. Dependents include other services, CloudWatch Synthetics canaries, and clients that are instrumented with CloudWatch RUM app monitors.</p>",
     "ListServiceLevelObjectiveExclusionWindows": "<p>Retrieves all exclusion windows configured for a specific SLO.</p>",
     "ListServiceLevelObjectives": "<p>Returns a list of SLOs created in this account.</p>",
     "ListServiceOperations": "<p>Returns a list of the <i>operations</i> of this service that have been discovered by Application Signals. Only the operations that were invoked during the specified time range are returned.</p>",
+    "ListServiceStates": "<p>Returns information about the last deployment and other change states of services. This API provides visibility into recent changes that may have affected service performance, helping with troubleshooting and change correlation.</p>",
     "ListServices": "<p>Returns a list of services that have been discovered by Application Signals. A service represents a minimum logical and transactional unit that completes a business function. Services are discovered through Application Signals instrumentation.</p>",
     "ListTagsForResource": "<p>Displays the tags associated with a CloudWatch resource. Tags can be assigned to service level objectives.</p>",
+    "PutGroupingConfiguration": "<p>Creates or updates the grouping configuration for this account. This operation allows you to define custom grouping attributes that determine how services are logically grouped based on telemetry attributes, Amazon Web Services tags, or predefined mappings. These grouping attributes can then be used to organize and filter services in the Application Signals console and APIs.</p>",
     "StartDiscovery": "<p>Enables this Amazon Web Services account to be able to use CloudWatch Application Signals by creating the <i>AWSServiceRoleForCloudWatchApplicationSignals</i> service-linked role. This service- linked role has the following permissions:</p> <ul> <li> <p> <code>xray:GetServiceGraph</code> </p> </li> <li> <p> <code>logs:StartQuery</code> </p> </li> <li> <p> <code>logs:GetQueryResults</code> </p> </li> <li> <p> <code>cloudwatch:GetMetricData</code> </p> </li> <li> <p> <code>cloudwatch:ListMetrics</code> </p> </li> <li> <p> <code>tag:GetResources</code> </p> </li> <li> <p> <code>autoscaling:DescribeAutoScalingGroups</code> </p> </li> </ul> <p>After completing this step, you still need to instrument your Java and Python applications to send data to Application Signals. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Application-Signals-Enable.html\"> Enabling Application Signals</a>.</p>",
     "TagResource": "<p>Assigns one or more tags (key-value pairs) to the specified CloudWatch resource, such as a service level objective.</p> <p>Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values.</p> <p>Tags don't have any semantic meaning to Amazon Web Services and are interpreted strictly as strings of characters.</p> <p>You can use the <code>TagResource</code> action with an alarm that already has tags. If you specify a new tag key for the alarm, this tag is appended to the list of tags associated with the alarm. If you specify a tag key that is already associated with the alarm, the new tag value that you specify replaces the previous value for that tag.</p> <p>You can associate as many as 50 tags with a CloudWatch resource.</p>",
     "UntagResource": "<p>Removes one or more tags from the specified resource.</p>",
@@ -23,8 +28,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You don't have sufficient permissions to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AccountId": {
       "base": null,
@@ -52,6 +56,37 @@
         "Goal$AttainmentGoal": "<p>The threshold that determines if the goal is being met.</p> <p>If this is a period-based SLO, the attainment goal is the percentage of good periods that meet the threshold requirements to the total periods within the interval. For example, an attainment goal of 99.9% means that within your interval, you are targeting 99.9% of the periods to be in healthy state.</p> <p>If this is a request-based SLO, the attainment goal is the percentage of requests that must be successful to meet the attainment goal.</p> <p>If you omit this parameter, 99 is used to represent 99% as the attainment goal.</p>"
       }
     },
+    "AttributeFilter": {
+      "base": "<p>A structure that defines a filter for narrowing down results based on specific attribute values. This can be used to filter services by platform, environment, or other service characteristics.</p>",
+      "refs": {
+        "AttributeFilters$member": null
+      }
+    },
+    "AttributeFilterName": {
+      "base": null,
+      "refs": {
+        "AttributeFilter$AttributeFilterName": "<p>The name of the attribute to filter by, such as <code>Platform</code>, <code>Environment</code>, or <code>BusinessUnit</code>.</p>"
+      }
+    },
+    "AttributeFilterValue": {
+      "base": null,
+      "refs": {
+        "AttributeFilterValues$member": null
+      }
+    },
+    "AttributeFilterValues": {
+      "base": null,
+      "refs": {
+        "AttributeFilter$AttributeFilterValues": "<p>An array of values to match for the specified attribute. Services that have any of these values for the attribute will be included in the results.</p>"
+      }
+    },
+    "AttributeFilters": {
+      "base": null,
+      "refs": {
+        "ListServiceStatesInput$AttributeFilters": "<p>A list of attribute filters to narrow down the services. You can filter by platform, environment, or other service attributes.</p>",
+        "ServiceState$AttributeFilters": "<p>The attribute filters that were applied when retrieving this service state information.</p>"
+      }
+    },
     "AttributeMap": {
       "base": null,
       "refs": {
@@ -68,6 +103,8 @@
     "Attributes": {
       "base": null,
       "refs": {
+        "AuditFinding$KeyAttributes": "<p>The key attributes that identify the service or entity this audit finding relates to. This is a string-to-string map that includes fields like Type, Name, and Environment.</p>",
+        "ChangeEvent$Entity": "<p>The entity (service or resource) that was affected by this change event, including its key attributes.</p>",
         "DependencyConfig$DependencyKeyAttributes": "<p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "GetServiceInput$KeyAttributes": "<p>Use this field to specify which service you want to retrieve information for. You must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "ListServiceDependenciesInput$KeyAttributes": "<p>Use this field to specify which service you want to retrieve information for. You must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
@@ -75,6 +112,7 @@
         "ListServiceLevelObjectivesInput$KeyAttributes": "<p>You can use this optional field to specify which services you want to retrieve SLO information for.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "ListServiceOperationsInput$KeyAttributes": "<p>Use this field to specify which service you want to retrieve information for. You must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "LogGroupReferences$member": null,
+        "Node$KeyAttributes": "<p>The key attributes that identify this node, including Type, Name, and Environment information.</p>",
         "RequestBasedServiceLevelIndicatorMetric$KeyAttributes": "<p>This is a string-to-string map that contains information about the type of object that this SLO is related to. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object that this SLO is related to.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "RequestBasedServiceLevelIndicatorMetricConfig$KeyAttributes": "<p>If this SLO is related to a metric collected by Application Signals, you must use this field to specify which service the SLO metric is related to. To do so, you must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "Service$KeyAttributes": "<p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
@@ -83,26 +121,81 @@
         "ServiceLevelIndicatorMetric$KeyAttributes": "<p>This is a string-to-string map that contains information about the type of object that this SLO is related to. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object that this SLO is related to.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "ServiceLevelIndicatorMetricConfig$KeyAttributes": "<p>If this SLO is related to a metric collected by Application Signals, you must use this field to specify which service the SLO metric is related to. To do so, you must specify at least the <code>Type</code>, <code>Name</code>, and <code>Environment</code> attributes.</p> <p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
         "ServiceLevelObjectiveSummary$KeyAttributes": "<p>This is a string-to-string map. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this service level objective is for.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>",
+        "ServiceState$Service": "<p>The key attributes that identify this service, including Type, Name, and Environment information.</p>",
         "ServiceSummary$KeyAttributes": "<p>This is a string-to-string map that help identify the objects discovered by Application Signals. It can include the following fields.</p> <ul> <li> <p> <code>Type</code> designates the type of object this is.</p> </li> <li> <p> <code>ResourceType</code> specifies the type of the resource. This field is used only when the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Name</code> specifies the name of the object. This is used only if the value of the <code>Type</code> field is <code>Service</code>, <code>RemoteService</code>, or <code>AWS::Service</code>.</p> </li> <li> <p> <code>Identifier</code> identifies the resource objects of this resource. This is used only if the value of the <code>Type</code> field is <code>Resource</code> or <code>AWS::Resource</code>.</p> </li> <li> <p> <code>Environment</code> specifies the location where this object is hosted, or what it belongs to.</p> </li> </ul>"
+      }
+    },
+    "AuditFinding": {
+      "base": "<p>A structure that contains information about an audit finding, which represents an automated analysis result about service behavior, performance issues, or potential problems identified through heuristic algorithms.</p>",
+      "refs": {
+        "AuditFindings$member": null
+      }
+    },
+    "AuditFindings": {
+      "base": null,
+      "refs": {
+        "ListAuditFindingsOutput$AuditFindings": "<p>An array of structures, where each structure contains information about one audit finding, including the auditor results, severity, and associated metric and dependency graphs.</p>"
+      }
+    },
+    "AuditTarget": {
+      "base": "<p>A structure that specifies the target entity for audit analysis, such as a <code>service</code>, <code>SLO</code>, or <code>service_operation</code>.</p>",
+      "refs": {
+        "AuditTargets$member": null
+      }
+    },
+    "AuditTargetEntity": {
+      "base": "<p>A union structure that contains the specific entity information for different types of audit targets.</p>",
+      "refs": {
+        "AuditTarget$Data": "<p>The specific data identifying the audit target entity.</p>"
+      }
+    },
+    "AuditTargets": {
+      "base": null,
+      "refs": {
+        "ListAuditFindingsInput$AuditTargets": "<p>A list of audit targets to filter the findings by. You can specify services, SLOs, or service operations to limit the audit findings to specific entities.</p>"
+      }
+    },
+    "AuditorResult": {
+      "base": "<p>A structure that contains the result of an automated audit analysis, including the auditor name, description of findings, and severity level.</p>",
+      "refs": {
+        "AuditorResults$member": null
+      }
+    },
+    "AuditorResultDescriptionString": {
+      "base": null,
+      "refs": {
+        "AuditorResult$Description": "<p>A detailed description of the audit finding, explaining what was observed and potential implications.</p>"
+      }
+    },
+    "AuditorResults": {
+      "base": null,
+      "refs": {
+        "AuditFinding$AuditorResults": "<p>An array of auditor results that contain the specific findings, descriptions, and severity levels identified by different auditing algorithms.</p>"
+      }
+    },
+    "Auditors": {
+      "base": null,
+      "refs": {
+        "ListAuditFindingsInput$Auditors": "<p>A list of auditor names to filter the findings by. Only findings generated by the specified auditors will be returned.</p> <p>The following auditors are available for configuration:</p> <ul> <li> <p> <code>slo</code> - SloAuditor: Identifies SLO violations and detects breached thresholds during the Assessment phase.</p> </li> <li> <p> <code>operation_metric</code> - OperationMetricAuditor: Detects anomalies in service operation metrics from Application Signals RED metrics during the Assessment phase</p> </li> <li> <p> <code>service_quota</code> - ServiceQuotaAuditor: Monitors resource utilization against service quotas during the Assessment phase</p> </li> <li> <p> <code>trace</code> - TraceAuditor: Performs deep-dive analysis of distributed traces, correlating traces with breached SLOs or abnormal RED metrics during the Analysis phase</p> </li> <li> <p> <code>dependency_metric</code> - CriticalPathAuditor: Analyzes service dependency impacts and maps dependency relationships from Application Signals RED metrics during the Analysis phase</p> </li> <li> <p> <code>top_contributor</code> - TopContributorAuditor: Identifies infrastructure-level contributors to issues by analyzing EMF logs of Application Signals RED metrics during the Analysis phase</p> </li> <li> <p> <code>log</code> - LogAuditor: Extracts insights from application logs, categorizing error types and ranking severity by frequency during the Analysis phase</p> </li> </ul> <note> <p> <code>InitAuditor</code> and <code>Summarizer</code> auditors are not configurable as they are automatically triggered during the audit process.</p> </note>"
       }
     },
     "AwsAccountId": {
       "base": null,
       "refs": {
+        "ChangeEvent$AccountId": "<p>The Amazon Web Services account ID where this change event occurred.</p>",
         "ListServiceLevelObjectivesInput$SloOwnerAwsAccountId": "<p>SLO's Amazon Web Services account ID.</p>",
+        "ListServiceStatesInput$AwsAccountId": "<p>The Amazon Web Services account ID to filter service states by. Use this to limit results to services from a specific account.</p>",
         "ListServicesInput$AwsAccountId": "<p>Amazon Web Services Account ID.</p>",
         "MetricReference$AccountId": "<p>Amazon Web Services account ID.</p>"
       }
     },
     "BatchGetServiceLevelObjectiveBudgetReportInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchGetServiceLevelObjectiveBudgetReportOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateExclusionWindowsError": {
       "base": "<p>An array of structures, where each structure includes an error indicating that one of the requests in the array was not valid.</p>",
@@ -118,19 +211,18 @@
     },
     "BatchUpdateExclusionWindowsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "BatchUpdateExclusionWindowsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Boolean": {
       "base": null,
       "refs": {
-        "ListServiceLevelObjectivesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include SLO from source accounts in the returned data. <pre><code> &lt;/p&gt; &lt;p&gt;When you are monitoring an account, you can use Amazon Web Services account ID in &lt;code&gt;KeyAttribute&lt;/code&gt; filter for service source account and &lt;code&gt;SloOwnerawsaccountID&lt;/code&gt; for SLO source account with &lt;code&gt;IncludeLinkedAccounts&lt;/code&gt; to filter the returned data to only a single source account. &lt;/p&gt; </code></pre>",
-        "ListServicesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include services from source accounts in the returned data. <pre><code> &lt;/p&gt; </code></pre>"
+        "ListServiceLevelObjectivesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include SLO from source accounts in the returned data. </p> <p>When you are monitoring an account, you can use Amazon Web Services account ID in <code>KeyAttribute</code> filter for service source account and <code>SloOwnerawsaccountID</code> for SLO source account with <code>IncludeLinkedAccounts</code> to filter the returned data to only a single source account. </p>",
+        "ListServiceStatesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include service states from source accounts in the returned data.</p>",
+        "ListServicesInput$IncludeLinkedAccounts": "<p>If you are using this operation in a monitoring account, specify <code>true</code> to include services from source accounts in the returned data. </p>"
       }
     },
     "BudgetRequestsRemaining": {
@@ -177,30 +269,47 @@
         "CalendarInterval$Duration": "<p>Specifies the duration of each calendar interval. For example, if <code>Duration</code> is <code>1</code> and <code>DurationUnit</code> is <code>MONTH</code>, each interval is one month, aligned with the calendar.</p>"
       }
     },
+    "ChangeEvent": {
+      "base": "<p>A structure that contains information about a change event that occurred for a service, such as a deployment or configuration change.</p>",
+      "refs": {
+        "LatestChangeEvents$member": null
+      }
+    },
+    "ChangeEventType": {
+      "base": null,
+      "refs": {
+        "ChangeEvent$ChangeEventType": "<p>The type of change event that occurred, such as <code>DEPLOYMENT</code>.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>This operation attempted to create a resource that already exists.</p>",
+      "refs": {}
+    },
+    "ConnectionType": {
+      "base": null,
       "refs": {
+        "Edge$ConnectionType": "<p>The type of connection between the nodes, indicating the nature of the relationship.</p>"
       }
     },
     "CreateServiceLevelObjectiveInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServiceLevelObjectiveOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
+    },
+    "DeleteGroupingConfigurationOutput": {
+      "base": null,
+      "refs": {}
     },
     "DeleteServiceLevelObjectiveInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServiceLevelObjectiveOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DependencyConfig": {
       "base": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>.</p> <p>When creating a service dependency SLO, you must specify the <code>KeyAttributes</code> of the service, and the <code>DependencyConfig</code> for the dependency. You can specify the <code>OperationName</code> of the service, from which it calls the dependency. Alternatively, you can exclude <code>OperationName</code> and the SLO will monitor all of the service's operations that call the dependency.</p>",
@@ -211,6 +320,12 @@
         "ServiceLevelIndicatorMetric$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>",
         "ServiceLevelIndicatorMetricConfig$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>",
         "ServiceLevelObjectiveSummary$DependencyConfig": "<p>Identifies the dependency using the <code>DependencyKeyAttributes</code> and <code>DependencyOperationName</code>. </p>"
+      }
+    },
+    "DependencyGraph": {
+      "base": "<p>A structure that represents the dependency relationships relevant to an audit finding, containing nodes and edges that show how services and resources are connected.</p>",
+      "refs": {
+        "AuditFinding$DependencyGraph": "<p>A structure containing nodes and edges that represent the dependency relationships relevant to this audit finding, helping to understand the context and potential impact.</p>"
       }
     },
     "Dimension": {
@@ -238,12 +353,31 @@
         "MetricReference$Dimensions": "<p>An array of one or more dimensions that further define the metric. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Dimension\">CloudWatchDimensions</a>.</p>"
       }
     },
+    "Double": {
+      "base": null,
+      "refs": {
+        "Edge$Duration": "<p>The duration or latency associated with this connection, if applicable.</p>",
+        "Node$Duration": "<p>The duration or processing time associated with this node, if applicable.</p>"
+      }
+    },
     "DurationUnit": {
       "base": null,
       "refs": {
         "CalendarInterval$DurationUnit": "<p>Specifies the calendar interval unit.</p>",
         "RollingInterval$DurationUnit": "<p>Specifies the rolling interval unit.</p>",
         "Window$DurationUnit": "<p>The unit of time for the exclusion window duration. Valid values: MINUTE, HOUR, DAY, MONTH.</p>"
+      }
+    },
+    "Edge": {
+      "base": "<p>A structure that represents a connection between two nodes in a dependency graph, showing the relationship and characteristics of the connection.</p>",
+      "refs": {
+        "Edges$member": null
+      }
+    },
+    "Edges": {
+      "base": null,
+      "refs": {
+        "DependencyGraph$Edges": "<p>An array of edges representing the connections and relationships between the nodes in the dependency graph.</p>"
       }
     },
     "EvaluationType": {
@@ -306,23 +440,19 @@
     },
     "GetServiceInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceLevelObjectiveInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceLevelObjectiveOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "GetServiceOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Goal": {
       "base": "<p>This structure contains the attributes that determine the goal of an SLO. This includes the time period for evaluation and the attainment threshold.</p>",
@@ -331,6 +461,64 @@
         "ServiceLevelObjective$Goal": null,
         "ServiceLevelObjectiveBudgetReport$Goal": null,
         "UpdateServiceLevelObjectiveInput$Goal": "<p>A structure that contains the attributes that determine the goal of the SLO. This includes the time period for evaluation and the attainment threshold.</p>"
+      }
+    },
+    "GroupIdentifier": {
+      "base": null,
+      "refs": {
+        "ServiceGroup$GroupIdentifier": "<p>A unique identifier for this grouping attribute value, used for filtering and API operations.</p>"
+      }
+    },
+    "GroupName": {
+      "base": null,
+      "refs": {
+        "ServiceGroup$GroupName": "<p>The name of the grouping attribute, such as <code>BusinessUnit</code> or <code>Environment</code>.</p>"
+      }
+    },
+    "GroupSource": {
+      "base": null,
+      "refs": {
+        "ServiceGroup$GroupSource": "<p>The source of the grouping attribute, such as <code>TAG</code>, <code>OTEL</code>, or <code>DEFAULT</code>.</p>"
+      }
+    },
+    "GroupValue": {
+      "base": null,
+      "refs": {
+        "ServiceGroup$GroupValue": "<p>The value of the grouping attribute for this service, such as <code>Payments</code> or <code>Production</code>.</p>"
+      }
+    },
+    "GroupingAttributeDefinition": {
+      "base": "<p>A structure that defines how services should be grouped based on specific attributes. This includes the friendly name for the grouping, the source keys to derive values from, and an optional default value.</p>",
+      "refs": {
+        "GroupingAttributeDefinitions$member": null
+      }
+    },
+    "GroupingAttributeDefinitions": {
+      "base": null,
+      "refs": {
+        "GroupingConfiguration$GroupingAttributeDefinitions": "<p>An array of grouping attribute definitions that specify how services should be grouped based on various attributes and source keys.</p>",
+        "ListGroupingAttributeDefinitionsOutput$GroupingAttributeDefinitions": "<p>An array of structures, where each structure contains information about one grouping attribute definition, including the grouping name, source keys, and default values.</p>",
+        "PutGroupingConfigurationInput$GroupingAttributeDefinitions": "<p>An array of grouping attribute definitions that specify how services should be grouped. Each definition includes a friendly name, source keys to derive the grouping value from, and an optional default value.</p>"
+      }
+    },
+    "GroupingConfiguration": {
+      "base": "<p>A structure that contains the complete grouping configuration for an account, including all defined grouping attributes and metadata about when it was last updated.</p>",
+      "refs": {
+        "PutGroupingConfigurationOutput$GroupingConfiguration": "<p>A structure containing the updated grouping configuration, including all grouping attribute definitions and the timestamp when it was last updated.</p>"
+      }
+    },
+    "GroupingSourceKeyStringList": {
+      "base": null,
+      "refs": {
+        "GroupingAttributeDefinition$GroupingSourceKeys": "<p>An array of source keys used to derive the grouping attribute value from telemetry data, Amazon Web Services tags, or other sources. For example, [\"business_unit\", \"team\"] would look for values in those fields.</p>"
+      }
+    },
+    "GroupingString": {
+      "base": null,
+      "refs": {
+        "GroupingAttributeDefinition$GroupingName": "<p>The friendly name for this grouping attribute, such as <code>BusinessUnit</code> or <code>Environment</code>. This name is used to identify the grouping in the console and APIs.</p>",
+        "GroupingAttributeDefinition$DefaultGroupingValue": "<p>The default value to use for this grouping attribute when no value can be derived from the source keys. This ensures all services have a grouping value even if the source data is missing.</p>",
+        "GroupingSourceKeyStringList$member": null
       }
     },
     "Interval": {
@@ -351,10 +539,37 @@
         "Attributes$value": null
       }
     },
-    "ListServiceDependenciesInput": {
+    "LatestChangeEvents": {
       "base": null,
       "refs": {
+        "ServiceState$LatestChangeEvents": "<p>An array containing the most recent change events for this service, such as deployments, with information about when they occurred and who initiated them.</p>"
       }
+    },
+    "ListAuditFindingMaxResults": {
+      "base": null,
+      "refs": {
+        "ListAuditFindingsInput$MaxResults": "<p>The maximum number of audit findings to return in one operation. If you omit this parameter, the default of 10 is used.</p>"
+      }
+    },
+    "ListAuditFindingsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListAuditFindingsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGroupingAttributeDefinitionsInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListGroupingAttributeDefinitionsOutput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceDependenciesInput": {
+      "base": null,
+      "refs": {}
     },
     "ListServiceDependenciesMaxResults": {
       "base": null,
@@ -364,13 +579,11 @@
     },
     "ListServiceDependenciesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceDependentsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceDependentsMaxResults": {
       "base": null,
@@ -380,29 +593,25 @@
     },
     "ListServiceDependentsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceLevelObjectiveExclusionWindowsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceLevelObjectiveExclusionWindowsMaxResults": {
       "base": null,
       "refs": {
-        "ListServiceLevelObjectiveExclusionWindowsInput$MaxResults": "<p>The maximum number of results to return in one operation. If you omit this parameter, the default of 50 is used. <pre><code> &lt;/p&gt; </code></pre>"
+        "ListServiceLevelObjectiveExclusionWindowsInput$MaxResults": "<p>The maximum number of results to return in one operation. If you omit this parameter, the default of 50 is used. </p>"
       }
     },
     "ListServiceLevelObjectiveExclusionWindowsOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceLevelObjectivesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceLevelObjectivesMaxResults": {
       "base": null,
@@ -412,8 +621,7 @@
     },
     "ListServiceLevelObjectivesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceOperationMaxResults": {
       "base": null,
@@ -423,18 +631,29 @@
     },
     "ListServiceOperationsInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServiceOperationsOutput": {
       "base": null,
+      "refs": {}
+    },
+    "ListServiceStatesInput": {
+      "base": null,
+      "refs": {}
+    },
+    "ListServiceStatesMaxResults": {
+      "base": null,
       "refs": {
+        "ListServiceStatesInput$MaxResults": "<p>The maximum number of service states to return in one operation. If you omit this parameter, the default of 20 is used.</p>"
       }
+    },
+    "ListServiceStatesOutput": {
+      "base": null,
+      "refs": {}
     },
     "ListServicesInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServicesMaxResults": {
       "base": null,
@@ -444,18 +663,15 @@
     },
     "ListServicesOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "LogGroupReferences": {
       "base": null,
@@ -473,6 +689,7 @@
     "MetricDataQueries": {
       "base": null,
       "refs": {
+        "MetricGraph$MetricDataQueries": "<p>An array of metric data queries that define the metrics to be retrieved and analyzed as part of the audit finding context.</p>",
         "MonitoredRequestCountMetricDataQueries$GoodCountMetric": "<p>If you want to count \"good requests\" to determine the percentage of successful requests for this request-based SLO, specify the metric to use as \"good requests\" in this structure.</p>",
         "MonitoredRequestCountMetricDataQueries$BadCountMetric": "<p>If you want to count \"bad requests\" to determine the percentage of successful requests for this request-based SLO, specify the metric to use as \"bad requests\" in this structure.</p>",
         "RequestBasedServiceLevelIndicatorMetric$TotalRequestCountMetric": "<p>This structure defines the metric that is used as the \"total requests\" number for a request-based SLO. The number observed for this metric is divided by the number of \"good requests\" or \"bad requests\" that is observed for the metric defined in <code>MonitoredRequestCountMetric</code>.</p>",
@@ -493,6 +710,12 @@
         "MetricDataQuery$Expression": "<p>This field can contain a metric math expression to be performed on the other metrics that you are retrieving within this <code>MetricDataQueries</code> structure. </p> <p>A math expression can use the <code>Id</code> of the other metrics or queries to refer to those metrics, and can also use the <code>Id</code> of other expressions to use the result of those expressions. For more information about metric math expressions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html#metric-math-syntax\">Metric Math Syntax and Functions</a> in the <i>Amazon CloudWatch User Guide</i>.</p> <p>Within each <code>MetricDataQuery</code> object, you must specify either <code>Expression</code> or <code>MetricStat</code> but not both.</p>"
       }
     },
+    "MetricGraph": {
+      "base": "<p>A structure that contains metric data queries and time range information that provides context for audit findings through relevant performance metrics.</p>",
+      "refs": {
+        "AuditFinding$MetricGraph": "<p>A structure containing metric data queries and time range information that provides context for the audit finding through relevant performance metrics.</p>"
+      }
+    },
     "MetricId": {
       "base": null,
       "refs": {
@@ -509,7 +732,8 @@
       "base": null,
       "refs": {
         "Metric$MetricName": "<p>The name of the metric to use.</p>",
-        "MetricReference$MetricName": "<p>The name of the metric.</p>"
+        "MetricReference$MetricName": "<p>The name of the metric.</p>",
+        "ServiceLevelIndicatorMetricConfig$MetricName": "<p>The name of the CloudWatch metric to use for the SLO, when using a custom metric rather than Application Signals standard metrics.</p>"
       }
     },
     "MetricReference": {
@@ -571,18 +795,36 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListAuditFindingsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of audit findings.</p>",
+        "ListAuditFindingsOutput$NextToken": "<p>Include this value in your next use of this API to get the next set of audit findings.</p>",
+        "ListGroupingAttributeDefinitionsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of grouping attribute definitions.</p>",
+        "ListGroupingAttributeDefinitionsOutput$NextToken": "<p>Include this value in your next use of this API to get the next set of grouping attribute definitions.</p>",
         "ListServiceDependenciesInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service dependencies.</p>",
         "ListServiceDependenciesOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service dependencies.</p>",
         "ListServiceDependentsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service dependents.</p>",
         "ListServiceDependentsOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service dependents.</p>",
-        "ListServiceLevelObjectiveExclusionWindowsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives. <pre><code> &lt;/p&gt; </code></pre>",
-        "ListServiceLevelObjectiveExclusionWindowsOutput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives. <pre><code> &lt;/p&gt; </code></pre>",
+        "ListServiceLevelObjectiveExclusionWindowsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives. </p>",
+        "ListServiceLevelObjectiveExclusionWindowsOutput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives. </p>",
         "ListServiceLevelObjectivesInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service level objectives.</p>",
         "ListServiceLevelObjectivesOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service level objectives.</p>",
         "ListServiceOperationsInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service operations.</p>",
         "ListServiceOperationsOutput$NextToken": "<p>Include this value in your next use of this API to get next set of service operations.</p>",
+        "ListServiceStatesInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of service states.</p>",
+        "ListServiceStatesOutput$NextToken": "<p>Include this value in your next use of this API to get the next set of service states.</p>",
         "ListServicesInput$NextToken": "<p>Include this value, if it was returned by the previous operation, to get the next set of services.</p>",
         "ListServicesOutput$NextToken": "<p>Include this value in your next use of this API to get next set of services.</p>"
+      }
+    },
+    "Node": {
+      "base": "<p>A structure that represents a node in a dependency graph, containing information about a service, resource, or other entity and its characteristics.</p>",
+      "refs": {
+        "Nodes$member": null
+      }
+    },
+    "Nodes": {
+      "base": null,
+      "refs": {
+        "DependencyGraph$Nodes": "<p>An array of nodes representing the services, resources, or other entities in the dependency graph.</p>"
       }
     },
     "OperationName": {
@@ -608,6 +850,14 @@
         "MetricDataQuery$Period": "<p>The granularity, in seconds, of the returned data points for this metric. For metrics with regular resolution, a period can be as short as one minute (60 seconds) and must be a multiple of 60. For high-resolution metrics that are collected at intervals of less than one minute, the period can be 1, 5, 10, 30, 60, or any multiple of 60. High-resolution metrics are those metrics stored by a <code>PutMetricData</code> call that includes a <code>StorageResolution</code> of 1 second.</p> <p>If the <code>StartTime</code> parameter specifies a time stamp that is greater than 3 hours ago, you must specify the period as follows or no data points in that time range is returned:</p> <ul> <li> <p>Start time between 3 hours and 15 days ago - Use a multiple of 60 seconds (1 minute).</p> </li> <li> <p>Start time between 15 and 63 days ago - Use a multiple of 300 seconds (5 minutes).</p> </li> <li> <p>Start time greater than 63 days ago - Use a multiple of 3600 seconds (1 hour).</p> </li> </ul>",
         "MetricStat$Period": "<p>The granularity, in seconds, to be used for the metric. For metrics with regular resolution, a period can be as short as one minute (60 seconds) and must be a multiple of 60. For high-resolution metrics that are collected at intervals of less than one minute, the period can be 1, 5, 10, 30, 60, or any multiple of 60. High-resolution metrics are those metrics stored by a <code>PutMetricData</code> call that includes a <code>StorageResolution</code> of 1 second.</p>"
       }
+    },
+    "PutGroupingConfigurationInput": {
+      "base": null,
+      "refs": {}
+    },
+    "PutGroupingConfigurationOutput": {
+      "base": null,
+      "refs": {}
     },
     "RecurrenceRule": {
       "base": "<p>The recurrence rule for the SLO time window exclusion .</p>",
@@ -649,8 +899,7 @@
     },
     "ResourceNotFoundException": {
       "base": "<p>Resource not found.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -712,10 +961,30 @@
         "ListServiceDependentsOutput$ServiceDependents": "<p>An array, where each object in the array contains information about one of the dependents of this service.</p>"
       }
     },
+    "ServiceEntity": {
+      "base": "<p>A structure that contains identifying information for a service entity.</p>",
+      "refs": {
+        "AuditTargetEntity$Service": "<p>Service entity information when the audit target is a service.</p>",
+        "ServiceOperationEntity$Service": "<p>The service entity that contains this operation.</p>"
+      }
+    },
     "ServiceErrorMessage": {
       "base": null,
       "refs": {
         "AccessDeniedException$Message": null
+      }
+    },
+    "ServiceGroup": {
+      "base": "<p>A structure that represents a logical grouping of services based on shared attributes such as business unit, environment, or entry point.</p>",
+      "refs": {
+        "ServiceGroups$member": null
+      }
+    },
+    "ServiceGroups": {
+      "base": null,
+      "refs": {
+        "Service$ServiceGroups": "<p>An array of service groups that this service belongs to, based on the configured grouping attributes.</p>",
+        "ServiceSummary$ServiceGroups": "<p>An array of service groups that this service belongs to, based on the configured grouping attributes.</p>"
       }
     },
     "ServiceLevelIndicator": {
@@ -844,6 +1113,12 @@
         "UpdateServiceLevelObjectiveInput$Description": "<p>An optional description for the SLO.</p>"
       }
     },
+    "ServiceLevelObjectiveEntity": {
+      "base": "<p>A structure that contains identifying information for a service level objective entity.</p>",
+      "refs": {
+        "AuditTargetEntity$Slo": "<p>SLO entity information when the audit target is a service level objective.</p>"
+      }
+    },
     "ServiceLevelObjectiveId": {
       "base": null,
       "refs": {
@@ -890,6 +1165,12 @@
         "ServiceOperations$member": null
       }
     },
+    "ServiceOperationEntity": {
+      "base": "<p>A structure that contains identifying information for a service operation entity.</p>",
+      "refs": {
+        "AuditTargetEntity$ServiceOperation": "<p>Service operation entity information when the audit target is a specific service operation.</p>"
+      }
+    },
     "ServiceOperations": {
       "base": null,
       "refs": {
@@ -898,7 +1179,18 @@
     },
     "ServiceQuotaExceededException": {
       "base": "<p>This request exceeds a service quota.</p>",
+      "refs": {}
+    },
+    "ServiceState": {
+      "base": "<p>A structure that contains information about the current state of a service, including its latest change events such as deployments and other state-changing activities.</p>",
       "refs": {
+        "ServiceStates$member": null
+      }
+    },
+    "ServiceStates": {
+      "base": null,
+      "refs": {
+        "ListServiceStatesOutput$ServiceStates": "<p>An array of structures, where each structure contains information about the state of one service, including its latest change events such as deployments.</p>"
       }
     },
     "ServiceSummaries": {
@@ -913,6 +1205,12 @@
         "ServiceSummaries$member": null
       }
     },
+    "Severity": {
+      "base": null,
+      "refs": {
+        "AuditorResult$Severity": "<p>The severity level of this audit finding, indicating the importance and potential impact of the issue.</p>"
+      }
+    },
     "StandardUnit": {
       "base": null,
       "refs": {
@@ -921,13 +1219,11 @@
     },
     "StartDiscoveryInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDiscoveryOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Stat": {
       "base": null,
@@ -940,8 +1236,32 @@
       "refs": {
         "AttributeMap$key": null,
         "AttributeMap$value": null,
+        "AuditFinding$Operation": "<p>The name of the operation associated with this audit finding, if the finding is specific to a particular service operation.</p>",
+        "AuditFinding$Type": "<p>The type of audit finding.</p>",
+        "AuditTarget$Type": "<p>The type of entity being audited, such as <code>Service</code>, <code>SLO</code>, or <code>ServiceOperation</code>.</p>",
+        "AuditorResult$Auditor": "<p>The name of the auditor algorithm that generated this result.</p>",
+        "Auditors$member": null,
+        "ChangeEvent$Region": "<p>The Amazon Web Services region where this change event occurred.</p>",
+        "ChangeEvent$EventId": "<p>A unique identifier for this change event.</p>",
+        "ChangeEvent$UserName": "<p>The name of the user who initiated this change event, if available.</p>",
+        "ChangeEvent$EventName": "<p>The name or description of this change event.</p>",
         "ConflictException$Message": null,
+        "Edge$SourceNodeId": "<p>The identifier of the source node in this edge connection.</p>",
+        "Edge$DestinationNodeId": "<p>The identifier of the destination node in this edge connection.</p>",
+        "Node$Name": "<p>The name of the entity represented by this node.</p>",
+        "Node$NodeId": "<p>A unique identifier for this node within the dependency graph.</p>",
+        "Node$Operation": "<p>The operation associated with this node, if applicable.</p>",
+        "Node$Type": "<p>The type of entity represented by this node, such as <code>Service</code> or <code>Resource</code>.</p>",
+        "Node$Status": "<p>The status of the entity represented by this node.</p>",
+        "ServiceEntity$Type": "<p>The type of the service entity.</p>",
+        "ServiceEntity$Name": "<p>The name of the service.</p>",
+        "ServiceEntity$Environment": "<p>The environment where the service is deployed.</p>",
+        "ServiceEntity$AwsAccountId": "<p>The Amazon Web Services account ID where the service is located. Provide this value only for cross-account access.</p>",
+        "ServiceLevelObjectiveEntity$SloName": "<p>The name of the service level objective.</p>",
+        "ServiceLevelObjectiveEntity$SloArn": "<p>The ARN of the service level objective. The SLO must be provided with ARN for cross-account access.</p>",
         "ServiceLevelObjectiveIds$member": null,
+        "ServiceOperationEntity$Operation": "<p>The name of the operation.</p>",
+        "ServiceOperationEntity$MetricType": "<p>The type of metric associated with this service operation.</p>",
         "ServiceQuotaExceededException$Message": null,
         "ThrottlingException$Message": null
       }
@@ -975,13 +1295,11 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagValue": {
       "base": null,
@@ -991,8 +1309,7 @@
     },
     "ThrottlingException": {
       "base": "<p>The request was throttled because of quota limits.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "Timestamp": {
       "base": null,
@@ -1000,11 +1317,16 @@
         "BatchGetServiceLevelObjectiveBudgetReportInput$Timestamp": "<p>The date and time that you want the report to be for. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>",
         "BatchGetServiceLevelObjectiveBudgetReportOutput$Timestamp": "<p>The date and time that the report is for. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>",
         "CalendarInterval$StartTime": "<p>The date and time when you want the first interval to start. Be sure to choose a time that configures the intervals the way that you want. For example, if you want weekly intervals starting on Mondays at 6 a.m., be sure to specify a start time that is a Monday at 6 a.m.</p> <p>When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>As soon as one calendar interval ends, another automatically begins.</p>",
+        "ChangeEvent$Timestamp": "<p>The timestamp when this change event occurred. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
         "ExclusionWindow$StartTime": "<p>The start of the SLO time window exclusion. Defaults to current time if not specified.</p>",
         "GetServiceInput$StartTime": "<p>The start of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "GetServiceInput$EndTime": "<p>The end of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "GetServiceOutput$StartTime": "<p>The start time of the data included in the response. In a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code>.</p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
         "GetServiceOutput$EndTime": "<p>The end time of the data included in the response. In a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code>.</p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
+        "GroupingConfiguration$UpdatedAt": "<p>The timestamp when this grouping configuration was last updated. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
+        "ListAuditFindingsInput$StartTime": "<p>The start of the time period to retrieve audit findings for. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code> </p>",
+        "ListAuditFindingsInput$EndTime": "<p>The end of the time period to retrieve audit findings for. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code> </p>",
+        "ListGroupingAttributeDefinitionsOutput$UpdatedAt": "<p>The timestamp when the grouping configuration was last updated. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
         "ListServiceDependenciesInput$StartTime": "<p>The start of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "ListServiceDependenciesInput$EndTime": "<p>The end of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested end time will be rounded to the nearest hour.</p>",
         "ListServiceDependenciesOutput$StartTime": "<p>The start of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
@@ -1017,10 +1339,16 @@
         "ListServiceOperationsInput$EndTime": "<p>The end of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested end time will be rounded to the nearest hour.</p>",
         "ListServiceOperationsOutput$StartTime": "<p>The start of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
         "ListServiceOperationsOutput$EndTime": "<p>The end of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
+        "ListServiceStatesInput$StartTime": "<p>The start of the time period to retrieve service state information for. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code>.</p>",
+        "ListServiceStatesInput$EndTime": "<p>The end of the time period to retrieve service state information for. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code>.</p>",
+        "ListServiceStatesOutput$StartTime": "<p>The start of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code>.</p>",
+        "ListServiceStatesOutput$EndTime": "<p>The end of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as epoch time in seconds. For example, <code>1698778057</code>.</p>",
         "ListServicesInput$StartTime": "<p>The start of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "ListServicesInput$EndTime": "<p>The end of the time period to retrieve information about. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>Your requested start time will be rounded to the nearest hour.</p>",
         "ListServicesOutput$StartTime": "<p>The start of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
         "ListServicesOutput$EndTime": "<p>The end of the time period that the returned information applies to. When used in a raw HTTP Query API, it is formatted as be epoch time in seconds. For example: <code>1698778057</code> </p> <p>This displays the time that Application Signals used for the request. It might not match your request exactly, because it was rounded to the nearest hour.</p>",
+        "MetricGraph$StartTime": "<p>The start time for the metric data included in this graph. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
+        "MetricGraph$EndTime": "<p>The end time for the metric data included in this graph. When used in a raw HTTP Query API, it is formatted as epoch time in seconds.</p>",
         "ServiceLevelObjective$CreatedTime": "<p>The date and time that this SLO was created. When used in a raw HTTP Query API, it is formatted as <code>yyyy-MM-dd'T'HH:mm:ss</code>. For example, <code>2019-07-01T23:59:59</code>.</p>",
         "ServiceLevelObjective$LastUpdatedTime": "<p>The time that this SLO was most recently updated. When used in a raw HTTP Query API, it is formatted as <code>yyyy-MM-dd'T'HH:mm:ss</code>. For example, <code>2019-07-01T23:59:59</code>.</p>",
         "ServiceLevelObjectiveSummary$CreatedTime": "<p>The date and time that this service level objective was created. It is expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.</p>"
@@ -1040,28 +1368,23 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UntagResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceLevelObjectiveInput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServiceLevelObjectiveOutput": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationException": {
       "base": "<p>The resource is not valid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ValidationExceptionMessage": {
       "base": null,

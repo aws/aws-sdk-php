@@ -24,7 +24,7 @@
     "DeleteWorkflow": "<p>Deletes the specified workflow.</p>",
     "DescribeAccess": "<p>Describes the access that is assigned to the specific file transfer protocol-enabled server, as identified by its <code>ServerId</code> property and its <code>ExternalId</code>.</p> <p>The response from this call returns the properties of the access that is associated with the <code>ServerId</code> value that was specified.</p>",
     "DescribeAgreement": "<p>Describes the agreement that's identified by the <code>AgreementId</code>.</p>",
-    "DescribeCertificate": "<p>Describes the certificate that's identified by the <code>CertificateId</code>.</p>",
+    "DescribeCertificate": "<p>Describes the certificate that's identified by the <code>CertificateId</code>.</p> <note> <p>Transfer Family automatically publishes a Amazon CloudWatch metric called <code>DaysUntilExpiry</code> for imported certificates. This metric tracks the number of days until the certificate expires based on the <code>InactiveDate</code>. The metric is available in the <code>AWS/Transfer</code> namespace and includes the <code>CertificateId</code> as a dimension.</p> </note>",
     "DescribeConnector": "<p>Describes the connector that's identified by the <code>ConnectorId.</code> </p>",
     "DescribeExecution": "<p>You can use <code>DescribeExecution</code> to check the details of the execution of the specified workflow.</p> <note> <p>This API call only returns details for in-progress workflows.</p> <p> If you provide an ID for an execution that is not in progress, or if the execution doesn't match the specified workflow ID, you receive a <code>ResourceNotFound</code> exception.</p> </note>",
     "DescribeHostKey": "<p>Returns the details of the host key that's specified by the <code>HostKeyId</code> and <code>ServerId</code>.</p>",
@@ -35,7 +35,7 @@
     "DescribeWebApp": "<p>Describes the web app that's identified by <code>WebAppId</code>.</p>",
     "DescribeWebAppCustomization": "<p>Describes the web app customization object that's identified by <code>WebAppId</code>.</p>",
     "DescribeWorkflow": "<p>Describes the specified workflow.</p>",
-    "ImportCertificate": "<p>Imports the signing and encryption certificates that you need to create local (AS2) profiles and partner profiles.</p> <p>You can import both the certificate and its chain in the <code>Certificate</code> parameter.</p> <note> <p>If you use the <code>Certificate</code> parameter to upload both the certificate and its chain, don't use the <code>CertificateChain</code> parameter.</p> </note>",
+    "ImportCertificate": "<p>Imports the signing and encryption certificates that you need to create local (AS2) profiles and partner profiles.</p> <p>You can import both the certificate and its chain in the <code>Certificate</code> parameter.</p> <p>After importing a certificate, Transfer Family automatically creates a Amazon CloudWatch metric called <code>DaysUntilExpiry</code> that tracks the number of days until the certificate expires. The metric is based on the <code>InactiveDate</code> parameter and is published daily in the <code>AWS/Transfer</code> namespace.</p> <important> <p>It can take up to a full day after importing a certificate for Transfer Family to emit the <code>DaysUntilExpiry</code> metric to your account.</p> </important> <note> <p>If you use the <code>Certificate</code> parameter to upload both the certificate and its chain, don't use the <code>CertificateChain</code> parameter.</p> </note> <p> <b>CloudWatch monitoring</b> </p> <p>The <code>DaysUntilExpiry</code> metric includes the following specifications:</p> <ul> <li> <p> <b>Units:</b> Count (days)</p> </li> <li> <p> <b>Dimensions:</b> <code>CertificateId</code> (always present), <code>Description</code> (if provided during certificate import)</p> </li> <li> <p> <b>Statistics:</b> Minimum, Maximum, Average</p> </li> <li> <p> <b>Frequency:</b> Published daily</p> </li> </ul>",
     "ImportHostKey": "<p>Adds a host key to the server that's specified by the <code>ServerId</code> parameter.</p>",
     "ImportSshPublicKey": "<p>Adds a Secure Shell (SSH) public key to a Transfer Family user identified by a <code>UserName</code> value assigned to the specific file transfer protocol-enabled server, identified by <code>ServerId</code>.</p> <p>The response returns the <code>UserName</code> value, the <code>ServerId</code> value, and the name of the <code>SshPublicKeyId</code>.</p>",
     "ListAccesses": "<p>Lists the details for all the accesses you have on your server.</p>",
@@ -77,8 +77,7 @@
   "shapes": {
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "AddressAllocationId": {
       "base": null,
@@ -276,8 +275,7 @@
     },
     "ConflictException": {
       "base": "<p>This exception is thrown when the <code>UpdateServer</code> is called for a file transfer protocol-enabled server that has VPC as the endpoint type and the server's <code>VpcEndpointID</code> is not in the available state.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ConnectorFileTransferResult": {
       "base": "<p>A structure that contains the details for files transferred using an SFTP connector, during a single transfer.</p>",
@@ -326,83 +324,67 @@
     },
     "CreateAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAgreementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateAgreementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateServerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateUserResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWebAppRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWebAppResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CreateWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "CustomDirectoriesType": {
       "base": "<p>Contains Amazon S3 locations for storing specific types of AS2 message files.</p>",
@@ -452,28 +434,23 @@
     },
     "DeleteAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteAgreementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteHostKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteId": {
       "base": null,
@@ -483,18 +460,15 @@
     },
     "DeleteProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteSshPublicKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteStepDetails": {
       "base": "<p>The name of the step, used to identify the delete step.</p>",
@@ -504,153 +478,123 @@
     },
     "DeleteUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWebAppCustomizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWebAppRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DeleteWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAgreementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeAgreementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExecutionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeExecutionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeHostKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeHostKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSecurityPolicyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeSecurityPolicyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeServerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeUserResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWebAppCustomizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWebAppCustomizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWebAppRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWebAppResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkflowRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribeWorkflowResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "DescribedAccess": {
       "base": "<p>Describes the properties of the access that was specified.</p>",
@@ -764,7 +708,7 @@
     "DirectoryListingOptimization": {
       "base": "<p>Indicates whether optimization to directory listing on S3 servers is used. Disabled by default for compatibility.</p>",
       "refs": {
-        "S3StorageOptions$DirectoryListingOptimization": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized. This is disabled by default.</p> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>"
+        "S3StorageOptions$DirectoryListingOptimization": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized.</p> <ul> <li> <p>If using the console, this is enabled by default.</p> </li> <li> <p>If using the API or CLI, this is disabled by default.</p> </li> </ul> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>"
       }
     },
     "Domain": {
@@ -1070,38 +1014,33 @@
       "refs": {
         "CreateServerRequest$IdentityProviderType": "<p>The mode of authentication for a server. The default value is <code>SERVICE_MANAGED</code>, which allows you to store and access user credentials within the Transfer Family service.</p> <p>Use <code>AWS_DIRECTORY_SERVICE</code> to provide access to Active Directory groups in Directory Service for Microsoft Active Directory or Microsoft Active Directory in your on-premises environment or in Amazon Web Services using AD Connector. This option also requires you to provide a Directory ID by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>API_GATEWAY</code> value to integrate with an identity provider of your choosing. The <code>API_GATEWAY</code> setting requires you to provide an Amazon API Gateway endpoint URL to call for authentication by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>AWS_LAMBDA</code> value to directly use an Lambda function as your identity provider. If you choose this value, you must specify the ARN for the Lambda function in the <code>Function</code> parameter for the <code>IdentityProviderDetails</code> data type.</p>",
         "DescribedServer$IdentityProviderType": "<p>The mode of authentication for a server. The default value is <code>SERVICE_MANAGED</code>, which allows you to store and access user credentials within the Transfer Family service.</p> <p>Use <code>AWS_DIRECTORY_SERVICE</code> to provide access to Active Directory groups in Directory Service for Microsoft Active Directory or Microsoft Active Directory in your on-premises environment or in Amazon Web Services using AD Connector. This option also requires you to provide a Directory ID by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>API_GATEWAY</code> value to integrate with an identity provider of your choosing. The <code>API_GATEWAY</code> setting requires you to provide an Amazon API Gateway endpoint URL to call for authentication by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>AWS_LAMBDA</code> value to directly use an Lambda function as your identity provider. If you choose this value, you must specify the ARN for the Lambda function in the <code>Function</code> parameter for the <code>IdentityProviderDetails</code> data type.</p>",
-        "ListedServer$IdentityProviderType": "<p>The mode of authentication for a server. The default value is <code>SERVICE_MANAGED</code>, which allows you to store and access user credentials within the Transfer Family service.</p> <p>Use <code>AWS_DIRECTORY_SERVICE</code> to provide access to Active Directory groups in Directory Service for Microsoft Active Directory or Microsoft Active Directory in your on-premises environment or in Amazon Web Services using AD Connector. This option also requires you to provide a Directory ID by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>API_GATEWAY</code> value to integrate with an identity provider of your choosing. The <code>API_GATEWAY</code> setting requires you to provide an Amazon API Gateway endpoint URL to call for authentication by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>AWS_LAMBDA</code> value to directly use an Lambda function as your identity provider. If you choose this value, you must specify the ARN for the Lambda function in the <code>Function</code> parameter for the <code>IdentityProviderDetails</code> data type.</p>"
+        "ListedServer$IdentityProviderType": "<p>The mode of authentication for a server. The default value is <code>SERVICE_MANAGED</code>, which allows you to store and access user credentials within the Transfer Family service.</p> <p>Use <code>AWS_DIRECTORY_SERVICE</code> to provide access to Active Directory groups in Directory Service for Microsoft Active Directory or Microsoft Active Directory in your on-premises environment or in Amazon Web Services using AD Connector. This option also requires you to provide a Directory ID by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>API_GATEWAY</code> value to integrate with an identity provider of your choosing. The <code>API_GATEWAY</code> setting requires you to provide an Amazon API Gateway endpoint URL to call for authentication by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>AWS_LAMBDA</code> value to directly use an Lambda function as your identity provider. If you choose this value, you must specify the ARN for the Lambda function in the <code>Function</code> parameter for the <code>IdentityProviderDetails</code> data type.</p>",
+        "UpdateServerRequest$IdentityProviderType": "<p>The mode of authentication for a server. The default value is <code>SERVICE_MANAGED</code>, which allows you to store and access user credentials within the Transfer Family service.</p> <p>Use <code>AWS_DIRECTORY_SERVICE</code> to provide access to Active Directory groups in Directory Service for Microsoft Active Directory or Microsoft Active Directory in your on-premises environment or in Amazon Web Services using AD Connector. This option also requires you to provide a Directory ID by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>API_GATEWAY</code> value to integrate with an identity provider of your choosing. The <code>API_GATEWAY</code> setting requires you to provide an Amazon API Gateway endpoint URL to call for authentication by using the <code>IdentityProviderDetails</code> parameter.</p> <p>Use the <code>AWS_LAMBDA</code> value to directly use an Lambda function as your identity provider. If you choose this value, you must specify the ARN for the Lambda function in the <code>Function</code> parameter for the <code>IdentityProviderDetails</code> data type.</p>"
       }
     },
     "ImportCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportHostKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportHostKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportSshPublicKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ImportSshPublicKeyResponse": {
       "base": "<p>Identifies the user, the server they belong to, and the identifier of the SSH public key associated with that user. A user can have more than one key on each server that they are associated with.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InputFileLocation": {
       "base": "<p>Specifies the location for the file that's being processed.</p>",
@@ -1112,18 +1051,15 @@
     },
     "InternalServiceError": {
       "base": "<p>This exception is thrown when an error occurs in the Transfer Family service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidNextTokenException": {
       "base": "<p>The <code>NextToken</code> parameter that was passed is invalid.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "InvalidRequestException": {
       "base": "<p>This exception is thrown when the client submits a malformed request.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "IpAddressType": {
       "base": null,
@@ -1135,143 +1071,115 @@
     },
     "ListAccessesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAccessesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgreementsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListAgreementsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificatesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListCertificatesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListConnectorsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutionsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListExecutionsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFileTransferResultsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListFileTransferResultsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListHostKeysRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListHostKeysResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfilesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListProfilesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityPoliciesRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListSecurityPoliciesResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListServersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListTagsForResourceResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsersRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListUsersResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWebAppsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWebAppsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowsRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListWorkflowsResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ListedAccess": {
       "base": "<p>Lists the properties for one or more specified associated accesses.</p>",
@@ -1444,7 +1352,7 @@
     "MaxConcurrentConnections": {
       "base": "<p>The number of concurrent connections that the connector will create to the remote server.</p>",
       "refs": {
-        "SftpConnectorConfig$MaxConcurrentConnections": "<p>Specify the number of concurrent connections that your connector creates to the remote server. The default value is <code>5</code> (this is also the maximum value allowed).</p> <p>This parameter specifies the number of active connections that your connector can establish with the remote server at the same time. Increasing this value can enhance connector performance when transferring large file batches by enabling parallel operations.</p>"
+        "SftpConnectorConfig$MaxConcurrentConnections": "<p>Specify the number of concurrent connections that your connector creates to the remote server. The default value is <code>1</code>. The maximum values is <code>5</code>.</p> <note> <p>If you are using the Amazon Web Services Management Console, the default value is <code>5</code>.</p> </note> <p>This parameter specifies the number of active connections that your connector can establish with the remote server at the same time. Increasing this value can enhance connector performance when transferring large file batches by enabling parallel operations.</p>"
       }
     },
     "MaxItems": {
@@ -1712,13 +1620,11 @@
     },
     "ResourceExistsException": {
       "base": "<p>The requested resource does not exist, or exists in a region other than the one specified for the command.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceNotFoundException": {
       "base": "<p>This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer Family service.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "ResourceType": {
       "base": null,
@@ -1804,9 +1710,9 @@
     "S3StorageOptions": {
       "base": "<p>The Amazon S3 storage options that are configured for your server.</p>",
       "refs": {
-        "CreateServerRequest$S3StorageOptions": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized. This is disabled by default.</p> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>",
-        "DescribedServer$S3StorageOptions": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized. This is disabled by default.</p> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>",
-        "UpdateServerRequest$S3StorageOptions": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized. This is disabled by default.</p> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>"
+        "CreateServerRequest$S3StorageOptions": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized.</p> <ul> <li> <p>If using the console, this is enabled by default.</p> </li> <li> <p>If using the API or CLI, this is disabled by default.</p> </li> </ul> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>",
+        "DescribedServer$S3StorageOptions": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized.</p> <ul> <li> <p>If using the console, this is enabled by default.</p> </li> <li> <p>If using the API or CLI, this is disabled by default.</p> </li> </ul> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>",
+        "UpdateServerRequest$S3StorageOptions": "<p>Specifies whether or not performance for your Amazon S3 directories is optimized.</p> <ul> <li> <p>If using the console, this is enabled by default.</p> </li> <li> <p>If using the API or CLI, this is disabled by default.</p> </li> </ul> <p>By default, home directory mappings have a <code>TYPE</code> of <code>DIRECTORY</code>. If you enable this option, you would then need to explicitly set the <code>HomeDirectoryMapEntry</code> <code>Type</code> to <code>FILE</code> if you want a mapping to have a file target.</p>"
       }
     },
     "S3Tag": {
@@ -1860,7 +1766,7 @@
     "SecurityGroupIds": {
       "base": null,
       "refs": {
-        "EndpointDetails$SecurityGroupIds": "<p>A list of security groups IDs that are available to attach to your server's endpoint.</p> <note> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> <p>You can edit the <code>SecurityGroupIds</code> property in the <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/API_UpdateServer.html\">UpdateServer</a> API only if you are changing the <code>EndpointType</code> from <code>PUBLIC</code> or <code>VPC_ENDPOINT</code> to <code>VPC</code>. To change security groups associated with your server's VPC endpoint after creation, use the Amazon EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyVpcEndpoint.html\">ModifyVpcEndpoint</a> API.</p> </note>"
+        "EndpointDetails$SecurityGroupIds": "<p>A list of security groups IDs that are available to attach to your server's endpoint.</p> <note> <p>While <code>SecurityGroupIds</code> appears in the response syntax for consistency with <code>CreateServer</code> and <code>UpdateServer</code> operations, this field is not populated in <code>DescribeServer</code> responses. Security groups are managed at the VPC endpoint level and can be modified outside of the Transfer Family service. To retrieve current security group information, use the EC2 <code>DescribeVpcEndpoints</code> API with the <code>VpcEndpointId</code> returned in the response.</p> <p>This property can only be set when <code>EndpointType</code> is set to <code>VPC</code>.</p> <p>You can edit the <code>SecurityGroupIds</code> property in the <a href=\"https://docs.aws.amazon.com/transfer/latest/userguide/API_UpdateServer.html\">UpdateServer</a> API only if you are changing the <code>EndpointType</code> from <code>PUBLIC</code> or <code>VPC_ENDPOINT</code> to <code>VPC</code>. To change security groups associated with your server's VPC endpoint after creation, use the Amazon EC2 <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyVpcEndpoint.html\">ModifyVpcEndpoint</a> API.</p> </note>"
       }
     },
     "SecurityPolicyName": {
@@ -1916,13 +1822,11 @@
     },
     "SendWorkflowStepStateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "SendWorkflowStepStateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ServerId": {
       "base": null,
@@ -2005,8 +1909,7 @@
     },
     "ServiceUnavailableException": {
       "base": "<p>The request has failed because the Amazon Web ServicesTransfer Family service is not available.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "SessionId": {
       "base": null,
@@ -2116,48 +2019,39 @@
     },
     "StartDirectoryListingRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartDirectoryListingResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartFileTransferRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartFileTransferResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRemoteDeleteRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRemoteDeleteResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRemoteMoveRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartRemoteMoveResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StartServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "State": {
       "base": "<p>Describes the condition of a file transfer protocol-enabled server with respect to its ability to perform file operations. There are six possible states: <code>OFFLINE</code>, <code>ONLINE</code>, <code>STARTING</code>, <code>STOPPING</code>, <code>START_FAILED</code>, and <code>STOP_FAILED</code>.</p> <p> <code>OFFLINE</code> indicates that the server exists, but that it is not available for file operations. <code>ONLINE</code> indicates that the server is available to perform file operations. <code>STARTING</code> indicates that the server's was instantiated, but the server is not yet available to perform file operations. Under normal conditions, it can take a couple of minutes for the server to be completely operational. Both <code>START_FAILED</code> and <code>STOP_FAILED</code> are error conditions.</p>",
@@ -2186,8 +2080,7 @@
     },
     "StopServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "StructuredLogDestinations": {
       "base": null,
@@ -2230,8 +2123,7 @@
     },
     "TagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TagStepDetails": {
       "base": "<p>Each step type has its own <code>StepDetails</code> structure.</p> <p>The key/value pairs used to tag a file during the execution of a workflow step.</p>",
@@ -2272,28 +2164,23 @@
     },
     "TestConnectionRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestConnectionResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestIdentityProviderRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "TestIdentityProviderResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "ThrottlingException": {
       "base": "<p>The request was denied due to request throttling.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "TlsSessionResumptionMode": {
       "base": null,
@@ -2316,98 +2203,79 @@
     },
     "UntagResourceRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAccessResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgreementRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateAgreementResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCertificateRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateCertificateResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectorRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateConnectorResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateHostKeyRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateHostKeyResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProfileRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateProfileResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServerRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateServerResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateUserRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateUserResponse": {
       "base": "<p> <code>UpdateUserResponse</code> returns the user name and identifier for the request to update a user's properties.</p>",
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWebAppCustomizationRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWebAppCustomizationResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWebAppIdentityCenterConfig": {
       "base": "<p>A structure that describes the values to use for the IAM Identity Center settings when you update a web app.</p>",
@@ -2423,13 +2291,11 @@
     },
     "UpdateWebAppRequest": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "UpdateWebAppResponse": {
       "base": null,
-      "refs": {
-      }
+      "refs": {}
     },
     "Url": {
       "base": null,

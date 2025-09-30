@@ -2236,7 +2236,8 @@
         "AwsRegion":{"shape":"VoiceConnectorAwsRegion"},
         "RequireEncryption":{"shape":"Boolean"},
         "Tags":{"shape":"TagList"},
-        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"}
+        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "CreateVoiceConnectorResponse":{
@@ -3330,6 +3331,13 @@
         "Disabled":{"shape":"Boolean"},
         "ConfigurationArn":{"shape":"Arn"}
       }
+    },
+    "NetworkType":{
+      "type":"string",
+      "enum":[
+        "IPV4_ONLY",
+        "DUAL_STACK"
+      ]
     },
     "NextTokenString":{
       "type":"string",
@@ -4646,7 +4654,8 @@
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
         "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
         "VoiceConnectorArn":{"shape":"NonEmptyString"},
-        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"}
+        "IntegrationType":{"shape":"VoiceConnectorIntegrationType"},
+        "NetworkType":{"shape":"NetworkType"}
       }
     },
     "VoiceConnectorAwsRegion":{

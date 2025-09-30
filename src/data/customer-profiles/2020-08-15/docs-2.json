@@ -39,6 +39,7 @@
     "GetIdentityResolutionJob": "<p>Returns information about an Identity Resolution Job in a specific domain. </p> <p>Identity Resolution Jobs are set up using the Amazon Connect admin console. For more information, see <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/use-identity-resolution.html\">Use Identity Resolution to consolidate similar profiles</a>.</p>",
     "GetIntegration": "<p>Returns an integration for a domain.</p>",
     "GetMatches": "<p>Before calling this API, use <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_CreateDomain.html\">CreateDomain</a> or <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_UpdateDomain.html\">UpdateDomain</a> to enable identity resolution: set <code>Matching</code> to true.</p> <p>GetMatches returns potentially matching profiles, based on the results of the latest run of a machine learning process. </p> <important> <p>The process of matching duplicate profiles. If <code>Matching</code> = <code>true</code>, Amazon Connect Customer Profiles starts a weekly batch process called Identity Resolution Job. If you do not specify a date and time for Identity Resolution Job to run, by default it runs every Saturday at 12AM UTC to detect duplicate profiles in your domains. </p> <p>After the Identity Resolution Job completes, use the <a href=\"https://docs.aws.amazon.com/customerprofiles/latest/APIReference/API_GetMatches.html\">GetMatches</a> API to return and review the results. Or, if you have configured <code>ExportingConfig</code> in the <code>MatchingRequest</code>, you can download the results from S3.</p> </important> <p>Amazon Connect uses the following profile attributes to identify matches:</p> <ul> <li> <p>PhoneNumber</p> </li> <li> <p>HomePhoneNumber</p> </li> <li> <p>BusinessPhoneNumber</p> </li> <li> <p>MobilePhoneNumber</p> </li> <li> <p>EmailAddress</p> </li> <li> <p>PersonalEmailAddress</p> </li> <li> <p>BusinessEmailAddress</p> </li> <li> <p>FullName</p> </li> </ul> <p>For example, two or more profiles—with spelling mistakes such as <b>John Doe</b> and <b>Jhn Doe</b>, or different casing email addresses such as <b>JOHN_DOE@ANYCOMPANY.COM</b> and <b>johndoe@anycompany.com</b>, or different phone number formats such as <b>555-010-0000</b> and <b>+1-555-010-0000</b>—can be detected as belonging to the same customer <b>John Doe</b> and merged into a unified profile.</p>",
+    "GetProfileHistoryRecord": "<p>Returns a history record for a specific profile, for a specific domain.</p>",
     "GetProfileObjectType": "<p>Returns the object types for a specific domain.</p>",
     "GetProfileObjectTypeTemplate": "<p>Returns the template information for a specific object type.</p> <p>A template is a predefined ProfileObjectType, such as “Salesforce-Account” or “Salesforce-Contact.” When a user sends a ProfileObject, using the PutProfileObject API, with an ObjectTypeName that matches one of the TemplateIds, it uses the mappings from the template.</p>",
     "GetSegmentDefinition": "<p>Gets a segment definition from the domain.</p>",
@@ -61,6 +62,7 @@
     "ListIntegrations": "<p>Lists all of the integrations in your domain.</p>",
     "ListObjectTypeAttributes": "<p>Fetch the possible attribute values given the attribute name.</p>",
     "ListProfileAttributeValues": "<p>Fetch the possible attribute values given the attribute name.</p>",
+    "ListProfileHistoryRecords": "<p>Returns a list of history records for a specific profile, for a specific domain.</p>",
     "ListProfileObjectTypeTemplates": "<p>Lists all of the template information for object types.</p>",
     "ListProfileObjectTypes": "<p>Lists all of the templates available within the service.</p>",
     "ListProfileObjects": "<p>Returns a list of objects associated with a profile of a given ProfileObjectType.</p>",
@@ -163,6 +165,7 @@
         "GetIntegrationRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetIntegrationResponse$DomainName": "<p>The unique name of the domain.</p>",
         "GetMatchesRequest$DomainName": "<p>The unique name of the domain.</p>",
+        "GetProfileHistoryRecordRequest$DomainName": "<p>The unique name of the domain for which to return a profile history record.</p>",
         "GetProfileObjectTypeRequest$DomainName": "<p>The unique name of the domain.</p>",
         "GetProfileObjectTypeResponse$TemplateId": "<p>A unique identifier for the object template.</p>",
         "GetProfileObjectTypeTemplateRequest$TemplateId": "<p>A unique identifier for the object template.</p>",
@@ -199,6 +202,7 @@
         "ListIntegrationsRequest$DomainName": "<p>The unique name of the domain.</p>",
         "ListObjectTypeAttributeItem$AttributeName": "<p>Name of the attribute.</p>",
         "ListObjectTypeAttributesRequest$DomainName": "<p>The unique identifier of the domain.</p>",
+        "ListProfileHistoryRecordsRequest$DomainName": "<p>The unique name of the domain for which to return profile history records.</p>",
         "ListProfileObjectTypeTemplateItem$TemplateId": "<p>A unique identifier for the object template.</p>",
         "ListProfileObjectTypeTemplateItem$SourceName": "<p>The name of the source of the object template.</p>",
         "ListProfileObjectTypeTemplateItem$SourceObject": "<p>The source of the object template.</p>",
@@ -243,6 +247,14 @@
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {}
+    },
+    "ActionType": {
+      "base": null,
+      "refs": {
+        "GetProfileHistoryRecordResponse$ActionType": "<p>The action type of the profile history record.</p>",
+        "ListProfileHistoryRecordsRequest$ActionType": "<p>Applies a filter to include profile history records only with the specified <code>ActionType</code> value in the response.</p>",
+        "ProfileHistoryRecord$ActionType": "<p>The action type of the profile history record.</p>"
+      }
     },
     "AddProfileKeyRequest": {
       "base": null,
@@ -1240,6 +1252,14 @@
       "base": null,
       "refs": {}
     },
+    "GetProfileHistoryRecordRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "GetProfileHistoryRecordResponse": {
+      "base": null,
+      "refs": {}
+    },
     "GetProfileObjectTypeRequest": {
       "base": null,
       "refs": {}
@@ -1587,6 +1607,14 @@
       "refs": {}
     },
     "ListObjectTypeAttributesResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProfileHistoryRecordsRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "ListProfileHistoryRecordsResponse": {
       "base": null,
       "refs": {}
     },
@@ -1950,6 +1978,18 @@
         "ProfileAttributes$EmailAddress": "<p>A field to describe values to segment on within email address.</p>",
         "ProfileAttributes$PersonalEmailAddress": "<p>A field to describe values to segment on within personal email address.</p>",
         "ProfileAttributes$BusinessEmailAddress": "<p>A field to describe values to segment on within business email address.</p>"
+      }
+    },
+    "ProfileHistoryRecord": {
+      "base": "<p>Contains profile history record metadata.</p>",
+      "refs": {
+        "ProfileHistoryRecords$member": null
+      }
+    },
+    "ProfileHistoryRecords": {
+      "base": null,
+      "refs": {
+        "ListProfileHistoryRecordsResponse$ProfileHistoryRecords": "<p>The list of profile history records.</p>"
       }
     },
     "ProfileId": {
@@ -2869,6 +2909,7 @@
         "ListIdentityResolutionJobsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListIntegrationsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListObjectTypeAttributesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
+        "ListProfileHistoryRecordsRequest$MaxResults": "<p>The maximum number of results to return per page.</p>",
         "ListProfileObjectTypeTemplatesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListProfileObjectTypesRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
         "ListProfileObjectsRequest$MaxResults": "<p>The maximum number of objects returned per page.</p>",
@@ -3189,6 +3230,8 @@
         "GetIntegrationRequest$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "GetIntegrationResponse$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "GetIntegrationResponse$WorkflowId": "<p>Unique identifier for the workflow.</p>",
+        "GetProfileHistoryRecordResponse$ProfileObjectUniqueKey": "<p>The unique identifier of the profile object generated by the service.</p>",
+        "GetProfileHistoryRecordResponse$PerformedBy": "<p>The Amazon Resource Name (ARN) of the person or service principal who performed the action.</p>",
         "GetProfileObjectTypeResponse$SourceLastUpdatedTimestampFormat": "<p>The format of your <code>sourceLastUpdatedTimestamp</code> that was previously set up.</p>",
         "GetProfileObjectTypeTemplateResponse$SourceLastUpdatedTimestampFormat": "<p>The format of your <code>sourceLastUpdatedTimestamp</code> that was previously set up.</p>",
         "GetSegmentDefinitionResponse$DisplayName": "<p>The display name of the segment definition.</p>",
@@ -3207,6 +3250,7 @@
         "ListCalculatedAttributeForProfileItem$Value": "<p>The value of the calculated attribute.</p>",
         "ListIntegrationItem$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "ListIntegrationItem$WorkflowId": "<p>Unique identifier for the workflow.</p>",
+        "ListProfileHistoryRecordsRequest$PerformedBy": "<p>Applies a filter to include profile history records only with the specified <code>PerformedBy</code> value in the response. The <code>PerformedBy</code> value can be the Amazon Resource Name (ARN) of the person or service principal who performed the action.</p>",
         "ListProfileObjectsItem$ProfileObjectUniqueKey": "<p>The unique identifier of the ProfileObject generated by the service.</p>",
         "ListWorkflowsItem$WorkflowId": "<p>Unique identifier for the workflow.</p>",
         "ListWorkflowsItem$StatusDescription": "<p>Description for workflow execution status.</p>",
@@ -3218,6 +3262,8 @@
         "PhoneNumberList$member": null,
         "ProfileAttributeValuesRequest$AttributeName": "<p>The attribute name.</p>",
         "ProfileAttributeValuesResponse$AttributeName": "<p>The attribute name.</p>",
+        "ProfileHistoryRecord$ProfileObjectUniqueKey": "<p>The unique identifier of the profile object generated by the service.</p>",
+        "ProfileHistoryRecord$PerformedBy": "<p>The Amazon Resource Name (ARN) of the person or service principal who performed the action.</p>",
         "PutIntegrationRequest$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "PutIntegrationResponse$Uri": "<p>The URI of the S3 bucket or any other type of data source.</p>",
         "PutIntegrationResponse$WorkflowId": "<p>Unique identifier for the workflow.</p>",
@@ -3248,6 +3294,7 @@
     "stringifiedJson": {
       "base": null,
       "refs": {
+        "GetProfileHistoryRecordResponse$Content": "<p>A string containing the customer profile, profile object, or profile key content.</p>",
         "ListProfileObjectsItem$Object": "<p>A JSON representation of a ProfileObject that belongs to a profile.</p>",
         "Objects$member": null,
         "PutProfileObjectRequest$Object": "<p>A string that is serialized from a JSON object.</p>"
@@ -3307,6 +3354,8 @@
         "GetIntegrationResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetIntegrationResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "GetMatchesResponse$MatchGenerationDate": "<p>The timestamp this version of Match Result generated.</p>",
+        "GetProfileHistoryRecordResponse$CreatedAt": "<p>The timestamp of when the profile history record was created.</p>",
+        "GetProfileHistoryRecordResponse$LastUpdatedAt": "<p>The timestamp of when the profile history record was last updated.</p>",
         "GetProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "GetProfileObjectTypeResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "GetSegmentDefinitionResponse$CreatedAt": "<p>The timestamp of when the segment definition was created.</p>",
@@ -3333,6 +3382,8 @@
         "ListWorkflowsItem$LastUpdatedAt": "<p>Last updated timestamp for workflow.</p>",
         "ListWorkflowsRequest$QueryStartDate": "<p>Retrieve workflows started after timestamp.</p>",
         "ListWorkflowsRequest$QueryEndDate": "<p>Retrieve workflows ended after timestamp.</p>",
+        "ProfileHistoryRecord$CreatedAt": "<p>The timestamp of when the profile history record was created.</p>",
+        "ProfileHistoryRecord$LastUpdatedAt": "<p>The timestamp of when the profile history record was last updated.</p>",
         "PutIntegrationResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
         "PutIntegrationResponse$LastUpdatedAt": "<p>The timestamp of when the domain was most recently edited.</p>",
         "PutProfileObjectTypeResponse$CreatedAt": "<p>The timestamp of when the domain was created.</p>",
@@ -3379,6 +3430,8 @@
         "ListIntegrationsResponse$NextToken": "<p>The pagination token from the previous ListIntegrations API call.</p>",
         "ListObjectTypeAttributesRequest$NextToken": "<p>The pagination token from the previous call. </p>",
         "ListObjectTypeAttributesResponse$NextToken": "<p>The pagination token from the previous call.</p>",
+        "ListProfileHistoryRecordsRequest$NextToken": "<p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>",
+        "ListProfileHistoryRecordsResponse$NextToken": "<p>If there are additional results, this is the token for the next set of results.</p>",
         "ListProfileObjectTypeTemplatesRequest$NextToken": "<p>The pagination token from the previous ListObjectTypeTemplates API call.</p>",
         "ListProfileObjectTypeTemplatesResponse$NextToken": "<p>The pagination token from the previous ListObjectTypeTemplates API call. </p>",
         "ListProfileObjectTypesRequest$NextToken": "<p>Identifies the next page of results to return.</p>",
@@ -3419,16 +3472,19 @@
         "GetCalculatedAttributeForProfileResponse$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "GetEventTriggerResponse$ObjectTypeName": "<p>The unique name of the object type.</p>",
         "GetIntegrationResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
+        "GetProfileHistoryRecordResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "GetProfileObjectTypeRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "GetProfileObjectTypeResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "ListCalculatedAttributeDefinitionItem$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "ListCalculatedAttributeForProfileItem$CalculatedAttributeName": "<p>The unique name of the calculated attribute.</p>",
         "ListIntegrationItem$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "ListObjectTypeAttributesRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
+        "ListProfileHistoryRecordsRequest$ObjectTypeName": "<p>Applies a filter to include profile history records only with the specified <code>ObjectTypeName</code> value in the response.</p>",
         "ListProfileObjectTypeItem$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "ListProfileObjectsItem$ObjectTypeName": "<p>Specifies the kind of object being added to a profile, such as \"Salesforce-Account.\"</p>",
         "ListProfileObjectsRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "ObjectTypeNames$value": null,
+        "ProfileHistoryRecord$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "PutIntegrationRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "PutIntegrationResponse$ObjectTypeName": "<p>The name of the profile object type.</p>",
         "PutProfileObjectRequest$ObjectTypeName": "<p>The name of the profile object type.</p>",
@@ -3483,6 +3539,9 @@
         "GetCalculatedAttributeForProfileRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "GetIdentityResolutionJobRequest$JobId": "<p>The unique identifier of the Identity Resolution Job.</p>",
         "GetIdentityResolutionJobResponse$JobId": "<p>The unique identifier of the Identity Resolution Job.</p>",
+        "GetProfileHistoryRecordRequest$ProfileId": "<p>The unique identifier of the profile for which to return a history record.</p>",
+        "GetProfileHistoryRecordRequest$Id": "<p>The unique identifier of the profile history record to return.</p>",
+        "GetProfileHistoryRecordResponse$Id": "<p>The unique identifier of the profile history record.</p>",
         "GetSegmentSnapshotRequest$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
         "GetSegmentSnapshotResponse$SnapshotId": "<p>The unique identifier of the segment snapshot.</p>",
         "GetUploadJobRequest$JobId": "<p>The unique identifier of the upload job to retrieve. </p>",
@@ -3493,9 +3552,11 @@
         "GetWorkflowStepsResponse$WorkflowId": "<p>Unique identifier for the workflow.</p>",
         "IdentityResolutionJob$JobId": "<p>The unique identifier of the Identity Resolution Job.</p>",
         "ListCalculatedAttributesForProfileRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
+        "ListProfileHistoryRecordsRequest$ProfileId": "<p>The identifier of the profile to be taken.</p>",
         "ListProfileObjectsRequest$ProfileId": "<p>The unique identifier of a customer profile.</p>",
         "MergeProfilesRequest$MainProfileId": "<p>The identifier of the profile to be taken.</p>",
         "Profile$ProfileId": "<p>The unique identifier of a customer profile.</p>",
+        "ProfileHistoryRecord$Id": "<p>The unique identifier of the profile history record.</p>",
         "ProfileIdList$member": null,
         "ProfileIdToBeMergedList$member": null,
         "ProfileIds$member": null,

@@ -2,8 +2,8 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2022-10-03",
+    "auth":["aws.auth#sigv4"],
     "endpointPrefix":"cases",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
     "protocols":["rest-json"],
     "serviceAbbreviation":"ConnectCases",
@@ -11,8 +11,7 @@
     "serviceId":"ConnectCases",
     "signatureVersion":"v4",
     "signingName":"cases",
-    "uid":"connectcases-2022-10-03",
-    "auth":["aws.auth#sigv4"]
+    "uid":"connectcases-2022-10-03"
   },
   "operations":{
     "BatchGetCaseRule":{
@@ -780,17 +779,17 @@
       "type":"structure",
       "required":[
         "eventId",
-        "fields",
+        "type",
         "performedTime",
-        "type"
+        "fields"
       ],
       "members":{
         "eventId":{"shape":"AuditEventId"},
-        "fields":{"shape":"AuditEventFieldList"},
-        "performedBy":{"shape":"AuditEventPerformedBy"},
-        "performedTime":{"shape":"AuditEventDateTime"},
+        "type":{"shape":"AuditEventType"},
         "relatedItemType":{"shape":"RelatedItemType"},
-        "type":{"shape":"AuditEventType"}
+        "performedTime":{"shape":"AuditEventDateTime"},
+        "fields":{"shape":"AuditEventFieldList"},
+        "performedBy":{"shape":"AuditEventPerformedBy"}
       }
     },
     "AuditEventDateTime":{
@@ -805,8 +804,8 @@
       ],
       "members":{
         "eventFieldId":{"shape":"AuditEventFieldId"},
-        "newValue":{"shape":"AuditEventFieldValueUnion"},
-        "oldValue":{"shape":"AuditEventFieldValueUnion"}
+        "oldValue":{"shape":"AuditEventFieldValueUnion"},
+        "newValue":{"shape":"AuditEventFieldValueUnion"}
       }
     },
     "AuditEventFieldId":{
@@ -821,10 +820,10 @@
     "AuditEventFieldValueUnion":{
       "type":"structure",
       "members":{
-        "booleanValue":{"shape":"Boolean"},
-        "doubleValue":{"shape":"Double"},
-        "emptyValue":{"shape":"EmptyFieldValue"},
         "stringValue":{"shape":"AuditEventFieldValueUnionStringValueString"},
+        "doubleValue":{"shape":"Double"},
+        "booleanValue":{"shape":"Boolean"},
+        "emptyValue":{"shape":"EmptyFieldValue"},
         "userArnValue":{"shape":"String"}
       },
       "union":true
@@ -843,8 +842,8 @@
       "type":"structure",
       "required":["iamPrincipalArn"],
       "members":{
-        "iamPrincipalArn":{"shape":"IamPrincipalArn"},
-        "user":{"shape":"UserUnion"}
+        "user":{"shape":"UserUnion"},
+        "iamPrincipalArn":{"shape":"IamPrincipalArn"}
       }
     },
     "AuditEventType":{
@@ -858,23 +857,23 @@
     "BasicLayout":{
       "type":"structure",
       "members":{
-        "moreInfo":{"shape":"LayoutSections"},
-        "topPanel":{"shape":"LayoutSections"}
+        "topPanel":{"shape":"LayoutSections"},
+        "moreInfo":{"shape":"LayoutSections"}
       }
     },
     "BatchGetCaseRuleRequest":{
       "type":"structure",
       "required":[
-        "caseRules",
-        "domainId"
+        "domainId",
+        "caseRules"
       ],
       "members":{
-        "caseRules":{"shape":"CaseRuleIdentifierList"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
-        }
+        },
+        "caseRules":{"shape":"CaseRuleIdentifierList"}
       }
     },
     "BatchGetCaseRuleResponse":{
@@ -924,12 +923,12 @@
     "BatchGetFieldResponse":{
       "type":"structure",
       "required":[
-        "errors",
-        "fields"
+        "fields",
+        "errors"
       ],
       "members":{
-        "errors":{"shape":"BatchGetFieldResponseErrorsList"},
-        "fields":{"shape":"BatchGetFieldResponseFieldsList"}
+        "fields":{"shape":"BatchGetFieldResponseFieldsList"},
+        "errors":{"shape":"BatchGetFieldResponseErrorsList"}
       }
     },
     "BatchGetFieldResponseErrorsList":{
@@ -1035,9 +1034,9 @@
     "CaseFilter":{
       "type":"structure",
       "members":{
-        "andAll":{"shape":"CaseFilterAndAllList"},
         "field":{"shape":"FieldFilter"},
         "not":{"shape":"CaseFilter"},
+        "andAll":{"shape":"CaseFilterAndAllList"},
         "orAll":{"shape":"CaseFilterOrAllList"}
       },
       "union":true
@@ -1079,12 +1078,12 @@
     "CaseRuleError":{
       "type":"structure",
       "required":[
-        "errorCode",
-        "id"
+        "id",
+        "errorCode"
       ],
       "members":{
-        "errorCode":{"shape":"String"},
         "id":{"shape":"CaseRuleId"},
+        "errorCode":{"shape":"String"},
         "message":{"shape":"String"}
       }
     },
@@ -1110,22 +1109,22 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^.*[\\S]$"
+      "pattern":".*[\\S]"
     },
     "CaseRuleSummary":{
       "type":"structure",
       "required":[
-        "caseRuleArn",
         "caseRuleId",
         "name",
+        "caseRuleArn",
         "ruleType"
       ],
       "members":{
-        "caseRuleArn":{"shape":"CaseRuleArn"},
         "caseRuleId":{"shape":"CaseRuleId"},
-        "description":{"shape":"CaseRuleDescription"},
         "name":{"shape":"CaseRuleName"},
-        "ruleType":{"shape":"RuleType"}
+        "caseRuleArn":{"shape":"CaseRuleArn"},
+        "ruleType":{"shape":"RuleType"},
+        "description":{"shape":"CaseRuleDescription"}
       }
     },
     "CaseSummary":{
@@ -1181,6 +1180,26 @@
       },
       "exception":true
     },
+    "ConnectCaseContent":{
+      "type":"structure",
+      "required":["caseId"],
+      "members":{
+        "caseId":{"shape":"CaseId"}
+      }
+    },
+    "ConnectCaseFilter":{
+      "type":"structure",
+      "members":{
+        "caseId":{"shape":"CaseId"}
+      }
+    },
+    "ConnectCaseInputContent":{
+      "type":"structure",
+      "required":["caseId"],
+      "members":{
+        "caseId":{"shape":"CaseId"}
+      }
+    },
     "ConnectedToSystemTime":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -1200,14 +1219,14 @@
     "ContactContent":{
       "type":"structure",
       "required":[
+        "contactArn",
         "channel",
-        "connectedToSystemTime",
-        "contactArn"
+        "connectedToSystemTime"
       ],
       "members":{
+        "contactArn":{"shape":"ContactArn"},
         "channel":{"shape":"Channel"},
-        "connectedToSystemTime":{"shape":"ConnectedToSystemTime"},
-        "contactArn":{"shape":"ContactArn"}
+        "connectedToSystemTime":{"shape":"ConnectedToSystemTime"}
       }
     },
     "ContactFilter":{
@@ -1227,22 +1246,22 @@
       "type":"structure",
       "required":[
         "domainId",
-        "fields",
-        "templateId"
+        "templateId",
+        "fields"
       ],
       "members":{
-        "clientToken":{
-          "shape":"CreateCaseRequestClientTokenString",
-          "idempotencyToken":true
-        },
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
+        "templateId":{"shape":"TemplateId"},
         "fields":{"shape":"CreateCaseRequestFieldsList"},
-        "performedBy":{"shape":"UserUnion"},
-        "templateId":{"shape":"TemplateId"}
+        "clientToken":{
+          "shape":"CreateCaseRequestClientTokenString",
+          "idempotencyToken":true
+        },
+        "performedBy":{"shape":"UserUnion"}
       }
     },
     "CreateCaseRequestClientTokenString":{
@@ -1259,12 +1278,12 @@
     "CreateCaseResponse":{
       "type":"structure",
       "required":[
-        "caseArn",
-        "caseId"
+        "caseId",
+        "caseArn"
       ],
       "members":{
-        "caseArn":{"shape":"CaseArn"},
-        "caseId":{"shape":"CaseId"}
+        "caseId":{"shape":"CaseId"},
+        "caseArn":{"shape":"CaseArn"}
       }
     },
     "CreateCaseRuleRequest":{
@@ -1275,25 +1294,25 @@
         "rule"
       ],
       "members":{
-        "description":{"shape":"CaseRuleDescription"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
         "name":{"shape":"CaseRuleName"},
+        "description":{"shape":"CaseRuleDescription"},
         "rule":{"shape":"CaseRuleDetails"}
       }
     },
     "CreateCaseRuleResponse":{
       "type":"structure",
       "required":[
-        "caseRuleArn",
-        "caseRuleId"
+        "caseRuleId",
+        "caseRuleArn"
       ],
       "members":{
-        "caseRuleArn":{"shape":"CaseRuleArn"},
-        "caseRuleId":{"shape":"CaseRuleId"}
+        "caseRuleId":{"shape":"CaseRuleId"},
+        "caseRuleArn":{"shape":"CaseRuleArn"}
       }
     },
     "CreateDomainRequest":{
@@ -1306,13 +1325,13 @@
     "CreateDomainResponse":{
       "type":"structure",
       "required":[
-        "domainArn",
         "domainId",
+        "domainArn",
         "domainStatus"
       ],
       "members":{
-        "domainArn":{"shape":"DomainArn"},
         "domainId":{"shape":"DomainId"},
+        "domainArn":{"shape":"DomainArn"},
         "domainStatus":{"shape":"DomainStatus"}
       }
     },
@@ -1324,88 +1343,88 @@
         "type"
       ],
       "members":{
-        "description":{"shape":"FieldDescription"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
         "name":{"shape":"FieldName"},
-        "type":{"shape":"FieldType"}
+        "type":{"shape":"FieldType"},
+        "description":{"shape":"FieldDescription"}
       }
     },
     "CreateFieldResponse":{
       "type":"structure",
       "required":[
-        "fieldArn",
-        "fieldId"
+        "fieldId",
+        "fieldArn"
       ],
       "members":{
-        "fieldArn":{"shape":"FieldArn"},
-        "fieldId":{"shape":"FieldId"}
+        "fieldId":{"shape":"FieldId"},
+        "fieldArn":{"shape":"FieldArn"}
       }
     },
     "CreateLayoutRequest":{
       "type":"structure",
       "required":[
-        "content",
         "domainId",
-        "name"
+        "name",
+        "content"
       ],
       "members":{
-        "content":{"shape":"LayoutContent"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
-        "name":{"shape":"LayoutName"}
+        "name":{"shape":"LayoutName"},
+        "content":{"shape":"LayoutContent"}
       }
     },
     "CreateLayoutResponse":{
       "type":"structure",
       "required":[
-        "layoutArn",
-        "layoutId"
+        "layoutId",
+        "layoutArn"
       ],
       "members":{
-        "layoutArn":{"shape":"LayoutArn"},
-        "layoutId":{"shape":"LayoutId"}
+        "layoutId":{"shape":"LayoutId"},
+        "layoutArn":{"shape":"LayoutArn"}
       }
     },
     "CreateRelatedItemRequest":{
       "type":"structure",
       "required":[
-        "caseId",
-        "content",
         "domainId",
-        "type"
+        "caseId",
+        "type",
+        "content"
       ],
       "members":{
-        "caseId":{
-          "shape":"CaseId",
-          "location":"uri",
-          "locationName":"caseId"
-        },
-        "content":{"shape":"RelatedItemInputContent"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
-        "performedBy":{"shape":"UserUnion"},
-        "type":{"shape":"RelatedItemType"}
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        },
+        "type":{"shape":"RelatedItemType"},
+        "content":{"shape":"RelatedItemInputContent"},
+        "performedBy":{"shape":"UserUnion"}
       }
     },
     "CreateRelatedItemResponse":{
       "type":"structure",
       "required":[
-        "relatedItemArn",
-        "relatedItemId"
+        "relatedItemId",
+        "relatedItemArn"
       ],
       "members":{
-        "relatedItemArn":{"shape":"RelatedItemArn"},
-        "relatedItemId":{"shape":"RelatedItemId"}
+        "relatedItemId":{"shape":"RelatedItemId"},
+        "relatedItemArn":{"shape":"RelatedItemArn"}
       }
     },
     "CreateTemplateRequest":{
@@ -1415,57 +1434,105 @@
         "name"
       ],
       "members":{
-        "description":{"shape":"TemplateDescription"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
-        "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "name":{"shape":"TemplateName"},
+        "description":{"shape":"TemplateDescription"},
+        "layoutConfiguration":{"shape":"LayoutConfiguration"},
         "requiredFields":{"shape":"RequiredFieldList"},
-        "rules":{"shape":"TemplateCaseRuleList"},
-        "status":{"shape":"TemplateStatus"}
+        "status":{"shape":"TemplateStatus"},
+        "rules":{"shape":"TemplateCaseRuleList"}
       }
     },
     "CreateTemplateResponse":{
       "type":"structure",
       "required":[
-        "templateArn",
-        "templateId"
+        "templateId",
+        "templateArn"
       ],
       "members":{
-        "templateArn":{"shape":"TemplateArn"},
-        "templateId":{"shape":"TemplateId"}
+        "templateId":{"shape":"TemplateId"},
+        "templateArn":{"shape":"TemplateArn"}
       }
     },
     "CreatedTime":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
     },
+    "CustomContent":{
+      "type":"structure",
+      "required":["fields"],
+      "members":{
+        "fields":{"shape":"FieldValueList"}
+      }
+    },
     "CustomEntity":{
       "type":"string",
       "max":500,
       "min":1,
-      "pattern":"^[a-zA-Z0-9_\\-\\.@:/ ]*[a-zA-Z0-9_\\-\\.@:/]$",
+      "pattern":"[a-zA-Z0-9_\\-\\.@:/ ]*[a-zA-Z0-9_\\-\\.@:/]",
       "sensitive":true
+    },
+    "CustomFieldsFilter":{
+      "type":"structure",
+      "members":{
+        "field":{"shape":"FieldFilter"},
+        "not":{"shape":"CustomFieldsFilter"},
+        "andAll":{"shape":"CustomFieldsFilterAndAllList"},
+        "orAll":{"shape":"CustomFieldsFilterOrAllList"}
+      },
+      "union":true
+    },
+    "CustomFieldsFilterAndAllList":{
+      "type":"list",
+      "member":{"shape":"CustomFieldsFilter"},
+      "max":10,
+      "min":0
+    },
+    "CustomFieldsFilterOrAllList":{
+      "type":"list",
+      "member":{"shape":"CustomFieldsFilter"},
+      "max":10,
+      "min":0
+    },
+    "CustomFilter":{
+      "type":"structure",
+      "members":{
+        "fields":{"shape":"CustomFieldsFilter"}
+      }
+    },
+    "CustomInputContent":{
+      "type":"structure",
+      "required":["fields"],
+      "members":{
+        "fields":{"shape":"CustomInputContentFieldsList"}
+      }
+    },
+    "CustomInputContentFieldsList":{
+      "type":"list",
+      "member":{"shape":"FieldValue"},
+      "max":50,
+      "min":1
     },
     "DeleteCaseRequest":{
       "type":"structure",
       "required":[
-        "caseId",
-        "domainId"
+        "domainId",
+        "caseId"
       ],
       "members":{
-        "caseId":{
-          "shape":"CaseId",
-          "location":"uri",
-          "locationName":"caseId"
-        },
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
+        },
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
         }
       }
     },
@@ -1477,19 +1544,19 @@
     "DeleteCaseRuleRequest":{
       "type":"structure",
       "required":[
-        "caseRuleId",
-        "domainId"
+        "domainId",
+        "caseRuleId"
       ],
       "members":{
-        "caseRuleId":{
-          "shape":"CaseRuleId",
-          "location":"uri",
-          "locationName":"caseRuleId"
-        },
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
+        },
+        "caseRuleId":{
+          "shape":"CaseRuleId",
+          "location":"uri",
+          "locationName":"caseRuleId"
         }
       }
     },
@@ -1565,20 +1632,20 @@
     "DeleteRelatedItemRequest":{
       "type":"structure",
       "required":[
-        "caseId",
         "domainId",
+        "caseId",
         "relatedItemId"
       ],
       "members":{
-        "caseId":{
-          "shape":"CaseId",
-          "location":"uri",
-          "locationName":"caseId"
-        },
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
+        },
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
         },
         "relatedItemId":{
           "shape":"RelatedItemId",
@@ -1631,7 +1698,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^.*[\\S]$"
+      "pattern":".*[\\S]"
     },
     "DomainStatus":{
       "type":"string",
@@ -1644,13 +1711,13 @@
     "DomainSummary":{
       "type":"structure",
       "required":[
-        "domainArn",
         "domainId",
+        "domainArn",
         "name"
       ],
       "members":{
-        "domainArn":{"shape":"DomainArn"},
         "domainId":{"shape":"DomainId"},
+        "domainArn":{"shape":"DomainArn"},
         "name":{"shape":"DomainName"}
       }
     },
@@ -1700,20 +1767,20 @@
     "FieldError":{
       "type":"structure",
       "required":[
-        "errorCode",
-        "id"
+        "id",
+        "errorCode"
       ],
       "members":{
-        "errorCode":{"shape":"String"},
         "id":{"shape":"FieldId"},
+        "errorCode":{"shape":"String"},
         "message":{"shape":"String"}
       }
     },
     "FieldFilter":{
       "type":"structure",
       "members":{
-        "contains":{"shape":"FieldValue"},
         "equalTo":{"shape":"FieldValue"},
+        "contains":{"shape":"FieldValue"},
         "greaterThan":{"shape":"FieldValue"},
         "greaterThanOrEqualTo":{"shape":"FieldValue"},
         "lessThan":{"shape":"FieldValue"},
@@ -1725,8 +1792,8 @@
       "type":"structure",
       "required":["fields"],
       "members":{
-        "fields":{"shape":"FieldGroupFieldsList"},
-        "name":{"shape":"FieldGroupNameString"}
+        "name":{"shape":"FieldGroupNameString"},
+        "fields":{"shape":"FieldGroupFieldsList"}
       }
     },
     "FieldGroupFieldsList":{
@@ -1763,7 +1830,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^.*[\\S]$"
+      "pattern":".*[\\S]"
     },
     "FieldNamespace":{
       "type":"string",
@@ -1775,26 +1842,26 @@
     "FieldOption":{
       "type":"structure",
       "required":[
-        "active",
         "name",
-        "value"
+        "value",
+        "active"
       ],
       "members":{
-        "active":{"shape":"Boolean"},
         "name":{"shape":"FieldOptionName"},
-        "value":{"shape":"FieldOptionValue"}
+        "value":{"shape":"FieldOptionValue"},
+        "active":{"shape":"Boolean"}
       }
     },
     "FieldOptionError":{
       "type":"structure",
       "required":[
-        "errorCode",
         "message",
+        "errorCode",
         "value"
       ],
       "members":{
-        "errorCode":{"shape":"String"},
         "message":{"shape":"String"},
+        "errorCode":{"shape":"String"},
         "value":{"shape":"FieldOptionValue"}
       }
     },
@@ -1802,13 +1869,13 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^.*[\\S]$"
+      "pattern":".*[\\S]"
     },
     "FieldOptionValue":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^.*[\\S]$"
+      "pattern":".*[\\S]"
     },
     "FieldOptionsList":{
       "type":"list",
@@ -1817,18 +1884,18 @@
     "FieldSummary":{
       "type":"structure",
       "required":[
-        "fieldArn",
         "fieldId",
+        "fieldArn",
         "name",
-        "namespace",
-        "type"
+        "type",
+        "namespace"
       ],
       "members":{
-        "fieldArn":{"shape":"FieldArn"},
         "fieldId":{"shape":"FieldId"},
+        "fieldArn":{"shape":"FieldArn"},
         "name":{"shape":"FieldName"},
-        "namespace":{"shape":"FieldNamespace"},
-        "type":{"shape":"FieldType"}
+        "type":{"shape":"FieldType"},
+        "namespace":{"shape":"FieldNamespace"}
       }
     },
     "FieldType":{
@@ -1854,13 +1921,17 @@
         "value":{"shape":"FieldValueUnion"}
       }
     },
+    "FieldValueList":{
+      "type":"list",
+      "member":{"shape":"FieldValue"}
+    },
     "FieldValueUnion":{
       "type":"structure",
       "members":{
-        "booleanValue":{"shape":"Boolean"},
-        "doubleValue":{"shape":"Double"},
-        "emptyValue":{"shape":"EmptyFieldValue"},
         "stringValue":{"shape":"FieldValueUnionStringValueString"},
+        "doubleValue":{"shape":"Double"},
+        "booleanValue":{"shape":"Boolean"},
+        "emptyValue":{"shape":"EmptyFieldValue"},
         "userArnValue":{"shape":"String"}
       },
       "union":true
@@ -1919,8 +1990,8 @@
       "type":"structure",
       "required":["auditEvents"],
       "members":{
-        "auditEvents":{"shape":"GetCaseAuditEventsResponseAuditEventsList"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "auditEvents":{"shape":"GetCaseAuditEventsResponseAuditEventsList"}
       }
     },
     "GetCaseAuditEventsResponseAuditEventsList":{
@@ -1983,9 +2054,9 @@
       ],
       "members":{
         "fields":{"shape":"GetCaseResponseFieldsList"},
+        "templateId":{"shape":"TemplateId"},
         "nextToken":{"shape":"NextToken"},
-        "tags":{"shape":"Tags"},
-        "templateId":{"shape":"TemplateId"}
+        "tags":{"shape":"Tags"}
       }
     },
     "GetCaseResponseFieldsList":{
@@ -1997,20 +2068,20 @@
     "GetCaseRuleResponse":{
       "type":"structure",
       "required":[
-        "caseRuleArn",
         "caseRuleId",
         "name",
+        "caseRuleArn",
         "rule"
       ],
       "members":{
-        "caseRuleArn":{"shape":"CaseRuleArn"},
         "caseRuleId":{"shape":"CaseRuleId"},
-        "createdTime":{"shape":"CreatedTime"},
-        "deleted":{"shape":"Deleted"},
-        "description":{"shape":"CaseRuleDescription"},
-        "lastModifiedTime":{"shape":"LastModifiedTime"},
         "name":{"shape":"CaseRuleName"},
+        "caseRuleArn":{"shape":"CaseRuleArn"},
         "rule":{"shape":"CaseRuleDetails"},
+        "description":{"shape":"CaseRuleDescription"},
+        "deleted":{"shape":"Deleted"},
+        "createdTime":{"shape":"CreatedTime"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
         "tags":{"shape":"Tags"}
       }
     },
@@ -2028,41 +2099,41 @@
     "GetDomainResponse":{
       "type":"structure",
       "required":[
-        "createdTime",
-        "domainArn",
         "domainId",
-        "domainStatus",
-        "name"
+        "domainArn",
+        "name",
+        "createdTime",
+        "domainStatus"
       ],
       "members":{
-        "createdTime":{"shape":"CreatedTime"},
-        "domainArn":{"shape":"DomainArn"},
         "domainId":{"shape":"DomainId"},
-        "domainStatus":{"shape":"DomainStatus"},
+        "domainArn":{"shape":"DomainArn"},
         "name":{"shape":"DomainName"},
+        "createdTime":{"shape":"CreatedTime"},
+        "domainStatus":{"shape":"DomainStatus"},
         "tags":{"shape":"Tags"}
       }
     },
     "GetFieldResponse":{
       "type":"structure",
       "required":[
-        "fieldArn",
         "fieldId",
         "name",
-        "namespace",
-        "type"
+        "fieldArn",
+        "type",
+        "namespace"
       ],
       "members":{
-        "createdTime":{"shape":"CreatedTime"},
-        "deleted":{"shape":"Deleted"},
-        "description":{"shape":"FieldDescription"},
-        "fieldArn":{"shape":"FieldArn"},
         "fieldId":{"shape":"FieldId"},
-        "lastModifiedTime":{"shape":"LastModifiedTime"},
         "name":{"shape":"FieldName"},
+        "fieldArn":{"shape":"FieldArn"},
+        "description":{"shape":"FieldDescription"},
+        "type":{"shape":"FieldType"},
         "namespace":{"shape":"FieldNamespace"},
         "tags":{"shape":"Tags"},
-        "type":{"shape":"FieldType"}
+        "deleted":{"shape":"Deleted"},
+        "createdTime":{"shape":"CreatedTime"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"}
       }
     },
     "GetLayoutRequest":{
@@ -2087,20 +2158,20 @@
     "GetLayoutResponse":{
       "type":"structure",
       "required":[
-        "content",
-        "layoutArn",
         "layoutId",
-        "name"
+        "layoutArn",
+        "name",
+        "content"
       ],
       "members":{
-        "content":{"shape":"LayoutContent"},
-        "createdTime":{"shape":"CreatedTime"},
-        "deleted":{"shape":"Deleted"},
-        "lastModifiedTime":{"shape":"LastModifiedTime"},
-        "layoutArn":{"shape":"LayoutArn"},
         "layoutId":{"shape":"LayoutId"},
+        "layoutArn":{"shape":"LayoutArn"},
         "name":{"shape":"LayoutName"},
-        "tags":{"shape":"Tags"}
+        "content":{"shape":"LayoutContent"},
+        "tags":{"shape":"Tags"},
+        "deleted":{"shape":"Deleted"},
+        "createdTime":{"shape":"CreatedTime"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"}
       }
     },
     "GetTemplateRequest":{
@@ -2125,24 +2196,24 @@
     "GetTemplateResponse":{
       "type":"structure",
       "required":[
-        "name",
-        "status",
+        "templateId",
         "templateArn",
-        "templateId"
+        "name",
+        "status"
       ],
       "members":{
-        "createdTime":{"shape":"CreatedTime"},
-        "deleted":{"shape":"Deleted"},
-        "description":{"shape":"TemplateDescription"},
-        "lastModifiedTime":{"shape":"LastModifiedTime"},
-        "layoutConfiguration":{"shape":"LayoutConfiguration"},
-        "name":{"shape":"TemplateName"},
-        "requiredFields":{"shape":"RequiredFieldList"},
-        "rules":{"shape":"TemplateCaseRuleList"},
-        "status":{"shape":"TemplateStatus"},
-        "tags":{"shape":"Tags"},
+        "templateId":{"shape":"TemplateId"},
         "templateArn":{"shape":"TemplateArn"},
-        "templateId":{"shape":"TemplateId"}
+        "name":{"shape":"TemplateName"},
+        "description":{"shape":"TemplateDescription"},
+        "layoutConfiguration":{"shape":"LayoutConfiguration"},
+        "requiredFields":{"shape":"RequiredFieldList"},
+        "tags":{"shape":"Tags"},
+        "status":{"shape":"TemplateStatus"},
+        "deleted":{"shape":"Deleted"},
+        "createdTime":{"shape":"CreatedTime"},
+        "lastModifiedTime":{"shape":"LastModifiedTime"},
+        "rules":{"shape":"TemplateCaseRuleList"}
       }
     },
     "IamPrincipalArn":{
@@ -2201,7 +2272,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^.*[\\S]$"
+      "pattern":".*[\\S]"
     },
     "LayoutSections":{
       "type":"structure",
@@ -2212,13 +2283,13 @@
     "LayoutSummary":{
       "type":"structure",
       "required":[
-        "layoutArn",
         "layoutId",
+        "layoutArn",
         "name"
       ],
       "members":{
-        "layoutArn":{"shape":"LayoutArn"},
         "layoutId":{"shape":"LayoutId"},
+        "layoutArn":{"shape":"LayoutArn"},
         "name":{"shape":"LayoutName"}
       }
     },
@@ -2264,16 +2335,16 @@
     "ListCasesForContactRequest":{
       "type":"structure",
       "required":[
-        "contactArn",
-        "domainId"
+        "domainId",
+        "contactArn"
       ],
       "members":{
-        "contactArn":{"shape":"ContactArn"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
+        "contactArn":{"shape":"ContactArn"},
         "maxResults":{"shape":"ListCasesForContactRequestMaxResultsInteger"},
         "nextToken":{"shape":"NextToken"}
       }
@@ -2365,8 +2436,8 @@
       "type":"structure",
       "required":["options"],
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "options":{"shape":"FieldOptionsList"}
+        "options":{"shape":"FieldOptionsList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListFieldsRequest":{
@@ -2480,8 +2551,8 @@
       "type":"structure",
       "required":["templates"],
       "members":{
-        "nextToken":{"shape":"NextToken"},
-        "templates":{"shape":"ListTemplatesResponseTemplatesList"}
+        "templates":{"shape":"ListTemplatesResponseTemplatesList"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "ListTemplatesResponseTemplatesList":{
@@ -2511,10 +2582,10 @@
     "OperandTwo":{
       "type":"structure",
       "members":{
+        "stringValue":{"shape":"OperandTwoStringValueString"},
         "booleanValue":{"shape":"Boolean"},
         "doubleValue":{"shape":"Double"},
-        "emptyValue":{"shape":"EmptyOperandValue"},
-        "stringValue":{"shape":"OperandTwoStringValueString"}
+        "emptyValue":{"shape":"EmptyOperandValue"}
       },
       "union":true
     },
@@ -2558,10 +2629,12 @@
     "RelatedItemContent":{
       "type":"structure",
       "members":{
-        "comment":{"shape":"CommentContent"},
         "contact":{"shape":"ContactContent"},
+        "comment":{"shape":"CommentContent"},
         "file":{"shape":"FileContent"},
-        "sla":{"shape":"SlaContent"}
+        "sla":{"shape":"SlaContent"},
+        "connectCase":{"shape":"ConnectCaseContent"},
+        "custom":{"shape":"CustomContent"}
       },
       "union":true
     },
@@ -2580,10 +2653,12 @@
     "RelatedItemInputContent":{
       "type":"structure",
       "members":{
-        "comment":{"shape":"CommentContent"},
         "contact":{"shape":"Contact"},
+        "comment":{"shape":"CommentContent"},
         "file":{"shape":"FileContent"},
-        "sla":{"shape":"SlaInputContent"}
+        "sla":{"shape":"SlaInputContent"},
+        "connectCase":{"shape":"ConnectCaseInputContent"},
+        "custom":{"shape":"CustomInputContent"}
       },
       "union":true
     },
@@ -2593,28 +2668,32 @@
         "Contact",
         "Comment",
         "File",
-        "Sla"
+        "Sla",
+        "ConnectCase",
+        "Custom"
       ]
     },
     "RelatedItemTypeFilter":{
       "type":"structure",
       "members":{
-        "comment":{"shape":"CommentFilter"},
         "contact":{"shape":"ContactFilter"},
+        "comment":{"shape":"CommentFilter"},
         "file":{"shape":"FileFilter"},
-        "sla":{"shape":"SlaFilter"}
+        "sla":{"shape":"SlaFilter"},
+        "connectCase":{"shape":"ConnectCaseFilter"},
+        "custom":{"shape":"CustomFilter"}
       },
       "union":true
     },
     "RequiredCaseRule":{
       "type":"structure",
       "required":[
-        "conditions",
-        "defaultValue"
+        "defaultValue",
+        "conditions"
       ],
       "members":{
-        "conditions":{"shape":"BooleanConditionList"},
-        "defaultValue":{"shape":"Boolean"}
+        "defaultValue":{"shape":"Boolean"},
+        "conditions":{"shape":"BooleanConditionList"}
       }
     },
     "RequiredField":{
@@ -2661,12 +2740,12 @@
           "location":"uri",
           "locationName":"domainId"
         },
-        "fields":{"shape":"SearchCasesRequestFieldsList"},
-        "filter":{"shape":"CaseFilter"},
         "maxResults":{"shape":"SearchCasesRequestMaxResultsInteger"},
         "nextToken":{"shape":"NextToken"},
         "searchTerm":{"shape":"SearchCasesRequestSearchTermString"},
-        "sorts":{"shape":"SearchCasesRequestSortsList"}
+        "filter":{"shape":"CaseFilter"},
+        "sorts":{"shape":"SearchCasesRequestSortsList"},
+        "fields":{"shape":"SearchCasesRequestFieldsList"}
       }
     },
     "SearchCasesRequestFieldsList":{
@@ -2696,8 +2775,8 @@
       "type":"structure",
       "required":["cases"],
       "members":{
-        "cases":{"shape":"SearchCasesResponseCasesList"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "cases":{"shape":"SearchCasesResponseCasesList"}
       }
     },
     "SearchCasesResponseCasesList":{
@@ -2710,14 +2789,14 @@
       "type":"structure",
       "required":[
         "caseId",
-        "fields",
-        "templateId"
+        "templateId",
+        "fields"
       ],
       "members":{
         "caseId":{"shape":"CaseId"},
+        "templateId":{"shape":"TemplateId"},
         "fields":{"shape":"SearchCasesResponseItemFieldsList"},
-        "tags":{"shape":"Tags"},
-        "templateId":{"shape":"TemplateId"}
+        "tags":{"shape":"Tags"}
       }
     },
     "SearchCasesResponseItemFieldsList":{
@@ -2729,23 +2808,23 @@
     "SearchRelatedItemsRequest":{
       "type":"structure",
       "required":[
-        "caseId",
-        "domainId"
+        "domainId",
+        "caseId"
       ],
       "members":{
-        "caseId":{
-          "shape":"CaseId",
-          "location":"uri",
-          "locationName":"caseId"
-        },
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
-        "filters":{"shape":"SearchRelatedItemsRequestFiltersList"},
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
+        },
         "maxResults":{"shape":"SearchRelatedItemsRequestMaxResultsInteger"},
-        "nextToken":{"shape":"NextToken"}
+        "nextToken":{"shape":"NextToken"},
+        "filters":{"shape":"SearchRelatedItemsRequestFiltersList"}
       }
     },
     "SearchRelatedItemsRequestFiltersList":{
@@ -2771,18 +2850,18 @@
     "SearchRelatedItemsResponseItem":{
       "type":"structure",
       "required":[
-        "associationTime",
-        "content",
         "relatedItemId",
-        "type"
+        "type",
+        "associationTime",
+        "content"
       ],
       "members":{
+        "relatedItemId":{"shape":"RelatedItemId"},
+        "type":{"shape":"RelatedItemType"},
         "associationTime":{"shape":"AssociationTime"},
         "content":{"shape":"RelatedItemContent"},
-        "performedBy":{"shape":"UserUnion"},
-        "relatedItemId":{"shape":"RelatedItemId"},
         "tags":{"shape":"Tags"},
-        "type":{"shape":"RelatedItemType"}
+        "performedBy":{"shape":"UserUnion"}
       }
     },
     "SearchRelatedItemsResponseRelatedItemsList":{
@@ -2824,18 +2903,18 @@
       "type":"structure",
       "required":[
         "name",
+        "type",
         "status",
-        "targetTime",
-        "type"
+        "targetTime"
       ],
       "members":{
-        "completionTime":{"shape":"SlaCompletionTime"},
-        "fieldId":{"shape":"FieldId"},
         "name":{"shape":"SlaName"},
+        "type":{"shape":"SlaType"},
         "status":{"shape":"SlaStatus"},
+        "fieldId":{"shape":"FieldId"},
         "targetFieldValues":{"shape":"SlaFieldValueUnionList"},
         "targetTime":{"shape":"SlaTargetTime"},
-        "type":{"shape":"SlaType"}
+        "completionTime":{"shape":"SlaCompletionTime"}
       }
     },
     "SlaContent":{
@@ -2862,15 +2941,15 @@
       "type":"structure",
       "required":[
         "name",
-        "targetSlaMinutes",
-        "type"
+        "type",
+        "targetSlaMinutes"
       ],
       "members":{
-        "fieldId":{"shape":"FieldId"},
         "name":{"shape":"SlaName"},
+        "type":{"shape":"SlaType"},
+        "fieldId":{"shape":"FieldId"},
         "targetFieldValues":{"shape":"SlaFieldValueUnionList"},
-        "targetSlaMinutes":{"shape":"TargetSlaMinutes"},
-        "type":{"shape":"SlaType"}
+        "targetSlaMinutes":{"shape":"TargetSlaMinutes"}
       }
     },
     "SlaInputContent":{
@@ -2884,7 +2963,7 @@
       "type":"string",
       "max":500,
       "min":1,
-      "pattern":"^.*[\\S]$",
+      "pattern":".*[\\S]",
       "sensitive":true
     },
     "SlaStatus":{
@@ -2920,7 +2999,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
     },
     "TagKeyList":{
       "type":"list",
@@ -2979,7 +3058,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^.*[\\S]$"
+      "pattern":".*[\\S]"
     },
     "TemplateRule":{
       "type":"structure",
@@ -3008,16 +3087,16 @@
     "TemplateSummary":{
       "type":"structure",
       "required":[
-        "name",
-        "status",
+        "templateId",
         "templateArn",
-        "templateId"
+        "name",
+        "status"
       ],
       "members":{
-        "name":{"shape":"TemplateName"},
-        "status":{"shape":"TemplateStatus"},
+        "templateId":{"shape":"TemplateId"},
         "templateArn":{"shape":"TemplateArn"},
-        "templateId":{"shape":"TemplateId"}
+        "name":{"shape":"TemplateName"},
+        "status":{"shape":"TemplateStatus"}
       }
     },
     "ThrottlingException":{
@@ -3055,20 +3134,20 @@
     "UpdateCaseRequest":{
       "type":"structure",
       "required":[
-        "caseId",
         "domainId",
+        "caseId",
         "fields"
       ],
       "members":{
-        "caseId":{
-          "shape":"CaseId",
-          "location":"uri",
-          "locationName":"caseId"
-        },
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
+        },
+        "caseId":{
+          "shape":"CaseId",
+          "location":"uri",
+          "locationName":"caseId"
         },
         "fields":{"shape":"UpdateCaseRequestFieldsList"},
         "performedBy":{"shape":"UserUnion"}
@@ -3088,22 +3167,22 @@
     "UpdateCaseRuleRequest":{
       "type":"structure",
       "required":[
-        "caseRuleId",
-        "domainId"
+        "domainId",
+        "caseRuleId"
       ],
       "members":{
-        "caseRuleId":{
-          "shape":"CaseRuleId",
-          "location":"uri",
-          "locationName":"caseRuleId"
-        },
-        "description":{"shape":"CaseRuleDescription"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
+        "caseRuleId":{
+          "shape":"CaseRuleId",
+          "location":"uri",
+          "locationName":"caseRuleId"
+        },
         "name":{"shape":"CaseRuleName"},
+        "description":{"shape":"CaseRuleDescription"},
         "rule":{"shape":"CaseRuleDetails"}
       }
     },
@@ -3119,7 +3198,6 @@
         "fieldId"
       ],
       "members":{
-        "description":{"shape":"FieldDescription"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
@@ -3130,7 +3208,8 @@
           "location":"uri",
           "locationName":"fieldId"
         },
-        "name":{"shape":"FieldName"}
+        "name":{"shape":"FieldName"},
+        "description":{"shape":"FieldDescription"}
       }
     },
     "UpdateFieldResponse":{
@@ -3145,7 +3224,6 @@
         "layoutId"
       ],
       "members":{
-        "content":{"shape":"LayoutContent"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
@@ -3156,7 +3234,8 @@
           "location":"uri",
           "locationName":"layoutId"
         },
-        "name":{"shape":"LayoutName"}
+        "name":{"shape":"LayoutName"},
+        "content":{"shape":"LayoutContent"}
       }
     },
     "UpdateLayoutResponse":{
@@ -3171,22 +3250,22 @@
         "templateId"
       ],
       "members":{
-        "description":{"shape":"TemplateDescription"},
         "domainId":{
           "shape":"DomainId",
           "location":"uri",
           "locationName":"domainId"
         },
-        "layoutConfiguration":{"shape":"LayoutConfiguration"},
-        "name":{"shape":"TemplateName"},
-        "requiredFields":{"shape":"RequiredFieldList"},
-        "rules":{"shape":"TemplateCaseRuleList"},
-        "status":{"shape":"TemplateStatus"},
         "templateId":{
           "shape":"TemplateId",
           "location":"uri",
           "locationName":"templateId"
-        }
+        },
+        "name":{"shape":"TemplateName"},
+        "description":{"shape":"TemplateDescription"},
+        "layoutConfiguration":{"shape":"LayoutConfiguration"},
+        "requiredFields":{"shape":"RequiredFieldList"},
+        "status":{"shape":"TemplateStatus"},
+        "rules":{"shape":"TemplateCaseRuleList"}
       }
     },
     "UpdateTemplateResponse":{
@@ -3202,8 +3281,8 @@
     "UserUnion":{
       "type":"structure",
       "members":{
-        "customEntity":{"shape":"CustomEntity"},
-        "userArn":{"shape":"UserArn"}
+        "userArn":{"shape":"UserArn"},
+        "customEntity":{"shape":"CustomEntity"}
       },
       "union":true
     },

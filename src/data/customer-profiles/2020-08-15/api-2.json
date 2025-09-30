@@ -613,6 +613,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetProfileHistoryRecord":{
+      "name":"GetProfileHistoryRecord",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/profiles/{ProfileId}/history-records/{Id}"
+      },
+      "input":{"shape":"GetProfileHistoryRecordRequest"},
+      "output":{"shape":"GetProfileHistoryRecordResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetProfileObjectType":{
       "name":"GetProfileObjectType",
       "http":{
@@ -660,7 +676,8 @@
         {"shape":"BadRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetSegmentEstimate":{
       "name":"GetSegmentEstimate",
@@ -743,7 +760,8 @@
         {"shape":"BadRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetUploadJobPath":{
       "name":"GetUploadJobPath",
@@ -760,7 +778,8 @@
         {"shape":"BadRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetWorkflow":{
       "name":"GetWorkflow",
@@ -970,6 +989,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListProfileHistoryRecords":{
+      "name":"ListProfileHistoryRecords",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/profiles/history-records"
+      },
+      "input":{"shape":"ListProfileHistoryRecordsRequest"},
+      "output":{"shape":"ListProfileHistoryRecordsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListProfileObjectTypeTemplates":{
       "name":"ListProfileObjectTypeTemplates",
       "http":{
@@ -1049,7 +1084,8 @@
         {"shape":"BadRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -1080,7 +1116,8 @@
         {"shape":"BadRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListWorkflows":{
       "name":"ListWorkflows",
@@ -1334,6 +1371,20 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "ActionType":{
+      "type":"string",
+      "enum":[
+        "ADDED_PROFILE_KEY",
+        "DELETED_PROFILE_KEY",
+        "CREATED",
+        "UPDATED",
+        "INGESTED",
+        "DELETED_BY_CUSTOMER",
+        "EXPIRED",
+        "MERGED",
+        "DELETED_BY_MERGE"
+      ]
     },
     "AddProfileKeyRequest":{
       "type":"structure",
@@ -3428,6 +3479,50 @@
         "Matches":{"shape":"MatchesList"}
       }
     },
+    "GetProfileHistoryRecordRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ProfileId",
+        "Id"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ProfileId":{
+          "shape":"uuid",
+          "location":"uri",
+          "locationName":"ProfileId"
+        },
+        "Id":{
+          "shape":"uuid",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "GetProfileHistoryRecordResponse":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "ObjectTypeName",
+        "CreatedAt",
+        "ActionType"
+      ],
+      "members":{
+        "Id":{"shape":"uuid"},
+        "ObjectTypeName":{"shape":"typeName"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "ActionType":{"shape":"ActionType"},
+        "ProfileObjectUniqueKey":{"shape":"string1To255"},
+        "Content":{"shape":"stringifiedJson"},
+        "PerformedBy":{"shape":"string1To255"}
+      }
+    },
     "GetProfileObjectTypeRequest":{
       "type":"structure",
       "required":[
@@ -4423,6 +4518,41 @@
         "NextToken":{"shape":"token"}
       }
     },
+    "ListProfileHistoryRecordsRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "ProfileId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ProfileId":{"shape":"uuid"},
+        "ObjectTypeName":{"shape":"typeName"},
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        },
+        "ActionType":{"shape":"ActionType"},
+        "PerformedBy":{"shape":"string1To255"}
+      }
+    },
+    "ListProfileHistoryRecordsResponse":{
+      "type":"structure",
+      "members":{
+        "ProfileHistoryRecords":{"shape":"ProfileHistoryRecords"},
+        "NextToken":{"shape":"token"}
+      }
+    },
     "ListProfileObjectTypeItem":{
       "type":"structure",
       "required":[
@@ -5164,6 +5294,28 @@
           "locationName":"Values"
         }
       }
+    },
+    "ProfileHistoryRecord":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "ObjectTypeName",
+        "CreatedAt",
+        "ActionType"
+      ],
+      "members":{
+        "Id":{"shape":"uuid"},
+        "ObjectTypeName":{"shape":"typeName"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "ActionType":{"shape":"ActionType"},
+        "ProfileObjectUniqueKey":{"shape":"string1To255"},
+        "PerformedBy":{"shape":"string1To255"}
+      }
+    },
+    "ProfileHistoryRecords":{
+      "type":"list",
+      "member":{"shape":"ProfileHistoryRecord"}
     },
     "ProfileId":{"type":"string"},
     "ProfileIdList":{

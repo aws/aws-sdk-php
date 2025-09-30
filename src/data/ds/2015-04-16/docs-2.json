@@ -75,7 +75,7 @@
     "StartSchemaExtension": "<p>Applies a schema extension to a Microsoft AD directory.</p>",
     "UnshareDirectory": "<p>Stops the directory sharing between the directory owner and consumer accounts. </p>",
     "UpdateConditionalForwarder": "<p>Updates a conditional forwarder that has been set up for your Amazon Web Services directory.</p>",
-    "UpdateDirectorySetup": "<p> Updates the directory for a particular update type. </p>",
+    "UpdateDirectorySetup": "<p>Updates directory configuration for the specified update type.</p>",
     "UpdateHybridAD": "<p>Updates the configuration of an existing hybrid directory. You can recover hybrid directory administrator account or modify self-managed instance settings.</p> <p>Updates are applied asynchronously. Use <a>DescribeHybridADUpdate</a> to monitor the progress of configuration changes.</p> <p>The <code>InstanceIds</code> must have a one-to-one correspondence with <code>CustomerDnsIps</code>, meaning that if the IP address for instance i-10243410 is 10.24.34.100 and the IP address for instance i-10243420 is 10.24.34.200, then the input arrays must maintain the same order relationship, either [10.24.34.100, 10.24.34.200] paired with [i-10243410, i-10243420] or [10.24.34.200, 10.24.34.100] paired with [i-10243420, i-10243410].</p> <note> <p>You must provide at least one update to <a>UpdateHybridADRequest$HybridAdministratorAccountUpdate</a> or <a>UpdateHybridADRequest$SelfManagedInstancesSettings</a>.</p> </note>",
     "UpdateNumberOfDomainControllers": "<p>Adds or removes domain controllers to or from the directory. Based on the difference between current value and new value (provided through this API call), domain controllers will be added or removed. It may take up to 45 minutes for any new domain controllers to become fully active once the requested number of domain controllers is updated. During this time, you cannot make another update request.</p>",
     "UpdateRadius": "<p>Updates the Remote Authentication Dial In User Service (RADIUS) server information for an AD Connector or Microsoft AD directory.</p>",
@@ -103,7 +103,7 @@
     "AccessUrl": {
       "base": null,
       "refs": {
-        "DirectoryDescription$AccessUrl": "<p>The access URL for the directory, such as <code>http://&lt;alias&gt;.awsapps.com</code>. If no alias has been created for the directory, <code>&lt;alias&gt;</code> is the directory identifier, such as <code>d-XXXXXXXXXX</code>.</p>"
+        "DirectoryDescription$AccessUrl": "<p>The access URL for the directory, such as <code>http://&lt;alias&gt;.awsapps.com</code>. If no alias exists, <code>&lt;alias&gt;</code> is the directory identifier, such as <code>d-XXXXXXXXXX</code>.</p>"
       }
     },
     "AddIpRoutesRequest": {
@@ -147,7 +147,7 @@
       "refs": {
         "CreateAliasRequest$Alias": "<p>The requested alias.</p> <p>The alias must be unique amongst all aliases in Amazon Web Services. This operation throws an <code>EntityAlreadyExistsException</code> error if the alias already exists.</p>",
         "CreateAliasResult$Alias": "<p>The alias for the directory.</p>",
-        "DirectoryDescription$Alias": "<p>The alias for the directory. If no alias has been created for the directory, the alias is the directory identifier, such as <code>d-XXXXXXXXXX</code>.</p>"
+        "DirectoryDescription$Alias": "<p>The alias for the directory. If no alias exists, the alias is the directory identifier, such as <code>d-XXXXXXXXXX</code>.</p>"
       }
     },
     "Assessment": {
@@ -349,7 +349,7 @@
     "AvailabilityZones": {
       "base": null,
       "refs": {
-        "DirectoryConnectSettingsDescription$AvailabilityZones": "<p>A list of the Availability Zones that the directory is in.</p>",
+        "DirectoryConnectSettingsDescription$AvailabilityZones": "<p>The Availability Zones that the directory is in.</p>",
         "DirectoryVpcSettingsDescription$AvailabilityZones": "<p>The list of Availability Zones that the directory is in.</p>"
       }
     },
@@ -468,7 +468,7 @@
       "base": null,
       "refs": {
         "CidrIps$member": null,
-        "IpRoute$CidrIp": "<p>IP address block using CIDR format, for example 10.0.0.0/24. This is often the address block of the DNS server used for your self-managed domain. For a single IP address use a CIDR address block with /32. For example 10.0.0.0/32.</p>",
+        "IpRoute$CidrIp": "<p>IP address block in CIDR format, such as 10.0.0.0/24. This is often the address block of the DNS server used for your self-managed domain. For a single IP address, use a CIDR address block with /32. For example, 10.0.0.0/32.</p>",
         "IpRouteInfo$CidrIp": "<p>IP address block in the <a>IpRoute</a>.</p>"
       }
     },
@@ -476,6 +476,20 @@
       "base": null,
       "refs": {
         "RemoveIpRoutesRequest$CidrIps": "<p>IP address blocks that you want to remove.</p>"
+      }
+    },
+    "CidrIpv6": {
+      "base": null,
+      "refs": {
+        "CidrIpv6s$member": null,
+        "IpRoute$CidrIpv6": "<p>IPv6 address block in CIDR format, such as 2001:db8::/32. This is often the address block of the DNS server used for your self-managed domain. For a single IPv6 address, use a CIDR address block with /128. For example, 2001:db8::1/128.</p>",
+        "IpRouteInfo$CidrIpv6": "<p>IPv6 address block in the <a>IpRoute</a>.</p>"
+      }
+    },
+    "CidrIpv6s": {
+      "base": null,
+      "refs": {
+        "RemoveIpRoutesRequest$CidrIpv6s": "<p>IPv6 address blocks that you want to remove.</p>"
       }
     },
     "ClientAuthenticationSettingInfo": {
@@ -641,7 +655,7 @@
     "CreateSnapshotBeforeUpdate": {
       "base": null,
       "refs": {
-        "UpdateDirectorySetupRequest$CreateSnapshotBeforeUpdate": "<p> The boolean that specifies if a snapshot for the directory needs to be taken before updating the directory. </p>"
+        "UpdateDirectorySetupRequest$CreateSnapshotBeforeUpdate": "<p>Specifies whether to create a directory snapshot before performing the update.</p>"
       }
     },
     "CreateSnapshotRequest": {
@@ -999,7 +1013,7 @@
       }
     },
     "DirectoryConnectSettings": {
-      "base": "<p>Contains information for the <a>ConnectDirectory</a> operation when an AD Connector directory is being created.</p>",
+      "base": "<p>Contains connection settings for creating an AD Connector with the <a>ConnectDirectory</a> action.</p>",
       "refs": {
         "ConnectDirectoryRequest$ConnectSettings": "<p>A <a>DirectoryConnectSettings</a> object that contains additional information for the operation.</p>"
       }
@@ -1007,7 +1021,7 @@
     "DirectoryConnectSettingsDescription": {
       "base": "<p>Contains information about an AD Connector directory.</p>",
       "refs": {
-        "DirectoryDescription$ConnectSettings": "<p>A <a>DirectoryConnectSettingsDescription</a> object that contains additional information about an AD Connector directory. This member is only present if the directory is an AD Connector directory.</p>"
+        "DirectoryDescription$ConnectSettings": "<p> <a>DirectoryConnectSettingsDescription</a> object that contains additional information about an AD Connector directory. Present only for AD Connector directories.</p>"
       }
     },
     "DirectoryDescription": {
@@ -1121,7 +1135,7 @@
         "UnshareDirectoryRequest$DirectoryId": "<p>The identifier of the Managed Microsoft AD directory that you want to stop sharing.</p>",
         "UnshareDirectoryResult$SharedDirectoryId": "<p>Identifier of the directory stored in the directory consumer account that is to be unshared from the specified directory (<code>DirectoryId</code>).</p>",
         "UpdateConditionalForwarderRequest$DirectoryId": "<p>The directory ID of the Amazon Web Services directory for which to update the conditional forwarder.</p>",
-        "UpdateDirectorySetupRequest$DirectoryId": "<p> The identifier of the directory on which you want to perform the update. </p>",
+        "UpdateDirectorySetupRequest$DirectoryId": "<p>The identifier of the directory to update.</p>",
         "UpdateHybridADRequest$DirectoryId": "<p>The identifier of the hybrid directory to update.</p>",
         "UpdateHybridADResult$DirectoryId": "<p>The identifier of the updated hybrid directory.</p>",
         "UpdateNumberOfDomainControllersRequest$DirectoryId": "<p>Identifier of the directory to which the domain controllers will be added or removed.</p>",
@@ -1181,7 +1195,14 @@
       "refs": {
         "ConnectDirectoryRequest$Size": "<p>The size of the directory.</p>",
         "CreateDirectoryRequest$Size": "<p>The size of the directory.</p>",
-        "DirectoryDescription$Size": "<p>The directory size.</p>"
+        "DirectoryDescription$Size": "<p>The directory size.</p>",
+        "DirectorySizeUpdateSettings$DirectorySize": "<p>The target directory size for the update operation.</p>"
+      }
+    },
+    "DirectorySizeUpdateSettings": {
+      "base": "<p>Contains the directory size configuration for update operations.</p>",
+      "refs": {
+        "UpdateDirectorySetupRequest$DirectorySizeUpdateSettings": "<p>Directory size configuration to apply during the update operation.</p>"
       }
     },
     "DirectoryStage": {
@@ -1214,7 +1235,7 @@
     "DirectoryVpcSettingsDescription": {
       "base": "<p>Contains information about the directory.</p>",
       "refs": {
-        "DirectoryDescription$VpcSettings": "<p>A <a>DirectoryVpcSettingsDescription</a> object that contains additional information about a directory. This member is only present if the directory is a Simple AD or Managed Microsoft AD directory.</p>",
+        "DirectoryDescription$VpcSettings": "<p>A <a>DirectoryVpcSettingsDescription</a> object that contains additional information about a directory. Present only for Simple AD and Managed Microsoft AD directories.</p>",
         "OwnerDirectoryDescription$VpcSettings": "<p>Information about the VPC settings for the directory.</p>"
       }
     },
@@ -1276,10 +1297,23 @@
         "ConditionalForwarder$DnsIpAddrs": "<p>The IP addresses of the remote DNS server associated with RemoteDomainName. This is the IP address of the DNS server that your conditional forwarder points to.</p>",
         "CreateConditionalForwarderRequest$DnsIpAddrs": "<p>The IP addresses of the remote DNS server associated with RemoteDomainName.</p>",
         "CreateTrustRequest$ConditionalForwarderIpAddrs": "<p>The IP addresses of the remote DNS server associated with RemoteDomainName.</p>",
-        "DirectoryConnectSettings$CustomerDnsIps": "<p>A list of one or more IP addresses of DNS servers or domain controllers in your self-managed directory.</p>",
-        "DirectoryDescription$DnsIpAddrs": "<p>The IP addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD directory, these are the IP addresses of the Simple AD or Microsoft AD directory servers. For an AD Connector directory, these are the IP addresses of the DNS servers or domain controllers in your self-managed directory to which the AD Connector is connected.</p>",
+        "DirectoryConnectSettings$CustomerDnsIps": "<p>The IP addresses of DNS servers or domain controllers in your self-managed directory.</p>",
+        "DirectoryDescription$DnsIpAddrs": "<p>The IP addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD directory, these are the IP addresses of the Simple AD or Microsoft AD directory servers. For an AD Connector directory, these are the IP addresses of self-managed directory to which the AD Connector is connected.</p>",
         "OwnerDirectoryDescription$DnsIpAddrs": "<p>IP address of the directory’s domain controllers.</p>",
         "UpdateConditionalForwarderRequest$DnsIpAddrs": "<p>The updated IP addresses of the remote DNS server associated with the conditional forwarder.</p>"
+      }
+    },
+    "DnsIpv6Addrs": {
+      "base": null,
+      "refs": {
+        "ConditionalForwarder$DnsIpv6Addrs": "<p>The IPv6 addresses of the remote DNS server associated with RemoteDomainName. This is the IPv6 address of the DNS server that your conditional forwarder points to.</p>",
+        "CreateConditionalForwarderRequest$DnsIpv6Addrs": "<p>The IPv6 addresses of the remote DNS server associated with RemoteDomainName.</p>",
+        "CreateTrustRequest$ConditionalForwarderIpv6Addrs": "<p>The IPv6 addresses of the remote DNS server associated with RemoteDomainName.</p>",
+        "DirectoryConnectSettings$CustomerDnsIpsV6": "<p>The IPv6 addresses of DNS servers or domain controllers in your self-managed directory.</p>",
+        "DirectoryDescription$DnsIpv6Addrs": "<p>The IPv6 addresses of the DNS servers for the directory. For a Simple AD or Microsoft AD directory, these are the IPv6 addresses of the Simple AD or Microsoft AD directory servers. For an AD Connector directory, these are the IPv6 addresses of the DNS servers or domain controllers in your self-managed directory to which the AD Connector is connected.</p>",
+        "NetworkUpdateSettings$CustomerDnsIpsV6": "<p>IPv6 addresses of DNS servers or domain controllers in the self-managed directory. Required only when updating an AD Connector directory.</p>",
+        "OwnerDirectoryDescription$DnsIpv6Addrs": "<p>IPv6 addresses of the directory’s domain controllers.</p>",
+        "UpdateConditionalForwarderRequest$DnsIpv6Addrs": "<p>The updated IPv6 addresses of the remote DNS server associated with the conditional forwarder.</p>"
       }
     },
     "DomainController": {
@@ -1573,7 +1607,7 @@
       }
     },
     "IpRoute": {
-      "base": "<p>IP address block. This is often the address block of the DNS server used for your self-managed domain. </p>",
+      "base": "<p>Contains the IP address block. This is often the address block of the DNS server used for your self-managed domain. </p>",
       "refs": {
         "IpRoutes$member": null
       }
@@ -1610,6 +1644,20 @@
       "base": null,
       "refs": {
         "ListIpRoutesResult$IpRoutesInfo": "<p>A list of <a>IpRoute</a>s.</p>"
+      }
+    },
+    "IpV6Addrs": {
+      "base": null,
+      "refs": {
+        "DirectoryConnectSettingsDescription$ConnectIpsV6": "<p>The IPv6 addresses of the AD Connector servers.</p>"
+      }
+    },
+    "Ipv6Addr": {
+      "base": null,
+      "refs": {
+        "DnsIpv6Addrs$member": null,
+        "DomainController$DnsIpv6Addr": "<p>The IPv6 address of the domain controller.</p>",
+        "IpV6Addrs$member": null
       }
     },
     "LDAPSSettingInfo": {
@@ -1656,7 +1704,7 @@
       "refs": {
         "ClientAuthenticationSettingInfo$LastUpdatedDateTime": "<p>The date and time when the status of the client authentication type was last updated.</p>",
         "DescribeCAEnrollmentPolicyResult$LastUpdatedDateTime": "<p>The date and time when the CA enrollment policy was last modified or updated.</p>",
-        "DirectoryDescription$StageLastUpdatedDateTime": "<p>The date and time that the stage was last updated.</p>",
+        "DirectoryDescription$StageLastUpdatedDateTime": "<p>The date and time when the stage was last updated.</p>",
         "DomainController$StatusLastUpdatedDateTime": "<p>The date and time that the status was last updated.</p>",
         "HybridUpdateInfoEntry$LastUpdatedDateTime": "<p>The date and time when the update activity status was last updated.</p>",
         "LDAPSSettingInfo$LastUpdatedDateTime": "<p>The date and time when the LDAPS settings were last updated.</p>",
@@ -1669,7 +1717,7 @@
     "LaunchTime": {
       "base": null,
       "refs": {
-        "DirectoryDescription$LaunchTime": "<p>Specifies when the directory was created.</p>",
+        "DirectoryDescription$LaunchTime": "<p>The date and time when the directory was created.</p>",
         "DomainController$LaunchTime": "<p>Specifies when the domain controller was created.</p>",
         "RegionDescription$LaunchTime": "<p>Specifies when the Region replication began.</p>"
       }
@@ -1775,6 +1823,23 @@
         "SnapshotLimits$ManualSnapshotsLimitReached": "<p>Indicates if the manual snapshot limit has been reached.</p>"
       }
     },
+    "NetworkType": {
+      "base": null,
+      "refs": {
+        "ConnectDirectoryRequest$NetworkType": "<p>The network type for your directory. The default value is <code>IPv4</code> or <code>IPv6</code> based on the provided subnet capabilities.</p>",
+        "CreateDirectoryRequest$NetworkType": "<p>The network type for your directory. Simple AD supports IPv4 and Dual-stack only.</p>",
+        "CreateMicrosoftADRequest$NetworkType": "<p> The network type for your domain. The default value is <code>IPv4</code> or <code>IPv6</code> based on the provided subnet capabilities.</p>",
+        "DirectoryDescription$NetworkType": "<p>The network type of the directory.</p>",
+        "NetworkUpdateSettings$NetworkType": "<p>The target network type for the directory update.</p>",
+        "OwnerDirectoryDescription$NetworkType": "<p>Network type of the directory in the directory owner account.</p>"
+      }
+    },
+    "NetworkUpdateSettings": {
+      "base": "<p>Contains the network configuration for directory update operations.</p>",
+      "refs": {
+        "UpdateDirectorySetupRequest$NetworkUpdateSettings": "<p>Network configuration to apply during the directory update operation.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -1833,9 +1898,9 @@
       }
     },
     "OSUpdateSettings": {
-      "base": "<p> OS version that the directory needs to be updated to. </p>",
+      "base": "<p>OS version that the directory needs to be updated to.</p>",
       "refs": {
-        "UpdateDirectorySetupRequest$OSUpdateSettings": "<p> The settings for the OS update that needs to be performed on the directory. </p>",
+        "UpdateDirectorySetupRequest$OSUpdateSettings": "<p>Operating system configuration to apply during the directory update operation.</p>",
         "UpdateValue$OSUpdateSettings": "<p> The OS update related settings. </p>"
       }
     },
@@ -1843,7 +1908,7 @@
       "base": null,
       "refs": {
         "DirectoryDescription$OsVersion": "<p>The operating system (OS) version of the directory.</p>",
-        "OSUpdateSettings$OSVersion": "<p> OS version that the directory needs to be updated to. </p>"
+        "OSUpdateSettings$OSVersion": "<p>OS version that the directory needs to be updated to.</p>"
       }
     },
     "OrganizationalUnitDN": {
@@ -1857,7 +1922,7 @@
       "refs": {}
     },
     "OwnerDirectoryDescription": {
-      "base": "<p>Describes the directory owner account details that have been shared to the directory consumer account.</p>",
+      "base": "<p>Contains the directory owner account details shared with the directory consumer account.</p>",
       "refs": {
         "DirectoryDescription$OwnerDirectoryDescription": "<p>Describes the Managed Microsoft AD directory in the directory owner account.</p>"
       }
@@ -1911,9 +1976,9 @@
     "RadiusSettings": {
       "base": "<p>Contains information about a Remote Authentication Dial In User Service (RADIUS) server.</p>",
       "refs": {
-        "DirectoryDescription$RadiusSettings": "<p>A <a>RadiusSettings</a> object that contains information about the RADIUS server configured for this directory.</p>",
+        "DirectoryDescription$RadiusSettings": "<p>Information about the <a>RadiusSettings</a> object configured for this directory.</p>",
         "EnableRadiusRequest$RadiusSettings": "<p>A <a>RadiusSettings</a> object that contains information about the RADIUS server.</p>",
-        "OwnerDirectoryDescription$RadiusSettings": "<p>A <a>RadiusSettings</a> object that contains information about the RADIUS server.</p>",
+        "OwnerDirectoryDescription$RadiusSettings": "<p>Information about the <a>RadiusSettings</a> object server configuration.</p>",
         "UpdateRadiusRequest$RadiusSettings": "<p>A <a>RadiusSettings</a> object that contains information about the RADIUS server.</p>"
       }
     },
@@ -1927,7 +1992,7 @@
       "base": null,
       "refs": {
         "DirectoryDescription$RadiusStatus": "<p>The status of the RADIUS MFA server connection.</p>",
-        "OwnerDirectoryDescription$RadiusStatus": "<p>Information about the status of the RADIUS server.</p>"
+        "OwnerDirectoryDescription$RadiusStatus": "<p>The status of the RADIUS server.</p>"
       }
     },
     "RadiusTimeout": {
@@ -2196,7 +2261,8 @@
     "Servers": {
       "base": null,
       "refs": {
-        "RadiusSettings$RadiusServers": "<p>An array of strings that contains the fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load balancer.</p>"
+        "RadiusSettings$RadiusServers": "<p>The fully qualified domain name (FQDN) or IP addresses of the RADIUS server endpoints, or the FQDN or IP addresses of your RADIUS server load balancer.</p>",
+        "RadiusSettings$RadiusServersIpv6": "<p>The IPv6 addresses of the RADIUS server endpoints or RADIUS server load balancer.</p>"
       }
     },
     "ServiceException": {
@@ -2334,7 +2400,7 @@
     "SsoEnabled": {
       "base": null,
       "refs": {
-        "DirectoryDescription$SsoEnabled": "<p>Indicates if single sign-on is enabled for the directory. For more information, see <a>EnableSso</a> and <a>DisableSso</a>.</p>"
+        "DirectoryDescription$SsoEnabled": "<p>Indicates whether single sign-on is enabled for the directory. For more information, see <a>EnableSso</a> and <a>DisableSso</a>.</p>"
       }
     },
     "StageReason": {
@@ -2601,7 +2667,7 @@
       "refs": {}
     },
     "UpdateInfoEntry": {
-      "base": "<p> An entry of update information related to a requested update type. </p>",
+      "base": "<p>An entry of update information related to a requested update type.</p>",
       "refs": {
         "UpdateActivities$member": null
       }
@@ -2662,7 +2728,7 @@
       "base": null,
       "refs": {
         "DescribeUpdateDirectoryRequest$UpdateType": "<p> The type of updates you want to describe for the directory. </p>",
-        "UpdateDirectorySetupRequest$UpdateType": "<p> The type of update that needs to be performed on the directory. For example, OS. </p>"
+        "UpdateDirectorySetupRequest$UpdateType": "<p>The type of update to perform on the directory.</p>"
       }
     },
     "UpdateValue": {

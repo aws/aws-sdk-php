@@ -197,7 +197,8 @@
         "responseCode":200
       },
       "input":{"shape":"DescribeChannelRequest"},
-      "output":{"shape":"DescribeChannelResponse"}
+      "output":{"shape":"DescribeChannelResponse"},
+      "readonly":true
     },
     "DescribeLiveSource":{
       "name":"DescribeLiveSource",
@@ -207,7 +208,8 @@
         "responseCode":200
       },
       "input":{"shape":"DescribeLiveSourceRequest"},
-      "output":{"shape":"DescribeLiveSourceResponse"}
+      "output":{"shape":"DescribeLiveSourceResponse"},
+      "readonly":true
     },
     "DescribeProgram":{
       "name":"DescribeProgram",
@@ -217,7 +219,8 @@
         "responseCode":200
       },
       "input":{"shape":"DescribeProgramRequest"},
-      "output":{"shape":"DescribeProgramResponse"}
+      "output":{"shape":"DescribeProgramResponse"},
+      "readonly":true
     },
     "DescribeSourceLocation":{
       "name":"DescribeSourceLocation",
@@ -227,7 +230,8 @@
         "responseCode":200
       },
       "input":{"shape":"DescribeSourceLocationRequest"},
-      "output":{"shape":"DescribeSourceLocationResponse"}
+      "output":{"shape":"DescribeSourceLocationResponse"},
+      "readonly":true
     },
     "DescribeVodSource":{
       "name":"DescribeVodSource",
@@ -237,7 +241,8 @@
         "responseCode":200
       },
       "input":{"shape":"DescribeVodSourceRequest"},
-      "output":{"shape":"DescribeVodSourceResponse"}
+      "output":{"shape":"DescribeVodSourceResponse"},
+      "readonly":true
     },
     "GetChannelPolicy":{
       "name":"GetChannelPolicy",
@@ -247,7 +252,8 @@
         "responseCode":200
       },
       "input":{"shape":"GetChannelPolicyRequest"},
-      "output":{"shape":"GetChannelPolicyResponse"}
+      "output":{"shape":"GetChannelPolicyResponse"},
+      "readonly":true
     },
     "GetChannelSchedule":{
       "name":"GetChannelSchedule",
@@ -257,7 +263,8 @@
         "responseCode":200
       },
       "input":{"shape":"GetChannelScheduleRequest"},
-      "output":{"shape":"GetChannelScheduleResponse"}
+      "output":{"shape":"GetChannelScheduleResponse"},
+      "readonly":true
     },
     "GetPlaybackConfiguration":{
       "name":"GetPlaybackConfiguration",
@@ -267,7 +274,8 @@
         "responseCode":200
       },
       "input":{"shape":"GetPlaybackConfigurationRequest"},
-      "output":{"shape":"GetPlaybackConfigurationResponse"}
+      "output":{"shape":"GetPlaybackConfigurationResponse"},
+      "readonly":true
     },
     "GetPrefetchSchedule":{
       "name":"GetPrefetchSchedule",
@@ -277,7 +285,8 @@
         "responseCode":200
       },
       "input":{"shape":"GetPrefetchScheduleRequest"},
-      "output":{"shape":"GetPrefetchScheduleResponse"}
+      "output":{"shape":"GetPrefetchScheduleResponse"},
+      "readonly":true
     },
     "ListAlerts":{
       "name":"ListAlerts",
@@ -287,7 +296,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListAlertsRequest"},
-      "output":{"shape":"ListAlertsResponse"}
+      "output":{"shape":"ListAlertsResponse"},
+      "readonly":true
     },
     "ListChannels":{
       "name":"ListChannels",
@@ -297,7 +307,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListChannelsRequest"},
-      "output":{"shape":"ListChannelsResponse"}
+      "output":{"shape":"ListChannelsResponse"},
+      "readonly":true
     },
     "ListLiveSources":{
       "name":"ListLiveSources",
@@ -307,7 +318,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListLiveSourcesRequest"},
-      "output":{"shape":"ListLiveSourcesResponse"}
+      "output":{"shape":"ListLiveSourcesResponse"},
+      "readonly":true
     },
     "ListPlaybackConfigurations":{
       "name":"ListPlaybackConfigurations",
@@ -317,7 +329,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListPlaybackConfigurationsRequest"},
-      "output":{"shape":"ListPlaybackConfigurationsResponse"}
+      "output":{"shape":"ListPlaybackConfigurationsResponse"},
+      "readonly":true
     },
     "ListPrefetchSchedules":{
       "name":"ListPrefetchSchedules",
@@ -327,7 +340,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListPrefetchSchedulesRequest"},
-      "output":{"shape":"ListPrefetchSchedulesResponse"}
+      "output":{"shape":"ListPrefetchSchedulesResponse"},
+      "readonly":true
     },
     "ListSourceLocations":{
       "name":"ListSourceLocations",
@@ -337,7 +351,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListSourceLocationsRequest"},
-      "output":{"shape":"ListSourceLocationsResponse"}
+      "output":{"shape":"ListSourceLocationsResponse"},
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -350,7 +365,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"BadRequestException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListVodSources":{
       "name":"ListVodSources",
@@ -360,7 +376,8 @@
         "responseCode":200
       },
       "input":{"shape":"ListVodSourcesRequest"},
-      "output":{"shape":"ListVodSourcesResponse"}
+      "output":{"shape":"ListVodSourcesResponse"},
+      "readonly":true
     },
     "PutChannelPolicy":{
       "name":"PutChannelPolicy",
@@ -1985,7 +2002,8 @@
         "EndTime":{"shape":"__timestampUnix"},
         "StartTime":{"shape":"__timestampUnix"},
         "TrafficShapingType":{"shape":"TrafficShapingType"},
-        "TrafficShapingRetrievalWindow":{"shape":"TrafficShapingRetrievalWindow"}
+        "TrafficShapingRetrievalWindow":{"shape":"TrafficShapingRetrievalWindow"},
+        "TrafficShapingTpsConfiguration":{"shape":"TrafficShapingTpsConfiguration"}
       }
     },
     "PrefetchSchedule":{
@@ -2113,7 +2131,8 @@
         "DynamicVariables":{"shape":"__mapOf__string"},
         "DelayAfterAvailEndSeconds":{"shape":"__integer"},
         "TrafficShapingType":{"shape":"TrafficShapingType"},
-        "TrafficShapingRetrievalWindow":{"shape":"TrafficShapingRetrievalWindow"}
+        "TrafficShapingRetrievalWindow":{"shape":"TrafficShapingRetrievalWindow"},
+        "TrafficShapingTpsConfiguration":{"shape":"TrafficShapingTpsConfiguration"}
       }
     },
     "RelativePosition":{
@@ -2358,9 +2377,19 @@
         "RetrievalWindowDurationSeconds":{"shape":"__integer"}
       }
     },
+    "TrafficShapingTpsConfiguration":{
+      "type":"structure",
+      "members":{
+        "PeakTps":{"shape":"__integer"},
+        "PeakConcurrentUsers":{"shape":"__integer"}
+      }
+    },
     "TrafficShapingType":{
       "type":"string",
-      "enum":["RETRIEVAL_WINDOW"]
+      "enum":[
+        "RETRIEVAL_WINDOW",
+        "TPS"
+      ]
     },
     "Transition":{
       "type":"structure",

@@ -11812,6 +11812,19 @@
       "min":0,
       "sensitive":true
     },
+    "ManagedEndpointCredentials":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"ManagedEndpointCredentialsIdString"},
+        "token":{"shape":"String"}
+      },
+      "sensitive":true
+    },
+    "ManagedEndpointCredentialsIdString":{
+      "type":"string",
+      "max":64,
+      "min":0
+    },
     "ManagedPolicyType":{
       "type":"string",
       "enum":[
@@ -13802,6 +13815,7 @@
         "instanceProfileArn":{"shape":"SparkEmrPropertiesInputInstanceProfileArnString"},
         "javaVirtualEnv":{"shape":"SparkEmrPropertiesInputJavaVirtualEnvString"},
         "logUri":{"shape":"SparkEmrPropertiesInputLogUriString"},
+        "managedEndpointArn":{"shape":"SparkEmrPropertiesInputManagedEndpointArnString"},
         "pythonVirtualEnv":{"shape":"SparkEmrPropertiesInputPythonVirtualEnvString"},
         "runtimeRole":{"shape":"SparkEmrPropertiesInputRuntimeRoleString"},
         "trustedCertificatesS3Uri":{"shape":"SparkEmrPropertiesInputTrustedCertificatesS3UriString"}
@@ -13809,8 +13823,9 @@
     },
     "SparkEmrPropertiesInputComputeArnString":{
       "type":"string",
-      "max":256,
-      "min":0
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws(-(cn|us-gov|iso(-[bef])?))?:(elasticmapreduce|emr-serverless|emr-containers):.*"
     },
     "SparkEmrPropertiesInputInstanceProfileArnString":{
       "type":"string",
@@ -13825,6 +13840,11 @@
     "SparkEmrPropertiesInputLogUriString":{
       "type":"string",
       "max":256,
+      "min":0
+    },
+    "SparkEmrPropertiesInputManagedEndpointArnString":{
+      "type":"string",
+      "max":2048,
       "min":0
     },
     "SparkEmrPropertiesInputPythonVirtualEnvString":{
@@ -13844,6 +13864,7 @@
     "SparkEmrPropertiesOutput":{
       "type":"structure",
       "members":{
+        "certificateData":{"shape":"String"},
         "computeArn":{"shape":"String"},
         "credentials":{"shape":"UsernamePassword"},
         "credentialsExpiration":{"shape":"SyntheticTimestamp_date_time"},
@@ -13852,10 +13873,17 @@
         "javaVirtualEnv":{"shape":"String"},
         "livyEndpoint":{"shape":"String"},
         "logUri":{"shape":"String"},
+        "managedEndpointArn":{"shape":"SparkEmrPropertiesOutputManagedEndpointArnString"},
+        "managedEndpointCredentials":{"shape":"ManagedEndpointCredentials"},
         "pythonVirtualEnv":{"shape":"String"},
         "runtimeRole":{"shape":"String"},
         "trustedCertificatesS3Uri":{"shape":"String"}
       }
+    },
+    "SparkEmrPropertiesOutputManagedEndpointArnString":{
+      "type":"string",
+      "max":2048,
+      "min":0
     },
     "SparkEmrPropertiesPatch":{
       "type":"structure",
@@ -13864,6 +13892,7 @@
         "instanceProfileArn":{"shape":"SparkEmrPropertiesPatchInstanceProfileArnString"},
         "javaVirtualEnv":{"shape":"SparkEmrPropertiesPatchJavaVirtualEnvString"},
         "logUri":{"shape":"SparkEmrPropertiesPatchLogUriString"},
+        "managedEndpointArn":{"shape":"SparkEmrPropertiesPatchManagedEndpointArnString"},
         "pythonVirtualEnv":{"shape":"SparkEmrPropertiesPatchPythonVirtualEnvString"},
         "runtimeRole":{"shape":"SparkEmrPropertiesPatchRuntimeRoleString"},
         "trustedCertificatesS3Uri":{"shape":"SparkEmrPropertiesPatchTrustedCertificatesS3UriString"}
@@ -13871,8 +13900,9 @@
     },
     "SparkEmrPropertiesPatchComputeArnString":{
       "type":"string",
-      "max":256,
-      "min":0
+      "max":2048,
+      "min":0,
+      "pattern":"^arn:aws(-(cn|us-gov|iso(-[bef])?))?:(elasticmapreduce|emr-serverless|emr-containers):.*"
     },
     "SparkEmrPropertiesPatchInstanceProfileArnString":{
       "type":"string",
@@ -13887,6 +13917,11 @@
     "SparkEmrPropertiesPatchLogUriString":{
       "type":"string",
       "max":256,
+      "min":0
+    },
+    "SparkEmrPropertiesPatchManagedEndpointArnString":{
+      "type":"string",
+      "max":2048,
       "min":0
     },
     "SparkEmrPropertiesPatchPythonVirtualEnvString":{

@@ -858,6 +858,7 @@
         "DOMAIN_NOT_FOUND",
         "INCOMPATIBLE_DOMAIN_MODE",
         "WRONG_VPC",
+        "INVALID_NETWORK_TYPE",
         "INVALID_DOMAIN_STAGE"
       ]
     },
@@ -1496,7 +1497,8 @@
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "HAPairs":{"shape":"HAPairs"},
-        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"}
+        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
     "CreateFileSystemOpenZFSConfiguration":{
@@ -2637,7 +2639,8 @@
       "type":"structure",
       "members":{
         "DNSName":{"shape":"DNSName"},
-        "IpAddresses":{"shape":"OntapEndpointIpAddresses"}
+        "IpAddresses":{"shape":"OntapEndpointIpAddresses"},
+        "Ipv6Addresses":{"shape":"OntapEndpointIpAddresses"}
       }
     },
     "FileSystemEndpoints":{
@@ -3219,7 +3222,8 @@
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "FsxAdminPassword":{"shape":"AdminPassword"},
         "HAPairs":{"shape":"HAPairs"},
-        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"}
+        "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
     "OntapVolumeConfiguration":{
@@ -4135,7 +4139,8 @@
       "type":"structure",
       "members":{
         "DNSName":{"shape":"DNSName"},
-        "IpAddresses":{"shape":"OntapEndpointIpAddresses"}
+        "IpAddresses":{"shape":"OntapEndpointIpAddresses"},
+        "Ipv6Addresses":{"shape":"OntapEndpointIpAddresses"}
       }
     },
     "SvmEndpoints":{
@@ -4361,7 +4366,8 @@
         "AddRouteTableIds":{"shape":"RouteTableIds"},
         "RemoveRouteTableIds":{"shape":"RouteTableIds"},
         "ThroughputCapacityPerHAPair":{"shape":"ThroughputCapacityPerHAPair"},
-        "HAPairs":{"shape":"HAPairs"}
+        "HAPairs":{"shape":"HAPairs"},
+        "EndpointIpv6AddressRange":{"shape":"Ipv6AddressRange"}
       }
     },
     "UpdateFileSystemOpenZFSConfiguration":{
@@ -4746,7 +4752,8 @@
         "CopyTagsToBackups":{"shape":"Flag"},
         "Aliases":{"shape":"Aliases"},
         "AuditLogConfiguration":{"shape":"WindowsAuditLogConfiguration"},
-        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"}
+        "DiskIopsConfiguration":{"shape":"DiskIopsConfiguration"},
+        "PreferredFileServerIpv6":{"shape":"IpAddress"}
       }
     }
   }
