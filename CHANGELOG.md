@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.29 - 2025-09-30
 
 * `Aws\BedrockAgentCoreControl` - Tagging support for AgentCore Gateway
 * `Aws\ApplicationSignals` - Amazon CloudWatch Application Signals is introducing the Application Map to give users a more comprehensive view of their service health. Users will now be able to group services, track their latest deployments, and view automated audit findings concerning service performance.
