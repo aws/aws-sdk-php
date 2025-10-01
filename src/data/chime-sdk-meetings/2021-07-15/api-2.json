@@ -539,7 +539,8 @@
         "MeetingFeatures":{"shape":"MeetingFeaturesConfiguration"},
         "PrimaryMeetingId":{"shape":"PrimaryMeetingId"},
         "TenantIds":{"shape":"TenantIdList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "MediaPlacementNetworkType":{"shape":"MediaPlacementNetworkType"}
       }
     },
     "CreateMeetingResponse":{
@@ -569,7 +570,8 @@
         "Attendees":{"shape":"CreateMeetingWithAttendeesRequestItemList"},
         "PrimaryMeetingId":{"shape":"PrimaryMeetingId"},
         "TenantIds":{"shape":"TenantIdList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "MediaPlacementNetworkType":{"shape":"MediaPlacementNetworkType"}
       }
     },
     "CreateMeetingWithAttendeesRequestItemList":{
@@ -803,6 +805,13 @@
         "ScreenSharingUrl":{"shape":"String"},
         "EventIngestionUrl":{"shape":"String"}
       }
+    },
+    "MediaPlacementNetworkType":{
+      "type":"string",
+      "enum":[
+        "Ipv4Only",
+        "DualStack"
+      ]
     },
     "MediaRegion":{
       "type":"string",

@@ -91,6 +91,49 @@
     "UpdateProtectedQuery": "<p>Updates the processing of a currently running query.</p>"
   },
   "shapes": {
+    "AccessBudget": {
+      "base": "<p>Controls and tracks usage limits for associated configured tables within a collaboration across queries and job. Supports both period-based budgets that can renew (daily, weekly, or monthly) and fixed lifetime budgets. Contains the resource ARN, remaining budget information, and up to two budget configurations (period-based and lifetime). By default, table usage is unlimited unless a budget is configured.</p>",
+      "refs": {
+        "PrivacyBudget$accessBudget": "<p>Access budget information associated with this privacy budget.</p>"
+      }
+    },
+    "AccessBudgetDetails": {
+      "base": "<p>Detailed information about an access budget including time bounds, budget allocation, and configuration settings.</p>",
+      "refs": {
+        "AccessBudgetDetailsList$member": null
+      }
+    },
+    "AccessBudgetDetailsList": {
+      "base": null,
+      "refs": {
+        "AccessBudget$details": "<p>Detailed budget information including time bounds, remaining budget, and refresh settings.</p>"
+      }
+    },
+    "AccessBudgetType": {
+      "base": null,
+      "refs": {
+        "AccessBudgetDetails$budgetType": "<p>Specifies the time period for limiting table usage in queries and jobs. For calendar-based periods, the budget can renew if auto refresh is enabled. For lifetime budgets, the limit applies to the total usage throughout the collaboration. Valid values are:</p> <p> <code>CALENDAR_DAY</code> - Limit table usage per day.</p> <p> <code>CALENDAR_WEEK</code> - Limit table usage per week.</p> <p> <code>CALENDAR_MONTH</code> - Limit table usage per month.</p> <p> <code>LIFETIME</code> - Limit total table usage for the collaboration duration.</p>",
+        "BudgetParameter$type": "<p>The type of budget parameter being configured.</p>"
+      }
+    },
+    "AccessBudgetsPrivacyTemplateParametersInput": {
+      "base": "<p>Input parameters for privacy budget templates that support access budgets functionality, enabling enhanced budget management capabilities.</p>",
+      "refs": {
+        "PrivacyBudgetTemplateParametersInput$accessBudget": "<p>Access budget configuration for the privacy budget template input, enabling integration with access budget functionality.</p>"
+      }
+    },
+    "AccessBudgetsPrivacyTemplateParametersOutput": {
+      "base": "<p>Output parameters for privacy budget templates with access budgets support, containing the configured budget information.</p>",
+      "refs": {
+        "PrivacyBudgetTemplateParametersOutput$accessBudget": "<p>Access budget configuration returned from the privacy budget template, containing the configured access budget settings.</p>"
+      }
+    },
+    "AccessBudgetsPrivacyTemplateUpdateParameters": {
+      "base": "<p>Update parameters for privacy budget templates with access budgets functionality, allowing modification of existing budget configurations.</p>",
+      "refs": {
+        "PrivacyBudgetTemplateUpdateParameters$accessBudget": "<p> The new access budget configuration that completely replaces the existing access budget settings in the privacy budget template.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>Caller does not have sufficient access to perform this action.</p>",
       "refs": {}
@@ -588,6 +631,13 @@
         "CreateCollaborationInput$autoApprovedChangeRequestTypes": "<p>The types of change requests that are automatically approved for this collaboration.</p>"
       }
     },
+    "AutoRefreshMode": {
+      "base": null,
+      "refs": {
+        "AccessBudgetDetails$autoRefresh": "<p>Indicates whether the budget automatically refreshes for each time period specified in <code>budgetType</code>. Valid values are:</p> <p> <code>ENABLED</code> - The budget refreshes automatically at the start of each period.</p> <p> <code>DISABLED</code> - The budget must be refreshed manually.</p> <p> <code>NULL</code> - The value is null when <code>budgetType</code> is set to <code>LIFETIME</code>.</p>",
+        "BudgetParameter$autoRefresh": "<p>Whether this individual budget parameter automatically refreshes when the budget period resets.</p>"
+      }
+    },
     "BatchGetCollaborationAnalysisTemplateError": {
       "base": "<p>Details of errors thrown by the call to retrieve multiple analysis templates within a collaboration by their identifiers.</p>",
       "refs": {
@@ -683,6 +733,37 @@
         "ModelTrainingPaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for model training costs (<code>TRUE</code>) or has not configured the collaboration member to pay for model training costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for model training costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for model training costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>",
         "ProtectedQueryS3OutputConfiguration$singleFileOutput": "<p>Indicates whether files should be output as a single file (<code>TRUE</code>) or output as multiple files (<code>FALSE</code>). This parameter is only supported for analyses with the Spark analytics engine.</p>",
         "QueryComputePaymentConfig$isResponsible": "<p>Indicates whether the collaboration creator has configured the collaboration member to pay for query compute costs (<code>TRUE</code>) or has not configured the collaboration member to pay for query compute costs (<code>FALSE</code>).</p> <p>Exactly one member can be configured to pay for query compute costs. An error is returned if the collaboration creator sets a <code>TRUE</code> value for more than one member in the collaboration. </p> <p>If the collaboration creator hasn't specified anyone as the member paying for query compute costs, then the member who can query is the default payer. An error is returned if the collaboration creator sets a <code>FALSE</code> value for the member who can query.</p>"
+      }
+    },
+    "Budget": {
+      "base": null,
+      "refs": {
+        "AccessBudgetDetails$budget": "<p>The total budget allocation amount for this access budget.</p>",
+        "BudgetParameter$budget": "<p>The budget allocation amount for this specific parameter.</p>"
+      }
+    },
+    "BudgetParameter": {
+      "base": "<p>Individual budget parameter configuration that defines specific budget allocation settings for access budgets.</p>",
+      "refs": {
+        "BudgetParameters$member": null
+      }
+    },
+    "BudgetParameters": {
+      "base": null,
+      "refs": {
+        "AccessBudgetsPrivacyTemplateParametersInput$budgetParameters": "<p>An array of budget parameters that define the access budget configuration for the privacy template.</p>",
+        "AccessBudgetsPrivacyTemplateParametersOutput$budgetParameters": "<p>An array of budget parameters returned from the access budget configuration.</p>",
+        "AccessBudgetsPrivacyTemplateUpdateParameters$budgetParameters": "<p>Updated array of budget parameters for the access budget configuration.</p>"
+      }
+    },
+    "BudgetedResourceArn": {
+      "base": null,
+      "refs": {
+        "AccessBudget$resourceArn": "<p>The Amazon Resource Name (ARN) of the access budget resource.</p>",
+        "AccessBudgetsPrivacyTemplateParametersInput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource associated with this privacy budget template.</p>",
+        "AccessBudgetsPrivacyTemplateParametersOutput$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource associated with this privacy budget template.</p>",
+        "ListCollaborationPrivacyBudgetsInput$accessBudgetResourceArn": "<p>The Amazon Resource Name (ARN) of the Configured Table Association (ConfiguredTableAssociation) used to filter privacy budgets.</p>",
+        "ListPrivacyBudgetsInput$accessBudgetResourceArn": "<p>The Amazon Resource Name (ARN) of the access budget resource to filter privacy budgets by.</p>"
       }
     },
     "Change": {
@@ -3279,6 +3360,13 @@
         "ProtectedQuerySummary$receiverConfigurations": "<p> The receiver configuration.</p>"
       }
     },
+    "RemainingBudget": {
+      "base": null,
+      "refs": {
+        "AccessBudget$aggregateRemainingBudget": "<p>The total remaining budget across all budget parameters, showing the lower value between the per-period budget and lifetime budget for this access budget. For individual parameter budgets, see <code>remainingBudget</code>.</p>",
+        "AccessBudgetDetails$remainingBudget": "<p>The remaining budget amount available for use within this access budget.</p>"
+      }
+    },
     "ResourceAlias": {
       "base": null,
       "refs": {
@@ -3418,6 +3506,13 @@
       "base": null,
       "refs": {
         "BatchGetSchemaOutput$schemas": "<p>The retrieved list of schemas.</p>"
+      }
+    },
+    "SchemaResourceArn": {
+      "base": null,
+      "refs": {
+        "Schema$resourceArn": "<p>The Amazon Resource Name (ARN) of the schema resource.</p>",
+        "SchemaSummary$resourceArn": "<p>The Amazon Resource Name (ARN) of the schema summary resource.</p>"
       }
     },
     "SchemaStatus": {
@@ -3714,6 +3809,8 @@
     "Timestamp": {
       "base": null,
       "refs": {
+        "AccessBudgetDetails$startTime": "<p>The start time for the access budget period.</p>",
+        "AccessBudgetDetails$endTime": "<p>The end time for the access budget period.</p>",
         "AnalysisRule$createTime": "<p>The time the analysis rule was created.</p>",
         "AnalysisRule$updateTime": "<p>The time the analysis rule was last updated.</p>",
         "AnalysisTemplate$createTime": "<p>The time that the analysis template was created.</p>",

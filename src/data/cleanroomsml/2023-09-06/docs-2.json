@@ -63,6 +63,36 @@
     "UpdateConfiguredAudienceModel": "<p>Provides the information necessary to update a configured audience model. Updates that impact audience generation jobs take effect when a new job starts, but do not impact currently running jobs.</p>"
   },
   "shapes": {
+    "AccessBudget": {
+      "base": "<p>An access budget that defines consumption limits for a specific resource within defined time periods.</p>",
+      "refs": {
+        "AccessBudgets$member": null
+      }
+    },
+    "AccessBudgetDetails": {
+      "base": "<p>The detailed information for a specific budget period, including time boundaries and budget amounts.</p>",
+      "refs": {
+        "AccessBudgetDetailsList$member": null
+      }
+    },
+    "AccessBudgetDetailsList": {
+      "base": null,
+      "refs": {
+        "AccessBudget$details": "<p>A list of budget details for this resource. Contains active budget periods that apply to the resource.</p>"
+      }
+    },
+    "AccessBudgetType": {
+      "base": null,
+      "refs": {
+        "AccessBudgetDetails$budgetType": "<p>The type of budget period. Calendar-based types reset automatically at regular intervals, while LIFETIME budgets never reset.</p>"
+      }
+    },
+    "AccessBudgets": {
+      "base": null,
+      "refs": {
+        "PrivacyBudgets$accessBudgets": "<p>A list of access budgets that apply to resources associated with this Clean Rooms ML input channel.</p>"
+      }
+    },
     "AccessDeniedException": {
       "base": "<p>You do not have sufficient access to perform this action.</p>",
       "refs": {}
@@ -248,11 +278,31 @@
         "AudienceSizeBins$member": null
       }
     },
+    "AutoRefreshMode": {
+      "base": null,
+      "refs": {
+        "AccessBudgetDetails$autoRefresh": "<p>Specifies whether this budget automatically refreshes when the current period ends.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
         "GetAudienceGenerationJobResponse$includeSeedInOutput": "<p>Configure whether the seed users are included in the output audience. By default, Clean Rooms ML removes seed users from the output audience. If you specify <code>TRUE</code>, the seed users will appear first in the output. Clean Rooms ML does not explicitly reveal whether a user was in the seed, but the recipient of the audience will know that the first <code>minimumSeedSize</code> count of users are from the seed.</p>",
         "StartAudienceGenerationJobRequest$includeSeedInOutput": "<p>Whether the seed audience is included in the audience generation output.</p>"
+      }
+    },
+    "Budget": {
+      "base": null,
+      "refs": {
+        "AccessBudget$aggregateRemainingBudget": "<p>The total remaining budget across all active budget periods for this resource.</p>",
+        "AccessBudgetDetails$remainingBudget": "<p>The amount of budget remaining in this period.</p>",
+        "AccessBudgetDetails$budget": "<p>The total budget amount allocated for this period.</p>"
+      }
+    },
+    "BudgetedResourceArn": {
+      "base": null,
+      "refs": {
+        "AccessBudget$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource that this access budget applies to.</p>"
       }
     },
     "CancelTrainedModelInferenceJobRequest": {
@@ -1525,6 +1575,13 @@
         "PutConfiguredAudienceModelPolicyRequest$policyExistenceCondition": "<p>Use this to prevent unexpected concurrent modification of the policy.</p>"
       }
     },
+    "PrivacyBudgets": {
+      "base": "<p>The privacy budget information that controls access to Clean Rooms ML input channels.</p>",
+      "refs": {
+        "GetCollaborationMLInputChannelResponse$privacyBudgets": "<p>Returns the privacy budgets that control access to this Clean Rooms ML input channel. Use these budgets to monitor and limit resource consumption over specified time periods.</p>",
+        "GetMLInputChannelResponse$privacyBudgets": "<p>Returns the privacy budgets that control access to this Clean Rooms ML input channel. Use these budgets to monitor and limit resource consumption over specified time periods.</p>"
+      }
+    },
     "PrivacyConfiguration": {
       "base": "<p>Information about the privacy configuration for a configured model algorithm association.</p>",
       "refs": {
@@ -1792,6 +1849,8 @@
     "SyntheticTimestamp_date_time": {
       "base": null,
       "refs": {
+        "AccessBudgetDetails$startTime": "<p>The start time of this budget period.</p>",
+        "AccessBudgetDetails$endTime": "<p>The end time of this budget period. If not specified, the budget period continues indefinitely.</p>",
         "AudienceExportJobSummary$createTime": "<p>The time at which the audience export job was created.</p>",
         "AudienceExportJobSummary$updateTime": "<p>The most recent time at which the audience export job was updated.</p>",
         "AudienceGenerationJobSummary$createTime": "<p>The time at which the audience generation job was created.</p>",

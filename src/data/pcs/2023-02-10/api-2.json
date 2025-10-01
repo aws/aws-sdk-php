@@ -140,7 +140,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetComputeNodeGroup":{
       "name":"GetComputeNodeGroup",
@@ -157,7 +158,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "GetQueue":{
       "name":"GetQueue",
@@ -174,7 +176,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListClusters":{
       "name":"ListClusters",
@@ -191,7 +194,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListComputeNodeGroups":{
       "name":"ListComputeNodeGroups",
@@ -208,7 +212,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListQueues":{
       "name":"ListQueues",
@@ -225,7 +230,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"}
-      ]
+      ],
+      "readonly":true
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -237,7 +243,8 @@
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
-      ]
+      ],
+      "readonly":true
     },
     "RegisterComputeNodeGroupInstance":{
       "name":"RegisterComputeNodeGroupInstance",
@@ -274,6 +281,24 @@
       "input":{"shape":"UntagResourceRequest"},
       "errors":[
         {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
+    "UpdateCluster":{
+      "name":"UpdateCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateClusterRequest"},
+      "output":{"shape":"UpdateClusterResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
     },
@@ -329,8 +354,8 @@
       "type":"structure",
       "required":["mode"],
       "members":{
-        "mode":{"shape":"AccountingMode"},
-        "defaultPurgeTimeInDays":{"shape":"AccountingDefaultPurgeTimeInDaysInteger"}
+        "defaultPurgeTimeInDays":{"shape":"AccountingDefaultPurgeTimeInDaysInteger"},
+        "mode":{"shape":"AccountingMode"}
       }
     },
     "AccountingDefaultPurgeTimeInDaysInteger":{
@@ -350,8 +375,8 @@
       "type":"structure",
       "required":["mode"],
       "members":{
-        "mode":{"shape":"AccountingMode"},
-        "defaultPurgeTimeInDays":{"shape":"AccountingRequestDefaultPurgeTimeInDaysInteger"}
+        "defaultPurgeTimeInDays":{"shape":"AccountingRequestDefaultPurgeTimeInDaysInteger"},
+        "mode":{"shape":"AccountingMode"}
       }
     },
     "AccountingRequestDefaultPurgeTimeInDaysInteger":{
@@ -673,6 +698,7 @@
         "clusterIdentifier":{"shape":"ClusterIdentifier"},
         "queueName":{"shape":"QueueName"},
         "computeNodeGroupConfigurations":{"shape":"ComputeNodeGroupConfigurationList"},
+        "slurmConfiguration":{"shape":"QueueSlurmConfigurationRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -982,6 +1008,7 @@
         "modifiedAt":{"shape":"SyntheticTimestamp_date_time"},
         "status":{"shape":"QueueStatus"},
         "computeNodeGroupConfigurations":{"shape":"ComputeNodeGroupConfigurationList"},
+        "slurmConfiguration":{"shape":"QueueSlurmConfiguration"},
         "errorInfo":{"shape":"ErrorInfoList"}
       }
     },
@@ -998,6 +1025,18 @@
       "max":25,
       "min":3,
       "pattern":"(?!pcs_)^[A-Za-z][A-Za-z0-9-]+"
+    },
+    "QueueSlurmConfiguration":{
+      "type":"structure",
+      "members":{
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+      }
+    },
+    "QueueSlurmConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
+      }
     },
     "QueueStatus":{
       "type":"string",
@@ -1298,6 +1337,50 @@
         "tagKeys":{"shape":"TagKeys"}
       }
     },
+    "UpdateAccountingRequest":{
+      "type":"structure",
+      "members":{
+        "defaultPurgeTimeInDays":{"shape":"UpdateAccountingRequestDefaultPurgeTimeInDaysInteger"},
+        "mode":{"shape":"AccountingMode"}
+      }
+    },
+    "UpdateAccountingRequestDefaultPurgeTimeInDaysInteger":{
+      "type":"integer",
+      "box":true,
+      "max":10000,
+      "min":-1
+    },
+    "UpdateClusterRequest":{
+      "type":"structure",
+      "required":["clusterIdentifier"],
+      "members":{
+        "clusterIdentifier":{"shape":"ClusterIdentifier"},
+        "clientToken":{
+          "shape":"SBClientToken",
+          "idempotencyToken":true
+        },
+        "slurmConfiguration":{"shape":"UpdateClusterSlurmConfigurationRequest"}
+      }
+    },
+    "UpdateClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{"shape":"Cluster"}
+      }
+    },
+    "UpdateClusterSlurmConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "scaleDownIdleTimeInSeconds":{"shape":"UpdateClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger"},
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"},
+        "accounting":{"shape":"UpdateAccountingRequest"}
+      }
+    },
+    "UpdateClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "UpdateComputeNodeGroupRequest":{
       "type":"structure",
       "required":[
@@ -1343,6 +1426,7 @@
         "clusterIdentifier":{"shape":"ClusterIdentifier"},
         "queueIdentifier":{"shape":"QueueIdentifier"},
         "computeNodeGroupConfigurations":{"shape":"ComputeNodeGroupConfigurationList"},
+        "slurmConfiguration":{"shape":"UpdateQueueSlurmConfigurationRequest"},
         "clientToken":{
           "shape":"SBClientToken",
           "idempotencyToken":true
@@ -1353,6 +1437,12 @@
       "type":"structure",
       "members":{
         "queue":{"shape":"Queue"}
+      }
+    },
+    "UpdateQueueSlurmConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "slurmCustomSettings":{"shape":"SlurmCustomSettings"}
       }
     },
     "ValidationException":{

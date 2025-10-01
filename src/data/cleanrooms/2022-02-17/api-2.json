@@ -1580,6 +1580,80 @@
     }
   },
   "shapes":{
+    "AccessBudget":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "details",
+        "aggregateRemainingBudget"
+      ],
+      "members":{
+        "resourceArn":{"shape":"BudgetedResourceArn"},
+        "details":{"shape":"AccessBudgetDetailsList"},
+        "aggregateRemainingBudget":{"shape":"RemainingBudget"}
+      }
+    },
+    "AccessBudgetDetails":{
+      "type":"structure",
+      "required":[
+        "startTime",
+        "remainingBudget",
+        "budget",
+        "budgetType"
+      ],
+      "members":{
+        "startTime":{"shape":"Timestamp"},
+        "endTime":{"shape":"Timestamp"},
+        "remainingBudget":{"shape":"RemainingBudget"},
+        "budget":{"shape":"Budget"},
+        "budgetType":{"shape":"AccessBudgetType"},
+        "autoRefresh":{"shape":"AutoRefreshMode"}
+      }
+    },
+    "AccessBudgetDetailsList":{
+      "type":"list",
+      "member":{"shape":"AccessBudgetDetails"},
+      "max":2,
+      "min":1
+    },
+    "AccessBudgetType":{
+      "type":"string",
+      "enum":[
+        "CALENDAR_DAY",
+        "CALENDAR_MONTH",
+        "CALENDAR_WEEK",
+        "LIFETIME"
+      ]
+    },
+    "AccessBudgetsPrivacyTemplateParametersInput":{
+      "type":"structure",
+      "required":[
+        "budgetParameters",
+        "resourceArn"
+      ],
+      "members":{
+        "budgetParameters":{"shape":"BudgetParameters"},
+        "resourceArn":{"shape":"BudgetedResourceArn"}
+      }
+    },
+    "AccessBudgetsPrivacyTemplateParametersOutput":{
+      "type":"structure",
+      "required":[
+        "budgetParameters",
+        "resourceArn"
+      ],
+      "members":{
+        "budgetParameters":{"shape":"BudgetParameters"},
+        "resourceArn":{"shape":"BudgetedResourceArn"}
+      }
+    },
+    "AccessBudgetsPrivacyTemplateUpdateParameters":{
+      "type":"structure",
+      "required":["budgetParameters"],
+      "members":{
+        "budgetParameters":{"shape":"BudgetParameters"}
+      }
+    },
     "AccessDeniedException":{
       "type":"structure",
       "members":{
@@ -2111,6 +2185,13 @@
       "type":"list",
       "member":{"shape":"AutoApprovedChangeType"}
     },
+    "AutoRefreshMode":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "BatchGetCollaborationAnalysisTemplateError":{
       "type":"structure",
       "required":[
@@ -2265,6 +2346,36 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "Budget":{
+      "type":"integer",
+      "box":true,
+      "max":1000000,
+      "min":0
+    },
+    "BudgetParameter":{
+      "type":"structure",
+      "required":[
+        "type",
+        "budget"
+      ],
+      "members":{
+        "type":{"shape":"AccessBudgetType"},
+        "budget":{"shape":"Budget"},
+        "autoRefresh":{"shape":"AutoRefreshMode"}
+      }
+    },
+    "BudgetParameters":{
+      "type":"list",
+      "member":{"shape":"BudgetParameter"},
+      "max":2,
+      "min":1
+    },
+    "BudgetedResourceArn":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "pattern":"arn:aws:[\\w]+:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership/[\\d\\w-]+/configuredtableassociation/[\\d\\w-]+"
     },
     "Change":{
       "type":"structure",
@@ -3545,7 +3656,6 @@
       "type":"structure",
       "required":[
         "membershipIdentifier",
-        "autoRefresh",
         "privacyBudgetType",
         "parameters"
       ],
@@ -5124,6 +5234,11 @@
           "shape":"PaginationToken",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "accessBudgetResourceArn":{
+          "shape":"BudgetedResourceArn",
+          "location":"querystring",
+          "locationName":"accessBudgetResourceArn"
         }
       }
     },
@@ -5414,6 +5529,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "accessBudgetResourceArn":{
+          "shape":"BudgetedResourceArn",
+          "location":"querystring",
+          "locationName":"accessBudgetResourceArn"
         }
       }
     },
@@ -5971,7 +6091,8 @@
     "PrivacyBudget":{
       "type":"structure",
       "members":{
-        "differentialPrivacy":{"shape":"DifferentialPrivacyPrivacyBudget"}
+        "differentialPrivacy":{"shape":"DifferentialPrivacyPrivacyBudget"},
+        "accessBudget":{"shape":"AccessBudget"}
       },
       "union":true
     },
@@ -6059,14 +6180,16 @@
     "PrivacyBudgetTemplateParametersInput":{
       "type":"structure",
       "members":{
-        "differentialPrivacy":{"shape":"DifferentialPrivacyTemplateParametersInput"}
+        "differentialPrivacy":{"shape":"DifferentialPrivacyTemplateParametersInput"},
+        "accessBudget":{"shape":"AccessBudgetsPrivacyTemplateParametersInput"}
       },
       "union":true
     },
     "PrivacyBudgetTemplateParametersOutput":{
       "type":"structure",
       "members":{
-        "differentialPrivacy":{"shape":"DifferentialPrivacyTemplateParametersOutput"}
+        "differentialPrivacy":{"shape":"DifferentialPrivacyTemplateParametersOutput"},
+        "accessBudget":{"shape":"AccessBudgetsPrivacyTemplateParametersOutput"}
       },
       "union":true
     },
@@ -6102,13 +6225,17 @@
     "PrivacyBudgetTemplateUpdateParameters":{
       "type":"structure",
       "members":{
-        "differentialPrivacy":{"shape":"DifferentialPrivacyTemplateUpdateParameters"}
+        "differentialPrivacy":{"shape":"DifferentialPrivacyTemplateUpdateParameters"},
+        "accessBudget":{"shape":"AccessBudgetsPrivacyTemplateUpdateParameters"}
       },
       "union":true
     },
     "PrivacyBudgetType":{
       "type":"string",
-      "enum":["DIFFERENTIAL_PRIVACY"]
+      "enum":[
+        "DIFFERENTIAL_PRIVACY",
+        "ACCESS_BUDGET"
+      ]
     },
     "PrivacyImpact":{
       "type":"structure",
@@ -6626,6 +6753,11 @@
       "type":"list",
       "member":{"shape":"ReceiverConfiguration"}
     },
+    "RemainingBudget":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
     "ResourceAlias":{
       "type":"string",
       "max":128,
@@ -6763,6 +6895,7 @@
         "updateTime":{"shape":"Timestamp"},
         "type":{"shape":"SchemaType"},
         "schemaStatusDetails":{"shape":"SchemaStatusDetailList"},
+        "resourceArn":{"shape":"SchemaResourceArn"},
         "schemaTypeProperties":{"shape":"SchemaTypeProperties"}
       }
     },
@@ -6802,6 +6935,12 @@
       "member":{"shape":"Schema"},
       "max":25,
       "min":0
+    },
+    "SchemaResourceArn":{
+      "type":"string",
+      "max":200,
+      "min":0,
+      "pattern":"arn:aws:cleanrooms:[\\w]{2}-[\\w]{4,9}-[\\d]:[\\d]{12}:membership\\/[\\d\\w-]+\\/(configuredtableassociation|idmappingtable)\\/[\\d\\w-]+"
     },
     "SchemaStatus":{
       "type":"string",
@@ -6881,6 +7020,7 @@
         "collaborationArn":{"shape":"CollaborationArn"},
         "analysisRuleTypes":{"shape":"AnalysisRuleTypeList"},
         "analysisMethod":{"shape":"AnalysisMethod"},
+        "resourceArn":{"shape":"SchemaResourceArn"},
         "selectedAnalysisMethods":{"shape":"SelectedAnalysisMethods"}
       }
     },

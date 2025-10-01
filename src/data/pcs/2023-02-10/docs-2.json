@@ -18,6 +18,7 @@
     "RegisterComputeNodeGroupInstance": "<p><important> <p>This API action isn't intended for you to use.</p> </important> <p>PCS uses this API action to register the compute nodes it launches in your account.</p></p>",
     "TagResource": "<p>Adds or edits tags on an PCS resource. Each tag consists of a tag key and a tag value. The tag key and tag value are case-sensitive strings. The tag value can be an empty (null) string. To add a tag, specify a new tag key and a tag value. To edit a tag, specify an existing tag key and a new tag value.</p>",
     "UntagResource": "<p>Deletes tags from an PCS resource. To delete a tag, specify the tag key and the Amazon Resource Name (ARN) of the PCS resource.</p>",
+    "UpdateCluster": "<p>Updates a cluster configuration. You can modify Slurm scheduler settings, accounting configuration, and security groups for an existing cluster. </p> <note> <p>You can only update clusters that are in <code>ACTIVE</code>, <code>UPDATE_FAILED</code>, or <code>SUSPENDED</code> state. All associated resources (queues and compute node groups) must be in <code>ACTIVE</code> state before you can update the cluster.</p> </note>",
     "UpdateComputeNodeGroup": "<p>Updates a compute node group. You can update many of the fields related to your compute node group including the configurations for networking, compute nodes, and settings specific to your scheduler (such as Slurm).</p>",
     "UpdateQueue": "<p>Updates the compute node group configuration of a queue. Use this API to change the compute node groups that the queue can send jobs to.</p>"
   },
@@ -42,7 +43,8 @@
       "base": null,
       "refs": {
         "Accounting$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means Slurm accounting is enabled.</p>",
-        "AccountingRequest$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means Slurm accounting is enabled.</p>"
+        "AccountingRequest$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means Slurm accounting is enabled.</p>",
+        "UpdateAccountingRequest$mode": "<p>The default value for <code>mode</code> is <code>STANDARD</code>. A value of <code>STANDARD</code> means Slurm accounting is enabled.</p>"
       }
     },
     "AccountingRequest": {
@@ -83,7 +85,8 @@
       "base": "<p>The cluster resource and configuration.</p>",
       "refs": {
         "CreateClusterResponse$cluster": "<p>The cluster resource.</p>",
-        "GetClusterResponse$cluster": "<p>The cluster resource.</p>"
+        "GetClusterResponse$cluster": "<p>The cluster resource.</p>",
+        "UpdateClusterResponse$cluster": null
       }
     },
     "ClusterIdentifier": {
@@ -94,12 +97,13 @@
         "DeleteClusterRequest$clusterIdentifier": "<p>The name or ID of the cluster to delete.</p>",
         "DeleteComputeNodeGroupRequest$clusterIdentifier": "<p>The name or ID of the cluster of the compute node group.</p>",
         "DeleteQueueRequest$clusterIdentifier": "<p>The name or ID of the cluster of the queue.</p>",
-        "GetClusterRequest$clusterIdentifier": "<p>The name or ID of the cluster of the queue.</p>",
+        "GetClusterRequest$clusterIdentifier": "<p>The name or ID of the cluster.</p>",
         "GetComputeNodeGroupRequest$clusterIdentifier": "<p>The name or ID of the cluster.</p>",
         "GetQueueRequest$clusterIdentifier": "<p>The name or ID of the cluster of the queue.</p>",
         "ListComputeNodeGroupsRequest$clusterIdentifier": "<p>The name or ID of the cluster to list compute node groups for.</p>",
         "ListQueuesRequest$clusterIdentifier": "<p>The name or ID of the cluster to list queues for.</p>",
         "RegisterComputeNodeGroupInstanceRequest$clusterIdentifier": "<p>The name or ID of the cluster to register the compute node group instance in.</p>",
+        "UpdateClusterRequest$clusterIdentifier": "<p>The name or ID of the cluster to update.</p>",
         "UpdateComputeNodeGroupRequest$clusterIdentifier": "<p>The name or ID of the cluster of the compute node group.</p>",
         "UpdateQueueRequest$clusterIdentifier": "<p>The name or ID of the cluster of the queue.</p>"
       }
@@ -467,6 +471,18 @@
         "QueueSummary$name": "<p>The name that identifies the queue.</p>"
       }
     },
+    "QueueSlurmConfiguration": {
+      "base": "<p>Additional options related to the Slurm scheduler.</p>",
+      "refs": {
+        "Queue$slurmConfiguration": "<p>Additional options related to the Slurm scheduler.</p>"
+      }
+    },
+    "QueueSlurmConfigurationRequest": {
+      "base": "<p>Additional options related to the Slurm scheduler.</p>",
+      "refs": {
+        "CreateQueueRequest$slurmConfiguration": "<p>Additional options related to the Slurm scheduler.</p>"
+      }
+    },
     "QueueStatus": {
       "base": null,
       "refs": {
@@ -516,6 +532,7 @@
         "DeleteClusterRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect. If you don't specify a client token, the CLI and SDK automatically generate 1 for you.</p>",
         "DeleteComputeNodeGroupRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect. If you don't specify a client token, the CLI and SDK automatically generate 1 for you.</p>",
         "DeleteQueueRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect. If you don't specify a client token, the CLI and SDK automatically generate 1 for you.</p>",
+        "UpdateClusterRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect. If you don't specify a client token, the CLI and SDK automatically generate 1 for you.</p>",
         "UpdateComputeNodeGroupRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect. If you don't specify a client token, the CLI and SDK automatically generate 1 for you.</p>",
         "UpdateQueueRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. Idempotency ensures that an API request completes only once. With an idempotent request, if the original request completes successfully, the subsequent retries with the same client token return the result from the original successful request and they have no additional effect. If you don't specify a client token, the CLI and SDK automatically generate 1 for you.</p>"
       }
@@ -613,7 +630,7 @@
       }
     },
     "SlurmCustomSetting": {
-      "base": "<p>Additional settings that directly map to Slurm settings.</p>",
+      "base": "<p>Additional settings that directly map to Slurm settings.</p> <important> <p>PCS supports a subset of Slurm settings. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-custom-settings.html\">Configuring custom Slurm settings in PCS</a> in the <i>PCS User Guide</i>.</p> </important>",
       "refs": {
         "SlurmCustomSettings$member": null
       }
@@ -625,7 +642,11 @@
         "ClusterSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>",
         "ComputeNodeGroupSlurmConfiguration$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>",
         "ComputeNodeGroupSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>",
-        "UpdateComputeNodeGroupSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>"
+        "QueueSlurmConfiguration$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>",
+        "QueueSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>",
+        "UpdateClusterSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>",
+        "UpdateComputeNodeGroupSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>",
+        "UpdateQueueSlurmConfigurationRequest$slurmCustomSettings": "<p>Additional Slurm-specific configuration that directly maps to Slurm settings.</p>"
       }
     },
     "SpotAllocationStrategy": {
@@ -697,7 +718,7 @@
         "ServiceQuotaExceededException$quotaCode": "<p> The <b>quota code</b> of the service quota that was exceeded. </p>",
         "SlurmAuthKey$secretArn": "<p>The Amazon Resource Name (ARN) of the shared Slurm key.</p>",
         "SlurmAuthKey$secretVersion": "<p>The version of the shared Slurm key.</p>",
-        "SlurmCustomSetting$parameterName": "<p>PCS supports configuration of the following Slurm parameters:</p> <ul> <li> <p>For <b>clusters</b> </p> <ul> <li> <p> <a href=\"https://slurm.schedmd.com/slurm.conf.html#OPT_Prolog_1\"> <code>Prolog</code> </a> </p> </li> <li> <p> <a href=\"https://slurm.schedmd.com/slurm.conf.html#OPT_Epilog_1\"> <code>Epilog</code> </a> </p> </li> <li> <p> <a href=\"https://slurm.schedmd.com/slurm.conf.html#OPT_SelectTypeParameters\"> <code>SelectTypeParameters</code> </a> </p> </li> <li> <p> <a href=\"https://slurm.schedmd.com/slurm.conf.html#OPT_AccountingStorageEnforce\"> <code>AccountingStorageEnforce</code> </a> </p> <important> <p>PCS supports a subset of the options for <code>AccountingStorageEnforce</code>. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-accounting.html\">Slurm accounting in PCS</a> in the <i>PCS User Guide</i>.</p> </important> </li> </ul> </li> <li> <p>For <b>compute node groups</b> </p> <ul> <li> <p> <a href=\"https://slurm.schedmd.com/slurm.conf.html#OPT_Weight\"> <code>Weight</code> </a> </p> </li> <li> <p> <a href=\"https://slurm.schedmd.com/slurm.conf.html#OPT_Weight\"> <code>RealMemory</code> </a> </p> </li> </ul> </li> </ul>",
+        "SlurmCustomSetting$parameterName": "<p>PCS supports custom Slurm settings for clusters, compute node groups, and queues. For more information, see <a href=\"https://docs.aws.amazon.com/pcs/latest/userguide/slurm-custom-settings.html\">Configuring custom Slurm settings in PCS</a> in the <i>PCS User Guide</i>.</p>",
         "SlurmCustomSetting$parameterValue": "<p>The values for the configured Slurm settings.</p>",
         "StringList$member": null,
         "ThrottlingException$message": null,
@@ -777,6 +798,38 @@
       "base": null,
       "refs": {}
     },
+    "UpdateAccountingRequest": {
+      "base": "<p>The accounting configuration includes configurable settings for Slurm accounting.</p>",
+      "refs": {
+        "UpdateClusterSlurmConfigurationRequest$accounting": "<p>The accounting configuration includes configurable settings for Slurm accounting.</p>"
+      }
+    },
+    "UpdateAccountingRequestDefaultPurgeTimeInDaysInteger": {
+      "base": null,
+      "refs": {
+        "UpdateAccountingRequest$defaultPurgeTimeInDays": "<p>The default value for all purge settings for <code>slurmdbd.conf</code>. For more information, see the <a href=\"https://slurm.schedmd.com/slurmdbd.conf.html\">slurmdbd.conf documentation at SchedMD</a>.</p> <p>The default value for <code>defaultPurgeTimeInDays</code> is <code>-1</code>.</p> <p>A value of <code>-1</code> means there is no purge time and records persist as long as the cluster exists.</p> <important> <p> <code>0</code> isn't a valid value.</p> </important>"
+      }
+    },
+    "UpdateClusterRequest": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateClusterResponse": {
+      "base": null,
+      "refs": {}
+    },
+    "UpdateClusterSlurmConfigurationRequest": {
+      "base": "<p>Additional options related to the Slurm scheduler.</p>",
+      "refs": {
+        "UpdateClusterRequest$slurmConfiguration": "<p>Additional options related to the Slurm scheduler.</p>"
+      }
+    },
+    "UpdateClusterSlurmConfigurationRequestScaleDownIdleTimeInSecondsInteger": {
+      "base": null,
+      "refs": {
+        "UpdateClusterSlurmConfigurationRequest$scaleDownIdleTimeInSeconds": "<p>The time (in seconds) before an idle node is scaled down.</p> <p>Default: <code>600</code> </p>"
+      }
+    },
     "UpdateComputeNodeGroupRequest": {
       "base": null,
       "refs": {}
@@ -798,6 +851,12 @@
     "UpdateQueueResponse": {
       "base": null,
       "refs": {}
+    },
+    "UpdateQueueSlurmConfigurationRequest": {
+      "base": "<p>Additional options related to the Slurm scheduler.</p>",
+      "refs": {
+        "UpdateQueueRequest$slurmConfiguration": "<p>Additional options related to the Slurm scheduler.</p>"
+      }
     },
     "ValidationException": {
       "base": "<p>The request isn't valid.</p> <p> <u>Examples</u> </p> <ul> <li> <p>Your request contains malformed JSON or unsupported characters.</p> </li> <li> <p>The scheduler version isn't supported.</p> </li> <li> <p>There are networking related errors, such as network validation failure.</p> </li> <li> <p>AMI type is <code>CUSTOM</code> and the launch template doesn't define the AMI ID, or the AMI type is AL2 and the launch template defines the AMI.</p> </li> </ul>",
