@@ -38,13 +38,16 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 
 class S3TransferManagerTest extends TestCase
 {
     private const DOWNLOAD_BASE_CASES = __DIR__ . '/test-cases/download-single-object.json';
     private const UPLOAD_BASE_CASES = __DIR__ . '/test-cases/upload-single-object.json';
-    private static array $multipartUploadBodyTemplates = [
-    'CreateMultipartUpload' => <<<EOF
+    private const UPLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/upload-directory.json';
+    private const DOWNLOAD_DIRECTORY_BASE_CASES = __DIR__ . '/test-cases/download-directory.json';
+    private static array $s3BodyTemplates = [
+        'CreateMultipartUpload' => <<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <InitiateMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
     <Bucket>{Bucket}</Bucket>
@@ -52,6 +55,27 @@ class S3TransferManagerTest extends TestCase
     <UploadId>{UploadId}</UploadId>
 </InitiateMultipartUploadResult>
 EOF,
+        'ListObjectsV2' => <<<EOF
+<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <Name>{Bucket}</Name>
+    <Prefix>{Prefix}</Prefix>
+    <KeyCount>3</KeyCount>
+    <MaxKeys>1000</MaxKeys>
+    <IsTruncated>false</IsTruncated>
+    {Contents}
+</ListBucketResult>
+EOF,
+        'ListObjectsV2::Contents' => <<<EOF
+    <Contents>
+        <Key>{Key}</Key>
+        <Size>{Size}</Size>
+        <LastModified>2025-05-20T14:45:08.000Z</LastModified>
+        <ETag>FixedETag</ETag>
+        <ChecksumAlgorithm>CRC64NVME</ChecksumAlgorithm>
+        <ChecksumType>FULL_OBJECT</ChecksumType>
+        <StorageClass>STANDARD</StorageClass>
+    </Contents>
+EOF
     ];
 
     /**
@@ -719,7 +743,7 @@ EOF,
                         'filter' => function (string $objectKey) {
                             return str_ends_with($objectKey, "-valid.txt");
                         },
-                        'put_object_request_callback' => function ($requestArgs) use (&$calledTimes) {
+                        'upload_object_request_modifier' => function ($requestArgs) use (&$calledTimes) {
                             $this->assertStringContainsString(
                                 'valid.txt',
                                 $requestArgs["Key"]
@@ -964,6 +988,59 @@ EOF,
     /**
      * @return void
      */
+    public function testUploadDirectoryFailsOnCircularSymbolicLinkTraversal() {
+        $parentDirectory = sys_get_temp_dir() . "/upload-directory-test";
+        $linkToParent = $parentDirectory . "/link_to_parent";
+        if (is_dir($parentDirectory)) {
+            TestsUtility::cleanUpDir($parentDirectory);
+        }
+
+        mkdir($parentDirectory, 0777, true);
+        symlink($parentDirectory, $linkToParent);
+        $operationCompleted = false;
+        try {
+            $s3Client = new S3Client([
+                'region' => 'us-west-2',
+            ]);
+            $s3TransferManager = new S3TransferManager(
+                $s3Client,
+            );
+            $s3TransferManager->uploadDirectory(
+                new UploadDirectoryRequest(
+                    $parentDirectory,
+                    "Bucket",
+                    [],
+                    [
+                        'recursive' => true,
+                        'follow_symbolic_links' => true
+                    ]
+                )
+            )->wait();
+            $operationCompleted = true;
+            $this->fail(
+                "Upload directory should have been failed!"
+            );
+        } catch (RuntimeException $exception) {
+            if (!$operationCompleted) {
+                $matches = $this->assertEachWordMatchesTheErrorMessage(
+                    "A circular symbolic link traversal have been detected at",
+                    $exception->getMessage()
+                );
+
+                $this->assertTrue(
+                    $matches,
+                    "Exception message does not match expected"
+                );
+            }
+        } finally {
+            unlink($linkToParent);
+            rmdir($parentDirectory);
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testUploadDirectoryUsesProvidedPrefix(): void
     {
         $directory = sys_get_temp_dir() . "/upload-directory-test";
@@ -1089,7 +1166,7 @@ EOF,
     public function testUploadDirectoryFailsOnInvalidPutObjectRequestCallback(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The provided config `put_object_request_callback` must be callable.");
+        $this->expectExceptionMessage("The provided config `upload_object_request_modifier` must be callable.");
         $directory = sys_get_temp_dir() . "/upload-directory-test";
         if (!is_dir($directory)) {
             mkdir($directory, 0777, true);
@@ -1105,7 +1182,7 @@ EOF,
                     "Bucket",
                     [],
                     [
-                        'put_object_request_callback' => false,
+                        'upload_object_request_modifier' => false,
                     ]
                 )
             )->wait();
@@ -1155,7 +1232,7 @@ EOF,
                     "Bucket",
                     [],
                     [
-                        'put_object_request_callback' => function (
+                        'upload_object_request_modifier' => function (
                             &$requestArgs
                         ) use (&$called) {
                             $requestArgs["FooParameter"] = "Test";
@@ -1971,110 +2048,6 @@ EOF,
     }
 
     /**
-     * @param string|null $delimiter
-     * @param string|null $expectedS3Delimiter
-     *
-     * @dataProvider downloadDirectoryAppliesDelimiterProvider
-     *
-     * @return void
-     */
-    public function testDownloadDirectoryAppliesDelimiter(
-        ?string $delimiter,
-        ?string $expectedS3Delimiter
-    ): void
-    {
-        $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
-        if (!is_dir($destinationDirectory)) {
-            mkdir($destinationDirectory, 0777, true);
-        }
-        try {
-            $called = false;
-            $listObjectsCalled = false;
-            $client = $this->getS3ClientMock([
-                'executeAsync' => function (CommandInterface $command) use (
-                    $expectedS3Delimiter,
-                    &$called,
-                    &$listObjectsCalled,
-                ) {
-                    $called = true;
-                    if ($command->getName() === "ListObjectsV2") {
-                        $listObjectsCalled = true;
-                        $this->assertEquals(
-                            $expectedS3Delimiter,
-                            $command['Delimiter'] ?? null
-                        );
-                    }
-
-                    return Create::promiseFor(new Result([]));
-                },
-                'getApi' => function () {
-                    $service = $this->getMockBuilder(Service::class)
-                        ->disableOriginalConstructor()
-                        ->onlyMethods(["getPaginatorConfig"])
-                        ->getMock();
-                    $service->method('getPaginatorConfig')
-                        ->willReturn([
-                            'input_token'  => null,
-                            'output_token' => null,
-                            'limit_key'    => null,
-                            'result_key'   => null,
-                            'more_results' => null,
-                        ]);
-
-                    return $service;
-                },
-                'getHandlerList' => function () {
-                    return new HandlerList();
-                }
-            ]);
-            $config = [];
-            if ($delimiter !== null) {
-                $config['list_object_v2_args'] = [
-                    'Delimiter' => $delimiter,
-                ];
-            }
-
-            $manager = new S3TransferManager(
-                $client,
-            );
-            $manager->downloadDirectory(
-                new DownloadDirectoryRequest(
-                    "Bucket",
-                    $destinationDirectory,
-                    [],
-                    $config
-                )
-            )->wait();
-
-            $this->assertTrue($called);
-            $this->assertTrue($listObjectsCalled);
-        } finally {
-           TestsUtility::cleanUpDir($destinationDirectory);
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function downloadDirectoryAppliesDelimiterProvider(): array
-    {
-        return [
-            's3_delimiter_1' => [
-                'Delimiter' => 'FooDelimiter',
-                'expected_s3_delimiter' => 'FooDelimiter'
-            ],
-            's3_delimiter_2' => [
-                'Delimiter' => 'FooDelimiter2',
-                'expected_s3_delimiter' => 'FooDelimiter2'
-            ],
-            's3_delimiter_4_defaulted_to_null' => [
-                'Delimiter' => null,
-                'expected_s3_delimiter' => null
-            ],
-        ];
-    }
-
-    /**
      * @return void
      */
     public function testDownloadDirectoryFailsOnInvalidFilter(): void
@@ -2443,7 +2416,7 @@ EOF,
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            "The provided config `get_object_request_callback` must be callable."
+            "The provided config `download_object_request_modifier` must be callable."
         );
         $destinationDirectory = sys_get_temp_dir() . "/download-directory-test";
         if (!is_dir($destinationDirectory)) {
@@ -2491,7 +2464,7 @@ EOF,
                     "Bucket",
                     $destinationDirectory,
                     [],
-                    ['get_object_request_callback' => false]
+                    ['download_object_request_modifier' => false]
                 )
             )->wait();
         } finally {
@@ -2567,7 +2540,7 @@ EOF,
                     [
                         'CustomParameter' => 'CustomParameterValue'
                     ],
-                    ['get_object_request_callback' => $getObjectRequestCallback]
+                    ['download_object_request_modifier' => $getObjectRequestCallback]
                 )
             )->wait();
             $this->assertTrue($called);
@@ -2695,7 +2668,6 @@ EOF,
 
     /**
      * @param string|null $prefix
-     * @param string|null $delimiter
      * @param array $objects
      * @param array $expectedOutput
      *
@@ -2704,7 +2676,6 @@ EOF,
      */
     public function testResolvesOutsideTargetDirectory(
         ?string $prefix,
-        ?string $delimiter,
         array $objects,
         array $expectedOutput
     ): void
@@ -2776,7 +2747,6 @@ EOF,
                     [],
                     [
                         's3_prefix' => $prefix,
-                        's3_delimiter' => $delimiter,
                     ]
                 )
             )->wait();
@@ -2802,7 +2772,6 @@ EOF,
         return [
             'download_directory_1_linux' => [
                 'prefix' => null,
-                'delimiter' => null,
                 'objects' => [
                     [
                         'Key' => '2023/Jan/1.png'
@@ -2815,7 +2784,6 @@ EOF,
             ],
             'download_directory_2' => [
                 'prefix' => '2023/Jan/',
-                'delimiter' => null,
                 'objects' => [
                     [
                         'Key' => '2023/Jan/1.png'
@@ -2828,7 +2796,6 @@ EOF,
             ],
             'download_directory_3' => [
                 'prefix' => '2023/Jan',
-                'delimiter' => null,
                 'objects' => [
                     [
                         'Key' => '2023/Jan/1.png'
@@ -2839,38 +2806,11 @@ EOF,
                     'filename' => '1.png',
                 ]
             ],
-            'download_directory_4' => [
-                'prefix' => null,
-                'delimiter' => '-',
-                'objects' => [
-                    [
-                        'Key' => '2023-Jan-1.png'
-                    ]
-                ],
-                'expected_output' => [
-                    'success' => true,
-                    'filename' => '2023/Jan/1.png',
-                ]
-            ],
-            'download_directory_5' => [
-                'prefix' => null,
-                'delimiter' => '-',
-                'objects' => [
-                    [
-                        'Key' => '2023-Jan-.png'
-                    ]
-                ],
-                'expected_output' => [
-                    'success' => true,
-                    'filename' => '2023/Jan/.png',
-                ]
-            ],
             'download_directory_6' => [
                 'prefix' => '2023',
-                'delimiter' => '-',
                 'objects' => [
                     [
-                        'Key' => '2023/Jan-1.png'
+                        'Key' => '2023/Jan/1.png'
                     ]
                 ],
                 'expected_output' => [
@@ -2880,7 +2820,6 @@ EOF,
             ],
             'download_directory_7_fails' => [
                 'prefix' => null,
-                'delimiter' => null,
                 'objects' => [
                     [
                         'Key' => '../2023/Jan/1.png'
@@ -2892,7 +2831,6 @@ EOF,
             ],
             'download_directory_9_fails' => [
                 'prefix' => null,
-                'delimiter' => null,
                 'objects' => [
                     [
                         'Key' => 'foo/../2023/../../Jan/1.png'
@@ -2904,7 +2842,6 @@ EOF,
             ],
             'download_directory_10_fails' => [
                 'prefix' => null,
-                'delimiter' => null,
                 'objects' => [
                     [
                         'Key' => '../test-2/object.dat'
@@ -3143,7 +3080,7 @@ EOF,
                 );
             }, $expectations),
             function (string $operation, ?array $body): StreamInterface {
-                $template = self::$multipartUploadBodyTemplates[$operation] ?? "";
+                $template = self::$s3BodyTemplates[$operation] ?? "";
                 if ($body === null) {
                     $body = [];
                 }
@@ -3241,6 +3178,357 @@ EOF,
     }
 
     /**
+     * @param string $testId
+     * @param array $config
+     * @param array $uploadDirectoryRequestArgs
+     * @param array|null $sourceStructure
+     * @param array $expectations
+     * @param array $outcomes
+     *
+     * @return void
+     * @dataProvider modeledUploadDirectoryCasesProvider
+     */
+    public function testModeledCasesForUploadDirectory(
+        string $testId,
+        array $config,
+        array $uploadDirectoryRequestArgs,
+        ?array $sourceStructure,
+        array $expectations,
+        array $outcomes
+    ) {
+        $testsToSkip = [
+            "Test upload directory - S3 directory bucket" => true,
+        ];
+        if ($testsToSkip[$testId] ?? false) {
+            $this->markTestSkipped(
+                "The test `" . $testId . "` is not supported yet."
+            );
+        }
+        // Parse config and request args
+        $this->parseConfigFromCamelCaseToSnakeCase($config);
+        $this->parseConfigFromCamelCaseToSnakeCase($uploadDirectoryRequestArgs);
+        // Extract bucket and source
+        $bucket = $uploadDirectoryRequestArgs['bucket'];
+        unset($uploadDirectoryRequestArgs['bucket']);
+        $source = $uploadDirectoryRequestArgs['source'];
+        unset($uploadDirectoryRequestArgs['source']);
+        // Now lets merge what is remaining in $uploadDirectoryRequestArgs into config
+        $config = array_merge(
+            $config,
+            $uploadDirectoryRequestArgs,
+        );
+        // Now let`s convert filter into its proper type
+        if (isset($config['filter'])) {
+            $filterExpression = $config['filter'];
+            $config['filter'] = function ($file) use ($filterExpression) {
+                return fnmatch($filterExpression, $file) == true;
+            };
+        }
+
+        // Now let`s convert failure policy into is proper type
+        if (isset($config['failure_policy'])) {
+            if ($config['failure_policy'] === 'CONTINUE_ON_FAILURE') {
+                $config['failure_policy'] = function () {
+                    return true;
+                };
+            }
+        }
+
+        // Prepare source directory
+        $sourceDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "upload-directory-test";
+        $source = $sourceDirectory . DIRECTORY_SEPARATOR . $source;
+        if ($sourceStructure !== null) {
+            // Create source folder first
+            if (is_dir($source)) {
+                TestsUtility::cleanUpDir($source);
+            }
+
+            mkdir($source, 0777, true);
+
+            // Populate source folder with test files
+            foreach ($sourceStructure as $src) {
+                $sourcePath = $sourceDirectory . $src['path'];
+                $sourceParent = dirname($sourcePath);
+                if (!is_dir($sourceParent)) {
+                    mkdir($sourceParent, 0777, true);
+                }
+
+                $remaining = $src['size'];
+                $chunkLimit = 1024;
+                // Populate the source
+                while ($remaining > 0) {
+                    $chunkSize = min($chunkLimit, $remaining);
+                    file_put_contents(
+                        $sourcePath,
+                        str_repeat(
+                            '#',
+                            $chunkSize
+                        ),
+                        FILE_APPEND
+                    );
+
+                    $remaining -= $chunkSize;
+                }
+            }
+        }
+
+        // Now lets orchestrate request-response
+        $s3Client = $this->getS3ClientWithSequentialResponses(
+            array_map(function ($expectation) {
+                $operation = $expectation['request']['operation'];
+
+                return array_merge(
+                    $expectation['response'],
+                    ['operation' => $operation]
+                );
+            }, $expectations),
+            function (string $operation, ?array $body): StreamInterface {
+                $template = self::$s3BodyTemplates[$operation] ?? "";
+                if ($body === null) {
+                    $body = [];
+                }
+
+                foreach ($body as $key => $value) {
+                    $template = str_replace("{{$key}}", $value, $template);
+                }
+
+                return Utils::streamFor(
+                    $template,
+                );
+            }
+        );
+        // Get outcome
+        $outcome = $outcomes[0];
+        try {
+            $s3TransferManager = new S3TransferManager(
+                $s3Client,
+            );
+            $result = $s3TransferManager->uploadDirectory(
+                new UploadDirectoryRequest(
+                    $source,
+                    $bucket,
+                    [],
+                    $config,
+                )
+            )->wait();
+
+            if ($outcome['result'] === 'failure') {
+                $this->fail(
+                    "A failure was expected on this test"
+                );
+            }
+            // Evaluate outcome
+            $this->assertEquals(
+                $outcome['objectsUploaded'],
+                $result->getObjectsUploaded()
+            );
+            $this->assertEquals(
+                $outcome['objectsFailed'],
+                $result->getObjectsFailed()
+            );
+        } catch (Exception $exception) {
+            if ($outcome['result'] !== 'failure') {
+                $this->fail(
+                    "A failure was not expected on this test but got: " . $exception->getMessage()
+                );
+            }
+            $this->assertTrue(true);
+        } finally {
+            TestsUtility::cleanUpDir($sourceDirectory);
+        }
+    }
+
+    /**
+     * @param string $testId
+     * @param array $config
+     * @param array $downloadDirectoryRequestArgs
+     * @param array $s3Objects
+     * @param array $expectations
+     * @param array $expectedFiles
+     * @param array $outcomes
+     *
+     * @return void
+     * @dataProvider modeledDownloadDirectoryCasesProvider
+     *
+     */
+    public function testModeledCasesForDownloadDirectory(
+        string $testId,
+        array $config,
+        array $downloadDirectoryRequestArgs,
+        array $s3Objects,
+        array $expectations,
+        array $expectedFiles,
+        array $outcomes
+    ) {
+        $testsToSkip = [
+            "Test download directory - S3 directory bucket" => true,
+        ];
+        if ($testsToSkip[$testId] ?? false) {
+            $this->markTestSkipped(
+                "The test `" . $testId . "` is not supported yet."
+            );
+        }
+        // Parse config and request args
+        $this->parseConfigFromCamelCaseToSnakeCase($config);
+        $this->parseConfigFromCamelCaseToSnakeCase($downloadDirectoryRequestArgs);
+        // Extract bucket and destination
+        $bucket = $downloadDirectoryRequestArgs['bucket'];
+        unset($downloadDirectoryRequestArgs['bucket']);
+        $destination = $downloadDirectoryRequestArgs['destination'];
+        unset($downloadDirectoryRequestArgs['destination']);
+        // Now lets merge what is remaining in $downloadDirectoryRequestArgs into config
+        $config = array_merge(
+            $config,
+            $downloadDirectoryRequestArgs,
+        );
+        // Now let`s convert filter into its proper type
+        if (isset($config['filter'])) {
+            $filterExpression = $config['filter'];
+            $config['filter'] = function ($file) use ($filterExpression) {
+                return fnmatch($filterExpression, $file) == true;
+            };
+        }
+        // Prepare destination directory
+        $baseDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "download-directory-test";
+        $targetDirectory = $baseDirectory . DIRECTORY_SEPARATOR . $destination;
+        if (is_dir($targetDirectory)) {
+            TestsUtility::cleanUpDir($targetDirectory);
+        }
+
+        mkdir($targetDirectory, 0777, true);
+
+        // Get prefix so it can be used in body creation for ListObjectsV2
+        $prefix = $config['prefix'] ?? '';
+        // Prepare the pool of responses
+        $s3Client = $this->getS3ClientWithSequentialResponses(
+            array_map(function ($expectation) {
+                $operation = $expectation['request']['operation'];
+
+                return array_merge(
+                    $expectation['response'],
+                    ['operation' => $operation]
+                );
+            }, $expectations),
+            function (
+                string $operation,
+                array|string|null $body,
+                ?array &$headers
+            ) use ($prefix, $bucket): StreamInterface
+            {
+                if ($operation === 'ListObjectsV2') {
+                    $listObjectsV2Template = self::$s3BodyTemplates[$operation];
+                    $listObjectsV2ContentsTemplate = self::$s3BodyTemplates[
+                        $operation . "::Contents"
+                    ];
+                    $bodyBuilder = str_replace(
+                        "{{Bucket}}",
+                        $bucket,
+                        $listObjectsV2Template
+                    );
+                    $bodyBuilder = str_replace(
+                        "{{Prefix}}",
+                        $prefix,
+                        $bodyBuilder
+                    );
+
+
+                    $itemBuilder = "";
+                    foreach ($body as $item) {
+                        $itemBuilder = $itemBuilder . "\n$listObjectsV2ContentsTemplate";
+                        $itemBuilder = str_replace(
+                            ['{Key}', '{Size}'],
+                            [$item['key'], $item['size']],
+                            $itemBuilder
+                        );
+                    }
+
+                    $bodyBuilder = str_replace(
+                        ['{Contents}'],
+                        [$itemBuilder],
+                        $bodyBuilder
+                    );
+
+                    $fixedBody = Utils::streamFor($bodyBuilder);
+                    $body = null;
+                } else {
+                    $fixedBody = Utils::streamFor(
+                        str_repeat(
+                            '*',
+                            $headers['Content-Length']
+                        )
+                    );
+                    $body = null;
+                }
+
+                if (isset($headers['ChecksumAlgorithm'])) {
+                    // Checksum injection when expected to succeed at checksum validation
+                    // This is needed because the checksum in the test is wrong
+                    $algorithm = strtolower($headers['ChecksumAlgorithm']);
+                    $checksumValue = ApplyChecksumMiddleware::getEncodedValue(
+                        $algorithm,
+                        $fixedBody
+                    );
+                    $headers['Checksum'.strtoupper($algorithm)] = $checksumValue;
+                    $fixedBody->rewind();
+                }
+
+                // If body was provided then we override the fixed one
+                if ($body !== null) {
+                    $fixedBody = Utils::streamFor($body);
+                }
+
+                return $fixedBody;
+            },
+        );
+        $outcome = $outcomes[0];
+        try {
+            $s3TransferManager = new S3TransferManager(
+                $s3Client,
+            );
+            $result = $s3TransferManager->downloadDirectory(
+                new DownloadDirectoryRequest(
+                    $bucket,
+                    $targetDirectory,
+                    [],
+                    $config,
+                )
+            )->wait();
+            if ($outcome['result'] !== 'success') {
+                $this->fail(
+                    "A failure was expected on this test"
+                );
+            }
+            foreach ($expectedFiles as $expectedFile) {
+                $filePath = $baseDirectory . DIRECTORY_SEPARATOR . $expectedFile['path'];
+                $this->assertFileExists(
+                    $filePath,
+                );
+                $this->assertEquals(
+                    $expectedFile['size'],
+                    filesize($filePath),
+                );
+            }
+            $this->assertEquals(
+                $outcome['objectsDownloaded'],
+                $result->getObjectsDownloaded()
+            );
+            $this->assertEquals(
+                $outcome['objectsFailed'],
+                $result->getObjectsFailed()
+            );
+        } catch (Exception $exception) {
+            if ($outcome['result'] === 'success') {
+                $this->fail(
+                    "A failure was not expected on this test and got: " . $exception->getMessage()
+                );
+            }
+            $this->assertTrue(true);
+        } finally {
+            TestsUtility::cleanUpDir($targetDirectory);
+        }
+    }
+
+    /**
      * @param array $responses
      * @param callable $bodyBuilder
      *  A callable to build the body of the response. It receives as
@@ -3259,7 +3547,7 @@ EOF,
         $index = 0;
         return new S3Client([
             'region' => 'eu-west-1',
-            'http_handler' => function ()
+            'http_handler' => function (RequestInterface $request)
             use ($bodyBuilder, $responses, &$index) {
                 $response = $responses[$index++];
                 if ($response['status'] < 400) {
@@ -3268,7 +3556,9 @@ EOF,
                         $bodyBuilder,
                             [
                                 $response['operation'],
-                                $response['body'] ?? null,
+                                $response['body']
+                                ?? $response['contents']
+                                ?? null,
                                 &$headers
                             ]
                     );
@@ -3287,7 +3577,7 @@ EOF,
                         )
                     );
                 }
-            }
+            },
         ]);
     }
 
@@ -3305,13 +3595,13 @@ EOF,
             // Then it is replaced by using group1_group2 found.
             $newKey = strtolower(
                 preg_replace(
-                    "/([a-z])([A-Z])/",
+                    "/([a-z0-9])([A-Z])/",
                     "$1_$2",
                     $key
                 )
             );
-            $config[$newKey] = $value;
             unset($config[$key]);
+            $config[$newKey] = $value;
         }
     }
 
@@ -3426,6 +3716,53 @@ EOF,
     }
 
     /**
+     * @return Generator
+     */
+    public function modeledUploadDirectoryCasesProvider(): Generator
+    {
+        $downloadCases = json_decode(
+            file_get_contents(
+                self::UPLOAD_DIRECTORY_BASE_CASES
+            ),
+            true
+        );
+        foreach ($downloadCases as $case) {
+            yield $case['summary'] => [
+                'test_id' => $case['summary'],
+                'config' => $case['config'],
+                'upload_directory_request' => $case['uploadDirectoryRequest'],
+                'source_structure' => $case['sourceStructure'] ?? null,
+                'expectations' => $case['expectations'],
+                'outcomes' => $case['outcomes'],
+            ];
+        }
+    }
+
+    /**
+     * @return Generator
+     */
+    public function modeledDownloadDirectoryCasesProvider(): Generator
+    {
+        $downloadCases = json_decode(
+            file_get_contents(
+                self::DOWNLOAD_DIRECTORY_BASE_CASES
+            ),
+            true
+        );
+        foreach ($downloadCases as $case) {
+            yield $case['summary'] => [
+                'test_id' => $case['summary'],
+                'config' => $case['config'],
+                'download_directory_request' => $case['downloadDirectoryRequest'],
+                's3_objects' => $case['s3Objects'],
+                'expectations' => $case['expectations'],
+                'expected_files' => $case['expectedFiles'],
+                'outcomes' => $case['outcomes'],
+            ];
+        }
+    }
+
+    /**
      * @param array $requestArgs
      *
      * @return void
@@ -3436,8 +3773,8 @@ EOF,
     {
         foreach ($requestArgs as $key => $value) {
             $newKey = ucfirst($key);
-            $requestArgs[$newKey] = $value;
             unset($requestArgs[$key]);
+            $requestArgs[$newKey] = $value;
         }
     }
 

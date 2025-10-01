@@ -8,6 +8,8 @@ use InvalidArgumentException;
 
 final class DownloadDirectoryRequest extends TransferRequest
 {
+    public const DEFAULT_MAX_CONCURRENCY = 100;
+
     /** @var string */
     private string $sourceBucket;
 
@@ -26,13 +28,10 @@ final class DownloadDirectoryRequest extends TransferRequest
      * @param array $config The config options for this download directory operation.
      *  - s3_prefix: (string, optional) This parameter will be considered just if
      *    not provided as part of the list_object_v2_args config option.
-     *  - s3_delimiter: (string, optional, defaulted to '/') This parameter will be
-     *    considered just if not provided as part of the list_object_v2_args config
-     *    option.
      *  - filter: (Closure, optional) A callable which will receive an object key as
      *    parameter and should return true or false in order to determine
      *    whether the object should be downloaded.
-     *  - get_object_request_callback: (Closure, optional) A function that will
+     *  - download_object_request_modifier: (Closure, optional) A function that will
      *    be invoked right before the download request is performed and that will
      *    receive as parameter the request arguments for each request.
      *  - failure_policy: (Closure, optional) A function that will be invoked
@@ -57,6 +56,7 @@ final class DownloadDirectoryRequest extends TransferRequest
      *      specified prefix.
      *    - fails_when_destination_exists: (bool) Whether to fail when a destination
      *      file exists.
+     *  - max_concurrency: (int, optional) The max number of concurrent downloads.
      * @param TransferListener[] $listeners The listeners for watching
      * transfer events. Each listener will be cloned per file upload.
      * @param TransferListener|null $progressTracker Ideally the progress

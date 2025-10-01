@@ -1,0 +1,808 @@
+[
+  {
+    "summary": "Test download directory - basic download",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads"
+    },
+    "s3Objects": [
+      {
+        "key": "photo1.jpg",
+        "size": 2048576,
+        "lastModified": "2023-01-15T10:30:00Z"
+      },
+      {
+        "key": "photo2.jpg", 
+        "size": 1048576,
+        "lastModified": "2023-01-15T11:00:00Z"
+      },
+      {
+        "key": "readme.txt",
+        "size": 1024,
+        "lastModified": "2023-01-10T09:00:00Z"
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "photo1.jpg", "size": 2048576},
+            {"key": "photo2.jpg", "size": 1048576},
+            {"key": "readme.txt", "size": 1024}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "photo1.jpg",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2048576",
+            "Content-Range": "bytes 0-2048575/2048576",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket", 
+          "key": "photo2.jpg",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "readme.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/photo1.jpg",
+        "size": 2048576
+      },
+      {
+        "path": "/local/downloads/photo2.jpg",
+        "size": 1048576
+      },
+      {
+        "path": "/local/downloads/readme.txt",
+        "size": 1024
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 3,
+        "objectsFailed": 0
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - with s3Prefix",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads",
+      "s3Prefix": "photos/"
+    },
+    "s3Objects": [
+      {
+        "key": "photos/2023/jan/photo1.jpg",
+        "size": 1048576,
+        "lastModified": "2023-01-15T10:30:00Z"
+      },
+      {
+        "key": "photos/2023/jan/photo2.jpg", 
+        "size": 1048576,
+        "lastModified": "2023-01-15T11:00:00Z"
+      },
+      {
+        "key": "photos/readme.txt",
+        "size": 1024,
+        "lastModified": "2023-01-10T09:00:00Z"
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "prefix": "photos/",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "photos/2023/jan/photo1.jpg", "size": 1048576},
+            {"key": "photos/2023/jan/photo2.jpg", "size": 1048576},
+            {"key": "photos/readme.txt", "size": 1024}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "photos/2023/jan/photo1.jpg",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "photos/2023/jan/photo2.jpg",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "photos/readme.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/2023/jan/photo1.jpg",
+        "size": 1048576
+      },
+      {
+        "path": "/local/downloads/2023/jan/photo2.jpg",
+        "size": 1048576
+      },
+      {
+        "path": "/local/downloads/readme.txt",
+        "size": 1024
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 3,
+        "objectsFailed": 0
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - with filter callback",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads",
+      "s3Prefix": "mixed/",
+      "filter": "*.jpg"
+    },
+    "s3Objects": [
+      {
+        "key": "mixed/image.jpg",
+        "size": 1048576
+      },
+      {
+        "key": "mixed/document.txt",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "prefix": "mixed/",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "mixed/image.jpg", "size": 1048576},
+            {"key": "mixed/document.txt", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "mixed/image.jpg",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1048576",
+            "Content-Range": "bytes 0-1048575/1048576",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/image.jpg",
+        "size": 1048576
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 0,
+        "note": "document.txt filtered out"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - skip folder objects",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART"
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads",
+      "s3Prefix": "data/"
+    },
+    "s3Objects": [
+      {
+        "key": "data/folder1/",
+        "size": 0
+      },
+      {
+        "key": "data/file1.txt",
+        "size": 1024
+      },
+      {
+        "key": "data/folder2/",
+        "size": 0
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "prefix": "data/",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "data/folder1/", "size": 0},
+            {"key": "data/file1.txt", "size": 1024},
+            {"key": "data/folder2/", "size": 0}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "data/file1.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "1024",
+            "Content-Range": "bytes 0-1023/1024",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/file1.txt",
+        "size": 1024
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 0,
+        "note": "folder objects skipped"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - path traversal security validation",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART"
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads",
+      "recursive": true,
+      "failurePolicy": "CONTINUE_ON_FAILURE"
+    },
+    "s3Objects": [
+      {
+        "key": "../../../etc/passwd",
+        "size": 1024
+      },
+      {
+        "key": "safe-file.txt",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "../../../etc/passwd", "size": 1024},
+            {"key": "safe-file.txt", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "safe-file.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2048",
+            "Content-Range": "bytes 0-2047/2048",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/safe-file.txt",
+        "size": 2048
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 1,
+        "note": "../../../etc/passwd rejected due to path traversal"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - path traversal with relative parent directory",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART"
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads",
+      "failurePolicy": "CONTINUE_ON_FAILURE"
+    },
+    "s3Objects": [
+      {
+        "key": "../2023/Jan/1.png",
+        "size": 1024
+      },
+      {
+        "key": "safe-file.txt",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "../2023/Jan/1.png", "size": 1024},
+            {"key": "safe-file.txt", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "safe-file.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2048",
+            "Content-Range": "bytes 0-2047/2048",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/safe-file.txt",
+        "size": 2048
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 1,
+        "note": "../2023/Jan/1.png rejected due to path traversal"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - complex path traversal with multiple levels",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART"
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads",
+      "failurePolicy": "CONTINUE_ON_FAILURE"
+    },
+    "s3Objects": [
+      {
+        "key": "foo/../2023/../../Jan/1.png",
+        "size": 1024
+      },
+      {
+        "key": "normal/file.txt",
+        "size": 512
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "foo/../2023/../../Jan/1.png", "size": 1024},
+            {"key": "normal/file.txt", "size": 512}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "normal/file.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "512",
+            "Content-Range": "bytes 0-511/512",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/normal/file.txt",
+        "size": 512
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 1,
+        "note": "foo/../2023/../../Jan/1.png rejected due to path traversal"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - failure handling with continue policy",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads",
+      "failurePolicy": "CONTINUE"
+    },
+    "s3Objects": [
+      {
+        "key": "file1.txt",
+        "size": 1024
+      },
+      {
+        "key": "file2.txt",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "file1.txt", "size": 1024},
+            {"key": "file2.txt", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "file1.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 404,
+          "error": "NoSuchKey"
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "file2.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "Content-Length": "2048",
+            "Content-Range": "bytes 0-2047/2048",
+            "PartsCount": 1
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/file2.txt",
+        "size": 2048
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsDownloaded": 1,
+        "objectsFailed": 1,
+        "note": "file1.txt failed but operation continued"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - failure handling with default policy",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "destination": "/local/downloads"
+    },
+    "s3Objects": [
+      {
+        "key": "file1.txt",
+        "size": 1024
+      },
+      {
+        "key": "file2.txt",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-bucket",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "file1.txt", "size": 1024},
+            {"key": "file2.txt", "size": 2048}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-bucket",
+          "key": "file1.txt",
+          "partNumber": 1
+        },
+        "response": {
+          "status": 404,
+          "error": "NoSuchKey"
+        }
+      }
+    ],
+    "expectedFiles": [],
+    "outcomes": [
+      {
+        "result": "failure",
+        "objectsDownloaded": 0,
+        "objectsFailed": 1,
+        "note": "operation stopped after first failure with default policy"
+      }
+    ]
+  },
+  {
+    "summary": "Test download directory - S3 directory bucket",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartDownloadType": "PART",
+      "maxConcurrency": 10
+    },
+    "downloadDirectoryRequest": {
+      "bucket": "example-directory-bucket--use1-az1--x-s3",
+      "destination": "/local/downloads"
+    },
+    "s3Objects": [
+      {
+        "key": "report.pdf",
+        "size": 1048576,
+        "lastModified": "2023-01-15T10:30:00Z"
+      },
+      {
+        "key": "data/metrics.csv",
+        "size": 2048576,
+        "lastModified": "2023-01-15T11:00:00Z"
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "ListObjectsV2",
+          "bucket": "example-directory-bucket--use1-az1--x-s3",
+          "delimiter": null
+        },
+        "response": {
+          "status": 200,
+          "contents": [
+            {"key": "report.pdf", "size": 1048576},
+            {"key": "data/metrics.csv", "size": 2048576}
+          ]
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-directory-bucket--use1-az1--x-s3",
+          "key": "report.pdf"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"dir123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "GetObject",
+          "bucket": "example-directory-bucket--use1-az1--x-s3",
+          "key": "data/metrics.csv"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"dir456\""
+          }
+        }
+      }
+    ],
+    "expectedFiles": [
+      {
+        "path": "/local/downloads/report.pdf",
+        "size": 1048576
+      },
+      {
+        "path": "/local/downloads/data/metrics.csv",
+        "size": 2048576
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsDownloaded": 2,
+        "objectsFailed": 0,
+        "note": "Successfully downloaded from S3 directory bucket"
+      }
+    ]
+  }
+]

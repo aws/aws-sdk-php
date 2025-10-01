@@ -23,11 +23,14 @@ use Aws\S3\S3Transfer\Progress\TransferProgressSnapshot;
 use Aws\S3\S3Transfer\Utils\DownloadHandler;
 use FilesystemIterator;
 use GuzzleHttp\Promise\Each;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\Utils;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 use Throwable;
 use function Aws\filter;
 use function Aws\map;
@@ -172,15 +175,15 @@ class S3TransferManager
             $filter = $config['filter'];
         }
 
-        $putObjectRequestCallback = null;
-        if (isset($config['put_object_request_callback'])) {
-            if (!is_callable($config['put_object_request_callback'])) {
+        $uploadObjectRequestModifier = null;
+        if (isset($config['upload_object_request_modifier'])) {
+            if (!is_callable($config['upload_object_request_modifier'])) {
                 throw new InvalidArgumentException(
-                    "The provided config `put_object_request_callback` must be callable."
+                    "The provided config `upload_object_request_modifier` must be callable."
                 );
             }
 
-            $putObjectRequestCallback = $config['put_object_request_callback'];
+            $uploadObjectRequestModifier = $config['upload_object_request_modifier'];
         }
 
         $failurePolicyCallback = null;
@@ -198,18 +201,45 @@ class S3TransferManager
         $dirIterator = new RecursiveDirectoryIterator(
             $sourceDirectory
         );
-        $dirIterator->setFlags(FilesystemIterator::SKIP_DOTS);
+
+        $flags = FilesystemIterator::SKIP_DOTS;
         if ($config['follow_symbolic_links'] ?? false) {
-            $dirIterator->setFlags(FilesystemIterator::FOLLOW_SYMLINKS);
+            $flags |= FilesystemIterator::FOLLOW_SYMLINKS;
         }
+
+        $dirIterator->setFlags($flags);
 
         if ($config['recursive'] ?? false) {
-            $dirIterator = new RecursiveIteratorIterator($dirIterator);
+            $dirIterator = new RecursiveIteratorIterator(
+                $dirIterator,
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+            if (isset($config['max_depth'])) {
+                if (!is_int($config['max_depth'])) {
+                    throw new InvalidArgumentException(
+                        "The provided config `max_depth` must be an integer."
+                    );
+                }
+
+                $dirIterator->setMaxDepth($config['max_depth']);
+            }
         }
 
+        // To avoid circular symbolic links traversal
+        $dirVisited = [];
         $files = filter(
             $dirIterator,
-            function ($file) use ($filter) {
+            function ($file) use ($filter, &$dirVisited) {
+                if (is_dir($file)) {
+                    $dirRealPath = realpath($file);
+                    if ($dirVisited[$dirRealPath] ?? false) {
+                        throw new RuntimeException(
+                            "A circular symbolic link traversal have been detected at $file -> $dirRealPath"
+                        );
+                    }
+                    $dirVisited[$dirRealPath] = true;
+                }
+
                 if ($filter !== null) {
                     return !is_dir($file) && $filter($file);
                 }
@@ -241,18 +271,18 @@ class S3TransferManager
                 $delimiter,
                 $objectKey
             );
-            $putObjectRequestArgs = $uploadDirectoryRequest->getUploadRequestArgs();
-            $putObjectRequestArgs['Bucket'] = $targetBucket;
-            $putObjectRequestArgs['Key'] = $objectKey;
+            $uploadRequestArgs = $uploadDirectoryRequest->getUploadRequestArgs();
+            $uploadRequestArgs['Bucket'] = $targetBucket;
+            $uploadRequestArgs['Key'] = $objectKey;
 
-            if ($putObjectRequestCallback !== null) {
-                $putObjectRequestCallback($putObjectRequestArgs);
+            if ($uploadObjectRequestModifier !== null) {
+                $uploadObjectRequestModifier($uploadRequestArgs);
             }
 
             $promises[] = $this->upload(
                 new UploadRequest(
                     $file,
-                    $putObjectRequestArgs,
+                    $uploadRequestArgs,
                     $config,
                     array_map(
                         fn($listener) => clone $listener,
@@ -268,15 +298,15 @@ class S3TransferManager
                 $targetBucket,
                 $sourceDirectory,
                 $failurePolicyCallback,
-                $putObjectRequestArgs,
+                $uploadRequestArgs,
                 &$objectsUploaded,
                 &$objectsFailed
             ) {
                 $objectsFailed++;
                 if($failurePolicyCallback !== null) {
-                    call_user_func(
+                    return call_user_func(
                         $failurePolicyCallback,
-                        $putObjectRequestArgs,
+                        $uploadRequestArgs,
                         [
                             "source_directory" => $sourceDirectory,
                             "bucket_to" => $targetBucket,
@@ -287,16 +317,20 @@ class S3TransferManager
                             $objectsFailed
                         )
                     );
-
-                    return;
                 }
 
-                throw $reason;
+                return $reason;
             });
         }
 
-        return Each::ofLimitAll($promises, $this->config->getConcurrency())
+        $maxConcurrency = $config['max_concurrency']
+            ?? UploadDirectoryRequest::DEFAULT_MAX_CONCURRENCY;
+
+        return Each::ofLimitAll($promises, $maxConcurrency)
             ->then(function () use (&$objectsUploaded, &$objectsFailed) {
+                return new UploadDirectoryResult($objectsUploaded, $objectsFailed);
+            })->otherwise(function ()
+            use (&$objectsUploaded, &$objectsFailed) {
                 return new UploadDirectoryResult($objectsUploaded, $objectsFailed);
             });
     }
@@ -384,7 +418,8 @@ class S3TransferManager
             $listArgs['Prefix'] = $s3Prefix;
         }
 
-        $listArgs['Delimiter'] = $listArgs['Delimiter'] ?? null;
+        // MUST BE NULL
+        $listArgs['Delimiter'] = null;
 
         $objects = $this->s3Client
             ->getPaginator('ListObjectsV2', $listArgs)
@@ -411,15 +446,15 @@ class S3TransferManager
             return  self::formatAsS3URI($sourceBucket, $key);
         });
 
-        $getObjectRequestCallback = null;
-        if (isset($config['get_object_request_callback'])) {
-            if (!is_callable($config['get_object_request_callback'])) {
+        $downloadObjectRequestModifier = null;
+        if (isset($config['download_object_request_modifier'])) {
+            if (!is_callable($config['download_object_request_modifier'])) {
                 throw new InvalidArgumentException(
-                    "The provided config `get_object_request_callback` must be callable."
+                    "The provided config `download_object_request_modifier` must be callable."
                 );
             }
 
-            $getObjectRequestCallback = $config['get_object_request_callback'];
+            $downloadObjectRequestModifier = $config['download_object_request_modifier'];
         }
 
         $failurePolicyCallback = null;
@@ -436,7 +471,7 @@ class S3TransferManager
         $promises = [];
         $objectsDownloaded = 0;
         $objectsFailed = 0;
-        $s3Delimiter = $config['s3_delimiter'] ?? '/';
+        $s3Delimiter = '/';
         foreach ($objects as $object) {
             $bucketAndKeyArray = self::s3UriAsBucketAndKey($object);
             $objectKey = $bucketAndKeyArray['Key'];
@@ -469,8 +504,8 @@ class S3TransferManager
             foreach ($bucketAndKeyArray as $key => $value) {
                 $requestArgs[$key] = $value;
             }
-            if ($getObjectRequestCallback !== null) {
-                call_user_func($getObjectRequestCallback, $requestArgs);
+            if ($downloadObjectRequestModifier !== null) {
+                call_user_func($downloadObjectRequestModifier, $requestArgs);
             }
 
             $promises[] = $this->downloadFile(
@@ -505,7 +540,7 @@ class S3TransferManager
             ) {
                 $objectsFailed++;
                 if ($failurePolicyCallback !== null) {
-                    call_user_func(
+                    return call_user_func(
                         $failurePolicyCallback,
                         $requestArgs,
                         [
@@ -518,16 +553,22 @@ class S3TransferManager
                             $objectsFailed
                         )
                     );
-
-                    return;
                 }
 
-                throw $reason;
+                return $reason;
             });
         }
 
-        return Each::ofLimitAll($promises, $this->config->getConcurrency())
+        $maxConcurrency = $config['max_concurrency']
+            ?? DownloadDirectoryRequest::DEFAULT_MAX_CONCURRENCY;
+
+        return Each::ofLimitAll($promises, $maxConcurrency)
             ->then(function () use (&$objectsFailed, &$objectsDownloaded) {
+                return new DownloadDirectoryResult(
+                    $objectsDownloaded,
+                    $objectsFailed
+                );
+            })->otherwise(function () use (&$objectsFailed, &$objectsDownloaded) {
                 return new DownloadDirectoryResult(
                     $objectsDownloaded,
                     $objectsFailed
@@ -648,7 +689,7 @@ class S3TransferManager
                     ]
                 );
 
-                throw $reason;
+                return $reason;
             });
         }
 

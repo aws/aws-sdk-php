@@ -8,6 +8,8 @@ use InvalidArgumentException;
 
 final class UploadDirectoryRequest extends TransferRequest
 {
+    public const DEFAULT_MAX_CONCURRENCY = 100;
+
     /** @var string */
     private string $sourceDirectory;
 
@@ -34,9 +36,10 @@ final class UploadDirectoryRequest extends TransferRequest
      *   should be uploaded.
      * - s3_delimiter: The S3 delimiter. A delimiter causes a list operation
      *   to roll up all the keys that share a common prefix into a single summary list result.
-     * - put_object_request_callback: (callable, optional) A callback mechanism
+     * - upload_object_request_modifier: (callable, optional) A callback mechanism
      *   to allow customers to update individual putObjectRequest that the S3 Transfer Manager generates.
      * - failure_policy: (callable, optional) The failure policy to handle failed requests.
+     * - max_concurrency: (int, optional) The max number of concurrent uploads.
      * @param array $listeners For listening to transfer events such as transferInitiated.
      * @param TransferListener|null $progressTracker For showing progress in transfers.
      */

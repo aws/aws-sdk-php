@@ -1,0 +1,601 @@
+[
+  {
+    "summary": "Test upload directory - basic recursive upload",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/photos",
+      "recursive": true,
+      "followSymbolicLinks": false
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/photos/2023/jan/photo1.jpg",
+        "type": "file",
+        "size": 2048576
+      },
+      {
+        "path": "/local/photos/2023/jan/photo2.jpg", 
+        "type": "file",
+        "size": 1048576
+      },
+      {
+        "path": "/local/photos/readme.txt",
+        "type": "file",
+        "size": 1024
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "2023/jan/photo1.jpg",
+          "filePath": "/local/photos/2023/jan/photo1.jpg"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"abc123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject", 
+          "bucket": "example-bucket",
+          "key": "2023/jan/photo2.jpg",
+          "filePath": "/local/photos/2023/jan/photo2.jpg"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"def456\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket", 
+          "key": "readme.txt",
+          "filePath": "/local/photos/readme.txt"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"ghi789\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 3,
+        "objectsFailed": 0
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - with s3Prefix",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/photos",
+      "recursive": true,
+      "s3Prefix": "backup",
+      "followSymbolicLinks": false
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/photos/2023/jan/photo1.jpg",
+        "type": "file",
+        "size": 1048576
+      },
+      {
+        "path": "/local/photos/2023/jan/photo2.jpg", 
+        "type": "file",
+        "size": 1048576
+      },
+      {
+        "path": "/local/photos/readme.txt",
+        "type": "file",
+        "size": 1024
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "backup/2023/jan/photo1.jpg",
+          "filePath": "/local/photos/2023/jan/photo1.jpg"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"abc123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject", 
+          "bucket": "example-bucket",
+          "key": "backup/2023/jan/photo2.jpg",
+          "filePath": "/local/photos/2023/jan/photo2.jpg"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"def456\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket", 
+          "key": "backup/readme.txt",
+          "filePath": "/local/photos/readme.txt"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"ghi789\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 3,
+        "objectsFailed": 0
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - non-recursive upload",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/docs",
+      "recursive": false,
+      "s3Prefix": null
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/docs/file1.txt",
+        "type": "file",
+        "size": 1048576
+      },
+      {
+        "path": "/local/docs/subdir/file2.txt",
+        "type": "file",
+        "size": 2048576
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "file1.txt",
+          "filePath": "/local/docs/file1.txt"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"xyz123\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 1,
+        "objectsFailed": 0,
+        "note": "subdir/file2.txt skipped due to recursive=false"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - with filter callback",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/mixed",
+      "recursive": true,
+      "filter": "*.jpg"
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/mixed/image.jpg",
+        "type": "file",
+        "size": 2048576
+      },
+      {
+        "path": "/local/mixed/document.txt",
+        "type": "file",
+        "size": 2048576
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "image.jpg",
+          "filePath": "/local/mixed/image.jpg"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"filtered123\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 1,
+        "objectsFailed": 0,
+        "note": "document.txt filtered out"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - failure handling with continue policy",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/files",
+      "recursive": true,
+      "failurePolicy": "CONTINUE_ON_FAILURE"
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/files/good.txt",
+        "type": "file",
+        "size": 2048576
+      },
+      {
+        "path": "/local/files/bad.txt",
+        "type": "file",
+        "size": 2048576
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "good.txt",
+          "filePath": "/local/files/good.txt"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"good123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "bad.txt",
+          "filePath": "/local/files/bad.txt"
+        },
+        "response": {
+          "status": 403,
+          "error": "AccessDenied"
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "partial_success",
+        "objectsUploaded": 1,
+        "objectsFailed": 1
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - failure handling with default policy",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 1
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/files",
+      "recursive": true
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/files/file1.txt",
+        "type": "file",
+        "size": 2048576
+      },
+      {
+        "path": "/local/files/file2.txt",
+        "type": "file",
+        "size": 2048576
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "file1.txt",
+          "filePath": "/local/files/file1.txt"
+        },
+        "response": {
+          "status": 403,
+          "error": "AccessDenied"
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "failure",
+        "objectsUploaded": 0,
+        "objectsFailed": 1,
+        "error": "AccessDenied",
+        "note": "Upload terminated on first failure due to default policy"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - source directory does not exist",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/nonexistent/path",
+      "recursive": true
+    },
+    "expectations": [],
+    "outcomes": [
+      {
+        "result": "failure",
+        "error": "DirectoryNotFound",
+        "message": "Source directory does not exist"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - empty directory",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/empty-dir",
+      "recursive": true,
+      "followSymbolicLinks": false
+    },
+    "sourceStructure": [],
+    "expectations": [],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 0,
+        "objectsFailed": 0,
+        "note": "Empty directory - no files to upload"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - S3 directory bucket",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-directory-bucket--use1-az1--x-s3",
+      "source": "/local/docs",
+      "recursive": true,
+      "followSymbolicLinks": false
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/docs/report.pdf",
+        "type": "file",
+        "size": 1048576
+      },
+      {
+        "path": "/local/docs/data/metrics.csv",
+        "type": "file",
+        "size": 2048576
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-directory-bucket--use1-az1--x-s3",
+          "key": "report.pdf",
+          "filePath": "/local/docs/report.pdf"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"dir123\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-directory-bucket--use1-az1--x-s3",
+          "key": "data/metrics.csv",
+          "filePath": "/local/docs/data/metrics.csv"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"dir456\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 2,
+        "objectsFailed": 0,
+        "note": "Successfully uploaded to S3 directory bucket"
+      }
+    ]
+  },
+  {
+    "summary": "Test upload directory - multipart upload for large file",
+    "config": {
+      "targetPartSizeBytes": 8388608,
+      "multipartUploadThresholdBytes": 16777216,
+      "maxConcurrency": 10
+    },
+    "uploadDirectoryRequest": {
+      "bucket": "example-bucket",
+      "source": "/local/large-files",
+      "recursive": false,
+      "followSymbolicLinks": false
+    },
+    "sourceStructure": [
+      {
+        "path": "/local/large-files/large-video.mp4",
+        "type": "file",
+        "size": 12582912
+      },
+      {
+        "path": "/local/large-files/metadata.txt",
+        "type": "file",
+        "size": 2048
+      }
+    ],
+    "expectations": [
+      {
+        "request": {
+          "operation": "PutObject",
+          "bucket": "example-bucket",
+          "key": "metadata.txt",
+          "filePath": "/local/large-files/metadata.txt"
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"smalletag\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "CreateMultipartUpload",
+          "bucket": "example-bucket",
+          "key": "large-video.mp4"
+        },
+        "response": {
+          "status": 200,
+          "body": {
+            "UploadId": "upload123",
+            "Bucket": "example-bucket",
+            "Key": "large-video.mp4"
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "bucket": "example-bucket",
+          "key": "large-video.mp4",
+          "uploadId": "upload123",
+          "partNumber": 1,
+          "filePath": "/local/large-files/large-video.mp4",
+          "partSize": 8388608
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"part1etag\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "UploadPart",
+          "bucket": "example-bucket",
+          "key": "large-video.mp4",
+          "uploadId": "upload123",
+          "partNumber": 2,
+          "filePath": "/local/large-files/large-video.mp4",
+          "partSize": 4194304
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"part2etag\""
+          }
+        }
+      },
+      {
+        "request": {
+          "operation": "CompleteMultipartUpload",
+          "bucket": "example-bucket",
+          "key": "large-video.mp4",
+          "uploadId": "upload123",
+          "parts": [
+            {"partNumber": 1, "etag": "\"part1etag\"", "checksumCRC32": "abc123"},
+            {"partNumber": 2, "etag": "\"part2etag\"", "checksumCRC32": "def456"}
+          ]
+        },
+        "response": {
+          "status": 200,
+          "headers": {
+            "ETag": "\"finaletag\""
+          }
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "result": "success",
+        "objectsUploaded": 2,
+        "objectsFailed": 0,
+        "note": "20MB file uploaded using multipart upload with 2 parts, small file uploaded normally"
+      }
+    ]
+  }
+]

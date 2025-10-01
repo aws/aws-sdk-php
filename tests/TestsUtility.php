@@ -18,6 +18,10 @@ class TestsUtility
             return;
         }
 
+        if (is_link($dirPath)) {
+            unlink($dirPath);
+        }
+
         $files = dir_iterator($dirPath);
         foreach ($files as $file) {
             if (in_array($file, ['.', '..'])) {
