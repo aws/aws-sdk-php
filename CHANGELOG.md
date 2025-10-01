@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.30 - 2025-10-01
 
 * `Aws\IVSRealTime` - Remove incorrect ReadOnly trait on IVS RealTime ImportPublicKey API
 * `Aws\PCS` - Added the UpdateCluster API action to modify cluster configurations, and Slurm custom settings for queues.
