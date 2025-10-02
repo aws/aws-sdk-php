@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.356.31 - 2025-10-02
 
 * `Aws\Synthetics` - Adds support to configure canaries with pre-configured blueprint code on supported runtime versions. This behavior can be controlled via the new BlueprintTypes property exposed in the CreateCanary and UpdateCanary APIs.
 * `Aws\CloudFormation` - Add new warning type 'EXCLUDED_RESOURCES'
